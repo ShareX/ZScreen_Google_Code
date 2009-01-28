@@ -1,0 +1,22 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Main =
+
+[http://i39.tinypic.com/10roaqu.jpg]
+
+= Hotkey Settings = 
+
+[http://i43.tinypic.com/2nlz2mh.png]
+
+= FTP Settings = 
+
+[http://i42.tinypic.com/k2mtt2.png]
+
+= File Settings = 
+
+[http://i41.tinypic.com/2zsqlqr.png]
+
+= Advanced = 
+
+[http://i40.tinypic.com/i35oxz.png]
