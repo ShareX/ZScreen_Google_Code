@@ -3,20 +3,36 @@
 <wiki:toc max_depth="1" />
 = Main =
 
-[http://i40.tinypic.com/16h3evb.png]
+[http://i38.tinypic.com/23kbyfb.png]
 
 = Hotkey Settings = 
 
-[http://i41.tinypic.com/5yxidd.png]
+[http://i37.tinypic.com/2czq5pc.png]
 
 = FTP Settings = 
 
-[http://i39.tinypic.com/2dln4o8.png]
+[http://i37.tinypic.com/3495f7r.png]
+
+= HTTP Settings =
+
+[http://i38.tinypic.com/24odoc6.png]
+
+= Image Software Settings =
+
+[http://i38.tinypic.com/iqfnzc.png]
 
 = File Settings = 
 
-[http://i39.tinypic.com/2ninwk7.png]
+[http://i38.tinypic.com/121q14g.png]
 
 = Advanced = 
 
-[http://i40.tinypic.com/i35oxz.png]
+[http://i38.tinypic.com/2prfmv5.png]
+
+= Image Uploaders =
+
+[http://i35.tinypic.com/20kavra.png]
+
+= Screenshots =
+
+[http://i37.tinypic.com/105wnlg.png]
