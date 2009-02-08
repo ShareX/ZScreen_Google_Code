@@ -1,13 +1,38 @@
 #summary Frequently Asked Questions
+#labels Featured
+<wiki:toc max_depth="1" />
 
-= Introduction =
+=What programming language is ZScreen made in?=
 
-Add your content here.
+ZScreen is made with C#.net 2.0.
 
+=Does that mean I need the .NET framework to run it?=
 
-= Details =
+Yes, that is correct, you do need the .net 2.0 framework to run ZScreen, but the NSIS installer I am using will automatically download it and install it for you if you do not have it.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=Is ZScreen free? Is there any kind of fee for using it?=
+
+ZScreen is completely free. The source code is published on [http://zscreen.svn.sourceforge.net/viewvc/zscreen/ Sourceforge.net.]
+
+=Why are you not selling this software?=
+
+I am not selling this software because I believe everyone should be able to enjoy this program at no cost. Also I would much rather receive [http://brandonz.net/donate.html donations] instead of forcing people to pay for my software.
+
+=Why does ZScreen not close when I press the X on the top right of the window?=
+
+ZScreen does not close when you do this, it will stay open in the tray. If you want to close it you can right click on the tray icon and choose Exit ZScreen.
+Can I run multiple copies of ZScreen on one computer at the same time?
+
+No, ZScreen will not run multiple copies. This feature was added to remove a big annoyance.
+
+=How can I suggest a feature for future releases or submit a bug report?=
+
+Since ZScreen is hosted on Google Code, a nice feature is available for this. Go [here http://code.google.com/p/zscreen/issues/list] and then click on New Issue. 
+
+=Why did you build this when you can just hit the print screen button?=
+
+The print screen button does not provide the same kind of [Features] this program does. This program is very automated and easy to use and is a great time saver compared to the print screen button.
+
+=How can I contact you?=
+
+You can contact me either via Sourceforge or through my contact form.
