@@ -27,7 +27,7 @@ No, ZScreen will not run multiple copies. This feature was added to remove a big
 
 =How can I suggest a feature for future releases or submit a bug report?=
 
-Since ZScreen is hosted on Google Code, a nice feature is available for this. Go [here http://code.google.com/p/zscreen/issues/list] and then click on New Issue. 
+Since ZScreen is hosted on Google Code, a nice feature is available for this. Go [http://code.google.com/p/zscreen/issues/list here] and then click on New Issue. 
 
 =Why did you build this when you can just hit the print screen button?=
 
