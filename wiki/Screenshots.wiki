@@ -3,15 +3,15 @@
 <wiki:toc max_depth="1" />
 = Main =
 
-[http://i39.tinypic.com/10roaqu.jpg]
+[http://i40.tinypic.com/16h3evb.png]
 
 = Hotkey Settings = 
 
-[http://i43.tinypic.com/2nlz2mh.png]
+[http://i41.tinypic.com/5yxidd.png]
 
 = FTP Settings = 
 
-[http://i42.tinypic.com/k2mtt2.png]
+[http://i39.tinypic.com/2dln4o8.png]
 
 = File Settings = 
 
@@ -19,4 +19,4 @@
 
 = Advanced = 
 
-[http://i40.tinypic.com/i35oxz.png]
+[http://i39.tinypic.com/2ninwk7.png]
