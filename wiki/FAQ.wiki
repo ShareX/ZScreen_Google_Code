@@ -4,11 +4,11 @@
 
 =What programming language is ZScreen made in?=
 
-ZScreen is made with C#.net 2.0.
+ZScreen is made with C# 3.0
 
 =Does that mean I need the .NET framework to run it?=
 
-Yes, that is correct, you do need the .net 2.0 framework to run ZScreen, but the NSIS installer I am using will automatically download it and install it for you if you do not have it.
+Yes, that is correct, you do need the .NET 3.5 framework to run ZScreen, but the InnoSetup installer I am using will automatically download it and install it for you if you do not have it.
 
 =Is ZScreen free? Is there any kind of fee for using it?=
 
