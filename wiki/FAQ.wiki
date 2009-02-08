@@ -35,4 +35,4 @@ The print screen button does not provide the same kind of [Features] this progra
 
 =How can I contact you?=
 
-You can contact me either via Sourceforge or through my contact form.
+You can contact me either via Support [http://groups.google.com/group/zscreen forums] or through my [http://brandonz.net/contact.html contact] form.
