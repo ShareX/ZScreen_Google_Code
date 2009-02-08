@@ -21,7 +21,8 @@ I am not selling this software because I believe everyone should be able to enjo
 =Why does ZScreen not close when I press the X on the top right of the window?=
 
 ZScreen does not close when you do this, it will stay open in the tray. If you want to close it you can right click on the tray icon and choose Exit ZScreen.
-Can I run multiple copies of ZScreen on one computer at the same time?
+
+=Can I run multiple copies of ZScreen on one computer at the same time?=
 
 No, ZScreen will not run multiple copies. This feature was added to remove a big annoyance.
 
