@@ -1,13 +1,14 @@
 #summary One-sentence summary of this page.
+#labels Phase-Support
 
 = Introduction =
 
-Add your content here.
+Using Custom Uploaders tab you can add any Image Hosting Service that supports POST command. 
 
+= Getting Started = 
+== Image Hosting Services ==
+ * Type the Image Hosting Service name and press Add
+[http://wmwiki.com/mcored/screenshots/SS-20090210142540.png]
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * The name will be added to the list
+ * Click it to make it active
