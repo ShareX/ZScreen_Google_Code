@@ -1,5 +1,6 @@
 #summary Getting Started with Custom Uploaders
 #labels Phase-Support
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
