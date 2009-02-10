@@ -4,7 +4,7 @@
 
 =What programming language is ZScreen made in?=
 
-ZScreen is made with C# 3.0
+ZScreen is made with C# 3.5
 
 =Does that mean I need the .NET framework to run it?=
 
