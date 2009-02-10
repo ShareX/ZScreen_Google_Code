@@ -37,8 +37,8 @@ Save the following as Default.zihs and use Import function in ZScreen > Image Up
         <string>(?&lt;=pic" value=").+(?=" /&gt;)</string>
         <string>(?&lt;=ext" value=").+(?=" /&gt;)</string>
       </RegexpList>
-      <Fullimage>"http://i" $1 ".tinypic.com/" $2 ($3 == "" ? ".jpg" : $3)</Fullimage>
-      <Thumbnail>"http://i" $1 ".tinypic.com/" $2 "_th" ($3 == "" ? ".jpg" : $3)</Thumbnail>
+      <Fullimage>"http://i" $1 ".tinypic.com/" $2 ($3 = "" ? ".jpg" : $3)</Fullimage>
+      <Thumbnail>"http://i" $1 ".tinypic.com/" $2 "_th" ($3 = "" ? ".jpg" : $3)</Thumbnail>
     </ImageHostingService>
     <ImageHostingService>
       <Name>ImageShack</Name>
