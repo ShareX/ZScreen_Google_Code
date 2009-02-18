@@ -3,15 +3,15 @@
 <wiki:toc max_depth="1" />
 = Main =
 
-[http://i38.tinypic.com/23kbyfb.png]
+[http://img23.imageshack.us/img23/7842/zscreen1100beta20090218pm6.png]
 
 = Hotkey Settings = 
 
-[http://i37.tinypic.com/2czq5pc.png]
+[http://img23.imageshack.us/img23/1301/zscreen1100beta20090218zz0.png]
 
 = FTP Settings = 
 
-[http://i37.tinypic.com/3495f7r.png]
+[http://img23.imageshack.us/img23/6431/zscreen1100beta20090218pw2.png]
 
 = HTTP Settings =
 
@@ -29,10 +29,10 @@
 
 [http://i38.tinypic.com/2prfmv5.png]
 
-= Image Uploaders =
+= Custom Uploaders =
 
-[http://i35.tinypic.com/20kavra.png]
+[http://img23.imageshack.us/img23/3097/zscreen1100beta20090218wh0.png]
 
 = Screenshots =
 
-[http://i37.tinypic.com/105wnlg.png]
+[http://img23.imageshack.us/img23/6770/zscreen1100beta20090218rr7.png]
