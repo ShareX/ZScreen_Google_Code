@@ -5,38 +5,50 @@
 
 [http://img23.imageshack.us/img23/7842/zscreen1100beta20090218pm6.png]
 
-= Hotkey Settings = 
+= Hotkeys = 
 
 [http://img23.imageshack.us/img23/1301/zscreen1100beta20090218zz0.png]
 
-= FTP Settings = 
+= Crop Shots =
 
-[http://img23.imageshack.us/img23/6431/zscreen1100beta20090218pw2.png]
+[http://img23.imageshack.us/img23/2098/zscreen1100beta20090218ns5.png]
+
+= Naming Conventions =
+
+[http://img23.imageshack.us/img23/5334/zscreen1100beta20090218xn2.png]
 
 = Watermark =
 
 [http://img23.imageshack.us/img23/9012/zscreen1100beta20090218lh1.png]
 
-= HTTP Settings =
+= Paths =
 
-[http://i38.tinypic.com/24odoc6.png]
+[http://img23.imageshack.us/img23/5725/zscreen1100beta20090218od2.png]
 
-= Image Software Settings =
+= Image Software =
 
-[http://i38.tinypic.com/iqfnzc.png]
+[http://img23.imageshack.us/img23/2258/zscreen1100beta20090218ux6.png]
 
-= File Settings = 
+= FTP = 
 
-[http://i38.tinypic.com/121q14g.png]
+[http://img23.imageshack.us/img23/6431/zscreen1100beta20090218pw2.png]
 
-= Advanced = 
+= HTTP =
 
-[http://i38.tinypic.com/2prfmv5.png]
+[http://img23.imageshack.us/img23/9441/zscreen1100beta20090218un4.png]
 
 = Custom Uploaders =
 
 [http://img23.imageshack.us/img23/3097/zscreen1100beta20090218wh0.png]
 
+= Advanced = 
+
+[http://img23.imageshack.us/img23/2456/zscreen1100beta20090218bk6.png]
+
 = Screenshots =
 
 [http://img23.imageshack.us/img23/6770/zscreen1100beta20090218rr7.png]
+
+= Tray =
+
+[http://img23.imageshack.us/img23/4027/ss20090218093457og0.png]
