@@ -1,13 +1,14 @@
 #summary ZScreen Features
+#labels Featured
 
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * Multiple-monitor support
+ * Auto-update (via code.google.com)
+ * Support for uploading screenshots to Tinypic
+ * Support for uploading to Imageshack and Tinypic Accounts
+ * Support for uploading to custom places (via HTTP)
+ * Built-in “Active Help” (that guides you through hard to understand controls)
+ * Watermarks
+ * New hotkey system
+ * Last Crop hotkey (allows you to redo your last crop shot)
+ * Balloon tips, sounds, and ability to show cursor in screenshots
+ * Upload images from the filesystem via Clipboard upload or Drag n Drop
