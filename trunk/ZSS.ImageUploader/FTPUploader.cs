@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -26,21 +26,26 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using ZSS.ImageUploader.Helpers;
 
 namespace ZSS.ImageUploader
 {
-    public class FTPUploader : IUploader
+    public sealed class FTPUploader : IUploader
     {
         private FTPAccount mFTPAccount = null;
+        private List<string> Errors { get; set; }
+        public string Name { get; private set; }
+        private FTPUploader() { }
 
         public FTPUploader(FTPAccount acc)
         {
             this.mFTPAccount = acc;
+            this.Errors = new List<string>();
+            this.Name = mFTPAccount.Name;
         }
 
         public bool Resume { get; set; }
         public bool EnableThumbnail { get; set; }
-
         public string WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace ZSS.ImageUploader
         /// </summary>
         /// <param name="localFilePath"></param>
         /// <returns>Returns a list of images.</returns>
-        public List<ImageFile> UploadImage(string localFilePath)
+        public ImageFileManager UploadImage(string localFilePath)
         {
             // Create a new ImageFile List
             List<ImageFile> ifl = new List<ImageFile>();
@@ -60,12 +65,12 @@ namespace ZSS.ImageUploader
                 //removed binary mode code line
 
                 string fName = Path.GetFileName(localFilePath);
-                ftpClient.OpenUpload(localFilePath, fName, this.Resume);
+                ftpClient.UploadFile(localFilePath, fName);
                 //int perc = 0;
-                while (ftpClient.DoUpload() > 0)
-                {
-                    //perc = (int)(((ff.BytesTotal) * 100) / ff.FileSize);
-                }
+                //while (ftpClient.DoUpload() > 0)
+                //{
+                //perc = (int)(((ff.BytesTotal) * 100) / ff.FileSize);
+                //}
 
                 ifl.Add(new ImageFile(this.mFTPAccount.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
 
@@ -82,20 +87,18 @@ namespace ZSS.ImageUploader
                     img.Save(thPath);
                     if (File.Exists(thPath))
                     {
-                        ftpClient.OpenUpload(thPath, Path.GetFileName(thPath), this.Resume);
-                        while (ftpClient.DoUpload() > 0)
-                        {
-                            // Do nothing
-                        }
+                        ftpClient.UploadFile(thPath, Path.GetFileName(thPath));
+                        //while (ftpClient.DoUpload() > 0)
+                        //{
+                        //     Do nothing
+                        //}
                     }
                     ifl.Add(new ImageFile(this.mFTPAccount.getUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
-                    ifl.Add(ImageFile.getThumbnailForum1ImageFile(this.mFTPAccount.getUriPath(fName),
-                        this.mFTPAccount.getUriPath(Path.GetFileName(thPath))));
+                   // ifl.Add(ImageFile.getThumbnailForum1ImageFile(this.mFTPAccount.getUriPath(fName),this.mFTPAccount.getUriPath(Path.GetFileName(thPath))));
                 }
 
                 //We do not want to disconnect here. We would rather have the connection time out.
-                ftpClient.Disconnect();
-
+                //ftpClient.Disconnect();
             }
             catch (Exception ex)
             {
@@ -104,7 +107,8 @@ namespace ZSS.ImageUploader
                 //MessageBox.Show(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
             }
 
-            return ifl;
+            ImageFileManager ifm = new ImageFileManager(ifl);
+            return ifm;
         }
 
         public Bitmap LoadBitmap(string filepath)
@@ -131,5 +135,15 @@ namespace ZSS.ImageUploader
             return result;
         }
 
+        public string ToErrorString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string err in this.Errors)
+            {
+                sb.AppendLine(err);
+            }
+            return sb.ToString();
+
+        }
     }
 }

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ImageUploader")]
-[assembly: AssemblyDescription("ImageUploader Dynamic Link Library provides facility to upload an image to FTP, ImageShack, Flickr any provides an interface to support more photo hosting services")]
+[assembly: AssemblyDescription("ImageUploader Dynamic Link Library provides facility to upload an image to FTP, ImageShack, Flickr or any service that provides an interface to support uploading images")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BrandonZ.net")]
 [assembly: AssemblyProduct("ImageUploader")]
-[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2008")]
+[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.2.3.0")]
