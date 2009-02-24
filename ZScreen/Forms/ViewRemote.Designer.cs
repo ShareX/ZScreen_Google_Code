@@ -54,14 +54,13 @@ namespace ZSS
             // 
             // pbViewer
             // 
-            this.pbViewer.AccessibleDescription = null;
-            this.pbViewer.AccessibleName = null;
-            resources.ApplyResources(this.pbViewer, "pbViewer");
             this.pbViewer.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.pbViewer.BackgroundImage = null;
-            this.pbViewer.Font = null;
-            this.pbViewer.ImageLocation = null;
+            this.pbViewer.Location = new System.Drawing.Point(0, 0);
+            this.pbViewer.Margin = new System.Windows.Forms.Padding(0);
             this.pbViewer.Name = "pbViewer";
+            this.pbViewer.Size = new System.Drawing.Size(525, 560);
+            this.pbViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbViewer.TabIndex = 0;
             this.pbViewer.TabStop = false;
             this.pbViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseMove);
             this.pbViewer.Click += new System.EventHandler(this.pbViewer_Click);
@@ -69,137 +68,130 @@ namespace ZSS
             // 
             // lbFiles
             // 
-            this.lbFiles.AccessibleDescription = null;
-            this.lbFiles.AccessibleName = null;
-            resources.ApplyResources(this.lbFiles, "lbFiles");
-            this.lbFiles.BackgroundImage = null;
-            this.lbFiles.Font = null;
             this.lbFiles.FormattingEnabled = true;
+            this.lbFiles.Location = new System.Drawing.Point(531, 129);
             this.lbFiles.Name = "lbFiles";
+            this.lbFiles.ScrollAlwaysVisible = true;
             this.lbFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbFiles.Size = new System.Drawing.Size(244, 420);
+            this.lbFiles.TabIndex = 1;
             this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.lbFiles_SelectedIndexChanged);
             // 
             // btnDelete
             // 
-            this.btnDelete.AccessibleDescription = null;
-            this.btnDelete.AccessibleName = null;
-            resources.ApplyResources(this.btnDelete, "btnDelete");
-            this.btnDelete.BackgroundImage = null;
-            this.btnDelete.Font = null;
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Location = new System.Drawing.Point(5, 99);
             this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(235, 24);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "Delete Files";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnCopyToClip
             // 
-            this.btnCopyToClip.AccessibleDescription = null;
-            this.btnCopyToClip.AccessibleName = null;
-            resources.ApplyResources(this.btnCopyToClip, "btnCopyToClip");
-            this.btnCopyToClip.BackgroundImage = null;
-            this.btnCopyToClip.Font = null;
+            this.btnCopyToClip.Enabled = false;
+            this.btnCopyToClip.Location = new System.Drawing.Point(5, 45);
             this.btnCopyToClip.Name = "btnCopyToClip";
+            this.btnCopyToClip.Size = new System.Drawing.Size(235, 24);
+            this.btnCopyToClip.TabIndex = 3;
+            this.btnCopyToClip.Text = "Copy URL To Clipboard";
             this.btnCopyToClip.UseVisualStyleBackColor = true;
             this.btnCopyToClip.Click += new System.EventHandler(this.btnCopyToClip_Click);
             // 
             // cbReverse
             // 
-            this.cbReverse.AccessibleDescription = null;
-            this.cbReverse.AccessibleName = null;
-            resources.ApplyResources(this.cbReverse, "cbReverse");
-            this.cbReverse.BackgroundImage = null;
+            this.cbReverse.AutoSize = true;
+//         this.cbReverse.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.cbReverse.Location = new System.Drawing.Point(7, 25);
+            this.cbReverse.Margin = new System.Windows.Forms.Padding(0);
             this.cbReverse.Name = "cbReverse";
+            this.cbReverse.Size = new System.Drawing.Size(87, 16);
+            this.cbReverse.TabIndex = 36;
+            this.cbReverse.Text = "Reverse List";
             this.cbReverse.UseVisualStyleBackColor = true;
             // 
             // cbAddSpace
             // 
-            this.cbAddSpace.AccessibleDescription = null;
-            this.cbAddSpace.AccessibleName = null;
-            resources.ApplyResources(this.cbAddSpace, "cbAddSpace");
-            this.cbAddSpace.BackgroundImage = null;
+            this.cbAddSpace.AutoSize = true;
+//            this.cbAddSpace.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.cbAddSpace.Location = new System.Drawing.Point(7, 7);
+            this.cbAddSpace.Margin = new System.Windows.Forms.Padding(0);
             this.cbAddSpace.Name = "cbAddSpace";
+            this.cbAddSpace.Size = new System.Drawing.Size(110, 16);
+            this.cbAddSpace.TabIndex = 35;
+            this.cbAddSpace.Text = "Add space before";
             this.cbAddSpace.UseVisualStyleBackColor = true;
             // 
             // pnlControls
             // 
-            this.pnlControls.AccessibleDescription = null;
-            this.pnlControls.AccessibleName = null;
-            resources.ApplyResources(this.pnlControls, "pnlControls");
-            this.pnlControls.BackgroundImage = null;
             this.pnlControls.Controls.Add(this.btnSave);
             this.pnlControls.Controls.Add(this.cbAddSpace);
             this.pnlControls.Controls.Add(this.cbReverse);
             this.pnlControls.Controls.Add(this.btnDelete);
             this.pnlControls.Controls.Add(this.btnCopyToClip);
-            this.pnlControls.Font = null;
+            this.pnlControls.Location = new System.Drawing.Point(530, 0);
+            this.pnlControls.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControls.Name = "pnlControls";
+            this.pnlControls.Size = new System.Drawing.Size(249, 126);
+            this.pnlControls.TabIndex = 37;
             // 
             // btnSave
             // 
-            this.btnSave.AccessibleDescription = null;
-            this.btnSave.AccessibleName = null;
-            resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.BackgroundImage = null;
-            this.btnSave.Font = null;
+            this.btnSave.Enabled = false;
+            this.btnSave.Location = new System.Drawing.Point(5, 72);
             this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(235, 24);
+            this.btnSave.TabIndex = 37;
+            this.btnSave.Text = "Save Files...";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // folderBrowseDialog
-            // 
-            resources.ApplyResources(this.folderBrowseDialog, "folderBrowseDialog");
-            // 
             // pnlViewer
             // 
-            this.pnlViewer.AccessibleDescription = null;
-            this.pnlViewer.AccessibleName = null;
-            resources.ApplyResources(this.pnlViewer, "pnlViewer");
-            this.pnlViewer.BackgroundImage = null;
             this.pnlViewer.Controls.Add(this.ssViewer);
             this.pnlViewer.Controls.Add(this.pbViewer);
-            this.pnlViewer.Font = null;
+            this.pnlViewer.Location = new System.Drawing.Point(0, 0);
             this.pnlViewer.Name = "pnlViewer";
+            this.pnlViewer.Size = new System.Drawing.Size(525, 560);
+            this.pnlViewer.TabIndex = 38;
             // 
             // ssViewer
             // 
-            this.ssViewer.AccessibleDescription = null;
-            this.ssViewer.AccessibleName = null;
-            resources.ApplyResources(this.ssViewer, "ssViewer");
-            this.ssViewer.BackgroundImage = null;
-            this.ssViewer.Font = null;
             this.ssViewer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.sBar,
             this.pBar});
+            this.ssViewer.Location = new System.Drawing.Point(0, 538);
             this.ssViewer.Name = "ssViewer";
+            this.ssViewer.Size = new System.Drawing.Size(525, 22);
             this.ssViewer.SizingGrip = false;
+            this.ssViewer.TabIndex = 1;
+            this.ssViewer.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
-            this.toolStripStatusLabel1.AccessibleDescription = null;
-            this.toolStripStatusLabel1.AccessibleName = null;
-            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
-            this.toolStripStatusLabel1.BackgroundImage = null;
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripStatusLabel1.Image = global::ZSS.Properties.Resources.info;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel1.Text = "Image";
             // 
             // sBar
             // 
-            this.sBar.AccessibleDescription = null;
-            this.sBar.AccessibleName = null;
-            resources.ApplyResources(this.sBar, "sBar");
-            this.sBar.BackgroundImage = null;
+            this.sBar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sBar.Name = "sBar";
             this.sBar.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.sBar.Size = new System.Drawing.Size(392, 17);
             this.sBar.Spring = true;
+            this.sBar.Text = "Ready.";
+            this.sBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sBar.Click += new System.EventHandler(this.sBar_Click);
             // 
             // pBar
             // 
-            this.pBar.AccessibleDescription = null;
-            this.pBar.AccessibleName = null;
-            resources.ApplyResources(this.pBar, "pBar");
             this.pBar.Name = "pBar";
+            this.pBar.Size = new System.Drawing.Size(100, 16);
             this.pBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // bwRemoteViewer
@@ -217,18 +209,19 @@ namespace ZSS
             // 
             // ViewRemote
             // 
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
-            resources.ApplyResources(this, "$this");
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = null;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(782, 558);
             this.Controls.Add(this.pnlViewer);
             this.Controls.Add(this.pnlControls);
             this.Controls.Add(this.lbFiles);
-            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewRemote";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "View Remote Directory";
             this.Shown += new System.EventHandler(this.ViewRemote_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ViewRemote_FormClosing);
             this.Resize += new System.EventHandler(this.ViewRemote_Resize);

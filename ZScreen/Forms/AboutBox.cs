@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -28,6 +28,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Text;
+using System.Diagnostics;
 
 namespace ZSS.Forms
 {
@@ -35,20 +36,29 @@ namespace ZSS.Forms
     {
         public AboutBox()
         {
-            InitializeComponent();
+            InitializeComponent();   
+            this.Icon = Properties.Resources.zss_main;
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", Application.ProductVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
+            this.llblCompanyName.Text = AssemblyCompany;
             StringBuilder sbDesc = new StringBuilder();
+            sbDesc.AppendLine(string.Format("{0} is developed by:", AssemblyTitle));
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("inf1ni (Brandon Zimmerman)");
+            sbDesc.AppendLine("McoreD (Mike Delpach)");
+            sbDesc.AppendLine("Jaex (Berk)");
+            sbDesc.AppendLine();
             sbDesc.AppendLine(AssemblyDescription);
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Using Silk icon set 1.3 by Mark James.");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");
             sbDesc.AppendLine(Application.StartupPath);
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Setting file:");
-            sbDesc.AppendLine(FileSystem.getConfigFilePath());
+            sbDesc.AppendLine("Settings file:");
+            sbDesc.AppendLine(Program.XMLSettingsFile);
             this.textBoxDescription.Text = sbDesc.ToString();
 
             //set translations for OK button
@@ -134,5 +144,20 @@ namespace ZSS.Forms
             }
         }
         #endregion
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(Program.URL_ISSUES);
+        }
+
+        private void llblCompanyName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("www." + ((Control)sender).Text);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "ZScreen"
-!define PRODUCT_VERSION "1.3.3.0"
+!define PRODUCT_VERSION "1.3.5.0"
 !define PRODUCT_PUBLISHER "Brandon Zimmerman"
 !define PRODUCT_WEB_SITE "http://brandonz.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ZScreen.exe"
@@ -50,13 +50,6 @@ var ICONS_GROUP
 
 ; Language files
 !insertmacro MUI_LANGUAGE "English" ;first language is the default language
-!insertmacro MUI_LANGUAGE "French"
-!insertmacro MUI_LANGUAGE "German"
-!insertmacro MUI_LANGUAGE "Russian"
-!insertmacro MUI_LANGUAGE "Spanish"
-!insertmacro MUI_LANGUAGE "Dutch"
-!insertmacro MUI_LANGUAGE "Arabic"
-!insertmacro MUI_LANGUAGE "SimpChinese"
 
 ; MUI end ------
 
@@ -90,21 +83,11 @@ Section "MainSection" SEC01
   File "docs.chm"
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-
-  CreateDirectory "$INSTDIR\ru"
-  SetOutPath "$INSTDIR\ru"
-  SetOverwrite ifnewer
-  File "${RELPATH}ru\ZScreen.resources.dll"
   
-  CreateDirectory "$INSTDIR\nl"
-  SetOutPath "$INSTDIR\nl"
-  SetOverwrite ifnewer
-  File "${RELPATH}nl\ZScreen.resources.dll"
-  
-  CreateDirectory "$INSTDIR\el"
-  SetOutPath "$INSTDIR\el"
-  SetOverwrite ifnewer
-  File "${RELPATH}el\ZScreen.resources.dll"
+;  CreateDirectory "$INSTDIR\el"
+;  SetOutPath "$INSTDIR\el"
+;  SetOverwrite ifnewer
+;  File "${RELPATH}el\ZScreen.resources.dll"
 
 ; Puts output path back to the right place
 SetOutPath "$INSTDIR"
@@ -141,33 +124,7 @@ Section -startup
 SectionEnd
 
 Function .onInit
-/*!insertmacro MUI_LANGDLL_DISPLAY*/
-;Language selection dialog
 
-	Push ""
-	Push ${LANG_ENGLISH}
-	Push English
-	Push ${LANG_ARABIC}
-	Push Arabic
-	Push ${LANG_DUTCH}
-	Push Dutch
-	Push ${LANG_FRENCH}
-	Push French
-	Push ${LANG_GERMAN}
-	Push German
-	Push ${LANG_RUSSIAN}
-	Push Russian
-	Push ${LANG_SPANISH}
-	Push Spanish
-	Push ${LANG_SIMPCHINESE}
-	Push "Simplified Chinese"
-	Push A ; A means auto count languages
-	       ; for the auto count to work the first empty push (Push "") must remain
-	LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
-
-	Pop $LANGUAGE
-	StrCmp $LANGUAGE "cancel" 0 +2
-		Abort
 FunctionEnd
 
 Function un.onUninstSuccess

@@ -1,60 +1,14 @@
-﻿
-Icons in tabs
-Screenshots tab should support double clicking screenshots from ImageShack
+﻿Support for scrolling windows via new hotkey
+
+Ability to rename files in 'view remote directory'
+
+Timer: take full screen shot ever 5 seconds
+
+Send to -> Printer
+
 Support for "sets" via right-click menu which allows creation of a new directory in your previously specified path automatically using two controls "Start Set" and "End Set." Optionally run image editing software for each individual image. Optionally have the directory pop up in explorer after you have ended the set. Optionally upload entire set and create new directory. Optionally set clipboard to that URL. All optional settings will save themselves for next time you wish to create a set.
-Support for dual monitors
-Support for scrolling windows via new hotkey
-Rounded window corners
-Multiple region selection via control in Crop
 
 yeah, but with big images, there's (a) no way to choose to auto resize it to the view size (b) the images don't stick to the edges of the preview pane (you can literally and completely move them out of view to the point where you lose the image altogether and can't click on it [you have to reclick the imagename to restore it to its default position]
 
-so the ability to 'view remote directory' to preview screenshots and to be able to rename something from there would be convenient
-
-Translations
-------------------------------------------------------------------------------------------------
-
-First Run
-
-"History" -> "Screenshots"
-
-"Win Settings" -> "Image Software Settings"
-
-Disabled (For Image Software)
-
-Send Image To
-
-Active Window and Entire screen labels are shorter now (because they are in a group box)
-
-Add ... to the end of (in other languages):
-View Remote Directory
-View Local Directory
-Change Local Directory
----Everything in View Settings Menu---
-
-Add new translations for:
-
-|VRDdeleteFailed| Delete Failed
-
-|VRDsaveFailed| Save Failed
-
-|VRDfetchingImages| Fetching images from {0}
-
-|VRDfetchingFile| Fetching file {0} from {1}...
-
-|VRDviewingFile| Viewing file: {0}
-
-|VRDready| Ready. Loaded {0} screenshots.
-
-|VRDshowing| Showing {0}.
-
-FTPnotUpdated	Not Updated.	
-FTPupdated	Updated.	
-
-Screenshot destinations:
-Clipboard
-File
-FTP
-ImageShack
-
--------------------------------------------------------------------------------------------------
+Pop up main window when second instance loaded
+http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
