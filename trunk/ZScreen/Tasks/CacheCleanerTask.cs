@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -72,7 +72,7 @@ namespace ZSS.Tasks
                 }
                  */
                 //include all supported file types
-                foreach (string s in ZScreen.mFileTypes)
+                foreach (string s in Program.mFileTypes)
                 {
                     string[] tmpFiles = Directory.GetFiles(mCacheDir, "*." + s, SearchOption.AllDirectories);
                     foreach (string f in tmpFiles)

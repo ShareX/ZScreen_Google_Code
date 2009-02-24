@@ -1,7 +1,7 @@
 #region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -53,7 +53,7 @@ namespace ZSS
         public ViewRemote()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.zss_new;
+            this.Icon = Properties.Resources.zss_main;
             setInitialHeightWidthVariables();
 
         }
@@ -108,35 +108,7 @@ namespace ZSS
             }
         }
 
-        /*
-        private void connect()
-        {
-            
-            ff.server = Program.set.FTPserver;
-            ff.port = Program.set.FTPport;
-            ff.user = Program.set.FTPusername;
-            ff.pass = Program.set.FTPpassword;
-
-            ff.Connect();
-
-            ff.ChangeDir(Program.set.FTPpath);
-            
-
-            
-
-            ff.server = acc.Server;
-            ff.port = acc.Port;
-            ff.user = acc.Username;
-            ff.pass = acc.Password;
-
-            ff.Connect();
-
-            ff.ChangeDir(acc.Path);
-            //removed binary mode
-        }
-        */
-
-        private List<string> fetchList()
+       private List<string> fetchList()
         {
             List<string> result = new List<string>();
 
@@ -144,7 +116,7 @@ namespace ZSS
             {
                 // ff.ChangeDir(acc.Path);
 
-                string[] str = (System.String[])mFTP.ListFiles().ToArray(typeof(System.String));
+                string[] str = mFTP.ListDirectory();//(System.String[])mFTP.ListFiles().ToArray(typeof(System.String);
                 string[] splode;
 
                 string s;
@@ -166,7 +138,7 @@ namespace ZSS
             }
             catch (System.Exception e)
             {
-                System.Windows.Forms.MessageBox.Show(Program.replaceErrorMessages(e.Message), "ZScreen FTP");
+                System.Windows.Forms.MessageBox.Show(e.Message, "ZScreen FTP");
             }
 
             return result;
@@ -176,7 +148,7 @@ namespace ZSS
         {
             bool b = false;
 
-            foreach (string s in ZScreen.mFileTypes)
+            foreach (string s in Program.mFileTypes)
             {
                 if (file.EndsWith(s))
                     b = true;
@@ -219,7 +191,7 @@ namespace ZSS
         {
             try
             {
-                mFTP.ChangeDir(mAcc.Path);
+                //mFTP.ChangeDir(mAcc.Path);
 
                 System.Collections.ArrayList items = new System.Collections.ArrayList();
 
@@ -230,11 +202,11 @@ namespace ZSS
                 {
                     if ((string)obj != "")
                     {
-                        mFTP.RemoveFile((string)obj);
+                        mFTP.DeleteFile(mAcc.Path + "/" + (string)obj);
                         lbFiles.Items.Remove(obj);
                     }
                 }
-                mFTP.Disconnect();
+                //mFTP.Disconnect();
             }
             catch (System.Exception)
             {
@@ -247,13 +219,13 @@ namespace ZSS
 
         private void ViewRemote_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            if (mFTP.IsConnected)
+            /*if (mFTP.IsConnected)
             {
                 mFTP.Disconnect();
-            }
+            }*/
 
             pbViewer.ImageLocation = "";
-            FileSystem.writeDebugFile();
+            //FileSystem.writeDebugFile();
             //foreach (string str in toDelete)
             //{
             //    System.IO.localFilePath.Delete(str);
@@ -266,7 +238,7 @@ namespace ZSS
 
             //choose directory / create directory popup
             //remember old directory and display it
-            folderBrowseDialog.SelectedPath = Program.conf.path;
+            folderBrowseDialog.SelectedPath = Program.conf.ImagesDir;
             folderBrowseDialog.ShowNewFolderButton = true;
             folderBrowseDialog.ShowDialog();
 
@@ -276,14 +248,14 @@ namespace ZSS
                 dir = folderBrowseDialog.SelectedPath;
                 try
                 {
-                    mFTP.ChangeDir(mAcc.Path);
+                    //mFTP.ChangeDir(mAcc.Path);
                     foreach (string str in lbFiles.SelectedItems)
                     {
-                        mFTP.OpenDownload(str, dir + "\\" + str, true);
+                        mFTP.DownloadFile(str, dir + "\\" + str);
 
-                        while (mFTP.DoDownload() > 0) ;
+                        //while (mFTP.DoDownload() > 0) ;
                     }
-                    mFTP.Disconnect();
+                    //mFTP.Disconnect();
                 }
                 catch (System.Exception)
                 {
@@ -349,20 +321,20 @@ namespace ZSS
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
                 string.Format(mRes.GetString("VRDfetchingImages"), mAcc.Name));
 
-            if (mAcc != null)
+            if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server ))
             {
                 //connect();
                 mFTP = new FTP(ref mAcc);
                 //test code
-                mFTP.timeout = 30000;
-                mFTP.Connect();
+                //mFTP.timeout = 30000;
+                //mFTP.Connect();
                 //end of test code
                 List<string> files = fetchList();
                 if (files.Count > 0)
                 {
                     sBwViewFile(files[0]);
                 }
-                mFTP.Disconnect();
+                //mFTP.Disconnect();
             }
         }
 
@@ -375,18 +347,18 @@ namespace ZSS
 
                 try
                 {
-                    mFTP.ChangeDir(mAcc.Path);
-                    mBytesTotal = mFTP.OpenDownload(file, localfile);
+                    //mFTP.ChangeDir(mAcc.Path);
+                    mFTP.DownloadFile(file, localfile);
 
-                    mBytesDownloaded = mFTP.DoDownload();
+                    //mBytesDownloaded = mFTP.DoDownload();
 
-                    while (mBytesDownloaded > 0)
-                    {
-                        mBytesDownloaded += mFTP.DoDownload();
-                    }
-                    mBytesTotal = 0;
-                    mBytesDownloaded = 0;
-                    mFTP.Disconnect();
+                    //while (mBytesDownloaded > 0)
+                    //{
+                    //    mBytesDownloaded += mFTP.DoDownload();
+                    //}
+                    //mBytesTotal = 0;
+                    //mBytesDownloaded = 0;
+                    //mFTP.Disconnect();
                 }
                 catch (System.Exception ex)
                 {

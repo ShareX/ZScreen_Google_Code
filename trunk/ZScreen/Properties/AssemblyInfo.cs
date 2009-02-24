@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -29,11 +29,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ZScreen")]
-[assembly: AssemblyDescription("Program used to take screenshots and FTP them.")]
+[assembly: AssemblyDescription("Program used to take screenshots and FTP/HTTP them.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BrandonZ.net")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2008")]
+[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -53,4 +53,4 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.3.3.0")]
+[assembly: AssemblyFileVersion("2.0.2.0")]

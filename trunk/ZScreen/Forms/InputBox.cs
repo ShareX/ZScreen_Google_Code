@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -22,11 +22,6 @@
 #endregion
 
 using System;
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Drawing;
-//using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -34,17 +29,20 @@ namespace ZSS.Forms
 {
     public partial class InputBox : System.Windows.Forms.Form
     {
+        public string Question { get; set; }
+        public string Answer { get; set; }
 
-        [DllImport("user32")]
-        private static extern bool SetForegroundWindow(int hWnd);
-
-        public InputBox(string q, string ans)
+        public InputBox(string q, string ans) : this()
         {
-            InitializeComponent();
             this.Text = q;
             this.txtAns.Text = ans;
-            // BringToFront();
-            SetForegroundWindow(this.Handle.ToInt32());
+        }
+
+        public InputBox()
+        {
+            InitializeComponent();
+
+            User32.SetForegroundWindow(this.Handle.ToInt32());
 
             //set translations for OK/Cancel
             btnOK.Text = Properties.Resources.OK;
@@ -59,7 +57,6 @@ namespace ZSS.Forms
                 this.Answer = txtAns.Text;
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
-                this.Close();
             }
 
         }
@@ -68,10 +65,7 @@ namespace ZSS.Forms
         {
             this.DialogResult = DialogResult.Cancel;
             this.Hide();
-            this.Close();
         }
-
-        public string Answer { get; private set; }
 
         private void InputBox_Shown(object sender, EventArgs e)
         {
@@ -79,6 +73,10 @@ namespace ZSS.Forms
             txtAns.SelectionLength = txtAns.Text.Length;
         }
 
-
+        private void InputBox_Load(object sender, EventArgs e)
+        {
+            this.Text = this.Question;
+            this.txtAns.Text = this.Answer;
+        }
     }
 }

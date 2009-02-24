@@ -14,7 +14,7 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>Resources\zss-new.ico</ApplicationIcon>
+    <ApplicationIcon>zss-main.ico</ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -22,6 +22,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <SignAssembly>false</SignAssembly>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -46,6 +47,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -63,21 +65,71 @@
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Inno|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Inno|x86' ">
+    <OutputPath>bin\x86\Inno\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\HKcombo.cs" />
-    <Compile Include="Classes\ImageSoftware.cs" />
-    <Compile Include="Forms\RadioListBox.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Forms\ShowScreenshot.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\XMLSettings.cs" />
+    <Compile Include="Forms\ShowScreenshot.Designer.cs">
+      <DependentUpon>ShowScreenshot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Debug.cs" />
+    <Compile Include="Global\Enums.cs" />
+    <Compile Include="Global\MyGraphics.cs" />
+    <Compile Include="Helpers\AppInfo.cs" />
+    <Compile Include="Global\ClipboardManager.cs" />
+    <Compile Include="Helpers\HistoryItem.cs" />
+    <Compile Include="Helpers\HKcombo.cs" />
+    <Compile Include="Helpers\ImageSoftware.cs" />
+    <Compile Include="Helpers\NameParser.cs" />
+    <Compile Include="Helpers\PasswordManager.cs" />
+    <Compile Include="Helpers\UpdateChecker.cs" />
+    <Compile Include="Forms\UserPassBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserPassBox.Designer.cs">
+      <DependentUpon>UserPassBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QuickOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuickOptions.Designer.cs">
+      <DependentUpon>QuickOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DropWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DropWindow.Designer.cs">
+      <DependentUpon>DropWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\WatermarkMaker.cs" />
+    <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,9 +148,12 @@
     <Compile Include="Forms\InputBox.Designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\FTPAccountReader.cs" />
+    <Compile Include="Helpers\FTPAccountReader.cs" />
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Classes\ScreenshotEditApp.cs" />
+    <Compile Include="Helpers\ScreenshotEditApp.cs" />
+    <Compile Include="Global\GDI32.cs" />
+    <Compile Include="Global\Structures.cs" />
+    <Compile Include="Global\User32.cs" />
     <Compile Include="Tasks\CacheCleanerTask.cs" />
     <Compile Include="Tasks\MainAppTask.cs" />
     <Compile Include="Tasks\RemoteViewerTask.cs" />
@@ -107,13 +162,6 @@
     </Compile>
     <Compile Include="Forms\Crop.designer.cs">
       <DependentUpon>Crop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Hotkey.cs">
-      <SubType>UserControl</SubType>
-      <Generator>hotkey</Generator>
-    </Compile>
-    <Compile Include="Forms\Hotkey.Designer.cs">
-      <DependentUpon>Hotkey.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -151,6 +199,11 @@
     <BaseApplicationManifest Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -166,6 +219,11 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
       <ProductName>Windows Installer 3.1</ProductName>
@@ -173,39 +231,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Hotkey.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>Hotkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.nl.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.ru.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ViewRemote.nl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ViewRemote.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ViewRemote.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ViewRemote.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ViewRemote.ru.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ViewRemote.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZScreen.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ZScreen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZScreen.nl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ZScreen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZScreen.ru.resx">
-      <DependentUpon>ZScreen.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +245,19 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowScreenshot.resx">
+      <DependentUpon>ShowScreenshot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserPassBox.resx">
+      <DependentUpon>UserPassBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuickOptions.resx">
+      <DependentUpon>QuickOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DropWindow.resx">
+      <DependentUpon>DropWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -225,20 +266,7 @@
       <DependentUpon>InputBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ViewRemote.el.resx">
-      <DependentUpon>ViewRemote.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ViewRemote.en.resx">
-      <DependentUpon>ViewRemote.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZScreen.el.resx">
-      <DependentUpon>ZScreen.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\VersionHistory.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <EmbeddedResource Include="VersionHistory.txt">
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -248,19 +276,33 @@
     <None Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zss-uploaded.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\zss-busy.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImageUploader\ImageUploader\ImageUploader.csproj">
+    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploader.csproj">
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
-      <Name>ImageUploader</Name>
+      <Name>ZSS.ImageUploader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploader.csproj">
+      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
+      <Name>ZSS.TextUploader</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\zss-new.ico" />
+    <None Include="Resources\zss-green.ico" />
+    <None Include="Resources\picture_edit.png" />
+    <None Include="Resources\application_edit.png" />
+    <None Include="Resources\wrench.png" />
+    <None Include="Resources\cross.png" />
+    <None Include="Resources\server_edit.png" />
+    <None Include="Resources\pictures.png" />
+    <None Include="Resources\world_edit.png" />
+    <None Include="Resources\folder_edit.png" />
+    <None Include="Resources\keyboard.png" />
+    <None Include="Resources\page_copy.png" />
+    <None Include="Resources\picture_go.png" />
+    <None Include="Resources\world_add.png" />
+    <None Include="Resources\camera_edit.png" />
+    <None Include="Resources\camera.png" />
+    <Content Include="Setup\zscreen-beta-setup.iss" />
+    <Content Include="zss-main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -270,6 +312,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
+    <PostBuildEvent>cd  "$(SolutionDir)Setup\"
+$(inno) /cc zscreen-beta-setup.iss
+start explorer /n,"$(SolutionDir)..\Output"</PostBuildEvent>
   </PropertyGroup>
 </Project>

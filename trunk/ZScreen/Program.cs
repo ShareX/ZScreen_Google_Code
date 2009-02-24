@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008  Brandon Zimmerman
+    Copyright (C) 2008-2009  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -24,59 +24,120 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Reflection;
-using ZSS.Properties;
 using System.IO;
 using System.Drawing;
-using System.Globalization;
+using System.Threading;
 
 namespace ZSS
 {
 
     static class Program
     {
-        public static readonly string LocalAppDataFolder = System.IO.Path.Combine(
-                       System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData),
-                       System.Windows.Forms.Application.ProductName);
 
-        public static readonly string XMLSettingsFile = LocalAppDataFolder + "\\Settings.xml";
+        // DO NOT CHANGE THE ORDER OF THESE VARIABLES UNLESS YOU KNOW WHAT YOU ARE DOING
+        private static readonly string LocalAppDataFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+
+        private static readonly string XMLFileName = "Settings.xml";
+        private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
+        private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
+        private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
+
+        private static string DefaultSettingsFolder;
+        private static string DefaultImagesFolder;
+        private static string DefaultTempFolder;
+        private static string DefaultTextFolder;
+        private static string DefaultCacheFolder;
+        private static string DefaultXMLFilePath;
+        private static string XMLPortableFile;
+
+        private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+
+        public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
+        public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen/";
+        public const string URL_WEBSITE = "http://brandonz.net/projects/zscreen/";
+
+        public const string IMAGESHACK_KEY = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
+        public const string TINYPIC_ID = "e2aabb8d555322fa";
+        public const string TINYPIC_KEY = "00a68ed73ddd54da52dc2d5803fa35ee";
+
+        public static string[] mFileTypes = { "png", "jpg", "gif", "bmp", "tif", "emf", "wmf", "ico" };
+
+        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Final, false);
+        internal static ZSS.Forms.DropWindow MyDropWindow;
+
+        /// <summary>
+        /// Root Folder of Images, Text, Settings, Cache. 
+        /// </summary>
+        public static string RootFolder
+        {
+            get
+            {
+                if (Directory.Exists(PortableRootFolder))
+                    return PortableRootFolder;
+                else
+                {
+                    return DefaultRootAppFolder;
+                }
+            }
+            set
+            {
+                DefaultRootAppFolder = value;
+            }
+        }
+
+        public static string XMLSettingsFile
+        {
+            get
+            {
+                DefaultSettingsFolder = Path.Combine(RootFolder, "Settings");
+                DefaultImagesFolder = Path.Combine(RootFolder, "Images");
+                DefaultTextFolder = Path.Combine(RootFolder, "Text");
+                DefaultTempFolder = Path.Combine(RootFolder, "Temp");
+                DefaultCacheFolder = Path.Combine(RootFolder, "Cache");
+
+                DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
+                XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
+
+
+                if (!Directory.Exists(DefaultSettingsFolder))
+                {
+                    Directory.CreateDirectory(DefaultSettingsFolder);
+                }
+
+                if (File.Exists(OldXMLPortableFile))
+                {
+                    if (!File.Exists(XMLPortableFile))
+                    {
+                        File.Move(OldXMLPortableFile, XMLPortableFile);
+                    }
+                    return XMLPortableFile;                               // Portable
+                }
+
+                else if (File.Exists(OldXMLFilePath))
+                {
+                    if (!File.Exists(DefaultXMLFilePath))
+                    {
+                        File.Move(OldXMLFilePath, DefaultXMLFilePath);
+                    }
+                    return DefaultXMLFilePath;                            // v1.x
+                }
+                else
+                    return DefaultXMLFilePath;                            // v2.x
+            }
+        }
 
         public static XMLSettings conf = XMLSettings.Read();
 
-        //Full list of languages intended to be supported
-        //public static string[] languages =   { "العربية (Arabic)", "Chinese", "Nederlands (Dutch)", "English", "Français (French)", "Deutsch (German)", "Ελληνικά (Greek)", "Русский (Russian)", "Español (Spanish)" };
-        //public static string[] langCode =    { "ar", "zh-CN", "nl", "en", "fr", "de", "el", "ru", "es" };
-
-        public static readonly string[] languages = { "Nederlands (Dutch)", "English", "Ελληνικά (Greek)", "Русский (Russian)" };
-        public static readonly string[] langCode = { "nl", "en", "el", "ru" };
-
         public const string FILTER_ACCOUNTS = "ZScreen FTP Accounts(*.zfa)|*.zfa";
+        public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
         public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
 
-        public static Image returnedCroppedImage;
+        public static Rectangle mLastRegion = Rectangle.Empty;
 
-        private static ZScreen mZScreenInstance;
+        private static ZScreen ZScreenWindow;
 
-        //Keyboard Hook
-        private const int mWH_KEYBOARD_LL = 13;
-
-        private delegate IntPtr mLowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private static mLowLevelKeyboardProc m_Proc;
-
-        //Imported Functions for Keyboard Hook
-        [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook,
-            mLowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
+        static Mutex mAppMutex = null;
 
 
         /// <summary>
@@ -85,83 +146,78 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
-            string proc = Process.GetCurrentProcess().ProcessName;
 
-            Process[] processes = Process.GetProcessesByName(proc);
-
-            if (processes.Length == 1)
+            bool bGrantedOwnership;
+            try
             {
-
-                if (/*not english*/!System.Threading.Thread.CurrentThread.CurrentCulture.NativeName.Contains("english") && Program.conf.Culture == "en")
-                {
-                    int num = Array.IndexOf(langCode, System.Threading.Thread.CurrentThread.CurrentCulture.Name.Split('-')[0]);
-                    if (num != -1)
-                    {
-                        Program.conf.Culture = Program.langCode[num];
-                        Program.conf.Save();
-                    }
-                }
-                else
-                {
-                    //make sure previously saved language exists, otherwise set the default of english
-                    int num = Array.IndexOf(langCode, Program.conf.Culture);
-                    if (num < 0)
-                    {
-                        Program.conf.Culture = "en";
-                        Program.conf.Save();
-                    }
-                }
-                System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(Program.conf.Culture);
-                System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                mZScreenInstance = new ZScreen();
-
-                m_Proc = mZScreenInstance.keyboardHookCallback;
-
-                mZScreenInstance.m_hID = setHook(m_Proc);
-
-                Application.Run(mZScreenInstance);
-
-                UnhookWindowsHookEx(mZScreenInstance.m_hID);
+                mAppMutex = new Mutex(true, @"Global\0167D1A0-6054-42f5-BA2A-243648899A6B", out bGrantedOwnership);
             }
+            catch (UnauthorizedAccessException)
+            {
+                bGrantedOwnership = false;
+            }
+
+            if (!bGrantedOwnership)
+            {
+                Application.Exit();
+                return;
+            }
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            ZScreenWindow = new ZScreen();
+            MyDropWindow = new ZSS.Forms.DropWindow();
+
+            User32.m_Proc = ZScreenWindow.ScreenshotUsingHotkeys;
+
+            ZScreenWindow.m_hID = User32.setHook();
+
+            Application.Run(ZScreenWindow);
+
+            User32.UnhookWindowsHookEx(ZScreenWindow.m_hID);
+
         }
 
-        public static string replaceErrorMessages(string msg)
+        public static void ConfigureDirs()
         {
-            string tmp;
-
-            List<string> errors = new List<string>();
-            
-            int x = 1;
-
-            while ((tmp = Properties.Resources.ResourceManager.GetString("ftp" + x++, CultureInfo.GetCultureInfo("en-US"))) != null )
+            // Settings
+            if (string.IsNullOrEmpty(Program.conf.SettingsDir))
             {
-                errors.Add(tmp);
+                conf.SettingsDir = DefaultSettingsFolder;
+            }
+            if (!Directory.Exists(conf.SettingsDir))
+            {
+                Directory.CreateDirectory(DefaultSettingsFolder);
+            }
+            // Images
+            if (string.IsNullOrEmpty(conf.ImagesDir))
+            {
+                conf.ImagesDir = DefaultImagesFolder;
+            }
+            if (!Directory.Exists(conf.ImagesDir))
+            {
+                Directory.CreateDirectory(DefaultImagesFolder);
+            }
+            // Cache
+            if (string.IsNullOrEmpty(Program.conf.CacheDir))
+            {
+                conf.CacheDir = DefaultCacheFolder;
+            }
+            if (!Directory.Exists(Program.conf.CacheDir))
+            {
+                Directory.CreateDirectory(Program.conf.CacheDir);
+            }
+            // Temp
+            if (string.IsNullOrEmpty(Program.conf.TempDir))
+            {
+                conf.TempDir = DefaultTempFolder;
+            }
+            if (!Directory.Exists(Program.conf.TempDir))
+            {
+                Directory.CreateDirectory(Program.conf.TempDir);
             }
 
-            msg = msg.Replace("\r", "");
-
-            for(int cnt = 0; cnt < errors.Count; cnt++)
-            {
-                string err = errors[cnt];
-
-                if (msg.Contains(err))
-                    return (tmp = Properties.Resources.ResourceManager.GetString("ftp" + (cnt + 1))) != null ? msg.Replace(err, tmp) : msg;
-            }
-
-            return msg;
-        }
-
-        private static IntPtr setHook(mLowLevelKeyboardProc proc)
-        {
-            using (Process currentProc = Process.GetCurrentProcess())
-            using (ProcessModule currentMod = currentProc.MainModule)
-            {
-                return SetWindowsHookEx(mWH_KEYBOARD_LL, proc, GetModuleHandle(currentMod.ModuleName), 0);
-            }
         }
 
         /// <summary>
@@ -178,8 +234,5 @@ namespace ZSS
             }
             return null;
         }
-
     }
-
-
 }
