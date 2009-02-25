@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageUploader", "ZSS.ImageUploader\ZSS.ImageUploader.csproj", "{223EC461-C070-4FF3-ADE7-92BC21AE66FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploader", "ZSS.TextUploader\ZSS.TextUploader.csproj", "{04DEED7C-450E-4C12-9586-040448FC6DD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Inno|Any CPU = Inno|Any CPU
+		Inno|x86 = Inno|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Debug|x86.ActiveCfg = Debug|x86
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Debug|x86.Build.0 = Debug|x86
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Inno|Any CPU.ActiveCfg = Inno|Any CPU
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Inno|Any CPU.Build.0 = Inno|Any CPU
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Inno|x86.ActiveCfg = Inno|x86
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Inno|x86.Build.0 = Inno|x86
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Release|x86.ActiveCfg = Release|x86
+		{223EC461-C070-4FF3-ADE7-92BC21AE66FC}.Release|x86.Build.0 = Release|x86
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Inno|Any CPU.ActiveCfg = Inno|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Inno|Any CPU.Build.0 = Inno|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Inno|x86.ActiveCfg = Inno|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Release|x86.ActiveCfg = Release|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Debug|x86.ActiveCfg = Debug|x86
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Debug|x86.Build.0 = Debug|x86
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Inno|Any CPU.ActiveCfg = Inno|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Inno|Any CPU.Build.0 = Inno|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Inno|x86.ActiveCfg = Inno|x86
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Inno|x86.Build.0 = Inno|x86
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|x86.ActiveCfg = Release|x86
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
