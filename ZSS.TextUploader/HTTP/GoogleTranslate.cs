@@ -102,11 +102,11 @@ namespace ZSS
                 }
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
                 WebClient webClient = new WebClient();
-                webClient.Encoding = Encoding.UTF8;//GetEncoding(toLanguage);
+                webClient.Encoding = Encoding.UTF8;
                 string wc = webClient.DownloadString(url);
                 result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=:</span> ).+?(?=</td>)").NextMatch().Value);
-                result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value.
-                    Replace(" <br> ", Environment.NewLine));
+                result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value);
+                result.TranslatedText = result.TranslatedText.Replace(" \r<br> ", Environment.NewLine);
                 result.Dictionary = SearchGrammer(wc);
             }
             catch (Exception ex)

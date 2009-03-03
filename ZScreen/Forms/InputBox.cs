@@ -42,13 +42,12 @@ namespace ZSS.Forms
         {
             InitializeComponent();
 
-            User32.SetForegroundWindow(this.Handle.ToInt32());
+            User32.ActivateWindow(this.Handle);
 
             //set translations for OK/Cancel
             btnOK.Text = Properties.Resources.OK;
             btnCancel.Text = Properties.Resources.Cancel;
         }
-
 
         private void btnOK_Click(object sender, EventArgs e)
         {

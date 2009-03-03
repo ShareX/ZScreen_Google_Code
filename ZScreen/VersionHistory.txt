@@ -1,9 +1,17 @@
-Version 2.0 - 20080228?
+2.1.0.0 Ability to capture Selected Window by enumerating all visible windows
+2.0.5.1 Fixed Issue 20: Dialog borders were cropped off under Windows Aero
 
+Version 2.0 - 20080228
+
+2.00.05.0 Option to automatically retry other HTTP Image Uploaders if the intial HTTP Image Uploader failed
+2.00.04.0 ZScreen will automatically attempt uploading non-images to FTP for Drag n Drop and Upload from Clipboard actions
+2.00.03.0 Reconfigured Advanced tab and added Debug facilities
+2.00.02.2 Could not fullscreen preview files uploaded to FTP
+2.00.02.1 Fixed FTP so that it uses ports once again
 2.00.02.0 Capturing Entire Screen if Active Window Capture or Crop fails is now an option
 2.00.01.1 Fixed Issue 15: High memory usage after a certain period of time of usage
 2.00.01.0 Active Help can now support multiple languages
-2.00.00.0 Established foundation for Text Services starting with Google Translate
+2.00.00.0 Established foundation for Text Services starting with Google Translate via Language Translator
 1.11.05.0 Clicking Images Preview in History tab will open Image in Full Screen
 1.11.04.0 Added Option to Retry failed Uploads for Images in History tab
 1.11.03.0 Added Context Menu item in History tab to open Source information in HTML or Text

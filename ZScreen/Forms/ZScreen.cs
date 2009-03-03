@@ -111,6 +111,9 @@ namespace ZSS
 
                 Program.conf.RunOnce = true;
             }
+
+            if (Program.conf.CheckUpdates) UpdateChecker.CheckUpdates();
+
             debug = new Debug();
             debugTimer.Start();
         }
@@ -130,12 +133,6 @@ namespace ZSS
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
             AddToClipboardByDoubleClick(tpScreenshots);
 
-            if (Program.conf.CheckUpdates)
-            {
-                UpdateChecker uc = new UpdateChecker();
-                uc.CheckUpdates();
-            }
-
             // Set Active Help Tags
             ActiveHelpTagsConfig();
             AddMouseHoverEventHandlerHelp(Controls);
@@ -146,6 +143,9 @@ namespace ZSS
             FillClipboardMenu();
 
             CreateCodesMenu();
+
+            //Need better solution for this
+            dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotKeys.BackColor.R, tpHotKeys.BackColor.G, tpHotKeys.BackColor.B);
         }
 
         private void SetupScreen()
@@ -163,10 +163,10 @@ namespace ZSS
             //{
             //    Program.conf.FTPAccountList = new List<FTPAccount>();
             //}
-            if (Program.conf.FTPAccountList.Count == 0)
-            {
-                Program.conf.FTPAccountList.Add(new FTPAccount(Resources.NewAccount));
-            }
+            //if (Program.conf.FTPAccountList.Count == 0)
+            //{
+            //    Program.conf.FTPAccountList.Add(new FTPAccount(Resources.NewAccount));
+            //}
             // Configure ImageSoftware List
             //if (Program.conf.ImageSoftwareList == null)
             //{
@@ -215,10 +215,14 @@ namespace ZSS
             cbActiveHelp.Checked = Program.conf.ActiveHelp;
             cbCropStyle.SelectedIndex = Program.conf.CropStyle;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
-            nudCropBorderSize.Value = (decimal)Program.conf.CropBorderSize;
+            nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCompleteSound.Checked = Program.conf.CompleteSound;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
+            cbSelectedWindowFront.Checked = Program.conf.SelectedWindowFront;
+            cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
+            pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
+            nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
 
             ///////////////////////////////////
             // Hotkeys Settings
@@ -229,40 +233,19 @@ namespace ZSS
             ///////////////////////////////////
             // FTP Settings
             ///////////////////////////////////
-            //load up FTP accounts
-            if (Program.conf.FTPAccountList != null)
-            {
-                List<FTPAccount> accs = Program.conf.FTPAccountList;
 
-                lbFTPAccounts.Items.Clear();
-                for (int x = 0; x < accs.Count; x++)
-                {
-                    lbFTPAccounts.Items.Add(accs[x].Name);
-                }
+            if (Program.conf.FTPAccountList == null || Program.conf.FTPAccountList.Count == 0)
+            {
+                FTPSetup(new List<FTPAccount>());
+                FTPLoad(new FTPAccount());
             }
-
-            //selects the ftpUpload account used last time... or the default ftpUpload account
-            if (lbFTPAccounts.Items.Count > 0)
-                lbFTPAccounts.SelectedIndex = Program.conf.FTPselected;
-
-            //Display selected FTP account
-            int sel = lbFTPAccounts.SelectedIndex;
-            FTPAccount acc;
-            if (Program.conf.FTPAccountList != null &&
-                Program.conf.FTPAccountList.Count >= sel && sel != -1 &&
-                Program.conf.FTPAccountList[sel] != null)
+            else
             {
-                acc = Program.conf.FTPAccountList[sel];
-                txtName.Text = acc.Name;
-                txtServer.Text = acc.Server;
-                txtServerPort.Text = acc.Port.ToString();
-                txtUsername.Text = acc.Username;
-                txtPassword.Text = acc.Password;
-                txtPath.Text = acc.Path;
-                txtHttpPath.Text = acc.HttpPath;
-                rbFTPActive.Checked = acc.IsActive;
-                rbFTPPassive.Checked = !acc.IsActive;
-                cbDeleteLocal.Checked = Program.conf.DeleteLocal;
+                FTPSetup(Program.conf.FTPAccountList);
+                if (lbFTPAccounts.Items.Count > 0)
+                {
+                    lbFTPAccounts.SelectedIndex = Program.conf.FTPselected;
+                }
             }
 
             ///////////////////////////////////
@@ -277,6 +260,8 @@ namespace ZSS
                 cboUploadMode.Items.Add(um.ToDescriptionString());
             }
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
+            chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
+            cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
 
             if (cbFromLanguage.Items.Count == 0 || cbToLanguage.Items.Count == 0 || cbHelpToLanguage.Items.Count == 0)
                 DownloadLanguagesList();
@@ -334,13 +319,12 @@ namespace ZSS
             cmbSwitchFormat.Items.AddRange(Program.mFileTypes);
 
             cmbFileFormat.SelectedIndex = Program.conf.FileFormat;
-            txtSwitchAfter.Text = Program.conf.SwitchAfter.ToString();
+            nudSwitchAfter.Text = Program.conf.SwitchAfter.ToString();
             cmbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
             txtImageQuality.Text = Program.conf.ImageQuality.ToString();
             chkManualNaming.Checked = Program.conf.ManualNaming;
 
             //tsmSaveToClip.Checked = Program.conf.ScreenshotDestMode == ScreenshotDestType.CLIPBOARD;
-            tsmPromptFileName.Checked = Program.conf.ManualNaming;
             cbShowWatermark.Checked = Program.conf.ShowWatermark;
 
             txtWatermarkText.Text = Program.conf.WatermarkText;
@@ -373,8 +357,11 @@ namespace ZSS
             cbShowPopup.Checked = Program.conf.ShowPopup;
             chkBalloonTipOpenLink.Checked = Program.conf.BalloonTipOpenLink;
             cbCheckUpdates.Checked = Program.conf.CheckUpdates;
+            cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
+            cbDeleteLocal.Checked = Program.conf.DeleteLocal;
+            cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
             ///////////////////////////////////
             // Image Uploaders
@@ -484,10 +471,16 @@ namespace ZSS
                     if (CheckKeys(Program.conf.HKActiveWindow, lParam))
                     {
                         //Active window
-                        StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW);
+                        StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
                         return m_hID;
                     }
-                    else if (CheckKeys(Program.conf.HKCropShot, lParam) && !mTakingScreenShot)
+                    else if (CheckKeys(Program.conf.HKSelectedWindow, lParam))
+                    {
+                        //Selected Window
+                        StartBW_SelectedWindow();
+                        return m_hID;
+                    }
+                    else if (CheckKeys(Program.conf.HKCropShot, lParam))
                     {
                         //Crop Shot
                         StartBW_CropShot();
@@ -541,19 +534,27 @@ namespace ZSS
         private void StartBW_EntireScreen()
         {
             StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN);
-            // StartBW(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN, this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN));
+        }
+
+        private void StartBW_SelectedWindow()
+        {
+            if (!mTakingScreenShot)
+            {
+                StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+            }
         }
 
         private void StartBW_CropShot()
         {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
-            // StartBW(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED, this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED));
+            if (!mTakingScreenShot)
+            {
+                StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
+            }
         }
 
         private void StartBW_LastCropShot()
         {
             StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
-            // StartBW(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED, this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED));
         }
 
         private void StartBW_LanguageTranslator()
@@ -584,7 +585,6 @@ namespace ZSS
 
         #region "Background Worker Safe Methods"
 
-
         private void CaptureActiveWindow(ref MainAppTask task)
         {
             try
@@ -593,17 +593,22 @@ namespace ZSS
                 SaveImage(task);
                 ImageSoftwareAndOrWeb(ref task);
             }
+            catch (System.ArgumentOutOfRangeException aor)
+            {
+                task.Errors.Add("Invalid FTP Account Selection");
+                Console.WriteLine(aor.ToString());
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 if (Program.conf.CaptureEntireScreenOnError)
                 {
-                    CaptureCrop(ref task);
+                    CaptureRegionOrWindow(ref task);
                 }
             }
         }
 
-        private string CaptureCrop(ref MainAppTask task)
+        private string CaptureRegionOrWindow(ref MainAppTask task)
         {
             string filePath = "";
             Image imgSS = null;
@@ -613,16 +618,23 @@ namespace ZSS
                 mTakingScreenShot = true;
                 imgSS = User32.CaptureScreen(Program.conf.ShowCursor);
 
-                if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.mLastRegion.IsEmpty)
+                if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
                 {
-                    task.SetImage(CropImage(imgSS, Program.mLastRegion));
+                    task.SetImage(CropImage(imgSS, Program.LastRegion));
                 }
                 else
                 {
-                    Crop c = new Crop(imgSS);
-                    if (c.ShowDialog() == DialogResult.OK && !Program.mLastRegion.IsEmpty)
+                    Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                    if (c.ShowDialog() == DialogResult.OK)
                     {
-                        task.SetImage(CropImage(imgSS, Program.mLastRegion));
+                        if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                        {
+                            task.SetImage(CropImage(imgSS, Program.LastRegion));
+                        }
+                        else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                        {
+                            task.SetImage(CropImage(imgSS, Program.LastCapture));
+                        }
                     }
                 }
 
@@ -677,7 +689,7 @@ namespace ZSS
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                     return FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), Program.conf.ManualNaming);
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW:
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                     return FileSystem.GetFilePath(NameParser.Convert(Program.conf.activeWindow, NameParser.NameType.ActiveWindow), Program.conf.ManualNaming);
             }
             throw new Exception("Unsupported Job for getting File Path.");
@@ -786,6 +798,11 @@ namespace ZSS
                     {
                         task.ImageManager = imageUploader.UploadImage(fullFilePath);
                         task.Errors = imageUploader.Errors;
+                        if (Program.conf.ImageUploadRetry && (task.ImageDestCategory ==
+                            ImageDestType.IMAGESHACK || task.ImageDestCategory == ImageDestType.TINYPIC))
+                        {
+                            break;
+                        }
                     }
 
                     //Set remote path for Screenshots history
@@ -794,10 +811,6 @@ namespace ZSS
                 }
             }
 
-            if (task.ImageManager == null || task.ImageManager.FileCount > 0)
-            {
-
-            }
             task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
 
             if (task.ImageManager != null)
@@ -909,8 +922,9 @@ namespace ZSS
                     case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                         t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN));
                         break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW));
+                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE));
                         break;
                 }
                 // Update LocalFilePath again, due to possible PNG to JPG changes
@@ -1092,18 +1106,21 @@ namespace ZSS
             {
                 if (task.ImageDestCategory != ImageDestType.FTP)
                 {
-                    //Image.FromFile(t.ScreenshotLocalPath).Dispose(); //Check if image
-                    //really wasteful (check file extension instead)
-
                     if (!IsValidImage(ref task))
                     {
-                        e.Result = task;
-                        return;
+                        if (Program.conf.AutoSwitchFTP)
+                        {
+                            task.ImageDestCategory = ImageDestType.FTP;
+                        }
+                        else
+                        {
+                            e.Result = task;
+                            return;
+                        }
                     }
                 }
             }
-            if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN || task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW ||
-                task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED)
+            if (task.JobCategory == JobCategoryType.SCREENSHOTS)
             {
                 if (Program.conf.ScreenshotDelay != 0)
                     Thread.Sleep((int)(Program.conf.ScreenshotDelay * 1000));
@@ -1117,16 +1134,19 @@ namespace ZSS
                 case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
                     CaptureActiveWindow(ref task);
                     break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                    CaptureRegionOrWindow(ref task);
+                    break;
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                    CaptureCrop(ref task);
+                    CaptureRegionOrWindow(ref task);
                     break;
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                    CaptureCrop(ref task);
+                    CaptureRegionOrWindow(ref task);
                     break;
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                     CaptureScreen(ref task);
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW:
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                     CaptureActiveWindow(ref task);
                     break;
                 case MainAppTask.Jobs.IMAGEUPLOAD_FROM_CLIPBOARD:
@@ -1137,6 +1157,9 @@ namespace ZSS
                     break;
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
                     LanguageTranslator(ref task);
+                    break;
+                case MainAppTask.Jobs.UPLOAD_IMAGE:
+                    ImageSoftwareAndOrWeb(ref task);
                     break;
             }
 
@@ -1180,115 +1203,138 @@ namespace ZSS
 
             FileSystem.appendDebug(string.Format("Job completed: {0}", t.Job.ToString()));
 
-            if (t != null)
+            //t.Errors.Add("Testing"); //For test retry upload
+            if (!RetryUpload(t))
             {
-                switch (t.JobCategory)
+                if (t != null)
                 {
-                    case JobCategoryType.TEXT:
-                        switch (t.Job)
-                        {
-                            case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                                txtTranslateText.Text = t.TranslationInfo.SourceText;
-                                txtTranslateResult.Text = t.TranslationInfo.Result.TranslatedText;
-                                txtLanguages.Text = t.TranslationInfo.Result.TranslationType;
-                                txtDictionary.Text = t.TranslationInfo.Result.Dictionary;
-                                if (Program.conf.ClipboardTranslate)
-                                {
-                                    Clipboard.SetText(t.TranslationInfo.Result.TranslatedText);
-                                }
-                                btnTranslate.Enabled = true;
-                                break;
-                        }
-                        break;
-                    case JobCategoryType.PICTURES:
-                        switch (t.Job)
-                        {
-                            case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                                if (t.ImageManager != null & t.ImageManager.FileCount > 0)
-                                {
-                                    if (t.ImageManager.GetFullImageUrl() != "")
+                    switch (t.JobCategory)
+                    {
+                        case JobCategoryType.TEXT:
+                            switch (t.Job)
+                            {
+                                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                                    txtTranslateText.Text = t.TranslationInfo.SourceText;
+                                    txtTranslateResult.Text = t.TranslationInfo.Result.TranslatedText;
+                                    txtLanguages.Text = t.TranslationInfo.Result.TranslationType;
+                                    txtDictionary.Text = t.TranslationInfo.Result.Dictionary;
+                                    if (Program.conf.ClipboardTranslate)
                                     {
-                                        txtUploadersLog.AppendText(t.ImageDestinationName + " full image: " +
-                                            t.ImageManager.GetFullImageUrl() + "\r\n");
+                                        Clipboard.SetText(t.TranslationInfo.Result.TranslatedText);
                                     }
-                                    if (t.ImageManager.GetThumbnailUrl() != "")
+                                    btnTranslate.Enabled = true;
+                                    break;
+                            }
+                            break;
+                        case JobCategoryType.PICTURES:
+                            switch (t.Job)
+                            {
+                                case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
+                                    if (t.ImageManager != null & t.ImageManager.FileCount > 0)
                                     {
-                                        txtUploadersLog.AppendText(t.ImageDestinationName + " thumbnail: " +
-                                            t.ImageManager.GetThumbnailUrl() + "\r\n");
+                                        if (t.ImageManager.GetFullImageUrl() != "")
+                                        {
+                                            txtUploadersLog.AppendText(t.ImageDestinationName + " full image: " +
+                                                t.ImageManager.GetFullImageUrl() + "\r\n");
+                                        }
+                                        if (t.ImageManager.GetThumbnailUrl() != "")
+                                        {
+                                            txtUploadersLog.AppendText(t.ImageDestinationName + " thumbnail: " +
+                                                t.ImageManager.GetThumbnailUrl() + "\r\n");
+                                        }
                                     }
-                                }
-                                btnUploadersTest.Enabled = true;
-                                break;
-                        }
-                        break;
-                    case JobCategoryType.SCREENSHOTS:
-                        if (File.Exists(t.ImageLocalPath))
-                        {
+                                    btnUploadersTest.Enabled = true;
+                                    break;
+                            }
+                            break;
+                        case JobCategoryType.SCREENSHOTS:
                             if (Program.conf.DeleteLocal)
                             {
-                                File.Delete(t.ImageLocalPath);
+                                if (File.Exists(t.ImageLocalPath))
+                                {
+                                    File.Delete(t.ImageLocalPath);
+                                }
                             }
-                        }
-                        break;
-                }
+                            break;
+                    }
 
-                if (t.JobCategory == JobCategoryType.SCREENSHOTS || t.JobCategory == JobCategoryType.PICTURES)
+                    if (t.JobCategory == JobCategoryType.SCREENSHOTS || t.JobCategory == JobCategoryType.PICTURES)
+                    {
+                        ClipboardManager.AddScreenshotList(t.ImageManager);
+                        ClipboardManager.SetClipboardText();
+                    }
+
+                    if (t.ImageManager != null && !string.IsNullOrEmpty(t.ImageManager.Source))
+                    {
+                        btnOpenSourceText.Enabled = true;
+                        btnOpenSourceBrowser.Enabled = true;
+                        btnOpenSourceString.Enabled = true;
+                    }
+                } // Task is not null
+
+                niTray.Text = this.Text;
+                if (ClipboardManager.Workers > 1)
                 {
-                    ClipboardManager.AddScreenshotList(t.ImageManager);
-                    ClipboardManager.SetClipboardText();
+                    niTray.Icon = Resources.zss_busy;
                 }
-
-                if (t.ImageManager != null && !string.IsNullOrEmpty(t.ImageManager.Source))
+                else
                 {
-                    btnOpenSourceText.Enabled = true;
-                    btnOpenSourceBrowser.Enabled = true;
-                    btnOpenSourceString.Enabled = true;
+                    niTray.Icon = Resources.zss_tray;
                 }
-            } // Task is not null
 
-            niTray.Text = this.Text;
-            if (ClipboardManager.Workers > 1)
+                if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.ImageLocalPath))
+                {
+                    if (Program.conf.CompleteSound)
+                    {
+                        System.Media.SystemSounds.Exclamation.Play();
+                    }
+                    if (Program.conf.ShowPopup)
+                    {
+                        ShowBalloonTip(t);
+                    }
+                }
+
+                if (t.Errors.Count > 0)
+                {
+                    Console.WriteLine(t.Errors[t.Errors.Count - 1]);
+                }
+            }
+
+            if (t.MyImage != null) t.MyImage.Dispose(); // For fix memory leak
+            ClipboardManager.Commit();
+        }
+
+        private bool RetryUpload(MainAppTask t)
+        {
+            if (Program.conf.ImageUploadRetry && t.Errors.Count > 0 && !t.Retry &&
+                (t.ImageDestCategory == ImageDestType.IMAGESHACK || t.ImageDestCategory == ImageDestType.TINYPIC))
             {
-                niTray.Icon = Resources.zss_busy;
+                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
+                task.JobCategory = t.JobCategory;
+                task.SetImage(t.ImageLocalPath);
+                task.SetLocalFilePath(t.ImageLocalPath);
+                if (t.ImageDestCategory == ImageDestType.IMAGESHACK)
+                {
+                    task.ImageDestCategory = ImageDestType.TINYPIC;
+                }
+                else
+                {
+                    task.ImageDestCategory = ImageDestType.IMAGESHACK;
+                }
+                task.Retry = true;
+                task.MyWorker.RunWorkerAsync(task);
+                return true;
             }
             else
             {
-                niTray.Icon = Resources.zss_tray;
+                return false;
             }
-
-            if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.ImageLocalPath))
-            {
-                if (Program.conf.CompleteSound)
-                {
-                    System.Media.SystemSounds.Exclamation.Play();
-                }
-                if (Program.conf.ShowPopup)
-                {
-                    ShowBalloonTip(t);
-                }
-            }
-
-            if (t.Errors.Count > 0)
-            {
-                Console.WriteLine(t.Errors[t.Errors.Count - 1]);
-            }
-
-            ClipboardManager.Commit();
-            //FileSystem.writeDebugFile();
-            if (t.MyImage != null) t.MyImage.Dispose(); // For fix memory leak
         }
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mClose = true;
             Close();
-        }
-
-        private void btnUpdateFTP_Click(object sender, EventArgs e)
-        {
-            //tsmFTP.Checked = Program.conf.ScreenshotDestMode == ScreenshotDestType.FTP;
-            //saveToUpdate(true);
-            UpdateFTP();
         }
 
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
@@ -1366,78 +1412,6 @@ namespace ZSS
         }
 
         #endregion
-
-
-        private FTPAccount GetFTPAccountFromFields()
-        {
-            int port = 21;
-            try { port = Int32.Parse(txtServerPort.Text); }
-            catch { }
-
-            TrimFTPControls();
-
-            FTPAccount acc = new FTPAccount();
-            acc.Name = txtName.Text;
-            acc.Server = txtServer.Text;
-            acc.Port = port;
-            acc.Username = txtUsername.Text;
-            acc.Password = txtPassword.Text;
-            if (!txtPath.Text.StartsWith("/"))
-                txtPath.Text = string.Concat("/", txtPath.Text);
-            acc.Path = txtPath.Text;
-            acc.HttpPath = txtHttpPath.Text;
-            acc.IsActive = rbFTPActive.Checked;
-
-            return acc;
-        }
-
-        private bool ValidateFTP()
-        {
-            Control[] controls = { txtServer, txtUsername, txtPassword, txtPath };
-
-            foreach (Control c in controls)
-            {
-                if (String.IsNullOrEmpty(c.Text))
-                    return false;
-            }
-
-            return true;
-        }
-
-        private void UpdateFTP()
-        {
-            if (ValidateFTP() //txtServer.Text != "" && txtUsername.Text != "" && txtPassword.Text != "" && txtPath.Text != ""
-                && lbFTPAccounts.SelectedIndices.Count == 1 && lbFTPAccounts.SelectedIndex != -1)
-            {
-                //unset error message (if applicable)
-                //lblError1.Visible = false;
-                txtErrorFTP.Text = Properties.Resources.FTPupdated;
-
-                FTPAccount acc = GetFTPAccountFromFields();
-
-                if (Program.conf.FTPAccountList != null)
-                {
-                    Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = acc; //use selected index instead of 0
-                }
-                else
-                {
-                    Program.conf.FTPAccountList = new List<FTPAccount>();
-                    Program.conf.FTPAccountList.Add(acc);
-                }
-
-                lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = acc.Name;
-
-                RewriteFTPRightClickMenu();
-            }
-            else
-            {
-                //Set error message                
-                Show();
-                //lblError1.Visible = true;
-                txtErrorFTP.Text = Properties.Resources.FTPnotUpdated;
-                //tsmFTP.Checked = false;
-            }
-        }
 
         private void RewriteISRightClickMenu()
         {
@@ -1950,68 +1924,9 @@ namespace ZSS
             BringUpMenu();
         }
 
-        private void btnTestConnection_Click(object sender, EventArgs e)
-        {
-
-            //PasswordManager pm = new PasswordManager(Path.Combine(Program.LocalAppDataFolder, "key.dat"));
-            //string temp = pm.EncryptString(txtPassword.Text);
-            //Console.WriteLine(temp);
-            //string pass = pm.DecryptString(temp);
-            //Console.WriteLine(pass);
-
-            txtErrorFTP.Text = /*"Testing...";*/ Properties.Resources.FTPtest;
-            txtErrorFTP.Update();
-            TrimFTPControls();
-            int port = 21;
-
-            Int32.TryParse(txtServerPort.Text, out port);
-
-            try
-            {
-                /*
-                FTP ff = new FTP();
-                ff.server = txtServer.Text;
-                ff.port = port;
-                ff.user = txtUsername.Text;
-                ff.pass = txtPassword.Text;
-                ff.PassiveMode = rbFTPPassive.Checked;
-                
-                ff.Connect();
-                ff.ChangeDir(txtPath.Text);
-
-                //removed binary mode
-
-                ff.Disconnect();
-                */
-
-                FTPAccount acc = new FTPAccount();
-                acc.Server = txtServer.Text;
-                acc.Port = port;
-                acc.Username = txtUsername.Text;
-                acc.Password = txtPassword.Text;
-                acc.IsActive = rbFTPActive.Checked;
-                acc.Path = txtPath.Text;
-
-                FTP ftp = new FTP(ref acc);
-                if (ftp.ListDirectory() != null)
-                {
-                    txtErrorFTP.Text = /*"Success";*/ Properties.Resources.FTPsuccess;
-                }
-                else
-                {
-                    txtErrorFTP.Text = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
-                }
-            }
-            catch (Exception t)
-            {
-                txtErrorFTP.Text = t.Message;
-            }
-
-        }
-
         private void TrimFTPControls()
         {
-            TextBox[] arr = { txtServer, txtPath, txtHttpPath };
+            TextBox[] arr = { txtFTPServer, txtFTPPath, txtFTPHTTPPath };
             foreach (TextBox tb in arr)
             {
                 if (tb.Text != "/")
@@ -2134,165 +2049,6 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.entireScreen;
         }
 
-        private void btnAddAccount_Click(object sender, EventArgs e)
-        {
-            if (ValidateFTP())
-            {
-                FTPAccount acc = GetFTPAccountFromFields();
-
-                Program.conf.FTPAccountList.Add(acc);
-
-                lbFTPAccounts.Items.Add(acc.Name);
-
-                lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-            }
-            else
-            {
-                txtErrorFTP.Text = Resources.FTPnotUpdated; //change to FTP Account not added?
-            }
-
-        }
-
-        private void btnCloneAccount_Click(object sender, EventArgs e)
-        {
-            FTPAccount tmp = new FTPAccount();
-
-            int src = lbFTPAccounts.SelectedIndex;
-
-            if (Program.conf.FTPAccountList != null && Program.conf.FTPAccountList.Count > 0 && lbFTPAccounts.SelectedIndices.Count == 1 && src != -1)
-            {
-                int len = Program.conf.FTPAccountList.Count;
-
-                tmp = Program.conf.FTPAccountList[src];
-
-                //mDoingNameUpdate = true;
-                lbFTPAccounts.Items.Add(tmp.Name);
-
-                txtServer.Text = tmp.Server;
-                txtServerPort.Text = tmp.Port.ToString();
-                txtUsername.Text = tmp.Username;
-                txtPassword.Text = tmp.Password;
-                txtPath.Text = tmp.Path;
-                txtHttpPath.Text = tmp.HttpPath;
-                rbFTPActive.Checked = tmp.IsActive;
-                rbFTPPassive.Checked = !tmp.IsActive;
-
-                Program.conf.FTPAccountList.Add(tmp);
-
-                lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-                txtName.Text = tmp.Name;
-                txtName.Focus();
-                txtName.SelectAll();
-                //mDoingNameUpdate = false;
-
-                //rewriteFTPRightClickMenu();
-            }
-        }
-
-        private void AddInNewFTPAccount()
-        {
-            FTPAccount acc = new FTPAccount();
-            acc.Name = Resources.NewAccount;
-
-            acc.Port = 21;
-            acc.Path = "/";
-            acc.HttpPath = "%/";
-
-            txtServerPort.Text = acc.Port.ToString();
-            txtPath.Text = acc.Path;
-            txtHttpPath.Text = acc.HttpPath;
-
-            txtServer.Text = "";
-            txtUsername.Text = "";
-            txtPassword.Text = "";
-
-            Program.conf.FTPAccountList.Add(acc);
-
-            lbFTPAccounts.Items.Add(Resources.NewAccount);
-
-            lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-            txtName.Text = Resources.NewAccount;
-            txtName.Focus();
-            txtName.SelectAll();
-
-            rbFTPActive.Checked = false;
-            rbFTPPassive.Checked = true;
-        }
-
-        private void btnDeleteFTP_Click(object sender, EventArgs e)
-        {
-            int sel = lbFTPAccounts.SelectedIndex;
-
-            //   if (sel != -1 && sel != 0)
-            if (sel != -1)
-            {
-                Program.conf.FTPAccountList.RemoveAt(sel);
-
-                lbFTPAccounts.Items.RemoveAt(sel);
-
-                //if the selected item is deleted change it back to default
-                //if (Program.conf.FTPselected == sel)
-                //{
-                //    lbFTPAccounts.SelectedIndex = 0;
-                //}
-                //else
-                //{
-                //lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-                //}
-                if (lbFTPAccounts.Items.Count > 0)
-                {
-                    lbFTPAccounts.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
-                }
-                else
-                {
-                    //No FTP Accounts
-                    //btnAddAccount.PerformClick();
-
-                    AddInNewFTPAccount();
-                }
-
-                //Program.conf.FTPselected = lbFTPAccounts.SelectedIndex;
-
-                //rewriteFTPRightClickMenu();
-            }
-        }
-
-        private void lbFTPAccounts_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = lbFTPAccounts.SelectedIndex;
-
-            if (!mDoingNameUpdate && Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
-            {
-                FTPAccount tmp = Program.conf.FTPAccountList[sel];
-
-                txtName.Text = tmp.Name;
-                txtServer.Text = tmp.Server;
-                txtServerPort.Text = tmp.Port.ToString();
-                txtUsername.Text = tmp.Username;
-                txtPassword.Text = tmp.Password;
-                txtPath.Text = tmp.Path;
-                txtHttpPath.Text = tmp.HttpPath;
-                rbFTPActive.Checked = tmp.IsActive;
-                rbFTPPassive.Checked = !tmp.IsActive;
-
-                Program.conf.FTPselected = lbFTPAccounts.SelectedIndex;
-
-                RewriteFTPRightClickMenu();
-            }
-        }
-
-        private void txtName_TextChanged(object sender, EventArgs e)
-        {
-            /*
-            if (lbFTPAccounts.SelectedIndex != -1)
-            {
-                mDoingNameUpdate = true;
-                lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = txtName.Text;
-                mDoingNameUpdate = false;
-            }
-            */
-        }
-
         private void tsmHelp_Click(object sender, EventArgs e)
         {
             ShowHelp();
@@ -2341,13 +2097,7 @@ namespace ZSS
 
         private void UpdatePromptFileNameCheck()
         {
-            tsmPromptFileName.Checked = chkManualNaming.Checked;
             Program.conf.ManualNaming = chkManualNaming.Checked;
-        }
-
-        private void tsmPromptFileName_Click(object sender, EventArgs e)
-        {
-            chkManualNaming.Checked = !tsmPromptFileName.Checked;
         }
 
         private void ZScreen_Shown(object sender, EventArgs e)
@@ -2405,49 +2155,6 @@ namespace ZSS
             }
 
             Registry.CurrentUser.Flush();
-        }
-
-        private void ExportAccounts()
-        {
-            if (Program.conf.FTPAccountList != null)
-            {
-                SaveFileDialog dlg = new SaveFileDialog();
-                dlg.FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd"));
-                dlg.Filter = Program.FILTER_ACCOUNTS;
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
-                    fam.Save(dlg.FileName);
-                }
-            }
-        }
-
-        private void btnExportAccounts_Click(object sender, EventArgs e)
-        {
-            ExportAccounts();
-        }
-
-        private void btnAccsImport_Click(object sender, EventArgs e)
-        {
-            if (Program.conf.FTPAccountList == null)
-                Program.conf.FTPAccountList = new List<FTPAccount>();
-
-            List<FTPAccount> tmp = new List<FTPAccount>();
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = Program.FILTER_ACCOUNTS;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
-                tmp = fam.FTPAccounts;
-            }
-            if (tmp != null)
-            {
-                Program.conf.FTPAccountList.AddRange(tmp);
-                foreach (FTPAccount acc in tmp)
-                {
-                    lbFTPAccounts.Items.Add(acc.Name);
-                }
-            }
         }
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
@@ -2544,11 +2251,6 @@ namespace ZSS
 
                 RewriteISRightClickMenu();
             }
-        }
-
-        private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.EnableThumbnail = chkEnableThumbnail.Checked;
         }
 
         private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
@@ -2731,7 +2433,7 @@ namespace ZSS
         {
             int switchAfter = 350;
 
-            try { switchAfter = Int32.Parse(txtSwitchAfter.Text); }
+            try { switchAfter = Int32.Parse(nudSwitchAfter.Text); }
             catch { }
 
             Program.conf.SwitchAfter = switchAfter;
@@ -2804,8 +2506,6 @@ namespace ZSS
                 StartWorkerImages(MainAppTask.Jobs.IMAGEUPLOAD_FROM_CLIPBOARD, fp);
             }
         }
-
-
 
         private List<string> GetClipboardImagePaths()
         {
@@ -2910,6 +2610,8 @@ namespace ZSS
                 }
             }
         }
+
+
 
         private void nScreenshotDelay_ValueChanged(object sender, EventArgs e)
         {
@@ -3124,8 +2826,9 @@ namespace ZSS
             if (tmp != null)
             {
                 lbUploader.Items.Clear();
+                Program.conf.ImageUploadersList = new List<ImageHostingService>();
                 Program.conf.ImageUploadersList.AddRange(tmp.ImageHostingServices);
-                foreach (ImageHostingService iHostingService in tmp.ImageHostingServices)
+                foreach (ImageHostingService iHostingService in Program.conf.ImageUploadersList)
                 {
                     lbUploader.Items.Add(iHostingService.Name);
                 }
@@ -3210,6 +2913,7 @@ namespace ZSS
             dgvHotkeys.Rows.Clear();
 
             dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HKActiveWindow });
+            dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HKSelectedWindow });
             dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HKEntireScreen });
             dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HKCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HKLastCropShot });
@@ -3228,25 +2932,28 @@ namespace ZSS
                 case 0: //active window
                     Program.conf.HKActiveWindow = hkc;
                     break;
-                case 1: //entire screen
+                case 1: //selected window
+                    Program.conf.HKSelectedWindow = hkc;
+                    break;
+                case 2: //entire screen
                     Program.conf.HKEntireScreen = hkc;
                     break;
-                case 2: //crop shot
+                case 3: //crop shot
                     Program.conf.HKCropShot = hkc;
                     break;
-                case 3: //last crop shot
+                case 4: //last crop shot
                     Program.conf.HKLastCropShot = hkc;
                     break;
-                case 4: //clipboard upload
+                case 5: //clipboard upload
                     Program.conf.HKClipboardUpload = hkc;
                     break;
-                case 5: //select quick options
+                case 6: //select quick options
                     Program.conf.HKQuickOptions = hkc;
                     break;
-                case 6: //drop window
+                case 7: //drop window
                     Program.conf.HKDropWindow = hkc;
                     break;
-                case 7: //language translator
+                case 8: //language translator
                     Program.conf.HKLanguageTranslator = hkc;
                     break;
             }
@@ -3265,25 +2972,28 @@ namespace ZSS
                     case 0: //active window
                         txtActiveHelp.Text += "capture a window that is currently highlighted and send it your selected destination.";
                         break;
-                    case 1: //entire screen
+                    case 1: //selected window
+                        txtActiveHelp.Text += "capture a window by selecting a window from the mouse and send it your selected destination.";
+                        break;
+                    case 2: //entire screen
                         txtActiveHelp.Text += "capture everything present on your screen including taskbar, start menu, etc and send it your selected destination";
                         break;
-                    case 2: //crop shot
+                    case 3: //crop shot
                         txtActiveHelp.Text += "capture a specified region of your screen and send it to your selected destination";
                         break;
-                    case 3: //last crop shot
+                    case 4: //last crop shot
                         txtActiveHelp.Text += "capture the specified region from crop shot another time";
                         break;
-                    case 4: //clipboard upload
+                    case 5: //clipboard upload
                         txtActiveHelp.Text += "send files from your file system to your selected destination.";
                         break;
-                    case 5: // quick options
+                    case 6: // quick options
                         txtActiveHelp.Text += "quickly select the destination you would like to send images via a small pop up form.";
                         break;
-                    case 6: // drop window
+                    case 7: // drop window
                         txtActiveHelp.Text += "display a Drop Window so can drag and drop image files from Windows Explorer to upload.";
                         break;
-                    case 7: // language translator
+                    case 8: // language translator
                         txtActiveHelp.Text += "translate the text that is in your clipboard from one language to another. See HTTP -> Language Translator for settings.";
                         break;
 
@@ -3482,7 +3192,7 @@ namespace ZSS
 
             txtActiveWindow.Tag = "The automatic naming convention used for active window screenshots.";
 
-            txtSwitchAfter.Tag = string.Format("After {0} KiB, {1} will switch format from {2} to JPG", txtSwitchAfter.Text, Application.ProductName, cmbFileFormat.Text.ToUpper());
+            nudSwitchAfter.Tag = string.Format("After {0} KiB, {1} will switch format from {2} to JPG", nudSwitchAfter.Text, Application.ProductName, cmbFileFormat.Text.ToUpper());
 
             nudWatermarkOffset.Tag = string.Format("Move Watermark {0} pixels leftwards and {0} pixels upwards from the Bottom Right corner of the Screenshot.", nudWatermarkOffset.Value);
 
@@ -3498,7 +3208,7 @@ namespace ZSS
 
             cmbSwitchFormat.Tag = "The secondary format that the program will switch to after a user-specified limit has been reached.";
 
-            txtSwitchAfter.Tag = "At this limit File Format will switch from the original format to the secondary format.";
+            nudSwitchAfter.Tag = "At this limit File Format will switch from the original format to the secondary format.";
 
             cbDeleteLocal.Tag = "When checked files that you upload will be deleted locally to save hard disk space.";
 
@@ -3512,10 +3222,6 @@ namespace ZSS
             lbHistory.Tag = "Right click to access Copy to Clipboard options.";
             txtHistoryLocalPath.Tag = "Double click to copy File Path to Clipboard.";
             txtHistoryRemotePath.Tag = "Double click to copy URL to Clipboard.";
-
-
-
-
         }
 
         /// <summary>
@@ -3529,12 +3235,10 @@ namespace ZSS
 
             try
             {
-                Image newImage = Image.FromFile(task.ImageLocalPath);
+                Image.FromFile(task.ImageLocalPath).Dispose();
             }
             catch (OutOfMemoryException ex)
             {
-                // Image.FromFile will throw this if file is invalid.
-                // Don't ask me why.
                 task.Errors.Add("Unsupported image. " + ex.Message);
                 isImage = false;
             }
@@ -3548,16 +3252,12 @@ namespace ZSS
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
         {
-            ColorDialog dColor = new ColorDialog();
-            dColor.Color = pbCropBorderColor.BackColor;
-            dColor.ShowDialog();
-            pbCropBorderColor.BackColor = dColor.Color;
-            Program.conf.CropBorderColor = XMLSettings.SerializeColor(dColor.Color);
+            SelectColor((PictureBox)sender, ref Program.conf.CropBorderColor);
         }
 
         private void nudCropBorderSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropBorderSize = (Single)nudCropBorderSize.Value;
+            Program.conf.CropBorderSize = nudCropBorderSize.Value;
         }
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -3573,6 +3273,7 @@ namespace ZSS
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CheckUpdates = cbCheckUpdates.Checked;
+            cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
         }
 
         public Image CropImage(Image img, Rectangle rect)
@@ -3824,9 +3525,16 @@ namespace ZSS
             TestWatermark();
         }
 
-        private void tsmScrenshotFromClipboard_Click(object sender, EventArgs e)
+        private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScreenshotUsingClipboard();
+            Thread.Sleep(300);
+            StartBW_EntireScreen();
+        }
+
+        private void selectedWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread.Sleep(300);
+            StartBW_SelectedWindow();
         }
 
         private void rectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3841,25 +3549,32 @@ namespace ZSS
             StartBW_LastCropShot();
         }
 
-        private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmScrenshotFromClipboard_Click(object sender, EventArgs e)
         {
-            Thread.Sleep(300);
-            StartBW_EntireScreen();
+            ScreenshotUsingClipboard();
+        }
+
+        private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText()) StartBW_LanguageTranslator(Clipboard.GetText());
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
         {
             SelectColor((PictureBox)sender, ref Program.conf.WatermarkGradient1);
+            TestWatermark();
         }
 
         private void pbWatermarkGradient2_Click(object sender, EventArgs e)
         {
             SelectColor((PictureBox)sender, ref Program.conf.WatermarkGradient2);
+            TestWatermark();
         }
 
         private void pbWatermarkBorderColor_Click(object sender, EventArgs e)
         {
             SelectColor((PictureBox)sender, ref Program.conf.WatermarkBorderColor);
+            TestWatermark();
         }
 
         private void TestWatermark()
@@ -3884,6 +3599,7 @@ namespace ZSS
         {
             SelectColor((PictureBox)sender, ref Program.conf.WatermarkFontColor);
             lblWatermarkFont.Text = FontToString();
+            TestWatermark();
         }
 
         private void SelectColor(PictureBox pb, ref string setting)
@@ -3894,7 +3610,6 @@ namespace ZSS
             {
                 pb.BackColor = dColor.Color;
                 setting = XMLSettings.SerializeColor(dColor.Color);
-                TestWatermark();
             }
         }
 
@@ -4174,11 +3889,18 @@ namespace ZSS
             HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
             if (hi != null && File.Exists(hi.LocalPath))
             {
-                ShowScreenshot sc = new ShowScreenshot();
-                if (hi.ScreenshotManager.GetImage() != null)
+                if (hi.ScreenshotManager != null)
                 {
-                    sc.BackgroundImage = Image.FromFile(hi.LocalPath);
-                    sc.ShowDialog();
+                    ShowScreenshot sc = new ShowScreenshot();
+                    if (hi.ScreenshotManager.GetImage() != null)
+                    {
+                        sc.BackgroundImage = Image.FromFile(hi.LocalPath);
+                        sc.ShowDialog();
+                    }
+                }
+                else
+                {
+                    Process.Start(hi.LocalPath);
                 }
             }
         }
@@ -4204,6 +3926,297 @@ namespace ZSS
         private void btnCopyStats_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(lblDebugInfo.Text);
+        }
+
+        private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageUploadRetry = chkImageUploadRetry.Checked;
+        }
+
+        #region FTP
+
+        private string FTPAdd(FTPAccount acc)
+        {
+            return acc.Name + " - " + acc.Server + ":" + acc.Port;
+        }
+
+        private void FTPLoad(FTPAccount acc)
+        {
+            txtFTPName.Text = acc.Name;
+            txtFTPServer.Text = acc.Server;
+            nudFTPServerPort.Value = acc.Port;
+            txtFTPUsername.Text = acc.Username;
+            txtFTPPassword.Text = acc.Password;
+            txtFTPPath.Text = acc.Path;
+            txtFTPHTTPPath.Text = acc.HttpPath;
+            rbFTPActive.Checked = acc.IsActive;
+            rbFTPPassive.Checked = !acc.IsActive;
+            gbFTPAccount.Text = string.Format("Settings: {0} - {1}", acc.Name, acc.Server);
+        }
+
+        private void FTPSetup(List<FTPAccount> accs)
+        {
+            if (accs != null)
+            {
+                lbFTPAccounts.Items.Clear();
+                Program.conf.FTPAccountList = new List<FTPAccount>();
+                Program.conf.FTPAccountList.AddRange(accs);
+                foreach (FTPAccount acc in Program.conf.FTPAccountList)
+                {
+                    lbFTPAccounts.Items.Add(FTPAdd(acc));
+                }
+            }
+        }
+
+        private FTPAccount GetFTPAccountFromFields()
+        {
+            TrimFTPControls();
+
+            FTPAccount acc = new FTPAccount();
+            acc.Name = txtFTPName.Text;
+            acc.Server = txtFTPServer.Text;
+            acc.Port = (int)nudFTPServerPort.Value;
+            acc.Username = txtFTPUsername.Text;
+            acc.Password = txtFTPPassword.Text;
+            if (!txtFTPPath.Text.StartsWith("/"))
+                txtFTPPath.Text = string.Concat("/", txtFTPPath.Text);
+            acc.Path = txtFTPPath.Text;
+            acc.HttpPath = txtFTPHTTPPath.Text;
+            acc.IsActive = rbFTPActive.Checked;
+
+            return acc;
+        }
+
+        private bool ValidateFTP()
+        {
+            Control[] controls = { txtFTPServer, txtFTPUsername, txtFTPPassword, txtFTPPath };
+
+            foreach (Control c in controls)
+            {
+                if (String.IsNullOrEmpty(c.Text))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private void UpdateFTP()
+        {
+            if (ValidateFTP() //txtServer.Text != "" && txtUsername.Text != "" && txtPassword.Text != "" && txtPath.Text != ""
+                && lbFTPAccounts.SelectedIndices.Count == 1 && lbFTPAccounts.SelectedIndex != -1)
+            {
+                txtFTPStatus.Text = Properties.Resources.FTPupdated;
+
+                FTPAccount acc = GetFTPAccountFromFields();
+
+                if (Program.conf.FTPAccountList != null)
+                {
+                    Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = acc; //use selected index instead of 0
+                }
+                else
+                {
+                    Program.conf.FTPAccountList = new List<FTPAccount>();
+                    Program.conf.FTPAccountList.Add(acc);
+                }
+
+                lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = FTPAdd(acc);
+
+                RewriteFTPRightClickMenu();
+            }
+            else
+            {
+                txtFTPStatus.Text = Properties.Resources.FTPnotUpdated;
+            }
+        }
+
+        private void btnCloneAccount_Click(object sender, EventArgs e)
+        {
+            FTPAccount tmp = new FTPAccount();
+
+            int src = lbFTPAccounts.SelectedIndex;
+
+            if (Program.conf.FTPAccountList != null && Program.conf.FTPAccountList.Count > 0 && lbFTPAccounts.SelectedIndices.Count == 1 && src != -1)
+            {
+                int len = Program.conf.FTPAccountList.Count;
+
+                tmp = Program.conf.FTPAccountList[src];
+
+                //mDoingNameUpdate = true;
+                lbFTPAccounts.Items.Add(tmp.Name);
+
+                txtFTPServer.Text = tmp.Server;
+                nudFTPServerPort.Text = tmp.Port.ToString();
+                txtFTPUsername.Text = tmp.Username;
+                txtFTPPassword.Text = tmp.Password;
+                txtFTPPath.Text = tmp.Path;
+                txtFTPHTTPPath.Text = tmp.HttpPath;
+                rbFTPActive.Checked = tmp.IsActive;
+                rbFTPPassive.Checked = !tmp.IsActive;
+
+                Program.conf.FTPAccountList.Add(tmp);
+
+                lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
+                txtFTPName.Text = tmp.Name;
+                txtFTPName.Focus();
+                txtFTPName.SelectAll();
+                //mDoingNameUpdate = false;
+
+                //rewriteFTPRightClickMenu();
+            }
+        }
+
+        private void btnDeleteFTP_Click(object sender, EventArgs e)
+        {
+            int sel = lbFTPAccounts.SelectedIndex;
+
+            if (sel != -1)
+            {
+                Program.conf.FTPAccountList.RemoveAt(sel);
+
+                lbFTPAccounts.Items.RemoveAt(sel);
+
+                if (lbFTPAccounts.Items.Count > 0)
+                {
+                    lbFTPAccounts.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
+                }
+            }
+        }
+
+        private void lbFTPAccounts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = lbFTPAccounts.SelectedIndex;
+            if (!mDoingNameUpdate && Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
+            {
+                FTPLoad(Program.conf.FTPAccountList[sel]);
+                Program.conf.FTPselected = lbFTPAccounts.SelectedIndex;
+                RewriteFTPRightClickMenu();
+            }
+        }
+
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            if (ValidateFTP())
+            {
+                FTPAccount acc = GetFTPAccountFromFields();
+                Program.conf.FTPAccountList.Add(acc);
+                lbFTPAccounts.Items.Add(FTPAdd(acc));
+                lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
+            }
+            else
+            {
+                txtFTPStatus.Text = Resources.FTPnotUpdated; //change to FTP Account not added?
+            }
+        }
+
+        private void btnUpdateFTP_Click(object sender, EventArgs e)
+        {
+            UpdateFTP();
+        }
+
+        private void btnClearFTP_Click(object sender, EventArgs e)
+        {
+            FTPLoad(new FTPAccount());
+        }
+
+        private void btnExportAccounts_Click(object sender, EventArgs e)
+        {
+            if (Program.conf.FTPAccountList != null)
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd"));
+                dlg.Filter = Program.FILTER_ACCOUNTS;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
+                    fam.Save(dlg.FileName);
+                }
+            }
+        }
+
+        private void btnAccsImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = Program.FILTER_ACCOUNTS;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
+                FTPSetup(fam.FTPAccounts);
+            }
+        }
+
+        private void btnTestConnection_Click(object sender, EventArgs e)
+        {
+            txtFTPStatus.Text = Properties.Resources.FTPtest; //Testing
+            txtFTPStatus.Update();
+            TrimFTPControls();
+            int port = (int)nudFTPServerPort.Value;
+
+            try
+            {
+                FTPAccount acc = new FTPAccount();
+                acc.Server = txtFTPServer.Text;
+                acc.Port = port;
+                acc.Username = txtFTPUsername.Text;
+                acc.Password = txtFTPPassword.Text;
+                acc.IsActive = rbFTPActive.Checked;
+                acc.Path = txtFTPPath.Text;
+
+                FTP ftp = new FTP(ref acc);
+                if (ftp.ListDirectory() != null)
+                {
+                    txtFTPStatus.Text = Properties.Resources.FTPsuccess; //Success
+                }
+                else
+                {
+                    txtFTPStatus.Text = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
+                }
+            }
+            catch (Exception t)
+            {
+                txtFTPStatus.Text = t.Message;
+            }
+        }
+
+        private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.EnableThumbnail = chkEnableThumbnail.Checked;
+        }
+
+        private void cbAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoSwitchFTP = cbAutoSwitchFTP.Checked;
+        }
+
+        #endregion
+
+        private void cbSelectedWindowFront_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowFront = cbSelectedWindowFront.Checked;
+        }
+
+        private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
+        }
+
+        private void pbSelectedWindowBorderColor_Click(object sender, EventArgs e)
+        {
+            SelectColor((PictureBox)sender, ref Program.conf.SelectedWindowBorderColor);
+        }
+
+        private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowBorderSize = nudSelectedWindowBorderSize.Value;
+        }
+
+        private void cbCheckExperimental_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CheckExperimental = cbCheckExperimental.Checked;
+        }
+
+        private void btnCheckUpdate_Click(object sender, EventArgs e)
+        {
+            UpdateChecker.CheckUpdates();
         }
     }
 }

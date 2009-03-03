@@ -34,12 +34,15 @@ namespace ZSS.Tasks
     public class MainAppTask
     {
         #region "Enums"
+
         public enum Jobs
         {
             [Description("Custom Uploader Test")]
             CUSTOM_UPLOADER_TEST,
             [Description("Active Window")]
-            TAKE_SCREENSHOT_WINDOW,
+            TAKE_SCREENSHOT_WINDOW_ACTIVE,
+            [Description("Selected Window")]
+            TAKE_SCREENSHOT_WINDOW_SELECTED,
             [Description("Cropped Window")]
             TAKE_SCREENSHOT_CROPPED,
             [Description("Cropped Window")]
@@ -51,7 +54,9 @@ namespace ZSS.Tasks
             [Description("Image from Clipboard")]
             IMAGEUPLOAD_FROM_CLIPBOARD,
             [Description("Language Translator")]
-            LANGUAGE_TRANSLATOR
+            LANGUAGE_TRANSLATOR,
+            [Description("Upload Image")]
+            UPLOAD_IMAGE
         }
 
         public enum ProgressType
@@ -66,9 +71,11 @@ namespace ZSS.Tasks
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE
         }
+
         #endregion
 
         #region "Common Properties for All Categories"
+
         public BackgroundWorker MyWorker { get; private set; }
         public JobCategoryType JobCategory { get; set; }
         public Jobs Job { get; private set; }
@@ -76,9 +83,12 @@ namespace ZSS.Tasks
         /// List of Errors the Worker had during its operation
         /// </summary>
         public List<string> Errors { get; set; }
+        public bool Retry { get; set; }
+
         #endregion
 
         #region "Properties for Categories: Pictures and Screenshots"
+
         /// <summary>
         /// Image object: Screenshot captured using User32 or Picture by User
         /// </summary>
@@ -107,10 +117,13 @@ namespace ZSS.Tasks
         /// Pictures List to access Local file path, URL
         /// </summary>
         public ImageFileManager ImageManager { get; set; }
+
         #endregion
 
         #region "Properties for Category: Text"
+
         public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
+
         #endregion
 
         /// <summary>
@@ -153,6 +166,7 @@ namespace ZSS.Tasks
         }
 
         #region "Functions"
+
         /// <summary>
         /// Function to Capture Active Window
         /// </summary>
@@ -174,6 +188,7 @@ namespace ZSS.Tasks
                 this.MyImage = User32.CaptureScreen(Program.conf.ShowCursor);
             }
         }
+
         #endregion
 
     }

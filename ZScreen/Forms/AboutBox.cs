@@ -36,7 +36,7 @@ namespace ZSS.Forms
     {
         public AboutBox()
         {
-            InitializeComponent();   
+            InitializeComponent();
             this.Icon = Properties.Resources.zss_main;
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
@@ -52,13 +52,11 @@ namespace ZSS.Forms
             sbDesc.AppendLine();
             sbDesc.AppendLine(AssemblyDescription);
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Using Silk icon set 1.3 by Mark James.");
+            sbDesc.AppendLine("Acknowledgements:");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Running from:");
-            sbDesc.AppendLine(Application.StartupPath);
+            sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Settings file:");
-            sbDesc.AppendLine(Program.XMLSettingsFile);
+            sbDesc.AppendLine("Portions of Selected Window code from Greenshot: https://sourceforge.net/projects/greenshot");
             this.textBoxDescription.Text = sbDesc.ToString();
 
             //set translations for OK button
@@ -158,6 +156,20 @@ namespace ZSS.Forms
         private void llblCompanyName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("www." + ((Control)sender).Text);
+        }
+
+        private void logoPictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            Image logo = logoPictureBox.Image;
+            if (e.Button == MouseButtons.Left)
+            {
+                logo.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                logo.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            }
+            logoPictureBox.Image = logo;
         }
     }
 }

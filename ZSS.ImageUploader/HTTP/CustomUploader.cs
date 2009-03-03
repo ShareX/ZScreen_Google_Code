@@ -77,9 +77,13 @@ namespace ZSS.ImageUploader
                     iHosting.Regexps = regexps;
                     string fullimage = iHosting.ReturnLink(iHosting.Fullimage);
                     string thumbnail = iHosting.ReturnLink(iHosting.Thumbnail);
-                    imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                    imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
-                    
+                    if (!string.IsNullOrEmpty(fullimage))
+                    {
+                        imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                        throw new Exception(StripHTML(imgSource));
+                    }
+                    if (!string.IsNullOrEmpty(thumbnail))
+                        imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));                                            
                 }
             }
             catch (Exception ex)
@@ -95,6 +99,13 @@ namespace ZSS.ImageUploader
             ImageFileManager ifm = new ImageFileManager(imageFiles);
             ifm.Source = imgSource;
             return ifm;
+        }
+
+        string StripHTML(string inputString)
+        {
+            string HTML_TAG_PATTERN = "<.*?>";
+            return Regex.Replace
+              (inputString, HTML_TAG_PATTERN, string.Empty);
         }
     }
 }
