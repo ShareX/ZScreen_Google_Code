@@ -1347,14 +1347,6 @@ namespace ZSS
             Program.conf.RegionHotkeyInfo = cbRegionHotkeyInfo.Checked;
         }
 
-        private void niTray_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left && e.Clicks == 2)
-            {
-                ShowMainWindow();
-            }
-        }
-
         private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ShowMainWindow();
@@ -2555,10 +2547,12 @@ namespace ZSS
 
         private void ShowMainWindow()
         {
-            Show();
-            WindowState = FormWindowState.Normal;
-            this.Activate();
-            Form.ActiveForm.BringToFront();
+            if (!this.Visible)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                User32.ActivateWindow(this.Handle);
+            }
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
