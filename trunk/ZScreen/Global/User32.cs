@@ -69,10 +69,10 @@ namespace ZSS
         public delegate IntPtr mLowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll")]
-        public static extern bool SetActiveWindow(int hWnd);
+        public static extern bool SetActiveWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern bool SetForegroundWindow(int hWnd);
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         public static mLowLevelKeyboardProc m_Proc;
 
@@ -117,16 +117,16 @@ namespace ZSS
         public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
         [DllImport("user32.dll")]
-        public static extern int GetForegroundWindow();
+        public static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        public static extern int GetWindowTextW(int hWnd, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder text, int count);
+        public static extern int GetWindowTextW(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder text, int count);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowRect(IntPtr hWnd, ref RECT rect);
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
         public static extern bool GetCursorInfo(out CursorInfo pci);
@@ -137,32 +137,44 @@ namespace ZSS
         [DllImport("user32.dll")]
         public static extern bool GetIconInfo(IntPtr hIcon, out IconInfo piconinfo);
 
+        [DllImport("user32.dll")]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern int EnumWindows(EnumWindowsProc ewp, int lParam);
+
+        public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
+
         public static string GetWindowLabel()
         {
             const int numOfChars = 256;
-            int handle = -1;
+            IntPtr handle = GetForegroundWindow();
             StringBuilder sb = new StringBuilder(numOfChars);
 
-            handle = GetForegroundWindow();
-
             if (GetWindowTextW(handle, sb, numOfChars) > 0)
+            {
                 return sb.ToString();
+            }
             else
+            {
                 return "";
+            }
         }
 
-        public static int GetWindowHandle()
+        public static IntPtr GetWindowHandle()
         {
             const int numOfChars = 256;
-            int handle = -1;
+            IntPtr handle = GetForegroundWindow();
             StringBuilder sb = new StringBuilder(numOfChars);
 
-            handle = GetForegroundWindow();
-
             if (GetWindowTextW(handle, sb, numOfChars) > 0)
+            {
                 return handle;
+            }
             else
-                return -1;
+            {
+                return IntPtr.Zero;
+            }
         }
 
         public static MyCursor CaptureCursor()
@@ -177,7 +189,7 @@ namespace ZSS
                     IntPtr hicon = CopyIcon(ci.hCursor);
                     if (GetIconInfo(hicon, out icInfo))
                     {
-                        Point position = new Point( ci.ptScreenPos.X - ((int)icInfo.xHotspot),
+                        Point position = new Point(ci.ptScreenPos.X - ((int)icInfo.xHotspot),
                             ci.ptScreenPos.Y - ((int)icInfo.yHotspot));
                         Icon ic = Icon.FromHandle(hicon);
                         Bitmap bmp = ic.ToBitmap();
@@ -243,32 +255,27 @@ namespace ZSS
         public static Image GrabWindow(IntPtr handle, bool showCursor)
         {
             IntPtr hdcSrc = GetWindowDC(handle);
-            RECT windowRect = new ZSS.RECT();
-            GetWindowRect(handle, ref windowRect);
-            int width = windowRect.right - windowRect.left;
-            int height = windowRect.bottom - windowRect.top;
-
-            Image img = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            Rectangle windowRect = GetWindowRectangle(handle);
+            Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics gfx = Graphics.FromImage(img);
-            gfx.CopyFromScreen(windowRect.left, windowRect.top, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
+            gfx.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
             if (showCursor)
             {
-                MyCursor cursor = CaptureCursor(); 
+                MyCursor cursor = CaptureCursor();
                 Graphics g = Graphics.FromImage(img);
                 if (cursor != null)
                 {
-                    Rectangle rect = new Rectangle(new Point(cursor.Position.X - windowRect.left,
-                        cursor.Position.Y - windowRect.top), cursor.Cursor.Size);
+                    Rectangle rect = new Rectangle(new Point(cursor.Position.X - windowRect.X,
+                        cursor.Position.Y - windowRect.Y), cursor.Cursor.Size);
                     cursor.Cursor.Draw(g, rect);
                 }
                 else
                 {
-                    Rectangle rect = new Rectangle(new Point(Cursor.Position.X - Cursors.Default.HotSpot.X - windowRect.left,
-                        cursor.Position.Y - Cursors.Default.HotSpot.Y - windowRect.top), Cursors.Default.Size);
+                    Rectangle rect = new Rectangle(new Point(Cursor.Position.X - Cursors.Default.HotSpot.X - windowRect.X,
+                        cursor.Position.Y - Cursors.Default.HotSpot.Y - windowRect.Y), Cursors.Default.Size);
                     Cursors.Default.Draw(g, rect);
                 }
             }
-
             return img;
         }
 
@@ -284,6 +291,71 @@ namespace ZSS
                 Position = position;
                 Bitmap = bitmap;
             }
+        }
+
+        public enum DWMWINDOWATTRIBUTE
+        {
+            DWMWA_NCRENDERING_ENABLED = 1,
+            DWMWA_NCRENDERING_POLICY,
+            DWMWA_TRANSITIONS_FORCEDISABLED,
+            DWMWA_ALLOW_NCPAINT,
+            DWMWA_CAPTION_BUTTON_BOUNDS,
+            DWMWA_NONCLIENT_RTL_LAYOUT,
+            DWMWA_FORCE_ICONIC_REPRESENTATION,
+            DWMWA_FLIP3D_POLICY,
+            DWMWA_EXTENDED_FRAME_BOUNDS,
+            DWMWA_HAS_ICONIC_BITMAP,
+            DWMWA_DISALLOW_PEEK,
+            DWMWA_LAST
+        }
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
+
+        public static Rectangle DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle)
+        {
+            RECT rect;
+            int result = DwmGetWindowAttribute(handle, (int)DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS,
+                out rect, Marshal.SizeOf(typeof(RECT)));
+            if (result < 0) throw new Exception("Error: DWMWA_EXTENDED_FRAME_BOUNDS");
+            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+        }
+
+        public static bool DWMWA_NCRENDERING_ENABLED(IntPtr handle)
+        {
+            bool enabled;
+            int result = DwmGetWindowAttribute(handle, (int)DWMWINDOWATTRIBUTE.DWMWA_NCRENDERING_ENABLED,
+                out enabled, sizeof(bool));
+            if (result < 0) throw new Exception("Error: DWMWA_NCRENDERING_ENABLED");
+            return enabled;
+        }
+
+        public static Rectangle GetWindowRect(IntPtr handle)
+        {
+            RECT rect;
+            GetWindowRect(handle, out rect);
+            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+        }
+
+        public static Rectangle GetWindowRectangle(IntPtr handle)
+        {
+            try
+            {
+                return User32.DWMWA_EXTENDED_FRAME_BOUNDS(handle);
+            }
+            catch
+            {
+                return User32.GetWindowRect(handle);
+            }
+        }
+
+        public static void ActivateWindow(IntPtr handle)
+        {
+            User32.SetActiveWindow(handle);
+            User32.SetForegroundWindow(handle);
         }
     }
 }

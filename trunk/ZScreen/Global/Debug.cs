@@ -31,13 +31,20 @@ namespace ZSS
         public string DebugInfo()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("          Start time: " + StartTime.ToLongTimeString());
-            sb.AppendLine("        Time elapsed: " + TimeElapsed);
+            sb.AppendLine("Running since: " + StartTime.ToString("yyyy-MM-dd") + " " + StartTime.ToString("HH:mm:ss"));
+            sb.AppendLine();
+            sb.AppendLine("Up Time: " + TimeElapsed);
             sb.AppendLine();
             sb.AppendLine("  Start memory usage: " + StartMemoryUsage.ToString());
             sb.AppendLine("Current memory usage: " + MemoryUsage.ToString());
             sb.AppendLine("Minimum memory usage: " + MinMemoryUsage.ToString());
-            sb.AppendLine("Maximum memory usage: " + MaxMemoryUsage.ToString());
+            sb.AppendLine("Maximum memory usage: " + MaxMemoryUsage.ToString());   
+            sb.AppendLine();
+            sb.AppendLine("Running from:");
+            sb.AppendLine(System.Windows.Forms.Application.ExecutablePath);   
+            sb.AppendLine();
+            sb.AppendLine("Settings file:");
+            sb.AppendLine(Program.XMLSettingsFile);
             return sb.ToString();
         }
 
@@ -54,7 +61,7 @@ namespace ZSS
         public int GetMemoryUsage()
         {
             currProc.Refresh();
-            return (int)currProc.PrivateMemorySize64/1024; // (int)(memoryPerfCounter.NextValue() / 1024);
+            return (int)currProc.PrivateMemorySize64 / 1024; // (int)(memoryPerfCounter.NextValue() / 1024);
         }
 
         private void TimerTick(Object stateInfo)

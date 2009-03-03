@@ -38,13 +38,7 @@ namespace ZSS
         //*********************
         public string ImagesDir { get; set; }
         public string TextDir { get; set; }
-        /// <summary>
-        /// Settings.xml folder
-        /// </summary>
         public string SettingsDir { get; set; }
-        /// <summary>
-        /// Cache folder mainly for FTP
-        /// </summary>
         public string CacheDir { get; set; }
         public string TempDir { get; set; }
 
@@ -63,21 +57,23 @@ namespace ZSS
         public bool RegionRectangleInfo = true;
         public bool RegionHotkeyInfo = true;
         public bool ActiveHelp = true;
-        /// <summary>
-        /// Translate Active Help using Google Translate
-        /// </summary>
         public bool GTActiveHelp = false;
         public int CropStyle = 1;
         public string CropBorderColor = SerializeColor(Color.Black);
-        public Single CropBorderSize = 1;
+        public decimal CropBorderSize = 1;
         public bool CompleteSound = false;
         public bool ShowCursor = false;
         public string HelpToLanguage = "en";
+        public bool SelectedWindowFront = false;
+        public bool SelectedWindowRectangleInfo = true;
+        public string SelectedWindowBorderColor = SerializeColor(Color.Red);
+        public decimal SelectedWindowBorderSize = 2;
 
         //*********************
         //* Hotkey Settings
         //*********************
         public HKcombo HKActiveWindow = new HKcombo(Keys.Alt, Keys.PrintScreen);
+        public HKcombo HKSelectedWindow = new HKcombo(Keys.Shift, Keys.PrintScreen);
         public HKcombo HKCropShot = new HKcombo(Keys.Control, Keys.PrintScreen);
         public HKcombo HKLastCropShot = new HKcombo(Keys.None);
         public HKcombo HKEntireScreen = new HKcombo(Keys.PrintScreen);
@@ -98,8 +94,9 @@ namespace ZSS
         public string ImageShackRegistrationCode = null;
         public string TinyPicShuk = null;
         public decimal ErrorRetryCount = 3;
-        public ZSS.ImageUploader.UploadMode UploadMode = ZSS.ImageUploader.UploadMode.API;       
-        
+        public ZSS.ImageUploader.UploadMode UploadMode = ZSS.ImageUploader.UploadMode.API;
+        public bool ImageUploadRetry = true;
+        public bool AutoSwitchFTP = true;
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
         public bool ClipboardTranslate = false;
@@ -118,7 +115,7 @@ namespace ZSS
         //*********************
         public int awincrement = 0;
         public int esincrement = 0;
-        public int csincrement = 0;        
+        public int csincrement = 0;
         public bool DeleteLocal = false;
         public bool ManualNaming = false;
         public string entireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
@@ -127,7 +124,6 @@ namespace ZSS
         public long ImageQuality = 90L;
         public int SwitchAfter = 350;
         public int SwitchFormat = 1;
-
         public bool ShowWatermark = false;
         public string WatermarkText = "%h:%mi";
         public XmlFont WatermarkFont = SerializeFont(new Font("Arial", 8));
@@ -138,10 +134,10 @@ namespace ZSS
         public string WatermarkGradient1 = SerializeColor(Color.White);
         public string WatermarkGradient2 = SerializeColor(Color.Gray);
         public string WatermarkBorderColor = SerializeColor(Color.Black);
-        public WatermarkPositionType WatermarkPositionMode =  WatermarkPositionType.BOTTOM_RIGHT;
+        public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkCornerRadius = 4;
         public string WatermarkGradientType = "Vertical";
-        
+
         //*********************
         //* Advanced Settings
         //*********************        
@@ -153,6 +149,7 @@ namespace ZSS
         public bool ShowInTaskbar = true;
         public bool BalloonTipOpenLink = false;
         public bool CaptureEntireScreenOnError = false;
+        public bool CheckExperimental = false;
 
         //*********************
         //* Custom Uploaders Settings

@@ -63,7 +63,7 @@ namespace ZSS
 
         public static string[] mFileTypes = { "png", "jpg", "gif", "bmp", "tif", "emf", "wmf", "ico" };
 
-        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Final, false);
+        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         internal static ZSS.Forms.DropWindow MyDropWindow;
 
         /// <summary>
@@ -133,7 +133,8 @@ namespace ZSS
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
         public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
 
-        public static Rectangle mLastRegion = Rectangle.Empty;
+        public static Rectangle LastRegion = Rectangle.Empty;
+        public static Rectangle LastCapture = Rectangle.Empty;
 
         private static ZScreen ZScreenWindow;
 

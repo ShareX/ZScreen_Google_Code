@@ -270,7 +270,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TODO.txt" />
+    <None Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\info.png" />
@@ -301,6 +301,11 @@
     <None Include="Resources\world_add.png" />
     <None Include="Resources\camera_edit.png" />
     <None Include="Resources\camera.png" />
+    <None Include="Resources\shape_move_backwards.png" />
+    <None Include="Resources\drive_network.png" />
+    <None Include="Resources\folder_picture.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\information.png" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
     <Content Include="zss-main.ico" />
   </ItemGroup>

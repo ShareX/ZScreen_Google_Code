@@ -108,6 +108,7 @@ namespace ZSS.ImageUploader
             }
 
             ImageFileManager ifm = new ImageFileManager(ifl);
+            ifm.LocalFilePath = localFilePath;
             return ifm;
         }
 

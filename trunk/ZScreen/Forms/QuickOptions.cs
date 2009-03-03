@@ -124,8 +124,7 @@ namespace ZSS.Forms
         private void QuickOptions_Shown(object sender, EventArgs e)
         {
             System.Threading.Thread.Sleep(100);
-            User32.SetForegroundWindow(this.Handle.ToInt32());
-            User32.SetActiveWindow(this.Handle.ToInt32());
+            User32.ActivateWindow(this.Handle);
             lbDest.Focus();
             lbDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             lbClipboardMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
