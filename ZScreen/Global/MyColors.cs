@@ -412,6 +412,42 @@ namespace ZSS
 
         #region Public Methods
 
+        public static string ColorToHex(Color color)
+        {
+            return string.Format("{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+        }
+
+        public static int ColorToDecimal(Color color)
+        {
+            return HexToDecimal(ColorToHex(color));
+        }
+
+        public static Color HexToColor(string hex)
+        {
+            string r, g, b;
+            r = hex.Substring(0, 2);
+            g = hex.Substring(2, 2);
+            b = hex.Substring(4, 2);
+
+            return Color.FromArgb(HexToDecimal(r), HexToDecimal(g), HexToDecimal(b));
+        }
+
+        public static int HexToDecimal(string hex)
+        {
+            //return int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+            return Convert.ToInt32(hex, 16);
+        }
+
+        public static string DecimalToHex(int dec)
+        {
+            return dec.ToString("X6");
+        }
+
+        public static Color DecimalToColor(int dec)
+        {
+            return Color.FromArgb(dec & 0xFF, (dec & 0xff00) / 256, dec / 65536);
+        }
+
         public static Color GetPixelColor(Point point)
         {
             Bitmap bmp = new Bitmap(1, 1);
@@ -459,6 +495,12 @@ namespace ZSS
             HSB hsb = RGB.ToHSB(c);
             hsb.Brightness *= brightness;
             return hsb.ToColor();
+        }
+
+        public static Color RandomColor()
+        {
+            Random rand = new Random();
+            return Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
         }
 
         #endregion
