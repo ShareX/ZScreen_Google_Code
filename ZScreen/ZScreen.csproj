@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Global\Debug.cs" />
     <Compile Include="Global\Enums.cs" />
+    <Compile Include="Global\MyColors.cs" />
     <Compile Include="Global\MyGraphics.cs" />
     <Compile Include="Helpers\AppInfo.cs" />
     <Compile Include="Global\ClipboardManager.cs" />
