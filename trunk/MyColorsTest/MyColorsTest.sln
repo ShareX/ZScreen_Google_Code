@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColorsTest", "MyColorsTest\MyColorsTest.csproj", "{B442275B-0659-4833-84FA-3709F6BB6AB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Colors", "ZSS.Colors\ZSS.Colors.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Colors", "..\ZSS.Colors\ZSS.Colors.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
