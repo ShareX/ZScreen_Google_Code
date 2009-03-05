@@ -99,6 +99,9 @@
     <Compile Include="Forms\ShowScreenshot.Designer.cs">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global\ColorBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Global\Debug.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\MyColors.cs" />
