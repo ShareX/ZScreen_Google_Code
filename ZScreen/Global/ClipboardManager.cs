@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using ZSS.ImageUploader;
 using ZSS.ImageUploader.Helpers;
+using System.Windows.Forms;
 
 namespace ZSS
 {
@@ -124,33 +125,43 @@ namespace ZSS
 
         public static void SetClipboardText()
         {
-
-            List<List<string>> lCbLines = new List<List<string>>();
-
-            if (Workers > 1)
+            try
             {
-                foreach (ImageFileManager list in ScreenshotsHistory)
+                List<List<string>> lCbLines = new List<List<string>>();
+
+                if (Workers > 1)
                 {
-                    lCbLines.Add(GetClipboardText(list));
+                    foreach (ImageFileManager list in ScreenshotsHistory)
+                    {
+                        lCbLines.Add(GetClipboardText(list));
+                    }
                 }
-            }
-            else if (Workers == 1)
-            {
-                lCbLines.Add(GetClipboardText(GetLastImageUpload()));
-            }
-
-            StringBuilder sbLines = new StringBuilder();
-            foreach (List<string> list in lCbLines)
-            {
-                foreach (string line in list)
+                else if (Workers == 1)
                 {
-                    sbLines.AppendLine(line);
+                    lCbLines.Add(GetClipboardText(GetLastImageUpload()));
                 }
-            }
 
-            string temp = sbLines.ToString();
-            if (!string.IsNullOrEmpty(temp))
-                System.Windows.Forms.Clipboard.SetDataObject(temp.Trim(), true, 3, 1000);
+                StringBuilder sbLines = new StringBuilder();
+                foreach (List<string> list in lCbLines)
+                {
+                    foreach (string line in list)
+                    {
+                        sbLines.AppendLine(line);
+                    }
+                }
+
+                string temp = sbLines.ToString();
+                if (!string.IsNullOrEmpty(temp))
+                {
+                    Clipboard.Clear();
+                    Clipboard.SetText(temp);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
         }
     }
