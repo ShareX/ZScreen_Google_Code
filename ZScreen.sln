@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploader", "ZSS.Tex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Colors", "ZSS.Colors\ZSS.Colors.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -54,6 +56,15 @@ Global
 		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|x86.ActiveCfg = Release|x86
 		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|x86.Build.0 = Release|x86
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|x86.ActiveCfg = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

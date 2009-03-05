@@ -280,6 +280,10 @@
     <None Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZSS.Colors\ZSS.Colors.csproj">
+      <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
+      <Name>ZSS.Colors</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploader.csproj">
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
       <Name>ZSS.ImageUploader</Name>
