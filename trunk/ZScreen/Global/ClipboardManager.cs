@@ -154,7 +154,7 @@ namespace ZSS
                 if (!string.IsNullOrEmpty(temp))
                 {
                     Clipboard.Clear();
-                    Clipboard.SetText(temp);
+                    Clipboard.SetText(temp.Trim());
                 }
 
             }
