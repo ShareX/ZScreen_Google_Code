@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
-namespace MyColorsTest
+namespace ZSS.Colors
 {
     public class ColorBox : UserControl
     {
@@ -15,9 +11,6 @@ namespace MyColorsTest
 
         public MyColors.MyColor MyColor { get; set; }
         public MyColors.MyColor MyColor2 { get; set; }
-        private Bitmap bmp;
-
-        private eDrawStyle mDrawStyle;
 
         public eDrawStyle DrawStyle
         {
@@ -39,7 +32,12 @@ namespace MyColorsTest
 
         public event EventHandler ColorChanged;
 
+        private Bitmap bmp;
+        private int width;
+        private int height;
+        private eDrawStyle mDrawStyle;
         private bool mouseDown;
+        private bool drawCrosshair;
         private Point oldMousePosition;
 
         #endregion
@@ -47,8 +45,10 @@ namespace MyColorsTest
         public ColorBox()
         {
             InitializeComponent();
+            this.width = this.ClientRectangle.Width;
+            this.height = this.ClientRectangle.Height;
+            this.bmp = new Bitmap(width, height);
             this.MyColor = Color.Red;
-            this.bmp = new Bitmap(this.Width, this.Height);
             this.DrawStyle = eDrawStyle.Hue;
         }
 
@@ -78,13 +78,28 @@ namespace MyColorsTest
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // ColorBox
+            // 
             this.Name = "ColorBox";
             this.Size = new System.Drawing.Size(255, 255);
-            this.MouseDown += new MouseEventHandler(ColorBox_MouseDown);
-            this.MouseMove += new MouseEventHandler(ColorBox_MouseMove);
-            this.MouseUp += new MouseEventHandler(ColorBox_MouseUp);
-            this.Paint += new PaintEventHandler(ColorBox_Paint);
+            this.DoubleBuffered = true;
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ColorBox_Paint);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseMove);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseUp);
+            this.ClientSizeChanged += new System.EventHandler(this.ColorBox_ClientSizeChanged);
+            this.ResumeLayout(false);
+
+        }
+
+        private void ColorBox_ClientSizeChanged(object sender, EventArgs e)
+        {
+            this.width = this.ClientRectangle.Width;
+            this.height = this.ClientRectangle.Height;
+            this.bmp = new Bitmap(width, height);
+            DrawColors();
         }
 
         #endregion
@@ -93,6 +108,7 @@ namespace MyColorsTest
 
         private void ColorBox_MouseDown(object sender, MouseEventArgs e)
         {
+            if (!drawCrosshair) drawCrosshair = true;
             mouseDown = true;
             ColorBox_MouseMove(this, e);
         }
@@ -104,8 +120,9 @@ namespace MyColorsTest
             {
                 MyColor2 = GetColor(mousePosition);
                 oldMousePosition = mousePosition;
-                if (ColorChanged != null) ColorChanged(this, e);
                 Refresh();
+                if (ColorChanged != null) ColorChanged(this, e);
+                //Console.WriteLine(width + "-" + this.ClientRectangle.Width + "-" + this.DisplayRectangle.Width);
             }
         }
 
@@ -116,12 +133,9 @@ namespace MyColorsTest
 
         private void ColorBox_Paint(object sender, PaintEventArgs e)
         {
-            if (!this.DesignMode)
-            {
-                if (!mouseDown) DrawColors();
-                e.Graphics.DrawImage(bmp, this.ClientRectangle);
-                DrawCrosshair(e.Graphics);
-            }
+            if (!mouseDown) DrawColors();
+            e.Graphics.DrawImage(bmp, this.ClientRectangle);
+            if (drawCrosshair) DrawCrosshair(e.Graphics);
         }
 
         #endregion
@@ -130,19 +144,10 @@ namespace MyColorsTest
 
         private void DrawCrosshair(Graphics g)
         {
-            Point circlePoint = new Point(oldMousePosition.X - 5, oldMousePosition.Y - 5);
-
-            int average = (MyColor2.RGB.Red + MyColor2.RGB.Green + MyColor2.RGB.Blue) / 3;
-            int circ = 5 * 2;
-
-            if (average > 175)
-            {
-                g.DrawEllipse(Pens.Black, new Rectangle(circlePoint, new Size(circ, circ)));
-            }
-            else
-            {
-                g.DrawEllipse(Pens.White, new Rectangle(circlePoint, new Size(circ, circ)));
-            }
+            g.DrawEllipse(new Pen(Color.Black), new Rectangle(new Point(oldMousePosition.X - 6, oldMousePosition.Y - 6),
+                new Size(12, 12)));
+            g.DrawEllipse(new Pen(Color.White), new Rectangle(new Point(oldMousePosition.X - 5, oldMousePosition.Y - 5),
+                new Size(10, 10)));
         }
 
         private void DrawColors()
@@ -175,15 +180,15 @@ namespace MyColorsTest
         private void DrawHue()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.HSB start = new MyColors.HSB(MyColor.HSB.Hue, 1.0, 0.0);
-            MyColors.HSB end = new MyColors.HSB(MyColor.HSB.Hue, 0.0, 0.0);
+            MyColors.HSB start = new MyColors.HSB(MyColor.HSB.Hue, 0.0, 0.0);
+            MyColors.HSB end = new MyColors.HSB(MyColor.HSB.Hue, 1.0, 0.0);
 
-            for (int i = 0; i < this.Height; i++)
+            for (int i = 0; i < height; i++)
             {
-                start.Brightness = end.Brightness = 1.0 - (double)i / this.Height;
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, this.Width, 1),
+                start.Brightness = end.Brightness = 1.0 - (double)i / height;
+                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                     start.ToColor(), end.ToColor(), 0, false);
-                g.FillRectangle(brush, new Rectangle(0, i, this.Width, 1));
+                g.FillRectangle(brush, new Rectangle(0, i, width, 1));
             }
         }
 
@@ -195,12 +200,12 @@ namespace MyColorsTest
             MyColors.HSB start = new MyColors.HSB(0.0, MyColor.HSB.Saturation, 1.0);
             MyColors.HSB end = new MyColors.HSB(0.0, MyColor.HSB.Saturation, 0.0);
 
-            for (int i = 0; i < this.Width; i++)
+            for (int i = 0; i < width; i++)
             {
-                start.Hue = end.Hue = (double)i / this.Height;
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, 1, this.Height),
+                start.Hue = end.Hue = (double)i / height;
+                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, 1, height),
                     start.ToColor(), end.ToColor(), 90, false);
-                g.FillRectangle(brush, new Rectangle(i, 0, 1, this.Height));
+                g.FillRectangle(brush, new Rectangle(i, 0, 1, height));
             }
         }
 
@@ -212,12 +217,12 @@ namespace MyColorsTest
             MyColors.HSB start = new MyColors.HSB(0.0, 1.0, MyColor.HSB.Brightness);
             MyColors.HSB end = new MyColors.HSB(0.0, 0.0, MyColor.HSB.Brightness);
 
-            for (int i = 0; i < this.Width; i++)
+            for (int i = 0; i < width; i++)
             {
-                start.Hue = end.Hue = (double)i / this.Height;
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, 1, this.Height),
+                start.Hue = end.Hue = (double)i / height;
+                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, 1, height),
                     start.ToColor(), end.ToColor(), 90, false);
-                g.FillRectangle(brush, new Rectangle(i, 0, 1, this.Height));
+                g.FillRectangle(brush, new Rectangle(i, 0, 1, height));
             }
         }
 
@@ -229,12 +234,12 @@ namespace MyColorsTest
             MyColors.RGB start = new MyColors.RGB(MyColor.RGB.Red, 0, 0);
             MyColors.RGB end = new MyColors.RGB(MyColor.RGB.Red, 0, 255);
 
-            for (int i = 0; i < this.Height; i++)
+            for (int i = 0; i < height; i++)
             {
-                start.Green = end.Green = Round(255 - (255 * (double)i / (this.Height)));
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, this.Width, 1),
+                start.Green = end.Green = Round(255 - (255 * (double)i / (height)));
+                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                   start.ToColor(), end.ToColor(), 0, false);
-                g.FillRectangle(brush, new Rectangle(0, i, this.Width, 1));
+                g.FillRectangle(brush, new Rectangle(0, i, width, 1));
             }
         }
 
@@ -246,12 +251,12 @@ namespace MyColorsTest
             MyColors.RGB start = new MyColors.RGB(0, MyColor.RGB.Green, 0);
             MyColors.RGB end = new MyColors.RGB(0, MyColor.RGB.Green, 255);
 
-            for (int i = 0; i < this.Height; i++)
+            for (int i = 0; i < height; i++)
             {
-                start.Red = end.Red = Round(255 - (255 * (double)i / (this.Height)));
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, this.Width, 1),
+                start.Red = end.Red = Round(255 - (255 * (double)i / (height)));
+                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                   start.ToColor(), end.ToColor(), 0, false);
-                g.FillRectangle(brush, new Rectangle(0, i, this.Width, 1));
+                g.FillRectangle(brush, new Rectangle(0, i, width, 1));
             }
         }
 
@@ -263,12 +268,12 @@ namespace MyColorsTest
             MyColors.RGB start = new MyColors.RGB(0, 0, MyColor.RGB.Blue);
             MyColors.RGB end = new MyColors.RGB(255, 0, MyColor.RGB.Blue);
 
-            for (int i = 0; i < this.Height; i++)
+            for (int i = 0; i < height; i++)
             {
-                start.Green = end.Green = Round(255 - (255 * (double)i / (this.Height)));
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, this.Width, 1),
+                start.Green = end.Green = Round(255 - (255 * (double)i / (height)));
+                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                   start.ToColor(), end.ToColor(), 0, false);
-                g.FillRectangle(brush, new Rectangle(0, i, this.Width, 1));
+                g.FillRectangle(brush, new Rectangle(0, i, width, 1));
             }
         }
 
@@ -282,39 +287,13 @@ namespace MyColorsTest
             return new MyColors.MyColor(bmp.GetPixel(x, y));
         }
 
-        //private MyColors.MyColor GetColor(int x, int y)
-        //{
-        //    switch (DrawStyle)
-        //    {
-        //        case eDrawStyle.Hue:
-        //            return new MyColors.MyColor(new MyColors.HSB(MyColor.HSB.Hue,
-        //                (double)x / this.Width, 1.0 - (double)y / this.Height));
-        //        case eDrawStyle.Saturation:
-        //            return new MyColors.MyColor(new MyColors.HSB((double)x / this.Width,
-        //                MyColor.HSB.Saturation, 1.0 - (double)y / this.Height));
-        //        case eDrawStyle.Brightness:
-        //            return new MyColors.MyColor(new MyColors.HSB((double)x / this.Width, 1.0 - (double)y / this.Height, MyColor.HSB.Brightness));
-        //        default:
-        //            return MyColor;
-        //        //case eDrawStyle.Red:
-        //        //    _hsl = AdobeColors.RGB_to_HSL(Color.FromArgb(m_rgb.R, Round(255 * (1.0 - (double)y / (this.Height - 4))), Round(255 * (double)x / (this.Width - 4))));
-        //        //    break;
-        //        //case eDrawStyle.Green:
-        //        //    _hsl = AdobeColors.RGB_to_HSL(Color.FromArgb(Round(255 * (1.0 - (double)y / (this.Height - 4))), m_rgb.G, Round(255 * (double)x / (this.Width - 4))));
-        //        //    break;
-        //        //case eDrawStyle.Blue:
-        //        //    _hsl = AdobeColors.RGB_to_HSL(Color.FromArgb(Round(255 * (double)x / (this.Width - 4)), Round(255 * (1.0 - (double)y / (this.Height - 4))), m_rgb.B));
-        //        //    break;
-        //    }
-        //}
-
         #endregion
 
         #region Private Helpers
 
         private Point GetPoint(Point point)
         {
-            return new Point(GetBetween(point.X, 0, this.Width - 1), GetBetween(point.Y, 0, this.Height - 1));
+            return new Point(GetBetween(point.X, 0, width - 1), GetBetween(point.Y, 0, height - 1));
         }
 
         private static int GetBetween(int value, int min, int max)
