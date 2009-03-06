@@ -1,4 +1,6 @@
-﻿namespace MyColorsTest
+﻿using ZSS.Colors;
+
+namespace MyColorsTest
 {
     partial class Form1
     {
@@ -32,16 +34,16 @@
             this.txtTest = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.colorBox1 = new MyColorsTest.ColorBox();
+            this.colorBox1 = new ZSS.Colors.ColorBox();
             this.SuspendLayout();
             // 
             // txtTest
             // 
             this.txtTest.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtTest.Location = new System.Drawing.Point(0, 304);
+            this.txtTest.Location = new System.Drawing.Point(0, 307);
             this.txtTest.Multiline = true;
             this.txtTest.Name = "txtTest";
-            this.txtTest.Size = new System.Drawing.Size(278, 127);
+            this.txtTest.Size = new System.Drawing.Size(274, 79);
             this.txtTest.TabIndex = 1;
             this.txtTest.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -61,7 +63,8 @@
             // 
             // colorBox1
             // 
-            this.colorBox1.DrawStyle = MyColorsTest.ColorBox.eDrawStyle.Hue;
+            this.colorBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.colorBox1.DrawStyle = ZSS.Colors.ColorBox.eDrawStyle.Hue;
             this.colorBox1.Location = new System.Drawing.Point(8, 8);
             this.colorBox1.Name = "colorBox1";
             this.colorBox1.Size = new System.Drawing.Size(255, 255);
@@ -71,7 +74,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 431);
+            this.ClientSize = new System.Drawing.Size(274, 386);
             this.Controls.Add(this.colorBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.txtTest);
@@ -91,4 +94,3 @@
         private ColorBox colorBox1;
     }
 }
-

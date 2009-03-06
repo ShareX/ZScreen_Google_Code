@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace MyColorsTest
+namespace ZSS.Colors
 {
     public static class MyColors
     {
@@ -29,6 +29,22 @@ namespace MyColorsTest
                 return new MyColor(color);
             }
 
+            public static implicit operator Color(MyColor color)
+            {
+                return color.Color;
+            }
+
+            public static bool operator ==(MyColor left, MyColor right)
+            {
+                return (left.Color == right.Color) && (left.RGB == right.RGB) && (left.HSB == right.HSB) &&
+                    (left.CMYK == right.CMYK);
+            }
+
+            public static bool operator !=(MyColor left, MyColor right)
+            {
+                return !(left == right);
+            }
+
             public override string ToString()
             {
                 return String.Format("RGB: {0}\r\nHSB: {1}\r\nCMYK: {2}",
@@ -45,19 +61,19 @@ namespace MyColorsTest
             public int Red
             {
                 get { return red; }
-                set { red = value; }
+                set { red = CheckColor(value); }
             }
 
             public int Green
             {
                 get { return green; }
-                set { green = value; }
+                set { green = CheckColor(value); }
             }
 
             public int Blue
             {
                 get { return blue; }
-                set { blue = value; }
+                set { blue = CheckColor(value); }
             }
 
             public RGB(int red, int green, int blue)
@@ -81,6 +97,16 @@ namespace MyColorsTest
             public static implicit operator Color(RGB color)
             {
                 return color.ToColor();
+            }
+
+            public static bool operator ==(RGB left, RGB right)
+            {
+                return (left.Red == right.Red) && (left.Green == right.Green) && (left.Blue == right.Blue);
+            }
+
+            public static bool operator !=(RGB left, RGB right)
+            {
+                return !(left == right);
             }
 
             public override string ToString()
@@ -216,6 +242,16 @@ namespace MyColorsTest
                 return color.ToColor();
             }
 
+            public static bool operator ==(HSB left, HSB right)
+            {
+                return (left.Hue == right.Hue) && (left.Saturation == right.Saturation) && (left.Brightness == right.Brightness);
+            }
+
+            public static bool operator !=(HSB left, HSB right)
+            {
+                return !(left == right);
+            }
+
             public override string ToString()
             {
                 return String.Format("Hue: {0}, Saturation: {1}, Brightness: {2}", Round(Hue * 360),
@@ -331,6 +367,17 @@ namespace MyColorsTest
             public static implicit operator Color(CMYK color)
             {
                 return color.ToColor();
+            }
+
+            public static bool operator ==(CMYK left, CMYK right)
+            {
+                return (left.Cyan == right.Cyan) && (left.Magenta == right.Magenta) && (left.Yellow == right.Yellow) &&
+                    (left.Key == right.Key);
+            }
+
+            public static bool operator !=(CMYK left, CMYK right)
+            {
+                return !(left == right);
             }
 
             public override string ToString()
@@ -460,18 +507,22 @@ namespace MyColorsTest
 
         private static double CheckColor(double number)
         {
-            if (number > 1)
-            {
-                return 1;
-            }
-            else if (number < 0)
-            {
-                return 0;
-            }
-            else
-            {
-                return number;
-            }
+            return GetBetween(number, 0, 1);
+        }
+
+        private static int CheckColor(int number)
+        {
+            return GetBetween(number, 0, 255);
+        }
+
+        private static int GetBetween(int number, int min, int max)
+        {
+            return Math.Max(Math.Min(number, max), min);
+        }
+
+        private static double GetBetween(double value, double min, double max)
+        {
+            return Math.Max(Math.Min(value, max), min);
         }
 
         private static int Round(double val)
