@@ -36,7 +36,7 @@ namespace ZSS
     /// </summary>
     public static class ClipboardManager
     {
-        public static int Workers = 0;
+        public static int Workers { get; private set; }
         private static List<ImageFileManager> ScreenshotsHistory = new List<ImageFileManager>();
 
         public static void AddScreenshotList(ImageFileManager screeshotsList)
@@ -51,6 +51,12 @@ namespace ZSS
         {
             Workers++;
             Console.WriteLine("Clipboard Queued. Total: " + Workers);
+        }
+
+        public static void Clear()
+        {
+            ScreenshotsHistory.Clear();
+            Workers = 0;
         }
 
         /// <summary>
