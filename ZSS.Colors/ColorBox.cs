@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace ZSS.Colors
 {
-    public class ColorBox : UserControl
+    public class ColorBox : ColorUserControl
     {
         public ColorBox()
         {
@@ -20,44 +20,7 @@ namespace ZSS.Colors
 
         #region Variables
 
-        public MyColors.MyColor SetColor
-        {
-            get
-            {
-                return mSetColor;
-            }
-            set
-            {
-                mSetColor = value;
-                Refresh();
-            }
-        }
-
-        public MyColors.MyColor GetColor { get; set; }
-
-        public DrawStyle DrawStyle
-        {
-            get
-            {
-                return mDrawStyle;
-            }
-            set
-            {
-                mDrawStyle = value;
-                Refresh();
-            }
-        }
-
         public event EventHandler ColorChanged;
-
-        private Bitmap bmp;
-        private int width;
-        private int height;
-        private MyColors.MyColor mSetColor;
-        private DrawStyle mDrawStyle;
-        private bool mouseDown;
-        private bool drawCrosshair;
-        private Point oldMousePosition;
 
         #endregion
 
@@ -162,34 +125,9 @@ namespace ZSS.Colors
                 new Size(size * 2, size * 2)));
         }
 
-        private void DrawColors()
-        {
-            switch (DrawStyle)
-            {
-                case DrawStyle.Hue:
-                    DrawHue();
-                    break;
-                case DrawStyle.Saturation:
-                    DrawSaturation();
-                    break;
-                case DrawStyle.Brightness:
-                    DrawBrightness();
-                    break;
-                case DrawStyle.Red:
-                    DrawRed();
-                    break;
-                case DrawStyle.Green:
-                    DrawGreen();
-                    break;
-                case DrawStyle.Blue:
-                    DrawBlue();
-                    break;
-            }
-        }
-
         // Saturation = 0 -> 100
         // Brightness = 100 -> 0
-        private void DrawHue()
+        protected override void DrawHue()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.HSB start = new MyColors.HSB(SetColor.HSB.Hue, 0.0, 0.0);
@@ -206,7 +144,7 @@ namespace ZSS.Colors
 
         // Hue = 0 -> 360
         // Brightness = 100 -> 0
-        private void DrawSaturation()
+        protected override void DrawSaturation()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.HSB start = new MyColors.HSB(0.0, SetColor.HSB.Saturation, 1.0);
@@ -223,7 +161,7 @@ namespace ZSS.Colors
 
         // Hue = 0 -> 360
         // Saturation = 100 -> 0
-        private void DrawBrightness()
+        protected override void DrawBrightness()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.HSB start = new MyColors.HSB(0.0, 1.0, SetColor.HSB.Brightness);
@@ -240,7 +178,7 @@ namespace ZSS.Colors
 
         // Blue = 0 -> 255
         // Green = 255 -> 0
-        private void DrawRed()
+        protected override void DrawRed()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.RGB start = new MyColors.RGB(SetColor.RGB.Red, 0, 0);
@@ -257,7 +195,7 @@ namespace ZSS.Colors
 
         // Blue = 0 -> 255
         // Red = 255 -> 0
-        private void DrawGreen()
+        protected override void DrawGreen()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.RGB start = new MyColors.RGB(0, SetColor.RGB.Green, 0);
@@ -274,7 +212,7 @@ namespace ZSS.Colors
 
         // Red = 0 -> 255
         // Green = 255 -> 0
-        private void DrawBlue()
+        protected override void DrawBlue()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.RGB start = new MyColors.RGB(0, 0, SetColor.RGB.Blue);
@@ -291,40 +229,5 @@ namespace ZSS.Colors
 
         #endregion
 
-        #region Private Helpers
-
-        private MyColors.MyColor GetPointColor(Point point)
-        {
-            return GetPointColor(point.X, point.Y);
-        }
-
-        private MyColors.MyColor GetPointColor(int x, int y)
-        {
-            return new MyColors.MyColor(bmp.GetPixel(x, y));
-        }
-
-        private Point GetPoint(Point point)
-        {
-            return new Point(GetBetween(point.X, 0, width - 1), GetBetween(point.Y, 0, height - 1));
-        }
-
-        private int GetBetween(int value, int min, int max)
-        {
-            return Math.Max(Math.Min(value, max), min);
-        }
-
-        private int Round(double val)
-        {
-            int ret_val = (int)val;
-
-            int temp = (int)(val * 100);
-
-            if ((temp % 100) >= 50)
-                ret_val += 1;
-
-            return ret_val;
-        }
-
-        #endregion
     }
 }

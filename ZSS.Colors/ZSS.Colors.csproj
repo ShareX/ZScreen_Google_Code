@@ -44,6 +44,9 @@
     <Compile Include="ColorSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ColorUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Helpers.cs" />
     <Compile Include="MyColors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
