@@ -20,7 +20,19 @@ namespace ZSS.Colors
 
         #region Variables
 
-        public MyColors.MyColor SetColor { get; set; }
+        public MyColors.MyColor SetColor
+        {
+            get
+            {
+                return mSetColor;
+            }
+            set
+            {
+                mSetColor = value;
+                Refresh();
+            }
+        }
+
         public MyColors.MyColor GetColor { get; set; }
 
         public DrawStyle DrawStyle
@@ -41,6 +53,7 @@ namespace ZSS.Colors
         private Bitmap bmp;
         private int width;
         private int height;
+        private MyColors.MyColor mSetColor;
         private DrawStyle mDrawStyle;
         private bool mouseDown;
         private bool drawCrosshair;
