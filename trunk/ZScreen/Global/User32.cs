@@ -353,9 +353,9 @@ namespace ZSS
         }
 
         public static void ActivateWindow(IntPtr handle)
-        {
-            User32.SetActiveWindow(handle);
+        {            
             User32.SetForegroundWindow(handle);
+            User32.SetActiveWindow(handle);            
         }
     }
 }
