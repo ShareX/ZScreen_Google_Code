@@ -21,27 +21,22 @@ namespace MyColorsTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.AddRange(Enum.GetNames(typeof(ColorBox.eDrawStyle)));
+            comboBox1.Items.AddRange(Enum.GetNames(typeof(DrawStyle)));
             comboBox1.SelectedIndex = 0;
             colorBox1.ColorChanged += new EventHandler(colorBox1_ColorChanged); 
-            //timer1.Start();
         }
 
         private void colorBox1_ColorChanged(object sender, EventArgs e)
         {
-            txtTest.Text = colorBox1.MyColor2.ToString();
+            txtTest.Text = colorBox1.GetColor.ToString();
             testColor = MyColors.GetPixelColor(MousePosition);
-            txtTest.AppendText("\r\n" + (colorBox1.MyColor2 == testColor).ToString());
+            txtTest.AppendText("\r\n" + (colorBox1.GetColor == testColor).ToString());
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            colorBox1.DrawStyle = (ColorBox.eDrawStyle)Enum.Parse(typeof(ColorBox.eDrawStyle), comboBox1.SelectedItem.ToString());
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
+            colorBox1.DrawStyle = (DrawStyle)Enum.Parse(typeof(DrawStyle), comboBox1.SelectedItem.ToString());
+            colorSlider1.DrawStyle = colorBox1.DrawStyle;
         }
     }
 }

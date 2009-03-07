@@ -30,26 +30,21 @@ namespace MyColorsTest
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.txtTest = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.colorBox1 = new ZSS.Colors.ColorBox();
+            this.colorSlider1 = new ZSS.Colors.ColorSlider();
             this.SuspendLayout();
             // 
             // txtTest
             // 
             this.txtTest.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtTest.Location = new System.Drawing.Point(0, 307);
+            this.txtTest.Location = new System.Drawing.Point(0, 300);
             this.txtTest.Multiline = true;
             this.txtTest.Name = "txtTest";
-            this.txtTest.Size = new System.Drawing.Size(274, 79);
+            this.txtTest.Size = new System.Drawing.Size(301, 66);
             this.txtTest.TabIndex = 1;
             this.txtTest.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // comboBox1
             // 
@@ -57,24 +52,35 @@ namespace MyColorsTest
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(8, 272);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(256, 21);
+            this.comboBox1.Size = new System.Drawing.Size(288, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // colorBox1
             // 
-            this.colorBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.colorBox1.DrawStyle = ZSS.Colors.ColorBox.eDrawStyle.Hue;
+            this.colorBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.colorBox1.DrawStyle = ZSS.Colors.DrawStyle.Hue;
             this.colorBox1.Location = new System.Drawing.Point(8, 8);
             this.colorBox1.Name = "colorBox1";
             this.colorBox1.Size = new System.Drawing.Size(255, 255);
             this.colorBox1.TabIndex = 3;
             // 
+            // colorSlider1
+            // 
+            this.colorSlider1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.colorSlider1.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorSlider1.Location = new System.Drawing.Point(264, 8);
+            this.colorSlider1.Name = "colorSlider1";
+            this.colorSlider1.Size = new System.Drawing.Size(30, 255);
+            this.colorSlider1.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 386);
+            this.BackColor = System.Drawing.Color.Silver;
+            this.ClientSize = new System.Drawing.Size(301, 366);
+            this.Controls.Add(this.colorSlider1);
             this.Controls.Add(this.colorBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.txtTest);
@@ -89,8 +95,8 @@ namespace MyColorsTest
         #endregion
 
         private System.Windows.Forms.TextBox txtTest;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox comboBox1;
         private ColorBox colorBox1;
+        private ColorSlider colorSlider1;
     }
 }

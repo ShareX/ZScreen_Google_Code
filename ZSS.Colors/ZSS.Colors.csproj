@@ -41,13 +41,12 @@
     <Compile Include="ColorBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ColorSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Helpers.cs" />
     <Compile Include="MyColors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ColorBox.resx">
-      <DependentUpon>ColorBox.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
