@@ -20,7 +20,19 @@ namespace ZSS.Colors
 
         #region Variables
 
-        public MyColors.MyColor SetColor { get; set; }
+        public MyColors.MyColor SetColor
+        {
+            get
+            {
+                return mSetColor;
+            }
+            set
+            {
+                mSetColor = value;
+                Refresh();
+            }
+        }
+
         public MyColors.MyColor GetColor { get; set; }
 
         public DrawStyle DrawStyle
@@ -41,6 +53,7 @@ namespace ZSS.Colors
         private Bitmap bmp;
         private int width;
         private int height;
+        private MyColors.MyColor mSetColor;
         private DrawStyle mDrawStyle;
         private bool mouseDown;
         private bool drawCrosshair;
@@ -130,12 +143,22 @@ namespace ZSS.Colors
         {
             if (!mouseDown) DrawColors();
             e.Graphics.DrawImage(bmp, this.ClientRectangle);
-            //if (drawCrosshair) DrawCrosshair(e.Graphics);
+            if (drawCrosshair) DrawCrosshair(e.Graphics);
         }
 
         #endregion
 
         #region Private Methods
+
+        private void DrawCrosshair(Graphics g)
+        {
+            int rectOffset = 3;
+            int rectSize = 4;
+            g.DrawRectangle(new Pen(Color.Black), new Rectangle(rectOffset, oldMousePosition.Y - rectSize,
+                width - rectOffset * 2, rectSize * 2 + 1));
+            g.DrawRectangle(new Pen(Color.White), new Rectangle(rectOffset + 1, oldMousePosition.Y - rectSize + 1,
+                width - rectOffset * 2 - 2, rectSize * 2 - 1));
+        }
 
         private void DrawColors()
         {
@@ -147,18 +170,18 @@ namespace ZSS.Colors
                 case DrawStyle.Saturation:
                     DrawSaturation();
                     break;
-                //case DrawStyle.Brightness:
-                //    DrawBrightness();
-                //    break;
-                //case DrawStyle.Red:
-                //    DrawRed();
-                //    break;
-                //case DrawStyle.Green:
-                //    DrawGreen();
-                //    break;
-                //case DrawStyle.Blue:
-                //    DrawBlue();
-                //    break;
+                case DrawStyle.Brightness:
+                    DrawBrightness();
+                    break;
+                case DrawStyle.Red:
+                    DrawRed();
+                    break;
+                case DrawStyle.Green:
+                    DrawGreen();
+                    break;
+                case DrawStyle.Blue:
+                    DrawBlue();
+                    break;
             }
         }
 
@@ -184,6 +207,58 @@ namespace ZSS.Colors
             for (int i = 0; i < height; i++)
             {
                 color.Saturation = 1.0 - (double)i / height;
+                g.DrawLine(new Pen(color), 0, i, width, i);
+            }
+        }
+
+        // Brightness = 100 -> 0
+        private void DrawBrightness()
+        {
+            Graphics g = Graphics.FromImage(bmp);
+            MyColors.HSB color = new MyColors.HSB(SetColor.HSB.Hue, SetColor.HSB.Saturation, 0.0);
+
+            for (int i = 0; i < height; i++)
+            {
+                color.Brightness = 1.0 - (double)i / height;
+                g.DrawLine(new Pen(color), 0, i, width, i);
+            }
+        }
+
+        // Red = 255 -> 0
+        private void DrawRed()
+        {
+            Graphics g = Graphics.FromImage(bmp);
+            MyColors.RGB color = new MyColors.RGB(0, SetColor.RGB.Green, SetColor.RGB.Blue);
+
+            for (int i = 0; i < height; i++)
+            {
+                color.Red = 255 - Round(255 * (double)i / height);
+                g.DrawLine(new Pen(color), 0, i, width, i);
+            }
+        }
+
+        // Green = 255 -> 0
+        private void DrawGreen()
+        {
+            Graphics g = Graphics.FromImage(bmp);
+            MyColors.RGB color = new MyColors.RGB(SetColor.RGB.Red, 0, SetColor.RGB.Blue);
+
+            for (int i = 0; i < height; i++)
+            {
+                color.Green = 255 - Round(255 * (double)i / height);
+                g.DrawLine(new Pen(color), 0, i, width, i);
+            }
+        }
+
+        // Blue = 255 -> 0
+        private void DrawBlue()
+        {
+            Graphics g = Graphics.FromImage(bmp);
+            MyColors.RGB color = new MyColors.RGB(SetColor.RGB.Red, SetColor.RGB.Green, 0);
+
+            for (int i = 0; i < height; i++)
+            {
+                color.Blue = 255 - Round(255 * (double)i / height);
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
