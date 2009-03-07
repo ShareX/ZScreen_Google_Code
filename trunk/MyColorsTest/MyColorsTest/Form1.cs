@@ -32,7 +32,6 @@ namespace MyColorsTest
         {
             colorBox = colorBox1.GetColor;
             txtColorBox.Text = colorBox.ToString();
-            txtColorBox.AppendText("\r\n" + (colorBox == (MyColors.MyColor)MyColors.GetPixelColor(MousePosition)).ToString());
             colorSlider1.SetColor = colorBox;
             //CheckControl(colorBox, txtColorBox);
         }
