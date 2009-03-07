@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace ZSS.Colors
 {
-    public abstract class ColorUserControl : UserControl
+    public class ColorUserControl : UserControl, IColorUserControl
     {
         protected Bitmap bmp;
         protected int width;
@@ -72,12 +73,6 @@ namespace ZSS.Colors
             }
         }
 
-        protected abstract void DrawHue();
-        protected abstract void DrawSaturation();
-        protected abstract void DrawBrightness();
-        protected abstract void DrawRed();
-        protected abstract void DrawGreen();
-        protected abstract void DrawBlue();
 
         #endregion
 
@@ -116,5 +111,24 @@ namespace ZSS.Colors
         }
 
         #endregion
+
+        #region IColorUserControl Members
+
+        public virtual void DrawHue() { ThrowMustOverrideError(new StackFrame(1, true)); }
+        public virtual void DrawSaturation() { ThrowMustOverrideError(new StackFrame(1, true)); }
+        public virtual void DrawBrightness() { ThrowMustOverrideError(new StackFrame(1, true)); }
+        public virtual void DrawRed() { ThrowMustOverrideError(new StackFrame(1, true)); }
+        public virtual void DrawGreen() { ThrowMustOverrideError(new StackFrame(1, true)); }
+        public virtual void DrawBlue() { ThrowMustOverrideError(new StackFrame(1, true)); }
+
+        private void ThrowMustOverrideError(StackFrame fr)
+        {
+            StackTrace st = new StackTrace(fr);
+            throw new Exception(string.Format("need to override inherited virtual method {0}", fr.GetMethod().Name));
+        }
+
+        #endregion
+
+
     }
 }

@@ -124,7 +124,7 @@ namespace ZSS.Colors
         }
 
         // Hue = 360 -> 0
-        protected override void DrawHue()
+        public override void DrawHue()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.HSB color = new MyColors.HSB(0.0, 1.0, 1.0);
@@ -137,7 +137,7 @@ namespace ZSS.Colors
         }
 
         // Saturation = 100 -> 0
-        protected override void DrawSaturation()
+        public override void DrawSaturation()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.HSB color = new MyColors.HSB(SetColor.HSB.Hue, 0.0, SetColor.HSB.Brightness);
@@ -150,7 +150,7 @@ namespace ZSS.Colors
         }
 
         // Brightness = 100 -> 0
-        protected override void DrawBrightness()
+        public override void DrawBrightness()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.HSB color = new MyColors.HSB(SetColor.HSB.Hue, SetColor.HSB.Saturation, 0.0);
@@ -163,7 +163,7 @@ namespace ZSS.Colors
         }
 
         // Red = 255 -> 0
-        protected override  void DrawRed()
+        public override void DrawRed()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.RGB color = new MyColors.RGB(0, SetColor.RGB.Green, SetColor.RGB.Blue);
@@ -176,7 +176,7 @@ namespace ZSS.Colors
         }
 
         // Green = 255 -> 0
-        protected override void DrawGreen()
+        public override void DrawGreen()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.RGB color = new MyColors.RGB(SetColor.RGB.Red, 0, SetColor.RGB.Blue);
@@ -189,7 +189,7 @@ namespace ZSS.Colors
         }
 
         // Blue = 255 -> 0
-        protected override void DrawBlue()
+        public override void DrawBlue()
         {
             Graphics g = Graphics.FromImage(bmp);
             MyColors.RGB color = new MyColors.RGB(SetColor.RGB.Red, SetColor.RGB.Green, 0);
