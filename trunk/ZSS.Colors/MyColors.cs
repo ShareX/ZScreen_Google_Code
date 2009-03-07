@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace ZSS.Colors
@@ -47,8 +45,7 @@ namespace ZSS.Colors
 
             public override string ToString()
             {
-                return String.Format("RGB: {0}\r\nHSB: {1}\r\nCMYK: {2}",
-                    RGB.ToString(), HSB.ToString(), CMYK.ToString());
+                return String.Format("{0}\r\n{1}\r\n{2}", RGB.ToString(), HSB.ToString(), CMYK.ToString());
             }
         }
 

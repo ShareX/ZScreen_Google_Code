@@ -7,12 +7,23 @@ namespace ZSS.Colors
 {
     public class ColorBox : UserControl
     {
+        public ColorBox()
+        {
+            InitializeComponent();
+            this.width = this.ClientRectangle.Width;
+            this.height = this.ClientRectangle.Height;
+            this.bmp = new Bitmap(width, height);
+            this.SetColor = Color.Red;
+            this.GetColor = this.SetColor;
+            this.DrawStyle = DrawStyle.Hue;
+        }
+
         #region Variables
 
-        public MyColors.MyColor MyColor { get; set; }
-        public MyColors.MyColor MyColor2 { get; set; }
+        public MyColors.MyColor SetColor { get; set; }
+        public MyColors.MyColor GetColor { get; set; }
 
-        public eDrawStyle DrawStyle
+        public DrawStyle DrawStyle
         {
             get
             {
@@ -25,32 +36,17 @@ namespace ZSS.Colors
             }
         }
 
-        public enum eDrawStyle
-        {
-            Hue, Saturation, Brightness, Red, Green, Blue
-        }
-
         public event EventHandler ColorChanged;
 
         private Bitmap bmp;
         private int width;
         private int height;
-        private eDrawStyle mDrawStyle;
+        private DrawStyle mDrawStyle;
         private bool mouseDown;
         private bool drawCrosshair;
         private Point oldMousePosition;
 
         #endregion
-
-        public ColorBox()
-        {
-            InitializeComponent();
-            this.width = this.ClientRectangle.Width;
-            this.height = this.ClientRectangle.Height;
-            this.bmp = new Bitmap(width, height);
-            this.MyColor = Color.Red;
-            this.DrawStyle = eDrawStyle.Hue;
-        }
 
         #region Component Designer generated code
 
@@ -58,6 +54,27 @@ namespace ZSS.Colors
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            //components = new System.ComponentModel.Container();
+
+            this.Name = "ColorBox";
+            this.Size = new System.Drawing.Size(255, 255);
+            this.DoubleBuffered = true;
+            this.ClientSizeChanged += new System.EventHandler(this.ColorBox_ClientSizeChanged);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseUp);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ColorBox_Paint);
+
+            this.ResumeLayout(false);
+        }
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -72,27 +89,9 @@ namespace ZSS.Colors
             base.Dispose(disposing);
         }
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // ColorBox
-            // 
-            this.Name = "ColorBox";
-            this.Size = new System.Drawing.Size(255, 255);
-            this.DoubleBuffered = true;
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ColorBox_Paint);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseMove);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseDown);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ColorBox_MouseUp);
-            this.ClientSizeChanged += new System.EventHandler(this.ColorBox_ClientSizeChanged);
-            this.ResumeLayout(false);
+        #endregion
 
-        }
+        #region Events
 
         private void ColorBox_ClientSizeChanged(object sender, EventArgs e)
         {
@@ -101,10 +100,6 @@ namespace ZSS.Colors
             this.bmp = new Bitmap(width, height);
             DrawColors();
         }
-
-        #endregion
-
-        #region Events
 
         private void ColorBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -118,7 +113,7 @@ namespace ZSS.Colors
             Point mousePosition = GetPoint(e.Location);
             if (mouseDown && (oldMousePosition == null || oldMousePosition != mousePosition))
             {
-                MyColor2 = GetColor(mousePosition);
+                GetColor = GetPointColor(mousePosition);
                 oldMousePosition = mousePosition;
                 Refresh();
                 if (ColorChanged != null) ColorChanged(this, e);
@@ -144,32 +139,36 @@ namespace ZSS.Colors
 
         private void DrawCrosshair(Graphics g)
         {
-            g.DrawEllipse(new Pen(Color.Black), new Rectangle(new Point(oldMousePosition.X - 6, oldMousePosition.Y - 6),
-                new Size(12, 12)));
-            g.DrawEllipse(new Pen(Color.White), new Rectangle(new Point(oldMousePosition.X - 5, oldMousePosition.Y - 5),
-                new Size(10, 10)));
+            DrawEllipse(g, 6, Color.Black);
+            DrawEllipse(g, 5, Color.White);
+        }
+
+        private void DrawEllipse(Graphics g, int size, Color color)
+        {
+            g.DrawEllipse(new Pen(color), new Rectangle(new Point(oldMousePosition.X - size, oldMousePosition.Y - size),
+                new Size(size * 2, size * 2)));
         }
 
         private void DrawColors()
         {
             switch (DrawStyle)
             {
-                case eDrawStyle.Hue:
+                case DrawStyle.Hue:
                     DrawHue();
                     break;
-                case eDrawStyle.Saturation:
+                case DrawStyle.Saturation:
                     DrawSaturation();
                     break;
-                case eDrawStyle.Brightness:
+                case DrawStyle.Brightness:
                     DrawBrightness();
                     break;
-                case eDrawStyle.Red:
+                case DrawStyle.Red:
                     DrawRed();
                     break;
-                case eDrawStyle.Green:
+                case DrawStyle.Green:
                     DrawGreen();
                     break;
-                case eDrawStyle.Blue:
+                case DrawStyle.Blue:
                     DrawBlue();
                     break;
             }
@@ -180,8 +179,8 @@ namespace ZSS.Colors
         private void DrawHue()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.HSB start = new MyColors.HSB(MyColor.HSB.Hue, 0.0, 0.0);
-            MyColors.HSB end = new MyColors.HSB(MyColor.HSB.Hue, 1.0, 0.0);
+            MyColors.HSB start = new MyColors.HSB(SetColor.HSB.Hue, 0.0, 0.0);
+            MyColors.HSB end = new MyColors.HSB(SetColor.HSB.Hue, 1.0, 0.0);
 
             for (int i = 0; i < height; i++)
             {
@@ -197,8 +196,8 @@ namespace ZSS.Colors
         private void DrawSaturation()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.HSB start = new MyColors.HSB(0.0, MyColor.HSB.Saturation, 1.0);
-            MyColors.HSB end = new MyColors.HSB(0.0, MyColor.HSB.Saturation, 0.0);
+            MyColors.HSB start = new MyColors.HSB(0.0, SetColor.HSB.Saturation, 1.0);
+            MyColors.HSB end = new MyColors.HSB(0.0, SetColor.HSB.Saturation, 0.0);
 
             for (int i = 0; i < width; i++)
             {
@@ -214,8 +213,8 @@ namespace ZSS.Colors
         private void DrawBrightness()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.HSB start = new MyColors.HSB(0.0, 1.0, MyColor.HSB.Brightness);
-            MyColors.HSB end = new MyColors.HSB(0.0, 0.0, MyColor.HSB.Brightness);
+            MyColors.HSB start = new MyColors.HSB(0.0, 1.0, SetColor.HSB.Brightness);
+            MyColors.HSB end = new MyColors.HSB(0.0, 0.0, SetColor.HSB.Brightness);
 
             for (int i = 0; i < width; i++)
             {
@@ -231,8 +230,8 @@ namespace ZSS.Colors
         private void DrawRed()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.RGB start = new MyColors.RGB(MyColor.RGB.Red, 0, 0);
-            MyColors.RGB end = new MyColors.RGB(MyColor.RGB.Red, 0, 255);
+            MyColors.RGB start = new MyColors.RGB(SetColor.RGB.Red, 0, 0);
+            MyColors.RGB end = new MyColors.RGB(SetColor.RGB.Red, 0, 255);
 
             for (int i = 0; i < height; i++)
             {
@@ -248,8 +247,8 @@ namespace ZSS.Colors
         private void DrawGreen()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.RGB start = new MyColors.RGB(0, MyColor.RGB.Green, 0);
-            MyColors.RGB end = new MyColors.RGB(0, MyColor.RGB.Green, 255);
+            MyColors.RGB start = new MyColors.RGB(0, SetColor.RGB.Green, 0);
+            MyColors.RGB end = new MyColors.RGB(0, SetColor.RGB.Green, 255);
 
             for (int i = 0; i < height; i++)
             {
@@ -265,8 +264,8 @@ namespace ZSS.Colors
         private void DrawBlue()
         {
             Graphics g = Graphics.FromImage(bmp);
-            MyColors.RGB start = new MyColors.RGB(0, 0, MyColor.RGB.Blue);
-            MyColors.RGB end = new MyColors.RGB(255, 0, MyColor.RGB.Blue);
+            MyColors.RGB start = new MyColors.RGB(0, 0, SetColor.RGB.Blue);
+            MyColors.RGB end = new MyColors.RGB(255, 0, SetColor.RGB.Blue);
 
             for (int i = 0; i < height; i++)
             {
@@ -277,31 +276,31 @@ namespace ZSS.Colors
             }
         }
 
-        private MyColors.MyColor GetColor(Point point)
-        {
-            return GetColor(point.X, point.Y);
-        }
-
-        private MyColors.MyColor GetColor(int x, int y)
-        {
-            return new MyColors.MyColor(bmp.GetPixel(x, y));
-        }
-
         #endregion
 
         #region Private Helpers
+
+        private MyColors.MyColor GetPointColor(Point point)
+        {
+            return GetPointColor(point.X, point.Y);
+        }
+
+        private MyColors.MyColor GetPointColor(int x, int y)
+        {
+            return new MyColors.MyColor(bmp.GetPixel(x, y));
+        }
 
         private Point GetPoint(Point point)
         {
             return new Point(GetBetween(point.X, 0, width - 1), GetBetween(point.Y, 0, height - 1));
         }
 
-        private static int GetBetween(int value, int min, int max)
+        private int GetBetween(int value, int min, int max)
         {
             return Math.Max(Math.Min(value, max), min);
         }
 
-        private static int Round(double val)
+        private int Round(double val)
         {
             int ret_val = (int)val;
 
