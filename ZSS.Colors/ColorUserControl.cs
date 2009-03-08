@@ -189,28 +189,28 @@ namespace ZSS.Colors
             switch (DrawStyle)
             {
                 case DrawStyle.Hue:
-                    oldPos.X = Round(width * SetColor.HSB.Saturation);
-                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
+                    oldPos.X = Round(width * GetColor.HSB.Saturation);
+                    oldPos.Y = Round(height * (1.0 - GetColor.HSB.Brightness));
                     break;
                 case DrawStyle.Saturation:
-                    oldPos.X = Round(width * SetColor.HSB.Hue);
-                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
+                    oldPos.X = Round(width * GetColor.HSB.Hue);
+                    oldPos.Y = Round(height * (1.0 - GetColor.HSB.Brightness));
                     break;
                 case DrawStyle.Brightness:
-                    oldPos.X = Round(width * SetColor.HSB.Hue);
-                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Saturation));
+                    oldPos.X = Round(width * GetColor.HSB.Hue);
+                    oldPos.Y = Round(height * (1.0 - GetColor.HSB.Saturation));
                     break;
                 case DrawStyle.Red:
-                    oldPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
+                    oldPos.X = Round(width * (double)GetColor.RGB.Blue / 255);
+                    oldPos.Y = Round(height * (1.0 - (double)GetColor.RGB.Green / 255));
                     break;
                 case DrawStyle.Green:
-                    oldPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Red / 255));
+                    oldPos.X = Round(width * (double)GetColor.RGB.Blue / 255);
+                    oldPos.Y = Round(height * (1.0 - (double)GetColor.RGB.Red / 255));
                     break;
                 case DrawStyle.Blue:
-                    oldPos.X = Round(width * (double)SetColor.RGB.Red / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
+                    oldPos.X = Round(width * (double)GetColor.RGB.Red / 255);
+                    oldPos.Y = Round(height * (1.0 - (double)GetColor.RGB.Green / 255));
                     break;
             }
             oldPos = GetPoint(oldPos);
@@ -221,22 +221,22 @@ namespace ZSS.Colors
             switch (DrawStyle)
             {
                 case DrawStyle.Hue:
-                    oldPos.Y = height - Round(height * SetColor.HSB.Hue);
+                    oldPos.Y = height - Round(height * GetColor.HSB.Hue);
                     break;
                 case DrawStyle.Saturation:
-                    oldPos.Y = height - Round(height * SetColor.HSB.Saturation);
+                    oldPos.Y = height - Round(height * GetColor.HSB.Saturation);
                     break;
                 case DrawStyle.Brightness:
-                    oldPos.Y = height - Round(height * SetColor.HSB.Brightness);
+                    oldPos.Y = height - Round(height * GetColor.HSB.Brightness);
                     break;
                 case DrawStyle.Red:
-                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Red / 255);
+                    oldPos.Y = height - Round(height * (double)GetColor.RGB.Red / 255);
                     break;
                 case DrawStyle.Green:
-                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Green / 255);
+                    oldPos.Y = height - Round(height * (double)GetColor.RGB.Green / 255);
                     break;
                 case DrawStyle.Blue:
-                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Blue / 255);
+                    oldPos.Y = height - Round(height * (double)GetColor.RGB.Blue / 255);
                     break;
             }
             oldPos = GetPoint(oldPos);
