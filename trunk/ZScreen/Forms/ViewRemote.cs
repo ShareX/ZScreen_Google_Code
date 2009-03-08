@@ -209,9 +209,10 @@ namespace ZSS
                 }
                 //mFTP.Disconnect();
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(mRes.GetString("VRDdeleteFailed"));
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (lbFiles.Items.Count > 0)
@@ -269,15 +270,19 @@ namespace ZSS
         {
             if (lbFiles.SelectedItems.Count == 1 && (string)lbFiles.SelectedItem != "")
             {
-                string file = (string)lbFiles.SelectedItem;
-                pbViewer.Left = 0;
-                pbViewer.Top = 0;
+                string fp = (string)lbFiles.SelectedItem;
 
-                if (!bwRemoteViewer.IsBusy)
+                if (checkFileTypes(fp))
                 {
-                    RemoteViewerTask rvt = new RemoteViewerTask(RemoteViewerTask.Jobs.VIEW_FILE);
-                    rvt.RemoteFile = file;
-                    bwRemoteViewer.RunWorkerAsync(rvt);
+                    pbViewer.Left = 0;
+                    pbViewer.Top = 0;
+
+                    if (!bwRemoteViewer.IsBusy)
+                    {
+                        RemoteViewerTask rvt = new RemoteViewerTask(RemoteViewerTask.Jobs.VIEW_FILE);
+                        rvt.RemoteFile = fp;
+                        bwRemoteViewer.RunWorkerAsync(rvt);
+                    }
                 }
             }
         }
@@ -320,7 +325,7 @@ namespace ZSS
             if (Program.conf.FTPAccountList != null)
                 mAcc = Program.conf.FTPAccountList[Program.conf.FTPselected];
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
-                string.Format(mRes.GetString("VRDfetchingImages"), mAcc.Name));
+                string.Format(mRes.GetString("VRDfetchingFiles"), mAcc.Name));
 
             if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server ))
             {

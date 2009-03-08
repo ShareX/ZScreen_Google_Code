@@ -35,7 +35,7 @@ using ZSS.Helpers;
 namespace ZSS
 {
     class MyGraphics
-    {    
+    {
 
         /// <summary>
         /// Function to get a Rectangle of all the screens combined
@@ -135,6 +135,31 @@ namespace ZSS
                 height = -height;
             }
             return new Rectangle(x, y, width, height);
+        }
+
+        /// <summary>
+        /// Determins if file is a valid image
+        /// </summary>
+        /// <param name="fp">File path of the Image</param>
+        /// <returns></returns>
+        public static bool IsValidImage(string fp)
+        {
+            bool isImage = false;
+
+            if (File.Exists(fp))
+            {
+                try
+                {
+                    Image.FromFile(fp).Dispose();
+                    isImage = true;
+                }
+                catch (OutOfMemoryException)
+                {
+                    // do nothing
+                }
+            }
+
+            return isImage;
         }
     }
 }
