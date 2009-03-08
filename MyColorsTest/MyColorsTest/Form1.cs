@@ -33,7 +33,7 @@ namespace MyColorsTest
             colorBox = colorBox1.GetColor;
             txtColorBox.Text = colorBox.ToString();
             colorSlider1.SetColor = colorBox;
-            //CheckControl(colorBox, txtColorBox);
+            pictureBox1.BackColor = colorBox;
         }
 
         private void colorSlider1_ColorChanged(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace MyColorsTest
             colorSlider = colorSlider1.GetColor;
             txtColorSlider.Text = colorSlider.ToString();
             colorBox1.SetColor = colorSlider;
-            //CheckControl(colorSlider, txtColorSlider);
+            pictureBox2.BackColor = colorSlider;
         }
 
         private void CheckControl(MyColor color, TextBox textbox)
