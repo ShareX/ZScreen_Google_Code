@@ -45,10 +45,21 @@ namespace ZSS.Colors
         {
             return String.Format("{0}\r\n{1}\r\n{2}", RGB.ToString(), HSB.ToString(), CMYK.ToString());
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 
     public struct RGB
     {
+
         private int red;
         private int green;
         private int blue;
@@ -188,6 +199,16 @@ namespace ZSS.Colors
         {
             return ToCMYK(this);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 
     public struct HSB
@@ -307,6 +328,16 @@ namespace ZSS.Colors
         {
             return ToColor(this);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 
     public struct CMYK
@@ -398,6 +429,16 @@ namespace ZSS.Colors
         public Color ToColor()
         {
             return ToColor(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
         }
     }
 
