@@ -128,11 +128,12 @@ namespace ZSS
                     s = str[x];
                     splode = s.Split(' ');
                     goodFile = splode[splode.Length - 1];
-                    if (checkFileTypes(goodFile))
-                    {
-                        result.Add(goodFile);
-                        bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.ADD_FILE_TO_LISTBOX, goodFile);
-                    }
+                    result.Add(goodFile);
+                    bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.ADD_FILE_TO_LISTBOX, goodFile);
+                    //if (checkFileTypes(goodFile))
+                    //{
+                        
+                    //}
                 }
 
             }
