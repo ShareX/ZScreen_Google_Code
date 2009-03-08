@@ -7,6 +7,22 @@ using System.IO;
 
 namespace ZSS.Colors
 {
+    public delegate void ColorEventHandler(object sender, ColorEventArgs e);
+
+    public class ColorEventArgs : EventArgs
+    {
+        public ColorEventArgs(MyColor color, DrawStyle drawStyle, bool updateControl)
+        {
+            this.Color = color;
+            this.DrawStyle = drawStyle;
+            this.UpdateControl = updateControl;
+        }
+
+        public MyColor Color;
+        public DrawStyle DrawStyle;
+        public bool UpdateControl;
+    }
+
     public enum DrawStyle
     {
         Hue, Saturation, Brightness, Red, Green, Blue
