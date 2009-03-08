@@ -25,9 +25,9 @@ namespace ZSS.Colors
         {
             int rectOffset = 3;
             int rectSize = 4;
-            g.DrawRectangle(new Pen(Color.Black), new Rectangle(rectOffset, oldMousePosition.Y - rectSize,
+            g.DrawRectangle(new Pen(Color.Black), new Rectangle(rectOffset, oldPos.Y - rectSize,
                 width - rectOffset * 2, rectSize * 2 + 1));
-            g.DrawRectangle(new Pen(Color.White), new Rectangle(rectOffset + 1, oldMousePosition.Y - rectSize + 1,
+            g.DrawRectangle(new Pen(Color.White), new Rectangle(rectOffset + 1, oldPos.Y - rectSize + 1,
                 width - rectOffset * 2 - 2, rectSize * 2 - 1));
         }
 
