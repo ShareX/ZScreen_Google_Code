@@ -9,16 +9,16 @@ namespace ZSS.Colors
     {
         public ColorBox()
         {
-            InitializeComponent();
+            Initialize();
         }
 
         #region Protected Override Methods
 
-        protected override void InitializeComponent()
+        protected override void Initialize()
         {
             this.Name = "ColorBox";
             this.Size = new System.Drawing.Size(255, 255);
-            base.InitializeComponent();
+            base.Initialize();
         }
 
         protected override void DrawCrosshair(Graphics g)
