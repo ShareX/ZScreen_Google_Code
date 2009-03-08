@@ -54,6 +54,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Crop_FormClosed);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Crop_MouseDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Crop_KeyPress);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Crop_FormClosing);
             this.ResumeLayout(false);
 
         }

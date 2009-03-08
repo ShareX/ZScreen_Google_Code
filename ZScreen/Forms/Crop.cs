@@ -339,7 +339,7 @@ namespace ZSS
             Close();
         }
 
-        private void Closing()
+        private void Crop_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer.Stop();
             windowCheck.Stop();
@@ -356,5 +356,6 @@ namespace ZSS
             mBgImage.Dispose();
             bmpBgImage.Dispose();
         }
+
     }
 }
