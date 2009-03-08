@@ -12,8 +12,8 @@ namespace MyColorsTest
 {
     public partial class Form1 : Form
     {
-        MyColors.MyColor colorBox;
-        MyColors.MyColor colorSlider;
+        MyColor colorBox;
+        MyColor colorSlider;
 
         public Form1()
         {
@@ -44,7 +44,7 @@ namespace MyColorsTest
             //CheckControl(colorSlider, txtColorSlider);
         }
 
-        private void CheckControl(MyColors.MyColor color, TextBox textbox)
+        private void CheckControl(MyColor color, TextBox textbox)
         {
             if (color.Color == MyColors.GetPixelColor(MousePosition))
             {

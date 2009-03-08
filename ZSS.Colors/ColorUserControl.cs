@@ -9,16 +9,30 @@ namespace ZSS.Colors
 {
     public class ColorUserControl : UserControl, IColorUserControl
     {
+        public event EventHandler ColorChanged;
+
         protected Bitmap bmp;
         protected int width;
         protected int height;
         protected DrawStyle mDrawStyle;
-        protected MyColors.MyColor mSetColor;
+        protected MyColor mSetColor;
         protected bool mouseDown;
         protected bool drawCrosshair;
         protected Point oldMousePosition;
 
-        public MyColors.MyColor SetColor
+        protected void Initialize()
+        {
+            InitializeComponent();
+            InitializeEvents();
+            this.width = this.ClientRectangle.Width;
+            this.height = this.ClientRectangle.Height;
+            this.bmp = new Bitmap(width, height);
+            this.SetColor = Color.Red;
+            this.GetColor = this.SetColor;
+            this.DrawStyle = DrawStyle.Hue;
+        }
+
+        public MyColor SetColor
         {
             get
             {
@@ -31,7 +45,7 @@ namespace ZSS.Colors
             }
         }
 
-        public MyColors.MyColor GetColor { get; set; }
+        public MyColor GetColor { get; set; }
 
         public DrawStyle DrawStyle
         {
@@ -45,6 +59,85 @@ namespace ZSS.Colors
                 Refresh();
             }
         }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        private void InitializeEvents()
+        {
+            this.SuspendLayout();
+
+            this.ClientSizeChanged += new System.EventHandler(this.EventClientSizeChanged);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EventMouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.EventMouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventMouseUp);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EventPaint);
+
+            this.ResumeLayout(false);
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region Events
+
+        private void EventClientSizeChanged(object sender, EventArgs e)
+        {
+            this.width = this.ClientRectangle.Width;
+            this.height = this.ClientRectangle.Height;
+            this.bmp = new Bitmap(width, height);
+            DrawColors();
+        }
+
+        private void EventMouseDown(object sender, MouseEventArgs e)
+        {
+            if (!drawCrosshair) drawCrosshair = true;
+            mouseDown = true;
+            EventMouseMove(this, e);
+        }
+
+        private void EventMouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePosition = GetPoint(e.Location);
+            if (mouseDown && (oldMousePosition == null || oldMousePosition != mousePosition))
+            {
+                GetColor = GetPointColor(mousePosition);
+                oldMousePosition = mousePosition;
+                Refresh();
+                if (ColorChanged != null) ColorChanged(this, e);
+                //Console.WriteLine(width + "-" + this.ClientRectangle.Width + "-" + this.DisplayRectangle.Width);
+            }
+        }
+
+        private void EventMouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void EventPaint(object sender, PaintEventArgs e)
+        {
+            if (!mouseDown) DrawColors();
+            e.Graphics.DrawImage(bmp, this.ClientRectangle);
+            if (drawCrosshair) DrawCrosshair(e.Graphics);
+        }
+
+        #endregion
 
         #region Protected Methods
 
@@ -73,19 +166,18 @@ namespace ZSS.Colors
             }
         }
 
-
         #endregion
 
         #region Protected Helpers
 
-        protected MyColors.MyColor GetPointColor(Point point)
+        protected MyColor GetPointColor(Point point)
         {
             return GetPointColor(point.X, point.Y);
         }
 
-        protected MyColors.MyColor GetPointColor(int x, int y)
+        protected MyColor GetPointColor(int x, int y)
         {
-            return new MyColors.MyColor(bmp.GetPixel(x, y));
+            return new MyColor(bmp.GetPixel(x, y));
         }
 
         protected Point GetPoint(Point point)
@@ -114,21 +206,21 @@ namespace ZSS.Colors
 
         #region IColorUserControl Members
 
+        public virtual void InitializeComponent() { ThrowMustOverrideError(new StackFrame(1, true)); }
         public virtual void DrawHue() { ThrowMustOverrideError(new StackFrame(1, true)); }
         public virtual void DrawSaturation() { ThrowMustOverrideError(new StackFrame(1, true)); }
         public virtual void DrawBrightness() { ThrowMustOverrideError(new StackFrame(1, true)); }
         public virtual void DrawRed() { ThrowMustOverrideError(new StackFrame(1, true)); }
         public virtual void DrawGreen() { ThrowMustOverrideError(new StackFrame(1, true)); }
         public virtual void DrawBlue() { ThrowMustOverrideError(new StackFrame(1, true)); }
+        public virtual void DrawCrosshair(Graphics g) { ThrowMustOverrideError(new StackFrame(1, true)); }
 
         private void ThrowMustOverrideError(StackFrame fr)
         {
             StackTrace st = new StackTrace(fr);
-            throw new Exception(string.Format("need to override inherited virtual method {0}", fr.GetMethod().Name));
+            throw new Exception(string.Format("Need to override inherited virtual method {0}", fr.GetMethod().Name));
         }
 
         #endregion
-
-
     }
 }
