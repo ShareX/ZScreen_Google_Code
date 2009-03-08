@@ -9,38 +9,27 @@ namespace ZSS.Colors
     {
         public ColorBox()
         {
-            Initialize();
+            InitializeComponent();
         }
 
-        public override void InitializeComponent()
-        {
-            this.SuspendLayout();
-            //components = new System.ComponentModel.Container();
+        #region Protected Override Methods
 
+        protected override void InitializeComponent()
+        {
             this.Name = "ColorBox";
             this.Size = new System.Drawing.Size(255, 255);
-            this.DoubleBuffered = true;
-
-            this.ResumeLayout(false);
+            base.InitializeComponent();
         }
 
-        #region Methods
-
-        public override void DrawCrosshair(Graphics g)
+        protected override void DrawCrosshair(Graphics g)
         {
             DrawEllipse(g, 6, Color.Black);
             DrawEllipse(g, 5, Color.White);
         }
 
-        private void DrawEllipse(Graphics g, int size, Color color)
-        {
-            g.DrawEllipse(new Pen(color), new Rectangle(new Point(oldMousePosition.X - size, oldMousePosition.Y - size),
-                new Size(size * 2, size * 2)));
-        }
-
         // Saturation = 0 -> 100
         // Brightness = 100 -> 0
-        public override void DrawHue()
+        protected override void DrawHue()
         {
             Graphics g = Graphics.FromImage(bmp);
             HSB start = new HSB(SetColor.HSB.Hue, 0.0, 0.0);
@@ -57,7 +46,7 @@ namespace ZSS.Colors
 
         // Hue = 0 -> 360
         // Brightness = 100 -> 0
-        public override void DrawSaturation()
+        protected override void DrawSaturation()
         {
             Graphics g = Graphics.FromImage(bmp);
             HSB start = new HSB(0.0, SetColor.HSB.Saturation, 1.0);
@@ -74,7 +63,7 @@ namespace ZSS.Colors
 
         // Hue = 0 -> 360
         // Saturation = 100 -> 0
-        public override void DrawBrightness()
+        protected override void DrawBrightness()
         {
             Graphics g = Graphics.FromImage(bmp);
             HSB start = new HSB(0.0, 1.0, SetColor.HSB.Brightness);
@@ -91,7 +80,7 @@ namespace ZSS.Colors
 
         // Blue = 0 -> 255
         // Green = 255 -> 0
-        public override void DrawRed()
+        protected override void DrawRed()
         {
             Graphics g = Graphics.FromImage(bmp);
             RGB start = new RGB(SetColor.RGB.Red, 0, 0);
@@ -108,7 +97,7 @@ namespace ZSS.Colors
 
         // Blue = 0 -> 255
         // Red = 255 -> 0
-        public override void DrawGreen()
+        protected override void DrawGreen()
         {
             Graphics g = Graphics.FromImage(bmp);
             RGB start = new RGB(0, SetColor.RGB.Green, 0);
@@ -125,7 +114,7 @@ namespace ZSS.Colors
 
         // Red = 0 -> 255
         // Green = 255 -> 0
-        public override void DrawBlue()
+        protected override void DrawBlue()
         {
             Graphics g = Graphics.FromImage(bmp);
             RGB start = new RGB(0, 0, SetColor.RGB.Blue);
@@ -141,6 +130,5 @@ namespace ZSS.Colors
         }
 
         #endregion
-
     }
 }

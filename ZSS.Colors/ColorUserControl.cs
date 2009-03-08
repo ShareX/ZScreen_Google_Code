@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace ZSS.Colors
 {
-    public class ColorUserControl : UserControl, IColorUserControl
+    public class ColorUserControl : UserControl
     {
         public event EventHandler ColorChanged;
 
@@ -19,18 +19,6 @@ namespace ZSS.Colors
         protected bool mouseDown;
         protected bool drawCrosshair;
         protected Point oldMousePosition;
-
-        protected void Initialize()
-        {
-            InitializeComponent();
-            InitializeEvents();
-            this.width = this.ClientRectangle.Width;
-            this.height = this.ClientRectangle.Height;
-            this.bmp = new Bitmap(width, height);
-            this.SetColor = Color.Red;
-            this.GetColor = this.SetColor;
-            this.DrawStyle = DrawStyle.Hue;
-        }
 
         public MyColor SetColor
         {
@@ -67,9 +55,18 @@ namespace ZSS.Colors
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        private void InitializeEvents()
+
+        protected virtual void InitializeComponent()
         {
             this.SuspendLayout();
+
+            this.DoubleBuffered = true;
+            this.width = this.ClientRectangle.Width;
+            this.height = this.ClientRectangle.Height;
+            this.bmp = new Bitmap(width, height);
+            this.SetColor = Color.Red;
+            this.GetColor = this.SetColor;
+            this.DrawStyle = DrawStyle.Hue;
 
             this.ClientSizeChanged += new System.EventHandler(this.EventClientSizeChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EventMouseDown);
@@ -170,6 +167,12 @@ namespace ZSS.Colors
 
         #region Protected Helpers
 
+        protected void DrawEllipse(Graphics g, int size, Color color)
+        {
+            g.DrawEllipse(new Pen(color), new Rectangle(new Point(oldMousePosition.X - size, oldMousePosition.Y - size),
+                new Size(size * 2, size * 2)));
+        }
+
         protected MyColor GetPointColor(Point point)
         {
             return GetPointColor(point.X, point.Y);
@@ -204,22 +207,15 @@ namespace ZSS.Colors
 
         #endregion
 
-        #region IColorUserControl Members
+        #region Protected Virtual Members
 
-        public virtual void InitializeComponent() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawHue() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawSaturation() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawBrightness() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawRed() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawGreen() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawBlue() { ThrowMustOverrideError(new StackFrame(1, true)); }
-        public virtual void DrawCrosshair(Graphics g) { ThrowMustOverrideError(new StackFrame(1, true)); }
-
-        private void ThrowMustOverrideError(StackFrame fr)
-        {
-            StackTrace st = new StackTrace(fr);
-            throw new Exception(string.Format("Need to override inherited virtual method {0}", fr.GetMethod().Name));
-        }
+        protected virtual void DrawCrosshair(Graphics g) { }
+        protected virtual void DrawHue() { }
+        protected virtual void DrawSaturation() { }
+        protected virtual void DrawBrightness() { }
+        protected virtual void DrawRed() { }
+        protected virtual void DrawGreen() { }
+        protected virtual void DrawBlue() { }
 
         #endregion
     }
