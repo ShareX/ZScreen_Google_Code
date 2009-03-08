@@ -339,10 +339,16 @@ namespace ZSS
             Close();
         }
 
+        private void Closing()
+        {
+            timer.Stop();
+            windowCheck.Stop();
+            if (!ActiveWindow) Cursor.Show();
+        }
+
         private void Crop_FormClosed(object sender, FormClosedEventArgs e)
         {
             DisposeImages();
-            if (!ActiveWindow) Cursor.Show();
         }
 
         private void DisposeImages()

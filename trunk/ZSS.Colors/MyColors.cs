@@ -59,7 +59,6 @@ namespace ZSS.Colors
 
     public struct RGB
     {
-
         private int red;
         private int green;
         private int blue;

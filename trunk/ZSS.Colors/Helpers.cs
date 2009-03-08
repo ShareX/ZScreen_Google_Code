@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Reflection;
+using System.IO;
 
 namespace ZSS.Colors
 {
@@ -47,6 +49,12 @@ namespace ZSS.Colors
         public static string ToShortString(double number)
         {
             return number.ToString("0.####");
+        }
+
+        public static Stream GetImageResource(string ResourceName)
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            return asm.GetManifestResourceStream(ResourceName);
         }
     }
 }

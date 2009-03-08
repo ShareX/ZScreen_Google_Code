@@ -44,6 +44,10 @@ namespace ZSS.Colors
             set
             {
                 mDrawStyle = value;
+                if (this is ColorBox)
+                {
+                    GetPointColor(oldMousePosition);
+                }
                 Refresh();
             }
         }
@@ -69,6 +73,7 @@ namespace ZSS.Colors
 
             this.ClientSizeChanged += new System.EventHandler(this.EventClientSizeChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EventMouseDown);
+            this.MouseEnter += new EventHandler(this.EventMouseEnter);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.EventMouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventMouseUp);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.EventPaint);
@@ -103,9 +108,22 @@ namespace ZSS.Colors
 
         private void EventMouseDown(object sender, MouseEventArgs e)
         {
-            if (!drawCrosshair) drawCrosshair = true;
+            if (this is ColorBox)
+            {
+                drawCrosshair = false;
+                DrawColors();
+            }
+            else
+            {
+                drawCrosshair = true;
+            }
             mouseDown = true;
             EventMouseMove(this, e);
+        }
+
+        private void EventMouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = new Cursor(Helpers.GetImageResource("ZSS.Colors.Cursor.cur"));
         }
 
         private void EventMouseMove(object sender, MouseEventArgs e)
@@ -113,10 +131,8 @@ namespace ZSS.Colors
             Point mousePosition = GetPoint(e.Location);
             if (mouseDown && (oldMousePosition == null || oldMousePosition != mousePosition))
             {
-                GetColor = GetPointColor(mousePosition);
-                oldMousePosition = mousePosition;
+                GetPointColor(mousePosition);
                 Refresh();
-                if (ColorChanged != null) ColorChanged(this, e);
                 //Console.WriteLine(width + "-" + this.ClientRectangle.Width + "-" + this.DisplayRectangle.Width);
             }
         }
@@ -124,6 +140,8 @@ namespace ZSS.Colors
         private void EventMouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
+            drawCrosshair = true;
+            Refresh();
         }
 
         private void EventPaint(object sender, PaintEventArgs e)
@@ -172,9 +190,11 @@ namespace ZSS.Colors
                 new Size(size * 2, size * 2)));
         }
 
-        protected MyColor GetPointColor(Point point)
+        protected void GetPointColor(Point point)
         {
-            return GetPointColor(point.X, point.Y);
+            GetColor = GetPointColor(point.X, point.Y);
+            oldMousePosition = point;
+            if (ColorChanged != null) ColorChanged(this, EventArgs.Empty);
         }
 
         protected MyColor GetPointColor(int x, int y)
