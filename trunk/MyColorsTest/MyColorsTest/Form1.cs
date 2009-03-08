@@ -24,22 +24,22 @@ namespace MyColorsTest
         {
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DrawStyle)));
             comboBox1.SelectedIndex = 0;
-            colorBox1.ColorChanged += new EventHandler(colorBox1_ColorChanged);
-            colorSlider1.ColorChanged += new EventHandler(colorSlider1_ColorChanged);
+            colorBox1.ColorChanged += new ColorEventHandler(colorBox1_ColorChanged);
+            colorSlider1.ColorChanged += new ColorEventHandler(colorSlider1_ColorChanged);
         }
 
-        private void colorBox1_ColorChanged(object sender, EventArgs e)
+        private void colorBox1_ColorChanged(object sender, ColorEventArgs e)
         {
-            colorBox = colorBox1.GetColor;
+            colorBox = e.Color;    
+            if(e.UpdateControl) colorSlider1.SetColor = colorBox;
             txtColorBox.Text = colorBox.ToString();
-            colorSlider1.SetColor = colorBox;
             pictureBox1.BackColor = colorBox;
         }
 
-        private void colorSlider1_ColorChanged(object sender, EventArgs e)
+        private void colorSlider1_ColorChanged(object sender, ColorEventArgs e)
         {
-            colorSlider = colorSlider1.GetColor;
-            txtColorSlider.Text = colorSlider.ToString();
+            colorSlider = colorSlider1.SetColor;
+            if (e.UpdateControl) txtColorSlider.Text = colorSlider.ToString();
             colorBox1.SetColor = colorSlider;
             pictureBox2.BackColor = colorSlider;
         }

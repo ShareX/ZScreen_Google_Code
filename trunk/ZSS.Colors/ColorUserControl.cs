@@ -9,7 +9,9 @@ namespace ZSS.Colors
 {
     public class ColorUserControl : UserControl
     {
-        public event EventHandler ColorChanged;
+        #region Variables
+
+        public event ColorEventHandler ColorChanged;
 
         protected Bitmap bmp;
         protected int width;
@@ -33,8 +35,6 @@ namespace ZSS.Colors
             }
         }
 
-        public MyColor GetColor { get; set; }
-
         public DrawStyle DrawStyle
         {
             get
@@ -57,10 +57,12 @@ namespace ZSS.Colors
                 if (drawCrosshair)
                 {
                     GetPointColor(oldPos);
-                    if (ColorChanged != null) ColorChanged(this, EventArgs.Empty);
+                    ThrowEvent();
                 }
             }
         }
+
+        #endregion
 
         #region Component Designer generated code
 
@@ -78,7 +80,6 @@ namespace ZSS.Colors
             this.height = this.ClientRectangle.Height;
             this.bmp = new Bitmap(width, height);
             this.SetColor = Color.Red;
-            this.GetColor = this.SetColor;
             this.DrawStyle = DrawStyle.Hue;
 
             this.ClientSizeChanged += new System.EventHandler(this.EventClientSizeChanged);
@@ -137,7 +138,7 @@ namespace ZSS.Colors
             if (mouseDown && (oldPos == null || oldPos != mousePosition))
             {
                 GetPointColor(mousePosition);
-                if (ColorChanged != null) ColorChanged(this, EventArgs.Empty);
+                ThrowEvent();
                 Refresh();
                 //Console.WriteLine(width + "-" + this.ClientRectangle.Width + "-" + this.DisplayRectangle.Width);
             }
@@ -158,6 +159,19 @@ namespace ZSS.Colors
         #endregion
 
         #region Protected Methods
+
+        protected void ThrowEvent()
+        {
+            ThrowEvent(true);
+        }
+
+        protected void ThrowEvent(bool updateControl)
+        {
+            if (ColorChanged != null)
+            {
+                ColorChanged(this, new ColorEventArgs(SetColor, DrawStyle, updateControl));
+            }
+        }
 
         protected void DrawColors()
         {
@@ -189,28 +203,28 @@ namespace ZSS.Colors
             switch (DrawStyle)
             {
                 case DrawStyle.Hue:
-                    oldPos.X = Round(width * GetColor.HSB.Saturation);
-                    oldPos.Y = Round(height * (1.0 - GetColor.HSB.Brightness));
+                    oldPos.X = Round(width * SetColor.HSB.Saturation);
+                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
                     break;
                 case DrawStyle.Saturation:
-                    oldPos.X = Round(width * GetColor.HSB.Hue);
-                    oldPos.Y = Round(height * (1.0 - GetColor.HSB.Brightness));
+                    oldPos.X = Round(width * SetColor.HSB.Hue);
+                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
                     break;
                 case DrawStyle.Brightness:
-                    oldPos.X = Round(width * GetColor.HSB.Hue);
-                    oldPos.Y = Round(height * (1.0 - GetColor.HSB.Saturation));
+                    oldPos.X = Round(width * SetColor.HSB.Hue);
+                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Saturation));
                     break;
                 case DrawStyle.Red:
-                    oldPos.X = Round(width * (double)GetColor.RGB.Blue / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)GetColor.RGB.Green / 255));
+                    oldPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
+                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
                     break;
                 case DrawStyle.Green:
-                    oldPos.X = Round(width * (double)GetColor.RGB.Blue / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)GetColor.RGB.Red / 255));
+                    oldPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
+                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Red / 255));
                     break;
                 case DrawStyle.Blue:
-                    oldPos.X = Round(width * (double)GetColor.RGB.Red / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)GetColor.RGB.Green / 255));
+                    oldPos.X = Round(width * (double)SetColor.RGB.Red / 255);
+                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
                     break;
             }
             oldPos = GetPoint(oldPos);
@@ -221,22 +235,22 @@ namespace ZSS.Colors
             switch (DrawStyle)
             {
                 case DrawStyle.Hue:
-                    oldPos.Y = height - Round(height * GetColor.HSB.Hue);
+                    oldPos.Y = height - Round(height * SetColor.HSB.Hue);
                     break;
                 case DrawStyle.Saturation:
-                    oldPos.Y = height - Round(height * GetColor.HSB.Saturation);
+                    oldPos.Y = height - Round(height * SetColor.HSB.Saturation);
                     break;
                 case DrawStyle.Brightness:
-                    oldPos.Y = height - Round(height * GetColor.HSB.Brightness);
+                    oldPos.Y = height - Round(height * SetColor.HSB.Brightness);
                     break;
                 case DrawStyle.Red:
-                    oldPos.Y = height - Round(height * (double)GetColor.RGB.Red / 255);
+                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Red / 255);
                     break;
                 case DrawStyle.Green:
-                    oldPos.Y = height - Round(height * (double)GetColor.RGB.Green / 255);
+                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Green / 255);
                     break;
                 case DrawStyle.Blue:
-                    oldPos.Y = height - Round(height * (double)GetColor.RGB.Blue / 255);
+                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Blue / 255);
                     break;
             }
             oldPos = GetPoint(oldPos);
@@ -254,7 +268,7 @@ namespace ZSS.Colors
 
         protected void GetPointColor(Point point)
         {
-            GetColor = GetPointColor(point.X, point.Y);
+            SetColor = GetPointColor(point.X, point.Y);
             oldPos = point;
         }
 
