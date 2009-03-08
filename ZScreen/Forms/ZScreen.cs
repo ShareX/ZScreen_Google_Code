@@ -1199,109 +1199,119 @@ namespace ZSS
 
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MainAppTask t = (MainAppTask)e.Result;
-
-            FileSystem.appendDebug(string.Format("Job completed: {0}", t.Job.ToString()));
-
-            //t.Errors.Add("Testing"); //For test retry upload
-            if (!RetryUpload(t))
+            try
             {
-                if (t != null)
+                MainAppTask t = (MainAppTask)e.Result;
+
+                FileSystem.appendDebug(string.Format("Job completed: {0}", t.Job.ToString()));
+
+                if (!RetryUpload(t))
                 {
-                    switch (t.JobCategory)
+                    if (t != null)
                     {
-                        case JobCategoryType.TEXT:
-                            switch (t.Job)
-                            {
-                                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                                    txtTranslateText.Text = t.TranslationInfo.SourceText;
-                                    txtTranslateResult.Text = t.TranslationInfo.Result.TranslatedText;
-                                    txtLanguages.Text = t.TranslationInfo.Result.TranslationType;
-                                    txtDictionary.Text = t.TranslationInfo.Result.Dictionary;
-                                    if (Program.conf.ClipboardTranslate)
-                                    {
-                                        Clipboard.SetText(t.TranslationInfo.Result.TranslatedText);
-                                    }
-                                    btnTranslate.Enabled = true;
-                                    break;
-                            }
-                            break;
-                        case JobCategoryType.PICTURES:
-                            switch (t.Job)
-                            {
-                                case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                                    if (t.ImageManager != null & t.ImageManager.FileCount > 0)
-                                    {
-                                        if (t.ImageManager.GetFullImageUrl() != "")
-                                        {
-                                            txtUploadersLog.AppendText(t.ImageDestinationName + " full image: " +
-                                                t.ImageManager.GetFullImageUrl() + "\r\n");
-                                        }
-                                        if (t.ImageManager.GetThumbnailUrl() != "")
-                                        {
-                                            txtUploadersLog.AppendText(t.ImageDestinationName + " thumbnail: " +
-                                                t.ImageManager.GetThumbnailUrl() + "\r\n");
-                                        }
-                                    }
-                                    btnUploadersTest.Enabled = true;
-                                    break;
-                            }
-                            break;
-                        case JobCategoryType.SCREENSHOTS:
-                            if (Program.conf.DeleteLocal)
-                            {
-                                if (File.Exists(t.ImageLocalPath))
+                        switch (t.JobCategory)
+                        {
+                            case JobCategoryType.TEXT:
+                                switch (t.Job)
                                 {
-                                    File.Delete(t.ImageLocalPath);
+                                    case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                                        txtTranslateText.Text = t.TranslationInfo.SourceText;
+                                        txtTranslateResult.Text = t.TranslationInfo.Result.TranslatedText;
+                                        txtLanguages.Text = t.TranslationInfo.Result.TranslationType;
+                                        txtDictionary.Text = t.TranslationInfo.Result.Dictionary;
+                                        if (Program.conf.ClipboardTranslate)
+                                        {
+                                            Clipboard.SetText(t.TranslationInfo.Result.TranslatedText);
+                                        }
+                                        btnTranslate.Enabled = true;
+                                        break;
                                 }
-                            }
-                            break;
-                    }
+                                break;
+                            case JobCategoryType.PICTURES:
+                                switch (t.Job)
+                                {
+                                    case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
+                                        if (t.ImageManager != null & t.ImageManager.FileCount > 0)
+                                        {
+                                            if (t.ImageManager.GetFullImageUrl() != "")
+                                            {
+                                                txtUploadersLog.AppendText(t.ImageDestinationName + " full image: " +
+                                                    t.ImageManager.GetFullImageUrl() + "\r\n");
+                                            }
+                                            if (t.ImageManager.GetThumbnailUrl() != "")
+                                            {
+                                                txtUploadersLog.AppendText(t.ImageDestinationName + " thumbnail: " +
+                                                    t.ImageManager.GetThumbnailUrl() + "\r\n");
+                                            }
+                                        }
+                                        btnUploadersTest.Enabled = true;
+                                        break;
+                                }
+                                break;
+                            case JobCategoryType.SCREENSHOTS:
+                                if (Program.conf.DeleteLocal)
+                                {
+                                    if (File.Exists(t.ImageLocalPath))
+                                    {
+                                        File.Delete(t.ImageLocalPath);
+                                    }
+                                }
+                                break;
+                        }
 
-                    if (t.JobCategory == JobCategoryType.SCREENSHOTS || t.JobCategory == JobCategoryType.PICTURES)
+                        if (t.JobCategory == JobCategoryType.SCREENSHOTS || t.JobCategory == JobCategoryType.PICTURES)
+                        {
+                            ClipboardManager.AddScreenshotList(t.ImageManager);
+                            ClipboardManager.SetClipboardText();
+                        }
+
+                        if (t.ImageManager != null && !string.IsNullOrEmpty(t.ImageManager.Source))
+                        {
+                            btnOpenSourceText.Enabled = true;
+                            btnOpenSourceBrowser.Enabled = true;
+                            btnOpenSourceString.Enabled = true;
+                        }
+                    } // Task is not null
+
+                    niTray.Text = this.Text;
+                    if (ClipboardManager.Workers > 1)
                     {
-                        ClipboardManager.AddScreenshotList(t.ImageManager);
-                        ClipboardManager.SetClipboardText();
+                        niTray.Icon = Resources.zss_busy;
                     }
-
-                    if (t.ImageManager != null && !string.IsNullOrEmpty(t.ImageManager.Source))
+                    else
                     {
-                        btnOpenSourceText.Enabled = true;
-                        btnOpenSourceBrowser.Enabled = true;
-                        btnOpenSourceString.Enabled = true;
+                        niTray.Icon = Resources.zss_tray;
                     }
-                } // Task is not null
 
-                niTray.Text = this.Text;
-                if (ClipboardManager.Workers > 1)
-                {
-                    niTray.Icon = Resources.zss_busy;
-                }
-                else
-                {
-                    niTray.Icon = Resources.zss_tray;
-                }
-
-                if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.ImageLocalPath))
-                {
-                    if (Program.conf.CompleteSound)
+                    if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.ImageLocalPath))
                     {
-                        System.Media.SystemSounds.Exclamation.Play();
+                        if (Program.conf.CompleteSound)
+                        {
+                            System.Media.SystemSounds.Exclamation.Play();
+                        }
+                        if (Program.conf.ShowPopup)
+                        {
+                            ShowBalloonTip(t);
+                        }
                     }
-                    if (Program.conf.ShowPopup)
+
+                    if (t.Errors.Count > 0)
                     {
-                        ShowBalloonTip(t);
+                        Console.WriteLine(t.Errors[t.Errors.Count - 1]);
                     }
                 }
 
-                if (t.Errors.Count > 0)
-                {
-                    Console.WriteLine(t.Errors[t.Errors.Count - 1]);
-                }
+                if (t.MyImage != null) t.MyImage.Dispose(); // For fix memory leak
+
             }
-
-            if (t.MyImage != null) t.MyImage.Dispose(); // For fix memory leak
-            ClipboardManager.Commit();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                ClipboardManager.Commit();
+            }
         }
 
         private bool RetryUpload(MainAppTask t)
