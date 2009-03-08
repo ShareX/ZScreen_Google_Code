@@ -9,16 +9,16 @@ namespace ZSS.Colors
     {
         public ColorSlider()
         {
-            InitializeComponent();
+            Initialize();
         }
 
         #region Protected Override Methods
 
-        protected override void InitializeComponent()
+        protected override void Initialize()
         {
             this.Name = "ColorSlider";
             this.Size = new System.Drawing.Size(30, 255);
-            base.InitializeComponent();
+            base.Initialize();
         }
 
         protected override void DrawCrosshair(Graphics g)

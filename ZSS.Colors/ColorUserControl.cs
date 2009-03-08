@@ -55,8 +55,7 @@ namespace ZSS.Colors
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-
-        protected virtual void InitializeComponent()
+        protected virtual void Initialize()
         {
             this.SuspendLayout();
 
