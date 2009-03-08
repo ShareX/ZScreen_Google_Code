@@ -1,0 +1,7 @@
+#summary Tips & Tricks
+#labels Phase-Support
+
+= Capture =
+
+== Clipboard Upload / Drag n Drop == 
+Did you know you can clipboard upload or drag n drop non-image files?
