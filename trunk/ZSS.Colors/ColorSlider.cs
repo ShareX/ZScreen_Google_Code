@@ -9,24 +9,19 @@ namespace ZSS.Colors
     {
         public ColorSlider()
         {
-            Initialize();
+            InitializeComponent();
         }
 
-        public override void InitializeComponent()
-        {
-            this.SuspendLayout();
-            //components = new System.ComponentModel.Container();
+        #region Protected Override Methods
 
+        protected override void InitializeComponent()
+        {
             this.Name = "ColorSlider";
             this.Size = new System.Drawing.Size(30, 255);
-            this.DoubleBuffered = true;
-
-            this.ResumeLayout(false);
+            base.InitializeComponent();
         }
 
-        #region Methods
-
-        public override void DrawCrosshair(Graphics g)
+        protected override void DrawCrosshair(Graphics g)
         {
             int rectOffset = 3;
             int rectSize = 4;
@@ -37,7 +32,7 @@ namespace ZSS.Colors
         }
 
         // Hue = 360 -> 0
-        public override void DrawHue()
+        protected override void DrawHue()
         {
             Graphics g = Graphics.FromImage(bmp);
             HSB color = new HSB(0.0, 1.0, 1.0);
@@ -50,7 +45,7 @@ namespace ZSS.Colors
         }
 
         // Saturation = 100 -> 0
-        public override void DrawSaturation()
+        protected override void DrawSaturation()
         {
             Graphics g = Graphics.FromImage(bmp);
             HSB color = new HSB(SetColor.HSB.Hue, 0.0, SetColor.HSB.Brightness);
@@ -63,7 +58,7 @@ namespace ZSS.Colors
         }
 
         // Brightness = 100 -> 0
-        public override void DrawBrightness()
+        protected override void DrawBrightness()
         {
             Graphics g = Graphics.FromImage(bmp);
             HSB color = new HSB(SetColor.HSB.Hue, SetColor.HSB.Saturation, 0.0);
@@ -76,7 +71,7 @@ namespace ZSS.Colors
         }
 
         // Red = 255 -> 0
-        public override void DrawRed()
+        protected override void DrawRed()
         {
             Graphics g = Graphics.FromImage(bmp);
             RGB color = new RGB(0, SetColor.RGB.Green, SetColor.RGB.Blue);
@@ -89,7 +84,7 @@ namespace ZSS.Colors
         }
 
         // Green = 255 -> 0
-        public override void DrawGreen()
+        protected override void DrawGreen()
         {
             Graphics g = Graphics.FromImage(bmp);
             RGB color = new RGB(SetColor.RGB.Red, 0, SetColor.RGB.Blue);
@@ -102,7 +97,7 @@ namespace ZSS.Colors
         }
 
         // Blue = 255 -> 0
-        public override void DrawBlue()
+        protected override void DrawBlue()
         {
             Graphics g = Graphics.FromImage(bmp);
             RGB color = new RGB(SetColor.RGB.Red, SetColor.RGB.Green, 0);

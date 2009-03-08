@@ -10,18 +10,6 @@ namespace ZSS.Colors
         Hue, Saturation, Brightness, Red, Green, Blue
     }
 
-    public interface IColorUserControl
-    {
-        void InitializeComponent();
-        void DrawHue();
-        void DrawSaturation();
-        void DrawBrightness();
-        void DrawRed();
-        void DrawGreen();
-        void DrawBlue();
-        void DrawCrosshair(Graphics g);
-    }
-
     public static class Helpers
     {
         public static double CheckColor(double number)

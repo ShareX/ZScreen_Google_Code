@@ -3,6 +3,8 @@ using System.Drawing;
 
 namespace ZSS.Colors
 {
+    #region Public Structs
+
     public struct MyColor
     {
         public Color Color;
@@ -398,6 +400,8 @@ namespace ZSS.Colors
             return ToColor(this);
         }
     }
+
+    #endregion
 
     public static class MyColors
     {
