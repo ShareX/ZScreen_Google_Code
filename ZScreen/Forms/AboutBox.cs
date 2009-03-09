@@ -40,7 +40,8 @@ namespace ZSS.Forms
             this.Icon = Properties.Resources.zss_main;
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0} :: Revision {1}", Application.ProductVersion, this.Revision);
+            this.labelVersion.Text = String.Format("Version {0}", Application.ProductVersion);
+            this.lblRev.Text = string.Format("Rev. {0}", this.Revision);
             this.labelCopyright.Text = AssemblyCopyright;
             this.llblCompanyName.Text = AssemblyCompany;
             StringBuilder sbDesc = new StringBuilder();
@@ -177,6 +178,11 @@ namespace ZSS.Forms
                 logo.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
             logoPictureBox.Image = logo;
+        }
+
+        private void lblRev_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/p/zscreen/source/list");
         }
     }
 }
