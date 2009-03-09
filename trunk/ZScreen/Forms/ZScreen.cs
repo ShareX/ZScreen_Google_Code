@@ -354,7 +354,7 @@ namespace ZSS
             txtCacheDir.Text = Program.conf.CacheDir;
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             nudFlashIconCount.Value = Program.conf.FlashTrayCount;
-            cbShowPopup.Checked = Program.conf.ShowPopup;
+            cbShowPopup.Checked = Program.conf.ShowBalloonTip;
             chkBalloonTipOpenLink.Checked = Program.conf.BalloonTipOpenLink;
             cbCheckUpdates.Checked = Program.conf.CheckUpdates;
             cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
@@ -1289,7 +1289,7 @@ namespace ZSS
                         {
                             System.Media.SystemSounds.Exclamation.Play();
                         }
-                        if (Program.conf.ShowPopup)
+                        if (Program.conf.ShowBalloonTip)
                         {
                             ShowBalloonTip(t);
                         }
@@ -2541,7 +2541,7 @@ namespace ZSS
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowPopup = cbShowPopup.Checked;
+            Program.conf.ShowBalloonTip = cbShowPopup.Checked;
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
