@@ -333,4 +333,7 @@ start explorer /n,"$(SolutionDir)"</PostBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" "$(SolutionDir)" "$(ProjectDir)ZScreen\Properties\AssemblyInfo.cs"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
