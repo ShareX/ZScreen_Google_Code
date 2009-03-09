@@ -182,7 +182,7 @@ namespace ZSS.Forms
 
         private void lblRev_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen/source/list");
+            Process.Start("http://code.google.com/p/zscreen/source/detail?r=" + this.Revision);
         }
     }
 }
