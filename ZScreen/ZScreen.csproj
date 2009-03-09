@@ -326,6 +326,11 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
     <PostBuildEvent>cd  "$(SolutionDir)Setup\"
 $(inno) /cc zscreen-beta-setup.iss
-start explorer /n,"$(SolutionDir)..\Output"</PostBuildEvent>
+start explorer /n,"$(SolutionDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
+    <PreBuildEvent>"$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" "$(SolutionDir)" "$(ProjectDir)ZScreen\Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
