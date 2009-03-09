@@ -41,11 +41,11 @@
     <Compile Include="ColorBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ColorDialog.cs">
+    <Compile Include="DialogColor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorDialog.Designer.cs">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
+    <Compile Include="DialogColor.Designer.cs">
+      <DependentUpon>DialogColor.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorPicker.cs">
       <SubType>UserControl</SubType>
@@ -66,8 +66,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ColorDialog.resx">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
+    <EmbeddedResource Include="DialogColor.resx">
+      <DependentUpon>DialogColor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cursor.cur" />
     <EmbeddedResource Include="Properties\Resources.resx">
