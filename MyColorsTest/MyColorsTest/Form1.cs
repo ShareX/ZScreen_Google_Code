@@ -38,9 +38,9 @@ namespace MyColorsTest
 
         private void colorSlider1_ColorChanged(object sender, ColorEventArgs e)
         {
-            colorSlider = colorSlider1.SetColor;
-            if (e.UpdateControl) txtColorSlider.Text = colorSlider.ToString();
-            colorBox1.SetColor = colorSlider;
+            colorSlider = e.Color;
+            if (e.UpdateControl) colorBox1.SetColor = colorSlider;
+            txtColorSlider.Text = colorSlider.ToString();
             pictureBox2.BackColor = colorSlider;
         }
 
