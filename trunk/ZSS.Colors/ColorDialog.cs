@@ -49,7 +49,6 @@ namespace ZSS.Colors
             OldColor = CurrentColor;
             oldColorExist = true;
             Initialize();
-            
         }
 
         private void Initialize()
@@ -111,16 +110,17 @@ namespace ZSS.Colors
             UpdateControls(NewColor);
         }
 
+        private void ColorDialog_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                colorTimer.Enabled = !colorTimer.Enabled;
+            }
+        }
+
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
-            if (colorTimer.Enabled)
-            {
-                colorTimer.Stop();
-            }
-            else
-            {
-                colorTimer.Start();
-            }
+            colorTimer.Enabled = !colorTimer.Enabled;
         }
 
         private void colorTimer_Tick(object sender, EventArgs e)
