@@ -43,7 +43,7 @@ namespace ZSS.Colors
         protected MyColor mSetColor;
         protected bool mouseDown;
         protected bool drawCrosshair;
-        protected Point oldPos;
+        protected Point lastPos;
 
         public MyColor SetColor
         {
@@ -55,7 +55,7 @@ namespace ZSS.Colors
             {
                 mSetColor = value;
                 Refresh();
-                GetPointColor(oldPos);
+                GetPointColor(lastPos);
                 ThrowEvent(false);
             }
         }
@@ -72,16 +72,16 @@ namespace ZSS.Colors
 
                 if (this is ColorBox)
                 {
-                    ResetBox();
+                    SetBoxMarker();
                 }
                 else
                 {
-                    ResetSlider();
+                    SetSliderMarker();
                 }
                 Refresh();
                 if (drawCrosshair)
                 {
-                    GetPointColor(oldPos);
+                    GetPointColor(lastPos);
                     ThrowEvent();
                 }
             }
@@ -160,7 +160,7 @@ namespace ZSS.Colors
         private void EventMouseMove(object sender, MouseEventArgs e)
         {
             Point mousePosition = GetPoint(e.Location);
-            if (mouseDown && (oldPos == null || oldPos != mousePosition))
+            if (mouseDown && (lastPos == null || lastPos != mousePosition))
             {
                 GetPointColor(mousePosition);
                 ThrowEvent();
@@ -223,62 +223,130 @@ namespace ZSS.Colors
             }
         }
 
-        protected void ResetBox()
+        protected void SetBoxMarker()
         {
             switch (DrawStyle)
             {
                 case DrawStyle.Hue:
-                    oldPos.X = Round(width * SetColor.HSB.Saturation);
-                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
+                    lastPos.X = Round(width * SetColor.HSB.Saturation);
+                    lastPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
                     break;
                 case DrawStyle.Saturation:
-                    oldPos.X = Round(width * SetColor.HSB.Hue);
-                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
+                    lastPos.X = Round(width * SetColor.HSB.Hue);
+                    lastPos.Y = Round(height * (1.0 - SetColor.HSB.Brightness));
                     break;
                 case DrawStyle.Brightness:
-                    oldPos.X = Round(width * SetColor.HSB.Hue);
-                    oldPos.Y = Round(height * (1.0 - SetColor.HSB.Saturation));
+                    lastPos.X = Round(width * SetColor.HSB.Hue);
+                    lastPos.Y = Round(height * (1.0 - SetColor.HSB.Saturation));
                     break;
                 case DrawStyle.Red:
-                    oldPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
+                    lastPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
+                    lastPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
                     break;
                 case DrawStyle.Green:
-                    oldPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Red / 255));
+                    lastPos.X = Round(width * (double)SetColor.RGB.Blue / 255);
+                    lastPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Red / 255));
                     break;
                 case DrawStyle.Blue:
-                    oldPos.X = Round(width * (double)SetColor.RGB.Red / 255);
-                    oldPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
+                    lastPos.X = Round(width * (double)SetColor.RGB.Red / 255);
+                    lastPos.Y = Round(height * (1.0 - (double)SetColor.RGB.Green / 255));
                     break;
             }
-            oldPos = GetPoint(oldPos);
+            lastPos = GetPoint(lastPos);
         }
 
-        protected void ResetSlider()
+        protected void GetBoxColor()
         {
             switch (DrawStyle)
             {
                 case DrawStyle.Hue:
-                    oldPos.Y = height - Round(height * SetColor.HSB.Hue);
+                    mSetColor.HSB.Saturation = (double)lastPos.X / width;
+                    mSetColor.HSB.Brightness = 1.0 - (double)lastPos.Y / height;
+                    mSetColor.RGB = mSetColor.HSB.ToColor();
                     break;
                 case DrawStyle.Saturation:
-                    oldPos.Y = height - Round(height * SetColor.HSB.Saturation);
+                    mSetColor.HSB.Hue = (double)lastPos.X / width;
+                    mSetColor.HSB.Brightness = 1.0 - (double)lastPos.Y / height;
+                    mSetColor.RGB = mSetColor.HSB.ToColor();
                     break;
                 case DrawStyle.Brightness:
-                    oldPos.Y = height - Round(height * SetColor.HSB.Brightness);
+                    mSetColor.HSB.Hue = (double)lastPos.X / width;
+                    mSetColor.HSB.Saturation = 1.0 - (double)lastPos.Y / height;
+                    mSetColor.RGB = mSetColor.HSB.ToColor();
                     break;
                 case DrawStyle.Red:
-                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Red / 255);
+                    mSetColor.RGB.Blue = Round(255 * (double)lastPos.X / width);
+                    mSetColor.RGB.Green = Round(255 * (1.0 - (double)lastPos.Y / height));
+                    mSetColor.HSB = mSetColor.RGB.ToHSB();
                     break;
                 case DrawStyle.Green:
-                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Green / 255);
+                    mSetColor.RGB.Blue = Round(255 * (double)lastPos.X / width);
+                    mSetColor.RGB.Red = Round(255 * (1.0 - (double)lastPos.Y / height));
+                    mSetColor.HSB = mSetColor.RGB.ToHSB();
                     break;
                 case DrawStyle.Blue:
-                    oldPos.Y = height - Round(height * (double)SetColor.RGB.Blue / 255);
+                    mSetColor.RGB.Red = Round(255 * (double)lastPos.X / width);
+                    mSetColor.RGB.Green = Round(255 * (1.0 - (double)lastPos.Y / height));
+                    mSetColor.HSB = mSetColor.RGB.ToHSB();
                     break;
             }
-            oldPos = GetPoint(oldPos);
+        }
+
+        protected void SetSliderMarker()
+        {
+            switch (DrawStyle)
+            {
+                case DrawStyle.Hue:
+                    lastPos.Y = height - Round(height * SetColor.HSB.Hue);
+                    break;
+                case DrawStyle.Saturation:
+                    lastPos.Y = height - Round(height * SetColor.HSB.Saturation);
+                    break;
+                case DrawStyle.Brightness:
+                    lastPos.Y = height - Round(height * SetColor.HSB.Brightness);
+                    break;
+                case DrawStyle.Red:
+                    lastPos.Y = height - Round(height * (double)SetColor.RGB.Red / 255);
+                    break;
+                case DrawStyle.Green:
+                    lastPos.Y = height - Round(height * (double)SetColor.RGB.Green / 255);
+                    break;
+                case DrawStyle.Blue:
+                    lastPos.Y = height - Round(height * (double)SetColor.RGB.Blue / 255);
+                    break;
+            }
+            lastPos = GetPoint(lastPos);
+        }
+
+        protected void GetSliderColor()
+        {
+            switch (DrawStyle)
+            {
+                case DrawStyle.Hue:
+                    mSetColor.HSB.Hue = 1.0 - (double)lastPos.Y / height;
+                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    break;
+                case DrawStyle.Saturation:
+                    mSetColor.HSB.Saturation = 1.0 - (double)lastPos.Y / height;
+                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    break;
+                case DrawStyle.Brightness:
+                    mSetColor.HSB.Brightness = 1.0 - (double)lastPos.Y / height;
+                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    break;
+                case DrawStyle.Red:
+                    mSetColor.RGB.Red = 255 - Round(255 * (double)lastPos.Y / height);
+                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    break;
+                case DrawStyle.Green:
+                    mSetColor.RGB.Green = 255 - Round(255 * (double)lastPos.Y / height);
+                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    break;
+                case DrawStyle.Blue:
+                    mSetColor.RGB.Blue = 255 - Round(255 * (double)lastPos.Y / height);
+                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    break;
+            }
         }
 
         #endregion
@@ -287,14 +355,21 @@ namespace ZSS.Colors
 
         protected void DrawEllipse(Graphics g, int size, Color color)
         {
-            g.DrawEllipse(new Pen(color), new Rectangle(new Point(oldPos.X - size, oldPos.Y - size),
+            g.DrawEllipse(new Pen(color), new Rectangle(new Point(lastPos.X - size, lastPos.Y - size),
                 new Size(size * 2, size * 2)));
         }
 
         protected void GetPointColor(Point point)
         {
-            mSetColor = GetPointColor(point.X, point.Y);
-            oldPos = point;
+            lastPos = point;
+            if (this is ColorBox)
+            {
+                GetBoxColor();
+            }
+            else
+            {
+                GetSliderColor();
+            }
         }
 
         protected MyColor GetPointColor(int x, int y)

@@ -44,18 +44,6 @@ namespace MyColorsTest
             pictureBox2.BackColor = colorSlider;
         }
 
-        private void CheckControl(MyColor color, TextBox textbox)
-        {
-            if (color.Color == MyColors.GetPixelColor(MousePosition))
-            {
-                textbox.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                textbox.BackColor = Color.LightPink;
-            }
-        }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             colorBox1.DrawStyle = (DrawStyle)Enum.Parse(typeof(DrawStyle), comboBox1.SelectedItem.ToString());

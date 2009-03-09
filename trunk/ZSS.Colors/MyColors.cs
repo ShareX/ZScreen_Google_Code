@@ -30,14 +30,12 @@ namespace ZSS.Colors
 
     public struct MyColor
     {
-        public Color Color;
         public RGB RGB;
         public HSB HSB;
         public CMYK CMYK;
 
         public MyColor(Color color)
         {
-            this.Color = color;
             this.RGB = color;
             this.HSB = color;
             this.CMYK = color;
@@ -50,13 +48,12 @@ namespace ZSS.Colors
 
         public static implicit operator Color(MyColor color)
         {
-            return color.Color;
+            return color.RGB;
         }
 
         public static bool operator ==(MyColor left, MyColor right)
         {
-            return (left.Color == right.Color) && (left.RGB == right.RGB) && (left.HSB == right.HSB) &&
-                (left.CMYK == right.CMYK);
+            return (left.RGB == right.RGB) && (left.HSB == right.HSB) && (left.CMYK == right.CMYK);
         }
 
         public static bool operator !=(MyColor left, MyColor right)
