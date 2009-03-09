@@ -55,6 +55,8 @@ namespace ZSS.Colors
             {
                 mSetColor = value;
                 Refresh();
+                GetPointColor(oldPos);
+                ThrowEvent(false);
             }
         }
 
@@ -291,7 +293,7 @@ namespace ZSS.Colors
 
         protected void GetPointColor(Point point)
         {
-            SetColor = GetPointColor(point.X, point.Y);
+            mSetColor = GetPointColor(point.X, point.Y);
             oldPos = point;
         }
 
