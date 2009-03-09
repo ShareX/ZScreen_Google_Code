@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Diagnostics;
 
 namespace ZSS.Colors
 {
@@ -91,9 +90,6 @@ namespace ZSS.Colors
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         protected virtual void Initialize()
@@ -117,10 +113,6 @@ namespace ZSS.Colors
             this.ResumeLayout(false);
         }
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))

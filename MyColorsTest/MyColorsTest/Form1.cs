@@ -12,9 +12,6 @@ namespace MyColorsTest
 {
     public partial class Form1 : Form
     {
-        MyColor colorBox;
-        MyColor colorSlider;
-
         public Form1()
         {
             InitializeComponent();
@@ -24,30 +21,18 @@ namespace MyColorsTest
         {
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DrawStyle)));
             comboBox1.SelectedIndex = 0;
-            colorBox1.ColorChanged += new ColorEventHandler(colorBox1_ColorChanged);
-            colorSlider1.ColorChanged += new ColorEventHandler(colorSlider1_ColorChanged);
+            colorPicker.ColorChanged += new ColorEventHandler(colorPicker_ColorChanged);
         }
 
-        private void colorBox1_ColorChanged(object sender, ColorEventArgs e)
+        private void colorPicker_ColorChanged(object sender, ColorEventArgs e)
         {
-            colorBox = e.Color;    
-            if(e.UpdateControl) colorSlider1.SetColor = colorBox;
-            txtColorBox.Text = colorBox.ToString();
-            pictureBox1.BackColor = colorBox;
-        }
-
-        private void colorSlider1_ColorChanged(object sender, ColorEventArgs e)
-        {
-            colorSlider = e.Color;
-            if (e.UpdateControl) colorBox1.SetColor = colorSlider;
-            txtColorSlider.Text = colorSlider.ToString();
-            pictureBox2.BackColor = colorSlider;
+            txtColor.Text = e.Color.ToString();
+            pbColor.BackColor = e.Color;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            colorBox1.DrawStyle = (DrawStyle)Enum.Parse(typeof(DrawStyle), comboBox1.SelectedItem.ToString());
-            colorSlider1.DrawStyle = colorBox1.DrawStyle;
+            colorPicker.DrawStyle = (DrawStyle)Enum.Parse(typeof(DrawStyle), comboBox1.SelectedItem.ToString());
         }
     }
 }

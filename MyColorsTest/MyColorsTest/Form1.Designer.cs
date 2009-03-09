@@ -30,26 +30,22 @@ namespace MyColorsTest
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtColorBox = new System.Windows.Forms.TextBox();
+            this.txtColor = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.txtColorSlider = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.colorSlider1 = new ZSS.Colors.ColorSlider();
-            this.colorBox1 = new ZSS.Colors.ColorBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pbColor = new System.Windows.Forms.PictureBox();
+            this.colorPicker = new ZSS.Colors.ColorPicker();
+            ((System.ComponentModel.ISupportInitialize)(this.pbColor)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtColorBox
+            // txtColor
             // 
-            this.txtColorBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtColorBox.Location = new System.Drawing.Point(8, 304);
-            this.txtColorBox.Multiline = true;
-            this.txtColorBox.Name = "txtColorBox";
-            this.txtColorBox.Size = new System.Drawing.Size(248, 64);
-            this.txtColorBox.TabIndex = 1;
-            this.txtColorBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtColor.Location = new System.Drawing.Point(8, 304);
+            this.txtColor.Multiline = true;
+            this.txtColor.Name = "txtColor";
+            this.txtColor.Size = new System.Drawing.Size(248, 64);
+            this.txtColor.TabIndex = 1;
+            this.txtColor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // comboBox1
             // 
@@ -61,70 +57,37 @@ namespace MyColorsTest
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // txtColorSlider
+            // pbColor
             // 
-            this.txtColorSlider.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtColorSlider.Location = new System.Drawing.Point(8, 376);
-            this.txtColorSlider.Multiline = true;
-            this.txtColorSlider.Name = "txtColorSlider";
-            this.txtColorSlider.Size = new System.Drawing.Size(248, 64);
-            this.txtColorSlider.TabIndex = 5;
-            this.txtColorSlider.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.pbColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbColor.Location = new System.Drawing.Point(256, 304);
+            this.pbColor.Name = "pbColor";
+            this.pbColor.Size = new System.Drawing.Size(32, 64);
+            this.pbColor.TabIndex = 8;
+            this.pbColor.TabStop = false;
             // 
-            // pictureBox1
+            // colorPicker
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(256, 304);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(32, 64);
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            // 
-            // colorSlider1
-            // 
-            this.colorSlider1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.colorSlider1.DrawStyle = ZSS.Colors.DrawStyle.Hue;
-            this.colorSlider1.Location = new System.Drawing.Point(264, 8);
-            this.colorSlider1.Name = "colorSlider1";
-            this.colorSlider1.Size = new System.Drawing.Size(30, 255);
-            this.colorSlider1.TabIndex = 7;
-            // 
-            // colorBox1
-            // 
-            this.colorBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.colorBox1.DrawStyle = ZSS.Colors.DrawStyle.Hue;
-            this.colorBox1.Location = new System.Drawing.Point(8, 8);
-            this.colorBox1.Name = "colorBox1";
-            this.colorBox1.Size = new System.Drawing.Size(255, 255);
-            this.colorBox1.TabIndex = 6;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(256, 376);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(32, 64);
-            this.pictureBox2.TabIndex = 9;
-            this.pictureBox2.TabStop = false;
+            this.colorPicker.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorPicker.Location = new System.Drawing.Point(8, 8);
+            this.colorPicker.Name = "colorPicker";
+            this.colorPicker.Size = new System.Drawing.Size(285, 255);
+            this.colorPicker.TabIndex = 10;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(301, 451);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.colorSlider1);
-            this.Controls.Add(this.colorBox1);
-            this.Controls.Add(this.txtColorSlider);
+            this.ClientSize = new System.Drawing.Size(301, 376);
+            this.Controls.Add(this.colorPicker);
+            this.Controls.Add(this.pbColor);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.txtColorBox);
+            this.Controls.Add(this.txtColor);
             this.Name = "Form1";
             this.Text = "MyColorsTest";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbColor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,12 +95,9 @@ namespace MyColorsTest
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtColorBox;
+        private System.Windows.Forms.TextBox txtColor;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox txtColorSlider;
-        private ColorBox colorBox1;
-        private ColorSlider colorSlider1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pbColor;
+        private ColorPicker colorPicker;
     }
 }
