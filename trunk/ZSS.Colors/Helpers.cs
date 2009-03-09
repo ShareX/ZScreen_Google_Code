@@ -41,6 +41,13 @@ namespace ZSS.Colors
             this.UpdateControl = updateControl;
         }
 
+        public ColorEventArgs(MyColor color, DrawStyle drawStyle)
+        {
+            this.Color = color;
+            this.DrawStyle = drawStyle;
+            this.UpdateControl = true;
+        }
+
         public MyColor Color;
         public DrawStyle DrawStyle;
         public bool UpdateControl;

@@ -10,9 +10,139 @@ namespace ZSS.Colors
 {
     public partial class ColorPicker : UserControl
     {
+        #region Variables
+
+        public event ColorEventHandler ColorChanged;
+
+        public MyColor Color
+        {
+            get
+            {
+                return mColor;
+            }
+            set
+            {
+                mColor = value;
+                colorBox.SetColor = value;
+            }
+        }
+
+        public MyColor ColorBox
+        {
+            get { return mColorBox; }
+            private set
+            {
+                mColorBox = value;
+                mColor = value;
+            }
+        }
+
+        public MyColor ColorSlider
+        {
+            get { return mColorSlider; }
+            private set
+            {
+                mColorSlider = value;
+                mColor = value;
+            }
+        }
+
+        public DrawStyle DrawStyle
+        {
+            get
+            { return mDrawStyle; }
+            set
+            {
+                colorBox.DrawStyle = value;
+                colorSlider.DrawStyle = value;
+                mDrawStyle = value;
+            }
+        }
+
+        private ColorBox colorBox;
+        private ColorSlider colorSlider;
+
+        private MyColor mColor;
+        private MyColor mColorBox;
+        private MyColor mColorSlider;
+        private DrawStyle mDrawStyle;
+
+        #endregion
+
         public ColorPicker()
         {
             InitializeComponent();
+            DrawStyle = DrawStyle.Hue;
+            colorBox.ColorChanged += new ColorEventHandler(colorBox_ColorChanged);
+            colorSlider.ColorChanged += new ColorEventHandler(colorSlider_ColorChanged);
         }
+
+        private void colorBox_ColorChanged(object sender, ColorEventArgs e)
+        {
+            ColorBox = e.Color;
+            if (e.UpdateControl) colorSlider.SetColor = ColorBox;
+            ThrowEvent();
+        }
+
+        private void colorSlider_ColorChanged(object sender, ColorEventArgs e)
+        {
+            ColorSlider = e.Color;
+            if (e.UpdateControl) colorBox.SetColor = ColorSlider;
+            ThrowEvent();
+        }
+
+        private void ThrowEvent()
+        {
+            if (ColorChanged != null)
+            {
+                ColorChanged(this, new ColorEventArgs(this.Color, this.DrawStyle));
+            }
+        }
+
+        #region Component Designer generated code
+
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+
+            this.colorBox = new ZSS.Colors.ColorBox();
+            this.colorSlider = new ZSS.Colors.ColorSlider();
+
+            // colorBox
+            this.colorBox.BorderStyle = BorderStyle.Fixed3D;
+            this.colorBox.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorBox.Location = new System.Drawing.Point(0, 0);
+            this.colorBox.Name = "colorBox";
+            this.colorBox.Size = new System.Drawing.Size(255, 255);
+            this.colorBox.TabIndex = 0;
+            // colorSlider
+            this.colorSlider.BorderStyle = BorderStyle.Fixed3D;
+            this.colorSlider.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorSlider.Location = new System.Drawing.Point(256, 0);
+            this.colorSlider.Name = "colorSlider";
+            this.colorSlider.Size = new System.Drawing.Size(30, 255);
+            this.colorSlider.TabIndex = 1;
+            // ColorPicker
+            this.Controls.Add(this.colorSlider);
+            this.Controls.Add(this.colorBox);
+            this.Name = "ColorPicker";
+            this.Size = new System.Drawing.Size(colorBox.Width + colorSlider.Width, colorBox.Height);
+
+            this.ResumeLayout(false);
+        }
+
+        #endregion
+
     }
 }
