@@ -40,7 +40,7 @@ namespace ZSS.Forms
             this.Icon = Properties.Resources.zss_main;
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", Application.ProductVersion);
+            this.labelVersion.Text = String.Format("Version {0} Rev. {1}", Application.ProductVersion, this.Revision);
             this.labelCopyright.Text = AssemblyCopyright;
             this.llblCompanyName.Text = AssemblyCompany;
             StringBuilder sbDesc = new StringBuilder();
@@ -90,6 +90,13 @@ namespace ZSS.Forms
             }
         }
 
+        public string Revision
+        {
+            get
+            {
+                return AssemblyVersion.ToString().Split('.')[3];
+            }
+        }
         public string AssemblyDescription
         {
             get
