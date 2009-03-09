@@ -42,6 +42,23 @@ namespace ZSS.Colors
             UpdateControls(myColor);
         }
 
+        private void btnColorPicker_Click(object sender, EventArgs e)
+        {
+            if (colorTimer.Enabled)
+            {
+                colorTimer.Stop();
+            }
+            else
+            {
+                colorTimer.Start();
+            }
+        }
+
+        private void colorTimer_Tick(object sender, EventArgs e)
+        {
+            colorPicker.Color = MyColors.GetPixelColor(MousePosition);
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
@@ -85,5 +102,7 @@ namespace ZSS.Colors
         }
 
         #endregion
+
+
     }
 }
