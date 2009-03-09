@@ -127,12 +127,12 @@ namespace ZSS
         public bool ShowWatermark = false;
         public string WatermarkText = "%h:%mi";
         public XmlFont WatermarkFont = SerializeFont(new Font("Arial", 8));
-        public string WatermarkFontColor = SerializeColor(Color.Black);
+        public string WatermarkFontColor = SerializeColor(Color.White);
         public decimal WatermarkFontTrans = 255;
-        public decimal WatermarkOffset = 10;
-        public decimal WatermarkBackTrans = 200;
-        public string WatermarkGradient1 = SerializeColor(Color.White);
-        public string WatermarkGradient2 = SerializeColor(Color.Gray);
+        public decimal WatermarkOffset = 5;
+        public decimal WatermarkBackTrans = 225;
+        public string WatermarkGradient1 = SerializeColor(Color.FromArgb(85, 85, 85));
+        public string WatermarkGradient2 = SerializeColor(Color.Black);
         public string WatermarkBorderColor = SerializeColor(Color.Black);
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkCornerRadius = 4;
@@ -143,7 +143,7 @@ namespace ZSS
         //*********************        
         public decimal ScreenshotCacheSize = 50;
         public decimal FlashTrayCount = 1;
-        public bool ShowPopup = true;
+        public bool ShowBalloonTip = true;
         public bool CheckUpdates = true;
         public bool OpenMainWindow = false;
         public bool ShowInTaskbar = true;
