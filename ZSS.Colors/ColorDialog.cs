@@ -33,24 +33,40 @@ namespace ZSS.Colors
 {
     public partial class ColorDialog : Form
     {
-        public MyColor NewColor;
+        public MyColor NewColor = Color.Red;
         public MyColor OldColor;
+        private bool oldColorExist;
 
         public ColorDialog()
         {
             InitializeComponent();
+            Initialize();
         }
 
         public ColorDialog(Color CurrentColor)
         {
             InitializeComponent();
             OldColor = CurrentColor;
-            lblSecondaryColor.BackColor = OldColor;
+            oldColorExist = true;
+            Initialize();
+            
+        }
+
+        private void Initialize()
+        {
+            foreach (Control cntrl in this.Controls)
+            {
+                if (cntrl is NumericUpDown || cntrl is TextBox)
+                {
+                    cntrl.DoubleClick += new EventHandler(CopyToClipboard);
+                }
+            }
+            DrawColors();
         }
 
         private void UpdateControls(MyColor color)
         {
-            lblPrimaryColor.BackColor = color;
+            DrawColors();
             nudHue.Value = (decimal)Math.Round(color.HSB.Hue * 360);
             nudSaturation.Value = (decimal)Math.Round(color.HSB.Saturation * 100);
             nudBrightness.Value = (decimal)Math.Round(color.HSB.Brightness * 100);
@@ -65,7 +81,29 @@ namespace ZSS.Colors
             txtDecimal.Text = MyColors.ColorToDecimal(color).ToString();
         }
 
+        private void DrawColors()
+        {
+            Bitmap bmp = new Bitmap(lblColorPreview.ClientSize.Width, lblColorPreview.ClientSize.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.FillRectangle(new SolidBrush(NewColor), new Rectangle(0, 0, bmp.Width, bmp.Height / 2));
+            if (oldColorExist) g.FillRectangle(new SolidBrush(OldColor),
+                new Rectangle(0, bmp.Height / 2, bmp.Width, bmp.Height / 2));
+            lblColorPreview.Image = bmp;
+        }
+
         #region Events
+
+        private void CopyToClipboard(object sender, EventArgs e)
+        {
+            if (sender is NumericUpDown)
+            {
+                Clipboard.SetText(((NumericUpDown)sender).Value.ToString());
+            }
+            else if (sender is TextBox)
+            {
+                Clipboard.SetText(((TextBox)sender).Text);
+            }
+        }
 
         private void colorPicker_ColorChanged(object sender, ColorEventArgs e)
         {
@@ -87,7 +125,10 @@ namespace ZSS.Colors
 
         private void colorTimer_Tick(object sender, EventArgs e)
         {
-            colorPicker.Color = MyColors.GetPixelColor(MousePosition);
+            Point pos = MousePosition;
+            colorPicker.Color = MyColors.GetPixelColor(pos);
+            txtX.Text = pos.X.ToString();
+            txtY.Text = pos.Y.ToString();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -133,7 +174,5 @@ namespace ZSS.Colors
         }
 
         #endregion
-
-
     }
 }

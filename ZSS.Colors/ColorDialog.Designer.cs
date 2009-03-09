@@ -58,8 +58,7 @@
             this.rbBrightness = new System.Windows.Forms.RadioButton();
             this.rbSaturation = new System.Windows.Forms.RadioButton();
             this.rbHue = new System.Windows.Forms.RadioButton();
-            this.lblSecondaryColor = new System.Windows.Forms.Label();
-            this.lblPrimaryColor = new System.Windows.Forms.Label();
+            this.lblColorPreview = new System.Windows.Forms.Label();
             this.lblDecimal = new System.Windows.Forms.Label();
             this.txtDecimal = new System.Windows.Forms.TextBox();
             this.lblCyanPerc = new System.Windows.Forms.Label();
@@ -69,6 +68,10 @@
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.colorTimer = new System.Windows.Forms.Timer(this.components);
             this.colorPicker = new ZSS.Colors.ColorPicker();
+            this.txtX = new System.Windows.Forms.TextBox();
+            this.txtY = new System.Windows.Forms.TextBox();
+            this.lblX = new System.Windows.Forms.Label();
+            this.lblY = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYellow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMagenta)).BeginInit();
@@ -426,21 +429,13 @@
             this.rbHue.UseVisualStyleBackColor = true;
             this.rbHue.CheckedChanged += new System.EventHandler(this.rbHue_CheckedChanged);
             // 
-            // lblSecondaryColor
+            // lblColorPreview
             // 
-            this.lblSecondaryColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblSecondaryColor.Location = new System.Drawing.Point(344, 232);
-            this.lblSecondaryColor.Name = "lblSecondaryColor";
-            this.lblSecondaryColor.Size = new System.Drawing.Size(64, 32);
-            this.lblSecondaryColor.TabIndex = 36;
-            // 
-            // lblPrimaryColor
-            // 
-            this.lblPrimaryColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblPrimaryColor.Location = new System.Drawing.Point(344, 200);
-            this.lblPrimaryColor.Name = "lblPrimaryColor";
-            this.lblPrimaryColor.Size = new System.Drawing.Size(64, 32);
-            this.lblPrimaryColor.TabIndex = 35;
+            this.lblColorPreview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblColorPreview.Location = new System.Drawing.Point(344, 200);
+            this.lblColorPreview.Name = "lblColorPreview";
+            this.lblColorPreview.Size = new System.Drawing.Size(64, 64);
+            this.lblColorPreview.TabIndex = 35;
             // 
             // lblDecimal
             // 
@@ -524,10 +519,48 @@
             this.colorPicker.TabIndex = 66;
             this.colorPicker.ColorChanged += new ZSS.Colors.ColorEventHandler(this.colorPicker_ColorChanged);
             // 
+            // txtX
+            // 
+            this.txtX.Location = new System.Drawing.Point(452, 205);
+            this.txtX.Name = "txtX";
+            this.txtX.Size = new System.Drawing.Size(40, 20);
+            this.txtX.TabIndex = 75;
+            this.txtX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtY
+            // 
+            this.txtY.Location = new System.Drawing.Point(524, 205);
+            this.txtY.Name = "txtY";
+            this.txtY.Size = new System.Drawing.Size(40, 20);
+            this.txtY.TabIndex = 76;
+            this.txtY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblX
+            // 
+            this.lblX.AutoSize = true;
+            this.lblX.Location = new System.Drawing.Point(428, 207);
+            this.lblX.Name = "lblX";
+            this.lblX.Size = new System.Drawing.Size(17, 13);
+            this.lblX.TabIndex = 77;
+            this.lblX.Text = "X:";
+            // 
+            // lblY
+            // 
+            this.lblY.AutoSize = true;
+            this.lblY.Location = new System.Drawing.Point(500, 207);
+            this.lblY.Name = "lblY";
+            this.lblY.Size = new System.Drawing.Size(17, 13);
+            this.lblY.TabIndex = 78;
+            this.lblY.Text = "Y:";
+            // 
             // ColorDialog
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(613, 272);
+            this.Controls.Add(this.lblY);
+            this.Controls.Add(this.lblX);
+            this.Controls.Add(this.txtY);
+            this.Controls.Add(this.txtX);
             this.Controls.Add(this.btnColorPicker);
             this.Controls.Add(this.lblKeyPerc);
             this.Controls.Add(this.lblYellowPerc);
@@ -565,8 +598,7 @@
             this.Controls.Add(this.rbBrightness);
             this.Controls.Add(this.rbSaturation);
             this.Controls.Add(this.rbHue);
-            this.Controls.Add(this.lblSecondaryColor);
-            this.Controls.Add(this.lblPrimaryColor);
+            this.Controls.Add(this.lblColorPreview);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ColorDialog";
@@ -619,8 +651,7 @@
         private System.Windows.Forms.RadioButton rbBrightness;
         private System.Windows.Forms.RadioButton rbSaturation;
         private System.Windows.Forms.RadioButton rbHue;
-        private System.Windows.Forms.Label lblSecondaryColor;
-        private System.Windows.Forms.Label lblPrimaryColor;
+        private System.Windows.Forms.Label lblColorPreview;
         private ColorPicker colorPicker;
         private System.Windows.Forms.Label lblDecimal;
         private System.Windows.Forms.TextBox txtDecimal;
@@ -630,5 +661,9 @@
         private System.Windows.Forms.Label lblKeyPerc;
         private System.Windows.Forms.Button btnColorPicker;
         private System.Windows.Forms.Timer colorTimer;
+        private System.Windows.Forms.TextBox txtX;
+        private System.Windows.Forms.TextBox txtY;
+        private System.Windows.Forms.Label lblX;
+        private System.Windows.Forms.Label lblY;
     }
 }
