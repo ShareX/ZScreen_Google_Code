@@ -262,32 +262,32 @@ namespace ZSS.Colors
                 case DrawStyle.Hue:
                     mSetColor.HSB.Saturation = (double)lastPos.X / width;
                     mSetColor.HSB.Brightness = 1.0 - (double)lastPos.Y / height;
-                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    mSetColor.HSBUpdate();
                     break;
                 case DrawStyle.Saturation:
                     mSetColor.HSB.Hue = (double)lastPos.X / width;
                     mSetColor.HSB.Brightness = 1.0 - (double)lastPos.Y / height;
-                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    mSetColor.HSBUpdate();
                     break;
                 case DrawStyle.Brightness:
                     mSetColor.HSB.Hue = (double)lastPos.X / width;
                     mSetColor.HSB.Saturation = 1.0 - (double)lastPos.Y / height;
-                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    mSetColor.HSBUpdate();
                     break;
                 case DrawStyle.Red:
                     mSetColor.RGB.Blue = Round(255 * (double)lastPos.X / width);
                     mSetColor.RGB.Green = Round(255 * (1.0 - (double)lastPos.Y / height));
-                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    mSetColor.RGBUpdate();
                     break;
                 case DrawStyle.Green:
                     mSetColor.RGB.Blue = Round(255 * (double)lastPos.X / width);
                     mSetColor.RGB.Red = Round(255 * (1.0 - (double)lastPos.Y / height));
-                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    mSetColor.RGBUpdate();
                     break;
                 case DrawStyle.Blue:
                     mSetColor.RGB.Red = Round(255 * (double)lastPos.X / width);
                     mSetColor.RGB.Green = Round(255 * (1.0 - (double)lastPos.Y / height));
-                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    mSetColor.RGBUpdate();
                     break;
             }
         }
@@ -324,27 +324,27 @@ namespace ZSS.Colors
             {
                 case DrawStyle.Hue:
                     mSetColor.HSB.Hue = 1.0 - (double)lastPos.Y / height;
-                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    mSetColor.HSBUpdate();
                     break;
                 case DrawStyle.Saturation:
                     mSetColor.HSB.Saturation = 1.0 - (double)lastPos.Y / height;
-                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    mSetColor.HSBUpdate();
                     break;
                 case DrawStyle.Brightness:
                     mSetColor.HSB.Brightness = 1.0 - (double)lastPos.Y / height;
-                    mSetColor.RGB = mSetColor.HSB.ToColor();
+                    mSetColor.HSBUpdate();
                     break;
                 case DrawStyle.Red:
                     mSetColor.RGB.Red = 255 - Round(255 * (double)lastPos.Y / height);
-                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    mSetColor.RGBUpdate();
                     break;
                 case DrawStyle.Green:
                     mSetColor.RGB.Green = 255 - Round(255 * (double)lastPos.Y / height);
-                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    mSetColor.RGBUpdate();
                     break;
                 case DrawStyle.Blue:
                     mSetColor.RGB.Blue = 255 - Round(255 * (double)lastPos.Y / height);
-                    mSetColor.HSB = mSetColor.RGB.ToHSB();
+                    mSetColor.RGBUpdate();
                     break;
             }
         }
