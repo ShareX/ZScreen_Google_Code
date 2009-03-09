@@ -428,7 +428,6 @@
             // 
             // lblSecondaryColor
             // 
-            this.lblSecondaryColor.BackColor = System.Drawing.Color.RoyalBlue;
             this.lblSecondaryColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblSecondaryColor.Location = new System.Drawing.Point(344, 232);
             this.lblSecondaryColor.Name = "lblSecondaryColor";
@@ -437,7 +436,6 @@
             // 
             // lblPrimaryColor
             // 
-            this.lblPrimaryColor.BackColor = System.Drawing.Color.Red;
             this.lblPrimaryColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblPrimaryColor.Location = new System.Drawing.Point(344, 200);
             this.lblPrimaryColor.Name = "lblPrimaryColor";
