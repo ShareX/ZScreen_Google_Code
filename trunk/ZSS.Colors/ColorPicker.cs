@@ -8,7 +8,8 @@ using System.Windows.Forms;
 
 namespace ZSS.Colors
 {
-    public partial class ColorPicker : UserControl
+    [DefaultEvent("ColorChanged")]
+    public class ColorPicker : UserControl
     {
         #region Variables
 
@@ -120,22 +121,22 @@ namespace ZSS.Colors
             this.colorSlider = new ZSS.Colors.ColorSlider();
 
             // colorBox
-            this.colorBox.BorderStyle = BorderStyle.Fixed3D;
+            this.colorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.colorBox.DrawStyle = ZSS.Colors.DrawStyle.Hue;
             this.colorBox.Location = new System.Drawing.Point(0, 0);
             this.colorBox.Name = "colorBox";
             this.colorBox.Size = new System.Drawing.Size(255, 255);
             this.colorBox.TabIndex = 0;
             // colorSlider
-            this.colorSlider.BorderStyle = BorderStyle.Fixed3D;
+            this.colorSlider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.colorSlider.DrawStyle = ZSS.Colors.DrawStyle.Hue;
             this.colorSlider.Location = new System.Drawing.Point(256, 0);
             this.colorSlider.Name = "colorSlider";
             this.colorSlider.Size = new System.Drawing.Size(30, 255);
             this.colorSlider.TabIndex = 1;
-            // ColorPicker
-            this.Controls.Add(this.colorSlider);
+            // ColorPicker 
             this.Controls.Add(this.colorBox);
+            this.Controls.Add(this.colorSlider);
             this.Name = "ColorPicker";
             this.Size = new System.Drawing.Size(colorBox.Width + colorSlider.Width, colorBox.Height);
 
