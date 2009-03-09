@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.lblOld = new System.Windows.Forms.Label();
@@ -65,6 +66,8 @@
             this.lblMagentaPerc = new System.Windows.Forms.Label();
             this.lblYellowPerc = new System.Windows.Forms.Label();
             this.lblKeyPerc = new System.Windows.Forms.Label();
+            this.btnColorPicker = new System.Windows.Forms.Button();
+            this.colorTimer = new System.Windows.Forms.Timer(this.components);
             this.colorPicker = new ZSS.Colors.ColorPicker();
             ((System.ComponentModel.ISupportInitialize)(this.nudKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYellow)).BeginInit();
@@ -80,9 +83,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(520, 232);
+            this.btnCancel.Location = new System.Drawing.Point(536, 232);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(83, 31);
+            this.btnCancel.Size = new System.Drawing.Size(64, 32);
             this.btnCancel.TabIndex = 65;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -90,9 +93,9 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(432, 232);
+            this.btnOK.Location = new System.Drawing.Point(464, 232);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(83, 31);
+            this.btnOK.Size = new System.Drawing.Size(64, 32);
             this.btnOK.TabIndex = 64;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -499,6 +502,21 @@
             this.lblKeyPerc.TabIndex = 73;
             this.lblKeyPerc.Text = "%";
             // 
+            // btnColorPicker
+            // 
+            this.btnColorPicker.Image = global::ZSS.Colors.Properties.Resources.color_picker;
+            this.btnColorPicker.Location = new System.Drawing.Point(424, 232);
+            this.btnColorPicker.Name = "btnColorPicker";
+            this.btnColorPicker.Size = new System.Drawing.Size(32, 32);
+            this.btnColorPicker.TabIndex = 74;
+            this.btnColorPicker.UseVisualStyleBackColor = true;
+            this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
+            // 
+            // colorTimer
+            // 
+            this.colorTimer.Interval = 10;
+            this.colorTimer.Tick += new System.EventHandler(this.colorTimer_Tick);
+            // 
             // colorPicker
             // 
             this.colorPicker.DrawStyle = ZSS.Colors.DrawStyle.Hue;
@@ -510,9 +528,9 @@
             // 
             // ColorDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(613, 272);
+            this.Controls.Add(this.btnColorPicker);
             this.Controls.Add(this.lblKeyPerc);
             this.Controls.Add(this.lblYellowPerc);
             this.Controls.Add(this.lblMagentaPerc);
@@ -551,8 +569,12 @@
             this.Controls.Add(this.rbHue);
             this.Controls.Add(this.lblSecondaryColor);
             this.Controls.Add(this.lblPrimaryColor);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "ColorDialog";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "ColorDialog";
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.nudKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYellow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMagenta)).EndInit();
@@ -608,5 +630,7 @@
         private System.Windows.Forms.Label lblMagentaPerc;
         private System.Windows.Forms.Label lblYellowPerc;
         private System.Windows.Forms.Label lblKeyPerc;
+        private System.Windows.Forms.Button btnColorPicker;
+        private System.Windows.Forms.Timer colorTimer;
     }
 }

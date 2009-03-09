@@ -25,6 +25,7 @@ namespace ZSS.Colors
             {
                 mColor = value;
                 colorBox.SetColor = value;
+                colorSlider.SetColor = value;
             }
         }
 

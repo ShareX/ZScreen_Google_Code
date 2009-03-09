@@ -43,6 +43,7 @@ namespace ZSS.Colors
         protected bool mouseDown;
         protected bool drawCrosshair;
         protected Point lastPos;
+        protected Timer MouseMoveTimer;
 
         public MyColor SetColor
         {
@@ -53,6 +54,14 @@ namespace ZSS.Colors
             set
             {
                 mSetColor = value;
+                if (this is ColorBox)
+                {
+                    SetBoxMarker();
+                }
+                else
+                {
+                    SetSliderMarker();
+                }
                 Refresh();
                 GetPointColor(lastPos);
                 ThrowEvent(false);
@@ -103,6 +112,10 @@ namespace ZSS.Colors
             this.SetColor = Color.Red;
             this.DrawStyle = DrawStyle.Hue;
 
+            MouseMoveTimer = new Timer();
+            MouseMoveTimer.Interval = 10;
+            MouseMoveTimer.Tick += new EventHandler(MouseMoveTimer_Tick);
+
             this.ClientSizeChanged += new System.EventHandler(this.EventClientSizeChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EventMouseDown);
             this.MouseEnter += new EventHandler(this.EventMouseEnter);
@@ -138,7 +151,8 @@ namespace ZSS.Colors
         {
             drawCrosshair = true;
             mouseDown = true;
-            EventMouseMove(this, e);
+            MouseMoveTimer.Start();
+            //EventMouseMove(this, e);
         }
 
         private void EventMouseEnter(object sender, EventArgs e)
@@ -151,19 +165,13 @@ namespace ZSS.Colors
 
         private void EventMouseMove(object sender, MouseEventArgs e)
         {
-            Point mousePosition = GetPoint(e.Location);
-            if (mouseDown && (lastPos == null || lastPos != mousePosition))
-            {
-                GetPointColor(mousePosition);
-                ThrowEvent();
-                Refresh();
-                //Console.WriteLine(width + "-" + this.ClientRectangle.Width + "-" + this.DisplayRectangle.Width);
-            }
+
         }
 
         private void EventMouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
+            MouseMoveTimer.Stop();
         }
 
         private void EventPaint(object sender, PaintEventArgs e)
@@ -171,6 +179,18 @@ namespace ZSS.Colors
             if (!mouseDown) DrawColors();
             e.Graphics.DrawImage(bmp, this.ClientRectangle);
             if (drawCrosshair) DrawCrosshair(e.Graphics);
+        }
+
+        private void MouseMoveTimer_Tick(object sender, EventArgs e)
+        {
+            Point mousePosition = GetPoint(this.PointToClient(MousePosition));
+            if (mouseDown && (lastPos == null || lastPos != mousePosition))
+            {
+                GetPointColor(mousePosition);
+                ThrowEvent();
+                Refresh();
+                //Console.WriteLine(width + "-" + this.ClientRectangle.Width + "-" + this.DisplayRectangle.Width);
+            }
         }
 
         #endregion
