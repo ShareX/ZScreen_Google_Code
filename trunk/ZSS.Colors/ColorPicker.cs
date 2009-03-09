@@ -84,6 +84,15 @@ namespace ZSS.Colors
             }
         }
 
+        public bool DrawCrosshair
+        {
+            set
+            {
+                colorBox.drawCrosshair = value;
+                colorSlider.drawCrosshair = value;
+            }
+        }
+
         private ColorBox colorBox;
         private ColorSlider colorSlider;
 

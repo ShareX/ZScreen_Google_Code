@@ -34,6 +34,7 @@ namespace ZSS.Colors
         #region Variables
 
         public event ColorEventHandler ColorChanged;
+        public bool drawCrosshair;
 
         protected Bitmap bmp;
         protected int width;
@@ -41,7 +42,6 @@ namespace ZSS.Colors
         protected DrawStyle mDrawStyle;
         protected MyColor mSetColor;
         protected bool mouseDown;
-        protected bool drawCrosshair;
         protected Point lastPos;
         protected Timer MouseMoveTimer;
 

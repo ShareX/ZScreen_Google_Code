@@ -1,6 +1,6 @@
 ﻿namespace ZSS.Colors
 {
-    partial class ColorDialog
+    partial class DialogColor
     {
         /// <summary>
         /// Required designer variable.
@@ -432,10 +432,12 @@
             // lblColorPreview
             // 
             this.lblColorPreview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblColorPreview.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblColorPreview.Location = new System.Drawing.Point(344, 200);
             this.lblColorPreview.Name = "lblColorPreview";
             this.lblColorPreview.Size = new System.Drawing.Size(64, 64);
             this.lblColorPreview.TabIndex = 35;
+            this.lblColorPreview.Click += new System.EventHandler(this.lblColorPreview_Click);
             // 
             // lblDecimal
             // 
@@ -553,7 +555,7 @@
             this.colorPicker.TabIndex = 66;
             this.colorPicker.ColorChanged += new ZSS.Colors.ColorEventHandler(this.colorPicker_ColorChanged);
             // 
-            // ColorDialog
+            // DialogColor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(601, 272);
@@ -602,10 +604,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.Name = "ColorDialog";
+            this.Name = "DialogColor";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "ColorDialog";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.DialogColor_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ColorDialog_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.nudKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYellow)).EndInit();

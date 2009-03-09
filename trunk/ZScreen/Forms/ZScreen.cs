@@ -41,6 +41,7 @@ using ZSS.ImageUploader;
 using ZSS.ImageUploader.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
+using ZSS.Colors;
 
 namespace ZSS
 {
@@ -3608,12 +3609,11 @@ namespace ZSS
 
         private void SelectColor(PictureBox pb, ref string setting)
         {
-            ColorDialog dColor = new ColorDialog();
-            dColor.Color = pb.BackColor;
+            DialogColor dColor = new DialogColor(pb.BackColor);
             if (dColor.ShowDialog() == DialogResult.OK)
             {
-                pb.BackColor = dColor.Color;
-                setting = XMLSettings.SerializeColor(dColor.Color);
+                pb.BackColor = dColor.NewColor;
+                setting = XMLSettings.SerializeColor(dColor.NewColor);
             }
         }
 

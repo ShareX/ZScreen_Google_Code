@@ -31,22 +31,24 @@ using System.Windows.Forms;
 
 namespace ZSS.Colors
 {
-    public partial class ColorDialog : Form
+    public partial class DialogColor : Form
     {
         public MyColor NewColor = Color.Red;
         public MyColor OldColor;
         private bool oldColorExist;
 
-        public ColorDialog()
+        public DialogColor()
         {
             InitializeComponent();
             Initialize();
         }
 
-        public ColorDialog(Color CurrentColor)
+        public DialogColor(Color CurrentColor)
         {
             InitializeComponent();
-            OldColor = CurrentColor;
+            NewColor = OldColor = CurrentColor;
+            colorPicker.DrawCrosshair = true;
+            colorPicker.Color = NewColor;
             oldColorExist = true;
             Initialize();
         }
@@ -91,6 +93,12 @@ namespace ZSS.Colors
         }
 
         #region Events
+
+        private void DialogColor_Load(object sender, EventArgs e)
+        {
+            this.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 - (this.Width / 2),
+                Screen.PrimaryScreen.Bounds.Height / 2 - (this.Height / 2));
+        }
 
         private void CopyToClipboard(object sender, EventArgs e)
         {
@@ -171,6 +179,14 @@ namespace ZSS.Colors
         private void rbBlue_CheckedChanged(object sender, EventArgs e)
         {
             if (rbBlue.Checked) colorPicker.DrawStyle = DrawStyle.Blue;
+        }
+
+        private void lblColorPreview_Click(object sender, EventArgs e)
+        {
+            if (oldColorExist)
+            {
+                colorPicker.Color = OldColor;
+            }
         }
 
         #endregion
