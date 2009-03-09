@@ -61,6 +61,24 @@ namespace ZSS.Colors
             return !(left == right);
         }
 
+        public void RGBUpdate()
+        {
+            this.HSB = this.RGB;
+            this.CMYK = this.RGB;
+        }
+
+        public void HSBUpdate()
+        {
+            this.RGB = this.HSB;
+            this.CMYK = this.HSB;
+        }
+
+        public void CMYKUpdate()
+        {
+            this.RGB = this.CMYK;
+            this.HSB = this.CMYK;
+        }
+
         public override string ToString()
         {
             return String.Format("{0}\r\n{1}\r\n{2}", RGB.ToString(), HSB.ToString(), CMYK.ToString());
@@ -122,6 +140,16 @@ namespace ZSS.Colors
         public static implicit operator Color(RGB color)
         {
             return color.ToColor();
+        }
+
+        public static implicit operator HSB(RGB color)
+        {
+            return color.ToHSB();
+        }
+
+        public static implicit operator CMYK(RGB color)
+        {
+            return color.ToCMYK();
         }
 
         public static bool operator ==(RGB left, RGB right)
@@ -277,6 +305,16 @@ namespace ZSS.Colors
             return color.ToColor();
         }
 
+        public static implicit operator RGB(HSB color)
+        {
+            return color.ToColor();
+        }
+
+        public static implicit operator CMYK(HSB color)
+        {
+            return color.ToColor();
+        }
+
         public static bool operator ==(HSB left, HSB right)
         {
             return (left.Hue == right.Hue) && (left.Saturation == right.Saturation) && (left.Brightness == right.Brightness);
@@ -410,6 +448,16 @@ namespace ZSS.Colors
         }
 
         public static implicit operator Color(CMYK color)
+        {
+            return color.ToColor();
+        }
+
+        public static implicit operator RGB(CMYK color)
+        {
+            return color.ToColor();
+        }
+
+        public static implicit operator HSB(CMYK color)
         {
             return color.ToColor();
         }
