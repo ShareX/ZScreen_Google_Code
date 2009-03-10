@@ -35,11 +35,13 @@ namespace ZSS.Colors
     {
         public MyColor NewColor = Color.Red;
         public MyColor OldColor;
+        public bool ScreenPicker;
         private bool oldColorExist;
 
         public DialogColor()
         {
             InitializeComponent();
+            oldColorExist = false;
             Initialize();
         }
 
@@ -47,7 +49,6 @@ namespace ZSS.Colors
         {
             InitializeComponent();
             NewColor = OldColor = CurrentColor;
-            colorPicker.DrawCrosshair = true;
             colorPicker.Color = NewColor;
             oldColorExist = true;
             Initialize();
@@ -62,6 +63,8 @@ namespace ZSS.Colors
                     cntrl.DoubleClick += new EventHandler(CopyToClipboard);
                 }
             }
+            colorPicker.DrawCrosshair = oldColorExist;
+            lblOld.Visible = oldColorExist;
             DrawColors();
         }
 
@@ -86,9 +89,11 @@ namespace ZSS.Colors
         {
             Bitmap bmp = new Bitmap(lblColorPreview.ClientSize.Width, lblColorPreview.ClientSize.Height);
             Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(new SolidBrush(NewColor), new Rectangle(0, 0, bmp.Width, bmp.Height / 2));
+            int bmpHeight = bmp.Height;
+            if (oldColorExist) bmpHeight /= 2;
+            g.FillRectangle(new SolidBrush(NewColor), new Rectangle(0, 0, bmp.Width, bmpHeight));
             if (oldColorExist) g.FillRectangle(new SolidBrush(OldColor),
-                new Rectangle(0, bmp.Height / 2, bmp.Width, bmp.Height / 2));
+                new Rectangle(0, bmpHeight, bmp.Width, bmpHeight));
             lblColorPreview.Image = bmp;
         }
 
@@ -96,8 +101,16 @@ namespace ZSS.Colors
 
         private void DialogColor_Load(object sender, EventArgs e)
         {
-            this.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 - (this.Width / 2),
-                Screen.PrimaryScreen.Bounds.Height / 2 - (this.Height / 2));
+            if (ScreenPicker)
+            {
+                this.Location = new Point(10, 10);
+                colorTimer.Start();
+            }
+            else
+            {
+                this.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 - (this.Width / 2),
+                                Screen.PrimaryScreen.Bounds.Height / 2 - (this.Height / 2));
+            }
         }
 
         private void CopyToClipboard(object sender, EventArgs e)
@@ -187,6 +200,13 @@ namespace ZSS.Colors
             {
                 colorPicker.Color = OldColor;
             }
+        }
+
+        private void DialogColor_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            MessageBox.Show("Press \"Control\" button for start or stop screen color picker.\r\nIf you double " +
+                "click on any of TextBox or NumericUpDown controls value or text will be copy to clipboard automaticly.", "Color Dialog");
+            e.Cancel = true;
         }
 
         #endregion

@@ -4222,5 +4222,13 @@ namespace ZSS
         {
             UpdateChecker.CheckUpdates();
         }
+
+        private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogColor dialogColor = new DialogColor();
+            dialogColor.ScreenPicker = true;
+            dialogColor.ShowDialog();
+            dialogColor.Dispose();
+        }
     }
 }

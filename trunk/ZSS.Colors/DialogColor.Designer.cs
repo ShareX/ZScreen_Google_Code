@@ -86,6 +86,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(536, 232);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(56, 32);
@@ -559,6 +560,7 @@
             // DialogColor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(601, 274);
             this.Controls.Add(this.lblY);
             this.Controls.Add(this.lblX);
@@ -602,14 +604,17 @@
             this.Controls.Add(this.rbSaturation);
             this.Controls.Add(this.rbHue);
             this.Controls.Add(this.lblColorPreview);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.HelpButton = true;
             this.KeyPreview = true;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DialogColor";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "ColorDialog";
+            this.Text = "Color Dialog";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.DialogColor_Load);
+            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.DialogColor_HelpButtonClicked);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ColorDialog_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.nudKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYellow)).EndInit();
