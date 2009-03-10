@@ -40,7 +40,7 @@ namespace ZSS.Colors
         protected override void Initialize()
         {
             this.Name = "ColorSlider";
-            this.Size = new System.Drawing.Size(30, 256);
+            this.Size = new System.Drawing.Size(30, 260);
             base.Initialize();
         }
 

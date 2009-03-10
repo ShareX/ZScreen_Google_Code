@@ -40,7 +40,7 @@ namespace ZSS.Colors
         protected override void Initialize()
         {
             this.Name = "ColorBox";
-            this.Size = new System.Drawing.Size(255, 256);
+            this.Size = new System.Drawing.Size(260, 260);
             base.Initialize();
         }
 
