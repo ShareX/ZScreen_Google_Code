@@ -548,17 +548,18 @@
             // 
             // colorPicker
             // 
+            this.colorPicker.AutoSize = true;
             this.colorPicker.DrawStyle = ZSS.Colors.DrawStyle.Hue;
             this.colorPicker.Location = new System.Drawing.Point(8, 8);
             this.colorPicker.Name = "colorPicker";
-            this.colorPicker.Size = new System.Drawing.Size(285, 255);
+            this.colorPicker.Size = new System.Drawing.Size(293, 263);
             this.colorPicker.TabIndex = 66;
             this.colorPicker.ColorChanged += new ZSS.Colors.ColorEventHandler(this.colorPicker_ColorChanged);
             // 
             // DialogColor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(601, 272);
+            this.ClientSize = new System.Drawing.Size(601, 274);
             this.Controls.Add(this.lblY);
             this.Controls.Add(this.lblX);
             this.Controls.Add(this.txtY);

@@ -158,18 +158,17 @@ namespace ZSS.Colors
             this.colorBox.DrawStyle = ZSS.Colors.DrawStyle.Hue;
             this.colorBox.Location = new System.Drawing.Point(0, 0);
             this.colorBox.Name = "colorBox";
-            this.colorBox.Size = new System.Drawing.Size(255, 255);
             this.colorBox.TabIndex = 0;
             // colorSlider
             this.colorSlider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.colorSlider.DrawStyle = ZSS.Colors.DrawStyle.Hue;
-            this.colorSlider.Location = new System.Drawing.Point(256, 0);
+            this.colorSlider.Location = new System.Drawing.Point(colorBox.Width, 0);
             this.colorSlider.Name = "colorSlider";
-            this.colorSlider.Size = new System.Drawing.Size(30, 255);
             this.colorSlider.TabIndex = 1;
             // ColorPicker 
             this.Controls.Add(this.colorBox);
             this.Controls.Add(this.colorSlider);
+            this.AutoSize = true;
             this.Name = "ColorPicker";
             this.Size = new System.Drawing.Size(colorBox.Width + colorSlider.Width, colorBox.Height);
 
