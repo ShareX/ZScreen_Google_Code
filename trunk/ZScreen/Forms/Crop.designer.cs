@@ -48,6 +48,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.TopMost = true;
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Crop_MouseUp);
             this.Shown += new System.EventHandler(this.Crop_Shown);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Crop_FormClosed);

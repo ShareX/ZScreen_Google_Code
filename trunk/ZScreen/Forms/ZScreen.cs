@@ -625,16 +625,18 @@ namespace ZSS
                 }
                 else
                 {
-                    Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
-                    if (c.ShowDialog() == DialogResult.OK)
+                    using (Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
                     {
-                        if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                        if (c.ShowDialog() == DialogResult.OK)
                         {
-                            task.SetImage(CropImage(imgSS, Program.LastRegion));
-                        }
-                        else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
-                        {
-                            task.SetImage(CropImage(imgSS, Program.LastCapture));
+                            if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                            {
+                                task.SetImage(CropImage(imgSS, Program.LastRegion));
+                            }
+                            else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                            {
+                                task.SetImage(CropImage(imgSS, Program.LastCapture));
+                            }
                         }
                     }
                 }
@@ -2635,14 +2637,16 @@ namespace ZSS
             if (!bDropWindowOpened)
             {
                 bDropWindowOpened = true;
-                DropWindow dw = Program.MyDropWindow;
-                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
-                dw.ShowDialog();
-                if (dw.DialogResult == DialogResult.OK)
+                using (DropWindow dw = Program.MyDropWindow)
                 {
-                    ScreenshotUsingDragDrop(dw.FilePaths);
+                    dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
+                    dw.ShowDialog();
+                    if (dw.DialogResult == DialogResult.OK)
+                    {
+                        ScreenshotUsingDragDrop(dw.FilePaths);
+                    }
+                    bDropWindowOpened = false;
                 }
-                bDropWindowOpened = false;
             }
         }
 
