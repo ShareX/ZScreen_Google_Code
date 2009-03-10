@@ -31,14 +31,15 @@
             this.txtText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // txtAns
+            // txtText
             // 
-            this.txtText.Location = new System.Drawing.Point(12, 12);
+            this.txtText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtText.Location = new System.Drawing.Point(0, 0);
             this.txtText.Multiline = true;
             this.txtText.Name = "txtText";
             this.txtText.ReadOnly = true;
             this.txtText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtText.Size = new System.Drawing.Size(600, 420);
+            this.txtText.Size = new System.Drawing.Size(624, 444);
             this.txtText.TabIndex = 0;
             this.txtText.TabStop = false;
             this.txtText.WordWrap = false;
@@ -50,8 +51,6 @@
             this.ClientSize = new System.Drawing.Size(624, 444);
             this.Controls.Add(this.txtText);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "frmTextViewer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmTextViewer";

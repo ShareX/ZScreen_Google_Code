@@ -64,6 +64,7 @@ namespace ZSS
             this.lastRectangularRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmScrenshotFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.languageTranslatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.screenColorPickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDropWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmQuickOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -378,7 +379,6 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.screenColorPickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmTray.SuspendLayout();
             this.tpScreenshots.SuspendLayout();
             this.gbScreenshotPreview.SuspendLayout();
@@ -678,13 +678,14 @@ namespace ZSS
             this.tsmScrenshotFromClipboard,
             this.languageTranslatorToolStripMenuItem,
             this.screenColorPickerToolStripMenuItem});
-            this.captureToolStripMenuItem.Image = global::ZSS.Properties.Resources.camera;
+            this.captureToolStripMenuItem.Image = global::ZSS.Properties.Resources.lightning1;
             this.captureToolStripMenuItem.Name = "captureToolStripMenuItem";
             this.captureToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.captureToolStripMenuItem.Text = "&Actions";
             // 
             // entireScreenToolStripMenuItem
             // 
+            this.entireScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.monitor;
             this.entireScreenToolStripMenuItem.Name = "entireScreenToolStripMenuItem";
             this.entireScreenToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.entireScreenToolStripMenuItem.Text = "&Entire Screen";
@@ -692,6 +693,7 @@ namespace ZSS
             // 
             // selectedWindowToolStripMenuItem
             // 
+            this.selectedWindowToolStripMenuItem.Image = global::ZSS.Properties.Resources.application_double;
             this.selectedWindowToolStripMenuItem.Name = "selectedWindowToolStripMenuItem";
             this.selectedWindowToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.selectedWindowToolStripMenuItem.Text = "Selected Window";
@@ -699,6 +701,7 @@ namespace ZSS
             // 
             // rectangularRegionToolStripMenuItem
             // 
+            this.rectangularRegionToolStripMenuItem.Image = global::ZSS.Properties.Resources.shape_square;
             this.rectangularRegionToolStripMenuItem.Name = "rectangularRegionToolStripMenuItem";
             this.rectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.rectangularRegionToolStripMenuItem.Text = "&Crop Shot";
@@ -706,6 +709,7 @@ namespace ZSS
             // 
             // lastRectangularRegionToolStripMenuItem
             // 
+            this.lastRectangularRegionToolStripMenuItem.Image = global::ZSS.Properties.Resources.shape_square_go;
             this.lastRectangularRegionToolStripMenuItem.Name = "lastRectangularRegionToolStripMenuItem";
             this.lastRectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.lastRectangularRegionToolStripMenuItem.Text = "Last Crop Shot";
@@ -713,6 +717,7 @@ namespace ZSS
             // 
             // tsmScrenshotFromClipboard
             // 
+            this.tsmScrenshotFromClipboard.Image = global::ZSS.Properties.Resources.images;
             this.tsmScrenshotFromClipboard.Name = "tsmScrenshotFromClipboard";
             this.tsmScrenshotFromClipboard.Size = new System.Drawing.Size(182, 22);
             this.tsmScrenshotFromClipboard.Text = "Clipboard Upload";
@@ -720,10 +725,19 @@ namespace ZSS
             // 
             // languageTranslatorToolStripMenuItem
             // 
+            this.languageTranslatorToolStripMenuItem.Image = global::ZSS.Properties.Resources.comments;
             this.languageTranslatorToolStripMenuItem.Name = "languageTranslatorToolStripMenuItem";
             this.languageTranslatorToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.languageTranslatorToolStripMenuItem.Text = "Language Translator";
             this.languageTranslatorToolStripMenuItem.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
+            // 
+            // screenColorPickerToolStripMenuItem
+            // 
+            this.screenColorPickerToolStripMenuItem.Image = global::ZSS.Properties.Resources.color_wheel;
+            this.screenColorPickerToolStripMenuItem.Name = "screenColorPickerToolStripMenuItem";
+            this.screenColorPickerToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.screenColorPickerToolStripMenuItem.Text = "Screen Color Picker";
+            this.screenColorPickerToolStripMenuItem.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
             // tsmDropWindow
             // 
@@ -759,6 +773,7 @@ namespace ZSS
             // 
             // tsmLic
             // 
+            this.tsmLic.Image = global::ZSS.Properties.Resources.note_error;
             this.tsmLic.Name = "tsmLic";
             this.tsmLic.Size = new System.Drawing.Size(163, 22);
             this.tsmLic.Text = "License...";
@@ -766,6 +781,7 @@ namespace ZSS
             // 
             // tsmVersionHistory
             // 
+            this.tsmVersionHistory.Image = global::ZSS.Properties.Resources.page_white_text1;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
             this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
@@ -4266,13 +4282,6 @@ namespace ZSS
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
-            // 
-            // screenColorPickerToolStripMenuItem
-            // 
-            this.screenColorPickerToolStripMenuItem.Name = "screenColorPickerToolStripMenuItem";
-            this.screenColorPickerToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.screenColorPickerToolStripMenuItem.Text = "Screen Color Picker";
-            this.screenColorPickerToolStripMenuItem.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
             // ZScreen
             // 
