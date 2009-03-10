@@ -323,6 +323,7 @@
     <None Include="Resources\page_white_text.png" />
     <None Include="Resources\page_white_text1.png" />
     <None Include="Resources\note_error.png" />
+    <None Include="Resources\lightning.png" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
     <Content Include="zss-main.ico" />
   </ItemGroup>
@@ -345,7 +346,7 @@ start explorer /n,"$(SolutionDir)"</PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>cd $(SolutionDir)Tools
+SVNRevToAssemblyInfo.exe dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
