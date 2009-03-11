@@ -100,6 +100,7 @@ namespace ZSS
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
         public bool ClipboardTranslate = false;
+        public bool AddFailedScreenshot = false;
 
         //*********************
         //* Image Software Settings
