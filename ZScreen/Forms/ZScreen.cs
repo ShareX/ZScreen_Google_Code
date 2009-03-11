@@ -292,7 +292,7 @@ namespace ZSS
             }
             txtImageSoftwarePath.Enabled = false;
             //cbRunImageSoftware.Checked = Program.conf.ISenabled;
-
+            cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
 
             ///////////////////////////////////
             // Main/File Settings
@@ -812,7 +812,11 @@ namespace ZSS
                 }
             }
 
-            task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
+            if (task.ImageDestCategory == ImageDestType.IMAGESHACK) task.Errors.Add("Test");
+            if (Program.conf.AddFailedScreenshot || (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0))
+            {
+                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
+            }
 
             if (task.ImageManager != null)
             {
@@ -2632,18 +2636,7 @@ namespace ZSS
 
         private void ShowDropWindow(object sender, EventArgs e)
         {
-            if (!bDropWindowOpened)
-            {
-                bDropWindowOpened = true;
-                DropWindow dw = Program.MyDropWindow;
-                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
-                dw.ShowDialog();
-                if (dw.DialogResult == DialogResult.OK)
-                {
-                    ScreenshotUsingDragDrop(dw.FilePaths);
-                }
-                bDropWindowOpened = false;
-            }
+            ShowDropWindow();
         }
 
         #region Image Uploaders
@@ -4231,9 +4224,25 @@ namespace ZSS
             dialogColor.Dispose();
         }
 
+        private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
+        }
+
         private void ShowDropWindow()
         {
-
+            if (!bDropWindowOpened)
+            {
+                bDropWindowOpened = true;
+                DropWindow dw = Program.MyDropWindow;
+                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
+                dw.ShowDialog();
+                if (dw.DialogResult == DialogResult.OK)
+                {
+                    ScreenshotUsingDragDrop(dw.FilePaths);
+                }
+                bDropWindowOpened = false;
+            }
         }
     }
 }

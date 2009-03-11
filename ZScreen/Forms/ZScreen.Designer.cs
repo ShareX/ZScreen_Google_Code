@@ -493,7 +493,7 @@ namespace ZSS
             this.aboutToolStripMenuItem,
             this.exitZScreenToolStripMenuItem});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 248);
             // 
             // tsmSettings
             // 
@@ -3244,6 +3244,7 @@ namespace ZSS
             this.cbAddFailedScreenshot.Text = "Add failed screenshot upload to History for see source ( For see what is problem " +
                 ")";
             this.cbAddFailedScreenshot.UseVisualStyleBackColor = true;
+            this.cbAddFailedScreenshot.CheckedChanged += new System.EventHandler(this.cbAddFailedScreenshot_CheckedChanged);
             // 
             // chkImageUploadRetry
             // 
