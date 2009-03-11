@@ -36,7 +36,7 @@ namespace McoreSystem
     public class AppInfo
     {
 
-        private string mAppName;
+        public string AppName { get; set; }
         private string mLocalVersion;
         private bool mShowFinalState;
 
@@ -90,7 +90,7 @@ namespace McoreSystem
 
         public AppInfo(string ProductName, string Version)
         {
-            this.mAppName = ProductName;
+            this.AppName = ProductName;
             this.mLocalVersion = Version;
         }
 
@@ -129,15 +129,15 @@ namespace McoreSystem
 
         public string GetApplicationTitle(VersionDepth depth, SoftwareCycle cycle, bool showFinal)
         {
-            if (!string.IsNullOrEmpty(mAppName) && !string.IsNullOrEmpty(mLocalVersion))
+            if (!string.IsNullOrEmpty(AppName) && !string.IsNullOrEmpty(mLocalVersion))
             {
                 if (cycle == SoftwareCycle.Final && showFinal || cycle != SoftwareCycle.Final)
                 {
-                    return GetApplicationTitle(mAppName, mLocalVersion, depth, cycle);
+                    return GetApplicationTitle(AppName, mLocalVersion, depth, cycle);
                 }
                 else
                 {
-                    return GetApplicationTitle(mAppName, mLocalVersion, depth);
+                    return GetApplicationTitle(AppName, mLocalVersion, depth);
                 }
             }
             else
@@ -148,12 +148,12 @@ namespace McoreSystem
 
         public string GetApplicationTitle()
         {
-            return this.GetApplicationTitle(this.mAppName, this.mLocalVersion);
+            return this.GetApplicationTitle(this.AppName, this.mLocalVersion);
         }
 
         public string GetApplicationTitleFull()
         {
-            return this.mAppName + " " + mLocalVersion + " " + mSoftwareState.ToString();
+            return this.AppName + " " + mLocalVersion + " " + mSoftwareState.ToString();
         }
 
 

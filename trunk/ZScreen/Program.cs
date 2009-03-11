@@ -65,6 +65,7 @@ namespace ZSS
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         internal static ZSS.Forms.DropWindow MyDropWindow;
+        public static bool MultipleInstance = false;
 
         /// <summary>
         /// Root Folder of Images, Text, Settings, Cache. 
@@ -160,8 +161,10 @@ namespace ZSS
 
             if (!bGrantedOwnership)
             {
-                Application.Exit();
-                return;
+                MultipleInstance = true;
+                mAppInfo.AppName = Application.ProductName + "*";
+                //Application.Exit();
+                //return;
             }
 
             Application.EnableVisualStyles();
