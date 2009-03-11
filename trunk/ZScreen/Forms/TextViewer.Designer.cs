@@ -40,7 +40,7 @@
             this.txtText.Name = "txtText";
             this.txtText.ReadOnly = true;
             this.txtText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtText.Size = new System.Drawing.Size(624, 444);
+            this.txtText.Size = new System.Drawing.Size(632, 446);
             this.txtText.TabIndex = 0;
             this.txtText.TabStop = false;
             this.txtText.WordWrap = false;
@@ -49,9 +49,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 444);
+            this.ClientSize = new System.Drawing.Size(632, 446);
             this.Controls.Add(this.txtText);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "frmTextViewer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmTextViewer";
