@@ -767,6 +767,10 @@ namespace ZSS
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.aboutToolStripMenuItem.Text = "&Help";
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmLic,
+            this.tsmVersionHistory,
+            this.tsmAboutMain});
             // 
             // exitZScreenToolStripMenuItem
             // 
