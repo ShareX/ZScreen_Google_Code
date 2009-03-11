@@ -69,10 +69,10 @@ namespace ZSS
             this.tsmQuickOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitZScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLic = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAboutMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitZScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tpScreenshots = new System.Windows.Forms.TabPage();
             this.gbScreenshotPreview = new System.Windows.Forms.GroupBox();
             this.btnScreenshotBrowse = new System.Windows.Forms.Button();
@@ -281,6 +281,7 @@ namespace ZSS
             this.tcHTTP = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
+            this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
             this.chkImageUploadRetry = new System.Windows.Forms.CheckBox();
             this.cboUploadMode = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -492,7 +493,7 @@ namespace ZSS
             this.aboutToolStripMenuItem,
             this.exitZScreenToolStripMenuItem});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
             // tsmSettings
             // 
@@ -678,7 +679,7 @@ namespace ZSS
             this.tsmScrenshotFromClipboard,
             this.languageTranslatorToolStripMenuItem,
             this.screenColorPickerToolStripMenuItem});
-            this.captureToolStripMenuItem.Image = global::ZSS.Properties.Resources.lightning1;
+            this.captureToolStripMenuItem.Image = global::ZSS.Properties.Resources.lightning;
             this.captureToolStripMenuItem.Name = "captureToolStripMenuItem";
             this.captureToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.captureToolStripMenuItem.Text = "&Actions";
@@ -762,14 +763,18 @@ namespace ZSS
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmLic,
-            this.tsmVersionHistory,
-            this.tsmAboutMain});
             this.aboutToolStripMenuItem.Image = global::ZSS.Properties.Resources.help;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.aboutToolStripMenuItem.Text = "&Help";
+            // 
+            // exitZScreenToolStripMenuItem
+            // 
+            this.exitZScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.cross;
+            this.exitZScreenToolStripMenuItem.Name = "exitZScreenToolStripMenuItem";
+            this.exitZScreenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.exitZScreenToolStripMenuItem.Text = "Exit ZScreen";
+            this.exitZScreenToolStripMenuItem.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
             // tsmLic
             // 
@@ -781,7 +786,7 @@ namespace ZSS
             // 
             // tsmVersionHistory
             // 
-            this.tsmVersionHistory.Image = global::ZSS.Properties.Resources.page_white_text1;
+            this.tsmVersionHistory.Image = global::ZSS.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
             this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
@@ -794,14 +799,6 @@ namespace ZSS
             this.tsmAboutMain.Size = new System.Drawing.Size(163, 22);
             this.tsmAboutMain.Text = "About...";
             this.tsmAboutMain.Click += new System.EventHandler(this.tsmAboutMain_Click);
-            // 
-            // exitZScreenToolStripMenuItem
-            // 
-            this.exitZScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.cross;
-            this.exitZScreenToolStripMenuItem.Name = "exitZScreenToolStripMenuItem";
-            this.exitZScreenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.exitZScreenToolStripMenuItem.Text = "Exit ZScreen";
-            this.exitZScreenToolStripMenuItem.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
             // tpScreenshots
             // 
@@ -3213,6 +3210,7 @@ namespace ZSS
             // 
             // gbImageUploaderOptions
             // 
+            this.gbImageUploaderOptions.Controls.Add(this.cbAddFailedScreenshot);
             this.gbImageUploaderOptions.Controls.Add(this.chkImageUploadRetry);
             this.gbImageUploaderOptions.Controls.Add(this.cboUploadMode);
             this.gbImageUploaderOptions.Controls.Add(this.label6);
@@ -3220,10 +3218,21 @@ namespace ZSS
             this.gbImageUploaderOptions.Controls.Add(this.nErrorRetry);
             this.gbImageUploaderOptions.Location = new System.Drawing.Point(16, 16);
             this.gbImageUploaderOptions.Name = "gbImageUploaderOptions";
-            this.gbImageUploaderOptions.Size = new System.Drawing.Size(496, 104);
+            this.gbImageUploaderOptions.Size = new System.Drawing.Size(496, 120);
             this.gbImageUploaderOptions.TabIndex = 7;
             this.gbImageUploaderOptions.TabStop = false;
             this.gbImageUploaderOptions.Text = "Options";
+            // 
+            // cbAddFailedScreenshot
+            // 
+            this.cbAddFailedScreenshot.AutoSize = true;
+            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(24, 88);
+            this.cbAddFailedScreenshot.Name = "cbAddFailedScreenshot";
+            this.cbAddFailedScreenshot.Size = new System.Drawing.Size(406, 17);
+            this.cbAddFailedScreenshot.TabIndex = 7;
+            this.cbAddFailedScreenshot.Text = "Add failed screenshot upload to History for see source ( For see what is problem " +
+                ")";
+            this.cbAddFailedScreenshot.UseVisualStyleBackColor = true;
             // 
             // chkImageUploadRetry
             // 
@@ -3285,7 +3294,7 @@ namespace ZSS
             this.gbImageShack.Controls.Add(this.btnRegCodeImageShack);
             this.gbImageShack.Controls.Add(this.lblImageShackRegistrationCode);
             this.gbImageShack.Controls.Add(this.txtImageShackRegistrationCode);
-            this.gbImageShack.Location = new System.Drawing.Point(16, 128);
+            this.gbImageShack.Location = new System.Drawing.Point(16, 144);
             this.gbImageShack.Name = "gbImageShack";
             this.gbImageShack.Size = new System.Drawing.Size(496, 97);
             this.gbImageShack.TabIndex = 0;
@@ -3334,7 +3343,7 @@ namespace ZSS
             this.gbTinyPic.Controls.Add(this.btnRegCodeTinyPic);
             this.gbTinyPic.Controls.Add(this.label2);
             this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
-            this.gbTinyPic.Location = new System.Drawing.Point(16, 232);
+            this.gbTinyPic.Location = new System.Drawing.Point(16, 248);
             this.gbTinyPic.Name = "gbTinyPic";
             this.gbTinyPic.Size = new System.Drawing.Size(496, 91);
             this.gbTinyPic.TabIndex = 4;
@@ -4778,6 +4787,7 @@ namespace ZSS
         private System.Windows.Forms.GroupBox gbUpdates;
         private System.Windows.Forms.Button btnCheckUpdate;
         private System.Windows.Forms.ToolStripMenuItem screenColorPickerToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cbAddFailedScreenshot;
 
     }
 }

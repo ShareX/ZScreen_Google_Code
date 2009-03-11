@@ -14,7 +14,7 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>zss-main.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\zss-main.ico</ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -156,19 +156,14 @@
     <Compile Include="Global\GDI32.cs" />
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\User32.cs" />
-    <Compile Include="Tasks\CacheCleanerTask.cs" />
-    <Compile Include="Tasks\MainAppTask.cs" />
-    <Compile Include="Tasks\RemoteViewerTask.cs" />
+    <Compile Include="Helpers\CacheCleanerTask.cs" />
+    <Compile Include="Helpers\MainAppTask.cs" />
+    <Compile Include="Helpers\RemoteViewerTask.cs" />
     <Compile Include="Forms\Crop.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Crop.designer.cs">
       <DependentUpon>Crop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Forms\ViewRemote.cs">
       <SubType>Form</SubType>
@@ -184,6 +179,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\Crop.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Crop.cs</DependentUpon>
@@ -191,13 +191,12 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZScreen.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ZScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
     <BaseApplicationManifest Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
@@ -239,10 +238,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\license.txt">
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -268,11 +263,6 @@
       <DependentUpon>InputBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="VersionHistory.txt">
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\info.png" />
@@ -323,9 +313,11 @@
     <None Include="Resources\page_white_text.png" />
     <None Include="Resources\page_white_text1.png" />
     <None Include="Resources\note_error.png" />
-    <None Include="Resources\lightning.png" />
+    <EmbeddedResource Include="Documents\License.txt" />
+    <EmbeddedResource Include="Documents\TODO.txt" />
+    <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
-    <Content Include="zss-main.ico" />
+    <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -346,7 +338,7 @@ start explorer /n,"$(SolutionDir)"</PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>cd $(SolutionDir)Tools
-SVNRevToAssemblyInfo.exe dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

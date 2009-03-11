@@ -34,6 +34,7 @@
             // txtText
             // 
             this.txtText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtText.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txtText.Location = new System.Drawing.Point(0, 0);
             this.txtText.Multiline = true;
             this.txtText.Name = "txtText";

@@ -127,9 +127,6 @@
   <data name="zss_busy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zss-busy.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TODO" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\TODO.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="page_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_copy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -178,9 +175,6 @@
   <data name="FTPupdated" xml:space="preserve">
     <value>Updated.</value>
   </data>
-  <data name="lightning1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\lightning1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="VRDshowing" xml:space="preserve">
     <value>Showing {0}.</value>
   </data>
@@ -193,9 +187,6 @@
   <data name="drive_network" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\drive_network.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VersionHistory" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\VersionHistory.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="lightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lightning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -207,9 +198,6 @@
   </data>
   <data name="ftp3" xml:space="preserve">
     <value>Please login with USER and PASS</value>
-  </data>
-  <data name="zss_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\zss-main.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pictures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pictures.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -232,9 +220,6 @@
   <data name="VRDviewingFile" xml:space="preserve">
     <value>Viewing file: {0}</value>
   </data>
-  <data name="page_white_text1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\page_white_text1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ftp5" xml:space="preserve">
     <value>Timed out waiting on server to respond</value>
   </data>
@@ -249,9 +234,6 @@
   </data>
   <data name="monitor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\monitor.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="license" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\license.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="keyboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\keyboard.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -310,5 +292,17 @@
   </data>
   <data name="note_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\note_error.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zss_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zss-main.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="License" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\documents\license.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
+  </data>
+  <data name="TODO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\documents\todo.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\documents\versionhistory.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
   </data>
 </root>
