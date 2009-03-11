@@ -2562,7 +2562,7 @@ namespace ZSS
 
         private void ShowMainWindow()
         {
-            if (!this.Visible)
+            if (this.IsHandleCreated)
             {
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
@@ -2620,8 +2620,6 @@ namespace ZSS
             }
         }
 
-
-
         private void nScreenshotDelay_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.ScreenshotDelay = nScreenshotDelay.Value;
@@ -2632,10 +2630,8 @@ namespace ZSS
             ShowDropWindow();
         }
 
-
-        private void ShowDropWindow()
+        private void ShowDropWindow(object sender, EventArgs e)
         {
-
             if (!bDropWindowOpened)
             {
                 bDropWindowOpened = true;
@@ -4233,6 +4229,11 @@ namespace ZSS
             dialogColor.ScreenPicker = true;
             dialogColor.ShowDialog();
             dialogColor.Dispose();
+        }
+
+        private void ShowDropWindow()
+        {
+
         }
     }
 }
