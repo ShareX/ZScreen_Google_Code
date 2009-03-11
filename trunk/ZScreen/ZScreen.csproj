@@ -101,7 +101,7 @@
     <Compile Include="Forms\ShowScreenshot.Designer.cs">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global\Debug.cs" />
+    <Compile Include="Helpers\Debug.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\MyGraphics.cs" />
     <Compile Include="Helpers\AppInfo.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="Helpers\HistoryItem.cs" />
     <Compile Include="Helpers\HKcombo.cs" />
     <Compile Include="Helpers\ImageSoftware.cs" />
-    <Compile Include="Helpers\NameParser.cs" />
+    <Compile Include="Global\NameParser.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
     <Compile Include="Helpers\UpdateChecker.cs" />
     <Compile Include="Forms\UserPassBox.cs">
@@ -130,7 +130,7 @@
     <Compile Include="Forms\DropWindow.Designer.cs">
       <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\WatermarkMaker.cs" />
+    <Compile Include="Global\WatermarkMaker.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>

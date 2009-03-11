@@ -28,10 +28,7 @@ using System.Runtime.InteropServices;
 
 namespace ZSS
 {
-    /// <summary>
-    /// Description of GDI32: http://greenshot.cvs.sourceforge.net/viewvc/greenshot/GreenShot/
-    /// </summary>
-    public class GDI32
+    public static class GDI32
     {
         public const int SRCCOPY = 0x00CC0020; //13369376, BitBlt dwRop parameter
 

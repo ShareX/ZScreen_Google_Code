@@ -34,7 +34,7 @@ using ZSS.Helpers;
 
 namespace ZSS
 {
-    class MyGraphics
+    public static class MyGraphics
     {
 
         /// <summary>
