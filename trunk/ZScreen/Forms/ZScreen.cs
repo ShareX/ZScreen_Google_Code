@@ -1702,8 +1702,8 @@ namespace ZSS
 
         private void ShowLicense()
         {
-            string lic = FileSystem.getTextFromFile(Path.Combine(Application.StartupPath, "license.txt"));
-            lic = lic != string.Empty ? lic : FileSystem.getText("license.txt");
+            string lic = FileSystem.getTextFromFile(Path.Combine(Application.StartupPath, "License.txt"));
+            lic = lic != string.Empty ? lic : FileSystem.GetText("License.txt");
             if (lic != string.Empty)
             {
                 frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
@@ -1711,7 +1711,6 @@ namespace ZSS
                 v.Icon = this.Icon;
                 v.ShowDialog();
             }
-
         }
 
         private void ShowVersionHistory()

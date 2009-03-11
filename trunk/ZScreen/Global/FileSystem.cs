@@ -131,37 +131,6 @@ namespace ZSS
         //    private set { ;}
         //}
 
-        /// <summary>
-        /// Function to read the contents of an embedded resource text fileName
-        /// </summary>
-        /// <param name="name">Embedded Text fileName name</param>
-        /// <returns>Text read from the embedded Text fileName</returns>
-        public static string getText(string name)
-        {
-            System.Reflection.Assembly oAsm = System.Reflection.Assembly.GetExecutingAssembly();
-            String rName = string.Empty;
-            String text = string.Empty;
-
-            for (int i = 0; i < oAsm.GetManifestResourceNames().Length - 1; i++)
-            {
-                if (oAsm.GetManifestResourceNames()[i].ToString().Contains(name))
-                {
-                    rName = oAsm.GetManifestResourceNames()[i].ToString();
-                    break;
-                }
-            }
-            if (!string.IsNullOrEmpty(rName))
-            {
-                Stream oStrm = oAsm.GetManifestResourceStream(rName);
-                // read contents of embedded fileName
-                StreamReader oRdr = new StreamReader(oStrm);
-                text = oRdr.ReadToEnd();
-            }
-
-            return text;
-
-        }
-
         public static string getTextFromFile(string filePath)
         {
             string s = "";
@@ -309,6 +278,5 @@ namespace ZSS
 
             return fName;
         }
-
     }
 }
