@@ -315,7 +315,6 @@
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <EmbeddedResource Include="Documents\License.txt" />
     <EmbeddedResource Include="Resources\lightning.png" />
-    <Content Include="Setup\zscreen-beta-setup.iss" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
