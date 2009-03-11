@@ -104,6 +104,7 @@ namespace ZSS.Colors
             if (ScreenPicker)
             {
                 this.Location = new Point(10, 10);
+                colorPicker.DrawCrosshair = true;
                 colorTimer.Start();
             }
             else
