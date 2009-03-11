@@ -625,18 +625,16 @@ namespace ZSS
                 }
                 else
                 {
-                    using (Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
+                    Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                    if (c.ShowDialog() == DialogResult.OK)
                     {
-                        if (c.ShowDialog() == DialogResult.OK)
+                        if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
                         {
-                            if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
-                            {
-                                task.SetImage(CropImage(imgSS, Program.LastRegion));
-                            }
-                            else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
-                            {
-                                task.SetImage(CropImage(imgSS, Program.LastCapture));
-                            }
+                            task.SetImage(CropImage(imgSS, Program.LastRegion));
+                        }
+                        else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                        {
+                            task.SetImage(CropImage(imgSS, Program.LastCapture));
                         }
                     }
                 }
@@ -2109,6 +2107,11 @@ namespace ZSS
         {
             mGuiIsReady = true;
             // this.ShowInTaskbar = Program.conf.ShowInTaskbar;
+            //if (Program.MultipleInstance)
+            //{
+            //    //MessageBox.Show(string.Format("Another instance of {0} is already running. {0} will continue to work in Muliple Instance mode.", Application.ProductName), 
+            //    //    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
         }
 
         private void AddToClipboardByDoubleClick(TabPage tp)
@@ -2637,16 +2640,14 @@ namespace ZSS
             if (!bDropWindowOpened)
             {
                 bDropWindowOpened = true;
-                using (DropWindow dw = Program.MyDropWindow)
+                DropWindow dw = Program.MyDropWindow;
+                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
+                dw.ShowDialog();
+                if (dw.DialogResult == DialogResult.OK)
                 {
-                    dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
-                    dw.ShowDialog();
-                    if (dw.DialogResult == DialogResult.OK)
-                    {
-                        ScreenshotUsingDragDrop(dw.FilePaths);
-                    }
-                    bDropWindowOpened = false;
+                    ScreenshotUsingDragDrop(dw.FilePaths);
                 }
+                bDropWindowOpened = false;
             }
         }
 

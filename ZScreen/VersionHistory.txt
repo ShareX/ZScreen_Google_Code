@@ -1,3 +1,4 @@
+2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
 2.2.0.0 Screen Color Picker in Tray menu > Actions
 2.1.1.0 Colors are chosen using an enhanced ColorDialog box
 2.1.0.2 Remote Viewer is not restricted to images anymore
