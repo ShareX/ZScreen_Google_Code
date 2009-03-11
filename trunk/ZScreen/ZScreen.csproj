@@ -309,13 +309,12 @@
     <None Include="Resources\shape_square_go.png" />
     <None Include="Resources\images.png" />
     <None Include="Resources\comments.png" />
-    <None Include="Resources\lightning1.png" />
     <None Include="Resources\page_white_text.png" />
-    <None Include="Resources\page_white_text1.png" />
     <None Include="Resources\note_error.png" />
     <EmbeddedResource Include="Documents\TODO.txt" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <EmbeddedResource Include="Documents\License.txt" />
+    <EmbeddedResource Include="Resources\lightning.png" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
