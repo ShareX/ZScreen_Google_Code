@@ -84,6 +84,21 @@ namespace ZSS.Tasks
         /// </summary>
         public List<string> Errors { get; set; }
         public bool Retry { get; set; }
+        public DateTime StartTime { get; set; }
+        private DateTime endTime;
+        public DateTime EndTime
+        {
+            get
+            {
+                return endTime;
+            }
+            set
+            {
+                endTime = value;
+                UploadDuration = (endTime - StartTime).TotalMilliseconds.ToString() + "ms";
+            }
+        }
+        public string UploadDuration { get; set; }
 
         #endregion
 

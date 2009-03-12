@@ -80,10 +80,12 @@ namespace ZSS.ImageUploader
                     if (!string.IsNullOrEmpty(fullimage))
                     {
                         imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                        throw new Exception(StripHTML(imgSource));
+                        //throw new Exception(StripHTML(imgSource));
                     }
                     if (!string.IsNullOrEmpty(thumbnail))
-                        imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));                                            
+                    {
+                        imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                    }
                 }
             }
             catch (Exception ex)
