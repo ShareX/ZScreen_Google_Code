@@ -21,6 +21,7 @@
 */
 #endregion
 
+using System;
 using ZSS.ImageUploader.Helpers;
 using ZSS.Tasks;
 
@@ -28,12 +29,12 @@ namespace ZSS.Helpers
 {
     public class HistoryItem
     {
+        public MainAppTask MyTask { get; private set; }
+        public string JobName { get; private set; }
         public string FileName { get; private set; }
         public ImageFileManager ScreenshotManager { get; set; }
         public string LocalPath { get; private set; }
         public string RemotePath { get; private set; }
-        public MainAppTask MyTask { get; private set; }
-
         /// <summary>
         /// Full Image, Active Window, Cropped Window etc..
         /// </summary>
@@ -42,7 +43,9 @@ namespace ZSS.Helpers
         /// ImageShack, TinyPic, xs.to, FTP...
         /// </summary>
         public string DestinationName { get; private set; }
-        public string JobName { get; private set; }
+        public DateTime StartTime { get; private set; }
+        public DateTime EndTime { get; private set; }
+        public string UploadDuration { get; private set; }
 
         public HistoryItem(MainAppTask task)
         {
@@ -53,12 +56,15 @@ namespace ZSS.Helpers
             this.RemotePath = task.ImageRemotePath;
             this.DestinationMode = task.ImageDestCategory.ToDescriptionString();
             this.DestinationName = task.ImageDestinationName;
-            this.ScreenshotManager = task.ImageManager;            
+            this.ScreenshotManager = task.ImageManager;
+            this.StartTime = task.StartTime;
+            this.EndTime = task.EndTime;
+            this.UploadDuration = task.UploadDuration;
         }
 
         public override string ToString()
         {
-            return FileName;
+            return EndTime.ToLongTimeString() + " - " + FileName;
         }
 
         public void RetryUpload()

@@ -224,6 +224,7 @@ namespace ZSS
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
             nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
+            cbShowUploadDuration.Checked = Program.conf.ShowUploadDuration;
 
             ///////////////////////////////////
             // Hotkeys Settings
@@ -762,6 +763,7 @@ namespace ZSS
 
         private void UploadScreenshot(ref MainAppTask task)
         {
+            task.StartTime = DateTime.Now;
             HTTPUploader imageUploader = null;
 
             switch (task.ImageDestCategory)
@@ -787,7 +789,6 @@ namespace ZSS
                     break;
             }
 
-
             if (imageUploader != null)
             {
                 task.ImageDestinationName = imageUploader.Name;
@@ -808,10 +809,10 @@ namespace ZSS
 
                     //Set remote path for Screenshots history
                     task.ImageRemotePath = task.ImageManager.GetFullImageUrl();
-
                 }
             }
 
+            task.EndTime = DateTime.Now;
             if (Program.conf.AddFailedScreenshot || (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0))
             {
                 task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
@@ -903,6 +904,11 @@ namespace ZSS
                 if (!string.IsNullOrEmpty(fileOrUrl))
                 {
                     sbMsg.AppendLine(fileOrUrl);
+                }
+
+                if(Program.conf.ShowUploadDuration && !string.IsNullOrEmpty(t.UploadDuration))
+                {
+                    sbMsg.AppendLine("Upload duration: " + t.UploadDuration);
                 }
             }
 
@@ -3335,7 +3341,6 @@ namespace ZSS
                 btnScreenshotBrowse.Enabled = tsmCopyCbHistory.Enabled;
                 btnScreenshotOpen.Enabled = hi.ScreenshotManager != null && File.Exists(hi.ScreenshotManager.LocalFilePath);
             }
-
         }
 
         private void lbHistory_DoubleClick(object sender, EventArgs e)
@@ -3362,7 +3367,8 @@ namespace ZSS
                 }
                 txtHistoryLocalPath.Text = hi.LocalPath;
                 txtHistoryRemotePath.Text = hi.RemotePath;
-                gbScreenshotPreview.Text = string.Format("{0} ({1})", hi.JobName, this.GetDestinationName(hi.MyTask));
+                gbScreenshotPreview.Text = string.Format("{0} ({1}) - {2}", hi.JobName, this.GetDestinationName(hi.MyTask),
+                    hi.UploadDuration);
             }
         }
 
@@ -4242,6 +4248,11 @@ namespace ZSS
                 }
                 bDropWindowOpened = false;
             }
+        }
+
+        private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ShowUploadDuration = cbShowUploadDuration.Checked;
         }
     }
 }

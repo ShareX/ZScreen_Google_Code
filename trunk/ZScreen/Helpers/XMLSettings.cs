@@ -49,7 +49,7 @@ namespace ZSS
 
         //*********************
         //* Main Settings
-        //*********************  
+        //*********************
         public bool EnableThumbnail { get; set; }
         private ImageDestType mScreenshotDest = ImageDestType.CLIPBOARD;
         public ImageDestType ScreenshotDestMode { get { return mScreenshotDest; } set { mScreenshotDest = value; } }
@@ -68,6 +68,7 @@ namespace ZSS
         public bool SelectedWindowRectangleInfo = true;
         public string SelectedWindowBorderColor = SerializeColor(Color.Red);
         public decimal SelectedWindowBorderSize = 2;
+        public bool ShowUploadDuration = false;
 
         //*********************
         //* Hotkey Settings
@@ -84,13 +85,13 @@ namespace ZSS
 
         //*********************
         //* FTP Settings
-        //*********************  
+        //*********************
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
         public int FTPselected = 0;
 
         //*********************
         //* HTTP Settings
-        //********************* 
+        //*********************
         public string ImageShackRegistrationCode = null;
         public string TinyPicShuk = null;
         public decimal ErrorRetryCount = 3;
@@ -104,7 +105,7 @@ namespace ZSS
 
         //*********************
         //* Image Software Settings
-        //*********************        
+        //*********************   
         public ImageSoftware ImageSoftwareActive { get; set; }
         public List<ZSS.ImageSoftware> ImageSoftwareList = new List<ImageSoftware>();
         public bool ISenabled = false;
@@ -141,7 +142,7 @@ namespace ZSS
 
         //*********************
         //* Advanced Settings
-        //*********************        
+        //*********************
         public decimal ScreenshotCacheSize = 50;
         public decimal FlashTrayCount = 1;
         public bool ShowBalloonTip = true;
