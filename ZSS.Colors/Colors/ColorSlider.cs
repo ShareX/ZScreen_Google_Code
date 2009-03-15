@@ -62,7 +62,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                color.Hue = 1.0 - (double)i / (height - 1);
+                color.Hue = 1.0 - (double)(i + 1) / height;
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
@@ -75,7 +75,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                color.Saturation = 1.0 - (double)i / (height - 1);
+                color.Saturation = 1.0 - (double)(i + 1) / height;
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
@@ -88,7 +88,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                color.Brightness = 1.0 - (double)i / (height - 1);
+                color.Brightness = 1.0 - (double)(i + 1) / height;
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
@@ -101,7 +101,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                color.Red = 255 - Round(255 * (double)i / (height - 1));
+                color.Red = 255 - Round(255 * (double)(i + 1) / height);
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
@@ -114,7 +114,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                color.Green = 255 - Round(255 * (double)i / (height - 1));
+                color.Green = 255 - Round(255 * (double)(i + 1) / height);
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
@@ -127,7 +127,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                color.Blue = 255 - Round(255 * (double)i / (height - 1));
+                color.Blue = 255 - Round(255 * (double)(i + 1) / height);
                 g.DrawLine(new Pen(color), 0, i, width, i);
             }
         }
