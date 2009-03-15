@@ -95,7 +95,7 @@ namespace ZSS.Tasks
             set
             {
                 endTime = value;
-                UploadDuration = (endTime - StartTime).TotalMilliseconds.ToString() + "ms";
+                UploadDuration = (endTime - StartTime).TotalMilliseconds.ToString() + " ms";
             }
         }
         public string UploadDuration { get; set; }

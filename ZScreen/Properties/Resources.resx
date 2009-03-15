@@ -127,23 +127,29 @@
   <data name="zss_busy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zss-busy.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="folder_picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder_picture.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="page_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_copy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="page_white_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_white_text.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ScreenshotName" xml:space="preserve">
-    <value>Specify a Screenshot Name...</value>
-  </data>
   <data name="VRDfetchingFiles" xml:space="preserve">
     <value>Fetching files from {0}</value>
   </data>
+  <data name="ScreenshotName" xml:space="preserve">
+    <value>Specify a Screenshot Name...</value>
+  </data>
+  <data name="FTPsuccess" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="VRDviewingFile" xml:space="preserve">
+    <value>Viewing file: {0}</value>
+  </data>
   <data name="server_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\server_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="folder_picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\folder_picture.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\camera.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -187,6 +193,12 @@
   <data name="drive_network" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\drive_network.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="VersionHistory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\documents\versionhistory.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
+  </data>
+  <data name="lightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\lightning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="picture_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\picture_go.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -195,6 +207,9 @@
   </data>
   <data name="ftp3" xml:space="preserve">
     <value>Please login with USER and PASS</value>
+  </data>
+  <data name="zss_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zss-main.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pictures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pictures.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,8 +229,8 @@
   <data name="shape_square_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_square_go.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VRDviewingFile" xml:space="preserve">
-    <value>Viewing file: {0}</value>
+  <data name="zss_uploaded" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zss-uploaded.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ftp5" xml:space="preserve">
     <value>Timed out waiting on server to respond</value>
@@ -226,11 +241,14 @@
   <data name="ftp2" xml:space="preserve">
     <value>No such host is known</value>
   </data>
-  <data name="activeWindowDefault" xml:space="preserve">
-    <value>%t-%y%mo%d%h%mi%s</value>
+  <data name="ftp4" xml:space="preserve">
+    <value>Login incorrect</value>
   </data>
   <data name="monitor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\monitor.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="License" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\documents\license.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
   </data>
   <data name="keyboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\keyboard.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -253,8 +271,8 @@
   <data name="cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cross.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="zss_uploaded" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zss-uploaded.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="note_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\note_error.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="world_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\world_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -275,34 +293,16 @@
   <data name="camera_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\camera_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FTPsuccess" xml:space="preserve">
-    <value>Success</value>
+  <data name="TODO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\documents\todo.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
-  <data name="ftp4" xml:space="preserve">
-    <value>Login incorrect</value>
+  <data name="activeWindowDefault" xml:space="preserve">
+    <value>%t-%y%mo%d%h%mi%s</value>
   </data>
   <data name="ftp6" xml:space="preserve">
     <value>No such file or directory</value>
-  </data>
-  <data name="note_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\note_error.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="zss_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zss-main.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="License" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\documents\license.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
-  </data>
-  <data name="TODO" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\documents\todo.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="VersionHistory" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\documents\versionhistory.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
-  </data>
-  <data name="lightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\lightning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -29,7 +29,6 @@ namespace ZSS.Helpers
 {
     public class HistoryItem
     {
-        public MainAppTask MyTask { get; private set; }
         public string JobName { get; private set; }
         public string FileName { get; private set; }
         public ImageFileManager ScreenshotManager { get; set; }
@@ -43,20 +42,23 @@ namespace ZSS.Helpers
         /// ImageShack, TinyPic, xs.to, FTP...
         /// </summary>
         public string DestinationName { get; private set; }
+        public JobCategoryType JobCategory { get; private set; }
+        public ImageDestType ImageDestCategory { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
         public string UploadDuration { get; private set; }
 
         public HistoryItem(MainAppTask task)
         {
-            this.MyTask = task;
             this.JobName = task.Job.ToDescriptionString();
             this.FileName = task.ImageName.ToString();
             this.LocalPath = task.ImageLocalPath;
             this.RemotePath = task.ImageRemotePath;
             this.DestinationMode = task.ImageDestCategory.ToDescriptionString();
-            this.DestinationName = task.ImageDestinationName;
+            this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.ImageManager;
+            this.JobCategory = task.JobCategory;
+            this.ImageDestCategory = task.ImageDestCategory;
             this.StartTime = task.StartTime;
             this.EndTime = task.EndTime;
             this.UploadDuration = task.UploadDuration;
@@ -67,10 +69,22 @@ namespace ZSS.Helpers
             return EndTime.ToLongTimeString() + " - " + FileName;
         }
 
-        public void RetryUpload()
+        private string GetDestinationName(MainAppTask t)
         {
-            this.MyTask.ImageManager = null;
-            this.MyTask.MyWorker.RunWorkerAsync(MyTask);
+            string name = "";
+
+            switch (t.ImageDestCategory)
+            {
+                case ImageDestType.FTP:
+                case ImageDestType.CUSTOM_UPLOADER:
+                    name = string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName);
+                    break;
+                default:
+                    name = string.Format("{0}", t.ImageDestCategory.ToDescriptionString());
+                    break;
+            }
+
+            return name;
         }
     }
 }
