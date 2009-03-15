@@ -60,7 +60,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                start.Brightness = end.Brightness = 1.0 - (double)i / (height - 1);
+                start.Brightness = end.Brightness = 1.0 - (double)(i + 1) / height;
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                     start.ToColor(), end.ToColor(), 0, false);
                 g.FillRectangle(brush, new Rectangle(0, i, width, 1));
@@ -77,7 +77,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < width; i++)
             {
-                start.Hue = end.Hue = (double)i / (height - 1);
+                start.Hue = end.Hue = (double)(i + 1) / height;
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, 1, height),
                     start.ToColor(), end.ToColor(), 90, false);
                 g.FillRectangle(brush, new Rectangle(i, 0, 1, height));
@@ -94,7 +94,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < width; i++)
             {
-                start.Hue = end.Hue = (double)i / (height - 1);
+                start.Hue = end.Hue = (double)(i + 1) / height;
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, 1, height),
                     start.ToColor(), end.ToColor(), 90, false);
                 g.FillRectangle(brush, new Rectangle(i, 0, 1, height));
@@ -111,7 +111,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                start.Green = end.Green = Round(255 - (255 * (double)i / (height - 1)));
+                start.Green = end.Green = Round(255 - (255 * (double)(i + 1) / height));
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                   start.ToColor(), end.ToColor(), 0, false);
                 g.FillRectangle(brush, new Rectangle(0, i, width, 1));
@@ -128,7 +128,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                start.Red = end.Red = Round(255 - (255 * (double)i /  (height - 1)));
+                start.Red = end.Red = Round(255 - (255 * (double)(i + 1) /  height));
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                   start.ToColor(), end.ToColor(), 0, false);
                 g.FillRectangle(brush, new Rectangle(0, i, width, 1));
@@ -145,7 +145,7 @@ namespace ZSS.Colors
 
             for (int i = 0; i < height; i++)
             {
-                start.Green = end.Green = Round(255 - (255 * (double)i / (height - 1)));
+                start.Green = end.Green = Round(255 - (255 * (double)(i + 1) / height));
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 1),
                   start.ToColor(), end.ToColor(), 0, false);
                 g.FillRectangle(brush, new Rectangle(0, i, width, 1));
