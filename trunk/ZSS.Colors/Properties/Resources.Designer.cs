@@ -60,9 +60,9 @@ namespace ZSS.Colors.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap color_picker {
+        internal static System.Drawing.Bitmap cursor {
             get {
-                object obj = ResourceManager.GetObject("color picker", resourceCulture);
+                object obj = ResourceManager.GetObject("cursor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

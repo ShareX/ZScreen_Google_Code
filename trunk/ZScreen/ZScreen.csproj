@@ -268,20 +268,6 @@
     <None Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.Colors\ZSS.Colors.csproj">
-      <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
-      <Name>ZSS.Colors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploader.csproj">
-      <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
-      <Name>ZSS.ImageUploader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploader.csproj">
-      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
-      <Name>ZSS.TextUploader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\zss-green.ico" />
     <None Include="Resources\picture_edit.png" />
     <None Include="Resources\application_edit.png" />
@@ -316,6 +302,20 @@
     <EmbeddedResource Include="Documents\License.txt" />
     <EmbeddedResource Include="Resources\lightning.png" />
     <Content Include="Resources\zss-main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZSS.Colors\ZSS.Colors.csproj">
+      <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
+      <Name>ZSS.Colors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploader.csproj">
+      <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
+      <Name>ZSS.ImageUploader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploader.csproj">
+      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
+      <Name>ZSS.TextUploader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

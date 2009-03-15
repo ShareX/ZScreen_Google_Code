@@ -441,14 +441,14 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
+        ///   Looks up a localized string similar to 2.3.1.0 Adding failed tasks to History tab is now optional
+        ///2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
         ///2.2.0.0 Screen Color Picker in Tray menu &gt; Actions
         ///2.1.1.0 Colors are chosen using an enhanced ColorDialog box
         ///2.1.0.2 Remote Viewer is not restricted to images anymore
         ///2.1.0.1 Fixed Issue 24: Requested Clipboard operation did not succeed
         ///2.1.0.0 Ability to capture Selected Window by enumerating all visible windows
-        ///2.0.5.1 Fixed Issue 20: Dialog borders were cropped off under Windows Aero
-        /// [rest of string was truncated]&quot;;.
+        ///2.0.5.1 Fixed I [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

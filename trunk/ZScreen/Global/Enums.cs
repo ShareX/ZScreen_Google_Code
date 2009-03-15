@@ -36,7 +36,7 @@ namespace ZSS
     {
         PICTURES,
         SCREENSHOTS,
-        TEXT,        
+        TEXT
     }
 
     public enum WatermarkPositionType

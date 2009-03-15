@@ -1,3 +1,4 @@
+2.3.1.0 Adding failed tasks to History tab is now optional
 2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
 2.2.0.0 Screen Color Picker in Tray menu > Actions
 2.1.1.0 Colors are chosen using an enhanced ColorDialog box

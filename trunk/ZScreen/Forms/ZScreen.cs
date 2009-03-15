@@ -906,7 +906,7 @@ namespace ZSS
                     sbMsg.AppendLine(fileOrUrl);
                 }
 
-                if(Program.conf.ShowUploadDuration && !string.IsNullOrEmpty(t.UploadDuration))
+                if (Program.conf.ShowUploadDuration && !string.IsNullOrEmpty(t.UploadDuration))
                 {
                     sbMsg.AppendLine("Upload duration: " + t.UploadDuration);
                 }
@@ -3367,27 +3367,21 @@ namespace ZSS
                 }
                 txtHistoryLocalPath.Text = hi.LocalPath;
                 txtHistoryRemotePath.Text = hi.RemotePath;
-                gbScreenshotPreview.Text = string.Format("{0} ({1}) - {2}", hi.JobName, this.GetDestinationName(hi.MyTask),
-                    hi.UploadDuration);
+                gbScreenshotPreview.Text = string.Format("{0} ({1}) - {2}", hi.JobName, hi.DestinationName, hi.UploadDuration);
             }
         }
 
-        private string GetDestinationName(MainAppTask t)
+        public void HistoryRetryUpload(HistoryItem hi)
         {
-            string name = "";
-
-            switch (t.ImageDestCategory)
+            if (hi != null && File.Exists(hi.LocalPath))
             {
-                case ImageDestType.FTP:
-                case ImageDestType.CUSTOM_UPLOADER:
-                    name = string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName);
-                    break;
-                default:
-                    name = string.Format("{0}", t.ImageDestCategory.ToDescriptionString());
-                    break;
+                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
+                task.JobCategory = hi.JobCategory;
+                task.SetImage(hi.LocalPath);
+                task.SetLocalFilePath(hi.LocalPath);
+                task.ImageDestCategory = hi.ImageDestCategory;
+                task.MyWorker.RunWorkerAsync(task);
             }
-
-            return name;
         }
 
         private void btnScreenshotOpen_Click(object sender, EventArgs e)
@@ -3878,12 +3872,7 @@ namespace ZSS
 
         private void cmsRetryUpload_Click(object sender, EventArgs e)
         {
-            HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            if (hi != null && File.Exists(hi.LocalPath))
-            {
-                hi.RetryUpload();
-                // ScreenshotUsingDragDrop(hi.LocalPath);
-            }
+            HistoryRetryUpload((HistoryItem)lbHistory.SelectedItem);
         }
 
         private void pbHistoryThumb_Click(object sender, EventArgs e)
