@@ -506,6 +506,12 @@ namespace ZSS
                             return m_hID;
                         }
                     }
+                    else if (CheckKeys(Program.conf.HKScreenColorPicker, lParam))
+                    {
+                        //Screen Color Picker
+                        ScreenColorPicker();
+                        return m_hID;
+                    }
                 }
             }
             return User32.CallNextHookEx(m_hID, nCode, wParam, lParam);
@@ -545,6 +551,13 @@ namespace ZSS
         private void StartBW_LanguageTranslator(string clipboard)
         {
             StartWorkerText(MainAppTask.Jobs.LANGUAGE_TRANSLATOR, clipboard);
+        }
+
+        private void ScreenColorPicker()
+        {
+            DialogColor dialogColor = new DialogColor();
+            dialogColor.ScreenPicker = true;
+            dialogColor.Show();
         }
 
         #region "Cache Cleaner Methods"
@@ -1473,7 +1486,7 @@ namespace ZSS
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
-            Program.conf.ImageSoftwareActive = Program.GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
+            Program.conf.ImageSoftwareActive = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
 
             if (lbImageSoftware.Items.IndexOf(tsm.Text) >= 0)
                 lbImageSoftware.SelectedItem = tsm.Text;
@@ -1842,7 +1855,7 @@ namespace ZSS
         private void btnUpdateImageSoftware_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtImageSoftwareName.Text) &&
-                Program.GetImageSoftware(txtImageSoftwareName.Text) == null &&
+                GetImageSoftware(txtImageSoftwareName.Text) == null &&
                 !string.IsNullOrEmpty(txtImageSoftwarePath.Text))
             {
                 int sel = 0;
@@ -2193,7 +2206,7 @@ namespace ZSS
         {
             if (!string.IsNullOrEmpty(txtImageSoftwareName.Text))
             {
-                if (Program.GetImageSoftware(txtImageSoftwareName.Text) == null)
+                if (GetImageSoftware(txtImageSoftwareName.Text) == null)
                 {
                     if (!string.IsNullOrEmpty(txtImageSoftwarePath.Text))
                     {
@@ -2228,7 +2241,7 @@ namespace ZSS
                     wasActiveSetLower = lbImageSoftware.SelectedIndex - 1;
                 }
 
-                ImageSoftware temp = Program.GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                ImageSoftware temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
                 if (temp != null)
                 {
                     Program.conf.ImageSoftwareList.Remove(temp);
@@ -2353,7 +2366,7 @@ namespace ZSS
             }
             else if (b)
             {
-                ImageSoftware temp = Program.GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                ImageSoftware temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
                 if (temp != null)
                 {
                     txtImageSoftwareName.Text = temp.Name;
@@ -2899,6 +2912,7 @@ namespace ZSS
             dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HKQuickOptions });
             dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HKDropWindow });
             dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HKLanguageTranslator });
+            dgvHotkeys.Rows.Add(new object[] { "Screen Color Picker", Program.conf.HKScreenColorPicker });
 
             dgvHotkeys.Refresh();
         }
@@ -2933,6 +2947,9 @@ namespace ZSS
                     break;
                 case 8: //language translator
                     Program.conf.HKLanguageTranslator = hkc;
+                    break;
+                case 9: //screen color picker
+                    Program.conf.HKScreenColorPicker = hkc;
                     break;
             }
 
@@ -4187,9 +4204,7 @@ namespace ZSS
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogColor dialogColor = new DialogColor();
-            dialogColor.ScreenPicker = true;
-            dialogColor.Show();
+            ScreenColorPicker();
         }
 
         private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
@@ -4216,6 +4231,21 @@ namespace ZSS
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ShowUploadDuration = cbShowUploadDuration.Checked;
+        }
+
+        /// <summary>
+        /// Searches for an Image Software in settings and returns it
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ImageSoftware GetImageSoftware(string name)
+        {
+            foreach (ImageSoftware app in Program.conf.ImageSoftwareList)
+            {
+                if (app.Name.Equals(name))
+                    return app;
+            }
+            return null;
         }
     }
 }
