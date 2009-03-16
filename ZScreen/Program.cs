@@ -31,11 +31,9 @@ using System.Threading;
 
 namespace ZSS
 {
-
     static class Program
     {
-
-        // DO NOT CHANGE THE ORDER OF THESE VARIABLES UNLESS YOU KNOW WHAT YOU ARE DOING
+        // DO NOT CHANGE THE ORDER OF THESE VARIABLES UNLESS YOU KNOW WHAT YOU ARE DOING <- LOL
         private static readonly string LocalAppDataFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
 
         private static readonly string XMLFileName = "Settings.xml";
@@ -100,7 +98,6 @@ namespace ZSS
                 DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
                 XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
 
-
                 if (!Directory.Exists(DefaultSettingsFolder))
                 {
                     Directory.CreateDirectory(DefaultSettingsFolder);
@@ -141,7 +138,6 @@ namespace ZSS
 
         static Mutex mAppMutex = null;
 
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -180,7 +176,6 @@ namespace ZSS
             Application.Run(ZScreenWindow);
 
             User32.UnhookWindowsHookEx(ZScreenWindow.m_hID);
-
         }
 
         public static void ConfigureDirs()
@@ -221,22 +216,6 @@ namespace ZSS
             {
                 Directory.CreateDirectory(Program.conf.TempDir);
             }
-
-        }
-
-        /// <summary>
-        /// Searches for an Image Software in settings and returns it
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static ImageSoftware GetImageSoftware(string name)
-        {
-            foreach (ImageSoftware app in conf.ImageSoftwareList)
-            {
-                if (app.Name.Equals(name))
-                    return app;
-            }
-            return null;
         }
     }
 }
