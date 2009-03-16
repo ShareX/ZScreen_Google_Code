@@ -38,13 +38,10 @@ namespace ZSS
             sb.AppendLine("  Start memory usage: " + StartMemoryUsage.ToString());
             sb.AppendLine("Current memory usage: " + MemoryUsage.ToString());
             sb.AppendLine("Minimum memory usage: " + MinMemoryUsage.ToString());
-            sb.AppendLine("Maximum memory usage: " + MaxMemoryUsage.ToString());   
+            sb.AppendLine("Maximum memory usage: " + MaxMemoryUsage.ToString());
             sb.AppendLine();
             sb.AppendLine("Running from:");
-            sb.AppendLine(System.Windows.Forms.Application.ExecutablePath);   
-            sb.AppendLine();
-            sb.AppendLine("Settings file:");
-            sb.AppendLine(Program.XMLSettingsFile);
+            sb.AppendLine(System.Windows.Forms.Application.ExecutablePath);
             return sb.ToString();
         }
 

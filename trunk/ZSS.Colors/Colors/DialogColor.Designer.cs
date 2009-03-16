@@ -360,10 +360,9 @@
             // 
             // rbBlue
             // 
-            this.rbBlue.AutoSize = true;
             this.rbBlue.Location = new System.Drawing.Point(304, 173);
             this.rbBlue.Name = "rbBlue";
-            this.rbBlue.Size = new System.Drawing.Size(49, 17);
+            this.rbBlue.Size = new System.Drawing.Size(77, 20);
             this.rbBlue.TabIndex = 42;
             this.rbBlue.TabStop = true;
             this.rbBlue.Text = "Blue:";
@@ -372,10 +371,9 @@
             // 
             // rbGreen
             // 
-            this.rbGreen.AutoSize = true;
             this.rbGreen.Location = new System.Drawing.Point(304, 141);
             this.rbGreen.Name = "rbGreen";
-            this.rbGreen.Size = new System.Drawing.Size(57, 17);
+            this.rbGreen.Size = new System.Drawing.Size(77, 20);
             this.rbGreen.TabIndex = 41;
             this.rbGreen.TabStop = true;
             this.rbGreen.Text = "Green:";
@@ -384,10 +382,9 @@
             // 
             // rbRed
             // 
-            this.rbRed.AutoSize = true;
             this.rbRed.Location = new System.Drawing.Point(304, 109);
             this.rbRed.Name = "rbRed";
-            this.rbRed.Size = new System.Drawing.Size(48, 17);
+            this.rbRed.Size = new System.Drawing.Size(77, 20);
             this.rbRed.TabIndex = 40;
             this.rbRed.TabStop = true;
             this.rbRed.Text = "Red:";
@@ -396,10 +393,9 @@
             // 
             // rbBrightness
             // 
-            this.rbBrightness.AutoSize = true;
             this.rbBrightness.Location = new System.Drawing.Point(304, 77);
             this.rbBrightness.Name = "rbBrightness";
-            this.rbBrightness.Size = new System.Drawing.Size(77, 17);
+            this.rbBrightness.Size = new System.Drawing.Size(77, 20);
             this.rbBrightness.TabIndex = 39;
             this.rbBrightness.TabStop = true;
             this.rbBrightness.Text = "Brightness:";
@@ -408,10 +404,9 @@
             // 
             // rbSaturation
             // 
-            this.rbSaturation.AutoSize = true;
             this.rbSaturation.Location = new System.Drawing.Point(304, 45);
             this.rbSaturation.Name = "rbSaturation";
-            this.rbSaturation.Size = new System.Drawing.Size(76, 17);
+            this.rbSaturation.Size = new System.Drawing.Size(77, 20);
             this.rbSaturation.TabIndex = 38;
             this.rbSaturation.TabStop = true;
             this.rbSaturation.Text = "Saturation:";
@@ -420,10 +415,9 @@
             // 
             // rbHue
             // 
-            this.rbHue.AutoSize = true;
             this.rbHue.Location = new System.Drawing.Point(304, 13);
             this.rbHue.Name = "rbHue";
-            this.rbHue.Size = new System.Drawing.Size(48, 17);
+            this.rbHue.Size = new System.Drawing.Size(77, 20);
             this.rbHue.TabIndex = 37;
             this.rbHue.TabStop = true;
             this.rbHue.Text = "Hue:";

@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -202,9 +202,9 @@ namespace ZSS
             this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.cbDeleteLocal = new System.Windows.Forms.CheckBox();
             this.gbSaveLoc = new System.Windows.Forms.GroupBox();
-            this.btnViewLocalDirectory = new System.Windows.Forms.Button();
-            this.txtFileDirectory = new System.Windows.Forms.TextBox();
-            this.btnBrowseDirectory = new System.Windows.Forms.Button();
+            this.btnViewImagesDir = new System.Windows.Forms.Button();
+            this.txtImagesDir = new System.Windows.Forms.TextBox();
+            this.btnBrowseImagesDir = new System.Windows.Forms.Button();
             this.cbShowWatermark = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
@@ -358,13 +358,13 @@ namespace ZSS
             this.cbOpenMainWindow = new System.Windows.Forms.CheckBox();
             this.tpAdvPaths = new System.Windows.Forms.TabPage();
             this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
-            this.btnDeleteSettings = new System.Windows.Forms.Button();
+            this.btnSettingsDefault = new System.Windows.Forms.Button();
             this.btnSettingsExport = new System.Windows.Forms.Button();
-            this.btnBrowseConfig = new System.Windows.Forms.Button();
+            this.btnViewSettingsDir = new System.Windows.Forms.Button();
             this.btnSettingsImport = new System.Windows.Forms.Button();
             this.gbRemoteDirCache = new System.Windows.Forms.GroupBox();
-            this.btnViewRemoteDirectory = new System.Windows.Forms.Button();
-            this.btnBrowseCacheLocation = new System.Windows.Forms.Button();
+            this.btnViewCacheDir = new System.Windows.Forms.Button();
+            this.btnBrowseCacheDir = new System.Windows.Forms.Button();
             this.lblCacheSize = new System.Windows.Forms.Label();
             this.lblMebibytes = new System.Windows.Forms.Label();
             this.nudCacheSize = new System.Windows.Forms.NumericUpDown();
@@ -382,6 +382,7 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.txtSettingsDir = new System.Windows.Forms.TextBox();
             this.cmTray.SuspendLayout();
             this.tpScreenshots.SuspendLayout();
             this.gbScreenshotPreview.SuspendLayout();
@@ -2236,9 +2237,9 @@ namespace ZSS
             this.cbDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cbDeleteLocal.Location = new System.Drawing.Point(16, 56);
             this.cbDeleteLocal.Name = "cbDeleteLocal";
-            this.cbDeleteLocal.Size = new System.Drawing.Size(239, 17);
+            this.cbDeleteLocal.Size = new System.Drawing.Size(273, 17);
             this.cbDeleteLocal.TabIndex = 0;
-            this.cbDeleteLocal.Text = "Delete Captured Screenshot after Completion";
+            this.cbDeleteLocal.Text = "Delete captured screenshots after upload completed";
             this.cbDeleteLocal.UseVisualStyleBackColor = true;
             this.cbDeleteLocal.CheckedChanged += new System.EventHandler(this.cbDeleteLocal_CheckedChanged);
             // 
@@ -2246,9 +2247,9 @@ namespace ZSS
             // 
             this.gbSaveLoc.BackColor = System.Drawing.Color.Transparent;
             this.gbSaveLoc.Controls.Add(this.cbDeleteLocal);
-            this.gbSaveLoc.Controls.Add(this.btnViewLocalDirectory);
-            this.gbSaveLoc.Controls.Add(this.txtFileDirectory);
-            this.gbSaveLoc.Controls.Add(this.btnBrowseDirectory);
+            this.gbSaveLoc.Controls.Add(this.btnViewImagesDir);
+            this.gbSaveLoc.Controls.Add(this.txtImagesDir);
+            this.gbSaveLoc.Controls.Add(this.btnBrowseImagesDir);
             this.gbSaveLoc.Location = new System.Drawing.Point(16, 16);
             this.gbSaveLoc.Name = "gbSaveLoc";
             this.gbSaveLoc.Size = new System.Drawing.Size(744, 88);
@@ -2256,37 +2257,37 @@ namespace ZSS
             this.gbSaveLoc.TabStop = false;
             this.gbSaveLoc.Text = "Images";
             // 
-            // btnViewLocalDirectory
+            // btnViewImagesDir
             // 
-            this.btnViewLocalDirectory.Location = new System.Drawing.Point(496, 24);
-            this.btnViewLocalDirectory.Name = "btnViewLocalDirectory";
-            this.btnViewLocalDirectory.Size = new System.Drawing.Size(104, 24);
-            this.btnViewLocalDirectory.TabIndex = 113;
-            this.btnViewLocalDirectory.Text = "View Directory...";
-            this.btnViewLocalDirectory.UseVisualStyleBackColor = true;
-            this.btnViewLocalDirectory.Click += new System.EventHandler(this.btnViewLocalDirectory_Click);
+            this.btnViewImagesDir.Location = new System.Drawing.Point(624, 24);
+            this.btnViewImagesDir.Name = "btnViewImagesDir";
+            this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
+            this.btnViewImagesDir.TabIndex = 113;
+            this.btnViewImagesDir.Text = "View Directory...";
+            this.btnViewImagesDir.UseVisualStyleBackColor = true;
+            this.btnViewImagesDir.Click += new System.EventHandler(this.btnViewLocalDirectory_Click);
             // 
-            // txtFileDirectory
+            // txtImagesDir
             // 
-            this.txtFileDirectory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtFileDirectory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtFileDirectory.Location = new System.Drawing.Point(16, 24);
-            this.txtFileDirectory.Name = "txtFileDirectory";
-            this.txtFileDirectory.Size = new System.Drawing.Size(386, 20);
-            this.txtFileDirectory.TabIndex = 1;
-            this.txtFileDirectory.TextChanged += new System.EventHandler(this.txtFileDirectory_TextChanged);
+            this.txtImagesDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtImagesDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
+            this.txtImagesDir.Name = "txtImagesDir";
+            this.txtImagesDir.Size = new System.Drawing.Size(512, 20);
+            this.txtImagesDir.TabIndex = 1;
+            this.txtImagesDir.TextChanged += new System.EventHandler(this.txtFileDirectory_TextChanged);
             // 
-            // btnBrowseDirectory
+            // btnBrowseImagesDir
             // 
-            this.btnBrowseDirectory.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnBrowseDirectory.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseDirectory.Location = new System.Drawing.Point(408, 24);
-            this.btnBrowseDirectory.Name = "btnBrowseDirectory";
-            this.btnBrowseDirectory.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseDirectory.TabIndex = 1;
-            this.btnBrowseDirectory.Text = "Browse...";
-            this.btnBrowseDirectory.UseVisualStyleBackColor = true;
-            this.btnBrowseDirectory.Click += new System.EventHandler(this.btnBrowseDirectory_Click);
+            this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnBrowseImagesDir.Location = new System.Drawing.Point(536, 24);
+            this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
+            this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
+            this.btnBrowseImagesDir.TabIndex = 1;
+            this.btnBrowseImagesDir.Text = "Browse...";
+            this.btnBrowseImagesDir.UseVisualStyleBackColor = true;
+            this.btnBrowseImagesDir.Click += new System.EventHandler(this.btnBrowseDirectory_Click);
             // 
             // cbShowWatermark
             // 
@@ -2863,38 +2864,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4020,33 +4021,34 @@ namespace ZSS
             // gbSettingsExportImport
             // 
             this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
-            this.gbSettingsExportImport.Controls.Add(this.btnDeleteSettings);
+            this.gbSettingsExportImport.Controls.Add(this.txtSettingsDir);
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
-            this.gbSettingsExportImport.Controls.Add(this.btnBrowseConfig);
+            this.gbSettingsExportImport.Controls.Add(this.btnViewSettingsDir);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
-            this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 216);
+            this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 208);
             this.gbSettingsExportImport.Name = "gbSettingsExportImport";
-            this.gbSettingsExportImport.Size = new System.Drawing.Size(744, 64);
+            this.gbSettingsExportImport.Size = new System.Drawing.Size(744, 96);
             this.gbSettingsExportImport.TabIndex = 6;
             this.gbSettingsExportImport.TabStop = false;
             this.gbSettingsExportImport.Text = "Settings";
             // 
-            // btnDeleteSettings
+            // btnSettingsDefault
             // 
-            this.btnDeleteSettings.AutoSize = true;
-            this.btnDeleteSettings.Location = new System.Drawing.Point(384, 24);
-            this.btnDeleteSettings.Name = "btnDeleteSettings";
-            this.btnDeleteSettings.Size = new System.Drawing.Size(104, 23);
-            this.btnDeleteSettings.TabIndex = 1;
-            this.btnDeleteSettings.Text = "Default Settings...";
-            this.btnDeleteSettings.UseVisualStyleBackColor = true;
-            this.btnDeleteSettings.Click += new System.EventHandler(this.btnDeleteSettings_Click);
+            this.btnSettingsDefault.AutoSize = true;
+            this.btnSettingsDefault.Location = new System.Drawing.Point(240, 56);
+            this.btnSettingsDefault.Name = "btnSettingsDefault";
+            this.btnSettingsDefault.Size = new System.Drawing.Size(104, 23);
+            this.btnSettingsDefault.TabIndex = 1;
+            this.btnSettingsDefault.Text = "Default Settings...";
+            this.btnSettingsDefault.UseVisualStyleBackColor = true;
+            this.btnSettingsDefault.Click += new System.EventHandler(this.btnDeleteSettings_Click);
             // 
             // btnSettingsExport
             // 
             this.btnSettingsExport.AutoSize = true;
             this.btnSettingsExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsExport.Location = new System.Drawing.Point(128, 24);
+            this.btnSettingsExport.Location = new System.Drawing.Point(128, 56);
             this.btnSettingsExport.Name = "btnSettingsExport";
             this.btnSettingsExport.Size = new System.Drawing.Size(104, 23);
             this.btnSettingsExport.TabIndex = 1;
@@ -4054,23 +4056,23 @@ namespace ZSS
             this.btnSettingsExport.UseVisualStyleBackColor = true;
             this.btnSettingsExport.Click += new System.EventHandler(this.btnSettingsExport_Click);
             // 
-            // btnBrowseConfig
+            // btnViewSettingsDir
             // 
-            this.btnBrowseConfig.AutoSize = true;
-            this.btnBrowseConfig.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseConfig.Location = new System.Drawing.Point(240, 24);
-            this.btnBrowseConfig.Name = "btnBrowseConfig";
-            this.btnBrowseConfig.Size = new System.Drawing.Size(136, 23);
-            this.btnBrowseConfig.TabIndex = 0;
-            this.btnBrowseConfig.Text = "Browse Settings folder...";
-            this.btnBrowseConfig.UseVisualStyleBackColor = true;
-            this.btnBrowseConfig.Click += new System.EventHandler(this.btnBrowseConfig_Click);
+            this.btnViewSettingsDir.AutoSize = true;
+            this.btnViewSettingsDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnViewSettingsDir.Location = new System.Drawing.Point(624, 24);
+            this.btnViewSettingsDir.Name = "btnViewSettingsDir";
+            this.btnViewSettingsDir.Size = new System.Drawing.Size(104, 23);
+            this.btnViewSettingsDir.TabIndex = 0;
+            this.btnViewSettingsDir.Text = "View Directory...";
+            this.btnViewSettingsDir.UseVisualStyleBackColor = true;
+            this.btnViewSettingsDir.Click += new System.EventHandler(this.btnBrowseConfig_Click);
             // 
             // btnSettingsImport
             // 
             this.btnSettingsImport.AutoSize = true;
             this.btnSettingsImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsImport.Location = new System.Drawing.Point(16, 24);
+            this.btnSettingsImport.Location = new System.Drawing.Point(16, 56);
             this.btnSettingsImport.Name = "btnSettingsImport";
             this.btnSettingsImport.Size = new System.Drawing.Size(104, 23);
             this.btnSettingsImport.TabIndex = 0;
@@ -4081,38 +4083,38 @@ namespace ZSS
             // gbRemoteDirCache
             // 
             this.gbRemoteDirCache.BackColor = System.Drawing.Color.Transparent;
-            this.gbRemoteDirCache.Controls.Add(this.btnViewRemoteDirectory);
-            this.gbRemoteDirCache.Controls.Add(this.btnBrowseCacheLocation);
+            this.gbRemoteDirCache.Controls.Add(this.btnViewCacheDir);
+            this.gbRemoteDirCache.Controls.Add(this.btnBrowseCacheDir);
             this.gbRemoteDirCache.Controls.Add(this.lblCacheSize);
             this.gbRemoteDirCache.Controls.Add(this.lblMebibytes);
             this.gbRemoteDirCache.Controls.Add(this.nudCacheSize);
             this.gbRemoteDirCache.Controls.Add(this.txtCacheDir);
             this.gbRemoteDirCache.Location = new System.Drawing.Point(16, 112);
             this.gbRemoteDirCache.Name = "gbRemoteDirCache";
-            this.gbRemoteDirCache.Size = new System.Drawing.Size(744, 96);
+            this.gbRemoteDirCache.Size = new System.Drawing.Size(744, 88);
             this.gbRemoteDirCache.TabIndex = 1;
             this.gbRemoteDirCache.TabStop = false;
             this.gbRemoteDirCache.Text = "Cache";
             // 
-            // btnViewRemoteDirectory
+            // btnViewCacheDir
             // 
-            this.btnViewRemoteDirectory.Location = new System.Drawing.Point(496, 24);
-            this.btnViewRemoteDirectory.Name = "btnViewRemoteDirectory";
-            this.btnViewRemoteDirectory.Size = new System.Drawing.Size(104, 24);
-            this.btnViewRemoteDirectory.TabIndex = 7;
-            this.btnViewRemoteDirectory.Text = "View Directory...";
-            this.btnViewRemoteDirectory.UseVisualStyleBackColor = true;
-            this.btnViewRemoteDirectory.Click += new System.EventHandler(this.btnViewRemoteDirectory_Click);
+            this.btnViewCacheDir.Location = new System.Drawing.Point(624, 24);
+            this.btnViewCacheDir.Name = "btnViewCacheDir";
+            this.btnViewCacheDir.Size = new System.Drawing.Size(104, 24);
+            this.btnViewCacheDir.TabIndex = 7;
+            this.btnViewCacheDir.Text = "View Directory...";
+            this.btnViewCacheDir.UseVisualStyleBackColor = true;
+            this.btnViewCacheDir.Click += new System.EventHandler(this.btnViewRemoteDirectory_Click);
             // 
-            // btnBrowseCacheLocation
+            // btnBrowseCacheDir
             // 
-            this.btnBrowseCacheLocation.Location = new System.Drawing.Point(408, 24);
-            this.btnBrowseCacheLocation.Name = "btnBrowseCacheLocation";
-            this.btnBrowseCacheLocation.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseCacheLocation.TabIndex = 6;
-            this.btnBrowseCacheLocation.Text = "Browse...";
-            this.btnBrowseCacheLocation.UseVisualStyleBackColor = true;
-            this.btnBrowseCacheLocation.Click += new System.EventHandler(this.btnBrowseCacheLocation_Click);
+            this.btnBrowseCacheDir.Location = new System.Drawing.Point(536, 24);
+            this.btnBrowseCacheDir.Name = "btnBrowseCacheDir";
+            this.btnBrowseCacheDir.Size = new System.Drawing.Size(80, 24);
+            this.btnBrowseCacheDir.TabIndex = 6;
+            this.btnBrowseCacheDir.Text = "Browse...";
+            this.btnBrowseCacheDir.UseVisualStyleBackColor = true;
+            this.btnBrowseCacheDir.Click += new System.EventHandler(this.btnBrowseCacheLocation_Click);
             // 
             // lblCacheSize
             // 
@@ -4120,15 +4122,15 @@ namespace ZSS
             this.lblCacheSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lblCacheSize.Location = new System.Drawing.Point(14, 56);
             this.lblCacheSize.Name = "lblCacheSize";
-            this.lblCacheSize.Size = new System.Drawing.Size(61, 13);
+            this.lblCacheSize.Size = new System.Drawing.Size(62, 13);
             this.lblCacheSize.TabIndex = 5;
-            this.lblCacheSize.Text = "Cache Size";
+            this.lblCacheSize.Text = "Cache size:";
             // 
             // lblMebibytes
             // 
             this.lblMebibytes.AutoSize = true;
             this.lblMebibytes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblMebibytes.Location = new System.Drawing.Point(232, 56);
+            this.lblMebibytes.Location = new System.Drawing.Point(200, 59);
             this.lblMebibytes.Name = "lblMebibytes";
             this.lblMebibytes.Size = new System.Drawing.Size(25, 13);
             this.lblMebibytes.TabIndex = 4;
@@ -4136,7 +4138,7 @@ namespace ZSS
             // 
             // nudCacheSize
             // 
-            this.nudCacheSize.Location = new System.Drawing.Point(108, 54);
+            this.nudCacheSize.Location = new System.Drawing.Point(80, 56);
             this.nudCacheSize.Maximum = new decimal(new int[] {
             500,
             0,
@@ -4148,7 +4150,7 @@ namespace ZSS
             0,
             0});
             this.nudCacheSize.Name = "nudCacheSize";
-            this.nudCacheSize.Size = new System.Drawing.Size(120, 20);
+            this.nudCacheSize.Size = new System.Drawing.Size(112, 20);
             this.nudCacheSize.TabIndex = 3;
             this.nudCacheSize.Value = new decimal(new int[] {
             1,
@@ -4163,7 +4165,7 @@ namespace ZSS
             this.txtCacheDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.txtCacheDir.Location = new System.Drawing.Point(16, 24);
             this.txtCacheDir.Name = "txtCacheDir";
-            this.txtCacheDir.Size = new System.Drawing.Size(384, 20);
+            this.txtCacheDir.Size = new System.Drawing.Size(512, 20);
             this.txtCacheDir.TabIndex = 0;
             this.txtCacheDir.TextChanged += new System.EventHandler(this.txtCacheDir_TextChanged);
             // 
@@ -4315,6 +4317,15 @@ namespace ZSS
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
+            // 
+            // txtSettingsDir
+            // 
+            this.txtSettingsDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtSettingsDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtSettingsDir.Location = new System.Drawing.Point(16, 24);
+            this.txtSettingsDir.Name = "txtSettingsDir";
+            this.txtSettingsDir.Size = new System.Drawing.Size(592, 20);
+            this.txtSettingsDir.TabIndex = 2;
             // 
             // ZScreen
             // 
@@ -4490,11 +4501,11 @@ namespace ZSS
         private System.Windows.Forms.Label lblCodeY;
         private System.Windows.Forms.Label lblCodeH;
         private System.Windows.Forms.Button btnResetEntireScreen;
-        private System.Windows.Forms.TextBox txtFileDirectory;
+        private System.Windows.Forms.TextBox txtImagesDir;
         private System.Windows.Forms.TextBox txtEntireScreen;
         private System.Windows.Forms.TextBox txtActiveWindow;
         private System.Windows.Forms.Button btnResetActiveWindow;
-        private System.Windows.Forms.Button btnBrowseDirectory;
+        private System.Windows.Forms.Button btnBrowseImagesDir;
         private System.Windows.Forms.TabPage tpImageSoftware;
         private System.Windows.Forms.CheckBox cbStartWin;
         private System.Windows.Forms.Button btnUpdateImageSoftware;
@@ -4553,7 +4564,7 @@ namespace ZSS
         private System.Windows.Forms.Button btnFTPDelete;
         private System.Windows.Forms.ListBox lbHistory;
         private System.Windows.Forms.TabPage tpAdvanced;
-        private System.Windows.Forms.Button btnBrowseConfig;
+        private System.Windows.Forms.Button btnViewSettingsDir;
         private System.Windows.Forms.GroupBox gbRemoteDirCache;
         private System.Windows.Forms.TextBox txtCacheDir;
         private System.Windows.Forms.Label lblMebibytes;
@@ -4604,7 +4615,7 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmDestTinyPic;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.CheckBox cbShowPopup;
-        private System.Windows.Forms.Button btnDeleteSettings;
+        private System.Windows.Forms.Button btnSettingsDefault;
         private System.Windows.Forms.Label lblDelaySeconds;
         private System.Windows.Forms.NumericUpDown nScreenshotDelay;
         private System.Windows.Forms.Label lblScreenshotDelay;
@@ -4734,9 +4745,9 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem copyImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.Button btnViewLocalDirectory;
-        private System.Windows.Forms.Button btnBrowseCacheLocation;
-        private System.Windows.Forms.Button btnViewRemoteDirectory;
+        private System.Windows.Forms.Button btnViewImagesDir;
+        private System.Windows.Forms.Button btnBrowseCacheDir;
+        private System.Windows.Forms.Button btnViewCacheDir;
         private System.Windows.Forms.CheckBox cbOpenMainWindow;
         private System.Windows.Forms.CheckBox cbShowTaskbar;
         private System.Windows.Forms.TabPage tpCaptureCrop;
@@ -4814,6 +4825,7 @@ namespace ZSS
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem tsmDropWindow;
         private System.Windows.Forms.CheckBox cbShowUploadDuration;
+        private System.Windows.Forms.TextBox txtSettingsDir;
 
     }
 }
