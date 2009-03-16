@@ -151,28 +151,16 @@ namespace ZSS
 
         private void SetupScreen()
         {
-            //////////////////////////////
+            ///////////////////////////////////
             // Global
-            /////////////////////////////            
+            ///////////////////////////////////
+
             Program.ConfigureDirs();
 
-            //////////////////////////////
+            ///////////////////////////////////
             // Configure Settings
-            /////////////////////////////
-            // Configure FTP Accounts List
-            //if (Program.conf.FTPAccountList == null)
-            //{
-            //    Program.conf.FTPAccountList = new List<FTPAccount>();
-            //}
-            //if (Program.conf.FTPAccountList.Count == 0)
-            //{
-            //    Program.conf.FTPAccountList.Add(new FTPAccount(Resources.NewAccount));
-            //}
-            // Configure ImageSoftware List
-            //if (Program.conf.ImageSoftwareList == null)
-            //{
-            //    Program.conf.ImageSoftwareList = new List<ImageSoftware>();
-            //}
+            ///////////////////////////////////
+
             if (Program.conf.ImageSoftwareActive == null)
             {
                 Program.conf.ImageSoftwareActive = new ImageSoftware();
@@ -187,7 +175,7 @@ namespace ZSS
 
             ///////////////////////////////////
             // Main Tab
-            //////////////////////////////////
+            ///////////////////////////////////
 
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
 
@@ -253,6 +241,7 @@ namespace ZSS
             ///////////////////////////////////
             // HTTP Settings
             ///////////////////////////////////
+
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             nErrorRetry.Value = Program.conf.ErrorRetryCount;
@@ -265,14 +254,13 @@ namespace ZSS
             chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
             cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
 
-            if (cbFromLanguage.Items.Count == 0 || cbToLanguage.Items.Count == 0 || cbHelpToLanguage.Items.Count == 0)
-                DownloadLanguagesList();
+            DownloadLanguagesList();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
 
             ///////////////////////////////////
             // Image Software Settings
             ///////////////////////////////////
-            //Add "Disabled" to the top of the Image Software List
+
             lbImageSoftware.Items.Clear();
             lbImageSoftware.Items.Add(Properties.Resources.Disabled);
             foreach (ImageSoftware app in Program.conf.ImageSoftwareList)
@@ -297,28 +285,18 @@ namespace ZSS
 
             ///////////////////////////////////
             // Main/File Settings
-            ///////////////////////////////////  
+            ///////////////////////////////////
+
             chkEnableThumbnail.Checked = Program.conf.EnableThumbnail;
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             //updateClipboardTextTrayMenu();
-
-            // 
-            //check start with windows
             cbStartWin.Checked = CheckStartWithWindows();
 
-            ///////////////////////////////////
-            // localFilePath Settings
-            ///////////////////////////////////
-            //gbAutoFileName.Enabled = !chkManualNaming.Checked;
-            //gbCodeTitle.Enabled = !chkManualNaming.Checked;
-            txtFileDirectory.Text = Program.conf.ImagesDir;
-
-            //file settings
             txtActiveWindow.Text = Program.conf.activeWindow;
             txtEntireScreen.Text = Program.conf.entireScreen;
 
-            cmbFileFormat.Items.AddRange(Program.mFileTypes);
-            cmbSwitchFormat.Items.AddRange(Program.mFileTypes);
+            if (cmbFileFormat.Items.Count < 1) cmbFileFormat.Items.AddRange(Program.mFileTypes);
+            if (cmbSwitchFormat.Items.Count < 1) cmbSwitchFormat.Items.AddRange(Program.mFileTypes);
 
             cmbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudSwitchAfter.Text = Program.conf.SwitchAfter.ToString();
@@ -351,9 +329,9 @@ namespace ZSS
             // Advanced Settings
             ///////////////////////////////////
 
+            txtImagesDir.Text = Program.conf.ImagesDir;
             txtCacheDir.Text = Program.conf.CacheDir;
-            //advanced
-            txtCacheDir.Text = Program.conf.CacheDir;
+            txtSettingsDir.Text = Program.conf.SettingsDir;
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             nudFlashIconCount.Value = Program.conf.FlashTrayCount;
             cbShowPopup.Checked = Program.conf.ShowBalloonTip;
@@ -1798,7 +1776,7 @@ namespace ZSS
 
         private void btnBrowseDirectory_Click(object sender, EventArgs e)
         {
-            Program.conf.ImagesDir = BrowseDirectory(ref txtFileDirectory);
+            Program.conf.ImagesDir = BrowseDirectory(ref txtImagesDir);
         }
 
         private string BrowseDirectory(ref TextBox textBoxDirectory)
@@ -1953,12 +1931,9 @@ namespace ZSS
             ShowDirectory(Program.conf.ImagesDir);
         }
 
-        private void ShowDirectory(string argDir)
+        private void ShowDirectory(string dir)
         {
-            Process proc = new Process();
-            proc.StartInfo.FileName = "explorer";
-            proc.StartInfo.Arguments = argDir;
-            proc.Start();
+            Process.Start(dir);
         }
 
         private void ShowHelp()
@@ -2093,7 +2068,7 @@ namespace ZSS
 
         private void btnBrowseConfig_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.GetDirectoryName(Program.XMLSettingsFile));
+            ShowDirectory(Program.conf.SettingsDir);
         }
 
         private void tsmLic_Click(object sender, EventArgs e)
@@ -2410,7 +2385,7 @@ namespace ZSS
 
         private void txtFileDirectory_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ImagesDir = txtFileDirectory.Text;
+            Program.conf.ImagesDir = txtImagesDir.Text;
         }
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
@@ -3202,7 +3177,7 @@ namespace ZSS
             txtWatermarkText.Tag = "The naming pattern that watermarks follow. To close this context menu just click in another textbox.";
 
             //Paths
-            txtFileDirectory.Tag = "The directory where all screenshots will be placed (unless deleted with the option below).";
+            txtImagesDir.Tag = "The directory where all screenshots will be placed (unless deleted with the option below).";
 
             cmbFileFormat.Tag = "The format that screenshots will be saved as.";
 
