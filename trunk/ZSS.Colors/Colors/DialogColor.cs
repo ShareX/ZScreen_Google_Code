@@ -33,8 +33,9 @@ namespace ZSS.Colors
 {
     public partial class DialogColor : Form
     {
-        public MyColor NewColor = Color.Red;
-        public MyColor OldColor;
+        public Color Color;
+        private MyColor NewColor = Color.Red;
+        private MyColor OldColor;
         public bool ScreenPicker;
         private bool oldColorExist;
 
@@ -155,6 +156,7 @@ namespace ZSS.Colors
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            this.Color = Color.FromArgb((int)nudRed.Value, (int)nudGreen.Value, (int)nudBlue.Value);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

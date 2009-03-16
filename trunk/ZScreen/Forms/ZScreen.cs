@@ -3507,7 +3507,7 @@ namespace ZSS
         public string FontToString(Font font, Color color)
         {
             return "Name: " + font.Name + " - Size: " + font.Size.ToString() + " - Style: " + font.Style.ToString() + " - Color: " +
-                (color.IsNamedColor ? color.Name : "(A:" + color.A + " R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
+                (color.IsNamedColor ? color.Name : "(R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
         }
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
@@ -3604,8 +3604,8 @@ namespace ZSS
             DialogColor dColor = new DialogColor(pb.BackColor);
             if (dColor.ShowDialog() == DialogResult.OK)
             {
-                pb.BackColor = dColor.NewColor;
-                setting = XMLSettings.SerializeColor(dColor.NewColor);
+                pb.BackColor = dColor.Color;
+                setting = XMLSettings.SerializeColor(dColor.Color);
             }
         }
 
@@ -4214,8 +4214,7 @@ namespace ZSS
         {
             DialogColor dialogColor = new DialogColor();
             dialogColor.ScreenPicker = true;
-            dialogColor.ShowDialog();
-            dialogColor.Dispose();
+            dialogColor.Show();
         }
 
         private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
