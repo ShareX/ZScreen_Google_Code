@@ -551,7 +551,10 @@ namespace ZSS
 
         private void StartBW_LanguageTranslator(string clipboard)
         {
-            StartWorkerText(MainAppTask.Jobs.LANGUAGE_TRANSLATOR, clipboard);
+            if (cbFromLanguage.Items.Count > 0 && cbToLanguage.Items.Count > 0)
+            {
+                StartWorkerText(MainAppTask.Jobs.LANGUAGE_TRANSLATOR, clipboard);
+            }
         }
 
         private void ScreenColorPicker()
@@ -3064,7 +3067,7 @@ namespace ZSS
             if (Program.conf.ActiveHelp)
             {
                 string help = ((Control)sender).Tag.ToString();
-                if (mGTranslator != null && Program.conf.GTActiveHelp)
+                if (mGTranslator != null && Program.conf.GTActiveHelp && cbHelpToLanguage.Items.Count > 0)
                 {
                     StartGTActiveHelp(help);
                 }
@@ -3778,9 +3781,9 @@ namespace ZSS
                     cbHelpToLanguage.Items.Add(gtLang.Name);
                 }
                 SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
-                cbFromLanguage.Enabled = true;
-                cbToLanguage.Enabled = true;
-                cbHelpToLanguage.Enabled = true;
+                if (cbFromLanguage.Items.Count > 0) cbFromLanguage.Enabled = true;
+                if (cbToLanguage.Items.Count > 0) cbToLanguage.Enabled = true;
+                if (cbHelpToLanguage.Items.Count > 0) cbHelpToLanguage.Enabled = true;
             }
         }
 
