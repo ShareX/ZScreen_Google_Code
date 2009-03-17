@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageUploader", "..\ZSS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploader", "..\ZSS.TextUploader\ZSS.TextUploader.csproj", "{04DEED7C-450E-4C12-9586-040448FC6DD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Colors", "..\ZSS.Colors\ZSS.Colors.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -39,6 +41,12 @@ Global
 		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Inno|Any CPU.Build.0 = Inno|Any CPU
 		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04DEED7C-450E-4C12-9586-040448FC6DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
