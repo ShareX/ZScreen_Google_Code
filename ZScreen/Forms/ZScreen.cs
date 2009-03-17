@@ -202,6 +202,7 @@ namespace ZSS
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
             cbActiveHelp.Checked = Program.conf.ActiveHelp;
+            CheckActiveHelp();
             cbCropStyle.SelectedIndex = Program.conf.CropStyle;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
@@ -3034,6 +3035,11 @@ namespace ZSS
         }
 
         private void cbActiveHelp_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckActiveHelp();
+        }
+
+        private void CheckActiveHelp()
         {
             this.Height = (cbActiveHelp.Checked ? startHeight : startHeight - txtActiveHelp.Height);
             splitContainerApp.Panel2Collapsed = !cbActiveHelp.Checked;

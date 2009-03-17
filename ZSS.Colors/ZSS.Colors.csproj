@@ -38,26 +38,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Colors\ColorBox.cs">
+    <Compile Include="ColorBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Colors\DialogColor.cs">
+    <Compile Include="DialogColor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Colors\DialogColor.Designer.cs">
+    <Compile Include="DialogColor.Designer.cs">
       <DependentUpon>DialogColor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Colors\ColorPicker.cs">
+    <Compile Include="ColorPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Colors\ColorSlider.cs">
+    <Compile Include="ColorSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Colors\ColorUserControl.cs">
+    <Compile Include="ColorUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Colors\Helpers.cs" />
-    <Compile Include="Colors\MyColors.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="MyColors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -66,17 +66,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Colors\DialogColor.resx">
+    <EmbeddedResource Include="DialogColor.resx">
       <DependentUpon>DialogColor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Colors\Cursor.cur" />
+    <EmbeddedResource Include="Cursor.cur" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Colors\cursor.png" />
+    <None Include="cursor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
