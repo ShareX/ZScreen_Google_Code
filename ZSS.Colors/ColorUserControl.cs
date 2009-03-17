@@ -152,7 +152,7 @@ namespace ZSS.Colors
         {
             if (this is ColorBox)
             {
-                this.Cursor = new Cursor(Helpers.GetImageResource("ZSS.Colors.Colors.Cursor.cur"));
+                this.Cursor = new Cursor(Helpers.GetImageResource("ZSS.Colors.Cursor.cur"));
             }
         }
 
