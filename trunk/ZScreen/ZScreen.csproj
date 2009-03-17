@@ -319,7 +319,7 @@ $(inno) /cc zscreen-beta-setup.iss
 start explorer /n,"$(SolutionDir)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>IF $(ConfigurationName) == Release"$(ProjectDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>IF $(ConfigurationName) == Release "$(ProjectDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
     <PostBuildEvent>IF $(ConfigurationName) == Release mkdir "$(TargetDir)ILMerge"
 IF $(ConfigurationName) == Release "$(ProjectDir)Tools\ILMerge.exe" /wildcards /t:winexe /out:"$(TargetDir)ILMerge\ZScreen.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
   </PropertyGroup>
