@@ -338,5 +338,6 @@ start explorer /n,"$(SolutionDir)"</PostBuildEvent>
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)Tools
 SVNRevToAssemblyInfo.exe dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PostBuildEvent>ILMerge.exe /wildcards /t:winexe /out:"$(TargetDir)ILMerge\ZScreen.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
