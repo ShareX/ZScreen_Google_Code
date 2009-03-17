@@ -19,7 +19,7 @@ namespace MyColorsTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ZSS.Colors.ColorDialog colorDialog = new ZSS.Colors.ColorDialog(Color.DarkBlue);
+            DialogColor colorDialog = new DialogColor(Color.DarkBlue);
             colorDialog.ShowDialog();
 
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DrawStyle)));
