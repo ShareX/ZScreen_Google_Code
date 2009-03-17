@@ -1,3 +1,5 @@
+Version 2.3 - 20090317
+
 2.3.1.0 Adding failed tasks to History tab is now optional
 2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
 2.2.0.0 Screen Color Picker in Tray menu > Actions
@@ -7,7 +9,7 @@
 2.1.0.0 Ability to capture Selected Window by enumerating all visible windows
 2.0.5.1 Fixed Issue 20: Dialog borders were cropped off under Windows Aero
 
-Version 2.0 - 20080228
+Version 2.0 - 20090228
 
 2.00.05.0 Option to automatically retry other HTTP Image Uploaders if the intial HTTP Image Uploader failed
 2.00.04.0 ZScreen will automatically attempt uploading non-images to FTP for Drag n Drop and Upload from Clipboard actions
