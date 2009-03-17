@@ -77,25 +77,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageUploader\Global\Enums.cs" />
-    <Compile Include="ImageUploader\Helpers\FTPAccountManager.cs" />
-    <Compile Include="ImageUploader\Helpers\ImageFileManager.cs" />
-    <Compile Include="ImageUploader\Helpers\ImageHostingServiceManager.cs" />
-    <Compile Include="ImageUploader\HTTP\CustomUploader.cs" />
-    <Compile Include="ImageUploader\Helpers\FTP.cs" />
-    <Compile Include="ImageUploader\Helpers\FTPAccount.cs" />
-    <Compile Include="ImageUploader\FTPUploader.cs" />
-    <Compile Include="ImageUploader\HTTP\FlickrUploader.cs" />
-    <Compile Include="ImageUploader\Helpers\ImageFile.cs" />
-    <Compile Include="ImageUploader\HTTP\ImageShackUploader.cs" />
-    <Compile Include="ImageUploader\Helpers\ImageHostingService.cs" />
-    <Compile Include="ImageUploader\Helpers\IUploader.cs" />
+    <Compile Include="Global\Enums.cs" />
+    <Compile Include="Helpers\FTPAccountManager.cs" />
+    <Compile Include="Helpers\ImageFileManager.cs" />
+    <Compile Include="Helpers\ImageHostingServiceManager.cs" />
+    <Compile Include="HTTP\CustomUploader.cs" />
+    <Compile Include="Helpers\FTP.cs" />
+    <Compile Include="Helpers\FTPAccount.cs" />
+    <Compile Include="FTPUploader.cs" />
+    <Compile Include="HTTP\FlickrUploader.cs" />
+    <Compile Include="Helpers\ImageFile.cs" />
+    <Compile Include="HTTP\ImageShackUploader.cs" />
+    <Compile Include="Helpers\ImageHostingService.cs" />
+    <Compile Include="Helpers\IUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImageUploader\HTTPUploader.cs" />
-    <Compile Include="ImageUploader\HTTP\TinyPicUploader.cs" />
+    <Compile Include="HTTPUploader.cs" />
+    <Compile Include="HTTP\TinyPicUploader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ImageUploader\VersionHistory.txt" />
+    <Content Include="VersionHistory.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

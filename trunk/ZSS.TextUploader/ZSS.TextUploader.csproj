@@ -54,18 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TextUploader\Helpers\ITextUploader.cs" />
-    <Compile Include="TextUploader\HTTPTextUploader.cs" />
-    <Compile Include="TextUploader\HTTP\CustomTextUploader.cs" />
-    <Compile Include="TextUploader\Helpers\TextFile.cs" />
-    <Compile Include="TextUploader\Helpers\TextFileManager.cs" />
-    <Compile Include="TextUploader\HTTP\GoogleTranslate.cs" />
-    <Compile Include="TextUploader\HTTP\Paste2Uploader.cs" />
-    <Compile Include="TextUploader\HTTP\PastebinUploader.cs" />
+    <Compile Include="Helpers\ITextUploader.cs" />
+    <Compile Include="HTTPTextUploader.cs" />
+    <Compile Include="HTTP\CustomTextUploader.cs" />
+    <Compile Include="Helpers\TextFile.cs" />
+    <Compile Include="Helpers\TextFileManager.cs" />
+    <Compile Include="HTTP\GoogleTranslate.cs" />
+    <Compile Include="HTTP\Paste2Uploader.cs" />
+    <Compile Include="HTTP\PastebinUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TextUploader\VersionHistory.txt" />
+    <Content Include="VersionHistory.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
