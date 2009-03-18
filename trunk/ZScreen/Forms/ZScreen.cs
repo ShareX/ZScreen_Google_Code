@@ -97,19 +97,13 @@ namespace ZSS
             CleanCache();
 
             //show settings if never ran before
-            if (Program.conf.RunOnce == false)
+            if (!Program.conf.RunOnce)
             {
                 Show();
                 WindowState = FormWindowState.Normal;
                 this.Activate();
                 this.BringToFront();
-                //Form.ActiveForm.BringToFront();
-
                 lblFirstRun.Visible = true;
-
-                Program.conf.activeWindow = Properties.Resources.activeWindowDefault;
-                Program.conf.entireScreen = Properties.Resources.entireScreenDefault;
-
                 Program.conf.RunOnce = true;
             }
 
@@ -260,7 +254,7 @@ namespace ZSS
             FindImageSoftwares();
 
             lbImageSoftware.Items.Clear();
-            lbImageSoftware.Items.Add(Properties.Resources.Disabled);
+            lbImageSoftware.Items.Add("Disabled");
             foreach (ImageSoftware app in Program.conf.ImageSoftwareList)
             {
                 lbImageSoftware.Items.Add(app.Name);
@@ -1053,48 +1047,6 @@ namespace ZSS
             return true;
         }
 
-        private void UpdateUI()
-        {
-            //manual changes
-            if (lbImageSoftware.Items.Count > 0) //It must contain one object
-                lbImageSoftware.Items[0] = Properties.Resources.Disabled;
-
-            if (tsmImageSoftware.DropDownItems.Count > 0) //It also should contain at least one object
-            {
-                tsmImageSoftware.DropDownItems[0].Text = Properties.Resources.Disabled;
-            }
-
-            //automatic changes
-            /*
-            foreach (ToolStripItem t in cmTray.Items)
-            {
-                if (t is ToolStripMenuItem)
-                {
-                    ToolStripMenuItem tm = (ToolStripMenuItem)t;
-
-                    string txt = mResourceMan.GetString(tm.Name + ".Text");
-
-                    if (txt != null)
-                        tm.Text = txt;
-
-                    foreach (ToolStripItem ti in tm.DropDownItems)
-                    {
-                        if (ti is ToolStripMenuItem)
-                        {
-                            ToolStripMenuItem tmi = (ToolStripMenuItem)ti;
-                            txt = mResourceMan.GetString(tmi.Name + ".Text");
-
-                            if (txt != null)
-                                tmi.Text = txt;
-                        }
-                    }
-                }
-            }
-            */
-            SetNamingConventions();
-
-        }
-
         #endregion
 
         #region "Event Handlers"
@@ -1432,7 +1384,7 @@ namespace ZSS
                 tsmImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 tsm = new ToolStripMenuItem();
-                tsm.Text = Properties.Resources.Disabled;
+                tsm.Text = "Disabled";
                 tsm.CheckOnClick = true;
                 tsm.Click += new EventHandler(disableImageSoftware_Click);
 
@@ -1809,18 +1761,6 @@ namespace ZSS
             return settingDir;
         }
 
-        private void btnResetActiveWindow_Click(object sender, EventArgs e)
-        {
-            Program.conf.activeWindow = Properties.Resources.activeWindowDefault;
-            txtActiveWindow.Text = Program.conf.activeWindow;
-        }
-
-        private void btnResetEntireScreen_Click(object sender, EventArgs e)
-        {
-            Program.conf.entireScreen = Properties.Resources.entireScreenDefault;
-            txtEntireScreen.Text = Program.conf.entireScreen;
-        }
-
         private void btnCopyToClipboard_Click(object sender, EventArgs e)
         {
             string str = "";
@@ -2037,15 +1977,6 @@ namespace ZSS
             BringUpMenu();
 
             tcApp.Focus();
-        }
-
-        private void SetNamingConventions()
-        {
-            Program.conf.activeWindow = Properties.Resources.activeWindowDefault;
-            Program.conf.entireScreen = Properties.Resources.entireScreenDefault;
-
-            txtActiveWindow.Text = Program.conf.activeWindow;
-            txtEntireScreen.Text = Program.conf.entireScreen;
         }
 
         private void tsmHelp_Click(object sender, EventArgs e)
@@ -2988,7 +2919,6 @@ namespace ZSS
                     case 8: // language translator
                         txtActiveHelp.Text += "translate the text that is in your clipboard from one language to another. See HTTP -> Language Translator for settings.";
                         break;
-
                 }
             }
         }
@@ -3990,7 +3920,7 @@ namespace ZSS
             if (ValidateFTP() //txtServer.Text != "" && txtUsername.Text != "" && txtPassword.Text != "" && txtPath.Text != ""
                 && lbFTPAccounts.SelectedIndices.Count == 1 && lbFTPAccounts.SelectedIndex != -1)
             {
-                txtFTPStatus.Text = Properties.Resources.FTPupdated;
+                txtFTPStatus.Text = "Updated.";
 
                 FTPAccount acc = GetFTPAccountFromFields();
 
@@ -4010,7 +3940,7 @@ namespace ZSS
             }
             else
             {
-                txtFTPStatus.Text = Properties.Resources.FTPnotUpdated;
+                txtFTPStatus.Text = "Not Updated.";
             }
         }
 
@@ -4089,7 +4019,7 @@ namespace ZSS
             }
             else
             {
-                txtFTPStatus.Text = Resources.FTPnotUpdated; //change to FTP Account not added?
+                txtFTPStatus.Text = "Not Updated."; //change to FTP Account not added?
             }
         }
 
@@ -4131,7 +4061,7 @@ namespace ZSS
 
         private void btnTestConnection_Click(object sender, EventArgs e)
         {
-            txtFTPStatus.Text = Properties.Resources.FTPtest; //Testing
+            txtFTPStatus.Text = "Testing..."; //Testing
             txtFTPStatus.Update();
             TrimFTPControls();
             int port = (int)nudFTPServerPort.Value;
@@ -4149,7 +4079,7 @@ namespace ZSS
                 FTP ftp = new FTP(ref acc);
                 if (ftp.ListDirectory() != null)
                 {
-                    txtFTPStatus.Text = Properties.Resources.FTPsuccess; //Success
+                    txtFTPStatus.Text = "Success"; //Success
                 }
                 else
                 {

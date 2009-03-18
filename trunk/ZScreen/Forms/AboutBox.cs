@@ -61,7 +61,7 @@ namespace ZSS.Forms
             this.textBoxDescription.Text = sbDesc.ToString();
 
             //set translations for OK button
-            okButton.Text = Properties.Resources.OK;
+            okButton.Text = "OK";
         }
 
         #region Assembly Attribute Accessors

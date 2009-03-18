@@ -136,18 +136,6 @@
   <data name="page_white_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_white_text.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VRDfetchingFiles" xml:space="preserve">
-    <value>Fetching files from {0}</value>
-  </data>
-  <data name="ScreenshotName" xml:space="preserve">
-    <value>Specify a Screenshot Name...</value>
-  </data>
-  <data name="FTPsuccess" xml:space="preserve">
-    <value>Success</value>
-  </data>
-  <data name="VRDviewingFile" xml:space="preserve">
-    <value>Viewing file: {0}</value>
-  </data>
   <data name="server_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\server_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -160,29 +148,14 @@
   <data name="application_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VRDsaveFailed" xml:space="preserve">
-    <value>Save Failed</value>
-  </data>
   <data name="color_wheel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\color_wheel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="VRDfetchingFile" xml:space="preserve">
-    <value>Fetching file {0} from {1}...</value>
-  </data>
-  <data name="VRDdeleteFailed" xml:space="preserve">
-    <value>Delete Failed</value>
   </data>
   <data name="info" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\info.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="picture_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\picture_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FTPupdated" xml:space="preserve">
-    <value>Updated.</value>
-  </data>
-  <data name="VRDshowing" xml:space="preserve">
-    <value>Showing {0}.</value>
   </data>
   <data name="shape_square" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_square.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -202,26 +175,14 @@
   <data name="picture_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\picture_go.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VRDready" xml:space="preserve">
-    <value>Ready. Loaded {0} screenshots.</value>
-  </data>
-  <data name="ftp3" xml:space="preserve">
-    <value>Please login with USER and PASS</value>
-  </data>
   <data name="zss_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zss-main.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pictures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pictures.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FTPtest" xml:space="preserve">
-    <value>Testing...</value>
-  </data>
   <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\images.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\information.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -232,17 +193,8 @@
   <data name="zss_uploaded" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zss-uploaded.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ftp5" xml:space="preserve">
-    <value>Timed out waiting on server to respond</value>
-  </data>
   <data name="world_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\world_add.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ftp2" xml:space="preserve">
-    <value>No such host is known</value>
-  </data>
-  <data name="ftp4" xml:space="preserve">
-    <value>Login incorrect</value>
   </data>
   <data name="monitor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\monitor.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -253,17 +205,8 @@
   <data name="keyboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\keyboard.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FTPnotUpdated" xml:space="preserve">
-    <value>Not Updated.</value>
-  </data>
   <data name="help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="entireScreenDefault" xml:space="preserve">
-    <value>SS-%y%mo%d%h%mi%s</value>
-  </data>
-  <data name="ftp1" xml:space="preserve">
-    <value>No connection could be made because the target machine actively refused it</value>
   </data>
   <data name="comments" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\comments.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -280,13 +223,6 @@
   <data name="application_double" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_double.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="PMvisible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="shape_move_backwards" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_move_backwards.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -295,14 +231,5 @@
   </data>
   <data name="TODO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\documents\todo.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Disabled</value>
-  </data>
-  <data name="activeWindowDefault" xml:space="preserve">
-    <value>%t-%y%mo%d%h%mi%s</value>
-  </data>
-  <data name="ftp6" xml:space="preserve">
-    <value>No such file or directory</value>
   </data>
 </root>

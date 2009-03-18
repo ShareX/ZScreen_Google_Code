@@ -60,15 +60,6 @@ namespace ZSS.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to %t-%y%mo%d%h%mi%s.
-        /// </summary>
-        internal static string activeWindowDefault {
-            get {
-                return ResourceManager.GetString("activeWindowDefault", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Bitmap application_double {
             get {
                 object obj = ResourceManager.GetObject("application_double", resourceCulture);
@@ -97,15 +88,6 @@ namespace ZSS.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        internal static string Cancel {
-            get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Bitmap color_wheel {
             get {
                 object obj = ResourceManager.GetObject("color_wheel", resourceCulture);
@@ -127,28 +109,10 @@ namespace ZSS.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Disabled.
-        /// </summary>
-        internal static string Disabled {
-            get {
-                return ResourceManager.GetString("Disabled", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Bitmap drive_network {
             get {
                 object obj = ResourceManager.GetObject("drive_network", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SS-%y%mo%d%h%mi%s.
-        /// </summary>
-        internal static string entireScreenDefault {
-            get {
-                return ResourceManager.GetString("entireScreenDefault", resourceCulture);
             }
         }
         
@@ -163,96 +127,6 @@ namespace ZSS.Properties {
             get {
                 object obj = ResourceManager.GetObject("folder_picture", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No connection could be made because the target machine actively refused it.
-        /// </summary>
-        internal static string ftp1 {
-            get {
-                return ResourceManager.GetString("ftp1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No such host is known.
-        /// </summary>
-        internal static string ftp2 {
-            get {
-                return ResourceManager.GetString("ftp2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please login with USER and PASS.
-        /// </summary>
-        internal static string ftp3 {
-            get {
-                return ResourceManager.GetString("ftp3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login incorrect.
-        /// </summary>
-        internal static string ftp4 {
-            get {
-                return ResourceManager.GetString("ftp4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Timed out waiting on server to respond.
-        /// </summary>
-        internal static string ftp5 {
-            get {
-                return ResourceManager.GetString("ftp5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No such file or directory.
-        /// </summary>
-        internal static string ftp6 {
-            get {
-                return ResourceManager.GetString("ftp6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not Updated..
-        /// </summary>
-        internal static string FTPnotUpdated {
-            get {
-                return ResourceManager.GetString("FTPnotUpdated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Success.
-        /// </summary>
-        internal static string FTPsuccess {
-            get {
-                return ResourceManager.GetString("FTPsuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Testing....
-        /// </summary>
-        internal static string FTPtest {
-            get {
-                return ResourceManager.GetString("FTPtest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated..
-        /// </summary>
-        internal static string FTPupdated {
-            get {
-                return ResourceManager.GetString("FTPupdated", resourceCulture);
             }
         }
         
@@ -333,15 +207,6 @@ namespace ZSS.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to OK.
-        /// </summary>
-        internal static string OK {
-            get {
-                return ResourceManager.GetString("OK", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Bitmap page_copy {
             get {
                 object obj = ResourceManager.GetObject("page_copy", resourceCulture);
@@ -374,22 +239,6 @@ namespace ZSS.Properties {
             get {
                 object obj = ResourceManager.GetObject("pictures", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static bool PMvisible {
-            get {
-                object obj = ResourceManager.GetObject("PMvisible", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specify a Screenshot Name....
-        /// </summary>
-        internal static string ScreenshotName {
-            get {
-                return ResourceManager.GetString("ScreenshotName", resourceCulture);
             }
         }
         
@@ -441,81 +290,19 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.3.1.0 Adding failed tasks to History tab is now optional
+        ///   Looks up a localized string similar to Version 2.3 - 20090317
+        ///
+        ///2.3.1.0 Adding failed tasks to History tab is now optional
         ///2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
         ///2.2.0.0 Screen Color Picker in Tray menu &gt; Actions
         ///2.1.1.0 Colors are chosen using an enhanced ColorDialog box
         ///2.1.0.2 Remote Viewer is not restricted to images anymore
         ///2.1.0.1 Fixed Issue 24: Requested Clipboard operation did not succeed
-        ///2.1.0.0 Ability to capture Selected Window by enumerating all visible windows
-        ///2.0.5.1 Fixed I [rest of string was truncated]&quot;;.
+        ///2.1.0.0 Ability to capture Selected Window by enumerating all visibl [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {
                 return ResourceManager.GetString("VersionHistory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete Failed.
-        /// </summary>
-        internal static string VRDdeleteFailed {
-            get {
-                return ResourceManager.GetString("VRDdeleteFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fetching file {0} from {1}....
-        /// </summary>
-        internal static string VRDfetchingFile {
-            get {
-                return ResourceManager.GetString("VRDfetchingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fetching files from {0}.
-        /// </summary>
-        internal static string VRDfetchingFiles {
-            get {
-                return ResourceManager.GetString("VRDfetchingFiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ready. Loaded {0} screenshots..
-        /// </summary>
-        internal static string VRDready {
-            get {
-                return ResourceManager.GetString("VRDready", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save Failed.
-        /// </summary>
-        internal static string VRDsaveFailed {
-            get {
-                return ResourceManager.GetString("VRDsaveFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Showing {0}..
-        /// </summary>
-        internal static string VRDshowing {
-            get {
-                return ResourceManager.GetString("VRDshowing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Viewing file: {0}.
-        /// </summary>
-        internal static string VRDviewingFile {
-            get {
-                return ResourceManager.GetString("VRDviewingFile", resourceCulture);
             }
         }
         

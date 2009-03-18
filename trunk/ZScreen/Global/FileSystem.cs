@@ -259,7 +259,7 @@ namespace ZSS
             if (Program.conf.ManualNaming)
             {
                 InputBox ib = new InputBox();
-                ib.Question = Resources.ScreenshotName;
+                ib.Question = "Specify a Screenshot Name...";
                 ib.Answer = fName;
                 ib.Icon = Properties.Resources.zss_main;
                 //Program.MyInputBox.BringToFront();
