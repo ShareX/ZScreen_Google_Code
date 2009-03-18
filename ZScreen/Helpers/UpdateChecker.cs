@@ -69,15 +69,16 @@ namespace ZSS.ImageUploader.Helpers
                 {
                     updateValues = CheckUpdate(CurrentDownloads);
                 }
-                string Versions = "Current version: " + Application.ProductVersion +
-                    "\r\nLatest version: " + updateValues[1];
+                StringBuilder sbVersions = new StringBuilder();
+                sbVersions.AppendLine("Current version: " + Application.ProductVersion);
+                sbVersions.AppendLine("Latest version:  " + updateValues[1]);
                 if (!string.IsNullOrEmpty(updateValues[1]) && new Version(updateValues[1]).
                     CompareTo(new Version(Application.ProductVersion)) > 0)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("New version available");
+                    sb.AppendLine("New version is available");
                     sb.AppendLine();
-                    sb.AppendLine(Versions);
+                    sb.AppendLine(sbVersions.ToString());
                     sb.AppendLine();
                     sb.AppendLine(updateValues[2].Replace("|", "\r\n"));
                     sb.AppendLine();
@@ -89,7 +90,7 @@ namespace ZSS.ImageUploader.Helpers
                         Process.Start(updateValues[0]);
                     }
                 }
-                return Versions;
+                return sbVersions.ToString();
             }
             catch (Exception ex)
             {

@@ -4183,11 +4183,11 @@ namespace ZSS
         private void CheckUpdates()
         {
             btnCheckUpdate.Enabled = false;
-            lblUpdateInfo.Text = "Checking update...";
+            lblUpdateInfo.Text = "Checking for Updates...";
             BackgroundWorker updateThread = new BackgroundWorker();
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
             updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
-            updateThread.RunWorkerAsync("zscreen");
+            updateThread.RunWorkerAsync(Application.ProductName.ToLower());
         }
 
         private void updateThread_DoWork(object sender, DoWorkEventArgs e)
