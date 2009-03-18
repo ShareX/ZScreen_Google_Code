@@ -702,7 +702,7 @@ namespace ZSS
                 p.WaitForExit();
 
                 // upload to ftpUpload or save to clipboard
-                UploadScreenshot(ref task);
+                //UploadScreenshot(ref task);
             }
         }
 
@@ -926,6 +926,7 @@ namespace ZSS
                         break;
                     case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                     case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                    case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
                         t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE));
                         break;
                 }
@@ -1229,7 +1230,7 @@ namespace ZSS
                                         break;
                                 }
                                 break;
-                            case JobCategoryType.PICTURES:
+                            case JobCategoryType.SCREENSHOTS:
                                 switch (t.Job)
                                 {
                                     case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
@@ -1249,8 +1250,6 @@ namespace ZSS
                                         btnUploadersTest.Enabled = true;
                                         break;
                                 }
-                                break;
-                            case JobCategoryType.SCREENSHOTS:
                                 if (Program.conf.DeleteLocal)
                                 {
                                     if (File.Exists(t.ImageLocalPath))
@@ -2788,9 +2787,7 @@ namespace ZSS
             if (lbUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
-                CustomUploader cUploader = new CustomUploader(Program.conf.ImageUploadersList[lbUploader.SelectedIndex]);
-                string fp = Path.Combine(Program.conf.TempDir, "CustomUploaderText.png");
-                StartWorkerImages(MainAppTask.Jobs.CUSTOM_UPLOADER_TEST, fp);
+                StartWorkerScreenshots(MainAppTask.Jobs.CUSTOM_UPLOADER_TEST);
             }
         }
 
