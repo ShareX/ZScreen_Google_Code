@@ -1,6 +1,6 @@
 #summary ZScreen Screenshots
 #labels Featured
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 = Main =
 
 [http://img18.imageshack.us/img18/6884/zscreen231beta180320090o.png]
@@ -9,23 +9,24 @@
 
 [http://img18.imageshack.us/img18/5266/zscreen231beta180320090z.png]
 
-= Capture -> Selected Window & Crop Shot =
+= Capture = 
+== Selected Window & Crop Shot ==
 
 [http://img18.imageshack.us/img18/2176/zscreen231beta180320090n.png]
 
-= Capture -> Interaction =
+== Interaction ==
 
 [http://img18.imageshack.us/img18/7282/zscreen231beta180320090nwf.png]
 
-= Capture -> Naming Conventions =
+== Naming Conventions ==
 
 [http://img18.imageshack.us/img18/7120/zscreen231beta180320090hve.png]
 
-= Capture -> Watermark =
+== Watermark ==
 
 [http://img18.imageshack.us/img18/9508/zscreen231beta180320090zhc.png]
 
-= Capture -> Quality =
+== Quality ==
 
 [http://img18.imageshack.us/img18/808/zscreen231beta180320090jos.png]
 
@@ -37,27 +38,29 @@
 
 [http://img18.imageshack.us/img18/723/zscreen231beta180320090jls.png]
 
-= HTTP -> Image Uploaders =
+= HTTP = 
+== Image Uploaders ==
 
 [http://img18.imageshack.us/img18/920/zscreen231beta180320090p.png]
 
-= HTTP -> Custom Image Uploaders =
+== Custom Image Uploaders ==
 
 [http://img18.imageshack.us/img18/6117/zscreen231beta180320090r.png]
 
-= HTTP -> Language Translator =
+== Language Translator ==
 
 [http://img18.imageshack.us/img18/103/zscreen231beta180320090d.png]
 
-= Advanced -> General =
+= Advanced = 
+== General ==
 
 [http://img18.imageshack.us/img18/8519/zscreen231beta180320090i.png]
 
-= Advanced -> Paths =
+== Paths ==
 
 [http://img18.imageshack.us/img18/5461/zscreen231beta180320090l.png]
 
-= Advanced -> Debug =
+== Debug ==
 
 [http://img18.imageshack.us/img18/3361/zscreen231beta180320090ndy.png]
 
