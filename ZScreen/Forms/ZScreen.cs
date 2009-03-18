@@ -113,7 +113,7 @@ namespace ZSS
                 Program.conf.RunOnce = true;
             }
 
-            if (Program.conf.CheckUpdates) UpdateChecker.CheckUpdates();
+            if (Program.conf.CheckUpdates) CheckUpdates();
 
             debug = new Debug();
             debugTimer.Start();
@@ -4208,7 +4208,7 @@ namespace ZSS
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
-            UpdateChecker.CheckUpdates();
+            CheckUpdates();
         }
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4255,6 +4255,27 @@ namespace ZSS
                     return app;
             }
             return null;
+        }
+
+        private void CheckUpdates()
+        {
+            btnCheckUpdate.Enabled = false;
+            BackgroundWorker updateThread = new BackgroundWorker();
+            updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
+            updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
+            updateThread.RunWorkerAsync("zscreen");
+        }
+
+        private void updateThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            UpdateChecker updateChecker = new UpdateChecker((string)e.Argument);
+            e.Result = updateChecker.StartCheckUpdate();
+        }   
+        
+        private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            lblUpdateInfo.Text = (string)e.Result;
+            btnCheckUpdate.Enabled = true;
         }
     }
 }

@@ -383,6 +383,7 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblUpdateInfo = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.tpScreenshots.SuspendLayout();
             this.gbScreenshotPreview.SuspendLayout();
@@ -3924,6 +3925,7 @@ namespace ZSS
             // 
             // gbUpdates
             // 
+            this.gbUpdates.Controls.Add(this.lblUpdateInfo);
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.cbCheckExperimental);
             this.gbUpdates.Controls.Add(this.cbCheckUpdates);
@@ -4323,6 +4325,15 @@ namespace ZSS
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
+            // 
+            // lblUpdateInfo
+            // 
+            this.lblUpdateInfo.AutoSize = true;
+            this.lblUpdateInfo.Location = new System.Drawing.Point(224, 16);
+            this.lblUpdateInfo.Name = "lblUpdateInfo";
+            this.lblUpdateInfo.Size = new System.Drawing.Size(96, 13);
+            this.lblUpdateInfo.TabIndex = 6;
+            this.lblUpdateInfo.Text = "Update information";
             // 
             // ZScreen
             // 
@@ -4823,6 +4834,7 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmDropWindow;
         private System.Windows.Forms.CheckBox cbShowUploadDuration;
         private System.Windows.Forms.TextBox txtSettingsDir;
+        private System.Windows.Forms.Label lblUpdateInfo;
 
     }
 }

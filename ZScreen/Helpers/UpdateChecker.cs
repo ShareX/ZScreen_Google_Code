@@ -34,36 +34,29 @@ namespace ZSS.ImageUploader.Helpers
 {
     public class UpdateChecker
     {
-        private const string DefaultDownloads = "http://code.google.com/p/zscreen/downloads/list";
-        private const string AllDownloads = DefaultDownloads + "?can=1";
-        private const string CurrentDownloads = DefaultDownloads + "?can=2";
-        private const string FeaturedDownloads = DefaultDownloads + "?can=3";
-        private const string DeprecatedDownloads = DefaultDownloads + "?can=4";
-        public static bool IsBusy = false;
-
-        public static void CheckUpdates()
+        public string ProjectName
         {
-            if (!IsBusy)
+            get { return projectName; }
+            set
             {
-                IsBusy = true;
-                Thread updateThread = new Thread(UpdateThread);
-                updateThread.Start();
+                projectName = value;
+                DefaultDownloads = "http://code.google.com/p/" + projectName + "/downloads/list";
+                AllDownloads = DefaultDownloads + "?can=1";
+                CurrentDownloads = DefaultDownloads + "?can=2";
+                FeaturedDownloads = DefaultDownloads + "?can=3";
+                DeprecatedDownloads = DefaultDownloads + "?can=4";
             }
         }
 
-        private static string[] CheckUpdate(string link)
+        private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
+            FeaturedDownloads, DeprecatedDownloads;
+
+        public UpdateChecker(string ProjectName)
         {
-            string[] returnValue = new string[3];
-            WebClient wClient = new WebClient();
-            string source = wClient.DownloadString(link);
-            returnValue[0] = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
-            returnValue[1] = Regex.Match(returnValue[0], @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
-            returnValue[2] = Regex.Match(source, "(?<=q=\">).+?(?=</a>)", RegexOptions.Singleline).Value.Replace("\n", "").
-                Replace("\r", "").Trim(); //Summary
-            return returnValue;
+            this.ProjectName = ProjectName;
         }
 
-        private static void UpdateThread()
+        public string StartCheckUpdate()
         {
             try
             {
@@ -76,16 +69,17 @@ namespace ZSS.ImageUploader.Helpers
                 {
                     updateValues = CheckUpdate(CurrentDownloads);
                 }
+                string Versions = "Current version: " + Application.ProductVersion +
+                    "\r\nLatest version: " + updateValues[1];
                 if (!string.IsNullOrEmpty(updateValues[1]) && new Version(updateValues[1]).
                     CompareTo(new Version(Application.ProductVersion)) > 0)
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("New version available");
                     sb.AppendLine();
-                    sb.AppendLine("Current version:\t" + Application.ProductVersion);
-                    sb.AppendLine("Latest version:\t" + updateValues[1]);
+                    sb.AppendLine(Versions);
                     sb.AppendLine();
-                    sb.AppendLine(updateValues[2].Replace("|", "\n"));
+                    sb.AppendLine(updateValues[2].Replace("|", "\r\n"));
                     sb.AppendLine();
                     sb.AppendLine("Press OK to download the latest version.");
 
@@ -95,12 +89,25 @@ namespace ZSS.ImageUploader.Helpers
                         Process.Start(updateValues[0]);
                     }
                 }
+                return Versions;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return "Update failed:\r\n" + ex.Message;
             }
-            IsBusy = false;
+        }
+
+        public string[] CheckUpdate(string link)
+        {
+            string[] returnValue = new string[3];
+            WebClient wClient = new WebClient();
+            string source = wClient.DownloadString(link);
+            returnValue[0] = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
+            returnValue[1] = Regex.Match(returnValue[0], @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
+            returnValue[2] = Regex.Match(source, "(?<=q=\">).+?(?=</a>)", RegexOptions.Singleline).Value.Replace("\n", "").
+                Replace("\r", "").Trim(); //Summary
+            return returnValue;
         }
     }
 }
