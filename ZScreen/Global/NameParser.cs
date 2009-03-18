@@ -74,7 +74,9 @@ namespace ZSS.Helpers
 
             if (sb.ToString().Contains(replacementVars[8]))
             {
-                sb = sb.Replace(replacementVars[4], !Properties.Resources.PMvisible ? dt.Hour.ToString() : (dt.Hour == 0 ? "12" : ((dt.Hour > 12 ? AddZeroes(dt.Hour - 12) : AddZeroes(dt.Hour)))));
+                sb = sb.Replace(replacementVars[4], dt.Hour == 0 ? "12" :
+                    ((dt.Hour > 12 ? AddZeroes(dt.Hour - 12) : AddZeroes(dt.Hour))));
+                //!Properties.Resources.PMvisible ? dt.Hour.ToString()
             }
             else
             {
@@ -110,7 +112,7 @@ namespace ZSS.Helpers
 
             //normalize the entire thing, allow only characters and digits
             //spaces become underscores, prevents possible problems
-            if(nameType != NameType.Watermark) sb = Normalize(sb);
+            if (nameType != NameType.Watermark) sb = Normalize(sb);
 
             return sb.ToString();
         }

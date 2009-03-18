@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,7 +122,6 @@ namespace ZSS
             this.gbOthersNaming = new System.Windows.Forms.GroupBox();
             this.lblEntireScreenPreview = new System.Windows.Forms.Label();
             this.txtEntireScreen = new System.Windows.Forms.TextBox();
-            this.btnResetEntireScreen = new System.Windows.Forms.Button();
             this.gbCodeTitle = new System.Windows.Forms.GroupBox();
             this.btnCodesI = new System.Windows.Forms.Button();
             this.btnCodesPm = new System.Windows.Forms.Button();
@@ -146,7 +145,6 @@ namespace ZSS
             this.gbActiveWindowNaming = new System.Windows.Forms.GroupBox();
             this.lblActiveWindowPreview = new System.Windows.Forms.Label();
             this.txtActiveWindow = new System.Windows.Forms.TextBox();
-            this.btnResetActiveWindow = new System.Windows.Forms.Button();
             this.tpFileSettingsWatermark = new System.Windows.Forms.TabPage();
             this.gbWatermarkPreview = new System.Windows.Forms.GroupBox();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
@@ -1289,7 +1287,6 @@ namespace ZSS
             // 
             this.gbOthersNaming.Controls.Add(this.lblEntireScreenPreview);
             this.gbOthersNaming.Controls.Add(this.txtEntireScreen);
-            this.gbOthersNaming.Controls.Add(this.btnResetEntireScreen);
             this.gbOthersNaming.Location = new System.Drawing.Point(240, 8);
             this.gbOthersNaming.Name = "gbOthersNaming";
             this.gbOthersNaming.Size = new System.Drawing.Size(376, 80);
@@ -1310,21 +1307,10 @@ namespace ZSS
             // 
             this.txtEntireScreen.Location = new System.Drawing.Point(16, 24);
             this.txtEntireScreen.Name = "txtEntireScreen";
-            this.txtEntireScreen.Size = new System.Drawing.Size(257, 20);
+            this.txtEntireScreen.Size = new System.Drawing.Size(344, 20);
             this.txtEntireScreen.TabIndex = 4;
             this.txtEntireScreen.TextChanged += new System.EventHandler(this.txtEntireScreen_TextChanged);
             this.txtEntireScreen.Leave += new System.EventHandler(this.txtEntireScreen_Leave);
-            // 
-            // btnResetEntireScreen
-            // 
-            this.btnResetEntireScreen.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnResetEntireScreen.Location = new System.Drawing.Point(280, 24);
-            this.btnResetEntireScreen.Name = "btnResetEntireScreen";
-            this.btnResetEntireScreen.Size = new System.Drawing.Size(80, 23);
-            this.btnResetEntireScreen.TabIndex = 5;
-            this.btnResetEntireScreen.Text = "Reset";
-            this.btnResetEntireScreen.UseVisualStyleBackColor = true;
-            this.btnResetEntireScreen.Click += new System.EventHandler(this.btnResetEntireScreen_Click);
             // 
             // gbCodeTitle
             // 
@@ -1585,7 +1571,6 @@ namespace ZSS
             this.gbActiveWindowNaming.BackColor = System.Drawing.Color.Transparent;
             this.gbActiveWindowNaming.Controls.Add(this.lblActiveWindowPreview);
             this.gbActiveWindowNaming.Controls.Add(this.txtActiveWindow);
-            this.gbActiveWindowNaming.Controls.Add(this.btnResetActiveWindow);
             this.gbActiveWindowNaming.Location = new System.Drawing.Point(240, 96);
             this.gbActiveWindowNaming.Name = "gbActiveWindowNaming";
             this.gbActiveWindowNaming.Size = new System.Drawing.Size(376, 80);
@@ -1606,21 +1591,10 @@ namespace ZSS
             // 
             this.txtActiveWindow.Location = new System.Drawing.Point(16, 24);
             this.txtActiveWindow.Name = "txtActiveWindow";
-            this.txtActiveWindow.Size = new System.Drawing.Size(257, 20);
+            this.txtActiveWindow.Size = new System.Drawing.Size(344, 20);
             this.txtActiveWindow.TabIndex = 2;
             this.txtActiveWindow.TextChanged += new System.EventHandler(this.txtActiveWindow_TextChanged);
             this.txtActiveWindow.Leave += new System.EventHandler(this.txtActiveWindow_Leave);
-            // 
-            // btnResetActiveWindow
-            // 
-            this.btnResetActiveWindow.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnResetActiveWindow.Location = new System.Drawing.Point(280, 24);
-            this.btnResetActiveWindow.Name = "btnResetActiveWindow";
-            this.btnResetActiveWindow.Size = new System.Drawing.Size(80, 23);
-            this.btnResetActiveWindow.TabIndex = 3;
-            this.btnResetActiveWindow.Text = "Reset";
-            this.btnResetActiveWindow.UseVisualStyleBackColor = true;
-            this.btnResetActiveWindow.Click += new System.EventHandler(this.btnResetActiveWindow_Click);
             // 
             // tpFileSettingsWatermark
             // 
@@ -2823,38 +2797,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4515,11 +4489,9 @@ namespace ZSS
         private System.Windows.Forms.Label lblCodeMi;
         private System.Windows.Forms.Label lblCodeY;
         private System.Windows.Forms.Label lblCodeH;
-        private System.Windows.Forms.Button btnResetEntireScreen;
         private System.Windows.Forms.TextBox txtImagesDir;
         private System.Windows.Forms.TextBox txtEntireScreen;
         private System.Windows.Forms.TextBox txtActiveWindow;
-        private System.Windows.Forms.Button btnResetActiveWindow;
         private System.Windows.Forms.Button btnBrowseImagesDir;
         private System.Windows.Forms.TabPage tpImageSoftware;
         private System.Windows.Forms.CheckBox cbStartWin;

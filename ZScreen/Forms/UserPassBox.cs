@@ -35,10 +35,9 @@ namespace ZSS.Forms
             this.Text = q;
             this.txtUserName.Text = ans;
             //set translations for OK/Cancel
-            btnOK.Text = Properties.Resources.OK;
-            btnCancel.Text = Properties.Resources.Cancel;
+            btnOK.Text = "OK";
+            btnCancel.Text = "Cancel";
         }
-
 
         private void btnOK_Click(object sender, EventArgs e)
         {
