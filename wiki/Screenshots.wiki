@@ -3,52 +3,72 @@
 <wiki:toc max_depth="1" />
 = Main =
 
-[http://img23.imageshack.us/img23/7842/zscreen1100beta20090218pm6.png]
+[http://img18.imageshack.us/img18/6884/zscreen231beta180320090o.png]
 
 = Hotkeys = 
 
-[http://img23.imageshack.us/img23/1301/zscreen1100beta20090218zz0.png]
+[http://img18.imageshack.us/img18/5266/zscreen231beta180320090z.png]
 
-= Crop Shots =
+= Capture -> Selected Window & Crop Shot =
 
-[http://img23.imageshack.us/img23/2098/zscreen1100beta20090218ns5.png]
+[http://img18.imageshack.us/img18/2176/zscreen231beta180320090n.png]
 
-= Naming Conventions =
+= Capture -> Interaction =
 
-[http://img23.imageshack.us/img23/5334/zscreen1100beta20090218xn2.png]
+[http://img18.imageshack.us/img18/7282/zscreen231beta180320090nwf.png]
 
-= Watermark =
+= Capture -> Naming Conventions =
 
-[http://img23.imageshack.us/img23/9012/zscreen1100beta20090218lh1.png]
+[http://img18.imageshack.us/img18/7120/zscreen231beta180320090hve.png]
 
-= Paths =
+= Capture -> Watermark =
 
-[http://img23.imageshack.us/img23/5725/zscreen1100beta20090218od2.png]
+[http://img18.imageshack.us/img18/9508/zscreen231beta180320090zhc.png]
+
+= Capture -> Quality =
+
+[http://img18.imageshack.us/img18/808/zscreen231beta180320090jos.png]
 
 = Image Software =
 
-[http://img23.imageshack.us/img23/2258/zscreen1100beta20090218ux6.png]
+[http://img18.imageshack.us/img18/1600/zscreen231beta180320090ofh.png]
 
 = FTP = 
 
-[http://img23.imageshack.us/img23/6431/zscreen1100beta20090218pw2.png]
+[http://img18.imageshack.us/img18/723/zscreen231beta180320090jls.png]
 
-= HTTP =
+= HTTP -> Image Uploaders =
 
-[http://img23.imageshack.us/img23/9441/zscreen1100beta20090218un4.png]
+[http://img18.imageshack.us/img18/920/zscreen231beta180320090p.png]
 
-= Custom Uploaders =
+= HTTP -> Custom Image Uploaders =
 
-[http://img23.imageshack.us/img23/3097/zscreen1100beta20090218wh0.png]
+[http://img18.imageshack.us/img18/6117/zscreen231beta180320090r.png]
 
-= Advanced = 
+= HTTP -> Language Translator =
 
-[http://img23.imageshack.us/img23/2456/zscreen1100beta20090218bk6.png]
+[http://img18.imageshack.us/img18/103/zscreen231beta180320090d.png]
 
-= Screenshots =
+= Advanced -> General =
 
-[http://img23.imageshack.us/img23/6770/zscreen1100beta20090218rr7.png]
+[http://img18.imageshack.us/img18/8519/zscreen231beta180320090i.png]
 
-= Tray =
+= Advanced -> Paths =
 
-[http://img23.imageshack.us/img23/4027/ss20090218093457og0.png]
+[http://img18.imageshack.us/img18/5461/zscreen231beta180320090l.png]
+
+= Advanced -> Debug =
+
+[http://img18.imageshack.us/img18/3361/zscreen231beta180320090ndy.png]
+
+= History =
+
+[http://img18.imageshack.us/img18/7809/zscreen231beta180320090k.png]
+
+= Screen Color Picker =
+
+[http://img18.imageshack.us/img18/3881/colordialog180320090838.png]
+
+= Tray Menu =
+
+[http://img18.imageshack.us/img18/200/ss18032009083507.png]
