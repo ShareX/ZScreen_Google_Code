@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,21 +103,33 @@ namespace ZSS
             this.tpFile = new System.Windows.Forms.TabPage();
             this.tcFileSettings = new System.Windows.Forms.TabControl();
             this.tpSelectedWindow = new System.Windows.Forms.TabPage();
-            this.gbSelectedWindowOptions = new System.Windows.Forms.GroupBox();
-            this.cbSelectedWindowRectangleInfo = new System.Windows.Forms.CheckBox();
-            this.nudSelectedWindowBorderSize = new System.Windows.Forms.NumericUpDown();
-            this.pbSelectedWindowBorderColor = new System.Windows.Forms.PictureBox();
-            this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
-            this.lblSelectedWindowBorderColor = new System.Windows.Forms.Label();
-            this.cbSelectedWindowFront = new System.Windows.Forms.CheckBox();
             this.gbCropShotOptions = new System.Windows.Forms.GroupBox();
+            this.lblCropRegionStyle = new System.Windows.Forms.Label();
             this.nudCropBorderSize = new System.Windows.Forms.NumericUpDown();
+            this.cbCropStyle = new System.Windows.Forms.ComboBox();
             this.lblCropBorderSize = new System.Windows.Forms.Label();
             this.lblCropBorderColor = new System.Windows.Forms.Label();
             this.cbRegionRectangleInfo = new System.Windows.Forms.CheckBox();
             this.pbCropBorderColor = new System.Windows.Forms.PictureBox();
             this.cbRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
-            this.cbCropStyle = new System.Windows.Forms.ComboBox();
+            this.gbSelectedWindowOptions = new System.Windows.Forms.GroupBox();
+            this.lblSelectedWindowRegionStyle = new System.Windows.Forms.Label();
+            this.cbSelectedWindowStyle = new System.Windows.Forms.ComboBox();
+            this.cbSelectedWindowRectangleInfo = new System.Windows.Forms.CheckBox();
+            this.nudSelectedWindowBorderSize = new System.Windows.Forms.NumericUpDown();
+            this.cbSelectedWindowFront = new System.Windows.Forms.CheckBox();
+            this.pbSelectedWindowBorderColor = new System.Windows.Forms.PictureBox();
+            this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
+            this.lblSelectedWindowBorderColor = new System.Windows.Forms.Label();
+            this.tpInteraction = new System.Windows.Forms.TabPage();
+            this.gbAppearance = new System.Windows.Forms.GroupBox();
+            this.cbCompleteSound = new System.Windows.Forms.CheckBox();
+            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
+            this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
+            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
+            this.cbShowPopup = new System.Windows.Forms.CheckBox();
+            this.lblTrayFlash = new System.Windows.Forms.Label();
+            this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.tpFileNaming = new System.Windows.Forms.TabPage();
             this.gbOthersNaming = new System.Windows.Forms.GroupBox();
             this.lblEntireScreenPreview = new System.Windows.Forms.Label();
@@ -189,14 +201,6 @@ namespace ZSS
             this.lblKB = new System.Windows.Forms.Label();
             this.lblAfter = new System.Windows.Forms.Label();
             this.lblSwitchTo = new System.Windows.Forms.Label();
-            this.tpInteraction = new System.Windows.Forms.TabPage();
-            this.gbAppearance = new System.Windows.Forms.GroupBox();
-            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
-            this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
-            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
-            this.cbShowPopup = new System.Windows.Forms.CheckBox();
-            this.lblTrayFlash = new System.Windows.Forms.Label();
-            this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.cbDeleteLocal = new System.Windows.Forms.CheckBox();
             this.gbSaveLoc = new System.Windows.Forms.GroupBox();
             this.btnViewImagesDir = new System.Windows.Forms.Button();
@@ -207,15 +211,16 @@ namespace ZSS
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpImageSoftware = new System.Windows.Forms.TabPage();
-            this.btnAddImageSoftware = new System.Windows.Forms.Button();
-            this.lbImageSoftware = new System.Windows.Forms.ListBox();
-            this.btnDeleteImageSoftware = new System.Windows.Forms.Button();
-            this.lblImageSoftwarePath = new System.Windows.Forms.Label();
+            this.gbImageSoftwaresList = new System.Windows.Forms.GroupBox();
             this.lblImageSoftwareName = new System.Windows.Forms.Label();
-            this.btnUpdateImageSoftware = new System.Windows.Forms.Button();
-            this.txtImageSoftwareName = new System.Windows.Forms.TextBox();
+            this.btnDeleteImageSoftware = new System.Windows.Forms.Button();
             this.btnBrowseImageSoftware = new System.Windows.Forms.Button();
+            this.lbImageSoftware = new System.Windows.Forms.ListBox();
             this.txtImageSoftwarePath = new System.Windows.Forms.TextBox();
+            this.btnAddImageSoftware = new System.Windows.Forms.Button();
+            this.btnUpdateImageSoftware = new System.Windows.Forms.Button();
+            this.lblImageSoftwarePath = new System.Windows.Forms.Label();
+            this.txtImageSoftwareName = new System.Windows.Forms.TextBox();
             this.cbStartWin = new System.Windows.Forms.CheckBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
@@ -269,7 +274,6 @@ namespace ZSS
             this.nScreenshotDelay = new System.Windows.Forms.NumericUpDown();
             this.lblScreenshotDestination = new System.Windows.Forms.Label();
             this.lblDelaySeconds = new System.Windows.Forms.Label();
-            this.cbCompleteSound = new System.Windows.Forms.CheckBox();
             this.cboScreenshotDest = new System.Windows.Forms.ComboBox();
             this.lblLogo = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
@@ -345,6 +349,7 @@ namespace ZSS
             this.tcAdvanced = new System.Windows.Forms.TabControl();
             this.tpAdvAppearance = new System.Windows.Forms.TabPage();
             this.gbUpdates = new System.Windows.Forms.GroupBox();
+            this.lblUpdateInfo = new System.Windows.Forms.Label();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.cbCheckExperimental = new System.Windows.Forms.CheckBox();
             this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
@@ -378,11 +383,6 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblUpdateInfo = new System.Windows.Forms.Label();
-            this.gbImageSoftwaresList = new System.Windows.Forms.GroupBox();
-            this.lblCropRegionStyle = new System.Windows.Forms.Label();
-            this.lblSelectedWindowRegionStyle = new System.Windows.Forms.Label();
-            this.cbSelectedWindowStyle = new System.Windows.Forms.ComboBox();
             this.cmTray.SuspendLayout();
             this.tpScreenshots.SuspendLayout();
             this.gbScreenshotPreview.SuspendLayout();
@@ -391,12 +391,15 @@ namespace ZSS
             this.tpFile.SuspendLayout();
             this.tcFileSettings.SuspendLayout();
             this.tpSelectedWindow.SuspendLayout();
-            this.gbSelectedWindowOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).BeginInit();
             this.gbCropShotOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropBorderColor)).BeginInit();
+            this.gbSelectedWindowOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).BeginInit();
+            this.tpInteraction.SuspendLayout();
+            this.gbAppearance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
             this.tpFileNaming.SuspendLayout();
             this.gbOthersNaming.SuspendLayout();
             this.gbCodeTitle.SuspendLayout();
@@ -419,11 +422,9 @@ namespace ZSS
             this.gbPictureQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtImageQuality)).BeginInit();
-            this.tpInteraction.SuspendLayout();
-            this.gbAppearance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
             this.gbSaveLoc.SuspendLayout();
             this.tpImageSoftware.SuspendLayout();
+            this.gbImageSoftwaresList.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
             this.gbFTPAccountsList.SuspendLayout();
@@ -465,7 +466,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
-            this.gbImageSoftwaresList.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -493,7 +493,7 @@ namespace ZSS
             this.aboutToolStripMenuItem,
             this.exitZScreenToolStripMenuItem});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 248);
+            this.cmTray.Size = new System.Drawing.Size(196, 248);
             // 
             // tsmSettings
             // 
@@ -508,7 +508,7 @@ namespace ZSS
             this.tsmHistory});
             this.tsmSettings.Image = global::ZSS.Properties.Resources.wrench;
             this.tsmSettings.Name = "tsmSettings";
-            this.tsmSettings.Size = new System.Drawing.Size(205, 22);
+            this.tsmSettings.Size = new System.Drawing.Size(195, 22);
             this.tsmSettings.Text = "View Settings Menu";
             this.tsmSettings.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
@@ -516,7 +516,7 @@ namespace ZSS
             // 
             this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
             this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(165, 22);
+            this.tsmHotkeys.Size = new System.Drawing.Size(163, 22);
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -524,7 +524,7 @@ namespace ZSS
             // 
             this.tsmFileSettings.Image = global::ZSS.Properties.Resources.camera_edit;
             this.tsmFileSettings.Name = "tsmFileSettings";
-            this.tsmFileSettings.Size = new System.Drawing.Size(165, 22);
+            this.tsmFileSettings.Size = new System.Drawing.Size(163, 22);
             this.tsmFileSettings.Text = "Capture...";
             this.tsmFileSettings.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -532,7 +532,7 @@ namespace ZSS
             // 
             this.tsmImageSoftwareSettings.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmImageSoftwareSettings.Name = "tsmImageSoftwareSettings";
-            this.tsmImageSoftwareSettings.Size = new System.Drawing.Size(165, 22);
+            this.tsmImageSoftwareSettings.Size = new System.Drawing.Size(163, 22);
             this.tsmImageSoftwareSettings.Text = "Image Software...";
             this.tsmImageSoftwareSettings.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -540,7 +540,7 @@ namespace ZSS
             // 
             this.tsmFTPSettings.Image = global::ZSS.Properties.Resources.server_edit;
             this.tsmFTPSettings.Name = "tsmFTPSettings";
-            this.tsmFTPSettings.Size = new System.Drawing.Size(165, 22);
+            this.tsmFTPSettings.Size = new System.Drawing.Size(163, 22);
             this.tsmFTPSettings.Text = "FTP...";
             this.tsmFTPSettings.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -548,7 +548,7 @@ namespace ZSS
             // 
             this.tsmHTTPSettings.Image = global::ZSS.Properties.Resources.world_edit;
             this.tsmHTTPSettings.Name = "tsmHTTPSettings";
-            this.tsmHTTPSettings.Size = new System.Drawing.Size(165, 22);
+            this.tsmHTTPSettings.Size = new System.Drawing.Size(163, 22);
             this.tsmHTTPSettings.Text = "HTTP...";
             this.tsmHTTPSettings.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -556,7 +556,7 @@ namespace ZSS
             // 
             this.tsmAdvanced.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmAdvanced.Name = "tsmAdvanced";
-            this.tsmAdvanced.Size = new System.Drawing.Size(165, 22);
+            this.tsmAdvanced.Size = new System.Drawing.Size(163, 22);
             this.tsmAdvanced.Text = "Advanced...";
             this.tsmAdvanced.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -564,14 +564,14 @@ namespace ZSS
             // 
             this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
             this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(165, 22);
+            this.tsmHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmHistory.Text = "History...";
             this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(192, 6);
             // 
             // tsmSendTo
             // 
@@ -584,48 +584,48 @@ namespace ZSS
             this.tsmDestCustomHTTP});
             this.tsmSendTo.Image = global::ZSS.Properties.Resources.picture_go;
             this.tsmSendTo.Name = "tsmSendTo";
-            this.tsmSendTo.Size = new System.Drawing.Size(205, 22);
+            this.tsmSendTo.Size = new System.Drawing.Size(195, 22);
             this.tsmSendTo.Text = "Send Image To";
             // 
             // tsmDestClipboard
             // 
             this.tsmDestClipboard.Name = "tsmDestClipboard";
-            this.tsmDestClipboard.Size = new System.Drawing.Size(167, 22);
+            this.tsmDestClipboard.Size = new System.Drawing.Size(156, 22);
             this.tsmDestClipboard.Text = "Clipboard";
             this.tsmDestClipboard.Click += new System.EventHandler(this.tsmDestClipboard_Click);
             // 
             // tsmDestFile
             // 
             this.tsmDestFile.Name = "tsmDestFile";
-            this.tsmDestFile.Size = new System.Drawing.Size(167, 22);
+            this.tsmDestFile.Size = new System.Drawing.Size(156, 22);
             this.tsmDestFile.Text = "File";
             this.tsmDestFile.Click += new System.EventHandler(this.tsmDestFile_Click);
             // 
             // tsmDestFTP
             // 
             this.tsmDestFTP.Name = "tsmDestFTP";
-            this.tsmDestFTP.Size = new System.Drawing.Size(167, 22);
+            this.tsmDestFTP.Size = new System.Drawing.Size(156, 22);
             this.tsmDestFTP.Text = "FTP";
             this.tsmDestFTP.Click += new System.EventHandler(this.tsmDestFTP_Click);
             // 
             // tsmDestImageShack
             // 
             this.tsmDestImageShack.Name = "tsmDestImageShack";
-            this.tsmDestImageShack.Size = new System.Drawing.Size(167, 22);
+            this.tsmDestImageShack.Size = new System.Drawing.Size(156, 22);
             this.tsmDestImageShack.Text = "ImageShack";
             this.tsmDestImageShack.Click += new System.EventHandler(this.tsmDestImageShack_Click);
             // 
             // tsmDestTinyPic
             // 
             this.tsmDestTinyPic.Name = "tsmDestTinyPic";
-            this.tsmDestTinyPic.Size = new System.Drawing.Size(167, 22);
+            this.tsmDestTinyPic.Size = new System.Drawing.Size(156, 22);
             this.tsmDestTinyPic.Text = "TinyPic";
             this.tsmDestTinyPic.Click += new System.EventHandler(this.tsmDestTinyPic_Click);
             // 
             // tsmDestCustomHTTP
             // 
             this.tsmDestCustomHTTP.Name = "tsmDestCustomHTTP";
-            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(167, 22);
+            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(156, 22);
             this.tsmDestCustomHTTP.Text = "&Custom Uploader";
             this.tsmDestCustomHTTP.Click += new System.EventHandler(this.tsmDestCustomHTTP_Click);
             // 
@@ -633,26 +633,26 @@ namespace ZSS
             // 
             this.tsmImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmImageSoftware.Name = "tsmImageSoftware";
-            this.tsmImageSoftware.Size = new System.Drawing.Size(205, 22);
+            this.tsmImageSoftware.Size = new System.Drawing.Size(195, 22);
             this.tsmImageSoftware.Text = "Edit in Image Software";
             // 
             // tsmCbCopy
             // 
             this.tsmCbCopy.Image = global::ZSS.Properties.Resources.page_copy;
             this.tsmCbCopy.Name = "tsmCbCopy";
-            this.tsmCbCopy.Size = new System.Drawing.Size(205, 22);
+            this.tsmCbCopy.Size = new System.Drawing.Size(195, 22);
             this.tsmCbCopy.Text = "Copy to Clipboard Mode";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(192, 6);
             // 
             // tsmViewRemote
             // 
             this.tsmViewRemote.Image = global::ZSS.Properties.Resources.drive_network;
             this.tsmViewRemote.Name = "tsmViewRemote";
-            this.tsmViewRemote.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewRemote.Size = new System.Drawing.Size(195, 22);
             this.tsmViewRemote.Text = "View Remote Directory...";
             this.tsmViewRemote.Click += new System.EventHandler(this.tsmViewRemote_Click);
             // 
@@ -660,14 +660,14 @@ namespace ZSS
             // 
             this.tsmViewDirectory.Image = global::ZSS.Properties.Resources.folder_picture;
             this.tsmViewDirectory.Name = "tsmViewDirectory";
-            this.tsmViewDirectory.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewDirectory.Size = new System.Drawing.Size(195, 22);
             this.tsmViewDirectory.Text = "View Local Directory...";
             this.tsmViewDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(192, 6);
             // 
             // captureToolStripMenuItem
             // 
@@ -683,14 +683,14 @@ namespace ZSS
             this.screenColorPickerToolStripMenuItem});
             this.captureToolStripMenuItem.Image = global::ZSS.Properties.Resources.lightning;
             this.captureToolStripMenuItem.Name = "captureToolStripMenuItem";
-            this.captureToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.captureToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.captureToolStripMenuItem.Text = "&Actions";
             // 
             // entireScreenToolStripMenuItem
             // 
             this.entireScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.monitor;
             this.entireScreenToolStripMenuItem.Name = "entireScreenToolStripMenuItem";
-            this.entireScreenToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.entireScreenToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.entireScreenToolStripMenuItem.Text = "&Entire Screen";
             this.entireScreenToolStripMenuItem.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
             // 
@@ -698,7 +698,7 @@ namespace ZSS
             // 
             this.selectedWindowToolStripMenuItem.Image = global::ZSS.Properties.Resources.application_double;
             this.selectedWindowToolStripMenuItem.Name = "selectedWindowToolStripMenuItem";
-            this.selectedWindowToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.selectedWindowToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.selectedWindowToolStripMenuItem.Text = "Selected Window";
             this.selectedWindowToolStripMenuItem.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
             // 
@@ -706,7 +706,7 @@ namespace ZSS
             // 
             this.rectangularRegionToolStripMenuItem.Image = global::ZSS.Properties.Resources.shape_square;
             this.rectangularRegionToolStripMenuItem.Name = "rectangularRegionToolStripMenuItem";
-            this.rectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.rectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.rectangularRegionToolStripMenuItem.Text = "&Crop Shot";
             this.rectangularRegionToolStripMenuItem.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
             // 
@@ -714,20 +714,20 @@ namespace ZSS
             // 
             this.lastRectangularRegionToolStripMenuItem.Image = global::ZSS.Properties.Resources.shape_square_go;
             this.lastRectangularRegionToolStripMenuItem.Name = "lastRectangularRegionToolStripMenuItem";
-            this.lastRectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.lastRectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.lastRectangularRegionToolStripMenuItem.Text = "Last Crop Shot";
             this.lastRectangularRegionToolStripMenuItem.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(194, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(183, 6);
             // 
             // tsmScrenshotFromClipboard
             // 
             this.tsmScrenshotFromClipboard.Image = global::ZSS.Properties.Resources.images;
             this.tsmScrenshotFromClipboard.Name = "tsmScrenshotFromClipboard";
-            this.tsmScrenshotFromClipboard.Size = new System.Drawing.Size(197, 22);
+            this.tsmScrenshotFromClipboard.Size = new System.Drawing.Size(186, 22);
             this.tsmScrenshotFromClipboard.Text = "Clipboard Upload";
             this.tsmScrenshotFromClipboard.Click += new System.EventHandler(this.tsmScrenshotFromClipboard_Click);
             // 
@@ -735,7 +735,7 @@ namespace ZSS
             // 
             this.tsmDropWindow.Image = global::ZSS.Properties.Resources.shape_move_backwards;
             this.tsmDropWindow.Name = "tsmDropWindow";
-            this.tsmDropWindow.Size = new System.Drawing.Size(197, 22);
+            this.tsmDropWindow.Size = new System.Drawing.Size(186, 22);
             this.tsmDropWindow.Text = "Drag && Drop Window...";
             this.tsmDropWindow.Click += new System.EventHandler(this.ShowDropWindow);
             // 
@@ -743,7 +743,7 @@ namespace ZSS
             // 
             this.languageTranslatorToolStripMenuItem.Image = global::ZSS.Properties.Resources.comments;
             this.languageTranslatorToolStripMenuItem.Name = "languageTranslatorToolStripMenuItem";
-            this.languageTranslatorToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.languageTranslatorToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.languageTranslatorToolStripMenuItem.Text = "Language Translator";
             this.languageTranslatorToolStripMenuItem.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
             // 
@@ -751,7 +751,7 @@ namespace ZSS
             // 
             this.screenColorPickerToolStripMenuItem.Image = global::ZSS.Properties.Resources.color_wheel;
             this.screenColorPickerToolStripMenuItem.Name = "screenColorPickerToolStripMenuItem";
-            this.screenColorPickerToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.screenColorPickerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.screenColorPickerToolStripMenuItem.Text = "Screen Color Picker";
             this.screenColorPickerToolStripMenuItem.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
@@ -759,14 +759,14 @@ namespace ZSS
             // 
             this.tsmQuickOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmQuickOptions.Name = "tsmQuickOptions";
-            this.tsmQuickOptions.Size = new System.Drawing.Size(205, 22);
+            this.tsmQuickOptions.Size = new System.Drawing.Size(195, 22);
             this.tsmQuickOptions.Text = "&Quick Options...";
             this.tsmQuickOptions.Click += new System.EventHandler(this.tsmQuickOptions_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(192, 6);
             // 
             // aboutToolStripMenuItem
             // 
@@ -776,14 +776,14 @@ namespace ZSS
             this.tsmAboutMain});
             this.aboutToolStripMenuItem.Image = global::ZSS.Properties.Resources.help;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.aboutToolStripMenuItem.Text = "&Help";
             // 
             // tsmLic
             // 
             this.tsmLic.Image = global::ZSS.Properties.Resources.note_error;
             this.tsmLic.Name = "tsmLic";
-            this.tsmLic.Size = new System.Drawing.Size(163, 22);
+            this.tsmLic.Size = new System.Drawing.Size(158, 22);
             this.tsmLic.Text = "License...";
             this.tsmLic.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -791,7 +791,7 @@ namespace ZSS
             // 
             this.tsmVersionHistory.Image = global::ZSS.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(158, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -799,7 +799,7 @@ namespace ZSS
             // 
             this.tsmAboutMain.Image = global::ZSS.Properties.Resources.information;
             this.tsmAboutMain.Name = "tsmAboutMain";
-            this.tsmAboutMain.Size = new System.Drawing.Size(163, 22);
+            this.tsmAboutMain.Size = new System.Drawing.Size(158, 22);
             this.tsmAboutMain.Text = "About...";
             this.tsmAboutMain.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
@@ -807,7 +807,7 @@ namespace ZSS
             // 
             this.exitZScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.cross;
             this.exitZScreenToolStripMenuItem.Name = "exitZScreenToolStripMenuItem";
-            this.exitZScreenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.exitZScreenToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.exitZScreenToolStripMenuItem.Text = "Exit ZScreen";
             this.exitZScreenToolStripMenuItem.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
@@ -954,37 +954,37 @@ namespace ZSS
             this.cmsRetryUpload,
             this.deleteToolStripMenuItem});
             this.cmsHistory.Name = "cmsHistory";
-            this.cmsHistory.Size = new System.Drawing.Size(165, 170);
+            this.cmsHistory.Size = new System.Drawing.Size(157, 170);
             // 
             // tsmCopyCbHistory
             // 
             this.tsmCopyCbHistory.Name = "tsmCopyCbHistory";
-            this.tsmCopyCbHistory.Size = new System.Drawing.Size(164, 22);
+            this.tsmCopyCbHistory.Size = new System.Drawing.Size(156, 22);
             this.tsmCopyCbHistory.Text = "&Copy Link";
             // 
             // copyImageToolStripMenuItem
             // 
             this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.copyImageToolStripMenuItem.Text = "Copy &Image";
             this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.copyImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(153, 6);
             // 
             // openLocalFileToolStripMenuItem
             // 
             this.openLocalFileToolStripMenuItem.Name = "openLocalFileToolStripMenuItem";
-            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.openLocalFileToolStripMenuItem.Text = "Open Local File";
             this.openLocalFileToolStripMenuItem.Click += new System.EventHandler(this.openLocalFileToolStripMenuItem_Click);
             // 
             // browseURLToolStripMenuItem
             // 
             this.browseURLToolStripMenuItem.Name = "browseURLToolStripMenuItem";
-            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.browseURLToolStripMenuItem.Text = "Browse URL";
             this.browseURLToolStripMenuItem.Click += new System.EventHandler(this.browseURLToolStripMenuItem_Click);
             // 
@@ -995,46 +995,46 @@ namespace ZSS
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem,
             this.copySourceToClipboardStringToolStripMenuItem});
             this.openSourceToolStripMenuItem.Name = "openSourceToolStripMenuItem";
-            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.openSourceToolStripMenuItem.Text = "Open Source";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.openToolStripMenuItem.Text = "Open Source in Text Editor";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openSourceInDefaultWebBrowserHTMLToolStripMenuItem
             // 
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Name = "openSourceInDefaultWebBrowserHTMLToolStripMenuItem";
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Text = "Open Source in Browser";
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Click += new System.EventHandler(this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem_Click);
             // 
             // copySourceToClipboardStringToolStripMenuItem
             // 
             this.copySourceToClipboardStringToolStripMenuItem.Name = "copySourceToClipboardStringToolStripMenuItem";
-            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.copySourceToClipboardStringToolStripMenuItem.Text = "Copy Source to Clipboard";
             this.copySourceToClipboardStringToolStripMenuItem.Click += new System.EventHandler(this.copySourceToClipboardStringToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(161, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(153, 6);
             // 
             // cmsRetryUpload
             // 
             this.cmsRetryUpload.Name = "cmsRetryUpload";
-            this.cmsRetryUpload.Size = new System.Drawing.Size(164, 22);
+            this.cmsRetryUpload.Size = new System.Drawing.Size(156, 22);
             this.cmsRetryUpload.Text = "Retry Upload";
             this.cmsRetryUpload.Click += new System.EventHandler(this.cmsRetryUpload_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.deleteToolStripMenuItem.Text = "&Delete Local Files";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -1098,87 +1098,8 @@ namespace ZSS
             this.tpSelectedWindow.Name = "tpSelectedWindow";
             this.tpSelectedWindow.Size = new System.Drawing.Size(778, 402);
             this.tpSelectedWindow.TabIndex = 6;
-            this.tpSelectedWindow.Text = "Selected Window & Crop Shot";
+            this.tpSelectedWindow.Text = "Selected Window | Crop Shot";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
-            // 
-            // gbSelectedWindowOptions
-            // 
-            this.gbSelectedWindowOptions.Controls.Add(this.lblSelectedWindowRegionStyle);
-            this.gbSelectedWindowOptions.Controls.Add(this.cbSelectedWindowStyle);
-            this.gbSelectedWindowOptions.Controls.Add(this.cbSelectedWindowRectangleInfo);
-            this.gbSelectedWindowOptions.Controls.Add(this.nudSelectedWindowBorderSize);
-            this.gbSelectedWindowOptions.Controls.Add(this.cbSelectedWindowFront);
-            this.gbSelectedWindowOptions.Controls.Add(this.pbSelectedWindowBorderColor);
-            this.gbSelectedWindowOptions.Controls.Add(this.lblSelectedWindowBorderSize);
-            this.gbSelectedWindowOptions.Controls.Add(this.lblSelectedWindowBorderColor);
-            this.gbSelectedWindowOptions.Location = new System.Drawing.Point(8, 8);
-            this.gbSelectedWindowOptions.Name = "gbSelectedWindowOptions";
-            this.gbSelectedWindowOptions.Size = new System.Drawing.Size(760, 144);
-            this.gbSelectedWindowOptions.TabIndex = 14;
-            this.gbSelectedWindowOptions.TabStop = false;
-            this.gbSelectedWindowOptions.Text = "Selected Window Options";
-            // 
-            // cbSelectedWindowRectangleInfo
-            // 
-            this.cbSelectedWindowRectangleInfo.AutoSize = true;
-            this.cbSelectedWindowRectangleInfo.Location = new System.Drawing.Point(16, 56);
-            this.cbSelectedWindowRectangleInfo.Name = "cbSelectedWindowRectangleInfo";
-            this.cbSelectedWindowRectangleInfo.Size = new System.Drawing.Size(267, 17);
-            this.cbSelectedWindowRectangleInfo.TabIndex = 5;
-            this.cbSelectedWindowRectangleInfo.Text = "Show selected window region coordinates and size";
-            this.cbSelectedWindowRectangleInfo.UseVisualStyleBackColor = true;
-            this.cbSelectedWindowRectangleInfo.CheckedChanged += new System.EventHandler(this.cbSelectedWindowRectangleInfo_CheckedChanged);
-            // 
-            // nudSelectedWindowBorderSize
-            // 
-            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(280, 104);
-            this.nudSelectedWindowBorderSize.Name = "nudSelectedWindowBorderSize";
-            this.nudSelectedWindowBorderSize.Size = new System.Drawing.Size(40, 20);
-            this.nudSelectedWindowBorderSize.TabIndex = 4;
-            this.nudSelectedWindowBorderSize.ValueChanged += new System.EventHandler(this.nudSelectedWindowBorderSize_ValueChanged);
-            // 
-            // pbSelectedWindowBorderColor
-            // 
-            this.pbSelectedWindowBorderColor.BackColor = System.Drawing.Color.White;
-            this.pbSelectedWindowBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbSelectedWindowBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(208, 80);
-            this.pbSelectedWindowBorderColor.Name = "pbSelectedWindowBorderColor";
-            this.pbSelectedWindowBorderColor.Size = new System.Drawing.Size(24, 24);
-            this.pbSelectedWindowBorderColor.TabIndex = 3;
-            this.pbSelectedWindowBorderColor.TabStop = false;
-            this.pbSelectedWindowBorderColor.Click += new System.EventHandler(this.pbSelectedWindowBorderColor_Click);
-            // 
-            // lblSelectedWindowBorderSize
-            // 
-            this.lblSelectedWindowBorderSize.AutoSize = true;
-            this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(16, 112);
-            this.lblSelectedWindowBorderSize.Name = "lblSelectedWindowBorderSize";
-            this.lblSelectedWindowBorderSize.Size = new System.Drawing.Size(254, 13);
-            this.lblSelectedWindowBorderSize.TabIndex = 2;
-            this.lblSelectedWindowBorderSize.Text = "Selected window region border size ( 0 = No border )";
-            // 
-            // lblSelectedWindowBorderColor
-            // 
-            this.lblSelectedWindowBorderColor.AutoSize = true;
-            this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(16, 88);
-            this.lblSelectedWindowBorderColor.Name = "lblSelectedWindowBorderColor";
-            this.lblSelectedWindowBorderColor.Size = new System.Drawing.Size(179, 13);
-            this.lblSelectedWindowBorderColor.TabIndex = 1;
-            this.lblSelectedWindowBorderColor.Text = "Selected window region border color";
-            // 
-            // cbSelectedWindowFront
-            // 
-            this.cbSelectedWindowFront.AutoSize = true;
-            this.cbSelectedWindowFront.Enabled = false;
-            this.cbSelectedWindowFront.Location = new System.Drawing.Point(552, 24);
-            this.cbSelectedWindowFront.Name = "cbSelectedWindowFront";
-            this.cbSelectedWindowFront.Size = new System.Drawing.Size(193, 17);
-            this.cbSelectedWindowFront.TabIndex = 0;
-            this.cbSelectedWindowFront.Text = "Send window to front after selected";
-            this.cbSelectedWindowFront.UseVisualStyleBackColor = true;
-            this.cbSelectedWindowFront.Visible = false;
-            this.cbSelectedWindowFront.CheckedChanged += new System.EventHandler(this.cbSelectedWindowFront_CheckedChanged);
             // 
             // gbCropShotOptions
             // 
@@ -1197,6 +1118,15 @@ namespace ZSS
             this.gbCropShotOptions.TabStop = false;
             this.gbCropShotOptions.Text = "Crop Shot Options";
             // 
+            // lblCropRegionStyle
+            // 
+            this.lblCropRegionStyle.AutoSize = true;
+            this.lblCropRegionStyle.Location = new System.Drawing.Point(16, 28);
+            this.lblCropRegionStyle.Name = "lblCropRegionStyle";
+            this.lblCropRegionStyle.Size = new System.Drawing.Size(88, 13);
+            this.lblCropRegionStyle.TabIndex = 9;
+            this.lblCropRegionStyle.Text = "Crop region style:";
+            // 
             // nudCropBorderSize
             // 
             this.nudCropBorderSize.Location = new System.Drawing.Point(221, 104);
@@ -1204,6 +1134,20 @@ namespace ZSS
             this.nudCropBorderSize.Size = new System.Drawing.Size(40, 20);
             this.nudCropBorderSize.TabIndex = 12;
             this.nudCropBorderSize.ValueChanged += new System.EventHandler(this.nudCropBorderSize_ValueChanged);
+            // 
+            // cbCropStyle
+            // 
+            this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCropStyle.FormattingEnabled = true;
+            this.cbCropStyle.Items.AddRange(new object[] {
+            "No Transparency",
+            "Region Transparent",
+            "Background Region Transparent"});
+            this.cbCropStyle.Location = new System.Drawing.Point(112, 24);
+            this.cbCropStyle.Name = "cbCropStyle";
+            this.cbCropStyle.Size = new System.Drawing.Size(240, 21);
+            this.cbCropStyle.TabIndex = 8;
+            this.cbCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
             // 
             // lblCropBorderSize
             // 
@@ -1257,19 +1201,212 @@ namespace ZSS
             this.cbRegionHotkeyInfo.UseVisualStyleBackColor = true;
             this.cbRegionHotkeyInfo.CheckedChanged += new System.EventHandler(this.cbRegionHotkeyInfo_CheckedChanged);
             // 
-            // cbCropStyle
+            // gbSelectedWindowOptions
             // 
-            this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCropStyle.FormattingEnabled = true;
-            this.cbCropStyle.Items.AddRange(new object[] {
+            this.gbSelectedWindowOptions.Controls.Add(this.lblSelectedWindowRegionStyle);
+            this.gbSelectedWindowOptions.Controls.Add(this.cbSelectedWindowStyle);
+            this.gbSelectedWindowOptions.Controls.Add(this.cbSelectedWindowRectangleInfo);
+            this.gbSelectedWindowOptions.Controls.Add(this.nudSelectedWindowBorderSize);
+            this.gbSelectedWindowOptions.Controls.Add(this.cbSelectedWindowFront);
+            this.gbSelectedWindowOptions.Controls.Add(this.pbSelectedWindowBorderColor);
+            this.gbSelectedWindowOptions.Controls.Add(this.lblSelectedWindowBorderSize);
+            this.gbSelectedWindowOptions.Controls.Add(this.lblSelectedWindowBorderColor);
+            this.gbSelectedWindowOptions.Location = new System.Drawing.Point(8, 8);
+            this.gbSelectedWindowOptions.Name = "gbSelectedWindowOptions";
+            this.gbSelectedWindowOptions.Size = new System.Drawing.Size(760, 144);
+            this.gbSelectedWindowOptions.TabIndex = 14;
+            this.gbSelectedWindowOptions.TabStop = false;
+            this.gbSelectedWindowOptions.Text = "Selected Window Options";
+            // 
+            // lblSelectedWindowRegionStyle
+            // 
+            this.lblSelectedWindowRegionStyle.AutoSize = true;
+            this.lblSelectedWindowRegionStyle.Location = new System.Drawing.Point(16, 28);
+            this.lblSelectedWindowRegionStyle.Name = "lblSelectedWindowRegionStyle";
+            this.lblSelectedWindowRegionStyle.Size = new System.Drawing.Size(147, 13);
+            this.lblSelectedWindowRegionStyle.TabIndex = 11;
+            this.lblSelectedWindowRegionStyle.Text = "Selected window region style:";
+            // 
+            // cbSelectedWindowStyle
+            // 
+            this.cbSelectedWindowStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSelectedWindowStyle.FormattingEnabled = true;
+            this.cbSelectedWindowStyle.Items.AddRange(new object[] {
             "No Transparency",
             "Region Transparent",
             "Background Region Transparent"});
-            this.cbCropStyle.Location = new System.Drawing.Point(112, 24);
-            this.cbCropStyle.Name = "cbCropStyle";
-            this.cbCropStyle.Size = new System.Drawing.Size(240, 21);
-            this.cbCropStyle.TabIndex = 8;
-            this.cbCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
+            this.cbSelectedWindowStyle.Location = new System.Drawing.Point(168, 24);
+            this.cbSelectedWindowStyle.Name = "cbSelectedWindowStyle";
+            this.cbSelectedWindowStyle.Size = new System.Drawing.Size(240, 21);
+            this.cbSelectedWindowStyle.TabIndex = 10;
+            this.cbSelectedWindowStyle.SelectedIndexChanged += new System.EventHandler(this.cbSelectedWindowStyle_SelectedIndexChanged);
+            // 
+            // cbSelectedWindowRectangleInfo
+            // 
+            this.cbSelectedWindowRectangleInfo.AutoSize = true;
+            this.cbSelectedWindowRectangleInfo.Location = new System.Drawing.Point(16, 56);
+            this.cbSelectedWindowRectangleInfo.Name = "cbSelectedWindowRectangleInfo";
+            this.cbSelectedWindowRectangleInfo.Size = new System.Drawing.Size(267, 17);
+            this.cbSelectedWindowRectangleInfo.TabIndex = 5;
+            this.cbSelectedWindowRectangleInfo.Text = "Show selected window region coordinates and size";
+            this.cbSelectedWindowRectangleInfo.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowRectangleInfo.CheckedChanged += new System.EventHandler(this.cbSelectedWindowRectangleInfo_CheckedChanged);
+            // 
+            // nudSelectedWindowBorderSize
+            // 
+            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(280, 104);
+            this.nudSelectedWindowBorderSize.Name = "nudSelectedWindowBorderSize";
+            this.nudSelectedWindowBorderSize.Size = new System.Drawing.Size(40, 20);
+            this.nudSelectedWindowBorderSize.TabIndex = 4;
+            this.nudSelectedWindowBorderSize.ValueChanged += new System.EventHandler(this.nudSelectedWindowBorderSize_ValueChanged);
+            // 
+            // cbSelectedWindowFront
+            // 
+            this.cbSelectedWindowFront.AutoSize = true;
+            this.cbSelectedWindowFront.Enabled = false;
+            this.cbSelectedWindowFront.Location = new System.Drawing.Point(552, 24);
+            this.cbSelectedWindowFront.Name = "cbSelectedWindowFront";
+            this.cbSelectedWindowFront.Size = new System.Drawing.Size(193, 17);
+            this.cbSelectedWindowFront.TabIndex = 0;
+            this.cbSelectedWindowFront.Text = "Send window to front after selected";
+            this.cbSelectedWindowFront.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowFront.Visible = false;
+            this.cbSelectedWindowFront.CheckedChanged += new System.EventHandler(this.cbSelectedWindowFront_CheckedChanged);
+            // 
+            // pbSelectedWindowBorderColor
+            // 
+            this.pbSelectedWindowBorderColor.BackColor = System.Drawing.Color.White;
+            this.pbSelectedWindowBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbSelectedWindowBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(208, 80);
+            this.pbSelectedWindowBorderColor.Name = "pbSelectedWindowBorderColor";
+            this.pbSelectedWindowBorderColor.Size = new System.Drawing.Size(24, 24);
+            this.pbSelectedWindowBorderColor.TabIndex = 3;
+            this.pbSelectedWindowBorderColor.TabStop = false;
+            this.pbSelectedWindowBorderColor.Click += new System.EventHandler(this.pbSelectedWindowBorderColor_Click);
+            // 
+            // lblSelectedWindowBorderSize
+            // 
+            this.lblSelectedWindowBorderSize.AutoSize = true;
+            this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(16, 112);
+            this.lblSelectedWindowBorderSize.Name = "lblSelectedWindowBorderSize";
+            this.lblSelectedWindowBorderSize.Size = new System.Drawing.Size(254, 13);
+            this.lblSelectedWindowBorderSize.TabIndex = 2;
+            this.lblSelectedWindowBorderSize.Text = "Selected window region border size ( 0 = No border )";
+            // 
+            // lblSelectedWindowBorderColor
+            // 
+            this.lblSelectedWindowBorderColor.AutoSize = true;
+            this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(16, 88);
+            this.lblSelectedWindowBorderColor.Name = "lblSelectedWindowBorderColor";
+            this.lblSelectedWindowBorderColor.Size = new System.Drawing.Size(179, 13);
+            this.lblSelectedWindowBorderColor.TabIndex = 1;
+            this.lblSelectedWindowBorderColor.Text = "Selected window region border color";
+            // 
+            // tpInteraction
+            // 
+            this.tpInteraction.Controls.Add(this.gbAppearance);
+            this.tpInteraction.Location = new System.Drawing.Point(4, 22);
+            this.tpInteraction.Name = "tpInteraction";
+            this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
+            this.tpInteraction.Size = new System.Drawing.Size(778, 402);
+            this.tpInteraction.TabIndex = 5;
+            this.tpInteraction.Text = "Interaction";
+            this.tpInteraction.UseVisualStyleBackColor = true;
+            // 
+            // gbAppearance
+            // 
+            this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
+            this.gbAppearance.Controls.Add(this.cbCompleteSound);
+            this.gbAppearance.Controls.Add(this.cbShowUploadDuration);
+            this.gbAppearance.Controls.Add(this.chkCaptureFallback);
+            this.gbAppearance.Controls.Add(this.chkBalloonTipOpenLink);
+            this.gbAppearance.Controls.Add(this.cbShowPopup);
+            this.gbAppearance.Controls.Add(this.lblTrayFlash);
+            this.gbAppearance.Controls.Add(this.nudFlashIconCount);
+            this.gbAppearance.Location = new System.Drawing.Point(8, 8);
+            this.gbAppearance.Name = "gbAppearance";
+            this.gbAppearance.Size = new System.Drawing.Size(760, 184);
+            this.gbAppearance.TabIndex = 5;
+            this.gbAppearance.TabStop = false;
+            this.gbAppearance.Text = "After taking a Screenshot";
+            // 
+            // cbCompleteSound
+            // 
+            this.cbCompleteSound.AutoSize = true;
+            this.cbCompleteSound.Location = new System.Drawing.Point(16, 128);
+            this.cbCompleteSound.Name = "cbCompleteSound";
+            this.cbCompleteSound.Size = new System.Drawing.Size(228, 17);
+            this.cbCompleteSound.TabIndex = 5;
+            this.cbCompleteSound.Text = "Play sound after image reaches destination";
+            this.cbCompleteSound.UseVisualStyleBackColor = true;
+            this.cbCompleteSound.CheckedChanged += new System.EventHandler(this.cbCompleteSound_CheckedChanged);
+            // 
+            // cbShowUploadDuration
+            // 
+            this.cbShowUploadDuration.AutoSize = true;
+            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 104);
+            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
+            this.cbShowUploadDuration.Size = new System.Drawing.Size(191, 17);
+            this.cbShowUploadDuration.TabIndex = 8;
+            this.cbShowUploadDuration.Text = "Show upload duration in balloon tip";
+            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
+            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
+            // 
+            // chkCaptureFallback
+            // 
+            this.chkCaptureFallback.AutoSize = true;
+            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 152);
+            this.chkCaptureFallback.Name = "chkCaptureFallback";
+            this.chkCaptureFallback.Size = new System.Drawing.Size(302, 17);
+            this.chkCaptureFallback.TabIndex = 7;
+            this.chkCaptureFallback.Text = "Capture entire screen if active window capture or crop fails";
+            this.chkCaptureFallback.UseVisualStyleBackColor = true;
+            // 
+            // chkBalloonTipOpenLink
+            // 
+            this.chkBalloonTipOpenLink.AutoSize = true;
+            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 80);
+            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
+            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(268, 17);
+            this.chkBalloonTipOpenLink.TabIndex = 6;
+            this.chkBalloonTipOpenLink.Text = "Open screenshot url/file when clicked to balloon tip";
+            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
+            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
+            // 
+            // cbShowPopup
+            // 
+            this.cbShowPopup.AutoSize = true;
+            this.cbShowPopup.Location = new System.Drawing.Point(16, 56);
+            this.cbShowPopup.Name = "cbShowPopup";
+            this.cbShowPopup.Size = new System.Drawing.Size(225, 17);
+            this.cbShowPopup.TabIndex = 5;
+            this.cbShowPopup.Text = "Show balloon tip after upload is completed";
+            this.cbShowPopup.UseVisualStyleBackColor = true;
+            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
+            // 
+            // lblTrayFlash
+            // 
+            this.lblTrayFlash.AutoSize = true;
+            this.lblTrayFlash.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTrayFlash.Location = new System.Drawing.Point(14, 26);
+            this.lblTrayFlash.Name = "lblTrayFlash";
+            this.lblTrayFlash.Size = new System.Drawing.Size(315, 13);
+            this.lblTrayFlash.TabIndex = 3;
+            this.lblTrayFlash.Text = "Number of times tray icon should flash after an upload is complete";
+            // 
+            // nudFlashIconCount
+            // 
+            this.nudFlashIconCount.Location = new System.Drawing.Point(336, 24);
+            this.nudFlashIconCount.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudFlashIconCount.Name = "nudFlashIconCount";
+            this.nudFlashIconCount.Size = new System.Drawing.Size(58, 20);
+            this.nudFlashIconCount.TabIndex = 4;
+            this.nudFlashIconCount.ValueChanged += new System.EventHandler(this.nudFlashIconCount_ValueChanged);
             // 
             // tpFileNaming
             // 
@@ -2101,100 +2238,6 @@ namespace ZSS
             this.lblSwitchTo.TabIndex = 92;
             this.lblSwitchTo.Text = "Switch to:";
             // 
-            // tpInteraction
-            // 
-            this.tpInteraction.Controls.Add(this.gbAppearance);
-            this.tpInteraction.Location = new System.Drawing.Point(4, 22);
-            this.tpInteraction.Name = "tpInteraction";
-            this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInteraction.Size = new System.Drawing.Size(778, 402);
-            this.tpInteraction.TabIndex = 5;
-            this.tpInteraction.Text = "Interaction";
-            this.tpInteraction.UseVisualStyleBackColor = true;
-            // 
-            // gbAppearance
-            // 
-            this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.gbAppearance.Controls.Add(this.cbCompleteSound);
-            this.gbAppearance.Controls.Add(this.cbShowUploadDuration);
-            this.gbAppearance.Controls.Add(this.chkCaptureFallback);
-            this.gbAppearance.Controls.Add(this.chkBalloonTipOpenLink);
-            this.gbAppearance.Controls.Add(this.cbShowPopup);
-            this.gbAppearance.Controls.Add(this.lblTrayFlash);
-            this.gbAppearance.Controls.Add(this.nudFlashIconCount);
-            this.gbAppearance.Location = new System.Drawing.Point(8, 8);
-            this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(760, 184);
-            this.gbAppearance.TabIndex = 5;
-            this.gbAppearance.TabStop = false;
-            this.gbAppearance.Text = "After taking a Screenshot";
-            // 
-            // cbShowUploadDuration
-            // 
-            this.cbShowUploadDuration.AutoSize = true;
-            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 104);
-            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
-            this.cbShowUploadDuration.Size = new System.Drawing.Size(191, 17);
-            this.cbShowUploadDuration.TabIndex = 8;
-            this.cbShowUploadDuration.Text = "Show upload duration in balloon tip";
-            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
-            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
-            // 
-            // chkCaptureFallback
-            // 
-            this.chkCaptureFallback.AutoSize = true;
-            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 152);
-            this.chkCaptureFallback.Name = "chkCaptureFallback";
-            this.chkCaptureFallback.Size = new System.Drawing.Size(302, 17);
-            this.chkCaptureFallback.TabIndex = 7;
-            this.chkCaptureFallback.Text = "Capture entire screen if active window capture or crop fails";
-            this.chkCaptureFallback.UseVisualStyleBackColor = true;
-            // 
-            // chkBalloonTipOpenLink
-            // 
-            this.chkBalloonTipOpenLink.AutoSize = true;
-            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 80);
-            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
-            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(268, 17);
-            this.chkBalloonTipOpenLink.TabIndex = 6;
-            this.chkBalloonTipOpenLink.Text = "Open screenshot url/file when clicked to balloon tip";
-            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
-            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
-            // 
-            // cbShowPopup
-            // 
-            this.cbShowPopup.AutoSize = true;
-            this.cbShowPopup.Location = new System.Drawing.Point(16, 56);
-            this.cbShowPopup.Name = "cbShowPopup";
-            this.cbShowPopup.Size = new System.Drawing.Size(225, 17);
-            this.cbShowPopup.TabIndex = 5;
-            this.cbShowPopup.Text = "Show balloon tip after upload is completed";
-            this.cbShowPopup.UseVisualStyleBackColor = true;
-            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
-            // 
-            // lblTrayFlash
-            // 
-            this.lblTrayFlash.AutoSize = true;
-            this.lblTrayFlash.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTrayFlash.Location = new System.Drawing.Point(14, 26);
-            this.lblTrayFlash.Name = "lblTrayFlash";
-            this.lblTrayFlash.Size = new System.Drawing.Size(315, 13);
-            this.lblTrayFlash.TabIndex = 3;
-            this.lblTrayFlash.Text = "Number of times tray icon should flash after an upload is complete";
-            // 
-            // nudFlashIconCount
-            // 
-            this.nudFlashIconCount.Location = new System.Drawing.Point(336, 24);
-            this.nudFlashIconCount.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudFlashIconCount.Name = "nudFlashIconCount";
-            this.nudFlashIconCount.Size = new System.Drawing.Size(58, 20);
-            this.nudFlashIconCount.TabIndex = 4;
-            this.nudFlashIconCount.ValueChanged += new System.EventHandler(this.nudFlashIconCount_ValueChanged);
-            // 
             // cbDeleteLocal
             // 
             this.cbDeleteLocal.AutoSize = true;
@@ -2311,49 +2354,23 @@ namespace ZSS
             this.tpImageSoftware.Text = "Image Software";
             this.tpImageSoftware.UseVisualStyleBackColor = true;
             // 
-            // btnAddImageSoftware
+            // gbImageSoftwaresList
             // 
-            this.btnAddImageSoftware.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAddImageSoftware.BackColor = System.Drawing.Color.Transparent;
-            this.btnAddImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnAddImageSoftware.Location = new System.Drawing.Point(304, 120);
-            this.btnAddImageSoftware.Name = "btnAddImageSoftware";
-            this.btnAddImageSoftware.Size = new System.Drawing.Size(88, 24);
-            this.btnAddImageSoftware.TabIndex = 59;
-            this.btnAddImageSoftware.Text = "Add";
-            this.btnAddImageSoftware.UseVisualStyleBackColor = false;
-            this.btnAddImageSoftware.Click += new System.EventHandler(this.btnAddImageSoftware_Click);
-            // 
-            // lbImageSoftware
-            // 
-            this.lbImageSoftware.FormattingEnabled = true;
-            this.lbImageSoftware.IntegralHeight = false;
-            this.lbImageSoftware.Location = new System.Drawing.Point(408, 24);
-            this.lbImageSoftware.Name = "lbImageSoftware";
-            this.lbImageSoftware.Size = new System.Drawing.Size(280, 264);
-            this.lbImageSoftware.TabIndex = 59;
-            this.lbImageSoftware.SelectedIndexChanged += new System.EventHandler(this.lbImageSoftware_SelectedIndexChanged);
-            // 
-            // btnDeleteImageSoftware
-            // 
-            this.btnDeleteImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnDeleteImageSoftware.Location = new System.Drawing.Point(208, 120);
-            this.btnDeleteImageSoftware.Name = "btnDeleteImageSoftware";
-            this.btnDeleteImageSoftware.Size = new System.Drawing.Size(88, 24);
-            this.btnDeleteImageSoftware.TabIndex = 58;
-            this.btnDeleteImageSoftware.Text = "Delete";
-            this.btnDeleteImageSoftware.UseVisualStyleBackColor = true;
-            this.btnDeleteImageSoftware.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
-            // 
-            // lblImageSoftwarePath
-            // 
-            this.lblImageSoftwarePath.AutoSize = true;
-            this.lblImageSoftwarePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblImageSoftwarePath.Location = new System.Drawing.Point(16, 72);
-            this.lblImageSoftwarePath.Name = "lblImageSoftwarePath";
-            this.lblImageSoftwarePath.Size = new System.Drawing.Size(32, 13);
-            this.lblImageSoftwarePath.TabIndex = 62;
-            this.lblImageSoftwarePath.Text = "Path:";
+            this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwareName);
+            this.gbImageSoftwaresList.Controls.Add(this.btnDeleteImageSoftware);
+            this.gbImageSoftwaresList.Controls.Add(this.btnBrowseImageSoftware);
+            this.gbImageSoftwaresList.Controls.Add(this.lbImageSoftware);
+            this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwarePath);
+            this.gbImageSoftwaresList.Controls.Add(this.btnAddImageSoftware);
+            this.gbImageSoftwaresList.Controls.Add(this.btnUpdateImageSoftware);
+            this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwarePath);
+            this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwareName);
+            this.gbImageSoftwaresList.Location = new System.Drawing.Point(8, 8);
+            this.gbImageSoftwaresList.Name = "gbImageSoftwaresList";
+            this.gbImageSoftwaresList.Size = new System.Drawing.Size(704, 304);
+            this.gbImageSoftwaresList.TabIndex = 63;
+            this.gbImageSoftwaresList.TabStop = false;
+            this.gbImageSoftwaresList.Text = "Image Software List";
             // 
             // lblImageSoftwareName
             // 
@@ -2365,23 +2382,16 @@ namespace ZSS
             this.lblImageSoftwareName.TabIndex = 61;
             this.lblImageSoftwareName.Text = "Name:";
             // 
-            // btnUpdateImageSoftware
+            // btnDeleteImageSoftware
             // 
-            this.btnUpdateImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUpdateImageSoftware.Location = new System.Drawing.Point(112, 120);
-            this.btnUpdateImageSoftware.Name = "btnUpdateImageSoftware";
-            this.btnUpdateImageSoftware.Size = new System.Drawing.Size(88, 24);
-            this.btnUpdateImageSoftware.TabIndex = 7;
-            this.btnUpdateImageSoftware.Text = "Update";
-            this.btnUpdateImageSoftware.UseVisualStyleBackColor = true;
-            this.btnUpdateImageSoftware.Click += new System.EventHandler(this.btnUpdateImageSoftware_Click);
-            // 
-            // txtImageSoftwareName
-            // 
-            this.txtImageSoftwareName.Location = new System.Drawing.Point(16, 40);
-            this.txtImageSoftwareName.Name = "txtImageSoftwareName";
-            this.txtImageSoftwareName.Size = new System.Drawing.Size(376, 20);
-            this.txtImageSoftwareName.TabIndex = 60;
+            this.btnDeleteImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnDeleteImageSoftware.Location = new System.Drawing.Point(208, 120);
+            this.btnDeleteImageSoftware.Name = "btnDeleteImageSoftware";
+            this.btnDeleteImageSoftware.Size = new System.Drawing.Size(88, 24);
+            this.btnDeleteImageSoftware.TabIndex = 58;
+            this.btnDeleteImageSoftware.Text = "Delete";
+            this.btnDeleteImageSoftware.UseVisualStyleBackColor = true;
+            this.btnDeleteImageSoftware.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
             // 
             // btnBrowseImageSoftware
             // 
@@ -2395,6 +2405,16 @@ namespace ZSS
             this.btnBrowseImageSoftware.UseVisualStyleBackColor = true;
             this.btnBrowseImageSoftware.Click += new System.EventHandler(this.btnBrowseImageSoftware_Click);
             // 
+            // lbImageSoftware
+            // 
+            this.lbImageSoftware.FormattingEnabled = true;
+            this.lbImageSoftware.IntegralHeight = false;
+            this.lbImageSoftware.Location = new System.Drawing.Point(408, 24);
+            this.lbImageSoftware.Name = "lbImageSoftware";
+            this.lbImageSoftware.Size = new System.Drawing.Size(280, 264);
+            this.lbImageSoftware.TabIndex = 59;
+            this.lbImageSoftware.SelectedIndexChanged += new System.EventHandler(this.lbImageSoftware_SelectedIndexChanged);
+            // 
             // txtImageSoftwarePath
             // 
             this.txtImageSoftwarePath.Enabled = false;
@@ -2402,6 +2422,47 @@ namespace ZSS
             this.txtImageSoftwarePath.Name = "txtImageSoftwarePath";
             this.txtImageSoftwarePath.Size = new System.Drawing.Size(376, 20);
             this.txtImageSoftwarePath.TabIndex = 5;
+            // 
+            // btnAddImageSoftware
+            // 
+            this.btnAddImageSoftware.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAddImageSoftware.BackColor = System.Drawing.Color.Transparent;
+            this.btnAddImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnAddImageSoftware.Location = new System.Drawing.Point(304, 120);
+            this.btnAddImageSoftware.Name = "btnAddImageSoftware";
+            this.btnAddImageSoftware.Size = new System.Drawing.Size(88, 24);
+            this.btnAddImageSoftware.TabIndex = 59;
+            this.btnAddImageSoftware.Text = "Add";
+            this.btnAddImageSoftware.UseVisualStyleBackColor = false;
+            this.btnAddImageSoftware.Click += new System.EventHandler(this.btnAddImageSoftware_Click);
+            // 
+            // btnUpdateImageSoftware
+            // 
+            this.btnUpdateImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnUpdateImageSoftware.Location = new System.Drawing.Point(112, 120);
+            this.btnUpdateImageSoftware.Name = "btnUpdateImageSoftware";
+            this.btnUpdateImageSoftware.Size = new System.Drawing.Size(88, 24);
+            this.btnUpdateImageSoftware.TabIndex = 7;
+            this.btnUpdateImageSoftware.Text = "Update";
+            this.btnUpdateImageSoftware.UseVisualStyleBackColor = true;
+            this.btnUpdateImageSoftware.Click += new System.EventHandler(this.btnUpdateImageSoftware_Click);
+            // 
+            // lblImageSoftwarePath
+            // 
+            this.lblImageSoftwarePath.AutoSize = true;
+            this.lblImageSoftwarePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblImageSoftwarePath.Location = new System.Drawing.Point(16, 72);
+            this.lblImageSoftwarePath.Name = "lblImageSoftwarePath";
+            this.lblImageSoftwarePath.Size = new System.Drawing.Size(32, 13);
+            this.lblImageSoftwarePath.TabIndex = 62;
+            this.lblImageSoftwarePath.Text = "Path:";
+            // 
+            // txtImageSoftwareName
+            // 
+            this.txtImageSoftwareName.Location = new System.Drawing.Point(16, 40);
+            this.txtImageSoftwareName.Name = "txtImageSoftwareName";
+            this.txtImageSoftwareName.Size = new System.Drawing.Size(376, 20);
+            this.txtImageSoftwareName.TabIndex = 60;
             // 
             // cbStartWin
             // 
@@ -2797,38 +2858,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3057,17 +3118,6 @@ namespace ZSS
             this.lblDelaySeconds.Size = new System.Drawing.Size(47, 13);
             this.lblDelaySeconds.TabIndex = 4;
             this.lblDelaySeconds.Text = "seconds";
-            // 
-            // cbCompleteSound
-            // 
-            this.cbCompleteSound.AutoSize = true;
-            this.cbCompleteSound.Location = new System.Drawing.Point(16, 128);
-            this.cbCompleteSound.Name = "cbCompleteSound";
-            this.cbCompleteSound.Size = new System.Drawing.Size(228, 17);
-            this.cbCompleteSound.TabIndex = 5;
-            this.cbCompleteSound.Text = "Play sound after image reaches destination";
-            this.cbCompleteSound.UseVisualStyleBackColor = true;
-            this.cbCompleteSound.CheckedChanged += new System.EventHandler(this.cbCompleteSound_CheckedChanged);
             // 
             // cboScreenshotDest
             // 
@@ -3869,6 +3919,15 @@ namespace ZSS
             this.gbUpdates.TabStop = false;
             this.gbUpdates.Text = "Check Updates";
             // 
+            // lblUpdateInfo
+            // 
+            this.lblUpdateInfo.AutoSize = true;
+            this.lblUpdateInfo.Location = new System.Drawing.Point(224, 16);
+            this.lblUpdateInfo.Name = "lblUpdateInfo";
+            this.lblUpdateInfo.Size = new System.Drawing.Size(96, 13);
+            this.lblUpdateInfo.TabIndex = 6;
+            this.lblUpdateInfo.Text = "Update information";
+            // 
             // btnCheckUpdate
             // 
             this.btnCheckUpdate.Location = new System.Drawing.Point(16, 72);
@@ -4259,65 +4318,6 @@ namespace ZSS
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
             // 
-            // lblUpdateInfo
-            // 
-            this.lblUpdateInfo.AutoSize = true;
-            this.lblUpdateInfo.Location = new System.Drawing.Point(224, 16);
-            this.lblUpdateInfo.Name = "lblUpdateInfo";
-            this.lblUpdateInfo.Size = new System.Drawing.Size(96, 13);
-            this.lblUpdateInfo.TabIndex = 6;
-            this.lblUpdateInfo.Text = "Update information";
-            // 
-            // gbImageSoftwaresList
-            // 
-            this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwareName);
-            this.gbImageSoftwaresList.Controls.Add(this.btnDeleteImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.btnBrowseImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.lbImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwarePath);
-            this.gbImageSoftwaresList.Controls.Add(this.btnAddImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.btnUpdateImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwarePath);
-            this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwareName);
-            this.gbImageSoftwaresList.Location = new System.Drawing.Point(8, 8);
-            this.gbImageSoftwaresList.Name = "gbImageSoftwaresList";
-            this.gbImageSoftwaresList.Size = new System.Drawing.Size(704, 304);
-            this.gbImageSoftwaresList.TabIndex = 63;
-            this.gbImageSoftwaresList.TabStop = false;
-            this.gbImageSoftwaresList.Text = "Image Softwares List";
-            // 
-            // lblCropRegionStyle
-            // 
-            this.lblCropRegionStyle.AutoSize = true;
-            this.lblCropRegionStyle.Location = new System.Drawing.Point(16, 28);
-            this.lblCropRegionStyle.Name = "lblCropRegionStyle";
-            this.lblCropRegionStyle.Size = new System.Drawing.Size(88, 13);
-            this.lblCropRegionStyle.TabIndex = 9;
-            this.lblCropRegionStyle.Text = "Crop region style:";
-            // 
-            // lblSelectedWindowRegionStyle
-            // 
-            this.lblSelectedWindowRegionStyle.AutoSize = true;
-            this.lblSelectedWindowRegionStyle.Location = new System.Drawing.Point(16, 28);
-            this.lblSelectedWindowRegionStyle.Name = "lblSelectedWindowRegionStyle";
-            this.lblSelectedWindowRegionStyle.Size = new System.Drawing.Size(147, 13);
-            this.lblSelectedWindowRegionStyle.TabIndex = 11;
-            this.lblSelectedWindowRegionStyle.Text = "Selected window region style:";
-            // 
-            // cbSelectedWindowStyle
-            // 
-            this.cbSelectedWindowStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSelectedWindowStyle.FormattingEnabled = true;
-            this.cbSelectedWindowStyle.Items.AddRange(new object[] {
-            "No Transparency",
-            "Region Transparent",
-            "Background Region Transparent"});
-            this.cbSelectedWindowStyle.Location = new System.Drawing.Point(168, 24);
-            this.cbSelectedWindowStyle.Name = "cbSelectedWindowStyle";
-            this.cbSelectedWindowStyle.Size = new System.Drawing.Size(240, 21);
-            this.cbSelectedWindowStyle.TabIndex = 10;
-            this.cbSelectedWindowStyle.SelectedIndexChanged += new System.EventHandler(this.cbSelectedWindowStyle_SelectedIndexChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4351,14 +4351,18 @@ namespace ZSS
             this.tpFile.ResumeLayout(false);
             this.tcFileSettings.ResumeLayout(false);
             this.tpSelectedWindow.ResumeLayout(false);
-            this.gbSelectedWindowOptions.ResumeLayout(false);
-            this.gbSelectedWindowOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).EndInit();
             this.gbCropShotOptions.ResumeLayout(false);
             this.gbCropShotOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropBorderColor)).EndInit();
+            this.gbSelectedWindowOptions.ResumeLayout(false);
+            this.gbSelectedWindowOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).EndInit();
+            this.tpInteraction.ResumeLayout(false);
+            this.gbAppearance.ResumeLayout(false);
+            this.gbAppearance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
             this.tpFileNaming.ResumeLayout(false);
             this.gbOthersNaming.ResumeLayout(false);
             this.gbOthersNaming.PerformLayout();
@@ -4389,13 +4393,11 @@ namespace ZSS
             this.gbPictureQuality.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtImageQuality)).EndInit();
-            this.tpInteraction.ResumeLayout(false);
-            this.gbAppearance.ResumeLayout(false);
-            this.gbAppearance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
             this.gbSaveLoc.ResumeLayout(false);
             this.gbSaveLoc.PerformLayout();
             this.tpImageSoftware.ResumeLayout(false);
+            this.gbImageSoftwaresList.ResumeLayout(false);
+            this.gbImageSoftwaresList.PerformLayout();
             this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
@@ -4457,8 +4459,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
-            this.gbImageSoftwaresList.ResumeLayout(false);
-            this.gbImageSoftwaresList.PerformLayout();
             this.ResumeLayout(false);
 
         }
