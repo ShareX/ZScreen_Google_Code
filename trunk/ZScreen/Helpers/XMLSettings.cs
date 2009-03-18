@@ -58,12 +58,13 @@ namespace ZSS
         public bool RegionHotkeyInfo = true;
         public bool ActiveHelp = true;
         public bool GTActiveHelp = false;
-        public int CropStyle = 1;
-        public string CropBorderColor = SerializeColor(Color.Black);
+        public int CropRegionStyle = 1;
+        public string CropBorderColor = SerializeColor(Color.Red);
         public decimal CropBorderSize = 1;
         public bool CompleteSound = false;
         public bool ShowCursor = false;
         public string HelpToLanguage = "en";
+        public int SelectedWindowRegionStyle = 2;
         public bool SelectedWindowFront = false;
         public bool SelectedWindowRectangleInfo = true;
         public string SelectedWindowBorderColor = SerializeColor(Color.Red);

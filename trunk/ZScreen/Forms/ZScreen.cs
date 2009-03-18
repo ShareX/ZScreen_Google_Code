@@ -158,22 +158,6 @@ namespace ZSS
             Program.ConfigureDirs();
 
             ///////////////////////////////////
-            // Configure Settings
-            ///////////////////////////////////
-
-            if (Program.conf.ImageSoftwareActive == null)
-            {
-                Program.conf.ImageSoftwareActive = new ImageSoftware();
-                Program.conf.ImageSoftwareActive.Name = "MS Paint";
-                Program.conf.ImageSoftwareActive.Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe");
-            }
-            if (Program.conf.ImageSoftwareList.Count == 0)
-            {
-                Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
-            }
-            FindImageSoftwares();
-
-            ///////////////////////////////////
             // Main Tab
             ///////////////////////////////////
 
@@ -203,12 +187,13 @@ namespace ZSS
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
             cbActiveHelp.Checked = Program.conf.ActiveHelp;
             CheckActiveHelp();
-            cbCropStyle.SelectedIndex = Program.conf.CropStyle;
+            cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCompleteSound.Checked = Program.conf.CompleteSound;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
+            cbSelectedWindowStyle.SelectedIndex = Program.conf.SelectedWindowRegionStyle;
             cbSelectedWindowFront.Checked = Program.conf.SelectedWindowFront;
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
@@ -262,6 +247,18 @@ namespace ZSS
             // Image Software Settings
             ///////////////////////////////////
 
+            if (Program.conf.ImageSoftwareActive == null)
+            {
+                Program.conf.ImageSoftwareActive = new ImageSoftware();
+                Program.conf.ImageSoftwareActive.Name = "MS Paint";
+                Program.conf.ImageSoftwareActive.Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe");
+            }
+            if (Program.conf.ImageSoftwareList.Count == 0)
+            {
+                Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
+            }
+            FindImageSoftwares();
+
             lbImageSoftware.Items.Clear();
             lbImageSoftware.Items.Add(Properties.Resources.Disabled);
             foreach (ImageSoftware app in Program.conf.ImageSoftwareList)
@@ -269,9 +266,9 @@ namespace ZSS
                 lbImageSoftware.Items.Add(app.Name);
             }
 
-            int i;
             if (Program.conf.ISenabled)
             {
+                int i;
                 if ((i = lbImageSoftware.Items.IndexOf(Program.conf.ImageSoftwareActive.Name)) != -1)
                     lbImageSoftware.SelectedIndex = i;
             }
@@ -2219,7 +2216,6 @@ namespace ZSS
                         temp.Path = txtImageSoftwarePath.Text;
                         Program.conf.ImageSoftwareList.Add(temp);
                         lbImageSoftware.Items.Add(temp.Name);
-
                         lbImageSoftware.SelectedItem = temp.Name;
 
                         //rewriteISRightClickMenu();
@@ -3251,7 +3247,7 @@ namespace ZSS
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.CropStyle = cbCropStyle.SelectedIndex;
+            Program.conf.CropRegionStyle = cbCropStyle.SelectedIndex;
         }
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
@@ -4260,6 +4256,7 @@ namespace ZSS
         private void CheckUpdates()
         {
             btnCheckUpdate.Enabled = false;
+            lblUpdateInfo.Text = "Checking update...";
             BackgroundWorker updateThread = new BackgroundWorker();
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
             updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
@@ -4270,12 +4267,17 @@ namespace ZSS
         {
             UpdateChecker updateChecker = new UpdateChecker((string)e.Argument);
             e.Result = updateChecker.StartCheckUpdate();
-        }   
-        
+        }
+
         private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             lblUpdateInfo.Text = (string)e.Result;
             btnCheckUpdate.Enabled = true;
+        }
+
+        private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowRegionStyle = cbSelectedWindowStyle.SelectedIndex;
         }
     }
 }
