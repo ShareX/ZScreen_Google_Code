@@ -1,6 +1,14 @@
 #summary Tips & Tricks
 #labels Phase-Support
 
+= General = 
+== Run ZScreen from USB Drive ==
+You can create a "ZScreen" folder where ZScreen.exe is 
+
+[http://img19.imageshack.us/img19/802/ss20090318214123.png] 
+
+and you can run ZScreen in a USB drive. 
+
 = Capture =
 
 == Clipboard Upload / Drag n Drop == 
