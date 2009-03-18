@@ -40,7 +40,10 @@ namespace ZSS
         private Point mousePos, mousePosOnClick, oldMousePos;
         private Rectangle mToCrop;
         private IntPtr mHandle;
-        private Pen mPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropBorderColor), (Single)Program.conf.CropBorderSize);
+        private Pen CropPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropBorderColor),
+            (Single)Program.conf.CropBorderSize);
+        private Pen SelectedWindowPen = new Pen(XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor),
+            (Single)Program.conf.SelectedWindowBorderSize);
         private Graphics mGraphics;
         private Bitmap bmpBgImage;
         private Pen labelBorderPen = new Pen(Color.Black);
@@ -145,8 +148,8 @@ namespace ZSS
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
             e.Graphics.DrawImage(mBgImage, 0, 0, mBgImage.Width, mBgImage.Height);
-            if (Program.conf.CropStyle == 2)
-                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
+            if ((ActiveWindow && Program.conf.SelectedWindowRegionStyle == 2) || (!ActiveWindow && Program.conf.CropRegionStyle == 2))
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)), new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -154,13 +157,23 @@ namespace ZSS
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
 
+            if ((ActiveWindow && Program.conf.SelectedWindowRegionStyle == 1) ||
+                (!ActiveWindow && Program.conf.CropRegionStyle == 1 && mMouseDown))
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), mToCrop);
+            }
+            else if (((ActiveWindow && Program.conf.SelectedWindowRegionStyle == 2) ||
+                (!ActiveWindow && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
+                mToCrop.Width > 0 && mToCrop.Height > 0)
+            {
+                g.DrawImage(bmpBgImage, mToCrop, mToCrop, GraphicsUnit.Pixel);
+            }
+
             if (ActiveWindow)
             {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(25, Color.White)), mToCrop);
                 if (Program.conf.SelectedWindowBorderSize != 0)
                 {
-                    g.DrawRectangle(new Pen(XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor),
-                        (Single)Program.conf.SelectedWindowBorderSize), mToCrop);
+                    g.DrawRectangle(SelectedWindowPen, mToCrop);
                 }
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
@@ -174,18 +187,10 @@ namespace ZSS
                 g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, mBgImage.Height));
                 if (mMouseDown)
                 {
-                    if (Program.conf.CropStyle == 1)
-                    {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), mToCrop);
-                    }
-                    if (Program.conf.CropStyle == 2)
-                    {
-                        if (mToCrop.Width > 0 && mToCrop.Height > 0) g.DrawImage(bmpBgImage.Clone(mToCrop, bmpBgImage.PixelFormat), mToCrop);
-                    }
                     DrawInstructor(strMouseDown, g);
                     if (Program.conf.CropBorderSize != 0)
                     {
-                        g.DrawRectangle(mPen, mToCrop);
+                        g.DrawRectangle(CropPen, mToCrop);
                     }
                     if (Program.conf.RegionRectangleInfo)
                     {
@@ -356,6 +361,5 @@ namespace ZSS
             mBgImage.Dispose();
             bmpBgImage.Dispose();
         }
-
     }
 }
