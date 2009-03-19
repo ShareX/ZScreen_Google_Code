@@ -122,19 +122,40 @@ namespace ZSS
             return null;
         }
 
-        public static Rectangle GetRectangle(int x, int y, int width, int height)
+        public static Rectangle GetRectangle(int x, int y, int width, int height, int grid)
         {
+            int oldX, oldY;
             if (width < 0)
             {
                 x = x + width;
                 width = -width;
+                width = GridPoint(width, grid);
+            }
+            else
+            {
+                oldX = x;
+                x = x + (width % grid);
+                width -= x - oldX;
             }
             if (height < 0)
             {
                 y = y + height;
                 height = -height;
+                height = GridPoint(height, grid);
+            }
+            else
+            {
+                oldY = y;
+                y = y + (height % grid);
+                height -= y - oldY;
             }
             return new Rectangle(x, y, width, height);
+        }
+
+        public static int GridPoint(int point, int grid)
+        {
+            if (point % grid > 0) point += grid - (point % grid);
+            return point;
         }
 
         /// <summary>

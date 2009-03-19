@@ -54,6 +54,7 @@ namespace ZSS
         private Queue windows = new Queue();
         private Timer timer = new Timer();
         private Timer windowCheck = new Timer();
+        private int grid = 25;
 
         public Crop(Image img, bool selectedWindow)
         {
@@ -121,7 +122,7 @@ namespace ZSS
                     if (mMouseDown)
                     {
                         mToCrop = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
-                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y);
+                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, grid);
                     }
                 }
                 Refresh();
@@ -205,6 +206,8 @@ namespace ZSS
                         g.DrawPath(labelBorderPen, gPath);
                         g.DrawString(posText, posFont, new SolidBrush(Color.White), mToCrop.Left + 10, mToCrop.Bottom - textSize.Height - 10);
                     }
+                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
+                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
                 }
                 else
                 {
