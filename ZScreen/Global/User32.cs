@@ -126,6 +126,9 @@ namespace ZSS
         public static extern IntPtr GetWindowDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
+        public static extern bool BringWindowToTop(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]

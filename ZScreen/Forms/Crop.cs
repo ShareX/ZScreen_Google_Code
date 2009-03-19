@@ -32,16 +32,6 @@ using System.Collections.Generic;
 
 namespace ZSS
 {
-    /// <summary>
-    /// Options class for Crop
-    /// </summary>
-    public class CropOptions
-    {
-        public bool SelectedWindowMode { get; set; }
-        public Image MyImage { get; set; }
-        public Size GridSize { get; set; }
-    }
-
     partial class Crop : Form
     {
         private bool mMouseDown = false;
@@ -375,5 +365,15 @@ namespace ZSS
             mBgImage.Dispose();
             bmpBgImage.Dispose();
         }
+    }
+
+    /// <summary>
+    /// Options class for Crop
+    /// </summary>
+    public class CropOptions
+    {
+        public bool SelectedWindowMode { get; set; }
+        public Image MyImage { get; set; }
+        public Size GridSize { get; set; }
     }
 }
