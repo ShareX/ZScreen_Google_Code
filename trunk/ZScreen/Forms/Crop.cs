@@ -32,6 +32,16 @@ using System.Collections.Generic;
 
 namespace ZSS
 {
+    /// <summary>
+    /// Options class for Crop
+    /// </summary>
+    public class CropOptions
+    {
+        public bool SelectedWindow { get; set; }
+        public Image MyImage { get; set; }
+        public int GridSize { get; set; }
+    }
+
     partial class Crop : Form
     {
         private bool ActiveWindow = false;
