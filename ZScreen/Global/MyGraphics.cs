@@ -134,7 +134,7 @@ namespace ZSS
             else
             {
                 oldX = x;
-                x = x + (width % grid);
+                x = x - (grid - (width % grid));
                 width -= x - oldX;
             }
             if (height < 0)
@@ -146,7 +146,7 @@ namespace ZSS
             else
             {
                 oldY = y;
-                y = y + (height % grid);
+                y = y - (grid - (height % grid));
                 height -= y - oldY;
             }
             return new Rectangle(x, y, width, height);
