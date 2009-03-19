@@ -48,16 +48,18 @@ namespace ZSS
         private Pen labelBorderPen = new Pen(Color.Black);
         private Pen crosshairPen = new Pen(Color.Red);
         private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
-        private string strMouseUp = "Mouse Left Down: Create crop region\nMouse Right Down & Escape: Cancel Screenshot\nSpace: Capture Entire Screen";
-        private string strMouseDown = "Mouse Left Up: Capture Screenshot\nMouse Right Down & Escape & Space: Cancel crop region";
+        private string strMouseUp = "Mouse Left Down: Create crop region\nMouse Right Down & Escape: Cancel Screenshot\nSpace: Capture Entire Screen\nTab: Toggle Crop Grid mode";
+        private string strMouseDown = "Mouse Left Up: Capture Screenshot\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle Crop Grid mode";
         private Queue windows = new Queue();
         private Timer timer = new Timer();
         private Timer windowCheck = new Timer();
         private CropOptions Options { get; set; }
+        private int infoRectOffset = 10;
+        private bool forceCheck = false;
 
         public Crop(CropOptions options)
         {
-            this.Options = options; 
+            this.Options = options;
             mBgImage = new Bitmap(this.Options.MyImage);
             bmpBgImage = new Bitmap(mBgImage);
             InitializeComponent();
@@ -99,9 +101,10 @@ namespace ZSS
         private void timer_Tick(object sender, EventArgs e)
         {
             mousePos = MousePosition;
-            if (oldMousePos == null || oldMousePos != mousePos)
+            if (oldMousePos == null || oldMousePos != mousePos || forceCheck)
             {
                 oldMousePos = mousePos;
+                forceCheck = false;
                 if (this.Options.SelectedWindowMode)
                 {
                     IEnumerator enumerator = windows.GetEnumerator();
@@ -121,7 +124,8 @@ namespace ZSS
                     if (mMouseDown)
                     {
                         mToCrop = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
-                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, this.Options.GridSize, ref mousePos);
+                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, this.Options.GridSize,
+                            Program.conf.CropGridToggle, ref mousePos);
                         mToCrop.Intersect(this.Bounds);
                     }
                 }
@@ -199,12 +203,14 @@ namespace ZSS
                         Font posFont = new Font(FontFamily.GenericSansSerif, 8);
                         string posText = "X: " + mToCrop.X + " px, Y: " + mToCrop.Y + " px\nWidth: " + mToCrop.Width + " px, Height: " + mToCrop.Height + " px";
                         Size textSize = TextRenderer.MeasureText(posText, posFont);
-                        Rectangle labelRect = new Rectangle(mToCrop.Left + 5, mToCrop.Bottom - textSize.Height - 15, textSize.Width + 10, textSize.Height + 10);
+                        Rectangle labelRect = new Rectangle(mToCrop.Left + infoRectOffset, mToCrop.Bottom - textSize.Height - (10 + infoRectOffset),
+                            textSize.Width + 10, textSize.Height + 10);
                         GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
                         g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
                             Color.Black, Color.FromArgb(150, Color.Black)), gPath);
                         g.DrawPath(labelBorderPen, gPath);
-                        g.DrawString(posText, posFont, new SolidBrush(Color.White), mToCrop.Left + 10, mToCrop.Bottom - textSize.Height - 10);
+                        g.DrawString(posText, posFont, new SolidBrush(Color.White), mToCrop.Left + 5 + infoRectOffset,
+                            mToCrop.Bottom - textSize.Height - 5 - infoRectOffset);
                     }
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
@@ -216,6 +222,14 @@ namespace ZSS
                     {
                         DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(15, 15), g);
                     }
+                }
+                if (Program.conf.CropGridToggle)
+                {
+                    g.DrawRectangle(crosshairPen, mousePos.X - 10, mousePos.Y - 10, 20, 20);
+                }
+                else
+                {
+                    g.DrawEllipse(crosshairPen, mousePos.X - 10, mousePos.Y - 10, 20, 20);
                 }
                 g.DrawLine(crosshairPen, new Point(mousePos.X - 10, mousePos.Y), new Point(mousePos.X + 10, mousePos.Y));
                 g.DrawLine(crosshairPen, new Point(mousePos.X, mousePos.Y - 10), new Point(mousePos.X, mousePos.Y + 10));
@@ -317,6 +331,11 @@ namespace ZSS
             if (mMouseDown && (e.KeyChar == (int)Keys.Escape || e.KeyChar == (int)Keys.Space))
             {
                 cancelAndRestart();
+            }
+            if (e.KeyChar == (int)Keys.Tab)
+            {
+                Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
+                forceCheck = true;
             }
         }
 
