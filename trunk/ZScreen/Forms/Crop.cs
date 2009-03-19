@@ -37,14 +37,13 @@ namespace ZSS
     /// </summary>
     public class CropOptions
     {
-        public bool SelectedWindow { get; set; }
+        public bool SelectedWindowMode { get; set; }
         public Image MyImage { get; set; }
         public int GridSize { get; set; }
     }
 
     partial class Crop : Form
     {
-        private bool ActiveWindow = false;
         private bool mMouseDown = false;
         private Image mBgImage;
         private Point mousePos, mousePosOnClick, oldMousePos;
@@ -64,12 +63,12 @@ namespace ZSS
         private Queue windows = new Queue();
         private Timer timer = new Timer();
         private Timer windowCheck = new Timer();
-        private int grid = 25;
+        private CropOptions Options { get; set; }
 
-        public Crop(Image img, bool selectedWindow)
+        public Crop(CropOptions options)
         {
-            this.ActiveWindow = selectedWindow;
-            mBgImage = new Bitmap(img);
+            this.Options = options; 
+            mBgImage = new Bitmap(this.Options.MyImage);
             bmpBgImage = new Bitmap(mBgImage);
             InitializeComponent();
             this.Bounds = MyGraphics.GetScreenBounds();
@@ -81,7 +80,7 @@ namespace ZSS
             windowCheck.Interval = 250;
             windowCheck.Tick += new EventHandler(windowCheck_Tick);
 
-            if (ActiveWindow)
+            if (this.Options.SelectedWindowMode)
             {
                 User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
                 User32.EnumWindows(ewp, 0);
@@ -113,7 +112,7 @@ namespace ZSS
             if (oldMousePos == null || oldMousePos != mousePos)
             {
                 oldMousePos = mousePos;
-                if (ActiveWindow)
+                if (this.Options.SelectedWindowMode)
                 {
                     IEnumerator enumerator = windows.GetEnumerator();
                     while (enumerator.MoveNext())
@@ -132,7 +131,7 @@ namespace ZSS
                     if (mMouseDown)
                     {
                         mToCrop = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
-                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, grid, ref mousePos);
+                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, this.Options.GridSize, ref mousePos);
                         mToCrop.Intersect(this.Bounds);
                     }
                 }
@@ -161,7 +160,7 @@ namespace ZSS
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
             e.Graphics.DrawImage(mBgImage, 0, 0, mBgImage.Width, mBgImage.Height);
-            if ((ActiveWindow && Program.conf.SelectedWindowRegionStyle == 2) || (!ActiveWindow && Program.conf.CropRegionStyle == 2))
+            if ((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) || (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2))
                 e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)), new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
         }
 
@@ -170,19 +169,19 @@ namespace ZSS
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
 
-            if ((ActiveWindow && Program.conf.SelectedWindowRegionStyle == 1) ||
-                (!ActiveWindow && Program.conf.CropRegionStyle == 1 && mMouseDown))
+            if ((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 1) ||
+                (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 1 && mMouseDown))
             {
                 g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), mToCrop);
             }
-            else if (((ActiveWindow && Program.conf.SelectedWindowRegionStyle == 2) ||
-                (!ActiveWindow && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
+            else if (((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
+                (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
                 mToCrop.Width > 0 && mToCrop.Height > 0)
             {
                 g.DrawImage(bmpBgImage, mToCrop, mToCrop, GraphicsUnit.Pixel);
             }
 
-            if (ActiveWindow)
+            if (this.Options.SelectedWindowMode)
             {
                 if (Program.conf.SelectedWindowBorderSize != 0)
                 {
@@ -266,7 +265,7 @@ namespace ZSS
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (ActiveWindow)
+                if (this.Options.SelectedWindowMode)
                 {
                     //if (Program.conf.SelectedWindowFront)
                     //{
@@ -297,7 +296,7 @@ namespace ZSS
 
         private void Crop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!ActiveWindow && mMouseDown)
+            if (!this.Options.SelectedWindowMode && mMouseDown)
             {
                 mMouseDown = false;
                 if (mToCrop != null && mToCrop.X >= 0 && mToCrop.Width > 0 && mToCrop.Height > 0)
@@ -339,7 +338,7 @@ namespace ZSS
 
         private void returnImageAndExit()
         {
-            if (ActiveWindow)
+            if (this.Options.SelectedWindowMode)
             {
                 Program.LastCapture = mToCrop;
             }
@@ -363,7 +362,7 @@ namespace ZSS
         {
             timer.Stop();
             windowCheck.Stop();
-            if (!ActiveWindow) Cursor.Show();
+            if (!this.Options.SelectedWindowMode) Cursor.Show();
         }
 
         private void Crop_FormClosed(object sender, FormClosedEventArgs e)

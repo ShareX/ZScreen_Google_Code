@@ -141,6 +141,7 @@ namespace ZSS
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkCornerRadius = 4;
         public string WatermarkGradientType = "Vertical";
+        public decimal CropGridSize = 1;
 
         //*********************
         //* Advanced Settings
