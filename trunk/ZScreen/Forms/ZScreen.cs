@@ -179,7 +179,8 @@ namespace ZSS
             ////////////////////////////////////
             // Capture
             ////////////////////////////////////
-            nudCropGridSize.Value = Program.conf.CropGridSize;
+            nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
+            nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             nScreenshotDelay.Value = Program.conf.ScreenshotDelay;
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
@@ -619,7 +620,7 @@ namespace ZSS
                     CropOptions co = new CropOptions();
                     co.MyImage = imgSS;
                     co.SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED;
-                    co.GridSize = (int)nudCropGridSize.Value; 
+                    co.GridSize = Program.conf.CropGridSize;
 
                     Crop c = new Crop(co);
                     if (c.ShowDialog() == DialogResult.OK)
@@ -3389,7 +3390,7 @@ namespace ZSS
             CodesMenuCloseEvents();
         }
 
-        void watermarkCodeMenu_Click(object sender, EventArgs e)
+        private void watermarkCodeMenu_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             int oldPos = txtWatermarkText.SelectionStart;
@@ -4218,7 +4219,12 @@ namespace ZSS
 
         private void nudCropGridSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropGridSize = nudCropGridSize.Value;
+            Program.conf.CropGridSize.Width = (int)nudCropGridWidth.Value;
+        }
+
+        private void nudCropGridHeight_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropGridSize.Height = (int)nudCropGridHeight.Value;
         }
     }
 }

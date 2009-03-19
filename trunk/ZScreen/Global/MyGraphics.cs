@@ -121,20 +121,20 @@ namespace ZSS
             return null;
         }
 
-        public static Rectangle GetRectangle(int x, int y, int width, int height, int grid, ref Point point)
+        public static Rectangle GetRectangle(int x, int y, int width, int height, Size grid, ref Point point)
         {
             int oldX, oldY;
             if (width < 0)
             {
                 x = x + width;
                 width = -width;
-                width = GridPoint(width, grid);
+                width = GridPoint(width, grid.Width);
                 point.X = x + width;
             }
             else
             {
                 oldX = x;
-                x = ReverseGridPoint(x, width, grid);
+                x = ReverseGridPoint(x, width, grid.Width);
                 width -= x - oldX;
                 point.X = x;
             }
@@ -142,13 +142,13 @@ namespace ZSS
             {
                 y = y + height;
                 height = -height;
-                height = GridPoint(height, grid);
+                height = GridPoint(height, grid.Height);
                 point.Y = y + height;
             }
             else
             {
                 oldY = y;
-                y = ReverseGridPoint(y, height, grid);
+                y = ReverseGridPoint(y, height, grid.Height);
                 height -= y - oldY;
                 point.Y = y;
             }

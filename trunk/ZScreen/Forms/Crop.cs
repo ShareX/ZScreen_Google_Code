@@ -39,7 +39,7 @@ namespace ZSS
     {
         public bool SelectedWindowMode { get; set; }
         public Image MyImage { get; set; }
-        public int GridSize { get; set; }
+        public Size GridSize { get; set; }
     }
 
     partial class Crop : Form
