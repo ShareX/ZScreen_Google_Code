@@ -89,8 +89,11 @@ namespace ZSS
 
         private void windowCheck_Tick(object sender, EventArgs e)
         {
-            User32.GetForegroundWindow(); 
-            User32.ActivateWindow(this.Handle);
+            if (User32.GetForegroundWindow() != this.Handle)
+            {
+                User32.SetForegroundWindow(this.Handle);
+                User32.ActivateWindow(this.Handle);
+            }
         }
 
         private void timer_Tick(object sender, EventArgs e)
