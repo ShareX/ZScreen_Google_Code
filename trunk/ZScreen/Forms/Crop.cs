@@ -132,7 +132,7 @@ namespace ZSS
                     if (mMouseDown)
                     {
                         mToCrop = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
-                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, grid);
+                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, grid, ref mousePos);
                         mToCrop.Intersect(this.Bounds);
                     }
                 }

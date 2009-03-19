@@ -36,7 +36,6 @@ namespace ZSS
 {
     public static class MyGraphics
     {
-
         /// <summary>
         /// Function to get a Rectangle of all the screens combined
         /// </summary>
@@ -122,7 +121,7 @@ namespace ZSS
             return null;
         }
 
-        public static Rectangle GetRectangle(int x, int y, int width, int height, int grid)
+        public static Rectangle GetRectangle(int x, int y, int width, int height, int grid, ref Point point)
         {
             int oldX, oldY;
             if (width < 0)
@@ -130,24 +129,28 @@ namespace ZSS
                 x = x + width;
                 width = -width;
                 width = GridPoint(width, grid);
+                point.X = x + width;
             }
             else
             {
                 oldX = x;
-                x = x - (grid - (width % grid));
+                x = ReverseGridPoint(x, width, grid);
                 width -= x - oldX;
+                point.X = x;
             }
             if (height < 0)
             {
                 y = y + height;
                 height = -height;
                 height = GridPoint(height, grid);
+                point.Y = y + height;
             }
             else
             {
                 oldY = y;
-                y = y - (grid - (height % grid));
+                y = ReverseGridPoint(y, height, grid);
                 height -= y - oldY;
+                point.Y = y;
             }
             return new Rectangle(x, y, width, height);
         }
@@ -155,6 +158,12 @@ namespace ZSS
         public static int GridPoint(int point, int grid)
         {
             if (point % grid > 0) point += grid - (point % grid);
+            return point;
+        }
+
+        public static int ReverseGridPoint(int point, int size, int grid)
+        {
+            point -= grid - (size % grid);
             return point;
         }
 
