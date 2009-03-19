@@ -65,7 +65,7 @@ namespace ZSS
         public static void Commit()
         {
             Workers--;
-            if (Workers > 1)
+            if (ScreenshotsHistory.Count > 1)
             {
                 ScreenshotsHistory.Remove(GetLastImageUpload());
             }
