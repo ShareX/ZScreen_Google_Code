@@ -176,6 +176,10 @@ namespace ZSS
             }
             cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
 
+            ////////////////////////////////////
+            // Capture
+            ////////////////////////////////////
+            nudCropGridSize.Value = Program.conf.CropGridSize;
             nScreenshotDelay.Value = Program.conf.ScreenshotDelay;
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
@@ -612,7 +616,12 @@ namespace ZSS
                 }
                 else
                 {
-                    Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                    CropOptions co = new CropOptions();
+                    co.MyImage = imgSS;
+                    co.SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED;
+                    co.GridSize = (int)nudCropGridSize.Value; 
+
+                    Crop c = new Crop(co);
                     if (c.ShowDialog() == DialogResult.OK)
                     {
                         if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
@@ -4205,6 +4214,11 @@ namespace ZSS
         private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.SelectedWindowRegionStyle = cbSelectedWindowStyle.SelectedIndex;
+        }
+
+        private void nudCropGridSize_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropGridSize = nudCropGridSize.Value;
         }
     }
 }
