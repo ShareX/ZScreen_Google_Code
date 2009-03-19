@@ -128,10 +128,13 @@ namespace ZSS
             {
                 x = x + width;
                 width = -width;
-                width = GridPoint(width, grid.Width);
-                point.X = x + width;
+                if (grid.Width > 0)
+                {
+                    width = GridPoint(width, grid.Width);
+                    point.X = x + width;
+                }
             }
-            else
+            else if (grid.Width > 0)
             {
                 oldX = x;
                 x = ReverseGridPoint(x, width, grid.Width);
@@ -142,10 +145,13 @@ namespace ZSS
             {
                 y = y + height;
                 height = -height;
-                height = GridPoint(height, grid.Height);
-                point.Y = y + height;
+                if (grid.Height > 0)
+                {
+                    height = GridPoint(height, grid.Height);
+                    point.Y = y + height;
+                }
             }
-            else
+            else if (grid.Height > 0)
             {
                 oldY = y;
                 y = ReverseGridPoint(y, height, grid.Height);

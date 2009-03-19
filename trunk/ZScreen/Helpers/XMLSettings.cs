@@ -51,7 +51,7 @@ namespace ZSS
         //* Main Settings
         //*********************
         public bool EnableThumbnail { get; set; }
-        private ImageDestType mScreenshotDest = ImageDestType.CLIPBOARD;
+        private ImageDestType mScreenshotDest = ImageDestType.IMAGESHACK;
         public ImageDestType ScreenshotDestMode { get { return mScreenshotDest; } set { mScreenshotDest = value; } }
         public decimal ScreenshotDelay = 0;
         public bool RegionRectangleInfo = true;
@@ -141,7 +141,7 @@ namespace ZSS
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkCornerRadius = 4;
         public string WatermarkGradientType = "Vertical";
-        public Size CropGridSize = new Size(1, 1);
+        public Size CropGridSize = new Size(0, 0);
 
         //*********************
         //* Advanced Settings
