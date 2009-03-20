@@ -127,36 +127,47 @@ namespace ZSS
             if (width < 0)
             {
                 x = x + width;
-                width = -width;
+                width = -width + 1;
+
                 if (gridToggle && grid.Width > 0)
                 {
                     width = GridPoint(width, grid.Width);
                     point.X = x + width;
                 }
             }
-            else if (gridToggle && grid.Width > 0)
+            else
             {
-                oldX = x;
-                x = ReverseGridPoint(x, width, grid.Width);
-                width -= x - oldX;
-                point.X = x;
+                width += 1;
+
+                if (gridToggle && grid.Width > 0)
+                {
+                    oldX = x;
+                    x = ReverseGridPoint(x, width, grid.Width);
+                    width -= x - oldX;
+                    point.X = x;
+                }
             }
             if (height < 0)
             {
                 y = y + height;
-                height = -height;
+                height = -height + 1;
                 if (gridToggle && grid.Height > 0)
                 {
                     height = GridPoint(height, grid.Height);
                     point.Y = y + height;
                 }
             }
-            else if (gridToggle && grid.Height > 0)
+            else
             {
-                oldY = y;
-                y = ReverseGridPoint(y, height, grid.Height);
-                height -= y - oldY;
-                point.Y = y;
+                height += 1;
+
+                if (gridToggle && grid.Height > 0)
+                {
+                    oldY = y;
+                    y = ReverseGridPoint(y, height, grid.Height);
+                    height -= y - oldY;
+                    point.Y = y;
+                }
             }
             return new Rectangle(x, y, width, height);
         }
