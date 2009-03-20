@@ -37,7 +37,23 @@ namespace ZSS
         private bool mMouseDown = false;
         private Image mBgImage;
         private Point mousePos, mousePosOnClick, oldMousePos;
-        private Rectangle mToCrop;
+        private Rectangle cropRegion;
+        private Rectangle rectRegion;
+
+        private Rectangle CropRegion
+        {
+            get
+            {
+                return cropRegion;
+            }
+            set
+            {
+                cropRegion = value;
+                rectRegion.Location = cropRegion.Location;
+                rectRegion.Size = new Size(cropRegion.Width - 1, cropRegion.Height - 1);
+            }
+        }
+
         private IntPtr mHandle;
         private Pen CropPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropBorderColor),
             (Single)Program.conf.CropBorderSize);
@@ -113,7 +129,7 @@ namespace ZSS
                         if (kv.Value.Contains(Cursor.Position))
                         {
                             mHandle = kv.Key;
-                            mToCrop = kv.Value;
+                            CropRegion = kv.Value;
                             break;
                         }
                     }
@@ -122,10 +138,10 @@ namespace ZSS
                 {
                     if (mMouseDown)
                     {
-                        mToCrop = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
+                        CropRegion = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
                             mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
                             Program.conf.CropGridToggle, ref mousePos);
-                        mToCrop.Intersect(this.Bounds);
+                        CropRegion = Rectangle.Intersect(CropRegion, this.Bounds);
                     }
                 }
                 Refresh();
@@ -165,25 +181,25 @@ namespace ZSS
             if ((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 1) ||
                 (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 1 && mMouseDown))
             {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), mToCrop);
+                g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), rectRegion);
             }
             else if (((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
                 (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
-                mToCrop.Width > 0 && mToCrop.Height > 0)
+                CropRegion.Width > 0 && CropRegion.Height > 0)
             {
-                g.DrawImage(bmpBgImage, mToCrop, mToCrop, GraphicsUnit.Pixel);
+                g.DrawImage(bmpBgImage, rectRegion, rectRegion, GraphicsUnit.Pixel);
             }
 
             if (this.Options.SelectedWindowMode)
             {
                 if (Program.conf.SelectedWindowBorderSize != 0)
                 {
-                    g.DrawRectangle(SelectedWindowPen, mToCrop);
+                    g.DrawRectangle(SelectedWindowPen, CropRegion);
                 }
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
-                    DrawTooltip("X: " + mToCrop.X + " px, Y: " + mToCrop.Y + " px\nWidth: " + mToCrop.Width +
-                        " px, Height: " + mToCrop.Height + " px", new Point(15, 15), g);
+                    DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " + CropRegion.Width +
+                        " px, Height: " + CropRegion.Height + " px", new Point(15, 15), g);
                 }
             }
             else
@@ -199,12 +215,12 @@ namespace ZSS
                     DrawInstructor(strMouseDown, g);
                     if (Program.conf.CropBorderSize != 0)
                     {
-                        g.DrawRectangle(CropPen, mToCrop);
+                        g.DrawRectangle(CropPen, rectRegion);
                     }
                     if (Program.conf.RegionRectangleInfo)
                     {
-                        DrawTooltip("X: " + mToCrop.X + " px, Y: " + mToCrop.Y + " px\nWidth: " +
-                            mToCrop.Width + " px, Height: " + mToCrop.Height + " px", new Point(15, 15), g);
+                        DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
+                            CropRegion.Width + " px, Height: " + CropRegion.Height + " px", new Point(15, 15), g);
                     }
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
@@ -248,20 +264,20 @@ namespace ZSS
         {
             if (Program.conf.CropGridSize.Width >= 10)
             {
-                for (int x = 0; x <= (mToCrop.Width / Program.conf.CropGridSize.Width); x++)
+                for (int x = 0; x <= (CropRegion.Width / Program.conf.CropGridSize.Width); x++)
                 {
                     g.DrawLine(crosshairPen2,
-                        new Point(mToCrop.X + (Program.conf.CropGridSize.Width * x), mToCrop.Y),
-                        new Point(mToCrop.X + (Program.conf.CropGridSize.Width * x), mToCrop.Y + mToCrop.Height));
+                        new Point(CropRegion.X + (Program.conf.CropGridSize.Width * x), CropRegion.Y),
+                        new Point(CropRegion.X + (Program.conf.CropGridSize.Width * x), CropRegion.Y + CropRegion.Height));
                 }
             }
             if (Program.conf.CropGridSize.Height >= 10)
             {
-                for (int y = 0; y <= (mToCrop.Height / Program.conf.CropGridSize.Height); y++)
+                for (int y = 0; y <= (CropRegion.Height / Program.conf.CropGridSize.Height); y++)
                 {
                     g.DrawLine(crosshairPen2,
-                        new Point(mToCrop.X, mToCrop.Y + (Program.conf.CropGridSize.Height * y)),
-                        new Point(mToCrop.X + mToCrop.Width, mToCrop.Y + (Program.conf.CropGridSize.Height * y)));
+                        new Point(CropRegion.X, CropRegion.Y + (Program.conf.CropGridSize.Height * y)),
+                        new Point(CropRegion.X + CropRegion.Width, CropRegion.Y + (Program.conf.CropGridSize.Height * y)));
                 }
             }
         }
@@ -296,7 +312,7 @@ namespace ZSS
                 else
                 {
                     mousePosOnClick = MousePosition;
-                    mToCrop = new Rectangle(mousePosOnClick, new Size(0, 0));
+                    CropRegion = new Rectangle(mousePosOnClick, new Size(1, 1));
                     mMouseDown = true;
                     Refresh();
                 }
@@ -319,7 +335,7 @@ namespace ZSS
             if (!this.Options.SelectedWindowMode && mMouseDown)
             {
                 mMouseDown = false;
-                if (mToCrop != null && mToCrop.Width > 0 && mToCrop.Height > 0)
+                if (CropRegion != null && CropRegion.Width > 0 && CropRegion.Height > 0)
                 {
                     returnImageAndExit();
                 }
@@ -336,7 +352,7 @@ namespace ZSS
             {
                 if (e.KeyChar == (int)Keys.Space)
                 {
-                    mToCrop = new Rectangle(0, 0, mBgImage.Width, mBgImage.Height);
+                    CropRegion = new Rectangle(0, 0, mBgImage.Width, mBgImage.Height);
                     returnImageAndExit();
                 }
                 if (e.KeyChar == (int)Keys.Escape)
@@ -351,6 +367,7 @@ namespace ZSS
             if (e.KeyChar == (int)Keys.Tab && !this.Options.SelectedWindowMode)
             {
                 Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
+                Program.conf.Save();
                 forceCheck = true;
             }
         }
@@ -365,11 +382,11 @@ namespace ZSS
         {
             if (this.Options.SelectedWindowMode)
             {
-                Program.LastCapture = mToCrop;
+                Program.LastCapture = CropRegion;
             }
             else
             {
-                Program.LastRegion = mToCrop;
+                Program.LastRegion = CropRegion;
             }
             this.DialogResult = DialogResult.OK;
             Close();
