@@ -143,6 +143,7 @@ namespace ZSS
         public string WatermarkGradientType = "Vertical";
         public Size CropGridSize = new Size(0, 0);
         public bool CropGridToggle = true;
+        public bool CropShowGrids = false;
 
         //*********************
         //* Advanced Settings
