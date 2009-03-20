@@ -621,7 +621,6 @@ namespace ZSS
                     CropOptions co = new CropOptions();
                     co.MyImage = imgSS;
                     co.SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED;
-                    co.GridSize = Program.conf.CropGridSize;
 
                     Crop c = new Crop(co);
                     if (c.ShowDialog() == DialogResult.OK)
