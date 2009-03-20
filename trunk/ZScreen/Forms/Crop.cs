@@ -54,7 +54,6 @@ namespace ZSS
         private Timer timer = new Timer();
         private Timer windowCheck = new Timer();
         private CropOptions Options { get; set; }
-        private int infoRectOffset = 15;
         private bool forceCheck = false;
 
         public Crop(CropOptions options)
@@ -124,7 +123,7 @@ namespace ZSS
                     if (mMouseDown)
                     {
                         mToCrop = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
-                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, this.Options.GridSize,
+                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
                             Program.conf.CropGridToggle, ref mousePos);
                         mToCrop.Intersect(this.Bounds);
                     }
@@ -204,17 +203,8 @@ namespace ZSS
                     }
                     if (Program.conf.RegionRectangleInfo)
                     {
-                        Font posFont = new Font(FontFamily.GenericSansSerif, 8);
-                        string posText = "X: " + mToCrop.X + " px, Y: " + mToCrop.Y + " px\nWidth: " + mToCrop.Width + " px, Height: " + mToCrop.Height + " px";
-                        Size textSize = TextRenderer.MeasureText(posText, posFont);
-                        Rectangle labelRect = new Rectangle(mToCrop.Left + infoRectOffset, mToCrop.Bottom - textSize.Height - (10 + infoRectOffset),
-                            textSize.Width + 10, textSize.Height + 10);
-                        GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
-                        g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
-                            Color.Black, Color.FromArgb(150, Color.Black)), gPath);
-                        g.DrawPath(labelBorderPen, gPath);
-                        g.DrawString(posText, posFont, new SolidBrush(Color.White), mToCrop.Left + 5 + infoRectOffset,
-                            mToCrop.Bottom - textSize.Height - 5 - infoRectOffset);
+                        DrawTooltip("X: " + mToCrop.X + " px, Y: " + mToCrop.Y + " px\nWidth: " +
+                            mToCrop.Width + " px, Height: " + mToCrop.Height + " px", new Point(15, 15), g);
                     }
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
@@ -329,7 +319,7 @@ namespace ZSS
             if (!this.Options.SelectedWindowMode && mMouseDown)
             {
                 mMouseDown = false;
-                if (mToCrop != null && mToCrop.X >= 0 && mToCrop.Width > 0 && mToCrop.Height > 0)
+                if (mToCrop != null && mToCrop.Width > 0 && mToCrop.Height > 0)
                 {
                     returnImageAndExit();
                 }
@@ -419,6 +409,5 @@ namespace ZSS
     {
         public bool SelectedWindowMode { get; set; }
         public Image MyImage { get; set; }
-        public Size GridSize { get; set; }
     }
 }
