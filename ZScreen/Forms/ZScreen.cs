@@ -179,8 +179,6 @@ namespace ZSS
             ////////////////////////////////////
             // Capture
             ////////////////////////////////////
-            nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
-            nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             nScreenshotDelay.Value = Program.conf.ScreenshotDelay;
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
@@ -198,6 +196,9 @@ namespace ZSS
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
             nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
             cbShowUploadDuration.Checked = Program.conf.ShowUploadDuration;
+            nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
+            nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
+            cbCropShowGrids.Checked = Program.conf.CropShowGrids;
 
             ///////////////////////////////////
             // Hotkeys Settings
@@ -4225,6 +4226,11 @@ namespace ZSS
         private void nudCropGridHeight_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.CropGridSize.Height = (int)nudCropGridHeight.Value;
+        }
+
+        private void cbCropShowGrids_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropShowGrids = cbCropShowGrids.Checked;
         }
     }
 }

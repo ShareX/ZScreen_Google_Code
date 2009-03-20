@@ -54,7 +54,7 @@ namespace ZSS
         private Timer timer = new Timer();
         private Timer windowCheck = new Timer();
         private CropOptions Options { get; set; }
-        private int infoRectOffset = 10;
+        private int infoRectOffset = 15;
         private bool forceCheck = false;
 
         public Crop(CropOptions options)
@@ -85,6 +85,7 @@ namespace ZSS
 
         private void Crop_Shown(object sender, EventArgs e)
         {
+            this.TopMost = true;
             timer.Start();
             windowCheck.Start();
         }
@@ -93,7 +94,6 @@ namespace ZSS
         {
             if (User32.GetForegroundWindow() != this.Handle)
             {
-                User32.SetForegroundWindow(this.Handle);
                 User32.ActivateWindow(this.Handle);
             }
         }
@@ -193,6 +193,10 @@ namespace ZSS
                 g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, mBgImage.Height));
                 if (mMouseDown)
                 {
+                    if (Program.conf.CropShowGrids && Program.conf.CropGridToggle)
+                    {
+                        DrawGrids(g);
+                    }
                     DrawInstructor(strMouseDown, g);
                     if (Program.conf.CropBorderSize != 0)
                     {
@@ -248,6 +252,28 @@ namespace ZSS
             Color.Black, Color.FromArgb(150, Color.Black)), gPath);
             g.DrawPath(labelBorderPen, gPath);
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
+        }
+
+        private void DrawGrids(Graphics g)
+        {
+            if (Program.conf.CropGridSize.Width >= 10)
+            {
+                for (int x = 0; x <= (mToCrop.Width / Program.conf.CropGridSize.Width); x++)
+                {
+                    g.DrawLine(crosshairPen2,
+                        new Point(mToCrop.X + (Program.conf.CropGridSize.Width * x), mToCrop.Y),
+                        new Point(mToCrop.X + (Program.conf.CropGridSize.Width * x), mToCrop.Y + mToCrop.Height));
+                }
+            }
+            if (Program.conf.CropGridSize.Height >= 10)
+            {
+                for (int y = 0; y <= (mToCrop.Height / Program.conf.CropGridSize.Height); y++)
+                {
+                    g.DrawLine(crosshairPen2,
+                        new Point(mToCrop.X, mToCrop.Y + (Program.conf.CropGridSize.Height * y)),
+                        new Point(mToCrop.X + mToCrop.Width, mToCrop.Y + (Program.conf.CropGridSize.Height * y)));
+                }
+            }
         }
 
         private void DrawInstructor(string drawText, Graphics g)
@@ -332,7 +358,7 @@ namespace ZSS
             {
                 cancelAndRestart();
             }
-            if (e.KeyChar == (int)Keys.Tab)
+            if (e.KeyChar == (int)Keys.Tab && !this.Options.SelectedWindowMode)
             {
                 Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
                 forceCheck = true;
