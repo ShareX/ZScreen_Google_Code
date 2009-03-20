@@ -2043,12 +2043,6 @@ namespace ZSS
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
-            // this.ShowInTaskbar = Program.conf.ShowInTaskbar;
-            //if (Program.MultipleInstance)
-            //{
-            //    //MessageBox.Show(string.Format("Another instance of {0} is already running. {0} will continue to work in Muliple Instance mode.", Application.ProductName), 
-            //    //    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
         }
 
         private void AddToClipboardByDoubleClick(TabPage tp)
