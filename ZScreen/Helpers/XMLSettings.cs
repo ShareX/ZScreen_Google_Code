@@ -157,6 +157,7 @@ namespace ZSS
         public bool BalloonTipOpenLink = false;
         public bool CaptureEntireScreenOnError = false;
         public bool CheckExperimental = false;
+        public UpdateCheckType UpdateCheckType = UpdateCheckType.SETUP_EXE;
 
         //*********************
         //* Custom Uploaders Settings
