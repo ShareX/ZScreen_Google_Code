@@ -45,11 +45,13 @@ namespace ZSS.ImageUploader.Helpers
                 CurrentDownloads = DefaultDownloads + "?can=2";
                 FeaturedDownloads = DefaultDownloads + "?can=3";
                 DeprecatedDownloads = DefaultDownloads + "?can=4";
+                DownloadsSetupExe = DefaultDownloads + "?q=label:Type-Installer";
+                DownloadsBinRar = DefaultDownloads + "?q=label:Type-Executable";
             }
         }
 
         private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
-            FeaturedDownloads, DeprecatedDownloads;
+            FeaturedDownloads, DeprecatedDownloads, DownloadsSetupExe, DownloadsBinRar;
 
         public UpdateChecker(string ProjectName)
         {
@@ -67,11 +69,22 @@ namespace ZSS.ImageUploader.Helpers
                 }
                 else
                 {
-                    updateValues = CheckUpdate(CurrentDownloads);
+                    switch (Program.conf.UpdateCheckType)
+                    {
+                        case UpdateCheckType.BIN_RAR:
+                            updateValues = CheckUpdate(DownloadsBinRar);
+                            break;
+                        case UpdateCheckType.SETUP_EXE:
+                            updateValues = CheckUpdate(DownloadsSetupExe);
+                            break;
+                        default:
+                            updateValues = CheckUpdate(DefaultDownloads);
+                            break;
+                    }
                 }
                 StringBuilder sbVersions = new StringBuilder();
-                sbVersions.AppendLine("Current version: " + Application.ProductVersion);
-                sbVersions.AppendLine("Latest version:  " + updateValues[1]);
+                sbVersions.AppendLine("Current version:\t" + Application.ProductVersion);
+                sbVersions.AppendLine("Latest version:\t " + updateValues[1]);
                 if (!string.IsNullOrEmpty(updateValues[1]) && new Version(updateValues[1]).
                     CompareTo(new Version(Application.ProductVersion)) > 0)
                 {
