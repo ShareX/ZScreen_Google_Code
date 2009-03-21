@@ -163,6 +163,13 @@ namespace ZSS
                 cboScreenshotDest.Items.Add(sdt.ToDescriptionString());
             }
 
+            cboUpdateCheckType.Items.Clear();
+            foreach (UpdateCheckType uct in Enum.GetValues(typeof(UpdateCheckType)))
+            {
+                cboUpdateCheckType.Items.Add(uct.ToDescriptionString());
+            }
+            cboUpdateCheckType.SelectedIndex = (int)Program.conf.UpdateCheckType;
+
             cbWatermarkPosition.Items.Clear();
             foreach (WatermarkPositionType wmt in Enum.GetValues(typeof(WatermarkPositionType)))
             {
@@ -4224,6 +4231,11 @@ namespace ZSS
         private void cbCropShowGrids_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CropShowGrids = cbCropShowGrids.Checked;
+        }
+
+        private void cboUpdateCheckType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.UpdateCheckType = (UpdateCheckType)cboUpdateCheckType.SelectedIndex;
         }
     }
 }
