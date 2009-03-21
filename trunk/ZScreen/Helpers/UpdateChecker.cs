@@ -32,6 +32,12 @@ using System.Threading;
 
 namespace ZSS.ImageUploader.Helpers
 {
+    public class UpdateCheckerOptions
+    {
+        public bool CheckExperimental { get; set; }
+        public UpdateCheckType UpdateCheckType { get; set; }
+    }
+
     public class UpdateChecker
     {
         public string ProjectName
@@ -53,9 +59,12 @@ namespace ZSS.ImageUploader.Helpers
         private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
             FeaturedDownloads, DeprecatedDownloads, DownloadsSetupExe, DownloadsBinRar;
 
-        public UpdateChecker(string ProjectName)
+        private UpdateCheckerOptions Options { get; set; }
+
+        public UpdateChecker(string projectName, UpdateCheckerOptions options)
         {
-            this.ProjectName = ProjectName;
+            this.ProjectName = projectName;
+            this.Options = options;
         }
 
         public string StartCheckUpdate()
@@ -63,13 +72,13 @@ namespace ZSS.ImageUploader.Helpers
             try
             {
                 string[] updateValues;
-                if (Program.conf.CheckExperimental)
+                if (this.Options.CheckExperimental)
                 {
                     updateValues = CheckUpdate(AllDownloads);
                 }
                 else
                 {
-                    switch (Program.conf.UpdateCheckType)
+                    switch (this.Options.UpdateCheckType)
                     {
                         case UpdateCheckType.BIN_RAR:
                             updateValues = CheckUpdate(DownloadsBinRar);

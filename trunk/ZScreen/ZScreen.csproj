@@ -100,7 +100,6 @@
     <Compile Include="Helpers\ImageSoftware.cs" />
     <Compile Include="Global\NameParser.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
-    <Compile Include="Helpers\UpdateChecker.cs" />
     <Compile Include="Forms\UserPassBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +119,7 @@
       <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\WatermarkMaker.cs" />
+    <Compile Include="Helpers\UpdateChecker.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
