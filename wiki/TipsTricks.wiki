@@ -3,11 +3,12 @@
 <wiki:toc max_depth="2" />
 = General = 
 == Run ZScreen from USB Drive ==
-You can create a "ZScreen" folder where ZScreen.exe is 
+ * Copy ZScreen.exe and *.dll to a USB Drive
+ * Create a create a "ZScreen" folder where ZScreen.exe is 
 
 [http://img19.imageshack.us/img19/802/ss20090318214123.png] 
 
-and you can run ZScreen in a USB drive. 
+and now you can run ZScreen in a USB drive. 
 
 = Capture =
 
