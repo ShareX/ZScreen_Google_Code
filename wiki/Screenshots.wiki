@@ -1,70 +1,70 @@
 #summary ZScreen Screenshots
 #labels Featured
-<wiki:toc max_depth="2" />
-= Main =
+<wiki:toc max_depth="3" />
+== Main ==
 
 [http://img18.imageshack.us/img18/6884/zscreen231beta180320090o.png]
 
-= Hotkeys = 
+== Hotkeys == 
 
 [http://img18.imageshack.us/img18/5266/zscreen231beta180320090z.png]
 
-= Capture = 
-== Selected Window & Crop Shot ==
+== Capture == 
+=== Selected Window & Crop Shot ===
 
 [http://img18.imageshack.us/img18/2176/zscreen231beta180320090n.png]
 
-== Interaction ==
+=== Interaction ===
 
 [http://img18.imageshack.us/img18/7282/zscreen231beta180320090nwf.png]
 
-== Naming Conventions ==
+=== Naming Conventions ===
 
 [http://img18.imageshack.us/img18/7120/zscreen231beta180320090hve.png]
 
-== Watermark ==
+=== Watermark ===
 
 [http://img18.imageshack.us/img18/9508/zscreen231beta180320090zhc.png]
 
-== Quality ==
+=== Quality ===
 
 [http://img18.imageshack.us/img18/808/zscreen231beta180320090jos.png]
 
-= Image Software =
+== Image Software ==
 
 [http://img18.imageshack.us/img18/1600/zscreen231beta180320090ofh.png]
 
-= FTP = 
+== FTP == 
 
 [http://img18.imageshack.us/img18/723/zscreen231beta180320090jls.png]
 
-= HTTP = 
-== Image Uploaders ==
+== HTTP == 
+=== Image Uploaders ===
 
 [http://img18.imageshack.us/img18/920/zscreen231beta180320090p.png]
 
-== Custom Image Uploaders ==
+=== Custom Image Uploaders ===
 
 [http://img18.imageshack.us/img18/6117/zscreen231beta180320090r.png]
 
-== Language Translator ==
+=== Language Translator ===
 
 [http://img18.imageshack.us/img18/103/zscreen231beta180320090d.png]
 
-= Advanced = 
-== General ==
+== Advanced == 
+=== General ===
 
 [http://img18.imageshack.us/img18/8519/zscreen231beta180320090i.png]
 
-== Paths ==
+=== Paths ===
 
 [http://img18.imageshack.us/img18/5461/zscreen231beta180320090l.png]
 
-== Debug ==
+=== Debug ===
 
 [http://img18.imageshack.us/img18/3361/zscreen231beta180320090ndy.png]
 
-= History =
+== History ==
 
 [http://img18.imageshack.us/img18/7809/zscreen231beta180320090k.png]
 
@@ -73,5 +73,6 @@
 [http://img18.imageshack.us/img18/3881/colordialog180320090838.png]
 
 = Tray Menu =
+== Root Menu ==
 
 [http://img18.imageshack.us/img18/200/ss18032009083507.png]
