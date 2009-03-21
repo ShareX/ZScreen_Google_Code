@@ -1,3 +1,5 @@
+2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
+
 Version 2.4 - 20090321
 
 2.4.0.0 Ability to take screenshots of pre-set sizes of the Screen using a Grid System
