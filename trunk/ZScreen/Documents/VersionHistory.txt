@@ -1,4 +1,4 @@
-Version 2.4 - 20090317
+Version 2.4 - 20090321
 
 2.4.0.0 Ability to take screenshots of pre-set sizes of the Screen using a Grid System
 2.3.1.0 Adding failed tasks to History tab is now optional
