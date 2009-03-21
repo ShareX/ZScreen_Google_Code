@@ -4203,7 +4203,10 @@ namespace ZSS
 
         private void updateThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            UpdateChecker updateChecker = new UpdateChecker((string)e.Argument);
+            UpdateCheckerOptions uco = new UpdateCheckerOptions();
+            uco.CheckExperimental = Program.conf.CheckExperimental;
+            uco.UpdateCheckType = Program.conf.UpdateCheckType;
+            UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
             e.Result = updateChecker.StartCheckUpdate();
         }
 
