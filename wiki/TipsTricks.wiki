@@ -3,7 +3,11 @@
 <wiki:toc max_depth="2" />
 = General = 
 == Run ZScreen from USB Drive ==
- * Copy ZScreen.exe and *.dll to a USB Drive
+ * Copy the following files to a USB Drive
+ {{{
+  ZScreen.exe
+  *.dll
+ }}} 
  * Create a create a "ZScreen" folder where ZScreen.exe is 
 
 [http://img19.imageshack.us/img19/802/ss20090318214123.png] 
