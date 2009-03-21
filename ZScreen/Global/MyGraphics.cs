@@ -131,14 +131,14 @@ namespace ZSS
 
                 if (gridToggle && grid.Width > 0)
                 {
-                    width = GridPoint(width, grid.Width);
+                    width = GridPoint(width, grid.Width) - 1;
                     point.X = x + width;
                 }
             }
             else if (gridToggle && grid.Width > 0)
             {
                 oldX = x;
-                x = ReverseGridPoint(x, width, grid.Width);
+                x = ReverseGridPoint(x, width + 1, grid.Width);
                 width -= x - oldX;
                 point.X = x;
             }
@@ -148,14 +148,14 @@ namespace ZSS
                 height = -height;
                 if (gridToggle && grid.Height > 0)
                 {
-                    height = GridPoint(height, grid.Height);
+                    height = GridPoint(height, grid.Height) - 1;
                     point.Y = y + height;
                 }
             }
             else if (gridToggle && grid.Height > 0)
             {
                 oldY = y;
-                y = ReverseGridPoint(y, height, grid.Height);
+                y = ReverseGridPoint(y, height + 1, grid.Height);
                 height -= y - oldY;
                 point.Y = y;
             }
