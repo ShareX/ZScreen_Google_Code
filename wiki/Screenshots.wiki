@@ -1,6 +1,7 @@
 #summary ZScreen Screenshots
 #labels Featured
 <wiki:toc max_depth="3" />
+= Main Window =
 == Main ==
 
 [http://img18.imageshack.us/img18/6884/zscreen231beta180320090o.png]
