@@ -40,7 +40,7 @@ namespace ZSS.ImageUploader.Helpers
             set
             {
                 projectName = value;
-                DefaultDownloads = "http://code.google.com/p/" + projectName + "/downloads/list";
+                DefaultDownloads = "http://code.google.com/p/" + projectName.ToLower() + "/downloads/list";
                 AllDownloads = DefaultDownloads + "?can=1";
                 CurrentDownloads = DefaultDownloads + "?can=2";
                 FeaturedDownloads = DefaultDownloads + "?can=3";
