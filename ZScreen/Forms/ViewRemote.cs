@@ -261,7 +261,7 @@ namespace ZSS
                 }
                 catch (System.Exception)
                 {
-                    System.Windows.Forms.MessageBox.Show(mRes.GetString("VRDsaveFailed"));
+                    System.Windows.Forms.MessageBox.Show("Save Failed");
                 }
             }
         }
@@ -325,7 +325,7 @@ namespace ZSS
             if (Program.conf.FTPAccountList != null)
                 mAcc = Program.conf.FTPAccountList[Program.conf.FTPselected];
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
-                string.Format(mRes.GetString("VRDfetchingFiles"), mAcc.Name));
+                string.Format("Fetching files from {0}", mAcc.Name));
 
             if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server ))
             {
@@ -429,7 +429,7 @@ namespace ZSS
 
                 case RemoteViewerTask.ProgressType.FETCHING_FILE:
                     fp = (string)e.UserState;
-                    sBar.Text = string.Format(mRes.GetString("VRDfetchingFile"), fp, mAcc.Name);
+                    sBar.Text = string.Format("Fetching file {0} from {1}...", fp, mAcc.Name);
                     break;
 
                 case RemoteViewerTask.ProgressType.INCREMENT_PROGRESS:
@@ -450,7 +450,7 @@ namespace ZSS
 
                 case RemoteViewerTask.ProgressType.VIEWING_FILE:
                     fp = (string)e.UserState;
-                    FileSystem.appendDebug(string.Format(mRes.GetString("VRDviewingFile"), fp));
+                    FileSystem.appendDebug(string.Format("Viewing file: {0}", fp));
                     pbViewer.ImageLocation = fp;
                     break;
 
@@ -465,10 +465,10 @@ namespace ZSS
             switch (rvt.Job)
             {
                 case RemoteViewerTask.Jobs.FETCH_LIST:
-                    sBar.Text = string.Format(mRes.GetString("VRDready"), lbFiles.Items.Count);
+                    sBar.Text = string.Format("Ready. Loaded {0} screenshots.", lbFiles.Items.Count);
                     break;
                 case RemoteViewerTask.Jobs.VIEW_FILE:
-                    sBar.Text = string.Format(mRes.GetString("VRDshowing"), rvt.RemoteFile);
+                    sBar.Text = string.Format("Showing {0}.", rvt.RemoteFile);
                     break;
             }
 
