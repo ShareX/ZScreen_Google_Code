@@ -25,9 +25,8 @@ namespace ZSS.UpdateCheckerLib
 
             this.lblVer.Text = this.Options.Question;
             StringBuilder sb = new StringBuilder();
-            //Regex RgxUrl = new Regex("(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?");
             if (!string.IsNullOrEmpty(this.Options.VersionHistory) &&
-                this.Options.VersionHistory.StartsWith("http://" + this.Options.ProjectName + ".googlecode.com/"))
+                 this.Options.VersionHistory.StartsWith("http://" + this.Options.ProjectName + ".googlecode.com/"))
             {
                 WebClient wClient = new WebClient();
                 string versionHistory = wClient.DownloadString(this.Options.VersionHistory);
