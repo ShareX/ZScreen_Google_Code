@@ -190,8 +190,8 @@ namespace ZSS
             nScreenshotDelay.Value = Program.conf.ScreenshotDelay;
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
-            cbActiveHelp.Checked = Program.conf.ActiveHelp;
             CheckActiveHelp();
+            cbActiveHelp.Checked = Program.conf.ActiveHelp;
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
@@ -2974,14 +2974,14 @@ namespace ZSS
 
         private void cbActiveHelp_CheckedChanged(object sender, EventArgs e)
         {
+            Program.conf.ActiveHelp = cbActiveHelp.Checked;
             CheckActiveHelp();
         }
 
         private void CheckActiveHelp()
         {
-            this.Height = (cbActiveHelp.Checked ? startHeight : startHeight - txtActiveHelp.Height);
-            splitContainerApp.Panel2Collapsed = !cbActiveHelp.Checked;
-            Program.conf.ActiveHelp = cbActiveHelp.Checked;
+            splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
+            this.Height = (Program.conf.ActiveHelp ? startHeight : startHeight - txtActiveHelp.Height);
         }
 
         private void AddMouseHoverEventHandlerHelp(Control.ControlCollection col)

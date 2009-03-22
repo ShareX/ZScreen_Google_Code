@@ -86,7 +86,7 @@ namespace ZSS.UpdateCheckerLib
                             MyVersionInfo = CheckUpdate(DownloadsBinRar);
                             break;
                         case UpdateCheckType.SETUP:
-                            MyVersionInfo = CheckUpdate(DownloadsSetupExe);  // versionInfo = CheckUpdate(DownloadsSetupExe);
+                            MyVersionInfo = CheckUpdate(DownloadsSetupExe);
                             break;
                         default:
                             MyVersionInfo = CheckUpdate(DefaultDownloads);
@@ -96,7 +96,7 @@ namespace ZSS.UpdateCheckerLib
 
                 StringBuilder sbVersions = new StringBuilder();
                 sbVersions.AppendLine("Current version: " + Application.ProductVersion);
-                sbVersions.AppendLine(" Latest version: " + MyVersionInfo.Version);
+                sbVersions.AppendLine("Latest version:  " + MyVersionInfo.Version);
                 this.Statistics = sbVersions.ToString();
 
                 return sbVersions.ToString();
