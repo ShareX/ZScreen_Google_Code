@@ -7,10 +7,10 @@ namespace ZSS.UpdateCheckerLib
 {
     public enum UpdateCheckType
     {
-        [Description("-setup.exe")]
-        SETUP_EXE,
-        [Description("-bin.rar")]
-        BIN_RAR,
+        [Description("*-setup (Installer)")]
+        SETUP,
+        [Description("*-bin (Executable)")]
+        BIN,
     }
 
     public static class UpdateCheckTypeExtensions
