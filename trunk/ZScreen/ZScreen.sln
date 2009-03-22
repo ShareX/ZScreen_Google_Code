@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploader", "..\ZSS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Colors", "..\ZSS.Colors\ZSS.Colors.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UpdateChecker", "..\ZSS.UpdateChecker\ZSS.UpdateChecker.csproj", "{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -47,6 +49,12 @@ Global
 		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|Any CPU.Build.0 = Release|Any CPU
 		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
