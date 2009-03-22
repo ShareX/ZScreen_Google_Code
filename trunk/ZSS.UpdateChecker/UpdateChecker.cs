@@ -97,7 +97,7 @@ namespace ZSS.UpdateCheckerLib
 
                 StringBuilder sbVersions = new StringBuilder();
                 sbVersions.AppendLine("Current version: " + Application.ProductVersion);
-                sbVersions.AppendLine("Latest version:  " + MyVersionInfo.Version);
+                sbVersions.AppendLine(" Latest version: " + MyVersionInfo.Version);
                 this.Statistics = sbVersions.ToString();
 
                 return sbVersions.ToString();
