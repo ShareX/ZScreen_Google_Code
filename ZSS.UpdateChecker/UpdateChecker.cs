@@ -87,7 +87,7 @@ namespace ZSS.UpdateCheckerLib
                             MyVersionInfo = CheckUpdate(DownloadsBinRar);
                             break;
                         case UpdateCheckType.SETUP_EXE:
-                            MyVersionInfo = CheckUpdate(DefaultDownloads);  // versionInfo = CheckUpdate(DownloadsSetupExe);
+                            MyVersionInfo = CheckUpdate(DownloadsSetupExe);  // versionInfo = CheckUpdate(DownloadsSetupExe);
                             break;
                         default:
                             MyVersionInfo = CheckUpdate(DefaultDownloads);
