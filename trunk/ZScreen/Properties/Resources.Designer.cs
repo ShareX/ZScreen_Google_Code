@@ -193,6 +193,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap main {
+            get {
+                object obj = ResourceManager.GetObject("main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap monitor {
             get {
                 object obj = ResourceManager.GetObject("monitor", resourceCulture);
@@ -290,15 +297,16 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 2.3 - 20090317
+        ///   Looks up a localized string similar to 2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
         ///
+        ///Version 2.4 - 20090321
+        ///
+        ///2.4.0.0 Ability to take screenshots of pre-set sizes of the Screen using a Grid System
         ///2.3.1.0 Adding failed tasks to History tab is now optional
         ///2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
         ///2.2.0.0 Screen Color Picker in Tray menu &gt; Actions
         ///2.1.1.0 Colors are chosen using an enhanced ColorDialog box
-        ///2.1.0.2 Remote Viewer is not restricted to images anymore
-        ///2.1.0.1 Fixed Issue 24: Requested Clipboard operation did not succeed
-        ///2.1.0.0 Ability to capture Selected Window by enumerating all visibl [rest of string was truncated]&quot;;.
+        ///2.1.0.2 Remote Viewer is not restricted [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

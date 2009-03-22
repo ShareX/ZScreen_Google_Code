@@ -119,7 +119,6 @@
       <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\WatermarkMaker.cs" />
-    <Compile Include="Helpers\UpdateChecker.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
@@ -290,6 +289,7 @@
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <EmbeddedResource Include="Documents\License.txt" />
     <EmbeddedResource Include="Resources\lightning.png" />
+    <None Include="main.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +304,10 @@
     <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploader.csproj">
       <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
       <Name>ZSS.TextUploader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateChecker.csproj">
+      <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
+      <Name>ZSS.UpdateChecker</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

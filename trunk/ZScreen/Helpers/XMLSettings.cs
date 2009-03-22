@@ -27,6 +27,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Drawing;
+using ZSS.UpdateCheckerLib;
 
 namespace ZSS
 {
