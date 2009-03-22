@@ -1,7 +1,7 @@
 #summary ZScreen Features
 #labels Featured
 
- * Multiple-monitor support
+ * ~~Multiple-monitor support~~
  * Auto-update (via code.google.com)
  * Support for uploading screenshots to Tinypic
  * Support for uploading to Imageshack and Tinypic Accounts
