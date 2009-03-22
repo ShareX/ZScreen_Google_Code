@@ -25,8 +25,9 @@ namespace ZSS.UpdateCheckerLib
 
             this.lblVer.Text = this.Options.Question;
             StringBuilder sb = new StringBuilder();
-            Regex RgxUrl = new Regex("(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?");
-            if (!string.IsNullOrEmpty(this.Options.VersionHistory) && RgxUrl.IsMatch(this.Options.VersionHistory))
+            //Regex RgxUrl = new Regex("(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?");
+            if (!string.IsNullOrEmpty(this.Options.VersionHistory) &&
+                this.Options.VersionHistory.StartsWith("http://" + this.Options.ProjectName + ".googlecode.com/"))
             {
                 WebClient wClient = new WebClient();
                 string versionHistory = wClient.DownloadString(this.Options.VersionHistory);
@@ -53,7 +54,6 @@ namespace ZSS.UpdateCheckerLib
             this.DialogResult = DialogResult.No;
             this.Close();
         }
-
     }
 
     public class NewVersionWindowOptions
@@ -62,5 +62,6 @@ namespace ZSS.UpdateCheckerLib
         public Image MyImage { get; set; }
         public string VersionHistory { get; set; }
         public string Question { get; set; }
+        public string ProjectName { get; set; }
     }
 }
