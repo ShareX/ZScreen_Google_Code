@@ -82,10 +82,10 @@ namespace ZSS.UpdateCheckerLib
                 {
                     switch (this.Options.UpdateCheckType)
                     {
-                        case UpdateCheckType.BIN_RAR:
+                        case UpdateCheckType.BIN:
                             MyVersionInfo = CheckUpdate(DownloadsBinRar);
                             break;
-                        case UpdateCheckType.SETUP_EXE:
+                        case UpdateCheckType.SETUP:
                             MyVersionInfo = CheckUpdate(DownloadsSetupExe);  // versionInfo = CheckUpdate(DownloadsSetupExe);
                             break;
                         default:

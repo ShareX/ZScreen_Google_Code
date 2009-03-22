@@ -158,7 +158,7 @@ namespace ZSS
         public bool BalloonTipOpenLink = false;
         public bool CaptureEntireScreenOnError = false;
         public bool CheckExperimental = false;
-        public UpdateCheckType UpdateCheckType = UpdateCheckType.SETUP_EXE;
+        public UpdateCheckType UpdateCheckType = UpdateCheckType.SETUP;
 
         //*********************
         //* Custom Uploaders Settings
@@ -300,7 +300,9 @@ namespace ZSS
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    // We dont need a MessageBox when we rename enumerations 
+                    // Renaming enums tend to break parts of serialization
+                    Console.WriteLine(ex.ToString()); 
                     //just return blank settings
                 }
             }
