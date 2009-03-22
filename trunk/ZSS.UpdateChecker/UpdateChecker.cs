@@ -74,7 +74,6 @@ namespace ZSS.UpdateCheckerLib
         {
             try
             {
- 
                 if (this.Options.CheckExperimental)
                 {
                     MyVersionInfo = CheckUpdate(AllDownloads);
@@ -115,6 +114,7 @@ namespace ZSS.UpdateCheckerLib
             {
                 this.Options.MyNewVersionWindowOptions.Question = string.Format("New version of {0} is available.\n\nDo you want to download it now?\n\n{1}", Application.ProductName, this.Statistics);
                 this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
+                this.Options.MyNewVersionWindowOptions.ProjectName = ProjectName;
                 NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions);
                 ver.Text = string.Format("{0} {1}", Application.ProductName, MyVersionInfo.Version);
                 if (ver.ShowDialog() == DialogResult.Yes)
