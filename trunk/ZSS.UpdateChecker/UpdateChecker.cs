@@ -121,21 +121,6 @@ namespace ZSS.UpdateCheckerLib
                 {
                     Process.Start(MyVersionInfo.Link);
                 }
-
-                //StringBuilder sb = new StringBuilder();
-                //sb.AppendLine("New version is available");
-                //sb.AppendLine();
-                //sb.AppendLine(sbVersions.ToString());
-                //sb.AppendLine();
-                //sb.AppendLine(versionInfo.Summary.Replace("|", "\r\n"));
-                //sb.AppendLine();
-                //sb.AppendLine("Press OK to download the latest version.");
-
-                //if (MessageBox.Show(sb.ToString(), Application.ProductName, MessageBoxButtons.OKCancel,
-                //    MessageBoxIcon.Information) == DialogResult.OK)
-                //{
-                //    Process.Start(versionInfo.Link);
-                //}
             }
         }
 

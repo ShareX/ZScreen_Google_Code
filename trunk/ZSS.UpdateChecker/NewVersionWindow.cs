@@ -2,6 +2,8 @@
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Net;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -23,7 +25,20 @@ namespace ZSS.UpdateCheckerLib
 
             this.lblVer.Text = this.Options.Question;
             StringBuilder sb = new StringBuilder();
-            this.txtVer.Text = this.Options.VersionHistory;
+            Regex RgxUrl = new Regex("(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?");
+            if (RgxUrl.IsMatch(this.Options.VersionHistory))
+            {
+                WebClient wClient = new WebClient();
+                string versionHistory = wClient.DownloadString(this.Options.VersionHistory);
+                if (!string.IsNullOrEmpty(versionHistory))
+                {
+                    this.txtVer.Text = versionHistory;
+                }
+            }
+            else
+            {
+                this.txtVer.Text = this.Options.VersionHistory;
+            }
             SetForegroundWindow(this.Handle.ToInt32());
         }
 

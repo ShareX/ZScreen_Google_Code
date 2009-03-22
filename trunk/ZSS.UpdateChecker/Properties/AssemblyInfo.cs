@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZSS.UpdateChecker")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ZSS.UpdateCheckerLib")]
+[assembly: AssemblyDescription("Dynamic Link Library for Checking Application Updates")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("ZScreen Foundation")]
 [assembly: AssemblyProduct("ZSS.UpdateChecker")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2009")]
+[assembly: AssemblyCopyright("Copyright © Contributors 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
