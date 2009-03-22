@@ -42,6 +42,7 @@ using ZSS.ImageUploader.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.Colors;
+using ZSS.UpdateCheckerLib;
 
 namespace ZSS
 {
@@ -4196,23 +4197,42 @@ namespace ZSS
             btnCheckUpdate.Enabled = false;
             lblUpdateInfo.Text = "Checking for Updates...";
             BackgroundWorker updateThread = new BackgroundWorker();
+            updateThread.WorkerReportsProgress = true;
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
+            updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
             updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
             updateThread.RunWorkerAsync(Application.ProductName);
         }
 
+        private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+           switch(e.ProgressPercentage){
+               case 1:
+                   lblUpdateInfo.Text = (string)e.UserState;
+                   break;
+           }
+        }
+
         private void updateThread_DoWork(object sender, DoWorkEventArgs e)
         {
+            BackgroundWorker worker = (BackgroundWorker)sender;
+            NewVersionWindowOptions nvwo = new NewVersionWindowOptions();
+            nvwo.MyIcon = this.Icon;
+            nvwo.MyImage = Resources.main;
+
             UpdateCheckerOptions uco = new UpdateCheckerOptions();
             uco.CheckExperimental = Program.conf.CheckExperimental;
             uco.UpdateCheckType = Program.conf.UpdateCheckType;
+            uco.MyNewVersionWindowOptions = nvwo;
+
             UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
-            e.Result = updateChecker.StartCheckUpdate();
+            worker.ReportProgress(1, updateChecker.StartCheckUpdate());
+            updateChecker.ShowPrompt();
         }
 
         private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            lblUpdateInfo.Text = (string)e.Result;
+           
             btnCheckUpdate.Enabled = true;
         }
 

@@ -30,16 +30,19 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace ZSS.ImageUploader.Helpers
+namespace ZSS.UpdateCheckerLib
 {
     public class UpdateCheckerOptions
     {
         public bool CheckExperimental { get; set; }
         public UpdateCheckType UpdateCheckType { get; set; }
+        public NewVersionWindowOptions MyNewVersionWindowOptions { get; set; }
     }
 
     public class UpdateChecker
     {
+        private VersionInfo MyVersionInfo;
+        public string Statistics { get; private set; }
         public string ProjectName
         {
             get { return projectName; }
@@ -71,47 +74,32 @@ namespace ZSS.ImageUploader.Helpers
         {
             try
             {
-                string[] updateValues;
+ 
                 if (this.Options.CheckExperimental)
                 {
-                    updateValues = CheckUpdate(AllDownloads);
+                    MyVersionInfo = CheckUpdate(AllDownloads);
                 }
                 else
                 {
                     switch (this.Options.UpdateCheckType)
                     {
                         case UpdateCheckType.BIN_RAR:
-                            updateValues = CheckUpdate(DownloadsBinRar);
+                            MyVersionInfo = CheckUpdate(DownloadsBinRar);
                             break;
                         case UpdateCheckType.SETUP_EXE:
-                            updateValues = CheckUpdate(DownloadsSetupExe);
+                            MyVersionInfo = CheckUpdate(DefaultDownloads);  // versionInfo = CheckUpdate(DownloadsSetupExe);
                             break;
                         default:
-                            updateValues = CheckUpdate(DefaultDownloads);
+                            MyVersionInfo = CheckUpdate(DefaultDownloads);
                             break;
                     }
                 }
-                StringBuilder sbVersions = new StringBuilder();
-                sbVersions.AppendLine("Current version:\t" + Application.ProductVersion);
-                sbVersions.AppendLine("Latest version:\t " + updateValues[1]);
-                if (!string.IsNullOrEmpty(updateValues[1]) && new Version(updateValues[1]).
-                    CompareTo(new Version(Application.ProductVersion)) > 0)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("New version is available");
-                    sb.AppendLine();
-                    sb.AppendLine(sbVersions.ToString());
-                    sb.AppendLine();
-                    sb.AppendLine(updateValues[2].Replace("|", "\r\n"));
-                    sb.AppendLine();
-                    sb.AppendLine("Press OK to download the latest version.");
 
-                    if (MessageBox.Show(sb.ToString(), Application.ProductName, MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Information) == DialogResult.OK)
-                    {
-                        Process.Start(updateValues[0]);
-                    }
-                }
+                StringBuilder sbVersions = new StringBuilder();
+                sbVersions.AppendLine("Current version: " + Application.ProductVersion);
+                sbVersions.AppendLine("Latest version:  " + MyVersionInfo.Version);
+                this.Statistics = sbVersions.ToString();
+
                 return sbVersions.ToString();
             }
             catch (Exception ex)
@@ -121,14 +109,44 @@ namespace ZSS.ImageUploader.Helpers
             }
         }
 
-        public string[] CheckUpdate(string link)
+        public void ShowPrompt()
         {
-            string[] returnValue = new string[3];
+            if (!string.IsNullOrEmpty(MyVersionInfo.Version) && new Version(MyVersionInfo.Version).CompareTo(new Version(Application.ProductVersion)) > 0)
+            {
+                this.Options.MyNewVersionWindowOptions.Question = string.Format("New version of {0} is available.\n\nDo you want to download it now?\n\n{1}", Application.ProductName, this.Statistics);
+                this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
+                NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions);
+                ver.Text = string.Format("{0} {1}", Application.ProductName, MyVersionInfo.Version);
+                if (ver.ShowDialog() == DialogResult.Yes)
+                {
+                    Process.Start(MyVersionInfo.Link);
+                }
+
+                //StringBuilder sb = new StringBuilder();
+                //sb.AppendLine("New version is available");
+                //sb.AppendLine();
+                //sb.AppendLine(sbVersions.ToString());
+                //sb.AppendLine();
+                //sb.AppendLine(versionInfo.Summary.Replace("|", "\r\n"));
+                //sb.AppendLine();
+                //sb.AppendLine("Press OK to download the latest version.");
+
+                //if (MessageBox.Show(sb.ToString(), Application.ProductName, MessageBoxButtons.OKCancel,
+                //    MessageBoxIcon.Information) == DialogResult.OK)
+                //{
+                //    Process.Start(versionInfo.Link);
+                //}
+            }
+        }
+
+        public VersionInfo CheckUpdate(string link)
+        {
+            VersionInfo returnValue = new VersionInfo();
             WebClient wClient = new WebClient();
             string source = wClient.DownloadString(link);
-            returnValue[0] = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
-            returnValue[1] = Regex.Match(returnValue[0], @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
-            returnValue[2] = Regex.Match(source, "(?<=q=\">).+?(?=</a>)", RegexOptions.Singleline).Value.Replace("\n", "").
+            returnValue.Link = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
+            returnValue.Version = Regex.Match(returnValue.Link, @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
+            returnValue.Summary = Regex.Match(source, "(?<=q=\">).+?(?=</a>)", RegexOptions.Singleline).Value.Replace("\n", "").
                 Replace("\r", "").Trim(); //Summary
             return returnValue;
         }
