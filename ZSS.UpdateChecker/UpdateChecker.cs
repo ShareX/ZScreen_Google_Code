@@ -48,8 +48,8 @@ namespace ZSS.UpdateCheckerLib
             get { return projectName; }
             set
             {
-                projectName = value;
-                DefaultDownloads = "http://code.google.com/p/" + projectName.ToLower() + "/downloads/list";
+                projectName = value.ToLower();
+                DefaultDownloads = "http://code.google.com/p/" + projectName + "/downloads/list";
                 AllDownloads = DefaultDownloads + "?can=1";
                 CurrentDownloads = DefaultDownloads + "?can=2";
                 FeaturedDownloads = DefaultDownloads + "?can=3";
@@ -131,8 +131,8 @@ namespace ZSS.UpdateCheckerLib
             string source = wClient.DownloadString(link);
             returnValue.Link = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
             returnValue.Version = Regex.Match(returnValue.Link, @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
-            returnValue.Summary = Regex.Match(source, "(?<=q=\">).+?(?=</a>)", RegexOptions.Singleline).Value.Replace("\n", "").
-                Replace("\r", "").Trim(); //Summary
+            returnValue.Summary = Regex.Match(source, "(?<=&amp;q=.*\">).+?(?=</a>)", RegexOptions.Singleline).Value.
+                Replace("\n", "").Replace("\r", "").Trim(); //Summary
             return returnValue;
         }
     }
