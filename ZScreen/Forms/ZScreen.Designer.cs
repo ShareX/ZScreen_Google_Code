@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,7 @@ namespace ZSS
             this.lblHistoryRemotePath = new System.Windows.Forms.Label();
             this.lblHistoryLocalPath = new System.Windows.Forms.Label();
             this.pbHistoryThumb = new System.Windows.Forms.PictureBox();
-            this.cbReverse = new System.Windows.Forms.CheckBox();
+            this.cbHistoryReverseList = new System.Windows.Forms.CheckBox();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.cmsHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmCopyCbHistory = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,7 +98,7 @@ namespace ZSS
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsRetryUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cbAddSpace = new System.Windows.Forms.CheckBox();
+            this.cbHistoryAddSpace = new System.Windows.Forms.CheckBox();
             this.btnCopyToClipboard = new System.Windows.Forms.Button();
             this.tpFile = new System.Windows.Forms.TabPage();
             this.tcFileSettings = new System.Windows.Forms.TabControl();
@@ -825,9 +825,9 @@ namespace ZSS
             // tpScreenshots
             // 
             this.tpScreenshots.Controls.Add(this.gbScreenshotPreview);
-            this.tpScreenshots.Controls.Add(this.cbReverse);
+            this.tpScreenshots.Controls.Add(this.cbHistoryReverseList);
             this.tpScreenshots.Controls.Add(this.lbHistory);
-            this.tpScreenshots.Controls.Add(this.cbAddSpace);
+            this.tpScreenshots.Controls.Add(this.cbHistoryAddSpace);
             this.tpScreenshots.Controls.Add(this.btnCopyToClipboard);
             this.tpScreenshots.ImageKey = "pictures.png";
             this.tpScreenshots.Location = new System.Drawing.Point(4, 23);
@@ -925,17 +925,18 @@ namespace ZSS
             this.pbHistoryThumb.TabStop = false;
             this.pbHistoryThumb.Click += new System.EventHandler(this.pbHistoryThumb_Click);
             // 
-            // cbReverse
+            // cbHistoryReverseList
             // 
-            this.cbReverse.AutoSize = true;
-            this.cbReverse.BackColor = System.Drawing.Color.Transparent;
-            this.cbReverse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbReverse.Location = new System.Drawing.Point(8, 32);
-            this.cbReverse.Name = "cbReverse";
-            this.cbReverse.Size = new System.Drawing.Size(85, 17);
-            this.cbReverse.TabIndex = 1;
-            this.cbReverse.Text = "Reverse List";
-            this.cbReverse.UseVisualStyleBackColor = false;
+            this.cbHistoryReverseList.AutoSize = true;
+            this.cbHistoryReverseList.BackColor = System.Drawing.Color.Transparent;
+            this.cbHistoryReverseList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cbHistoryReverseList.Location = new System.Drawing.Point(8, 32);
+            this.cbHistoryReverseList.Name = "cbHistoryReverseList";
+            this.cbHistoryReverseList.Size = new System.Drawing.Size(85, 17);
+            this.cbHistoryReverseList.TabIndex = 1;
+            this.cbHistoryReverseList.Text = "Reverse List";
+            this.cbHistoryReverseList.UseVisualStyleBackColor = false;
+            this.cbHistoryReverseList.CheckedChanged += new System.EventHandler(this.cbReverse_CheckedChanged);
             // 
             // lbHistory
             // 
@@ -1049,19 +1050,20 @@ namespace ZSS
             this.deleteToolStripMenuItem.Text = "&Delete Local Files";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // cbAddSpace
+            // cbHistoryAddSpace
             // 
-            this.cbAddSpace.AutoSize = true;
-            this.cbAddSpace.BackColor = System.Drawing.Color.Transparent;
-            this.cbAddSpace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbAddSpace.Location = new System.Drawing.Point(8, 13);
-            this.cbAddSpace.Name = "cbAddSpace";
-            this.cbAddSpace.Size = new System.Drawing.Size(183, 17);
-            this.cbAddSpace.TabIndex = 0;
-            this.cbAddSpace.Tag = "Adding a New Line before the URLs makes it look nicer when you copy a URL List in" +
+            this.cbHistoryAddSpace.AutoSize = true;
+            this.cbHistoryAddSpace.BackColor = System.Drawing.Color.Transparent;
+            this.cbHistoryAddSpace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cbHistoryAddSpace.Location = new System.Drawing.Point(8, 13);
+            this.cbHistoryAddSpace.Name = "cbHistoryAddSpace";
+            this.cbHistoryAddSpace.Size = new System.Drawing.Size(183, 17);
+            this.cbHistoryAddSpace.TabIndex = 0;
+            this.cbHistoryAddSpace.Tag = "Adding a New Line before the URLs makes it look nicer when you copy a URL List in" +
                 " IM such as Pidgin";
-            this.cbAddSpace.Text = "Add a New Line before the URLs";
-            this.cbAddSpace.UseVisualStyleBackColor = false;
+            this.cbHistoryAddSpace.Text = "Add a New Line before the URLs";
+            this.cbHistoryAddSpace.UseVisualStyleBackColor = false;
+            this.cbHistoryAddSpace.CheckedChanged += new System.EventHandler(this.cbAddSpace_CheckedChanged);
             // 
             // btnCopyToClipboard
             // 
@@ -2903,38 +2905,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4582,8 +4584,8 @@ namespace ZSS
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem tsmViewDirectory;
         private System.Windows.Forms.TabPage tpScreenshots;
-        private System.Windows.Forms.CheckBox cbReverse;
-        private System.Windows.Forms.CheckBox cbAddSpace;
+        private System.Windows.Forms.CheckBox cbHistoryReverseList;
+        private System.Windows.Forms.CheckBox cbHistoryAddSpace;
         private System.Windows.Forms.Button btnCopyToClipboard;
         private System.Windows.Forms.TabPage tpFile;
         private System.Windows.Forms.Label lblCodeI;

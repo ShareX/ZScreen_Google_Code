@@ -50,9 +50,8 @@ namespace ZSS
         //*********************
         //* Main Settings
         //*********************
-        public bool EnableThumbnail { get; set; }
-        private ImageDestType mScreenshotDest = ImageDestType.IMAGESHACK;
-        public ImageDestType ScreenshotDestMode { get { return mScreenshotDest; } set { mScreenshotDest = value; } }
+        public bool EnableThumbnail = false;
+        public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
         public decimal ScreenshotDelay = 0;
         public bool RegionRectangleInfo = true;
         public bool RegionHotkeyInfo = true;
@@ -108,11 +107,10 @@ namespace ZSS
         //*********************
         //* Image Software Settings
         //*********************   
-        public ImageSoftware ImageSoftwareActive { get; set; }
+        public ImageSoftware ImageSoftwareActive = new ImageSoftware();
         public List<ZSS.ImageSoftware> ImageSoftwareList = new List<ImageSoftware>();
-        public bool ISenabled = false;
-        private ClipboardUriType mClipboardTextMode = ClipboardUriType.FULL;
-        public ClipboardUriType ClipboardUriMode { get { return mClipboardTextMode; } set { mClipboardTextMode = value; } }
+        public bool ImageSoftwareEnabled = false;
+        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
 
         //*********************
         //* File Settings
@@ -146,6 +144,12 @@ namespace ZSS
         public bool CropShowGrids = false;
 
         //*********************
+        //* Custom Uploaders Settings
+        //*********************
+        public List<ImageHostingService> ImageUploadersList = null;
+        public int ImageUploaderSelected = 0;
+
+        //*********************
         //* Advanced Settings
         //*********************
         public decimal ScreenshotCacheSize = 50;
@@ -160,10 +164,10 @@ namespace ZSS
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
 
         //*********************
-        //* Custom Uploaders Settings
+        //* History
         //*********************
-        public List<ImageHostingService> ImageUploadersList = null;
-        public int ImageUploaderSelected = 0;
+        public bool HistoryAddSpace = false;
+        public bool HistoryReverseList = false;
 
         #region Serialization Helpers
 
