@@ -67,6 +67,7 @@
             this.txtVer.Size = new System.Drawing.Size(476, 184);
             this.txtVer.TabIndex = 2;
             this.txtVer.TabStop = false;
+            this.txtVer.WordWrap = false;
             // 
             // lblVer
             // 
