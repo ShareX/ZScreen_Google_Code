@@ -10,13 +10,15 @@ namespace ZSS.ImageUploader.Helpers
     public class ImageFileManager
     {
         private List<ImageFile> ImageFileList = new List<ImageFile>();
-        public string URL { get; private set; }
-        public int FileCount { get; private set; }
+        public string URL { get; set; }
+        public int FileCount { get; set; }
         public string Source { get; set; }
         /// <summary>
         /// Local File Path of the Image if exists
         /// </summary>
         public string LocalFilePath { get; set; }
+
+        public ImageFileManager() { }
 
         public ImageFileManager(List<ImageFile> list)
         {

@@ -52,8 +52,8 @@ namespace ZSS.Helpers
 
         public void Save(string filePath)
         {
-            try
-            {
+            //try
+            //{
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
@@ -62,11 +62,11 @@ namespace ZSS.Helpers
                 {
                     xs.Serialize(fs, this);
                 }
-            }
-            catch (Exception e)
-            {
-                System.Windows.Forms.MessageBox.Show(e.Message);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    System.Windows.Forms.MessageBox.Show(e.Message);
+            //}
         }
 
         public static HistoryManager Read()
