@@ -274,7 +274,7 @@ namespace ZSS
                 lbImageSoftware.Items.Add(app.Name);
             }
 
-            if (Program.conf.ISenabled)
+            if (Program.conf.ImageSoftwareEnabled)
             {
                 int i;
                 if ((i = lbImageSoftware.Items.IndexOf(Program.conf.ImageSoftwareActive.Name)) != -1)
@@ -375,6 +375,20 @@ namespace ZSS
                 if (lbUploader.SelectedIndex != -1)
                 {
                     LoadImageUploaders(Program.conf.ImageUploadersList[lbUploader.SelectedIndex]);
+                }
+            }
+
+            ///////////////////////////////////
+            // History
+            ///////////////////////////////////
+
+            cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
+            cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
+            if (lbHistory.Items.Count < 1)
+            {
+                foreach (HistoryItem item in Program.history.HistoryItems)
+                {
+                    lbHistory.Items.Add(item);
                 }
             }
         }
@@ -720,7 +734,7 @@ namespace ZSS
 
         private void ImageSoftwareAndOrWeb(ref MainAppTask task)
         {
-            if (task.MyImage != null && Program.conf.ISenabled)
+            if (task.MyImage != null && Program.conf.ImageSoftwareEnabled)
             {
                 //if (Program.conf.ISpath != "")
                 ImageSoftware(ref task);
@@ -1432,7 +1446,7 @@ namespace ZSS
 
                 //check the active ftpUpload account
 
-                if (Program.conf.ISenabled)
+                if (Program.conf.ImageSoftwareEnabled)
                     CheckCorrectISRightClickMenu(Program.conf.ImageSoftwareActive.Name);
                 else
                     CheckCorrectISRightClickMenu(tsmImageSoftware.DropDownItems[0].Text);
@@ -1798,7 +1812,7 @@ namespace ZSS
             }
 
             //Changed it back to the way it was. (reversing the list is unreliable when you do it more than one time [when new screenshots are dropping in])
-            if (cbReverse.Checked)
+            if (cbHistoryReverseList.Checked)
                 items.Reverse();
 
             foreach (string url in items)
@@ -1808,7 +1822,7 @@ namespace ZSS
 
             if (str != "")
             {
-                if (cbAddSpace.Checked)
+                if (cbHistoryAddSpace.Checked)
                     str = str.Insert(0, System.Environment.NewLine);
                 str = str.TrimEnd(System.Environment.NewLine.ToCharArray()); ;
 
@@ -1838,7 +1852,7 @@ namespace ZSS
 
                     if (isActiveImageSoftware)
                     {
-                        if (Program.conf.ISenabled)
+                        if (Program.conf.ImageSoftwareEnabled)
                         {
                             Program.conf.ImageSoftwareActive = temp;
                             CheckCorrectISRightClickMenu(temp.Name);
@@ -2290,7 +2304,7 @@ namespace ZSS
 
             if ((sel = lbImageSoftware.SelectedIndex) > 0)
             {
-                Program.conf.ISenabled = true;
+                Program.conf.ImageSoftwareEnabled = true;
 
                 Program.conf.ImageSoftwareActive = Program.conf.ImageSoftwareList[sel - 1];
                 RewriteISRightClickMenu();
@@ -2310,7 +2324,7 @@ namespace ZSS
                 txtImageSoftwareName.Text = "";
                 txtImageSoftwarePath.Text = "";
 
-                Program.conf.ISenabled = false;
+                Program.conf.ImageSoftwareEnabled = false;
                 RewriteISRightClickMenu();
             }
             else if (b)
@@ -4266,6 +4280,16 @@ namespace ZSS
         private void cboUpdateCheckType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.UpdateCheckType = (UpdateCheckType)cboUpdateCheckType.SelectedIndex;
+        }
+
+        private void cbAddSpace_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.HistoryAddSpace = cbHistoryAddSpace.Checked;
+        }
+
+        private void cbReverse_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.HistoryReverseList = cbHistoryReverseList.Checked;
         }
     }
 }
