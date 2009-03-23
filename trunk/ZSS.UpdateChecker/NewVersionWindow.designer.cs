@@ -38,9 +38,9 @@
             // 
             // btnYes
             // 
-            this.btnYes.Location = new System.Drawing.Point(324, 313);
+            this.btnYes.Location = new System.Drawing.Point(312, 80);
             this.btnYes.Name = "btnYes";
-            this.btnYes.Size = new System.Drawing.Size(75, 23);
+            this.btnYes.Size = new System.Drawing.Size(83, 24);
             this.btnYes.TabIndex = 0;
             this.btnYes.Text = "&Yes";
             this.btnYes.UseVisualStyleBackColor = true;
@@ -48,9 +48,9 @@
             // 
             // btnNo
             // 
-            this.btnNo.Location = new System.Drawing.Point(409, 313);
+            this.btnNo.Location = new System.Drawing.Point(400, 80);
             this.btnNo.Name = "btnNo";
-            this.btnNo.Size = new System.Drawing.Size(75, 23);
+            this.btnNo.Size = new System.Drawing.Size(83, 24);
             this.btnNo.TabIndex = 1;
             this.btnNo.Text = "&No";
             this.btnNo.UseVisualStyleBackColor = true;
@@ -59,30 +59,31 @@
             // txtVer
             // 
             this.txtVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVer.Location = new System.Drawing.Point(12, 122);
+            this.txtVer.Location = new System.Drawing.Point(8, 112);
             this.txtVer.Multiline = true;
             this.txtVer.Name = "txtVer";
             this.txtVer.ReadOnly = true;
             this.txtVer.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtVer.Size = new System.Drawing.Size(472, 171);
+            this.txtVer.Size = new System.Drawing.Size(476, 184);
             this.txtVer.TabIndex = 2;
             this.txtVer.TabStop = false;
-            this.txtVer.WordWrap = false;
             // 
             // lblVer
             // 
+            this.lblVer.BackColor = System.Drawing.Color.Transparent;
             this.lblVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVer.Location = new System.Drawing.Point(118, 12);
+            this.lblVer.Location = new System.Drawing.Point(136, 8);
             this.lblVer.Name = "lblVer";
-            this.lblVer.Size = new System.Drawing.Size(366, 100);
+            this.lblVer.Size = new System.Drawing.Size(344, 100);
             this.lblVer.TabIndex = 3;
             this.lblVer.Text = "New Version is available";
             // 
             // pbApp
             // 
-            this.pbApp.Location = new System.Drawing.Point(12, 12);
+            this.pbApp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbApp.Location = new System.Drawing.Point(8, 8);
             this.pbApp.Name = "pbApp";
-            this.pbApp.Size = new System.Drawing.Size(100, 100);
+            this.pbApp.Size = new System.Drawing.Size(116, 100);
             this.pbApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbApp.TabIndex = 4;
             this.pbApp.TabStop = false;
@@ -92,12 +93,12 @@
             this.AcceptButton = this.btnYes;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(496, 348);
+            this.ClientSize = new System.Drawing.Size(493, 305);
             this.Controls.Add(this.pbApp);
-            this.Controls.Add(this.lblVer);
             this.Controls.Add(this.txtVer);
             this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnYes);
+            this.Controls.Add(this.lblVer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

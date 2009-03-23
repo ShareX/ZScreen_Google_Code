@@ -29,6 +29,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
+using System.Web;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -112,11 +113,11 @@ namespace ZSS.UpdateCheckerLib
         {
             if (!string.IsNullOrEmpty(MyVersionInfo.Version) && new Version(MyVersionInfo.Version).CompareTo(new Version(Application.ProductVersion)) > 0)
             {
-                this.Options.MyNewVersionWindowOptions.Question = string.Format("New version of {0} is available.\n\nDo you want to download it now?\n\n{1}", Application.ProductName, this.Statistics);
+                this.Options.MyNewVersionWindowOptions.Question = string.Format("Do you want to download it now?\n\n{0}", this.Statistics);
                 this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
                 this.Options.MyNewVersionWindowOptions.ProjectName = ProjectName;
                 NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions);
-                ver.Text = string.Format("{0} {1}", Application.ProductName, MyVersionInfo.Version);
+                ver.Text = string.Format("{0} {1} is available",  Application.ProductName, MyVersionInfo.Version);
                 if (ver.ShowDialog() == DialogResult.Yes)
                 {
                     Process.Start(MyVersionInfo.Link);
@@ -131,8 +132,8 @@ namespace ZSS.UpdateCheckerLib
             string source = wClient.DownloadString(link);
             returnValue.Link = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
             returnValue.Version = Regex.Match(returnValue.Link, @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
-            returnValue.Summary = Regex.Match(source, "(?<=&amp;q=.*\">).+?(?=</a>)", RegexOptions.Singleline).Value.
-                Replace("\n", "").Replace("\r", "").Trim(); //Summary
+            returnValue.Summary = HttpUtility.HtmlDecode(Regex.Match(source, "(?<=&amp;q=.*\">).+?(?=</a>)", RegexOptions.Singleline).Value.
+                Replace("\n", "").Replace("\r", "").Trim()); //Summary
             return returnValue;
         }
     }
