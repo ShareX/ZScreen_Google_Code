@@ -29,24 +29,26 @@ namespace ZSS.Helpers
 {
     public class HistoryItem
     {
-        public string JobName { get; private set; }
-        public string FileName { get; private set; }
+        public string JobName { get; set; }
+        public string FileName { get; set; }
         public ImageFileManager ScreenshotManager { get; set; }
-        public string LocalPath { get; private set; }
-        public string RemotePath { get; private set; }
+        public string LocalPath { get; set; }
+        public string RemotePath { get; set; }
         /// <summary>
         /// Full Image, Active Window, Cropped Window etc..
         /// </summary>
-        public string DestinationMode { get; private set; }
+        public string DestinationMode { get; set; }
         /// <summary>
         /// ImageShack, TinyPic, xs.to, FTP...
         /// </summary>
-        public string DestinationName { get; private set; }
-        public JobCategoryType JobCategory { get; private set; }
-        public ImageDestType ImageDestCategory { get; private set; }
-        public DateTime StartTime { get; private set; }
-        public DateTime EndTime { get; private set; }
-        public string UploadDuration { get; private set; }
+        public string DestinationName { get; set; }
+        public JobCategoryType JobCategory { get; set; }
+        public ImageDestType ImageDestCategory { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public string UploadDuration { get; set; }
+
+        public HistoryItem() { }
 
         public HistoryItem(MainAppTask task)
         {
