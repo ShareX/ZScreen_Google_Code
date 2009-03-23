@@ -384,11 +384,12 @@ namespace ZSS
 
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
+            nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
             if (lbHistory.Items.Count < 1)
             {
-                foreach (HistoryItem item in Program.history.HistoryItems)
+                for(int i = 0; i < Program.history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
                 {
-                    lbHistory.Items.Add(item);
+                    lbHistory.Items.Add(Program.history.HistoryItems[i]);
                 }
             }
         }
@@ -1159,15 +1160,7 @@ namespace ZSS
             switch (p)
             {
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
-                    HistoryItem hi = (HistoryItem)e.UserState;
-                    lbHistory.Items.Insert(0, hi);
-                    List<HistoryItem> historyItems = new List<HistoryItem>();
-                    foreach(HistoryItem item in lbHistory.Items)
-                    {
-                        historyItems.Add(item);
-                    }
-                    HistoryManager hm = new HistoryManager(historyItems);
-                    hm.Save();
+                    AddHistoryItem((HistoryItem)e.UserState);
                     break;
 
                 case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
@@ -1330,6 +1323,30 @@ namespace ZSS
             else
             {
                 return false;
+            }
+        }
+
+        private void AddHistoryItem(HistoryItem hi)
+        {
+            lbHistory.Items.Insert(0, hi);
+            CheckHistoryItems();
+            List<HistoryItem> historyItems = new List<HistoryItem>();
+            foreach (HistoryItem item in lbHistory.Items)
+            {
+                historyItems.Add(item);
+            }
+            HistoryManager hm = new HistoryManager(historyItems);
+            hm.Save();
+        }
+
+        private void CheckHistoryItems()
+        {
+            if (lbHistory.Items.Count > Program.conf.HistoryMaxNumber)
+            {
+                for (int i = lbHistory.Items.Count - 1; i >= Program.conf.HistoryMaxNumber; i--)
+                {
+                    lbHistory.Items.RemoveAt(i);
+                }
             }
         }
 
@@ -4227,11 +4244,12 @@ namespace ZSS
 
         private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-           switch(e.ProgressPercentage){
-               case 1:
-                   lblUpdateInfo.Text = (string)e.UserState;
-                   break;
-           }
+            switch (e.ProgressPercentage)
+            {
+                case 1:
+                    lblUpdateInfo.Text = (string)e.UserState;
+                    break;
+            }
         }
 
         private void updateThread_DoWork(object sender, DoWorkEventArgs e)
@@ -4253,7 +4271,7 @@ namespace ZSS
 
         private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-           
+
             btnCheckUpdate.Enabled = true;
         }
 
@@ -4290,6 +4308,12 @@ namespace ZSS
         private void cbReverse_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.HistoryReverseList = cbHistoryReverseList.Checked;
+        }
+
+        private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
+            CheckHistoryItems();
         }
     }
 }

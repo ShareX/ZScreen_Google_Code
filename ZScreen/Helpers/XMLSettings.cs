@@ -168,6 +168,7 @@ namespace ZSS
         //*********************
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
+        public int HistoryMaxNumber = 50;
 
         #region Serialization Helpers
 
