@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using System.Threading;
+using ZSS.Helpers;
 
 namespace ZSS
 {
@@ -37,6 +38,7 @@ namespace ZSS
         private static readonly string LocalAppDataFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
 
         private static readonly string XMLFileName = "Settings.xml";
+        private static readonly string HistoryFileName = "History.xml";
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
         private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
@@ -125,7 +127,16 @@ namespace ZSS
             }
         }
 
+        public static string HistoryFile
+        {
+            get
+            {
+                return Path.Combine(DefaultSettingsFolder, HistoryFileName);
+            }
+        }
+
         public static XMLSettings conf = XMLSettings.Read();
+        public static HistoryManager history = HistoryManager.Read();
 
         public const string FILTER_ACCOUNTS = "ZScreen FTP Accounts(*.zfa)|*.zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";

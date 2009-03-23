@@ -50,7 +50,6 @@ namespace ZSS
                         new System.Xml.Serialization.XmlSerializer(typeof(ImageHostingServiceManager));
                     xs.Serialize(fs, this);
                 }
-
             }
             catch (Exception e)
             {
@@ -60,12 +59,10 @@ namespace ZSS
 
         public static ImageHostingServiceManager Read(string filePath)
         {
-
             if (File.Exists(filePath))
             {
                 try
                 {
-
                     using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
                         System.Xml.Serialization.XmlSerializer xs =
@@ -83,6 +80,5 @@ namespace ZSS
 
             return new ImageHostingServiceManager();
         }
-
     }
 }
