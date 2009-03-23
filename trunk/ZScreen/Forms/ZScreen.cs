@@ -1147,6 +1147,13 @@ namespace ZSS
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     HistoryItem hi = (HistoryItem)e.UserState;
                     lbHistory.Items.Insert(0, hi);
+                    List<HistoryItem> historyItems = new List<HistoryItem>();
+                    foreach(HistoryItem item in lbHistory.Items)
+                    {
+                        historyItems.Add(item);
+                    }
+                    HistoryManager hm = new HistoryManager(historyItems);
+                    hm.Save();
                     break;
 
                 case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:

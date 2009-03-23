@@ -27,7 +27,6 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Drawing;
-using ZSS.UpdateCheckerLib;
 
 namespace ZSS
 {
@@ -158,7 +157,7 @@ namespace ZSS
         public bool BalloonTipOpenLink = false;
         public bool CaptureEntireScreenOnError = false;
         public bool CheckExperimental = false;
-        public UpdateCheckType UpdateCheckType = UpdateCheckType.SETUP;
+        public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
 
         //*********************
         //* Custom Uploaders Settings
@@ -250,6 +249,11 @@ namespace ZSS
 
         #region I/O Methods
 
+        public void Save()
+        {
+            Save(Program.XMLSettingsFile);
+        }
+
         public void Save(string filePath)
         {
             try
@@ -257,14 +261,11 @@ namespace ZSS
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-                //Write XML file
-                XmlSerializer serial = new XmlSerializer(typeof(XMLSettings));
-                FileStream fs = new FileStream(filePath, FileMode.Create);
-                serial.Serialize(fs, this);
-                fs.Close();
-
-                serial = null;
-                fs = null;
+                XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
+                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                {
+                    xs.Serialize(fs, this);
+                }
             }
             catch (Exception e)
             {
@@ -272,9 +273,9 @@ namespace ZSS
             }
         }
 
-        public void Save()
+        public static XMLSettings Read()
         {
-            Save(Program.XMLSettingsFile);
+            return Read(Program.XMLSettingsFile);
         }
 
         public static XMLSettings Read(string filePath)
@@ -282,37 +283,25 @@ namespace ZSS
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-
             if (File.Exists(filePath))
             {
                 try
                 {
-                    //Read XML file
-                    XmlSerializer serial = new XmlSerializer(typeof(XMLSettings));
-                    FileStream fs = new FileStream(filePath, FileMode.Open);
-                    XMLSettings set = (XMLSettings)serial.Deserialize(fs);
-                    fs.Close();
-
-                    serial = null;
-                    fs = null;
-
-                    return set;
+                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                    {
+                        return (XMLSettings)xs.Deserialize(fs);
+                    }
                 }
                 catch (Exception ex)
                 {
                     // We dont need a MessageBox when we rename enumerations 
                     // Renaming enums tend to break parts of serialization
-                    Console.WriteLine(ex.ToString()); 
-                    //just return blank settings
+                    Console.WriteLine(ex.ToString());
                 }
             }
 
             return new XMLSettings();
-        }
-
-        public static XMLSettings Read()
-        {
-            return Read(Program.XMLSettingsFile);
         }
 
         #endregion

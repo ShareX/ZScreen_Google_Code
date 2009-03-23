@@ -96,6 +96,7 @@
     <Compile Include="Helpers\AppInfo.cs" />
     <Compile Include="Global\ClipboardManager.cs" />
     <Compile Include="Helpers\HistoryItem.cs" />
+    <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\HKcombo.cs" />
     <Compile Include="Helpers\ImageSoftware.cs" />
     <Compile Include="Global\NameParser.cs" />
