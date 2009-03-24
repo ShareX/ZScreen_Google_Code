@@ -88,7 +88,7 @@ namespace ZSS
         //* FTP Settings
         //*********************
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FTPselected = 0;
+        public int FTPselected = -1;
 
         //*********************
         //* HTTP Settings
