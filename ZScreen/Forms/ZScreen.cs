@@ -387,7 +387,7 @@ namespace ZSS
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
             if (lbHistory.Items.Count < 1)
             {
-                for(int i = 0; i < Program.history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
+                for (int i = 0; i < Program.history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
                 {
                     lbHistory.Items.Add(Program.history.HistoryItems[i]);
                 }
@@ -2484,40 +2484,46 @@ namespace ZSS
 
         private void ScreenshotUsingClipboard()
         {
-            List<string> files = GetClipboardImagePaths();
+            List<string> files = GetClipboardFilePaths();
             foreach (string fp in files)
             {
                 StartWorkerImages(MainAppTask.Jobs.IMAGEUPLOAD_FROM_CLIPBOARD, fp);
             }
         }
 
-        private List<string> GetClipboardImagePaths()
+        private List<string> GetClipboardFilePaths()
         {
             List<string> cbListFilePath = new List<string>();
 
-            string cbFilePath = null;
-            Image cImage = Clipboard.GetImage();
-
-            string fileName = NameParser.Convert(Program.conf.entireScreen, NameParser.NameType.EntireScreen);
-
-            if (cImage != null)
+            try
             {
-                cbFilePath = FileSystem.GetFilePath(fileName, false); // Path.Combine(Program.conf.path, Path.Combine("ClipboardImage.", mFileTypes[Program.conf.FileFormat]));
-                cbFilePath = FileSystem.SaveImage(cImage, cbFilePath);
-                cbListFilePath.Add(cbFilePath);
-            }
-            else
-            {
-                if (Clipboard.ContainsFileDropList())
+                string cbFilePath = null;
+
+                if (Clipboard.ContainsImage())
+                {
+                    Image cImage = Clipboard.GetImage();
+                    cbFilePath = FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), false);
+                    cbFilePath = FileSystem.SaveImage(cImage, cbFilePath);
+                    cbListFilePath.Add(cbFilePath);
+                }
+                else if (Clipboard.ContainsText())
+                {
+                    cbFilePath = Path.Combine(Program.conf.ImagesDir, NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                    File.WriteAllText(cbFilePath, Clipboard.GetText());
+                    cbListFilePath.Add(cbFilePath);
+                }
+                else if (Clipboard.ContainsFileDropList())
                 {
                     foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
                     {
-                        cbFilePath = Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp)); //fileName.ToString() + Path.GetExtension(filePath[0]));
-                        System.IO.File.Copy(fp, cbFilePath, true);
+                        cbFilePath = Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp));
+                        File.Copy(fp, cbFilePath, true);
                         cbListFilePath.Add(cbFilePath);
                     }
                 }
             }
+            catch { }
+
             return cbListFilePath;
         }
 

@@ -57,6 +57,11 @@ namespace ZSS.Helpers
             return "";
         }
 
+        public static string Convert(string pattern)
+        {
+            return Convert(pattern, NameType.EntireScreen);
+        }
+
         public static string Convert(string pattern, NameType nameType)
         {
             StringBuilder sb = new StringBuilder(pattern);
