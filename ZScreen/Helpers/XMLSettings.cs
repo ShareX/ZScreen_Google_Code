@@ -69,6 +69,7 @@ namespace ZSS
         public string SelectedWindowBorderColor = SerializeColor(Color.Red);
         public decimal SelectedWindowBorderSize = 2;
         public bool ShowUploadDuration = false;
+        public bool CloseDropBox = false;
 
         //*********************
         //* Hotkey Settings
