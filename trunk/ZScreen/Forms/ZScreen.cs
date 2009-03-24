@@ -737,7 +737,6 @@ namespace ZSS
         {
             if (task.MyImage != null && Program.conf.ImageSoftwareEnabled)
             {
-                //if (Program.conf.ISpath != "")
                 ImageSoftware(ref task);
             }
 
@@ -756,28 +755,35 @@ namespace ZSS
         /// <returns>Retuns a List of Screenshots</returns>
         private bool UploadFtp(ref MainAppTask task)
         {
-            bool succ = true;
-            string httpPath = "";
-            string fullFilePath = task.ImageLocalPath;
-
-            if (File.Exists(fullFilePath))
+            try
             {
-                //there may be bugs from this line
-                FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
-                task.ImageDestinationName = acc.Name;
-                httpPath = acc.getUriPath(Path.GetFileName(task.ImageLocalPath));
-                task.ImageRemotePath = httpPath;
+                string fullFilePath = task.ImageLocalPath;
 
-                FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.ImageName, acc.Server));
+                if (CheckFTPAccounts() && File.Exists(fullFilePath))
+                {
+                    FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
+                    task.ImageDestinationName = acc.Name;
 
-                // ftpUploadFile(ref acc, task.ScreenshotName, fullFilePath);
-                ImageUploader.FTPUploader fu = new ZSS.ImageUploader.FTPUploader(acc);
-                fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.EnableThumbnail; // = true; // ideally this shold be true
-                fu.WorkingDir = Program.conf.CacheDir;
-                task.ImageManager = fu.UploadImage(fullFilePath);
+                    FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.ImageName, acc.Server));
+
+                    ImageUploader.FTPUploader fu = new ZSS.ImageUploader.FTPUploader(acc);
+                    fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.EnableThumbnail; // = true; // ideally this shold be true
+                    fu.WorkingDir = Program.conf.CacheDir;
+                    task.ImageManager = fu.UploadImage(fullFilePath);
+                    task.ImageRemotePath = acc.getUriPath(Path.GetFileName(task.ImageLocalPath));
+                    return true;
+                }
+                else
+                {
+                    task.Errors.Add("FTP upload failed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                task.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
-            return succ;
+            return false;
         }
 
         private void UploadScreenshot(ref MainAppTask task)
@@ -1096,7 +1102,7 @@ namespace ZSS
                 {
                     if (!IsValidImage(ref task))
                     {
-                        if (Program.conf.AutoSwitchFTP)
+                        if (Program.conf.AutoSwitchFTP && CheckFTPAccounts())
                         {
                             task.ImageDestCategory = ImageDestType.FTP;
                         }
@@ -4156,6 +4162,12 @@ namespace ZSS
         private void cbAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.AutoSwitchFTP = cbAutoSwitchFTP.Checked;
+        }
+
+        private bool CheckFTPAccounts()
+        {
+            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPselected != -1 &&
+                Program.conf.FTPAccountList.Count > Program.conf.FTPselected;
         }
 
         #endregion
