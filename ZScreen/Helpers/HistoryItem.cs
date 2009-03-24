@@ -73,20 +73,14 @@ namespace ZSS.Helpers
 
         private string GetDestinationName(MainAppTask t)
         {
-            string name = "";
-
             switch (t.ImageDestCategory)
             {
                 case ImageDestType.FTP:
                 case ImageDestType.CUSTOM_UPLOADER:
-                    name = string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName);
-                    break;
+                    return string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName);
                 default:
-                    name = string.Format("{0}", t.ImageDestCategory.ToDescriptionString());
-                    break;
+                    return string.Format("{0}", t.ImageDestCategory.ToDescriptionString());
             }
-
-            return name;
         }
     }
 }
