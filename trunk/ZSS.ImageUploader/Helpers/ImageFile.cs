@@ -29,23 +29,20 @@ namespace ZSS.ImageUploader
 {
     public class ImageFile : IComparable<ImageFile>
     {
-        private ImageType mType;
-        private string mURI;
-
         /// <summary>
         /// Name of the Screenshot with extension
         /// </summary>
-        public string Name { get; private set; }
-
+        public string Name { get; set; }
         /// <summary>
         /// Local file path of the Screenshot
         /// </summary>
-        private string mFilePath;
-
+        public string LocalFilePath { get; set; }
+        public ImageType Type { get; set; }
+        public string URI { get; set; }
         /// <summary>
         /// Size in Mebibytes (MiB) = 1024 KiB
         /// </summary>
-        public decimal Size { get; private set; }
+        public decimal Size { get; set; }
         public DateTime DateModified { get; set; }
         public string Source { get; set; }
 
@@ -55,9 +52,11 @@ namespace ZSS.ImageUploader
             FULLIMAGE
         }
 
+        public ImageFile() { }
+
         public ImageFile(string filePath)
         {
-            this.mFilePath = filePath;
+            this.LocalFilePath = filePath;
             this.Name = System.IO.Path.GetFileName(filePath);
             System.IO.FileInfo fi = new System.IO.FileInfo(filePath);
             this.DateModified = fi.LastWriteTime;
@@ -66,33 +65,9 @@ namespace ZSS.ImageUploader
 
         public ImageFile(string URI, ImageType Type)
         {
-            mURI = URI;
+            this.URI = URI;
             this.Name = System.IO.Path.GetFileName(URI);
-            mType = Type;
-        }       
-
-        public ImageType Type
-        {
-            get
-            {
-                return mType;
-            }
-        }
-
-        public string URI
-        {
-            get
-            {
-                return mURI;
-            }
-        }
-
-        public string LocalFilePath
-        {
-            get
-            {
-                return mFilePath;
-            }
+            this.Type = Type;
         }
 
         //public static ImageFile getThumbnailForum1ImageFile(string fullPath, string thPath)

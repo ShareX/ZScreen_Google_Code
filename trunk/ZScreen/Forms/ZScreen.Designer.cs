@@ -125,6 +125,8 @@ namespace ZSS
             this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
             this.lblSelectedWindowBorderColor = new System.Windows.Forms.Label();
             this.tpInteraction = new System.Windows.Forms.TabPage();
+            this.gbDropBox = new System.Windows.Forms.GroupBox();
+            this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
             this.gbAppearance = new System.Windows.Forms.GroupBox();
             this.cbCompleteSound = new System.Windows.Forms.CheckBox();
             this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
@@ -393,8 +395,7 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.gbDropBox = new System.Windows.Forms.GroupBox();
-            this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
+            this.btnHistoryClear = new System.Windows.Forms.Button();
             this.cmTray.SuspendLayout();
             this.tpScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
@@ -411,6 +412,7 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).BeginInit();
             this.tpInteraction.SuspendLayout();
+            this.gbDropBox.SuspendLayout();
             this.gbAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
             this.tpFileNaming.SuspendLayout();
@@ -482,7 +484,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
-            this.gbDropBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -830,6 +831,7 @@ namespace ZSS
             // 
             // tpScreenshots
             // 
+            this.tpScreenshots.Controls.Add(this.btnHistoryClear);
             this.tpScreenshots.Controls.Add(this.lblHistoryMaxItems);
             this.tpScreenshots.Controls.Add(this.nudHistoryMaxItems);
             this.tpScreenshots.Controls.Add(this.gbScreenshotPreview);
@@ -1370,6 +1372,27 @@ namespace ZSS
             this.tpInteraction.TabIndex = 5;
             this.tpInteraction.Text = "Interaction";
             this.tpInteraction.UseVisualStyleBackColor = true;
+            // 
+            // gbDropBox
+            // 
+            this.gbDropBox.Controls.Add(this.cbCloseDropBox);
+            this.gbDropBox.Location = new System.Drawing.Point(8, 200);
+            this.gbDropBox.Name = "gbDropBox";
+            this.gbDropBox.Size = new System.Drawing.Size(760, 56);
+            this.gbDropBox.TabIndex = 6;
+            this.gbDropBox.TabStop = false;
+            this.gbDropBox.Text = "Drop Box (Drag n Drop) Settings";
+            // 
+            // cbCloseDropBox
+            // 
+            this.cbCloseDropBox.AutoSize = true;
+            this.cbCloseDropBox.Location = new System.Drawing.Point(16, 24);
+            this.cbCloseDropBox.Name = "cbCloseDropBox";
+            this.cbCloseDropBox.Size = new System.Drawing.Size(180, 17);
+            this.cbCloseDropBox.TabIndex = 0;
+            this.cbCloseDropBox.Text = "After drag n drop close Drop Box";
+            this.cbCloseDropBox.UseVisualStyleBackColor = true;
+            this.cbCloseDropBox.CheckedChanged += new System.EventHandler(this.cbCloseDropBox_CheckedChanged);
             // 
             // gbAppearance
             // 
@@ -4455,26 +4478,15 @@ namespace ZSS
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
             // 
-            // gbDropBox
+            // btnHistoryClear
             // 
-            this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 200);
-            this.gbDropBox.Name = "gbDropBox";
-            this.gbDropBox.Size = new System.Drawing.Size(760, 56);
-            this.gbDropBox.TabIndex = 6;
-            this.gbDropBox.TabStop = false;
-            this.gbDropBox.Text = "Drop Box (Drag n Drop) Settings";
-            // 
-            // cbCloseDropBox
-            // 
-            this.cbCloseDropBox.AutoSize = true;
-            this.cbCloseDropBox.Location = new System.Drawing.Point(16, 24);
-            this.cbCloseDropBox.Name = "cbCloseDropBox";
-            this.cbCloseDropBox.Size = new System.Drawing.Size(180, 17);
-            this.cbCloseDropBox.TabIndex = 0;
-            this.cbCloseDropBox.Text = "After drag n drop close Drop Box";
-            this.cbCloseDropBox.UseVisualStyleBackColor = true;
-            this.cbCloseDropBox.CheckedChanged += new System.EventHandler(this.cbCloseDropBox_CheckedChanged);
+            this.btnHistoryClear.Location = new System.Drawing.Point(324, 387);
+            this.btnHistoryClear.Name = "btnHistoryClear";
+            this.btnHistoryClear.Size = new System.Drawing.Size(43, 23);
+            this.btnHistoryClear.TabIndex = 6;
+            this.btnHistoryClear.Text = "Clear";
+            this.btnHistoryClear.UseVisualStyleBackColor = true;
+            this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
             // 
             // ZScreen
             // 
@@ -4519,6 +4531,8 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).EndInit();
             this.tpInteraction.ResumeLayout(false);
+            this.gbDropBox.ResumeLayout(false);
+            this.gbDropBox.PerformLayout();
             this.gbAppearance.ResumeLayout(false);
             this.gbAppearance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
@@ -4622,8 +4636,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
-            this.gbDropBox.ResumeLayout(false);
-            this.gbDropBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -4992,6 +5004,7 @@ namespace ZSS
         private System.Windows.Forms.Label lblHistoryMaxItems;
         private System.Windows.Forms.GroupBox gbDropBox;
         private System.Windows.Forms.CheckBox cbCloseDropBox;
+        private System.Windows.Forms.Button btnHistoryClear;
 
     }
 }

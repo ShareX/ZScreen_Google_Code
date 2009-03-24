@@ -9,7 +9,7 @@ namespace ZSS.ImageUploader.Helpers
 {
     public class ImageFileManager
     {
-        private List<ImageFile> ImageFileList = new List<ImageFile>();
+        public List<ImageFile> ImageFileList = new List<ImageFile>();
         public string URL { get; set; }
         public int FileCount { get; set; }
         public string Source { get; set; }
@@ -111,6 +111,13 @@ namespace ZSS.ImageUploader.Helpers
             return string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", GetFullImageUrl(), GetThumbnailUrl());
         }
 
+        public enum SourceType
+        {
+            TEXT,
+            HTML,
+            STRING
+        }
+
         /// <summary>
         /// Return a file path of the Source saved as text or html
         /// </summary>
@@ -138,13 +145,6 @@ namespace ZSS.ImageUploader.Helpers
                 }
             }
             return filePath;
-        }
-
-        public enum SourceType
-        {
-            TEXT,
-            HTML,
-            STRING
         }
     }
 }

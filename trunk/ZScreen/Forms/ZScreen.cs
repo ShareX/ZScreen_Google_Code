@@ -1337,13 +1337,7 @@ namespace ZSS
         {
             lbHistory.Items.Insert(0, hi);
             CheckHistoryItems();
-            List<HistoryItem> historyItems = new List<HistoryItem>();
-            foreach (HistoryItem item in lbHistory.Items)
-            {
-                historyItems.Add(item);
-            }
-            HistoryManager hm = new HistoryManager(historyItems);
-            hm.Save();
+            SaveHistoryItems();
         }
 
         private void CheckHistoryItems()
@@ -1355,6 +1349,17 @@ namespace ZSS
                     lbHistory.Items.RemoveAt(i);
                 }
             }
+        }
+
+        private void SaveHistoryItems()
+        {
+            List<HistoryItem> historyItems = new List<HistoryItem>();
+            foreach (HistoryItem item in lbHistory.Items)
+            {
+                historyItems.Add(item);
+            }
+            HistoryManager hm = new HistoryManager(historyItems);
+            hm.Save();
         }
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1419,6 +1424,7 @@ namespace ZSS
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SaveHistoryItems();
             Program.conf.Save();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
@@ -1426,7 +1432,6 @@ namespace ZSS
                 Hide();
             }
             FileSystem.appendDebug("Closed " + Application.ProductName + "\n");
-            //FileSystem.writeDebugFile();
         }
 
         #endregion
@@ -4340,11 +4345,19 @@ namespace ZSS
         {
             Program.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
             CheckHistoryItems();
+            SaveHistoryItems();
         }
 
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CloseDropBox = cbCloseDropBox.Checked;
+        }
+
+        private void btnHistoryClear_Click(object sender, EventArgs e)
+        {
+            lbHistory.Items.Clear();
+            CheckHistoryItems();
+            SaveHistoryItems();
         }
     }
 }
