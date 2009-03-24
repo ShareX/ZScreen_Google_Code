@@ -90,6 +90,7 @@
     <Compile Include="Forms\ShowScreenshot.Designer.cs">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global\MyEventArgs.cs" />
     <Compile Include="Helpers\Debug.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\MyGraphics.cs" />

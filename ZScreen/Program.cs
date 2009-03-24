@@ -64,7 +64,6 @@ namespace ZSS
         public static string[] mFileTypes = { "png", "jpg", "gif", "bmp", "tif", "emf", "wmf", "ico" };
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
-        internal static ZSS.Forms.DropWindow MyDropWindow;
         public static bool MultipleInstance = false;
 
         /// <summary>
@@ -176,7 +175,6 @@ namespace ZSS
             Application.SetCompatibleTextRenderingDefault(false);
 
             ZScreenWindow = new ZScreen();
-            MyDropWindow = new ZSS.Forms.DropWindow();
 
             User32.m_Proc = ZScreenWindow.ScreenshotUsingHotkeys;
 

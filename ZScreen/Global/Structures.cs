@@ -44,5 +44,4 @@ namespace ZSS
         public ImageDestType Destination { get; set; }
         public ClipboardUriType ClipboardMode { get; set; }
     }
-
 }

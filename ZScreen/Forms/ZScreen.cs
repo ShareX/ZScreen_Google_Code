@@ -1590,7 +1590,7 @@ namespace ZSS
             }
         }
 
-        void clipboardCopyHistory_Click(object sender, EventArgs e)
+        private void clipboardCopyHistory_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
             SetClipboardFromHistory((ClipboardUriType)tsm.Tag);
@@ -4217,15 +4217,17 @@ namespace ZSS
             if (!bDropWindowOpened)
             {
                 bDropWindowOpened = true;
-                DropWindow dw = Program.MyDropWindow;
+                DropWindow dw = new DropWindow();
                 dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
-                dw.ShowDialog();
-                if (dw.DialogResult == DialogResult.OK)
-                {
-                    ScreenshotUsingDragDrop(dw.FilePaths);
-                }
-                bDropWindowOpened = false;
+                dw.Result += new StringsEventHandler(dw_Result);
+                dw.Show();
             }
+        }
+
+        private void dw_Result(object sender, string[] strings)
+        {
+            if (strings != null) ScreenshotUsingDragDrop(strings);
+            bDropWindowOpened = false;
         }
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)

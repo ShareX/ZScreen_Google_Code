@@ -37,13 +37,14 @@ namespace ZSS.Forms
     /// </summary>
     public partial class DropWindow : Form
     {
+        public event StringsEventHandler Result;
+
+        public string[] FilePaths { get; set; }
+
         public DropWindow()
         {
             InitializeComponent();
-
         }
-
-        public string[] FilePaths { get; set; }
 
         private void DropWindow_DragEnter(object sender, DragEventArgs e)
         {
@@ -59,34 +60,18 @@ namespace ZSS.Forms
 
         private void DropWindow_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            this.Close();
         }
 
         private void DropWindow_DragDrop(object sender, DragEventArgs e)
         {
             this.FilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
+            this.Close();
         }
 
-        private void DropWindow_DoubleClick(object sender, EventArgs e)
+        private void DropWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Hide();
-        }
-
-        /// <summary>
-        /// TODO: Position this Window in a way so that it shows up roughly above the Tray
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DropWindow_Load(object sender, EventArgs e)
-        {
-            //Console.WriteLine(this.Location.ToString());
-            //this.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - this.Width, SystemInformation.PrimaryMonitorSize.Height - this.Height*2);
-            //Console.WriteLine(this.Location.ToString());
+            Result(this, FilePaths);
         }
 
         private void DropWindow_Paint(object sender, PaintEventArgs e)
