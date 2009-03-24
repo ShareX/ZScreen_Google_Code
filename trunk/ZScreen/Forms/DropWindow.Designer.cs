@@ -49,7 +49,6 @@
             this.TopMost = true;
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DropWindow_Paint);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragDrop);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DropWindow_FormClosed);
             this.Click += new System.EventHandler(this.DropWindow_Click);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragEnter);
             this.ResumeLayout(false);

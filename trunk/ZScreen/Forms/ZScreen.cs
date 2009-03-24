@@ -207,6 +207,7 @@ namespace ZSS
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
+            cbCloseDropBox.Checked = Program.conf.CloseDropBox;
 
             ///////////////////////////////////
             // Hotkeys Settings
@@ -4220,6 +4221,7 @@ namespace ZSS
                 DropWindow dw = new DropWindow();
                 dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
                 dw.Result += new StringsEventHandler(dw_Result);
+                dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
                 dw.Show();
             }
         }
@@ -4227,6 +4229,10 @@ namespace ZSS
         private void dw_Result(object sender, string[] strings)
         {
             if (strings != null) ScreenshotUsingDragDrop(strings);
+        }
+
+        private void dw_FormClosed(object sender, FormClosedEventArgs e)
+        {
             bDropWindowOpened = false;
         }
 
@@ -4334,6 +4340,11 @@ namespace ZSS
         {
             Program.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
             CheckHistoryItems();
+        }
+
+        private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CloseDropBox = cbCloseDropBox.Checked;
         }
     }
 }

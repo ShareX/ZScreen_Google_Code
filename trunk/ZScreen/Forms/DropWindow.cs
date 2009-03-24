@@ -66,12 +66,8 @@ namespace ZSS.Forms
         private void DropWindow_DragDrop(object sender, DragEventArgs e)
         {
             this.FilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            this.Close();
-        }
-
-        private void DropWindow_FormClosed(object sender, FormClosedEventArgs e)
-        {
             Result(this, FilePaths);
+            if (Program.conf.CloseDropBox) this.Close();
         }
 
         private void DropWindow_Paint(object sender, PaintEventArgs e)

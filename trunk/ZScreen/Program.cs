@@ -28,14 +28,13 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using System.Threading;
-using ZSS.Helpers;
 
 namespace ZSS
 {
     static class Program
     {
-        // DO NOT CHANGE THE ORDER OF THESE VARIABLES UNLESS YOU KNOW WHAT YOU ARE DOING <- LOL
-        private static readonly string LocalAppDataFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        private static readonly string LocalAppDataFolder = System.IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
 
         private static readonly string XMLFileName = "Settings.xml";
         private static readonly string HistoryFileName = "History.xml";
@@ -51,7 +50,8 @@ namespace ZSS
         private static string DefaultXMLFilePath;
         private static string XMLPortableFile;
 
-        private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(
+            Environment.SpecialFolder.Personal), Application.ProductName);
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen/";
@@ -63,7 +63,8 @@ namespace ZSS
 
         public static string[] mFileTypes = { "png", "jpg", "gif", "bmp", "tif", "emf", "wmf", "ico" };
 
-        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
+        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
+            Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         public static bool MultipleInstance = false;
 
         /// <summary>
@@ -112,7 +113,6 @@ namespace ZSS
                     }
                     return XMLPortableFile;                               // Portable
                 }
-
                 else if (File.Exists(OldXMLFilePath))
                 {
                     if (!File.Exists(DefaultXMLFilePath))
@@ -122,7 +122,9 @@ namespace ZSS
                     return DefaultXMLFilePath;                            // v1.x
                 }
                 else
+                {
                     return DefaultXMLFilePath;                            // v2.x
+                }
             }
         }
 
@@ -135,7 +137,7 @@ namespace ZSS
         }
 
         public static XMLSettings conf = XMLSettings.Read();
-        public static HistoryManager history = HistoryManager.Read();
+        public static ZSS.Helpers.HistoryManager history = ZSS.Helpers.HistoryManager.Read();
 
         public const string FILTER_ACCOUNTS = "ZScreen FTP Accounts(*.zfa)|*.zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
@@ -146,7 +148,7 @@ namespace ZSS
 
         private static ZScreen ZScreenWindow;
 
-        static Mutex mAppMutex = null;
+        private static Mutex mAppMutex = null;
 
         /// <summary>
         /// The main entry point for the application.
@@ -154,7 +156,6 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
-
             bool bGrantedOwnership;
             try
             {
