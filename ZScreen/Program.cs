@@ -170,8 +170,6 @@ namespace ZSS
             {
                 MultipleInstance = true;
                 mAppInfo.AppName = Application.ProductName + "*";
-                //Application.Exit();
-                //return;
             }
 
             Application.EnableVisualStyles();

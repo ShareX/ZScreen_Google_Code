@@ -1,4 +1,6 @@
-﻿Support for scrolling windows via new hotkey
+﻿Copy Text to FTP by creating a notepad file
+
+Support for scrolling windows via new hotkey
 
 Ability to rename files in 'view remote directory'
 
