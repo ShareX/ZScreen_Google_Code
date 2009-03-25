@@ -106,12 +106,17 @@ namespace ZSS
         public bool AddFailedScreenshot = false;
 
         //*********************
-        //* Image Software Settings
+        //* Image Editor Settings
         //*********************   
         public ImageSoftware ImageSoftwareActive = new ImageSoftware();
         public List<ZSS.ImageSoftware> ImageSoftwareList = new List<ImageSoftware>();
         public bool ImageSoftwareEnabled = false;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
+
+        //*********************
+        //* Text Editor Settings
+        //*********************   
+
 
         //*********************
         //* File Settings

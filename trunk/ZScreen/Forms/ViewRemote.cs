@@ -145,18 +145,7 @@ namespace ZSS
             return result;
         }
 
-        private bool checkFileTypes(string file)
-        {
-            bool b = false;
 
-            foreach (string s in Program.zImageFileTypes)
-            {
-                if (file.EndsWith(s))
-                    b = true;
-            }
-
-            return b;
-        }
 
         private void btnCopyToClip_Click(object sender, System.EventArgs e)
         {
@@ -272,7 +261,7 @@ namespace ZSS
             {
                 string fp = (string)lbFiles.SelectedItem;
 
-                if (checkFileTypes(fp))
+                if (FileSystem.IsValidImageFile(fp))
                 {
                     pbViewer.Left = 0;
                     pbViewer.Top = 0;

@@ -276,5 +276,41 @@ namespace ZSS
 
             return fName;
         }
+
+        /// <summary>
+        /// Function to check if file is a valid Image file by checking its extension
+        /// </summary>
+        /// <param name="fp"></param>
+        /// <returns></returns>
+        public static bool IsValidImageFile(string fp)
+        {
+            bool b = false;
+
+            foreach (string s in Program.zImageFileTypes)
+            {
+                if (fp.EndsWith(s))
+                    b = true;
+            }
+
+            return b;
+        }
+
+        /// <summary>
+        /// Function to check if file is a valid Text file by checking its extension
+        /// </summary>
+        /// <param name="fp"></param>
+        /// <returns></returns>
+        public static bool IsValidTextFile(string fp)
+        {
+            bool b = false;
+
+            foreach (string s in Program.zTextFileTypes)
+            {
+                if (fp.EndsWith(s))
+                    b = true;
+            }
+
+            return b;
+        }
     }
 }
