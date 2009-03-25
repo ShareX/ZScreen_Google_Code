@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace ZSS.Forms
 {
-    public partial class QuickActions : Form
+    public partial class ToolbarWindow : Form
     {
         public event JobsEventHandler EventJob;
 
-        public QuickActions()
+        public ToolbarWindow()
         {
             InitializeComponent();
         }

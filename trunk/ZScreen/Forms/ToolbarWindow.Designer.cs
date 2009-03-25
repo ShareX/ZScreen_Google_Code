@@ -1,6 +1,6 @@
 ﻿namespace ZSS.Forms
 {
-    partial class QuickActions
+    partial class ToolbarWindow
     {
         /// <summary>
         /// Required designer variable.
