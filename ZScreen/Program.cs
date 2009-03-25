@@ -137,7 +137,6 @@ namespace ZSS
         }
 
         public static XMLSettings conf = XMLSettings.Read();
-        public static ZSS.Helpers.HistoryManager history = ZSS.Helpers.HistoryManager.Read();
 
         public const string FILTER_ACCOUNTS = "ZScreen FTP Accounts(*.zfa)|*.zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";

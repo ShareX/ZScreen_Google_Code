@@ -246,17 +246,16 @@ namespace ZSS
             this.btnFTPDelete = new System.Windows.Forms.Button();
             this.gbFTPAccount = new System.Windows.Forms.GroupBox();
             this.nudFTPServerPort = new System.Windows.Forms.NumericUpDown();
-            this.gbFTPMode = new System.Windows.Forms.GroupBox();
             this.rbFTPActive = new System.Windows.Forms.RadioButton();
             this.rbFTPPassive = new System.Windows.Forms.RadioButton();
-            this.lblPort = new System.Windows.Forms.Label();
+            this.lblFTPPort = new System.Windows.Forms.Label();
             this.txtFTPServer = new System.Windows.Forms.TextBox();
-            this.lblServer = new System.Windows.Forms.Label();
+            this.lblFTPHost = new System.Windows.Forms.Label();
             this.txtFTPUsername = new System.Windows.Forms.TextBox();
-            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblFTPUsername = new System.Windows.Forms.Label();
             this.txtFTPPassword = new System.Windows.Forms.TextBox();
             this.lblHttpPath = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblFTPPassword = new System.Windows.Forms.Label();
             this.txtFTPHTTPPath = new System.Windows.Forms.TextBox();
             this.txtFTPPath = new System.Windows.Forms.TextBox();
             this.lblFtpPath = new System.Windows.Forms.Label();
@@ -396,6 +395,7 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnHistoryClear = new System.Windows.Forms.Button();
+            this.lblFTPMode = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.tpScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
@@ -446,7 +446,6 @@ namespace ZSS
             this.gbFTPAccountsList.SuspendLayout();
             this.gbFTPAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFTPServerPort)).BeginInit();
-            this.gbFTPMode.SuspendLayout();
             this.tpHotKeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpMain.SuspendLayout();
@@ -2438,9 +2437,9 @@ namespace ZSS
             this.chkEnableThumbnail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chkEnableThumbnail.Location = new System.Drawing.Point(16, 24);
             this.chkEnableThumbnail.Name = "chkEnableThumbnail";
-            this.chkEnableThumbnail.Size = new System.Drawing.Size(109, 17);
+            this.chkEnableThumbnail.Size = new System.Drawing.Size(105, 17);
             this.chkEnableThumbnail.TabIndex = 113;
-            this.chkEnableThumbnail.Text = "Create Thumbnail";
+            this.chkEnableThumbnail.Text = "Create thumbnail";
             this.chkEnableThumbnail.UseVisualStyleBackColor = false;
             this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
             // 
@@ -2596,9 +2595,9 @@ namespace ZSS
             // 
             this.gbFTPSettings.Controls.Add(this.cbAutoSwitchFTP);
             this.gbFTPSettings.Controls.Add(this.chkEnableThumbnail);
-            this.gbFTPSettings.Location = new System.Drawing.Point(400, 296);
+            this.gbFTPSettings.Location = new System.Drawing.Point(400, 288);
             this.gbFTPSettings.Name = "gbFTPSettings";
-            this.gbFTPSettings.Size = new System.Drawing.Size(368, 120);
+            this.gbFTPSettings.Size = new System.Drawing.Size(368, 128);
             this.gbFTPSettings.TabIndex = 115;
             this.gbFTPSettings.TabStop = false;
             this.gbFTPSettings.Text = "FTP Settings";
@@ -2712,11 +2711,11 @@ namespace ZSS
             // 
             this.lblFTPName.AutoSize = true;
             this.lblFTPName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblFTPName.Location = new System.Drawing.Point(16, 24);
+            this.lblFTPName.Location = new System.Drawing.Point(16, 28);
             this.lblFTPName.Name = "lblFTPName";
-            this.lblFTPName.Size = new System.Drawing.Size(35, 13);
+            this.lblFTPName.Size = new System.Drawing.Size(38, 13);
             this.lblFTPName.TabIndex = 36;
-            this.lblFTPName.Text = "Name";
+            this.lblFTPName.Text = "Name:";
             // 
             // txtFTPStatus
             // 
@@ -2755,29 +2754,31 @@ namespace ZSS
             // gbFTPAccount
             // 
             this.gbFTPAccount.BackColor = System.Drawing.Color.Transparent;
+            this.gbFTPAccount.Controls.Add(this.lblFTPMode);
+            this.gbFTPAccount.Controls.Add(this.rbFTPActive);
             this.gbFTPAccount.Controls.Add(this.nudFTPServerPort);
-            this.gbFTPAccount.Controls.Add(this.gbFTPMode);
-            this.gbFTPAccount.Controls.Add(this.lblPort);
+            this.gbFTPAccount.Controls.Add(this.rbFTPPassive);
+            this.gbFTPAccount.Controls.Add(this.lblFTPPort);
             this.gbFTPAccount.Controls.Add(this.txtFTPServer);
-            this.gbFTPAccount.Controls.Add(this.lblServer);
+            this.gbFTPAccount.Controls.Add(this.lblFTPHost);
             this.gbFTPAccount.Controls.Add(this.txtFTPUsername);
-            this.gbFTPAccount.Controls.Add(this.lblUsername);
+            this.gbFTPAccount.Controls.Add(this.lblFTPUsername);
             this.gbFTPAccount.Controls.Add(this.txtFTPPassword);
             this.gbFTPAccount.Controls.Add(this.lblHttpPath);
-            this.gbFTPAccount.Controls.Add(this.lblPassword);
+            this.gbFTPAccount.Controls.Add(this.lblFTPPassword);
             this.gbFTPAccount.Controls.Add(this.txtFTPHTTPPath);
             this.gbFTPAccount.Controls.Add(this.txtFTPPath);
             this.gbFTPAccount.Controls.Add(this.lblFtpPath);
             this.gbFTPAccount.Location = new System.Drawing.Point(400, 8);
             this.gbFTPAccount.Name = "gbFTPAccount";
-            this.gbFTPAccount.Size = new System.Drawing.Size(368, 280);
+            this.gbFTPAccount.Size = new System.Drawing.Size(368, 272);
             this.gbFTPAccount.TabIndex = 40;
             this.gbFTPAccount.TabStop = false;
             this.gbFTPAccount.Text = "FTP Account";
             // 
             // nudFTPServerPort
             // 
-            this.nudFTPServerPort.Location = new System.Drawing.Point(249, 88);
+            this.nudFTPServerPort.Location = new System.Drawing.Point(248, 80);
             this.nudFTPServerPort.Maximum = new decimal(new int[] {
             65536,
             0,
@@ -2797,26 +2798,15 @@ namespace ZSS
             0,
             0});
             // 
-            // gbFTPMode
-            // 
-            this.gbFTPMode.Controls.Add(this.rbFTPActive);
-            this.gbFTPMode.Controls.Add(this.rbFTPPassive);
-            this.gbFTPMode.Location = new System.Drawing.Point(16, 24);
-            this.gbFTPMode.Name = "gbFTPMode";
-            this.gbFTPMode.Size = new System.Drawing.Size(227, 40);
-            this.gbFTPMode.TabIndex = 33;
-            this.gbFTPMode.TabStop = false;
-            this.gbFTPMode.Text = "FTP Mode";
-            // 
             // rbFTPActive
             // 
             this.rbFTPActive.AutoSize = true;
             this.rbFTPActive.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.rbFTPActive.Location = new System.Drawing.Point(112, 16);
+            this.rbFTPActive.Location = new System.Drawing.Point(96, 40);
             this.rbFTPActive.Name = "rbFTPActive";
-            this.rbFTPActive.Size = new System.Drawing.Size(85, 17);
+            this.rbFTPActive.Size = new System.Drawing.Size(55, 17);
             this.rbFTPActive.TabIndex = 1;
-            this.rbFTPActive.Text = "Active Mode";
+            this.rbFTPActive.Text = "Active";
             this.rbFTPActive.UseVisualStyleBackColor = true;
             // 
             // rbFTPPassive
@@ -2824,61 +2814,61 @@ namespace ZSS
             this.rbFTPPassive.AutoSize = true;
             this.rbFTPPassive.Checked = true;
             this.rbFTPPassive.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.rbFTPPassive.Location = new System.Drawing.Point(16, 16);
+            this.rbFTPPassive.Location = new System.Drawing.Point(24, 40);
             this.rbFTPPassive.Name = "rbFTPPassive";
-            this.rbFTPPassive.Size = new System.Drawing.Size(92, 17);
+            this.rbFTPPassive.Size = new System.Drawing.Size(62, 17);
             this.rbFTPPassive.TabIndex = 0;
             this.rbFTPPassive.TabStop = true;
-            this.rbFTPPassive.Text = "Passive Mode";
+            this.rbFTPPassive.Text = "Passive";
             this.rbFTPPassive.UseVisualStyleBackColor = true;
             // 
-            // lblPort
+            // lblFTPPort
             // 
-            this.lblPort.AutoSize = true;
-            this.lblPort.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblPort.Location = new System.Drawing.Point(246, 71);
-            this.lblPort.Name = "lblPort";
-            this.lblPort.Size = new System.Drawing.Size(29, 13);
-            this.lblPort.TabIndex = 29;
-            this.lblPort.Text = "Port:";
+            this.lblFTPPort.AutoSize = true;
+            this.lblFTPPort.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblFTPPort.Location = new System.Drawing.Point(248, 64);
+            this.lblFTPPort.Name = "lblFTPPort";
+            this.lblFTPPort.Size = new System.Drawing.Size(29, 13);
+            this.lblFTPPort.TabIndex = 29;
+            this.lblFTPPort.Text = "Port:";
             // 
             // txtFTPServer
             // 
-            this.txtFTPServer.Location = new System.Drawing.Point(19, 87);
+            this.txtFTPServer.Location = new System.Drawing.Point(16, 80);
             this.txtFTPServer.Name = "txtFTPServer";
             this.txtFTPServer.Size = new System.Drawing.Size(224, 20);
             this.txtFTPServer.TabIndex = 1;
             // 
-            // lblServer
+            // lblFTPHost
             // 
-            this.lblServer.AutoSize = true;
-            this.lblServer.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblServer.Location = new System.Drawing.Point(16, 71);
-            this.lblServer.Name = "lblServer";
-            this.lblServer.Size = new System.Drawing.Size(64, 13);
-            this.lblServer.TabIndex = 25;
-            this.lblServer.Text = "FTP Server:";
+            this.lblFTPHost.AutoSize = true;
+            this.lblFTPHost.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblFTPHost.Location = new System.Drawing.Point(16, 64);
+            this.lblFTPHost.Name = "lblFTPHost";
+            this.lblFTPHost.Size = new System.Drawing.Size(32, 13);
+            this.lblFTPHost.TabIndex = 25;
+            this.lblFTPHost.Text = "Host:";
             // 
             // txtFTPUsername
             // 
-            this.txtFTPUsername.Location = new System.Drawing.Point(19, 126);
+            this.txtFTPUsername.Location = new System.Drawing.Point(16, 120);
             this.txtFTPUsername.Name = "txtFTPUsername";
             this.txtFTPUsername.Size = new System.Drawing.Size(224, 20);
             this.txtFTPUsername.TabIndex = 3;
             // 
-            // lblUsername
+            // lblFTPUsername
             // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblUsername.Location = new System.Drawing.Point(16, 110);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(81, 13);
-            this.lblUsername.TabIndex = 24;
-            this.lblUsername.Text = "FTP Username:";
+            this.lblFTPUsername.AutoSize = true;
+            this.lblFTPUsername.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblFTPUsername.Location = new System.Drawing.Point(16, 104);
+            this.lblFTPUsername.Name = "lblFTPUsername";
+            this.lblFTPUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblFTPUsername.TabIndex = 24;
+            this.lblFTPUsername.Text = "Username:";
             // 
             // txtFTPPassword
             // 
-            this.txtFTPPassword.Location = new System.Drawing.Point(19, 165);
+            this.txtFTPPassword.Location = new System.Drawing.Point(16, 160);
             this.txtFTPPassword.Name = "txtFTPPassword";
             this.txtFTPPassword.Size = new System.Drawing.Size(224, 20);
             this.txtFTPPassword.TabIndex = 4;
@@ -2888,32 +2878,32 @@ namespace ZSS
             // 
             this.lblHttpPath.AutoSize = true;
             this.lblHttpPath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblHttpPath.Location = new System.Drawing.Point(16, 225);
+            this.lblHttpPath.Location = new System.Drawing.Point(16, 224);
             this.lblHttpPath.Name = "lblHttpPath";
             this.lblHttpPath.Size = new System.Drawing.Size(214, 13);
             this.lblHttpPath.TabIndex = 20;
             this.lblHttpPath.Text = "HTTP Path: (ex: brandonz.net/screenshots)";
             // 
-            // lblPassword
+            // lblFTPPassword
             // 
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblPassword.Location = new System.Drawing.Point(16, 149);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(79, 13);
-            this.lblPassword.TabIndex = 23;
-            this.lblPassword.Text = "FTP Password:";
+            this.lblFTPPassword.AutoSize = true;
+            this.lblFTPPassword.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblFTPPassword.Location = new System.Drawing.Point(16, 144);
+            this.lblFTPPassword.Name = "lblFTPPassword";
+            this.lblFTPPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblFTPPassword.TabIndex = 23;
+            this.lblFTPPassword.Text = "Password:";
             // 
             // txtFTPHTTPPath
             // 
-            this.txtFTPHTTPPath.Location = new System.Drawing.Point(19, 241);
+            this.txtFTPHTTPPath.Location = new System.Drawing.Point(16, 240);
             this.txtFTPHTTPPath.Name = "txtFTPHTTPPath";
             this.txtFTPHTTPPath.Size = new System.Drawing.Size(224, 20);
             this.txtFTPHTTPPath.TabIndex = 6;
             // 
             // txtFTPPath
             // 
-            this.txtFTPPath.Location = new System.Drawing.Point(19, 204);
+            this.txtFTPPath.Location = new System.Drawing.Point(16, 200);
             this.txtFTPPath.Name = "txtFTPPath";
             this.txtFTPPath.Size = new System.Drawing.Size(224, 20);
             this.txtFTPPath.TabIndex = 5;
@@ -2922,7 +2912,7 @@ namespace ZSS
             // 
             this.lblFtpPath.AutoSize = true;
             this.lblFtpPath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblFtpPath.Location = new System.Drawing.Point(16, 188);
+            this.lblFtpPath.Location = new System.Drawing.Point(16, 184);
             this.lblFtpPath.Name = "lblFtpPath";
             this.lblFtpPath.Size = new System.Drawing.Size(200, 13);
             this.lblFtpPath.TabIndex = 22;
@@ -4488,6 +4478,15 @@ namespace ZSS
             this.btnHistoryClear.UseVisualStyleBackColor = true;
             this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
             // 
+            // lblFTPMode
+            // 
+            this.lblFTPMode.AutoSize = true;
+            this.lblFTPMode.Location = new System.Drawing.Point(16, 24);
+            this.lblFTPMode.Name = "lblFTPMode";
+            this.lblFTPMode.Size = new System.Drawing.Size(78, 13);
+            this.lblFTPMode.TabIndex = 38;
+            this.lblFTPMode.Text = "Transfer mode:";
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4580,8 +4579,6 @@ namespace ZSS
             this.gbFTPAccount.ResumeLayout(false);
             this.gbFTPAccount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFTPServerPort)).EndInit();
-            this.gbFTPMode.ResumeLayout(false);
-            this.gbFTPMode.PerformLayout();
             this.tpHotKeys.ResumeLayout(false);
             this.tpHotKeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -4676,16 +4673,16 @@ namespace ZSS
         private System.Windows.Forms.Button btnBrowseImageSoftware;
         private System.Windows.Forms.TextBox txtImageSoftwarePath;
         private System.Windows.Forms.TabPage tpFTP;
-        private System.Windows.Forms.Label lblPort;
+        private System.Windows.Forms.Label lblFTPPort;
         private System.Windows.Forms.TextBox txtFTPServer;
-        private System.Windows.Forms.Label lblServer;
+        private System.Windows.Forms.Label lblFTPHost;
         private System.Windows.Forms.TextBox txtFTPStatus;
         private System.Windows.Forms.TextBox txtFTPUsername;
         private System.Windows.Forms.Button btnFTPTest;
-        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Label lblFTPUsername;
         private System.Windows.Forms.TextBox txtFTPPassword;
         private System.Windows.Forms.Label lblHttpPath;
-        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.Label lblFTPPassword;
         private System.Windows.Forms.TextBox txtFTPHTTPPath;
         private System.Windows.Forms.Button btnFTPUpdate;
         private System.Windows.Forms.TextBox txtFTPPath;
@@ -4719,7 +4716,6 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmFileSettings;
         private System.Windows.Forms.ToolStripMenuItem tsmHistory;
         private System.Windows.Forms.CheckBox cbDeleteLocal;
-        private System.Windows.Forms.GroupBox gbFTPMode;
         private System.Windows.Forms.RadioButton rbFTPActive;
         private System.Windows.Forms.RadioButton rbFTPPassive;
         private System.Windows.Forms.Label lblFTPName;
@@ -5005,6 +5001,7 @@ namespace ZSS
         private System.Windows.Forms.GroupBox gbDropBox;
         private System.Windows.Forms.CheckBox cbCloseDropBox;
         private System.Windows.Forms.Button btnHistoryClear;
+        private System.Windows.Forms.Label lblFTPMode;
 
     }
 }

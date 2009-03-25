@@ -385,14 +385,15 @@ namespace ZSS
 
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
-            nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
+            HistoryManager history = HistoryManager.Read();
             if (lbHistory.Items.Count < 1)
             {
-                for (int i = 0; i < Program.history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
+                for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
                 {
-                    lbHistory.Items.Add(Program.history.HistoryItems[i]);
+                    lbHistory.Items.Add(history.HistoryItems[i]);
                 }
             }
+            nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
         private bool CheckKeys(HKcombo hkc, IntPtr lParam)
@@ -1424,8 +1425,8 @@ namespace ZSS
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveHistoryItems();
             Program.conf.Save();
+            SaveHistoryItems();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
