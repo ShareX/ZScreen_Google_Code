@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -220,7 +220,7 @@ namespace ZSS
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
-            this.tpImageSoftware = new System.Windows.Forms.TabPage();
+            this.tpEditors = new System.Windows.Forms.TabPage();
             this.gbImageSoftwaresList = new System.Windows.Forms.GroupBox();
             this.lblImageSoftwareName = new System.Windows.Forms.Label();
             this.btnDeleteImageSoftware = new System.Windows.Forms.Button();
@@ -398,6 +398,8 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tpEditorsImages = new System.Windows.Forms.TabPage();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
@@ -442,7 +444,7 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.txtImageQuality)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).BeginInit();
             this.gbSaveLoc.SuspendLayout();
-            this.tpImageSoftware.SuspendLayout();
+            this.tpEditors.SuspendLayout();
             this.gbImageSoftwaresList.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
@@ -486,6 +488,8 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tpEditorsImages.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1389,16 +1393,16 @@ namespace ZSS
             this.groupBox1.Size = new System.Drawing.Size(760, 56);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Quick Actions Settings";
+            this.groupBox1.Text = "Actions Toolbar Settings";
             // 
             // cbCloseQuickActions
             // 
             this.cbCloseQuickActions.AutoSize = true;
             this.cbCloseQuickActions.Location = new System.Drawing.Point(16, 24);
             this.cbCloseQuickActions.Name = "cbCloseQuickActions";
-            this.cbCloseQuickActions.Size = new System.Drawing.Size(241, 17);
+            this.cbCloseQuickActions.Size = new System.Drawing.Size(214, 17);
             this.cbCloseQuickActions.TabIndex = 0;
-            this.cbCloseQuickActions.Text = "After click action close Quick Actions window";
+            this.cbCloseQuickActions.Text = "Close Actions Toolbar after Mouse Click";
             this.cbCloseQuickActions.UseVisualStyleBackColor = true;
             this.cbCloseQuickActions.CheckedChanged += new System.EventHandler(this.cbCloseQuickActions_CheckedChanged);
             // 
@@ -1410,16 +1414,16 @@ namespace ZSS
             this.gbDropBox.Size = new System.Drawing.Size(760, 56);
             this.gbDropBox.TabIndex = 6;
             this.gbDropBox.TabStop = false;
-            this.gbDropBox.Text = "Drop Box (Drag n Drop) Settings";
+            this.gbDropBox.Text = "Drop Window Settings";
             // 
             // cbCloseDropBox
             // 
             this.cbCloseDropBox.AutoSize = true;
             this.cbCloseDropBox.Location = new System.Drawing.Point(16, 24);
             this.cbCloseDropBox.Name = "cbCloseDropBox";
-            this.cbCloseDropBox.Size = new System.Drawing.Size(180, 17);
+            this.cbCloseDropBox.Size = new System.Drawing.Size(205, 17);
             this.cbCloseDropBox.TabIndex = 0;
-            this.cbCloseDropBox.Text = "After drag n drop close Drop Box";
+            this.cbCloseDropBox.Text = "Close Drop Window after Drag n Drop";
             this.cbCloseDropBox.UseVisualStyleBackColor = true;
             this.cbCloseDropBox.CheckedChanged += new System.EventHandler(this.cbCloseDropBox_CheckedChanged);
             // 
@@ -2473,17 +2477,17 @@ namespace ZSS
             this.chkEnableThumbnail.UseVisualStyleBackColor = false;
             this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
             // 
-            // tpImageSoftware
+            // tpEditors
             // 
-            this.tpImageSoftware.Controls.Add(this.gbImageSoftwaresList);
-            this.tpImageSoftware.ImageKey = "picture_edit.png";
-            this.tpImageSoftware.Location = new System.Drawing.Point(4, 23);
-            this.tpImageSoftware.Name = "tpImageSoftware";
-            this.tpImageSoftware.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageSoftware.Size = new System.Drawing.Size(786, 428);
-            this.tpImageSoftware.TabIndex = 2;
-            this.tpImageSoftware.Text = "Image Software";
-            this.tpImageSoftware.UseVisualStyleBackColor = true;
+            this.tpEditors.Controls.Add(this.tabControl1);
+            this.tpEditors.ImageKey = "picture_edit.png";
+            this.tpEditors.Location = new System.Drawing.Point(4, 23);
+            this.tpEditors.Name = "tpEditors";
+            this.tpEditors.Padding = new System.Windows.Forms.Padding(3);
+            this.tpEditors.Size = new System.Drawing.Size(786, 428);
+            this.tpEditors.TabIndex = 2;
+            this.tpEditors.Text = "Editors";
+            this.tpEditors.UseVisualStyleBackColor = true;
             // 
             // gbImageSoftwaresList
             // 
@@ -2496,7 +2500,7 @@ namespace ZSS
             this.gbImageSoftwaresList.Controls.Add(this.btnUpdateImageSoftware);
             this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwarePath);
             this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwareName);
-            this.gbImageSoftwaresList.Location = new System.Drawing.Point(8, 8);
+            this.gbImageSoftwaresList.Location = new System.Drawing.Point(16, 16);
             this.gbImageSoftwaresList.Name = "gbImageSoftwaresList";
             this.gbImageSoftwaresList.Size = new System.Drawing.Size(704, 304);
             this.gbImageSoftwaresList.TabIndex = 63;
@@ -2989,38 +2993,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3339,7 +3343,7 @@ namespace ZSS
             this.tcApp.Controls.Add(this.tpMain);
             this.tcApp.Controls.Add(this.tpHotkeys);
             this.tcApp.Controls.Add(this.tpCapture);
-            this.tcApp.Controls.Add(this.tpImageSoftware);
+            this.tcApp.Controls.Add(this.tpEditors);
             this.tcApp.Controls.Add(this.tpFTP);
             this.tcApp.Controls.Add(this.tpHTTP);
             this.tcApp.Controls.Add(this.tpAdvanced);
@@ -4502,6 +4506,27 @@ namespace ZSS
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tpEditorsImages);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(780, 422);
+            this.tabControl1.TabIndex = 64;
+            // 
+            // tpEditorsImages
+            // 
+            this.tpEditorsImages.Controls.Add(this.gbImageSoftwaresList);
+            this.tpEditorsImages.Location = new System.Drawing.Point(4, 22);
+            this.tpEditorsImages.Name = "tpEditorsImages";
+            this.tpEditorsImages.Padding = new System.Windows.Forms.Padding(3);
+            this.tpEditorsImages.Size = new System.Drawing.Size(772, 396);
+            this.tpEditorsImages.TabIndex = 0;
+            this.tpEditorsImages.Text = "Images";
+            this.tpEditorsImages.UseVisualStyleBackColor = true;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4585,7 +4610,7 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).EndInit();
             this.gbSaveLoc.ResumeLayout(false);
             this.gbSaveLoc.PerformLayout();
-            this.tpImageSoftware.ResumeLayout(false);
+            this.tpEditors.ResumeLayout(false);
             this.gbImageSoftwaresList.ResumeLayout(false);
             this.gbImageSoftwaresList.PerformLayout();
             this.tpFTP.ResumeLayout(false);
@@ -4650,6 +4675,8 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tpEditorsImages.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -4683,7 +4710,7 @@ namespace ZSS
         private System.Windows.Forms.TextBox txtEntireScreen;
         private System.Windows.Forms.TextBox txtActiveWindow;
         private System.Windows.Forms.Button btnBrowseImagesDir;
-        private System.Windows.Forms.TabPage tpImageSoftware;
+        private System.Windows.Forms.TabPage tpEditors;
         private System.Windows.Forms.CheckBox cbStartWin;
         private System.Windows.Forms.Button btnUpdateImageSoftware;
         private System.Windows.Forms.Button btnBrowseImageSoftware;
@@ -5021,6 +5048,8 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmQuickActions;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox cbCloseQuickActions;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tpEditorsImages;
 
     }
 }
