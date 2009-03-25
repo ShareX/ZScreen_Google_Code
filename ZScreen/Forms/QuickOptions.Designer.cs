@@ -93,7 +93,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(104, 264);
+            this.btnCancel.Location = new System.Drawing.Point(200, 264);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(96, 24);
             this.btnCancel.TabIndex = 4;
@@ -103,7 +103,7 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(200, 264);
+            this.btnApply.Location = new System.Drawing.Point(104, 264);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(96, 24);
             this.btnApply.TabIndex = 5;
@@ -128,7 +128,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quick Options";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.QuickOptions_Load);
             this.Shown += new System.EventHandler(this.QuickOptions_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

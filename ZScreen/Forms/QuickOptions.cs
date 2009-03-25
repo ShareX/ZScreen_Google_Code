@@ -34,7 +34,7 @@ namespace ZSS.Forms
 {
     public partial class QuickOptions : Form
     {
-        private bool isClosing = false;
+        public event EventHandler ApplySettings;
 
         public QuickOptions()
         {
@@ -50,22 +50,14 @@ namespace ZSS.Forms
             }
         }
 
-        private void QuickOptions_Load(object sender, EventArgs e)
+        private void QuickOptions_Shown(object sender, EventArgs e)
         {
-            //this.Location = new Point(Cursor.Position.X - (this.Width / 2), Cursor.Position.Y - (this.Height / 2));
-            /*
-            foreach (ScreenshotDestType sdt in Enum.GetValues(typeof(ScreenshotDestType)))
-            {
-                lbDest.Items.Add(sdt.ToDescriptionString());                
-            }
-            foreach (ClipboardUriType cui in Enum.GetValues(typeof(ClipboardUriType)))
-            {
-                lbClipboardMode.Items.Add(cui.ToDescriptionString());
-            }
-            */
+            System.Threading.Thread.Sleep(100);
+            User32.ActivateWindow(this.Handle);
+            lbDest.Focus();
+            lbDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            lbClipboardMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
         }
-
-        public QuickOptionsPacket Result { get; private set; }
 
         private void lbDest_KeyDown(object sender, KeyEventArgs e)
         {
@@ -75,7 +67,6 @@ namespace ZSS.Forms
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
         }
@@ -87,47 +78,17 @@ namespace ZSS.Forms
 
         private void ReturnResult()
         {
-            if (lbDest.SelectedIndex > -1)
-            {
-
-                ApplyOptions();
-                this.DialogResult = DialogResult.OK;
-                isClosing = true;
-                this.Close();
-            }
+            ApplyOptions();
+            this.Close();
         }
 
         private void ApplyOptions()
         {
-            QuickOptionsPacket r = new QuickOptionsPacket();
-            r.Destination = (ImageDestType)lbDest.SelectedIndex;
-            r.ClipboardMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
-            this.Result = r;
-
-            Program.conf.ScreenshotDestMode = (ImageDestType)lbDest.SelectedIndex;
-            Program.conf.ClipboardUriMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
-        }
-
-        // I like it without closing please -- McoreD
-        //private void Destinations_Deactivate(object sender, EventArgs e)
-        //{
-        //    CloseWindow();
-        //}
-
-        private void CloseWindow()
-        {
-         if (isClosing) return;
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void QuickOptions_Shown(object sender, EventArgs e)
-        {
-            System.Threading.Thread.Sleep(100);
-            User32.ActivateWindow(this.Handle);
-            lbDest.Focus();
-            lbDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            lbClipboardMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
+            if (lbDest.SelectedIndex > -1)
+                Program.conf.ScreenshotDestMode = (ImageDestType)lbDest.SelectedIndex;
+            if (lbClipboardMode.SelectedIndex > -1)
+                Program.conf.ClipboardUriMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
+            ApplySettings(this, EventArgs.Empty);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -142,7 +103,7 @@ namespace ZSS.Forms
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            CloseWindow();
+            this.Close();
         }
     }
 }
