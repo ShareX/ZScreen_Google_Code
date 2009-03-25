@@ -528,8 +528,7 @@ namespace ZSS
                     else if (CheckKeys(Program.conf.HKQuickOptions, lParam))
                     {
                         //Quick Options
-                        Thread thr = new Thread(new ThreadStart(ShowQuickOptions));
-                        thr.Start();
+                        ShowQuickOptions();
                         return m_hID;
                     }
                     else if (CheckKeys(Program.conf.HKLanguageTranslator, lParam))
@@ -1009,6 +1008,9 @@ namespace ZSS
                 quickOptions.FormClosed += new FormClosedEventHandler(quickOptions_FormClosed);
                 quickOptions.ApplySettings += new EventHandler(quickOptions_ApplySettings);
                 quickOptions.Show();
+                Rectangle taskbar = User32.GetTaskbarRectangle();
+                quickOptions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickOptions.Width - 100,
+                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - quickOptions.Height - 10);
             }
         }
 
@@ -4263,10 +4265,12 @@ namespace ZSS
             {
                 bDropWindowOpened = true;
                 DropWindow dw = new DropWindow();
-                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width * 2, SystemInformation.PrimaryMonitorSize.Height - dw.Height * 2);
                 dw.Result += new StringsEventHandler(dw_Result);
                 dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
                 dw.Show();
+                Rectangle taskbar = User32.GetTaskbarRectangle();
+                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,
+                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - dw.Height - 10);
             }
         }
 
@@ -4341,7 +4345,6 @@ namespace ZSS
 
         private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
             btnCheckUpdate.Enabled = true;
         }
 
@@ -4416,7 +4419,9 @@ namespace ZSS
                 quickActions.EventJob += new JobsEventHandler(EventJobs);
                 quickActions.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
                 quickActions.Show();
-                quickActions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - (int)(quickActions.Width * 1.5), SystemInformation.PrimaryMonitorSize.Height - quickActions.Height * 2);
+                Rectangle taskbar = User32.GetTaskbarRectangle();
+                quickActions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickActions.Width - 100,
+                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - quickActions.Height - 10);
             }
         }
 

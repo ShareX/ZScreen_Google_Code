@@ -356,9 +356,127 @@ namespace ZSS
         }
 
         public static void ActivateWindow(IntPtr handle)
-        {            
+        {
             User32.SetForegroundWindow(handle);
-            User32.SetActiveWindow(handle);            
+            User32.SetActiveWindow(handle);
         }
+
+        #region Taskbar
+
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern uint SHAppBarMessage(int dwMessage, out APPBARDATA pData);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct APPBARDATA
+        {
+            public int cbSize;
+            public IntPtr hWnd;
+            public int uCallbackMessage;
+            public int uEdge;
+            public RECT rc;
+            public IntPtr lParam;
+        }
+
+        public enum ABMsg
+        {
+            ABM_NEW = 0,
+            ABM_REMOVE = 1,
+            ABM_QUERYPOS = 2,
+            ABM_SETPOS = 3,
+            ABM_GETSTATE = 4,
+            ABM_GETTASKBARPOS = 5,
+            ABM_ACTIVATE = 6,
+            ABM_GETAUTOHIDEBAR = 7,
+            ABM_SETAUTOHIDEBAR = 8,
+            ABM_WINDOWPOSCHANGED = 9,
+            ABM_SETSTATE = 10
+        }
+
+        public enum ABEdge
+        {
+            ABE_LEFT = 0,
+            ABE_TOP,
+            ABE_RIGHT,
+            ABE_BOTTOM
+        }
+
+        public enum ABState
+        {
+            ABS_MANUAL = 0,
+            ABS_AUTOHIDE = 1,
+            ABS_ALWAYSONTOP = 2,
+            ABS_AUTOHIDEANDONTOP = 3,
+        }
+
+        public enum TaskBarEdge
+        {
+            Bottom,
+            Top,
+            Left,
+            Right
+        }
+
+        public static Rectangle GetTaskbarRectangle()
+        {
+            APPBARDATA abd = new APPBARDATA();
+            SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, out abd);
+            return new Rectangle(abd.rc.left, abd.rc.top, abd.rc.right - abd.rc.left, abd.rc.bottom - abd.rc.top);
+        }
+
+        /// <summary>
+        /// Method returns information about the Window's TaskBar.
+        /// </summary>
+        /// <param name="taskBarEdge">Location of the TaskBar(Top,Bottom,Left,Right).</param>
+        /// <param name="height">Height of the TaskBar.</param>
+        /// <param name="autoHide">AutoHide property of the TaskBar.</param>
+        private static void GetTaskBarInfo(out TaskBarEdge taskBarEdge, out int height, out bool autoHide)
+        {
+            APPBARDATA abd = new APPBARDATA();
+
+            height = 0;
+            taskBarEdge = TaskBarEdge.Bottom;
+            autoHide = false;
+
+            uint ret = SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, out abd);
+            switch (abd.uEdge)
+            {
+                case (int)ABEdge.ABE_BOTTOM:
+                    taskBarEdge = TaskBarEdge.Bottom;
+                    height = abd.rc.bottom - abd.rc.top;
+                    break;
+                case (int)ABEdge.ABE_TOP:
+                    taskBarEdge = TaskBarEdge.Top;
+                    height = abd.rc.bottom;
+                    break;
+                case (int)ABEdge.ABE_LEFT:
+                    taskBarEdge = TaskBarEdge.Left;
+                    height = abd.rc.right - abd.rc.left;
+                    break;
+                case (int)ABEdge.ABE_RIGHT:
+                    taskBarEdge = TaskBarEdge.Right;
+                    height = abd.rc.right - abd.rc.left;
+                    break;
+            }
+
+            abd = new APPBARDATA();
+            uint uState = SHAppBarMessage((int)ABMsg.ABM_GETSTATE, out abd);
+            switch (uState)
+            {
+                case (int)ABState.ABS_ALWAYSONTOP:
+                    autoHide = false;
+                    break;
+                case (int)ABState.ABS_AUTOHIDE:
+                    autoHide = true;
+                    break;
+                case (int)ABState.ABS_AUTOHIDEANDONTOP:
+                    autoHide = true;
+                    break;
+                case (int)ABState.ABS_MANUAL:
+                    autoHide = false;
+                    break;
+            }
+        }
+
+        #endregion
     }
 }
