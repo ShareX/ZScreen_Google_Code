@@ -139,14 +139,15 @@
             this.tsbScreenColorPicker.Text = "Screen Color Picker";
             this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
             // 
-            // QuickActions
+            // ToolbarWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(185, 24);
             this.Controls.Add(this.tsQuickActions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "QuickActions";
+            this.MaximizeBox = false;
+            this.Name = "ToolbarWindow";
             this.Text = "Quick Actions";
             this.TopMost = true;
             this.tsQuickActions.ResumeLayout(false);
