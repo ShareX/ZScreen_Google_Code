@@ -2521,7 +2521,7 @@ namespace ZSS
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    cbFilePath = Path.Combine(Program.conf.ImagesDir, NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                    cbFilePath = Path.Combine(Program.conf.TextDir, NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
                     File.WriteAllText(cbFilePath, Clipboard.GetText());
                     cbListFilePath.Add(cbFilePath);
                 }
@@ -2535,7 +2535,10 @@ namespace ZSS
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return cbListFilePath;
         }
