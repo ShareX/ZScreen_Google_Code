@@ -187,7 +187,7 @@ namespace ZSS
 
         public static void ConfigureDirs()
         {
-            // Settings
+            // Settings         
             if (string.IsNullOrEmpty(Program.conf.SettingsDir))
             {
                 conf.SettingsDir = DefaultSettingsFolder;
@@ -204,6 +204,15 @@ namespace ZSS
             if (!Directory.Exists(conf.ImagesDir))
             {
                 Directory.CreateDirectory(DefaultImagesFolder);
+            }
+            // Text
+            if (string.IsNullOrEmpty(conf.TextDir))
+            {
+                conf.TextDir = DefaultTextFolder;
+            }
+            if (!Directory.Exists(conf.TextDir))
+            {
+                Directory.CreateDirectory(DefaultTextFolder);
             }
             // Cache
             if (string.IsNullOrEmpty(Program.conf.CacheDir))
