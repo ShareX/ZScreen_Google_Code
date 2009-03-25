@@ -4415,7 +4415,7 @@ namespace ZSS
             if (!bQuickActionsOpened)
             {
                 bQuickActionsOpened = true;
-                QuickActions quickActions = new QuickActions();
+                ToolbarWindow quickActions = new ToolbarWindow();
                 quickActions.Icon = Properties.Resources.zss_main;
                 quickActions.EventJob += new JobsEventHandler(EventJobs);
                 quickActions.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
