@@ -37,11 +37,4 @@ namespace ZSS
         public int right { get; set; }
         public int bottom { get; set; }
     }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct QuickOptionsPacket
-    {
-        public ImageDestType Destination { get; set; }
-        public ClipboardUriType ClipboardMode { get; set; }
-    }
 }

@@ -519,9 +519,15 @@ namespace ZSS
                         ShowDropWindow();
                         return m_hID;
                     }
+                    else if (CheckKeys(Program.conf.HKQuickActions, lParam))
+                    {
+                        //Quick Actions
+                        ShowQuickActions();
+                        return m_hID;
+                    }
                     else if (CheckKeys(Program.conf.HKQuickOptions, lParam))
                     {
-                        //ShowQuickOptions();
+                        //Quick Options
                         Thread thr = new Thread(new ThreadStart(ShowQuickOptions));
                         thr.Start();
                         return m_hID;
@@ -998,24 +1004,23 @@ namespace ZSS
             if (!bQuickOptionsOpened)
             {
                 bQuickOptionsOpened = true;
-                QuickOptions fDes = new QuickOptions();
-                fDes.Icon = Properties.Resources.zss_main;
-                fDes.ShowDialog();
-                if (fDes.DialogResult == DialogResult.OK)
-                {
-                    BeginInvoke(new SetIndexes(SetIndexesMethod),
-                        new object[] { (int)fDes.Result.Destination, (int)fDes.Result.ClipboardMode });
-                }
-                bQuickOptionsOpened = false;
+                QuickOptions quickOptions = new QuickOptions();
+                quickOptions.Icon = Properties.Resources.zss_main;
+                quickOptions.FormClosed += new FormClosedEventHandler(quickOptions_FormClosed);
+                quickOptions.ApplySettings += new EventHandler(quickOptions_ApplySettings);
+                quickOptions.Show();
             }
         }
 
-        public delegate void SetIndexes(int x, int y);
-
-        private void SetIndexesMethod(int destination, int clipboardMode)
+        private void quickOptions_ApplySettings(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = destination;
-            cboClipboardTextMode.SelectedIndex = clipboardMode;
+            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
+        }
+
+        private void quickOptions_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bQuickOptionsOpened = false;
         }
 
         private BackgroundWorker CreateWorker()
@@ -2930,6 +2935,7 @@ namespace ZSS
             dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HKCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HKLastCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HKClipboardUpload });
+            dgvHotkeys.Rows.Add(new object[] { "Quick Actions", Program.conf.HKQuickActions });
             dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HKQuickOptions });
             dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HKDropWindow });
             dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HKLanguageTranslator });
@@ -2942,34 +2948,37 @@ namespace ZSS
         {
             switch (row)
             {
-                case 0: //active window
+                case 0: //Active Window
                     Program.conf.HKActiveWindow = hkc;
                     break;
-                case 1: //selected window
+                case 1: //Selected Window
                     Program.conf.HKSelectedWindow = hkc;
                     break;
-                case 2: //entire screen
+                case 2: //Entire Screen
                     Program.conf.HKEntireScreen = hkc;
                     break;
-                case 3: //crop shot
+                case 3: //Crop Shot
                     Program.conf.HKCropShot = hkc;
                     break;
-                case 4: //last crop shot
+                case 4: //Last Crop Shot
                     Program.conf.HKLastCropShot = hkc;
                     break;
-                case 5: //clipboard upload
+                case 5: //Clipboard Upload
                     Program.conf.HKClipboardUpload = hkc;
                     break;
-                case 6: //select quick options
+                case 6: //Quick Actions
+                    Program.conf.HKQuickActions = hkc;
+                    break;
+                case 7: //Quick Options
                     Program.conf.HKQuickOptions = hkc;
                     break;
-                case 7: //drop window
+                case 8: //Drag & Drop Window
                     Program.conf.HKDropWindow = hkc;
                     break;
-                case 8: //language translator
+                case 9: //Language Translator
                     Program.conf.HKLanguageTranslator = hkc;
                     break;
-                case 9: //screen color picker
+                case 10: //Screen Color Picker
                     Program.conf.HKScreenColorPicker = hkc;
                     break;
             }
