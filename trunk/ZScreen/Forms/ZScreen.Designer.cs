@@ -706,7 +706,7 @@ namespace ZSS
             this.tsmActions.Image = global::ZSS.Properties.Resources.lightning;
             this.tsmActions.Name = "tsmActions";
             this.tsmActions.Size = new System.Drawing.Size(205, 22);
-            this.tsmActions.Text = "&Actions";
+            this.tsmActions.Text = "Quick &Actions";
             // 
             // tsmEntireScreen
             // 
@@ -782,7 +782,7 @@ namespace ZSS
             this.tsmQuickActions.Image = global::ZSS.Properties.Resources.application_lightning;
             this.tsmQuickActions.Name = "tsmQuickActions";
             this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
-            this.tsmQuickActions.Text = "Toolbar...";
+            this.tsmQuickActions.Text = "Actions Toolbar...";
             this.tsmQuickActions.Click += new System.EventHandler(this.tsmQuickActions_Click);
             // 
             // tsmQuickOptions
