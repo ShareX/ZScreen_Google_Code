@@ -108,15 +108,17 @@ namespace ZSS
         //*********************
         //* Image Editor Settings
         //*********************   
-        public ImageSoftware ImageSoftwareActive = new ImageSoftware();
-        public List<ZSS.ImageSoftware> ImageSoftwareList = new List<ImageSoftware>();
+        public Software ImageSoftwareActive = new Software();
+        public List<ZSS.Software> ImageSoftwareList = new List<Software>();
         public bool ImageSoftwareEnabled = false;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
 
         //*********************
         //* Text Editor Settings
         //*********************   
-
+        public Software TextEditorActive = new Software();
+        public List<Software> TextEditors = new List<Software>();
+        public bool TextEditorEnabled = false; 
 
         //*********************
         //* File Settings

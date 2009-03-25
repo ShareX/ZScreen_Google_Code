@@ -258,19 +258,24 @@ namespace ZSS
 
             if (Program.conf.ImageSoftwareActive == null)
             {
-                Program.conf.ImageSoftwareActive = new ImageSoftware();
-                Program.conf.ImageSoftwareActive.Name = "MS Paint";
+                Program.conf.ImageSoftwareActive = new Software();
+                Program.conf.ImageSoftwareActive.Name = "Paint";
                 Program.conf.ImageSoftwareActive.Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe");
             }
             if (Program.conf.ImageSoftwareList.Count == 0)
             {
                 Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
             }
-            FindImageSoftwares();
+            FindImageEditors();
+
+            if (Program.conf.TextEditors.Count == 0)
+            {
+                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe")));
+            }
 
             lbImageSoftware.Items.Clear();
             lbImageSoftware.Items.Add("Disabled");
-            foreach (ImageSoftware app in Program.conf.ImageSoftwareList)
+            foreach (Software app in Program.conf.ImageSoftwareList)
             {
                 lbImageSoftware.Items.Add(app.Name);
             }
@@ -719,23 +724,7 @@ namespace ZSS
         }
 
 
-        /// <summary>
-        /// Edit Image in selected Image Editor
-        /// </summary>
-        /// <param name="task"></param>
-        private void ImageEdit(ref MainAppTask task)
-        {
-            if (File.Exists(task.ImageLocalPath))
-            {
-                Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.ImageSoftwareActive.Path);
-                psi.Arguments = string.Format("{0}{1}{0}", "\"", task.ImageLocalPath);
-                p.StartInfo = psi;
-                p.Start();
-                // Wait till user quits the ScreenshotEditApp
-                p.WaitForExit();
-            }
-        }
+ 
 
         /// <summary>
         /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
@@ -745,12 +734,13 @@ namespace ZSS
         {
             if (task.MyImage != null && Program.conf.ImageSoftwareEnabled)
             {
-                ImageEdit(ref task);
+                TaskManager tm = new TaskManager(ref task);
+                tm.ImageEdit();
             }
 
             if (task.SafeToUpload())
             {
-                Console.WriteLine("File for HDD: " + task.ImageLocalPath);
+                Console.WriteLine("File for HDD: " + task.LocalFilePath);
                 UploadImage(ref task);
             }
         }
@@ -776,20 +766,20 @@ namespace ZSS
         {
             try
             {
-                string fullFilePath = task.ImageLocalPath;
+                string fullFilePath = task.LocalFilePath;
 
                 if (CheckFTPAccounts() && File.Exists(fullFilePath))
                 {
                     FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
-                    task.ImageDestinationName = acc.Name;
+                    task.DestinationName = acc.Name;
 
-                    FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.ImageName, acc.Server));
+                    FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
 
                     ImageUploader.FTPUploader fu = new ZSS.ImageUploader.FTPUploader(acc);
                     fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.EnableThumbnail; // = true; // ideally this shold be true
                     fu.WorkingDir = Program.conf.CacheDir;
                     task.ImageManager = fu.UploadImage(fullFilePath);
-                    task.ImageRemotePath = acc.getUriPath(Path.GetFileName(task.ImageLocalPath));
+                    task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
                     return true;
                 }
                 else
@@ -813,7 +803,7 @@ namespace ZSS
             switch (task.ImageDestCategory)
             {
                 case ImageDestType.CLIPBOARD:
-                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, task.ImageLocalPath);
+                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, task.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:
                     if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
@@ -835,8 +825,8 @@ namespace ZSS
 
             if (imageUploader != null)
             {
-                task.ImageDestinationName = imageUploader.Name;
-                string fullFilePath = task.ImageLocalPath;
+                task.DestinationName = imageUploader.Name;
+                string fullFilePath = task.LocalFilePath;
                 if (File.Exists(fullFilePath))
                 {
                     for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
@@ -852,7 +842,7 @@ namespace ZSS
                     }
 
                     //Set remote path for Screenshots history
-                    task.ImageRemotePath = task.ImageManager.GetFullImageUrl();
+                    task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
                 }
             }
 
@@ -892,10 +882,10 @@ namespace ZSS
                 switch (t.ImageDestCategory)
                 {
                     case ImageDestType.FTP:
-                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName));
+                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.ToDescriptionString(), t.DestinationName));
                         break;
                     case ImageDestType.CUSTOM_UPLOADER:
-                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName));
+                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.ToDescriptionString(), t.DestinationName));
                         break;
                     default:
                         sbMsg.AppendLine(string.Format("Destination: {0}", t.ImageDestCategory.ToDescriptionString()));
@@ -907,24 +897,24 @@ namespace ZSS
                 if (t.ImageDestCategory == ImageDestType.CLIPBOARD || t.ImageDestCategory == ImageDestType.FILE)
                 {
                     // just local file 
-                    if (!string.IsNullOrEmpty(t.ImageName.ToString()))
+                    if (!string.IsNullOrEmpty(t.FileName.ToString()))
                     {
-                        sbMsg.AppendLine("Name: " + t.ImageName.ToString());
+                        sbMsg.AppendLine("Name: " + t.FileName.ToString());
                     }
-                    fileOrUrl = string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.ImageLocalPath);
+                    fileOrUrl = string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.LocalFilePath);
                 }
                 else
                 {
                     // remote file
-                    if (!string.IsNullOrEmpty(t.ImageRemotePath))
+                    if (!string.IsNullOrEmpty(t.RemoteFilePath))
                     {
-                        if (!string.IsNullOrEmpty(t.ImageName.ToString()))
+                        if (!string.IsNullOrEmpty(t.FileName.ToString()))
                         {
-                            sbMsg.AppendLine("Name: " + t.ImageName.ToString());
+                            sbMsg.AppendLine("Name: " + t.FileName.ToString());
                         }
-                        fileOrUrl = string.Format("URL: {0}", t.ImageRemotePath);
+                        fileOrUrl = string.Format("URL: {0}", t.RemoteFilePath);
 
-                        if (string.IsNullOrEmpty(t.ImageRemotePath) && t.Errors.Count > 0)
+                        if (string.IsNullOrEmpty(t.RemoteFilePath) && t.Errors.Count > 0)
                         {
                             tti = ToolTipIcon.Warning;
                             sbMsg.AppendLine("Warnings: ");
@@ -983,7 +973,7 @@ namespace ZSS
                         break;
                 }
                 // Update LocalFilePath again, due to possible PNG to JPG changes
-                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, t.ImageLocalPath));
+                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, t.LocalFilePath));
 
             }
         }
@@ -1272,12 +1262,12 @@ namespace ZSS
                                         {
                                             if (t.ImageManager.GetFullImageUrl() != "")
                                             {
-                                                txtUploadersLog.AppendText(t.ImageDestinationName + " full image: " +
+                                                txtUploadersLog.AppendText(t.DestinationName + " full image: " +
                                                     t.ImageManager.GetFullImageUrl() + "\r\n");
                                             }
                                             if (t.ImageManager.GetThumbnailUrl() != "")
                                             {
-                                                txtUploadersLog.AppendText(t.ImageDestinationName + " thumbnail: " +
+                                                txtUploadersLog.AppendText(t.DestinationName + " thumbnail: " +
                                                     t.ImageManager.GetThumbnailUrl() + "\r\n");
                                             }
                                         }
@@ -1286,9 +1276,9 @@ namespace ZSS
                                 }
                                 if (Program.conf.DeleteLocal)
                                 {
-                                    if (File.Exists(t.ImageLocalPath))
+                                    if (File.Exists(t.LocalFilePath))
                                     {
-                                        File.Delete(t.ImageLocalPath);
+                                        File.Delete(t.LocalFilePath);
                                     }
                                 }
                                 break;
@@ -1318,7 +1308,7 @@ namespace ZSS
                         niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.ImageLocalPath))
+                    if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.LocalFilePath))
                     {
                         if (Program.conf.CompleteSound)
                         {
@@ -1356,8 +1346,8 @@ namespace ZSS
             {
                 MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
                 task.JobCategory = t.JobCategory;
-                task.SetImage(t.ImageLocalPath);
-                task.SetLocalFilePath(t.ImageLocalPath);
+                task.SetImage(t.LocalFilePath);
+                task.SetLocalFilePath(t.LocalFilePath);
                 if (t.ImageDestCategory == ImageDestType.IMAGESHACK)
                 {
                     task.ImageDestCategory = ImageDestType.TINYPIC;
@@ -1487,7 +1477,7 @@ namespace ZSS
 
                 tsmImageSoftware.DropDownItems.Clear();
 
-                List<ImageSoftware> imgs = Program.conf.ImageSoftwareList;
+                List<Software> imgs = Program.conf.ImageSoftwareList;
 
                 ToolStripMenuItem tsm;
 
@@ -1792,7 +1782,7 @@ namespace ZSS
             }
         }
 
-        private void FindImageSoftwares()
+        private void FindImageEditors()
         {
             //Adobe Photoshop - HKEY_CLASSES_ROOT\Applications\Photoshop.exe\shell\open\command
             SoftwareCheck(@"Applications\Photoshop.exe\shell\open\command", "Adobe Photoshop");
@@ -1815,7 +1805,7 @@ namespace ZSS
                     {
                         if (!SoftwareExist(sName)) //If not added to Software list before
                         {
-                            Program.conf.ImageSoftwareList.Add(new ImageSoftware(sName, filePath));
+                            Program.conf.ImageSoftwareList.Add(new Software(sName, filePath));
                         }
                         return true;
                     }
@@ -1827,7 +1817,7 @@ namespace ZSS
 
         private bool SoftwareExist(string sName)
         {
-            foreach (ImageSoftware iS in Program.conf.ImageSoftwareList)
+            foreach (Software iS in Program.conf.ImageSoftwareList)
             {
                 if (iS.Name == sName) return true;
             }
@@ -1838,7 +1828,7 @@ namespace ZSS
         {
             if (SoftwareExist(sName))
             {
-                foreach (ImageSoftware iS in Program.conf.ImageSoftwareList)
+                foreach (Software iS in Program.conf.ImageSoftwareList)
                 {
                     if (iS.Name == sName)
                     {
@@ -1916,7 +1906,7 @@ namespace ZSS
                 {
                     if (Program.conf.ImageSoftwareActive.Name == (string)lbImageSoftware.SelectedItem)
                         isActiveImageSoftware = true;
-                    ImageSoftware temp = new ImageSoftware();
+                    Software temp = new Software();
                     temp.Name = txtImageSoftwareName.Text;
                     temp.Path = txtImageSoftwarePath.Text;
                     Program.conf.ImageSoftwareList[sel - 1] = temp;
@@ -2246,7 +2236,7 @@ namespace ZSS
                 {
                     if (!string.IsNullOrEmpty(txtImageSoftwarePath.Text))
                     {
-                        ImageSoftware temp = new ImageSoftware();
+                        Software temp = new Software();
                         temp.Name = txtImageSoftwareName.Text;
                         temp.Path = txtImageSoftwarePath.Text;
                         Program.conf.ImageSoftwareList.Add(temp);
@@ -2276,7 +2266,7 @@ namespace ZSS
                     wasActiveSetLower = lbImageSoftware.SelectedIndex - 1;
                 }
 
-                ImageSoftware temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
                 if (temp != null)
                 {
                     Program.conf.ImageSoftwareList.Remove(temp);
@@ -2401,7 +2391,7 @@ namespace ZSS
             }
             else if (b)
             {
-                ImageSoftware temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
                 if (temp != null)
                 {
                     txtImageSoftwareName.Text = temp.Name;
@@ -2636,14 +2626,14 @@ namespace ZSS
                                 {
                                     case ImageDestType.FILE:
                                     case ImageDestType.CLIPBOARD:
-                                        cbString = t.ImageLocalPath;
+                                        cbString = t.LocalFilePath;
                                         if (!string.IsNullOrEmpty(cbString))
                                         {
                                             Process.Start(cbString);
                                         }
                                         break;
                                     default:
-                                        cbString = t.ImageRemotePath;
+                                        cbString = t.RemoteFilePath;
                                         if (!string.IsNullOrEmpty(cbString))
                                         {
                                             Process.Start(cbString);
@@ -3276,7 +3266,7 @@ namespace ZSS
 
             try
             {
-                Image.FromFile(task.ImageLocalPath).Dispose();
+                Image.FromFile(task.LocalFilePath).Dispose();
             }
             catch (OutOfMemoryException ex)
             {
@@ -4297,9 +4287,9 @@ namespace ZSS
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ImageSoftware GetImageSoftware(string name)
+        public static Software GetImageSoftware(string name)
         {
-            foreach (ImageSoftware app in Program.conf.ImageSoftwareList)
+            foreach (Software app in Program.conf.ImageSoftwareList)
             {
                 if (app.Name.Equals(name))
                     return app;

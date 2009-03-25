@@ -111,19 +111,19 @@ namespace ZSS.Tasks
         /// <summary>
         /// Name of the Image
         /// </summary>                
-        public StringBuilder ImageName { get; set; }
+        public StringBuilder FileName { get; set; }
         /// <summary>
-        /// Local file path of the Image: Picture or Screenshot
+        /// Local file path of the Image: Picture or Screenshot or Text file
         /// </summary>
-        public string ImageLocalPath { get; private set; }
+        public string LocalFilePath { get; private set; }
         /// <summary>
-        /// URL of the Image: Picture or Screenshot
+        /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
-        public string ImageRemotePath { get; set; }
+        public string RemoteFilePath { get; set; }
         /// <summary>
         /// FTP Account Name, TinyPic, ImageShack, xs.to
         /// </summary>
-        public string ImageDestinationName { get; set; }
+        public string DestinationName { get; set; }
         /// <summary>
         /// FTP, HTTP: TinyPic, ImageShack
         /// </summary>
@@ -176,8 +176,8 @@ namespace ZSS.Tasks
 
         public void SetLocalFilePath(string fp)
         {
-            this.ImageLocalPath = fp;
-            this.ImageName = new StringBuilder(Path.GetFileName(fp));
+            this.LocalFilePath = fp;
+            this.FileName = new StringBuilder(Path.GetFileName(fp));
         }
 
         #region "Functions"
