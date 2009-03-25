@@ -37,26 +37,28 @@ namespace ZSS.Tasks
 
         public enum Jobs
         {
-            [Description("Custom Uploader Test")]
-            CUSTOM_UPLOADER_TEST,
+            [Description("Entire Screen")]
+            TAKE_SCREENSHOT_SCREEN,
             [Description("Active Window")]
             TAKE_SCREENSHOT_WINDOW_ACTIVE,
             [Description("Selected Window")]
             TAKE_SCREENSHOT_WINDOW_SELECTED,
-            [Description("Cropped Window")]
+            [Description("Crop Shot")]
             TAKE_SCREENSHOT_CROPPED,
-            [Description("Cropped Window")]
+            [Description("Last Crop Shot")]
             TAKE_SCREENSHOT_LAST_CROPPED,
-            [Description("Fullscreen")]
-            TAKE_SCREENSHOT_SCREEN,
-            [Description("Drag and Drop")]
-            PROCESS_DRAG_N_DROP,
-            [Description("Upload from Clipboard")]
+            [Description("Clipboard Upload")]
             UPLOAD_FROM_CLIPBOARD,
+            [Description("Drag & Drop Window")]
+            PROCESS_DRAG_N_DROP,
             [Description("Language Translator")]
             LANGUAGE_TRANSLATOR,
+            [Description("Screen Color Picker")]
+            SCREEN_COLOR_PICKER,
             [Description("Upload Image")]
-            UPLOAD_IMAGE
+            UPLOAD_IMAGE,
+            [Description("Custom Uploader Test")]
+            CUSTOM_UPLOADER_TEST
         }
 
         public enum ProgressType

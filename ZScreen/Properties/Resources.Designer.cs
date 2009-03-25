@@ -74,6 +74,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_lightning {
+            get {
+                object obj = ResourceManager.GetObject("application_lightning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap camera {
             get {
                 object obj = ResourceManager.GetObject("camera", resourceCulture);
@@ -278,17 +285,18 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Support for scrolling windows via new hotkey
+        ///   Looks up a localized string similar to 
+        ///- Support for scrolling windows via new hotkey
         ///
-        ///Ability to rename files in &apos;view remote directory&apos;
+        ///- Ability to rename files in &apos;view remote directory&apos;
         ///
-        ///Timer: take full screen shot ever 5 seconds
+        ///- Timer: take full screen shot every .. seconds
         ///
-        ///Option to have Watermark in the middle
+        ///- Option to have Watermark in the middle
         ///
-        ///Send to -&gt; Printer
+        ///- Send to -&gt; Printer
         ///
-        ///Support for &quot;sets&quot; via right-click menu which allows creation of a new directory in your previously specified path automatically using two controls &quot;Start Set&quot; and &quot;End Set.&quot; Optionally run image editing software for each individual image. Optionally have the directory pop up in explorer after you  [rest of string was truncated]&quot;;.
+        ///- Support for &quot;sets&quot; via right-click menu which allows creation of a new directory in your previously specified path automatically using two controls &quot;Start Set&quot; and &quot;End Set.&quot; Optionally run image editing software for each individual image. Optionally have the directory pop up in exp [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TODO {
             get {
@@ -297,7 +305,8 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
+        ///   Looks up a localized string similar to 2.5.0.0 History items are now retrievable from Settings\History.xml
+        ///2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
         ///
         ///Version 2.4 - 20090321
         ///
@@ -305,8 +314,7 @@ namespace ZSS.Properties {
         ///2.3.1.0 Adding failed tasks to History tab is now optional
         ///2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
         ///2.2.0.0 Screen Color Picker in Tray menu &gt; Actions
-        ///2.1.1.0 Colors are chosen using an enhanced ColorDialog box
-        ///2.1.0.2 Remote Viewer is not restricted [rest of string was truncated]&quot;;.
+        ///2.1.1.0 Colors are chosen using [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {
