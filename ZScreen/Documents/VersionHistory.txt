@@ -1,3 +1,4 @@
+2.5.0.1 Fixed a bug related to copying multiple image URLs in History tab
 2.5.0.0 History items are now retrievable from Settings\History.xml
 2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
 
