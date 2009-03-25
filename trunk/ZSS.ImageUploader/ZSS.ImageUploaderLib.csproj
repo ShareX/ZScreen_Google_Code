@@ -53,14 +53,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FTPUploader.cs" />
     <Compile Include="Global\Enums.cs" />
-    <Compile Include="Helpers\FTPAccountManager.cs" />
     <Compile Include="Helpers\ImageFileManager.cs" />
     <Compile Include="Helpers\ImageHostingServiceManager.cs" />
     <Compile Include="HTTP\CustomUploader.cs" />
-    <Compile Include="Helpers\FTP.cs" />
-    <Compile Include="Helpers\FTPAccount.cs" />
-    <Compile Include="FTPUploader.cs" />
     <Compile Include="HTTP\FlickrUploader.cs" />
     <Compile Include="Helpers\ImageFile.cs" />
     <Compile Include="HTTP\ImageShackUploader.cs" />
@@ -72,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="VersionHistory.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
+      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
+      <Name>ZSS.FTPUploaderLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

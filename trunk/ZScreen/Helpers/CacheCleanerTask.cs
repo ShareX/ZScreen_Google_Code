@@ -72,7 +72,7 @@ namespace ZSS.Tasks
                 }
                  */
                 //include all supported file types
-                foreach (string s in Program.mFileTypes)
+                foreach (string s in Program.zImageFileTypes)
                 {
                     string[] tmpFiles = Directory.GetFiles(mCacheDir, "*." + s, SearchOption.AllDirectories);
                     foreach (string f in tmpFiles)

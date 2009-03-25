@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageUploader", "ZSS.ImageUploader\ZSS.ImageUploader.csproj", "{223EC461-C070-4FF3-ADE7-92BC21AE66FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageUploaderLib", "ZSS.ImageUploader\ZSS.ImageUploaderLib.csproj", "{223EC461-C070-4FF3-ADE7-92BC21AE66FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploader", "ZSS.TextUploader\ZSS.TextUploader.csproj", "{04DEED7C-450E-4C12-9586-040448FC6DD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploaderLib", "ZSS.TextUploader\ZSS.TextUploaderLib.csproj", "{04DEED7C-450E-4C12-9586-040448FC6DD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Colors", "ZSS.Colors\ZSS.Colors.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UpdateChecker", "ZSS.UpdateChecker\ZSS.UpdateChecker.csproj", "{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UpdateCheckerLib", "ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj", "{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPUploaderLib", "ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj", "{6856E9A8-E067-49EE-8F58-DA3985295F53}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -52,6 +54,12 @@ Global
 		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Inno|Any CPU.Build.0 = Release|Any CPU
 		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
