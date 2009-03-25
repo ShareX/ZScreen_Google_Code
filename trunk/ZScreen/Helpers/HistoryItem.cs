@@ -53,9 +53,9 @@ namespace ZSS.Helpers
         public HistoryItem(MainAppTask task)
         {
             this.JobName = task.Job.ToDescriptionString();
-            this.FileName = task.ImageName.ToString();
-            this.LocalPath = task.ImageLocalPath;
-            this.RemotePath = task.ImageRemotePath;
+            this.FileName = task.FileName.ToString();
+            this.LocalPath = task.LocalFilePath;
+            this.RemotePath = task.RemoteFilePath;
             this.DestinationMode = task.ImageDestCategory.ToDescriptionString();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.ImageManager;
@@ -77,7 +77,7 @@ namespace ZSS.Helpers
             {
                 case ImageDestType.FTP:
                 case ImageDestType.CUSTOM_UPLOADER:
-                    return string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.ImageDestinationName);
+                    return string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.DestinationName);
                 default:
                     return string.Format("{0}", t.ImageDestCategory.ToDescriptionString());
             }

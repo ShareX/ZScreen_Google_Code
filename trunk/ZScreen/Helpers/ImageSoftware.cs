@@ -29,11 +29,11 @@ using System.Xml.Serialization;
 
 namespace ZSS
 {
-    public class ImageSoftware
+    public class Software
     {
-        public ImageSoftware() { }
+        public Software() { }
 
-        public ImageSoftware(string sName, string sPath)
+        public Software(string sName, string sPath)
         {
             Name = sName;
             Path = sPath;
