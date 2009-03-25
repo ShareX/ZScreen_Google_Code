@@ -84,6 +84,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\QuickActions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuickActions.Designer.cs">
+      <DependentUpon>QuickActions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ShowScreenshot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,8 +297,12 @@
     <EmbeddedResource Include="Documents\TODO.txt" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <EmbeddedResource Include="Documents\License.txt" />
+    <EmbeddedResource Include="Forms\QuickActions.resx">
+      <DependentUpon>QuickActions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
     <None Include="main.png" />
+    <None Include="Resources\application_lightning.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

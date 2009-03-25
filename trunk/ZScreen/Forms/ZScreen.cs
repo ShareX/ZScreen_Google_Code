@@ -68,6 +68,7 @@ namespace ZSS
         private const int mWM_SYSKEYDOWN = 0x0104;
         private bool bQuickOptionsOpened = false;
         private bool bDropWindowOpened = false;
+        private bool bQuickActionsOpened = false;
         public int startHeight;
         //public List<Control> ZScreenControls;
         public ContextMenuStrip codesMenu = new ContextMenuStrip();
@@ -127,7 +128,7 @@ namespace ZSS
             }
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
-            AddToClipboardByDoubleClick(tpScreenshots);
+            AddToClipboardByDoubleClick(tpHistory);
 
             // Set Active Help Tags
             ActiveHelpTagsConfig();
@@ -141,7 +142,7 @@ namespace ZSS
             CreateCodesMenu();
 
             //Need better solution for this
-            dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotKeys.BackColor.R, tpHotKeys.BackColor.G, tpHotKeys.BackColor.B);
+            dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
         }
 
         private void SetupScreen()
@@ -724,7 +725,7 @@ namespace ZSS
         }
 
 
- 
+
 
         /// <summary>
         /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
@@ -997,15 +998,13 @@ namespace ZSS
             if (!bQuickOptionsOpened)
             {
                 bQuickOptionsOpened = true;
-                Forms.QuickOptions fDes = new ZSS.Forms.QuickOptions();
+                QuickOptions fDes = new QuickOptions();
                 fDes.Icon = Properties.Resources.zss_main;
                 fDes.ShowDialog();
                 if (fDes.DialogResult == DialogResult.OK)
                 {
                     BeginInvoke(new SetIndexes(SetIndexesMethod),
-                        new object[] { (int)fDes.Result.Destination, 
-                                       (int)fDes.Result.ClipboardMode }
-                                );
+                        new object[] { (int)fDes.Result.Destination, (int)fDes.Result.ClipboardMode });
                 }
                 bQuickOptionsOpened = false;
             }
@@ -1473,25 +1472,25 @@ namespace ZSS
         {
             if (Program.conf.ImageSoftwareList != null)
             {
-                tsmImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
-                tsmImageSoftware.DropDownItems.Clear();
+                tsmEditinImageSoftware.DropDownItems.Clear();
 
                 List<Software> imgs = Program.conf.ImageSoftwareList;
 
                 ToolStripMenuItem tsm;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                tsmImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 tsm = new ToolStripMenuItem();
                 tsm.Text = "Disabled";
                 tsm.CheckOnClick = true;
                 tsm.Click += new EventHandler(disableImageSoftware_Click);
 
-                tsmImageSoftware.DropDownItems.Add(tsm);
+                tsmEditinImageSoftware.DropDownItems.Add(tsm);
 
-                tsmImageSoftware.DropDownItems.Add(new ToolStripSeparator());
+                tsmEditinImageSoftware.DropDownItems.Add(new ToolStripSeparator());
 
                 for (int x = 0; x < imgs.Count; x++)
                 {
@@ -1503,7 +1502,7 @@ namespace ZSS
                     tsm.Click += new EventHandler(rightClickISItem_Click);
 
                     tsm.Text = imgs[x].Name;
-                    tsmImageSoftware.DropDownItems.Add(tsm);
+                    tsmEditinImageSoftware.DropDownItems.Add(tsm);
                 }
 
                 //check the active ftpUpload account
@@ -1511,15 +1510,15 @@ namespace ZSS
                 if (Program.conf.ImageSoftwareEnabled)
                     CheckCorrectISRightClickMenu(Program.conf.ImageSoftwareActive.Name);
                 else
-                    CheckCorrectISRightClickMenu(tsmImageSoftware.DropDownItems[0].Text);
+                    CheckCorrectISRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text);
 
-                tsmImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
-                if (tsmImageSoftware.Selected == true)
+                if (tsmEditinImageSoftware.Selected == true)
                 {
-                    tsmImageSoftware.DropDown.Hide();
-                    tsmImageSoftware.DropDown.Show();
+                    tsmEditinImageSoftware.DropDown.Hide();
+                    tsmEditinImageSoftware.DropDown.Show();
                 }
             }
         }
@@ -1531,7 +1530,7 @@ namespace ZSS
             //select "Disabled"
             lbImageSoftware.SelectedIndex = 0;
 
-            CheckCorrectISRightClickMenu(tsmImageSoftware.DropDownItems[0].Text); //disabled
+            CheckCorrectISRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text); //disabled
             //rewriteISRightClickMenu();
         }
 
@@ -1554,12 +1553,12 @@ namespace ZSS
         {
             ToolStripMenuItem tsm;
 
-            for (int x = 0; x < tsmImageSoftware.DropDownItems.Count; x++)
+            for (int x = 0; x < tsmEditinImageSoftware.DropDownItems.Count; x++)
             {
                 //if (tsmImageSoftware.DropDownItems[x].GetType() == typeof(ToolStripMenuItem))
-                if (tsmImageSoftware.DropDownItems[x] is ToolStripMenuItem)
+                if (tsmEditinImageSoftware.DropDownItems[x] is ToolStripMenuItem)
                 {
-                    tsm = (ToolStripMenuItem)tsmImageSoftware.DropDownItems[x];
+                    tsm = (ToolStripMenuItem)tsmEditinImageSoftware.DropDownItems[x];
 
                     if (tsm.Text == txt)
                     {
@@ -1638,8 +1637,8 @@ namespace ZSS
         private void FillClipboardMenu()
         {
 
-            tsmCbCopy.DropDownDirection = ToolStripDropDownDirection.Right;
-            tsmCbCopy.DropDownItems.Clear();
+            tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
+            tsmCopytoClipboardMode.DropDownItems.Clear();
 
             ToolStripMenuItem tsm;
             int x = 0;
@@ -1650,11 +1649,11 @@ namespace ZSS
                 tsm.CheckOnClick = true;
                 tsm.Text = cui.ToDescriptionString();
                 tsm.Click += new EventHandler(clipboardMode_Click);
-                tsmCbCopy.DropDownItems.Add(tsm);
+                tsmCopytoClipboardMode.DropDownItems.Add(tsm);
             }
 
-            CheckCorrectMenuItemClicked(ref tsmCbCopy, (int)Program.conf.ClipboardUriMode);
-            tsmCbCopy.DropDownDirection = ToolStripDropDownDirection.Right;
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
+            tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
 
         }
 
@@ -1662,7 +1661,7 @@ namespace ZSS
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
             Program.conf.ClipboardUriMode = (ClipboardUriType)tsm.Tag;
-            CheckCorrectMenuItemClicked(ref tsmCbCopy, (int)Program.conf.ClipboardUriMode);
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
         }
 
@@ -2057,19 +2056,19 @@ namespace ZSS
             TabPage sel = tpMain;
 
             if (tsm == tsmHotkeys)
-                sel = tpHotKeys;
-            else if (tsm == tsmFTPSettings)
+                sel = tpHotkeys;
+            else if (tsm == tsmFTP)
                 sel = tpFTP;
-            else if (tsm == tsmHTTPSettings)
+            else if (tsm == tsmHTTP)
                 sel = tpHTTP;
-            else if (tsm == tsmImageSoftwareSettings)
+            else if (tsm == tsmImageSoftware)
                 sel = tpImageSoftware;
-            else if (tsm == tsmFileSettings)
-                sel = tpFile;
-            else if (tsm == tsmFTPSettings)
+            else if (tsm == tsmCapture)
+                sel = tpCapture;
+            else if (tsm == tsmFTP)
                 sel = tpFTP;
             else if (tsm == tsmHistory)
-                sel = tpScreenshots;
+                sel = tpHistory;
             else if (tsm == tsmAdvanced)
                 sel = tpAdvanced;
 
@@ -2313,7 +2312,7 @@ namespace ZSS
 
         private void CheckSendToMenu(ToolStripMenuItem item)
         {
-            CheckToolStripMenuItem(tsmSendTo, item);
+            CheckToolStripMenuItem(tsmSendImageTo, item);
         }
 
         private void CheckToolStripMenuItem(ToolStripMenuItem parent, ToolStripMenuItem item)
@@ -2326,7 +2325,7 @@ namespace ZSS
                     tsmi.Checked = false;
             }
 
-            tsmCbCopy.Enabled = cboScreenshotDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
+            tsmCopytoClipboardMode.Enabled = cboScreenshotDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
                                 cboScreenshotDest.SelectedIndex != (int)ImageDestType.FILE;
         }
 
@@ -2414,11 +2413,11 @@ namespace ZSS
         private void UpdateClipboardTextTrayMenu()
         {
 
-            foreach (ToolStripMenuItem tsmi in tsmCbCopy.DropDownItems)
+            foreach (ToolStripMenuItem tsmi in tsmCopytoClipboardMode.DropDownItems)
             {
                 tsmi.Checked = false;
             }
-            CheckCorrectMenuItemClicked(ref tsmCbCopy, (int)Program.conf.ClipboardUriMode);
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
         }
 
         private void txtFileDirectory_TextChanged(object sender, EventArgs e)
@@ -2654,16 +2653,6 @@ namespace ZSS
         private void nScreenshotDelay_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.ScreenshotDelay = nScreenshotDelay.Value;
-        }
-
-        private void tsmDropWindow_Click(object sender, EventArgs e)
-        {
-            ShowDropWindow();
-        }
-
-        private void ShowDropWindow(object sender, EventArgs e)
-        {
-            ShowDropWindow();
         }
 
         #region Image Uploaders
@@ -3160,7 +3149,7 @@ namespace ZSS
             {
                 txtActiveHelp.Text = tabDesc + "select the destination that images are uploaded to, enable/disable crop settings, and turn Active Help on and off.";
             }
-            else if (e.TabPage == tpHotKeys)
+            else if (e.TabPage == tpHotkeys)
             {
                 txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use. To set a Hotkey click on a button and follow the directions provided above.";
             }
@@ -3176,11 +3165,11 @@ namespace ZSS
             {
                 txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot. {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
             }
-            else if (e.TabPage == tpFile)
+            else if (e.TabPage == tpCapture)
             {
                 txtActiveHelp.Text = tabDesc + string.Format("customize file naming patterns for the screenshot you are taking.");
             }
-            else if (e.TabPage == tpScreenshots)
+            else if (e.TabPage == tpHistory)
             {
                 txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots. To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
             }
@@ -3574,6 +3563,11 @@ namespace ZSS
             StartBW_LastCropShot();
         }
 
+        private void tsmDropWindow_Click(object sender, EventArgs e)
+        {
+            ShowDropWindow();
+        }
+
         private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
         {
             UploadUsingClipboard();
@@ -3582,6 +3576,11 @@ namespace ZSS
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText()) StartBW_LanguageTranslator(Clipboard.GetText());
+        }
+
+        private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScreenColorPicker();
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
@@ -4244,11 +4243,6 @@ namespace ZSS
             CheckUpdates();
         }
 
-        private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ScreenColorPicker();
-        }
-
         private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
@@ -4395,5 +4389,64 @@ namespace ZSS
             CheckHistoryItems();
             SaveHistoryItems();
         }
+
+        private void tsmQuickActions_Click(object sender, EventArgs e)
+        {
+            ShowQuickActions();
+        }
+
+        #region Quick Actions
+
+        private void ShowQuickActions()
+        {
+            if (!bQuickActionsOpened)
+            {
+                bQuickActionsOpened = true;
+                QuickActions quickActions = new QuickActions();
+                quickActions.Icon = Properties.Resources.zss_main;
+                quickActions.EventJob += new JobsEventHandler(EventJobs);
+                quickActions.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
+                quickActions.Show();
+                quickActions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - (int)(quickActions.Width * 1.5), SystemInformation.PrimaryMonitorSize.Height - quickActions.Height * 2);
+            }
+        }
+
+        private void quickActions_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bQuickActionsOpened = false;
+        }
+
+        private void EventJobs(object sender, MainAppTask.Jobs jobs)
+        {
+            switch (jobs)
+            {
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                    StartBW_EntireScreen();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                    StartBW_SelectedWindow();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                    StartBW_CropShot();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                    StartBW_LastCropShot();
+                    break;
+                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                    UploadUsingClipboard();
+                    break;
+                case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
+                    ShowDropWindow();
+                    break;
+                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                    if (Clipboard.ContainsText()) StartBW_LanguageTranslator(Clipboard.GetText());
+                    break;
+                case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
+                    ScreenColorPicker();
+                    break;
+            }
+        }
+
+        #endregion
     }
 }

@@ -42,6 +42,9 @@ namespace ZSS
             sb.AppendLine();
             sb.AppendLine("Running from:");
             sb.AppendLine(System.Windows.Forms.Application.ExecutablePath);
+            sb.AppendLine();
+            sb.AppendLine("Settings file:");
+            sb.AppendLine(Program.DefaultXMLFilePath);
             return sb.ToString();
         }
 

@@ -30,51 +30,53 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHotkeys = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmFileSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmImageSoftwareSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmFTPSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmHTTPSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmFTP = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmHTTP = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmSendTo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSendImageTo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestFTP = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestImageShack = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestTinyPic = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestCustomHTTP = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCbCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmViewRemote = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmViewDirectory = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmViewRemoteDirectory = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmViewLocalDirectory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.captureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.entireScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectedWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rectangularRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lastRectangularRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmActions = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSelectedWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCropShot = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmLastCropShot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmScrenshotFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDropWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this.languageTranslatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.screenColorPickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmClipboardUpload = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmDragDropWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmLanguageTranslator = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmScreenColorPicker = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmQuickActions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmQuickOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmLic = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmAboutMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitZScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tpScreenshots = new System.Windows.Forms.TabPage();
+            this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmExitZScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tpHistory = new System.Windows.Forms.TabPage();
+            this.btnHistoryClear = new System.Windows.Forms.Button();
             this.lblHistoryMaxItems = new System.Windows.Forms.Label();
             this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.gbScreenshotPreview = new System.Windows.Forms.GroupBox();
@@ -102,7 +104,7 @@ namespace ZSS
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbHistoryAddSpace = new System.Windows.Forms.CheckBox();
             this.btnCopyToClipboard = new System.Windows.Forms.Button();
-            this.tpFile = new System.Windows.Forms.TabPage();
+            this.tpCapture = new System.Windows.Forms.TabPage();
             this.tcFileSettings = new System.Windows.Forms.TabControl();
             this.tpSelectedWindow = new System.Windows.Forms.TabPage();
             this.gbCropShotOptions = new System.Windows.Forms.GroupBox();
@@ -245,8 +247,9 @@ namespace ZSS
             this.btnFTPUpdate = new System.Windows.Forms.Button();
             this.btnFTPDelete = new System.Windows.Forms.Button();
             this.gbFTPAccount = new System.Windows.Forms.GroupBox();
-            this.nudFTPServerPort = new System.Windows.Forms.NumericUpDown();
+            this.lblFTPMode = new System.Windows.Forms.Label();
             this.rbFTPActive = new System.Windows.Forms.RadioButton();
+            this.nudFTPServerPort = new System.Windows.Forms.NumericUpDown();
             this.rbFTPPassive = new System.Windows.Forms.RadioButton();
             this.lblFTPPort = new System.Windows.Forms.Label();
             this.txtFTPServer = new System.Windows.Forms.TextBox();
@@ -259,7 +262,7 @@ namespace ZSS
             this.txtFTPHTTPPath = new System.Windows.Forms.TextBox();
             this.txtFTPPath = new System.Windows.Forms.TextBox();
             this.lblFtpPath = new System.Windows.Forms.Label();
-            this.tpHotKeys = new System.Windows.Forms.TabPage();
+            this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
             this.chHotkeys_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -394,15 +397,13 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnHistoryClear = new System.Windows.Forms.Button();
-            this.lblFTPMode = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
-            this.tpScreenshots.SuspendLayout();
+            this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.gbScreenshotPreview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHistoryThumb)).BeginInit();
             this.cmsHistory.SuspendLayout();
-            this.tpFile.SuspendLayout();
+            this.tpCapture.SuspendLayout();
             this.tcFileSettings.SuspendLayout();
             this.tpSelectedWindow.SuspendLayout();
             this.gbCropShotOptions.SuspendLayout();
@@ -446,7 +447,7 @@ namespace ZSS
             this.gbFTPAccountsList.SuspendLayout();
             this.gbFTPAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFTPServerPort)).BeginInit();
-            this.tpHotKeys.SuspendLayout();
+            this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpMain.SuspendLayout();
             this.gbPresetScreenshot.SuspendLayout();
@@ -495,39 +496,40 @@ namespace ZSS
             // cmTray
             // 
             this.cmTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmSettings,
+            this.tsmViewSettingsMenu,
             this.toolStripSeparator4,
-            this.tsmSendTo,
-            this.tsmImageSoftware,
-            this.tsmCbCopy,
+            this.tsmSendImageTo,
+            this.tsmEditinImageSoftware,
+            this.tsmCopytoClipboardMode,
             this.toolStripSeparator3,
-            this.tsmViewRemote,
-            this.tsmViewDirectory,
+            this.tsmViewRemoteDirectory,
+            this.tsmViewLocalDirectory,
             this.toolStripSeparator1,
-            this.captureToolStripMenuItem,
+            this.tsmActions,
+            this.tsmQuickActions,
             this.tsmQuickOptions,
             this.toolStripSeparator7,
-            this.aboutToolStripMenuItem,
-            this.exitZScreenToolStripMenuItem});
+            this.tsmHelp,
+            this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 248);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
-            // tsmSettings
+            // tsmViewSettingsMenu
             // 
-            this.tsmSettings.DoubleClickEnabled = true;
-            this.tsmSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmViewSettingsMenu.DoubleClickEnabled = true;
+            this.tsmViewSettingsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmHotkeys,
-            this.tsmFileSettings,
-            this.tsmImageSoftwareSettings,
-            this.tsmFTPSettings,
-            this.tsmHTTPSettings,
+            this.tsmCapture,
+            this.tsmImageSoftware,
+            this.tsmFTP,
+            this.tsmHTTP,
             this.tsmAdvanced,
             this.tsmHistory});
-            this.tsmSettings.Image = global::ZSS.Properties.Resources.wrench;
-            this.tsmSettings.Name = "tsmSettings";
-            this.tsmSettings.Size = new System.Drawing.Size(205, 22);
-            this.tsmSettings.Text = "View Settings Menu";
-            this.tsmSettings.Click += new System.EventHandler(this.tsmSettings_Click);
+            this.tsmViewSettingsMenu.Image = global::ZSS.Properties.Resources.wrench;
+            this.tsmViewSettingsMenu.Name = "tsmViewSettingsMenu";
+            this.tsmViewSettingsMenu.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewSettingsMenu.Text = "View Settings Menu";
+            this.tsmViewSettingsMenu.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
             // tsmHotkeys
             // 
@@ -537,37 +539,37 @@ namespace ZSS
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
-            // tsmFileSettings
+            // tsmCapture
             // 
-            this.tsmFileSettings.Image = global::ZSS.Properties.Resources.camera_edit;
-            this.tsmFileSettings.Name = "tsmFileSettings";
-            this.tsmFileSettings.Size = new System.Drawing.Size(165, 22);
-            this.tsmFileSettings.Text = "Capture...";
-            this.tsmFileSettings.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
+            this.tsmCapture.Name = "tsmCapture";
+            this.tsmCapture.Size = new System.Drawing.Size(165, 22);
+            this.tsmCapture.Text = "Capture...";
+            this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
             // 
-            // tsmImageSoftwareSettings
+            // tsmImageSoftware
             // 
-            this.tsmImageSoftwareSettings.Image = global::ZSS.Properties.Resources.picture_edit;
-            this.tsmImageSoftwareSettings.Name = "tsmImageSoftwareSettings";
-            this.tsmImageSoftwareSettings.Size = new System.Drawing.Size(165, 22);
-            this.tsmImageSoftwareSettings.Text = "Image Software...";
-            this.tsmImageSoftwareSettings.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
+            this.tsmImageSoftware.Name = "tsmImageSoftware";
+            this.tsmImageSoftware.Size = new System.Drawing.Size(165, 22);
+            this.tsmImageSoftware.Text = "Image Software...";
+            this.tsmImageSoftware.Click += new System.EventHandler(this.tsm_Click);
             // 
-            // tsmFTPSettings
+            // tsmFTP
             // 
-            this.tsmFTPSettings.Image = global::ZSS.Properties.Resources.server_edit;
-            this.tsmFTPSettings.Name = "tsmFTPSettings";
-            this.tsmFTPSettings.Size = new System.Drawing.Size(165, 22);
-            this.tsmFTPSettings.Text = "FTP...";
-            this.tsmFTPSettings.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
+            this.tsmFTP.Name = "tsmFTP";
+            this.tsmFTP.Size = new System.Drawing.Size(165, 22);
+            this.tsmFTP.Text = "FTP...";
+            this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
             // 
-            // tsmHTTPSettings
+            // tsmHTTP
             // 
-            this.tsmHTTPSettings.Image = global::ZSS.Properties.Resources.world_edit;
-            this.tsmHTTPSettings.Name = "tsmHTTPSettings";
-            this.tsmHTTPSettings.Size = new System.Drawing.Size(165, 22);
-            this.tsmHTTPSettings.Text = "HTTP...";
-            this.tsmHTTPSettings.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmHTTP.Image = global::ZSS.Properties.Resources.world_edit;
+            this.tsmHTTP.Name = "tsmHTTP";
+            this.tsmHTTP.Size = new System.Drawing.Size(165, 22);
+            this.tsmHTTP.Text = "HTTP...";
+            this.tsmHTTP.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmAdvanced
             // 
@@ -590,19 +592,19 @@ namespace ZSS
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
-            // tsmSendTo
+            // tsmSendImageTo
             // 
-            this.tsmSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmSendImageTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmDestClipboard,
             this.tsmDestFile,
             this.tsmDestFTP,
             this.tsmDestImageShack,
             this.tsmDestTinyPic,
             this.tsmDestCustomHTTP});
-            this.tsmSendTo.Image = global::ZSS.Properties.Resources.picture_go;
-            this.tsmSendTo.Name = "tsmSendTo";
-            this.tsmSendTo.Size = new System.Drawing.Size(205, 22);
-            this.tsmSendTo.Text = "Send Image To";
+            this.tsmSendImageTo.Image = global::ZSS.Properties.Resources.picture_go;
+            this.tsmSendImageTo.Name = "tsmSendImageTo";
+            this.tsmSendImageTo.Size = new System.Drawing.Size(205, 22);
+            this.tsmSendImageTo.Text = "Send Image To";
             // 
             // tsmDestClipboard
             // 
@@ -646,131 +648,139 @@ namespace ZSS
             this.tsmDestCustomHTTP.Text = "&Custom Uploader";
             this.tsmDestCustomHTTP.Click += new System.EventHandler(this.tsmDestCustomHTTP_Click);
             // 
-            // tsmImageSoftware
+            // tsmEditinImageSoftware
             // 
-            this.tsmImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
-            this.tsmImageSoftware.Name = "tsmImageSoftware";
-            this.tsmImageSoftware.Size = new System.Drawing.Size(205, 22);
-            this.tsmImageSoftware.Text = "Edit in Image Software";
+            this.tsmEditinImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
+            this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
+            this.tsmEditinImageSoftware.Text = "Edit in Image Software";
             // 
-            // tsmCbCopy
+            // tsmCopytoClipboardMode
             // 
-            this.tsmCbCopy.Image = global::ZSS.Properties.Resources.page_copy;
-            this.tsmCbCopy.Name = "tsmCbCopy";
-            this.tsmCbCopy.Size = new System.Drawing.Size(205, 22);
-            this.tsmCbCopy.Text = "Copy to Clipboard Mode";
+            this.tsmCopytoClipboardMode.Image = global::ZSS.Properties.Resources.page_copy;
+            this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
+            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(205, 22);
+            this.tsmCopytoClipboardMode.Text = "Copy to Clipboard Mode";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
-            // tsmViewRemote
+            // tsmViewRemoteDirectory
             // 
-            this.tsmViewRemote.Image = global::ZSS.Properties.Resources.drive_network;
-            this.tsmViewRemote.Name = "tsmViewRemote";
-            this.tsmViewRemote.Size = new System.Drawing.Size(205, 22);
-            this.tsmViewRemote.Text = "View Remote Directory...";
-            this.tsmViewRemote.Click += new System.EventHandler(this.tsmViewRemote_Click);
+            this.tsmViewRemoteDirectory.Image = global::ZSS.Properties.Resources.drive_network;
+            this.tsmViewRemoteDirectory.Name = "tsmViewRemoteDirectory";
+            this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewRemoteDirectory.Text = "View Remote Directory...";
+            this.tsmViewRemoteDirectory.Click += new System.EventHandler(this.tsmViewRemote_Click);
             // 
-            // tsmViewDirectory
+            // tsmViewLocalDirectory
             // 
-            this.tsmViewDirectory.Image = global::ZSS.Properties.Resources.folder_picture;
-            this.tsmViewDirectory.Name = "tsmViewDirectory";
-            this.tsmViewDirectory.Size = new System.Drawing.Size(205, 22);
-            this.tsmViewDirectory.Text = "View Local Directory...";
-            this.tsmViewDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
+            this.tsmViewLocalDirectory.Image = global::ZSS.Properties.Resources.folder_picture;
+            this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewLocalDirectory.Text = "View Local Directory...";
+            this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
-            // captureToolStripMenuItem
+            // tsmActions
             // 
-            this.captureToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.entireScreenToolStripMenuItem,
-            this.selectedWindowToolStripMenuItem,
-            this.rectangularRegionToolStripMenuItem,
-            this.lastRectangularRegionToolStripMenuItem,
+            this.tsmActions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmEntireScreen,
+            this.tsmSelectedWindow,
+            this.tsmCropShot,
+            this.tsmLastCropShot,
             this.toolStripSeparator6,
-            this.tsmScrenshotFromClipboard,
-            this.tsmDropWindow,
-            this.languageTranslatorToolStripMenuItem,
-            this.screenColorPickerToolStripMenuItem});
-            this.captureToolStripMenuItem.Image = global::ZSS.Properties.Resources.lightning;
-            this.captureToolStripMenuItem.Name = "captureToolStripMenuItem";
-            this.captureToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.captureToolStripMenuItem.Text = "&Actions";
+            this.tsmClipboardUpload,
+            this.tsmDragDropWindow,
+            this.tsmLanguageTranslator,
+            this.tsmScreenColorPicker});
+            this.tsmActions.Image = global::ZSS.Properties.Resources.lightning;
+            this.tsmActions.Name = "tsmActions";
+            this.tsmActions.Size = new System.Drawing.Size(205, 22);
+            this.tsmActions.Text = "&Actions";
             // 
-            // entireScreenToolStripMenuItem
+            // tsmEntireScreen
             // 
-            this.entireScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.monitor;
-            this.entireScreenToolStripMenuItem.Name = "entireScreenToolStripMenuItem";
-            this.entireScreenToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.entireScreenToolStripMenuItem.Text = "&Entire Screen";
-            this.entireScreenToolStripMenuItem.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
+            this.tsmEntireScreen.Image = global::ZSS.Properties.Resources.monitor;
+            this.tsmEntireScreen.Name = "tsmEntireScreen";
+            this.tsmEntireScreen.Size = new System.Drawing.Size(188, 22);
+            this.tsmEntireScreen.Text = "&Entire Screen";
+            this.tsmEntireScreen.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
             // 
-            // selectedWindowToolStripMenuItem
+            // tsmSelectedWindow
             // 
-            this.selectedWindowToolStripMenuItem.Image = global::ZSS.Properties.Resources.application_double;
-            this.selectedWindowToolStripMenuItem.Name = "selectedWindowToolStripMenuItem";
-            this.selectedWindowToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.selectedWindowToolStripMenuItem.Text = "Selected Window";
-            this.selectedWindowToolStripMenuItem.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
+            this.tsmSelectedWindow.Image = global::ZSS.Properties.Resources.application_double;
+            this.tsmSelectedWindow.Name = "tsmSelectedWindow";
+            this.tsmSelectedWindow.Size = new System.Drawing.Size(188, 22);
+            this.tsmSelectedWindow.Text = "Selected Window";
+            this.tsmSelectedWindow.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
             // 
-            // rectangularRegionToolStripMenuItem
+            // tsmCropShot
             // 
-            this.rectangularRegionToolStripMenuItem.Image = global::ZSS.Properties.Resources.shape_square;
-            this.rectangularRegionToolStripMenuItem.Name = "rectangularRegionToolStripMenuItem";
-            this.rectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.rectangularRegionToolStripMenuItem.Text = "&Crop Shot";
-            this.rectangularRegionToolStripMenuItem.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
+            this.tsmCropShot.Image = global::ZSS.Properties.Resources.shape_square;
+            this.tsmCropShot.Name = "tsmCropShot";
+            this.tsmCropShot.Size = new System.Drawing.Size(188, 22);
+            this.tsmCropShot.Text = "&Crop Shot";
+            this.tsmCropShot.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
             // 
-            // lastRectangularRegionToolStripMenuItem
+            // tsmLastCropShot
             // 
-            this.lastRectangularRegionToolStripMenuItem.Image = global::ZSS.Properties.Resources.shape_square_go;
-            this.lastRectangularRegionToolStripMenuItem.Name = "lastRectangularRegionToolStripMenuItem";
-            this.lastRectangularRegionToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.lastRectangularRegionToolStripMenuItem.Text = "Last Crop Shot";
-            this.lastRectangularRegionToolStripMenuItem.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
+            this.tsmLastCropShot.Image = global::ZSS.Properties.Resources.shape_square_go;
+            this.tsmLastCropShot.Name = "tsmLastCropShot";
+            this.tsmLastCropShot.Size = new System.Drawing.Size(188, 22);
+            this.tsmLastCropShot.Text = "Last Crop Shot";
+            this.tsmLastCropShot.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(194, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(185, 6);
             // 
-            // tsmScrenshotFromClipboard
+            // tsmClipboardUpload
             // 
-            this.tsmScrenshotFromClipboard.Image = global::ZSS.Properties.Resources.images;
-            this.tsmScrenshotFromClipboard.Name = "tsmScrenshotFromClipboard";
-            this.tsmScrenshotFromClipboard.Size = new System.Drawing.Size(197, 22);
-            this.tsmScrenshotFromClipboard.Text = "Clipboard Upload";
-            this.tsmScrenshotFromClipboard.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
+            this.tsmClipboardUpload.Image = global::ZSS.Properties.Resources.images;
+            this.tsmClipboardUpload.Name = "tsmClipboardUpload";
+            this.tsmClipboardUpload.Size = new System.Drawing.Size(188, 22);
+            this.tsmClipboardUpload.Text = "Clipboard Upload";
+            this.tsmClipboardUpload.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
             // 
-            // tsmDropWindow
+            // tsmDragDropWindow
             // 
-            this.tsmDropWindow.Image = global::ZSS.Properties.Resources.shape_move_backwards;
-            this.tsmDropWindow.Name = "tsmDropWindow";
-            this.tsmDropWindow.Size = new System.Drawing.Size(197, 22);
-            this.tsmDropWindow.Text = "Drag && Drop Window...";
-            this.tsmDropWindow.Click += new System.EventHandler(this.ShowDropWindow);
+            this.tsmDragDropWindow.Image = global::ZSS.Properties.Resources.shape_move_backwards;
+            this.tsmDragDropWindow.Name = "tsmDragDropWindow";
+            this.tsmDragDropWindow.Size = new System.Drawing.Size(188, 22);
+            this.tsmDragDropWindow.Text = "Drag && Drop Window";
+            this.tsmDragDropWindow.Click += new System.EventHandler(this.tsmDropWindow_Click);
             // 
-            // languageTranslatorToolStripMenuItem
+            // tsmLanguageTranslator
             // 
-            this.languageTranslatorToolStripMenuItem.Image = global::ZSS.Properties.Resources.comments;
-            this.languageTranslatorToolStripMenuItem.Name = "languageTranslatorToolStripMenuItem";
-            this.languageTranslatorToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.languageTranslatorToolStripMenuItem.Text = "Language Translator";
-            this.languageTranslatorToolStripMenuItem.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
+            this.tsmLanguageTranslator.Image = global::ZSS.Properties.Resources.comments;
+            this.tsmLanguageTranslator.Name = "tsmLanguageTranslator";
+            this.tsmLanguageTranslator.Size = new System.Drawing.Size(188, 22);
+            this.tsmLanguageTranslator.Text = "Language Translator";
+            this.tsmLanguageTranslator.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
             // 
-            // screenColorPickerToolStripMenuItem
+            // tsmScreenColorPicker
             // 
-            this.screenColorPickerToolStripMenuItem.Image = global::ZSS.Properties.Resources.color_wheel;
-            this.screenColorPickerToolStripMenuItem.Name = "screenColorPickerToolStripMenuItem";
-            this.screenColorPickerToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.screenColorPickerToolStripMenuItem.Text = "Screen Color Picker";
-            this.screenColorPickerToolStripMenuItem.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
+            this.tsmScreenColorPicker.Image = global::ZSS.Properties.Resources.color_wheel;
+            this.tsmScreenColorPicker.Name = "tsmScreenColorPicker";
+            this.tsmScreenColorPicker.Size = new System.Drawing.Size(188, 22);
+            this.tsmScreenColorPicker.Text = "Screen Color Picker";
+            this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
+            // 
+            // tsmQuickActions
+            // 
+            this.tsmQuickActions.Image = global::ZSS.Properties.Resources.application_lightning;
+            this.tsmQuickActions.Name = "tsmQuickActions";
+            this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
+            this.tsmQuickActions.Text = "Quick Actions...";
+            this.tsmQuickActions.Click += new System.EventHandler(this.tsmQuickActions_Click);
             // 
             // tsmQuickOptions
             // 
@@ -785,24 +795,24 @@ namespace ZSS
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
             // 
-            // aboutToolStripMenuItem
+            // tsmHelp
             // 
-            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmLic,
+            this.tsmHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmLicense,
             this.tsmVersionHistory,
-            this.tsmAboutMain});
-            this.aboutToolStripMenuItem.Image = global::ZSS.Properties.Resources.help;
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.aboutToolStripMenuItem.Text = "&Help";
+            this.tsmAbout});
+            this.tsmHelp.Image = global::ZSS.Properties.Resources.help;
+            this.tsmHelp.Name = "tsmHelp";
+            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
+            this.tsmHelp.Text = "&Help";
             // 
-            // tsmLic
+            // tsmLicense
             // 
-            this.tsmLic.Image = global::ZSS.Properties.Resources.note_error;
-            this.tsmLic.Name = "tsmLic";
-            this.tsmLic.Size = new System.Drawing.Size(163, 22);
-            this.tsmLic.Text = "License...";
-            this.tsmLic.Click += new System.EventHandler(this.tsmLic_Click);
+            this.tsmLicense.Image = global::ZSS.Properties.Resources.note_error;
+            this.tsmLicense.Name = "tsmLicense";
+            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
+            this.tsmLicense.Text = "License...";
+            this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
             // tsmVersionHistory
             // 
@@ -812,39 +822,49 @@ namespace ZSS
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
-            // tsmAboutMain
+            // tsmAbout
             // 
-            this.tsmAboutMain.Image = global::ZSS.Properties.Resources.information;
-            this.tsmAboutMain.Name = "tsmAboutMain";
-            this.tsmAboutMain.Size = new System.Drawing.Size(163, 22);
-            this.tsmAboutMain.Text = "About...";
-            this.tsmAboutMain.Click += new System.EventHandler(this.tsmAboutMain_Click);
+            this.tsmAbout.Image = global::ZSS.Properties.Resources.information;
+            this.tsmAbout.Name = "tsmAbout";
+            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
+            this.tsmAbout.Text = "About...";
+            this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
-            // exitZScreenToolStripMenuItem
+            // tsmExitZScreen
             // 
-            this.exitZScreenToolStripMenuItem.Image = global::ZSS.Properties.Resources.cross;
-            this.exitZScreenToolStripMenuItem.Name = "exitZScreenToolStripMenuItem";
-            this.exitZScreenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.exitZScreenToolStripMenuItem.Text = "Exit ZScreen";
-            this.exitZScreenToolStripMenuItem.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
+            this.tsmExitZScreen.Image = global::ZSS.Properties.Resources.cross;
+            this.tsmExitZScreen.Name = "tsmExitZScreen";
+            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
+            this.tsmExitZScreen.Text = "Exit ZScreen";
+            this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
-            // tpScreenshots
+            // tpHistory
             // 
-            this.tpScreenshots.Controls.Add(this.btnHistoryClear);
-            this.tpScreenshots.Controls.Add(this.lblHistoryMaxItems);
-            this.tpScreenshots.Controls.Add(this.nudHistoryMaxItems);
-            this.tpScreenshots.Controls.Add(this.gbScreenshotPreview);
-            this.tpScreenshots.Controls.Add(this.cbHistoryReverseList);
-            this.tpScreenshots.Controls.Add(this.lbHistory);
-            this.tpScreenshots.Controls.Add(this.cbHistoryAddSpace);
-            this.tpScreenshots.Controls.Add(this.btnCopyToClipboard);
-            this.tpScreenshots.ImageKey = "pictures.png";
-            this.tpScreenshots.Location = new System.Drawing.Point(4, 23);
-            this.tpScreenshots.Name = "tpScreenshots";
-            this.tpScreenshots.Size = new System.Drawing.Size(786, 428);
-            this.tpScreenshots.TabIndex = 8;
-            this.tpScreenshots.Text = "History";
-            this.tpScreenshots.UseVisualStyleBackColor = true;
+            this.tpHistory.Controls.Add(this.btnHistoryClear);
+            this.tpHistory.Controls.Add(this.lblHistoryMaxItems);
+            this.tpHistory.Controls.Add(this.nudHistoryMaxItems);
+            this.tpHistory.Controls.Add(this.gbScreenshotPreview);
+            this.tpHistory.Controls.Add(this.cbHistoryReverseList);
+            this.tpHistory.Controls.Add(this.lbHistory);
+            this.tpHistory.Controls.Add(this.cbHistoryAddSpace);
+            this.tpHistory.Controls.Add(this.btnCopyToClipboard);
+            this.tpHistory.ImageKey = "pictures.png";
+            this.tpHistory.Location = new System.Drawing.Point(4, 23);
+            this.tpHistory.Name = "tpHistory";
+            this.tpHistory.Size = new System.Drawing.Size(786, 428);
+            this.tpHistory.TabIndex = 8;
+            this.tpHistory.Text = "History";
+            this.tpHistory.UseVisualStyleBackColor = true;
+            // 
+            // btnHistoryClear
+            // 
+            this.btnHistoryClear.Location = new System.Drawing.Point(324, 387);
+            this.btnHistoryClear.Name = "btnHistoryClear";
+            this.btnHistoryClear.Size = new System.Drawing.Size(43, 23);
+            this.btnHistoryClear.TabIndex = 6;
+            this.btnHistoryClear.Text = "Clear";
+            this.btnHistoryClear.UseVisualStyleBackColor = true;
+            this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
             // 
             // lblHistoryMaxItems
             // 
@@ -1110,16 +1130,16 @@ namespace ZSS
             this.btnCopyToClipboard.UseVisualStyleBackColor = false;
             this.btnCopyToClipboard.Click += new System.EventHandler(this.btnCopyToClipboard_Click);
             // 
-            // tpFile
+            // tpCapture
             // 
-            this.tpFile.Controls.Add(this.tcFileSettings);
-            this.tpFile.ImageKey = "camera_edit.png";
-            this.tpFile.Location = new System.Drawing.Point(4, 23);
-            this.tpFile.Name = "tpFile";
-            this.tpFile.Size = new System.Drawing.Size(786, 428);
-            this.tpFile.TabIndex = 4;
-            this.tpFile.Text = "Capture";
-            this.tpFile.UseVisualStyleBackColor = true;
+            this.tpCapture.Controls.Add(this.tcFileSettings);
+            this.tpCapture.ImageKey = "camera_edit.png";
+            this.tpCapture.Location = new System.Drawing.Point(4, 23);
+            this.tpCapture.Name = "tpCapture";
+            this.tpCapture.Size = new System.Drawing.Size(786, 428);
+            this.tpCapture.TabIndex = 4;
+            this.tpCapture.Text = "Capture";
+            this.tpCapture.UseVisualStyleBackColor = true;
             // 
             // tcFileSettings
             // 
@@ -2776,6 +2796,26 @@ namespace ZSS
             this.gbFTPAccount.TabStop = false;
             this.gbFTPAccount.Text = "FTP Account";
             // 
+            // lblFTPMode
+            // 
+            this.lblFTPMode.AutoSize = true;
+            this.lblFTPMode.Location = new System.Drawing.Point(16, 24);
+            this.lblFTPMode.Name = "lblFTPMode";
+            this.lblFTPMode.Size = new System.Drawing.Size(78, 13);
+            this.lblFTPMode.TabIndex = 38;
+            this.lblFTPMode.Text = "Transfer mode:";
+            // 
+            // rbFTPActive
+            // 
+            this.rbFTPActive.AutoSize = true;
+            this.rbFTPActive.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.rbFTPActive.Location = new System.Drawing.Point(96, 40);
+            this.rbFTPActive.Name = "rbFTPActive";
+            this.rbFTPActive.Size = new System.Drawing.Size(55, 17);
+            this.rbFTPActive.TabIndex = 1;
+            this.rbFTPActive.Text = "Active";
+            this.rbFTPActive.UseVisualStyleBackColor = true;
+            // 
             // nudFTPServerPort
             // 
             this.nudFTPServerPort.Location = new System.Drawing.Point(248, 80);
@@ -2797,17 +2837,6 @@ namespace ZSS
             0,
             0,
             0});
-            // 
-            // rbFTPActive
-            // 
-            this.rbFTPActive.AutoSize = true;
-            this.rbFTPActive.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.rbFTPActive.Location = new System.Drawing.Point(96, 40);
-            this.rbFTPActive.Name = "rbFTPActive";
-            this.rbFTPActive.Size = new System.Drawing.Size(55, 17);
-            this.rbFTPActive.TabIndex = 1;
-            this.rbFTPActive.Text = "Active";
-            this.rbFTPActive.UseVisualStyleBackColor = true;
             // 
             // rbFTPPassive
             // 
@@ -2918,18 +2947,18 @@ namespace ZSS
             this.lblFtpPath.TabIndex = 22;
             this.lblFtpPath.Text = "FTP Path: (ex: / or /htdocs/screenshots)";
             // 
-            // tpHotKeys
+            // tpHotkeys
             // 
-            this.tpHotKeys.Controls.Add(this.lblHotkeyStatus);
-            this.tpHotKeys.Controls.Add(this.dgvHotkeys);
-            this.tpHotKeys.ImageKey = "keyboard.png";
-            this.tpHotKeys.Location = new System.Drawing.Point(4, 23);
-            this.tpHotKeys.Name = "tpHotKeys";
-            this.tpHotKeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHotKeys.Size = new System.Drawing.Size(786, 428);
-            this.tpHotKeys.TabIndex = 1;
-            this.tpHotKeys.Text = "Hotkeys";
-            this.tpHotKeys.UseVisualStyleBackColor = true;
+            this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
+            this.tpHotkeys.Controls.Add(this.dgvHotkeys);
+            this.tpHotkeys.ImageKey = "keyboard.png";
+            this.tpHotkeys.Location = new System.Drawing.Point(4, 23);
+            this.tpHotkeys.Name = "tpHotkeys";
+            this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
+            this.tpHotkeys.Size = new System.Drawing.Size(786, 428);
+            this.tpHotkeys.TabIndex = 1;
+            this.tpHotkeys.Text = "Hotkeys";
+            this.tpHotkeys.UseVisualStyleBackColor = true;
             // 
             // lblHotkeyStatus
             // 
@@ -2950,38 +2979,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3298,13 +3327,13 @@ namespace ZSS
             // 
             this.tcApp.AllowDrop = true;
             this.tcApp.Controls.Add(this.tpMain);
-            this.tcApp.Controls.Add(this.tpHotKeys);
-            this.tcApp.Controls.Add(this.tpFile);
+            this.tcApp.Controls.Add(this.tpHotkeys);
+            this.tcApp.Controls.Add(this.tpCapture);
             this.tcApp.Controls.Add(this.tpImageSoftware);
             this.tcApp.Controls.Add(this.tpFTP);
             this.tcApp.Controls.Add(this.tpHTTP);
             this.tcApp.Controls.Add(this.tpAdvanced);
-            this.tcApp.Controls.Add(this.tpScreenshots);
+            this.tcApp.Controls.Add(this.tpHistory);
             this.tcApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcApp.ImageList = this.ilApp;
             this.tcApp.Location = new System.Drawing.Point(0, 0);
@@ -4410,19 +4439,14 @@ namespace ZSS
             // 
             this.ilApp.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilApp.ImageStream")));
             this.ilApp.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilApp.Images.SetKeyName(0, "keyboard.png");
-            this.ilApp.Images.SetKeyName(1, "application_edit.png");
-            this.ilApp.Images.SetKeyName(2, "picture.png");
-            this.ilApp.Images.SetKeyName(3, "pictures.png");
-            this.ilApp.Images.SetKeyName(4, "picture_edit.png");
+            this.ilApp.Images.SetKeyName(0, "application_form.png");
+            this.ilApp.Images.SetKeyName(1, "keyboard.png");
+            this.ilApp.Images.SetKeyName(2, "camera_edit.png");
+            this.ilApp.Images.SetKeyName(3, "picture_edit.png");
+            this.ilApp.Images.SetKeyName(4, "server_edit.png");
             this.ilApp.Images.SetKeyName(5, "world_edit.png");
-            this.ilApp.Images.SetKeyName(6, "server.png");
-            this.ilApp.Images.SetKeyName(7, "folder_edit.png");
-            this.ilApp.Images.SetKeyName(8, "world_add.png");
-            this.ilApp.Images.SetKeyName(9, "application.png");
-            this.ilApp.Images.SetKeyName(10, "server_edit.png");
-            this.ilApp.Images.SetKeyName(11, "application_form.png");
-            this.ilApp.Images.SetKeyName(12, "camera_edit.png");
+            this.ilApp.Images.SetKeyName(6, "application_edit.png");
+            this.ilApp.Images.SetKeyName(7, "pictures.png");
             // 
             // txtActiveHelp
             // 
@@ -4468,25 +4492,6 @@ namespace ZSS
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
             // 
-            // btnHistoryClear
-            // 
-            this.btnHistoryClear.Location = new System.Drawing.Point(324, 387);
-            this.btnHistoryClear.Name = "btnHistoryClear";
-            this.btnHistoryClear.Size = new System.Drawing.Size(43, 23);
-            this.btnHistoryClear.TabIndex = 6;
-            this.btnHistoryClear.Text = "Clear";
-            this.btnHistoryClear.UseVisualStyleBackColor = true;
-            this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
-            // 
-            // lblFTPMode
-            // 
-            this.lblFTPMode.AutoSize = true;
-            this.lblFTPMode.Location = new System.Drawing.Point(16, 24);
-            this.lblFTPMode.Name = "lblFTPMode";
-            this.lblFTPMode.Size = new System.Drawing.Size(78, 13);
-            this.lblFTPMode.TabIndex = 38;
-            this.lblFTPMode.Text = "Transfer mode:";
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4511,14 +4516,14 @@ namespace ZSS
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.cmTray.ResumeLayout(false);
-            this.tpScreenshots.ResumeLayout(false);
-            this.tpScreenshots.PerformLayout();
+            this.tpHistory.ResumeLayout(false);
+            this.tpHistory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
             this.gbScreenshotPreview.ResumeLayout(false);
             this.gbScreenshotPreview.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHistoryThumb)).EndInit();
             this.cmsHistory.ResumeLayout(false);
-            this.tpFile.ResumeLayout(false);
+            this.tpCapture.ResumeLayout(false);
             this.tcFileSettings.ResumeLayout(false);
             this.tpSelectedWindow.ResumeLayout(false);
             this.gbCropShotOptions.ResumeLayout(false);
@@ -4579,8 +4584,8 @@ namespace ZSS
             this.gbFTPAccount.ResumeLayout(false);
             this.gbFTPAccount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFTPServerPort)).EndInit();
-            this.tpHotKeys.ResumeLayout(false);
-            this.tpHotKeys.PerformLayout();
+            this.tpHotkeys.ResumeLayout(false);
+            this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
@@ -4641,18 +4646,18 @@ namespace ZSS
 
         private System.Windows.Forms.NotifyIcon niTray;
         private System.Windows.Forms.ContextMenuStrip cmTray;
-        private System.Windows.Forms.ToolStripMenuItem exitZScreenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmImageSoftware;
+        private System.Windows.Forms.ToolStripMenuItem tsmExitZScreen;
+        private System.Windows.Forms.ToolStripMenuItem tsmEditinImageSoftware;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem tsmSettings;
+        private System.Windows.Forms.ToolStripMenuItem tsmViewSettingsMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem tsmViewDirectory;
-        private System.Windows.Forms.TabPage tpScreenshots;
+        private System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
+        private System.Windows.Forms.TabPage tpHistory;
         private System.Windows.Forms.CheckBox cbHistoryReverseList;
         private System.Windows.Forms.CheckBox cbHistoryAddSpace;
         private System.Windows.Forms.Button btnCopyToClipboard;
-        private System.Windows.Forms.TabPage tpFile;
+        private System.Windows.Forms.TabPage tpCapture;
         private System.Windows.Forms.Label lblCodeI;
         private System.Windows.Forms.Label lblCodeT;
         private System.Windows.Forms.Label lblCodeMo;
@@ -4687,7 +4692,7 @@ namespace ZSS
         private System.Windows.Forms.Button btnFTPUpdate;
         private System.Windows.Forms.TextBox txtFTPPath;
         private System.Windows.Forms.Label lblFtpPath;
-        private System.Windows.Forms.TabPage tpHotKeys;
+        private System.Windows.Forms.TabPage tpHotkeys;
         private System.Windows.Forms.TabPage tpMain;
         private System.Windows.Forms.Label lblLogo;
         private System.Windows.Forms.PictureBox pbLogo;
@@ -4698,7 +4703,7 @@ namespace ZSS
         private System.Windows.Forms.Label lblSwitchTo;
         private System.Windows.Forms.ComboBox cmbSwitchFormat;
         private System.Windows.Forms.Label lblFileFormat;
-        private System.Windows.Forms.ToolStripMenuItem tsmViewRemote;
+        private System.Windows.Forms.ToolStripMenuItem tsmViewRemoteDirectory;
         private System.Windows.Forms.Button btnCodesT;
         private System.Windows.Forms.Button btnCodesMo;
         private System.Windows.Forms.Button btnCodesI;
@@ -4711,9 +4716,9 @@ namespace ZSS
         private System.Windows.Forms.Label lblQuality;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ToolStripMenuItem tsmHotkeys;
-        private System.Windows.Forms.ToolStripMenuItem tsmFTPSettings;
-        private System.Windows.Forms.ToolStripMenuItem tsmImageSoftwareSettings;
-        private System.Windows.Forms.ToolStripMenuItem tsmFileSettings;
+        private System.Windows.Forms.ToolStripMenuItem tsmFTP;
+        private System.Windows.Forms.ToolStripMenuItem tsmImageSoftware;
+        private System.Windows.Forms.ToolStripMenuItem tsmCapture;
         private System.Windows.Forms.ToolStripMenuItem tsmHistory;
         private System.Windows.Forms.CheckBox cbDeleteLocal;
         private System.Windows.Forms.RadioButton rbFTPActive;
@@ -4757,19 +4762,19 @@ namespace ZSS
         private System.Windows.Forms.CheckBox chkEnableThumbnail;
         private System.Windows.Forms.GroupBox gbMainOptions;
         private System.Windows.Forms.ComboBox cboScreenshotDest;
-        private System.Windows.Forms.ToolStripMenuItem tsmSendTo;
+        private System.Windows.Forms.ToolStripMenuItem tsmSendImageTo;
         private System.Windows.Forms.ToolStripMenuItem tsmDestClipboard;
         private System.Windows.Forms.ToolStripMenuItem tsmDestFile;
         private System.Windows.Forms.ToolStripMenuItem tsmDestFTP;
         private System.Windows.Forms.ToolStripMenuItem tsmDestImageShack;
-        private System.Windows.Forms.ToolStripMenuItem tsmCbCopy;
+        private System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
         private System.Windows.Forms.Label lblFirstRun;
         private System.Windows.Forms.GroupBox gbMisc;
         private System.Windows.Forms.TabPage tpHTTP;
         private System.Windows.Forms.GroupBox gbImageShack;
         private System.Windows.Forms.Label lblImageShackRegistrationCode;
         private System.Windows.Forms.TextBox txtImageShackRegistrationCode;
-        private System.Windows.Forms.ToolStripMenuItem tsmHTTPSettings;
+        private System.Windows.Forms.ToolStripMenuItem tsmHTTP;
         private System.Windows.Forms.ToolStripMenuItem tsmDestTinyPic;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.CheckBox cbShowPopup;
@@ -4863,10 +4868,10 @@ namespace ZSS
         private System.Windows.Forms.NumericUpDown nudWatermarkBackTrans;
         private System.Windows.Forms.Label lblWatermarkBackTrans;
         private System.Windows.Forms.Label lblWatermarkBackTransTip;
-        private System.Windows.Forms.ToolStripMenuItem captureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rectangularRegionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmScrenshotFromClipboard;
-        private System.Windows.Forms.ToolStripMenuItem entireScreenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmActions;
+        private System.Windows.Forms.ToolStripMenuItem tsmCropShot;
+        private System.Windows.Forms.ToolStripMenuItem tsmClipboardUpload;
+        private System.Windows.Forms.ToolStripMenuItem tsmEntireScreen;
         private System.Windows.Forms.PictureBox pbWatermarkGradient2;
         private System.Windows.Forms.PictureBox pbWatermarkGradient1;
         private System.Windows.Forms.Label lblWatermarkBackColors;
@@ -4895,7 +4900,7 @@ namespace ZSS
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown nudWatermarkCornerRadius;
         private System.Windows.Forms.Label lblWatermarkCornerRadiusTip;
-        private System.Windows.Forms.ToolStripMenuItem lastRectangularRegionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmLastCropShot;
         private System.Windows.Forms.Label lblWatermarkTextTip;
         private System.Windows.Forms.ComboBox cbWatermarkGradientType;
         private System.Windows.Forms.Label lblWatermarkGradientType;
@@ -4952,11 +4957,11 @@ namespace ZSS
         private System.Windows.Forms.Timer debugTimer;
         private System.Windows.Forms.GroupBox gbStatistics;
         private System.Windows.Forms.Button btnCopyStats;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmLic;
+        private System.Windows.Forms.ToolStripMenuItem tsmHelp;
+        private System.Windows.Forms.ToolStripMenuItem tsmLicense;
         private System.Windows.Forms.ToolStripMenuItem tsmVersionHistory;
-        private System.Windows.Forms.ToolStripMenuItem tsmAboutMain;
-        private System.Windows.Forms.ToolStripMenuItem languageTranslatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmAbout;
+        private System.Windows.Forms.ToolStripMenuItem tsmLanguageTranslator;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.CheckBox chkImageUploadRetry;
         private System.Windows.Forms.CheckBox cbAutoSwitchFTP;
@@ -4965,7 +4970,7 @@ namespace ZSS
         private System.Windows.Forms.GroupBox gbImageUploaderOptions;
         private System.Windows.Forms.TabPage tpInteraction;
         private System.Windows.Forms.NumericUpDown nudSwitchAfter;
-        private System.Windows.Forms.ToolStripMenuItem selectedWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmSelectedWindow;
         private System.Windows.Forms.GroupBox gbSelectedWindowOptions;
         private System.Windows.Forms.CheckBox cbSelectedWindowFront;
         private System.Windows.Forms.NumericUpDown nudSelectedWindowBorderSize;
@@ -4977,10 +4982,10 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbCheckExperimental;
         private System.Windows.Forms.GroupBox gbUpdates;
         private System.Windows.Forms.Button btnCheckUpdate;
-        private System.Windows.Forms.ToolStripMenuItem screenColorPickerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmScreenColorPicker;
         private System.Windows.Forms.CheckBox cbAddFailedScreenshot;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem tsmDropWindow;
+        private System.Windows.Forms.ToolStripMenuItem tsmDragDropWindow;
         private System.Windows.Forms.CheckBox cbShowUploadDuration;
         private System.Windows.Forms.TextBox txtSettingsDir;
         private System.Windows.Forms.Label lblUpdateInfo;
@@ -5002,6 +5007,7 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbCloseDropBox;
         private System.Windows.Forms.Button btnHistoryClear;
         private System.Windows.Forms.Label lblFTPMode;
+        private System.Windows.Forms.ToolStripMenuItem tsmQuickActions;
 
     }
 }

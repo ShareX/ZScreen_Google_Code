@@ -70,6 +70,7 @@ namespace ZSS
         public decimal SelectedWindowBorderSize = 2;
         public bool ShowUploadDuration = false;
         public bool CloseDropBox = false;
+        public bool CloseQuickActions = false;
 
         //*********************
         //* Hotkey Settings
