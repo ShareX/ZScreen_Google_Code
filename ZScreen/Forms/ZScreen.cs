@@ -302,8 +302,8 @@ namespace ZSS
             txtActiveWindow.Text = Program.conf.activeWindow;
             txtEntireScreen.Text = Program.conf.entireScreen;
 
-            if (cmbFileFormat.Items.Count < 1) cmbFileFormat.Items.AddRange(Program.mFileTypes);
-            if (cmbSwitchFormat.Items.Count < 1) cmbSwitchFormat.Items.AddRange(Program.mFileTypes);
+            if (cmbFileFormat.Items.Count < 1) cmbFileFormat.Items.AddRange(Program.zImageFileTypes);
+            if (cmbSwitchFormat.Items.Count < 1) cmbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
 
             cmbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudSwitchAfter.Text = Program.conf.SwitchAfter.ToString();
@@ -504,7 +504,7 @@ namespace ZSS
                     else if (CheckKeys(Program.conf.HKClipboardUpload, lParam))
                     {
                         //Clipboard Upload
-                        ScreenshotUsingClipboard();
+                        UploadUsingClipboard();
                         return m_hID;
                     }
                     else if (CheckKeys(Program.conf.HKDropWindow, lParam))
@@ -2495,7 +2495,7 @@ namespace ZSS
             }
         }
 
-        private void ScreenshotUsingClipboard()
+        private void UploadUsingClipboard()
         {
             List<string> files = GetClipboardFilePaths();
             foreach (string fp in files)
@@ -3542,9 +3542,9 @@ namespace ZSS
             StartBW_LastCropShot();
         }
 
-        private void tsmScrenshotFromClipboard_Click(object sender, EventArgs e)
+        private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
         {
-            ScreenshotUsingClipboard();
+            UploadUsingClipboard();
         }
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)

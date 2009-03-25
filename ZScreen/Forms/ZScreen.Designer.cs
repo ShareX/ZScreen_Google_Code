@@ -746,7 +746,7 @@ namespace ZSS
             this.tsmScrenshotFromClipboard.Name = "tsmScrenshotFromClipboard";
             this.tsmScrenshotFromClipboard.Size = new System.Drawing.Size(197, 22);
             this.tsmScrenshotFromClipboard.Text = "Clipboard Upload";
-            this.tsmScrenshotFromClipboard.Click += new System.EventHandler(this.tsmScrenshotFromClipboard_Click);
+            this.tsmScrenshotFromClipboard.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
             // 
             // tsmDropWindow
             // 

@@ -103,7 +103,7 @@ namespace ZSS
                     ms = new MemoryStream();
                     MyGraphics.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
 
-                    filePath = Path.ChangeExtension(filePath, Program.mFileTypes[Program.conf.SwitchFormat]);
+                    filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
                 }
 
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
@@ -234,7 +234,7 @@ namespace ZSS
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
         {
-            string filePath = Path.Combine(Program.conf.ImagesDir, fileName + "." + Program.mFileTypes[Program.conf.FileFormat]);
+            string filePath = Path.Combine(Program.conf.ImagesDir, fileName + "." + Program.zImageFileTypes[Program.conf.FileFormat]);
 
             if (manualNaming)
             {

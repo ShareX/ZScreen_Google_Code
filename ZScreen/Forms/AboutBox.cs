@@ -58,6 +58,12 @@ namespace ZSS.Forms
             sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Portions of Selected Window code from Greenshot: https://sourceforge.net/projects/greenshot");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Running from:");
+            sbDesc.AppendLine(System.Windows.Forms.Application.ExecutablePath);
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Settings file:");
+            sbDesc.AppendLine(Program.DefaultXMLFilePath);
             this.textBoxDescription.Text = sbDesc.ToString();
 
             //set translations for OK button

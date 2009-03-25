@@ -149,7 +149,7 @@ namespace ZSS
         {
             bool b = false;
 
-            foreach (string s in Program.mFileTypes)
+            foreach (string s in Program.zImageFileTypes)
             {
                 if (file.EndsWith(s))
                     b = true;

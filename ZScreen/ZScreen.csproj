@@ -295,21 +295,25 @@
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.Colors\ZSS.Colors.csproj">
+    <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
-      <Name>ZSS.Colors</Name>
+      <Name>ZSS.ColorsLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploader.csproj">
+    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
+      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
+      <Name>ZSS.FTPUploaderLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploaderLib.csproj">
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
-      <Name>ZSS.ImageUploader</Name>
+      <Name>ZSS.ImageUploaderLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploader.csproj">
+    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploaderLib.csproj">
       <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
-      <Name>ZSS.TextUploader</Name>
+      <Name>ZSS.TextUploaderLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateChecker.csproj">
+    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
       <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
-      <Name>ZSS.UpdateChecker</Name>
+      <Name>ZSS.UpdateCheckerLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
