@@ -209,6 +209,7 @@ namespace ZSS
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
             cbCloseDropBox.Checked = Program.conf.CloseDropBox;
+            cbCloseQuickActions.Checked = Program.conf.CloseQuickActions;
 
             ///////////////////////////////////
             // Hotkeys Settings
@@ -4461,6 +4462,12 @@ namespace ZSS
             }
         }
 
+        private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CloseQuickActions = cbCloseQuickActions.Checked;
+        }
+
         #endregion
+
     }
 }
