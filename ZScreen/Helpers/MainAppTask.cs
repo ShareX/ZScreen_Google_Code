@@ -51,8 +51,8 @@ namespace ZSS.Tasks
             TAKE_SCREENSHOT_SCREEN,
             [Description("Drag and Drop")]
             PROCESS_DRAG_N_DROP,
-            [Description("Image from Clipboard")]
-            IMAGEUPLOAD_FROM_CLIPBOARD,
+            [Description("Upload from Clipboard")]
+            UPLOAD_FROM_CLIPBOARD,
             [Description("Language Translator")]
             LANGUAGE_TRANSLATOR,
             [Description("Upload Image")]
@@ -160,7 +160,7 @@ namespace ZSS.Tasks
 
         public bool SafeToUpload()
         {
-            bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.IMAGEUPLOAD_FROM_CLIPBOARD)
+            bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UPLOAD_FROM_CLIPBOARD)
                 && this.ImageDestCategory == ImageDestType.FTP) || this.MyImage != null;
             if (!safe)
             {

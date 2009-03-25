@@ -610,7 +610,7 @@ namespace ZSS
             {
                 task.CaptureActiveWindow();
                 SaveImage(task);
-                ImageSoftwareAndOrWeb(ref task);
+                PublishImage(ref task);
             }
             catch (System.ArgumentOutOfRangeException aor)
             {
@@ -665,7 +665,7 @@ namespace ZSS
                 if (task.MyImage != null)
                 {
                     SaveImage(task);
-                    ImageSoftwareAndOrWeb(ref task);
+                    PublishImage(ref task);
                 }
             }
             catch (Exception ex)
@@ -690,7 +690,7 @@ namespace ZSS
         {
             task.CaptureScreen();
             SaveImage(task);
-            ImageSoftwareAndOrWeb(ref task);
+            PublishImage(ref task);
         }
 
         private void FlashIcon(MainAppTask task)
@@ -718,7 +718,12 @@ namespace ZSS
             throw new Exception("Unsupported Job for getting File Path.");
         }
 
-        private void ImageSoftware(ref MainAppTask task)
+
+        /// <summary>
+        /// Edit Image in selected Image Editor
+        /// </summary>
+        /// <param name="task"></param>
+        private void ImageEdit(ref MainAppTask task)
         {
             if (File.Exists(task.ImageLocalPath))
             {
@@ -729,25 +734,37 @@ namespace ZSS
                 p.Start();
                 // Wait till user quits the ScreenshotEditApp
                 p.WaitForExit();
-
-                // upload to ftpUpload or save to clipboard
-                //UploadScreenshot(ref task);
             }
         }
 
-        private void ImageSoftwareAndOrWeb(ref MainAppTask task)
+        /// <summary>
+        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
+        /// </summary>
+        /// <param name="task"></param>
+        private void PublishImage(ref MainAppTask task)
         {
             if (task.MyImage != null && Program.conf.ImageSoftwareEnabled)
             {
-                ImageSoftware(ref task);
+                ImageEdit(ref task);
             }
 
             if (task.SafeToUpload())
             {
                 Console.WriteLine("File for HDD: " + task.ImageLocalPath);
-                UploadScreenshot(ref task);
+                UploadImage(ref task);
             }
         }
+
+        /// <summary>
+        /// Function to edit Text in a Text Editor and Upload
+        /// </summary>
+        /// <param name="task"></param>
+        private void PublishText(ref MainAppTask task)
+        {
+            // TODO: Stuff
+        }
+
+
 
         /// <summary>
         /// Funtion to FTP the Screenshot
@@ -788,7 +805,7 @@ namespace ZSS
             return false;
         }
 
-        private void UploadScreenshot(ref MainAppTask task)
+        private void UploadImage(ref MainAppTask task)
         {
             task.StartTime = DateTime.Now;
             HTTPUploader imageUploader = null;
@@ -1070,20 +1087,28 @@ namespace ZSS
         /// <returns></returns>
         private bool StartWorkerText(MainAppTask.Jobs job, string clipboard)
         {
-            btnTranslate.Enabled = false;
             MainAppTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.TEXT;
-            if (clipboard == "")
+
+            switch (job)
             {
-                clipboard = txtTranslateText.Text;
+                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                    btnTranslate.Enabled = false;
+
+                    t.JobCategory = JobCategoryType.TEXT;
+                    if (clipboard == "")
+                    {
+                        clipboard = txtTranslateText.Text;
+                    }
+                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(clipboard, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
+                        mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex]);
+                    if (t.TranslationInfo.IsEmpty())
+                    {
+                        btnTranslate.Enabled = true;
+                        return false;
+                    }
+                    break;
             }
-            t.TranslationInfo = new GoogleTranslate.TranslationInfo(clipboard, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
-                mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex]);
-            if (t.TranslationInfo.IsEmpty())
-            {
-                btnTranslate.Enabled = true;
-                return false;
-            }
+
             t.MyWorker.RunWorkerAsync(t);
             return true;
         }
@@ -1098,7 +1123,7 @@ namespace ZSS
             task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
             ClipboardManager.Queue();
 
-            if (task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.IMAGEUPLOAD_FROM_CLIPBOARD)
+            if (task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD)
             {
                 if (task.ImageDestCategory != ImageDestType.FTP)
                 {
@@ -1125,40 +1150,57 @@ namespace ZSS
             FileSystem.appendDebug(".");
             FileSystem.appendDebug(string.Format("Job started: {0}", task.Job.ToString()));
 
-            switch (task.Job)
+            switch (task.JobCategory)
             {
-                case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                    CaptureActiveWindow(ref task);
+                case JobCategoryType.PICTURES:
+                    switch (task.Job)
+                    {
+                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                            PublishImage(ref task);
+                            break;
+                        case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
+                            PublishImage(ref task);
+                            break;
+                        case MainAppTask.Jobs.UPLOAD_IMAGE:
+                            PublishImage(ref task);
+                            break;
+                    }
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                    CaptureRegionOrWindow(ref task);
+                case JobCategoryType.SCREENSHOTS:
+                    switch (task.Job)
+                    {
+                        case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
+                            CaptureActiveWindow(ref task);
+                            break;
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                            CaptureRegionOrWindow(ref task);
+                            break;
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                            CaptureRegionOrWindow(ref task);
+                            break;
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                            CaptureRegionOrWindow(ref task);
+                            break;
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                            CaptureScreen(ref task);
+                            break;
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                            CaptureActiveWindow(ref task);
+                            break;
+                        case MainAppTask.Jobs.UPLOAD_IMAGE:
+                            PublishImage(ref task);
+                            break;
+                    }
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                    CaptureRegionOrWindow(ref task);
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                    CaptureRegionOrWindow(ref task);
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                    CaptureScreen(ref task);
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    CaptureActiveWindow(ref task);
-                    break;
-                case MainAppTask.Jobs.IMAGEUPLOAD_FROM_CLIPBOARD:
-                    ImageSoftwareAndOrWeb(ref task);
-                    break;
-                case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
-                    ImageSoftwareAndOrWeb(ref task);
-                    break;
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    LanguageTranslator(ref task);
-                    break;
-                case MainAppTask.Jobs.UPLOAD_IMAGE:
-                    ImageSoftwareAndOrWeb(ref task);
+                case JobCategoryType.TEXT:
+                    switch (task.Job)
+                    {
+                        case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                            LanguageTranslator(ref task);
+                            break;
+                    }
                     break;
             }
-
             e.Result = task;
         }
 
@@ -2500,7 +2542,7 @@ namespace ZSS
             List<string> files = GetClipboardFilePaths();
             foreach (string fp in files)
             {
-                StartWorkerImages(MainAppTask.Jobs.IMAGEUPLOAD_FROM_CLIPBOARD, fp);
+                StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
             }
         }
 
