@@ -1,5 +1,9 @@
+2.6.0.0 New Quick Actions toolbar that can be activated from Tray menu
+2.5.0.3 Fixed instabilities in FTP Remote Viewer
+2.5.0.2 Drop Window while opened will not interfere with the application events anymore
 2.5.0.1 Fixed a bug related to copying multiple image URLs in History tab
 2.5.0.0 History items are now retrievable from Settings\History.xml
+2.4.1.0 Revamped Update Checker system
 2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
 
 Version 2.4 - 20090321
