@@ -103,7 +103,6 @@ namespace ZSS
             this.cmsRetryUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbHistoryAddSpace = new System.Windows.Forms.CheckBox();
-            this.btnCopyToClipboard = new System.Windows.Forms.Button();
             this.tpCapture = new System.Windows.Forms.TabPage();
             this.tcFileSettings = new System.Windows.Forms.TabControl();
             this.tpSelectedWindow = new System.Windows.Forms.TabPage();
@@ -515,7 +514,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
             // tsmViewSettingsMenu
             // 
@@ -850,7 +849,6 @@ namespace ZSS
             this.tpHistory.Controls.Add(this.cbHistoryReverseList);
             this.tpHistory.Controls.Add(this.lbHistory);
             this.tpHistory.Controls.Add(this.cbHistoryAddSpace);
-            this.tpHistory.Controls.Add(this.btnCopyToClipboard);
             this.tpHistory.ImageKey = "pictures.png";
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
@@ -987,9 +985,9 @@ namespace ZSS
             this.cbHistoryReverseList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cbHistoryReverseList.Location = new System.Drawing.Point(200, 16);
             this.cbHistoryReverseList.Name = "cbHistoryReverseList";
-            this.cbHistoryReverseList.Size = new System.Drawing.Size(85, 17);
+            this.cbHistoryReverseList.Size = new System.Drawing.Size(143, 17);
             this.cbHistoryReverseList.TabIndex = 1;
-            this.cbHistoryReverseList.Text = "Reverse List";
+            this.cbHistoryReverseList.Text = "Reverse List in Clipboard";
             this.cbHistoryReverseList.UseVisualStyleBackColor = false;
             this.cbHistoryReverseList.CheckedChanged += new System.EventHandler(this.cbReverse_CheckedChanged);
             // 
@@ -1119,19 +1117,6 @@ namespace ZSS
             this.cbHistoryAddSpace.Text = "Add a New Line before the URLs";
             this.cbHistoryAddSpace.UseVisualStyleBackColor = false;
             this.cbHistoryAddSpace.CheckedChanged += new System.EventHandler(this.cbAddSpace_CheckedChanged);
-            // 
-            // btnCopyToClipboard
-            // 
-            this.btnCopyToClipboard.BackColor = System.Drawing.Color.Transparent;
-            this.btnCopyToClipboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnCopyToClipboard.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCopyToClipboard.Location = new System.Drawing.Point(312, 16);
-            this.btnCopyToClipboard.Name = "btnCopyToClipboard";
-            this.btnCopyToClipboard.Size = new System.Drawing.Size(80, 48);
-            this.btnCopyToClipboard.TabIndex = 3;
-            this.btnCopyToClipboard.Text = "Copy to Clipboard";
-            this.btnCopyToClipboard.UseVisualStyleBackColor = false;
-            this.btnCopyToClipboard.Click += new System.EventHandler(this.btnCopyToClipboard_Click);
             // 
             // tpCapture
             // 
@@ -4683,7 +4668,6 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpHistory;
         private System.Windows.Forms.CheckBox cbHistoryReverseList;
         private System.Windows.Forms.CheckBox cbHistoryAddSpace;
-        private System.Windows.Forms.Button btnCopyToClipboard;
         private System.Windows.Forms.TabPage tpCapture;
         private System.Windows.Forms.Label lblCodeI;
         private System.Windows.Forms.Label lblCodeT;
