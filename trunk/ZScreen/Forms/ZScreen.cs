@@ -2070,7 +2070,7 @@ namespace ZSS
             else if (tsm == tsmHTTP)
                 sel = tpHTTP;
             else if (tsm == tsmImageSoftware)
-                sel = tpImageSoftware;
+                sel = tpEditors;
             else if (tsm == tsmCapture)
                 sel = tpCapture;
             else if (tsm == tsmFTP)
@@ -3173,7 +3173,7 @@ namespace ZSS
             {
                 txtActiveHelp.Text = tabDesc + "configure the Image Hosting Service you prefer to upload the screenshot.";
             }
-            else if (e.TabPage == tpImageSoftware)
+            else if (e.TabPage == tpEditors)
             {
                 txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot. {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
             }
