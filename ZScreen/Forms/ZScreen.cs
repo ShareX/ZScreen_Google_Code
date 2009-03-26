@@ -2556,7 +2556,7 @@ namespace ZSS
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    cbFilePath = FileSystem.CheckPath(Path.Combine(Program.conf.TextDir,
+                    cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.conf.TextDir,
                         NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                     File.WriteAllText(cbFilePath, Clipboard.GetText());
                     cbListFilePath.Add(cbFilePath);
@@ -2565,7 +2565,7 @@ namespace ZSS
                 {
                     foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
                     {
-                        cbFilePath = FileSystem.CheckPath(Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp)));
+                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp)));
                         File.Copy(fp, cbFilePath, true);
                         cbListFilePath.Add(cbFilePath);
                     }

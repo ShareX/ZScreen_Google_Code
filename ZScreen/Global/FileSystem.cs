@@ -65,14 +65,14 @@ namespace ZSS
             {
                 if (File.Exists(fp))
                 {
-                    files.Add(CheckPath(fp));
+                    files.Add(GetUniqueFilePath(fp));
                 }
                 else if (Directory.Exists(fp))
                 {
                     string[] dirFiles = Directory.GetFiles(fp, "*.*", SearchOption.AllDirectories);
                     foreach (string f in dirFiles)
                     {
-                        files.Add(CheckPath(f));
+                        files.Add(GetUniqueFilePath(f));
                     }
                 }
             }
@@ -228,13 +228,13 @@ namespace ZSS
         }
 
         /// <summary>
-        /// Gets a fully qualified File Path for a file name provided as a StringBuilder. Save Location is set by the GUI. 
+        /// Gets a fully qualified unique File Path for a file name provided as a StringBuilder. Save Location is set by the GUI. 
         /// </summary>
         /// <param name="file">File Name</param>
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
         {
-            string filePath = CheckPath(Path.Combine(Program.conf.ImagesDir, fileName + "." +
+            string filePath = GetUniqueFilePath(Path.Combine(Program.conf.ImagesDir, fileName + "." +
                 Program.zImageFileTypes[Program.conf.FileFormat]));
 
             if (manualNaming)
@@ -319,10 +319,10 @@ namespace ZSS
         /// </summary>
         /// <param name="fp">File path.</param>
         /// <returns></returns>
-        public static string CheckPath(string fileName)
+        public static string GetUniqueFilePath(string fileName)
         {
-            string filePath = fileName.Substring(0, fileName.LastIndexOf('.'));
-            string fileExt = fileName.Remove(0, fileName.LastIndexOf('.'));
+            string filePath = Path.GetFileNameWithoutExtension(fileName);
+            string fileExt = Path.GetExtension(fileName);
             int num = 1;
             while (File.Exists(fileName))
             {
