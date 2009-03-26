@@ -82,7 +82,7 @@ namespace ZSS
         public HKcombo HKEntireScreen = new HKcombo(Keys.PrintScreen);
         public HKcombo HKClipboardUpload = new HKcombo(Keys.None);
         public HKcombo HKDropWindow = new HKcombo(Keys.None);
-        public HKcombo HKQuickActions = new HKcombo(Keys.None);
+        public HKcombo HKActionsToolbar = new HKcombo(Keys.None);
         public HKcombo HKQuickOptions = new HKcombo(Keys.None);
         public HKcombo HKLanguageTranslator = new HKcombo(Keys.None);
         public HKcombo HKScreenColorPicker = new HKcombo(Keys.None);
