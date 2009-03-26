@@ -520,7 +520,7 @@ namespace ZSS
                         ShowDropWindow();
                         return m_hID;
                     }
-                    else if (CheckKeys(Program.conf.HKQuickActions, lParam))
+                    else if (CheckKeys(Program.conf.HKActionsToolbar, lParam))
                     {
                         //Quick Actions
                         ShowQuickActions();
@@ -2935,7 +2935,7 @@ namespace ZSS
             dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HKCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HKLastCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HKClipboardUpload });
-            dgvHotkeys.Rows.Add(new object[] { "Quick Actions", Program.conf.HKQuickActions });
+            dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HKActionsToolbar });
             dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HKQuickOptions });
             dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HKDropWindow });
             dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HKLanguageTranslator });
@@ -2966,8 +2966,8 @@ namespace ZSS
                 case 5: //Clipboard Upload
                     Program.conf.HKClipboardUpload = hkc;
                     break;
-                case 6: //Quick Actions
-                    Program.conf.HKQuickActions = hkc;
+                case 6: //Actions Toolbar
+                    Program.conf.HKActionsToolbar = hkc;
                     break;
                 case 7: //Quick Options
                     Program.conf.HKQuickOptions = hkc;
@@ -3012,13 +3012,13 @@ namespace ZSS
                     case 5: //clipboard upload
                         txtActiveHelp.Text += "send files from your file system to your selected destination.";
                         break;
-                    case 6: // quick options
+                    case 7: // quick options
                         txtActiveHelp.Text += "quickly select the destination you would like to send images via a small pop up form.";
                         break;
-                    case 7: // drop window
+                    case 8: // drop window
                         txtActiveHelp.Text += "display a Drop Window so can drag and drop image files from Windows Explorer to upload.";
                         break;
-                    case 8: // language translator
+                    case 9: // language translator
                         txtActiveHelp.Text += "translate the text that is in your clipboard from one language to another. See HTTP -> Language Translator for settings.";
                         break;
                 }
