@@ -24,7 +24,7 @@ ZScreen does not close when you do this, it will stay open in the tray. If you w
 
 =Can I run multiple copies of ZScreen on one computer at the same time?=
 
-No, ZScreen 2.3 and prior versions will not run multiple copies. This feature was added to remove a big annoyance. Starting from ZScreen 2.3 multiple instances are supported. Newer instances will have a * which you will notice in Tray Icon when you mouse hover or in main application window. 
+No, ZScreen 2.3 and prior versions will not run multiple copies. This feature was added to remove a big annoyance. Starting from ZScreen 2.3 multiple instances are supported. Newer instances will have a `*` which you will notice in Tray Icon when you mouse hover or in main application window. 
 
 =How can I suggest a feature for future releases or submit a bug report?=
 
