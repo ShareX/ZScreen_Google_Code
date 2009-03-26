@@ -65,14 +65,14 @@ namespace ZSS
             {
                 if (File.Exists(fp))
                 {
-                    files.Add(fp);
+                    files.Add(CheckPath(fp));
                 }
                 else if (Directory.Exists(fp))
                 {
                     string[] dirFiles = Directory.GetFiles(fp, "*.*", SearchOption.AllDirectories);
                     foreach (string f in dirFiles)
                     {
-                        files.Add(f);
+                        files.Add(CheckPath(f));
                     }
                 }
             }
@@ -234,7 +234,8 @@ namespace ZSS
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
         {
-            string filePath = Path.Combine(Program.conf.ImagesDir, fileName + "." + Program.zImageFileTypes[Program.conf.FileFormat]);
+            string filePath = CheckPath(Path.Combine(Program.conf.ImagesDir, fileName + "." +
+                Program.zImageFileTypes[Program.conf.FileFormat]));
 
             if (manualNaming)
             {
@@ -311,6 +312,23 @@ namespace ZSS
             }
 
             return b;
+        }
+
+        /// <summary>
+        /// If file exist then adding number end of file name. Example: directory/fileName(2).exe
+        /// </summary>
+        /// <param name="fp">File path.</param>
+        /// <returns></returns>
+        public static string CheckPath(string fileName)
+        {
+            string filePath = fileName.Substring(0, fileName.LastIndexOf('.'));
+            string fileExt = fileName.Remove(0, fileName.LastIndexOf('.'));
+            int num = 1;
+            while (File.Exists(fileName))
+            {
+                fileName = filePath + "(" + ++num + ")" + fileExt;
+            }
+            return fileName;
         }
     }
 }
