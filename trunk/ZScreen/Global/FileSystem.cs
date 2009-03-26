@@ -33,6 +33,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Text.RegularExpressions;
 
 namespace ZSS
 {
@@ -65,14 +66,14 @@ namespace ZSS
             {
                 if (File.Exists(fp))
                 {
-                    files.Add(GetUniqueFilePath(fp));
+                    files.Add(fp);
                 }
                 else if (Directory.Exists(fp))
                 {
                     string[] dirFiles = Directory.GetFiles(fp, "*.*", SearchOption.AllDirectories);
                     foreach (string f in dirFiles)
                     {
-                        files.Add(GetUniqueFilePath(f));
+                        files.Add(f);
                     }
                 }
             }
@@ -321,12 +322,24 @@ namespace ZSS
         /// <returns></returns>
         public static string GetUniqueFilePath(string fileName)
         {
-            string filePath = Path.GetFileNameWithoutExtension(fileName);
-            string fileExt = Path.GetExtension(fileName);
-            int num = 1;
+            string filePath, fileExt, pattern = @"(\b.+\()(\d+)(\)\.\w+\b)";
+            int num;
+            GroupCollection groups = Regex.Match(fileName, pattern).Groups;
+            if (string.IsNullOrEmpty(groups[2].Value))
+            {
+                filePath = fileName.Substring(0, fileName.LastIndexOf('.')) + "(";
+                fileExt = ")" + fileName.Remove(0, fileName.LastIndexOf('.'));
+                num = 1;
+            }
+            else
+            {
+                filePath = groups[1].Value;
+                fileExt = groups[3].Value;
+                num = Convert.ToInt32(groups[2].Value);
+            }
             while (File.Exists(fileName))
             {
-                fileName = filePath + "(" + ++num + ")" + fileExt;
+                fileName = filePath + ++num + fileExt;
             }
             return fileName;
         }
