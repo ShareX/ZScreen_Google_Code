@@ -16,11 +16,12 @@ namespace ZSS.Forms
         public ToolbarWindow()
         {
             InitializeComponent();
+            User32.ActivateWindow(this.Handle);
         }
 
         private void DoJob(object sender, Tasks.MainAppTask.Jobs e)
         {
-            EventJob(sender, e);     
+            EventJob(sender, e);
             if (Program.conf.CloseQuickActions)
             {
                 this.Close();
@@ -65,6 +66,11 @@ namespace ZSS.Forms
         private void tsbScreenColorPicker_Click(object sender, EventArgs e)
         {
             DoJob(this, Tasks.MainAppTask.Jobs.SCREEN_COLOR_PICKER);
+        }
+
+        private void tsQuickActions_MouseEnter(object sender, EventArgs e)
+        {
+            User32.SetActiveWindow(this.Handle);
         }
     }
 }

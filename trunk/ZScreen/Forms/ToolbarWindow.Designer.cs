@@ -58,6 +58,7 @@
             this.tsQuickActions.Size = new System.Drawing.Size(185, 24);
             this.tsQuickActions.TabIndex = 0;
             this.tsQuickActions.Text = "toolStrip1";
+            this.tsQuickActions.MouseEnter += new System.EventHandler(this.tsQuickActions_MouseEnter);
             // 
             // tsbEntireScreen
             // 
