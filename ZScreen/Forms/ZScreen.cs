@@ -2503,6 +2503,8 @@ namespace ZSS
         {
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
+                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(
+                    Program.conf.ImagesDir, Path.GetFileName(filePath))), true);
                 ScreenshotUsingDragDrop(filePath);
             }
         }
