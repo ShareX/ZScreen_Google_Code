@@ -730,9 +730,6 @@ namespace ZSS
             throw new Exception("Unsupported Job for getting File Path.");
         }
 
-
-
-
         /// <summary>
         /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
         /// </summary>
@@ -2504,9 +2501,9 @@ namespace ZSS
 
         public void ScreenshotUsingDragDrop(string[] paths)
         {
-            foreach (string fp in FileSystem.GetExplorerFileList(paths))
+            foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
-                ScreenshotUsingDragDrop(fp);
+                ScreenshotUsingDragDrop(filePath);
             }
         }
 
@@ -2536,10 +2533,9 @@ namespace ZSS
 
         private void UploadUsingClipboard()
         {
-            List<string> files = GetClipboardFilePaths();
-            foreach (string fp in files)
+            foreach (string filePath in GetClipboardFilePaths())
             {
-                StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
             }
         }
 
@@ -2560,7 +2556,8 @@ namespace ZSS
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    cbFilePath = Path.Combine(Program.conf.TextDir, NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                    cbFilePath = FileSystem.CheckPath(Path.Combine(Program.conf.TextDir,
+                        NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                     File.WriteAllText(cbFilePath, Clipboard.GetText());
                     cbListFilePath.Add(cbFilePath);
                 }
@@ -2568,7 +2565,7 @@ namespace ZSS
                 {
                     foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
                     {
-                        cbFilePath = Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp));
+                        cbFilePath = FileSystem.CheckPath(Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp)));
                         File.Copy(fp, cbFilePath, true);
                         cbListFilePath.Add(cbFilePath);
                     }
