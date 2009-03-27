@@ -234,5 +234,11 @@ namespace ZSS
                 Directory.CreateDirectory(Program.conf.TempDir);
             }
         }
+
+        public static bool CheckFTPAccounts()
+        {
+            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPselected != -1 &&
+                Program.conf.FTPAccountList.Count > Program.conf.FTPselected;
+        }
     }
 }

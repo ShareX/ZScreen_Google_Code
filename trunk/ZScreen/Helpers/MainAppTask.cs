@@ -28,6 +28,7 @@ using System.ComponentModel;
 using System.Drawing;
 using ZSS.ImageUploader.Helpers;
 using System.IO;
+using ZSS.TextUploader.Global;
 
 namespace ZSS.Tasks
 {
@@ -143,7 +144,10 @@ namespace ZSS.Tasks
         /// </summary>
         public string MyText { get; set; }
         public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
-
+        /// <summary>
+        /// FTP, Paste2, pastebin.ca
+        /// </summary>
+        public TextDestType TextDestCategory { get; set; }
         #endregion
 
         /// <summary>

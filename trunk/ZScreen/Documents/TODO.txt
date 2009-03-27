@@ -1,4 +1,6 @@
-﻿
+﻿Extend ClipboardManager to support Text in clipboard
+Text Editors tab
+
 - Support for scrolling windows via new hotkey
 
 - Ability to rename files in 'view remote directory'
