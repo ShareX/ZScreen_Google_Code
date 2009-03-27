@@ -587,7 +587,7 @@ namespace ZSS
         {
             if (cbFromLanguage.Items.Count > 0 && cbToLanguage.Items.Count > 0)
             {
-                StartWorkerText(MainAppTask.Jobs.LANGUAGE_TRANSLATOR, clipboard);
+                StartWorkerText(MainAppTask.Jobs.LANGUAGE_TRANSLATOR, clipboard, "");
             }
         }
 
@@ -1079,21 +1079,22 @@ namespace ZSS
         /// <param name="job"></param>
         /// <param name="clipboard"></param>
         /// <returns></returns>
-        private bool StartWorkerText(MainAppTask.Jobs job, string clipboard)
+        private bool StartWorkerText(MainAppTask.Jobs job, string txt, string localFilePath)
         {
             MainAppTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.TEXT;
+            t.SetLocalFilePath(localFilePath);
 
             switch (job)
             {
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
                     btnTranslate.Enabled = false;
 
-                    t.JobCategory = JobCategoryType.TEXT;
-                    if (clipboard == "")
+                    if (txt == "")
                     {
-                        clipboard = txtTranslateText.Text;
+                        txt = txtTranslateText.Text;
                     }
-                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(clipboard, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
+                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(txt, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
                         mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex]);
                     if (t.TranslationInfo.IsEmpty())
                     {
