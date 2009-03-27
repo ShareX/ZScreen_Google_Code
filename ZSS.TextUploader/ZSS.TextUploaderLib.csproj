@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
     <Compile Include="HTTPTextUploader.cs" />
     <Compile Include="HTTP\CustomTextUploader.cs" />

@@ -705,16 +705,6 @@ namespace ZSS
             PublishImage(ref task);
         }
 
-        private void FlashIcon(MainAppTask task)
-        {
-            for (int i = 0; i < (int)Program.conf.FlashTrayCount; i++)
-            {
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
-                Thread.Sleep(275);
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_green);
-                Thread.Sleep(275);
-            }
-        }
 
         private string GetFilePath(MainAppTask.Jobs job)
         {
@@ -736,16 +726,16 @@ namespace ZSS
         /// <param name="task"></param>
         private void PublishImage(ref MainAppTask task)
         {
+            TaskManager tm = new TaskManager(ref task);
             if (task.MyImage != null && Program.conf.ImageSoftwareEnabled)
             {
-                TaskManager tm = new TaskManager(ref task);
                 tm.ImageEdit();
             }
 
             if (task.SafeToUpload())
             {
                 Console.WriteLine("File for HDD: " + task.LocalFilePath);
-                UploadImage(ref task);
+                tm.UploadImage();
             }
         }
 
@@ -755,111 +745,8 @@ namespace ZSS
         /// <param name="task"></param>
         private void PublishText(ref MainAppTask task)
         {
-            // TODO: Stuff
-        }
-
-
-
-        /// <summary>
-        /// Funtion to FTP the Screenshot
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="fullFilePath"></param>
-        /// <returns>Retuns a List of Screenshots</returns>
-        private bool UploadFtp(ref MainAppTask task)
-        {
-            try
-            {
-                string fullFilePath = task.LocalFilePath;
-
-                if (CheckFTPAccounts() && File.Exists(fullFilePath))
-                {
-                    FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
-                    task.DestinationName = acc.Name;
-
-                    FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
-
-                    ImageUploader.FTPUploader fu = new ZSS.ImageUploader.FTPUploader(acc);
-                    fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.EnableThumbnail; // = true; // ideally this shold be true
-                    fu.WorkingDir = Program.conf.CacheDir;
-                    task.ImageManager = fu.UploadImage(fullFilePath);
-                    task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
-                    return true;
-                }
-                else
-                {
-                    task.Errors.Add("FTP upload failed.");
-                }
-            }
-            catch (Exception ex)
-            {
-                task.Errors.Add("FTP upload failed.\r\n" + ex.Message);
-            }
-
-            return false;
-        }
-
-        private void UploadImage(ref MainAppTask task)
-        {
-            task.StartTime = DateTime.Now;
-            HTTPUploader imageUploader = null;
-
-            switch (task.ImageDestCategory)
-            {
-                case ImageDestType.CLIPBOARD:
-                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, task.LocalFilePath);
-                    break;
-                case ImageDestType.CUSTOM_UPLOADER:
-                    if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
-                    {
-                        imageUploader = new CustomUploader(Program.conf.ImageUploadersList[Program.conf.ImageUploaderSelected]);
-                    }
-                    break;
-                case ImageDestType.FTP:
-                    UploadFtp(ref task);
-                    break;
-                case ImageDestType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
-                    break;
-                case ImageDestType.TINYPIC:
-                    imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
-                    ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
-                    break;
-            }
-
-            if (imageUploader != null)
-            {
-                task.DestinationName = imageUploader.Name;
-                string fullFilePath = task.LocalFilePath;
-                if (File.Exists(fullFilePath))
-                {
-                    for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
-                        (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.FileCount < 1)); i++)
-                    {
-                        task.ImageManager = imageUploader.UploadImage(fullFilePath);
-                        task.Errors = imageUploader.Errors;
-                        if (Program.conf.ImageUploadRetry && (task.ImageDestCategory ==
-                            ImageDestType.IMAGESHACK || task.ImageDestCategory == ImageDestType.TINYPIC))
-                        {
-                            break;
-                        }
-                    }
-
-                    //Set remote path for Screenshots history
-                    task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
-                }
-            }
-
-            task.EndTime = DateTime.Now;
-            if (Program.conf.AddFailedScreenshot || (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0))
-            {
-                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
-            }
-
-            if (task.ImageManager != null)
-            {
-                FlashIcon(task);
-            }
+            TaskManager tm = new TaskManager(ref task);
+            tm.UploadText();
         }
 
         #endregion
@@ -1124,7 +1011,7 @@ namespace ZSS
                 {
                     if (!IsValidImage(ref task))
                     {
-                        if (Program.conf.AutoSwitchFTP && CheckFTPAccounts())
+                        if (Program.conf.AutoSwitchFTP && Program.CheckFTPAccounts())
                         {
                             task.ImageDestCategory = ImageDestType.FTP;
                         }
@@ -1190,6 +1077,9 @@ namespace ZSS
                 case JobCategoryType.TEXT:
                     switch (task.Job)
                     {
+                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                            PublishText(ref task);
+                            break;
                         case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
                             LanguageTranslator(ref task);
                             break;
@@ -1233,47 +1123,50 @@ namespace ZSS
         {
             try
             {
-                MainAppTask t = (MainAppTask)e.Result;
+                MainAppTask task = (MainAppTask)e.Result;
 
-                FileSystem.appendDebug(string.Format("Job completed: {0}", t.Job.ToString()));
+                FileSystem.appendDebug(string.Format("Job completed: {0}", task.Job.ToString()));
 
-                if (!RetryUpload(t))
+                if (!RetryUpload(task))
                 {
-                    if (t != null)
+                    if (task != null)
                     {
-                        switch (t.JobCategory)
+                        switch (task.JobCategory)
                         {
                             case JobCategoryType.TEXT:
-                                switch (t.Job)
+                                switch (task.Job)
                                 {
                                     case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                                        txtTranslateText.Text = t.TranslationInfo.SourceText;
-                                        txtTranslateResult.Text = t.TranslationInfo.Result.TranslatedText;
-                                        txtLanguages.Text = t.TranslationInfo.Result.TranslationType;
-                                        txtDictionary.Text = t.TranslationInfo.Result.Dictionary;
+                                        txtTranslateText.Text = task.TranslationInfo.SourceText;
+                                        txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
+                                        txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
+                                        txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
                                         if (Program.conf.ClipboardTranslate)
                                         {
-                                            Clipboard.SetText(t.TranslationInfo.Result.TranslatedText);
+                                            Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
                                         }
                                         btnTranslate.Enabled = true;
+                                        break;
+                                    case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                        Clipboard.SetText(task.RemoteFilePath);
                                         break;
                                 }
                                 break;
                             case JobCategoryType.SCREENSHOTS:
-                                switch (t.Job)
+                                switch (task.Job)
                                 {
                                     case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                                        if (t.ImageManager != null & t.ImageManager.FileCount > 0)
+                                        if (task.ImageManager != null & task.ImageManager.FileCount > 0)
                                         {
-                                            if (t.ImageManager.GetFullImageUrl() != "")
+                                            if (task.ImageManager.GetFullImageUrl() != "")
                                             {
-                                                txtUploadersLog.AppendText(t.DestinationName + " full image: " +
-                                                    t.ImageManager.GetFullImageUrl() + "\r\n");
+                                                txtUploadersLog.AppendText(task.DestinationName + " full image: " +
+                                                    task.ImageManager.GetFullImageUrl() + "\r\n");
                                             }
-                                            if (t.ImageManager.GetThumbnailUrl() != "")
+                                            if (task.ImageManager.GetThumbnailUrl() != "")
                                             {
-                                                txtUploadersLog.AppendText(t.DestinationName + " thumbnail: " +
-                                                    t.ImageManager.GetThumbnailUrl() + "\r\n");
+                                                txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
+                                                    task.ImageManager.GetThumbnailUrl() + "\r\n");
                                             }
                                         }
                                         btnUploadersTest.Enabled = true;
@@ -1281,21 +1174,21 @@ namespace ZSS
                                 }
                                 if (Program.conf.DeleteLocal)
                                 {
-                                    if (File.Exists(t.LocalFilePath))
+                                    if (File.Exists(task.LocalFilePath))
                                     {
-                                        File.Delete(t.LocalFilePath);
+                                        File.Delete(task.LocalFilePath);
                                     }
                                 }
                                 break;
                         }
 
-                        if (t.JobCategory == JobCategoryType.SCREENSHOTS || t.JobCategory == JobCategoryType.PICTURES)
+                        if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                         {
-                            ClipboardManager.AddScreenshotList(t.ImageManager);
+                            ClipboardManager.AddScreenshotList(task.ImageManager);
                             ClipboardManager.SetClipboardText();
                         }
 
-                        if (t.ImageManager != null && !string.IsNullOrEmpty(t.ImageManager.Source))
+                        if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
                         {
                             btnOpenSourceText.Enabled = true;
                             btnOpenSourceBrowser.Enabled = true;
@@ -1313,7 +1206,7 @@ namespace ZSS
                         niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(t.LocalFilePath))
+                    if (task.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath))
                     {
                         if (Program.conf.CompleteSound)
                         {
@@ -1321,17 +1214,17 @@ namespace ZSS
                         }
                         if (Program.conf.ShowBalloonTip)
                         {
-                            ShowBalloonTip(t);
+                            ShowBalloonTip(task);
                         }
                     }
 
-                    if (t.Errors.Count > 0)
+                    if (task.Errors.Count > 0)
                     {
-                        Console.WriteLine(t.Errors[t.Errors.Count - 1]);
+                        Console.WriteLine(task.Errors[task.Errors.Count - 1]);
                     }
                 }
 
-                if (t.MyImage != null) t.MyImage.Dispose(); // For fix memory leak
+                if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
 
             }
             catch (Exception ex)
@@ -2538,7 +2431,14 @@ namespace ZSS
         {
             foreach (string filePath in GetClipboardFilePaths())
             {
-                StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                if (FileSystem.IsValidTextFile(filePath))
+                {
+                    StartWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, "", filePath);
+                }
+                else
+                {
+                    StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                }
             }
         }
 
@@ -4215,12 +4115,6 @@ namespace ZSS
         private void cbAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.AutoSwitchFTP = cbAutoSwitchFTP.Checked;
-        }
-
-        private bool CheckFTPAccounts()
-        {
-            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPselected != -1 &&
-                Program.conf.FTPAccountList.Count > Program.conf.FTPselected;
         }
 
         #endregion
