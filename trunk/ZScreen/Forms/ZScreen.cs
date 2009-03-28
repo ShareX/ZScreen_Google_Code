@@ -4307,7 +4307,7 @@ namespace ZSS
 
         private void btnHistoryClear_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you really want to delete history list?", this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Do you really want to clear the History List?",  this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbHistory.Items.Clear();
                 CheckHistoryItems();
