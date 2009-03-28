@@ -45,34 +45,41 @@ namespace ZSS
 
         public static string Convert(NameType nameType)
         {
+            return Convert(nameType, false);
+        }
+
+        public static string Convert(NameType nameType, bool preview)
+        {
             switch (nameType)
             {
                 case NameType.ActiveWindow:
-                    return Convert(Program.conf.activeWindow, nameType);
+                    return Convert(Program.conf.activeWindow, nameType, preview);
                 case NameType.EntireScreen:
-                    return Convert(Program.conf.entireScreen, nameType);
+                    return Convert(Program.conf.entireScreen, nameType, preview);
                 case NameType.Watermark:
-                    return Convert(Program.conf.WatermarkText, nameType);
+                    return Convert(Program.conf.WatermarkText, nameType, preview);
+                default:
+                    return "";
             }
-            return "";
         }
 
         public static string Convert(string pattern)
         {
-            return Convert(pattern, NameType.EntireScreen);
+            return Convert(pattern, NameType.EntireScreen, false);
         }
 
         public static string Convert(string pattern, NameType nameType)
         {
+            return Convert(pattern, nameType, false);
+        }
+
+        public static string Convert(string pattern, NameType nameType, bool preview)
+        {
             StringBuilder sb = new StringBuilder(pattern);
 
-            //auto-increment
-            if (sb.ToString().Contains("%i"))
+            if (!preview && sb.ToString().Contains("%i"))
             {
-                if (Program.conf.awincrement != 0)
-                    Program.conf.awincrement += 1;
-                else
-                    Program.conf.awincrement = 1;
+                Program.conf.awincrement++;
             }
 
             DateTime dt = DateTime.Now;
