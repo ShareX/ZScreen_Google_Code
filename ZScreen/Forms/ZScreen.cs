@@ -280,7 +280,7 @@ namespace ZSS
             lbImageSoftware.Items.Add("Disabled");
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
-                if(!String.IsNullOrEmpty(app.Name))
+                if (!String.IsNullOrEmpty(app.Name))
                     lbImageSoftware.Items.Add(app.Name);
             }
 
@@ -4307,9 +4307,12 @@ namespace ZSS
 
         private void btnHistoryClear_Click(object sender, EventArgs e)
         {
-            lbHistory.Items.Clear();
-            CheckHistoryItems();
-            SaveHistoryItems();
+            if (MessageBox.Show("Are you really want to delete history list?", this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                lbHistory.Items.Clear();
+                CheckHistoryItems();
+                SaveHistoryItems();
+            }
         }
 
         private void tsmQuickActions_Click(object sender, EventArgs e)
