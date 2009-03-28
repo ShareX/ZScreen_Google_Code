@@ -402,6 +402,7 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnImageCopy = new System.Windows.Forms.Button();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
@@ -899,6 +900,7 @@ namespace ZSS
             // 
             // gbScreenshotPreview
             // 
+            this.gbScreenshotPreview.Controls.Add(this.btnImageCopy);
             this.gbScreenshotPreview.Controls.Add(this.btnScreenshotBrowse);
             this.gbScreenshotPreview.Controls.Add(this.btnScreenshotOpen);
             this.gbScreenshotPreview.Controls.Add(this.txtHistoryRemotePath);
@@ -917,9 +919,9 @@ namespace ZSS
             // 
             this.btnScreenshotBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnScreenshotBrowse.Enabled = false;
-            this.btnScreenshotBrowse.Location = new System.Drawing.Point(192, 272);
+            this.btnScreenshotBrowse.Location = new System.Drawing.Point(248, 272);
             this.btnScreenshotBrowse.Name = "btnScreenshotBrowse";
-            this.btnScreenshotBrowse.Size = new System.Drawing.Size(104, 23);
+            this.btnScreenshotBrowse.Size = new System.Drawing.Size(96, 23);
             this.btnScreenshotBrowse.TabIndex = 10;
             this.btnScreenshotBrowse.Text = "Browse &URL";
             this.btnScreenshotBrowse.UseVisualStyleBackColor = true;
@@ -927,11 +929,11 @@ namespace ZSS
             // 
             // btnScreenshotOpen
             // 
-            this.btnScreenshotOpen.AutoSize = true;
+            this.btnScreenshotOpen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnScreenshotOpen.Enabled = false;
-            this.btnScreenshotOpen.Location = new System.Drawing.Point(80, 272);
+            this.btnScreenshotOpen.Location = new System.Drawing.Point(144, 272);
             this.btnScreenshotOpen.Name = "btnScreenshotOpen";
-            this.btnScreenshotOpen.Size = new System.Drawing.Size(104, 23);
+            this.btnScreenshotOpen.Size = new System.Drawing.Size(96, 23);
             this.btnScreenshotOpen.TabIndex = 9;
             this.btnScreenshotOpen.Text = "&Open Local File";
             this.btnScreenshotOpen.UseVisualStyleBackColor = true;
@@ -1184,9 +1186,9 @@ namespace ZSS
             this.cbCropShowGrids.AutoSize = true;
             this.cbCropShowGrids.Location = new System.Drawing.Point(16, 136);
             this.cbCropShowGrids.Name = "cbCropShowGrids";
-            this.cbCropShowGrids.Size = new System.Drawing.Size(277, 17);
+            this.cbCropShowGrids.Size = new System.Drawing.Size(208, 17);
             this.cbCropShowGrids.TabIndex = 13;
-            this.cbCropShowGrids.Text = "If grid mode open and grid size >= 10 then show grids";
+            this.cbCropShowGrids.Text = "Show Grid when possible in Grid Mode";
             this.cbCropShowGrids.UseVisualStyleBackColor = true;
             this.cbCropShowGrids.CheckedChanged += new System.EventHandler(this.cbCropShowGrids_CheckedChanged);
             // 
@@ -1244,9 +1246,9 @@ namespace ZSS
             this.cbRegionRectangleInfo.AutoSize = true;
             this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 56);
             this.cbRegionRectangleInfo.Name = "cbRegionRectangleInfo";
-            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
+            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(215, 17);
             this.cbRegionRectangleInfo.TabIndex = 5;
-            this.cbRegionRectangleInfo.Text = "Show crop region coordinates and size";
+            this.cbRegionRectangleInfo.Text = "Show Crop Region coordinates and size";
             this.cbRegionRectangleInfo.UseVisualStyleBackColor = true;
             this.cbRegionRectangleInfo.CheckedChanged += new System.EventHandler(this.cbRegionRectangleInfo_CheckedChanged);
             // 
@@ -1267,9 +1269,9 @@ namespace ZSS
             this.cbRegionHotkeyInfo.AutoSize = true;
             this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 160);
             this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
-            this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
+            this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(206, 17);
             this.cbRegionHotkeyInfo.TabIndex = 6;
-            this.cbRegionHotkeyInfo.Text = "Show crop region hotkey instructions";
+            this.cbRegionHotkeyInfo.Text = "Show Crop Region hotkey instructions";
             this.cbRegionHotkeyInfo.UseVisualStyleBackColor = true;
             this.cbRegionHotkeyInfo.CheckedChanged += new System.EventHandler(this.cbRegionHotkeyInfo_CheckedChanged);
             // 
@@ -2850,9 +2852,9 @@ namespace ZSS
             this.lblFTPMode.AutoSize = true;
             this.lblFTPMode.Location = new System.Drawing.Point(16, 24);
             this.lblFTPMode.Name = "lblFTPMode";
-            this.lblFTPMode.Size = new System.Drawing.Size(78, 13);
+            this.lblFTPMode.Size = new System.Drawing.Size(76, 13);
             this.lblFTPMode.TabIndex = 38;
-            this.lblFTPMode.Text = "Transfer mode:";
+            this.lblFTPMode.Text = "Transfer Mode";
             // 
             // rbFTPActive
             // 
@@ -4553,6 +4555,16 @@ namespace ZSS
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
             // 
+            // btnImageCopy
+            // 
+            this.btnImageCopy.Location = new System.Drawing.Point(40, 272);
+            this.btnImageCopy.Name = "btnImageCopy";
+            this.btnImageCopy.Size = new System.Drawing.Size(96, 23);
+            this.btnImageCopy.TabIndex = 11;
+            this.btnImageCopy.Text = "Copy &Image";
+            this.btnImageCopy.UseVisualStyleBackColor = true;
+            this.btnImageCopy.Click += new System.EventHandler(this.btnImageCopy_Click);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5078,6 +5090,7 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpEditorsImages;
         private System.Windows.Forms.CheckBox chkRememberTinyPicUserPass;
         private System.Windows.Forms.Button btnResetIncrement;
+        private System.Windows.Forms.Button btnImageCopy;
 
     }
 }

@@ -3578,13 +3578,18 @@ namespace ZSS
             TestWatermark();
         }
 
-        private void copyImageToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CopyImageFromHistory()
         {
             if (lbHistory.SelectedIndex != -1)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
                 Clipboard.SetImage(MyGraphics.GetImageSafely(hi.LocalPath));
             }
+        }
+
+        private void copyImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyImageFromHistory();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4307,7 +4312,7 @@ namespace ZSS
 
         private void btnHistoryClear_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to clear the History List?",  this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show("Do you really want to clear the History List?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbHistory.Items.Clear();
                 CheckHistoryItems();
@@ -4389,6 +4394,11 @@ namespace ZSS
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
             Program.conf.awincrement = 0;
+        }
+
+        private void btnImageCopy_Click(object sender, EventArgs e)
+        {
+            CopyImageFromHistory();
         }
     }
 }
