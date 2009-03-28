@@ -1,6 +1,7 @@
 Version 2.6 - 20090327
 
-2.6.2.0 TinyPic RegCode is now automatically updated if TinyPic UserName and Password are set to remember
+2.6.3.0 Option to reset Auto-increment number in File Naming conventions [Issue 43]
+2.6.2.0 TinyPic RegCode is now automatically updated if TinyPic UserName and Password are set to remember [Issue 44]
 2.6.1.0 Taking multiple screenshots within a second is now possible via automatic file renaming
 2.6.0.0 New Quick Actions toolbar that can be activated from Tray menu
 2.5.0.3 Fixed instabilities in FTP Remote Viewer

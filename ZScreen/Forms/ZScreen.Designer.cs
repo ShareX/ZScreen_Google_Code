@@ -865,11 +865,12 @@ namespace ZSS
             // 
             // btnHistoryClear
             // 
-            this.btnHistoryClear.Location = new System.Drawing.Point(328, 40);
+            this.btnHistoryClear.AutoSize = true;
+            this.btnHistoryClear.Location = new System.Drawing.Point(320, 40);
             this.btnHistoryClear.Name = "btnHistoryClear";
-            this.btnHistoryClear.Size = new System.Drawing.Size(64, 24);
+            this.btnHistoryClear.Size = new System.Drawing.Size(69, 24);
             this.btnHistoryClear.TabIndex = 6;
-            this.btnHistoryClear.Text = "Clear list";
+            this.btnHistoryClear.Text = "Clear List...";
             this.btnHistoryClear.UseVisualStyleBackColor = true;
             this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
             // 
@@ -1538,11 +1539,11 @@ namespace ZSS
             // 
             // btnResetIncrement
             // 
-            this.btnResetIncrement.Location = new System.Drawing.Point(240, 184);
+            this.btnResetIncrement.Location = new System.Drawing.Point(240, 208);
             this.btnResetIncrement.Name = "btnResetIncrement";
             this.btnResetIncrement.Size = new System.Drawing.Size(184, 23);
             this.btnResetIncrement.TabIndex = 116;
-            this.btnResetIncrement.Text = "Reset auto increment number";
+            this.btnResetIncrement.Text = "Reset Auto-Increment Number";
             this.btnResetIncrement.UseVisualStyleBackColor = true;
             this.btnResetIncrement.Click += new System.EventHandler(this.btnResetIncrement_Click);
             // 
