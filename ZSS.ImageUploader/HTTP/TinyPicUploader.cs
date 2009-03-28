@@ -49,7 +49,7 @@ namespace ZSS.ImageUploader
 
         private string URLAPI = "http://api.tinypic.com/api.php";
 
-        public TinyPicUploader() { }
+       // public TinyPicUploader() { }
 
         public TinyPicUploader(string id, string key)
         {
