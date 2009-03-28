@@ -239,6 +239,7 @@ namespace ZSS
             // HTTP Settings
             ///////////////////////////////////
 
+            chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             nErrorRetry.Value = Program.conf.ErrorRetryCount;
@@ -3035,13 +3036,19 @@ namespace ZSS
 
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
         {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", "someone@gmail.com");
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
+
             ub.Icon = this.Icon;
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
                 TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
                 txtTinyPicShuk.Text = tpu.UserAuth(ub.UserName, ub.Password);
+                if (Program.conf.RememberTinyPicUserPass)
+                {
+                    Program.conf.TinyPicUserName = ub.UserName;
+                    Program.conf.TinyPicPassword = ub.Password;
+                }
             }
             this.BringToFront();
         }
@@ -3692,17 +3699,22 @@ namespace ZSS
         private void DownloadLanguagesList()
         {
             BackgroundWorker bwLanguages = new BackgroundWorker();
-            bwLanguages.DoWork += new DoWorkEventHandler(bwLanguages_DoWork);
-            bwLanguages.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwLanguages_RunWorkerCompleted);
+            bwLanguages.DoWork += new DoWorkEventHandler(bwOnlineTasks_DoWork);
+            bwLanguages.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwOnlineTasks_RunWorkerCompleted);
             bwLanguages.RunWorkerAsync();
         }
 
-        private void bwLanguages_DoWork(object sender, DoWorkEventArgs e)
+        private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
         {
             mGTranslator = new GoogleTranslate();
+            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) && !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
+            {
+                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                Program.conf.TinyPicShuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
+            }
         }
 
-        private void bwLanguages_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (mGTranslator != null)
             {
@@ -3722,6 +3734,10 @@ namespace ZSS
                 if (cbFromLanguage.Items.Count > 0) cbFromLanguage.Enabled = true;
                 if (cbToLanguage.Items.Count > 0) cbToLanguage.Enabled = true;
                 if (cbHelpToLanguage.Items.Count > 0) cbHelpToLanguage.Enabled = true;
+            }
+            if (!string.IsNullOrEmpty(Program.conf.TinyPicShuk) && Program.conf.TinyPicShuk != txtTinyPicShuk.Text)
+            {
+                txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             }
         }
 
@@ -4362,6 +4378,11 @@ namespace ZSS
         }
 
         #endregion
+
+        private void chkRememberTinyPicUserPass_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.RememberTinyPicUserPass = chkRememberTinyPicUserPass.Checked;
+        }
 
     }
 }

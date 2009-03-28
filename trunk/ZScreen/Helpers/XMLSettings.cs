@@ -96,8 +96,11 @@ namespace ZSS
         //*********************
         //* HTTP Settings
         //*********************
-        public string ImageShackRegistrationCode = null;
-        public string TinyPicShuk = null;
+        public string ImageShackRegistrationCode { get; set; }
+        public string TinyPicShuk { get; set; }
+        public bool RememberTinyPicUserPass { get; set; }
+        public string TinyPicUserName { get; set; }
+        public string TinyPicPassword { get; set; }
         public decimal ErrorRetryCount = 3;
         public ZSS.ImageUploader.UploadMode UploadMode = ZSS.ImageUploader.UploadMode.API;
         public bool ImageUploadRetry = true;

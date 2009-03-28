@@ -29,11 +29,12 @@ namespace ZSS.Forms
 {
     public partial class UserPassBox : System.Windows.Forms.Form
     {
-        public UserPassBox(string q, string ans)
+        public UserPassBox(string q, string userName, string password)
         {
             InitializeComponent();
             this.Text = q;
-            this.txtUserName.Text = ans;
+            this.txtUserName.Text = userName;
+            this.txtPassword.Text = password;
             //set translations for OK/Cancel
             btnOK.Text = "OK";
             btnCancel.Text = "Cancel";
