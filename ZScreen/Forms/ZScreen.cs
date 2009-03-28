@@ -280,7 +280,8 @@ namespace ZSS
             lbImageSoftware.Items.Add("Disabled");
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
-                lbImageSoftware.Items.Add(app.Name);
+                if(!String.IsNullOrEmpty(app.Name))
+                    lbImageSoftware.Items.Add(app.Name);
             }
 
             if (Program.conf.ImageSoftwareEnabled)
