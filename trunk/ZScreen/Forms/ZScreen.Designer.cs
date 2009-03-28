@@ -139,6 +139,7 @@ namespace ZSS
             this.lblTrayFlash = new System.Windows.Forms.Label();
             this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.tpFileNaming = new System.Windows.Forms.TabPage();
+            this.btnResetIncrement = new System.Windows.Forms.Button();
             this.gbOthersNaming = new System.Windows.Forms.GroupBox();
             this.lblEntireScreenPreview = new System.Windows.Forms.Label();
             this.txtEntireScreen = new System.Windows.Forms.TextBox();
@@ -401,7 +402,6 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnResetIncrement = new System.Windows.Forms.Button();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
@@ -865,11 +865,11 @@ namespace ZSS
             // 
             // btnHistoryClear
             // 
-            this.btnHistoryClear.Location = new System.Drawing.Point(324, 387);
+            this.btnHistoryClear.Location = new System.Drawing.Point(328, 40);
             this.btnHistoryClear.Name = "btnHistoryClear";
-            this.btnHistoryClear.Size = new System.Drawing.Size(43, 23);
+            this.btnHistoryClear.Size = new System.Drawing.Size(64, 24);
             this.btnHistoryClear.TabIndex = 6;
-            this.btnHistoryClear.Text = "Clear";
+            this.btnHistoryClear.Text = "Clear list";
             this.btnHistoryClear.UseVisualStyleBackColor = true;
             this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
             // 
@@ -1535,6 +1535,16 @@ namespace ZSS
             this.tpFileNaming.TabIndex = 3;
             this.tpFileNaming.Text = "Naming Conventions";
             this.tpFileNaming.UseVisualStyleBackColor = true;
+            // 
+            // btnResetIncrement
+            // 
+            this.btnResetIncrement.Location = new System.Drawing.Point(240, 184);
+            this.btnResetIncrement.Name = "btnResetIncrement";
+            this.btnResetIncrement.Size = new System.Drawing.Size(184, 23);
+            this.btnResetIncrement.TabIndex = 116;
+            this.btnResetIncrement.Text = "Reset auto increment number";
+            this.btnResetIncrement.UseVisualStyleBackColor = true;
+            this.btnResetIncrement.Click += new System.EventHandler(this.btnResetIncrement_Click);
             // 
             // gbOthersNaming
             // 
@@ -4541,16 +4551,6 @@ namespace ZSS
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
-            // 
-            // btnResetIncrement
-            // 
-            this.btnResetIncrement.Location = new System.Drawing.Point(240, 184);
-            this.btnResetIncrement.Name = "btnResetIncrement";
-            this.btnResetIncrement.Size = new System.Drawing.Size(184, 23);
-            this.btnResetIncrement.TabIndex = 116;
-            this.btnResetIncrement.Text = "Reset auto increment number";
-            this.btnResetIncrement.UseVisualStyleBackColor = true;
-            this.btnResetIncrement.Click += new System.EventHandler(this.btnResetIncrement_Click);
             // 
             // ZScreen
             // 
