@@ -17,12 +17,12 @@ namespace ZSS
         /// <returns></returns>
         public static Image GetImage(Image img)
         {
-            return Watermark(img, Program.conf.WatermarkText);
+            return Watermark(img);
         }
 
-        private static Image Watermark(Image img, string str)
+        private static Image Watermark(Image img)
         {
-            return DrawWatermark(img, NameParser.Convert(str, NameParser.NameType.Watermark), XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
+            return DrawWatermark(img, NameParser.Convert(NameParser.NameType.Watermark, true), XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
                 XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor), (int)Program.conf.WatermarkFontTrans, (int)Program.conf.WatermarkOffset,
                 (int)Program.conf.WatermarkBackTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1),
                 XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2), XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor),
@@ -81,6 +81,5 @@ namespace ZSS
             }
             return img;
         }
-
     }
 }

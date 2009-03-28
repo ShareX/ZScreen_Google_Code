@@ -2334,13 +2334,13 @@ namespace ZSS
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
             Program.conf.activeWindow = txtActiveWindow.Text;
-            lblActiveWindowPreview.Text = NameParser.Convert(NameParser.NameType.ActiveWindow);
+            lblActiveWindowPreview.Text = NameParser.Convert(NameParser.NameType.ActiveWindow, true);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
             Program.conf.entireScreen = txtEntireScreen.Text;
-            lblEntireScreenPreview.Text = NameParser.Convert(NameParser.NameType.EntireScreen);
+            lblEntireScreenPreview.Text = NameParser.Convert(NameParser.NameType.EntireScreen, true);
         }
 
         private void cmbFileFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -3526,8 +3526,6 @@ namespace ZSS
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ZScreen));
             Bitmap bmp = new Bitmap((Image)(resources.GetObject("pbLogo.Image")));
             bmp = bmp.Clone(new Rectangle(61, 32, 201, 141), PixelFormat.Format32bppArgb);
-            pbWatermarkShow.Image = bmp;
-            Graphics g = Graphics.FromImage(bmp);
             pbWatermarkShow.Image = WatermarkMaker.GetImage(bmp);
         }
 
@@ -4385,5 +4383,9 @@ namespace ZSS
             Program.conf.RememberTinyPicUserPass = chkRememberTinyPicUserPass.Checked;
         }
 
+        private void btnResetIncrement_Click(object sender, EventArgs e)
+        {
+            Program.conf.awincrement = 0;
+        }
     }
 }
