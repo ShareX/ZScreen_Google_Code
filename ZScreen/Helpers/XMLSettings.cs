@@ -103,7 +103,7 @@ namespace ZSS
         public string TinyPicUserName { get; set; }
         public string TinyPicPassword { get; set; }
         public decimal ErrorRetryCount = 3;
-        public ZSS.ImageUploader.UploadMode UploadMode = ZSS.ImageUploader.UploadMode.API;
+        public UploadMode UploadMode = UploadMode.API;
         public bool ImageUploadRetry = true;
         public bool AutoSwitchFTP = true;
         public string FromLanguage = "auto";
@@ -152,7 +152,7 @@ namespace ZSS
         public string WatermarkBorderColor = SerializeColor(Color.Black);
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkCornerRadius = 4;
-        public string WatermarkGradientType = "Vertical";
+        public System.Drawing.Drawing2D.LinearGradientMode WatermarkGradientType = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
         public Size CropGridSize = new Size(100, 100);
         public bool CropGridToggle = false;
         public bool CropShowGrids = false;
@@ -176,6 +176,7 @@ namespace ZSS
         public bool CaptureEntireScreenOnError = false;
         public bool CheckExperimental = false;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
+        public HistoryListFormat HistoryListFormat = HistoryListFormat.NAME;
 
         //*********************
         //* History

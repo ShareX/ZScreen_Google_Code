@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace ZSS
 {
@@ -37,6 +38,16 @@ namespace ZSS
         PICTURES,
         SCREENSHOTS,
         TEXT
+    }
+
+    public enum HistoryListFormat
+    {
+        [Description("File name")]
+        NAME,
+        [Description("Time - File name")]
+        TIME_NAME,
+        [Description("Date - Time - File name")]
+        DATE_TIME_NAME
     }
 
     public enum WatermarkPositionType
@@ -51,21 +62,25 @@ namespace ZSS
         BOTTOM_LEFT
     }
 
-    public static class WatermarkPositionTypeExtensions
+    public static class Enums
     {
-        public static string ToDescriptionString(this WatermarkPositionType val)
+        public static string GetDescription(this Enum value)
         {
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
+                typeof(DescriptionAttribute), false);
+            return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
         }
-    }
 
-    public static class JobsTypeExtensions
-    {
-        public static string ToDescriptionString(this ZSS.Tasks.MainAppTask.Jobs val)
+        public static string[] GetDescriptions(this Type type)
         {
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
+            string[] descriptions = new string[Enum.GetValues(type).Length];
+            int i = 0;
+            foreach (int value in Enum.GetValues(type))
+            {
+                descriptions[i++] = ((Enum)Enum.ToObject(type, value)).GetDescription();
+            }
+            return descriptions;
         }
     }
 }

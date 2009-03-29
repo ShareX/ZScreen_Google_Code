@@ -30,7 +30,7 @@ namespace ZSS
         }
 
         private static Image DrawWatermark(Image img, string drawText, Font font, Color fontColor, int fontTrans, int offset, int backTrans,
-            Color backColor1, Color backColor2, Color borderColor, WatermarkPositionType position, int cornerRadius, string gradientType)
+            Color backColor1, Color backColor2, Color borderColor, WatermarkPositionType position, int cornerRadius, LinearGradientMode gradientType)
         {
             Graphics g = Graphics.FromImage(img);
             g.SmoothingMode = SmoothingMode.HighQuality;
@@ -70,8 +70,8 @@ namespace ZSS
                     gPath = new GraphicsPath();
                     gPath.AddRectangle(labelRect);
                 }
-                g.FillPath(new LinearGradientBrush(labelRect, Color.FromArgb(backTrans, backColor1), Color.FromArgb(backTrans, backColor2),
-                   (LinearGradientMode)Enum.Parse(typeof(LinearGradientMode), gradientType)), gPath);
+                g.FillPath(new LinearGradientBrush(labelRect, Color.FromArgb(backTrans, backColor1),
+                    Color.FromArgb(backTrans, backColor2), gradientType), gPath);
                 g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
                 g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), labelRect.X + 5, labelRect.Y + 5);
             }
