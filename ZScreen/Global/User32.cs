@@ -38,8 +38,9 @@ namespace ZSS
 
         public const int SM_CXSCREEN = 0;
         public const int SM_CYSCREEN = 1;
-
-        public const Int32 CURSOR_SHOWING = 0x00000001;
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        public const int CURSOR_SHOWING = 0x00000001;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct IconInfo
@@ -145,6 +146,12 @@ namespace ZSS
 
         [DllImport("user32.dll")]
         public static extern int EnumWindows(EnumWindowsProc ewp, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 

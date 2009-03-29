@@ -39,6 +39,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(113, 96);
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "DropWindow";
@@ -48,9 +49,11 @@
             this.Text = "DropWindow";
             this.TopMost = true;
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DropWindow_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseClick);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragDrop);
-            this.Click += new System.EventHandler(this.DropWindow_Click);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseDown);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragEnter);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DropWindow_FormClosing);
             this.ResumeLayout(false);
 
         }
