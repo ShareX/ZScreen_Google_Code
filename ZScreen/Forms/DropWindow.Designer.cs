@@ -48,6 +48,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "DropWindow";
             this.TopMost = true;
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseDoubleClick);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DropWindow_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseClick);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragDrop);

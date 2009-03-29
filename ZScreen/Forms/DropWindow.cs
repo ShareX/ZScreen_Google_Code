@@ -81,15 +81,20 @@ namespace ZSS.Forms
 
         private void DropWindow_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                this.Close();
-            }
+            //if (e.Button == MouseButtons.Right)
+            //{
+            // this.Close();
+            //}
         }
 
         private void DropWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.conf.LastDropBoxPosition = this.Location;
+        }
+
+        private void DropWindow_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Close();
         }
     }
 }
