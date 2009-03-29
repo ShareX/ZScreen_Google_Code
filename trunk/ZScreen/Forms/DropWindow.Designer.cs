@@ -50,11 +50,10 @@
             this.TopMost = true;
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseDoubleClick);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DropWindow_Paint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseClick);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragDrop);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseDown);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.DropWindow_DragEnter);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DropWindow_FormClosing);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DropWindow_MouseMove);
             this.ResumeLayout(false);
 
         }
