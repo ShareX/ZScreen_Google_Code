@@ -42,11 +42,11 @@ namespace ZSS
 
     public enum HistoryListFormat
     {
-        [Description("File name")]
+        [Description("FileName")]
         NAME,
-        [Description("Time - File name")]
+        [Description("Time - FileName")]
         TIME_NAME,
-        [Description("Date - Time - File name")]
+        [Description("Date - Time - FileName")]
         DATE_TIME_NAME
     }
 
