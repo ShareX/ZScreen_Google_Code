@@ -3304,9 +3304,11 @@ namespace ZSS
                 }
                 txtHistoryLocalPath.Text = hi.LocalPath;
                 txtHistoryRemotePath.Text = hi.RemotePath;
-                gbScreenshotPreview.Text = string.Format("{0} ({1}) - {2}", hi.JobName, hi.DestinationName, hi.UploadDuration);
+                gbScreenshotPreview.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
+
+                ttApp.SetToolTip(lbHistory, hi.GetStatistics());
             }
-        }
+        }      
 
         public void HistoryRetryUpload(HistoryItem hi)
         {

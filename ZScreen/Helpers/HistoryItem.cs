@@ -24,6 +24,7 @@
 using System;
 using ZSS.ImageUploader.Helpers;
 using ZSS.Tasks;
+using System.Text;
 
 namespace ZSS.Helpers
 {
@@ -68,7 +69,16 @@ namespace ZSS.Helpers
 
         public override string ToString()
         {
-            return EndTime.ToLongTimeString() + " - " + FileName;
+            return FileName;
+        }
+
+        public string GetStatistics()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(String.Format("Date Uploaded:   {0}", this.EndTime.ToLongDateString()));
+            sb.AppendLine(String.Format("Time Uploaded:   {0}", this.EndTime.ToLongTimeString()));
+            sb.AppendLine(String.Format("Upload Duration: {0}", this.UploadDuration));
+            return sb.ToString().TrimEnd();
         }
 
         private string GetDestinationName(MainAppTask t)
