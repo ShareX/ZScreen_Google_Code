@@ -75,7 +75,7 @@ namespace ZSS.Helpers
         public string GetStatistics()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(String.Format("Date Uploaded:   {0}", this.EndTime.ToLongDateString()));
+            sb.AppendLine(String.Format("Date Uploaded:   {0}", this.EndTime.ToShortDateString()));
             sb.AppendLine(String.Format("Time Uploaded:   {0}", this.EndTime.ToLongTimeString()));
             sb.AppendLine(String.Format("Upload Duration: {0}", this.UploadDuration));
             return sb.ToString().TrimEnd();
