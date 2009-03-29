@@ -71,6 +71,7 @@ namespace ZSS
         public bool ShowUploadDuration = false;
         public bool CloseDropBox = false;
         public bool CloseQuickActions = false;
+        public Point LastDropBoxPosition = Point.Empty;
 
         //*********************
         //* Hotkey Settings

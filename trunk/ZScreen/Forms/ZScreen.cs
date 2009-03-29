@@ -3308,7 +3308,7 @@ namespace ZSS
 
                 ttApp.SetToolTip(lbHistory, hi.GetStatistics());
             }
-        }      
+        }
 
         public void HistoryRetryUpload(HistoryItem hi)
         {
@@ -4186,8 +4186,15 @@ namespace ZSS
                 dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
                 dw.Show();
                 Rectangle taskbar = User32.GetTaskbarRectangle();
-                dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,
-                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - dw.Height - 10);
+                if (Program.conf.LastDropBoxPosition == Point.Empty)
+                {
+                    dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,
+                        SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - dw.Height - 10);
+                }
+                else
+                {
+                    dw.Location = Program.conf.LastDropBoxPosition;
+                }
             }
         }
 
