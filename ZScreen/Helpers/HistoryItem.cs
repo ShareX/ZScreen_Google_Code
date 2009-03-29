@@ -69,7 +69,17 @@ namespace ZSS.Helpers
 
         public override string ToString()
         {
-            return FileName;
+            switch (Program.conf.HistoryListFormat)
+            {
+                case HistoryListFormat.NAME:
+                    return FileName;
+                case HistoryListFormat.TIME_NAME:
+                    return EndTime.ToLongTimeString() + " - " + FileName;
+                case HistoryListFormat.DATE_TIME_NAME:
+                    return EndTime.ToShortDateString() + " - " + EndTime.ToLongTimeString() + " - " + FileName;
+                default:
+                    return FileName;
+            }
         }
 
         public string GetStatistics()

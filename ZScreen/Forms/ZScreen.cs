@@ -384,14 +384,7 @@ namespace ZSS
 
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
-            HistoryManager history = HistoryManager.Read();
-            if (lbHistory.Items.Count == 0)
-            {
-                for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
-                {
-                    lbHistory.Items.Add(history.HistoryItems[i]);
-                }
-            }
+            LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
@@ -1253,6 +1246,16 @@ namespace ZSS
             else
             {
                 return false;
+            }
+        }
+
+        private void LoadHistoryItems()
+        {
+            lbHistory.Items.Clear();
+            HistoryManager history = HistoryManager.Read();
+            for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
+            {
+                lbHistory.Items.Add(history.HistoryItems[i]);
             }
         }
 
@@ -4440,6 +4443,7 @@ namespace ZSS
         private void cbHistoryListFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
+            LoadHistoryItems();
         }
     }
 }
