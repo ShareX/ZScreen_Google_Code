@@ -3585,7 +3585,28 @@ namespace ZSS
             if (lbHistory.SelectedIndex != -1)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                Clipboard.SetImage(MyGraphics.GetImageSafely(hi.LocalPath));
+                if (!string.IsNullOrEmpty(hi.LocalPath))
+                {
+                    using (Image img = MyGraphics.GetImageSafely(hi.LocalPath))
+                    {
+                        if (img != null)
+                        {
+                            Clipboard.SetImage(img);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CopyLinkFromHistory()
+        {
+            if (lbHistory.SelectedIndex != -1)
+            {
+                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
+                if (!string.IsNullOrEmpty(hi.RemotePath))
+                {
+                    Clipboard.SetText(hi.RemotePath);
+                }
             }
         }
 
@@ -4412,13 +4433,18 @@ namespace ZSS
 
         private void lbHistory_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A && Control.ModifierKeys == Keys.Control)
+            if (e.Control && e.KeyCode == Keys.A)
             {
-                for (int i = 0; i < lbHistory.Items.Count; i++)
+                for (int i = lbHistory.Items.Count - 1; i >= 0; i--)
                 {
                     lbHistory.SetSelected(i, true);
                 }
             }
+        }
+
+        private void btnCopyLink_Click(object sender, EventArgs e)
+        {
+            CopyLinkFromHistory();
         }
     }
 }

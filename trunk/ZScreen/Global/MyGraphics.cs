@@ -64,9 +64,10 @@ namespace ZSS
             Bitmap bmp = null;
             try
             {
-                Image img = Image.FromFile(fp);
-                bmp = new Bitmap(img);
-                img.Dispose();
+                using (Image img = Image.FromFile(fp))
+                {
+                    bmp = new Bitmap(img);
+                }
             }
             catch (Exception ex)
             {
