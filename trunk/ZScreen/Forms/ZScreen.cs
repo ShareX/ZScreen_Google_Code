@@ -4402,5 +4402,16 @@ namespace ZSS
         {
             CopyImageFromHistory();
         }
+
+        private void lbHistory_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && Control.ModifierKeys == Keys.Control)
+            {
+                for (int i = 0; i < lbHistory.Items.Count; i++)
+                {
+                    lbHistory.SetSelected(i, true);
+                }
+            }
+        }
     }
 }
