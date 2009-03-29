@@ -65,26 +65,9 @@ namespace ZSS.Forms
             if (Program.conf.CloseDropBox) this.Close();
         }
 
-        private void DropWindow_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                User32.ReleaseCapture();
-                User32.SendMessage(Handle, User32.WM_NCLBUTTONDOWN, User32.HT_CAPTION, 0);
-            }
-        }
-
         private void DropWindow_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
-        }
-
-        private void DropWindow_MouseClick(object sender, MouseEventArgs e)
-        {
-            //if (e.Button == MouseButtons.Right)
-            //{
-            // this.Close();
-            //}
         }
 
         private void DropWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -95,6 +78,12 @@ namespace ZSS.Forms
         private void DropWindow_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Close();
+        }
+
+        private void DropWindow_MouseMove(object sender, MouseEventArgs e)
+        {
+            User32.ReleaseCapture();
+            User32.SendMessage(Handle, User32.WM_NCLBUTTONDOWN, User32.HT_CAPTION, 0);
         }
     }
 }
