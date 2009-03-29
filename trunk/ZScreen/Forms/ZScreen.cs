@@ -98,7 +98,7 @@ namespace ZSS
 
             CleanCache();
 
-            //show settings if never ran before
+            // Show settings if never ran before
             if (!Program.conf.RunOnce)
             {
                 Show();
@@ -153,41 +153,10 @@ namespace ZSS
 
             Program.ConfigureDirs();
 
-            ///////////////////////////////////
-            // Main Tab
-            ///////////////////////////////////
-
-            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
-
-            cboScreenshotDest.Items.Clear();
-            foreach (ImageDestType sdt in Enum.GetValues(typeof(ImageDestType)))
-            {
-                cboScreenshotDest.Items.Add(sdt.ToDescriptionString());
-            }
-
-            cboUpdateCheckType.Items.Clear();
-            foreach (UpdateCheckType uct in Enum.GetValues(typeof(UpdateCheckType)))
-            {
-                cboUpdateCheckType.Items.Add(uct.ToDescriptionString());
-            }
-            cboUpdateCheckType.SelectedIndex = (int)Program.conf.UpdateCheckType;
-
-            cbWatermarkPosition.Items.Clear();
-            foreach (WatermarkPositionType wmt in Enum.GetValues(typeof(WatermarkPositionType)))
-            {
-                cbWatermarkPosition.Items.Add(wmt.ToDescriptionString());
-            }
-
-            cboClipboardTextMode.Items.Clear();
-            foreach (ClipboardUriType cut in Enum.GetValues(typeof(ClipboardUriType)))
-            {
-                cboClipboardTextMode.Items.Add(cut.ToDescriptionString());
-            }
-            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-
             ////////////////////////////////////
             // Capture
             ////////////////////////////////////
+
             nScreenshotDelay.Value = Program.conf.ScreenshotDelay;
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
@@ -243,15 +212,13 @@ namespace ZSS
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             nErrorRetry.Value = Program.conf.ErrorRetryCount;
-            cboUploadMode.Items.Clear();
-            foreach (UploadMode um in Enum.GetValues(typeof(UploadMode)))
+            if (cboUploadMode.Items.Count == 0)
             {
-                cboUploadMode.Items.Add(um.ToDescriptionString());
+                cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
             }
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
             chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
             cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
-
             DownloadLanguagesList();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
 
@@ -292,18 +259,27 @@ namespace ZSS
             }
             else
             {
-                //Set to disabled
-                lbImageSoftware.SelectedIndex = 0;
+                lbImageSoftware.SelectedIndex = 0; //Set to disabled
             }
             txtImageSoftwarePath.Enabled = false;
-            //cbRunImageSoftware.Checked = Program.conf.ISenabled;
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
 
             ///////////////////////////////////
             // Main/File Settings
             ///////////////////////////////////
 
+            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
+
+            if (cboScreenshotDest.Items.Count == 0)
+            {
+                cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            }
+            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             chkEnableThumbnail.Checked = Program.conf.EnableThumbnail;
+            if (cboClipboardTextMode.Items.Count == 0)
+            {
+                cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
+            }
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             //updateClipboardTextTrayMenu();
             cbStartWin.Checked = CheckStartWithWindows();
@@ -311,8 +287,8 @@ namespace ZSS
             txtActiveWindow.Text = Program.conf.activeWindow;
             txtEntireScreen.Text = Program.conf.entireScreen;
 
-            if (cmbFileFormat.Items.Count < 1) cmbFileFormat.Items.AddRange(Program.zImageFileTypes);
-            if (cmbSwitchFormat.Items.Count < 1) cmbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
+            if (cmbFileFormat.Items.Count == 0) cmbFileFormat.Items.AddRange(Program.zImageFileTypes);
+            if (cmbSwitchFormat.Items.Count == 0) cmbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
 
             cmbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudSwitchAfter.Text = Program.conf.SwitchAfter.ToString();
@@ -332,13 +308,17 @@ namespace ZSS
             pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1);
             pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2);
             pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor);
+            if (cbWatermarkPosition.Items.Count == 0)
+            {
+                cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
+            }
             cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
             nudWatermarkCornerRadius.Value = Program.conf.WatermarkCornerRadius;
             if (cbWatermarkGradientType.Items.Count == 0)
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
             }
-            cbWatermarkGradientType.SelectedIndex = cbWatermarkGradientType.FindStringExact(Program.conf.WatermarkGradientType);
+            cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
             TestWatermark();
 
             ///////////////////////////////////
@@ -352,12 +332,22 @@ namespace ZSS
             nudFlashIconCount.Value = Program.conf.FlashTrayCount;
             cbShowPopup.Checked = Program.conf.ShowBalloonTip;
             chkBalloonTipOpenLink.Checked = Program.conf.BalloonTipOpenLink;
+            if (cboUpdateCheckType.Items.Count == 0)
+            {
+                cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
+            }
+            cboUpdateCheckType.SelectedIndex = (int)Program.conf.UpdateCheckType;
             cbCheckUpdates.Checked = Program.conf.CheckUpdates;
             cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
+            if (cbHistoryListFormat.Items.Count == 0)
+            {
+                cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
+            }
+            cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
 
             ///////////////////////////////////
             // Image Uploaders
@@ -395,7 +385,7 @@ namespace ZSS
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
             HistoryManager history = HistoryManager.Read();
-            if (lbHistory.Items.Count < 1)
+            if (lbHistory.Items.Count == 0)
             {
                 for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
                 {
@@ -775,13 +765,13 @@ namespace ZSS
                 switch (t.ImageDestCategory)
                 {
                     case ImageDestType.FTP:
-                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.ToDescriptionString(), t.DestinationName));
+                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
                         break;
                     case ImageDestType.CUSTOM_UPLOADER:
-                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.ToDescriptionString(), t.DestinationName));
+                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
                         break;
                     default:
-                        sbMsg.AppendLine(string.Format("Destination: {0}", t.ImageDestCategory.ToDescriptionString()));
+                        sbMsg.AppendLine(string.Format("Destination: {0}", t.ImageDestCategory.GetDescription()));
                         break;
                 }
 
@@ -794,7 +784,7 @@ namespace ZSS
                     {
                         sbMsg.AppendLine("Name: " + t.FileName.ToString());
                     }
-                    fileOrUrl = string.Format("{0}: {1}", t.ImageDestCategory.ToDescriptionString(), t.LocalFilePath);
+                    fileOrUrl = string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.LocalFilePath);
                 }
                 else
                 {
@@ -1115,7 +1105,7 @@ namespace ZSS
 
                 case MainAppTask.ProgressType.SET_ICON_BUSY:
                     MainAppTask task = (MainAppTask)e.UserState;
-                    niTray.Text = this.Text + " - " + task.Job.ToDescriptionString();
+                    niTray.Text = this.Text + " - " + task.Job.GetDescription();
                     niTray.Icon = Properties.Resources.zss_busy;
                     break;
             }
@@ -1523,7 +1513,7 @@ namespace ZSS
             {
                 tsm = new ToolStripMenuItem();
                 tsm.Tag = x++;
-                tsm.Text = cui.ToDescriptionString();
+                tsm.Text = cui.GetDescription();
                 tsm.Click += new EventHandler(clipboardCopyHistory_Click);
                 tsmCopyCbHistory.DropDownItems.Add(tsm);
             }
@@ -1548,7 +1538,7 @@ namespace ZSS
                 tsm = new ToolStripMenuItem();
                 tsm.Tag = x++;
                 tsm.CheckOnClick = true;
-                tsm.Text = cui.ToDescriptionString();
+                tsm.Text = cui.GetDescription();
                 tsm.Click += new EventHandler(clipboardMode_Click);
                 tsmCopytoClipboardMode.DropDownItems.Add(tsm);
             }
@@ -1558,7 +1548,7 @@ namespace ZSS
 
         }
 
-        void clipboardMode_Click(object sender, EventArgs e)
+        private void clipboardMode_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
             Program.conf.ClipboardUriMode = (ClipboardUriType)tsm.Tag;
@@ -3576,7 +3566,7 @@ namespace ZSS
 
         private void cbWatermarkGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkGradientType = cbWatermarkGradientType.Text;
+            Program.conf.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
             TestWatermark();
         }
 
@@ -4445,6 +4435,11 @@ namespace ZSS
         private void btnCopyLink_Click(object sender, EventArgs e)
         {
             CopyLinkFromHistory();
+        }
+
+        private void cbHistoryListFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
         }
     }
 }

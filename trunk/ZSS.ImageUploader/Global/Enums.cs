@@ -27,17 +27,16 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using ZSS.ImageUploader;
+using System.Reflection;
 
 namespace ZSS
 {
-
-    public static class UploadModeTypeExtensions
+    public enum UploadMode
     {
-        public static string ToDescriptionString(this UploadMode val)
-        {
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
-        }
+        [Description("User")]
+        API,
+        [Description("Anonymous")]
+        ANONYMOUS
     }
 
     public enum ClipboardUriType
@@ -50,15 +49,6 @@ namespace ZSS
         THUMBNAIL,
         [Description("Linked Thumbnail for Forums")]
         LINKED_THUMBNAIL
-    }
-
-    public static class ClipboardUriTypeExtensions
-    {
-        public static string ToDescriptionString(this ClipboardUriType val)
-        {
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
-        }
     }
 
     public enum ImageDestType
@@ -75,14 +65,5 @@ namespace ZSS
         IMAGESHACK,
         [Description("TinyPic")]
         TINYPIC
-    }
-
-    public static class ScreenshotDestTypeExtensions
-    {
-        public static string ToDescriptionString(this ImageDestType val)
-        {
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
-        }
     }
 }

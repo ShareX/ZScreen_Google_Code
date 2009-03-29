@@ -41,14 +41,6 @@ using System.ComponentModel;
 
 namespace ZSS.ImageUploader
 {
-    public enum UploadMode
-    {
-        [Description("User")]
-        API,
-        [Description("Anonymous")]
-        ANONYMOUS
-    }
-
     public abstract class HTTPUploader : IUploader
     {
         /// <summary>

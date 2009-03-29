@@ -42,11 +42,11 @@ namespace ZSS.Forms
 
             foreach (ImageDestType sdt in Enum.GetValues(typeof(ImageDestType)))
             {
-                lbDest.Items.Add(sdt.ToDescriptionString());
+                lbDest.Items.Add(sdt.GetDescription());
             }
             foreach (ClipboardUriType cui in Enum.GetValues(typeof(ClipboardUriType)))
             {
-                lbClipboardMode.Items.Add(cui.ToDescriptionString());
+                lbClipboardMode.Items.Add(cui.GetDescription());
             }
         }
 
