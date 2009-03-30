@@ -854,7 +854,6 @@ namespace ZSS
                 }
                 // Update LocalFilePath again, due to possible PNG to JPG changes
                 t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, t.LocalFilePath));
-
             }
         }
 

@@ -67,10 +67,9 @@ namespace ZSS.Helpers
             this.StartTime = task.StartTime;
             this.EndTime = task.EndTime;
             this.UploadDuration = task.UploadDuration;
-            if (!string.IsNullOrEmpty(this.LocalPath))
+            if (!string.IsNullOrEmpty(this.LocalPath) && File.Exists(this.LocalPath))
             {
-                FileInfo fi = new FileInfo(this.LocalPath);
-                this.FileSize = fi.Length;
+                this.FileSize = new FileInfo(this.LocalPath).Length;
             }
         }
 
@@ -98,7 +97,15 @@ namespace ZSS.Helpers
             sb.AppendLine(String.Format("Date Started: {0}", this.StartTime.ToShortDateString()));
             sb.AppendLine(String.Format("Time Started: {0}", this.StartTime.ToLongTimeString()));
             sb.AppendLine(String.Format("Time Uploaded: {0}", this.EndTime.ToLongTimeString()));
-            sb.AppendLine(String.Format("File Size: {0} ({1} bytes)", FileSystem.GetFileSize(this.FileSize),this.FileSize.ToString("N0")));
+            if (this.FileSize == 0 && !string.IsNullOrEmpty(this.LocalPath) && File.Exists(this.LocalPath))
+            {
+                this.FileSize = new FileInfo(this.LocalPath).Length;
+            }
+            if (this.FileSize > 0)
+            {
+                sb.AppendLine(String.Format("File Size: {0} ({1} bytes)",
+                    FileSystem.GetFileSize(this.FileSize), this.FileSize.ToString("N0")));
+            }
             sb.AppendLine(String.Format("Upload Duration: {0}", this.UploadDuration));
             return sb.ToString().TrimEnd();
         }
