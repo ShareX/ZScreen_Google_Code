@@ -79,7 +79,7 @@ namespace ZSS
 
             if (!preview && sb.ToString().Contains("%i"))
             {
-                Program.conf.awincrement++;
+                Program.conf.AutoIncrement++;
             }
 
             DateTime dt = DateTime.Now;
@@ -114,7 +114,7 @@ namespace ZSS
                 .Replace(replacementVars[3], dt.Year.ToString())
                 .Replace(replacementVars[5], AddZeroes(dt.Minute))
                 .Replace(replacementVars[6], AddZeroes(dt.Second))
-                .Replace(replacementVars[7], AddZeroes(Program.conf.awincrement, 4))
+                .Replace(replacementVars[7], AddZeroes(Program.conf.AutoIncrement, 4))
                 .Replace(replacementVars[8], (dt.Hour >= 12 ? "PM" : "AM"));
 
             if (nameType == NameType.Watermark)
