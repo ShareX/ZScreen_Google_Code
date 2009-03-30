@@ -348,15 +348,15 @@ namespace ZSS
         {
             if (bytes >= 1073741824)
             {
-                return String.Format("{0:##.##} GiB", bytes / 1073741824);
+                return String.Format("{0:##.##} GiB", (decimal)bytes / 1073741824);
             }
             else if (bytes >= 1048576)
             {
-                return String.Format("{0:##.##} MiB", bytes / 1048576);
+                return String.Format("{0:##.##} MiB", (decimal)bytes / 1048576);
             }
             else if (bytes >= 1024)
             {
-                return String.Format("{0:##.##} KiB", bytes / 1024);
+                return String.Format("{0:##.##} KiB", (decimal)bytes / 1024);
             }
             else if (bytes > 0 & bytes < 1024)
             {
