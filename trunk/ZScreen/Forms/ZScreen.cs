@@ -157,7 +157,7 @@ namespace ZSS
             // Capture
             ////////////////////////////////////
 
-            nScreenshotDelay.Value = Program.conf.ScreenshotDelay;
+            nudScreenshotDelay.Value = Program.conf.ScreenshotDelay;
             cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
             CheckActiveHelp();
@@ -211,7 +211,7 @@ namespace ZSS
             chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
-            nErrorRetry.Value = Program.conf.ErrorRetryCount;
+            nudErrorRetry.Value = Program.conf.ErrorRetryCount;
             if (cboUploadMode.Items.Count == 0)
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
@@ -1257,6 +1257,10 @@ namespace ZSS
             {
                 lbHistory.Items.Add(history.HistoryItems[i]);
             }
+            if (lbHistory.Items.Count > 0)
+            {
+                lbHistory.SelectedIndex = 0;
+            }
         }
 
         private void AddHistoryItem(HistoryItem hi)
@@ -1321,7 +1325,7 @@ namespace ZSS
 
         private void nErrorRetry_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ErrorRetryCount = nErrorRetry.Value;
+            Program.conf.ErrorRetryCount = nudErrorRetry.Value;
         }
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
@@ -2555,7 +2559,7 @@ namespace ZSS
 
         private void nScreenshotDelay_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ScreenshotDelay = nScreenshotDelay.Value;
+            Program.conf.ScreenshotDelay = nudScreenshotDelay.Value;
         }
 
         #region Image Uploaders
@@ -3297,7 +3301,7 @@ namespace ZSS
                 }
                 txtHistoryLocalPath.Text = hi.LocalPath;
                 txtHistoryRemotePath.Text = hi.RemotePath;
-                gbScreenshotPreview.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
+                lblHistoryScreenshot.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
 
                 ttApp.SetToolTip(lbHistory, hi.GetStatistics());
             }
