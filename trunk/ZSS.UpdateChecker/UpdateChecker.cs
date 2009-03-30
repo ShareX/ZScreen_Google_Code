@@ -55,8 +55,8 @@ namespace ZSS.UpdateCheckerLib
                 CurrentDownloads = DefaultDownloads + "?can=2";
                 FeaturedDownloads = DefaultDownloads + "?can=3";
                 DeprecatedDownloads = DefaultDownloads + "?can=4";
-                DownloadsSetupExe = DefaultDownloads + "?q=label:Type-Installer";
-                DownloadsBinRar = DefaultDownloads + "?q=label:Type-Executable";
+                DownloadsSetupExe = "&q=label:Type-Installer";
+                DownloadsBinRar = "&q=label:Type-Executable";
             }
         }
 
@@ -75,24 +75,32 @@ namespace ZSS.UpdateCheckerLib
         {
             try
             {
-                if (this.Options.CheckExperimental)
+                switch (this.Options.UpdateCheckType)
                 {
-                    MyVersionInfo = CheckUpdate(AllDownloads);
-                }
-                else
-                {
-                    switch (this.Options.UpdateCheckType)
-                    {
-                        case UpdateCheckType.BIN:
-                            MyVersionInfo = CheckUpdate(DownloadsBinRar);
-                            break;
-                        case UpdateCheckType.SETUP:
-                            MyVersionInfo = CheckUpdate(DownloadsSetupExe);
-                            break;
-                        default:
-                            MyVersionInfo = CheckUpdate(DefaultDownloads);
-                            break;
-                    }
+                    case UpdateCheckType.SETUP:
+                        if (this.Options.CheckExperimental)
+                        {
+                            MyVersionInfo = CheckUpdate(AllDownloads + DownloadsSetupExe);
+                        }
+                        else
+                        {
+                            MyVersionInfo = CheckUpdate(CurrentDownloads + DownloadsSetupExe);
+                        }
+                        break;
+                    case UpdateCheckType.BIN:
+                        if (this.Options.CheckExperimental)
+                        {
+                            MyVersionInfo = CheckUpdate(AllDownloads + DownloadsBinRar);
+                        }
+                        else
+                        {
+                            MyVersionInfo = CheckUpdate(CurrentDownloads + DownloadsBinRar);
+                        }
+                        break;
+
+                    default:
+                        MyVersionInfo = CheckUpdate(DefaultDownloads);
+                        break;
                 }
 
                 StringBuilder sbVersions = new StringBuilder();
@@ -117,7 +125,7 @@ namespace ZSS.UpdateCheckerLib
                 this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
                 this.Options.MyNewVersionWindowOptions.ProjectName = ProjectName;
                 NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions);
-                ver.Text = string.Format("{0} {1} is available",  Application.ProductName, MyVersionInfo.Version);
+                ver.Text = string.Format("{0} {1} is available", Application.ProductName, MyVersionInfo.Version);
                 if (ver.ShowDialog() == DialogResult.Yes)
                 {
                     Process.Start(MyVersionInfo.Link);
