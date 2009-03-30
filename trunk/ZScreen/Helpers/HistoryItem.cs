@@ -95,12 +95,10 @@ namespace ZSS.Helpers
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(String.Format("Job: {0} ({1})", this.JobName, this.DestinationName));
-            sb.AppendLine(String.Format("Time Started: {0} - {1}", this.StartTime.ToLongTimeString(),
-                this.StartTime.ToShortDateString()));
-            sb.AppendLine(String.Format("Time Uploaded: {0} - {1}", this.EndTime.ToLongTimeString(),
-                this.EndTime.ToShortDateString()));
-            sb.AppendLine(String.Format("File Size: {0} ({1} bytes)", FileSystem.GetFileSize(this.FileSize),
-                this.FileSize.ToString("N0")));
+            sb.AppendLine(String.Format("Date Started: {0}", this.StartTime.ToShortDateString()));
+            sb.AppendLine(String.Format("Time Started: {0}", this.StartTime.ToLongTimeString()));
+            sb.AppendLine(String.Format("Time Uploaded: {0}", this.EndTime.ToLongTimeString()));
+            sb.AppendLine(String.Format("File Size: {0} ({1} bytes)", FileSystem.GetFileSize(this.FileSize),this.FileSize.ToString("N0")));
             sb.AppendLine(String.Format("Upload Duration: {0}", this.UploadDuration));
             return sb.ToString().TrimEnd();
         }
