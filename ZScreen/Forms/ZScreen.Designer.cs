@@ -103,6 +103,7 @@ namespace ZSS
             this.cmsRetryUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
+            this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
             this.btnHistoryClear = new System.Windows.Forms.Button();
             this.cbHistoryListFormat = new System.Windows.Forms.ComboBox();
             this.lblHistoryMaxItems = new System.Windows.Forms.Label();
@@ -409,7 +410,7 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
+            this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -1120,6 +1121,7 @@ namespace ZSS
             // 
             // tpHistorySettings
             // 
+            this.tpHistorySettings.Controls.Add(this.cbHistorySave);
             this.tpHistorySettings.Controls.Add(this.cbShowHistoryTooltip);
             this.tpHistorySettings.Controls.Add(this.btnHistoryClear);
             this.tpHistorySettings.Controls.Add(this.cbHistoryListFormat);
@@ -1136,10 +1138,21 @@ namespace ZSS
             this.tpHistorySettings.Text = "History Settings";
             this.tpHistorySettings.UseVisualStyleBackColor = true;
             // 
+            // cbShowHistoryTooltip
+            // 
+            this.cbShowHistoryTooltip.AutoSize = true;
+            this.cbShowHistoryTooltip.Location = new System.Drawing.Point(16, 96);
+            this.cbShowHistoryTooltip.Name = "cbShowHistoryTooltip";
+            this.cbShowHistoryTooltip.Size = new System.Drawing.Size(198, 17);
+            this.cbShowHistoryTooltip.TabIndex = 9;
+            this.cbShowHistoryTooltip.Text = "Show screenshot information tooltips";
+            this.cbShowHistoryTooltip.UseVisualStyleBackColor = true;
+            this.cbShowHistoryTooltip.CheckedChanged += new System.EventHandler(this.cbShowHistoryTooltip_CheckedChanged);
+            // 
             // btnHistoryClear
             // 
             this.btnHistoryClear.AutoSize = true;
-            this.btnHistoryClear.Location = new System.Drawing.Point(16, 144);
+            this.btnHistoryClear.Location = new System.Drawing.Point(16, 168);
             this.btnHistoryClear.Name = "btnHistoryClear";
             this.btnHistoryClear.Size = new System.Drawing.Size(112, 24);
             this.btnHistoryClear.TabIndex = 6;
@@ -1151,7 +1164,7 @@ namespace ZSS
             // 
             this.cbHistoryListFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHistoryListFormat.FormattingEnabled = true;
-            this.cbHistoryListFormat.Location = new System.Drawing.Point(120, 16);
+            this.cbHistoryListFormat.Location = new System.Drawing.Point(112, 16);
             this.cbHistoryListFormat.Name = "cbHistoryListFormat";
             this.cbHistoryListFormat.Size = new System.Drawing.Size(176, 21);
             this.cbHistoryListFormat.TabIndex = 7;
@@ -1162,18 +1175,18 @@ namespace ZSS
             this.lblHistoryMaxItems.AutoSize = true;
             this.lblHistoryMaxItems.Location = new System.Drawing.Point(16, 48);
             this.lblHistoryMaxItems.Name = "lblHistoryMaxItems";
-            this.lblHistoryMaxItems.Size = new System.Drawing.Size(212, 13);
+            this.lblHistoryMaxItems.Size = new System.Drawing.Size(208, 13);
             this.lblHistoryMaxItems.TabIndex = 5;
-            this.lblHistoryMaxItems.Text = "Maximum number of Screenshots in History:";
+            this.lblHistoryMaxItems.Text = "Maximum number of screenshots in history:";
             // 
             // lblHistoryListFormat
             // 
             this.lblHistoryListFormat.AutoSize = true;
             this.lblHistoryListFormat.Location = new System.Drawing.Point(16, 20);
             this.lblHistoryListFormat.Name = "lblHistoryListFormat";
-            this.lblHistoryListFormat.Size = new System.Drawing.Size(96, 13);
+            this.lblHistoryListFormat.Size = new System.Drawing.Size(89, 13);
             this.lblHistoryListFormat.TabIndex = 8;
-            this.lblHistoryListFormat.Text = "History List Format:";
+            this.lblHistoryListFormat.Text = "History list format:";
             // 
             // nudHistoryMaxItems
             // 
@@ -1194,7 +1207,7 @@ namespace ZSS
             this.cbHistoryAddSpace.AutoSize = true;
             this.cbHistoryAddSpace.BackColor = System.Drawing.Color.Transparent;
             this.cbHistoryAddSpace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbHistoryAddSpace.Location = new System.Drawing.Point(16, 96);
+            this.cbHistoryAddSpace.Location = new System.Drawing.Point(16, 120);
             this.cbHistoryAddSpace.Name = "cbHistoryAddSpace";
             this.cbHistoryAddSpace.Size = new System.Drawing.Size(234, 17);
             this.cbHistoryAddSpace.TabIndex = 0;
@@ -1209,7 +1222,7 @@ namespace ZSS
             this.cbHistoryReverseList.AutoSize = true;
             this.cbHistoryReverseList.BackColor = System.Drawing.Color.Transparent;
             this.cbHistoryReverseList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbHistoryReverseList.Location = new System.Drawing.Point(16, 120);
+            this.cbHistoryReverseList.Location = new System.Drawing.Point(16, 144);
             this.cbHistoryReverseList.Name = "cbHistoryReverseList";
             this.cbHistoryReverseList.Size = new System.Drawing.Size(138, 17);
             this.cbHistoryReverseList.TabIndex = 1;
@@ -4642,16 +4655,16 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // cbShowHistoryTooltip
+            // cbHistorySave
             // 
-            this.cbShowHistoryTooltip.AutoSize = true;
-            this.cbShowHistoryTooltip.Location = new System.Drawing.Point(16, 72);
-            this.cbShowHistoryTooltip.Name = "cbShowHistoryTooltip";
-            this.cbShowHistoryTooltip.Size = new System.Drawing.Size(198, 17);
-            this.cbShowHistoryTooltip.TabIndex = 9;
-            this.cbShowHistoryTooltip.Text = "Show screenshot information tooltips";
-            this.cbShowHistoryTooltip.UseVisualStyleBackColor = true;
-            this.cbShowHistoryTooltip.CheckedChanged += new System.EventHandler(this.cbShowHistoryTooltip_CheckedChanged);
+            this.cbHistorySave.AutoSize = true;
+            this.cbHistorySave.Location = new System.Drawing.Point(16, 72);
+            this.cbHistorySave.Name = "cbHistorySave";
+            this.cbHistorySave.Size = new System.Drawing.Size(99, 17);
+            this.cbHistorySave.TabIndex = 10;
+            this.cbHistorySave.Text = "Save history list";
+            this.cbHistorySave.UseVisualStyleBackColor = true;
+            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -5188,6 +5201,7 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpHistorySettings;
         private System.Windows.Forms.Label lblHistoryScreenshot;
         private System.Windows.Forms.CheckBox cbShowHistoryTooltip;
+        private System.Windows.Forms.CheckBox cbHistorySave;
 
     }
 }

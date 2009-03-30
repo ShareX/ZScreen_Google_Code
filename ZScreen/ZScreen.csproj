@@ -301,7 +301,7 @@
       <DependentUpon>ToolbarWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
-    <None Include="main.png" />
+    <None Include="Resources\main.png" />
     <None Include="Resources\application_lightning.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>

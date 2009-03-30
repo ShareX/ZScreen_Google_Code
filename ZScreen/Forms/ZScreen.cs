@@ -377,6 +377,7 @@ namespace ZSS
             // History
             ///////////////////////////////////
 
+            cbHistorySave.Checked = Program.conf.HistorySave;
             if (cbHistoryListFormat.Items.Count == 0)
             {
                 cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
@@ -1284,13 +1285,16 @@ namespace ZSS
 
         private void SaveHistoryItems()
         {
-            List<HistoryItem> historyItems = new List<HistoryItem>();
-            foreach (HistoryItem item in lbHistory.Items)
+            if (Program.conf.HistorySave)
             {
-                historyItems.Add(item);
+                List<HistoryItem> historyItems = new List<HistoryItem>();
+                foreach (HistoryItem item in lbHistory.Items)
+                {
+                    historyItems.Add(item);
+                }
+                HistoryManager hm = new HistoryManager(historyItems);
+                hm.Save();
             }
-            HistoryManager hm = new HistoryManager(historyItems);
-            hm.Save();
         }
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3306,7 +3310,11 @@ namespace ZSS
                     txtHistoryRemotePath.Text = hi.RemotePath;
                 }
 
-                if (Program.conf.HistoryShowTooltips) ttApp.SetToolTip(lbHistory, hi.GetStatistics());
+                if (Program.conf.HistoryShowTooltips)
+                {
+                    ttApp.SetToolTip(lbHistory, hi.GetStatistics());
+                    ttApp.SetToolTip(pbHistoryThumb, hi.GetStatistics());
+                }
             }
         }
 
@@ -4456,6 +4464,11 @@ namespace ZSS
         private void cbShowHistoryTooltip_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.HistoryShowTooltips = cbShowHistoryTooltip.Checked;
+        }
+
+        private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.HistorySave = cbHistorySave.Checked;
         }
     }
 }

@@ -47,7 +47,9 @@ namespace ZSS
         [Description("Time - FileName")]
         TIME_NAME,
         [Description("Date - Time - FileName")]
-        DATE_TIME_NAME
+        DATE_TIME_NAME,
+        [Description("Date - FileName")]
+        DATE_NAME
     }
 
     public enum WatermarkPositionType
