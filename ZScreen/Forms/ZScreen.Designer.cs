@@ -78,15 +78,16 @@ namespace ZSS
             this.tpHistory = new System.Windows.Forms.TabPage();
             this.tcHistory = new System.Windows.Forms.TabControl();
             this.tpHistoryList = new System.Windows.Forms.TabPage();
-            this.btnCopyLink = new System.Windows.Forms.Button();
-            this.btnImageCopy = new System.Windows.Forms.Button();
-            this.btnScreenshotBrowse = new System.Windows.Forms.Button();
-            this.btnScreenshotOpen = new System.Windows.Forms.Button();
-            this.txtHistoryRemotePath = new System.Windows.Forms.TextBox();
-            this.txtHistoryLocalPath = new System.Windows.Forms.TextBox();
-            this.lblHistoryRemotePath = new System.Windows.Forms.Label();
-            this.lblHistoryLocalPath = new System.Windows.Forms.Label();
+            this.lblHistoryScreenshot = new System.Windows.Forms.Label();
+            this.btnHistoryCopyLink = new System.Windows.Forms.Button();
+            this.btnHistoryCopyImage = new System.Windows.Forms.Button();
+            this.btnHistoryBrowseURL = new System.Windows.Forms.Button();
             this.pbHistoryThumb = new System.Windows.Forms.PictureBox();
+            this.btnHistoryOpenLocalFile = new System.Windows.Forms.Button();
+            this.lblHistoryLocalPath = new System.Windows.Forms.Label();
+            this.txtHistoryRemotePath = new System.Windows.Forms.TextBox();
+            this.lblHistoryRemotePath = new System.Windows.Forms.Label();
+            this.txtHistoryLocalPath = new System.Windows.Forms.TextBox();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.cmsHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmCopyCbHistory = new System.Windows.Forms.ToolStripMenuItem();
@@ -408,7 +409,7 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.lblHistoryScreenshot = new System.Windows.Forms.Label();
+            this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -881,11 +882,11 @@ namespace ZSS
             // tpHistoryList
             // 
             this.tpHistoryList.Controls.Add(this.lblHistoryScreenshot);
-            this.tpHistoryList.Controls.Add(this.btnCopyLink);
-            this.tpHistoryList.Controls.Add(this.btnImageCopy);
-            this.tpHistoryList.Controls.Add(this.btnScreenshotBrowse);
+            this.tpHistoryList.Controls.Add(this.btnHistoryCopyLink);
+            this.tpHistoryList.Controls.Add(this.btnHistoryCopyImage);
+            this.tpHistoryList.Controls.Add(this.btnHistoryBrowseURL);
             this.tpHistoryList.Controls.Add(this.pbHistoryThumb);
-            this.tpHistoryList.Controls.Add(this.btnScreenshotOpen);
+            this.tpHistoryList.Controls.Add(this.btnHistoryOpenLocalFile);
             this.tpHistoryList.Controls.Add(this.lblHistoryLocalPath);
             this.tpHistoryList.Controls.Add(this.txtHistoryRemotePath);
             this.tpHistoryList.Controls.Add(this.lblHistoryRemotePath);
@@ -899,85 +900,48 @@ namespace ZSS
             this.tpHistoryList.Text = "History List";
             this.tpHistoryList.UseVisualStyleBackColor = true;
             // 
-            // btnCopyLink
+            // lblHistoryScreenshot
             // 
-            this.btnCopyLink.Location = new System.Drawing.Point(400, 280);
-            this.btnCopyLink.Name = "btnCopyLink";
-            this.btnCopyLink.Size = new System.Drawing.Size(80, 24);
-            this.btnCopyLink.TabIndex = 12;
-            this.btnCopyLink.Text = "Copy Link";
-            this.btnCopyLink.UseVisualStyleBackColor = true;
-            this.btnCopyLink.Click += new System.EventHandler(this.btnCopyLink_Click);
+            this.lblHistoryScreenshot.AutoSize = true;
+            this.lblHistoryScreenshot.Location = new System.Drawing.Point(400, 7);
+            this.lblHistoryScreenshot.Name = "lblHistoryScreenshot";
+            this.lblHistoryScreenshot.Size = new System.Drawing.Size(61, 13);
+            this.lblHistoryScreenshot.TabIndex = 13;
+            this.lblHistoryScreenshot.Text = "Screenshot";
             // 
-            // btnImageCopy
+            // btnHistoryCopyLink
             // 
-            this.btnImageCopy.Location = new System.Drawing.Point(488, 280);
-            this.btnImageCopy.Name = "btnImageCopy";
-            this.btnImageCopy.Size = new System.Drawing.Size(80, 24);
-            this.btnImageCopy.TabIndex = 11;
-            this.btnImageCopy.Text = "Copy &Image";
-            this.btnImageCopy.UseVisualStyleBackColor = true;
-            this.btnImageCopy.Click += new System.EventHandler(this.btnImageCopy_Click);
+            this.btnHistoryCopyLink.Enabled = false;
+            this.btnHistoryCopyLink.Location = new System.Drawing.Point(400, 280);
+            this.btnHistoryCopyLink.Name = "btnHistoryCopyLink";
+            this.btnHistoryCopyLink.Size = new System.Drawing.Size(80, 24);
+            this.btnHistoryCopyLink.TabIndex = 12;
+            this.btnHistoryCopyLink.Text = "Copy Link";
+            this.btnHistoryCopyLink.UseVisualStyleBackColor = true;
+            this.btnHistoryCopyLink.Click += new System.EventHandler(this.btnCopyLink_Click);
             // 
-            // btnScreenshotBrowse
+            // btnHistoryCopyImage
             // 
-            this.btnScreenshotBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnScreenshotBrowse.Enabled = false;
-            this.btnScreenshotBrowse.Location = new System.Drawing.Point(680, 280);
-            this.btnScreenshotBrowse.Name = "btnScreenshotBrowse";
-            this.btnScreenshotBrowse.Size = new System.Drawing.Size(80, 24);
-            this.btnScreenshotBrowse.TabIndex = 10;
-            this.btnScreenshotBrowse.Text = "Browse &URL";
-            this.btnScreenshotBrowse.UseVisualStyleBackColor = true;
-            this.btnScreenshotBrowse.Click += new System.EventHandler(this.btnScreenshotBrowse_Click);
+            this.btnHistoryCopyImage.Enabled = false;
+            this.btnHistoryCopyImage.Location = new System.Drawing.Point(488, 280);
+            this.btnHistoryCopyImage.Name = "btnHistoryCopyImage";
+            this.btnHistoryCopyImage.Size = new System.Drawing.Size(80, 24);
+            this.btnHistoryCopyImage.TabIndex = 11;
+            this.btnHistoryCopyImage.Text = "Copy &Image";
+            this.btnHistoryCopyImage.UseVisualStyleBackColor = true;
+            this.btnHistoryCopyImage.Click += new System.EventHandler(this.btnImageCopy_Click);
             // 
-            // btnScreenshotOpen
+            // btnHistoryBrowseURL
             // 
-            this.btnScreenshotOpen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnScreenshotOpen.Enabled = false;
-            this.btnScreenshotOpen.Location = new System.Drawing.Point(576, 280);
-            this.btnScreenshotOpen.Name = "btnScreenshotOpen";
-            this.btnScreenshotOpen.Size = new System.Drawing.Size(96, 24);
-            this.btnScreenshotOpen.TabIndex = 9;
-            this.btnScreenshotOpen.Text = "&Open Local File";
-            this.btnScreenshotOpen.UseVisualStyleBackColor = true;
-            this.btnScreenshotOpen.Click += new System.EventHandler(this.btnScreenshotOpen_Click);
-            // 
-            // txtHistoryRemotePath
-            // 
-            this.txtHistoryRemotePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHistoryRemotePath.Location = new System.Drawing.Point(400, 368);
-            this.txtHistoryRemotePath.Name = "txtHistoryRemotePath";
-            this.txtHistoryRemotePath.ReadOnly = true;
-            this.txtHistoryRemotePath.Size = new System.Drawing.Size(360, 20);
-            this.txtHistoryRemotePath.TabIndex = 8;
-            // 
-            // txtHistoryLocalPath
-            // 
-            this.txtHistoryLocalPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHistoryLocalPath.Location = new System.Drawing.Point(400, 328);
-            this.txtHistoryLocalPath.Name = "txtHistoryLocalPath";
-            this.txtHistoryLocalPath.ReadOnly = true;
-            this.txtHistoryLocalPath.Size = new System.Drawing.Size(360, 20);
-            this.txtHistoryLocalPath.TabIndex = 7;
-            // 
-            // lblHistoryRemotePath
-            // 
-            this.lblHistoryRemotePath.AutoSize = true;
-            this.lblHistoryRemotePath.Location = new System.Drawing.Point(400, 351);
-            this.lblHistoryRemotePath.Name = "lblHistoryRemotePath";
-            this.lblHistoryRemotePath.Size = new System.Drawing.Size(69, 13);
-            this.lblHistoryRemotePath.TabIndex = 6;
-            this.lblHistoryRemotePath.Text = "Remote Path";
-            // 
-            // lblHistoryLocalPath
-            // 
-            this.lblHistoryLocalPath.AutoSize = true;
-            this.lblHistoryLocalPath.Location = new System.Drawing.Point(400, 311);
-            this.lblHistoryLocalPath.Name = "lblHistoryLocalPath";
-            this.lblHistoryLocalPath.Size = new System.Drawing.Size(58, 13);
-            this.lblHistoryLocalPath.TabIndex = 5;
-            this.lblHistoryLocalPath.Text = "Local Path";
+            this.btnHistoryBrowseURL.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnHistoryBrowseURL.Enabled = false;
+            this.btnHistoryBrowseURL.Location = new System.Drawing.Point(576, 280);
+            this.btnHistoryBrowseURL.Name = "btnHistoryBrowseURL";
+            this.btnHistoryBrowseURL.Size = new System.Drawing.Size(80, 24);
+            this.btnHistoryBrowseURL.TabIndex = 10;
+            this.btnHistoryBrowseURL.Text = "Browse &URL";
+            this.btnHistoryBrowseURL.UseVisualStyleBackColor = true;
+            this.btnHistoryBrowseURL.Click += new System.EventHandler(this.btnScreenshotBrowse_Click);
             // 
             // pbHistoryThumb
             // 
@@ -990,6 +954,54 @@ namespace ZSS
             this.pbHistoryThumb.TabIndex = 4;
             this.pbHistoryThumb.TabStop = false;
             this.pbHistoryThumb.Click += new System.EventHandler(this.pbHistoryThumb_Click);
+            // 
+            // btnHistoryOpenLocalFile
+            // 
+            this.btnHistoryOpenLocalFile.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnHistoryOpenLocalFile.Enabled = false;
+            this.btnHistoryOpenLocalFile.Location = new System.Drawing.Point(664, 280);
+            this.btnHistoryOpenLocalFile.Name = "btnHistoryOpenLocalFile";
+            this.btnHistoryOpenLocalFile.Size = new System.Drawing.Size(96, 24);
+            this.btnHistoryOpenLocalFile.TabIndex = 9;
+            this.btnHistoryOpenLocalFile.Text = "&Open Local File";
+            this.btnHistoryOpenLocalFile.UseVisualStyleBackColor = true;
+            this.btnHistoryOpenLocalFile.Click += new System.EventHandler(this.btnScreenshotOpen_Click);
+            // 
+            // lblHistoryLocalPath
+            // 
+            this.lblHistoryLocalPath.AutoSize = true;
+            this.lblHistoryLocalPath.Location = new System.Drawing.Point(400, 311);
+            this.lblHistoryLocalPath.Name = "lblHistoryLocalPath";
+            this.lblHistoryLocalPath.Size = new System.Drawing.Size(58, 13);
+            this.lblHistoryLocalPath.TabIndex = 5;
+            this.lblHistoryLocalPath.Text = "Local Path";
+            // 
+            // txtHistoryRemotePath
+            // 
+            this.txtHistoryRemotePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtHistoryRemotePath.Location = new System.Drawing.Point(400, 368);
+            this.txtHistoryRemotePath.Name = "txtHistoryRemotePath";
+            this.txtHistoryRemotePath.ReadOnly = true;
+            this.txtHistoryRemotePath.Size = new System.Drawing.Size(360, 20);
+            this.txtHistoryRemotePath.TabIndex = 8;
+            // 
+            // lblHistoryRemotePath
+            // 
+            this.lblHistoryRemotePath.AutoSize = true;
+            this.lblHistoryRemotePath.Location = new System.Drawing.Point(400, 351);
+            this.lblHistoryRemotePath.Name = "lblHistoryRemotePath";
+            this.lblHistoryRemotePath.Size = new System.Drawing.Size(69, 13);
+            this.lblHistoryRemotePath.TabIndex = 6;
+            this.lblHistoryRemotePath.Text = "Remote Path";
+            // 
+            // txtHistoryLocalPath
+            // 
+            this.txtHistoryLocalPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtHistoryLocalPath.Location = new System.Drawing.Point(400, 328);
+            this.txtHistoryLocalPath.Name = "txtHistoryLocalPath";
+            this.txtHistoryLocalPath.ReadOnly = true;
+            this.txtHistoryLocalPath.Size = new System.Drawing.Size(360, 20);
+            this.txtHistoryLocalPath.TabIndex = 7;
             // 
             // lbHistory
             // 
@@ -1108,6 +1120,7 @@ namespace ZSS
             // 
             // tpHistorySettings
             // 
+            this.tpHistorySettings.Controls.Add(this.cbShowHistoryTooltip);
             this.tpHistorySettings.Controls.Add(this.btnHistoryClear);
             this.tpHistorySettings.Controls.Add(this.cbHistoryListFormat);
             this.tpHistorySettings.Controls.Add(this.lblHistoryMaxItems);
@@ -1126,7 +1139,7 @@ namespace ZSS
             // btnHistoryClear
             // 
             this.btnHistoryClear.AutoSize = true;
-            this.btnHistoryClear.Location = new System.Drawing.Point(16, 120);
+            this.btnHistoryClear.Location = new System.Drawing.Point(16, 144);
             this.btnHistoryClear.Name = "btnHistoryClear";
             this.btnHistoryClear.Size = new System.Drawing.Size(112, 24);
             this.btnHistoryClear.TabIndex = 6;
@@ -1147,7 +1160,7 @@ namespace ZSS
             // lblHistoryMaxItems
             // 
             this.lblHistoryMaxItems.AutoSize = true;
-            this.lblHistoryMaxItems.Location = new System.Drawing.Point(16, 96);
+            this.lblHistoryMaxItems.Location = new System.Drawing.Point(16, 48);
             this.lblHistoryMaxItems.Name = "lblHistoryMaxItems";
             this.lblHistoryMaxItems.Size = new System.Drawing.Size(212, 13);
             this.lblHistoryMaxItems.TabIndex = 5;
@@ -1164,7 +1177,7 @@ namespace ZSS
             // 
             // nudHistoryMaxItems
             // 
-            this.nudHistoryMaxItems.Location = new System.Drawing.Point(232, 92);
+            this.nudHistoryMaxItems.Location = new System.Drawing.Point(232, 44);
             this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1181,13 +1194,13 @@ namespace ZSS
             this.cbHistoryAddSpace.AutoSize = true;
             this.cbHistoryAddSpace.BackColor = System.Drawing.Color.Transparent;
             this.cbHistoryAddSpace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbHistoryAddSpace.Location = new System.Drawing.Point(16, 48);
+            this.cbHistoryAddSpace.Location = new System.Drawing.Point(16, 96);
             this.cbHistoryAddSpace.Name = "cbHistoryAddSpace";
-            this.cbHistoryAddSpace.Size = new System.Drawing.Size(183, 17);
+            this.cbHistoryAddSpace.Size = new System.Drawing.Size(234, 17);
             this.cbHistoryAddSpace.TabIndex = 0;
             this.cbHistoryAddSpace.Tag = "Adding a New Line before the URLs makes it look nicer when you copy a URL List in" +
                 " IM such as Pidgin";
-            this.cbHistoryAddSpace.Text = "Add a New Line before the URLs";
+            this.cbHistoryAddSpace.Text = "Add a new line before the URLs in clipboard";
             this.cbHistoryAddSpace.UseVisualStyleBackColor = false;
             this.cbHistoryAddSpace.CheckedChanged += new System.EventHandler(this.cbAddSpace_CheckedChanged);
             // 
@@ -1196,11 +1209,11 @@ namespace ZSS
             this.cbHistoryReverseList.AutoSize = true;
             this.cbHistoryReverseList.BackColor = System.Drawing.Color.Transparent;
             this.cbHistoryReverseList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbHistoryReverseList.Location = new System.Drawing.Point(16, 72);
+            this.cbHistoryReverseList.Location = new System.Drawing.Point(16, 120);
             this.cbHistoryReverseList.Name = "cbHistoryReverseList";
-            this.cbHistoryReverseList.Size = new System.Drawing.Size(143, 17);
+            this.cbHistoryReverseList.Size = new System.Drawing.Size(138, 17);
             this.cbHistoryReverseList.TabIndex = 1;
-            this.cbHistoryReverseList.Text = "Reverse List in Clipboard";
+            this.cbHistoryReverseList.Text = "Reverse list in clipboard";
             this.cbHistoryReverseList.UseVisualStyleBackColor = false;
             this.cbHistoryReverseList.CheckedChanged += new System.EventHandler(this.cbReverse_CheckedChanged);
             // 
@@ -4623,14 +4636,22 @@ namespace ZSS
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(179, 6);
             // 
-            // lblHistoryScreenshot
+            // ttApp
             // 
-            this.lblHistoryScreenshot.AutoSize = true;
-            this.lblHistoryScreenshot.Location = new System.Drawing.Point(400, 7);
-            this.lblHistoryScreenshot.Name = "lblHistoryScreenshot";
-            this.lblHistoryScreenshot.Size = new System.Drawing.Size(61, 13);
-            this.lblHistoryScreenshot.TabIndex = 13;
-            this.lblHistoryScreenshot.Text = "Screenshot";
+            this.ttApp.AutoPopDelay = 10000;
+            this.ttApp.InitialDelay = 500;
+            this.ttApp.ReshowDelay = 100;
+            // 
+            // cbShowHistoryTooltip
+            // 
+            this.cbShowHistoryTooltip.AutoSize = true;
+            this.cbShowHistoryTooltip.Location = new System.Drawing.Point(16, 72);
+            this.cbShowHistoryTooltip.Name = "cbShowHistoryTooltip";
+            this.cbShowHistoryTooltip.Size = new System.Drawing.Size(198, 17);
+            this.cbShowHistoryTooltip.TabIndex = 9;
+            this.cbShowHistoryTooltip.Text = "Show screenshot information tooltips";
+            this.cbShowHistoryTooltip.UseVisualStyleBackColor = true;
+            this.cbShowHistoryTooltip.CheckedChanged += new System.EventHandler(this.cbShowHistoryTooltip_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -4999,8 +5020,8 @@ namespace ZSS
         private System.Windows.Forms.TextBox txtHistoryLocalPath;
         private System.Windows.Forms.Label lblHistoryRemotePath;
         private System.Windows.Forms.Label lblHistoryLocalPath;
-        private System.Windows.Forms.Button btnScreenshotBrowse;
-        private System.Windows.Forms.Button btnScreenshotOpen;
+        private System.Windows.Forms.Button btnHistoryBrowseURL;
+        private System.Windows.Forms.Button btnHistoryOpenLocalFile;
         private System.Windows.Forms.ImageList ilApp;
         private System.Windows.Forms.CheckBox cbShowWatermark;
         private System.Windows.Forms.CheckBox cbShowCursor;
@@ -5157,15 +5178,16 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpEditorsImages;
         private System.Windows.Forms.CheckBox chkRememberTinyPicUserPass;
         private System.Windows.Forms.Button btnResetIncrement;
-        private System.Windows.Forms.Button btnImageCopy;
+        private System.Windows.Forms.Button btnHistoryCopyImage;
         private System.Windows.Forms.ToolTip ttApp;
-        private System.Windows.Forms.Button btnCopyLink;
+        private System.Windows.Forms.Button btnHistoryCopyLink;
         private System.Windows.Forms.Label lblHistoryListFormat;
         private System.Windows.Forms.ComboBox cbHistoryListFormat;
         private System.Windows.Forms.TabControl tcHistory;
         private System.Windows.Forms.TabPage tpHistoryList;
         private System.Windows.Forms.TabPage tpHistorySettings;
         private System.Windows.Forms.Label lblHistoryScreenshot;
+        private System.Windows.Forms.CheckBox cbShowHistoryTooltip;
 
     }
 }

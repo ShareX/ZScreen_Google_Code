@@ -343,5 +343,29 @@ namespace ZSS
             }
             return fileName;
         }
+
+        public static string GetFileSize(long bytes)
+        {
+            if (bytes >= 1073741824)
+            {
+                return String.Format("{0:##.##} GB", bytes / 1073741824);
+            }
+            else if (bytes >= 1048576)
+            {
+                return String.Format("{0:##.##} MB", bytes / 1048576);
+            }
+            else if (bytes >= 1024)
+            {
+                return String.Format("{0:##.##} KB", bytes / 1024);
+            }
+            else if (bytes > 0 & bytes < 1024)
+            {
+                return String.Format("{0:##.##} Bytes", bytes);
+            }
+            else
+            {
+                return "0 Bytes";
+            }
+        }
     }
 }

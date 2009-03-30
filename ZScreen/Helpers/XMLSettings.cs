@@ -124,7 +124,7 @@ namespace ZSS
         //*********************   
         public Software TextEditorActive = new Software();
         public List<Software> TextEditors = new List<Software>();
-        public bool TextEditorEnabled = false; 
+        public bool TextEditorEnabled = false;
 
         //*********************
         //* File Settings
@@ -176,14 +176,15 @@ namespace ZSS
         public bool CaptureEntireScreenOnError = false;
         public bool CheckExperimental = false;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
-        public HistoryListFormat HistoryListFormat = HistoryListFormat.NAME;
 
         //*********************
         //* History
         //*********************
+        public HistoryListFormat HistoryListFormat = HistoryListFormat.NAME;
+        public int HistoryMaxNumber = 50;
+        public bool HistoryShowTooltips = true;
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
-        public int HistoryMaxNumber = 50;
 
         #region Serialization Helpers
 

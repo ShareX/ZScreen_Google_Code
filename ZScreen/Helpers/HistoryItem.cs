@@ -25,6 +25,7 @@ using System;
 using ZSS.ImageUploader.Helpers;
 using ZSS.Tasks;
 using System.Text;
+using System.IO;
 
 namespace ZSS.Helpers
 {
@@ -32,22 +33,23 @@ namespace ZSS.Helpers
     {
         public string JobName { get; set; }
         public string FileName { get; set; }
-        public ImageFileManager ScreenshotManager { get; set; }
         public string LocalPath { get; set; }
         public string RemotePath { get; set; }
         /// <summary>
-        /// Full Image, Active Window, Cropped Window etc..
+        /// Full Image, Active Window, Cropped Window...
         /// </summary>
         public string DestinationMode { get; set; }
         /// <summary>
-        /// ImageShack, TinyPic, xs.to, FTP...
+        /// ImageShack, TinyPic, FTP...
         /// </summary>
         public string DestinationName { get; set; }
+        public ImageFileManager ScreenshotManager { get; set; }
         public JobCategoryType JobCategory { get; set; }
         public ImageDestType ImageDestCategory { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string UploadDuration { get; set; }
+        public long FileSize { get; set; }
 
         public HistoryItem() { }
 
@@ -65,6 +67,11 @@ namespace ZSS.Helpers
             this.StartTime = task.StartTime;
             this.EndTime = task.EndTime;
             this.UploadDuration = task.UploadDuration;
+            if (!string.IsNullOrEmpty(this.LocalPath))
+            {
+                FileInfo fi = new FileInfo(this.LocalPath);
+                this.FileSize = fi.Length;
+            }
         }
 
         public override string ToString()
@@ -85,8 +92,13 @@ namespace ZSS.Helpers
         public string GetStatistics()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(String.Format("Date Uploaded:   {0}", this.EndTime.ToShortDateString()));
-            sb.AppendLine(String.Format("Time Uploaded:   {0}", this.EndTime.ToLongTimeString()));
+            sb.AppendLine(String.Format("Job: {0} ({1})", this.JobName, this.DestinationName));
+            sb.AppendLine(String.Format("Time Started: {0} - {1}", this.StartTime.ToLongTimeString(),
+                this.StartTime.ToShortDateString()));
+            sb.AppendLine(String.Format("Time Uploaded: {0} - {1}", this.EndTime.ToLongTimeString(),
+                this.EndTime.ToShortDateString()));
+            sb.AppendLine(String.Format("File Size: {0} ({1} bytes)", FileSystem.GetFileSize(this.FileSize),
+                this.FileSize.ToString("N0")));
             sb.AppendLine(String.Format("Upload Duration: {0}", this.UploadDuration));
             return sb.ToString().TrimEnd();
         }

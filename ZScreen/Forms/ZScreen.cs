@@ -343,11 +343,6 @@ namespace ZSS
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
-            if (cbHistoryListFormat.Items.Count == 0)
-            {
-                cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
-            }
-            cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
 
             ///////////////////////////////////
             // Image Uploaders
@@ -382,6 +377,12 @@ namespace ZSS
             // History
             ///////////////////////////////////
 
+            if (cbHistoryListFormat.Items.Count == 0)
+            {
+                cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
+            }
+            cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
+            cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
             LoadHistoryItems();
@@ -3266,15 +3267,6 @@ namespace ZSS
             }
 
             lbHistory.Refresh();
-
-            HistoryItem hi = ((HistoryItem)lbHistory.SelectedItem);
-            if (hi != null)
-            {
-                tsmCopyCbHistory.Enabled = hi.ScreenshotManager != null && !string.IsNullOrEmpty(hi.ScreenshotManager.URL);
-                browseURLToolStripMenuItem.Enabled = tsmCopyCbHistory.Enabled;
-                btnScreenshotBrowse.Enabled = tsmCopyCbHistory.Enabled;
-                btnScreenshotOpen.Enabled = hi.ScreenshotManager != null && File.Exists(hi.ScreenshotManager.LocalFilePath);
-            }
         }
 
         private void lbHistory_DoubleClick(object sender, EventArgs e)
@@ -3291,19 +3283,30 @@ namespace ZSS
             if (lbHistory.SelectedIndex > -1)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath))
-                {
-                    pbHistoryThumb.ImageLocation = hi.LocalPath;
-                }
-                else if (!string.IsNullOrEmpty(hi.RemotePath))
-                {
-                    pbHistoryThumb.ImageLocation = hi.RemotePath;
-                }
-                txtHistoryLocalPath.Text = hi.LocalPath;
-                txtHistoryRemotePath.Text = hi.RemotePath;
-                lblHistoryScreenshot.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
 
-                ttApp.SetToolTip(lbHistory, hi.GetStatistics());
+                if (hi != null)
+                {
+                    bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
+                    bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
+                    tsmCopyCbHistory.Enabled = checkRemote;
+                    browseURLToolStripMenuItem.Enabled = checkRemote;
+                    btnHistoryCopyLink.Enabled = checkRemote;
+                    btnHistoryCopyImage.Enabled = checkLocal;
+                    btnHistoryBrowseURL.Enabled = checkRemote;
+                    btnHistoryOpenLocalFile.Enabled = checkLocal;
+                    if (checkLocal)
+                    {
+                        pbHistoryThumb.ImageLocation = hi.LocalPath;
+                    }
+                    else if (checkRemote)
+                    {
+                        pbHistoryThumb.ImageLocation = hi.RemotePath;
+                    }
+                    txtHistoryLocalPath.Text = hi.LocalPath;
+                    txtHistoryRemotePath.Text = hi.RemotePath;
+                }
+
+                if (Program.conf.HistoryShowTooltips) ttApp.SetToolTip(lbHistory, hi.GetStatistics());
             }
         }
 
@@ -4448,6 +4451,11 @@ namespace ZSS
         {
             Program.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
             LoadHistoryItems();
+        }
+
+        private void cbShowHistoryTooltip_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.HistoryShowTooltips = cbShowHistoryTooltip.Checked;
         }
     }
 }
