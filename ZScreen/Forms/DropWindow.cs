@@ -75,15 +75,17 @@ namespace ZSS.Forms
             Program.conf.LastDropBoxPosition = this.Location;
         }
 
-        private void DropWindow_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void DropWindow_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Close();
-        }
-
-        private void DropWindow_MouseMove(object sender, MouseEventArgs e)
-        {
-            User32.ReleaseCapture();
-            User32.SendMessage(Handle, User32.WM_NCLBUTTONDOWN, User32.HT_CAPTION, 0);
+            if (e.Button == MouseButtons.Left)
+            {
+                User32.ReleaseCapture();
+                User32.SendMessage(Handle, User32.WM_NCLBUTTONDOWN, User32.HT_CAPTION, 0);
+            }
+            else
+            {
+                this.Close();
+            }
         }
     }
 }
