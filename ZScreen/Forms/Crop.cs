@@ -62,7 +62,7 @@ namespace ZSS
         private Graphics mGraphics;
         private Bitmap bmpBgImage;
         private Pen labelBorderPen = new Pen(Color.Black);
-        private Pen crosshairPen = new Pen(Color.Red);
+        private Pen crosshairPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor));
         private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
         private string strMouseUp = "Mouse Left Down: Create crop region\nMouse Right Down & Escape: Cancel Screenshot\nSpace: Capture Entire Screen\nTab: Toggle Crop Grid mode";
         private string strMouseDown = "Mouse Left Up: Capture Screenshot\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle Crop Grid mode";
@@ -220,7 +220,7 @@ namespace ZSS
                     {
                         g.DrawRectangle(CropPen, CropRegion);
                     }
-                    if (Program.conf.RegionRectangleInfo)
+                    if (Program.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
                             rectRegion.Width + " px, Height: " + rectRegion.Height + " px", new Point(15, 15), g);
@@ -231,7 +231,7 @@ namespace ZSS
                 else
                 {
                     DrawInstructor(strMouseUp, g);
-                    if (Program.conf.RegionRectangleInfo)
+                    if (Program.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(15, 15), g);
                     }
@@ -287,7 +287,7 @@ namespace ZSS
 
         private void DrawInstructor(string drawText, Graphics g)
         {
-            if (Program.conf.RegionHotkeyInfo)
+            if (Program.conf.CropRegionHotkeyInfo)
             {
                 Font posFont = new Font(FontFamily.GenericSansSerif, 8);
                 Size textSize = TextRenderer.MeasureText(drawText, posFont);

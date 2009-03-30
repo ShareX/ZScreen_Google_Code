@@ -33,49 +33,33 @@ namespace ZSS
     [XmlRoot("Settings")]
     public class XMLSettings
     {
-        //*********************
-        //* Folder Settings
-        //*********************
-        public string ImagesDir { get; set; }
-        public string TextDir { get; set; }
-        public string SettingsDir { get; set; }
-        public string CacheDir { get; set; }
-        public string TempDir { get; set; }
+        #region Settings
 
-        //*********************
-        //* Misc Settings
-        //*********************
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Misc Settings
+        //~~~~~~~~~~~~~~~~~~~~~
+
         public bool RunOnce = false;
 
-        //*********************
-        //* Main Settings
-        //*********************
-        public bool EnableThumbnail = false;
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Main
+        //~~~~~~~~~~~~~~~~~~~~~
+
         public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
+        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public decimal ScreenshotDelay = 0;
-        public bool RegionRectangleInfo = true;
-        public bool RegionHotkeyInfo = true;
+        public bool ManualNaming = false;
+        public bool ShowCursor = false;
+        public bool ShowWatermark = false;
+        public Size CropGridSize = new Size(100, 100);
         public bool ActiveHelp = true;
         public bool GTActiveHelp = false;
-        public int CropRegionStyle = 1;
-        public string CropBorderColor = SerializeColor(Color.Red);
-        public decimal CropBorderSize = 1;
-        public bool CompleteSound = false;
-        public bool ShowCursor = false;
         public string HelpToLanguage = "en";
-        public int SelectedWindowRegionStyle = 2;
-        public bool SelectedWindowFront = false;
-        public bool SelectedWindowRectangleInfo = true;
-        public string SelectedWindowBorderColor = SerializeColor(Color.Red);
-        public decimal SelectedWindowBorderSize = 2;
-        public bool ShowUploadDuration = false;
-        public bool CloseDropBox = false;
-        public bool CloseQuickActions = false;
-        public Point LastDropBoxPosition = Point.Empty;
 
-        //*********************
-        //* Hotkey Settings
-        //*********************
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Hotkeys
+        //~~~~~~~~~~~~~~~~~~~~~
+
         public HKcombo HKActiveWindow = new HKcombo(Keys.Alt, Keys.PrintScreen);
         public HKcombo HKSelectedWindow = new HKcombo(Keys.Shift, Keys.PrintScreen);
         public HKcombo HKCropShot = new HKcombo(Keys.Control, Keys.PrintScreen);
@@ -88,104 +72,138 @@ namespace ZSS
         public HKcombo HKLanguageTranslator = new HKcombo(Keys.None);
         public HKcombo HKScreenColorPicker = new HKcombo(Keys.None);
 
-        //*********************
-        //* FTP Settings
-        //*********************
-        public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FTPselected = -1;
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Capture
+        //~~~~~~~~~~~~~~~~~~~~~
 
-        //*********************
-        //* HTTP Settings
-        //*********************
-        public string ImageShackRegistrationCode { get; set; }
-        public string TinyPicShuk { get; set; }
-        public bool RememberTinyPicUserPass { get; set; }
-        public string TinyPicUserName { get; set; }
-        public string TinyPicPassword { get; set; }
-        public decimal ErrorRetryCount = 3;
-        public UploadMode UploadMode = UploadMode.API;
-        public bool ImageUploadRetry = true;
-        public bool AutoSwitchFTP = true;
-        public string FromLanguage = "auto";
-        public string ToLanguage = "en";
-        public bool ClipboardTranslate = false;
-        public bool AddFailedScreenshot = false;
+        // Selected Window | Crop Shot
+        public int SelectedWindowRegionStyle = 2;
+        public bool SelectedWindowFront = false;
+        public bool SelectedWindowRectangleInfo = true;
+        public string SelectedWindowBorderColor = SerializeColor(Color.Red);
+        public decimal SelectedWindowBorderSize = 2;
+        public int CropRegionStyle = 1;
+        public bool CropRegionHotkeyInfo = true;
+        public string CropCrosshairColor = SerializeColor(Color.Red);
+        public string CropBorderColor = SerializeColor(Color.Black);
+        public decimal CropBorderSize = 1;
+        public bool CropShowGrids = false;
+        public bool CropRegionRectangleInfo = true;
+        public bool CropGridToggle = false;
 
-        //*********************
-        //* Image Editor Settings
-        //*********************   
-        public Software ImageSoftwareActive = new Software();
-        public List<ZSS.Software> ImageSoftwareList = new List<Software>();
-        public bool ImageSoftwareEnabled = false;
-        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
+        // Interaction
+        public decimal FlashTrayCount = 1;
+        public bool CaptureEntireScreenOnError = false;
+        public bool ShowBalloonTip = true;
+        public bool BalloonTipOpenLink = false;
+        public bool ShowUploadDuration = false;
+        public bool CompleteSound = false;
+        public bool CloseDropBox = false;
+        public Point LastDropBoxPosition = Point.Empty;
+        public bool CloseQuickActions = false;
 
-        //*********************
-        //* Text Editor Settings
-        //*********************   
-        public Software TextEditorActive = new Software();
-        public List<Software> TextEditors = new List<Software>();
-        public bool TextEditorEnabled = false;
-
-        //*********************
-        //* File Settings
-        //*********************
-        public int awincrement = 0;
-        public int esincrement = 0;
-        public int csincrement = 0;
-        public bool DeleteLocal = false;
-        public bool ManualNaming = false;
-        public string entireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
+        // Naming Conventions
         public string activeWindow = "%t-%y.%mo.%d-%h.%mi.%s";
-        public int FileFormat = 0;
-        public long ImageQuality = 90L;
-        public int SwitchAfter = 350;
-        public int SwitchFormat = 1;
-        public bool ShowWatermark = false;
+        public string entireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
+        public int AutoIncrement = 0;
+
+        // Watermark
+        public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
+        public decimal WatermarkOffset = 5;
         public string WatermarkText = "%h:%mi";
         public XmlFont WatermarkFont = SerializeFont(new Font("Arial", 8));
         public string WatermarkFontColor = SerializeColor(Color.White);
         public decimal WatermarkFontTrans = 255;
-        public decimal WatermarkOffset = 5;
-        public decimal WatermarkBackTrans = 225;
+        public decimal WatermarkCornerRadius = 4;
         public string WatermarkGradient1 = SerializeColor(Color.FromArgb(85, 85, 85));
         public string WatermarkGradient2 = SerializeColor(Color.Black);
         public string WatermarkBorderColor = SerializeColor(Color.Black);
-        public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
-        public decimal WatermarkCornerRadius = 4;
+        public decimal WatermarkBackTrans = 225;
         public System.Drawing.Drawing2D.LinearGradientMode WatermarkGradientType = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-        public Size CropGridSize = new Size(100, 100);
-        public bool CropGridToggle = false;
-        public bool CropShowGrids = false;
 
-        //*********************
-        //* Custom Uploaders Settings
-        //*********************
+        // Quality
+        public int FileFormat = 0;
+        public long ImageQuality = 90;
+        public int SwitchAfter = 350;
+        public int SwitchFormat = 1;
+
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Editors
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        public List<Software> ImageSoftwareList = new List<Software>();
+        public Software ImageSoftwareActive = new Software();
+        public bool ImageSoftwareEnabled = false;
+        public Software TextEditorActive = new Software();
+        public List<Software> TextEditors = new List<Software>();
+        public bool TextEditorEnabled = false;
+
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  FTP
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
+        public int FTPselected = -1;
+        public bool FTPCreateThumbnail = false;
+        public bool AutoSwitchFTP = true;
+
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  HTTP
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        // Image Uploaders
+        public UploadMode UploadMode = UploadMode.API;
+        public decimal ErrorRetryCount = 3;
+        public bool ImageUploadRetry = true;
+        public bool AddFailedScreenshot = false;
+        public string ImageShackRegistrationCode { get; set; }
+        public string TinyPicShuk { get; set; }
+        public string TinyPicUserName { get; set; }
+        public string TinyPicPassword { get; set; }
+        public bool RememberTinyPicUserPass { get; set; }
+
+        // Custom Image Uploaders
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
 
-        //*********************
-        //* Advanced Settings
-        //*********************
-        public decimal ScreenshotCacheSize = 50;
-        public decimal FlashTrayCount = 1;
-        public bool ShowBalloonTip = true;
-        public bool CheckUpdates = true;
-        public bool OpenMainWindow = false;
-        public bool ShowInTaskbar = true;
-        public bool BalloonTipOpenLink = false;
-        public bool CaptureEntireScreenOnError = false;
-        public bool CheckExperimental = false;
-        public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
+        // Language Translator
+        public string FromLanguage = "auto";
+        public string ToLanguage = "en";
+        public bool ClipboardTranslate = false;
 
-        //*********************
-        //* History
-        //*********************
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  History
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        // History Settings
         public HistoryListFormat HistoryListFormat = HistoryListFormat.NAME;
         public int HistoryMaxNumber = 50;
         public bool HistorySave = true;
         public bool HistoryShowTooltips = true;
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
+
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Options
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        // General
+        public bool OpenMainWindow = false;
+        public bool ShowInTaskbar = true;
+        public bool CheckUpdates = true;
+        public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
+        public bool CheckExperimental = false;
+
+        // Paths
+        public string ImagesDir = "";
+        public bool DeleteLocal = false;
+        public string CacheDir = "";
+        public decimal ScreenshotCacheSize = 50;
+        public string SettingsDir = "";
+        public string TextDir = "";
+        public string TempDir = "";
+
+        #endregion
 
         #region Serialization Helpers
 
@@ -317,7 +335,7 @@ namespace ZSS
                 }
                 catch (Exception ex)
                 {
-                    // We dont need a MessageBox when we rename enumerations 
+                    // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
                     Console.WriteLine(ex.ToString());
                 }

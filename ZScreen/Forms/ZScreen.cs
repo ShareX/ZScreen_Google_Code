@@ -158,11 +158,12 @@ namespace ZSS
             ////////////////////////////////////
 
             nudScreenshotDelay.Value = Program.conf.ScreenshotDelay;
-            cbRegionRectangleInfo.Checked = Program.conf.RegionRectangleInfo;
-            cbRegionHotkeyInfo.Checked = Program.conf.RegionHotkeyInfo;
+            cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
+            cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
             CheckActiveHelp();
             cbActiveHelp.Checked = Program.conf.ActiveHelp;
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
+            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCompleteSound.Checked = Program.conf.CompleteSound;
@@ -179,6 +180,7 @@ namespace ZSS
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
             cbCloseDropBox.Checked = Program.conf.CloseDropBox;
             cbCloseQuickActions.Checked = Program.conf.CloseQuickActions;
+            chkCaptureFallback.Checked = Program.conf.CaptureEntireScreenOnError;
 
             ///////////////////////////////////
             // Hotkeys Settings
@@ -275,7 +277,7 @@ namespace ZSS
                 cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
             cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            chkEnableThumbnail.Checked = Program.conf.EnableThumbnail;
+            chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
@@ -291,7 +293,7 @@ namespace ZSS
             if (cmbSwitchFormat.Items.Count == 0) cmbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
 
             cmbFileFormat.SelectedIndex = Program.conf.FileFormat;
-            nudSwitchAfter.Text = Program.conf.SwitchAfter.ToString();
+            nudSwitchAfter.Value = Program.conf.SwitchAfter;
             cmbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
             txtImageQuality.Text = Program.conf.ImageQuality.ToString();
             chkManualNaming.Checked = Program.conf.ManualNaming;
@@ -1305,12 +1307,12 @@ namespace ZSS
 
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.RegionRectangleInfo = cbRegionRectangleInfo.Checked;
+            Program.conf.CropRegionRectangleInfo = cbRegionRectangleInfo.Checked;
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.RegionHotkeyInfo = cbRegionHotkeyInfo.Checked;
+            Program.conf.CropRegionHotkeyInfo = cbRegionHotkeyInfo.Checked;
         }
 
         private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -2024,11 +2026,6 @@ namespace ZSS
         }
 
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdatePromptFileNameCheck();
-        }
-
-        private void UpdatePromptFileNameCheck()
         {
             Program.conf.ManualNaming = chkManualNaming.Checked;
         }
@@ -4160,7 +4157,7 @@ namespace ZSS
 
         private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.EnableThumbnail = chkEnableThumbnail.Checked;
+            Program.conf.FTPCreateThumbnail = chkEnableThumbnail.Checked;
         }
 
         private void cbAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
@@ -4431,7 +4428,7 @@ namespace ZSS
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Program.conf.awincrement = 0;
+            Program.conf.AutoIncrement = 0;
         }
 
         private void btnImageCopy_Click(object sender, EventArgs e)
@@ -4469,6 +4466,21 @@ namespace ZSS
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.HistorySave = cbHistorySave.Checked;
+        }
+
+        private void pbCropCrosshairColor_Click(object sender, EventArgs e)
+        {
+            SelectColor((PictureBox)sender, ref Program.conf.CropCrosshairColor);
+        }
+
+        private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
+        }
+
+        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.SwitchAfter = (int)nudSwitchAfter.Value;
         }
     }
 }

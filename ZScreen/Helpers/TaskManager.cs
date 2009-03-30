@@ -116,7 +116,7 @@ namespace ZSS.Helpers
                     FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
 
                     ImageUploader.FTPUploader fu = new ZSS.ImageUploader.FTPUploader(acc);
-                    fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.EnableThumbnail; // = true; // ideally this shold be true
+                    fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail; // = true; // ideally this shold be true
                     fu.WorkingDir = Program.conf.CacheDir;
                     task.ImageManager = fu.UploadImage(fullFilePath);
                     task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));

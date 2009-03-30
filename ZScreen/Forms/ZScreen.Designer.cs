@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,6 +103,7 @@ namespace ZSS
             this.cmsRetryUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
+            this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
             this.btnHistoryClear = new System.Windows.Forms.Button();
             this.cbHistoryListFormat = new System.Windows.Forms.ComboBox();
@@ -410,7 +411,8 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.cbHistorySave = new System.Windows.Forms.CheckBox();
+            this.pbCropCrosshairColor = new System.Windows.Forms.PictureBox();
+            this.lblCropCrosshairColor = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -503,6 +505,7 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -1138,6 +1141,17 @@ namespace ZSS
             this.tpHistorySettings.Text = "History Settings";
             this.tpHistorySettings.UseVisualStyleBackColor = true;
             // 
+            // cbHistorySave
+            // 
+            this.cbHistorySave.AutoSize = true;
+            this.cbHistorySave.Location = new System.Drawing.Point(16, 72);
+            this.cbHistorySave.Name = "cbHistorySave";
+            this.cbHistorySave.Size = new System.Drawing.Size(99, 17);
+            this.cbHistorySave.TabIndex = 10;
+            this.cbHistorySave.Text = "Save history list";
+            this.cbHistorySave.UseVisualStyleBackColor = true;
+            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
+            // 
             // cbShowHistoryTooltip
             // 
             this.cbShowHistoryTooltip.AutoSize = true;
@@ -1269,6 +1283,8 @@ namespace ZSS
             // 
             // gbCropShotOptions
             // 
+            this.gbCropShotOptions.Controls.Add(this.lblCropCrosshairColor);
+            this.gbCropShotOptions.Controls.Add(this.pbCropCrosshairColor);
             this.gbCropShotOptions.Controls.Add(this.cbCropShowGrids);
             this.gbCropShotOptions.Controls.Add(this.lblCropRegionStyle);
             this.gbCropShotOptions.Controls.Add(this.nudCropBorderSize);
@@ -1280,7 +1296,7 @@ namespace ZSS
             this.gbCropShotOptions.Controls.Add(this.cbRegionHotkeyInfo);
             this.gbCropShotOptions.Location = new System.Drawing.Point(8, 160);
             this.gbCropShotOptions.Name = "gbCropShotOptions";
-            this.gbCropShotOptions.Size = new System.Drawing.Size(752, 192);
+            this.gbCropShotOptions.Size = new System.Drawing.Size(752, 224);
             this.gbCropShotOptions.TabIndex = 13;
             this.gbCropShotOptions.TabStop = false;
             this.gbCropShotOptions.Text = "Crop Shot Options";
@@ -1288,7 +1304,7 @@ namespace ZSS
             // cbCropShowGrids
             // 
             this.cbCropShowGrids.AutoSize = true;
-            this.cbCropShowGrids.Location = new System.Drawing.Point(16, 136);
+            this.cbCropShowGrids.Location = new System.Drawing.Point(16, 168);
             this.cbCropShowGrids.Name = "cbCropShowGrids";
             this.cbCropShowGrids.Size = new System.Drawing.Size(208, 17);
             this.cbCropShowGrids.TabIndex = 13;
@@ -1307,7 +1323,7 @@ namespace ZSS
             // 
             // nudCropBorderSize
             // 
-            this.nudCropBorderSize.Location = new System.Drawing.Point(221, 104);
+            this.nudCropBorderSize.Location = new System.Drawing.Point(221, 136);
             this.nudCropBorderSize.Name = "nudCropBorderSize";
             this.nudCropBorderSize.Size = new System.Drawing.Size(40, 20);
             this.nudCropBorderSize.TabIndex = 12;
@@ -1330,7 +1346,7 @@ namespace ZSS
             // lblCropBorderSize
             // 
             this.lblCropBorderSize.AutoSize = true;
-            this.lblCropBorderSize.Location = new System.Drawing.Point(16, 112);
+            this.lblCropBorderSize.Location = new System.Drawing.Point(16, 144);
             this.lblCropBorderSize.Name = "lblCropBorderSize";
             this.lblCropBorderSize.Size = new System.Drawing.Size(195, 13);
             this.lblCropBorderSize.TabIndex = 11;
@@ -1339,11 +1355,11 @@ namespace ZSS
             // lblCropBorderColor
             // 
             this.lblCropBorderColor.AutoSize = true;
-            this.lblCropBorderColor.Location = new System.Drawing.Point(16, 88);
+            this.lblCropBorderColor.Location = new System.Drawing.Point(16, 120);
             this.lblCropBorderColor.Name = "lblCropBorderColor";
-            this.lblCropBorderColor.Size = new System.Drawing.Size(120, 13);
+            this.lblCropBorderColor.Size = new System.Drawing.Size(123, 13);
             this.lblCropBorderColor.TabIndex = 10;
-            this.lblCropBorderColor.Text = "Crop region border color";
+            this.lblCropBorderColor.Text = "Crop region border color:";
             // 
             // cbRegionRectangleInfo
             // 
@@ -1361,7 +1377,7 @@ namespace ZSS
             this.pbCropBorderColor.BackColor = System.Drawing.Color.White;
             this.pbCropBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbCropBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbCropBorderColor.Location = new System.Drawing.Point(149, 80);
+            this.pbCropBorderColor.Location = new System.Drawing.Point(144, 112);
             this.pbCropBorderColor.Name = "pbCropBorderColor";
             this.pbCropBorderColor.Size = new System.Drawing.Size(24, 24);
             this.pbCropBorderColor.TabIndex = 9;
@@ -1371,7 +1387,7 @@ namespace ZSS
             // cbRegionHotkeyInfo
             // 
             this.cbRegionHotkeyInfo.AutoSize = true;
-            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 160);
+            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 192);
             this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
             this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(206, 17);
             this.cbRegionHotkeyInfo.TabIndex = 6;
@@ -1573,6 +1589,7 @@ namespace ZSS
             this.chkCaptureFallback.TabIndex = 7;
             this.chkCaptureFallback.Text = "Capture entire screen if active window capture or crop fails";
             this.chkCaptureFallback.UseVisualStyleBackColor = true;
+            this.chkCaptureFallback.CheckedChanged += new System.EventHandler(this.chkCaptureFallback_CheckedChanged);
             // 
             // cbShowUploadDuration
             // 
@@ -2362,6 +2379,7 @@ namespace ZSS
             0,
             0,
             0});
+            this.nudSwitchAfter.ValueChanged += new System.EventHandler(this.nudSwitchAfter_ValueChanged);
             // 
             // txtImageQuality
             // 
@@ -3124,38 +3142,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4655,16 +4673,26 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // cbHistorySave
+            // pbCropCrosshairColor
             // 
-            this.cbHistorySave.AutoSize = true;
-            this.cbHistorySave.Location = new System.Drawing.Point(16, 72);
-            this.cbHistorySave.Name = "cbHistorySave";
-            this.cbHistorySave.Size = new System.Drawing.Size(99, 17);
-            this.cbHistorySave.TabIndex = 10;
-            this.cbHistorySave.Text = "Save history list";
-            this.cbHistorySave.UseVisualStyleBackColor = true;
-            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
+            this.pbCropCrosshairColor.BackColor = System.Drawing.Color.White;
+            this.pbCropCrosshairColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbCropCrosshairColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbCropCrosshairColor.Location = new System.Drawing.Point(128, 80);
+            this.pbCropCrosshairColor.Name = "pbCropCrosshairColor";
+            this.pbCropCrosshairColor.Size = new System.Drawing.Size(24, 24);
+            this.pbCropCrosshairColor.TabIndex = 14;
+            this.pbCropCrosshairColor.TabStop = false;
+            this.pbCropCrosshairColor.Click += new System.EventHandler(this.pbCropCrosshairColor_Click);
+            // 
+            // lblCropCrosshairColor
+            // 
+            this.lblCropCrosshairColor.AutoSize = true;
+            this.lblCropCrosshairColor.Location = new System.Drawing.Point(16, 88);
+            this.lblCropCrosshairColor.Name = "lblCropCrosshairColor";
+            this.lblCropCrosshairColor.Size = new System.Drawing.Size(103, 13);
+            this.lblCropCrosshairColor.TabIndex = 15;
+            this.lblCropCrosshairColor.Text = "Crop crosshair color:";
             // 
             // ZScreen
             // 
@@ -4818,6 +4846,7 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5202,6 +5231,8 @@ namespace ZSS
         private System.Windows.Forms.Label lblHistoryScreenshot;
         private System.Windows.Forms.CheckBox cbShowHistoryTooltip;
         private System.Windows.Forms.CheckBox cbHistorySave;
+        private System.Windows.Forms.PictureBox pbCropCrosshairColor;
+        private System.Windows.Forms.Label lblCropCrosshairColor;
 
     }
 }

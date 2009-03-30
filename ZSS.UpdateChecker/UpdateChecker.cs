@@ -55,13 +55,13 @@ namespace ZSS.UpdateCheckerLib
                 CurrentDownloads = DefaultDownloads + "?can=2";
                 FeaturedDownloads = DefaultDownloads + "?can=3";
                 DeprecatedDownloads = DefaultDownloads + "?can=4";
-                DownloadsSetupExe = "&q=label:Type-Installer";
-                DownloadsBinRar = "&q=label:Type-Executable";
+                InstallerDownloads = "&q=label:Type-Installer";
+                ExecutableDownloads = "&q=label:Type-Executable";
             }
         }
 
         private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
-            FeaturedDownloads, DeprecatedDownloads, DownloadsSetupExe, DownloadsBinRar;
+            FeaturedDownloads, DeprecatedDownloads, InstallerDownloads, ExecutableDownloads;
 
         private UpdateCheckerOptions Options { get; set; }
 
@@ -80,24 +80,23 @@ namespace ZSS.UpdateCheckerLib
                     case UpdateCheckType.SETUP:
                         if (this.Options.CheckExperimental)
                         {
-                            MyVersionInfo = CheckUpdate(AllDownloads + DownloadsSetupExe);
+                            MyVersionInfo = CheckUpdate(AllDownloads + InstallerDownloads);
                         }
                         else
                         {
-                            MyVersionInfo = CheckUpdate(CurrentDownloads + DownloadsSetupExe);
+                            MyVersionInfo = CheckUpdate(CurrentDownloads + InstallerDownloads);
                         }
                         break;
                     case UpdateCheckType.BIN:
                         if (this.Options.CheckExperimental)
                         {
-                            MyVersionInfo = CheckUpdate(AllDownloads + DownloadsBinRar);
+                            MyVersionInfo = CheckUpdate(AllDownloads + ExecutableDownloads);
                         }
                         else
                         {
-                            MyVersionInfo = CheckUpdate(CurrentDownloads + DownloadsBinRar);
+                            MyVersionInfo = CheckUpdate(CurrentDownloads + ExecutableDownloads);
                         }
                         break;
-
                     default:
                         MyVersionInfo = CheckUpdate(DefaultDownloads);
                         break;
