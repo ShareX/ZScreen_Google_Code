@@ -3305,6 +3305,7 @@ namespace ZSS
                     }
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
+                    lblHistoryScreenshot.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
                 }
 
                 if (Program.conf.HistoryShowTooltips)
