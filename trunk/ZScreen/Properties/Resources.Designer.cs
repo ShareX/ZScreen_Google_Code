@@ -285,7 +285,9 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
+        ///   Looks up a localized string similar to Extend ClipboardManager to support Text in clipboard
+        ///Text Editors tab
+        ///
         ///- Support for scrolling windows via new hotkey
         ///
         ///- Ability to rename files in &apos;view remote directory&apos;
@@ -296,7 +298,7 @@ namespace ZSS.Properties {
         ///
         ///- Send to -&gt; Printer
         ///
-        ///- Support for &quot;sets&quot; via right-click menu which allows creation of a new directory in your previously specified path automatically using two controls &quot;Start Set&quot; and &quot;End Set.&quot; Optionally run image editing software for each individual image. Optionally have the directory pop up in exp [rest of string was truncated]&quot;;.
+        ///- Support for &quot;sets&quot; via right-click menu which allows creation of a new directory in your previously specified path automatically using two controls &quot;Start Set&quot; and &quot;End Set.&quot; Optionally run image editing softwar [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TODO {
             get {
@@ -305,16 +307,15 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.5.0.0 History items are now retrievable from Settings\History.xml
-        ///2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
+        ///   Looks up a localized string similar to 2.6.4.0 Added options to customize History List format in Options : History tab
         ///
-        ///Version 2.4 - 20090321
+        ///Version 2.6 - 20090329
         ///
-        ///2.4.0.0 Ability to take screenshots of pre-set sizes of the Screen using a Grid System
-        ///2.3.1.0 Adding failed tasks to History tab is now optional
-        ///2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
-        ///2.2.0.0 Screen Color Picker in Tray menu &gt; Actions
-        ///2.1.1.0 Colors are chosen using [rest of string was truncated]&quot;;.
+        ///2.6.3.0 Option to reset Auto-increment number in File Naming conventions [Issue 43]
+        ///2.6.2.0 TinyPic RegCode is now automatically updated if TinyPic UserName and Password are set to remember [Issue 44]
+        ///2.6.1.0 Taking multiple screenshots within a second is now possible via automatic file renaming
+        ///2.6.0.0 New Quick Actions toolbar that can be activated from Tray menu
+        ///2.5.0.3 Fixed instabilities in  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

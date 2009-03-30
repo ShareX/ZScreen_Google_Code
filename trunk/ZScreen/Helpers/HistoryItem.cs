@@ -84,6 +84,8 @@ namespace ZSS.Helpers
                     return EndTime.ToLongTimeString() + " - " + FileName;
                 case HistoryListFormat.DATE_TIME_NAME:
                     return EndTime.ToShortDateString() + " - " + EndTime.ToLongTimeString() + " - " + FileName;
+                case HistoryListFormat.DATE_NAME:
+                    return EndTime.ToShortDateString() + " - " + FileName;
                 default:
                     return FileName;
             }

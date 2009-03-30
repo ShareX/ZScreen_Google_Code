@@ -182,6 +182,7 @@ namespace ZSS
         //*********************
         public HistoryListFormat HistoryListFormat = HistoryListFormat.NAME;
         public int HistoryMaxNumber = 50;
+        public bool HistorySave = true;
         public bool HistoryShowTooltips = true;
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
