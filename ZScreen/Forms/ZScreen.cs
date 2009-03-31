@@ -1075,6 +1075,12 @@ namespace ZSS
                     }
                     break;
             }
+
+            if (Program.conf.AddFailedScreenshot || (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0))
+            {
+                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
+            }
+
             e.Result = task;
         }
 
@@ -3178,7 +3184,7 @@ namespace ZSS
             }
             catch (OutOfMemoryException ex)
             {
-                task.Errors.Add("Unsupported image. " + ex.Message);
+                Console.WriteLine("Unsupported image. " + ex.Message);
                 isImage = false;
             }
             return isImage;
@@ -3295,13 +3301,25 @@ namespace ZSS
                     btnHistoryCopyImage.Enabled = checkLocal;
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
-                    if (checkLocal)
+
+                    if (FileSystem.IsValidImageFile(hi.LocalPath))
                     {
-                        pbHistoryThumb.ImageLocation = hi.LocalPath;
+                        pbPreview.Visible = true;
+                        txtPreview.Visible = false;
+                        if (checkLocal)
+                        {
+                            pbPreview.ImageLocation = hi.LocalPath;
+                        }
+                        else if (checkRemote)
+                        {
+                            pbPreview.ImageLocation = hi.RemotePath;
+                        }
                     }
-                    else if (checkRemote)
+                    else if (FileSystem.IsValidTextFile(hi.LocalPath))
                     {
-                        pbHistoryThumb.ImageLocation = hi.RemotePath;
+                        pbPreview.Visible = false;
+                        txtPreview.Visible = true;
+                        txtPreview.Text = File.ReadAllText(hi.LocalPath);
                     }
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
@@ -3311,7 +3329,7 @@ namespace ZSS
                 if (Program.conf.HistoryShowTooltips)
                 {
                     ttApp.SetToolTip(lbHistory, hi.GetStatistics());
-                    ttApp.SetToolTip(pbHistoryThumb, hi.GetStatistics());
+                    ttApp.SetToolTip(pbPreview, hi.GetStatistics());
                 }
             }
         }
@@ -3870,11 +3888,14 @@ namespace ZSS
             {
                 if (hi.ScreenshotManager != null)
                 {
-                    ShowScreenshot sc = new ShowScreenshot();
-                    if (hi.ScreenshotManager.GetImage() != null)
+                    if (FileSystem.IsValidImageFile(hi.LocalPath))
                     {
-                        sc.BackgroundImage = Image.FromFile(hi.LocalPath);
-                        sc.ShowDialog();
+                        ShowScreenshot sc = new ShowScreenshot();
+                        if (hi.ScreenshotManager.GetImage() != null)
+                        {
+                            sc.BackgroundImage = Image.FromFile(hi.LocalPath);
+                            sc.ShowDialog();
+                        }
                     }
                 }
                 else
