@@ -1,3 +1,4 @@
+2.6.6.2 Fixed crash when attempted to View Directory after Folder Browse Dialog was cancelled
 2.6.6.1 ZScreen did not show main window properly for new installs until it was loaded again
 2.6.6.0 Crop Shot Crosshair color is now customizable
 2.6.5.0 Drag n Drop Window is now movable and the location is remembered
