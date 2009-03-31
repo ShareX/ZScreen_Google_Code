@@ -98,17 +98,6 @@ namespace ZSS
 
             CleanCache();
 
-            // Show settings if never ran before
-            if (!Program.conf.RunOnce)
-            {
-                Show();
-                WindowState = FormWindowState.Normal;
-                this.Activate();
-                this.BringToFront();
-                lblFirstRun.Visible = true;
-                Program.conf.RunOnce = true;
-            }
-
             if (Program.conf.CheckUpdates) CheckUpdates();
 
             debug = new Debug();
@@ -143,6 +132,18 @@ namespace ZSS
 
             //Need better solution for this
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
+
+            // Show settings if never ran before
+            if (!Program.conf.RunOnce)
+            {
+                Show();
+                WindowState = FormWindowState.Normal;
+                this.Activate();
+                this.BringToFront();
+                lblFirstRun.Visible = true;
+                Program.conf.RunOnce = true;
+            }
+
         }
 
         private void SetupScreen()
