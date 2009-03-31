@@ -1,4 +1,6 @@
-2.6.4.0 Added options to customize History List format in Options : History tab
+2.6.6.0 Crop Shot Crosshair color is now customizable
+2.6.5.0 Drag n Drop Window is now movable and the location is remembered
+2.6.4.0 Added History Settings tab to customize History List under History tab
 
 Version 2.6 - 20090329
 
