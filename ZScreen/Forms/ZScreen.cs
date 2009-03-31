@@ -1751,7 +1751,7 @@ namespace ZSS
 
         private string BrowseDirectory(ref TextBox textBoxDirectory)
         {
-            string settingDir = "";
+            string settingDir = textBoxDirectory.Text;
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.SelectedPath = textBoxDirectory.Text;
             dlg.ShowNewFolderButton = true;
