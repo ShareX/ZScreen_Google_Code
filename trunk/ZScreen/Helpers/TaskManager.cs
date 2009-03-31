@@ -73,10 +73,6 @@ namespace ZSS.Helpers
             }
 
             task.EndTime = DateTime.Now;
-            if (Program.conf.AddFailedScreenshot || (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0))
-            {
-                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
-            }
 
             if (task.ImageManager != null)
             {
