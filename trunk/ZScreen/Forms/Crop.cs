@@ -90,7 +90,7 @@ namespace ZSS
             timer.Tick += new EventHandler(timer_Tick);
             windowCheck.Interval = 250;
             windowCheck.Tick += new EventHandler(windowCheck_Tick);
-            crosshair = new DynamicCrosshair(crosshairPen, 25, 3, 5, 50);
+            crosshair = new DynamicCrosshair();
 
             if (this.Options.SelectedWindowMode)
             {
@@ -428,28 +428,24 @@ namespace ZSS
 
     public class DynamicCrosshair
     {
-        private int Interval;
-        private int Step;
+        private int Interval = 25;
+        private int Step = 1;
         private int CurrentStep;
-        private int MinSize;
+        private int MinSize = 1;
         private int MaxSize;
         private Stopwatch Timer = new Stopwatch();
         private long LastTime = 0;
-        private Pen CrosshairPen;
         private int CurrentSize;
         private int NormalSize;
-        private int GradientSize = 25;
-        private int GradientWidth = 25;
+        private int GradientSize = 4;
+        private int GradientWidth = 10;
+        private Color CrosshairColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
 
-        public DynamicCrosshair(Pen crosshairPen, int interval, int step, int minSize, int maxSize)
+        public DynamicCrosshair()
         {
-            CrosshairPen = crosshairPen;
-            Interval = interval;
-            Step = step;
-            CurrentStep = step;
-            MinSize = 1;//minSize;
+            CurrentStep = Step;
             MaxSize = GradientWidth;
-            NormalSize = minSize + ((maxSize - minSize) / 2);
+            NormalSize = MinSize + ((MaxSize - MinSize) / 2);
             CurrentSize = NormalSize;
             Timer.Start();
         }
@@ -483,8 +479,7 @@ namespace ZSS
             {
                 for (int i = 0; i < GradientSize; i++)
                 {
-                    g.DrawRectangle(new Pen(Color.FromArgb((255 / GradientSize) * (i + 1),
-                        XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor))),
+                    g.DrawRectangle(new Pen(Color.FromArgb((255 / GradientSize) * (i + 1), CrosshairColor)),
                         mousePos.X - (CurrentSize + (i * GradientWidth)) / 2,
                         mousePos.Y - (CurrentSize + (i * GradientWidth)) / 2,
                         (CurrentSize + (i * GradientWidth)), (CurrentSize + (i * GradientWidth)));
@@ -494,8 +489,7 @@ namespace ZSS
             {
                 for (int i = 0; i < GradientSize; i++)
                 {
-                    g.DrawEllipse(new Pen(Color.FromArgb((255 / GradientSize) * (i + 1),
-                        XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor))),
+                    g.DrawEllipse(new Pen(Color.FromArgb((255 / GradientSize) * (i + 1), CrosshairColor)),
                         mousePos.X - (CurrentSize + (i * GradientWidth)) / 2,
                         mousePos.Y - (CurrentSize + (i * GradientWidth)) / 2,
                         (CurrentSize + (i * GradientWidth)), (CurrentSize + (i * GradientWidth)));
@@ -505,9 +499,9 @@ namespace ZSS
             //    new Point(mousePos.X + CurrentSize / 2, mousePos.Y));
             //g.DrawLine(CrosshairPen, new Point(mousePos.X, mousePos.Y - CurrentSize / 2),
             //    new Point(mousePos.X, mousePos.Y + CurrentSize / 2));
-            g.DrawLine(CrosshairPen, new Point(mousePos.X - MaxSize / 2, mousePos.Y),
+            g.DrawLine(new Pen(CrosshairColor), new Point(mousePos.X - MaxSize / 2, mousePos.Y),
                 new Point(mousePos.X + MaxSize / 2, mousePos.Y));
-            g.DrawLine(CrosshairPen, new Point(mousePos.X, mousePos.Y - MaxSize / 2),
+            g.DrawLine(new Pen(CrosshairColor), new Point(mousePos.X, mousePos.Y - MaxSize / 2),
                 new Point(mousePos.X, mousePos.Y + MaxSize / 2));
         }
     }
