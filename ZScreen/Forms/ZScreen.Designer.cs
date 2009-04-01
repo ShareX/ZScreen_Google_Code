@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,6 +117,8 @@ namespace ZSS
             this.tcFileSettings = new System.Windows.Forms.TabControl();
             this.tpCropShot = new System.Windows.Forms.TabPage();
             this.gbCropShotOptions = new System.Windows.Forms.GroupBox();
+            this.lblCrosshairLineSize = new System.Windows.Forms.Label();
+            this.lblCrosshairLineCount = new System.Windows.Forms.Label();
             this.nudCrosshairLineSize = new System.Windows.Forms.NumericUpDown();
             this.nudCrosshairLineCount = new System.Windows.Forms.NumericUpDown();
             this.cbCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
@@ -418,8 +420,10 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.lblCrosshairLineCount = new System.Windows.Forms.Label();
-            this.lblCrosshairLineSize = new System.Windows.Forms.Label();
+            this.lblCropInterval = new System.Windows.Forms.Label();
+            this.lblCropStep = new System.Windows.Forms.Label();
+            this.nudCropInterval = new System.Windows.Forms.NumericUpDown();
+            this.nudCropStep = new System.Windows.Forms.NumericUpDown();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -516,6 +520,8 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropStep)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -1306,6 +1312,10 @@ namespace ZSS
             // 
             // gbCropShotOptions
             // 
+            this.gbCropShotOptions.Controls.Add(this.nudCropStep);
+            this.gbCropShotOptions.Controls.Add(this.nudCropInterval);
+            this.gbCropShotOptions.Controls.Add(this.lblCropStep);
+            this.gbCropShotOptions.Controls.Add(this.lblCropInterval);
             this.gbCropShotOptions.Controls.Add(this.lblCrosshairLineSize);
             this.gbCropShotOptions.Controls.Add(this.lblCrosshairLineCount);
             this.gbCropShotOptions.Controls.Add(this.nudCrosshairLineSize);
@@ -1324,14 +1334,37 @@ namespace ZSS
             this.gbCropShotOptions.Controls.Add(this.cbRegionHotkeyInfo);
             this.gbCropShotOptions.Location = new System.Drawing.Point(8, 8);
             this.gbCropShotOptions.Name = "gbCropShotOptions";
-            this.gbCropShotOptions.Size = new System.Drawing.Size(752, 312);
+            this.gbCropShotOptions.Size = new System.Drawing.Size(752, 344);
             this.gbCropShotOptions.TabIndex = 13;
             this.gbCropShotOptions.TabStop = false;
             this.gbCropShotOptions.Text = "Crop Shot Options";
             // 
+            // lblCrosshairLineSize
+            // 
+            this.lblCrosshairLineSize.AutoSize = true;
+            this.lblCrosshairLineSize.Location = new System.Drawing.Point(16, 136);
+            this.lblCrosshairLineSize.Name = "lblCrosshairLineSize";
+            this.lblCrosshairLineSize.Size = new System.Drawing.Size(93, 13);
+            this.lblCrosshairLineSize.TabIndex = 20;
+            this.lblCrosshairLineSize.Text = "Crosshair line size:";
+            // 
+            // lblCrosshairLineCount
+            // 
+            this.lblCrosshairLineCount.AutoSize = true;
+            this.lblCrosshairLineCount.Location = new System.Drawing.Point(16, 112);
+            this.lblCrosshairLineCount.Name = "lblCrosshairLineCount";
+            this.lblCrosshairLineCount.Size = new System.Drawing.Size(102, 13);
+            this.lblCrosshairLineCount.TabIndex = 19;
+            this.lblCrosshairLineCount.Text = "Crosshair line count:";
+            // 
             // nudCrosshairLineSize
             // 
-            this.nudCrosshairLineSize.Location = new System.Drawing.Point(128, 128);
+            this.nudCrosshairLineSize.Location = new System.Drawing.Point(128, 133);
+            this.nudCrosshairLineSize.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nudCrosshairLineSize.Name = "nudCrosshairLineSize";
             this.nudCrosshairLineSize.Size = new System.Drawing.Size(56, 20);
             this.nudCrosshairLineSize.TabIndex = 18;
@@ -1339,7 +1372,7 @@ namespace ZSS
             // 
             // nudCrosshairLineCount
             // 
-            this.nudCrosshairLineCount.Location = new System.Drawing.Point(128, 104);
+            this.nudCrosshairLineCount.Location = new System.Drawing.Point(128, 109);
             this.nudCrosshairLineCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -3233,38 +3266,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle14;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4764,23 +4797,54 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // lblCrosshairLineCount
+            // lblCropInterval
             // 
-            this.lblCrosshairLineCount.AutoSize = true;
-            this.lblCrosshairLineCount.Location = new System.Drawing.Point(16, 112);
-            this.lblCrosshairLineCount.Name = "lblCrosshairLineCount";
-            this.lblCrosshairLineCount.Size = new System.Drawing.Size(102, 13);
-            this.lblCrosshairLineCount.TabIndex = 19;
-            this.lblCrosshairLineCount.Text = "Crosshair line count:";
+            this.lblCropInterval.AutoSize = true;
+            this.lblCropInterval.Location = new System.Drawing.Point(136, 80);
+            this.lblCropInterval.Name = "lblCropInterval";
+            this.lblCropInterval.Size = new System.Drawing.Size(45, 13);
+            this.lblCropInterval.TabIndex = 21;
+            this.lblCropInterval.Text = "Interval:";
             // 
-            // lblCrosshairLineSize
+            // lblCropStep
             // 
-            this.lblCrosshairLineSize.AutoSize = true;
-            this.lblCrosshairLineSize.Location = new System.Drawing.Point(16, 136);
-            this.lblCrosshairLineSize.Name = "lblCrosshairLineSize";
-            this.lblCrosshairLineSize.Size = new System.Drawing.Size(93, 13);
-            this.lblCrosshairLineSize.TabIndex = 20;
-            this.lblCrosshairLineSize.Text = "Crosshair line size:";
+            this.lblCropStep.AutoSize = true;
+            this.lblCropStep.Location = new System.Drawing.Point(248, 80);
+            this.lblCropStep.Name = "lblCropStep";
+            this.lblCropStep.Size = new System.Drawing.Size(32, 13);
+            this.lblCropStep.TabIndex = 22;
+            this.lblCropStep.Text = "Step:";
+            // 
+            // nudCropInterval
+            // 
+            this.nudCropInterval.Location = new System.Drawing.Point(184, 77);
+            this.nudCropInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudCropInterval.Name = "nudCropInterval";
+            this.nudCropInterval.Size = new System.Drawing.Size(56, 20);
+            this.nudCropInterval.TabIndex = 23;
+            this.nudCropInterval.ValueChanged += new System.EventHandler(this.nudCropInterval_ValueChanged);
+            // 
+            // nudCropStep
+            // 
+            this.nudCropStep.Location = new System.Drawing.Point(280, 77);
+            this.nudCropStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropStep.Name = "nudCropStep";
+            this.nudCropStep.Size = new System.Drawing.Size(56, 20);
+            this.nudCropStep.TabIndex = 24;
+            this.nudCropStep.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropStep.ValueChanged += new System.EventHandler(this.nudCropStep_ValueChanged);
             // 
             // ZScreen
             // 
@@ -4938,6 +5002,8 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropStep)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5331,6 +5397,10 @@ namespace ZSS
         private System.Windows.Forms.NumericUpDown nudCrosshairLineCount;
         private System.Windows.Forms.Label lblCrosshairLineSize;
         private System.Windows.Forms.Label lblCrosshairLineCount;
+        private System.Windows.Forms.NumericUpDown nudCropStep;
+        private System.Windows.Forms.NumericUpDown nudCropInterval;
+        private System.Windows.Forms.Label lblCropStep;
+        private System.Windows.Forms.Label lblCropInterval;
 
     }
 }

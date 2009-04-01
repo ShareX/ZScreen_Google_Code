@@ -427,8 +427,8 @@ namespace ZSS
 
     public class DynamicCrosshair
     {
-        private int Interval = 25;
-        private int Step = 1;
+        private int Interval;
+        private int Step;
         private int CurrentStep;
         private int MinSize = 1;
         private int MaxSize;
@@ -443,6 +443,8 @@ namespace ZSS
 
         public DynamicCrosshair()
         {
+            Interval = Program.conf.CropInterval;
+            Step = Program.conf.CropStep;
             LineCount = Program.conf.CrosshairLineCount;
             LineSize = Program.conf.CrosshairLineSize;
             CurrentStep = Step;
