@@ -206,6 +206,8 @@ namespace ZSS
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
             cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
             cbCropDynamicCrosshair.Checked = Program.conf.CropDynamicCrosshair;
+            nudCropInterval.Value = Program.conf.CropInterval;
+            nudCropStep.Value = Program.conf.CropStep;
             nudCrosshairLineCount.Value = Program.conf.CrosshairLineCount;
             nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
             pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
@@ -285,6 +287,8 @@ namespace ZSS
                     lbFTPAccounts.SelectedIndex = Program.conf.FTPselected;
                 }
             }
+            chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
+            cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
 
             ///////////////////////////////////
             // HTTP Settings
@@ -300,9 +304,9 @@ namespace ZSS
             }
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
             chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
-            cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
             DownloadLanguagesList();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
+            cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
 
             ///////////////////////////////////
             // Image Software Settings
@@ -341,14 +345,12 @@ namespace ZSS
                 lbImageSoftware.SelectedIndex = 0; //Set to disabled
             }
             txtImageSoftwarePath.Enabled = false;
-            cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
-            chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
-            cbStartWin.Checked = CheckStartWithWindows();
 
             ///////////////////////////////////
             // Advanced Settings
             ///////////////////////////////////
 
+            cbStartWin.Checked = CheckStartWithWindows();
             txtImagesDir.Text = Program.conf.ImagesDir;
             txtCacheDir.Text = Program.conf.CacheDir;
             txtSettingsDir.Text = Program.conf.SettingsDir;
@@ -4531,6 +4533,16 @@ namespace ZSS
         private void nudCrosshairLineSize_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
+        }
+
+        private void nudCropInterval_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropInterval = (int)nudCropInterval.Value;
+        }
+
+        private void nudCropStep_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropStep = (int)nudCropStep.Value;
         }
     }
 }
