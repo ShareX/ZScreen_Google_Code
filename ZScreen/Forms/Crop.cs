@@ -30,6 +30,9 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Update: 20080401 (Isaac) Fixing multiple screen handling
+ */
 namespace ZSS
 {
     partial class Crop : Form
@@ -81,11 +84,12 @@ namespace ZSS
             bmpBgImage = new Bitmap(mBgImage);
             InitializeComponent();
             this.Bounds = MyGraphics.GetScreenBounds();
-            rectIntersect.Location = this.Bounds.Location;
-            rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
             mGraphics = this.CreateGraphics();
+            //This should not be used anymore since we will normalize points to client's coordinate
+            //rectIntersect.Location = this.Bounds.Location;
+            rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-            mousePos = MousePosition;
+            mousePos = this.PointToClient(MousePosition);
             timer.Interval = 10;
             timer.Tick += new EventHandler(timer_Tick);
             windowCheck.Interval = 250;
@@ -120,7 +124,7 @@ namespace ZSS
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            mousePos = MousePosition;
+            mousePos = this.PointToClient(MousePosition);
             if (Program.conf.CropDynamicCrosshair) forceCheck = true;
             if (oldMousePos == null || oldMousePos != mousePos || forceCheck)
             {
@@ -135,7 +139,8 @@ namespace ZSS
                         if (kv.Value.Contains(Cursor.Position))
                         {
                             mHandle = kv.Key;
-                            CropRegion = kv.Value;
+                            CropRegion = new Rectangle(this.PointToClient(kv.Value.Location), kv.Value.Size);
+
                             break;
                         }
                     }
@@ -144,9 +149,14 @@ namespace ZSS
                 {
                     if (mMouseDown)
                     {
-                        CropRegion = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
+                        CropRegion = MyGraphics.GetRectangle(mousePos.X, mousePos.Y,
                             mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
                             Program.conf.CropGridToggle, ref mousePos);
+                        /*
+                                                CropRegion = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
+                                                    mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
+                                                    Program.conf.CropGridToggle, ref mousePos);
+                        */
                         CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
                     }
                 }
@@ -239,7 +249,8 @@ namespace ZSS
                     DrawInstructor(strMouseUp, g);
                     if (Program.conf.CropRegionRectangleInfo)
                     {
-                        DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(15, 15), g);
+                        Point p = this.PointToClient(mousePos);
+                        DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px X: " + p.X + " px, Y: " + p.Y + " px", new Point(15, 15), g);
                     }
                 }
                 crosshair.Draw(g, mousePos);
@@ -249,10 +260,11 @@ namespace ZSS
         private void DrawTooltip(string text, Point offset, Graphics g)
         {
             Font font = new Font(FontFamily.GenericSansSerif, 8);
-            Rectangle labelRect = new Rectangle(new Point(MousePosition.X + offset.X, MousePosition.Y + offset.Y),
+            Point mPos = this.PointToClient(MousePosition);
+            Rectangle labelRect = new Rectangle(new Point(mPos.X + offset.X, mPos.Y + offset.Y),
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
-            if (labelRect.Right > this.Bounds.Right - 5) labelRect.X = MousePosition.X - offset.X - labelRect.Width;
-            if (labelRect.Bottom > this.Bounds.Bottom - 5) labelRect.Y = MousePosition.Y - offset.Y - labelRect.Height;
+            if (labelRect.Right > this.Bounds.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
+            if (labelRect.Bottom > this.Bounds.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
             GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
             g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
             Color.Black, Color.FromArgb(150, Color.Black)), gPath);
@@ -311,7 +323,7 @@ namespace ZSS
                 }
                 else
                 {
-                    mousePosOnClick = MousePosition;
+                    mousePosOnClick = this.PointToClient(MousePosition);
                     CropRegion = new Rectangle(mousePosOnClick, new Size(0, 0));
                     mMouseDown = true;
                     Refresh();
