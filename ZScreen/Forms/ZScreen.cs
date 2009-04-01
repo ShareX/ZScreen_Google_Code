@@ -165,6 +165,7 @@ namespace ZSS
             cbActiveHelp.Checked = Program.conf.ActiveHelp;
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
             pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
+            cbCropDynamicCrosshair.Checked = Program.conf.CropDynamicCrosshair;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCompleteSound.Checked = Program.conf.CompleteSound;
@@ -4503,6 +4504,11 @@ namespace ZSS
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.SwitchAfter = (int)nudSwitchAfter.Value;
+        }
+
+        private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropDynamicCrosshair = cbCropDynamicCrosshair.Checked;
         }
     }
 }

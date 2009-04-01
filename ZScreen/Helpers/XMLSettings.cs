@@ -85,6 +85,7 @@ namespace ZSS
         public int CropRegionStyle = 1;
         public bool CropRegionHotkeyInfo = true;
         public string CropCrosshairColor = SerializeColor(Color.Red);
+        public bool CropDynamicCrosshair = false;
         public string CropBorderColor = SerializeColor(Color.Black);
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
