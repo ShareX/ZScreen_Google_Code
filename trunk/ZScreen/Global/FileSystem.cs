@@ -287,13 +287,14 @@ namespace ZSS
         public static bool IsValidImageFile(string fp)
         {
             bool b = false;
-
-            foreach (string s in Program.zImageFileTypes)
+            if (!string.IsNullOrEmpty(fp))
             {
-                if (fp.EndsWith(s))
-                    b = true;
+                foreach (string s in Program.zImageFileTypes)
+                {
+                    if (fp.EndsWith(s))
+                        b = true;
+                }
             }
-
             return b;
         }
 
@@ -305,13 +306,14 @@ namespace ZSS
         public static bool IsValidTextFile(string fp)
         {
             bool b = false;
-
-            foreach (string s in Program.zTextFileTypes)
+            if (!string.IsNullOrEmpty(fp))
             {
-                if (fp.EndsWith(s))
-                    b = true;
+                foreach (string s in Program.zTextFileTypes)
+                {
+                    if (fp.EndsWith(s))
+                        b = true;
+                }
             }
-
             return b;
         }
 
