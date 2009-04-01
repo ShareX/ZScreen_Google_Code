@@ -90,7 +90,7 @@ namespace ZSS
             timer.Tick += new EventHandler(timer_Tick);
             windowCheck.Interval = 250;
             windowCheck.Tick += new EventHandler(windowCheck_Tick);
-            crosshair = new DynamicCrosshair(crosshairPen, 25, 1, 15, 25);
+            crosshair = new DynamicCrosshair(crosshairPen, 25, 3, 5, 50);
 
             if (this.Options.SelectedWindowMode)
             {
@@ -101,6 +101,7 @@ namespace ZSS
             {
                 Cursor.Hide();
             }
+            Program.conf.CropDynamicCrosshair = true;
         }
 
         private void Crop_Shown(object sender, EventArgs e)
@@ -437,6 +438,8 @@ namespace ZSS
         private Pen CrosshairPen;
         private int CurrentSize;
         private int NormalSize;
+        private int GradientSize = 25;
+        private int GradientWidth = 25;
 
         public DynamicCrosshair(Pen crosshairPen, int interval, int step, int minSize, int maxSize)
         {
@@ -444,8 +447,8 @@ namespace ZSS
             Interval = interval;
             Step = step;
             CurrentStep = step;
-            MinSize = minSize;
-            MaxSize = maxSize;
+            MinSize = 1;//minSize;
+            MaxSize = GradientWidth;
             NormalSize = minSize + ((maxSize - minSize) / 2);
             CurrentSize = NormalSize;
             Timer.Start();
@@ -453,6 +456,7 @@ namespace ZSS
 
         public void Draw(Graphics g, Point mousePos)
         {
+            g.SmoothingMode = SmoothingMode.HighQuality;
             if (Program.conf.CropDynamicCrosshair)
             {
                 if (Timer.ElapsedMilliseconds - LastTime >= Interval)
@@ -465,8 +469,8 @@ namespace ZSS
                     }
                     else if (CurrentSize < MinSize)
                     {
-                        CurrentStep = Step;
-                        CurrentSize += CurrentStep;
+                        //CurrentStep = Step;
+                        CurrentSize = MaxSize;
                     }
                     LastTime = Timer.ElapsedMilliseconds;
                 }
@@ -477,18 +481,34 @@ namespace ZSS
             }
             if (Program.conf.CropGridToggle)
             {
-                g.DrawRectangle(CrosshairPen, mousePos.X - CurrentSize / 2,
-                    mousePos.Y - CurrentSize / 2, CurrentSize, CurrentSize);
+                for (int i = 0; i < GradientSize; i++)
+                {
+                    g.DrawRectangle(new Pen(Color.FromArgb((255 / GradientSize) * (i + 1),
+                        XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor))),
+                        mousePos.X - (CurrentSize + (i * GradientWidth)) / 2,
+                        mousePos.Y - (CurrentSize + (i * GradientWidth)) / 2,
+                        (CurrentSize + (i * GradientWidth)), (CurrentSize + (i * GradientWidth)));
+                }
             }
             else
             {
-                g.DrawEllipse(CrosshairPen, mousePos.X - CurrentSize / 2,
-                    mousePos.Y - CurrentSize / 2, CurrentSize, CurrentSize);
+                for (int i = 0; i < GradientSize; i++)
+                {
+                    g.DrawEllipse(new Pen(Color.FromArgb((255 / GradientSize) * (i + 1),
+                        XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor))),
+                        mousePos.X - (CurrentSize + (i * GradientWidth)) / 2,
+                        mousePos.Y - (CurrentSize + (i * GradientWidth)) / 2,
+                        (CurrentSize + (i * GradientWidth)), (CurrentSize + (i * GradientWidth)));
+                }
             }
-            g.DrawLine(CrosshairPen, new Point(mousePos.X - CurrentSize / 2, mousePos.Y),
-                new Point(mousePos.X + CurrentSize / 2, mousePos.Y));
-            g.DrawLine(CrosshairPen, new Point(mousePos.X, mousePos.Y - CurrentSize / 2),
-                new Point(mousePos.X, mousePos.Y + CurrentSize / 2));
+            //g.DrawLine(CrosshairPen, new Point(mousePos.X - CurrentSize / 2, mousePos.Y),
+            //    new Point(mousePos.X + CurrentSize / 2, mousePos.Y));
+            //g.DrawLine(CrosshairPen, new Point(mousePos.X, mousePos.Y - CurrentSize / 2),
+            //    new Point(mousePos.X, mousePos.Y + CurrentSize / 2));
+            g.DrawLine(CrosshairPen, new Point(mousePos.X - MaxSize / 2, mousePos.Y),
+                new Point(mousePos.X + MaxSize / 2, mousePos.Y));
+            g.DrawLine(CrosshairPen, new Point(mousePos.X, mousePos.Y - MaxSize / 2),
+                new Point(mousePos.X, mousePos.Y + MaxSize / 2));
         }
     }
 }
