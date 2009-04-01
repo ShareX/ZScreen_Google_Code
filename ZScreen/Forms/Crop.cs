@@ -86,7 +86,7 @@ namespace ZSS
             this.Bounds = MyGraphics.GetScreenBounds();
             mGraphics = this.CreateGraphics();
             //This should not be used anymore since we will normalize points to client's coordinate
-            //rectIntersect.Location = this.Bounds.Location;
+            rectIntersect.Location = this.Bounds.Location;
             rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             mousePos = this.PointToClient(MousePosition);
@@ -152,12 +152,8 @@ namespace ZSS
                         CropRegion = MyGraphics.GetRectangle(mousePos.X, mousePos.Y,
                             mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
                             Program.conf.CropGridToggle, ref mousePos);
-                        /*
-                                                CropRegion = MyGraphics.GetRectangle(mousePos.X + this.Left, mousePos.Y + this.Top,
-                                                    mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
-                                                    Program.conf.CropGridToggle, ref mousePos);
-                        */
                         CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
+                        mousePos = mousePos.Intersect(rectIntersect);
                     }
                 }
                 Refresh();
@@ -249,8 +245,7 @@ namespace ZSS
                     DrawInstructor(strMouseUp, g);
                     if (Program.conf.CropRegionRectangleInfo)
                     {
-                        Point p = this.PointToClient(mousePos);
-                        DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px X: " + p.X + " px, Y: " + p.Y + " px", new Point(15, 15), g);
+                        DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(15, 15), g);
                     }
                 }
                 crosshair.Draw(g, mousePos);
@@ -260,7 +255,7 @@ namespace ZSS
         private void DrawTooltip(string text, Point offset, Graphics g)
         {
             Font font = new Font(FontFamily.GenericSansSerif, 8);
-            Point mPos = this.PointToClient(MousePosition);
+            Point mPos = mousePos;
             Rectangle labelRect = new Rectangle(new Point(mPos.X + offset.X, mPos.Y + offset.Y),
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
             if (labelRect.Right > this.Bounds.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
