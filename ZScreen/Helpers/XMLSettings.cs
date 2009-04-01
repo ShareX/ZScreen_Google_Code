@@ -76,21 +76,25 @@ namespace ZSS
         //  Capture
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // Selected Window | Crop Shot
-        public int SelectedWindowRegionStyle = 2;
-        public bool SelectedWindowFront = false;
-        public bool SelectedWindowRectangleInfo = true;
-        public string SelectedWindowBorderColor = SerializeColor(Color.Red);
-        public decimal SelectedWindowBorderSize = 2;
+        // Crop Shot
         public int CropRegionStyle = 1;
         public bool CropRegionHotkeyInfo = true;
         public string CropCrosshairColor = SerializeColor(Color.Red);
-        public bool CropDynamicCrosshair = false;
+        public bool CropDynamicCrosshair = true;
+        public int CrosshairLineCount = 2;
+        public int CrosshairLineSize = 25;
         public string CropBorderColor = SerializeColor(Color.Black);
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
         public bool CropRegionRectangleInfo = true;
         public bool CropGridToggle = false;
+
+        // Selected Window
+        public int SelectedWindowRegionStyle = 2;
+        public bool SelectedWindowFront = false;
+        public bool SelectedWindowRectangleInfo = true;
+        public string SelectedWindowBorderColor = SerializeColor(Color.Red);
+        public decimal SelectedWindowBorderSize = 2;
 
         // Interaction
         public decimal FlashTrayCount = 1;
@@ -124,7 +128,7 @@ namespace ZSS
 
         // Quality
         public int FileFormat = 0;
-        public long ImageQuality = 90;
+        public int ImageQuality = 90;
         public int SwitchAfter = 350;
         public int SwitchFormat = 1;
 

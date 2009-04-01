@@ -143,52 +143,130 @@ namespace ZSS
                 lblFirstRun.Visible = true;
                 Program.conf.RunOnce = true;
             }
-
         }
 
         private void SetupScreen()
         {
-            ///////////////////////////////////
-            // Global
-            ///////////////////////////////////
+            #region Global
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Global
+            //~~~~~~~~~~~~~~~~~~~~~
 
             Program.ConfigureDirs();
+            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
 
-            ////////////////////////////////////
-            // Capture
-            ////////////////////////////////////
+            #endregion
 
+            #region Main
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Main
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            if (cboScreenshotDest.Items.Count == 0)
+            {
+                cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            }
+            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            if (cboClipboardTextMode.Items.Count == 0)
+            {
+                cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
+            }
+            cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             nudScreenshotDelay.Value = Program.conf.ScreenshotDelay;
-            cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
-            cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
+            chkManualNaming.Checked = Program.conf.ManualNaming;
+            cbShowCursor.Checked = Program.conf.ShowCursor;
+            cbShowWatermark.Checked = Program.conf.ShowWatermark;
+            nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
+            nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             CheckActiveHelp();
             cbActiveHelp.Checked = Program.conf.ActiveHelp;
+            chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
+
+            #endregion
+
+            #region Hotkeys
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Hotkeys
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            UpdateHotkeysDGV();
+
+            #endregion
+
+            #region Capture
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Capture
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            // Crop Shot
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
-            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
+            cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
             cbCropDynamicCrosshair.Checked = Program.conf.CropDynamicCrosshair;
+            nudCrosshairLineCount.Value = Program.conf.CrosshairLineCount;
+            nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
+            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
-            cbCompleteSound.Checked = Program.conf.CompleteSound;
-            cbShowCursor.Checked = Program.conf.ShowCursor;
-            chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
+            cbCropShowGrids.Checked = Program.conf.CropShowGrids;
+            cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
+
+            // Selected Window
             cbSelectedWindowStyle.SelectedIndex = Program.conf.SelectedWindowRegionStyle;
             cbSelectedWindowFront.Checked = Program.conf.SelectedWindowFront;
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
             nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
+
+            // Interaction
+            nudFlashIconCount.Value = Program.conf.FlashTrayCount;
+            chkCaptureFallback.Checked = Program.conf.CaptureEntireScreenOnError;
+            cbShowPopup.Checked = Program.conf.ShowBalloonTip;
+            chkBalloonTipOpenLink.Checked = Program.conf.BalloonTipOpenLink;
             cbShowUploadDuration.Checked = Program.conf.ShowUploadDuration;
-            nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
-            nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
-            cbCropShowGrids.Checked = Program.conf.CropShowGrids;
+            cbCompleteSound.Checked = Program.conf.CompleteSound;
             cbCloseDropBox.Checked = Program.conf.CloseDropBox;
             cbCloseQuickActions.Checked = Program.conf.CloseQuickActions;
-            chkCaptureFallback.Checked = Program.conf.CaptureEntireScreenOnError;
 
-            ///////////////////////////////////
-            // Hotkeys Settings
-            ///////////////////////////////////
+            // Naming Conventions
+            txtActiveWindow.Text = Program.conf.activeWindow;
+            txtEntireScreen.Text = Program.conf.entireScreen;
 
-            UpdateHotkeysDGV();
+            // Watermark
+            if (cbWatermarkPosition.Items.Count == 0)
+            {
+                cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
+            }
+            cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
+            nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
+            txtWatermarkText.Text = Program.conf.WatermarkText;
+            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
+            lblWatermarkFont.Text = FontToString();
+            nudWatermarkFontTrans.Value = Program.conf.WatermarkFontTrans;
+            nudWatermarkCornerRadius.Value = Program.conf.WatermarkCornerRadius;
+            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1);
+            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2);
+            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor);
+            nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
+            if (cbWatermarkGradientType.Items.Count == 0)
+            {
+                cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
+            }
+            cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
+            TestWatermark();
+
+            // Quality
+            if (cbFileFormat.Items.Count == 0) cbFileFormat.Items.AddRange(Program.zImageFileTypes);
+            cbFileFormat.SelectedIndex = Program.conf.FileFormat;
+            nudImageQuality.Value = Program.conf.ImageQuality;
+            nudSwitchAfter.Value = Program.conf.SwitchAfter;
+            if (cbSwitchFormat.Items.Count == 0) cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
+            cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
+
+            #endregion
 
             ///////////////////////////////////
             // FTP Settings
@@ -241,12 +319,10 @@ namespace ZSS
                 Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
             }
             FindImageEditors();
-
             if (Program.conf.TextEditors.Count == 0)
             {
                 Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe")));
             }
-
             lbImageSoftware.Items.Clear();
             lbImageSoftware.Items.Add("Disabled");
             foreach (Software app in Program.conf.ImageSoftwareList)
@@ -254,7 +330,6 @@ namespace ZSS
                 if (!String.IsNullOrEmpty(app.Name))
                     lbImageSoftware.Items.Add(app.Name);
             }
-
             if (Program.conf.ImageSoftwareEnabled)
             {
                 int i;
@@ -267,63 +342,8 @@ namespace ZSS
             }
             txtImageSoftwarePath.Enabled = false;
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
-
-            ///////////////////////////////////
-            // Main/File Settings
-            ///////////////////////////////////
-
-            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
-
-            if (cboScreenshotDest.Items.Count == 0)
-            {
-                cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
-            }
-            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
-            if (cboClipboardTextMode.Items.Count == 0)
-            {
-                cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
-            }
-            cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
-            //updateClipboardTextTrayMenu();
             cbStartWin.Checked = CheckStartWithWindows();
-
-            txtActiveWindow.Text = Program.conf.activeWindow;
-            txtEntireScreen.Text = Program.conf.entireScreen;
-
-            if (cmbFileFormat.Items.Count == 0) cmbFileFormat.Items.AddRange(Program.zImageFileTypes);
-            if (cmbSwitchFormat.Items.Count == 0) cmbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
-
-            cmbFileFormat.SelectedIndex = Program.conf.FileFormat;
-            nudSwitchAfter.Value = Program.conf.SwitchAfter;
-            cmbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
-            txtImageQuality.Text = Program.conf.ImageQuality.ToString();
-            chkManualNaming.Checked = Program.conf.ManualNaming;
-
-            //tsmSaveToClip.Checked = Program.conf.ScreenshotDestMode == ScreenshotDestType.CLIPBOARD;
-            cbShowWatermark.Checked = Program.conf.ShowWatermark;
-
-            txtWatermarkText.Text = Program.conf.WatermarkText;
-            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
-            lblWatermarkFont.Text = FontToString();
-            nudWatermarkFontTrans.Value = Program.conf.WatermarkFontTrans;
-            nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
-            nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
-            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1);
-            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2);
-            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor);
-            if (cbWatermarkPosition.Items.Count == 0)
-            {
-                cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
-            }
-            cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
-            nudWatermarkCornerRadius.Value = Program.conf.WatermarkCornerRadius;
-            if (cbWatermarkGradientType.Items.Count == 0)
-            {
-                cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
-            }
-            cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
-            TestWatermark();
 
             ///////////////////////////////////
             // Advanced Settings
@@ -333,9 +353,6 @@ namespace ZSS
             txtCacheDir.Text = Program.conf.CacheDir;
             txtSettingsDir.Text = Program.conf.SettingsDir;
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
-            nudFlashIconCount.Value = Program.conf.FlashTrayCount;
-            cbShowPopup.Checked = Program.conf.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Program.conf.BalloonTipOpenLink;
             if (cboUpdateCheckType.Items.Count == 0)
             {
                 cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
@@ -353,7 +370,6 @@ namespace ZSS
             ///////////////////////////////////
 
             lbUploader.Items.Clear();
-
             if (Program.conf.ImageUploadersList == null)
             {
                 Program.conf.ImageUploadersList = new List<ImageHostingService>();
@@ -362,7 +378,6 @@ namespace ZSS
             else
             {
                 List<ImageHostingService> iUploaders = Program.conf.ImageUploadersList;
-
                 foreach (ImageHostingService iUploader in iUploaders)
                 {
                     lbUploader.Items.Add(iUploader.Name);
@@ -2353,17 +2368,12 @@ namespace ZSS
 
         private void cmbFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FileFormat = cmbFileFormat.SelectedIndex;
+            Program.conf.FileFormat = cbFileFormat.SelectedIndex;
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            long quality = 100L;
-
-            try { quality = long.Parse(txtImageQuality.Text); }
-            catch { }
-
-            Program.conf.ImageQuality = quality;
+            Program.conf.ImageQuality = (int)nudImageQuality.Value;
         }
 
         private void txtSwitchAfter_TextChanged(object sender, EventArgs e)
@@ -2378,7 +2388,7 @@ namespace ZSS
 
         private void cmbSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.SwitchFormat = cmbSwitchFormat.SelectedIndex;
+            Program.conf.SwitchFormat = cbSwitchFormat.SelectedIndex;
         }
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
@@ -3140,7 +3150,7 @@ namespace ZSS
 
             txtActiveWindow.Tag = "The automatic naming convention used for active window screenshots.";
 
-            nudSwitchAfter.Tag = string.Format("After {0} KiB, {1} will switch format from {2} to JPG", nudSwitchAfter.Text, Application.ProductName, cmbFileFormat.Text.ToUpper());
+            nudSwitchAfter.Tag = string.Format("After {0} KiB, {1} will switch format from {2} to JPG", nudSwitchAfter.Text, Application.ProductName, cbFileFormat.Text.ToUpper());
 
             nudWatermarkOffset.Tag = string.Format("Move Watermark {0} pixels leftwards and {0} pixels upwards from the Bottom Right corner of the Screenshot.", nudWatermarkOffset.Value);
 
@@ -3149,12 +3159,12 @@ namespace ZSS
             //Paths
             txtImagesDir.Tag = "The directory where all screenshots will be placed (unless deleted with the option below).";
 
-            cmbFileFormat.Tag = "The format that screenshots will be saved as.";
+            cbFileFormat.Tag = "The format that screenshots will be saved as.";
 
             //active help inconsistency (uses label because numeric up/down doesn't support mousehover event
             lblQuality.Tag = "The quality (1-100%) of JPEG screenshots. This quality setting does not effect any other type of Image Format.";
 
-            cmbSwitchFormat.Tag = "The secondary format that the program will switch to after a user-specified limit has been reached.";
+            cbSwitchFormat.Tag = "The secondary format that the program will switch to after a user-specified limit has been reached.";
 
             nudSwitchAfter.Tag = "At this limit File Format will switch from the original format to the secondary format.";
 
@@ -4511,6 +4521,16 @@ namespace ZSS
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CropDynamicCrosshair = cbCropDynamicCrosshair.Checked;
+        }
+
+        private void nudCrosshairLineCount_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CrosshairLineCount = (int)nudCrosshairLineCount.Value;
+        }
+
+        private void nudCrosshairLineSize_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
         }
     }
 }
