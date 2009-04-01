@@ -86,7 +86,7 @@ namespace ZSS
             this.Bounds = MyGraphics.GetScreenBounds();
             mGraphics = this.CreateGraphics();
             //This should not be used anymore since we will normalize points to client's coordinate
-            rectIntersect.Location = this.Bounds.Location;
+            // rectIntersect.Location = this.Bounds.Location;
             rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             mousePos = this.PointToClient(MousePosition);
