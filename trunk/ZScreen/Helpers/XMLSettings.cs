@@ -86,6 +86,7 @@ namespace ZSS
         public int CrosshairLineCount = 2;
         public int CrosshairLineSize = 25;
         public string CropBorderColor = SerializeColor(Color.Black);
+        public bool CropShowBigCross = true;
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
         public bool CropRegionRectangleInfo = true;
