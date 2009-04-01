@@ -199,5 +199,26 @@ namespace ZSS
 
             return isImage;
         }
+
+        public static Point Intersect(this Point point, Rectangle rect)
+        {
+            if (point.X < rect.X)
+            {
+                point.X = rect.X;
+            }      
+            else if (point.X > rect.Right)
+            {
+                point.X = rect.Right;
+            }
+            if (point.Y < rect.Y)
+            {
+                point.Y = rect.Y;
+            }
+            else if (point.Y > rect.Bottom)
+            {
+                point.Y = rect.Bottom;
+            }
+            return point;
+        }
     }
 }
