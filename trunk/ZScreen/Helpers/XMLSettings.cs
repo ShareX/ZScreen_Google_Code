@@ -81,7 +81,7 @@ namespace ZSS
         public bool CropRegionHotkeyInfo = true;
         public string CropCrosshairColor = SerializeColor(Color.Red);
         public bool CropDynamicCrosshair = true;
-        public int CropInterval = 10;
+        public int CropInterval = 25;
         public int CropStep = 1;
         public int CrosshairLineCount = 2;
         public int CrosshairLineSize = 25;

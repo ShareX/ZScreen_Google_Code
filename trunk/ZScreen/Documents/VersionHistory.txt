@@ -1,3 +1,6 @@
+Version 2.6.7 - 20090401
+
+2.6.7.1 Proper support for multiple monitors {Isaac}
 2.6.7.0 Extended History viewer to support Text previews
 2.6.6.2 Fixed crash when attempted to View Directory after Folder Browse Dialog was cancelled [HotRod]
 2.6.6.1 ZScreen did not show main window properly for new installs until it was loaded again
@@ -5,7 +8,7 @@
 2.6.5.0 Drag n Drop Window is now movable and the location is remembered
 2.6.4.0 Added History Settings tab to customize History List under History tab
 
-Version 2.6 - 20090329
+Version 2.6.3 - 20090329
 
 2.6.3.0 Option to reset Auto-increment number in File Naming conventions [Issue 43]
 2.6.2.0 TinyPic RegCode is now automatically updated if TinyPic UserName and Password are set to remember [Issue 44]
