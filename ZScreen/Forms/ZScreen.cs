@@ -211,6 +211,7 @@ namespace ZSS
             nudCrosshairLineCount.Value = Program.conf.CrosshairLineCount;
             nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
             pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
+            cbCropShowBigCross.Checked = Program.conf.CropShowBigCross;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
@@ -4543,6 +4544,11 @@ namespace ZSS
         private void nudCropStep_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.CropStep = (int)nudCropStep.Value;
+        }
+
+        private void cbCropShowBigCross_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropShowBigCross = cbCropShowBigCross.Checked;
         }
     }
 }

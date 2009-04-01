@@ -210,8 +210,11 @@ namespace ZSS
             }
             else
             {
-                g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(mBgImage.Width, mousePos.Y));
-                g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, mBgImage.Height));
+                if (Program.conf.CropShowBigCross)
+                {
+                    g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(mBgImage.Width, mousePos.Y));
+                    g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, mBgImage.Height));
+                }
                 if (mMouseDown)
                 {
                     if (Program.conf.CropShowGrids && Program.conf.CropGridToggle)
