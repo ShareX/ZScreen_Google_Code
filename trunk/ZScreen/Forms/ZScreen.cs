@@ -4286,6 +4286,9 @@ namespace ZSS
         {
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
+                if (app.Name == null)
+                    return null;
+
                 if (app.Name.Equals(name))
                     return app;
             }

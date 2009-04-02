@@ -40,6 +40,9 @@ namespace ZSS
         private bool mMouseDown = false;
         private Image mBgImage;
         private Point mousePos, mousePosOnClick, oldMousePos;
+        private Point screenMousePos;
+        private Rectangle screenBound;
+        private Rectangle clientBound;
         private Rectangle cropRegion;
         private Rectangle rectRegion;
 
@@ -89,7 +92,9 @@ namespace ZSS
             // rectIntersect.Location = this.Bounds.Location;
             rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-            mousePos = this.PointToClient(MousePosition);
+
+            CalculateBoundaryFromMousePosition();
+
             timer.Interval = 10;
             timer.Tick += new EventHandler(timer_Tick);
             windowCheck.Interval = 250;
@@ -124,7 +129,8 @@ namespace ZSS
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            mousePos = this.PointToClient(MousePosition);
+            CalculateBoundaryFromMousePosition();
+
             if (Program.conf.CropDynamicCrosshair) forceCheck = true;
             if (oldMousePos == null || oldMousePos != mousePos || forceCheck)
             {
@@ -258,8 +264,8 @@ namespace ZSS
             Point mPos = mousePos;
             Rectangle labelRect = new Rectangle(new Point(mPos.X + offset.X, mPos.Y + offset.Y),
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
-            if (labelRect.Right > this.Bounds.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
-            if (labelRect.Bottom > this.Bounds.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
+            if (labelRect.Right > clientBound.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
+            if (labelRect.Bottom > clientBound.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
             GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
             g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
             Color.Black, Color.FromArgb(150, Color.Black)), gPath);
@@ -295,13 +301,22 @@ namespace ZSS
             {
                 Font posFont = new Font(FontFamily.GenericSansSerif, 8);
                 Size textSize = TextRenderer.MeasureText(drawText, posFont);
-                Rectangle labelRect = new Rectangle((this.Width / 2) - ((textSize.Width + 10) / 2), 30, textSize.Width + 30, textSize.Height + 10);
+                Point textPos = this.PointToClient(new Point(screenBound.Left + (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
+                Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
                 GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
                 g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
                 Color.White, Color.FromArgb(150, Color.White)), gPath);
                 g.DrawPath(labelBorderPen, gPath);
                 g.DrawString(drawText, posFont, new SolidBrush(Color.Black), labelRect.X + 5, labelRect.Y + 5);
             }
+        }
+
+        private void CalculateBoundaryFromMousePosition()
+        {
+            mousePos = this.PointToClient(MousePosition);
+            screenMousePos = this.PointToScreen(mousePos);
+            screenBound = Screen.GetBounds(screenMousePos);
+            clientBound = new Rectangle(this.PointToClient(screenBound.Location), screenBound.Size);
         }
 
         private void Crop_MouseDown(object sender, MouseEventArgs e)
