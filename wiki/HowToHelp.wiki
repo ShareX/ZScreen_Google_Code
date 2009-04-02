@@ -53,6 +53,6 @@ Once you have modified your code in ZScreen,
 
 [http://img5.imageshack.us/img5/3122/ss20090402113351.png]
 
-If this is the first time, AnkhSVN will ask for the user name and password. Simply input your Gmail address and the Google Code password. 
+If this is the first time, AnkhSVN will ask for the user name and password. Simply input your Gmail address and the Google Code password (*Note:* this is not the GMail password)
 
 You are done! :)
