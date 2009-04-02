@@ -500,7 +500,7 @@ namespace ZSS
 
         public DynamicCrosshair()
         {
-            CurrentStep = Step;
+            CurrentStep = -Step;
             MaxSize = LineSize;
             MaxWidth = MaxSize * LineCount;
             NormalSize = MinSize + ((MaxSize - MinSize) / 2);
@@ -542,6 +542,8 @@ namespace ZSS
                         mousePos.Y - (CurrentSize + (i * LineSize)) / 2,
                         (CurrentSize + (i * LineSize)), (CurrentSize + (i * LineSize)));
                 }
+                g.DrawRectangle(new Pen(Color.FromArgb(50, CrosshairColor)), mousePos.X - MaxWidth / 2,
+                    mousePos.Y - MaxWidth / 2, MaxWidth, MaxWidth);
             }
             else
             {
@@ -552,8 +554,8 @@ namespace ZSS
                         mousePos.Y - (CurrentSize + (i * LineSize)) / 2,
                         (CurrentSize + (i * LineSize)), (CurrentSize + (i * LineSize)));
                 }
-                g.DrawEllipse(new Pen(Color.FromArgb(50, CrosshairColor)), mousePos.X - MaxWidth / 2, mousePos.Y - MaxWidth / 2,
-                    MaxWidth, MaxWidth);
+                g.DrawEllipse(new Pen(Color.FromArgb(50, CrosshairColor)), mousePos.X - MaxWidth / 2,
+                    mousePos.Y - MaxWidth / 2, MaxWidth, MaxWidth);
             }
             g.DrawLine(new Pen(CrosshairColor), new Point(mousePos.X - (MaxWidth - (MaxSize - CurrentSize)) / 2, mousePos.Y),
                 new Point(mousePos.X + (MaxWidth - (MaxSize - CurrentSize)) / 2, mousePos.Y));
