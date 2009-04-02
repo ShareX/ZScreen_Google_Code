@@ -85,6 +85,7 @@ namespace ZSS
         public int CropStep = 1;
         public int CrosshairLineCount = 2;
         public int CrosshairLineSize = 25;
+        public bool CropShowRuler = false;
         public string CropBorderColor = SerializeColor(Color.Black);
         public bool CropShowBigCross = true;
         public decimal CropBorderSize = 1;
@@ -96,6 +97,7 @@ namespace ZSS
         public int SelectedWindowRegionStyle = 2;
         public bool SelectedWindowFront = false;
         public bool SelectedWindowRectangleInfo = true;
+        public bool SelectedWindowRuler = false;
         public string SelectedWindowBorderColor = SerializeColor(Color.Red);
         public decimal SelectedWindowBorderSize = 2;
 

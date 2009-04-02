@@ -212,6 +212,7 @@ namespace ZSS
             nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
             pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
             cbCropShowBigCross.Checked = Program.conf.CropShowBigCross;
+            cbShowCropRuler.Checked = Program.conf.CropShowRuler;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
@@ -221,6 +222,7 @@ namespace ZSS
             cbSelectedWindowStyle.SelectedIndex = Program.conf.SelectedWindowRegionStyle;
             cbSelectedWindowFront.Checked = Program.conf.SelectedWindowFront;
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
+            cbSelectedWindowRuler.Checked = Program.conf.SelectedWindowRuler;
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
             nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
 
@@ -4552,6 +4554,16 @@ namespace ZSS
         private void cbCropShowBigCross_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CropShowBigCross = cbCropShowBigCross.Checked;
+        }
+
+        private void cbShowCropRuler_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropShowRuler = cbShowCropRuler.Checked;
+        }
+
+        private void cbSelectedWindowRuler_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowRuler = cbSelectedWindowRuler.Checked;
         }
     }
 }

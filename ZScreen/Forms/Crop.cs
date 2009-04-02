@@ -213,6 +213,11 @@ namespace ZSS
                 if (Program.conf.SelectedWindowBorderSize != 0)
                 {
                     g.DrawRectangle(SelectedWindowPen, CropRegion);
+                    if (Program.conf.SelectedWindowRuler)
+                    {
+                        DrawRuler(g, SelectedWindowPen, 5, 10);
+                        DrawRuler(g, SelectedWindowPen, 20, 100);
+                    }
                 }
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
@@ -237,6 +242,11 @@ namespace ZSS
                     if (Program.conf.CropBorderSize != 0)
                     {
                         g.DrawRectangle(CropPen, CropRegion);
+                        if (Program.conf.CropShowRuler)
+                        {
+                            DrawRuler(g, CropPen, 5, 10);
+                            DrawRuler(g, CropPen, 20, 100);
+                        }
                     }
                     if (Program.conf.CropRegionRectangleInfo)
                     {
@@ -291,6 +301,28 @@ namespace ZSS
                     g.DrawLine(crosshairPen2,
                         new Point(CropRegion.X, CropRegion.Y + (Program.conf.CropGridSize.Height * y)),
                         new Point(CropRegion.X + CropRegion.Width, CropRegion.Y + (Program.conf.CropGridSize.Height * y)));
+                }
+            }
+        }
+
+        private void DrawRuler(Graphics g, Pen pen, int rulerSize, int rulerWidth)
+        {
+            pen = new Pen(pen.Color);
+            if (CropRegion.Width >= rulerWidth && cropRegion.Height >= rulerWidth)
+            {
+                for (int x = 1; x <= CropRegion.Width / rulerWidth; x++)
+                {
+                    g.DrawLine(pen, new Point(CropRegion.X + x * rulerWidth, CropRegion.Y),
+                        new Point(CropRegion.X + x * rulerWidth, CropRegion.Y + rulerSize));
+                    g.DrawLine(pen, new Point(CropRegion.X + x * rulerWidth, CropRegion.Bottom),
+                        new Point(CropRegion.X + x * rulerWidth, CropRegion.Bottom - rulerSize));
+                }
+                for (int y = 1; y <= CropRegion.Height / rulerWidth; y++)
+                {
+                    g.DrawLine(pen, new Point(CropRegion.X, CropRegion.Y + y * rulerWidth),
+                        new Point(CropRegion.X + rulerSize, CropRegion.Y + y * rulerWidth));
+                    g.DrawLine(pen, new Point(CropRegion.Right, CropRegion.Y + y * rulerWidth),
+                           new Point(CropRegion.Right - rulerSize, CropRegion.Y + y * rulerWidth));
                 }
             }
         }
@@ -452,8 +484,8 @@ namespace ZSS
 
     public class DynamicCrosshair
     {
-        private int Interval;
-        private int Step;
+        private int Interval = Program.conf.CropInterval;
+        private int Step = Program.conf.CropStep;
         private int CurrentStep;
         private int MinSize = 1;
         private int MaxSize;
@@ -462,16 +494,12 @@ namespace ZSS
         private long LastTime = 0;
         private int CurrentSize;
         private int NormalSize;
-        private int LineCount;
-        private int LineSize;
+        private int LineCount = Program.conf.CrosshairLineCount;
+        private int LineSize = Program.conf.CrosshairLineSize;
         private Color CrosshairColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
 
         public DynamicCrosshair()
         {
-            Interval = Program.conf.CropInterval;
-            Step = Program.conf.CropStep;
-            LineCount = Program.conf.CrosshairLineCount;
-            LineSize = Program.conf.CrosshairLineSize;
             CurrentStep = Step;
             MaxSize = LineSize;
             MaxWidth = MaxSize * LineCount;
