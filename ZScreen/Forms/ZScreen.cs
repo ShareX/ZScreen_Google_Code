@@ -132,17 +132,6 @@ namespace ZSS
 
             //Need better solution for this
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
-
-            // Show settings if never ran before
-            if (!Program.conf.RunOnce)
-            {
-                Show();
-                WindowState = FormWindowState.Normal;
-                this.Activate();
-                this.BringToFront();
-                lblFirstRun.Visible = true;
-                Program.conf.RunOnce = true;
-            }
         }
 
         private void SetupScreen()
@@ -1390,6 +1379,11 @@ namespace ZSS
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
+            /* 
+             * Sometimes Settings.xml write delays cause a small pause when user press the close button
+             * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
+            */
+            this.WindowState = FormWindowState.Minimized; 
             Program.conf.Save();
             SaveHistoryItems();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
@@ -2062,6 +2056,17 @@ namespace ZSS
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
+
+            // Show settings if never ran before
+            if (!Program.conf.RunOnce)
+            {
+                Show();
+                WindowState = FormWindowState.Normal;
+                this.Activate();
+                this.BringToFront();
+                lblFirstRun.Visible = true;
+                Program.conf.RunOnce = true;
+            }
         }
 
         private void AddToClipboardByDoubleClick(TabPage tp)
@@ -4287,12 +4292,13 @@ namespace ZSS
         public static Software GetImageSoftware(string name)
         {
             foreach (Software app in Program.conf.ImageSoftwareList)
-            {
-                if (app.Name == null)
-                    return null;
+            {                
+                if (app != null && app.Name != null)
+                {
+                    if (app.Name.Equals(name))
+                        return app;
+                }
 
-                if (app.Name.Equals(name))
-                    return app;
             }
             return null;
         }

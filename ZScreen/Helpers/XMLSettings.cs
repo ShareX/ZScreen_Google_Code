@@ -142,7 +142,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<Software> ImageSoftwareList = new List<Software>();
-        public Software ImageSoftwareActive = new Software();
+        public Software ImageSoftwareActive = null; // this has to be initially null to get Paint added - McoreD
         public bool ImageSoftwareEnabled = false;
         public Software TextEditorActive = new Software();
         public List<Software> TextEditors = new List<Software>();
