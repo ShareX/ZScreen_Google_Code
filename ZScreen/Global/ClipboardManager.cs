@@ -102,27 +102,13 @@ namespace ZSS
         /// </summary>
         /// <param name="ifl"></param>
         /// <returns></returns>
-        private static List<string> GetClipboardText(ImageFileManager ifl)
+        private static List<string> GetClipboardText(ImageFileManager ifm)
         {
             List<string> lCbLines = new List<string>();
 
-            if (ifl != null)
+            if (ifm != null)
             {
-                switch (Program.conf.ClipboardUriMode)
-                {
-                    case ClipboardUriType.FULL:
-                        lCbLines.Add(ifl.GetFullImageUrl());
-                        break;
-                    case ClipboardUriType.FULL_IMAGE_FORUMS:
-                        lCbLines.Add(ifl.GetFullImageForumsUrl());
-                        break;
-                    case ClipboardUriType.LINKED_THUMBNAIL:
-                        lCbLines.Add(ifl.GetLinkedThumbnailUrl());
-                        break;
-                    case ClipboardUriType.THUMBNAIL:
-                        lCbLines.Add(ifl.GetThumbnailUrl());
-                        break;
-                }
+                lCbLines.Add(ifm.GetUrlByType(Program.conf.ClipboardUriMode));
             }
 
             return lCbLines;

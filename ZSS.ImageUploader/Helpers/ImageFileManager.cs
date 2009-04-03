@@ -56,6 +56,8 @@ namespace ZSS.ImageUploader.Helpers
                     return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE);
                 case ClipboardUriType.FULL_IMAGE_FORUMS:
                     return GetFullImageForumsUrl();
+                case ClipboardUriType.FULL_IMAGE_WIKI:
+                    return GetFullImageWiki();
                 case ClipboardUriType.LINKED_THUMBNAIL:
                     return GetLinkedThumbnailUrl();
                 case ClipboardUriType.THUMBNAIL:
@@ -104,6 +106,11 @@ namespace ZSS.ImageUploader.Helpers
         public string GetFullImageForumsUrl()
         {
             return string.Format("[IMG]{0}[/IMG]", this.GetFullImageUrl());
+        }
+
+        public string GetFullImageWiki()
+        {
+            return string.Format("[{0}]", this.GetFullImageUrl());
         }
 
         public string GetLinkedThumbnailUrl()
