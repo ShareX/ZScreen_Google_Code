@@ -1,3 +1,6 @@
+2.6.8.1 Adding new Image Editors did not work as expected [Issue 46]
+2.6.8.0 Added Ruler for Crop Shot
+
 Version 2.6.7 - 20090401
 
 2.6.7.1 Proper support for multiple monitors {Isaac}
