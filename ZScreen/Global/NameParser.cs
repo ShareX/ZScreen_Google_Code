@@ -30,9 +30,9 @@ namespace ZSS
 {
     public static class NameParser
     {
-        public static string[] replacementVars = { "%t", "%mo", "%d", "%y", "%h", "%mi", "%s", "%i", "%pm" };
-        public static string[] replacementDescriptions = { "Title of active window", "Gets the current month", "Gets the current day",
-                                                             "Gets the current year", "Gets the current hour", "Gets the current minute",
+        public static string[] replacementVars = { "%t", "%y", "%mo", "%d", "%h", "%mi", "%s", "%i", "%pm" };
+        public static string[] replacementDescriptions = { "Title of active window", "Gets the current year", "Gets the current month",
+                                                             "Gets the current day", "Gets the current hour", "Gets the current minute",
                                                              "Gets the current second", "Auto increment", "Gets AM/PM" };
         public static string prefix = "%";
 
@@ -109,9 +109,9 @@ namespace ZSS
                 sb = sb.Replace(replacementVars[0], "");
             }
 
-            sb = sb.Replace(replacementVars[1], AddZeroes(dt.Month))
-                .Replace(replacementVars[2], AddZeroes(dt.Day))
-                .Replace(replacementVars[3], dt.Year.ToString())
+            sb = sb.Replace(replacementVars[1], dt.Year.ToString())
+                .Replace(replacementVars[2], AddZeroes(dt.Month))
+                .Replace(replacementVars[3], AddZeroes(dt.Day))
                 .Replace(replacementVars[5], AddZeroes(dt.Minute))
                 .Replace(replacementVars[6], AddZeroes(dt.Second))
                 .Replace(replacementVars[7], AddZeroes(Program.conf.AutoIncrement, 4))
