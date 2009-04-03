@@ -133,6 +133,7 @@ namespace ZSS.Helpers
 
         public void UploadText()
         {
+            task.StartTime = DateTime.Now;
             switch (task.TextDestCategory)
             {
                 // WE ARE ONLY SUPPORTING TXT UPLOADING VIA FTP SO FAR, PASTE2 AND PASTEBIN SUPPORT WILL COME LATER
@@ -141,6 +142,7 @@ namespace ZSS.Helpers
                     UploadFtp();
                     break;
             }
+            task.EndTime = DateTime.Now;
         }
 
         public void TextEdit()
