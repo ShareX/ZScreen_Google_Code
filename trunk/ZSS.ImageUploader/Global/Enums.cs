@@ -45,6 +45,8 @@ namespace ZSS
         FULL,
         [Description("Full Image for Forums")]
         FULL_IMAGE_FORUMS,
+        [Description("Full Image for Wiki")]
+        FULL_IMAGE_WIKI,
         [Description("Thumbnail")]
         THUMBNAIL,
         [Description("Linked Thumbnail for Forums")]
