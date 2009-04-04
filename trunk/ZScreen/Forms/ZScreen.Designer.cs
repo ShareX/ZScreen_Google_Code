@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,13 +120,13 @@ namespace ZSS
             this.gbCrosshairSettings = new System.Windows.Forms.GroupBox();
             this.cbCropShowBigCross = new System.Windows.Forms.CheckBox();
             this.cbCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
-            this.nudCropStep = new System.Windows.Forms.NumericUpDown();
+            this.nudCropCrosshairStep = new System.Windows.Forms.NumericUpDown();
             this.pbCropCrosshairColor = new System.Windows.Forms.PictureBox();
-            this.nudCropInterval = new System.Windows.Forms.NumericUpDown();
+            this.nudCropCrosshairInterval = new System.Windows.Forms.NumericUpDown();
             this.lblCropCrosshairColor = new System.Windows.Forms.Label();
-            this.lblCropStep = new System.Windows.Forms.Label();
+            this.lblCropCrosshairStep = new System.Windows.Forms.Label();
             this.nudCrosshairLineCount = new System.Windows.Forms.NumericUpDown();
-            this.lblCropInterval = new System.Windows.Forms.Label();
+            this.lblCropCrosshairInterval = new System.Windows.Forms.Label();
             this.nudCrosshairLineSize = new System.Windows.Forms.NumericUpDown();
             this.lblCrosshairLineSize = new System.Windows.Forms.Label();
             this.lblCrosshairLineCount = new System.Windows.Forms.Label();
@@ -140,6 +140,7 @@ namespace ZSS
             this.lblCropBorderSize = new System.Windows.Forms.Label();
             this.lblCropBorderColor = new System.Windows.Forms.Label();
             this.tpSelectedWindow = new System.Windows.Forms.TabPage();
+            this.cbSelectedWindowRuler = new System.Windows.Forms.CheckBox();
             this.lblSelectedWindowRegionStyle = new System.Windows.Forms.Label();
             this.cbSelectedWindowStyle = new System.Windows.Forms.ComboBox();
             this.cbSelectedWindowRectangleInfo = new System.Windows.Forms.CheckBox();
@@ -425,7 +426,21 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.cbSelectedWindowRuler = new System.Windows.Forms.CheckBox();
+            this.gbCropRegionSettings = new System.Windows.Forms.GroupBox();
+            this.cbCropDynamicBorderColor = new System.Windows.Forms.CheckBox();
+            this.lblCropRegionInterval = new System.Windows.Forms.Label();
+            this.lblCropRegionStep = new System.Windows.Forms.Label();
+            this.nudCropRegionInterval = new System.Windows.Forms.NumericUpDown();
+            this.nudCropRegionStep = new System.Windows.Forms.NumericUpDown();
+            this.lblCropHueRange = new System.Windows.Forms.Label();
+            this.nudCropHueRange = new System.Windows.Forms.NumericUpDown();
+            this.nudSelectedWindowHueRange = new System.Windows.Forms.NumericUpDown();
+            this.lblSelectedWindowHueRange = new System.Windows.Forms.Label();
+            this.nudSelectedWindowRegionStep = new System.Windows.Forms.NumericUpDown();
+            this.nudSelectedWindowRegionInterval = new System.Windows.Forms.NumericUpDown();
+            this.lblSelectedWindowRegionStep = new System.Windows.Forms.Label();
+            this.lblSelectedWindowRegionInterval = new System.Windows.Forms.Label();
+            this.cbSelectedWindowDynamicBorderColor = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -438,9 +453,9 @@ namespace ZSS
             this.tcFileSettings.SuspendLayout();
             this.tpCropShot.SuspendLayout();
             this.gbCrosshairSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).BeginInit();
@@ -523,6 +538,13 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
+            this.gbCropRegionSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowHueRange)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -1302,17 +1324,12 @@ namespace ZSS
             // 
             // tpCropShot
             // 
-            this.tpCropShot.Controls.Add(this.cbShowCropRuler);
+            this.tpCropShot.Controls.Add(this.gbCropRegionSettings);
             this.tpCropShot.Controls.Add(this.gbCrosshairSettings);
-            this.tpCropShot.Controls.Add(this.cbCropShowGrids);
             this.tpCropShot.Controls.Add(this.lblCropRegionStyle);
             this.tpCropShot.Controls.Add(this.cbRegionHotkeyInfo);
-            this.tpCropShot.Controls.Add(this.nudCropBorderSize);
-            this.tpCropShot.Controls.Add(this.pbCropBorderColor);
             this.tpCropShot.Controls.Add(this.cbCropStyle);
             this.tpCropShot.Controls.Add(this.cbRegionRectangleInfo);
-            this.tpCropShot.Controls.Add(this.lblCropBorderSize);
-            this.tpCropShot.Controls.Add(this.lblCropBorderColor);
             this.tpCropShot.Location = new System.Drawing.Point(4, 22);
             this.tpCropShot.Name = "tpCropShot";
             this.tpCropShot.Padding = new System.Windows.Forms.Padding(3);
@@ -1324,11 +1341,11 @@ namespace ZSS
             // cbShowCropRuler
             // 
             this.cbShowCropRuler.AutoSize = true;
-            this.cbShowCropRuler.Location = new System.Drawing.Point(16, 248);
+            this.cbShowCropRuler.Location = new System.Drawing.Point(16, 24);
             this.cbShowCropRuler.Name = "cbShowCropRuler";
-            this.cbShowCropRuler.Size = new System.Drawing.Size(100, 17);
+            this.cbShowCropRuler.Size = new System.Drawing.Size(76, 17);
             this.cbShowCropRuler.TabIndex = 26;
-            this.cbShowCropRuler.Text = "Show crop ruler";
+            this.cbShowCropRuler.Text = "Show ruler";
             this.cbShowCropRuler.UseVisualStyleBackColor = true;
             this.cbShowCropRuler.CheckedChanged += new System.EventHandler(this.cbShowCropRuler_CheckedChanged);
             // 
@@ -1336,17 +1353,17 @@ namespace ZSS
             // 
             this.gbCrosshairSettings.Controls.Add(this.cbCropShowBigCross);
             this.gbCrosshairSettings.Controls.Add(this.cbCropDynamicCrosshair);
-            this.gbCrosshairSettings.Controls.Add(this.nudCropStep);
+            this.gbCrosshairSettings.Controls.Add(this.nudCropCrosshairStep);
             this.gbCrosshairSettings.Controls.Add(this.pbCropCrosshairColor);
-            this.gbCrosshairSettings.Controls.Add(this.nudCropInterval);
+            this.gbCrosshairSettings.Controls.Add(this.nudCropCrosshairInterval);
             this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairColor);
-            this.gbCrosshairSettings.Controls.Add(this.lblCropStep);
+            this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairStep);
             this.gbCrosshairSettings.Controls.Add(this.nudCrosshairLineCount);
-            this.gbCrosshairSettings.Controls.Add(this.lblCropInterval);
+            this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairInterval);
             this.gbCrosshairSettings.Controls.Add(this.nudCrosshairLineSize);
             this.gbCrosshairSettings.Controls.Add(this.lblCrosshairLineSize);
             this.gbCrosshairSettings.Controls.Add(this.lblCrosshairLineCount);
-            this.gbCrosshairSettings.Location = new System.Drawing.Point(8, 68);
+            this.gbCrosshairSettings.Location = new System.Drawing.Point(8, 88);
             this.gbCrosshairSettings.Name = "gbCrosshairSettings";
             this.gbCrosshairSettings.Size = new System.Drawing.Size(352, 168);
             this.gbCrosshairSettings.TabIndex = 25;
@@ -1375,23 +1392,23 @@ namespace ZSS
             this.cbCropDynamicCrosshair.UseVisualStyleBackColor = true;
             this.cbCropDynamicCrosshair.CheckedChanged += new System.EventHandler(this.cbCropDynamicCrosshair_CheckedChanged);
             // 
-            // nudCropStep
+            // nudCropCrosshairStep
             // 
-            this.nudCropStep.Location = new System.Drawing.Point(280, 21);
-            this.nudCropStep.Minimum = new decimal(new int[] {
+            this.nudCropCrosshairStep.Location = new System.Drawing.Point(280, 21);
+            this.nudCropCrosshairStep.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nudCropStep.Name = "nudCropStep";
-            this.nudCropStep.Size = new System.Drawing.Size(56, 20);
-            this.nudCropStep.TabIndex = 24;
-            this.nudCropStep.Value = new decimal(new int[] {
+            this.nudCropCrosshairStep.Name = "nudCropCrosshairStep";
+            this.nudCropCrosshairStep.Size = new System.Drawing.Size(56, 20);
+            this.nudCropCrosshairStep.TabIndex = 24;
+            this.nudCropCrosshairStep.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nudCropStep.ValueChanged += new System.EventHandler(this.nudCropStep_ValueChanged);
+            this.nudCropCrosshairStep.ValueChanged += new System.EventHandler(this.nudCropStep_ValueChanged);
             // 
             // pbCropCrosshairColor
             // 
@@ -1405,18 +1422,18 @@ namespace ZSS
             this.pbCropCrosshairColor.TabStop = false;
             this.pbCropCrosshairColor.Click += new System.EventHandler(this.pbCropCrosshairColor_Click);
             // 
-            // nudCropInterval
+            // nudCropCrosshairInterval
             // 
-            this.nudCropInterval.Location = new System.Drawing.Point(184, 21);
-            this.nudCropInterval.Maximum = new decimal(new int[] {
+            this.nudCropCrosshairInterval.Location = new System.Drawing.Point(184, 21);
+            this.nudCropCrosshairInterval.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.nudCropInterval.Name = "nudCropInterval";
-            this.nudCropInterval.Size = new System.Drawing.Size(56, 20);
-            this.nudCropInterval.TabIndex = 23;
-            this.nudCropInterval.ValueChanged += new System.EventHandler(this.nudCropInterval_ValueChanged);
+            this.nudCropCrosshairInterval.Name = "nudCropCrosshairInterval";
+            this.nudCropCrosshairInterval.Size = new System.Drawing.Size(56, 20);
+            this.nudCropCrosshairInterval.TabIndex = 23;
+            this.nudCropCrosshairInterval.ValueChanged += new System.EventHandler(this.nudCropInterval_ValueChanged);
             // 
             // lblCropCrosshairColor
             // 
@@ -1427,14 +1444,14 @@ namespace ZSS
             this.lblCropCrosshairColor.TabIndex = 15;
             this.lblCropCrosshairColor.Text = "Crosshair color:";
             // 
-            // lblCropStep
+            // lblCropCrosshairStep
             // 
-            this.lblCropStep.AutoSize = true;
-            this.lblCropStep.Location = new System.Drawing.Point(248, 24);
-            this.lblCropStep.Name = "lblCropStep";
-            this.lblCropStep.Size = new System.Drawing.Size(32, 13);
-            this.lblCropStep.TabIndex = 22;
-            this.lblCropStep.Text = "Step:";
+            this.lblCropCrosshairStep.AutoSize = true;
+            this.lblCropCrosshairStep.Location = new System.Drawing.Point(248, 24);
+            this.lblCropCrosshairStep.Name = "lblCropCrosshairStep";
+            this.lblCropCrosshairStep.Size = new System.Drawing.Size(32, 13);
+            this.lblCropCrosshairStep.TabIndex = 22;
+            this.lblCropCrosshairStep.Text = "Step:";
             // 
             // nudCrosshairLineCount
             // 
@@ -1449,14 +1466,14 @@ namespace ZSS
             this.nudCrosshairLineCount.TabIndex = 17;
             this.nudCrosshairLineCount.ValueChanged += new System.EventHandler(this.nudCrosshairLineCount_ValueChanged);
             // 
-            // lblCropInterval
+            // lblCropCrosshairInterval
             // 
-            this.lblCropInterval.AutoSize = true;
-            this.lblCropInterval.Location = new System.Drawing.Point(136, 24);
-            this.lblCropInterval.Name = "lblCropInterval";
-            this.lblCropInterval.Size = new System.Drawing.Size(45, 13);
-            this.lblCropInterval.TabIndex = 21;
-            this.lblCropInterval.Text = "Interval:";
+            this.lblCropCrosshairInterval.AutoSize = true;
+            this.lblCropCrosshairInterval.Location = new System.Drawing.Point(136, 24);
+            this.lblCropCrosshairInterval.Name = "lblCropCrosshairInterval";
+            this.lblCropCrosshairInterval.Size = new System.Drawing.Size(45, 13);
+            this.lblCropCrosshairInterval.TabIndex = 21;
+            this.lblCropCrosshairInterval.Text = "Interval:";
             // 
             // nudCrosshairLineSize
             // 
@@ -1492,7 +1509,7 @@ namespace ZSS
             // cbCropShowGrids
             // 
             this.cbCropShowGrids.AutoSize = true;
-            this.cbCropShowGrids.Location = new System.Drawing.Point(16, 328);
+            this.cbCropShowGrids.Location = new System.Drawing.Point(16, 160);
             this.cbCropShowGrids.Name = "cbCropShowGrids";
             this.cbCropShowGrids.Size = new System.Drawing.Size(203, 17);
             this.cbCropShowGrids.TabIndex = 13;
@@ -1512,7 +1529,7 @@ namespace ZSS
             // cbRegionHotkeyInfo
             // 
             this.cbRegionHotkeyInfo.AutoSize = true;
-            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 352);
+            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 64);
             this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
             this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
             this.cbRegionHotkeyInfo.TabIndex = 6;
@@ -1522,7 +1539,7 @@ namespace ZSS
             // 
             // nudCropBorderSize
             // 
-            this.nudCropBorderSize.Location = new System.Drawing.Point(221, 296);
+            this.nudCropBorderSize.Location = new System.Drawing.Point(200, 64);
             this.nudCropBorderSize.Name = "nudCropBorderSize";
             this.nudCropBorderSize.Size = new System.Drawing.Size(40, 20);
             this.nudCropBorderSize.TabIndex = 12;
@@ -1533,7 +1550,7 @@ namespace ZSS
             this.pbCropBorderColor.BackColor = System.Drawing.Color.White;
             this.pbCropBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbCropBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbCropBorderColor.Location = new System.Drawing.Point(144, 272);
+            this.pbCropBorderColor.Location = new System.Drawing.Point(128, 40);
             this.pbCropBorderColor.Name = "pbCropBorderColor";
             this.pbCropBorderColor.Size = new System.Drawing.Size(24, 24);
             this.pbCropBorderColor.TabIndex = 9;
@@ -1557,34 +1574,41 @@ namespace ZSS
             // cbRegionRectangleInfo
             // 
             this.cbRegionRectangleInfo.AutoSize = true;
-            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 44);
+            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 40);
             this.cbRegionRectangleInfo.Name = "cbRegionRectangleInfo";
-            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(206, 17);
+            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
             this.cbRegionRectangleInfo.TabIndex = 5;
-            this.cbRegionRectangleInfo.Text = "Show cop region coordinates and size";
+            this.cbRegionRectangleInfo.Text = "Show crop region coordinates and size";
             this.cbRegionRectangleInfo.UseVisualStyleBackColor = true;
             this.cbRegionRectangleInfo.CheckedChanged += new System.EventHandler(this.cbRegionRectangleInfo_CheckedChanged);
             // 
             // lblCropBorderSize
             // 
             this.lblCropBorderSize.AutoSize = true;
-            this.lblCropBorderSize.Location = new System.Drawing.Point(16, 304);
+            this.lblCropBorderSize.Location = new System.Drawing.Point(16, 72);
             this.lblCropBorderSize.Name = "lblCropBorderSize";
-            this.lblCropBorderSize.Size = new System.Drawing.Size(195, 13);
+            this.lblCropBorderSize.Size = new System.Drawing.Size(175, 13);
             this.lblCropBorderSize.TabIndex = 11;
-            this.lblCropBorderSize.Text = "Crop region border size ( 0 = No border )";
+            this.lblCropBorderSize.Text = "Region border size ( 0 = No border )";
             // 
             // lblCropBorderColor
             // 
             this.lblCropBorderColor.AutoSize = true;
-            this.lblCropBorderColor.Location = new System.Drawing.Point(16, 280);
+            this.lblCropBorderColor.Location = new System.Drawing.Point(16, 48);
             this.lblCropBorderColor.Name = "lblCropBorderColor";
-            this.lblCropBorderColor.Size = new System.Drawing.Size(123, 13);
+            this.lblCropBorderColor.Size = new System.Drawing.Size(103, 13);
             this.lblCropBorderColor.TabIndex = 10;
-            this.lblCropBorderColor.Text = "Crop region border color:";
+            this.lblCropBorderColor.Text = "Region border color:";
             // 
             // tpSelectedWindow
             // 
+            this.tpSelectedWindow.Controls.Add(this.nudSelectedWindowHueRange);
+            this.tpSelectedWindow.Controls.Add(this.lblSelectedWindowHueRange);
+            this.tpSelectedWindow.Controls.Add(this.nudSelectedWindowRegionStep);
+            this.tpSelectedWindow.Controls.Add(this.nudSelectedWindowRegionInterval);
+            this.tpSelectedWindow.Controls.Add(this.lblSelectedWindowRegionStep);
+            this.tpSelectedWindow.Controls.Add(this.lblSelectedWindowRegionInterval);
+            this.tpSelectedWindow.Controls.Add(this.cbSelectedWindowDynamicBorderColor);
             this.tpSelectedWindow.Controls.Add(this.cbSelectedWindowRuler);
             this.tpSelectedWindow.Controls.Add(this.lblSelectedWindowRegionStyle);
             this.tpSelectedWindow.Controls.Add(this.cbSelectedWindowStyle);
@@ -1600,6 +1624,17 @@ namespace ZSS
             this.tpSelectedWindow.TabIndex = 6;
             this.tpSelectedWindow.Text = "Selected Window";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
+            // 
+            // cbSelectedWindowRuler
+            // 
+            this.cbSelectedWindowRuler.AutoSize = true;
+            this.cbSelectedWindowRuler.Location = new System.Drawing.Point(16, 72);
+            this.cbSelectedWindowRuler.Name = "cbSelectedWindowRuler";
+            this.cbSelectedWindowRuler.Size = new System.Drawing.Size(76, 17);
+            this.cbSelectedWindowRuler.TabIndex = 12;
+            this.cbSelectedWindowRuler.Text = "Show ruler";
+            this.cbSelectedWindowRuler.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowRuler.CheckedChanged += new System.EventHandler(this.cbSelectedWindowRuler_CheckedChanged);
             // 
             // lblSelectedWindowRegionStyle
             // 
@@ -1640,13 +1675,13 @@ namespace ZSS
             this.lblSelectedWindowBorderColor.AutoSize = true;
             this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(16, 104);
             this.lblSelectedWindowBorderColor.Name = "lblSelectedWindowBorderColor";
-            this.lblSelectedWindowBorderColor.Size = new System.Drawing.Size(179, 13);
+            this.lblSelectedWindowBorderColor.Size = new System.Drawing.Size(103, 13);
             this.lblSelectedWindowBorderColor.TabIndex = 1;
-            this.lblSelectedWindowBorderColor.Text = "Selected window region border color";
+            this.lblSelectedWindowBorderColor.Text = "Region border color:";
             // 
             // nudSelectedWindowBorderSize
             // 
-            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(280, 120);
+            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(200, 120);
             this.nudSelectedWindowBorderSize.Name = "nudSelectedWindowBorderSize";
             this.nudSelectedWindowBorderSize.Size = new System.Drawing.Size(40, 20);
             this.nudSelectedWindowBorderSize.TabIndex = 4;
@@ -1657,9 +1692,9 @@ namespace ZSS
             this.lblSelectedWindowBorderSize.AutoSize = true;
             this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(16, 128);
             this.lblSelectedWindowBorderSize.Name = "lblSelectedWindowBorderSize";
-            this.lblSelectedWindowBorderSize.Size = new System.Drawing.Size(254, 13);
+            this.lblSelectedWindowBorderSize.Size = new System.Drawing.Size(175, 13);
             this.lblSelectedWindowBorderSize.TabIndex = 2;
-            this.lblSelectedWindowBorderSize.Text = "Selected window region border size ( 0 = No border )";
+            this.lblSelectedWindowBorderSize.Text = "Region border size ( 0 = No border )";
             // 
             // cbSelectedWindowFront
             // 
@@ -1679,7 +1714,7 @@ namespace ZSS
             this.pbSelectedWindowBorderColor.BackColor = System.Drawing.Color.White;
             this.pbSelectedWindowBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbSelectedWindowBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(208, 96);
+            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(128, 96);
             this.pbSelectedWindowBorderColor.Name = "pbSelectedWindowBorderColor";
             this.pbSelectedWindowBorderColor.Size = new System.Drawing.Size(24, 24);
             this.pbSelectedWindowBorderColor.TabIndex = 3;
@@ -3332,38 +3367,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle14;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4864,16 +4899,191 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // cbSelectedWindowRuler
+            // gbCropRegionSettings
             // 
-            this.cbSelectedWindowRuler.AutoSize = true;
-            this.cbSelectedWindowRuler.Location = new System.Drawing.Point(16, 72);
-            this.cbSelectedWindowRuler.Name = "cbSelectedWindowRuler";
-            this.cbSelectedWindowRuler.Size = new System.Drawing.Size(108, 17);
-            this.cbSelectedWindowRuler.TabIndex = 12;
-            this.cbSelectedWindowRuler.Text = "Show region ruler";
-            this.cbSelectedWindowRuler.UseVisualStyleBackColor = true;
-            this.cbSelectedWindowRuler.CheckedChanged += new System.EventHandler(this.cbSelectedWindowRuler_CheckedChanged);
+            this.gbCropRegionSettings.Controls.Add(this.nudCropHueRange);
+            this.gbCropRegionSettings.Controls.Add(this.lblCropHueRange);
+            this.gbCropRegionSettings.Controls.Add(this.nudCropRegionStep);
+            this.gbCropRegionSettings.Controls.Add(this.nudCropRegionInterval);
+            this.gbCropRegionSettings.Controls.Add(this.lblCropRegionStep);
+            this.gbCropRegionSettings.Controls.Add(this.lblCropRegionInterval);
+            this.gbCropRegionSettings.Controls.Add(this.cbCropDynamicBorderColor);
+            this.gbCropRegionSettings.Controls.Add(this.lblCropBorderSize);
+            this.gbCropRegionSettings.Controls.Add(this.cbShowCropRuler);
+            this.gbCropRegionSettings.Controls.Add(this.cbCropShowGrids);
+            this.gbCropRegionSettings.Controls.Add(this.lblCropBorderColor);
+            this.gbCropRegionSettings.Controls.Add(this.pbCropBorderColor);
+            this.gbCropRegionSettings.Controls.Add(this.nudCropBorderSize);
+            this.gbCropRegionSettings.Location = new System.Drawing.Point(368, 64);
+            this.gbCropRegionSettings.Name = "gbCropRegionSettings";
+            this.gbCropRegionSettings.Size = new System.Drawing.Size(392, 192);
+            this.gbCropRegionSettings.TabIndex = 27;
+            this.gbCropRegionSettings.TabStop = false;
+            this.gbCropRegionSettings.Text = "Region Settings";
+            // 
+            // cbCropDynamicBorderColor
+            // 
+            this.cbCropDynamicBorderColor.AutoSize = true;
+            this.cbCropDynamicBorderColor.Location = new System.Drawing.Point(16, 96);
+            this.cbCropDynamicBorderColor.Name = "cbCropDynamicBorderColor";
+            this.cbCropDynamicBorderColor.Size = new System.Drawing.Size(158, 17);
+            this.cbCropDynamicBorderColor.TabIndex = 27;
+            this.cbCropDynamicBorderColor.Text = "Dynamic region border color";
+            this.cbCropDynamicBorderColor.UseVisualStyleBackColor = true;
+            this.cbCropDynamicBorderColor.CheckedChanged += new System.EventHandler(this.cbCropDynamicBorderColor_CheckedChanged);
+            // 
+            // lblCropRegionInterval
+            // 
+            this.lblCropRegionInterval.AutoSize = true;
+            this.lblCropRegionInterval.Location = new System.Drawing.Point(176, 98);
+            this.lblCropRegionInterval.Name = "lblCropRegionInterval";
+            this.lblCropRegionInterval.Size = new System.Drawing.Size(45, 13);
+            this.lblCropRegionInterval.TabIndex = 28;
+            this.lblCropRegionInterval.Text = "Interval:";
+            // 
+            // lblCropRegionStep
+            // 
+            this.lblCropRegionStep.AutoSize = true;
+            this.lblCropRegionStep.Location = new System.Drawing.Point(288, 98);
+            this.lblCropRegionStep.Name = "lblCropRegionStep";
+            this.lblCropRegionStep.Size = new System.Drawing.Size(32, 13);
+            this.lblCropRegionStep.TabIndex = 29;
+            this.lblCropRegionStep.Text = "Step:";
+            // 
+            // nudCropRegionInterval
+            // 
+            this.nudCropRegionInterval.Location = new System.Drawing.Point(224, 95);
+            this.nudCropRegionInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudCropRegionInterval.Name = "nudCropRegionInterval";
+            this.nudCropRegionInterval.Size = new System.Drawing.Size(56, 20);
+            this.nudCropRegionInterval.TabIndex = 30;
+            this.nudCropRegionInterval.ValueChanged += new System.EventHandler(this.nudCropRegionInterval_ValueChanged);
+            // 
+            // nudCropRegionStep
+            // 
+            this.nudCropRegionStep.Location = new System.Drawing.Point(322, 95);
+            this.nudCropRegionStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropRegionStep.Name = "nudCropRegionStep";
+            this.nudCropRegionStep.Size = new System.Drawing.Size(56, 20);
+            this.nudCropRegionStep.TabIndex = 31;
+            this.nudCropRegionStep.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropRegionStep.ValueChanged += new System.EventHandler(this.nudCropRegionStep_ValueChanged);
+            // 
+            // lblCropHueRange
+            // 
+            this.lblCropHueRange.AutoSize = true;
+            this.lblCropHueRange.Location = new System.Drawing.Point(16, 132);
+            this.lblCropHueRange.Name = "lblCropHueRange";
+            this.lblCropHueRange.Size = new System.Drawing.Size(193, 13);
+            this.lblCropHueRange.TabIndex = 32;
+            this.lblCropHueRange.Text = "Dynamic region border color hue range:";
+            // 
+            // nudCropHueRange
+            // 
+            this.nudCropHueRange.Location = new System.Drawing.Point(216, 128);
+            this.nudCropHueRange.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.nudCropHueRange.Name = "nudCropHueRange";
+            this.nudCropHueRange.Size = new System.Drawing.Size(64, 20);
+            this.nudCropHueRange.TabIndex = 33;
+            this.nudCropHueRange.ValueChanged += new System.EventHandler(this.nudCropHueRange_ValueChanged);
+            // 
+            // nudSelectedWindowHueRange
+            // 
+            this.nudSelectedWindowHueRange.Location = new System.Drawing.Point(216, 188);
+            this.nudSelectedWindowHueRange.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.nudSelectedWindowHueRange.Name = "nudSelectedWindowHueRange";
+            this.nudSelectedWindowHueRange.Size = new System.Drawing.Size(64, 20);
+            this.nudSelectedWindowHueRange.TabIndex = 40;
+            this.nudSelectedWindowHueRange.ValueChanged += new System.EventHandler(this.nudSelectedWindowHueRange_ValueChanged);
+            // 
+            // lblSelectedWindowHueRange
+            // 
+            this.lblSelectedWindowHueRange.AutoSize = true;
+            this.lblSelectedWindowHueRange.Location = new System.Drawing.Point(16, 192);
+            this.lblSelectedWindowHueRange.Name = "lblSelectedWindowHueRange";
+            this.lblSelectedWindowHueRange.Size = new System.Drawing.Size(193, 13);
+            this.lblSelectedWindowHueRange.TabIndex = 39;
+            this.lblSelectedWindowHueRange.Text = "Dynamic region border color hue range:";
+            // 
+            // nudSelectedWindowRegionStep
+            // 
+            this.nudSelectedWindowRegionStep.Location = new System.Drawing.Point(320, 155);
+            this.nudSelectedWindowRegionStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudSelectedWindowRegionStep.Name = "nudSelectedWindowRegionStep";
+            this.nudSelectedWindowRegionStep.Size = new System.Drawing.Size(56, 20);
+            this.nudSelectedWindowRegionStep.TabIndex = 38;
+            this.nudSelectedWindowRegionStep.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudSelectedWindowRegionStep.ValueChanged += new System.EventHandler(this.nudSelectedWindowRegionStep_ValueChanged);
+            // 
+            // nudSelectedWindowRegionInterval
+            // 
+            this.nudSelectedWindowRegionInterval.Location = new System.Drawing.Point(224, 155);
+            this.nudSelectedWindowRegionInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudSelectedWindowRegionInterval.Name = "nudSelectedWindowRegionInterval";
+            this.nudSelectedWindowRegionInterval.Size = new System.Drawing.Size(56, 20);
+            this.nudSelectedWindowRegionInterval.TabIndex = 37;
+            this.nudSelectedWindowRegionInterval.ValueChanged += new System.EventHandler(this.nudSelectedWindowRegionInterval_ValueChanged);
+            // 
+            // lblSelectedWindowRegionStep
+            // 
+            this.lblSelectedWindowRegionStep.AutoSize = true;
+            this.lblSelectedWindowRegionStep.Location = new System.Drawing.Point(288, 160);
+            this.lblSelectedWindowRegionStep.Name = "lblSelectedWindowRegionStep";
+            this.lblSelectedWindowRegionStep.Size = new System.Drawing.Size(32, 13);
+            this.lblSelectedWindowRegionStep.TabIndex = 36;
+            this.lblSelectedWindowRegionStep.Text = "Step:";
+            // 
+            // lblSelectedWindowRegionInterval
+            // 
+            this.lblSelectedWindowRegionInterval.AutoSize = true;
+            this.lblSelectedWindowRegionInterval.Location = new System.Drawing.Point(176, 160);
+            this.lblSelectedWindowRegionInterval.Name = "lblSelectedWindowRegionInterval";
+            this.lblSelectedWindowRegionInterval.Size = new System.Drawing.Size(45, 13);
+            this.lblSelectedWindowRegionInterval.TabIndex = 35;
+            this.lblSelectedWindowRegionInterval.Text = "Interval:";
+            // 
+            // cbSelectedWindowDynamicBorderColor
+            // 
+            this.cbSelectedWindowDynamicBorderColor.AutoSize = true;
+            this.cbSelectedWindowDynamicBorderColor.Location = new System.Drawing.Point(16, 160);
+            this.cbSelectedWindowDynamicBorderColor.Name = "cbSelectedWindowDynamicBorderColor";
+            this.cbSelectedWindowDynamicBorderColor.Size = new System.Drawing.Size(158, 17);
+            this.cbSelectedWindowDynamicBorderColor.TabIndex = 34;
+            this.cbSelectedWindowDynamicBorderColor.Text = "Dynamic region border color";
+            this.cbSelectedWindowDynamicBorderColor.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowDynamicBorderColor.CheckedChanged += new System.EventHandler(this.cbSelectedWindowDynamicBorderColor_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -4914,9 +5124,9 @@ namespace ZSS
             this.tpCropShot.PerformLayout();
             this.gbCrosshairSettings.ResumeLayout(false);
             this.gbCrosshairSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).EndInit();
@@ -5033,6 +5243,14 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
+            this.gbCropRegionSettings.ResumeLayout(false);
+            this.gbCropRegionSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowHueRange)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionInterval)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5424,14 +5642,29 @@ namespace ZSS
         private System.Windows.Forms.NumericUpDown nudCrosshairLineCount;
         private System.Windows.Forms.Label lblCrosshairLineSize;
         private System.Windows.Forms.Label lblCrosshairLineCount;
-        private System.Windows.Forms.NumericUpDown nudCropStep;
-        private System.Windows.Forms.NumericUpDown nudCropInterval;
-        private System.Windows.Forms.Label lblCropStep;
-        private System.Windows.Forms.Label lblCropInterval;
+        private System.Windows.Forms.NumericUpDown nudCropCrosshairStep;
+        private System.Windows.Forms.NumericUpDown nudCropCrosshairInterval;
+        private System.Windows.Forms.Label lblCropCrosshairStep;
+        private System.Windows.Forms.Label lblCropCrosshairInterval;
         private System.Windows.Forms.GroupBox gbCrosshairSettings;
         private System.Windows.Forms.CheckBox cbCropShowBigCross;
         private System.Windows.Forms.CheckBox cbShowCropRuler;
         private System.Windows.Forms.CheckBox cbSelectedWindowRuler;
+        private System.Windows.Forms.GroupBox gbCropRegionSettings;
+        private System.Windows.Forms.CheckBox cbCropDynamicBorderColor;
+        private System.Windows.Forms.NumericUpDown nudCropRegionStep;
+        private System.Windows.Forms.NumericUpDown nudCropRegionInterval;
+        private System.Windows.Forms.Label lblCropRegionStep;
+        private System.Windows.Forms.Label lblCropRegionInterval;
+        private System.Windows.Forms.Label lblCropHueRange;
+        private System.Windows.Forms.NumericUpDown nudCropHueRange;
+        private System.Windows.Forms.NumericUpDown nudSelectedWindowHueRange;
+        private System.Windows.Forms.Label lblSelectedWindowHueRange;
+        private System.Windows.Forms.NumericUpDown nudSelectedWindowRegionStep;
+        private System.Windows.Forms.NumericUpDown nudSelectedWindowRegionInterval;
+        private System.Windows.Forms.Label lblSelectedWindowRegionStep;
+        private System.Windows.Forms.Label lblSelectedWindowRegionInterval;
+        private System.Windows.Forms.CheckBox cbSelectedWindowDynamicBorderColor;
 
     }
 }

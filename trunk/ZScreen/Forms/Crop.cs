@@ -454,9 +454,18 @@ namespace ZSS
         private float size;
         private bool ruler;
         private Rectangle region;
-        private int colorDiff = 50;
+        private int colorDiff;
         private double colorHue;
         private double colorHue360;
+        private double colorHueMin;
+        private double colorHueMax;
+        private int step;
+        private int currentStep;
+        private Stopwatch timer;
+        private long lastTime;
+        private int interval;
+        private bool changeColor;
+
         private double ColorHue
         {
             get { return colorHue; }
@@ -478,13 +487,6 @@ namespace ZSS
                 color.Hue = colorHue360 / 360;
             }
         }
-        private double colorHueMin;
-        private double colorHueMax;
-        private int step = 5;
-        private int currentStep;
-        private Stopwatch Timer = new Stopwatch();
-        private long LastTime = 0;
-        private int Interval = 100;
 
         public DynamicRectangle(CaptureType ct)
         {
@@ -493,18 +495,27 @@ namespace ZSS
                 color = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
                 size = (float)Program.conf.CropBorderSize;
                 ruler = Program.conf.CropShowRuler;
+                changeColor = Program.conf.CropDynamicBorderColor;
+                interval = (int)Program.conf.CropRegionInterval;
+                step = (int)Program.conf.CropRegionStep;
+                colorDiff = (int)Program.conf.CropHueRange;
             }
             else if (ct == CaptureType.SELECTED_WINDOW)
             {
                 color = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
                 size = (float)Program.conf.SelectedWindowBorderSize;
                 ruler = Program.conf.SelectedWindowRuler;
+                changeColor = Program.conf.SelectedWindowDynamicBorderColor;
+                interval = (int)Program.conf.SelectedWindowRegionInterval;
+                step = (int)Program.conf.SelectedWindowRegionStep;
+                colorDiff = (int)Program.conf.SelectedWindowHueRange;
             }
             colorHue = color.Hue * 360;
             colorHueMin = color.Hue * 360 - colorDiff;
             colorHueMax = color.Hue * 360 + colorDiff;
             currentStep = step;
-            Timer.Start();
+            timer = new Stopwatch();
+            timer.Start();
         }
 
         public void DrawRectangle(Graphics g, Rectangle rect)
@@ -512,10 +523,10 @@ namespace ZSS
             region = rect;
             if (size > 0)
             {
-                if (Timer.ElapsedMilliseconds - LastTime >= Interval)
+                if (changeColor && timer.ElapsedMilliseconds - lastTime >= interval)
                 {
                     FindNewColor();
-                    LastTime = Timer.ElapsedMilliseconds;
+                    lastTime = timer.ElapsedMilliseconds;
                 }
                 g.DrawRectangle(new Pen(color, size), region);
                 if (ruler)

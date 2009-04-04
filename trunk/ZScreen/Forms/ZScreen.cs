@@ -195,13 +195,17 @@ namespace ZSS
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
             cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
             cbCropDynamicCrosshair.Checked = Program.conf.CropDynamicCrosshair;
-            nudCropInterval.Value = Program.conf.CropInterval;
-            nudCropStep.Value = Program.conf.CropStep;
+            nudCropCrosshairInterval.Value = Program.conf.CropInterval;
+            nudCropCrosshairStep.Value = Program.conf.CropStep;
             nudCrosshairLineCount.Value = Program.conf.CrosshairLineCount;
             nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
             pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
             cbCropShowBigCross.Checked = Program.conf.CropShowBigCross;
             cbShowCropRuler.Checked = Program.conf.CropShowRuler;
+            cbCropDynamicBorderColor.Checked = Program.conf.CropDynamicBorderColor;
+            nudCropRegionInterval.Value = Program.conf.CropRegionInterval;
+            nudCropRegionStep.Value = Program.conf.CropRegionStep;
+            nudCropHueRange.Value = Program.conf.CropHueRange;
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
@@ -214,6 +218,10 @@ namespace ZSS
             cbSelectedWindowRuler.Checked = Program.conf.SelectedWindowRuler;
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
             nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
+            cbSelectedWindowDynamicBorderColor.Checked = Program.conf.SelectedWindowDynamicBorderColor;
+            nudSelectedWindowRegionInterval.Value = Program.conf.SelectedWindowRegionInterval;
+            nudSelectedWindowRegionStep.Value = Program.conf.SelectedWindowRegionStep;
+            nudSelectedWindowHueRange.Value = Program.conf.SelectedWindowHueRange;
 
             // Interaction
             nudFlashIconCount.Value = Program.conf.FlashTrayCount;
@@ -4549,12 +4557,12 @@ namespace ZSS
 
         private void nudCropInterval_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropInterval = (int)nudCropInterval.Value;
+            Program.conf.CropInterval = (int)nudCropCrosshairInterval.Value;
         }
 
         private void nudCropStep_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropStep = (int)nudCropStep.Value;
+            Program.conf.CropStep = (int)nudCropCrosshairStep.Value;
         }
 
         private void cbCropShowBigCross_CheckedChanged(object sender, EventArgs e)
@@ -4570,6 +4578,46 @@ namespace ZSS
         private void cbSelectedWindowRuler_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.SelectedWindowRuler = cbSelectedWindowRuler.Checked;
+        }
+
+        private void cbCropDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropDynamicBorderColor = cbCropDynamicBorderColor.Checked;
+        }
+
+        private void nudCropRegionInterval_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropRegionInterval = nudCropRegionInterval.Value;
+        }
+
+        private void nudCropRegionStep_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropRegionStep = nudCropRegionStep.Value;
+        }
+
+        private void nudCropHueRange_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropHueRange = nudCropHueRange.Value;
+        }
+
+        private void cbSelectedWindowDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowDynamicBorderColor = cbSelectedWindowDynamicBorderColor.Checked;
+        }
+
+        private void nudSelectedWindowRegionInterval_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowRegionInterval = nudSelectedWindowRegionInterval.Value;
+        }
+
+        private void nudSelectedWindowRegionStep_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowRegionStep = nudSelectedWindowRegionStep.Value;
+        }
+
+        private void nudSelectedWindowHueRange_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowHueRange = nudSelectedWindowHueRange.Value;
         }
     }
 }
