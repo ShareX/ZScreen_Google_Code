@@ -40,6 +40,12 @@ namespace ZSS
         TEXT
     }
 
+    public enum CaptureType
+    {
+        CROP,
+        SELECTED_WINDOW
+    }
+
     public enum HistoryListFormat
     {
         [Description("FileName")]

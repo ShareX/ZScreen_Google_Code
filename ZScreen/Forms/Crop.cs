@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using ZSS.Colors;
 
 /*
  * Update: 20080401 (Isaac) Fixing multiple screen handling
@@ -37,6 +38,8 @@ namespace ZSS
 {
     partial class Crop : Form
     {
+        private bool Debug = false;
+
         private bool mMouseDown = false;
         private Image mBgImage;
         private Point mousePos, mousePosOnClick, oldMousePos;
@@ -61,10 +64,6 @@ namespace ZSS
         }
 
         private IntPtr mHandle;
-        private Pen CropPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropBorderColor),
-            (Single)Program.conf.CropBorderSize);
-        private Pen SelectedWindowPen = new Pen(XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor),
-            (Single)Program.conf.SelectedWindowBorderSize);
         private Graphics mGraphics;
         private Bitmap bmpBgImage;
         private Pen labelBorderPen = new Pen(Color.Black);
@@ -79,6 +78,7 @@ namespace ZSS
         private bool forceCheck = false;
         private Rectangle rectIntersect;
         private DynamicCrosshair crosshair;
+        private DynamicRectangle myRectangle;
 
         public Crop(CropOptions options)
         {
@@ -89,7 +89,7 @@ namespace ZSS
             this.Bounds = MyGraphics.GetScreenBounds();
             mGraphics = this.CreateGraphics();
             //This should not be used anymore since we will normalize points to client's coordinate
-            // rectIntersect.Location = this.Bounds.Location;
+            //rectIntersect.Location = this.Bounds.Location;
             rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
 
@@ -103,20 +103,25 @@ namespace ZSS
 
             if (this.Options.SelectedWindowMode)
             {
+                myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
                 User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
                 User32.EnumWindows(ewp, 0);
             }
             else
             {
+                myRectangle = new DynamicRectangle(CaptureType.CROP);
                 Cursor.Hide();
             }
         }
 
         private void Crop_Shown(object sender, EventArgs e)
         {
-            this.TopMost = true;
+            if (!Debug)
+            {
+                this.TopMost = true;
+                windowCheck.Start();
+            }
             timer.Start();
-            windowCheck.Start();
         }
 
         private void windowCheck_Tick(object sender, EventArgs e)
@@ -210,15 +215,7 @@ namespace ZSS
 
             if (this.Options.SelectedWindowMode)
             {
-                if (Program.conf.SelectedWindowBorderSize != 0)
-                {
-                    g.DrawRectangle(SelectedWindowPen, CropRegion);
-                    if (Program.conf.SelectedWindowRuler)
-                    {
-                        DrawRuler(g, SelectedWindowPen, 5, 10);
-                        DrawRuler(g, SelectedWindowPen, 20, 100);
-                    }
-                }
+                myRectangle.DrawRectangle(CaptureType.SELECTED_WINDOW, g, CropRegion);
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
                     DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " + CropRegion.Width +
@@ -239,15 +236,7 @@ namespace ZSS
                         DrawGrids(g);
                     }
                     DrawInstructor(strMouseDown, g);
-                    if (Program.conf.CropBorderSize != 0)
-                    {
-                        g.DrawRectangle(CropPen, CropRegion);
-                        if (Program.conf.CropShowRuler)
-                        {
-                            DrawRuler(g, CropPen, 5, 10);
-                            DrawRuler(g, CropPen, 20, 100);
-                        }
-                    }
+                    myRectangle.DrawRectangle(CaptureType.CROP, g, CropRegion);
                     if (Program.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
@@ -301,28 +290,6 @@ namespace ZSS
                     g.DrawLine(crosshairPen2,
                         new Point(CropRegion.X, CropRegion.Y + (Program.conf.CropGridSize.Height * y)),
                         new Point(CropRegion.X + CropRegion.Width, CropRegion.Y + (Program.conf.CropGridSize.Height * y)));
-                }
-            }
-        }
-
-        private void DrawRuler(Graphics g, Pen pen, int rulerSize, int rulerWidth)
-        {
-            pen = new Pen(pen.Color);
-            if (CropRegion.Width >= rulerWidth && cropRegion.Height >= rulerWidth)
-            {
-                for (int x = 1; x <= CropRegion.Width / rulerWidth; x++)
-                {
-                    g.DrawLine(pen, new Point(CropRegion.X + x * rulerWidth, CropRegion.Y),
-                        new Point(CropRegion.X + x * rulerWidth, CropRegion.Y + rulerSize));
-                    g.DrawLine(pen, new Point(CropRegion.X + x * rulerWidth, CropRegion.Bottom),
-                        new Point(CropRegion.X + x * rulerWidth, CropRegion.Bottom - rulerSize));
-                }
-                for (int y = 1; y <= CropRegion.Height / rulerWidth; y++)
-                {
-                    g.DrawLine(pen, new Point(CropRegion.X, CropRegion.Y + y * rulerWidth),
-                        new Point(CropRegion.X + rulerSize, CropRegion.Y + y * rulerWidth));
-                    g.DrawLine(pen, new Point(CropRegion.Right, CropRegion.Y + y * rulerWidth),
-                           new Point(CropRegion.Right - rulerSize, CropRegion.Y + y * rulerWidth));
                 }
             }
         }
@@ -482,6 +449,114 @@ namespace ZSS
         public Image MyImage { get; set; }
     }
 
+    public class DynamicRectangle
+    {
+        private HSB color;
+        private float size;
+        private bool ruler;
+        private Rectangle region;
+        private int colorDiff = 40;
+        private double colorHue;
+        private double colorHue360;
+        private double ColorHue
+        {
+            get { return colorHue; }
+            set
+            {
+                colorHue = value;
+                if (colorHue > 360)
+                {
+                    colorHue360 = colorHue - 360;
+                }
+                else if (colorHue < 0)
+                {
+                    colorHue360 = 360 + colorHue;
+                }
+                else
+                {
+                    colorHue360 = colorHue;
+                }
+                color.Hue = colorHue360 / 360;
+            }
+        }
+        private double colorHueMin;
+        private double colorHueMax;
+        private int step = 1;
+        private int currentStep;
+
+        public DynamicRectangle(CaptureType ct)
+        {
+            if (ct == CaptureType.CROP)
+            {
+                color = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
+                size = (float)Program.conf.CropBorderSize;
+                ruler = Program.conf.CropShowRuler;
+            }
+            else if (ct == CaptureType.SELECTED_WINDOW)
+            {
+                color = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
+                size = (float)Program.conf.SelectedWindowBorderSize;
+                ruler = Program.conf.SelectedWindowRuler;
+            }
+            colorHue = color.Hue * 360;
+            colorHueMin = color.Hue * 360 - colorDiff;
+            colorHueMax = color.Hue * 360 + colorDiff;
+            currentStep = step;
+        }
+
+        public void DrawRectangle(CaptureType ct, Graphics g, Rectangle rect)
+        {
+            region = rect;
+            if (size > 0)
+            {
+                FindNewColor();
+                g.DrawRectangle(new Pen(color, size), region);
+                if (ruler)
+                {
+                    DrawRuler(g, color, 5, 10);
+                    DrawRuler(g, color, 20, 100);
+                }
+            }
+        }
+
+        private void DrawRuler(Graphics g, Color color, int rulerSize, int rulerWidth)
+        {
+            Pen pen = new Pen(color);
+            if (region.Width >= rulerWidth && region.Height >= rulerWidth)
+            {
+                for (int x = 1; x <= region.Width / rulerWidth; x++)
+                {
+                    g.DrawLine(pen, new Point(region.X + x * rulerWidth, region.Y),
+                        new Point(region.X + x * rulerWidth, region.Y + rulerSize));
+                    g.DrawLine(pen, new Point(region.X + x * rulerWidth, region.Bottom),
+                        new Point(region.X + x * rulerWidth, region.Bottom - rulerSize));
+                }
+                for (int y = 1; y <= region.Height / rulerWidth; y++)
+                {
+                    g.DrawLine(pen, new Point(region.X, region.Y + y * rulerWidth),
+                        new Point(region.X + rulerSize, region.Y + y * rulerWidth));
+                    g.DrawLine(pen, new Point(region.Right, region.Y + y * rulerWidth),
+                           new Point(region.Right - rulerSize, region.Y + y * rulerWidth));
+                }
+            }
+        }
+
+        private void FindNewColor()
+        {
+            double hue = ColorHue;
+            if (currentStep > 0 && hue + currentStep > colorHueMax)
+            {
+                currentStep = -step;
+            }
+            else if (currentStep < 0 && hue + currentStep < colorHueMin)
+            {
+                currentStep = step;
+            }
+            ColorHue += (double)currentStep;
+            //Console.WriteLine(colorHue + " " + colorHueMin + " " + colorHueMax + " " + (double)currentStep);
+        }
+    }
+
     public class DynamicCrosshair
     {
         private int Interval = Program.conf.CropInterval;
@@ -542,7 +617,7 @@ namespace ZSS
                         mousePos.Y - (CurrentSize + (i * LineSize)) / 2,
                         (CurrentSize + (i * LineSize)), (CurrentSize + (i * LineSize)));
                 }
-                g.DrawRectangle(new Pen(Color.FromArgb(50, CrosshairColor)), mousePos.X - MaxWidth / 2,
+                g.DrawRectangle(new Pen(Color.FromArgb(75, CrosshairColor)), mousePos.X - MaxWidth / 2,
                     mousePos.Y - MaxWidth / 2, MaxWidth, MaxWidth);
             }
             else
