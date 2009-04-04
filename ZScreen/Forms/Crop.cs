@@ -39,7 +39,6 @@ namespace ZSS
     partial class Crop : Form
     {
         private bool Debug = false;
-
         private bool mMouseDown = false;
         private Image mBgImage;
         private Point mousePos, mousePosOnClick, oldMousePos;
@@ -215,7 +214,7 @@ namespace ZSS
 
             if (this.Options.SelectedWindowMode)
             {
-                myRectangle.DrawRectangle(CaptureType.SELECTED_WINDOW, g, CropRegion);
+                myRectangle.DrawRectangle(g, CropRegion);
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
                     DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " + CropRegion.Width +
@@ -236,7 +235,7 @@ namespace ZSS
                         DrawGrids(g);
                     }
                     DrawInstructor(strMouseDown, g);
-                    myRectangle.DrawRectangle(CaptureType.CROP, g, CropRegion);
+                    myRectangle.DrawRectangle(g, CropRegion);
                     if (Program.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
@@ -455,7 +454,7 @@ namespace ZSS
         private float size;
         private bool ruler;
         private Rectangle region;
-        private int colorDiff = 40;
+        private int colorDiff = 50;
         private double colorHue;
         private double colorHue360;
         private double ColorHue
@@ -481,8 +480,11 @@ namespace ZSS
         }
         private double colorHueMin;
         private double colorHueMax;
-        private int step = 1;
+        private int step = 5;
         private int currentStep;
+        private Stopwatch Timer = new Stopwatch();
+        private long LastTime = 0;
+        private int Interval = 100;
 
         public DynamicRectangle(CaptureType ct)
         {
@@ -502,14 +504,19 @@ namespace ZSS
             colorHueMin = color.Hue * 360 - colorDiff;
             colorHueMax = color.Hue * 360 + colorDiff;
             currentStep = step;
+            Timer.Start();
         }
 
-        public void DrawRectangle(CaptureType ct, Graphics g, Rectangle rect)
+        public void DrawRectangle(Graphics g, Rectangle rect)
         {
             region = rect;
             if (size > 0)
             {
-                FindNewColor();
+                if (Timer.ElapsedMilliseconds - LastTime >= Interval)
+                {
+                    FindNewColor();
+                    LastTime = Timer.ElapsedMilliseconds;
+                }
                 g.DrawRectangle(new Pen(color, size), region);
                 if (ruler)
                 {
@@ -522,7 +529,7 @@ namespace ZSS
         private void DrawRuler(Graphics g, Color color, int rulerSize, int rulerWidth)
         {
             Pen pen = new Pen(color);
-            if (region.Width >= rulerWidth && region.Height >= rulerWidth)
+            if (region.Width >= rulerSize && region.Height >= rulerSize)
             {
                 for (int x = 1; x <= region.Width / rulerWidth; x++)
                 {
