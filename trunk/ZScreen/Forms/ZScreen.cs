@@ -3447,7 +3447,7 @@ namespace ZSS
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             int oldPos = txtWatermarkText.SelectionStart;
             string appendText;
-            if (txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == NameParser.prefix[0])
+            if (oldPos > 0 && txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == NameParser.prefix[0])
             {
                 appendText = tsi.Tag.ToString().TrimStart('%');
                 txtWatermarkText.Text =
