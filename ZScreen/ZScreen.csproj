@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -241,6 +241,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ShowScreenshot.resx">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserPassBox.resx">
       <DependentUpon>UserPassBox.cs</DependentUpon>
@@ -248,9 +249,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\QuickOptions.resx">
       <DependentUpon>QuickOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DropWindow.resx">
       <DependentUpon>DropWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
@@ -299,6 +302,7 @@
     <EmbeddedResource Include="Documents\License.txt" />
     <EmbeddedResource Include="Forms\ToolbarWindow.resx">
       <DependentUpon>ToolbarWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
     <None Include="Resources\main.png" />
