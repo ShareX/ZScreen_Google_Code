@@ -934,6 +934,7 @@ namespace ZSS
             if (task.Job != MainAppTask.Jobs.CUSTOM_UPLOADER_TEST)
             {
                 task.ImageDestCategory = Program.conf.ScreenshotDestMode;
+                task.TextDestCategory = Program.conf.TextDestMode;
             }
             else
             {

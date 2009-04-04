@@ -27,6 +27,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Drawing;
+using ZSS.TextUploader.Global;
 
 namespace ZSS
 {
@@ -47,6 +48,7 @@ namespace ZSS
 
         public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
+        public TextDestType TextDestMode = TextDestType.FTP;
         public decimal ScreenshotDelay = 0;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
