@@ -1,6 +1,7 @@
-2.6.9.0 Added new Clipboard URL Type: Full Image for Wiki
-2.6.8.1 Adding new Image Editors did not work as expected [Issue 47]
-2.6.8.0 Added Ruler for Crop Shot
+2.6.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
+2.6.09.0 Added new Clipboard URL Type: Full Image for Wiki
+2.6.08.1 Adding new Image Editors did not work as expected [Issue 47]
+2.6.08.0 Added Ruler for Crop Shot
 
 Version 2.6.7 - 20090401
 
