@@ -95,7 +95,7 @@ namespace ZSS
                 sb = sb.Replace(replacementVars[4], AddZeroes(dt.Hour));
             }
 
-            if (nameType == NameType.ActiveWindow)
+            if (nameType == NameType.ActiveWindow || nameType == NameType.Watermark)
             {
                 string activeWindow = User32.GetWindowLabel();
                 if (string.IsNullOrEmpty(activeWindow))
