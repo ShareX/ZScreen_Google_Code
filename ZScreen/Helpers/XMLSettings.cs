@@ -53,6 +53,7 @@ namespace ZSS
         public bool ManualNaming = false;
         public bool ShowCursor = false;
         public bool ShowWatermark = false;
+        public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
         public bool ActiveHelp = true;
         public bool GTActiveHelp = false;
@@ -79,6 +80,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         // Crop Shot
+
         public int CropRegionStyle = 1;
         public bool CropRegionRectangleInfo = true;
         public bool CropRegionHotkeyInfo = true;
@@ -100,9 +102,8 @@ namespace ZSS
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
 
-        public bool CropGridToggle = false;
-
         // Selected Window
+
         public int SelectedWindowRegionStyle = 2;
         public bool SelectedWindowFront = false;
         public bool SelectedWindowRectangleInfo = true;
@@ -115,6 +116,7 @@ namespace ZSS
         public decimal SelectedWindowHueRange = 50;
 
         // Interaction
+
         public decimal FlashTrayCount = 1;
         public bool CaptureEntireScreenOnError = false;
         public bool ShowBalloonTip = true;
@@ -126,11 +128,13 @@ namespace ZSS
         public bool CloseQuickActions = false;
 
         // Naming Conventions
+
         public string activeWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string entireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
         public int AutoIncrement = 0;
 
         // Watermark
+
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkOffset = 5;
         public string WatermarkText = "%h:%mi";
@@ -145,6 +149,7 @@ namespace ZSS
         public System.Drawing.Drawing2D.LinearGradientMode WatermarkGradientType = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
 
         // Quality
+
         public int FileFormat = 0;
         public int ImageQuality = 90;
         public int SwitchAfter = 350;
@@ -175,6 +180,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         // Image Uploaders
+
         public UploadMode UploadMode = UploadMode.API;
         public decimal ErrorRetryCount = 3;
         public bool ImageUploadRetry = true;
@@ -186,10 +192,12 @@ namespace ZSS
         public bool RememberTinyPicUserPass { get; set; }
 
         // Custom Image Uploaders
+
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
 
         // Language Translator
+
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
         public bool ClipboardTranslate = false;
@@ -199,6 +207,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         // History Settings
+
         public HistoryListFormat HistoryListFormat = HistoryListFormat.NAME;
         public int HistoryMaxNumber = 50;
         public bool HistorySave = true;
@@ -211,6 +220,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         // General
+
         public bool OpenMainWindow = false;
         public bool ShowInTaskbar = true;
         public bool CheckUpdates = true;
@@ -218,6 +228,7 @@ namespace ZSS
         public bool CheckExperimental = false;
 
         // Paths
+
         public string ImagesDir = "";
         public bool DeleteLocal = false;
         public string CacheDir = "";
