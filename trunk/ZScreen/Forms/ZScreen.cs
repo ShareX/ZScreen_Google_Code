@@ -167,6 +167,7 @@ namespace ZSS
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             cbShowWatermark.Checked = Program.conf.ShowWatermark;
+            cbCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             CheckActiveHelp();
@@ -666,7 +667,6 @@ namespace ZSS
                     CropOptions co = new CropOptions();
                     co.MyImage = imgSS;
                     co.SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED;
-
                     Crop c = new Crop(co);
                     if (c.ShowDialog() == DialogResult.OK)
                     {
@@ -712,7 +712,6 @@ namespace ZSS
             SaveImage(task);
             PublishImage(ref task);
         }
-
 
         private string GetFilePath(MainAppTask.Jobs job)
         {
@@ -1241,7 +1240,6 @@ namespace ZSS
                 }
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
-
             }
             catch (Exception ex)
             {
@@ -1249,6 +1247,7 @@ namespace ZSS
             }
             finally
             {
+                cbCropGridMode.Checked = Program.conf.CropGridToggle;
                 ClipboardManager.Commit();
             }
         }
@@ -1392,7 +1391,7 @@ namespace ZSS
              * Sometimes Settings.xml write delays cause a small pause when user press the close button
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
             */
-            this.WindowState = FormWindowState.Minimized; 
+            this.WindowState = FormWindowState.Minimized;
             Program.conf.Save();
             SaveHistoryItems();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
@@ -4301,7 +4300,7 @@ namespace ZSS
         public static Software GetImageSoftware(string name)
         {
             foreach (Software app in Program.conf.ImageSoftwareList)
-            {                
+            {
                 if (app != null && app.Name != null)
                 {
                     if (app.Name.Equals(name))
@@ -4619,6 +4618,11 @@ namespace ZSS
         private void nudSelectedWindowHueRange_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.SelectedWindowHueRange = nudSelectedWindowHueRange.Value;
+        }
+
+        private void cbCropGridMode_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropGridToggle = cbCropGridMode.Checked;
         }
     }
 }

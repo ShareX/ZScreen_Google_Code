@@ -31,9 +31,8 @@ using System.Collections;
 using System.Collections.Generic;
 using ZSS.Colors;
 
-/*
- * Update: 20080401 (Isaac) Fixing multiple screen handling
- */
+// Update: 20080401 (Isaac) Fixing multiple screen handling
+
 namespace ZSS
 {
     partial class Crop : Form
@@ -218,7 +217,7 @@ namespace ZSS
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
                     DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " + CropRegion.Width +
-                        " px, Height: " + CropRegion.Height + " px", new Point(15, 15), g);
+                        " px, Height: " + CropRegion.Height + " px", new Point(20, 20), g);
                 }
             }
             else
@@ -239,7 +238,7 @@ namespace ZSS
                     if (Program.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
-                            rectRegion.Width + " px, Height: " + rectRegion.Height + " px", new Point(15, 15), g);
+                            rectRegion.Width + " px, Height: " + rectRegion.Height + " px", new Point(20, 20), g);
                     }
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
                     g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
@@ -249,7 +248,7 @@ namespace ZSS
                     DrawInstructor(strMouseUp, g);
                     if (Program.conf.CropRegionRectangleInfo)
                     {
-                        DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(15, 15), g);
+                        DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(20, 20), g);
                     }
                 }
                 crosshair.Draw(g, mousePos);
@@ -456,7 +455,6 @@ namespace ZSS
         private Rectangle region;
         private int colorDiff;
         private double colorHue;
-        private double colorHue360;
         private double colorHueMin;
         private double colorHueMax;
         private int step;
@@ -474,17 +472,16 @@ namespace ZSS
                 colorHue = value;
                 if (colorHue > 360)
                 {
-                    colorHue360 = colorHue - 360;
+                    color.Hue360 = colorHue - 360;
                 }
                 else if (colorHue < 0)
                 {
-                    colorHue360 = 360 + colorHue;
+                    color.Hue360 = 360 + colorHue;
                 }
                 else
                 {
-                    colorHue360 = colorHue;
+                    color.Hue360 = colorHue;
                 }
-                color.Hue = colorHue360 / 360;
             }
         }
 
@@ -561,12 +558,11 @@ namespace ZSS
 
         private void FindNewColor()
         {
-            double hue = ColorHue;
-            if (currentStep > 0 && hue + currentStep > colorHueMax)
+            if (ColorHue + currentStep > colorHueMax)
             {
                 currentStep = -step;
             }
-            else if (currentStep < 0 && hue + currentStep < colorHueMin)
+            else if (ColorHue + currentStep < colorHueMin)
             {
                 currentStep = step;
             }

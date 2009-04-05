@@ -270,6 +270,12 @@ namespace ZSS.Colors
             set { hue = Helpers.CheckColor(value); }
         }
 
+        public double Hue360
+        {
+            get { return hue * 360; }
+            set { hue = Helpers.CheckColor(value / 360); }
+        }
+
         public double Saturation
         {
             get { return saturation; }
