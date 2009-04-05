@@ -83,7 +83,7 @@ namespace ZSS
             InitializeComponent();
 
             // Set height when program is launched
-            startHeight = this.Height;
+            startHeight = Program.conf.WindowSize.Height;
 
             // Set Icon
             this.Icon = Properties.Resources.zss_main;
