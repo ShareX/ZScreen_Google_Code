@@ -1,7 +1,9 @@
+2.6.11.0 Delay for Entire Screen and Active Window Screenshot is now set in milliseconds
+2.6.10.0 Crop Shot and Selected Window can optionally display a Dynamic Region Border
 2.6.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
 2.6.09.0 Added new Clipboard URL Type: Full Image for Wiki
 2.6.08.1 Adding new Image Editors did not work as expected [Issue 47]
-2.6.08.0 Added Ruler for Crop Shot
+2.6.08.0 Crop Shot and Selected Window can optionally display a Ruler
 
 Version 2.6.7 - 20090401
 
