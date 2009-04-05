@@ -309,6 +309,7 @@ namespace ZSS
             DownloadLanguagesList();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
+            cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
 
             ///////////////////////////////////
             // Image Software Settings
@@ -4625,6 +4626,11 @@ namespace ZSS
         private void cbCropGridMode_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CropGridToggle = cboCropGridMode.Checked;
+        }
+
+        private void cbTinyPicSizeCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.TinyPicSizeCheck = cbTinyPicSizeCheck.Checked;
         }
     }
 }

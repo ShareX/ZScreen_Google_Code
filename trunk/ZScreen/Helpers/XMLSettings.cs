@@ -186,11 +186,12 @@ namespace ZSS
         public decimal ErrorRetryCount = 3;
         public bool ImageUploadRetry = true;
         public bool AddFailedScreenshot = false;
-        public string ImageShackRegistrationCode { get; set; }
-        public string TinyPicShuk { get; set; }
-        public string TinyPicUserName { get; set; }
-        public string TinyPicPassword { get; set; }
-        public bool RememberTinyPicUserPass { get; set; }
+        public string ImageShackRegistrationCode = "";
+        public string TinyPicShuk = "";
+        public string TinyPicUserName = "";
+        public string TinyPicPassword = "";
+        public bool RememberTinyPicUserPass = false;
+        public bool TinyPicSizeCheck = false;
 
         // Custom Image Uploaders
 
