@@ -177,6 +177,11 @@ namespace ZSS
 
             ZScreenWindow = new ZScreen();
 
+            if (conf.WindowSize.Height == 0 || conf.WindowSize.Width == 0)
+            {
+                conf.WindowSize = ZScreenWindow.Size;
+            }
+
             User32.m_Proc = ZScreenWindow.ScreenshotUsingHotkeys;
 
             ZScreenWindow.m_hID = User32.setHook();

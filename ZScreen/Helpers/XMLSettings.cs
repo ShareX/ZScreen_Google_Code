@@ -41,6 +41,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool RunOnce = false;
+        public Size WindowSize = new Size();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
