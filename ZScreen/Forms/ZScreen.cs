@@ -167,7 +167,7 @@ namespace ZSS
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             cbShowWatermark.Checked = Program.conf.ShowWatermark;
-            cbCropGridMode.Checked = Program.conf.CropGridToggle;
+            cboCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
             CheckActiveHelp();
@@ -1033,7 +1033,7 @@ namespace ZSS
             if (task.JobCategory == JobCategoryType.SCREENSHOTS)
             {
                 if (Program.conf.ScreenshotDelay != 0)
-                    Thread.Sleep((int)(Program.conf.ScreenshotDelay * 1000));
+                    Thread.Sleep((int)(Program.conf.ScreenshotDelay));
             }
 
             FileSystem.appendDebug(".");
@@ -1247,7 +1247,7 @@ namespace ZSS
             }
             finally
             {
-                cbCropGridMode.Checked = Program.conf.CropGridToggle;
+                cboCropGridMode.Checked = Program.conf.CropGridToggle;
                 ClipboardManager.Commit();
             }
         }
@@ -4622,7 +4622,7 @@ namespace ZSS
 
         private void cbCropGridMode_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropGridToggle = cbCropGridMode.Checked;
+            Program.conf.CropGridToggle = cboCropGridMode.Checked;
         }
     }
 }
