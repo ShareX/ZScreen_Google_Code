@@ -109,6 +109,7 @@ namespace ZSS
             if (Program.conf.OpenMainWindow)
             {
                 this.WindowState = FormWindowState.Normal;
+                this.Size = Program.conf.WindowSize;
                 this.ShowInTaskbar = Program.conf.ShowInTaskbar;
             }
             else
@@ -1379,7 +1380,8 @@ namespace ZSS
                     }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
-                {
+                {                    
+                    Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
             }
@@ -1390,8 +1392,8 @@ namespace ZSS
             /* 
              * Sometimes Settings.xml write delays cause a small pause when user press the close button
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
-            */
-            this.WindowState = FormWindowState.Minimized;
+            */            
+            this.WindowState = FormWindowState.Minimized;            
             Program.conf.Save();
             SaveHistoryItems();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
