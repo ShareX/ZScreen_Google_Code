@@ -441,6 +441,7 @@ namespace ZSS
             this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
+            this.cbTinyPicSizeCheck = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -4067,7 +4068,7 @@ namespace ZSS
             // 
             // btnGalleryImageShack
             // 
-            this.btnGalleryImageShack.Location = new System.Drawing.Point(363, 44);
+            this.btnGalleryImageShack.Location = new System.Drawing.Point(372, 42);
             this.btnGalleryImageShack.Name = "btnGalleryImageShack";
             this.btnGalleryImageShack.Size = new System.Drawing.Size(75, 23);
             this.btnGalleryImageShack.TabIndex = 3;
@@ -4077,7 +4078,7 @@ namespace ZSS
             // 
             // btnRegCodeImageShack
             // 
-            this.btnRegCodeImageShack.Location = new System.Drawing.Point(282, 44);
+            this.btnRegCodeImageShack.Location = new System.Drawing.Point(291, 42);
             this.btnRegCodeImageShack.Name = "btnRegCodeImageShack";
             this.btnRegCodeImageShack.Size = new System.Drawing.Size(75, 23);
             this.btnRegCodeImageShack.TabIndex = 2;
@@ -4088,7 +4089,7 @@ namespace ZSS
             // lblImageShackRegistrationCode
             // 
             this.lblImageShackRegistrationCode.AutoSize = true;
-            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(7, 26);
+            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(16, 24);
             this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
             this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(94, 13);
             this.lblImageShackRegistrationCode.TabIndex = 1;
@@ -4096,7 +4097,7 @@ namespace ZSS
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(9, 46);
+            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(18, 44);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(267, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
@@ -4104,13 +4105,14 @@ namespace ZSS
             // 
             // gbTinyPic
             // 
+            this.gbTinyPic.Controls.Add(this.cbTinyPicSizeCheck);
             this.gbTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
             this.gbTinyPic.Controls.Add(this.btnRegCodeTinyPic);
             this.gbTinyPic.Controls.Add(this.lblRegistrationCode);
             this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
             this.gbTinyPic.Location = new System.Drawing.Point(8, 232);
             this.gbTinyPic.Name = "gbTinyPic";
-            this.gbTinyPic.Size = new System.Drawing.Size(496, 112);
+            this.gbTinyPic.Size = new System.Drawing.Size(496, 136);
             this.gbTinyPic.TabIndex = 4;
             this.gbTinyPic.TabStop = false;
             this.gbTinyPic.Text = "TinyPic";
@@ -4118,7 +4120,7 @@ namespace ZSS
             // chkRememberTinyPicUserPass
             // 
             this.chkRememberTinyPicUserPass.AutoSize = true;
-            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(8, 80);
+            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(16, 80);
             this.chkRememberTinyPicUserPass.Name = "chkRememberTinyPicUserPass";
             this.chkRememberTinyPicUserPass.Size = new System.Drawing.Size(241, 17);
             this.chkRememberTinyPicUserPass.TabIndex = 6;
@@ -4128,7 +4130,7 @@ namespace ZSS
             // 
             // btnRegCodeTinyPic
             // 
-            this.btnRegCodeTinyPic.Location = new System.Drawing.Point(282, 44);
+            this.btnRegCodeTinyPic.Location = new System.Drawing.Point(291, 45);
             this.btnRegCodeTinyPic.Name = "btnRegCodeTinyPic";
             this.btnRegCodeTinyPic.Size = new System.Drawing.Size(75, 23);
             this.btnRegCodeTinyPic.TabIndex = 5;
@@ -4139,7 +4141,7 @@ namespace ZSS
             // lblRegistrationCode
             // 
             this.lblRegistrationCode.AutoSize = true;
-            this.lblRegistrationCode.Location = new System.Drawing.Point(7, 23);
+            this.lblRegistrationCode.Location = new System.Drawing.Point(16, 24);
             this.lblRegistrationCode.Name = "lblRegistrationCode";
             this.lblRegistrationCode.Size = new System.Drawing.Size(94, 13);
             this.lblRegistrationCode.TabIndex = 4;
@@ -4147,7 +4149,7 @@ namespace ZSS
             // 
             // txtTinyPicShuk
             // 
-            this.txtTinyPicShuk.Location = new System.Drawing.Point(9, 46);
+            this.txtTinyPicShuk.Location = new System.Drawing.Point(18, 47);
             this.txtTinyPicShuk.Name = "txtTinyPicShuk";
             this.txtTinyPicShuk.ReadOnly = true;
             this.txtTinyPicShuk.Size = new System.Drawing.Size(267, 20);
@@ -5103,6 +5105,18 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
+            // cbTinyPicSizeCheck
+            // 
+            this.cbTinyPicSizeCheck.AutoSize = true;
+            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(16, 104);
+            this.cbTinyPicSizeCheck.Name = "cbTinyPicSizeCheck";
+            this.cbTinyPicSizeCheck.Size = new System.Drawing.Size(467, 17);
+            this.cbTinyPicSizeCheck.TabIndex = 7;
+            this.cbTinyPicSizeCheck.Text = "If destination is tinypic and image resolution size bigger than 1600 then upload " +
+                "to ImageShack";
+            this.cbTinyPicSizeCheck.UseVisualStyleBackColor = true;
+            this.cbTinyPicSizeCheck.CheckedChanged += new System.EventHandler(this.cbTinyPicSizeCheck_CheckedChanged);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5680,6 +5694,7 @@ namespace ZSS
         private System.Windows.Forms.Label lblSelectedWindowRegionInterval;
         private System.Windows.Forms.CheckBox cbSelectedWindowDynamicBorderColor;
         private System.Windows.Forms.CheckBox cboCropGridMode;
+        private System.Windows.Forms.CheckBox cbTinyPicSizeCheck;
 
     }
 }

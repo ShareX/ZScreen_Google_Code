@@ -9,6 +9,7 @@ using ZSS.TextUploader.Global;
 using ZSS.ImageUploader;
 using ZSS.Properties;
 using System.Threading;
+using System.Drawing;
 
 namespace ZSS.Helpers
 {
@@ -25,6 +26,16 @@ namespace ZSS.Helpers
         {
             task.StartTime = DateTime.Now;
             HTTPUploader imageUploader = null;
+
+            if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC &&
+                !string.IsNullOrEmpty(task.LocalFilePath))
+            {
+                SizeF size = Image.FromFile(task.LocalFilePath).PhysicalDimension;
+                if (size.Width > 1600 || size.Height > 1600)
+                {
+                    task.ImageDestCategory = ImageDestType.IMAGESHACK;
+                }
+            }
 
             switch (task.ImageDestCategory)
             {
