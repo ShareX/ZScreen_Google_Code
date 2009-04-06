@@ -153,7 +153,7 @@ namespace ZSS
 
         public int FileFormat = 0;
         public int ImageQuality = 90;
-        public int SwitchAfter = 350;
+        public int SwitchAfter = 512;
         public int SwitchFormat = 1;
 
         //~~~~~~~~~~~~~~~~~~~~~
