@@ -240,6 +240,8 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.entireScreen;
 
             // Watermark
+            cbWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
+            txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             if (cbWatermarkPosition.Items.Count == 0)
             {
                 cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
@@ -1381,7 +1383,7 @@ namespace ZSS
                     }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
-                {                    
+                {
                     Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
@@ -1393,8 +1395,8 @@ namespace ZSS
             /* 
              * Sometimes Settings.xml write delays cause a small pause when user press the close button
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
-            */            
-            this.WindowState = FormWindowState.Minimized;            
+            */
+            this.WindowState = FormWindowState.Minimized;
             Program.conf.Save();
             SaveHistoryItems();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
@@ -4631,6 +4633,30 @@ namespace ZSS
         private void cbTinyPicSizeCheck_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.TinyPicSizeCheck = cbTinyPicSizeCheck.Checked;
+        }
+
+        private void cbWatermarkUseImage_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkUseImage = cbWatermarkUseImage.Checked;
+            TestWatermark();
+        }
+
+        private void txtWatermarkImageLocation_TextChanged(object sender, EventArgs e)
+        {
+            if (File.Exists(txtWatermarkImageLocation.Text))
+            {
+                Program.conf.WatermarkImageLocation = txtWatermarkImageLocation.Text;
+                TestWatermark();
+            }
+        }
+
+        private void btwWatermarkBrowseImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                txtWatermarkImageLocation.Text = fd.FileName;
+            }
         }
     }
 }

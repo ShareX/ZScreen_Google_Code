@@ -136,6 +136,8 @@ namespace ZSS
 
         // Watermark
 
+        public bool WatermarkUseImage = false;
+        public string WatermarkImageLocation = "";
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkOffset = 5;
         public string WatermarkText = "%h:%mi";
