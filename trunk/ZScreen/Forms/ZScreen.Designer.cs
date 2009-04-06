@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -208,6 +208,9 @@ namespace ZSS
             this.gbWatermarkPreview = new System.Windows.Forms.GroupBox();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
+            this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
+            this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
+            this.cbWatermarkUseImage = new System.Windows.Forms.CheckBox();
             this.cbWatermarkPosition = new System.Windows.Forms.ComboBox();
             this.lblWatermarkPosition = new System.Windows.Forms.Label();
             this.nudWatermarkOffset = new System.Windows.Forms.NumericUpDown();
@@ -2433,22 +2436,54 @@ namespace ZSS
             // 
             // gbWatermarkGeneral
             // 
+            this.gbWatermarkGeneral.Controls.Add(this.btwWatermarkBrowseImage);
+            this.gbWatermarkGeneral.Controls.Add(this.txtWatermarkImageLocation);
+            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkUseImage);
             this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.nudWatermarkOffset);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffset);
             this.gbWatermarkGeneral.Location = new System.Drawing.Point(8, 8);
             this.gbWatermarkGeneral.Name = "gbWatermarkGeneral";
-            this.gbWatermarkGeneral.Size = new System.Drawing.Size(520, 88);
+            this.gbWatermarkGeneral.Size = new System.Drawing.Size(488, 104);
             this.gbWatermarkGeneral.TabIndex = 26;
             this.gbWatermarkGeneral.TabStop = false;
             this.gbWatermarkGeneral.Text = "General Settings";
+            // 
+            // btwWatermarkBrowseImage
+            // 
+            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(408, 20);
+            this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
+            this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
+            this.btwWatermarkBrowseImage.TabIndex = 22;
+            this.btwWatermarkBrowseImage.Text = "Browse";
+            this.btwWatermarkBrowseImage.UseVisualStyleBackColor = true;
+            this.btwWatermarkBrowseImage.Click += new System.EventHandler(this.btwWatermarkBrowseImage_Click);
+            // 
+            // txtWatermarkImageLocation
+            // 
+            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(96, 24);
+            this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
+            this.txtWatermarkImageLocation.Size = new System.Drawing.Size(304, 20);
+            this.txtWatermarkImageLocation.TabIndex = 21;
+            this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
+            // 
+            // cbWatermarkUseImage
+            // 
+            this.cbWatermarkUseImage.AutoSize = true;
+            this.cbWatermarkUseImage.Location = new System.Drawing.Point(16, 24);
+            this.cbWatermarkUseImage.Name = "cbWatermarkUseImage";
+            this.cbWatermarkUseImage.Size = new System.Drawing.Size(79, 17);
+            this.cbWatermarkUseImage.TabIndex = 20;
+            this.cbWatermarkUseImage.Text = "Use image:";
+            this.cbWatermarkUseImage.UseVisualStyleBackColor = true;
+            this.cbWatermarkUseImage.CheckedChanged += new System.EventHandler(this.cbWatermarkUseImage_CheckedChanged);
             // 
             // cbWatermarkPosition
             // 
             this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(120, 16);
+            this.cbWatermarkPosition.Location = new System.Drawing.Point(120, 50);
             this.cbWatermarkPosition.Name = "cbWatermarkPosition";
             this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
             this.cbWatermarkPosition.TabIndex = 18;
@@ -2457,7 +2492,7 @@ namespace ZSS
             // lblWatermarkPosition
             // 
             this.lblWatermarkPosition.AutoSize = true;
-            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 24);
+            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 56);
             this.lblWatermarkPosition.Name = "lblWatermarkPosition";
             this.lblWatermarkPosition.Size = new System.Drawing.Size(101, 13);
             this.lblWatermarkPosition.TabIndex = 19;
@@ -2465,7 +2500,7 @@ namespace ZSS
             // 
             // nudWatermarkOffset
             // 
-            this.nudWatermarkOffset.Location = new System.Drawing.Point(64, 48);
+            this.nudWatermarkOffset.Location = new System.Drawing.Point(64, 76);
             this.nudWatermarkOffset.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -2480,7 +2515,7 @@ namespace ZSS
             // lblWatermarkOffset
             // 
             this.lblWatermarkOffset.AutoSize = true;
-            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 56);
+            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 80);
             this.lblWatermarkOffset.Name = "lblWatermarkOffset";
             this.lblWatermarkOffset.Size = new System.Drawing.Size(38, 13);
             this.lblWatermarkOffset.TabIndex = 5;
@@ -2501,9 +2536,9 @@ namespace ZSS
             this.gbWatermarkBackground.Controls.Add(this.pbWatermarkBorderColor);
             this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient2);
             this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
-            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 224);
+            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 240);
             this.gbWatermarkBackground.Name = "gbWatermarkBackground";
-            this.gbWatermarkBackground.Size = new System.Drawing.Size(520, 144);
+            this.gbWatermarkBackground.Size = new System.Drawing.Size(488, 144);
             this.gbWatermarkBackground.TabIndex = 25;
             this.gbWatermarkBackground.TabStop = false;
             this.gbWatermarkBackground.Text = "Background Settings";
@@ -2656,9 +2691,9 @@ namespace ZSS
             this.gbWatermarkText.Controls.Add(this.lblWatermarkFontTrans);
             this.gbWatermarkText.Controls.Add(this.txtWatermarkText);
             this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
-            this.gbWatermarkText.Location = new System.Drawing.Point(8, 104);
+            this.gbWatermarkText.Location = new System.Drawing.Point(8, 120);
             this.gbWatermarkText.Name = "gbWatermarkText";
-            this.gbWatermarkText.Size = new System.Drawing.Size(520, 112);
+            this.gbWatermarkText.Size = new System.Drawing.Size(488, 112);
             this.gbWatermarkText.TabIndex = 24;
             this.gbWatermarkText.TabStop = false;
             this.gbWatermarkText.Text = "Text Settings";
@@ -3566,38 +3601,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle17;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5695,6 +5730,9 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbSelectedWindowDynamicBorderColor;
         private System.Windows.Forms.CheckBox cboCropGridMode;
         private System.Windows.Forms.CheckBox cbTinyPicSizeCheck;
+        private System.Windows.Forms.Button btwWatermarkBrowseImage;
+        private System.Windows.Forms.TextBox txtWatermarkImageLocation;
+        private System.Windows.Forms.CheckBox cbWatermarkUseImage;
 
     }
 }
