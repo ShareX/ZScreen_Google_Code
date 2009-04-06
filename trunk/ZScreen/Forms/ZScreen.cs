@@ -2009,7 +2009,7 @@ namespace ZSS
             else if (tsm == tsmHistory)
                 sel = tpHistory;
             else if (tsm == tsmAdvanced)
-                sel = tpAdvanced;
+                sel = tpOptions;
 
             tcApp.SelectedTab = sel;
 
@@ -3132,7 +3132,7 @@ namespace ZSS
             {
                 txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots. To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
             }
-            else if (e.TabPage == tpAdvanced)
+            else if (e.TabPage == tpOptions)
             {
                 txtActiveHelp.Text = tabDesc + "access the folder where settings are saved and import/export/revert settings";
             }

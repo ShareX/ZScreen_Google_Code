@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -402,7 +402,7 @@ namespace ZSS
             this.lblFromLanguage = new System.Windows.Forms.Label();
             this.cbToLanguage = new System.Windows.Forms.ComboBox();
             this.cbFromLanguage = new System.Windows.Forms.ComboBox();
-            this.tpAdvanced = new System.Windows.Forms.TabPage();
+            this.tpOptions = new System.Windows.Forms.TabPage();
             this.tcAdvanced = new System.Windows.Forms.TabControl();
             this.tpAdvAppearance = new System.Windows.Forms.TabPage();
             this.gbUpdates = new System.Windows.Forms.GroupBox();
@@ -530,7 +530,7 @@ namespace ZSS
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
             this.tpLanguageTranslator.SuspendLayout();
-            this.tpAdvanced.SuspendLayout();
+            this.tpOptions.SuspendLayout();
             this.tcAdvanced.SuspendLayout();
             this.tpAdvAppearance.SuspendLayout();
             this.gbUpdates.SuspendLayout();
@@ -902,7 +902,7 @@ namespace ZSS
             // tpHistory
             // 
             this.tpHistory.Controls.Add(this.tcHistory);
-            this.tpHistory.ImageIndex = 7;
+            this.tpHistory.ImageIndex = 6;
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
@@ -1311,7 +1311,7 @@ namespace ZSS
             // tpCapture
             // 
             this.tpCapture.Controls.Add(this.tcFileSettings);
-            this.tpCapture.ImageKey = "camera_edit.png";
+            this.tpCapture.ImageIndex = 2;
             this.tpCapture.Location = new System.Drawing.Point(4, 23);
             this.tpCapture.Name = "tpCapture";
             this.tpCapture.Padding = new System.Windows.Forms.Padding(3);
@@ -3031,7 +3031,7 @@ namespace ZSS
             // tpEditors
             // 
             this.tpEditors.Controls.Add(this.tcEditors);
-            this.tpEditors.ImageKey = "picture_edit.png";
+            this.tpEditors.ImageIndex = 3;
             this.tpEditors.Location = new System.Drawing.Point(4, 23);
             this.tpEditors.Name = "tpEditors";
             this.tpEditors.Padding = new System.Windows.Forms.Padding(3);
@@ -3188,7 +3188,7 @@ namespace ZSS
             this.tpFTP.Controls.Add(this.gbFTPSettings);
             this.tpFTP.Controls.Add(this.gbFTPAccountsList);
             this.tpFTP.Controls.Add(this.gbFTPAccount);
-            this.tpFTP.ImageKey = "server_edit.png";
+            this.tpFTP.ImageIndex = 4;
             this.tpFTP.Location = new System.Drawing.Point(4, 23);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
@@ -3538,7 +3538,7 @@ namespace ZSS
             // 
             this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
             this.tpHotkeys.Controls.Add(this.dgvHotkeys);
-            this.tpHotkeys.ImageKey = "keyboard.png";
+            this.tpHotkeys.ImageIndex = 1;
             this.tpHotkeys.Location = new System.Drawing.Point(4, 23);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
@@ -3566,38 +3566,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3639,7 +3639,7 @@ namespace ZSS
             this.tpMain.Controls.Add(this.gbMainOptions);
             this.tpMain.Controls.Add(this.lblLogo);
             this.tpMain.Controls.Add(this.pbLogo);
-            this.tpMain.ImageKey = "application_form.png";
+            this.tpMain.ImageIndex = 0;
             this.tpMain.Location = new System.Drawing.Point(4, 23);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
@@ -3926,7 +3926,7 @@ namespace ZSS
             this.tcApp.Controls.Add(this.tpFTP);
             this.tcApp.Controls.Add(this.tpHTTP);
             this.tcApp.Controls.Add(this.tpHistory);
-            this.tcApp.Controls.Add(this.tpAdvanced);
+            this.tcApp.Controls.Add(this.tpOptions);
             this.tcApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcApp.ImageList = this.ilApp;
             this.tcApp.Location = new System.Drawing.Point(0, 0);
@@ -3939,7 +3939,7 @@ namespace ZSS
             // tpHTTP
             // 
             this.tpHTTP.Controls.Add(this.tcHTTP);
-            this.tpHTTP.ImageKey = "world_edit.png";
+            this.tpHTTP.ImageIndex = 5;
             this.tpHTTP.Location = new System.Drawing.Point(4, 23);
             this.tpHTTP.Name = "tpHTTP";
             this.tpHTTP.Padding = new System.Windows.Forms.Padding(3);
@@ -4656,17 +4656,17 @@ namespace ZSS
             this.cbFromLanguage.TabIndex = 0;
             this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
-            // tpAdvanced
+            // tpOptions
             // 
-            this.tpAdvanced.Controls.Add(this.tcAdvanced);
-            this.tpAdvanced.ImageKey = "application_edit.png";
-            this.tpAdvanced.Location = new System.Drawing.Point(4, 23);
-            this.tpAdvanced.Name = "tpAdvanced";
-            this.tpAdvanced.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanced.Size = new System.Drawing.Size(786, 428);
-            this.tpAdvanced.TabIndex = 9;
-            this.tpAdvanced.Text = "Options";
-            this.tpAdvanced.UseVisualStyleBackColor = true;
+            this.tpOptions.Controls.Add(this.tcAdvanced);
+            this.tpOptions.ImageIndex = 7;
+            this.tpOptions.Location = new System.Drawing.Point(4, 23);
+            this.tpOptions.Name = "tpOptions";
+            this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOptions.Size = new System.Drawing.Size(786, 428);
+            this.tpOptions.TabIndex = 9;
+            this.tpOptions.Text = "Options";
+            this.tpOptions.UseVisualStyleBackColor = true;
             // 
             // tcAdvanced
             // 
@@ -5064,8 +5064,8 @@ namespace ZSS
             this.ilApp.Images.SetKeyName(3, "picture_edit.png");
             this.ilApp.Images.SetKeyName(4, "server_edit.png");
             this.ilApp.Images.SetKeyName(5, "world_edit.png");
-            this.ilApp.Images.SetKeyName(6, "application_edit.png");
-            this.ilApp.Images.SetKeyName(7, "pictures.png");
+            this.ilApp.Images.SetKeyName(6, "pictures.png");
+            this.ilApp.Images.SetKeyName(7, "application_edit.png");
             // 
             // txtActiveHelp
             // 
@@ -5261,7 +5261,7 @@ namespace ZSS
             this.gbArguments.PerformLayout();
             this.tpLanguageTranslator.ResumeLayout(false);
             this.tpLanguageTranslator.PerformLayout();
-            this.tpAdvanced.ResumeLayout(false);
+            this.tpOptions.ResumeLayout(false);
             this.tcAdvanced.ResumeLayout(false);
             this.tpAdvAppearance.ResumeLayout(false);
             this.gbUpdates.ResumeLayout(false);
@@ -5368,7 +5368,7 @@ namespace ZSS
         private System.Windows.Forms.Button btnFTPAdd;
         private System.Windows.Forms.Button btnFTPDelete;
         private System.Windows.Forms.ListBox lbHistory;
-        private System.Windows.Forms.TabPage tpAdvanced;
+        private System.Windows.Forms.TabPage tpOptions;
         private System.Windows.Forms.Button btnViewSettingsDir;
         private System.Windows.Forms.GroupBox gbRemoteDirCache;
         private System.Windows.Forms.TextBox txtCacheDir;
