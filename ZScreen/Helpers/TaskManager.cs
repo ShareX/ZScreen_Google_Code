@@ -25,75 +25,70 @@ namespace ZSS.Helpers
 
         public void UploadImage()
         {
-            if (!Program.conf.PromptforUpload || (task.ImageDestCategory != ImageDestType.CLIPBOARD &&
-                MessageBox.Show("Are you really want upload to " + task.ImageDestCategory + " ?",
-                "ZScreen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+            task.StartTime = DateTime.Now;
+            HTTPUploader imageUploader = null;
+
+            if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC &&
+                !string.IsNullOrEmpty(task.LocalFilePath))
             {
-                task.StartTime = DateTime.Now;
-                HTTPUploader imageUploader = null;
-
-                if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC &&
-                    !string.IsNullOrEmpty(task.LocalFilePath))
+                SizeF size = Image.FromFile(task.LocalFilePath).PhysicalDimension;
+                if (size.Width > 1600 || size.Height > 1600)
                 {
-                    SizeF size = Image.FromFile(task.LocalFilePath).PhysicalDimension;
-                    if (size.Width > 1600 || size.Height > 1600)
+                    task.ImageDestCategory = ImageDestType.IMAGESHACK;
+                }
+            }
+
+            switch (task.ImageDestCategory)
+            {
+                case ImageDestType.CLIPBOARD:
+                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, task.LocalFilePath);
+                    break;
+                case ImageDestType.CUSTOM_UPLOADER:
+                    if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
                     {
-                        task.ImageDestCategory = ImageDestType.IMAGESHACK;
+                        imageUploader = new CustomUploader(Program.conf.ImageUploadersList[Program.conf.ImageUploaderSelected]);
                     }
-                }
+                    break;
+                case ImageDestType.FTP:
+                    UploadFtp();
+                    break;
+                case ImageDestType.IMAGESHACK:
+                    imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
+                    break;
+                case ImageDestType.TINYPIC:
+                    imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
+                    ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
+                    break;
+            }
 
-                switch (task.ImageDestCategory)
+            if (imageUploader != null)
+            {
+                task.DestinationName = imageUploader.Name;
+                string fullFilePath = task.LocalFilePath;
+                if (File.Exists(fullFilePath))
                 {
-                    case ImageDestType.CLIPBOARD:
-                        task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, task.LocalFilePath);
-                        break;
-                    case ImageDestType.CUSTOM_UPLOADER:
-                        if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
-                        {
-                            imageUploader = new CustomUploader(Program.conf.ImageUploadersList[Program.conf.ImageUploaderSelected]);
-                        }
-                        break;
-                    case ImageDestType.FTP:
-                        UploadFtp();
-                        break;
-                    case ImageDestType.IMAGESHACK:
-                        imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
-                        break;
-                    case ImageDestType.TINYPIC:
-                        imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
-                        ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
-                        break;
-                }
-
-                if (imageUploader != null)
-                {
-                    task.DestinationName = imageUploader.Name;
-                    string fullFilePath = task.LocalFilePath;
-                    if (File.Exists(fullFilePath))
+                    for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
+                        (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.FileCount < 1)); i++)
                     {
-                        for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
-                            (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.FileCount < 1)); i++)
+                        task.ImageManager = imageUploader.UploadImage(fullFilePath);
+                        task.Errors = imageUploader.Errors;
+                        if (Program.conf.ImageUploadRetry && (task.ImageDestCategory ==
+                            ImageDestType.IMAGESHACK || task.ImageDestCategory == ImageDestType.TINYPIC))
                         {
-                            task.ImageManager = imageUploader.UploadImage(fullFilePath);
-                            task.Errors = imageUploader.Errors;
-                            if (Program.conf.ImageUploadRetry && (task.ImageDestCategory ==
-                                ImageDestType.IMAGESHACK || task.ImageDestCategory == ImageDestType.TINYPIC))
-                            {
-                                break;
-                            }
+                            break;
                         }
-
-                        //Set remote path for Screenshots history
-                        task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
                     }
-                }
 
-                task.EndTime = DateTime.Now;
-
-                if (task.ImageManager != null)
-                {
-                    FlashIcon(task);
+                    //Set remote path for Screenshots history
+                    task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
                 }
+            }
+
+            task.EndTime = DateTime.Now;
+
+            if (task.ImageManager != null)
+            {
+                FlashIcon(task);
             }
         }
 
