@@ -51,6 +51,7 @@ namespace ZSS
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
         public decimal ScreenshotDelay = 0;
+        public bool PromptforUpload = false;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
         public bool ShowWatermark = false;
