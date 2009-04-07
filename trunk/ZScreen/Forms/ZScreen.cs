@@ -1017,6 +1017,17 @@ namespace ZSS
             task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
             ClipboardManager.Queue();
 
+            if (Program.conf.PromptforUpload && task.ImageDestCategory != ImageDestType.CLIPBOARD &
+                task.ImageDestCategory != ImageDestType.FILE &&
+                (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
+                task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
+                MessageBox.Show("Are you really want upload to " + task.ImageDestCategory.GetDescription() + " ?",
+                "ZScreen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                e.Result = task;
+                return;
+            }
+
             if (task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD)
             {
                 if (task.ImageDestCategory != ImageDestType.FTP)
@@ -1035,10 +1046,13 @@ namespace ZSS
                     }
                 }
             }
+
             if (task.JobCategory == JobCategoryType.SCREENSHOTS)
             {
                 if (Program.conf.ScreenshotDelay != 0)
+                {
                     Thread.Sleep((int)(Program.conf.ScreenshotDelay));
+                }
             }
 
             FileSystem.appendDebug(".");
@@ -1047,37 +1061,20 @@ namespace ZSS
             switch (task.JobCategory)
             {
                 case JobCategoryType.PICTURES:
-                    switch (task.Job)
-                    {
-                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                            PublishImage(ref task);
-                            break;
-                        case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
-                            PublishImage(ref task);
-                            break;
-                        case MainAppTask.Jobs.UPLOAD_IMAGE:
-                            PublishImage(ref task);
-                            break;
-                    }
+                    PublishImage(ref task);
                     break;
                 case JobCategoryType.SCREENSHOTS:
                     switch (task.Job)
                     {
-                        case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                            CaptureActiveWindow(ref task);
-                            break;
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                            CaptureRegionOrWindow(ref task);
-                            break;
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                            CaptureRegionOrWindow(ref task);
-                            break;
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                            CaptureRegionOrWindow(ref task);
-                            break;
                         case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                             CaptureScreen(ref task);
                             break;
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                        case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                            CaptureRegionOrWindow(ref task);
+                            break;
+                        case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
                         case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                             CaptureActiveWindow(ref task);
                             break;

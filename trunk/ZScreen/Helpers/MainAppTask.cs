@@ -81,6 +81,9 @@ namespace ZSS.Tasks
 
         public BackgroundWorker MyWorker { get; private set; }
         public JobCategoryType JobCategory { get; set; }
+        /// <summary>
+        /// Entire Screen, Active Window, Selected Window, Crop Shot...
+        /// </summary>
         public Jobs Job { get; private set; }
         /// <summary>
         /// List of Errors the Worker had during its operation
@@ -124,11 +127,11 @@ namespace ZSS.Tasks
         /// </summary>
         public string RemoteFilePath { get; set; }
         /// <summary>
-        /// FTP Account Name, TinyPic, ImageShack, xs.to
+        /// FTP Account Name, TinyPic, ImageShack
         /// </summary>
         public string DestinationName { get; set; }
         /// <summary>
-        /// FTP, HTTP: TinyPic, ImageShack
+        /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
         public ImageDestType ImageDestCategory { get; set; }
         /// <summary>
