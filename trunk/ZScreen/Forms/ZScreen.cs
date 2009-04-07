@@ -165,6 +165,7 @@ namespace ZSS
             }
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             nudScreenshotDelay.Value = Program.conf.ScreenshotDelay;
+            cbPromptforUpload.Checked = Program.conf.PromptforUpload;
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             cbShowWatermark.Checked = Program.conf.ShowWatermark;
@@ -4657,6 +4658,11 @@ namespace ZSS
             {
                 txtWatermarkImageLocation.Text = fd.FileName;
             }
+        }
+
+        private void cbPromptforUpload_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.PromptforUpload = cbPromptforUpload.Checked;
         }
     }
 }
