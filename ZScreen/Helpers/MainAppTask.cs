@@ -72,7 +72,9 @@ namespace ZSS.Tasks
             SET_ICON_BUSY,
             UPDATE_STATUS_BAR_TEXT,
             UPDATE_PROGRESS_MAX,
-            UPDATE_TRAY_TITLE
+            UPDATE_TRAY_TITLE,
+            UPDATE_CROP_MODE,
+            UPDATE_UPLOAD_DESTINATION
         }
 
         #endregion
@@ -101,10 +103,10 @@ namespace ZSS.Tasks
             set
             {
                 endTime = value;
-                UploadDuration = Math.Round((endTime - StartTime).TotalMilliseconds).ToString() + " ms";
+                UploadDuration = (int)Math.Round((endTime - StartTime).TotalMilliseconds);
             }
         }
-        public string UploadDuration { get; set; }
+        public int UploadDuration { get; set; }
 
         #endregion
 

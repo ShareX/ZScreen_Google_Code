@@ -86,6 +86,19 @@ namespace ZSS.Helpers
 
             task.EndTime = DateTime.Now;
 
+            if (Program.conf.AutoChangeUploadDestination && task.UploadDuration > (int)Program.conf.UploadDurationLimit)
+            {
+                if (task.ImageDestCategory == ImageDestType.IMAGESHACK)
+                {
+                    Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
+                }
+                else if (task.ImageDestCategory == ImageDestType.TINYPIC)
+                {
+                    Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
+                }
+                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
+            }
+
             if (task.ImageManager != null)
             {
                 FlashIcon(task);
