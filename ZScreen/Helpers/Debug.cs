@@ -9,23 +9,21 @@ namespace ZSS
 {
     public class Debug
     {
-        //private PerformanceCounter memoryPerfCounter;
+        public event StringEventHandler GetDebugInfo;
         private Process currProc = Process.GetCurrentProcess();
-        private Timer debugTimer;
-        private TimerCallback timerDelegate;
+        public System.Windows.Forms.Timer DebugTimer;
         public Memory StartMemoryUsage { get; private set; }
         public Memory MemoryUsage { get; private set; }
         public Memory MinMemoryUsage { get; private set; }
         public Memory MaxMemoryUsage { get; private set; }
         public DateTime StartTime { get; private set; }
-        public bool IsReady = false;
 
         public Debug()
         {
             StartTime = DateTime.Now;
-            timerDelegate = new TimerCallback(TimerTick);
-            debugTimer = new Timer(timerDelegate);
-            debugTimer.Change(3000, 1000);
+            DebugTimer = new System.Windows.Forms.Timer();
+            DebugTimer.Interval = 500;
+            DebugTimer.Tick += new EventHandler(TimerTick);
         }
 
         public string DebugInfo()
@@ -64,7 +62,7 @@ namespace ZSS
             return (int)currProc.PrivateMemorySize64 / 1024; // (int)(memoryPerfCounter.NextValue() / 1024);
         }
 
-        private void TimerTick(Object stateInfo)
+        private void TimerTick(object sender, EventArgs e)
         {
             if (StartMemoryUsage == 0)
             {
@@ -73,7 +71,6 @@ namespace ZSS
                 StartMemoryUsage = MemoryUsage;
                 MinMemoryUsage = MemoryUsage;
                 MaxMemoryUsage = MemoryUsage;
-                IsReady = true;
             }
             else
             {
@@ -81,6 +78,7 @@ namespace ZSS
                 MinMemoryUsage = Math.Min(MinMemoryUsage, MemoryUsage);
                 MaxMemoryUsage = Math.Max(MaxMemoryUsage, MemoryUsage);
             }
+            GetDebugInfo(this, DebugInfo());
         }
 
         public struct Memory

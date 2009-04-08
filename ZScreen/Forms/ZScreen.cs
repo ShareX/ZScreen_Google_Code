@@ -57,10 +57,6 @@ namespace ZSS
         private bool mSetHotkeys = false;
         private int mHKSelectedRow = -1;
         private HKcombo mHKSetcombo;
-        //Used for appending Screenshot URL when taking more than on Screenshot in a short time
-        //private uint mNumWorkers = 0;
-        //private List<string> mClipboardURLs = new List<string>();
-        //Used for Click-to-insert Codes (Naming Conventions)
         private TextBox mHadFocus;
         private int mHadFocusAt;
         public IntPtr m_hID = (IntPtr)1; //Used for the keyboard hook
@@ -70,7 +66,6 @@ namespace ZSS
         private bool bDropWindowOpened = false;
         private bool bQuickActionsOpened = false;
         public int startHeight;
-        //public List<Control> ZScreenControls;
         public ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator = null;
         private BackgroundWorker bwActiveHelp = new BackgroundWorker();
@@ -82,26 +77,14 @@ namespace ZSS
         {
             InitializeComponent();
 
-            // Set height when program is launched
-            startHeight = Program.conf.WindowSize.Height;
-
-            // Set Icon
             this.Icon = Properties.Resources.zss_main;
-
-            // Set Name            
-            lblLogo.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
-            this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuild);
+            this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
             this.niTray.Text = this.Text;
+            lblLogo.Text = this.Text;
 
-            // Update GUI Controls
             SetupScreen();
 
-            CleanCache();
-
             if (Program.conf.CheckUpdates) CheckUpdates();
-
-            debug = new Debug();
-            debugTimer.Start();
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -117,21 +100,20 @@ namespace ZSS
                 this.Hide();
             }
 
+            CleanCache();
+            StartDebug();
+
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
             AddToClipboardByDoubleClick(tpHistory);
 
-            // Set Active Help Tags
             ActiveHelpTagsConfig();
             AddMouseHoverEventHandlerHelp(Controls);
-
-            //LoadTranslations("English");
 
             FillClipboardCopyMenu();
             FillClipboardMenu();
 
             CreateCodesMenu();
 
-            //Need better solution for this
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
         }
 
@@ -143,6 +125,7 @@ namespace ZSS
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
 
+            startHeight = Program.conf.WindowSize.Height;
             Program.ConfigureDirs();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
 
@@ -3958,14 +3941,6 @@ namespace ZSS
             Program.conf.HelpToLanguage = mGTranslator.LanguageOptions.TargetLangList[cbHelpToLanguage.SelectedIndex].Value;
         }
 
-        private void debugTimer_Tick(object sender, EventArgs e)
-        {
-            if (this.Visible && debug.IsReady)
-            {
-                lblDebugInfo.Text = debug.DebugInfo();
-            }
-        }
-
         private void btnCopyStats_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(lblDebugInfo.Text);
@@ -4679,6 +4654,33 @@ namespace ZSS
         private void nudUploadDurationLimit_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.UploadDurationLimit = nudUploadDurationLimit.Value;
+        }
+
+        private void StartDebug()
+        {
+            debug = new Debug();
+            debug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
+        }
+
+        private void debug_GetDebugInfo(object sender, string e)
+        {
+            if (this.Visible)
+            {
+                lblDebugInfo.Text = e;
+            }
+        }
+
+        private void btnDebugStart_Click(object sender, EventArgs e)
+        {
+            if (debug.DebugTimer.Enabled)
+            {
+                btnDebugStart.Text = "Start";
+            }
+            else
+            {
+                btnDebugStart.Text = "Pause";
+            }
+            debug.DebugTimer.Enabled = !debug.DebugTimer.Enabled;
         }
     }
 }

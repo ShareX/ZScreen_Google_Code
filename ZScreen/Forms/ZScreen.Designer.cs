@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -322,6 +322,7 @@ namespace ZSS
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblFirstRun = new System.Windows.Forms.Label();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
             this.cboCropGridMode = new System.Windows.Forms.CheckBox();
             this.lblGridSize = new System.Windows.Forms.Label();
             this.lblGridSizeHeight = new System.Windows.Forms.Label();
@@ -340,6 +341,9 @@ namespace ZSS
             this.tcHTTP = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
+            this.lblUploadDurationLimit = new System.Windows.Forms.Label();
+            this.nudUploadDurationLimit = new System.Windows.Forms.NumericUpDown();
+            this.cbAutoChangeUploadDestination = new System.Windows.Forms.CheckBox();
             this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
             this.chkImageUploadRetry = new System.Windows.Forms.CheckBox();
             this.cboUploadMode = new System.Windows.Forms.ComboBox();
@@ -442,13 +446,9 @@ namespace ZSS
             this.ilApp = new System.Windows.Forms.ImageList(this.components);
             this.txtActiveHelp = new System.Windows.Forms.RichTextBox();
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
-            this.debugTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
-            this.cbAutoChangeUploadDestination = new System.Windows.Forms.CheckBox();
-            this.nudUploadDurationLimit = new System.Windows.Forms.NumericUpDown();
-            this.lblUploadDurationLimit = new System.Windows.Forms.Label();
+            this.btnDebugStart = new System.Windows.Forms.Button();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -529,6 +529,7 @@ namespace ZSS
             this.tcHTTP.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.gbImageUploaderOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorRetry)).BeginInit();
             this.gbImageShack.SuspendLayout();
             this.gbTinyPic.SuspendLayout();
@@ -552,7 +553,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -3606,38 +3606,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3811,6 +3811,17 @@ namespace ZSS
             this.gbMainOptions.TabIndex = 79;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "General Settings";
+            // 
+            // cbPromptforUpload
+            // 
+            this.cbPromptforUpload.AutoSize = true;
+            this.cbPromptforUpload.Location = new System.Drawing.Point(24, 144);
+            this.cbPromptforUpload.Name = "cbPromptforUpload";
+            this.cbPromptforUpload.Size = new System.Drawing.Size(275, 17);
+            this.cbPromptforUpload.TabIndex = 120;
+            this.cbPromptforUpload.Text = "Prompt for upload ( Entire Screen or Active Window )";
+            this.cbPromptforUpload.UseVisualStyleBackColor = true;
+            this.cbPromptforUpload.CheckedChanged += new System.EventHandler(this.cbPromptforUpload_CheckedChanged);
             // 
             // cboCropGridMode
             // 
@@ -4031,6 +4042,40 @@ namespace ZSS
             this.gbImageUploaderOptions.TabIndex = 7;
             this.gbImageUploaderOptions.TabStop = false;
             this.gbImageUploaderOptions.Text = "Options";
+            // 
+            // lblUploadDurationLimit
+            // 
+            this.lblUploadDurationLimit.AutoSize = true;
+            this.lblUploadDurationLimit.Location = new System.Drawing.Point(640, 112);
+            this.lblUploadDurationLimit.Name = "lblUploadDurationLimit";
+            this.lblUploadDurationLimit.Size = new System.Drawing.Size(61, 13);
+            this.lblUploadDurationLimit.TabIndex = 10;
+            this.lblUploadDurationLimit.Text = "miliseconds";
+            // 
+            // nudUploadDurationLimit
+            // 
+            this.nudUploadDurationLimit.Location = new System.Drawing.Point(544, 108);
+            this.nudUploadDurationLimit.Maximum = new decimal(new int[] {
+            300000,
+            0,
+            0,
+            0});
+            this.nudUploadDurationLimit.Name = "nudUploadDurationLimit";
+            this.nudUploadDurationLimit.Size = new System.Drawing.Size(88, 20);
+            this.nudUploadDurationLimit.TabIndex = 9;
+            this.nudUploadDurationLimit.ValueChanged += new System.EventHandler(this.nudUploadDurationLimit_ValueChanged);
+            // 
+            // cbAutoChangeUploadDestination
+            // 
+            this.cbAutoChangeUploadDestination.AutoSize = true;
+            this.cbAutoChangeUploadDestination.Location = new System.Drawing.Point(24, 112);
+            this.cbAutoChangeUploadDestination.Name = "cbAutoChangeUploadDestination";
+            this.cbAutoChangeUploadDestination.Size = new System.Drawing.Size(517, 17);
+            this.cbAutoChangeUploadDestination.TabIndex = 8;
+            this.cbAutoChangeUploadDestination.Text = "If upload duration higher than selected ms then select other image uploaders dest" +
+                "ination for next uploads";
+            this.cbAutoChangeUploadDestination.UseVisualStyleBackColor = true;
+            this.cbAutoChangeUploadDestination.CheckedChanged += new System.EventHandler(this.cbAutoChangeUploadDestination_CheckedChanged);
             // 
             // cbAddFailedScreenshot
             // 
@@ -5025,6 +5070,7 @@ namespace ZSS
             // 
             // gbStatistics
             // 
+            this.gbStatistics.Controls.Add(this.btnDebugStart);
             this.gbStatistics.Controls.Add(this.btnCopyStats);
             this.gbStatistics.Controls.Add(this.lblDebugInfo);
             this.gbStatistics.Location = new System.Drawing.Point(8, 8);
@@ -5036,9 +5082,9 @@ namespace ZSS
             // 
             // btnCopyStats
             // 
-            this.btnCopyStats.Location = new System.Drawing.Point(16, 24);
+            this.btnCopyStats.Location = new System.Drawing.Point(88, 24);
             this.btnCopyStats.Name = "btnCopyStats";
-            this.btnCopyStats.Size = new System.Drawing.Size(120, 23);
+            this.btnCopyStats.Size = new System.Drawing.Size(120, 24);
             this.btnCopyStats.TabIndex = 29;
             this.btnCopyStats.Text = "Copy to Clipboard";
             this.btnCopyStats.UseVisualStyleBackColor = true;
@@ -5051,7 +5097,6 @@ namespace ZSS
             this.lblDebugInfo.Name = "lblDebugInfo";
             this.lblDebugInfo.Size = new System.Drawing.Size(722, 228);
             this.lblDebugInfo.TabIndex = 27;
-            this.lblDebugInfo.Text = "Debug Info - Wait 3 seconds";
             // 
             // gbLastSource
             // 
@@ -5145,11 +5190,6 @@ namespace ZSS
             this.splitContainerApp.SplitterWidth = 1;
             this.splitContainerApp.TabIndex = 76;
             // 
-            // debugTimer
-            // 
-            this.debugTimer.Interval = 1000;
-            this.debugTimer.Tick += new System.EventHandler(this.debugTimer_Tick);
-            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -5161,50 +5201,15 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // cbPromptforUpload
+            // btnDebugStart
             // 
-            this.cbPromptforUpload.AutoSize = true;
-            this.cbPromptforUpload.Location = new System.Drawing.Point(24, 144);
-            this.cbPromptforUpload.Name = "cbPromptforUpload";
-            this.cbPromptforUpload.Size = new System.Drawing.Size(109, 17);
-            this.cbPromptforUpload.TabIndex = 120;
-            this.cbPromptforUpload.Text = "Prompt for upload";
-            this.cbPromptforUpload.UseVisualStyleBackColor = true;
-            this.cbPromptforUpload.CheckedChanged += new System.EventHandler(this.cbPromptforUpload_CheckedChanged);
-            // 
-            // cbAutoChangeUploadDestination
-            // 
-            this.cbAutoChangeUploadDestination.AutoSize = true;
-            this.cbAutoChangeUploadDestination.Location = new System.Drawing.Point(24, 112);
-            this.cbAutoChangeUploadDestination.Name = "cbAutoChangeUploadDestination";
-            this.cbAutoChangeUploadDestination.Size = new System.Drawing.Size(517, 17);
-            this.cbAutoChangeUploadDestination.TabIndex = 8;
-            this.cbAutoChangeUploadDestination.Text = "If upload duration higher than selected ms then select other image uploaders dest" +
-                "ination for next uploads";
-            this.cbAutoChangeUploadDestination.UseVisualStyleBackColor = true;
-            this.cbAutoChangeUploadDestination.CheckedChanged += new System.EventHandler(this.cbAutoChangeUploadDestination_CheckedChanged);
-            // 
-            // nudUploadDurationLimit
-            // 
-            this.nudUploadDurationLimit.Location = new System.Drawing.Point(544, 108);
-            this.nudUploadDurationLimit.Maximum = new decimal(new int[] {
-            300000,
-            0,
-            0,
-            0});
-            this.nudUploadDurationLimit.Name = "nudUploadDurationLimit";
-            this.nudUploadDurationLimit.Size = new System.Drawing.Size(88, 20);
-            this.nudUploadDurationLimit.TabIndex = 9;
-            this.nudUploadDurationLimit.ValueChanged += new System.EventHandler(this.nudUploadDurationLimit_ValueChanged);
-            // 
-            // lblUploadDurationLimit
-            // 
-            this.lblUploadDurationLimit.AutoSize = true;
-            this.lblUploadDurationLimit.Location = new System.Drawing.Point(640, 112);
-            this.lblUploadDurationLimit.Name = "lblUploadDurationLimit";
-            this.lblUploadDurationLimit.Size = new System.Drawing.Size(61, 13);
-            this.lblUploadDurationLimit.TabIndex = 10;
-            this.lblUploadDurationLimit.Text = "miliseconds";
+            this.btnDebugStart.Location = new System.Drawing.Point(16, 24);
+            this.btnDebugStart.Name = "btnDebugStart";
+            this.btnDebugStart.Size = new System.Drawing.Size(64, 24);
+            this.btnDebugStart.TabIndex = 30;
+            this.btnDebugStart.Text = "Start";
+            this.btnDebugStart.UseVisualStyleBackColor = true;
+            this.btnDebugStart.Click += new System.EventHandler(this.btnDebugStart_Click);
             // 
             // ZScreen
             // 
@@ -5335,6 +5340,7 @@ namespace ZSS
             this.tpImageUploaders.ResumeLayout(false);
             this.gbImageUploaderOptions.ResumeLayout(false);
             this.gbImageUploaderOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorRetry)).EndInit();
             this.gbImageShack.ResumeLayout(false);
             this.gbImageShack.PerformLayout();
@@ -5369,7 +5375,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5682,7 +5687,6 @@ namespace ZSS
         private System.Windows.Forms.GroupBox gbLastSource;
         private System.Windows.Forms.CheckBox chkCaptureFallback;
         private System.Windows.Forms.Label lblDebugInfo;
-        private System.Windows.Forms.Timer debugTimer;
         private System.Windows.Forms.GroupBox gbStatistics;
         private System.Windows.Forms.Button btnCopyStats;
         private System.Windows.Forms.ToolStripMenuItem tsmHelp;
@@ -5792,6 +5796,7 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbAutoChangeUploadDestination;
         private System.Windows.Forms.Label lblUploadDurationLimit;
         private System.Windows.Forms.NumericUpDown nudUploadDurationLimit;
+        private System.Windows.Forms.Button btnDebugStart;
 
     }
 }
