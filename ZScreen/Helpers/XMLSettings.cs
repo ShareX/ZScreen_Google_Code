@@ -92,15 +92,15 @@ namespace ZSS
         public int CropStep = 1;
         public int CrosshairLineCount = 2;
         public int CrosshairLineSize = 25;
-        public string CropCrosshairColor = SerializeColor(Color.Red);
+        public string CropCrosshairColor = SerializeColor(Color.Black);
         public bool CropShowBigCross = true;
 
-        public bool CropShowRuler = false;
+        public bool CropShowRuler = true;
         public bool CropDynamicBorderColor = true;
-        public decimal CropRegionInterval = 100;
+        public decimal CropRegionInterval = 75;
         public decimal CropRegionStep = 5;
         public decimal CropHueRange = 50;
-        public string CropBorderColor = SerializeColor(Color.Black);
+        public string CropBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
 
@@ -109,11 +109,11 @@ namespace ZSS
         public int SelectedWindowRegionStyle = 2;
         public bool SelectedWindowFront = false;
         public bool SelectedWindowRectangleInfo = true;
-        public bool SelectedWindowRuler = false;
-        public string SelectedWindowBorderColor = SerializeColor(Color.Red);
+        public bool SelectedWindowRuler = true;
+        public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
         public decimal SelectedWindowBorderSize = 2;
         public bool SelectedWindowDynamicBorderColor = true;
-        public decimal SelectedWindowRegionInterval = 100;
+        public decimal SelectedWindowRegionInterval = 75;
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
 
