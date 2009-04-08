@@ -30,19 +30,20 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmMain = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHotkeys = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmEditors = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFTP = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHTTP = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmSendImageTo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmDestClipboard = new System.Windows.Forms.ToolStripMenuItem();
@@ -437,6 +438,7 @@ namespace ZSS
             this.txtCacheDir = new System.Windows.Forms.TextBox();
             this.tpAdvDebug = new System.Windows.Forms.TabPage();
             this.gbStatistics = new System.Windows.Forms.GroupBox();
+            this.btnDebugStart = new System.Windows.Forms.Button();
             this.btnCopyStats = new System.Windows.Forms.Button();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.gbLastSource = new System.Windows.Forms.GroupBox();
@@ -448,7 +450,6 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.btnDebugStart = new System.Windows.Forms.Button();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -581,30 +582,39 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmViewSettingsMenu
             // 
             this.tsmViewSettingsMenu.DoubleClickEnabled = true;
             this.tsmViewSettingsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmMain,
             this.tsmHotkeys,
             this.tsmCapture,
-            this.tsmImageSoftware,
+            this.tsmEditors,
             this.tsmFTP,
             this.tsmHTTP,
-            this.tsmAdvanced,
-            this.tsmHistory});
+            this.tsmHistory,
+            this.tsmOptions});
             this.tsmViewSettingsMenu.Image = global::ZSS.Properties.Resources.wrench;
             this.tsmViewSettingsMenu.Name = "tsmViewSettingsMenu";
             this.tsmViewSettingsMenu.Size = new System.Drawing.Size(205, 22);
             this.tsmViewSettingsMenu.Text = "View Settings Menu";
             this.tsmViewSettingsMenu.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
+            // tsmMain
+            // 
+            this.tsmMain.Image = global::ZSS.Properties.Resources.application_form;
+            this.tsmMain.Name = "tsmMain";
+            this.tsmMain.Size = new System.Drawing.Size(152, 22);
+            this.tsmMain.Text = "Main...";
+            this.tsmMain.Click += new System.EventHandler(this.tsmMain_Click);
+            // 
             // tsmHotkeys
             // 
             this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
             this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(165, 22);
+            this.tsmHotkeys.Size = new System.Drawing.Size(152, 22);
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -612,23 +622,23 @@ namespace ZSS
             // 
             this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
             this.tsmCapture.Name = "tsmCapture";
-            this.tsmCapture.Size = new System.Drawing.Size(165, 22);
+            this.tsmCapture.Size = new System.Drawing.Size(152, 22);
             this.tsmCapture.Text = "Capture...";
             this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
             // 
-            // tsmImageSoftware
+            // tsmEditors
             // 
-            this.tsmImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
-            this.tsmImageSoftware.Name = "tsmImageSoftware";
-            this.tsmImageSoftware.Size = new System.Drawing.Size(165, 22);
-            this.tsmImageSoftware.Text = "Image Software...";
-            this.tsmImageSoftware.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmEditors.Image = global::ZSS.Properties.Resources.picture_edit;
+            this.tsmEditors.Name = "tsmEditors";
+            this.tsmEditors.Size = new System.Drawing.Size(152, 22);
+            this.tsmEditors.Text = "Editors...";
+            this.tsmEditors.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmFTP
             // 
             this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
             this.tsmFTP.Name = "tsmFTP";
-            this.tsmFTP.Size = new System.Drawing.Size(165, 22);
+            this.tsmFTP.Size = new System.Drawing.Size(152, 22);
             this.tsmFTP.Text = "FTP...";
             this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -636,25 +646,25 @@ namespace ZSS
             // 
             this.tsmHTTP.Image = global::ZSS.Properties.Resources.world_edit;
             this.tsmHTTP.Name = "tsmHTTP";
-            this.tsmHTTP.Size = new System.Drawing.Size(165, 22);
+            this.tsmHTTP.Size = new System.Drawing.Size(152, 22);
             this.tsmHTTP.Text = "HTTP...";
             this.tsmHTTP.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmAdvanced
-            // 
-            this.tsmAdvanced.Image = global::ZSS.Properties.Resources.application_edit;
-            this.tsmAdvanced.Name = "tsmAdvanced";
-            this.tsmAdvanced.Size = new System.Drawing.Size(165, 22);
-            this.tsmAdvanced.Text = "Advanced...";
-            this.tsmAdvanced.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmHistory
             // 
             this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
             this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(165, 22);
+            this.tsmHistory.Size = new System.Drawing.Size(152, 22);
             this.tsmHistory.Text = "History...";
             this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
+            // 
+            // tsmOptions
+            // 
+            this.tsmOptions.Image = global::ZSS.Properties.Resources.application_edit;
+            this.tsmOptions.Name = "tsmOptions";
+            this.tsmOptions.Size = new System.Drawing.Size(152, 22);
+            this.tsmOptions.Text = "Options...";
+            this.tsmOptions.Click += new System.EventHandler(this.tsm_Click);
             // 
             // toolStripSeparator4
             // 
@@ -3606,38 +3616,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5080,6 +5090,16 @@ namespace ZSS
             this.gbStatistics.TabStop = false;
             this.gbStatistics.Text = "Statistics";
             // 
+            // btnDebugStart
+            // 
+            this.btnDebugStart.Location = new System.Drawing.Point(16, 24);
+            this.btnDebugStart.Name = "btnDebugStart";
+            this.btnDebugStart.Size = new System.Drawing.Size(64, 24);
+            this.btnDebugStart.TabIndex = 30;
+            this.btnDebugStart.Text = "Start";
+            this.btnDebugStart.UseVisualStyleBackColor = true;
+            this.btnDebugStart.Click += new System.EventHandler(this.btnDebugStart_Click);
+            // 
             // btnCopyStats
             // 
             this.btnCopyStats.Location = new System.Drawing.Point(88, 24);
@@ -5200,16 +5220,6 @@ namespace ZSS
             this.ttApp.AutoPopDelay = 10000;
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
-            // 
-            // btnDebugStart
-            // 
-            this.btnDebugStart.Location = new System.Drawing.Point(16, 24);
-            this.btnDebugStart.Name = "btnDebugStart";
-            this.btnDebugStart.Size = new System.Drawing.Size(64, 24);
-            this.btnDebugStart.TabIndex = 30;
-            this.btnDebugStart.Text = "Start";
-            this.btnDebugStart.UseVisualStyleBackColor = true;
-            this.btnDebugStart.Click += new System.EventHandler(this.btnDebugStart_Click);
             // 
             // ZScreen
             // 
@@ -5452,7 +5462,7 @@ namespace ZSS
         private System.Windows.Forms.Label lblJPEGQualityPercentage;
         private System.Windows.Forms.ToolStripMenuItem tsmHotkeys;
         private System.Windows.Forms.ToolStripMenuItem tsmFTP;
-        private System.Windows.Forms.ToolStripMenuItem tsmImageSoftware;
+        private System.Windows.Forms.ToolStripMenuItem tsmEditors;
         private System.Windows.Forms.ToolStripMenuItem tsmCapture;
         private System.Windows.Forms.ToolStripMenuItem tsmHistory;
         private System.Windows.Forms.CheckBox cbDeleteLocal;
@@ -5490,7 +5500,7 @@ namespace ZSS
         private System.Windows.Forms.GroupBox gbSettingsExportImport;
         private System.Windows.Forms.Button btnSettingsExport;
         private System.Windows.Forms.Button btnSettingsImport;
-        private System.Windows.Forms.ToolStripMenuItem tsmAdvanced;
+        private System.Windows.Forms.ToolStripMenuItem tsmOptions;
         private System.Windows.Forms.GroupBox gbFTPAccount;
         private System.Windows.Forms.GroupBox gbFTPAccountsList;
         private System.Windows.Forms.ComboBox cboClipboardTextMode;
@@ -5797,6 +5807,7 @@ namespace ZSS
         private System.Windows.Forms.Label lblUploadDurationLimit;
         private System.Windows.Forms.NumericUpDown nudUploadDurationLimit;
         private System.Windows.Forms.Button btnDebugStart;
+        private System.Windows.Forms.ToolStripMenuItem tsmMain;
 
     }
 }

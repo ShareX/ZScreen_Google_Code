@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -307,6 +307,7 @@
     <EmbeddedResource Include="Resources\lightning.png" />
     <None Include="Resources\main.png" />
     <None Include="Resources\application_lightning.png" />
+    <None Include="Resources\application_form.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

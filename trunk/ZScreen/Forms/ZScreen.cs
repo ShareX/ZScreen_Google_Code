@@ -1992,7 +1992,7 @@ namespace ZSS
                 sel = tpFTP;
             else if (tsm == tsmHTTP)
                 sel = tpHTTP;
-            else if (tsm == tsmImageSoftware)
+            else if (tsm == tsmEditors)
                 sel = tpEditors;
             else if (tsm == tsmCapture)
                 sel = tpCapture;
@@ -2000,7 +2000,7 @@ namespace ZSS
                 sel = tpFTP;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
-            else if (tsm == tsmAdvanced)
+            else if (tsm == tsmOptions)
                 sel = tpOptions;
 
             tcApp.SelectedTab = sel;
@@ -4681,6 +4681,11 @@ namespace ZSS
                 btnDebugStart.Text = "Pause";
             }
             debug.DebugTimer.Enabled = !debug.DebugTimer.Enabled;
+        }
+
+        private void tsmMain_Click(object sender, EventArgs e)
+        {
+            BringUpMenu();
         }
     }
 }
