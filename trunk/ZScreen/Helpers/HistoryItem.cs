@@ -66,7 +66,7 @@ namespace ZSS.Helpers
             this.ImageDestCategory = task.ImageDestCategory;
             this.StartTime = task.StartTime;
             this.EndTime = task.EndTime;
-            this.UploadDuration = task.UploadDuration;
+            this.UploadDuration = task.UploadDuration.ToString() + " ms";
             if (!string.IsNullOrEmpty(this.LocalPath) && File.Exists(this.LocalPath))
             {
                 this.FileSize = new FileInfo(this.LocalPath).Length;

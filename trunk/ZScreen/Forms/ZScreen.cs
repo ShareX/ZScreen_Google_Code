@@ -303,6 +303,8 @@ namespace ZSS
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             nudErrorRetry.Value = Program.conf.ErrorRetryCount;
+            cbAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
+            nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
             if (cboUploadMode.Items.Count == 0)
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
@@ -704,6 +706,7 @@ namespace ZSS
             }
             finally
             {
+                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.UPDATE_CROP_MODE);
                 mTakingScreenShot = false;
                 if (imgSS != null) imgSS.Dispose();
             }
@@ -843,9 +846,9 @@ namespace ZSS
                     sbMsg.AppendLine(fileOrUrl);
                 }
 
-                if (Program.conf.ShowUploadDuration && !string.IsNullOrEmpty(t.UploadDuration))
+                if (Program.conf.ShowUploadDuration && t.UploadDuration > 0)
                 {
-                    sbMsg.AppendLine("Upload duration: " + t.UploadDuration);
+                    sbMsg.AppendLine("Upload duration: " + t.UploadDuration + " ms");
                 }
             }
 
@@ -1103,18 +1106,17 @@ namespace ZSS
                     task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
             }
+
             e.Result = task;
         }
 
         private void BwApp_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            ZSS.Tasks.MainAppTask.ProgressType p = (ZSS.Tasks.MainAppTask.ProgressType)e.ProgressPercentage;
-            switch (p)
+            switch ((ZSS.Tasks.MainAppTask.ProgressType)e.ProgressPercentage)
             {
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem((HistoryItem)e.UserState);
                     break;
-
                 case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
                     string f = e.UserState.ToString();
                     if (File.Exists(f))
@@ -1123,15 +1125,19 @@ namespace ZSS
                         FileSystem.appendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
                     }
                     break;
-
                 case MainAppTask.ProgressType.FLASH_ICON:
                     niTray.Icon = (Icon)e.UserState;
                     break;
-
                 case MainAppTask.ProgressType.SET_ICON_BUSY:
                     MainAppTask task = (MainAppTask)e.UserState;
                     niTray.Text = this.Text + " - " + task.Job.GetDescription();
                     niTray.Icon = Properties.Resources.zss_busy;
+                    break;
+                case MainAppTask.ProgressType.UPDATE_CROP_MODE:
+                    cboCropGridMode.Checked = Program.conf.CropGridToggle;
+                    break;
+                case MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION:
+                    cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
                     break;
             }
         }
@@ -1249,7 +1255,6 @@ namespace ZSS
             }
             finally
             {
-                cboCropGridMode.Checked = Program.conf.CropGridToggle;
                 ClipboardManager.Commit();
             }
         }
@@ -1300,6 +1305,10 @@ namespace ZSS
             lbHistory.Items.Insert(0, hi);
             CheckHistoryItems();
             SaveHistoryItems();
+            if (lbHistory.Items.Count > 0)
+            {
+                lbHistory.SelectedIndex = 0;
+            }
         }
 
         private void CheckHistoryItems()
@@ -4660,6 +4669,16 @@ namespace ZSS
         private void cbPromptforUpload_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.PromptforUpload = cbPromptforUpload.Checked;
+        }
+
+        private void cbAutoChangeUploadDestination_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoChangeUploadDestination = cbAutoChangeUploadDestination.Checked;
+        }
+
+        private void nudUploadDurationLimit_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.UploadDurationLimit = nudUploadDurationLimit.Value;
         }
     }
 }
