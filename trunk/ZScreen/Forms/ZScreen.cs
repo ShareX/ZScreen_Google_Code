@@ -224,7 +224,7 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.entireScreen;
 
             // Watermark
-            cbWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
+            cboWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
             txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             if (cbWatermarkPosition.Items.Count == 0)
             {
@@ -4619,7 +4619,7 @@ namespace ZSS
 
         private void cbWatermarkUseImage_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkUseImage = cbWatermarkUseImage.Checked;
+            Program.conf.WatermarkUseImage = cboWatermarkUseImage.Checked;
             TestWatermark();
         }
 
