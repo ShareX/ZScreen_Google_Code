@@ -125,7 +125,7 @@ namespace ZSS
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
 
-            startHeight = Program.conf.WindowSize.Height;
+            startHeight = txtActiveHelp.Height;
             Program.ConfigureDirs();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
 
@@ -286,7 +286,7 @@ namespace ZSS
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             nudErrorRetry.Value = Program.conf.ErrorRetryCount;
-            cbAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
+            cboAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
             nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
             if (cboUploadMode.Items.Count == 0)
             {
@@ -3007,7 +3007,7 @@ namespace ZSS
         private void CheckActiveHelp()
         {
             splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
-            this.Height = (Program.conf.ActiveHelp ? startHeight : startHeight - txtActiveHelp.Height);
+            this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height + startHeight : Program.conf.WindowSize.Height - txtActiveHelp.Height);
         }
 
         private void AddMouseHoverEventHandlerHelp(Control.ControlCollection col)
@@ -4648,7 +4648,7 @@ namespace ZSS
 
         private void cbAutoChangeUploadDestination_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoChangeUploadDestination = cbAutoChangeUploadDestination.Checked;
+            Program.conf.AutoChangeUploadDestination = cboAutoChangeUploadDestination.Checked;
         }
 
         private void nudUploadDurationLimit_ValueChanged(object sender, EventArgs e)
@@ -4686,6 +4686,11 @@ namespace ZSS
         private void tsmMain_Click(object sender, EventArgs e)
         {
             BringUpMenu();
+        }
+
+        private void btnGalleryTinyPic_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://tinypic.com/yourstuff.php");
         }
     }
 }
