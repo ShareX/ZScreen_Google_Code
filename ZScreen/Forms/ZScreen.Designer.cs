@@ -211,7 +211,7 @@ namespace ZSS
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
-            this.cbWatermarkUseImage = new System.Windows.Forms.CheckBox();
+            this.cboWatermarkUseImage = new System.Windows.Forms.CheckBox();
             this.cbWatermarkPosition = new System.Windows.Forms.ComboBox();
             this.lblWatermarkPosition = new System.Windows.Forms.Label();
             this.nudWatermarkOffset = new System.Windows.Forms.NumericUpDown();
@@ -451,6 +451,10 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
+            this.tpWatermark = new System.Windows.Forms.TabPage();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tpWatermarkText = new System.Windows.Forms.TabPage();
+            this.tpWatermarkImage = new System.Windows.Forms.TabPage();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -489,7 +493,6 @@ namespace ZSS
             this.gbOthersNaming.SuspendLayout();
             this.gbCodeTitle.SuspendLayout();
             this.gbActiveWindowNaming.SuspendLayout();
-            this.tpFileSettingsWatermark.SuspendLayout();
             this.gbWatermarkPreview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).BeginInit();
             this.gbWatermarkGeneral.SuspendLayout();
@@ -555,6 +558,10 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
+            this.tpWatermark.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tpWatermarkText.SuspendLayout();
+            this.tpWatermarkImage.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -2417,10 +2424,6 @@ namespace ZSS
             // 
             // tpFileSettingsWatermark
             // 
-            this.tpFileSettingsWatermark.Controls.Add(this.gbWatermarkPreview);
-            this.tpFileSettingsWatermark.Controls.Add(this.gbWatermarkGeneral);
-            this.tpFileSettingsWatermark.Controls.Add(this.gbWatermarkBackground);
-            this.tpFileSettingsWatermark.Controls.Add(this.gbWatermarkText);
             this.tpFileSettingsWatermark.Location = new System.Drawing.Point(4, 22);
             this.tpFileSettingsWatermark.Name = "tpFileSettingsWatermark";
             this.tpFileSettingsWatermark.Padding = new System.Windows.Forms.Padding(3);
@@ -2432,7 +2435,7 @@ namespace ZSS
             // gbWatermarkPreview
             // 
             this.gbWatermarkPreview.Controls.Add(this.pbWatermarkShow);
-            this.gbWatermarkPreview.Location = new System.Drawing.Point(536, 8);
+            this.gbWatermarkPreview.Location = new System.Drawing.Point(560, 8);
             this.gbWatermarkPreview.Name = "gbWatermarkPreview";
             this.gbWatermarkPreview.Size = new System.Drawing.Size(216, 176);
             this.gbWatermarkPreview.TabIndex = 28;
@@ -2452,54 +2455,52 @@ namespace ZSS
             // 
             // gbWatermarkGeneral
             // 
-            this.gbWatermarkGeneral.Controls.Add(this.btwWatermarkBrowseImage);
-            this.gbWatermarkGeneral.Controls.Add(this.txtWatermarkImageLocation);
-            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkUseImage);
             this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.nudWatermarkOffset);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffset);
-            this.gbWatermarkGeneral.Location = new System.Drawing.Point(8, 8);
+            this.gbWatermarkGeneral.Location = new System.Drawing.Point(16, 16);
             this.gbWatermarkGeneral.Name = "gbWatermarkGeneral";
-            this.gbWatermarkGeneral.Size = new System.Drawing.Size(488, 104);
+            this.gbWatermarkGeneral.Size = new System.Drawing.Size(528, 56);
             this.gbWatermarkGeneral.TabIndex = 26;
             this.gbWatermarkGeneral.TabStop = false;
             this.gbWatermarkGeneral.Text = "General Settings";
             // 
             // btwWatermarkBrowseImage
             // 
-            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(408, 20);
+            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(328, 16);
             this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
             this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
             this.btwWatermarkBrowseImage.TabIndex = 22;
+            this.btwWatermarkBrowseImage.Tag = "Browse for a Watermark Image";
             this.btwWatermarkBrowseImage.Text = "Browse";
             this.btwWatermarkBrowseImage.UseVisualStyleBackColor = true;
             this.btwWatermarkBrowseImage.Click += new System.EventHandler(this.btwWatermarkBrowseImage_Click);
             // 
             // txtWatermarkImageLocation
             // 
-            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(96, 24);
+            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(16, 20);
             this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
             this.txtWatermarkImageLocation.Size = new System.Drawing.Size(304, 20);
             this.txtWatermarkImageLocation.TabIndex = 21;
             this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
             // 
-            // cbWatermarkUseImage
+            // cboWatermarkUseImage
             // 
-            this.cbWatermarkUseImage.AutoSize = true;
-            this.cbWatermarkUseImage.Location = new System.Drawing.Point(16, 24);
-            this.cbWatermarkUseImage.Name = "cbWatermarkUseImage";
-            this.cbWatermarkUseImage.Size = new System.Drawing.Size(80, 17);
-            this.cbWatermarkUseImage.TabIndex = 20;
-            this.cbWatermarkUseImage.Text = "Use Image:";
-            this.cbWatermarkUseImage.UseVisualStyleBackColor = true;
-            this.cbWatermarkUseImage.CheckedChanged += new System.EventHandler(this.cbWatermarkUseImage_CheckedChanged);
+            this.cboWatermarkUseImage.AutoSize = true;
+            this.cboWatermarkUseImage.Location = new System.Drawing.Point(560, 200);
+            this.cboWatermarkUseImage.Name = "cboWatermarkUseImage";
+            this.cboWatermarkUseImage.Size = new System.Drawing.Size(80, 17);
+            this.cboWatermarkUseImage.TabIndex = 20;
+            this.cboWatermarkUseImage.Text = "Use Image:";
+            this.cboWatermarkUseImage.UseVisualStyleBackColor = true;
+            this.cboWatermarkUseImage.CheckedChanged += new System.EventHandler(this.cbWatermarkUseImage_CheckedChanged);
             // 
             // cbWatermarkPosition
             // 
             this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(120, 50);
+            this.cbWatermarkPosition.Location = new System.Drawing.Point(120, 24);
             this.cbWatermarkPosition.Name = "cbWatermarkPosition";
             this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
             this.cbWatermarkPosition.TabIndex = 18;
@@ -2508,7 +2509,7 @@ namespace ZSS
             // lblWatermarkPosition
             // 
             this.lblWatermarkPosition.AutoSize = true;
-            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 56);
+            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 30);
             this.lblWatermarkPosition.Name = "lblWatermarkPosition";
             this.lblWatermarkPosition.Size = new System.Drawing.Size(101, 13);
             this.lblWatermarkPosition.TabIndex = 19;
@@ -2516,7 +2517,7 @@ namespace ZSS
             // 
             // nudWatermarkOffset
             // 
-            this.nudWatermarkOffset.Location = new System.Drawing.Point(64, 76);
+            this.nudWatermarkOffset.Location = new System.Drawing.Point(304, 24);
             this.nudWatermarkOffset.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -2531,7 +2532,7 @@ namespace ZSS
             // lblWatermarkOffset
             // 
             this.lblWatermarkOffset.AutoSize = true;
-            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 80);
+            this.lblWatermarkOffset.Location = new System.Drawing.Point(256, 28);
             this.lblWatermarkOffset.Name = "lblWatermarkOffset";
             this.lblWatermarkOffset.Size = new System.Drawing.Size(38, 13);
             this.lblWatermarkOffset.TabIndex = 5;
@@ -2552,12 +2553,12 @@ namespace ZSS
             this.gbWatermarkBackground.Controls.Add(this.pbWatermarkBorderColor);
             this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient2);
             this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
-            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 240);
+            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 139);
             this.gbWatermarkBackground.Name = "gbWatermarkBackground";
             this.gbWatermarkBackground.Size = new System.Drawing.Size(488, 144);
             this.gbWatermarkBackground.TabIndex = 25;
             this.gbWatermarkBackground.TabStop = false;
-            this.gbWatermarkBackground.Text = "Background Settings";
+            this.gbWatermarkBackground.Text = "Text Background Settings";
             // 
             // cbWatermarkGradientType
             // 
@@ -2583,9 +2584,9 @@ namespace ZSS
             this.lblWatermarkCornerRadiusTip.AutoSize = true;
             this.lblWatermarkCornerRadiusTip.Location = new System.Drawing.Point(200, 24);
             this.lblWatermarkCornerRadiusTip.Name = "lblWatermarkCornerRadiusTip";
-            this.lblWatermarkCornerRadiusTip.Size = new System.Drawing.Size(141, 13);
+            this.lblWatermarkCornerRadiusTip.Size = new System.Drawing.Size(146, 13);
             this.lblWatermarkCornerRadiusTip.TabIndex = 23;
-            this.lblWatermarkCornerRadiusTip.Text = "(0 - 10) 0 = Normal rectangle";
+            this.lblWatermarkCornerRadiusTip.Text = "(0 - 10) 0 = Normal Rectangle";
             // 
             // nudWatermarkCornerRadius
             // 
@@ -2707,7 +2708,7 @@ namespace ZSS
             this.gbWatermarkText.Controls.Add(this.lblWatermarkFontTrans);
             this.gbWatermarkText.Controls.Add(this.txtWatermarkText);
             this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
-            this.gbWatermarkText.Location = new System.Drawing.Point(8, 120);
+            this.gbWatermarkText.Location = new System.Drawing.Point(8, 16);
             this.gbWatermarkText.Name = "gbWatermarkText";
             this.gbWatermarkText.Size = new System.Drawing.Size(488, 112);
             this.gbWatermarkText.TabIndex = 24;
@@ -2717,7 +2718,7 @@ namespace ZSS
             // lblWatermarkTextTip
             // 
             this.lblWatermarkTextTip.AutoSize = true;
-            this.lblWatermarkTextTip.Location = new System.Drawing.Point(304, 24);
+            this.lblWatermarkTextTip.Location = new System.Drawing.Point(312, 24);
             this.lblWatermarkTextTip.Name = "lblWatermarkTextTip";
             this.lblWatermarkTextTip.Size = new System.Drawing.Size(95, 13);
             this.lblWatermarkTextTip.TabIndex = 24;
@@ -2728,9 +2729,9 @@ namespace ZSS
             this.lblWatermarkText.AutoSize = true;
             this.lblWatermarkText.Location = new System.Drawing.Point(8, 24);
             this.lblWatermarkText.Name = "lblWatermarkText";
-            this.lblWatermarkText.Size = new System.Drawing.Size(82, 13);
+            this.lblWatermarkText.Size = new System.Drawing.Size(86, 13);
             this.lblWatermarkText.TabIndex = 16;
-            this.lblWatermarkText.Text = "Watermark text:";
+            this.lblWatermarkText.Text = "Watermark Text:";
             // 
             // lblWatermarkFontTransTip
             // 
@@ -2746,9 +2747,9 @@ namespace ZSS
             this.lblWatermarkFont.AutoSize = true;
             this.lblWatermarkFont.Location = new System.Drawing.Point(136, 56);
             this.lblWatermarkFont.Name = "lblWatermarkFont";
-            this.lblWatermarkFont.Size = new System.Drawing.Size(82, 13);
+            this.lblWatermarkFont.Size = new System.Drawing.Size(83, 13);
             this.lblWatermarkFont.TabIndex = 4;
-            this.lblWatermarkFont.Text = "Font information";
+            this.lblWatermarkFont.Text = "Font Information";
             // 
             // nudWatermarkFontTrans
             // 
@@ -2770,7 +2771,7 @@ namespace ZSS
             this.btnWatermarkFont.Name = "btnWatermarkFont";
             this.btnWatermarkFont.Size = new System.Drawing.Size(88, 24);
             this.btnWatermarkFont.TabIndex = 3;
-            this.btnWatermarkFont.Text = "Change Font";
+            this.btnWatermarkFont.Text = "Change Font...";
             this.btnWatermarkFont.UseVisualStyleBackColor = true;
             this.btnWatermarkFont.Click += new System.EventHandler(this.btnWatermarkFont_Click);
             // 
@@ -2786,7 +2787,7 @@ namespace ZSS
             // txtWatermarkText
             // 
             this.txtWatermarkText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtWatermarkText.Location = new System.Drawing.Point(96, 16);
+            this.txtWatermarkText.Location = new System.Drawing.Point(104, 16);
             this.txtWatermarkText.Name = "txtWatermarkText";
             this.txtWatermarkText.Size = new System.Drawing.Size(200, 20);
             this.txtWatermarkText.TabIndex = 15;
@@ -3985,6 +3986,7 @@ namespace ZSS
             this.tcApp.AllowDrop = true;
             this.tcApp.Controls.Add(this.tpMain);
             this.tcApp.Controls.Add(this.tpHotkeys);
+            this.tcApp.Controls.Add(this.tpWatermark);
             this.tcApp.Controls.Add(this.tpCapture);
             this.tcApp.Controls.Add(this.tpEditors);
             this.tcApp.Controls.Add(this.tpFTP);
@@ -5186,6 +5188,7 @@ namespace ZSS
             this.ilApp.Images.SetKeyName(5, "world_edit.png");
             this.ilApp.Images.SetKeyName(6, "pictures.png");
             this.ilApp.Images.SetKeyName(7, "application_edit.png");
+            this.ilApp.Images.SetKeyName(8, "tag_blue_edit.png");
             // 
             // txtActiveHelp
             // 
@@ -5231,6 +5234,54 @@ namespace ZSS
             this.ttApp.AutoPopDelay = 10000;
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
+            // 
+            // tpWatermark
+            // 
+            this.tpWatermark.Controls.Add(this.tabControl1);
+            this.tpWatermark.Controls.Add(this.gbWatermarkPreview);
+            this.tpWatermark.Controls.Add(this.cboWatermarkUseImage);
+            this.tpWatermark.Controls.Add(this.gbWatermarkGeneral);
+            this.tpWatermark.ImageIndex = 8;
+            this.tpWatermark.Location = new System.Drawing.Point(4, 23);
+            this.tpWatermark.Name = "tpWatermark";
+            this.tpWatermark.Size = new System.Drawing.Size(786, 428);
+            this.tpWatermark.TabIndex = 11;
+            this.tpWatermark.Text = "Watermark";
+            this.tpWatermark.UseVisualStyleBackColor = true;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tpWatermarkText);
+            this.tabControl1.Controls.Add(this.tpWatermarkImage);
+            this.tabControl1.Location = new System.Drawing.Point(16, 80);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(528, 336);
+            this.tabControl1.TabIndex = 29;
+            // 
+            // tpWatermarkText
+            // 
+            this.tpWatermarkText.Controls.Add(this.gbWatermarkBackground);
+            this.tpWatermarkText.Controls.Add(this.gbWatermarkText);
+            this.tpWatermarkText.Location = new System.Drawing.Point(4, 22);
+            this.tpWatermarkText.Name = "tpWatermarkText";
+            this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWatermarkText.Size = new System.Drawing.Size(520, 310);
+            this.tpWatermarkText.TabIndex = 0;
+            this.tpWatermarkText.Text = "Text";
+            this.tpWatermarkText.UseVisualStyleBackColor = true;
+            // 
+            // tpWatermarkImage
+            // 
+            this.tpWatermarkImage.Controls.Add(this.btwWatermarkBrowseImage);
+            this.tpWatermarkImage.Controls.Add(this.txtWatermarkImageLocation);
+            this.tpWatermarkImage.Location = new System.Drawing.Point(4, 22);
+            this.tpWatermarkImage.Name = "tpWatermarkImage";
+            this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(520, 310);
+            this.tpWatermarkImage.TabIndex = 1;
+            this.tpWatermarkImage.Text = "Image";
+            this.tpWatermarkImage.UseVisualStyleBackColor = true;
             // 
             // ZScreen
             // 
@@ -5304,7 +5355,6 @@ namespace ZSS
             this.gbCodeTitle.PerformLayout();
             this.gbActiveWindowNaming.ResumeLayout(false);
             this.gbActiveWindowNaming.PerformLayout();
-            this.tpFileSettingsWatermark.ResumeLayout(false);
             this.gbWatermarkPreview.ResumeLayout(false);
             this.gbWatermarkPreview.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).EndInit();
@@ -5396,6 +5446,12 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
+            this.tpWatermark.ResumeLayout(false);
+            this.tpWatermark.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tpWatermarkText.ResumeLayout(false);
+            this.tpWatermarkImage.ResumeLayout(false);
+            this.tpWatermarkImage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5812,7 +5868,7 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbTinyPicSizeCheck;
         private System.Windows.Forms.Button btwWatermarkBrowseImage;
         private System.Windows.Forms.TextBox txtWatermarkImageLocation;
-        private System.Windows.Forms.CheckBox cbWatermarkUseImage;
+        private System.Windows.Forms.CheckBox cboWatermarkUseImage;
         private System.Windows.Forms.CheckBox cbPromptforUpload;
         private System.Windows.Forms.CheckBox cboAutoChangeUploadDestination;
         private System.Windows.Forms.Label lblUploadDurationLimit;
@@ -5820,6 +5876,10 @@ namespace ZSS
         private System.Windows.Forms.Button btnDebugStart;
         private System.Windows.Forms.ToolStripMenuItem tsmMain;
         private System.Windows.Forms.Button btnGalleryTinyPic;
+        private System.Windows.Forms.TabPage tpWatermark;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tpWatermarkText;
+        private System.Windows.Forms.TabPage tpWatermarkImage;
 
     }
 }
