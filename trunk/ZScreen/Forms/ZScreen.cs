@@ -3736,8 +3736,8 @@ namespace ZSS
 
         private void CodesMenuCloseEvents()
         {
-            tpFileSettingsWatermark.MouseClick += new MouseEventHandler(CodesMenuCloseEvent);
-            foreach (Control cntrl in tpFileSettingsWatermark.Controls)
+            tpWatermark.MouseClick += new MouseEventHandler(CodesMenuCloseEvent);
+            foreach (Control cntrl in tpWatermark.Controls)
             {
                 if (cntrl.GetType() == typeof(GroupBox))
                 {
