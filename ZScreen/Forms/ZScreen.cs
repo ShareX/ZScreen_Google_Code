@@ -1300,6 +1300,7 @@ namespace ZSS
             SaveHistoryItems();
             if (lbHistory.Items.Count > 0)
             {
+                lbHistory.ClearSelected();
                 lbHistory.SelectedIndex = 0;
             }
         }
