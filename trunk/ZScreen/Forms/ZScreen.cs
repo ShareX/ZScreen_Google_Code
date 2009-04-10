@@ -126,7 +126,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
 
             confApp.SelectedObject = Program.conf;
-         
+
 
             startHeight = txtActiveHelp.Height;
             Program.ConfigureDirs();
@@ -821,7 +821,6 @@ namespace ZSS
                         if (t.Errors.Count > 0)
                         {
                             tti = ToolTipIcon.Error;
-                            // this is not good
                             fileOrUrl = "Warning: " + t.Errors[t.Errors.Count - 1];
                         }
                     }
@@ -1017,22 +1016,17 @@ namespace ZSS
                 return;
             }
 
-            if (task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD)
+            if ((task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD) &&
+                task.ImageDestCategory != ImageDestType.FTP && !task.IsValidImage())
             {
-                if (task.ImageDestCategory != ImageDestType.FTP)
+                if (Program.conf.AutoSwitchFTP)
                 {
-                    if (!IsValidImage(ref task))
-                    {
-                        if (Program.conf.AutoSwitchFTP && Program.CheckFTPAccounts())
-                        {
-                            task.ImageDestCategory = ImageDestType.FTP;
-                        }
-                        else
-                        {
-                            e.Result = task;
-                            return;
-                        }
-                    }
+                    task.ImageDestCategory = ImageDestType.FTP;
+                }
+                else
+                {
+                    e.Result = task;
+                    return;
                 }
             }
 
@@ -1157,7 +1151,10 @@ namespace ZSS
                                         btnTranslate.Enabled = true;
                                         break;
                                     case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                                        Clipboard.SetText(task.RemoteFilePath);
+                                        if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                                        {
+                                            Clipboard.SetText(task.RemoteFilePath);
+                                        }
                                         break;
                                 }
                                 break;
@@ -1250,7 +1247,7 @@ namespace ZSS
 
         private bool RetryUpload(MainAppTask t)
         {
-            if (Program.conf.ImageUploadRetry && t.Errors.Count > 0 && !t.Retry &&
+            if (Program.conf.ImageUploadRetry && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
                 (t.ImageDestCategory == ImageDestType.IMAGESHACK || t.ImageDestCategory == ImageDestType.TINYPIC))
             {
                 MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
@@ -3199,27 +3196,6 @@ namespace ZSS
             lbHistory.Tag = "Right click to access Copy to Clipboard options.";
             txtHistoryLocalPath.Tag = "Double click to copy File Path to Clipboard.";
             txtHistoryRemotePath.Tag = "Double click to copy URL to Clipboard.";
-        }
-
-        /// <summary>
-        /// Check for valid image and update task.Errors with the error message
-        /// </summary>
-        /// <param name="task"></param>
-        /// <returns></returns>
-        private bool IsValidImage(ref MainAppTask task)
-        {
-            bool isImage = true;
-
-            try
-            {
-                Image.FromFile(task.LocalFilePath).Dispose();
-            }
-            catch (OutOfMemoryException ex)
-            {
-                Console.WriteLine("Unsupported image. " + ex.Message);
-                isImage = false;
-            }
-            return isImage;
         }
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)

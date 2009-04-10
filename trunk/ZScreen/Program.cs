@@ -240,10 +240,18 @@ namespace ZSS
             }
         }
 
-        public static bool CheckFTPAccounts()
+        public static bool CheckFTPAccounts(ref ZSS.Tasks.MainAppTask task)
         {
-            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPselected != -1 &&
-                Program.conf.FTPAccountList.Count > Program.conf.FTPselected;
+            if (Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPselected != -1 &&
+                Program.conf.FTPAccountList.Count > Program.conf.FTPselected)
+            {
+                return true;
+            }
+            else
+            {
+                task.Errors.Add("An FTP account does not exist or not selected properly.");
+                return false;
+            }
         }
     }
 }

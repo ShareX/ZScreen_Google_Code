@@ -107,6 +107,7 @@ namespace ZSS.Tasks
             }
         }
         public int UploadDuration { get; set; }
+        public bool IsImage { get; set; }
 
         #endregion
 
@@ -120,10 +121,22 @@ namespace ZSS.Tasks
         /// Name of the Image
         /// </summary>                
         public StringBuilder FileName { get; set; }
+        private string localFilePath;
         /// <summary>
         /// Local file path of the Image: Picture or Screenshot or Text file
         /// </summary>
-        public string LocalFilePath { get; private set; }
+        public string LocalFilePath
+        {
+            get
+            {
+                return localFilePath;
+            }
+            private set
+            {
+                localFilePath = value;
+                CheckIsValidImage();
+            }
+        }
         /// <summary>
         /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
@@ -192,6 +205,33 @@ namespace ZSS.Tasks
         {
             this.LocalFilePath = fp;
             this.FileName = new StringBuilder(Path.GetFileName(fp));
+        }
+
+        /// <summary>
+        /// Check for valid image and update task.Errors with the error message
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public bool IsValidImage()
+        {
+            if(!IsImage)
+            {
+                Errors.Add("Unsupported image.");
+            }
+            return IsImage;
+        }
+
+        private void CheckIsValidImage()
+        {
+            try
+            {
+                Image.FromFile(LocalFilePath).Dispose();
+                IsImage = true;
+            }
+            catch
+            {
+                IsImage = false;
+            }
         }
 
         #region "Functions"
