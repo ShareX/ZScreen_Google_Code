@@ -227,12 +227,14 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.entireScreen;
 
             // Watermark
+            rbWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
             if (cbWatermarkPosition.Items.Count == 0)
             {
                 cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
             }
             cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
             nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
+
             txtWatermarkText.Text = Program.conf.WatermarkText;
             pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
             lblWatermarkFont.Text = FontToString();
@@ -248,10 +250,10 @@ namespace ZSS
             }
             cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
 
-            rbWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
             rbWatermarkUseText.Checked = !rbWatermarkUseImage.Checked;
             txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             cbWatermarkUseBorder.Checked = Program.conf.WatermarkUseBorder;
+            cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
 
             TestWatermark();
 
@@ -4708,6 +4710,12 @@ namespace ZSS
         private void rbWatermarkUseText_CheckedChanged(object sender, EventArgs e)
         {
             PreviewWatermark();
+        }
+
+        private void cbWatermarkAddReflection_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
+            TestWatermark();
         }
     }
 }
