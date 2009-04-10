@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using System.Threading;
+using ZSS.Properties;
 
 namespace ZSS
 {
@@ -75,31 +76,43 @@ namespace ZSS
         {
             get
             {
+                if (string.IsNullOrEmpty(Settings.Default.RootDir))
+                {
+                    Settings.Default.RootDir = DefaultRootAppFolder;
+                }
                 if (Directory.Exists(PortableRootFolder))
+                {
                     return PortableRootFolder;
+                }
                 else
                 {
-                    return DefaultRootAppFolder;
+                    return Settings.Default.RootDir;
                 }
             }
             set
             {
+                Settings.Default.RootDir = value;
                 DefaultRootAppFolder = value;
             }
+        }
+
+        public static void InitializeDefaultFolderPaths()
+        {
+            DefaultSettingsFolder = Path.Combine(RootFolder, "Settings");
+            DefaultImagesFolder = Path.Combine(RootFolder, "Images");
+            DefaultTextFolder = Path.Combine(RootFolder, "Text");
+            DefaultTempFolder = Path.Combine(RootFolder, "Temp");
+            DefaultCacheFolder = Path.Combine(RootFolder, "Cache");
+
+            DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
+            XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
         }
 
         public static string XMLSettingsFile
         {
             get
             {
-                DefaultSettingsFolder = Path.Combine(RootFolder, "Settings");
-                DefaultImagesFolder = Path.Combine(RootFolder, "Images");
-                DefaultTextFolder = Path.Combine(RootFolder, "Text");
-                DefaultTempFolder = Path.Combine(RootFolder, "Temp");
-                DefaultCacheFolder = Path.Combine(RootFolder, "Cache");
-
-                DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
-                XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
+                InitializeDefaultFolderPaths();
 
                 if (!Directory.Exists(DefaultSettingsFolder))
                 {
@@ -140,7 +153,7 @@ namespace ZSS
         public static XMLSettings conf = XMLSettings.Read();
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
-        public static readonly string FILTER_ACCOUNTS = string.Format( "ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
+        public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
         public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
 
@@ -195,7 +208,7 @@ namespace ZSS
         public static void ConfigureDirs()
         {
             // Settings         
-            if (string.IsNullOrEmpty(Program.conf.SettingsDir))
+            if (Program.conf.SettingsDir != DefaultSettingsFolder)
             {
                 conf.SettingsDir = DefaultSettingsFolder;
             }
@@ -204,7 +217,7 @@ namespace ZSS
                 Directory.CreateDirectory(DefaultSettingsFolder);
             }
             // Images
-            if (string.IsNullOrEmpty(conf.ImagesDir))
+            if (conf.ImagesDir != DefaultImagesFolder)
             {
                 conf.ImagesDir = DefaultImagesFolder;
             }
@@ -213,7 +226,7 @@ namespace ZSS
                 Directory.CreateDirectory(DefaultImagesFolder);
             }
             // Text
-            if (string.IsNullOrEmpty(conf.TextDir))
+            if (conf.TextDir != DefaultTextFolder)
             {
                 conf.TextDir = DefaultTextFolder;
             }
@@ -222,7 +235,7 @@ namespace ZSS
                 Directory.CreateDirectory(DefaultTextFolder);
             }
             // Cache
-            if (string.IsNullOrEmpty(Program.conf.CacheDir))
+            if (Program.conf.CacheDir != DefaultCacheFolder)
             {
                 conf.CacheDir = DefaultCacheFolder;
             }
@@ -231,7 +244,7 @@ namespace ZSS
                 Directory.CreateDirectory(Program.conf.CacheDir);
             }
             // Temp
-            if (string.IsNullOrEmpty(Program.conf.TempDir))
+            if (Program.conf.TempDir != DefaultTempFolder)
             {
                 conf.TempDir = DefaultTempFolder;
             }
