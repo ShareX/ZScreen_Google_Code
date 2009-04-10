@@ -196,8 +196,10 @@ namespace ZSS
         public decimal UploadDurationLimit = 10000;
         public string ImageShackRegistrationCode = "";
         public string TinyPicShuk = "";
-        public string TinyPicUserName = "";
-        public string TinyPicPassword = "";
+        [CategoryAttribute("HTTP/TinyPic")]
+        public string TinyPicUserName { get; set; }
+        [CategoryAttribute("HTTP/TinyPic"), TypeConverter(typeof(CustomPassConverter))]
+        public string TinyPicPassword { get; set; }
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = false;
 
@@ -392,4 +394,16 @@ namespace ZSS
         #endregion
 
     }
+
+    public class CustomPassConverter : System.ComponentModel.StringConverter
+    {
+        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        {
+            string passValue = (string)value;
+            string pass = new string('*', passValue.Length);
+            return pass;
+        }
+    }
+
 }
+
