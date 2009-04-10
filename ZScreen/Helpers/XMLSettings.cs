@@ -36,6 +36,12 @@ namespace ZSS
     [XmlRoot("Settings")]
     public class XMLSettings
     {
+        public XMLSettings()
+        {
+            CropRegionInterval = 75; // until DefaultValueAttribute works properly
+            CropRegionStep =5;
+        }
+
         #region Settings
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -107,11 +113,11 @@ namespace ZSS
         public bool CropShowRuler { get; set; }
         [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
         public bool CropDynamicBorderColor { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(75)]
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal),"75")]
         public decimal CropRegionInterval { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(5)]
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "5")]
         public decimal CropRegionStep { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(50)]
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "50")]
         public decimal CropHueRange { get; set; }
         public string CropBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
         [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(1)]
