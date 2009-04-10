@@ -125,6 +125,9 @@ namespace ZSS
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
 
+            confApp.SelectedObject = Program.conf;
+         
+
             startHeight = txtActiveHelp.Height;
             Program.ConfigureDirs();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
