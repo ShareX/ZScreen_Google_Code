@@ -226,7 +226,7 @@ namespace ZSS
             this.lblWatermarkOffset = new System.Windows.Forms.Label();
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
-            this.cboWatermarkUseImage = new System.Windows.Forms.CheckBox();
+            this.rbWatermarkUseImage = new System.Windows.Forms.RadioButton();
             this.gbWatermarkBackground = new System.Windows.Forms.GroupBox();
             this.cbWatermarkGradientType = new System.Windows.Forms.ComboBox();
             this.lblWatermarkGradientType = new System.Windows.Forms.Label();
@@ -341,6 +341,7 @@ namespace ZSS
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpWatermarkText = new System.Windows.Forms.TabPage();
             this.tpWatermarkImage = new System.Windows.Forms.TabPage();
+            this.cbWatermarkUseBorder = new System.Windows.Forms.CheckBox();
             this.tpHTTP = new System.Windows.Forms.TabPage();
             this.tcHTTP = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
@@ -456,7 +457,7 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.cbWatermarkUseBorder = new System.Windows.Forms.CheckBox();
+            this.rbWatermarkUseText = new System.Windows.Forms.RadioButton();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -2573,10 +2574,12 @@ namespace ZSS
             // 
             // gbWatermarkPreview
             // 
+            this.gbWatermarkPreview.Controls.Add(this.rbWatermarkUseText);
             this.gbWatermarkPreview.Controls.Add(this.pbWatermarkShow);
+            this.gbWatermarkPreview.Controls.Add(this.rbWatermarkUseImage);
             this.gbWatermarkPreview.Location = new System.Drawing.Point(560, 8);
             this.gbWatermarkPreview.Name = "gbWatermarkPreview";
-            this.gbWatermarkPreview.Size = new System.Drawing.Size(216, 176);
+            this.gbWatermarkPreview.Size = new System.Drawing.Size(216, 200);
             this.gbWatermarkPreview.TabIndex = 28;
             this.gbWatermarkPreview.TabStop = false;
             this.gbWatermarkPreview.Text = "Watermark Preview";
@@ -2649,33 +2652,33 @@ namespace ZSS
             // 
             // btwWatermarkBrowseImage
             // 
-            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(416, 13);
+            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(328, 13);
             this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
             this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
             this.btwWatermarkBrowseImage.TabIndex = 22;
             this.btwWatermarkBrowseImage.Tag = "Browse for a Watermark Image";
-            this.btwWatermarkBrowseImage.Text = "Browse";
+            this.btwWatermarkBrowseImage.Text = "Browse...";
             this.btwWatermarkBrowseImage.UseVisualStyleBackColor = true;
             this.btwWatermarkBrowseImage.Click += new System.EventHandler(this.btwWatermarkBrowseImage_Click);
             // 
             // txtWatermarkImageLocation
             // 
-            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(104, 16);
+            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(16, 16);
             this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
             this.txtWatermarkImageLocation.Size = new System.Drawing.Size(304, 20);
             this.txtWatermarkImageLocation.TabIndex = 21;
             this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
             // 
-            // cboWatermarkUseImage
+            // rbWatermarkUseImage
             // 
-            this.cboWatermarkUseImage.AutoSize = true;
-            this.cboWatermarkUseImage.Location = new System.Drawing.Point(16, 16);
-            this.cboWatermarkUseImage.Name = "cboWatermarkUseImage";
-            this.cboWatermarkUseImage.Size = new System.Drawing.Size(80, 17);
-            this.cboWatermarkUseImage.TabIndex = 20;
-            this.cboWatermarkUseImage.Text = "Use Image:";
-            this.cboWatermarkUseImage.UseVisualStyleBackColor = true;
-            this.cboWatermarkUseImage.CheckedChanged += new System.EventHandler(this.cbWatermarkUseImage_CheckedChanged);
+            this.rbWatermarkUseImage.AutoSize = true;
+            this.rbWatermarkUseImage.Location = new System.Drawing.Point(104, 168);
+            this.rbWatermarkUseImage.Name = "rbWatermarkUseImage";
+            this.rbWatermarkUseImage.Size = new System.Drawing.Size(54, 17);
+            this.rbWatermarkUseImage.TabIndex = 20;
+            this.rbWatermarkUseImage.Text = "Image";
+            this.rbWatermarkUseImage.UseVisualStyleBackColor = true;
+            this.rbWatermarkUseImage.CheckedChanged += new System.EventHandler(this.cbWatermarkUseImage_CheckedChanged);
             // 
             // gbWatermarkBackground
             // 
@@ -4034,7 +4037,6 @@ namespace ZSS
             this.tpWatermarkImage.Controls.Add(this.cbWatermarkUseBorder);
             this.tpWatermarkImage.Controls.Add(this.btwWatermarkBrowseImage);
             this.tpWatermarkImage.Controls.Add(this.txtWatermarkImageLocation);
-            this.tpWatermarkImage.Controls.Add(this.cboWatermarkUseImage);
             this.tpWatermarkImage.Location = new System.Drawing.Point(4, 22);
             this.tpWatermarkImage.Name = "tpWatermarkImage";
             this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
@@ -4042,6 +4044,17 @@ namespace ZSS
             this.tpWatermarkImage.TabIndex = 1;
             this.tpWatermarkImage.Text = "Image";
             this.tpWatermarkImage.UseVisualStyleBackColor = true;
+            // 
+            // cbWatermarkUseBorder
+            // 
+            this.cbWatermarkUseBorder.AutoSize = true;
+            this.cbWatermarkUseBorder.Location = new System.Drawing.Point(16, 48);
+            this.cbWatermarkUseBorder.Name = "cbWatermarkUseBorder";
+            this.cbWatermarkUseBorder.Size = new System.Drawing.Size(78, 17);
+            this.cbWatermarkUseBorder.TabIndex = 23;
+            this.cbWatermarkUseBorder.Text = "Use border";
+            this.cbWatermarkUseBorder.UseVisualStyleBackColor = true;
+            this.cbWatermarkUseBorder.CheckedChanged += new System.EventHandler(this.cbWatermarkUseBorder_CheckedChanged);
             // 
             // tpHTTP
             // 
@@ -5296,16 +5309,16 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // cbWatermarkUseBorder
+            // rbWatermarkUseText
             // 
-            this.cbWatermarkUseBorder.AutoSize = true;
-            this.cbWatermarkUseBorder.Location = new System.Drawing.Point(16, 48);
-            this.cbWatermarkUseBorder.Name = "cbWatermarkUseBorder";
-            this.cbWatermarkUseBorder.Size = new System.Drawing.Size(78, 17);
-            this.cbWatermarkUseBorder.TabIndex = 23;
-            this.cbWatermarkUseBorder.Text = "Use border";
-            this.cbWatermarkUseBorder.UseVisualStyleBackColor = true;
-            this.cbWatermarkUseBorder.CheckedChanged += new System.EventHandler(this.cbWatermarkUseBorder_CheckedChanged);
+            this.rbWatermarkUseText.AutoSize = true;
+            this.rbWatermarkUseText.Location = new System.Drawing.Point(8, 168);
+            this.rbWatermarkUseText.Name = "rbWatermarkUseText";
+            this.rbWatermarkUseText.Size = new System.Drawing.Size(46, 17);
+            this.rbWatermarkUseText.TabIndex = 30;
+            this.rbWatermarkUseText.Text = "Text";
+            this.rbWatermarkUseText.UseVisualStyleBackColor = true;
+            this.rbWatermarkUseText.CheckedChanged += new System.EventHandler(this.rbWatermarkUseText_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -5891,7 +5904,7 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbTinyPicSizeCheck;
         private System.Windows.Forms.Button btwWatermarkBrowseImage;
         private System.Windows.Forms.TextBox txtWatermarkImageLocation;
-        private System.Windows.Forms.CheckBox cboWatermarkUseImage;
+        private System.Windows.Forms.RadioButton rbWatermarkUseImage;
         private System.Windows.Forms.CheckBox cbPromptforUpload;
         private System.Windows.Forms.CheckBox cboAutoChangeUploadDestination;
         private System.Windows.Forms.Label lblUploadDurationLimit;
@@ -5906,6 +5919,7 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpOptionsAdv;
         private System.Windows.Forms.PropertyGrid confApp;
         private System.Windows.Forms.CheckBox cbWatermarkUseBorder;
+        private System.Windows.Forms.RadioButton rbWatermarkUseText;
 
     }
 }

@@ -248,7 +248,8 @@ namespace ZSS
             }
             cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
 
-            cboWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
+            rbWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
+            rbWatermarkUseText.Checked = !rbWatermarkUseImage.Checked;
             txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             cbWatermarkUseBorder.Checked = Program.conf.WatermarkUseBorder;
 
@@ -4612,7 +4613,12 @@ namespace ZSS
 
         private void cbWatermarkUseImage_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkUseImage = cboWatermarkUseImage.Checked;
+            PreviewWatermark();
+        }
+
+        private void PreviewWatermark()
+        {
+            Program.conf.WatermarkUseImage = rbWatermarkUseImage.Checked;
             TestWatermark();
         }
 
@@ -4628,6 +4634,7 @@ namespace ZSS
         private void btwWatermarkBrowseImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog fd = new OpenFileDialog();
+            fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             if (fd.ShowDialog() == DialogResult.OK)
             {
                 txtWatermarkImageLocation.Text = fd.FileName;
@@ -4689,6 +4696,11 @@ namespace ZSS
         private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
+        }
+
+        private void rbWatermarkUseText_CheckedChanged(object sender, EventArgs e)
+        {
+            PreviewWatermark();
         }
     }
 }
