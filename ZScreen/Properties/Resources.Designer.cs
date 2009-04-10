@@ -291,6 +291,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tag_blue_edit {
+            get {
+                object obj = ResourceManager.GetObject("tag_blue_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Extend ClipboardManager to support Text in clipboard
         ///Text Editors tab
@@ -314,13 +321,15 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.6.13.0 Option to automatically switch from TinyPic to ImageShack if the image dimensions are greater than 1600x1600
+        ///   Looks up a localized string similar to Version 2.6.16 - 20090410
+        ///
+        ///2.6.16.1 More accurate error reporting via BalloonTip
+        ///2.6.16.0 PropertyGrid in Options : Advanced tab exposes XML Settings that are not visible in GUI
+        ///2.6.15.0 Option to set Timeout in milliseconds to retry other Image Uploaders
+        ///2.6.14.0 Prompt for Upload [Issue 51]
+        ///2.6.13.0 Option to automatically switch from TinyPic to ImageShack if the image dimensions are greater than 1600x1600
         ///2.6.12.0 ZScreen Window is now resizable to increase viewing area in History
-        ///2.6.11.0 Delay for Entire Screen and Active Window Screenshot is now set in milliseconds
-        ///2.6.10.0 Crop Shot and Selected Window can optionally display a Dynamic Region Border
-        ///2.6.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
-        ///2.6.09.0 Added new Clipboard URL Type: Full Image for Wiki
-        ///2.6 [rest of string was truncated]&quot;;.
+        ///2.6.11.0 Delay  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

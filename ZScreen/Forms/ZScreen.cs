@@ -2003,16 +2003,16 @@ namespace ZSS
 
             if (tsm == tsmHotkeys)
                 sel = tpHotkeys;
+            else if (tsm == tsmCapture)
+                sel = tpCapture;
+            else if (tsm == tsmWatermark)
+                sel = tpWatermark;
+            else if (tsm == tsmEditors)
+                sel = tpEditors;
             else if (tsm == tsmFTP)
                 sel = tpFTP;
             else if (tsm == tsmHTTP)
                 sel = tpHTTP;
-            else if (tsm == tsmEditors)
-                sel = tpEditors;
-            else if (tsm == tsmCapture)
-                sel = tpCapture;
-            else if (tsm == tsmFTP)
-                sel = tpFTP;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
             else if (tsm == tsmOptions)
@@ -2021,7 +2021,6 @@ namespace ZSS
             tcApp.SelectedTab = sel;
 
             BringUpMenu();
-
             tcApp.Focus();
         }
 
@@ -4697,6 +4696,7 @@ namespace ZSS
         private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
+            TestWatermark();
         }
 
         private void rbWatermarkUseText_CheckedChanged(object sender, EventArgs e)
