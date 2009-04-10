@@ -369,5 +369,22 @@ namespace ZSS
                 return "0 Bytes";
             }
         }
+
+        public static void BackupFTPSettings()
+        {
+            if (Program.conf.FTPAccountList != null)
+            {
+                if (Program.conf.FTPAccountList.Count > 0)
+                {
+
+                    string fp = Path.Combine(Program.conf.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
+                    if (!File.Exists(fp))
+                    {
+                        FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
+                        fam.Save(fp);
+                    }
+                }
+            }
+        }
     }
 }
