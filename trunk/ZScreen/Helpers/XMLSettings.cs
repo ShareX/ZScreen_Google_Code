@@ -35,6 +35,12 @@ namespace ZSS
     [XmlRoot("Settings")]
     public class XMLSettings
     {
+
+        public XMLSettings()
+        {
+            FTPSettingsBackup = true;
+        }
+
         #region Settings
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +158,7 @@ namespace ZSS
         public string WatermarkBorderColor = SerializeColor(Color.Black);
         public decimal WatermarkBackTrans = 225;
         public System.Drawing.Drawing2D.LinearGradientMode WatermarkGradientType = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-        
+
         public bool WatermarkUseImage = false;
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
@@ -184,6 +190,8 @@ namespace ZSS
         public int FTPselected = -1;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
+        [DescriptionAttribute("Periodically backup FTP Settings"), CategoryAttribute("FTP"), DefaultValue(true)]
+        public bool FTPSettingsBackup { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
@@ -402,8 +410,12 @@ namespace ZSS
     {
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
-            string passValue = (string)value;
-            string pass = new string('*', passValue.Length);
+            string pass = "";
+            if (value != null)
+            {
+                string passValue = (string)value;
+                pass = new string('*', passValue.Length);
+            }
             return pass;
         }
     }

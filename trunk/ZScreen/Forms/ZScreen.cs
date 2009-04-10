@@ -2086,6 +2086,11 @@ namespace ZSS
                 lblFirstRun.Visible = true;
                 Program.conf.RunOnce = true;
             }
+
+            if (Program.conf.FTPSettingsBackup)
+            {
+                FileSystem.BackupFTPSettings();
+            }
         }
 
         private void AddToClipboardByDoubleClick(TabPage tp)
