@@ -3571,8 +3571,11 @@ namespace ZSS
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ZScreen));
             Bitmap bmp = new Bitmap((Image)(resources.GetObject("pbLogo.Image")));
-            bmp = bmp.Clone(new Rectangle(61, 32, 200, 140), PixelFormat.Format32bppArgb);
-            pbWatermarkShow.Image = WatermarkMaker.GetImage(bmp);
+            bmp = bmp.Clone(new Rectangle(62, 33, 199, 140), PixelFormat.Format32bppArgb);
+            Bitmap bmp2 = new Bitmap(pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height);
+            Graphics.FromImage(bmp2).DrawImage(bmp, new Rectangle(0, 0, pbWatermarkShow.ClientRectangle.Width,
+                pbWatermarkShow.ClientRectangle.Height));
+            pbWatermarkShow.Image = WatermarkMaker.GetImage(bmp2);
         }
 
         private void txtWatermarkText_Leave(object sender, EventArgs e)
