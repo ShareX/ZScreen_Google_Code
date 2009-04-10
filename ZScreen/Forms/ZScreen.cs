@@ -3320,7 +3320,6 @@ namespace ZSS
                     tsmCopyCbHistory.Enabled = checkRemote;
                     browseURLToolStripMenuItem.Enabled = checkRemote;
                     btnHistoryCopyLink.Enabled = checkRemote;
-                    btnHistoryCopyImage.Enabled = checkLocal;
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
 
@@ -3328,6 +3327,7 @@ namespace ZSS
                     {
                         pbPreview.Visible = true;
                         txtPreview.Visible = false;
+                        btnHistoryCopyImage.Enabled = true;
                         if (checkLocal)
                         {
                             pbPreview.ImageLocation = hi.LocalPath;

@@ -58,7 +58,7 @@ namespace ZSS.Helpers
             this.JobName = task.Job.GetDescription();
             this.FileName = task.FileName.ToString();
             this.LocalPath = task.LocalFilePath;
-            this.RemotePath = task.RemoteFilePath;
+            this.RemotePath = task.RemoteFilePath;            
             this.DestinationMode = task.ImageDestCategory.GetDescription();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.ImageManager;
