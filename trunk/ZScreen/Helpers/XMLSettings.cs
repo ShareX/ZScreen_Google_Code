@@ -28,6 +28,8 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Drawing;
 using ZSS.TextUploader.Global;
+using System.Xml;
+using System.ComponentModel;
 
 namespace ZSS
 {
@@ -51,11 +53,16 @@ namespace ZSS
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
         public decimal ScreenshotDelay = 0;
-        public bool PromptforUpload = false;
-        public bool ManualNaming = false;
-        public bool ShowCursor = false;
-        public bool ShowWatermark = false;
-        public bool CropGridToggle = false;
+        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
+        public bool PromptforUpload { get; set; }
+        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
+        public bool ManualNaming { get; set; }
+        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
+        public bool ShowCursor { get; set; }
+        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
+        public bool ShowWatermark { get; set; }
+        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
+        public bool CropGridToggle { get; set; }
         public Size CropGridSize = new Size(100, 100);
         public bool ActiveHelp = true;
         public bool GTActiveHelp = false;
@@ -95,21 +102,32 @@ namespace ZSS
         public string CropCrosshairColor = SerializeColor(Color.Black);
         public bool CropShowBigCross = true;
 
-        public bool CropShowRuler = true;
-        public bool CropDynamicBorderColor = true;
-        public decimal CropRegionInterval = 75;
-        public decimal CropRegionStep = 5;
-        public decimal CropHueRange = 50;
+        [DescriptionAttribute("Show or Hide Ruler for Crop Shots."), 
+        CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
+        public bool CropShowRuler { get; set; }
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
+        public bool CropDynamicBorderColor { get; set; }
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(75)]
+        public decimal CropRegionInterval { get; set; }
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(5)]
+        public decimal CropRegionStep { get; set; }
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(50)]
+        public decimal CropHueRange { get; set; }
         public string CropBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
-        public decimal CropBorderSize = 1;
-        public bool CropShowGrids = false;
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(1)]
+        public decimal CropBorderSize { get; set; }
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(false)]
+        public bool CropShowGrids { get; set; }
 
         // Selected Window
 
         public int SelectedWindowRegionStyle = 2;
-        public bool SelectedWindowFront = false;
-        public bool SelectedWindowRectangleInfo = true;
-        public bool SelectedWindowRuler = true;
+        [CategoryAttribute("Capture/Selected Window"), DefaultValueAttribute(false)]
+        public bool SelectedWindowFront { get; set; }
+        [CategoryAttribute("Capture/Selected Window"), DefaultValueAttribute(true)]
+        public bool SelectedWindowRectangleInfo { get; set; }
+        [CategoryAttribute("Capture/Selected Window"), DefaultValueAttribute(true)]
+        public bool SelectedWindowRuler { get; set; }
         public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
         public decimal SelectedWindowBorderSize = 2;
         public bool SelectedWindowDynamicBorderColor = true;
