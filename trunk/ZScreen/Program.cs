@@ -51,8 +51,7 @@ namespace ZSS
         internal static string DefaultXMLFilePath;
         private static string XMLPortableFile;
 
-        private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.Personal), Application.ProductName);
+        private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen/";
@@ -76,26 +75,26 @@ namespace ZSS
         {
             get
             {
-                if (string.IsNullOrEmpty(Settings.Default.RootDir))
-                {
-                    Settings.Default.RootDir = DefaultRootAppFolder;
-                }
                 if (Directory.Exists(PortableRootFolder))
                 {
-                    return PortableRootFolder;
+                    Settings.Default.RootDir = PortableRootFolder;
+                    mAppInfo.AppName = Application.ProductName + " Portable";
                 }
                 else
                 {
-                    return Settings.Default.RootDir;
+                    Settings.Default.RootDir = DefaultRootAppFolder;
                 }
+                return Settings.Default.RootDir;
             }
             set
             {
                 Settings.Default.RootDir = value;
-                DefaultRootAppFolder = value;
             }
         }
 
+        /// <summary>
+        /// Function to update Default Folder Paths based on Root folder
+        /// </summary>
         public static void InitializeDefaultFolderPaths()
         {
             DefaultSettingsFolder = Path.Combine(RootFolder, "Settings");
