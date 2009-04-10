@@ -156,6 +156,7 @@ namespace ZSS
         public bool WatermarkUseImage = false;
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
+        public bool WatermarkAddReflection = false;
 
         // Quality
 

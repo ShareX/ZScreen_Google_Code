@@ -73,8 +73,11 @@ namespace ZSS
                             {
                                 g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgRect.X - 1, imgRect.Y - 1, imgRect.Width, imgRect.Height));
                             }
-                            Bitmap img3 = Transparent((Bitmap)img2);
-                            g.DrawImage(img3, new Rectangle(imgRect.X, imgRect.Y + imgRect.Height, img3.Width, img3.Height));
+                            if (Program.conf.WatermarkAddReflection)
+                            {
+                                Bitmap img3 = Transparent((Bitmap)img2);
+                                g.DrawImage(img3, new Rectangle(imgRect.X, imgRect.Y + imgRect.Height, img3.Width, img3.Height));
+                            }
                         }
                     }
                 }
@@ -146,30 +149,25 @@ namespace ZSS
             return img;
         }
 
-        public static Bitmap Transparent(Bitmap bmp)
+        public static Bitmap Transparent(Bitmap b)
         {
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            Bitmap b = bmp.Clone(new Rectangle(0, 0, bmp.Width, bmp.Height / 2), PixelFormat.Format32bppArgb);
+            b.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            b = b.Clone(new Rectangle(0, 0, b.Width, b.Height / 2), PixelFormat.Format32bppArgb);
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
-            int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
             byte alpha;
+            int nOffset = bmData.Stride - b.Width * 4;
 
             unsafe
             {
-                byte* p = (byte*)(void*)Scan0;
-                int nOffset = stride - b.Width * 4;
+                byte* p = (byte*)(void*)bmData.Scan0;
 
                 for (int y = 0; y < b.Height; ++y)
                 {
                     for (int x = 0; x < b.Width; ++x)
                     {
                         alpha = (byte)(255 - 255 * (y + 1) / b.Height);
-                        if (p[3] > alpha)
-                        {
-                            p[3] = alpha;
-                        }
+                        if (p[3] > alpha) p[3] = alpha;
                         p += 4;
                     }
                     p += nOffset;
