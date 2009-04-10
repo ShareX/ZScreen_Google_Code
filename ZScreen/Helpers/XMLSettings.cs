@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+   
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
 #endregion
@@ -28,7 +28,6 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Drawing;
 using ZSS.TextUploader.Global;
-using System.Xml;
 using System.ComponentModel;
 
 namespace ZSS
@@ -36,27 +35,6 @@ namespace ZSS
     [XmlRoot("Settings")]
     public class XMLSettings
     {
-        /// <summary>
-        /// Initializing Properties until DefaultValueAttribute works properly
-        /// </summary>
-        public XMLSettings()
-        {
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Main
-            //~~~~~~~~~~~~~~~~~~~~~
-            ScreenshotDestMode = ImageDestType.IMAGESHACK;
-            ClipboardUriMode = ClipboardUriType.FULL;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Capture
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            // Crop Shot
-            CropRegionInterval = 75; 
-            CropRegionStep = 5;
-            CropHueRange = 50;
-        }
-
         #region Settings
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -69,27 +47,19 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
-        [CategoryAttribute("Main")]
-        public ImageDestType ScreenshotDestMode { get; set; }
-        [CategoryAttribute("Main")]
-        public ClipboardUriType ClipboardUriMode { get; set; }
+
+        public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
+        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
         public decimal ScreenshotDelay = 0;
-        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
-        public bool PromptforUpload { get; set; }
-        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
-        public bool ManualNaming { get; set; }
-        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
-        public bool ShowCursor { get; set; }
-        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
-        public bool ShowWatermark { get; set; }
-        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
-        public bool CropGridToggle { get; set; }
+        public bool PromptforUpload = false;
+        public bool ManualNaming = false;
+        public bool ShowCursor = false;
+        public bool ShowWatermark = false;
+        public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
-        [CategoryAttribute("Main"), DefaultValueAttribute(true)]
-        public bool ActiveHelp { get; set; }
-        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
-        public bool GTActiveHelp { get; set; }
+        public bool ActiveHelp = true;
+        public bool GTActiveHelp = false;
         public string HelpToLanguage = "en";
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -126,32 +96,21 @@ namespace ZSS
         public string CropCrosshairColor = SerializeColor(Color.Black);
         public bool CropShowBigCross = true;
 
-        [DescriptionAttribute("Show or Hide Ruler for Crop Shots."),
-        CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
-        public bool CropShowRuler { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
-        public bool CropDynamicBorderColor { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "75")]
-        public decimal CropRegionInterval { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "5")]
-        public decimal CropRegionStep { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "50")]
-        public decimal CropHueRange { get; set; }
+        public bool CropShowRuler = true;
+        public bool CropDynamicBorderColor = true;
+        public decimal CropRegionInterval = 75;
+        public decimal CropRegionStep = 5;
+        public decimal CropHueRange = 50;
         public string CropBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(1)]
-        public decimal CropBorderSize { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(false)]
-        public bool CropShowGrids { get; set; }
+        public decimal CropBorderSize = 1;
+        public bool CropShowGrids = false;
 
         // Selected Window
 
         public int SelectedWindowRegionStyle = 2;
-        [CategoryAttribute("Capture/Selected Window"), DefaultValueAttribute(false)]
-        public bool SelectedWindowFront { get; set; }
-        [CategoryAttribute("Capture/Selected Window"), DefaultValueAttribute(true)]
-        public bool SelectedWindowRectangleInfo { get; set; }
-        [CategoryAttribute("Capture/Selected Window"), DefaultValueAttribute(true)]
-        public bool SelectedWindowRuler { get; set; }
+        public bool SelectedWindowFront = false;
+        public bool SelectedWindowRectangleInfo = true;
+        public bool SelectedWindowRuler = true;
         public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
         public decimal SelectedWindowBorderSize = 2;
         public bool SelectedWindowDynamicBorderColor = true;
@@ -175,7 +134,9 @@ namespace ZSS
 
         public string activeWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string entireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        public int AutoIncrement = 0;
+        [DescriptionAttribute("Adjust the current Auto-Increment Number"),
+        CategoryAttribute("Capture/File Naming"), DefaultValueAttribute(0)]
+        public int AutoIncrement { get; set; }
 
         // Watermark
 
@@ -241,6 +202,7 @@ namespace ZSS
         public bool TinyPicSizeCheck = false;
 
         // Custom Image Uploaders
+
 
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
