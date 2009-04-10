@@ -403,6 +403,13 @@ namespace ZSS
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
             LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
+
+            UpdateGuiControlsHistory();
+        }
+
+        private void UpdateGuiControlsHistory()
+        {
+            tpHistoryList.Text = string.Format("History List ({0}/{1})", lbHistory.Items.Count, Program.conf.HistoryMaxNumber);
         }
 
         private bool CheckKeys(HKcombo hkc, IntPtr lParam)
@@ -1232,7 +1239,7 @@ namespace ZSS
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
 
-                tpHistoryList.Text = string.Format("History List {0}/{1}", lbHistory.Items.Count, Program.conf.HistoryMaxNumber);
+                UpdateGuiControlsHistory();
 
             }
             catch (Exception ex)
