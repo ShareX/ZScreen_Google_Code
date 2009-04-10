@@ -3023,6 +3023,7 @@ namespace ZSS
         {
             splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
             this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height + startHeight : Program.conf.WindowSize.Height - txtActiveHelp.Height);
+            this.Refresh();
         }
 
         private void AddMouseHoverEventHandlerHelp(Control.ControlCollection col)
