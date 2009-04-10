@@ -36,10 +36,25 @@ namespace ZSS
     [XmlRoot("Settings")]
     public class XMLSettings
     {
+        /// <summary>
+        /// Initializing Properties until DefaultValueAttribute works properly
+        /// </summary>
         public XMLSettings()
         {
-            CropRegionInterval = 75; // until DefaultValueAttribute works properly
-            CropRegionStep =5;
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Main
+            //~~~~~~~~~~~~~~~~~~~~~
+            ScreenshotDestMode = ImageDestType.IMAGESHACK;
+            ClipboardUriMode = ClipboardUriType.FULL;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Capture
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            // Crop Shot
+            CropRegionInterval = 75; 
+            CropRegionStep = 5;
+            CropHueRange = 50;
         }
 
         #region Settings
@@ -54,9 +69,10 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
-
-        public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
-        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
+        [CategoryAttribute("Main")]
+        public ImageDestType ScreenshotDestMode { get; set; }
+        [CategoryAttribute("Main")]
+        public ClipboardUriType ClipboardUriMode { get; set; }
         public TextDestType TextDestMode = TextDestType.FTP;
         public decimal ScreenshotDelay = 0;
         [CategoryAttribute("Main"), DefaultValueAttribute(false)]
@@ -70,8 +86,10 @@ namespace ZSS
         [CategoryAttribute("Main"), DefaultValueAttribute(false)]
         public bool CropGridToggle { get; set; }
         public Size CropGridSize = new Size(100, 100);
-        public bool ActiveHelp = true;
-        public bool GTActiveHelp = false;
+        [CategoryAttribute("Main"), DefaultValueAttribute(true)]
+        public bool ActiveHelp { get; set; }
+        [CategoryAttribute("Main"), DefaultValueAttribute(false)]
+        public bool GTActiveHelp { get; set; }
         public string HelpToLanguage = "en";
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -108,12 +126,12 @@ namespace ZSS
         public string CropCrosshairColor = SerializeColor(Color.Black);
         public bool CropShowBigCross = true;
 
-        [DescriptionAttribute("Show or Hide Ruler for Crop Shots."), 
+        [DescriptionAttribute("Show or Hide Ruler for Crop Shots."),
         CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
         public bool CropShowRuler { get; set; }
         [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(true)]
         public bool CropDynamicBorderColor { get; set; }
-        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal),"75")]
+        [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "75")]
         public decimal CropRegionInterval { get; set; }
         [CategoryAttribute("Capture/Crop Shot"), DefaultValueAttribute(typeof(System.Decimal), "5")]
         public decimal CropRegionStep { get; set; }
