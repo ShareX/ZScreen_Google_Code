@@ -3571,7 +3571,7 @@ namespace ZSS
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ZScreen));
             Bitmap bmp = new Bitmap((Image)(resources.GetObject("pbLogo.Image")));
-            bmp = bmp.Clone(new Rectangle(61, 32, 201, 141), PixelFormat.Format32bppArgb);
+            bmp = bmp.Clone(new Rectangle(61, 32, 200, 140), PixelFormat.Format32bppArgb);
             pbWatermarkShow.Image = WatermarkMaker.GetImage(bmp);
         }
 
