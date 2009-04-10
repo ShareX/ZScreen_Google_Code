@@ -308,6 +308,7 @@
     <None Include="Resources\main.png" />
     <None Include="Resources\application_lightning.png" />
     <None Include="Resources\application_form.png" />
+    <None Include="Resources\tag_blue_edit.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

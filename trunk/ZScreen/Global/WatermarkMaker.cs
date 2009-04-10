@@ -57,6 +57,9 @@ namespace ZSS
                             case WatermarkPositionType.BOTTOM_RIGHT:
                                 imgRect = new Rectangle(img.Width - img2.Width - offset, img.Height - img2.Height - offset, img2.Width, img2.Height);
                                 break;
+                            case WatermarkPositionType.CENTER:
+                                imgRect = new Rectangle(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2, img2.Width, img2.Height);
+                                break;
                         }
                         if ((img.Width < imgRect.Width + offset) || (img.Height < imgRect.Height + offset))
                         {
@@ -105,6 +108,10 @@ namespace ZSS
                     case WatermarkPositionType.BOTTOM_RIGHT:
                         labelRect = new Rectangle(img.Width - textSize.Width - 10 - offset - 1,
                             img.Height - textSize.Height - 10 - offset - 1, textSize.Width + 10, textSize.Height + 10);
+                        break;
+                    case WatermarkPositionType.CENTER:
+                        labelRect = new Rectangle(img.Width / 2 - (textSize.Width + 10) / 2 - 1,
+                            img.Height / 2 - (textSize.Height + 10) / 2 - 1, textSize.Width + 10, textSize.Height + 10);
                         break;
                 }
                 if ((img.Width < labelRect.Width + offset) || (img.Height < labelRect.Height + offset))

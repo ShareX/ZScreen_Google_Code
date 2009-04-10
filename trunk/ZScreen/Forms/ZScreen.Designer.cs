@@ -39,6 +39,7 @@ namespace ZSS
             this.tsmMain = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHotkeys = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmWatermark = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditors = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFTP = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHTTP = new System.Windows.Forms.ToolStripMenuItem();
@@ -218,8 +219,8 @@ namespace ZSS
             this.lblAfter = new System.Windows.Forms.Label();
             this.lblSwitchTo = new System.Windows.Forms.Label();
             this.gbWatermarkPreview = new System.Windows.Forms.GroupBox();
-            this.rbWatermarkUseText = new System.Windows.Forms.RadioButton();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
+            this.rbWatermarkUseText = new System.Windows.Forms.RadioButton();
             this.rbWatermarkUseImage = new System.Windows.Forms.RadioButton();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
             this.cbWatermarkPosition = new System.Windows.Forms.ComboBox();
@@ -594,7 +595,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmViewSettingsMenu
             // 
@@ -603,6 +604,7 @@ namespace ZSS
             this.tsmMain,
             this.tsmHotkeys,
             this.tsmCapture,
+            this.tsmWatermark,
             this.tsmEditors,
             this.tsmFTP,
             this.tsmHTTP,
@@ -618,7 +620,7 @@ namespace ZSS
             // 
             this.tsmMain.Image = global::ZSS.Properties.Resources.application_form;
             this.tsmMain.Name = "tsmMain";
-            this.tsmMain.Size = new System.Drawing.Size(126, 22);
+            this.tsmMain.Size = new System.Drawing.Size(152, 22);
             this.tsmMain.Text = "Main...";
             this.tsmMain.Click += new System.EventHandler(this.tsmMain_Click);
             // 
@@ -626,7 +628,7 @@ namespace ZSS
             // 
             this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
             this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(126, 22);
+            this.tsmHotkeys.Size = new System.Drawing.Size(152, 22);
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -634,15 +636,23 @@ namespace ZSS
             // 
             this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
             this.tsmCapture.Name = "tsmCapture";
-            this.tsmCapture.Size = new System.Drawing.Size(126, 22);
+            this.tsmCapture.Size = new System.Drawing.Size(152, 22);
             this.tsmCapture.Text = "Capture...";
             this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
+            // 
+            // tsmWatermark
+            // 
+            this.tsmWatermark.Image = global::ZSS.Properties.Resources.tag_blue_edit;
+            this.tsmWatermark.Name = "tsmWatermark";
+            this.tsmWatermark.Size = new System.Drawing.Size(152, 22);
+            this.tsmWatermark.Text = "Watermark...";
+            this.tsmWatermark.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmEditors
             // 
             this.tsmEditors.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmEditors.Name = "tsmEditors";
-            this.tsmEditors.Size = new System.Drawing.Size(126, 22);
+            this.tsmEditors.Size = new System.Drawing.Size(152, 22);
             this.tsmEditors.Text = "Editors...";
             this.tsmEditors.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -650,7 +660,7 @@ namespace ZSS
             // 
             this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
             this.tsmFTP.Name = "tsmFTP";
-            this.tsmFTP.Size = new System.Drawing.Size(126, 22);
+            this.tsmFTP.Size = new System.Drawing.Size(152, 22);
             this.tsmFTP.Text = "FTP...";
             this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -658,7 +668,7 @@ namespace ZSS
             // 
             this.tsmHTTP.Image = global::ZSS.Properties.Resources.world_edit;
             this.tsmHTTP.Name = "tsmHTTP";
-            this.tsmHTTP.Size = new System.Drawing.Size(126, 22);
+            this.tsmHTTP.Size = new System.Drawing.Size(152, 22);
             this.tsmHTTP.Text = "HTTP...";
             this.tsmHTTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -666,7 +676,7 @@ namespace ZSS
             // 
             this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
             this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(126, 22);
+            this.tsmHistory.Size = new System.Drawing.Size(152, 22);
             this.tsmHistory.Text = "History...";
             this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -674,7 +684,7 @@ namespace ZSS
             // 
             this.tsmOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(126, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(152, 22);
             this.tsmOptions.Text = "Options...";
             this.tsmOptions.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -2574,26 +2584,13 @@ namespace ZSS
             // 
             // gbWatermarkPreview
             // 
-            this.gbWatermarkPreview.Controls.Add(this.rbWatermarkUseText);
             this.gbWatermarkPreview.Controls.Add(this.pbWatermarkShow);
-            this.gbWatermarkPreview.Controls.Add(this.rbWatermarkUseImage);
             this.gbWatermarkPreview.Location = new System.Drawing.Point(560, 8);
             this.gbWatermarkPreview.Name = "gbWatermarkPreview";
-            this.gbWatermarkPreview.Size = new System.Drawing.Size(216, 200);
+            this.gbWatermarkPreview.Size = new System.Drawing.Size(216, 176);
             this.gbWatermarkPreview.TabIndex = 28;
             this.gbWatermarkPreview.TabStop = false;
             this.gbWatermarkPreview.Text = "Watermark Preview";
-            // 
-            // rbWatermarkUseText
-            // 
-            this.rbWatermarkUseText.AutoSize = true;
-            this.rbWatermarkUseText.Location = new System.Drawing.Point(8, 168);
-            this.rbWatermarkUseText.Name = "rbWatermarkUseText";
-            this.rbWatermarkUseText.Size = new System.Drawing.Size(46, 17);
-            this.rbWatermarkUseText.TabIndex = 30;
-            this.rbWatermarkUseText.Text = "Text";
-            this.rbWatermarkUseText.UseVisualStyleBackColor = true;
-            this.rbWatermarkUseText.CheckedChanged += new System.EventHandler(this.rbWatermarkUseText_CheckedChanged);
             // 
             // pbWatermarkShow
             // 
@@ -2606,10 +2603,21 @@ namespace ZSS
             this.pbWatermarkShow.TabIndex = 13;
             this.pbWatermarkShow.TabStop = false;
             // 
+            // rbWatermarkUseText
+            // 
+            this.rbWatermarkUseText.AutoSize = true;
+            this.rbWatermarkUseText.Location = new System.Drawing.Point(112, 70);
+            this.rbWatermarkUseText.Name = "rbWatermarkUseText";
+            this.rbWatermarkUseText.Size = new System.Drawing.Size(46, 17);
+            this.rbWatermarkUseText.TabIndex = 30;
+            this.rbWatermarkUseText.Text = "Text";
+            this.rbWatermarkUseText.UseVisualStyleBackColor = true;
+            this.rbWatermarkUseText.CheckedChanged += new System.EventHandler(this.rbWatermarkUseText_CheckedChanged);
+            // 
             // rbWatermarkUseImage
             // 
             this.rbWatermarkUseImage.AutoSize = true;
-            this.rbWatermarkUseImage.Location = new System.Drawing.Point(104, 168);
+            this.rbWatermarkUseImage.Location = new System.Drawing.Point(168, 70);
             this.rbWatermarkUseImage.Name = "rbWatermarkUseImage";
             this.rbWatermarkUseImage.Size = new System.Drawing.Size(54, 17);
             this.rbWatermarkUseImage.TabIndex = 20;
@@ -3701,7 +3709,7 @@ namespace ZSS
             this.tpMain.Location = new System.Drawing.Point(4, 23);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(786, 428);
+            this.tpMain.Size = new System.Drawing.Size(786, 431);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
@@ -3992,8 +4000,8 @@ namespace ZSS
             this.tcApp.AllowDrop = true;
             this.tcApp.Controls.Add(this.tpMain);
             this.tcApp.Controls.Add(this.tpHotkeys);
-            this.tcApp.Controls.Add(this.tpWatermark);
             this.tcApp.Controls.Add(this.tpCapture);
+            this.tcApp.Controls.Add(this.tpWatermark);
             this.tcApp.Controls.Add(this.tpEditors);
             this.tcApp.Controls.Add(this.tpFTP);
             this.tcApp.Controls.Add(this.tpHTTP);
@@ -4004,15 +4012,17 @@ namespace ZSS
             this.tcApp.Location = new System.Drawing.Point(0, 0);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(794, 455);
+            this.tcApp.Size = new System.Drawing.Size(794, 458);
             this.tcApp.TabIndex = 74;
             this.tcApp.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
             // tpWatermark
             // 
-            this.tpWatermark.Controls.Add(this.tabControl1);
+            this.tpWatermark.Controls.Add(this.rbWatermarkUseText);
+            this.tpWatermark.Controls.Add(this.rbWatermarkUseImage);
             this.tpWatermark.Controls.Add(this.gbWatermarkPreview);
             this.tpWatermark.Controls.Add(this.gbWatermarkGeneral);
+            this.tpWatermark.Controls.Add(this.tabControl1);
             this.tpWatermark.ImageIndex = 8;
             this.tpWatermark.Location = new System.Drawing.Point(4, 23);
             this.tpWatermark.Name = "tpWatermark";
@@ -5283,7 +5293,7 @@ namespace ZSS
             this.txtActiveHelp.Name = "txtActiveHelp";
             this.txtActiveHelp.ReadOnly = true;
             this.txtActiveHelp.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txtActiveHelp.Size = new System.Drawing.Size(794, 58);
+            this.txtActiveHelp.Size = new System.Drawing.Size(794, 55);
             this.txtActiveHelp.TabIndex = 75;
             this.txtActiveHelp.Text = "";
             this.txtActiveHelp.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtActiveHelp_LinkClicked);
@@ -5305,7 +5315,7 @@ namespace ZSS
             // 
             this.splitContainerApp.Panel2.Controls.Add(this.txtActiveHelp);
             this.splitContainerApp.Size = new System.Drawing.Size(794, 514);
-            this.splitContainerApp.SplitterDistance = 455;
+            this.splitContainerApp.SplitterDistance = 458;
             this.splitContainerApp.SplitterWidth = 1;
             this.splitContainerApp.TabIndex = 76;
             // 
@@ -5444,6 +5454,7 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.tcApp.ResumeLayout(false);
             this.tpWatermark.ResumeLayout(false);
+            this.tpWatermark.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tpWatermarkText.ResumeLayout(false);
             this.tpWatermarkImage.ResumeLayout(false);
@@ -5920,6 +5931,7 @@ namespace ZSS
         private System.Windows.Forms.PropertyGrid confApp;
         private System.Windows.Forms.CheckBox cbWatermarkUseBorder;
         private System.Windows.Forms.RadioButton rbWatermarkUseText;
+        private System.Windows.Forms.ToolStripMenuItem tsmWatermark;
 
     }
 }
