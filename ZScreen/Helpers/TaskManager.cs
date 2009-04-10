@@ -128,7 +128,7 @@ namespace ZSS.Helpers
             {
                 string fullFilePath = task.LocalFilePath;
 
-                if (Program.CheckFTPAccounts() && File.Exists(fullFilePath))
+                if (Program.CheckFTPAccounts(ref task) && File.Exists(fullFilePath))
                 {
                     FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
                     task.DestinationName = acc.Name;
@@ -141,10 +141,6 @@ namespace ZSS.Helpers
                     task.ImageManager = fu.UploadImage(fullFilePath);
                     task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
                     return true;
-                }
-                else
-                {
-                    task.Errors.Add("FTP upload failed.");
                 }
             }
             catch (Exception ex)
