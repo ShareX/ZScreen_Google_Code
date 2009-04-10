@@ -44,7 +44,7 @@
             this.groupBox1.Controls.Add(this.lbDest);
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(288, 160);
+            this.groupBox1.Size = new System.Drawing.Size(288, 128);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Choose Destination";
@@ -56,7 +56,7 @@
             this.lbDest.IntegralHeight = false;
             this.lbDest.Location = new System.Drawing.Point(3, 16);
             this.lbDest.Name = "lbDest";
-            this.lbDest.Size = new System.Drawing.Size(282, 141);
+            this.lbDest.Size = new System.Drawing.Size(282, 109);
             this.lbDest.TabIndex = 0;
             this.lbDest.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbDest_MouseDoubleClick);
             this.lbDest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbDest_KeyDown);
@@ -64,9 +64,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lbClipboardMode);
-            this.groupBox2.Location = new System.Drawing.Point(8, 176);
+            this.groupBox2.Location = new System.Drawing.Point(8, 144);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(288, 80);
+            this.groupBox2.Size = new System.Drawing.Size(288, 112);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Clipboard Mode";
@@ -78,7 +78,7 @@
             this.lbClipboardMode.IntegralHeight = false;
             this.lbClipboardMode.Location = new System.Drawing.Point(3, 16);
             this.lbClipboardMode.Name = "lbClipboardMode";
-            this.lbClipboardMode.Size = new System.Drawing.Size(282, 61);
+            this.lbClipboardMode.Size = new System.Drawing.Size(282, 93);
             this.lbClipboardMode.TabIndex = 0;
             // 
             // btnOK
