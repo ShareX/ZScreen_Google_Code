@@ -50,7 +50,7 @@
 	);
 		
 #define ExeName "ZScreen"		
-#define ExePath "..\bin\Release\ZScreen.exe"
+#define ExePath "..\bin\Release\ILMerge\ZScreen.exe"
 #define MyAppVersion GetFileVersion(ExePath)
 #define MySimpleAppVersion SimpleVersion(MyAppVersion)
 
@@ -79,7 +79,7 @@ InfoBeforeFile=..\Documents\VersionHistory.txt
 InfoAfterFile=..\Documents\license.txt
 SolidCompression=yes
 OutputDir=..\..\..\Output\
-OutputBaseFilename={#ExeName}-{#MyAppVersion}-setup
+OutputBaseFilename={#ExeName}-{#MyAppVersion}-bin
 ArchitecturesInstallIn64BitMode=x64 ia64
 DirExistsWarning=no
 CreateAppDir=true
@@ -105,7 +105,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: {#ExePath}; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+;Source: "..\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#ExeName}"; Filename: "{app}\ZScreen.exe"

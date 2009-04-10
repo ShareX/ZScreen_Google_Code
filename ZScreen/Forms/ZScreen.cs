@@ -1231,6 +1231,9 @@ namespace ZSS
                 }
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
+
+                tpHistoryList.Text = string.Format("History List {0}/{1}", lbHistory.Items.Count, Program.conf.HistoryMaxNumber);
+
             }
             catch (Exception ex)
             {

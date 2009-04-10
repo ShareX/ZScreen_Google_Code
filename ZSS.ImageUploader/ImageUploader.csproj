@@ -62,12 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
-    <Compile Include="Helpers\FTPAccountManager.cs" />
     <Compile Include="Helpers\ImageFileManager.cs" />
     <Compile Include="Helpers\ImageHostingServiceManager.cs" />
     <Compile Include="HTTP\CustomUploader.cs" />
-    <Compile Include="Helpers\FTP.cs" />
-    <Compile Include="Helpers\FTPAccount.cs" />
     <Compile Include="FTPUploader.cs" />
     <Compile Include="HTTP\FlickrUploader.cs" />
     <Compile Include="Helpers\ImageFile.cs" />
