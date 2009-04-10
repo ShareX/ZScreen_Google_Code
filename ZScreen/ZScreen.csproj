@@ -184,6 +184,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\Crop.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Crop.cs</DependentUpon>
@@ -271,6 +276,11 @@
     <None Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\zss-green.ico" />
     <None Include="Resources\picture_edit.png" />
     <None Include="Resources\application_edit.png" />

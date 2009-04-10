@@ -351,9 +351,8 @@ namespace ZSS
             ///////////////////////////////////
 
             cbStartWin.Checked = CheckStartWithWindows();
-            txtImagesDir.Text = Program.conf.ImagesDir;
-            txtCacheDir.Text = Program.conf.CacheDir;
-            txtSettingsDir.Text = Program.conf.SettingsDir;
+            UpdateGuiControlsPaths();
+
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             if (cboUpdateCheckType.Items.Count == 0)
             {
@@ -411,6 +410,15 @@ namespace ZSS
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
 
             UpdateGuiControlsHistory();
+        }
+
+        private void UpdateGuiControlsPaths()
+        {
+            Program.InitializeDefaultFolderPaths();
+            Program.ConfigureDirs();
+            txtImagesDir.Text = Program.conf.ImagesDir;
+            txtCacheDir.Text = Program.conf.CacheDir;
+            txtSettingsDir.Text = Program.conf.SettingsDir;
         }
 
         private void UpdateGuiControlsHistory()
@@ -1412,6 +1420,7 @@ namespace ZSS
                 Hide();
             }
             FileSystem.appendDebug("Closed " + Application.ProductName + "\n");
+            Settings.Default.Save();
         }
 
         #endregion
@@ -4721,6 +4730,22 @@ namespace ZSS
         {
             Program.conf.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
             TestWatermark();
+        }
+
+        private void gbRemoteDirCache_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBrowseRootDir_Click(object sender, EventArgs e)
+        {
+            Settings.Default.RootDir = BrowseDirectory(ref txtRootFolder);
+            UpdateGuiControlsPaths();
+        }
+
+        private void btnViewRootDir_Click(object sender, EventArgs e)
+        {
+            ShowDirectory(txtRootFolder.Text);
         }
     }
 }

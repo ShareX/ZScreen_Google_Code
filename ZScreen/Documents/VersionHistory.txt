@@ -1,5 +1,6 @@
-Version 2.6.18 - 20090410
+Version 2.6.19 - 20090412
 
+2.6.19.0 The Root folder is now relocatable to a different folder
 2.6.18.0 XML Option to periodically backup FTP Settings
 2.6.17.1 More accurate error reporting via BalloonTip
 2.6.17.0 PropertyGrid in Options : Advanced tab exposes XML Settings that are not visible in GUI
