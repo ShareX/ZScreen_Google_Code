@@ -227,8 +227,6 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.entireScreen;
 
             // Watermark
-            cboWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
-            txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             if (cbWatermarkPosition.Items.Count == 0)
             {
                 cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
@@ -249,6 +247,11 @@ namespace ZSS
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
             }
             cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
+
+            cboWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
+            txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
+            cbWatermarkUseBorder.Checked = Program.conf.WatermarkUseBorder;
+
             TestWatermark();
 
             // Quality
@@ -4681,6 +4684,11 @@ namespace ZSS
         private void btnGalleryTinyPic_Click(object sender, EventArgs e)
         {
             Process.Start("http://tinypic.com/yourstuff.php");
+        }
+
+        private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
         }
     }
 }

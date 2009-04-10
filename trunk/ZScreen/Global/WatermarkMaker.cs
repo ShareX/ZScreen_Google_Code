@@ -65,6 +65,10 @@ namespace ZSS
                         else
                         {
                             g.DrawImage(img2, imgRect);
+                            if (Program.conf.WatermarkUseBorder)
+                            {
+                                g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgRect.X - 1, imgRect.Y - 1, imgRect.Width, imgRect.Height));
+                            }
                         }
                     }
                 }
