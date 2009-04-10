@@ -132,6 +132,7 @@
             this.txtHex.TabIndex = 61;
             this.txtHex.Text = "#FFFFFF";
             this.txtHex.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHex.TextChanged += new System.EventHandler(this.txtHex_TextChanged);
             // 
             // lblHex
             // 
@@ -154,6 +155,7 @@
             0,
             0,
             0});
+            this.nudKey.ValueChanged += new System.EventHandler(this.CMYK_ValueChanged);
             // 
             // nudYellow
             // 
@@ -167,6 +169,7 @@
             0,
             0,
             0});
+            this.nudYellow.ValueChanged += new System.EventHandler(this.CMYK_ValueChanged);
             // 
             // nudMagenta
             // 
@@ -180,6 +183,7 @@
             0,
             0,
             0});
+            this.nudMagenta.ValueChanged += new System.EventHandler(this.CMYK_ValueChanged);
             // 
             // nudCyan
             // 
@@ -193,6 +197,7 @@
             0,
             0,
             0});
+            this.nudCyan.ValueChanged += new System.EventHandler(this.CMYK_ValueChanged);
             // 
             // lblKey
             // 
@@ -277,6 +282,7 @@
             0,
             0,
             0});
+            this.nudBlue.ValueChanged += new System.EventHandler(this.RGB_ValueChanged);
             // 
             // nudGreen
             // 
@@ -295,6 +301,7 @@
             0,
             0,
             0});
+            this.nudGreen.ValueChanged += new System.EventHandler(this.RGB_ValueChanged);
             // 
             // nudRed
             // 
@@ -313,6 +320,7 @@
             0,
             0,
             0});
+            this.nudRed.ValueChanged += new System.EventHandler(this.RGB_ValueChanged);
             // 
             // nudBrightness
             // 
@@ -326,6 +334,7 @@
             0,
             0,
             0});
+            this.nudBrightness.ValueChanged += new System.EventHandler(this.HSB_ValueChanged);
             // 
             // nudSaturation
             // 
@@ -339,6 +348,7 @@
             0,
             0,
             0});
+            this.nudSaturation.ValueChanged += new System.EventHandler(this.HSB_ValueChanged);
             // 
             // nudHue
             // 
@@ -357,6 +367,7 @@
             0,
             0,
             0});
+            this.nudHue.ValueChanged += new System.EventHandler(this.HSB_ValueChanged);
             // 
             // rbBlue
             // 
@@ -451,6 +462,7 @@
             this.txtDecimal.TabIndex = 69;
             this.txtDecimal.Text = "12345678";
             this.txtDecimal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtDecimal.TextChanged += new System.EventHandler(this.txtDecimal_TextChanged);
             // 
             // lblCyanPerc
             // 

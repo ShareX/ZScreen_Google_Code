@@ -38,6 +38,7 @@ namespace ZSS.Colors
         private MyColor OldColor;
         public bool ScreenPicker;
         private bool oldColorExist;
+        private bool dialogChanged = false;
 
         public DialogColor()
         {
@@ -72,18 +73,20 @@ namespace ZSS.Colors
         private void UpdateControls(MyColor color)
         {
             DrawColors();
-            nudHue.Value = (decimal)Math.Round(color.HSB.Hue * 360);
-            nudSaturation.Value = (decimal)Math.Round(color.HSB.Saturation * 100);
-            nudBrightness.Value = (decimal)Math.Round(color.HSB.Brightness * 100);
+            dialogChanged = true;
+            nudHue.Value = (decimal)Math.Round(color.HSB.Hue360);
+            nudSaturation.Value = (decimal)Math.Round(color.HSB.Saturation100);
+            nudBrightness.Value = (decimal)Math.Round(color.HSB.Brightness100);
             nudRed.Value = color.RGB.Red;
             nudGreen.Value = color.RGB.Green;
             nudBlue.Value = color.RGB.Blue;
-            nudCyan.Value = (decimal)Math.Round(color.CMYK.Cyan * 100);
-            nudMagenta.Value = (decimal)Math.Round(color.CMYK.Magenta * 100);
-            nudYellow.Value = (decimal)Math.Round(color.CMYK.Yellow * 100);
-            nudKey.Value = (decimal)Math.Round(color.CMYK.Key * 100);
+            nudCyan.Value = (decimal)Math.Round(color.CMYK.Cyan100);
+            nudMagenta.Value = (decimal)Math.Round(color.CMYK.Magenta100);
+            nudYellow.Value = (decimal)Math.Round(color.CMYK.Yellow100);
+            nudKey.Value = (decimal)Math.Round(color.CMYK.Key100);
             txtHex.Text = MyColors.ColorToHex(color);
             txtDecimal.Text = MyColors.ColorToDecimal(color).ToString();
+            dialogChanged = false;
         }
 
         private void DrawColors()
@@ -208,8 +211,58 @@ namespace ZSS.Colors
         private void DialogColor_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             MessageBox.Show("Press \"Control\" button for start or stop screen color picker.\r\nIf you double " +
-                "click on any of TextBox or NumericUpDown controls value or text will be copy to clipboard automaticly.", "Color Dialog");
+                "click on any of TextBox or NumericUpDown controls value or text will be copy to clipboard automaticly.",
+                "Color Dialog");
             e.Cancel = true;
+        }
+
+        private void RGB_ValueChanged(object sender, EventArgs e)
+        {
+            if (!dialogChanged)
+            {
+                colorPicker.Color = new RGB((int)nudRed.Value, (int)nudGreen.Value, (int)nudBlue.Value).ToColor();
+            }
+        }
+
+        private void HSB_ValueChanged(object sender, EventArgs e)
+        {
+            if (!dialogChanged)
+            {
+                colorPicker.Color = new HSB((int)nudHue.Value, (int)nudSaturation.Value, (int)nudBrightness.Value).ToColor();
+            }
+        }
+
+        private void CMYK_ValueChanged(object sender, EventArgs e)
+        {
+            if (!dialogChanged)
+            {
+                colorPicker.Color = new CMYK((int)nudCyan.Value, (int)nudMagenta.Value, (int)nudYellow.Value,
+                    (int)nudKey.Value).ToColor();
+            }
+        }
+
+        private void txtHex_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!dialogChanged)
+                {
+                    colorPicker.Color = MyColors.HexToColor(txtHex.Text);
+                }
+            }
+            catch { }
+        }
+
+        private void txtDecimal_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!dialogChanged)
+                {
+                    colorPicker.Color = MyColors.DecimalToColor(Convert.ToInt32(txtDecimal.Text));
+                }
+            }
+            catch { }
         }
 
         #endregion

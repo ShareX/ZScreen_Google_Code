@@ -282,10 +282,22 @@ namespace ZSS.Colors
             set { saturation = Helpers.CheckColor(value); }
         }
 
+        public double Saturation100
+        {
+            get { return saturation * 100; }
+            set { saturation = Helpers.CheckColor(value / 100); }
+        }
+
         public double Brightness
         {
             get { return brightness; }
             set { brightness = Helpers.CheckColor(value); }
+        }
+
+        public double Brightness100
+        {
+            get { return brightness * 100; }
+            set { brightness = Helpers.CheckColor(value / 100); }
         }
 
         public HSB(double hue, double saturation, double brightness)
@@ -294,6 +306,14 @@ namespace ZSS.Colors
             this.Hue = hue;
             this.Saturation = saturation;
             this.Brightness = brightness;
+        }
+
+        public HSB(int hue, int saturation, int brightness)
+            : this()
+        {
+            this.Hue360 = hue;
+            this.Saturation100 = saturation;
+            this.Brightness100 = brightness;
         }
 
         public HSB(Color color)
@@ -333,8 +353,8 @@ namespace ZSS.Colors
 
         public override string ToString()
         {
-            return String.Format("Hue: {0}, Saturation: {1}, Brightness: {2}", Helpers.Round(Hue * 360),
-              Helpers.Round(Saturation * 100), Helpers.Round(Brightness * 100));
+            return String.Format("Hue: {0}, Saturation: {1}, Brightness: {2}", Helpers.Round(Hue360),
+              Helpers.Round(Saturation100), Helpers.Round(Brightness100));
         }
 
         public static Color ToColor(HSB hsb)
@@ -416,10 +436,22 @@ namespace ZSS.Colors
             set { cyan = Helpers.CheckColor(value); }
         }
 
+        public double Cyan100
+        {
+            get { return cyan * 100; }
+            set { cyan = Helpers.CheckColor(value / 100); }
+        }
+
         public double Magenta
         {
             get { return magenta; }
             set { magenta = Helpers.CheckColor(value); }
+        }
+
+        public double Magenta100
+        {
+            get { return magenta * 100; }
+            set { magenta = Helpers.CheckColor(value / 100); }
         }
 
         public double Yellow
@@ -428,10 +460,22 @@ namespace ZSS.Colors
             set { yellow = Helpers.CheckColor(value); }
         }
 
+        public double Yellow100
+        {
+            get { return yellow * 100; }
+            set { yellow = Helpers.CheckColor(value / 100); }
+        }
+
         public double Key
         {
             get { return key; }
             set { key = Helpers.CheckColor(value); }
+        }
+
+        public double Key100
+        {
+            get { return key * 100; }
+            set { key = Helpers.CheckColor(value / 100); }
         }
 
         public CMYK(double cyan, double magenta, double yellow, double key)
@@ -441,6 +485,15 @@ namespace ZSS.Colors
             this.Magenta = magenta;
             this.Yellow = yellow;
             this.Key = key;
+        }
+
+        public CMYK(int cyan, int magenta, int yellow, int key)
+            : this()
+        {
+            this.Cyan100 = cyan;
+            this.Magenta100 = magenta;
+            this.Yellow100 = yellow;
+            this.Key100 = key;
         }
 
         public CMYK(Color color)
@@ -481,8 +534,8 @@ namespace ZSS.Colors
 
         public override string ToString()
         {
-            return String.Format("Cyan: {0}, Magenta: {1}, Yellow: {2}, Key: {3}", Helpers.Round(Cyan * 100),
-              Helpers.Round(Magenta * 100), Helpers.Round(Yellow * 100), Helpers.Round(Key * 100));
+            return String.Format("Cyan: {0}, Magenta: {1}, Yellow: {2}, Key: {3}", Helpers.Round(Cyan100),
+              Helpers.Round(Magenta100), Helpers.Round(Yellow100), Helpers.Round(Key100));
         }
 
         public static Color ToColor(CMYK cmyk)
@@ -531,6 +584,8 @@ namespace ZSS.Colors
 
         public static Color HexToColor(string hex)
         {
+            if (hex.StartsWith("#")) hex.Remove(0, 1);
+
             string r, g, b;
             r = hex.Substring(0, 2);
             g = hex.Substring(2, 2);

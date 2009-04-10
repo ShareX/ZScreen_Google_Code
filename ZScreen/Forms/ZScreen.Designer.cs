@@ -449,13 +449,13 @@ namespace ZSS
             this.btnOpenSourceString = new System.Windows.Forms.Button();
             this.btnOpenSourceText = new System.Windows.Forms.Button();
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
+            this.tpOptionsAdv = new System.Windows.Forms.TabPage();
+            this.confApp = new System.Windows.Forms.PropertyGrid();
             this.ilApp = new System.Windows.Forms.ImageList(this.components);
             this.txtActiveHelp = new System.Windows.Forms.RichTextBox();
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.tpOptionsAdv = new System.Windows.Forms.TabPage();
-            this.confApp = new System.Windows.Forms.PropertyGrid();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -560,10 +560,10 @@ namespace ZSS
             this.tpAdvDebug.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
+            this.tpOptionsAdv.SuspendLayout();
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
-            this.tpOptionsAdv.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -592,7 +592,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(196, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
             // tsmViewSettingsMenu
             // 
@@ -608,7 +608,7 @@ namespace ZSS
             this.tsmOptions});
             this.tsmViewSettingsMenu.Image = global::ZSS.Properties.Resources.wrench;
             this.tsmViewSettingsMenu.Name = "tsmViewSettingsMenu";
-            this.tsmViewSettingsMenu.Size = new System.Drawing.Size(195, 22);
+            this.tsmViewSettingsMenu.Size = new System.Drawing.Size(205, 22);
             this.tsmViewSettingsMenu.Text = "View Settings Menu";
             this.tsmViewSettingsMenu.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
@@ -616,7 +616,7 @@ namespace ZSS
             // 
             this.tsmMain.Image = global::ZSS.Properties.Resources.application_form;
             this.tsmMain.Name = "tsmMain";
-            this.tsmMain.Size = new System.Drawing.Size(125, 22);
+            this.tsmMain.Size = new System.Drawing.Size(126, 22);
             this.tsmMain.Text = "Main...";
             this.tsmMain.Click += new System.EventHandler(this.tsmMain_Click);
             // 
@@ -624,7 +624,7 @@ namespace ZSS
             // 
             this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
             this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(125, 22);
+            this.tsmHotkeys.Size = new System.Drawing.Size(126, 22);
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -632,7 +632,7 @@ namespace ZSS
             // 
             this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
             this.tsmCapture.Name = "tsmCapture";
-            this.tsmCapture.Size = new System.Drawing.Size(125, 22);
+            this.tsmCapture.Size = new System.Drawing.Size(126, 22);
             this.tsmCapture.Text = "Capture...";
             this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -640,7 +640,7 @@ namespace ZSS
             // 
             this.tsmEditors.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmEditors.Name = "tsmEditors";
-            this.tsmEditors.Size = new System.Drawing.Size(125, 22);
+            this.tsmEditors.Size = new System.Drawing.Size(126, 22);
             this.tsmEditors.Text = "Editors...";
             this.tsmEditors.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -648,7 +648,7 @@ namespace ZSS
             // 
             this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
             this.tsmFTP.Name = "tsmFTP";
-            this.tsmFTP.Size = new System.Drawing.Size(125, 22);
+            this.tsmFTP.Size = new System.Drawing.Size(126, 22);
             this.tsmFTP.Text = "FTP...";
             this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -656,7 +656,7 @@ namespace ZSS
             // 
             this.tsmHTTP.Image = global::ZSS.Properties.Resources.world_edit;
             this.tsmHTTP.Name = "tsmHTTP";
-            this.tsmHTTP.Size = new System.Drawing.Size(125, 22);
+            this.tsmHTTP.Size = new System.Drawing.Size(126, 22);
             this.tsmHTTP.Text = "HTTP...";
             this.tsmHTTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -664,7 +664,7 @@ namespace ZSS
             // 
             this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
             this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(125, 22);
+            this.tsmHistory.Size = new System.Drawing.Size(126, 22);
             this.tsmHistory.Text = "History...";
             this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -672,14 +672,14 @@ namespace ZSS
             // 
             this.tsmOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(125, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(126, 22);
             this.tsmOptions.Text = "Options...";
             this.tsmOptions.Click += new System.EventHandler(this.tsm_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmSendImageTo
             // 
@@ -692,48 +692,48 @@ namespace ZSS
             this.tsmDestCustomHTTP});
             this.tsmSendImageTo.Image = global::ZSS.Properties.Resources.picture_go;
             this.tsmSendImageTo.Name = "tsmSendImageTo";
-            this.tsmSendImageTo.Size = new System.Drawing.Size(195, 22);
+            this.tsmSendImageTo.Size = new System.Drawing.Size(205, 22);
             this.tsmSendImageTo.Text = "Send Image To";
             // 
             // tsmDestClipboard
             // 
             this.tsmDestClipboard.Name = "tsmDestClipboard";
-            this.tsmDestClipboard.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestClipboard.Size = new System.Drawing.Size(167, 22);
             this.tsmDestClipboard.Text = "Clipboard";
             this.tsmDestClipboard.Click += new System.EventHandler(this.tsmDestClipboard_Click);
             // 
             // tsmDestFile
             // 
             this.tsmDestFile.Name = "tsmDestFile";
-            this.tsmDestFile.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestFile.Size = new System.Drawing.Size(167, 22);
             this.tsmDestFile.Text = "File";
             this.tsmDestFile.Click += new System.EventHandler(this.tsmDestFile_Click);
             // 
             // tsmDestFTP
             // 
             this.tsmDestFTP.Name = "tsmDestFTP";
-            this.tsmDestFTP.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestFTP.Size = new System.Drawing.Size(167, 22);
             this.tsmDestFTP.Text = "FTP";
             this.tsmDestFTP.Click += new System.EventHandler(this.tsmDestFTP_Click);
             // 
             // tsmDestImageShack
             // 
             this.tsmDestImageShack.Name = "tsmDestImageShack";
-            this.tsmDestImageShack.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestImageShack.Size = new System.Drawing.Size(167, 22);
             this.tsmDestImageShack.Text = "ImageShack";
             this.tsmDestImageShack.Click += new System.EventHandler(this.tsmDestImageShack_Click);
             // 
             // tsmDestTinyPic
             // 
             this.tsmDestTinyPic.Name = "tsmDestTinyPic";
-            this.tsmDestTinyPic.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestTinyPic.Size = new System.Drawing.Size(167, 22);
             this.tsmDestTinyPic.Text = "TinyPic";
             this.tsmDestTinyPic.Click += new System.EventHandler(this.tsmDestTinyPic_Click);
             // 
             // tsmDestCustomHTTP
             // 
             this.tsmDestCustomHTTP.Name = "tsmDestCustomHTTP";
-            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(167, 22);
             this.tsmDestCustomHTTP.Text = "&Custom Uploader";
             this.tsmDestCustomHTTP.Click += new System.EventHandler(this.tsmDestCustomHTTP_Click);
             // 
@@ -741,26 +741,26 @@ namespace ZSS
             // 
             this.tsmEditinImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(195, 22);
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
             this.tsmEditinImageSoftware.Text = "Edit in Image Software";
             // 
             // tsmCopytoClipboardMode
             // 
             this.tsmCopytoClipboardMode.Image = global::ZSS.Properties.Resources.page_copy;
             this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
-            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(195, 22);
+            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(205, 22);
             this.tsmCopytoClipboardMode.Text = "Copy to Clipboard Mode";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmViewRemoteDirectory
             // 
             this.tsmViewRemoteDirectory.Image = global::ZSS.Properties.Resources.drive_network;
             this.tsmViewRemoteDirectory.Name = "tsmViewRemoteDirectory";
-            this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(195, 22);
+            this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewRemoteDirectory.Text = "View Remote Directory...";
             this.tsmViewRemoteDirectory.Click += new System.EventHandler(this.tsmViewRemote_Click);
             // 
@@ -768,14 +768,14 @@ namespace ZSS
             // 
             this.tsmViewLocalDirectory.Image = global::ZSS.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
-            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(195, 22);
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewLocalDirectory.Text = "View Local Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmActions
             // 
@@ -791,14 +791,14 @@ namespace ZSS
             this.tsmScreenColorPicker});
             this.tsmActions.Image = global::ZSS.Properties.Resources.lightning;
             this.tsmActions.Name = "tsmActions";
-            this.tsmActions.Size = new System.Drawing.Size(195, 22);
+            this.tsmActions.Size = new System.Drawing.Size(205, 22);
             this.tsmActions.Text = "Quick &Actions";
             // 
             // tsmEntireScreen
             // 
             this.tsmEntireScreen.Image = global::ZSS.Properties.Resources.monitor;
             this.tsmEntireScreen.Name = "tsmEntireScreen";
-            this.tsmEntireScreen.Size = new System.Drawing.Size(174, 22);
+            this.tsmEntireScreen.Size = new System.Drawing.Size(188, 22);
             this.tsmEntireScreen.Text = "&Entire Screen";
             this.tsmEntireScreen.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
             // 
@@ -806,7 +806,7 @@ namespace ZSS
             // 
             this.tsmSelectedWindow.Image = global::ZSS.Properties.Resources.application_double;
             this.tsmSelectedWindow.Name = "tsmSelectedWindow";
-            this.tsmSelectedWindow.Size = new System.Drawing.Size(174, 22);
+            this.tsmSelectedWindow.Size = new System.Drawing.Size(188, 22);
             this.tsmSelectedWindow.Text = "Selected Window";
             this.tsmSelectedWindow.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
             // 
@@ -814,7 +814,7 @@ namespace ZSS
             // 
             this.tsmCropShot.Image = global::ZSS.Properties.Resources.shape_square;
             this.tsmCropShot.Name = "tsmCropShot";
-            this.tsmCropShot.Size = new System.Drawing.Size(174, 22);
+            this.tsmCropShot.Size = new System.Drawing.Size(188, 22);
             this.tsmCropShot.Text = "&Crop Shot";
             this.tsmCropShot.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
             // 
@@ -822,20 +822,20 @@ namespace ZSS
             // 
             this.tsmLastCropShot.Image = global::ZSS.Properties.Resources.shape_square_go;
             this.tsmLastCropShot.Name = "tsmLastCropShot";
-            this.tsmLastCropShot.Size = new System.Drawing.Size(174, 22);
+            this.tsmLastCropShot.Size = new System.Drawing.Size(188, 22);
             this.tsmLastCropShot.Text = "Last Crop Shot";
             this.tsmLastCropShot.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(185, 6);
             // 
             // tsmClipboardUpload
             // 
             this.tsmClipboardUpload.Image = global::ZSS.Properties.Resources.images;
             this.tsmClipboardUpload.Name = "tsmClipboardUpload";
-            this.tsmClipboardUpload.Size = new System.Drawing.Size(174, 22);
+            this.tsmClipboardUpload.Size = new System.Drawing.Size(188, 22);
             this.tsmClipboardUpload.Text = "Clipboard Upload";
             this.tsmClipboardUpload.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
             // 
@@ -843,7 +843,7 @@ namespace ZSS
             // 
             this.tsmDragDropWindow.Image = global::ZSS.Properties.Resources.shape_move_backwards;
             this.tsmDragDropWindow.Name = "tsmDragDropWindow";
-            this.tsmDragDropWindow.Size = new System.Drawing.Size(174, 22);
+            this.tsmDragDropWindow.Size = new System.Drawing.Size(188, 22);
             this.tsmDragDropWindow.Text = "Drag && Drop Window";
             this.tsmDragDropWindow.Click += new System.EventHandler(this.tsmDropWindow_Click);
             // 
@@ -851,7 +851,7 @@ namespace ZSS
             // 
             this.tsmLanguageTranslator.Image = global::ZSS.Properties.Resources.comments;
             this.tsmLanguageTranslator.Name = "tsmLanguageTranslator";
-            this.tsmLanguageTranslator.Size = new System.Drawing.Size(174, 22);
+            this.tsmLanguageTranslator.Size = new System.Drawing.Size(188, 22);
             this.tsmLanguageTranslator.Text = "Language Translator";
             this.tsmLanguageTranslator.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
             // 
@@ -859,7 +859,7 @@ namespace ZSS
             // 
             this.tsmScreenColorPicker.Image = global::ZSS.Properties.Resources.color_wheel;
             this.tsmScreenColorPicker.Name = "tsmScreenColorPicker";
-            this.tsmScreenColorPicker.Size = new System.Drawing.Size(174, 22);
+            this.tsmScreenColorPicker.Size = new System.Drawing.Size(188, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker";
             this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
@@ -867,7 +867,7 @@ namespace ZSS
             // 
             this.tsmQuickActions.Image = global::ZSS.Properties.Resources.application_lightning;
             this.tsmQuickActions.Name = "tsmQuickActions";
-            this.tsmQuickActions.Size = new System.Drawing.Size(195, 22);
+            this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickActions.Text = "Actions Toolbar...";
             this.tsmQuickActions.Click += new System.EventHandler(this.tsmQuickActions_Click);
             // 
@@ -875,14 +875,14 @@ namespace ZSS
             // 
             this.tsmQuickOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmQuickOptions.Name = "tsmQuickOptions";
-            this.tsmQuickOptions.Size = new System.Drawing.Size(195, 22);
+            this.tsmQuickOptions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickOptions.Text = "&Quick Options...";
             this.tsmQuickOptions.Click += new System.EventHandler(this.tsmQuickOptions_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmHelp
             // 
@@ -892,14 +892,14 @@ namespace ZSS
             this.tsmAbout});
             this.tsmHelp.Image = global::ZSS.Properties.Resources.help;
             this.tsmHelp.Name = "tsmHelp";
-            this.tsmHelp.Size = new System.Drawing.Size(195, 22);
+            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
             // 
             this.tsmLicense.Image = global::ZSS.Properties.Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
-            this.tsmLicense.Size = new System.Drawing.Size(158, 22);
+            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
             this.tsmLicense.Text = "License...";
             this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -907,7 +907,7 @@ namespace ZSS
             // 
             this.tsmVersionHistory.Image = global::ZSS.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(158, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -915,7 +915,7 @@ namespace ZSS
             // 
             this.tsmAbout.Image = global::ZSS.Properties.Resources.information;
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(158, 22);
+            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
@@ -923,7 +923,7 @@ namespace ZSS
             // 
             this.tsmExitZScreen.Image = global::ZSS.Properties.Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
-            this.tsmExitZScreen.Size = new System.Drawing.Size(195, 22);
+            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
@@ -1105,37 +1105,37 @@ namespace ZSS
             this.cmsRetryUpload,
             this.deleteToolStripMenuItem});
             this.cmsHistory.Name = "cmsHistory";
-            this.cmsHistory.Size = new System.Drawing.Size(157, 170);
+            this.cmsHistory.Size = new System.Drawing.Size(165, 170);
             // 
             // tsmCopyCbHistory
             // 
             this.tsmCopyCbHistory.Name = "tsmCopyCbHistory";
-            this.tsmCopyCbHistory.Size = new System.Drawing.Size(156, 22);
+            this.tsmCopyCbHistory.Size = new System.Drawing.Size(164, 22);
             this.tsmCopyCbHistory.Text = "&Copy Link";
             // 
             // copyImageToolStripMenuItem
             // 
             this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.copyImageToolStripMenuItem.Text = "Copy &Image";
             this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.copyImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
             // 
             // openLocalFileToolStripMenuItem
             // 
             this.openLocalFileToolStripMenuItem.Name = "openLocalFileToolStripMenuItem";
-            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.openLocalFileToolStripMenuItem.Text = "Open Local File";
             this.openLocalFileToolStripMenuItem.Click += new System.EventHandler(this.openLocalFileToolStripMenuItem_Click);
             // 
             // browseURLToolStripMenuItem
             // 
             this.browseURLToolStripMenuItem.Name = "browseURLToolStripMenuItem";
-            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.browseURLToolStripMenuItem.Text = "Browse URL";
             this.browseURLToolStripMenuItem.Click += new System.EventHandler(this.browseURLToolStripMenuItem_Click);
             // 
@@ -1146,46 +1146,46 @@ namespace ZSS
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem,
             this.copySourceToClipboardStringToolStripMenuItem});
             this.openSourceToolStripMenuItem.Name = "openSourceToolStripMenuItem";
-            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.openSourceToolStripMenuItem.Text = "Open Source";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.openToolStripMenuItem.Text = "Open Source in Text Editor";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openSourceInDefaultWebBrowserHTMLToolStripMenuItem
             // 
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Name = "openSourceInDefaultWebBrowserHTMLToolStripMenuItem";
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Text = "Open Source in Browser";
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Click += new System.EventHandler(this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem_Click);
             // 
             // copySourceToClipboardStringToolStripMenuItem
             // 
             this.copySourceToClipboardStringToolStripMenuItem.Name = "copySourceToClipboardStringToolStripMenuItem";
-            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.copySourceToClipboardStringToolStripMenuItem.Text = "Copy Source to Clipboard";
             this.copySourceToClipboardStringToolStripMenuItem.Click += new System.EventHandler(this.copySourceToClipboardStringToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(161, 6);
             // 
             // cmsRetryUpload
             // 
             this.cmsRetryUpload.Name = "cmsRetryUpload";
-            this.cmsRetryUpload.Size = new System.Drawing.Size(156, 22);
+            this.cmsRetryUpload.Size = new System.Drawing.Size(164, 22);
             this.cmsRetryUpload.Text = "Retry Upload";
             this.cmsRetryUpload.Click += new System.EventHandler(this.cmsRetryUpload_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.deleteToolStripMenuItem.Text = "&Delete Local Files";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -2597,9 +2597,9 @@ namespace ZSS
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.nudWatermarkOffset);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffset);
-            this.gbWatermarkGeneral.Location = new System.Drawing.Point(16, 16);
+            this.gbWatermarkGeneral.Location = new System.Drawing.Point(8, 8);
             this.gbWatermarkGeneral.Name = "gbWatermarkGeneral";
-            this.gbWatermarkGeneral.Size = new System.Drawing.Size(528, 56);
+            this.gbWatermarkGeneral.Size = new System.Drawing.Size(544, 56);
             this.gbWatermarkGeneral.TabIndex = 26;
             this.gbWatermarkGeneral.TabStop = false;
             this.gbWatermarkGeneral.Text = "General Settings";
@@ -2608,7 +2608,7 @@ namespace ZSS
             // 
             this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(120, 24);
+            this.cbWatermarkPosition.Location = new System.Drawing.Point(120, 18);
             this.cbWatermarkPosition.Name = "cbWatermarkPosition";
             this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
             this.cbWatermarkPosition.TabIndex = 18;
@@ -2617,7 +2617,7 @@ namespace ZSS
             // lblWatermarkPosition
             // 
             this.lblWatermarkPosition.AutoSize = true;
-            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 30);
+            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 24);
             this.lblWatermarkPosition.Name = "lblWatermarkPosition";
             this.lblWatermarkPosition.Size = new System.Drawing.Size(101, 13);
             this.lblWatermarkPosition.TabIndex = 19;
@@ -2625,7 +2625,7 @@ namespace ZSS
             // 
             // nudWatermarkOffset
             // 
-            this.nudWatermarkOffset.Location = new System.Drawing.Point(304, 24);
+            this.nudWatermarkOffset.Location = new System.Drawing.Point(304, 18);
             this.nudWatermarkOffset.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -2640,7 +2640,7 @@ namespace ZSS
             // lblWatermarkOffset
             // 
             this.lblWatermarkOffset.AutoSize = true;
-            this.lblWatermarkOffset.Location = new System.Drawing.Point(256, 28);
+            this.lblWatermarkOffset.Location = new System.Drawing.Point(256, 22);
             this.lblWatermarkOffset.Name = "lblWatermarkOffset";
             this.lblWatermarkOffset.Size = new System.Drawing.Size(38, 13);
             this.lblWatermarkOffset.TabIndex = 5;
@@ -2648,7 +2648,7 @@ namespace ZSS
             // 
             // btwWatermarkBrowseImage
             // 
-            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(328, 16);
+            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(408, 12);
             this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
             this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
             this.btwWatermarkBrowseImage.TabIndex = 22;
@@ -2659,7 +2659,7 @@ namespace ZSS
             // 
             // txtWatermarkImageLocation
             // 
-            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(16, 20);
+            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(96, 16);
             this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
             this.txtWatermarkImageLocation.Size = new System.Drawing.Size(304, 20);
             this.txtWatermarkImageLocation.TabIndex = 21;
@@ -2668,7 +2668,7 @@ namespace ZSS
             // cboWatermarkUseImage
             // 
             this.cboWatermarkUseImage.AutoSize = true;
-            this.cboWatermarkUseImage.Location = new System.Drawing.Point(560, 200);
+            this.cboWatermarkUseImage.Location = new System.Drawing.Point(12, 18);
             this.cboWatermarkUseImage.Name = "cboWatermarkUseImage";
             this.cboWatermarkUseImage.Size = new System.Drawing.Size(80, 17);
             this.cboWatermarkUseImage.TabIndex = 20;
@@ -2691,9 +2691,9 @@ namespace ZSS
             this.gbWatermarkBackground.Controls.Add(this.pbWatermarkBorderColor);
             this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient2);
             this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
-            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 139);
+            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 128);
             this.gbWatermarkBackground.Name = "gbWatermarkBackground";
-            this.gbWatermarkBackground.Size = new System.Drawing.Size(488, 144);
+            this.gbWatermarkBackground.Size = new System.Drawing.Size(528, 144);
             this.gbWatermarkBackground.TabIndex = 25;
             this.gbWatermarkBackground.TabStop = false;
             this.gbWatermarkBackground.Text = "Text Background Settings";
@@ -2846,9 +2846,9 @@ namespace ZSS
             this.gbWatermarkText.Controls.Add(this.lblWatermarkFontTrans);
             this.gbWatermarkText.Controls.Add(this.txtWatermarkText);
             this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
-            this.gbWatermarkText.Location = new System.Drawing.Point(8, 16);
+            this.gbWatermarkText.Location = new System.Drawing.Point(8, 8);
             this.gbWatermarkText.Name = "gbWatermarkText";
-            this.gbWatermarkText.Size = new System.Drawing.Size(488, 112);
+            this.gbWatermarkText.Size = new System.Drawing.Size(528, 112);
             this.gbWatermarkText.TabIndex = 24;
             this.gbWatermarkText.TabStop = false;
             this.gbWatermarkText.Text = "Text Settings";
@@ -3997,7 +3997,6 @@ namespace ZSS
             // 
             this.tpWatermark.Controls.Add(this.tabControl1);
             this.tpWatermark.Controls.Add(this.gbWatermarkPreview);
-            this.tpWatermark.Controls.Add(this.cboWatermarkUseImage);
             this.tpWatermark.Controls.Add(this.gbWatermarkGeneral);
             this.tpWatermark.ImageIndex = 8;
             this.tpWatermark.Location = new System.Drawing.Point(4, 23);
@@ -4011,10 +4010,10 @@ namespace ZSS
             // 
             this.tabControl1.Controls.Add(this.tpWatermarkText);
             this.tabControl1.Controls.Add(this.tpWatermarkImage);
-            this.tabControl1.Location = new System.Drawing.Point(16, 80);
+            this.tabControl1.Location = new System.Drawing.Point(8, 72);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(528, 336);
+            this.tabControl1.Size = new System.Drawing.Size(544, 344);
             this.tabControl1.TabIndex = 29;
             // 
             // tpWatermarkText
@@ -4024,7 +4023,7 @@ namespace ZSS
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 22);
             this.tpWatermarkText.Name = "tpWatermarkText";
             this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(520, 310);
+            this.tpWatermarkText.Size = new System.Drawing.Size(536, 318);
             this.tpWatermarkText.TabIndex = 0;
             this.tpWatermarkText.Text = "Text";
             this.tpWatermarkText.UseVisualStyleBackColor = true;
@@ -4033,10 +4032,11 @@ namespace ZSS
             // 
             this.tpWatermarkImage.Controls.Add(this.btwWatermarkBrowseImage);
             this.tpWatermarkImage.Controls.Add(this.txtWatermarkImageLocation);
+            this.tpWatermarkImage.Controls.Add(this.cboWatermarkUseImage);
             this.tpWatermarkImage.Location = new System.Drawing.Point(4, 22);
             this.tpWatermarkImage.Name = "tpWatermarkImage";
             this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkImage.Size = new System.Drawing.Size(520, 310);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(544, 318);
             this.tpWatermarkImage.TabIndex = 1;
             this.tpWatermarkImage.Text = "Image";
             this.tpWatermarkImage.UseVisualStyleBackColor = true;
@@ -5216,6 +5216,25 @@ namespace ZSS
             this.btnOpenSourceBrowser.UseVisualStyleBackColor = true;
             this.btnOpenSourceBrowser.Click += new System.EventHandler(this.btnOpenSourceBrowser_Click);
             // 
+            // tpOptionsAdv
+            // 
+            this.tpOptionsAdv.Controls.Add(this.confApp);
+            this.tpOptionsAdv.Location = new System.Drawing.Point(4, 22);
+            this.tpOptionsAdv.Name = "tpOptionsAdv";
+            this.tpOptionsAdv.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOptionsAdv.Size = new System.Drawing.Size(772, 396);
+            this.tpOptionsAdv.TabIndex = 3;
+            this.tpOptionsAdv.Text = "Advanced";
+            this.tpOptionsAdv.UseVisualStyleBackColor = true;
+            // 
+            // confApp
+            // 
+            this.confApp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.confApp.Location = new System.Drawing.Point(3, 3);
+            this.confApp.Name = "confApp";
+            this.confApp.Size = new System.Drawing.Size(766, 390);
+            this.confApp.TabIndex = 0;
+            // 
             // ilApp
             // 
             this.ilApp.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilApp.ImageStream")));
@@ -5274,25 +5293,6 @@ namespace ZSS
             this.ttApp.AutoPopDelay = 10000;
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
-            // 
-            // tpOptionsAdv
-            // 
-            this.tpOptionsAdv.Controls.Add(this.confApp);
-            this.tpOptionsAdv.Location = new System.Drawing.Point(4, 22);
-            this.tpOptionsAdv.Name = "tpOptionsAdv";
-            this.tpOptionsAdv.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptionsAdv.Size = new System.Drawing.Size(772, 396);
-            this.tpOptionsAdv.TabIndex = 3;
-            this.tpOptionsAdv.Text = "Advanced";
-            this.tpOptionsAdv.UseVisualStyleBackColor = true;
-            // 
-            // confApp
-            // 
-            this.confApp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.confApp.Location = new System.Drawing.Point(3, 3);
-            this.confApp.Name = "confApp";
-            this.confApp.Size = new System.Drawing.Size(766, 390);
-            this.confApp.TabIndex = 0;
             // 
             // ZScreen
             // 
@@ -5418,7 +5418,6 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.tcApp.ResumeLayout(false);
             this.tpWatermark.ResumeLayout(false);
-            this.tpWatermark.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tpWatermarkText.ResumeLayout(false);
             this.tpWatermarkImage.ResumeLayout(false);
@@ -5460,10 +5459,10 @@ namespace ZSS
             this.tpAdvDebug.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
+            this.tpOptionsAdv.ResumeLayout(false);
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
-            this.tpOptionsAdv.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
