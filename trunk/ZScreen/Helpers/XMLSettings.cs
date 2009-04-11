@@ -148,6 +148,7 @@ namespace ZSS
 
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkOffset = 5;
+        public bool WatermarkAddReflection = false;
         public string WatermarkText = "%h:%mi";
         public XmlFont WatermarkFont = SerializeFont(new Font("Arial", 8));
         public string WatermarkFontColor = SerializeColor(Color.White);
@@ -162,7 +163,7 @@ namespace ZSS
         public bool WatermarkUseImage = false;
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
-        public bool WatermarkAddReflection = false;
+        public decimal WatermarkImageScale = 100;
 
         // Quality
 
@@ -256,7 +257,7 @@ namespace ZSS
         public string ImagesDir = "";
         public bool DeleteLocal = false;
         public string CacheDir = "";
-        public decimal ScreenshotCacheSize = 50;        
+        public decimal ScreenshotCacheSize = 50;
         public string SettingsDir = "";
         public string TextDir = "";
         public string TempDir = "";
@@ -421,4 +422,3 @@ namespace ZSS
     }
 
 }
-

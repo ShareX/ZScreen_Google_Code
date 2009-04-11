@@ -39,45 +39,44 @@ namespace ZSS
             {
                 if (File.Exists(imgPath))
                 {
-                    using (Image img2 = Image.FromFile(imgPath))
+                    Image img2 = Image.FromFile(imgPath);
+                    img2 = ImageChangeSize(img2);
+                    Point imgPos = Point.Empty;
+                    switch (position)
                     {
-                        Point imgPos = Point.Empty;
-                        switch (position)
+                        case WatermarkPositionType.TOP_LEFT:
+                            imgPos = new Point(offset, offset);
+                            break;
+                        case WatermarkPositionType.TOP_RIGHT:
+                            imgPos = new Point(img.Width - img2.Width - offset, offset);
+                            break;
+                        case WatermarkPositionType.BOTTOM_LEFT:
+                            imgPos = new Point(offset, img.Height - img2.Height - offset);
+                            break;
+                        case WatermarkPositionType.BOTTOM_RIGHT:
+                            imgPos = new Point(img.Width - img2.Width - offset, img.Height - img2.Height - offset);
+                            break;
+                        case WatermarkPositionType.CENTER:
+                            imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2);
+                            break;
+                    }
+                    if ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset))
+                    {
+                        throw new Exception("Image size smaller than watermark size.");
+                    }
+                    else
+                    {
+                        Graphics g = Graphics.FromImage(img);
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.DrawImage(img2, imgPos);
+                        if (Program.conf.WatermarkUseBorder)
                         {
-                            case WatermarkPositionType.TOP_LEFT:
-                                imgPos = new Point(offset, offset);
-                                break;
-                            case WatermarkPositionType.TOP_RIGHT:
-                                imgPos = new Point(img.Width - img2.Width - offset, offset);
-                                break;
-                            case WatermarkPositionType.BOTTOM_LEFT:
-                                imgPos = new Point(offset, img.Height - img2.Height - offset);
-                                break;
-                            case WatermarkPositionType.BOTTOM_RIGHT:
-                                imgPos = new Point(img.Width - img2.Width - offset, img.Height - img2.Height - offset);
-                                break;
-                            case WatermarkPositionType.CENTER:
-                                imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2);
-                                break;
+                            g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
                         }
-                        if ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset))
+                        if (Program.conf.WatermarkAddReflection)
                         {
-                            throw new Exception("Image size smaller than watermark size.");
-                        }
-                        else
-                        {
-                            Graphics g = Graphics.FromImage(img);
-                            g.SmoothingMode = SmoothingMode.HighQuality;
-                            g.DrawImage(img2, imgPos);
-                            if (Program.conf.WatermarkUseBorder)
-                            {
-                                g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
-                            }
-                            if (Program.conf.WatermarkAddReflection)
-                            {
-                                Bitmap bmp = AddReflection((Bitmap)img2);
-                                g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
-                            }
+                            Bitmap bmp = AddReflection((Bitmap)img2);
+                            g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
                         }
                     }
                 }
@@ -188,6 +187,17 @@ namespace ZSS
             b.UnlockBits(bmData);
 
             return b;
+        }
+
+        public static Bitmap ImageChangeSize(Image img)
+        {
+            Bitmap bmp = new Bitmap((int)(img.Width / 100 * Program.conf.WatermarkImageScale),
+                (int)(img.Height / 100 * Program.conf.WatermarkImageScale));
+            Graphics g = Graphics.FromImage(bmp);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            return bmp;
         }
     }
 }
