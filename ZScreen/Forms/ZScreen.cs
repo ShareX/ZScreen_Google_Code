@@ -4735,7 +4735,6 @@ namespace ZSS
             TestWatermark();
         }
 
-
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldRootDir = txtRootFolder.Text;
@@ -4780,6 +4779,7 @@ namespace ZSS
         private void cbWatermarkAutoHide_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
+            TestWatermark();
         }
     }
 }
