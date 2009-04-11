@@ -3520,7 +3520,7 @@ namespace ZSS
         private void nudWatermarkBackTrans_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkBackTrans = nudWatermarkBackTrans.Value;
-            TestWatermark();
+            trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value; 
         }
 
         private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3633,7 +3633,7 @@ namespace ZSS
         private void nudWatermarkFontTrans_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkFontTrans = nudWatermarkFontTrans.Value;
-            TestWatermark();
+            trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;            
         }
 
         private void nudWatermarkCornerRadius_ValueChanged(object sender, EventArgs e)
@@ -4765,12 +4765,14 @@ namespace ZSS
         private void trackWatermarkFontTrans_Scroll(object sender, EventArgs e)
         {
             Program.conf.WatermarkFontTrans = trackWatermarkFontTrans.Value;
+            nudWatermarkFontTrans.Value = Program.conf.WatermarkFontTrans;
             TestWatermark();
         }
 
         private void trackWatermarkBackgroundTrans_Scroll(object sender, EventArgs e)
         {
             Program.conf.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
+            nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
             TestWatermark();
         }
     }
