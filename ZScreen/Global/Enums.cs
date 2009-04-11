@@ -69,7 +69,15 @@ namespace ZSS
         [Description("Bottom Left")]
         BOTTOM_LEFT,
         [Description("Center")]
-        CENTER
+        CENTER,
+        [Description("Left")]
+        LEFT,
+        [Description("Top")]
+        TOP,
+        [Description("Right")]
+        RIGHT,
+        [Description("Bottom")]
+        BOTTOM
     }
 
     public static class Enums
