@@ -58,6 +58,16 @@ namespace ZSS
         DATE_NAME
     }
 
+    public enum WatermarkType
+    {
+        [Description("None")]
+        NONE,
+        [Description("Text")]
+        TEXT,
+        [Description("Image")]
+        IMAGE
+    }
+
     public enum WatermarkPositionType
     {
         [Description("Top Left")]
