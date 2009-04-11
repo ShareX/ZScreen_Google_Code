@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -3161,7 +3161,7 @@ namespace ZSS
             this.tpEditors.Location = new System.Drawing.Point(4, 23);
             this.tpEditors.Name = "tpEditors";
             this.tpEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditors.Size = new System.Drawing.Size(786, 431);
+            this.tpEditors.Size = new System.Drawing.Size(794, 418);
             this.tpEditors.TabIndex = 2;
             this.tpEditors.Text = "Editors";
             this.tpEditors.UseVisualStyleBackColor = true;
@@ -3173,7 +3173,7 @@ namespace ZSS
             this.tcEditors.Location = new System.Drawing.Point(3, 3);
             this.tcEditors.Name = "tcEditors";
             this.tcEditors.SelectedIndex = 0;
-            this.tcEditors.Size = new System.Drawing.Size(780, 425);
+            this.tcEditors.Size = new System.Drawing.Size(788, 412);
             this.tcEditors.TabIndex = 64;
             // 
             // tpEditorsImages
@@ -3182,7 +3182,7 @@ namespace ZSS
             this.tpEditorsImages.Location = new System.Drawing.Point(4, 22);
             this.tpEditorsImages.Name = "tpEditorsImages";
             this.tpEditorsImages.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditorsImages.Size = new System.Drawing.Size(772, 399);
+            this.tpEditorsImages.Size = new System.Drawing.Size(780, 386);
             this.tpEditorsImages.TabIndex = 0;
             this.tpEditorsImages.Text = "Image Editors";
             this.tpEditorsImages.UseVisualStyleBackColor = true;
@@ -3318,7 +3318,7 @@ namespace ZSS
             this.tpFTP.Location = new System.Drawing.Point(4, 23);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(786, 431);
+            this.tpFTP.Size = new System.Drawing.Size(794, 423);
             this.tpFTP.TabIndex = 3;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
@@ -3692,38 +3692,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3769,7 +3769,7 @@ namespace ZSS
             this.tpMain.Location = new System.Drawing.Point(4, 23);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(794, 436);
+            this.tpMain.Size = new System.Drawing.Size(794, 418);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
@@ -4072,7 +4072,7 @@ namespace ZSS
             this.tcApp.Location = new System.Drawing.Point(0, 0);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(802, 463);
+            this.tcApp.Size = new System.Drawing.Size(802, 450);
             this.tcApp.TabIndex = 74;
             this.tcApp.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
@@ -4085,7 +4085,7 @@ namespace ZSS
             this.tpWatermark.Location = new System.Drawing.Point(4, 23);
             this.tpWatermark.Name = "tpWatermark";
             this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermark.Size = new System.Drawing.Size(794, 436);
+            this.tpWatermark.Size = new System.Drawing.Size(794, 418);
             this.tpWatermark.TabIndex = 11;
             this.tpWatermark.Text = "Watermark";
             this.tpWatermark.UseVisualStyleBackColor = true;
@@ -4101,7 +4101,7 @@ namespace ZSS
             this.tcWatermark.Location = new System.Drawing.Point(3, 3);
             this.tcWatermark.Name = "tcWatermark";
             this.tcWatermark.SelectedIndex = 0;
-            this.tcWatermark.Size = new System.Drawing.Size(453, 429);
+            this.tcWatermark.Size = new System.Drawing.Size(453, 395);
             this.tcWatermark.TabIndex = 29;
             // 
             // tpWatermarkText
@@ -4114,7 +4114,7 @@ namespace ZSS
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkText.Name = "tpWatermarkText";
             this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(445, 402);
+            this.tpWatermarkText.Size = new System.Drawing.Size(445, 368);
             this.tpWatermarkText.TabIndex = 0;
             this.tpWatermarkText.Text = "Text";
             this.tpWatermarkText.UseVisualStyleBackColor = true;
@@ -4130,7 +4130,7 @@ namespace ZSS
             this.tpWatermarkImage.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkImage.Name = "tpWatermarkImage";
             this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkImage.Size = new System.Drawing.Size(445, 398);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(445, 368);
             this.tpWatermarkImage.TabIndex = 1;
             this.tpWatermarkImage.Text = "Image";
             this.tpWatermarkImage.UseVisualStyleBackColor = true;
@@ -5440,7 +5440,7 @@ namespace ZSS
             this.txtActiveHelp.Name = "txtActiveHelp";
             this.txtActiveHelp.ReadOnly = true;
             this.txtActiveHelp.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txtActiveHelp.Size = new System.Drawing.Size(802, 32);
+            this.txtActiveHelp.Size = new System.Drawing.Size(802, 45);
             this.txtActiveHelp.TabIndex = 75;
             this.txtActiveHelp.Text = "";
             this.txtActiveHelp.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtActiveHelp_LinkClicked);
@@ -5462,7 +5462,7 @@ namespace ZSS
             // 
             this.splitContainerApp.Panel2.Controls.Add(this.txtActiveHelp);
             this.splitContainerApp.Size = new System.Drawing.Size(802, 496);
-            this.splitContainerApp.SplitterDistance = 463;
+            this.splitContainerApp.SplitterDistance = 450;
             this.splitContainerApp.SplitterWidth = 1;
             this.splitContainerApp.TabIndex = 76;
             // 
