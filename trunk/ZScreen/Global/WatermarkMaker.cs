@@ -191,8 +191,8 @@ namespace ZSS
 
         public static Bitmap ImageChangeSize(Image img)
         {
-            Bitmap bmp = new Bitmap((int)(img.Width / 100 * Program.conf.WatermarkImageScale),
-                (int)(img.Height / 100 * Program.conf.WatermarkImageScale));
+            Bitmap bmp = new Bitmap((int)((float)img.Width / 100 * (float)Program.conf.WatermarkImageScale),
+                (int)((float)img.Height / 100 * (float)Program.conf.WatermarkImageScale));
             Graphics g = Graphics.FromImage(bmp);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.SmoothingMode = SmoothingMode.HighQuality;
