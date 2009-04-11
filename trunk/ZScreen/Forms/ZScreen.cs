@@ -156,8 +156,8 @@ namespace ZSS
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
-            CheckActiveHelp();
-            cbActiveHelp.Checked = Program.conf.ActiveHelp;
+            // CheckActiveHelp();
+            // cbActiveHelp.Checked = Program.conf.ActiveHelp;
             chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
 
             #endregion
@@ -3031,18 +3031,18 @@ namespace ZSS
             QuitSettingHotkeys();
         }
 
-        private void cbActiveHelp_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.ActiveHelp = cbActiveHelp.Checked;
-            CheckActiveHelp();
-        }
+        //private void cbActiveHelp_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    Program.conf.ActiveHelp = cbActiveHelp.Checked;
+        //    CheckActiveHelp();
+        //}
 
-        private void CheckActiveHelp()
-        {
-            splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
-            this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height : Program.conf.WindowSize.Height - txtActiveHelp.Height);
-            this.Refresh();
-        }
+        //private void CheckActiveHelp()
+        //{
+        //    splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
+        //    this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height : Program.conf.WindowSize.Height - txtActiveHelp.Height);
+        //    this.Refresh();
+        //}
 
         private void AddMouseHoverEventHandlerHelp(Control.ControlCollection col)
         {
@@ -3059,18 +3059,18 @@ namespace ZSS
 
         private void HelpMouseHoverEvent(object sender, EventArgs e)
         {
-            if (Program.conf.ActiveHelp)
+            //if (Program.conf.ActiveHelp)
+            //{
+            string help = ((Control)sender).Tag.ToString();
+            if (mGTranslator != null && Program.conf.GTActiveHelp && cbHelpToLanguage.Items.Count > 0)
             {
-                string help = ((Control)sender).Tag.ToString();
-                if (mGTranslator != null && Program.conf.GTActiveHelp && cbHelpToLanguage.Items.Count > 0)
-                {
-                    StartGTActiveHelp(help);
-                }
-                else
-                {
-                    txtActiveHelp.Text = help;
-                }
+                StartGTActiveHelp(help);
             }
+            else
+            {
+                txtActiveHelp.Text = help;
+            }
+            // }
         }
 
         private void StartGTActiveHelp(string help)
