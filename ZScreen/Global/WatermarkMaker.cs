@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 
 namespace ZSS
 {
@@ -40,7 +41,7 @@ namespace ZSS
                 if (File.Exists(imgPath))
                 {
                     Image img2 = Image.FromFile(imgPath);
-                    img2 = ImageChangeSize(img2);
+                    img2 = ImageChangeSize((Bitmap)img2);
                     Point imgPos = Point.Empty;
                     switch (position)
                     {
@@ -69,14 +70,14 @@ namespace ZSS
                         Graphics g = Graphics.FromImage(img);
                         g.SmoothingMode = SmoothingMode.HighQuality;
                         g.DrawImage(img2, imgPos);
-                        if (Program.conf.WatermarkUseBorder)
-                        {
-                            g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
-                        }
                         if (Program.conf.WatermarkAddReflection)
                         {
                             Bitmap bmp = AddReflection((Bitmap)img2);
                             g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
+                        }
+                        if (Program.conf.WatermarkUseBorder)
+                        {
+                            g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
                         }
                     }
                 }
@@ -136,11 +137,12 @@ namespace ZSS
                     Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
                     Graphics g = Graphics.FromImage(bmp);
                     g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
                     g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, backColor1),
                         Color.FromArgb(backTrans, backColor2), gradientType), gPath);
                     g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
                     g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)),
-                        labelRectangle.X + 5, labelRectangle.Y + 5);
+                        5, 5);
 
                     Graphics gImg = Graphics.FromImage(img);
                     gImg.SmoothingMode = SmoothingMode.HighQuality;
@@ -189,7 +191,7 @@ namespace ZSS
             return b;
         }
 
-        public static Bitmap ImageChangeSize(Image img)
+        public static Bitmap ImageChangeSize(Bitmap img)
         {
             Bitmap bmp = new Bitmap((int)((float)img.Width / 100 * (float)Program.conf.WatermarkImageScale),
                 (int)((float)img.Height / 100 * (float)Program.conf.WatermarkImageScale));
