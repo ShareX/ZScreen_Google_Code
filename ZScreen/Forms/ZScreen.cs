@@ -233,6 +233,7 @@ namespace ZSS
             cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
             nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
             cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
+            cbWatermarkAutoHide.Checked = Program.conf.WatermarkAutoHide;
 
             txtWatermarkText.Text = Program.conf.WatermarkText;
             pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
@@ -3507,8 +3508,8 @@ namespace ZSS
 
         public string FontToString(Font font, Color color)
         {
-            return "Name: " + font.Name + " - Size: " + font.Size.ToString() + " - Style: " + font.Style.ToString() + " - Color: " +
-                (color.IsNamedColor ? color.Name : "(R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
+            return "Name: " + font.Name + " - Size: " + font.Size.ToString() + " - Style: " + font.Style.ToString();
+            //+ " - Color: " + (color.IsNamedColor ? color.Name : "(R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
         }
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
@@ -3520,7 +3521,7 @@ namespace ZSS
         private void nudWatermarkBackTrans_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkBackTrans = nudWatermarkBackTrans.Value;
-            trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value; 
+            trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value;
         }
 
         private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3633,7 +3634,7 @@ namespace ZSS
         private void nudWatermarkFontTrans_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkFontTrans = nudWatermarkFontTrans.Value;
-            trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;            
+            trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;
         }
 
         private void nudWatermarkCornerRadius_ValueChanged(object sender, EventArgs e)
@@ -4774,6 +4775,11 @@ namespace ZSS
             Program.conf.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
             nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
             TestWatermark();
+        }
+
+        private void cbWatermarkAutoHide_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
         }
     }
 }

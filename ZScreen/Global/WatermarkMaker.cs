@@ -61,7 +61,7 @@ namespace ZSS
                             imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2);
                             break;
                     }
-                    if ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset))
+                    if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset)))
                     {
                         throw new Exception("Image size smaller than watermark size.");
                     }
@@ -117,7 +117,7 @@ namespace ZSS
                             img.Height / 2 - (textSize.Height + 10) / 2 - 1);
                         break;
                 }
-                if ((img.Width < labelSize.Width + offset) || (img.Height < labelSize.Height + offset))
+                if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) || (img.Height < labelSize.Height + offset)))
                 {
                     throw new Exception("Image size smaller than watermark size.");
                 }
@@ -141,9 +141,7 @@ namespace ZSS
                     g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, backColor1),
                         Color.FromArgb(backTrans, backColor2), gradientType), gPath);
                     g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
-                    g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)),
-                        5, 5);
-
+                    g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), 5, 5);
                     Graphics gImg = Graphics.FromImage(img);
                     gImg.SmoothingMode = SmoothingMode.HighQuality;
                     gImg.DrawImage(bmp, labelPosition);
