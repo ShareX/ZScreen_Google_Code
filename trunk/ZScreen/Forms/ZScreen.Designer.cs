@@ -345,6 +345,8 @@ namespace ZSS
             this.tcWatermark = new System.Windows.Forms.TabControl();
             this.tpWatermarkText = new System.Windows.Forms.TabPage();
             this.tpWatermarkImage = new System.Windows.Forms.TabPage();
+            this.lblWatermarkImageScale = new System.Windows.Forms.Label();
+            this.nudWatermarkImageScale = new System.Windows.Forms.NumericUpDown();
             this.cbWatermarkUseBorder = new System.Windows.Forms.CheckBox();
             this.tpHTTP = new System.Windows.Forms.TabPage();
             this.tcHTTP = new System.Windows.Forms.TabControl();
@@ -464,8 +466,6 @@ namespace ZSS
             this.splitContainerApp = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.nudWatermarkImageScale = new System.Windows.Forms.NumericUpDown();
-            this.lblWatermarkImageScale = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -544,6 +544,7 @@ namespace ZSS
             this.tcWatermark.SuspendLayout();
             this.tpWatermarkText.SuspendLayout();
             this.tpWatermarkImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).BeginInit();
             this.tpHTTP.SuspendLayout();
             this.tcHTTP.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
@@ -574,7 +575,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.SuspendLayout();
             this.splitContainerApp.Panel2.SuspendLayout();
             this.splitContainerApp.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -954,7 +954,7 @@ namespace ZSS
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(786, 417);
+            this.tpHistory.Size = new System.Drawing.Size(786, 431);
             this.tpHistory.TabIndex = 8;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -967,7 +967,7 @@ namespace ZSS
             this.tcHistory.Location = new System.Drawing.Point(3, 3);
             this.tcHistory.Name = "tcHistory";
             this.tcHistory.SelectedIndex = 0;
-            this.tcHistory.Size = new System.Drawing.Size(780, 411);
+            this.tcHistory.Size = new System.Drawing.Size(780, 425);
             this.tcHistory.TabIndex = 3;
             // 
             // tpHistoryList
@@ -987,7 +987,7 @@ namespace ZSS
             this.tpHistoryList.Location = new System.Drawing.Point(4, 22);
             this.tpHistoryList.Name = "tpHistoryList";
             this.tpHistoryList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistoryList.Size = new System.Drawing.Size(772, 385);
+            this.tpHistoryList.Size = new System.Drawing.Size(772, 399);
             this.tpHistoryList.TabIndex = 0;
             this.tpHistoryList.Text = "History List";
             this.tpHistoryList.UseVisualStyleBackColor = true;
@@ -1105,7 +1105,7 @@ namespace ZSS
             this.lbHistory.Name = "lbHistory";
             this.lbHistory.ScrollAlwaysVisible = true;
             this.lbHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbHistory.Size = new System.Drawing.Size(389, 379);
+            this.lbHistory.Size = new System.Drawing.Size(389, 393);
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
@@ -1248,7 +1248,7 @@ namespace ZSS
             this.tpHistorySettings.Location = new System.Drawing.Point(4, 22);
             this.tpHistorySettings.Name = "tpHistorySettings";
             this.tpHistorySettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistorySettings.Size = new System.Drawing.Size(772, 385);
+            this.tpHistorySettings.Size = new System.Drawing.Size(772, 376);
             this.tpHistorySettings.TabIndex = 1;
             this.tpHistorySettings.Text = "History Settings";
             this.tpHistorySettings.UseVisualStyleBackColor = true;
@@ -1363,7 +1363,7 @@ namespace ZSS
             this.tpCapture.Location = new System.Drawing.Point(4, 23);
             this.tpCapture.Name = "tpCapture";
             this.tpCapture.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCapture.Size = new System.Drawing.Size(786, 417);
+            this.tpCapture.Size = new System.Drawing.Size(786, 408);
             this.tpCapture.TabIndex = 4;
             this.tpCapture.Text = "Capture";
             this.tpCapture.UseVisualStyleBackColor = true;
@@ -1380,7 +1380,7 @@ namespace ZSS
             this.tcFileSettings.Location = new System.Drawing.Point(3, 3);
             this.tcFileSettings.Name = "tcFileSettings";
             this.tcFileSettings.SelectedIndex = 0;
-            this.tcFileSettings.Size = new System.Drawing.Size(780, 411);
+            this.tcFileSettings.Size = new System.Drawing.Size(780, 402);
             this.tcFileSettings.TabIndex = 77;
             // 
             // tpCropShot
@@ -1395,7 +1395,7 @@ namespace ZSS
             this.tpCropShot.Location = new System.Drawing.Point(4, 23);
             this.tpCropShot.Name = "tpCropShot";
             this.tpCropShot.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCropShot.Size = new System.Drawing.Size(772, 384);
+            this.tpCropShot.Size = new System.Drawing.Size(772, 375);
             this.tpCropShot.TabIndex = 7;
             this.tpCropShot.Text = "Crop Shot";
             this.tpCropShot.UseVisualStyleBackColor = true;
@@ -1787,7 +1787,7 @@ namespace ZSS
             this.tpSelectedWindow.ImageKey = "application_double.png";
             this.tpSelectedWindow.Location = new System.Drawing.Point(4, 23);
             this.tpSelectedWindow.Name = "tpSelectedWindow";
-            this.tpSelectedWindow.Size = new System.Drawing.Size(772, 384);
+            this.tpSelectedWindow.Size = new System.Drawing.Size(772, 375);
             this.tpSelectedWindow.TabIndex = 6;
             this.tpSelectedWindow.Text = "Selected Window";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
@@ -1978,7 +1978,7 @@ namespace ZSS
             this.tpInteraction.Location = new System.Drawing.Point(4, 23);
             this.tpInteraction.Name = "tpInteraction";
             this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInteraction.Size = new System.Drawing.Size(772, 384);
+            this.tpInteraction.Size = new System.Drawing.Size(772, 375);
             this.tpInteraction.TabIndex = 5;
             this.tpInteraction.Text = "Interaction";
             this.tpInteraction.UseVisualStyleBackColor = true;
@@ -2128,7 +2128,7 @@ namespace ZSS
             this.tpFileNaming.Controls.Add(this.gbActiveWindowNaming);
             this.tpFileNaming.Location = new System.Drawing.Point(4, 23);
             this.tpFileNaming.Name = "tpFileNaming";
-            this.tpFileNaming.Size = new System.Drawing.Size(772, 384);
+            this.tpFileNaming.Size = new System.Drawing.Size(772, 375);
             this.tpFileNaming.TabIndex = 3;
             this.tpFileNaming.Text = "Naming Conventions";
             this.tpFileNaming.UseVisualStyleBackColor = true;
@@ -2452,7 +2452,7 @@ namespace ZSS
             this.tpCaptureQuality.Location = new System.Drawing.Point(4, 23);
             this.tpCaptureQuality.Name = "tpCaptureQuality";
             this.tpCaptureQuality.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureQuality.Size = new System.Drawing.Size(772, 384);
+            this.tpCaptureQuality.Size = new System.Drawing.Size(772, 375);
             this.tpCaptureQuality.TabIndex = 0;
             this.tpCaptureQuality.Text = "Quality";
             this.tpCaptureQuality.UseVisualStyleBackColor = true;
@@ -3151,7 +3151,7 @@ namespace ZSS
             this.tpEditors.Location = new System.Drawing.Point(4, 23);
             this.tpEditors.Name = "tpEditors";
             this.tpEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditors.Size = new System.Drawing.Size(786, 417);
+            this.tpEditors.Size = new System.Drawing.Size(786, 408);
             this.tpEditors.TabIndex = 2;
             this.tpEditors.Text = "Editors";
             this.tpEditors.UseVisualStyleBackColor = true;
@@ -3163,7 +3163,7 @@ namespace ZSS
             this.tcEditors.Location = new System.Drawing.Point(3, 3);
             this.tcEditors.Name = "tcEditors";
             this.tcEditors.SelectedIndex = 0;
-            this.tcEditors.Size = new System.Drawing.Size(780, 411);
+            this.tcEditors.Size = new System.Drawing.Size(780, 402);
             this.tcEditors.TabIndex = 64;
             // 
             // tpEditorsImages
@@ -3172,7 +3172,7 @@ namespace ZSS
             this.tpEditorsImages.Location = new System.Drawing.Point(4, 22);
             this.tpEditorsImages.Name = "tpEditorsImages";
             this.tpEditorsImages.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditorsImages.Size = new System.Drawing.Size(772, 385);
+            this.tpEditorsImages.Size = new System.Drawing.Size(772, 376);
             this.tpEditorsImages.TabIndex = 0;
             this.tpEditorsImages.Text = "Image Editors";
             this.tpEditorsImages.UseVisualStyleBackColor = true;
@@ -3308,7 +3308,7 @@ namespace ZSS
             this.tpFTP.Location = new System.Drawing.Point(4, 23);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(786, 417);
+            this.tpFTP.Size = new System.Drawing.Size(786, 408);
             this.tpFTP.TabIndex = 3;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
@@ -3658,7 +3658,7 @@ namespace ZSS
             this.tpHotkeys.Location = new System.Drawing.Point(4, 23);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHotkeys.Size = new System.Drawing.Size(786, 417);
+            this.tpHotkeys.Size = new System.Drawing.Size(786, 408);
             this.tpHotkeys.TabIndex = 1;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
@@ -3759,7 +3759,7 @@ namespace ZSS
             this.tpMain.Location = new System.Drawing.Point(4, 23);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(786, 408);
+            this.tpMain.Size = new System.Drawing.Size(786, 411);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
@@ -4062,7 +4062,7 @@ namespace ZSS
             this.tcApp.Location = new System.Drawing.Point(0, 0);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(794, 435);
+            this.tcApp.Size = new System.Drawing.Size(794, 458);
             this.tcApp.TabIndex = 74;
             this.tcApp.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
@@ -4075,7 +4075,7 @@ namespace ZSS
             this.tpWatermark.Location = new System.Drawing.Point(4, 23);
             this.tpWatermark.Name = "tpWatermark";
             this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermark.Size = new System.Drawing.Size(786, 417);
+            this.tpWatermark.Size = new System.Drawing.Size(786, 408);
             this.tpWatermark.TabIndex = 11;
             this.tpWatermark.Text = "Watermark";
             this.tpWatermark.UseVisualStyleBackColor = true;
@@ -4089,7 +4089,7 @@ namespace ZSS
             this.tcWatermark.Location = new System.Drawing.Point(3, 3);
             this.tcWatermark.Name = "tcWatermark";
             this.tcWatermark.SelectedIndex = 0;
-            this.tcWatermark.Size = new System.Drawing.Size(453, 411);
+            this.tcWatermark.Size = new System.Drawing.Size(453, 402);
             this.tcWatermark.TabIndex = 29;
             // 
             // tpWatermarkText
@@ -4100,7 +4100,7 @@ namespace ZSS
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkText.Name = "tpWatermarkText";
             this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(445, 384);
+            this.tpWatermarkText.Size = new System.Drawing.Size(445, 375);
             this.tpWatermarkText.TabIndex = 0;
             this.tpWatermarkText.Text = "Text";
             this.tpWatermarkText.UseVisualStyleBackColor = true;
@@ -4116,10 +4116,37 @@ namespace ZSS
             this.tpWatermarkImage.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkImage.Name = "tpWatermarkImage";
             this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkImage.Size = new System.Drawing.Size(445, 384);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(445, 375);
             this.tpWatermarkImage.TabIndex = 1;
             this.tpWatermarkImage.Text = "Image";
             this.tpWatermarkImage.UseVisualStyleBackColor = true;
+            // 
+            // lblWatermarkImageScale
+            // 
+            this.lblWatermarkImageScale.AutoSize = true;
+            this.lblWatermarkImageScale.Location = new System.Drawing.Point(16, 76);
+            this.lblWatermarkImageScale.Name = "lblWatermarkImageScale";
+            this.lblWatermarkImageScale.Size = new System.Drawing.Size(117, 13);
+            this.lblWatermarkImageScale.TabIndex = 25;
+            this.lblWatermarkImageScale.Text = "Image size percentage:";
+            // 
+            // nudWatermarkImageScale
+            // 
+            this.nudWatermarkImageScale.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudWatermarkImageScale.Location = new System.Drawing.Point(136, 72);
+            this.nudWatermarkImageScale.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.nudWatermarkImageScale.Name = "nudWatermarkImageScale";
+            this.nudWatermarkImageScale.Size = new System.Drawing.Size(56, 20);
+            this.nudWatermarkImageScale.TabIndex = 24;
+            this.nudWatermarkImageScale.ValueChanged += new System.EventHandler(this.nudWatermarkImageScale_ValueChanged);
             // 
             // cbWatermarkUseBorder
             // 
@@ -4139,7 +4166,7 @@ namespace ZSS
             this.tpHTTP.Location = new System.Drawing.Point(4, 23);
             this.tpHTTP.Name = "tpHTTP";
             this.tpHTTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHTTP.Size = new System.Drawing.Size(786, 417);
+            this.tpHTTP.Size = new System.Drawing.Size(786, 411);
             this.tpHTTP.TabIndex = 10;
             this.tpHTTP.Text = "HTTP";
             this.tpHTTP.UseVisualStyleBackColor = true;
@@ -4154,7 +4181,7 @@ namespace ZSS
             this.tcHTTP.Location = new System.Drawing.Point(3, 3);
             this.tcHTTP.Name = "tcHTTP";
             this.tcHTTP.SelectedIndex = 0;
-            this.tcHTTP.Size = new System.Drawing.Size(780, 411);
+            this.tcHTTP.Size = new System.Drawing.Size(780, 405);
             this.tcHTTP.TabIndex = 5;
             // 
             // tpImageUploaders
@@ -4165,7 +4192,7 @@ namespace ZSS
             this.tpImageUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpImageUploaders.Name = "tpImageUploaders";
             this.tpImageUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageUploaders.Size = new System.Drawing.Size(772, 384);
+            this.tpImageUploaders.Size = new System.Drawing.Size(772, 378);
             this.tpImageUploaders.TabIndex = 0;
             this.tpImageUploaders.Text = "Image Uploaders";
             this.tpImageUploaders.UseVisualStyleBackColor = true;
@@ -4430,7 +4457,7 @@ namespace ZSS
             this.tpCustomUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpCustomUploaders.Name = "tpCustomUploaders";
             this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploaders.Size = new System.Drawing.Size(772, 384);
+            this.tpCustomUploaders.Size = new System.Drawing.Size(772, 375);
             this.tpCustomUploaders.TabIndex = 11;
             this.tpCustomUploaders.Text = "Custom Image Uploaders";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
@@ -4784,7 +4811,7 @@ namespace ZSS
             this.tpLanguageTranslator.Location = new System.Drawing.Point(4, 23);
             this.tpLanguageTranslator.Name = "tpLanguageTranslator";
             this.tpLanguageTranslator.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLanguageTranslator.Size = new System.Drawing.Size(772, 384);
+            this.tpLanguageTranslator.Size = new System.Drawing.Size(772, 375);
             this.tpLanguageTranslator.TabIndex = 1;
             this.tpLanguageTranslator.Text = "Language Translator";
             this.tpLanguageTranslator.UseVisualStyleBackColor = true;
@@ -4907,7 +4934,7 @@ namespace ZSS
             this.tpOptions.Location = new System.Drawing.Point(4, 23);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(786, 417);
+            this.tpOptions.Size = new System.Drawing.Size(786, 408);
             this.tpOptions.TabIndex = 9;
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
@@ -4922,7 +4949,7 @@ namespace ZSS
             this.tcAdvanced.Location = new System.Drawing.Point(3, 3);
             this.tcAdvanced.Name = "tcAdvanced";
             this.tcAdvanced.SelectedIndex = 0;
-            this.tcAdvanced.Size = new System.Drawing.Size(780, 411);
+            this.tcAdvanced.Size = new System.Drawing.Size(780, 402);
             this.tcAdvanced.TabIndex = 8;
             // 
             // tpAdvAppearance
@@ -4932,7 +4959,7 @@ namespace ZSS
             this.tpAdvAppearance.Location = new System.Drawing.Point(4, 22);
             this.tpAdvAppearance.Name = "tpAdvAppearance";
             this.tpAdvAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvAppearance.Size = new System.Drawing.Size(772, 385);
+            this.tpAdvAppearance.Size = new System.Drawing.Size(772, 376);
             this.tpAdvAppearance.TabIndex = 0;
             this.tpAdvAppearance.Text = "General";
             this.tpAdvAppearance.UseVisualStyleBackColor = true;
@@ -5047,7 +5074,7 @@ namespace ZSS
             this.tpAdvPaths.Controls.Add(this.gbRemoteDirCache);
             this.tpAdvPaths.Location = new System.Drawing.Point(4, 22);
             this.tpAdvPaths.Name = "tpAdvPaths";
-            this.tpAdvPaths.Size = new System.Drawing.Size(772, 385);
+            this.tpAdvPaths.Size = new System.Drawing.Size(772, 376);
             this.tpAdvPaths.TabIndex = 2;
             this.tpAdvPaths.Text = "Paths";
             this.tpAdvPaths.UseVisualStyleBackColor = true;
@@ -5282,7 +5309,7 @@ namespace ZSS
             this.tpAdvDebug.Location = new System.Drawing.Point(4, 22);
             this.tpAdvDebug.Name = "tpAdvDebug";
             this.tpAdvDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvDebug.Size = new System.Drawing.Size(772, 385);
+            this.tpAdvDebug.Size = new System.Drawing.Size(772, 376);
             this.tpAdvDebug.TabIndex = 1;
             this.tpAdvDebug.Text = "Debug";
             this.tpAdvDebug.UseVisualStyleBackColor = true;
@@ -5378,7 +5405,7 @@ namespace ZSS
             this.tpOptionsAdv.Location = new System.Drawing.Point(4, 22);
             this.tpOptionsAdv.Name = "tpOptionsAdv";
             this.tpOptionsAdv.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptionsAdv.Size = new System.Drawing.Size(772, 385);
+            this.tpOptionsAdv.Size = new System.Drawing.Size(772, 376);
             this.tpOptionsAdv.TabIndex = 3;
             this.tpOptionsAdv.Text = "Advanced";
             this.tpOptionsAdv.UseVisualStyleBackColor = true;
@@ -5388,7 +5415,7 @@ namespace ZSS
             this.confApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.confApp.Location = new System.Drawing.Point(3, 3);
             this.confApp.Name = "confApp";
-            this.confApp.Size = new System.Drawing.Size(766, 379);
+            this.confApp.Size = new System.Drawing.Size(766, 370);
             this.confApp.TabIndex = 0;
             // 
             // txtActiveHelp
@@ -5399,7 +5426,7 @@ namespace ZSS
             this.txtActiveHelp.Name = "txtActiveHelp";
             this.txtActiveHelp.ReadOnly = true;
             this.txtActiveHelp.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txtActiveHelp.Size = new System.Drawing.Size(794, 38);
+            this.txtActiveHelp.Size = new System.Drawing.Size(794, 35);
             this.txtActiveHelp.TabIndex = 75;
             this.txtActiveHelp.Text = "";
             this.txtActiveHelp.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtActiveHelp_LinkClicked);
@@ -5420,8 +5447,8 @@ namespace ZSS
             // splitContainerApp.Panel2
             // 
             this.splitContainerApp.Panel2.Controls.Add(this.txtActiveHelp);
-            this.splitContainerApp.Size = new System.Drawing.Size(794, 474);
-            this.splitContainerApp.SplitterDistance = 435;
+            this.splitContainerApp.Size = new System.Drawing.Size(794, 494);
+            this.splitContainerApp.SplitterDistance = 458;
             this.splitContainerApp.SplitterWidth = 1;
             this.splitContainerApp.TabIndex = 76;
             // 
@@ -5436,42 +5463,15 @@ namespace ZSS
             this.ttApp.InitialDelay = 500;
             this.ttApp.ReshowDelay = 100;
             // 
-            // nudWatermarkImageScale
-            // 
-            this.nudWatermarkImageScale.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudWatermarkImageScale.Location = new System.Drawing.Point(136, 72);
-            this.nudWatermarkImageScale.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.nudWatermarkImageScale.Name = "nudWatermarkImageScale";
-            this.nudWatermarkImageScale.Size = new System.Drawing.Size(56, 20);
-            this.nudWatermarkImageScale.TabIndex = 24;
-            this.nudWatermarkImageScale.ValueChanged += new System.EventHandler(this.nudWatermarkImageScale_ValueChanged);
-            // 
-            // lblWatermarkImageScale
-            // 
-            this.lblWatermarkImageScale.AutoSize = true;
-            this.lblWatermarkImageScale.Location = new System.Drawing.Point(16, 76);
-            this.lblWatermarkImageScale.Name = "lblWatermarkImageScale";
-            this.lblWatermarkImageScale.Size = new System.Drawing.Size(117, 13);
-            this.lblWatermarkImageScale.TabIndex = 25;
-            this.lblWatermarkImageScale.Text = "Image size percentage:";
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(794, 474);
+            this.ClientSize = new System.Drawing.Size(794, 494);
             this.Controls.Add(this.splitContainerApp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(810, 510);
+            this.MinimumSize = new System.Drawing.Size(810, 530);
             this.Name = "ZScreen";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -5589,6 +5589,7 @@ namespace ZSS
             this.tpWatermarkText.ResumeLayout(false);
             this.tpWatermarkImage.ResumeLayout(false);
             this.tpWatermarkImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).EndInit();
             this.tpHTTP.ResumeLayout(false);
             this.tcHTTP.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
@@ -5632,7 +5633,6 @@ namespace ZSS
             this.splitContainerApp.Panel1.ResumeLayout(false);
             this.splitContainerApp.Panel2.ResumeLayout(false);
             this.splitContainerApp.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).EndInit();
             this.ResumeLayout(false);
 
         }
