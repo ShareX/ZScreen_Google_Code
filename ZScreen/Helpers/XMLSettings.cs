@@ -64,7 +64,7 @@ namespace ZSS
         public bool ShowWatermark = false;
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
-        public bool ActiveHelp = true;
+        // public bool ActiveHelp = true;
         public bool GTActiveHelp = false;
         public string HelpToLanguage = "en";
 
