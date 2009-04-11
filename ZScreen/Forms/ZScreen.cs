@@ -152,7 +152,7 @@ namespace ZSS
             cbPromptforUpload.Checked = Program.conf.PromptforUpload;
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
-            cbShowWatermark.Checked = Program.conf.ShowWatermark;
+            cboShowWatermark.Checked = Program.conf.ShowWatermark;
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
@@ -225,11 +225,15 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.entireScreen;
 
             // Watermark
-            rbWatermarkUseImage.Checked = Program.conf.WatermarkUseImage;
             if (cbWatermarkPosition.Items.Count == 0)
             {
                 cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
             }
+            if (cboWatermarkType.Items.Count == 0)
+            {
+                cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
+            }
+            cboWatermarkType.SelectedIndex = (int)Program.conf.WatermarkMode;
             cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
             nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
             cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
@@ -252,7 +256,6 @@ namespace ZSS
             }
             cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
 
-            rbWatermarkUseText.Checked = !rbWatermarkUseImage.Checked;
             txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             cbWatermarkUseBorder.Checked = Program.conf.WatermarkUseBorder;
             nudWatermarkImageScale.Value = Program.conf.WatermarkImageScale;
@@ -3427,7 +3430,7 @@ namespace ZSS
 
         private void cbShowWatermark_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowWatermark = cbShowWatermark.Checked;
+            Program.conf.ShowWatermark = cboShowWatermark.Checked;
             TestWatermark();
         }
 
@@ -4641,15 +4644,16 @@ namespace ZSS
             Program.conf.TinyPicSizeCheck = cbTinyPicSizeCheck.Checked;
         }
 
-        private void cbWatermarkUseImage_CheckedChanged(object sender, EventArgs e)
-        {
-            PreviewWatermark();
-        }
 
         private void PreviewWatermark()
         {
-            Program.conf.WatermarkUseImage = rbWatermarkUseImage.Checked;
-            TestWatermark();
+            Program.conf.ShowWatermark = (Program.conf.WatermarkMode != WatermarkType.NONE);
+            Program.conf.WatermarkUseImage = (Program.conf.WatermarkMode == WatermarkType.IMAGE);
+
+            if (Program.conf.ShowWatermark)
+            {
+                TestWatermark();
+            }
         }
 
         private void txtWatermarkImageLocation_TextChanged(object sender, EventArgs e)
@@ -4729,10 +4733,7 @@ namespace ZSS
             TestWatermark();
         }
 
-        private void rbWatermarkUseText_CheckedChanged(object sender, EventArgs e)
-        {
-            PreviewWatermark();
-        }
+
 
         private void cbWatermarkAddReflection_CheckedChanged(object sender, EventArgs e)
         {
@@ -4790,6 +4791,13 @@ namespace ZSS
         private void btnSaveSettings_Click(object sender, EventArgs e)
         {
             SaveSettings();
+        }
+
+        private void cboWatermarkType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
+            cboShowWatermark.Checked = (Program.conf.WatermarkMode != WatermarkType.NONE);
+            PreviewWatermark();
         }
     }
 }

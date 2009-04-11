@@ -64,7 +64,6 @@ namespace ZSS
         public bool ShowWatermark = false;
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
-        // public bool ActiveHelp = true;
         public bool GTActiveHelp = false;
         public string HelpToLanguage = "en";
 
@@ -147,6 +146,7 @@ namespace ZSS
         // Watermark
 
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
+        public WatermarkType WatermarkMode = WatermarkType.NONE;
         public decimal WatermarkOffset = 5;
         public bool WatermarkAddReflection = false;
         public bool WatermarkAutoHide = true;
