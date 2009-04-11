@@ -43,36 +43,7 @@ namespace ZSS
                     Image img2 = Image.FromFile(imgPath);
                     img2 = ImageChangeSize((Bitmap)img2);
                     Point imgPos = Point.Empty;
-                    switch (position)
-                    {
-                        case WatermarkPositionType.TOP_LEFT:
-                            imgPos = new Point(offset, offset);
-                            break;
-                        case WatermarkPositionType.TOP_RIGHT:
-                            imgPos = new Point(img.Width - img2.Width - offset, offset);
-                            break;
-                        case WatermarkPositionType.BOTTOM_LEFT:
-                            imgPos = new Point(offset, img.Height - img2.Height - offset);
-                            break;
-                        case WatermarkPositionType.BOTTOM_RIGHT:
-                            imgPos = new Point(img.Width - img2.Width - offset, img.Height - img2.Height - offset);
-                            break;
-                        case WatermarkPositionType.CENTER:
-                            imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2);
-                            break;
-                        case WatermarkPositionType.LEFT:
-                            imgPos = new Point(offset, img.Height / 2 - img2.Height / 2);
-                            break;
-                        case WatermarkPositionType.TOP:
-                            imgPos = new Point(img.Width / 2 - img2.Width / 2, offset);
-                            break;
-                        case WatermarkPositionType.RIGHT:
-                            imgPos = new Point(img.Width - img2.Width - offset, img.Height / 2 - img2.Height / 2);
-                            break;
-                        case WatermarkPositionType.BOTTOM:
-                            imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height - img2.Height - offset);
-                            break;
-                    }
+                    imgPos = FindPosition(position, offset, img.Size, img2.Size, 0);
                     if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset)))
                     {
                         throw new Exception("Image size smaller than watermark size.");
@@ -109,36 +80,7 @@ namespace ZSS
                 Size textSize = TextRenderer.MeasureText(drawText, font);
                 Point labelPosition = Point.Empty;
                 Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
-                switch (position)
-                {
-                    case WatermarkPositionType.TOP_LEFT:
-                        labelPosition = new Point(offset, offset);
-                        break;
-                    case WatermarkPositionType.TOP_RIGHT:
-                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1, offset);
-                        break;
-                    case WatermarkPositionType.BOTTOM_LEFT:
-                        labelPosition = new Point(offset, img.Height - textSize.Height - 10 - offset - 1);
-                        break;
-                    case WatermarkPositionType.BOTTOM_RIGHT:
-                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1, img.Height - textSize.Height - 10 - offset - 1);
-                        break;
-                    case WatermarkPositionType.CENTER:
-                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1, img.Height / 2 - (textSize.Height + 10) / 2 - 1);
-                        break;
-                    case WatermarkPositionType.LEFT:
-                        labelPosition = new Point(offset, img.Height / 2 - (textSize.Height + 10) / 2 - 1);
-                        break;
-                    case WatermarkPositionType.TOP:
-                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1, offset);
-                        break;
-                    case WatermarkPositionType.RIGHT:
-                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1, img.Height / 2 - (textSize.Height + 10) / 2 - 1);
-                        break;
-                    case WatermarkPositionType.BOTTOM:
-                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1, img.Height - textSize.Height - 10 - offset - 1);
-                        break;
-                }
+                labelPosition = FindPosition(position, offset, img.Size, new Size(textSize.Width + 10, textSize.Height + 10), 1);
                 if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) || (img.Height < labelSize.Height + offset)))
                 {
                     throw new Exception("Image size smaller than watermark size.");
@@ -220,6 +162,45 @@ namespace ZSS
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
             return bmp;
+        }
+
+        public static Point FindPosition(WatermarkPositionType positionType, int offset, Size img, Size img2, int add)
+        {
+            Point position;
+            switch (positionType)
+            {
+                case WatermarkPositionType.TOP_LEFT:
+                    position = new Point(offset, offset);
+                    break;
+                case WatermarkPositionType.TOP_RIGHT:
+                    position = new Point(img.Width - img2.Width - offset - add, offset);
+                    break;
+                case WatermarkPositionType.BOTTOM_LEFT:
+                    position = new Point(offset, img.Height - img2.Height - offset - add);
+                    break;
+                case WatermarkPositionType.BOTTOM_RIGHT:
+                    position = new Point(img.Width - img2.Width - offset - add, img.Height - img2.Height - offset - add);
+                    break;
+                case WatermarkPositionType.CENTER:
+                    position = new Point(img.Width / 2 - img2.Width / 2 - add, img.Height / 2 - img2.Height / 2 - add);
+                    break;
+                case WatermarkPositionType.LEFT:
+                    position = new Point(offset, img.Height / 2 - img2.Height / 2 - add);
+                    break;
+                case WatermarkPositionType.TOP:
+                    position = new Point(img.Width / 2 - img2.Width / 2 - add, offset);
+                    break;
+                case WatermarkPositionType.RIGHT:
+                    position = new Point(img.Width - img2.Width - offset - add, img.Height / 2 - img2.Height / 2 - add);
+                    break;
+                case WatermarkPositionType.BOTTOM:
+                    position = new Point(img.Width / 2 - img2.Width / 2 - add, img.Height - img2.Height - offset - add);
+                    break;
+                default:
+                    position = Point.Empty;
+                    break;
+            }
+            return position;
         }
     }
 }
