@@ -149,6 +149,8 @@ namespace ZSS
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkOffset = 5;
         public bool WatermarkAddReflection = false;
+        public bool WatermarkAutoHide = true;
+
         public string WatermarkText = "%h:%mi";
         public XmlFont WatermarkFont = SerializeFont(new Font("Arial", 8));
         public string WatermarkFontColor = SerializeColor(Color.White);
