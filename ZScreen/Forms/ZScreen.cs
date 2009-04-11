@@ -4659,7 +4659,7 @@ namespace ZSS
         private void btwWatermarkBrowseImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog fd = new OpenFileDialog();
-            fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             if (fd.ShowDialog() == DialogResult.OK)
             {
                 txtWatermarkImageLocation.Text = fd.FileName;

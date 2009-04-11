@@ -60,6 +60,18 @@ namespace ZSS
                         case WatermarkPositionType.CENTER:
                             imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2);
                             break;
+                        case WatermarkPositionType.LEFT:
+                            imgPos = new Point(offset, img.Height / 2 - img2.Height / 2);
+                            break;
+                        case WatermarkPositionType.TOP:
+                            imgPos = new Point(img.Width / 2 - img2.Width / 2, offset);
+                            break;
+                        case WatermarkPositionType.RIGHT:
+                            imgPos = new Point(img.Width - img2.Width - offset, img.Height / 2 - img2.Height / 2);
+                            break;
+                        case WatermarkPositionType.BOTTOM:
+                            imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height - img2.Height - offset);
+                            break;
                     }
                     if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset)))
                     {
