@@ -394,7 +394,7 @@ namespace ZSS
         /// <param name="dirNew"></param>
         public static void MoveDirectory(string dirOld, string dirNew)
         {
-            if (dirOld != dirNew)
+            if (Directory.Exists(dirOld) && dirOld != dirNew)
             {
                 if (MessageBox.Show("Would you like to move old Root folder content to the new location?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
