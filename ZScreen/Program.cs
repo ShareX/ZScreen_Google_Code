@@ -70,29 +70,10 @@ namespace ZSS
         private static string mProductName = Application.ProductName;
 
         /// <summary>
-        /// Root Folder of Images, Text, Settings, Cache. 
-        /// </summary>
-        public static void SetRootFolder()
-        {
-            if (Directory.Exists(PortableRootFolder))
-            {
-                Settings.Default.RootDir = PortableRootFolder;
-                mProductName += " Portable";
-                mAppInfo.AppName = mProductName;
-            }
-            else if (string.IsNullOrEmpty(Settings.Default.RootDir))
-            {
-                Settings.Default.RootDir = DefaultRootAppFolder;
-            }
-        }
-
-        /// <summary>
         /// Function to update Default Folder Paths based on Root folder
         /// </summary>
         public static void InitializeDefaultFolderPaths()
-        {
-            SetRootFolder();
-
+        {            
             DefaultSettingsFolder = Path.Combine(Settings.Default.RootDir, "Settings");
             DefaultImagesFolder = Path.Combine(Settings.Default.RootDir, "Images");
             DefaultTextFolder = Path.Combine(Settings.Default.RootDir, "Text");
@@ -107,7 +88,6 @@ namespace ZSS
         {
             get
             {
-                InitializeDefaultFolderPaths();
 
                 if (!Directory.Exists(DefaultSettingsFolder))
                 {
@@ -145,7 +125,7 @@ namespace ZSS
             }
         }
 
-        public static XMLSettings conf = XMLSettings.Read();
+        public static XMLSettings conf = null;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
@@ -165,6 +145,22 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
+            Settings.Default.Upgrade();
+
+            if (Directory.Exists(PortableRootFolder))
+            {
+                Settings.Default.RootDir = PortableRootFolder;
+                mProductName += " Portable";
+                mAppInfo.AppName = mProductName;
+            }
+            else if (String.IsNullOrEmpty(Settings.Default.RootDir))
+            {
+                Settings.Default.RootDir = DefaultRootAppFolder;
+            }
+            
+            InitializeDefaultFolderPaths();
+            conf = XMLSettings.Read();
+
             bool bGrantedOwnership;
             try
             {

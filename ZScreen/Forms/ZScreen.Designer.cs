@@ -3032,6 +3032,8 @@ namespace ZSS
             // 
             // gbSaveLoc
             // 
+            this.gbSaveLoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSaveLoc.BackColor = System.Drawing.Color.Transparent;
             this.gbSaveLoc.Controls.Add(this.cbDeleteLocal);
             this.gbSaveLoc.Controls.Add(this.btnViewImagesDir);
@@ -3046,6 +3048,7 @@ namespace ZSS
             // 
             // btnViewImagesDir
             // 
+            this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnViewImagesDir.Location = new System.Drawing.Point(632, 24);
             this.btnViewImagesDir.Name = "btnViewImagesDir";
             this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
@@ -3056,6 +3059,8 @@ namespace ZSS
             // 
             // txtImagesDir
             // 
+            this.txtImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImagesDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtImagesDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
@@ -4922,7 +4927,7 @@ namespace ZSS
             this.tpAdvAppearance.Location = new System.Drawing.Point(4, 22);
             this.tpAdvAppearance.Name = "tpAdvAppearance";
             this.tpAdvAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvAppearance.Size = new System.Drawing.Size(772, 426);
+            this.tpAdvAppearance.Size = new System.Drawing.Size(772, 429);
             this.tpAdvAppearance.TabIndex = 0;
             this.tpAdvAppearance.Text = "General";
             this.tpAdvAppearance.UseVisualStyleBackColor = true;
@@ -5044,6 +5049,8 @@ namespace ZSS
             // 
             // gbRoot
             // 
+            this.gbRoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRoot.Controls.Add(this.btnViewRootDir);
             this.gbRoot.Controls.Add(this.btnBrowseRootDir);
             this.gbRoot.Controls.Add(this.txtRootFolder);
@@ -5056,6 +5063,7 @@ namespace ZSS
             // 
             // btnViewRootDir
             // 
+            this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnViewRootDir.Location = new System.Drawing.Point(632, 24);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
@@ -5066,18 +5074,21 @@ namespace ZSS
             // 
             // btnBrowseRootDir
             // 
+            this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnBrowseRootDir.Location = new System.Drawing.Point(544, 24);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseRootDir.TabIndex = 115;
-            this.btnBrowseRootDir.Text = "Browse...";
+            this.btnBrowseRootDir.Text = "Relocate...";
             this.btnBrowseRootDir.UseVisualStyleBackColor = true;
             this.btnBrowseRootDir.Click += new System.EventHandler(this.btnBrowseRootDir_Click);
             // 
             // txtRootFolder
             // 
+            this.txtRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
@@ -5088,6 +5099,8 @@ namespace ZSS
             // 
             // gbSettingsExportImport
             // 
+            this.gbSettingsExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
             this.gbSettingsExportImport.Controls.Add(this.txtSettingsDir);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
@@ -5103,6 +5116,8 @@ namespace ZSS
             // 
             // txtSettingsDir
             // 
+            this.txtSettingsDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSettingsDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtSettingsDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.txtSettingsDir.Location = new System.Drawing.Point(16, 24);
@@ -5136,6 +5151,7 @@ namespace ZSS
             // 
             // btnViewSettingsDir
             // 
+            this.btnViewSettingsDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnViewSettingsDir.AutoSize = true;
             this.btnViewSettingsDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnViewSettingsDir.Location = new System.Drawing.Point(632, 24);
@@ -5160,6 +5176,8 @@ namespace ZSS
             // 
             // gbRemoteDirCache
             // 
+            this.gbRemoteDirCache.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRemoteDirCache.BackColor = System.Drawing.Color.Transparent;
             this.gbRemoteDirCache.Controls.Add(this.btnViewCacheDir);
             this.gbRemoteDirCache.Controls.Add(this.btnBrowseCacheDir);
@@ -5173,10 +5191,10 @@ namespace ZSS
             this.gbRemoteDirCache.TabIndex = 1;
             this.gbRemoteDirCache.TabStop = false;
             this.gbRemoteDirCache.Text = "Cache";
-            this.gbRemoteDirCache.Enter += new System.EventHandler(this.gbRemoteDirCache_Enter);
             // 
             // btnViewCacheDir
             // 
+            this.btnViewCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnViewCacheDir.Location = new System.Drawing.Point(632, 24);
             this.btnViewCacheDir.Name = "btnViewCacheDir";
             this.btnViewCacheDir.Size = new System.Drawing.Size(104, 24);
@@ -5241,6 +5259,8 @@ namespace ZSS
             // 
             // txtCacheDir
             // 
+            this.txtCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCacheDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtCacheDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.txtCacheDir.Location = new System.Drawing.Point(16, 24);
