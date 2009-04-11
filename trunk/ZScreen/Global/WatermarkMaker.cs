@@ -109,12 +109,22 @@ namespace ZSS
                         labelPosition = new Point(offset, img.Height - textSize.Height - 10 - offset - 1);
                         break;
                     case WatermarkPositionType.BOTTOM_RIGHT:
-                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1,
-                            img.Height - textSize.Height - 10 - offset - 1);
+                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1, img.Height - textSize.Height - 10 - offset - 1);
                         break;
                     case WatermarkPositionType.CENTER:
-                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1,
-                            img.Height / 2 - (textSize.Height + 10) / 2 - 1);
+                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1, img.Height / 2 - (textSize.Height + 10) / 2 - 1);
+                        break;
+                    case WatermarkPositionType.LEFT:
+                        labelPosition = new Point(offset, img.Height / 2 - (textSize.Height + 10) / 2 - 1);
+                        break;
+                    case WatermarkPositionType.TOP:
+                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1, offset);
+                        break;
+                    case WatermarkPositionType.RIGHT:
+                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1, img.Height / 2 - (textSize.Height + 10) / 2 - 1);
+                        break;
+                    case WatermarkPositionType.BOTTOM:
+                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1, img.Height - textSize.Height - 10 - offset - 1);
                         break;
                 }
                 if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) || (img.Height < labelSize.Height + offset)))
