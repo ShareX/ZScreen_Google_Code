@@ -1415,18 +1415,23 @@ namespace ZSS
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
             */
             this.WindowState = FormWindowState.Minimized;
-            Program.conf.Save();
-            SaveHistoryItems();
+            SaveSettings();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 Hide();
             }
             FileSystem.appendDebug("Closed " + Application.ProductName + "\n");
-            Settings.Default.Save();
         }
 
         #endregion
+
+        private void SaveSettings()
+        {
+            Program.conf.Save();
+            SaveHistoryItems();
+            Settings.Default.Save();
+        }
 
         private void RewriteISRightClickMenu()
         {
@@ -4780,6 +4785,11 @@ namespace ZSS
         {
             Program.conf.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
             TestWatermark();
+        }
+
+        private void btnSaveSettings_Click(object sender, EventArgs e)
+        {
+            SaveSettings();
         }
     }
 }
