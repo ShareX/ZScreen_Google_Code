@@ -252,45 +252,25 @@ namespace ZSS
             {
                 conf.SettingsDir = SettingsDir;
             }
-            if (!Directory.Exists(conf.SettingsDir))
-            {
-                Directory.CreateDirectory(SettingsDir);
-            }
             // Images
             if (conf.ImagesDir != ImagesDir)
             {
                 conf.ImagesDir = ImagesDir;
-            }
-            if (!Directory.Exists(conf.ImagesDir))
-            {
-                Directory.CreateDirectory(ImagesDir);
             }
             // Text
             if (conf.TextDir != TextDir)
             {
                 conf.TextDir = TextDir;
             }
-            if (!Directory.Exists(conf.TextDir))
-            {
-                Directory.CreateDirectory(TextDir);
-            }
             // Cache
             if (Program.conf.CacheDir != CacheDir)
             {
                 conf.CacheDir = CacheDir;
             }
-            if (!Directory.Exists(Program.conf.CacheDir))
-            {
-                Directory.CreateDirectory(Program.conf.CacheDir);
-            }
             // Temp
             if (Program.conf.TempDir != TempDir)
             {
                 conf.TempDir = TempDir;
-            }
-            if (!Directory.Exists(Program.conf.TempDir))
-            {
-                Directory.CreateDirectory(Program.conf.TempDir);
             }
         }
 
