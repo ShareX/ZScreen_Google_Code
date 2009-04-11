@@ -67,28 +67,22 @@ namespace ZSS
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
             Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         public static bool MultipleInstance = false;
+        private static string mProductName = Application.ProductName;
 
         /// <summary>
         /// Root Folder of Images, Text, Settings, Cache. 
         /// </summary>
-        public static string RootFolder
+        public static void SetRootFolder()
         {
-            get
+            if (Directory.Exists(PortableRootFolder))
             {
-                if (Directory.Exists(PortableRootFolder))
-                {
-                    Settings.Default.RootDir = PortableRootFolder;
-                    mAppInfo.AppName = Application.ProductName + " Portable";
-                }
-                else
-                {
-                    Settings.Default.RootDir = DefaultRootAppFolder;
-                }
-                return Settings.Default.RootDir;
+                Settings.Default.RootDir = PortableRootFolder;
+                mProductName += " Portable";
+                mAppInfo.AppName = mProductName;
             }
-            set
+            else if (string.IsNullOrEmpty(Settings.Default.RootDir))
             {
-                Settings.Default.RootDir = value;
+                Settings.Default.RootDir = DefaultRootAppFolder;
             }
         }
 
@@ -97,11 +91,13 @@ namespace ZSS
         /// </summary>
         public static void InitializeDefaultFolderPaths()
         {
-            DefaultSettingsFolder = Path.Combine(RootFolder, "Settings");
-            DefaultImagesFolder = Path.Combine(RootFolder, "Images");
-            DefaultTextFolder = Path.Combine(RootFolder, "Text");
-            DefaultTempFolder = Path.Combine(RootFolder, "Temp");
-            DefaultCacheFolder = Path.Combine(RootFolder, "Cache");
+            SetRootFolder();
+
+            DefaultSettingsFolder = Path.Combine(Settings.Default.RootDir, "Settings");
+            DefaultImagesFolder = Path.Combine(Settings.Default.RootDir, "Images");
+            DefaultTextFolder = Path.Combine(Settings.Default.RootDir, "Text");
+            DefaultTempFolder = Path.Combine(Settings.Default.RootDir, "Temp");
+            DefaultCacheFolder = Path.Combine(Settings.Default.RootDir, "Cache");
 
             DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
             XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
@@ -182,7 +178,8 @@ namespace ZSS
             if (!bGrantedOwnership)
             {
                 MultipleInstance = true;
-                mAppInfo.AppName = Application.ProductName + "*";
+                mProductName += "*";
+                mAppInfo.AppName = mProductName;
             }
 
             Application.EnableVisualStyles();
