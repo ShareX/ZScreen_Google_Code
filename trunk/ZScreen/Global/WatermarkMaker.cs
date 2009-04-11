@@ -41,42 +41,42 @@ namespace ZSS
                 {
                     using (Image img2 = Image.FromFile(imgPath))
                     {
-                        Graphics g = Graphics.FromImage(img);
-                        g.SmoothingMode = SmoothingMode.HighQuality;
-                        Rectangle imgRect = Rectangle.Empty;
+                        Point imgPos = Point.Empty;
                         switch (position)
                         {
                             case WatermarkPositionType.TOP_LEFT:
-                                imgRect = new Rectangle(offset, offset, img2.Width, img2.Height);
+                                imgPos = new Point(offset, offset);
                                 break;
                             case WatermarkPositionType.TOP_RIGHT:
-                                imgRect = new Rectangle(img.Width - img2.Width - offset, offset, img2.Width, img2.Height);
+                                imgPos = new Point(img.Width - img2.Width - offset, offset);
                                 break;
                             case WatermarkPositionType.BOTTOM_LEFT:
-                                imgRect = new Rectangle(offset, img.Height - img2.Height - offset, img2.Width, img2.Height);
+                                imgPos = new Point(offset, img.Height - img2.Height - offset);
                                 break;
                             case WatermarkPositionType.BOTTOM_RIGHT:
-                                imgRect = new Rectangle(img.Width - img2.Width - offset, img.Height - img2.Height - offset, img2.Width, img2.Height);
+                                imgPos = new Point(img.Width - img2.Width - offset, img.Height - img2.Height - offset);
                                 break;
                             case WatermarkPositionType.CENTER:
-                                imgRect = new Rectangle(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2, img2.Width, img2.Height);
+                                imgPos = new Point(img.Width / 2 - img2.Width / 2, img.Height / 2 - img2.Height / 2);
                                 break;
                         }
-                        if ((img.Width < imgRect.Width + offset) || (img.Height < imgRect.Height + offset))
+                        if ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset))
                         {
                             throw new Exception("Image size smaller than watermark size.");
                         }
                         else
                         {
-                            g.DrawImage(img2, imgRect);
+                            Graphics g = Graphics.FromImage(img);
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.DrawImage(img2, imgPos);
                             if (Program.conf.WatermarkUseBorder)
                             {
-                                g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgRect.X - 1, imgRect.Y - 1, imgRect.Width, imgRect.Height));
+                                g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
                             }
                             if (Program.conf.WatermarkAddReflection)
                             {
-                                Bitmap img3 = Transparent((Bitmap)img2);
-                                g.DrawImage(img3, new Rectangle(imgRect.X, imgRect.Y + imgRect.Height, img3.Width, img3.Height));
+                                Bitmap bmp = AddReflection((Bitmap)img2);
+                                g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
                             }
                         }
                     }
@@ -94,52 +94,63 @@ namespace ZSS
         {
             try
             {
-                Graphics g = Graphics.FromImage(img);
-                g.SmoothingMode = SmoothingMode.HighQuality;
                 Size textSize = TextRenderer.MeasureText(drawText, font);
-                Rectangle labelRect = Rectangle.Empty;
+                Point labelPosition = Point.Empty;
+                Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
                 switch (position)
                 {
                     case WatermarkPositionType.TOP_LEFT:
-                        labelRect = new Rectangle(offset, offset, textSize.Width + 10, textSize.Height + 10);
+                        labelPosition = new Point(offset, offset);
                         break;
                     case WatermarkPositionType.TOP_RIGHT:
-                        labelRect = new Rectangle(img.Width - textSize.Width - 10 - offset - 1, offset,
-                            textSize.Width + 10, textSize.Height + 10);
+                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1, offset);
                         break;
                     case WatermarkPositionType.BOTTOM_LEFT:
-                        labelRect = new Rectangle(offset, img.Height - textSize.Height - 10 - offset - 1,
-                            textSize.Width + 10, textSize.Height + 10);
+                        labelPosition = new Point(offset, img.Height - textSize.Height - 10 - offset - 1);
                         break;
                     case WatermarkPositionType.BOTTOM_RIGHT:
-                        labelRect = new Rectangle(img.Width - textSize.Width - 10 - offset - 1,
-                            img.Height - textSize.Height - 10 - offset - 1, textSize.Width + 10, textSize.Height + 10);
+                        labelPosition = new Point(img.Width - textSize.Width - 10 - offset - 1,
+                            img.Height - textSize.Height - 10 - offset - 1);
                         break;
                     case WatermarkPositionType.CENTER:
-                        labelRect = new Rectangle(img.Width / 2 - (textSize.Width + 10) / 2 - 1,
-                            img.Height / 2 - (textSize.Height + 10) / 2 - 1, textSize.Width + 10, textSize.Height + 10);
+                        labelPosition = new Point(img.Width / 2 - (textSize.Width + 10) / 2 - 1,
+                            img.Height / 2 - (textSize.Height + 10) / 2 - 1);
                         break;
                 }
-                if ((img.Width < labelRect.Width + offset) || (img.Height < labelRect.Height + offset))
+                if ((img.Width < labelSize.Width + offset) || (img.Height < labelSize.Height + offset))
                 {
                     throw new Exception("Image size smaller than watermark size.");
                 }
                 else
                 {
+                    Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
                     GraphicsPath gPath;
                     if (cornerRadius > 0)
                     {
-                        gPath = MyGraphics.RoundedRectangle(labelRect, cornerRadius);
+                        gPath = MyGraphics.RoundedRectangle(labelRectangle, cornerRadius);
                     }
                     else
                     {
                         gPath = new GraphicsPath();
-                        gPath.AddRectangle(labelRect);
+                        gPath.AddRectangle(labelRectangle);
                     }
-                    g.FillPath(new LinearGradientBrush(labelRect, Color.FromArgb(backTrans, backColor1),
+                    Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
+                    Graphics g = Graphics.FromImage(bmp);
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, backColor1),
                         Color.FromArgb(backTrans, backColor2), gradientType), gPath);
                     g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
-                    g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), labelRect.X + 5, labelRect.Y + 5);
+                    g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)),
+                        labelRectangle.X + 5, labelRectangle.Y + 5);
+
+                    Graphics gImg = Graphics.FromImage(img);
+                    gImg.SmoothingMode = SmoothingMode.HighQuality;
+                    gImg.DrawImage(bmp, labelPosition);
+                    if (Program.conf.WatermarkAddReflection)
+                    {
+                        Bitmap bmp2 = AddReflection(bmp);
+                        gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
+                    }
                 }
             }
             catch (Exception ex)
@@ -149,10 +160,10 @@ namespace ZSS
             return img;
         }
 
-        public static Bitmap Transparent(Bitmap b)
+        public static Bitmap AddReflection(Bitmap b)
         {
             b.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            b = b.Clone(new Rectangle(0, 0, b.Width, b.Height / 2), PixelFormat.Format32bppArgb);
+            b = b.Clone(new Rectangle(0, 0, b.Width, (int)(b.Height / 1.5)), PixelFormat.Format32bppArgb);
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             byte alpha;
@@ -166,7 +177,7 @@ namespace ZSS
                 {
                     for (int x = 0; x < b.Width; ++x)
                     {
-                        alpha = (byte)(255 - 255 * (y + 1) / b.Height);
+                        alpha = (byte)(200 - 200 * (y + 1) / b.Height);
                         if (p[3] > alpha) p[3] = alpha;
                         p += 4;
                     }

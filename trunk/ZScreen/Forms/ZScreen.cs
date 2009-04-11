@@ -348,7 +348,7 @@ namespace ZSS
             // Advanced Settings
             ///////////////////////////////////
 
-            cbStartWin.Checked = CheckStartWithWindows();            
+            cbStartWin.Checked = CheckStartWithWindows();
 
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             if (cboUpdateCheckType.Items.Count == 0)
@@ -1099,9 +1099,9 @@ namespace ZSS
 
             if (!string.IsNullOrEmpty(task.LocalFilePath))
             {
-                if (Program.conf.AddFailedScreenshot || 
-                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 || 
-                    task.JobCategory == JobCategoryType.TEXT ))
+                if (Program.conf.AddFailedScreenshot ||
+                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 ||
+                    task.JobCategory == JobCategoryType.TEXT))
                 {
                     task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
@@ -1942,7 +1942,7 @@ namespace ZSS
 
         private void ShowDirectory(string dir)
         {
-            Process.Start(dir);
+            Process.Start("explorer.exe", dir);
         }
 
         private void ShowHelp()
@@ -4739,9 +4739,9 @@ namespace ZSS
             dlg.ShowNewFolderButton = true;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Program.SetRootFolder(dlg.SelectedPath);                
+                Program.SetRootFolder(dlg.SelectedPath);
                 txtRootFolder.Text = Settings.Default.RootDir;
-            }            
+            }
             if (oldRootDir != txtRootFolder.Text)
             {
                 if (MessageBox.Show("Would you like to move old Root folder content to the new location?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
