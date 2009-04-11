@@ -65,7 +65,6 @@ namespace ZSS
         private bool bQuickOptionsOpened = false;
         private bool bDropWindowOpened = false;
         private bool bQuickActionsOpened = false;
-        public int startHeight;
         public ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator = null;
         private BackgroundWorker bwActiveHelp = new BackgroundWorker();
@@ -128,7 +127,6 @@ namespace ZSS
             confApp.SelectedObject = Program.conf;
             txtRootFolder.Text = Program.RootAppFolder;
 
-            startHeight = txtActiveHelp.Height;
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
 
@@ -3038,7 +3036,7 @@ namespace ZSS
         private void CheckActiveHelp()
         {
             splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
-            this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height + startHeight : Program.conf.WindowSize.Height - txtActiveHelp.Height);
+            this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height : Program.conf.WindowSize.Height - txtActiveHelp.Height);
             this.Refresh();
         }
 

@@ -168,10 +168,10 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
-            Settings.Default.Upgrade();
-
+       
             if (String.IsNullOrEmpty(Settings.Default.RootDir))
             {
+                Settings.Default.Upgrade();
                 Settings.Default.RootDir = DefaultRootAppFolder;
             }
 
