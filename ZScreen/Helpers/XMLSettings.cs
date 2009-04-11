@@ -256,7 +256,7 @@ namespace ZSS
         public string ImagesDir = "";
         public bool DeleteLocal = false;
         public string CacheDir = "";
-        public decimal ScreenshotCacheSize = 50;
+        public decimal ScreenshotCacheSize = 50;        
         public string SettingsDir = "";
         public string TextDir = "";
         public string TempDir = "";

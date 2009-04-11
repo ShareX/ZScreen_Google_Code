@@ -2531,8 +2531,8 @@ namespace ZSS
                 else if (Clipboard.ContainsFileDropList())
                 {
                     foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
-                    {
-                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.conf.ImagesDir, Path.GetFileName(fp)));
+                    {                        
+                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(MyGraphics.IsValidImage(fp)? Program.ImagesDir: Program.FilesDir, Path.GetFileName(fp)));
                         File.Copy(fp, cbFilePath, true);
                         cbListFilePath.Add(cbFilePath);
                     }

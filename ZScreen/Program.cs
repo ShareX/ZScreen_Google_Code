@@ -44,11 +44,16 @@ namespace ZSS
         private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
 
         public static string RootAppFolder { get; set; }
-        private static string DefaultSettingsFolder;
-        private static string DefaultImagesFolder;
-        private static string DefaultTempFolder;
-        private static string DefaultTextFolder;
-        private static string DefaultCacheFolder;
+
+        public static string CacheDir { get; set; }
+        public static string FilesDir { get; set; }
+        public static string ImagesDir { get; set; }
+        public static string SettingsDir { get; set; }
+        public static string TempDir { get; set; }
+        public static string TextDir { get; set; }
+
+        private static string[] AppDirs; 
+
         internal static string DefaultXMLFilePath;
         private static string XMLPortableFile;
 
@@ -80,15 +85,26 @@ namespace ZSS
         /// Function to update Default Folder Paths based on Root folder
         /// </summary>
         public static void InitializeDefaultFolderPaths()
-        {            
-            DefaultSettingsFolder = Path.Combine(RootAppFolder, "Settings");
-            DefaultImagesFolder = Path.Combine(RootAppFolder, "Images");
-            DefaultTextFolder = Path.Combine(RootAppFolder, "Text");
-            DefaultTempFolder = Path.Combine(RootAppFolder, "Temp");
-            DefaultCacheFolder = Path.Combine(RootAppFolder, "Cache");
+        {
+            CacheDir = Path.Combine(RootAppFolder, "Cache");
+            FilesDir = Path.Combine(RootAppFolder, "Files");
+            ImagesDir = Path.Combine(RootAppFolder, "Images");
+            SettingsDir = Path.Combine(RootAppFolder, "Settings");
+            TextDir = Path.Combine(RootAppFolder, "Text");
+            TempDir = Path.Combine(RootAppFolder, "Temp");
 
-            DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
-            XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
+            AppDirs = new string[] { CacheDir, FilesDir, ImagesDir, SettingsDir, TempDir, TextDir };
+
+            foreach (string dp in AppDirs)
+            {
+                if (!Directory.Exists(dp))
+                {
+                    Directory.CreateDirectory(dp);
+                }
+            }
+
+            DefaultXMLFilePath = Path.Combine(SettingsDir, XMLFileName);
+            XMLPortableFile = Path.Combine(SettingsDir, XMLFileName);
         }
 
         public static string XMLSettingsFile
@@ -96,9 +112,9 @@ namespace ZSS
             get
             {
 
-                if (!Directory.Exists(DefaultSettingsFolder))
+                if (!Directory.Exists(SettingsDir))
                 {
-                    Directory.CreateDirectory(DefaultSettingsFolder);
+                    Directory.CreateDirectory(SettingsDir);
                 }
 
                 if (File.Exists(OldXMLPortableFile))
@@ -128,7 +144,7 @@ namespace ZSS
         {
             get
             {
-                return Path.Combine(DefaultSettingsFolder, HistoryFileName);
+                return Path.Combine(SettingsDir, HistoryFileName);
             }
         }
 
@@ -164,12 +180,12 @@ namespace ZSS
                 RootAppFolder = PortableRootFolder;
                 mProductName += " Portable";
                 mAppInfo.AppName = mProductName;
-            }   
+            }
             else
             {
                 RootAppFolder = Settings.Default.RootDir;
             }
-            
+
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
 
@@ -212,45 +228,45 @@ namespace ZSS
         public static void ConfigureDirs()
         {
             // Settings         
-            if (Program.conf.SettingsDir != DefaultSettingsFolder)
+            if (Program.conf.SettingsDir != SettingsDir)
             {
-                conf.SettingsDir = DefaultSettingsFolder;
+                conf.SettingsDir = SettingsDir;
             }
             if (!Directory.Exists(conf.SettingsDir))
             {
-                Directory.CreateDirectory(DefaultSettingsFolder);
+                Directory.CreateDirectory(SettingsDir);
             }
             // Images
-            if (conf.ImagesDir != DefaultImagesFolder)
+            if (conf.ImagesDir != ImagesDir)
             {
-                conf.ImagesDir = DefaultImagesFolder;
+                conf.ImagesDir = ImagesDir;
             }
             if (!Directory.Exists(conf.ImagesDir))
             {
-                Directory.CreateDirectory(DefaultImagesFolder);
+                Directory.CreateDirectory(ImagesDir);
             }
             // Text
-            if (conf.TextDir != DefaultTextFolder)
+            if (conf.TextDir != TextDir)
             {
-                conf.TextDir = DefaultTextFolder;
+                conf.TextDir = TextDir;
             }
             if (!Directory.Exists(conf.TextDir))
             {
-                Directory.CreateDirectory(DefaultTextFolder);
+                Directory.CreateDirectory(TextDir);
             }
             // Cache
-            if (Program.conf.CacheDir != DefaultCacheFolder)
+            if (Program.conf.CacheDir != CacheDir)
             {
-                conf.CacheDir = DefaultCacheFolder;
+                conf.CacheDir = CacheDir;
             }
             if (!Directory.Exists(Program.conf.CacheDir))
             {
                 Directory.CreateDirectory(Program.conf.CacheDir);
             }
             // Temp
-            if (Program.conf.TempDir != DefaultTempFolder)
+            if (Program.conf.TempDir != TempDir)
             {
-                conf.TempDir = DefaultTempFolder;
+                conf.TempDir = TempDir;
             }
             if (!Directory.Exists(Program.conf.TempDir))
             {
