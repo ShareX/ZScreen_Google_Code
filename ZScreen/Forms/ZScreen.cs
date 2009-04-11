@@ -238,11 +238,13 @@ namespace ZSS
             pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
             lblWatermarkFont.Text = FontToString();
             nudWatermarkFontTrans.Value = Program.conf.WatermarkFontTrans;
+            trackWatermarkFontTrans.Value = (int)Program.conf.WatermarkFontTrans;
             nudWatermarkCornerRadius.Value = Program.conf.WatermarkCornerRadius;
             pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1);
             pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2);
             pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor);
             nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
+            trackWatermarkFontTrans.Value = (int)Program.conf.WatermarkBackTrans;
             if (cbWatermarkGradientType.Items.Count == 0)
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
@@ -4757,6 +4759,18 @@ namespace ZSS
         private void nudWatermarkImageScale_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkImageScale = nudWatermarkImageScale.Value;
+            TestWatermark();
+        }
+
+        private void trackWatermarkFontTrans_Scroll(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkFontTrans = trackWatermarkFontTrans.Value;
+            TestWatermark();
+        }
+
+        private void trackWatermarkBackgroundTrans_Scroll(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
             TestWatermark();
         }
     }
