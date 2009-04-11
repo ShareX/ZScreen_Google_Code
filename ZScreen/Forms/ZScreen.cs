@@ -232,6 +232,7 @@ namespace ZSS
             }
             cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
             nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
+            cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
 
             txtWatermarkText.Text = Program.conf.WatermarkText;
             pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
@@ -251,7 +252,7 @@ namespace ZSS
             rbWatermarkUseText.Checked = !rbWatermarkUseImage.Checked;
             txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
             cbWatermarkUseBorder.Checked = Program.conf.WatermarkUseBorder;
-            cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
+            nudWatermarkImageScale.Value = Program.conf.WatermarkImageScale;
 
             TestWatermark();
 
@@ -2529,8 +2530,8 @@ namespace ZSS
                 else if (Clipboard.ContainsFileDropList())
                 {
                     foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
-                    {                        
-                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(MyGraphics.IsValidImage(fp)? Program.ImagesDir: Program.FilesDir, Path.GetFileName(fp)));
+                    {
+                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(MyGraphics.IsValidImage(fp) ? Program.ImagesDir : Program.FilesDir, Path.GetFileName(fp)));
                         File.Copy(fp, cbFilePath, true);
                         cbListFilePath.Add(cbFilePath);
                     }
@@ -4751,6 +4752,12 @@ namespace ZSS
         private void btnViewRootDir_Click(object sender, EventArgs e)
         {
             ShowDirectory(txtRootFolder.Text);
+        }
+
+        private void nudWatermarkImageScale_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.WatermarkImageScale = nudWatermarkImageScale.Value;
+            TestWatermark();
         }
     }
 }
