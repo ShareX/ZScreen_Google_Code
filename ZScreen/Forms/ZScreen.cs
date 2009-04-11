@@ -4742,20 +4742,7 @@ namespace ZSS
                 Program.SetRootFolder(dlg.SelectedPath);
                 txtRootFolder.Text = Settings.Default.RootDir;
             }
-            if (oldRootDir != txtRootFolder.Text)
-            {
-                if (MessageBox.Show("Would you like to move old Root folder content to the new location?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        Microsoft.VisualBasic.FileIO.FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text, true);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
+            FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
             UpdateGuiControlsPaths();
             Program.conf = XMLSettings.Read();
             SetupScreen();

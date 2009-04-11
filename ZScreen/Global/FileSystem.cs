@@ -386,5 +386,29 @@ namespace ZSS
                 }
             }
         }
+
+        /// <summary>
+        /// Function to move a directory with overwriting existing files
+        /// </summary>
+        /// <param name="dirOld"></param>
+        /// <param name="dirNew"></param>
+        public static void MoveDirectory(string dirOld, string dirNew)
+        {
+            if (dirOld != dirNew)
+            {
+                if (MessageBox.Show("Would you like to move old Root folder content to the new location?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        Microsoft.VisualBasic.FileIO.FileSystem.MoveDirectory(dirOld, dirNew, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+
+        }
     }
 }

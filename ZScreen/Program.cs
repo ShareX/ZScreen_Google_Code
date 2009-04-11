@@ -29,6 +29,7 @@ using System.IO;
 using System.Drawing;
 using System.Threading;
 using ZSS.Properties;
+using ZSS.Forms;
 
 namespace ZSS
 {
@@ -52,7 +53,7 @@ namespace ZSS
         public static string TempDir { get; set; }
         public static string TextDir { get; set; }
 
-        private static string[] AppDirs; 
+        private static string[] AppDirs;
 
         internal static string DefaultXMLFilePath;
         private static string XMLPortableFile;
@@ -168,11 +169,27 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
-       
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            ConfigWizard cw = null;
             if (String.IsNullOrEmpty(Settings.Default.RootDir))
             {
+                /* 
+                 * Everytime SVN Revision is updated in AssemblyVersion, Default settings reset
+                 * So we need to Upgrade settings
+                 */
                 Settings.Default.Upgrade();
-                Settings.Default.RootDir = DefaultRootAppFolder;
+                if (String.IsNullOrEmpty(Settings.Default.RootDir))
+                {
+                    // If RootDir is still empty that means it is a new installation
+                    cw = new ConfigWizard(DefaultRootAppFolder);
+                    cw.ShowDialog();
+                    if (cw.DialogResult == DialogResult.OK)
+                    {
+                        Settings.Default.RootDir = cw.RootFolder;
+                    }
+                }
             }
 
             if (Directory.Exists(PortableRootFolder))
@@ -188,6 +205,12 @@ namespace ZSS
 
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
+
+            // Use Configuration Wizard Settings if applied
+            if (cw != null)
+            {
+                conf.ScreenshotDestMode = cw.ImageDestinationType;
+            }
 
             bool bGrantedOwnership;
             try
@@ -205,9 +228,6 @@ namespace ZSS
                 mProductName += "*";
                 mAppInfo.AppName = mProductName;
             }
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
             ZScreenWindow = new ZScreen();
 
