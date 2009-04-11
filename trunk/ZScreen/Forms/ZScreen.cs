@@ -129,7 +129,7 @@ namespace ZSS
             txtRootFolder.Text = Settings.Default.RootDir;
 
             startHeight = txtActiveHelp.Height;
-            Program.ConfigureDirs();
+            UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
 
             #endregion
@@ -350,8 +350,7 @@ namespace ZSS
             // Advanced Settings
             ///////////////////////////////////
 
-            cbStartWin.Checked = CheckStartWithWindows();
-            UpdateGuiControlsPaths();
+            cbStartWin.Checked = CheckStartWithWindows();            
 
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             if (cboUpdateCheckType.Items.Count == 0)
@@ -1102,7 +1101,9 @@ namespace ZSS
 
             if (!string.IsNullOrEmpty(task.LocalFilePath))
             {
-                if (Program.conf.AddFailedScreenshot || (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0))
+                if (Program.conf.AddFailedScreenshot || 
+                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 || 
+                    task.JobCategory == JobCategoryType.TEXT ))
                 {
                     task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
@@ -3695,7 +3696,7 @@ namespace ZSS
                     lbHistory.Items.Remove(hi);
                     if (File.Exists(hi.LocalPath))
                     {
-                        File.Delete(hi.LocalPath);
+                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(hi.LocalPath, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
                     }
                 }
             }
@@ -4732,13 +4733,10 @@ namespace ZSS
             TestWatermark();
         }
 
-        private void gbRemoteDirCache_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
+            string oldRootDir = txtRootFolder.Text;
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.ShowNewFolderButton = true;
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -4746,17 +4744,28 @@ namespace ZSS
                 Settings.Default.RootDir = dlg.SelectedPath;
                 txtRootFolder.Text = Settings.Default.RootDir;
             }            
+            if (oldRootDir != txtRootFolder.Text)
+            {
+                if (MessageBox.Show("Would you like to move old Root folder content to the new location?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        Microsoft.VisualBasic.FileIO.FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
             UpdateGuiControlsPaths();
+            Program.conf = XMLSettings.Read();
+            SetupScreen();
         }
 
         private void btnViewRootDir_Click(object sender, EventArgs e)
         {
             ShowDirectory(txtRootFolder.Text);
-        }
-
-        private void txtRootFolder_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

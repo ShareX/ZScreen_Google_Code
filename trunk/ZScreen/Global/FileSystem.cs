@@ -306,7 +306,7 @@ namespace ZSS
         public static bool IsValidTextFile(string fp)
         {
             bool b = false;
-            if (!string.IsNullOrEmpty(fp))
+            if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
             {
                 foreach (string s in Program.zTextFileTypes)
                 {
