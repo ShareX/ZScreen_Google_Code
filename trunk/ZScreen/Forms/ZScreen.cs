@@ -126,7 +126,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
 
             confApp.SelectedObject = Program.conf;
-            txtRootFolder.Text = Settings.Default.RootDir;
+            txtRootFolder.Text = Program.RootAppFolder;
 
             startHeight = txtActiveHelp.Height;
             UpdateGuiControlsPaths();
@@ -4740,8 +4740,8 @@ namespace ZSS
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.ShowNewFolderButton = true;
             if (dlg.ShowDialog() == DialogResult.OK)
-            {                
-                Settings.Default.RootDir = dlg.SelectedPath;
+            {
+                Program.SetRootFolder(dlg.SelectedPath);                
                 txtRootFolder.Text = Settings.Default.RootDir;
             }            
             if (oldRootDir != txtRootFolder.Text)

@@ -43,6 +43,7 @@ namespace ZSS
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
         private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
 
+        public static string RootAppFolder { get; set; }
         private static string DefaultSettingsFolder;
         private static string DefaultImagesFolder;
         private static string DefaultTempFolder;
@@ -69,16 +70,22 @@ namespace ZSS
         public static bool MultipleInstance = false;
         private static string mProductName = Application.ProductName;
 
+        public static void SetRootFolder(string dp)
+        {
+            Settings.Default.RootDir = dp;
+            RootAppFolder = dp;
+        }
+
         /// <summary>
         /// Function to update Default Folder Paths based on Root folder
         /// </summary>
         public static void InitializeDefaultFolderPaths()
         {            
-            DefaultSettingsFolder = Path.Combine(Settings.Default.RootDir, "Settings");
-            DefaultImagesFolder = Path.Combine(Settings.Default.RootDir, "Images");
-            DefaultTextFolder = Path.Combine(Settings.Default.RootDir, "Text");
-            DefaultTempFolder = Path.Combine(Settings.Default.RootDir, "Temp");
-            DefaultCacheFolder = Path.Combine(Settings.Default.RootDir, "Cache");
+            DefaultSettingsFolder = Path.Combine(RootAppFolder, "Settings");
+            DefaultImagesFolder = Path.Combine(RootAppFolder, "Images");
+            DefaultTextFolder = Path.Combine(RootAppFolder, "Text");
+            DefaultTempFolder = Path.Combine(RootAppFolder, "Temp");
+            DefaultCacheFolder = Path.Combine(RootAppFolder, "Cache");
 
             DefaultXMLFilePath = Path.Combine(DefaultSettingsFolder, XMLFileName);
             XMLPortableFile = Path.Combine(DefaultSettingsFolder, XMLFileName);
@@ -147,15 +154,20 @@ namespace ZSS
         {
             Settings.Default.Upgrade();
 
-            if (Directory.Exists(PortableRootFolder))
-            {
-                Settings.Default.RootDir = PortableRootFolder;
-                mProductName += " Portable";
-                mAppInfo.AppName = mProductName;
-            }
-            else if (String.IsNullOrEmpty(Settings.Default.RootDir))
+            if (String.IsNullOrEmpty(Settings.Default.RootDir))
             {
                 Settings.Default.RootDir = DefaultRootAppFolder;
+            }
+
+            if (Directory.Exists(PortableRootFolder))
+            {
+                RootAppFolder = PortableRootFolder;
+                mProductName += " Portable";
+                mAppInfo.AppName = mProductName;
+            }   
+            else
+            {
+                RootAppFolder = Settings.Default.RootDir;
             }
             
             InitializeDefaultFolderPaths();
