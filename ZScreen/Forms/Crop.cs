@@ -149,7 +149,6 @@ namespace ZSS
                         {
                             mHandle = kv.Key;
                             CropRegion = new Rectangle(this.PointToClient(kv.Value.Location), kv.Value.Size);
-
                             break;
                         }
                     }
@@ -213,6 +212,15 @@ namespace ZSS
 
             if (this.Options.SelectedWindowMode)
             {
+                if (Program.conf.SelectedWindowAddBorder)
+                {
+                    IEnumerator enumerator = windows.GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
+                        g.DrawRectangle(new Pen(Brushes.Red), new Rectangle(this.PointToClient(kv.Value.Location), kv.Value.Size));
+                    }
+                }
                 myRectangle.DrawRectangle(g, CropRegion);
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {

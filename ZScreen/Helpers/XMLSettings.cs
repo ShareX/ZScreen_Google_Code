@@ -122,6 +122,7 @@ namespace ZSS
         public decimal SelectedWindowRegionInterval = 75;
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
+        public bool SelectedWindowAddBorder = false;
 
         // Interaction
 

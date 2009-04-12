@@ -209,6 +209,7 @@ namespace ZSS
             nudSelectedWindowRegionInterval.Value = Program.conf.SelectedWindowRegionInterval;
             nudSelectedWindowRegionStep.Value = Program.conf.SelectedWindowRegionStep;
             nudSelectedWindowHueRange.Value = Program.conf.SelectedWindowHueRange;
+            cbSelectedWindowAddBorder.Checked = Program.conf.SelectedWindowAddBorder;
 
             // Interaction
             nudFlashIconCount.Value = Program.conf.FlashTrayCount;
@@ -4798,6 +4799,11 @@ namespace ZSS
             Program.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             cboShowWatermark.Checked = (Program.conf.WatermarkMode != WatermarkType.NONE);
             PreviewWatermark();
+        }
+
+        private void cbSelectedWindowAddBorder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowAddBorder = cbSelectedWindowAddBorder.Checked;
         }
     }
 }
