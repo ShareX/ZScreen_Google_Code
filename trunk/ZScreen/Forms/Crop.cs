@@ -21,24 +21,22 @@
 */
 #endregion
 
+// Update: 20080401 (Isaac) Fixing multiple screen handling
+
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using ZSS.Colors;
 
-// Update: 20080401 (Isaac) Fixing multiple screen handling
-
 namespace ZSS
 {
     partial class Crop : Form
     {
-        private bool Debug = false;
-        private bool mMouseDown = false;
+        private bool mMouseDown;
         private Image mBgImage;
         private Point mousePos, mousePosOnClick, oldMousePos;
         private Point screenMousePos;
@@ -46,6 +44,22 @@ namespace ZSS
         private Rectangle clientBound;
         private Rectangle cropRegion;
         private Rectangle rectRegion;
+        private Bitmap bmpBgImage;
+        private Pen labelBorderPen = new Pen(Color.Black);
+        private Pen crosshairPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor));
+        private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
+        private string strMouseUp = "Mouse Left Down: Create crop region" +
+            "\nMouse Right Down & Escape: Cancel Screenshot\nSpace: Capture Entire Screen\nTab: Toggle Crop Grid mode";
+        private string strMouseDown = "Mouse Left Up: Capture Screenshot" +
+            "\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle Crop Grid mode";
+        private Queue windows = new Queue();
+        private Timer timer = new Timer();
+        private Timer windowCheck = new Timer();
+        private CropOptions Options { get; set; }
+        private bool forceCheck;
+        private Rectangle rectIntersect;
+        private DynamicCrosshair crosshair;
+        private DynamicRectangle myRectangle;
 
         private Rectangle CropRegion
         {
@@ -61,45 +75,27 @@ namespace ZSS
             }
         }
 
-        private IntPtr mHandle;
-        private Graphics mGraphics;
-        private Bitmap bmpBgImage;
-        private Pen labelBorderPen = new Pen(Color.Black);
-        private Pen crosshairPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor));
-        private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
-        private string strMouseUp = "Mouse Left Down: Create crop region\nMouse Right Down & Escape: Cancel Screenshot\nSpace: Capture Entire Screen\nTab: Toggle Crop Grid mode";
-        private string strMouseDown = "Mouse Left Up: Capture Screenshot\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle Crop Grid mode";
-        private Queue windows = new Queue();
-        private Timer timer = new Timer();
-        private Timer windowCheck = new Timer();
-        private CropOptions Options { get; set; }
-        private bool forceCheck = false;
-        private Rectangle rectIntersect;
-        private DynamicCrosshair crosshair;
-        private DynamicRectangle myRectangle;
-
         public Crop(CropOptions options)
         {
-            this.Options = options;
-            mBgImage = new Bitmap(this.Options.MyImage);
+            Options = options;
+            mBgImage = new Bitmap(Options.MyImage);
             bmpBgImage = new Bitmap(mBgImage);
             InitializeComponent();
-            this.Bounds = MyGraphics.GetScreenBounds();
-            mGraphics = this.CreateGraphics();
+            Bounds = MyGraphics.GetScreenBounds();
             //This should not be used anymore since we will normalize points to client's coordinate
             //rectIntersect.Location = this.Bounds.Location;
-            rectIntersect.Size = new Size(this.Bounds.Width - 1, this.Bounds.Height - 1);
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+            rectIntersect.Size = new Size(Bounds.Width - 1, Bounds.Height - 1);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
 
             CalculateBoundaryFromMousePosition();
 
             timer.Interval = 10;
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += new EventHandler(TimerTick);
             windowCheck.Interval = 250;
-            windowCheck.Tick += new EventHandler(windowCheck_Tick);
+            windowCheck.Tick += new EventHandler(WindowCheckTick);
             crosshair = new DynamicCrosshair();
 
-            if (this.Options.SelectedWindowMode)
+            if (Options.SelectedWindowMode)
             {
                 myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
                 User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
@@ -114,32 +110,29 @@ namespace ZSS
 
         private void Crop_Shown(object sender, EventArgs e)
         {
-            if (!Debug)
-            {
-                this.TopMost = true;
-                windowCheck.Start();
-            }
+            TopMost = true;
+            windowCheck.Start();
             timer.Start();
         }
 
-        private void windowCheck_Tick(object sender, EventArgs e)
+        private void WindowCheckTick(object sender, EventArgs e)
         {
-            if (User32.GetForegroundWindow() != this.Handle)
+            if (User32.GetForegroundWindow() != Handle)
             {
-                User32.ActivateWindow(this.Handle);
+                User32.ActivateWindow(Handle);
             }
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             CalculateBoundaryFromMousePosition();
 
             if (Program.conf.CropDynamicCrosshair) forceCheck = true;
-            if (oldMousePos == null || oldMousePos != mousePos || forceCheck)
+            if (oldMousePos != mousePos || forceCheck)
             {
                 oldMousePos = mousePos;
                 forceCheck = false;
-                if (this.Options.SelectedWindowMode)
+                if (Options.SelectedWindowMode)
                 {
                     IEnumerator enumerator = windows.GetEnumerator();
                     while (enumerator.MoveNext())
@@ -147,8 +140,7 @@ namespace ZSS
                         KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
                         if (kv.Value.Contains(Cursor.Position))
                         {
-                            mHandle = kv.Key;
-                            CropRegion = new Rectangle(this.PointToClient(kv.Value.Location), kv.Value.Size);
+                            CropRegion = new Rectangle(PointToClient(kv.Value.Location), kv.Value.Size);
                             break;
                         }
                     }
@@ -171,26 +163,25 @@ namespace ZSS
         private bool EvalWindow(IntPtr hWnd, int lParam)
         {
             if (!User32.IsWindowVisible(hWnd)) return true;
-            if (this.Handle == hWnd) return false;
+            if (Handle == hWnd) return false;
 
             Rectangle rect = User32.GetWindowRectangle(hWnd);
-            rect.Intersect(this.Bounds);
+            rect.Intersect(Bounds);
             windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
 
             return true;
-        }
-
-        private void ShowFormSize(string methodName)
-        {
-            Console.WriteLine(string.Format("{2} (Form Size): {0}x{1}", this.Size.Width, this.Size.Height, methodName));
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
             e.Graphics.DrawImage(mBgImage, 0, 0, mBgImage.Width, mBgImage.Height);
-            if ((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) || (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2))
-                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)), new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
+            if ((Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
+                (!Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2))
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)),
+                    new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -198,19 +189,19 @@ namespace ZSS
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
 
-            if ((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 1) ||
-                (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 1 && mMouseDown))
+            if ((Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 1) ||
+                (!Options.SelectedWindowMode && Program.conf.CropRegionStyle == 1 && mMouseDown))
             {
                 g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), CropRegion);
             }
-            else if (((this.Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
-                (!this.Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
+            else if (((Options.SelectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
+                (!Options.SelectedWindowMode && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
                 CropRegion.Width > 0 && CropRegion.Height > 0)
             {
                 g.DrawImage(bmpBgImage, CropRegion, CropRegion, GraphicsUnit.Pixel);
             }
 
-            if (this.Options.SelectedWindowMode)
+            if (Options.SelectedWindowMode)
             {
                 if (Program.conf.SelectedWindowAddBorder)
                 {
@@ -218,7 +209,7 @@ namespace ZSS
                     while (enumerator.MoveNext())
                     {
                         KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
-                        g.DrawRectangle(new Pen(Brushes.Red), new Rectangle(this.PointToClient(kv.Value.Location), kv.Value.Size));
+                        g.DrawRectangle(new Pen(Brushes.Red), new Rectangle(PointToClient(kv.Value.Location), kv.Value.Size));
                     }
                 }
                 myRectangle.DrawRectangle(g, CropRegion);
@@ -248,8 +239,10 @@ namespace ZSS
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
                             rectRegion.Width + " px, Height: " + rectRegion.Height + " px", new Point(20, 20), g);
                     }
-                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
-                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
+                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y),
+                        new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
+                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10),
+                        new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
                 }
                 else
                 {
@@ -272,8 +265,8 @@ namespace ZSS
             if (labelRect.Right > clientBound.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
             if (labelRect.Bottom > clientBound.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
             GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
-            g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
-            Color.Black, Color.FromArgb(150, Color.Black)), gPath);
+            g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y),
+                new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.Black, Color.FromArgb(150, Color.Black)), gPath);
             g.DrawPath(labelBorderPen, gPath);
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
         }
@@ -306,11 +299,12 @@ namespace ZSS
             {
                 Font posFont = new Font(FontFamily.GenericSansSerif, 8);
                 Size textSize = TextRenderer.MeasureText(drawText, posFont);
-                Point textPos = this.PointToClient(new Point(screenBound.Left + (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
+                Point textPos = PointToClient(new Point(screenBound.Left +
+                    (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
                 Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
                 GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
-                g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X + labelRect.Width, labelRect.Y),
-                Color.White, Color.FromArgb(150, Color.White)), gPath);
+                g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X +
+                    labelRect.Width, labelRect.Y), Color.White, Color.FromArgb(150, Color.White)), gPath);
                 g.DrawPath(labelBorderPen, gPath);
                 g.DrawString(drawText, posFont, new SolidBrush(Color.Black), labelRect.X + 5, labelRect.Y + 5);
             }
@@ -318,27 +312,27 @@ namespace ZSS
 
         private void CalculateBoundaryFromMousePosition()
         {
-            mousePos = this.PointToClient(MousePosition);
-            screenMousePos = this.PointToScreen(mousePos);
+            mousePos = PointToClient(MousePosition);
+            screenMousePos = PointToScreen(mousePos);
             screenBound = Screen.GetBounds(screenMousePos);
-            clientBound = new Rectangle(this.PointToClient(screenBound.Location), screenBound.Size);
+            clientBound = new Rectangle(PointToClient(screenBound.Location), screenBound.Size);
         }
 
         private void Crop_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (this.Options.SelectedWindowMode)
+                if (Options.SelectedWindowMode)
                 {
                     //if (Program.conf.SelectedWindowFront)
                     //{
                     //    User32.ActivateWindow(mHandle);
                     //}
-                    returnImageAndExit();
+                    ReturnImageAndExit();
                 }
                 else
                 {
-                    mousePosOnClick = this.PointToClient(MousePosition);
+                    mousePosOnClick = PointToClient(MousePosition);
                     CropRegion = new Rectangle(mousePosOnClick, new Size(0, 0));
                     mMouseDown = true;
                     Refresh();
@@ -348,23 +342,23 @@ namespace ZSS
             {
                 if (mMouseDown)
                 {
-                    cancelAndRestart();
+                    CancelAndRestart();
                 }
                 else
                 {
-                    returnNullAndExit();
+                    ReturnNullAndExit();
                 }
             }
         }
 
         private void Crop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!this.Options.SelectedWindowMode && mMouseDown)
+            if (!Options.SelectedWindowMode && mMouseDown)
             {
                 mMouseDown = false;
-                if (CropRegion != null && CropRegion.Width > 0 && CropRegion.Height > 0)
+                if (CropRegion.Width > 0 && CropRegion.Height > 0)
                 {
-                    returnImageAndExit();
+                    ReturnImageAndExit();
                 }
                 else
                 {
@@ -380,18 +374,18 @@ namespace ZSS
                 if (e.KeyChar == (int)Keys.Space)
                 {
                     CropRegion = new Rectangle(0, 0, mBgImage.Width, mBgImage.Height);
-                    returnImageAndExit();
+                    ReturnImageAndExit();
                 }
                 if (e.KeyChar == (int)Keys.Escape)
                 {
-                    returnNullAndExit();
+                    ReturnNullAndExit();
                 }
             }
             if (mMouseDown && (e.KeyChar == (int)Keys.Escape || e.KeyChar == (int)Keys.Space))
             {
-                cancelAndRestart();
+                CancelAndRestart();
             }
-            if (e.KeyChar == (int)Keys.Tab && !this.Options.SelectedWindowMode)
+            if (e.KeyChar == (int)Keys.Tab && !Options.SelectedWindowMode)
             {
                 Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
                 Program.conf.Save();
@@ -399,15 +393,15 @@ namespace ZSS
             }
         }
 
-        private void cancelAndRestart()
+        private void CancelAndRestart()
         {
             mMouseDown = false;
             Refresh();
         }
 
-        private void returnImageAndExit()
+        private void ReturnImageAndExit()
         {
-            if (this.Options.SelectedWindowMode)
+            if (Options.SelectedWindowMode)
             {
                 Program.LastCapture = CropRegion;
             }
@@ -415,15 +409,14 @@ namespace ZSS
             {
                 Program.LastRegion = rectRegion;
             }
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             Close();
         }
 
-        private void returnNullAndExit()
+        private void ReturnNullAndExit()
         {
-            //fixes right click menus from displaying in external programs after close
-            System.Threading.Thread.Sleep(150);
-            this.DialogResult = DialogResult.Cancel;
+            System.Threading.Thread.Sleep(150); //fixes right click menus from displaying in external programs after close
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 
@@ -431,7 +424,7 @@ namespace ZSS
         {
             timer.Stop();
             windowCheck.Stop();
-            if (!this.Options.SelectedWindowMode) Cursor.Show();
+            if (!Options.SelectedWindowMode) Cursor.Show();
         }
 
         private void Crop_FormClosed(object sender, FormClosedEventArgs e)
@@ -536,13 +529,13 @@ namespace ZSS
                 g.DrawRectangle(new Pen(color, size), region);
                 if (ruler)
                 {
-                    DrawRuler(g, color, 5, 10);
-                    DrawRuler(g, color, 20, 100);
+                    DrawRuler(g, 5, 10);
+                    DrawRuler(g, 20, 100);
                 }
             }
         }
 
-        private void DrawRuler(Graphics g, Color color, int rulerSize, int rulerWidth)
+        private void DrawRuler(Graphics g, int rulerSize, int rulerWidth)
         {
             Pen pen = new Pen(color);
             if (region.Width >= rulerSize && region.Height >= rulerSize)
@@ -574,35 +567,35 @@ namespace ZSS
             {
                 currentStep = step;
             }
-            ColorHue += (double)currentStep;
+            ColorHue += currentStep;
             //Console.WriteLine(colorHue + " " + colorHueMin + " " + colorHueMax + " " + (double)currentStep);
         }
     }
 
     public class DynamicCrosshair
     {
-        private int Interval = Program.conf.CropInterval;
-        private int Step = Program.conf.CropStep;
-        private int CurrentStep;
-        private int MinSize = 1;
-        private int MaxSize;
-        private int MaxWidth;
-        private Stopwatch Timer = new Stopwatch();
-        private long LastTime = 0;
-        private int CurrentSize;
-        private int NormalSize;
-        private int LineCount = Program.conf.CrosshairLineCount;
-        private int LineSize = Program.conf.CrosshairLineSize;
-        private Color CrosshairColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
+        private int interval = Program.conf.CropInterval;
+        private int step = Program.conf.CropStep;
+        private int currentStep;
+        private int minSize = 1;
+        private int maxSize;
+        private int maxWidth;
+        private Stopwatch timer = new Stopwatch();
+        private long lastTime;
+        private int currentSize;
+        private int normalSize;
+        private int lineCount = Program.conf.CrosshairLineCount;
+        private int lineSize = Program.conf.CrosshairLineSize;
+        private Color crosshairColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
 
         public DynamicCrosshair()
         {
-            CurrentStep = -Step;
-            MaxSize = LineSize;
-            MaxWidth = MaxSize * LineCount;
-            NormalSize = MinSize + ((MaxSize - MinSize) / 2);
-            CurrentSize = NormalSize;
-            Timer.Start();
+            currentStep = -step;
+            maxSize = lineSize;
+            maxWidth = maxSize * lineCount;
+            normalSize = minSize + ((maxSize - minSize) / 2);
+            currentSize = normalSize;
+            timer.Start();
         }
 
         public void Draw(Graphics g, Point mousePos)
@@ -610,54 +603,54 @@ namespace ZSS
             g.SmoothingMode = SmoothingMode.HighQuality;
             if (Program.conf.CropDynamicCrosshair)
             {
-                if (Timer.ElapsedMilliseconds - LastTime >= Interval)
+                if (timer.ElapsedMilliseconds - lastTime >= interval)
                 {
-                    CurrentSize += CurrentStep;
-                    if (CurrentSize > MaxSize)
+                    currentSize += currentStep;
+                    if (currentSize > maxSize)
                     {
-                        CurrentStep = -Step;
-                        CurrentSize += CurrentStep;
+                        currentStep = -step;
+                        currentSize += currentStep;
                     }
-                    else if (CurrentSize < MinSize)
+                    else if (currentSize < minSize)
                     {
-                        //CurrentStep = Step;
-                        CurrentSize = MaxSize;
+                        //currentStep = step;
+                        currentSize = maxSize;
                     }
-                    LastTime = Timer.ElapsedMilliseconds;
+                    lastTime = timer.ElapsedMilliseconds;
                 }
             }
             else
             {
-                CurrentSize = NormalSize;
+                currentSize = normalSize;
             }
             if (Program.conf.CropGridToggle)
             {
-                for (int i = 0; i < LineCount; i++)
+                for (int i = 0; i < lineCount; i++)
                 {
-                    g.DrawRectangle(new Pen(Color.FromArgb((255 / LineCount) * (i + 1), CrosshairColor)),
-                        mousePos.X - (CurrentSize + (i * LineSize)) / 2,
-                        mousePos.Y - (CurrentSize + (i * LineSize)) / 2,
-                        (CurrentSize + (i * LineSize)), (CurrentSize + (i * LineSize)));
+                    g.DrawRectangle(new Pen(Color.FromArgb((255 / lineCount) * (i + 1), crosshairColor)),
+                        mousePos.X - (currentSize + (i * lineSize)) / 2,
+                        mousePos.Y - (currentSize + (i * lineSize)) / 2,
+                        (currentSize + (i * lineSize)), (currentSize + (i * lineSize)));
                 }
-                g.DrawRectangle(new Pen(Color.FromArgb(75, CrosshairColor)), mousePos.X - MaxWidth / 2,
-                    mousePos.Y - MaxWidth / 2, MaxWidth, MaxWidth);
+                g.DrawRectangle(new Pen(Color.FromArgb(75, crosshairColor)), mousePos.X - maxWidth / 2,
+                    mousePos.Y - maxWidth / 2, maxWidth, maxWidth);
             }
             else
             {
-                for (int i = 0; i < LineCount; i++)
+                for (int i = 0; i < lineCount; i++)
                 {
-                    g.DrawEllipse(new Pen(Color.FromArgb((255 / LineCount) * (i + 1), CrosshairColor)),
-                        mousePos.X - (CurrentSize + (i * LineSize)) / 2,
-                        mousePos.Y - (CurrentSize + (i * LineSize)) / 2,
-                        (CurrentSize + (i * LineSize)), (CurrentSize + (i * LineSize)));
+                    g.DrawEllipse(new Pen(Color.FromArgb((255 / lineCount) * (i + 1), crosshairColor)),
+                        mousePos.X - (currentSize + (i * lineSize)) / 2,
+                        mousePos.Y - (currentSize + (i * lineSize)) / 2,
+                        (currentSize + (i * lineSize)), (currentSize + (i * lineSize)));
                 }
-                g.DrawEllipse(new Pen(Color.FromArgb(50, CrosshairColor)), mousePos.X - MaxWidth / 2,
-                    mousePos.Y - MaxWidth / 2, MaxWidth, MaxWidth);
+                g.DrawEllipse(new Pen(Color.FromArgb(50, crosshairColor)), mousePos.X - maxWidth / 2,
+                    mousePos.Y - maxWidth / 2, maxWidth, maxWidth);
             }
-            g.DrawLine(new Pen(CrosshairColor), new Point(mousePos.X - (MaxWidth - (MaxSize - CurrentSize)) / 2, mousePos.Y),
-                new Point(mousePos.X + (MaxWidth - (MaxSize - CurrentSize)) / 2, mousePos.Y));
-            g.DrawLine(new Pen(CrosshairColor), new Point(mousePos.X, mousePos.Y - (MaxWidth - (MaxSize - CurrentSize)) / 2),
-                new Point(mousePos.X, mousePos.Y + (MaxWidth - (MaxSize - CurrentSize)) / 2));
+            g.DrawLine(new Pen(crosshairColor), new Point(mousePos.X - (maxWidth - (maxSize - currentSize)) / 2, mousePos.Y),
+                new Point(mousePos.X + (maxWidth - (maxSize - currentSize)) / 2, mousePos.Y));
+            g.DrawLine(new Pen(crosshairColor), new Point(mousePos.X, mousePos.Y - (maxWidth - (maxSize - currentSize)) / 2),
+                new Point(mousePos.X, mousePos.Y + (maxWidth - (maxSize - currentSize)) / 2));
         }
     }
 }

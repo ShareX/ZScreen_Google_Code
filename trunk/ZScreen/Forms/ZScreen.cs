@@ -48,27 +48,27 @@ namespace ZSS
 {
     public partial class ZScreen : Form
     {
-        #region Global Variables
+        #region Variables
 
-        private bool mGuiIsReady = false;
-        private bool mClose = false;
-        private bool mDoingNameUpdate = false;
-        private bool mTakingScreenShot = false;
-        private bool mSetHotkeys = false;
+        public IntPtr KeyboardHookHandle = (IntPtr)1; //Used for the keyboard hook
+
+        private bool mGuiIsReady;
+        private bool mClose;
+        private bool mTakingScreenShot;
+        private bool mSetHotkeys;
         private int mHKSelectedRow = -1;
         private HKcombo mHKSetcombo;
         private TextBox mHadFocus;
         private int mHadFocusAt;
-        public IntPtr m_hID = (IntPtr)1; //Used for the keyboard hook
         private const int mWM_KEYDOWN = 0x0100;
         private const int mWM_SYSKEYDOWN = 0x0104;
-        private bool bQuickOptionsOpened = false;
-        private bool bDropWindowOpened = false;
-        private bool bQuickActionsOpened = false;
-        public ContextMenuStrip codesMenu = new ContextMenuStrip();
-        private GoogleTranslate mGTranslator = null;
+        private bool bQuickOptionsOpened;
+        private bool bDropWindowOpened;
+        private bool bQuickActionsOpened;
+        private ContextMenuStrip codesMenu = new ContextMenuStrip();
+        private GoogleTranslate mGTranslator;
         private BackgroundWorker bwActiveHelp = new BackgroundWorker();
-        public Debug debug;
+        private Debug debug;
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace ZSS
         {
             InitializeComponent();
 
-            this.Icon = Properties.Resources.zss_main;
+            this.Icon = Resources.zss_main;
             this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
             this.niTray.Text = this.Text;
             lblLogo.Text = this.Text;
@@ -90,13 +90,13 @@ namespace ZSS
         {
             if (Program.conf.OpenMainWindow)
             {
-                this.WindowState = FormWindowState.Normal;
-                this.Size = Program.conf.WindowSize;
-                this.ShowInTaskbar = Program.conf.ShowInTaskbar;
+                WindowState = FormWindowState.Normal;
+                Size = Program.conf.WindowSize;
+                ShowInTaskbar = Program.conf.ShowInTaskbar;
             }
             else
             {
-                this.Hide();
+                Hide();
             }
 
             CleanCache();
@@ -128,7 +128,7 @@ namespace ZSS
             txtRootFolder.Text = Program.RootAppFolder;
 
             UpdateGuiControlsPaths();
-            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", this.ProductName);
+            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", ProductName);
 
             #endregion
 
@@ -320,9 +320,11 @@ namespace ZSS
 
             if (Program.conf.ImageSoftwareActive == null)
             {
-                Program.conf.ImageSoftwareActive = new Software();
-                Program.conf.ImageSoftwareActive.Name = "Paint";
-                Program.conf.ImageSoftwareActive.Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe");
+                Program.conf.ImageSoftwareActive = new Software
+                {
+                    Name = "Paint",
+                    Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe")
+                };
             }
             if (Program.conf.ImageSoftwareList.Count == 0)
             {
@@ -435,19 +437,19 @@ namespace ZSS
         {
             if (hkc.Mods == null) //0 mods
             {
-                if (Control.ModifierKeys == Keys.None && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
+                if (ModifierKeys == Keys.None && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
                     return true;
             }
             else // if(hkc.Mods.Length > 0)
             {
                 if (hkc.Mods.Length == 1)
                 {
-                    if (Control.ModifierKeys == hkc.Mods[0] && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
+                    if (ModifierKeys == hkc.Mods[0] && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
                         return true;
                 }
                 else //if (hkc.Mods.Length == 2)
                 {
-                    if (Control.ModifierKeys == (hkc.Mods[0] | hkc.Mods[1]) && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
+                    if (ModifierKeys == (hkc.Mods[0] | hkc.Mods[1]) && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
                         return true;
                 }
             }
@@ -459,17 +461,17 @@ namespace ZSS
         {
             try
             {
-                string[] mods = Control.ModifierKeys.ToString().Split(',');
+                string[] mods = ModifierKeys.ToString().Split(',');
 
-                if (mods == null || Control.ModifierKeys == Keys.None)
+                if (ModifierKeys == Keys.None)
                 {
                     return new HKcombo((Keys)Marshal.ReadInt32(lParam));
                 }
-                else if (mods.Length == 1)
+                if (mods.Length == 1)
                 {
                     return new HKcombo((Keys)Enum.Parse(typeof(Keys), mods[0], true), (Keys)Marshal.ReadInt32(lParam));
                 }
-                else if (mods.Length == 2)
+                if (mods.Length == 2)
                 {
                     return new HKcombo((Keys)Enum.Parse(typeof(Keys), mods[0], true), (Keys)Enum.Parse(typeof(Keys), mods[1], true), (Keys)Marshal.ReadInt32(lParam));
                 }
@@ -477,7 +479,6 @@ namespace ZSS
             catch { }
 
             return null;
-            //(Keys)Marshal.ReadInt32(lParam)
         }
 
         public IntPtr ScreenshotUsingHotkeys(int nCode, IntPtr wParam, IntPtr lParam)
@@ -510,74 +511,74 @@ namespace ZSS
                     {
                         //Active window
                         StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKSelectedWindow, lParam))
+                    if (CheckKeys(Program.conf.HKSelectedWindow, lParam))
                     {
                         //Selected Window
                         StartBW_SelectedWindow();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKCropShot, lParam))
+                    if (CheckKeys(Program.conf.HKCropShot, lParam))
                     {
                         //Crop Shot
                         StartBW_CropShot();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKLastCropShot, lParam))
+                    if (CheckKeys(Program.conf.HKLastCropShot, lParam))
                     {
                         //Last Crop Shot
                         StartBW_LastCropShot();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKEntireScreen, lParam))
+                    if (CheckKeys(Program.conf.HKEntireScreen, lParam))
                     {
                         //Entire Screen
                         StartBW_EntireScreen();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKClipboardUpload, lParam))
+                    if (CheckKeys(Program.conf.HKClipboardUpload, lParam))
                     {
                         //Clipboard Upload
                         UploadUsingClipboard();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKDropWindow, lParam))
+                    if (CheckKeys(Program.conf.HKDropWindow, lParam))
                     {
                         //Drop Window
                         ShowDropWindow();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKActionsToolbar, lParam))
+                    if (CheckKeys(Program.conf.HKActionsToolbar, lParam))
                     {
                         //Quick Actions
                         ShowQuickActions();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKQuickOptions, lParam))
+                    if (CheckKeys(Program.conf.HKQuickOptions, lParam))
                     {
                         //Quick Options
                         ShowQuickOptions();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKLanguageTranslator, lParam))
+                    if (CheckKeys(Program.conf.HKLanguageTranslator, lParam))
                     {
                         //Language Translator
                         if (Clipboard.ContainsText())
                         {
                             StartBW_LanguageTranslator(Clipboard.GetText());
-                            return m_hID;
                         }
+                        return KeyboardHookHandle;
                     }
-                    else if (CheckKeys(Program.conf.HKScreenColorPicker, lParam))
+                    if (CheckKeys(Program.conf.HKScreenColorPicker, lParam))
                     {
                         //Screen Color Picker
                         ScreenColorPicker();
-                        return m_hID;
+                        return KeyboardHookHandle;
                     }
                 }
             }
-            return User32.CallNextHookEx(m_hID, nCode, wParam, lParam);
+            return User32.CallNextHookEx(KeyboardHookHandle, nCode, wParam, lParam);
         }
 
         private void StartBW_EntireScreen()
@@ -621,8 +622,7 @@ namespace ZSS
 
         private void ScreenColorPicker()
         {
-            DialogColor dialogColor = new DialogColor();
-            dialogColor.ScreenPicker = true;
+            DialogColor dialogColor = new DialogColor { ScreenPicker = true };
             dialogColor.Show();
         }
 
@@ -630,14 +630,15 @@ namespace ZSS
 
         private void CleanCache()
         {
-            System.ComponentModel.BackgroundWorker bw = new System.ComponentModel.BackgroundWorker();
+            BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new System.ComponentModel.DoWorkEventHandler(BwCache_DoWork);
             bw.RunWorkerAsync();
         }
 
-        private void BwCache_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void BwCache_DoWork(object sender, DoWorkEventArgs e)
         {
-            ZSS.Tasks.CacheCleanerTask t = new ZSS.Tasks.CacheCleanerTask(Program.conf.CacheDir, Program.conf.ScreenshotCacheSize);
+            CacheCleanerTask t = new CacheCleanerTask(Program.conf.CacheDir, Program.conf.ScreenshotCacheSize);
+            t.CleanCache();
         }
 
         #endregion
@@ -652,7 +653,7 @@ namespace ZSS
                 SaveImage(task);
                 PublishImage(ref task);
             }
-            catch (System.ArgumentOutOfRangeException aor)
+            catch (ArgumentOutOfRangeException aor)
             {
                 task.Errors.Add("Invalid FTP Account Selection");
                 Console.WriteLine(aor.ToString());
@@ -683,9 +684,11 @@ namespace ZSS
                 }
                 else
                 {
-                    CropOptions co = new CropOptions();
-                    co.MyImage = imgSS;
-                    co.SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED;
+                    CropOptions co = new CropOptions
+                    {
+                        MyImage = imgSS,
+                        SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED
+                    };
                     Crop c = new Crop(co);
                     if (c.ShowDialog() == DialogResult.OK)
                     {
@@ -718,7 +721,7 @@ namespace ZSS
             }
             finally
             {
-                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.UPDATE_CROP_MODE);
+                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_CROP_MODE);
                 mTakingScreenShot = false;
                 if (imgSS != null) imgSS.Dispose();
             }
@@ -817,7 +820,7 @@ namespace ZSS
                     // just local file 
                     if (!string.IsNullOrEmpty(t.FileName.ToString()))
                     {
-                        sbMsg.AppendLine("Name: " + t.FileName.ToString());
+                        sbMsg.AppendLine("Name: " + t.FileName);
                     }
                     fileOrUrl = string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.LocalFilePath);
                 }
@@ -828,7 +831,7 @@ namespace ZSS
                     {
                         if (!string.IsNullOrEmpty(t.FileName.ToString()))
                         {
-                            sbMsg.AppendLine("Name: " + t.FileName.ToString());
+                            sbMsg.AppendLine("Name: " + t.FileName);
                         }
                         fileOrUrl = string.Format("URL: {0}", t.RemoteFilePath);
 
@@ -913,10 +916,9 @@ namespace ZSS
             if (!bQuickOptionsOpened)
             {
                 bQuickOptionsOpened = true;
-                QuickOptions quickOptions = new QuickOptions();
-                quickOptions.Icon = Properties.Resources.zss_main;
-                quickOptions.FormClosed += new FormClosedEventHandler(quickOptions_FormClosed);
-                quickOptions.ApplySettings += new EventHandler(quickOptions_ApplySettings);
+                QuickOptions quickOptions = new QuickOptions { Icon = Resources.zss_main };
+                quickOptions.FormClosed += new FormClosedEventHandler(QuickOptionsFormClosed);
+                quickOptions.ApplySettings += new EventHandler(QuickOptionsApplySettings);
                 quickOptions.Show();
                 Rectangle taskbar = User32.GetTaskbarRectangle();
                 quickOptions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickOptions.Width - 100,
@@ -924,21 +926,20 @@ namespace ZSS
             }
         }
 
-        private void quickOptions_ApplySettings(object sender, EventArgs e)
+        private void QuickOptionsApplySettings(object sender, EventArgs e)
         {
             cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
         }
 
-        private void quickOptions_FormClosed(object sender, FormClosedEventArgs e)
+        private void QuickOptionsFormClosed(object sender, FormClosedEventArgs e)
         {
             bQuickOptionsOpened = false;
         }
 
         private BackgroundWorker CreateWorker()
         {
-            BackgroundWorker bwApp = new BackgroundWorker();
-            bwApp.WorkerReportsProgress = true;
+            BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
             bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(BwApp_DoWork);
             bwApp.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(BwApp_ProgressChanged);
             bwApp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BwApp_RunWorkerCompleted);
@@ -989,8 +990,6 @@ namespace ZSS
         /// <summary>
         /// Worker for Text: Google Translate, Paste2, Pastebin
         /// </summary>
-        /// <param name="job"></param>
-        /// <param name="clipboard"></param>
         /// <returns></returns>
         private bool StartWorkerText(MainAppTask.Jobs job, string txt, string localFilePath)
         {
@@ -1025,7 +1024,7 @@ namespace ZSS
 
         #region "Event Handlers"
 
-        private void BwApp_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             MainAppTask task = (MainAppTask)e.Argument;
             task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
@@ -1065,7 +1064,7 @@ namespace ZSS
             }
 
             FileSystem.appendDebug(".");
-            FileSystem.appendDebug(string.Format("Job started: {0}", task.Job.ToString()));
+            FileSystem.appendDebug(string.Format("Job started: {0}", task.Job));
 
             switch (task.JobCategory)
             {
@@ -1111,16 +1110,16 @@ namespace ZSS
                     (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 ||
                     task.JobCategory == JobCategoryType.TEXT))
                 {
-                    task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
+                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
             }
 
             e.Result = task;
         }
 
-        private void BwApp_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            switch ((ZSS.Tasks.MainAppTask.ProgressType)e.ProgressPercentage)
+            switch ((MainAppTask.ProgressType)e.ProgressPercentage)
             {
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem((HistoryItem)e.UserState);
@@ -1139,7 +1138,7 @@ namespace ZSS
                 case MainAppTask.ProgressType.SET_ICON_BUSY:
                     MainAppTask task = (MainAppTask)e.UserState;
                     niTray.Text = this.Text + " - " + task.Job.GetDescription();
-                    niTray.Icon = Properties.Resources.zss_busy;
+                    niTray.Icon = Resources.zss_busy;
                     break;
                 case MainAppTask.ProgressType.UPDATE_CROP_MODE:
                     cboCropGridMode.Checked = Program.conf.CropGridToggle;
@@ -1156,79 +1155,76 @@ namespace ZSS
             {
                 MainAppTask task = (MainAppTask)e.Result;
 
-                FileSystem.appendDebug(string.Format("Job completed: {0}", task.Job.ToString()));
+                FileSystem.appendDebug(string.Format("Job completed: {0}", task.Job));
 
                 if (!RetryUpload(task))
                 {
-                    if (task != null)
+                    switch (task.JobCategory)
                     {
-                        switch (task.JobCategory)
-                        {
-                            case JobCategoryType.TEXT:
-                                switch (task.Job)
-                                {
-                                    case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                                        txtTranslateText.Text = task.TranslationInfo.SourceText;
-                                        txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
-                                        txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
-                                        txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
-                                        if (Program.conf.ClipboardTranslate)
-                                        {
-                                            Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
-                                        }
-                                        btnTranslate.Enabled = true;
-                                        break;
-                                    case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                                        if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                        {
-                                            Clipboard.SetText(task.RemoteFilePath);
-                                        }
-                                        break;
-                                }
-                                break;
-                            case JobCategoryType.SCREENSHOTS:
-                                switch (task.Job)
-                                {
-                                    case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                                        if (task.ImageManager != null & task.ImageManager.FileCount > 0)
-                                        {
-                                            if (task.ImageManager.GetFullImageUrl() != "")
-                                            {
-                                                txtUploadersLog.AppendText(task.DestinationName + " full image: " +
-                                                    task.ImageManager.GetFullImageUrl() + "\r\n");
-                                            }
-                                            if (task.ImageManager.GetThumbnailUrl() != "")
-                                            {
-                                                txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
-                                                    task.ImageManager.GetThumbnailUrl() + "\r\n");
-                                            }
-                                        }
-                                        btnUploadersTest.Enabled = true;
-                                        break;
-                                }
-                                if (Program.conf.DeleteLocal)
-                                {
-                                    if (File.Exists(task.LocalFilePath))
+                        case JobCategoryType.TEXT:
+                            switch (task.Job)
+                            {
+                                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                                    txtTranslateText.Text = task.TranslationInfo.SourceText;
+                                    txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
+                                    txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
+                                    txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
+                                    if (Program.conf.ClipboardTranslate)
                                     {
-                                        File.Delete(task.LocalFilePath);
+                                        Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
                                     }
+                                    btnTranslate.Enabled = true;
+                                    break;
+                                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                                    {
+                                        Clipboard.SetText(task.RemoteFilePath);
+                                    }
+                                    break;
+                            }
+                            break;
+                        case JobCategoryType.SCREENSHOTS:
+                            switch (task.Job)
+                            {
+                                case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
+                                    if (task.ImageManager != null && task.ImageManager.FileCount > 0)
+                                    {
+                                        if (task.ImageManager.GetFullImageUrl() != "")
+                                        {
+                                            txtUploadersLog.AppendText(task.DestinationName + " full image: " +
+                                                task.ImageManager.GetFullImageUrl() + "\r\n");
+                                        }
+                                        if (task.ImageManager.GetThumbnailUrl() != "")
+                                        {
+                                            txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
+                                                task.ImageManager.GetThumbnailUrl() + "\r\n");
+                                        }
+                                    }
+                                    btnUploadersTest.Enabled = true;
+                                    break;
+                            }
+                            if (Program.conf.DeleteLocal)
+                            {
+                                if (File.Exists(task.LocalFilePath))
+                                {
+                                    File.Delete(task.LocalFilePath);
                                 }
-                                break;
-                        }
+                            }
+                            break;
+                    }
 
-                        if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
-                        {
-                            ClipboardManager.AddScreenshotList(task.ImageManager);
-                            ClipboardManager.SetClipboardText();
-                        }
+                    if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
+                    {
+                        ClipboardManager.AddScreenshotList(task.ImageManager);
+                        ClipboardManager.SetClipboardText();
+                    }
 
-                        if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
-                        {
-                            btnOpenSourceText.Enabled = true;
-                            btnOpenSourceBrowser.Enabled = true;
-                            btnOpenSourceString.Enabled = true;
-                        }
-                    } // Task is not null
+                    if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
+                    {
+                        btnOpenSourceText.Enabled = true;
+                        btnOpenSourceBrowser.Enabled = true;
+                        btnOpenSourceString.Enabled = true;
+                    }
 
                     niTray.Text = this.Text;
                     if (ClipboardManager.Workers > 1)
@@ -1294,10 +1290,7 @@ namespace ZSS
                 task.MyWorker.RunWorkerAsync(task);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void LoadHistoryItems()
@@ -1437,7 +1430,7 @@ namespace ZSS
             Settings.Default.Save();
         }
 
-        private void RewriteISRightClickMenu()
+        private void RewriteIsRightClickMenu()
         {
             if (Program.conf.ImageSoftwareList != null)
             {
@@ -1447,15 +1440,11 @@ namespace ZSS
 
                 List<Software> imgs = Program.conf.ImageSoftwareList;
 
-                ToolStripMenuItem tsm;
-
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
-                tsm = new ToolStripMenuItem();
-                tsm.Text = "Disabled";
-                tsm.CheckOnClick = true;
-                tsm.Click += new EventHandler(disableImageSoftware_Click);
+                ToolStripMenuItem tsm = new ToolStripMenuItem { Text = "Disabled", CheckOnClick = true };
+                tsm.Click += DisableImageSoftwareClick;
 
                 tsmEditinImageSoftware.DropDownItems.Add(tsm);
 
@@ -1463,28 +1452,23 @@ namespace ZSS
 
                 for (int x = 0; x < imgs.Count; x++)
                 {
-                    tsm = new ToolStripMenuItem();
+                    tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
                     //tsm.Tag = x;
-                    tsm.CheckOnClick = true;
-
-                    //add event handler
-                    tsm.Click += new EventHandler(rightClickISItem_Click);
-
-                    tsm.Text = imgs[x].Name;
+                    tsm.Click += new EventHandler(RightClickIsItemClick);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
                 }
 
                 //check the active ftpUpload account
 
                 if (Program.conf.ImageSoftwareEnabled)
-                    CheckCorrectISRightClickMenu(Program.conf.ImageSoftwareActive.Name);
+                    CheckCorrectIsRightClickMenu(Program.conf.ImageSoftwareActive.Name);
                 else
-                    CheckCorrectISRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text);
+                    CheckCorrectIsRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text);
 
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
-                if (tsmEditinImageSoftware.Selected == true)
+                if (tsmEditinImageSoftware.Selected)
                 {
                     tsmEditinImageSoftware.DropDown.Hide();
                     tsmEditinImageSoftware.DropDown.Show();
@@ -1492,18 +1476,18 @@ namespace ZSS
             }
         }
 
-        private void disableImageSoftware_Click(object sender, EventArgs e)
+        private void DisableImageSoftwareClick(object sender, EventArgs e)
         {
             //cbRunImageSoftware.Checked = false;
 
             //select "Disabled"
             lbImageSoftware.SelectedIndex = 0;
 
-            CheckCorrectISRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text); //disabled
+            CheckCorrectIsRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text); //disabled
             //rewriteISRightClickMenu();
         }
 
-        private void rightClickISItem_Click(object sender, EventArgs e)
+        private void RightClickIsItemClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
@@ -1518,7 +1502,7 @@ namespace ZSS
             //rewriteISRightClickMenu();
         }
 
-        private void CheckCorrectISRightClickMenu(string txt)
+        private void CheckCorrectIsRightClickMenu(string txt)
         {
             ToolStripMenuItem tsm;
 
@@ -1552,11 +1536,8 @@ namespace ZSS
 
                 for (int i = 0; i < lUploaders.Count; i++)
                 {
-                    tsm = new ToolStripMenuItem();
-                    tsm.CheckOnClick = true;
-                    tsm.Click += new EventHandler(rightClickIHS_Click);
-                    tsm.Tag = i;
-                    tsm.Text = lUploaders[i].Name;
+                    tsm = new ToolStripMenuItem { CheckOnClick = true, Tag = i, Text = lUploaders[i].Name };
+                    tsm.Click += rightClickIHS_Click;
                     tsmDestCustomHTTP.DropDownItems.Add(tsm);
                 }
 
@@ -1565,12 +1546,11 @@ namespace ZSS
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
-                if (tsmDestCustomHTTP.Selected == true)
+                if (tsmDestCustomHTTP.Selected)
                 {
                     tsmDestCustomHTTP.DropDown.Hide();
                     tsmDestCustomHTTP.DropDown.Show();
                 }
-
             }
         }
 
@@ -1589,10 +1569,8 @@ namespace ZSS
             int x = 0;
             foreach (ClipboardUriType cui in Enum.GetValues(typeof(ClipboardUriType)))
             {
-                tsm = new ToolStripMenuItem();
-                tsm.Tag = x++;
-                tsm.Text = cui.GetDescription();
-                tsm.Click += new EventHandler(clipboardCopyHistory_Click);
+                tsm = new ToolStripMenuItem { Tag = x++, Text = cui.GetDescription() };
+                tsm.Click += clipboardCopyHistory_Click;
                 tsmCopyCbHistory.DropDownItems.Add(tsm);
             }
         }
@@ -1605,7 +1583,6 @@ namespace ZSS
 
         private void FillClipboardMenu()
         {
-
             tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
             tsmCopytoClipboardMode.DropDownItems.Clear();
 
@@ -1613,20 +1590,16 @@ namespace ZSS
             int x = 0;
             foreach (ClipboardUriType cui in Enum.GetValues(typeof(ClipboardUriType)))
             {
-                tsm = new ToolStripMenuItem();
-                tsm.Tag = x++;
-                tsm.CheckOnClick = true;
-                tsm.Text = cui.GetDescription();
-                tsm.Click += new EventHandler(clipboardMode_Click);
+                tsm = new ToolStripMenuItem { Tag = x++, CheckOnClick = true, Text = cui.GetDescription() };
+                tsm.Click += new EventHandler(ClipboardModeClick);
                 tsmCopytoClipboardMode.DropDownItems.Add(tsm);
             }
 
             CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
             tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
-
         }
 
-        private void clipboardMode_Click(object sender, EventArgs e)
+        private void ClipboardModeClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
             Program.conf.ClipboardUriMode = (ClipboardUriType)tsm.Tag;
@@ -1639,39 +1612,25 @@ namespace ZSS
             if (Program.conf.FTPAccountList != null)
             {
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
-
                 tsmDestFTP.DropDownItems.Clear();
-
                 List<FTPAccount> accs = Program.conf.FTPAccountList;
-
                 ToolStripMenuItem tsm;
-
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
-
                 for (int x = 0; x < accs.Count; x++)
                 {
-                    tsm = new ToolStripMenuItem();
-                    tsm.Tag = x;
-                    tsm.CheckOnClick = true;
-
-                    //add event handler
-                    tsm.Click += new EventHandler(rightClickFTPItem_Click);
-
-                    tsm.Text = accs[x].Name;
+                    tsm = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
+                    tsm.Click += rightClickFTPItem_Click;
                     tsmDestFTP.DropDownItems.Add(tsm);
-
                 }
 
                 //check the active ftpUpload account
-
                 CheckCorrectMenuItemClicked(ref tsmDestFTP, Program.conf.FTPselected);
-
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
-                if (tsmDestFTP.Selected == true)
+                if (tsmDestFTP.Selected)
                 {
                     tsmDestFTP.DropDown.Hide();
                     tsmDestFTP.DropDown.Show();
@@ -1712,7 +1671,8 @@ namespace ZSS
         private bool CheckStartWithWindows()
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
-            if ((string)regkey.GetValue(Application.ProductName, "null", RegistryValueOptions.None) != "null")
+            if (regkey != null && (string)regkey.GetValue(Application.ProductName,
+                "null", RegistryValueOptions.None) != "null")
             {
                 Registry.CurrentUser.Flush();
                 return true;
@@ -1728,8 +1688,7 @@ namespace ZSS
             if (lic != string.Empty)
             {
                 frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "License"), lic);
-                v.Icon = this.Icon;
+                    Application.ProductName, "License"), lic) { Icon = this.Icon };
                 v.ShowDialog();
             }
         }
@@ -1744,8 +1703,7 @@ namespace ZSS
             if (h != string.Empty)
             {
                 frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "Version History"), h);
-                v.Icon = this.Icon;
+                    Application.ProductName, "Version History"), h) { Icon = this.Icon };
                 v.ShowDialog();
             }
         }
@@ -1816,9 +1774,11 @@ namespace ZSS
         private string BrowseDirectory(ref TextBox textBoxDirectory)
         {
             string settingDir = textBoxDirectory.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.SelectedPath = textBoxDirectory.Text;
-            dlg.ShowNewFolderButton = true;
+            FolderBrowserDialog dlg = new FolderBrowserDialog
+            {
+                SelectedPath = textBoxDirectory.Text,
+                ShowNewFolderButton = true
+            };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 if (dlg.SelectedPath != "")
@@ -1847,14 +1807,14 @@ namespace ZSS
 
             foreach (string url in items)
             {
-                str += url + System.Environment.NewLine;
+                str += url + Environment.NewLine;
             }
 
             if (str != "")
             {
                 if (cbHistoryAddSpace.Checked)
-                    str = str.Insert(0, System.Environment.NewLine);
-                str = str.TrimEnd(System.Environment.NewLine.ToCharArray()); ;
+                    str = str.Insert(0, Environment.NewLine);
+                str = str.TrimEnd(Environment.NewLine.ToCharArray());
 
                 //Set clipboard data
                 Clipboard.SetDataObject(str);
@@ -1867,16 +1827,14 @@ namespace ZSS
                 GetImageSoftware(txtImageSoftwareName.Text) == null &&
                 !string.IsNullOrEmpty(txtImageSoftwarePath.Text))
             {
-                int sel = 0;
+                int sel;
                 bool isActiveImageSoftware = false;
 
                 if ((sel = lbImageSoftware.SelectedIndex) > 0)
                 {
                     if (Program.conf.ImageSoftwareActive.Name == (string)lbImageSoftware.SelectedItem)
                         isActiveImageSoftware = true;
-                    Software temp = new Software();
-                    temp.Name = txtImageSoftwareName.Text;
-                    temp.Path = txtImageSoftwarePath.Text;
+                    Software temp = new Software { Name = txtImageSoftwareName.Text, Path = txtImageSoftwarePath.Text };
                     Program.conf.ImageSoftwareList[sel - 1] = temp;
                     lbImageSoftware.Items[sel] = temp.Name;
 
@@ -1885,13 +1843,13 @@ namespace ZSS
                         if (Program.conf.ImageSoftwareEnabled)
                         {
                             Program.conf.ImageSoftwareActive = temp;
-                            CheckCorrectISRightClickMenu(temp.Name);
+                            CheckCorrectIsRightClickMenu(temp.Name);
                         }
                     }
                 }
             }
 
-            RewriteISRightClickMenu();
+            RewriteIsRightClickMenu();
         }
 
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
@@ -1901,9 +1859,6 @@ namespace ZSS
 
         private void BrowseImageSoftware()
         {
-            //get old path
-            string old = txtImageSoftwarePath.Text;
-
             txtImageSoftwarePath.Enabled = true;
 
             //choose path / create path popup
@@ -1926,8 +1881,6 @@ namespace ZSS
             }
 
             txtImageSoftwarePath.Enabled = false;
-
-
         }
 
         private void tsmSettings_Click(object sender, EventArgs e)
@@ -1956,16 +1909,6 @@ namespace ZSS
         private void ShowDirectory(string dir)
         {
             Process.Start("explorer.exe", dir);
-        }
-
-        private void ShowHelp()
-        {
-            Process.Start("http://www.brandonz.net/projects/zscreen/documentation.html");
-        }
-
-        private void tpDocumentation_Enter(object sender, EventArgs e)
-        {
-            ShowHelp();
         }
 
         private void tsmViewRemote_Click(object sender, EventArgs e)
@@ -2015,7 +1958,7 @@ namespace ZSS
             Show();
             WindowState = FormWindowState.Normal;
             this.Activate();
-            Form.ActiveForm.BringToFront();
+            this.BringToFront();
         }
 
         private void tsm_Click(object sender, EventArgs e)
@@ -2047,35 +1990,10 @@ namespace ZSS
             tcApp.Focus();
         }
 
-        private void tsmHelp_Click(object sender, EventArgs e)
-        {
-            ShowHelp();
-        }
-
-        private void tsmLicense_Click(object sender, EventArgs e)
-        {
-            ShowLicense();
-        }
-
-        private void tsmVersionHistory_Click(object sender, EventArgs e)
-        {
-            ShowVersionHistory();
-        }
-
         private void sShowAbout()
         {
-            ZSS.Forms.AboutBox ab = new ZSS.Forms.AboutBox();
+            AboutBox ab = new AboutBox();
             ab.ShowDialog();
-        }
-
-        private void tsmAbout_Click(object sender, EventArgs e)
-        {
-            sShowAbout();
-        }
-
-        private void tsmDocumentation_Click(object sender, EventArgs e)
-        {
-            ShowHelp();
         }
 
         private void btnBrowseConfig_Click(object sender, EventArgs e)
@@ -2114,14 +2032,14 @@ namespace ZSS
             }
         }
 
-        private void AddToClipboardByDoubleClick(TabPage tp)
+        private void AddToClipboardByDoubleClick(Control tp)
         {
             Control ctl = tp.GetNextControl(tp, true);
             while (ctl != null)
             {
                 if (ctl.GetType() == typeof(TextBox))
                 {
-                    ((TextBox)ctl).DoubleClick += new EventHandler(TextBox_DoubleClick);
+                    ctl.DoubleClick += TextBox_DoubleClick;
                 }
                 ctl = tp.GetNextControl(ctl, true);
             }
@@ -2152,17 +2070,20 @@ namespace ZSS
         private void cbStartWin_CheckedChanged(object sender, EventArgs e)
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-
-            if (cbStartWin.Checked)
+            if (regkey != null)
             {
-                regkey.SetValue(Application.ProductName, Application.ExecutablePath, RegistryValueKind.String);
-            }
-            else
-            {
-                regkey.DeleteValue(Application.ProductName, false);
-            }
+                if (cbStartWin.Checked)
+                {
 
-            Registry.CurrentUser.Flush();
+                    regkey.SetValue(Application.ProductName, Application.ExecutablePath, RegistryValueKind.String);
+                }
+                else
+                {
+                    regkey.DeleteValue(Application.ProductName, false);
+                }
+
+                Registry.CurrentUser.Flush();
+            }
         }
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
@@ -2170,21 +2091,19 @@ namespace ZSS
             Program.conf.FlashTrayCount = nudFlashIconCount.Value;
         }
 
-        private void nudCacheSize_ValueChanged(object sender, System.EventArgs e)
+        private void nudCacheSize_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.ScreenshotCacheSize = nudCacheSize.Value;
         }
 
-        private void txtCacheDir_TextChanged(object sender, System.EventArgs e)
+        private void txtCacheDir_TextChanged(object sender, EventArgs e)
         {
             Program.conf.CacheDir = txtCacheDir.Text;
         }
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = Program.FILTER_SETTINGS;
-
+            SaveFileDialog dlg = new SaveFileDialog { Filter = Program.FILTER_SETTINGS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Program.conf.Save(dlg.FileName);
@@ -2193,12 +2112,11 @@ namespace ZSS
 
         private void btnSettingsImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = Program.FILTER_SETTINGS;
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
-                if (temp.RunOnce == true)
+                if (temp.RunOnce)
                 {
                     Program.conf = temp;
                     SetupScreen();
@@ -2214,14 +2132,14 @@ namespace ZSS
                 {
                     if (!string.IsNullOrEmpty(txtImageSoftwarePath.Text))
                     {
-                        Software temp = new Software();
-                        temp.Name = txtImageSoftwareName.Text;
-                        temp.Path = txtImageSoftwarePath.Text;
+                        Software temp = new Software
+                        {
+                            Name = txtImageSoftwareName.Text,
+                            Path = txtImageSoftwarePath.Text
+                        };
                         Program.conf.ImageSoftwareList.Add(temp);
                         lbImageSoftware.Items.Add(temp.Name);
                         lbImageSoftware.SelectedItem = temp.Name;
-
-                        //rewriteISRightClickMenu();
                     }
                 }
             }
@@ -2256,7 +2174,7 @@ namespace ZSS
                     lbImageSoftware.SelectedIndex = wasActiveSetLower;
                 }
 
-                RewriteISRightClickMenu();
+                RewriteIsRightClickMenu();
             }
         }
 
@@ -2294,18 +2212,15 @@ namespace ZSS
             CheckToolStripMenuItem(tsmSendImageTo, item);
         }
 
-        private void CheckToolStripMenuItem(ToolStripMenuItem parent, ToolStripMenuItem item)
+        private void CheckToolStripMenuItem(ToolStripDropDownItem parent, ToolStripMenuItem item)
         {
             foreach (ToolStripMenuItem tsmi in parent.DropDownItems)
             {
-                if (tsmi == item)
-                    tsmi.Checked = true;
-                else
-                    tsmi.Checked = false;
+                tsmi.Checked = tsmi == item;
             }
 
             tsmCopytoClipboardMode.Enabled = cboScreenshotDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
-                                cboScreenshotDest.SelectedIndex != (int)ImageDestType.FILE;
+                cboScreenshotDest.SelectedIndex != (int)ImageDestType.FILE;
         }
 
         private void tsmDestClipboard_Click(object sender, EventArgs e)
@@ -2340,14 +2255,14 @@ namespace ZSS
 
         private void SetActiveImageSoftware()
         {
-            int sel = 0;
+            int sel;
 
             if ((sel = lbImageSoftware.SelectedIndex) > 0)
             {
                 Program.conf.ImageSoftwareEnabled = true;
 
                 Program.conf.ImageSoftwareActive = Program.conf.ImageSoftwareList[sel - 1];
-                RewriteISRightClickMenu();
+                RewriteIsRightClickMenu();
                 //checkCorrectISRightClickMenu(Program.conf.ImageSoftwareActive.Name);
                 //cbRunImageSoftware.Checked = true;
             }
@@ -2365,7 +2280,7 @@ namespace ZSS
                 txtImageSoftwarePath.Text = "";
 
                 Program.conf.ImageSoftwareEnabled = false;
-                RewriteISRightClickMenu();
+                RewriteIsRightClickMenu();
             }
             else if (b)
             {
@@ -2429,16 +2344,6 @@ namespace ZSS
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.ImageQuality = (int)nudImageQuality.Value;
-        }
-
-        private void txtSwitchAfter_TextChanged(object sender, EventArgs e)
-        {
-            int switchAfter = 350;
-
-            try { switchAfter = Int32.Parse(nudSwitchAfter.Text); }
-            catch { }
-
-            Program.conf.SwitchAfter = switchAfter;
         }
 
         private void cmbSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -2523,7 +2428,7 @@ namespace ZSS
 
             try
             {
-                string cbFilePath = null;
+                string cbFilePath;
 
                 if (Clipboard.ContainsImage())
                 {
@@ -2667,7 +2572,7 @@ namespace ZSS
             ImageHostingService iUploader = new ImageHostingService(txtUploader.Text);
             foreach (ListViewItem lvItem in lvArguments.Items)
             {
-                iUploader.Arguments.Add(new string[] { lvItem.Text, lvItem.SubItems[1].Text });
+                iUploader.Arguments.Add(new[] { lvItem.Text, lvItem.SubItems[1].Text });
             }
             iUploader.UploadURL = txtUploadURL.Text;
             iUploader.FileForm = txtFileForm.Text;
@@ -2802,13 +2707,17 @@ namespace ZSS
         {
             if (Program.conf.ImageUploadersList != null)
             {
-                SaveFileDialog dlg = new SaveFileDialog();
-                dlg.FileName = string.Format("{0}-{1}-uploaders", Application.ProductName, DateTime.Now.ToString("yyyyMMdd"));
-                dlg.Filter = Program.FILTER_IMAGE_HOSTING_SERVICES;
+                SaveFileDialog dlg = new SaveFileDialog
+                {
+                    FileName = string.Format("{0}-{1}-uploaders", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
+                    Filter = Program.FILTER_IMAGE_HOSTING_SERVICES
+                };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    ImageHostingServiceManager ihsm = new ImageHostingServiceManager();
-                    ihsm.ImageHostingServices = Program.conf.ImageUploadersList;
+                    ImageHostingServiceManager ihsm = new ImageHostingServiceManager
+                    {
+                        ImageHostingServices = Program.conf.ImageUploadersList
+                    };
                     ihsm.Save(dlg.FileName);
                 }
             }
@@ -2816,8 +2725,7 @@ namespace ZSS
 
         private void ImportImageUploaders(string fp)
         {
-            ImageHostingServiceManager tmp = new ImageHostingServiceManager();
-            tmp = ImageHostingServiceManager.Read(fp);
+            ImageHostingServiceManager tmp = ImageHostingServiceManager.Read(fp);
             if (tmp != null)
             {
                 lbUploader.Items.Clear();
@@ -2835,8 +2743,7 @@ namespace ZSS
             if (Program.conf.ImageUploadersList == null)
                 Program.conf.ImageUploadersList = new List<ImageHostingService>();
 
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = Program.FILTER_IMAGE_HOSTING_SERVICES;
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_IMAGE_HOSTING_SERVICES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 ImportImageUploaders(dlg.FileName);
@@ -2873,7 +2780,7 @@ namespace ZSS
                     Process.Start(path);
                     return true;
                 }
-                else if (sType == ImageFileManager.SourceType.STRING)
+                if (sType == ImageFileManager.SourceType.STRING)
                 {
                     Clipboard.SetText(path);
                     return true;
@@ -2961,7 +2868,7 @@ namespace ZSS
                     break;
             }
 
-            lblHotkeyStatus.Text = dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey set to: " + mHKSetcombo.ToString() + ". Press enter when done setting all desired Hotkeys.";
+            lblHotkeyStatus.Text = dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey set to: " + mHKSetcombo + ". Press enter when done setting all desired Hotkeys.";
         }
 
         private void dgvHotkeys_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -3085,7 +2992,9 @@ namespace ZSS
         private void StartGTActiveHelp(string help)
         {
             bwActiveHelp.DoWork += new DoWorkEventHandler(bwActiveHelp_DoWork);
-            ZSS.GoogleTranslate.TranslationInfo ti = new GoogleTranslate.TranslationInfo(help, new GoogleTranslate.GTLanguage("en", "English"), mGTranslator.LanguageOptions.TargetLangList[cbHelpToLanguage.SelectedIndex]);
+            GoogleTranslate.TranslationInfo ti =
+                new GoogleTranslate.TranslationInfo(help, new GoogleTranslate.GTLanguage("en", "English"),
+                    mGTranslator.LanguageOptions.TargetLangList[cbHelpToLanguage.SelectedIndex]);
             bwActiveHelp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwActiveHelp_RunWorkerCompleted);
             if (!bwActiveHelp.IsBusy)
             {
@@ -3097,23 +3006,23 @@ namespace ZSS
         {
             if (e.Result != null)
             {
-                ZSS.GoogleTranslate.ResultPacket grp = (ZSS.GoogleTranslate.ResultPacket)e.Result;
+                GoogleTranslate.ResultPacket grp = (GoogleTranslate.ResultPacket)e.Result;
                 txtActiveHelp.Text = grp.TranslatedText;
             }
         }
 
         private void bwActiveHelp_DoWork(object sender, DoWorkEventArgs e)
         {
-            ZSS.GoogleTranslate.TranslationInfo ti = (ZSS.GoogleTranslate.TranslationInfo)e.Argument;
-            ZSS.GoogleTranslate.ResultPacket grp = mGTranslator.TranslateText(ti);
+            GoogleTranslate.TranslationInfo ti = (GoogleTranslate.TranslationInfo)e.Argument;
+            GoogleTranslate.ResultPacket grp = mGTranslator.TranslateText(ti);
             e.Result = grp;
         }
 
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
         {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
-
-            ub.Icon = this.Icon;
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password",
+                string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" :
+                Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = this.Icon };
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
@@ -3271,13 +3180,13 @@ namespace ZSS
 
         public Image CropImage(Image img, Rectangle rect)
         {
-            Image Cropped = new Bitmap(rect.Width, rect.Height);
-            Graphics e = Graphics.FromImage(Cropped);
+            Image cropped = new Bitmap(rect.Width, rect.Height);
+            Graphics e = Graphics.FromImage(cropped);
             e.CompositingQuality = CompositingQuality.HighQuality;
             e.SmoothingMode = SmoothingMode.HighQuality;
             e.InterpolationMode = InterpolationMode.HighQualityBicubic;
             e.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
-            return Cropped;
+            return cropped;
         }
 
         private void txtActiveHelp_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -3285,7 +3194,7 @@ namespace ZSS
             Process.Start(e.LinkText);
         }
 
-        private void SetClipboardFromHistory(ZSS.ClipboardUriType type)
+        private void SetClipboardFromHistory(ClipboardUriType type)
         {
             if (lbHistory.SelectedIndex != -1)
             {
@@ -3374,7 +3283,7 @@ namespace ZSS
                     lblHistoryScreenshot.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
                 }
 
-                if (Program.conf.HistoryShowTooltips)
+                if (Program.conf.HistoryShowTooltips && hi != null)
                 {
                     ttApp.SetToolTip(lbHistory, hi.GetStatistics());
                     ttApp.SetToolTip(pbPreview, hi.GetStatistics());
@@ -3458,10 +3367,12 @@ namespace ZSS
             codesMenu.ShowImageMargin = false;
             for (int i = 0; i < NameParser.replacementVars.Length; i++)
             {
-                ToolStripMenuItem tsi = new ToolStripMenuItem();
-                tsi.Text = NameParser.replacementVars[i].PadRight(3, ' ') + " - " + NameParser.replacementDescriptions[i];
-                tsi.Tag = NameParser.replacementVars[i];
-                tsi.Click += new EventHandler(watermarkCodeMenu_Click);
+                ToolStripMenuItem tsi = new ToolStripMenuItem
+                {
+                    Text = NameParser.replacementVars[i].PadRight(3, ' ') + " - " + NameParser.replacementDescriptions[i],
+                    Tag = NameParser.replacementVars[i]
+                };
+                tsi.Click += watermarkCodeMenu_Click;
                 codesMenu.Items.Add(tsi);
             }
             CodesMenuCloseEvents();
@@ -3495,10 +3406,12 @@ namespace ZSS
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
         {
-            FontDialog fDialog = new FontDialog();
-            fDialog.ShowColor = true;
-            fDialog.Font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont);
-            fDialog.Color = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
+            FontDialog fDialog = new FontDialog
+            {
+                ShowColor = true,
+                Font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
+                Color = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor)
+            };
             if (fDialog.ShowDialog() == DialogResult.OK)
             {
                 Program.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
@@ -3517,7 +3430,7 @@ namespace ZSS
 
         public string FontToString(Font font, Color color)
         {
-            return "Name: " + font.Name + " - Size: " + font.Size.ToString() + " - Style: " + font.Style.ToString();
+            return "Name: " + font.Name + " - Size: " + font.Size + " - Style: " + font.Style;
             //+ " - Color: " + (color.IsNamedColor ? color.Name : "(R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
         }
 
@@ -3624,7 +3537,7 @@ namespace ZSS
             TestWatermark();
         }
 
-        private void SelectColor(PictureBox pb, ref string setting)
+        private void SelectColor(Control pb, ref string setting)
         {
             DialogColor dColor = new DialogColor(pb.BackColor);
             if (dColor.ShowDialog() == DialogResult.OK)
@@ -3826,11 +3739,11 @@ namespace ZSS
                 cbFromLanguage.Items.Clear();
                 cbToLanguage.Items.Clear();
                 cbHelpToLanguage.Items.Clear();
-                foreach (ZSS.GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.SourceLangList)
+                foreach (GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.SourceLangList)
                 {
                     cbFromLanguage.Items.Add(gtLang.Name);
                 }
-                foreach (ZSS.GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.TargetLangList)
+                foreach (GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.TargetLangList)
                 {
                     cbToLanguage.Items.Add(gtLang.Name);
                     cbHelpToLanguage.Items.Add(gtLang.Name);
@@ -4000,7 +3913,7 @@ namespace ZSS
             gbFTPAccount.Text = string.Format("Settings: {0} - {1}", acc.Name, acc.Server);
         }
 
-        private void FTPSetup(List<FTPAccount> accs)
+        private void FTPSetup(IEnumerable<FTPAccount> accs)
         {
             if (accs != null)
             {
@@ -4018,14 +3931,18 @@ namespace ZSS
         {
             TrimFTPControls();
 
-            FTPAccount acc = new FTPAccount();
-            acc.Name = txtFTPName.Text;
-            acc.Server = txtFTPServer.Text;
-            acc.Port = (int)nudFTPServerPort.Value;
-            acc.Username = txtFTPUsername.Text;
-            acc.Password = txtFTPPassword.Text;
+            FTPAccount acc = new FTPAccount
+            {
+                Name = txtFTPName.Text,
+                Server = txtFTPServer.Text,
+                Port = (int)nudFTPServerPort.Value,
+                Username = txtFTPUsername.Text,
+                Password = txtFTPPassword.Text
+            };
             if (!txtFTPPath.Text.StartsWith("/"))
+            {
                 txtFTPPath.Text = string.Concat("/", txtFTPPath.Text);
+            }
             acc.Path = txtFTPPath.Text;
             acc.HttpPath = txtFTPHTTPPath.Text;
             acc.IsActive = rbFTPActive.Checked;
@@ -4061,8 +3978,7 @@ namespace ZSS
                 }
                 else
                 {
-                    Program.conf.FTPAccountList = new List<FTPAccount>();
-                    Program.conf.FTPAccountList.Add(acc);
+                    Program.conf.FTPAccountList = new List<FTPAccount> { acc };
                 }
 
                 lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = FTPAdd(acc);
@@ -4072,42 +3988,6 @@ namespace ZSS
             else
             {
                 txtFTPStatus.Text = "Not Updated.";
-            }
-        }
-
-        private void btnCloneAccount_Click(object sender, EventArgs e)
-        {
-            FTPAccount tmp = new FTPAccount();
-
-            int src = lbFTPAccounts.SelectedIndex;
-
-            if (Program.conf.FTPAccountList != null && Program.conf.FTPAccountList.Count > 0 && lbFTPAccounts.SelectedIndices.Count == 1 && src != -1)
-            {
-                int len = Program.conf.FTPAccountList.Count;
-
-                tmp = Program.conf.FTPAccountList[src];
-
-                //mDoingNameUpdate = true;
-                lbFTPAccounts.Items.Add(tmp.Name);
-
-                txtFTPServer.Text = tmp.Server;
-                nudFTPServerPort.Text = tmp.Port.ToString();
-                txtFTPUsername.Text = tmp.Username;
-                txtFTPPassword.Text = tmp.Password;
-                txtFTPPath.Text = tmp.Path;
-                txtFTPHTTPPath.Text = tmp.HttpPath;
-                rbFTPActive.Checked = tmp.IsActive;
-                rbFTPPassive.Checked = !tmp.IsActive;
-
-                Program.conf.FTPAccountList.Add(tmp);
-
-                lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-                txtFTPName.Text = tmp.Name;
-                txtFTPName.Focus();
-                txtFTPName.SelectAll();
-                //mDoingNameUpdate = false;
-
-                //rewriteFTPRightClickMenu();
             }
         }
 
@@ -4131,7 +4011,7 @@ namespace ZSS
         private void lbFTPAccounts_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = lbFTPAccounts.SelectedIndex;
-            if (!mDoingNameUpdate && Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
+            if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
                 FTPLoad(Program.conf.FTPAccountList[sel]);
                 Program.conf.FTPselected = lbFTPAccounts.SelectedIndex;
@@ -4168,9 +4048,11 @@ namespace ZSS
         {
             if (Program.conf.FTPAccountList != null)
             {
-                SaveFileDialog dlg = new SaveFileDialog();
-                dlg.FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd"));
-                dlg.Filter = Program.FILTER_ACCOUNTS;
+                SaveFileDialog dlg = new SaveFileDialog
+                {
+                    FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
+                    Filter = Program.FILTER_ACCOUNTS
+                };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
@@ -4181,8 +4063,7 @@ namespace ZSS
 
         private void btnAccsImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = Program.FILTER_ACCOUNTS;
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_ACCOUNTS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
@@ -4199,13 +4080,15 @@ namespace ZSS
 
             try
             {
-                FTPAccount acc = new FTPAccount();
-                acc.Server = txtFTPServer.Text;
-                acc.Port = port;
-                acc.Username = txtFTPUsername.Text;
-                acc.Password = txtFTPPassword.Text;
-                acc.IsActive = rbFTPActive.Checked;
-                acc.Path = txtFTPPath.Text;
+                FTPAccount acc = new FTPAccount
+                {
+                    Server = txtFTPServer.Text,
+                    Port = port,
+                    Username = txtFTPUsername.Text,
+                    Password = txtFTPPassword.Text,
+                    IsActive = rbFTPActive.Checked,
+                    Path = txtFTPPath.Text
+                };
 
                 FTP ftp = new FTP(ref acc);
                 if (ftp.ListDirectory() != null)
@@ -4330,8 +4213,7 @@ namespace ZSS
         {
             btnCheckUpdate.Enabled = false;
             lblUpdateInfo.Text = "Checking for Updates...";
-            BackgroundWorker updateThread = new BackgroundWorker();
-            updateThread.WorkerReportsProgress = true;
+            BackgroundWorker updateThread = new BackgroundWorker { WorkerReportsProgress = true };
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
             updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
             updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
@@ -4351,14 +4233,14 @@ namespace ZSS
         private void updateThread_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = (BackgroundWorker)sender;
-            NewVersionWindowOptions nvwo = new NewVersionWindowOptions();
-            nvwo.MyIcon = this.Icon;
-            nvwo.MyImage = Resources.main;
+            NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = this.Icon, MyImage = Resources.main };
 
-            UpdateCheckerOptions uco = new UpdateCheckerOptions();
-            uco.CheckExperimental = Program.conf.CheckExperimental;
-            uco.UpdateCheckType = Program.conf.UpdateCheckType;
-            uco.MyNewVersionWindowOptions = nvwo;
+            UpdateCheckerOptions uco = new UpdateCheckerOptions
+            {
+                CheckExperimental = Program.conf.CheckExperimental,
+                UpdateCheckType = Program.conf.UpdateCheckType,
+                MyNewVersionWindowOptions = nvwo
+            };
 
             UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
             worker.ReportProgress(1, updateChecker.StartCheckUpdate());
@@ -4439,8 +4321,7 @@ namespace ZSS
             if (!bQuickActionsOpened)
             {
                 bQuickActionsOpened = true;
-                ToolbarWindow quickActions = new ToolbarWindow();
-                quickActions.Icon = Properties.Resources.zss_main;
+                ToolbarWindow quickActions = new ToolbarWindow { Icon = Resources.zss_main };
                 quickActions.EventJob += new JobsEventHandler(EventJobs);
                 quickActions.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
                 quickActions.Show();
@@ -4668,8 +4549,10 @@ namespace ZSS
 
         private void btwWatermarkBrowseImage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fd = new OpenFileDialog();
-            fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            OpenFileDialog fd = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
             if (fd.ShowDialog() == DialogResult.OK)
             {
                 txtWatermarkImageLocation.Text = fd.FileName;
@@ -4745,8 +4628,7 @@ namespace ZSS
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldRootDir = txtRootFolder.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.ShowNewFolderButton = true;
+            FolderBrowserDialog dlg = new FolderBrowserDialog { ShowNewFolderButton = true };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Program.SetRootFolder(dlg.SelectedPath);
