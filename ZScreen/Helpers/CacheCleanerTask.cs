@@ -21,9 +21,7 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using ZSS.ImageUploader;
 
@@ -38,7 +36,7 @@ namespace ZSS.Tasks
     class CacheCleanerTask
     {
         private string mCacheDir = "";
-        private decimal mCacheSize = 0;
+        private decimal mCacheSize;
 
         /// <summary>
         /// 
@@ -49,13 +47,10 @@ namespace ZSS.Tasks
         {
             this.mCacheDir = loc;
             this.mCacheSize = size;
-            this.fCleanCache();
         }
 
-        private bool fCleanCache()
+        public void CleanCache()
         {
-            bool success = true;
-
             if (Directory.Exists(mCacheDir))
             {
                 List<ImageFile> files = new List<ImageFile>();
@@ -91,7 +86,7 @@ namespace ZSS.Tasks
                     dirSize += f.Size;
                 }
 
-                FileSystem.appendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString()));
+                FileSystem.appendDebug(string.Format("Cache Size (before): {0} MiB", dirSize));
 
                 while (dirSize > mCacheSize)
                 {
@@ -105,11 +100,9 @@ namespace ZSS.Tasks
                     }
                 }
 
-                FileSystem.appendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString()));
+                FileSystem.appendDebug(string.Format("Cache Size (after): {0} MiB", dirSize));
 
             }
-
-            return success;
         }
     }
 }

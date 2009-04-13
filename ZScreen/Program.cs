@@ -22,8 +22,6 @@
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
@@ -35,8 +33,8 @@ namespace ZSS
 {
     static class Program
     {
-        private static readonly string LocalAppDataFolder = System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        private static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(
+            Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
 
         private static readonly string XMLFileName = "Settings.xml";
         private static readonly string HistoryFileName = "History.xml";
@@ -73,7 +71,7 @@ namespace ZSS
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
             Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
-        public static bool MultipleInstance = false;
+        public static bool MultipleInstance;
         private static string mProductName = Application.ProductName;
 
         public static void SetRootFolder(string dp)
@@ -94,7 +92,7 @@ namespace ZSS
             TextDir = Path.Combine(RootAppFolder, "Text");
             TempDir = Path.Combine(RootAppFolder, "Temp");
 
-            AppDirs = new string[] { CacheDir, FilesDir, ImagesDir, SettingsDir, TempDir, TextDir };
+            AppDirs = new[] { CacheDir, FilesDir, ImagesDir, SettingsDir, TempDir, TextDir };
 
             foreach (string dp in AppDirs)
             {
@@ -126,7 +124,7 @@ namespace ZSS
                     }
                     return XMLPortableFile;                               // Portable
                 }
-                else if (File.Exists(OldXMLFilePath))
+                if (File.Exists(OldXMLFilePath))
                 {
                     if (!File.Exists(DefaultXMLFilePath))
                     {
@@ -134,10 +132,7 @@ namespace ZSS
                     }
                     return DefaultXMLFilePath;                            // v1.x
                 }
-                else
-                {
-                    return DefaultXMLFilePath;                            // v2.x
-                }
+                return DefaultXMLFilePath;                                // v2.x
             }
         }
 
@@ -149,7 +144,7 @@ namespace ZSS
             }
         }
 
-        public static XMLSettings conf = null;
+        public static XMLSettings conf;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
@@ -161,7 +156,7 @@ namespace ZSS
 
         private static ZScreen ZScreenWindow;
 
-        private static Mutex mAppMutex = null;
+        public static Mutex mAppMutex;
 
         /// <summary>
         /// The main entry point for the application.
@@ -238,17 +233,17 @@ namespace ZSS
 
             User32.m_Proc = ZScreenWindow.ScreenshotUsingHotkeys;
 
-            ZScreenWindow.m_hID = User32.setHook();
+            ZScreenWindow.KeyboardHookHandle = User32.setHook();
 
             Application.Run(ZScreenWindow);
 
-            User32.UnhookWindowsHookEx(ZScreenWindow.m_hID);
+            User32.UnhookWindowsHookEx(ZScreenWindow.KeyboardHookHandle);
         }
 
         public static void ConfigureDirs()
         {
             // Settings         
-            if (Program.conf.SettingsDir != SettingsDir)
+            if (conf.SettingsDir != SettingsDir)
             {
                 conf.SettingsDir = SettingsDir;
             }
@@ -263,29 +258,25 @@ namespace ZSS
                 conf.TextDir = TextDir;
             }
             // Cache
-            if (Program.conf.CacheDir != CacheDir)
+            if (conf.CacheDir != CacheDir)
             {
                 conf.CacheDir = CacheDir;
             }
             // Temp
-            if (Program.conf.TempDir != TempDir)
+            if (conf.TempDir != TempDir)
             {
                 conf.TempDir = TempDir;
             }
         }
 
-        public static bool CheckFTPAccounts(ref ZSS.Tasks.MainAppTask task)
+        public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
         {
-            if (Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPselected != -1 &&
-                Program.conf.FTPAccountList.Count > Program.conf.FTPselected)
+            if (conf.FTPAccountList.Count > 0 && conf.FTPselected != -1 && conf.FTPAccountList.Count > conf.FTPselected)
             {
                 return true;
             }
-            else
-            {
-                task.Errors.Add("An FTP account does not exist or not selected properly.");
-                return false;
-            }
+            task.Errors.Add("An FTP account does not exist or not selected properly.");
+            return false;
         }
     }
 }
