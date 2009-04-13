@@ -335,7 +335,7 @@ namespace ZSS
 
         private void sBwViewFile(string file)
         {
-            string localfile = FileSystem.getTempFilePath(file);
+            string localfile = FileSystem.GetTempFilePath(file);
             if (!System.IO.File.Exists(localfile))
             {
                 bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.FETCHING_FILE, file);
@@ -357,7 +357,7 @@ namespace ZSS
                 }
                 catch (System.Exception ex)
                 {
-                    FileSystem.appendDebug(ex.Message);
+                    FileSystem.AppendDebug(ex.Message);
                     // bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.VIEWING_FILE, "");
                 }
             }
@@ -439,7 +439,7 @@ namespace ZSS
 
                 case RemoteViewerTask.ProgressType.VIEWING_FILE:
                     fp = (string)e.UserState;
-                    FileSystem.appendDebug(string.Format("Viewing file: {0}", fp));
+                    FileSystem.AppendDebug(string.Format("Viewing file: {0}", fp));
                     pbViewer.ImageLocation = fp;
                     break;
 

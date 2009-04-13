@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZSS
+﻿namespace ZSS
 {
     public delegate void StringEventHandler(object sender, string str);
     public delegate void StringsEventHandler(object sender, string[] strings);

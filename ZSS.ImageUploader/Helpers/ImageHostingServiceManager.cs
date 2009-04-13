@@ -23,9 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using System.IO;
 
 namespace ZSS
@@ -70,7 +67,7 @@ namespace ZSS
                         ImageHostingServiceManager set = xs.Deserialize(fs) as ImageHostingServiceManager;
                         fs.Close();
                         return set;
-                    }                    
+                    }
                 }
                 catch
                 {

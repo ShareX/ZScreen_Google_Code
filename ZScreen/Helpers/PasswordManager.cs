@@ -22,11 +22,7 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography;
-using System.Xml;
 using System.IO;
 
 namespace ZSS.Helpers
@@ -105,12 +101,14 @@ namespace ZSS.Helpers
             // byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Passphrase));
 
             // Step 2. Create a new TripleDESCryptoServiceProvider object 
-            TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
+            TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider
+            {
+                Key = buffer,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
 
             // Step 3. Setup the decoder 
-            TDESAlgorithm.Key = buffer;
-            TDESAlgorithm.Mode = CipherMode.ECB;
-            TDESAlgorithm.Padding = PaddingMode.PKCS7;
 
             // Step 4. Convert the input string to a byte[] 
             byte[] DataToDecrypt = Convert.FromBase64String(Message);
@@ -131,7 +129,6 @@ namespace ZSS.Helpers
 
             // Step 6. Return the decrypted string in UTF8 format 
             return UTF8.GetString(Results);
-
         }
     }
 }

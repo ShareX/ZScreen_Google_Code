@@ -23,8 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.XPath;
 using System.IO;
 using System.Xml;
 
@@ -32,8 +30,6 @@ namespace ZSS
 {
     class FTPAccountReader
     {
-        private string mBaseDir = string.Empty;
-
         public List<FTPAccount> Accounts { get; private set; }
 
         /// <summary>
@@ -48,15 +44,13 @@ namespace ZSS
 
         private void readConfigFiles(string dir)
         {
-
             this.Accounts = new List<FTPAccount>();
 
             string[] configFiles = Directory.GetFiles(dir, "*.config", SearchOption.AllDirectories);
-            FTPAccount acc = null;
+            FTPAccount acc;
             int accIndex = -1;
             foreach (string fileLocation in configFiles)
             {
-
                 XmlTextReader xtr = new XmlTextReader(fileLocation);
                 while (xtr.Read())
                 {
@@ -128,9 +122,7 @@ namespace ZSS
                                         int port = 21;
                                         Int32.TryParse(xtr.Value, out port);
                                         Accounts[accIndex].Port = port;
-
                                     }
-
 
                                     if (attrb.Equals("httppath"))
                                     {
@@ -140,31 +132,23 @@ namespace ZSS
                                         }
                                         // Console.WriteLine("value: " + xtr.Value);
                                         string path = xtr.Value;
-                                        if (!path.ToLower().Equals("true") && 
+                                        if (!path.ToLower().Equals("true") &&
                                             !path.ToLower().Equals("false"))
                                         {
                                             Accounts[accIndex].HttpPath = xtr.Value;
                                         }
                                     }
-
                                 } // if first node is not empty
-
                             } // if first node as attributes
-
                         } // first node not empty
-
                     } // if node is an element
-
                 } // reading xml
-
             } // for each config fileName
-
         }
-
 
         public FTPAccountReader()
         {
-            string dir = Path.GetDirectoryName(Path.GetDirectoryName(FileSystem.getConfigFilePath()));
+            string dir = Path.GetDirectoryName(Path.GetDirectoryName(FileSystem.GetConfigFilePath()));
             // Console.WriteLine(Path.GetDirectoryName(dir));
             readConfigFiles(dir);
             // validate ftpUpload accounts
@@ -183,8 +167,6 @@ namespace ZSS
                     this.Accounts.RemoveAt(i);
                 }
             }
-
         }
-
     }
 }

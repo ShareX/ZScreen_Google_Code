@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.Net;
 
 namespace ZSS.UpdateCheckerLib
@@ -24,7 +22,6 @@ namespace ZSS.UpdateCheckerLib
                 this.pbApp.Image = this.Options.MyImage;
 
             this.lblVer.Text = this.Options.Question;
-            StringBuilder sb = new StringBuilder();
             if (!string.IsNullOrEmpty(this.Options.VersionHistory) &&
                  this.Options.VersionHistory.StartsWith("http://" + this.Options.ProjectName + ".googlecode.com/"))
             {

@@ -21,7 +21,7 @@ namespace ZSS.TextUploader
 
             string post = arguments.Aggregate("?", (current, arg) => current + arg.Key + "=" + arg.Value + "&");
             post = post.Substring(0, post.Length - 1);
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(post);
+            byte[] data = Encoding.ASCII.GetBytes(post);
 
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -67,6 +67,5 @@ namespace ZSS.TextUploader
             }
             return sb.ToString();
         }
-
     }
 }

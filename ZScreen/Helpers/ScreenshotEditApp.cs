@@ -21,9 +21,6 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 
 namespace ZSS.Screenshots
@@ -47,19 +44,13 @@ namespace ZSS.Screenshots
         /// <summary>
         /// Function to open a fileName using the Screenshot application
         /// </summary>
-        /// <param name="fullFilePath">Screenshot fileName to open</param>
         /// <returns></returns>
-        public bool openFile(string filePath)
+        public void OpenFile(string filePath)
         {
-            bool success = false;
             Process p = new Process();
-            ProcessStartInfo psi = new ProcessStartInfo(this.Location);
-            psi.Arguments = filePath;
+            ProcessStartInfo psi = new ProcessStartInfo(this.Location) { Arguments = filePath };
             p.StartInfo = psi;
             p.Start();
-            success = true;
-            return success;
         }
     }
-
 }

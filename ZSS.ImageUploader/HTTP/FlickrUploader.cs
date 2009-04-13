@@ -21,9 +21,6 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using ZSS.ImageUploader.Helpers;
@@ -37,7 +34,7 @@ namespace ZSS.ImageUploader
             get { return "Flickr"; }
         }
 
-        public override ImageFileManager UploadImage(Image image, ImageFormat format)
+        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
         {
             return null;
         }

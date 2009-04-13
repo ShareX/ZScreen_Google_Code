@@ -22,13 +22,11 @@
 #endregion
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Threading;
 using System.Web;
 
 namespace ZSS.UpdateCheckerLib
@@ -42,8 +40,14 @@ namespace ZSS.UpdateCheckerLib
 
     public class UpdateChecker
     {
+        private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
+            FeaturedDownloads, DeprecatedDownloads, InstallerDownloads, ExecutableDownloads;
+
+        private UpdateCheckerOptions Options { get; set; }
         private VersionInfo MyVersionInfo;
+
         public string Statistics { get; private set; }
+
         public string ProjectName
         {
             get { return projectName; }
@@ -59,11 +63,6 @@ namespace ZSS.UpdateCheckerLib
                 ExecutableDownloads = "&q=label:Type-Executable";
             }
         }
-
-        private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
-            FeaturedDownloads, DeprecatedDownloads, InstallerDownloads, ExecutableDownloads;
-
-        private UpdateCheckerOptions Options { get; set; }
 
         public UpdateChecker(string projectName, UpdateCheckerOptions options)
         {
@@ -123,8 +122,10 @@ namespace ZSS.UpdateCheckerLib
                 this.Options.MyNewVersionWindowOptions.Question = string.Format("Do you want to download it now?\n\n{0}", this.Statistics);
                 this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
                 this.Options.MyNewVersionWindowOptions.ProjectName = ProjectName;
-                NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions);
-                ver.Text = string.Format("{0} {1} is available", Application.ProductName, MyVersionInfo.Version);
+                NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions)
+                {
+                    Text = string.Format("{0} {1} is available", Application.ProductName, MyVersionInfo.Version)
+                };
                 if (ver.ShowDialog() == DialogResult.Yes)
                 {
                     Process.Start(MyVersionInfo.Link);

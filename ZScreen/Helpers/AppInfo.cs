@@ -23,10 +23,7 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace McoreSystem
 {
@@ -35,7 +32,6 @@ namespace McoreSystem
     /// </summary>
     public class AppInfo
     {
-
         public string AppName { get; set; }
         private string mLocalVersion;
         private bool mShowFinalState;
@@ -53,7 +49,6 @@ namespace McoreSystem
             get { return mSoftwareState; }
 
         }
-
 
         #region "Enumerations"
         public enum VersionDepth
@@ -79,7 +74,6 @@ namespace McoreSystem
         }
         #endregion
 
-
         #region "Constructors"
         public AppInfo()
         {
@@ -93,7 +87,6 @@ namespace McoreSystem
             this.AppName = ProductName;
             this.mLocalVersion = Version;
         }
-
 
         public AppInfo(string ProductName, string Version, SoftwareCycle state)
             : this(ProductName, Version)
@@ -114,7 +107,6 @@ namespace McoreSystem
             string aModuleName = Process.GetCurrentProcess().MainModule.ModuleName;
             string aProcName = System.IO.Path.GetFileNameWithoutExtension(aModuleName);
             return Process.GetProcessesByName(aProcName).Length;
-
         }
 
         public string GetApplicationTitle(VersionDepth depth)
@@ -135,15 +127,9 @@ namespace McoreSystem
                 {
                     return GetApplicationTitle(AppName, mLocalVersion, depth, cycle);
                 }
-                else
-                {
-                    return GetApplicationTitle(AppName, mLocalVersion, depth);
-                }
+                return GetApplicationTitle(AppName, mLocalVersion, depth);
             }
-            else
-            {
-                throw new Exception("Product Name or Product Version is Empty.");
-            }
+            throw new Exception("Product Name or Product Version is Empty.");
         }
 
         public string GetApplicationTitle()
@@ -153,9 +139,8 @@ namespace McoreSystem
 
         public string GetApplicationTitleFull()
         {
-            return this.AppName + " " + mLocalVersion + " " + mSoftwareState.ToString();
+            return this.AppName + " " + mLocalVersion + " " + mSoftwareState;
         }
-
 
         public String GetApplicationTitle(string ProductName, string ProductVersion)
         {
@@ -182,23 +167,20 @@ namespace McoreSystem
 
         public String GetApplicationTitle(string productName, string ProductVersion, VersionDepth Depth, SoftwareCycle state)
         {
-            return GetApplicationTitle(productName, ProductVersion, Depth) + " " + state.ToString();
+            return GetApplicationTitle(productName, ProductVersion, Depth) + " " + state;
         }
 
         public String GetApplicationTitle(string ProductName, string ProductVersion, VersionDepth Depth)
         {
-
             return ProductName + " " + GetVersion(ProductVersion, Depth);
-
         }
-
 
         public string GetVersion(string ProductVersion, VersionDepth Depth)
         {
 
             string title = "";
             int i;
-            int d = System.Convert.ToInt32(Depth);
+            int d = Convert.ToInt32(Depth);
             String[] version = ProductVersion.Split('.');
 
             if (d > version.Length)
@@ -221,7 +203,7 @@ namespace McoreSystem
             return this.mLocalVersion;
         }
 
-        private string compareVersion(string version1, string version2)
+        private string CompareVersion(string version1, string version2)
         {
             string[] ver1 = version1.Split('.');
             string[] ver2 = version2.Split('.');
@@ -235,7 +217,7 @@ namespace McoreSystem
                 vers2[i] = Convert.ToInt32(ver2[i]);
             }
 
-            int r = compareVersion(vers1, vers2, 0);
+            int r = CompareVersion(vers1, vers2, 0);
             switch (r)
             {
                 case 1:
@@ -247,25 +229,17 @@ namespace McoreSystem
             }
         }
 
-        private int compareVersion(int[] ver1, int[] ver2, int index)
+        private int CompareVersion(int[] ver1, int[] ver2, int index)
         {
-
             if (ver1[index] > ver2[index])
                 return 1;
-            else if (ver1[index] < ver2[index])
+            if (ver1[index] < ver2[index])
                 return 2;
-            else
+            if (++index < 4)
             {
-                if (++index < 4)
-                {
-                    return compareVersion(ver1, ver2, index);
-                }
-                else
-                {
-                    return 0;
-                }
+                return CompareVersion(ver1, ver2, index);
             }
+            return 0;
         }
-
     }
 }

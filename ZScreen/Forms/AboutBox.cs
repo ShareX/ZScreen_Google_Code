@@ -22,8 +22,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
@@ -60,7 +58,7 @@ namespace ZSS.Forms
             sbDesc.AppendLine("Portions of Selected Window code from Greenshot: https://sourceforge.net/projects/greenshot");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");
-            sbDesc.AppendLine(System.Windows.Forms.Application.ExecutablePath);
+            sbDesc.AppendLine(Application.ExecutablePath);
             sbDesc.AppendLine();
             sbDesc.AppendLine("Settings file:");
             sbDesc.AppendLine(Program.DefaultXMLFilePath);
@@ -101,7 +99,7 @@ namespace ZSS.Forms
         {
             get
             {
-                return AssemblyVersion.ToString().Split('.')[3];
+                return AssemblyVersion.Split('.')[3];
             }
         }
         public string AssemblyDescription

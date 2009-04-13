@@ -22,8 +22,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -43,7 +41,7 @@ namespace ZSS.Colors
         protected MyColor mSetColor;
         protected bool mouseDown;
         protected Point lastPos;
-        protected Timer MouseMoveTimer;
+        protected Timer mouseMoveTimer;
 
         public MyColor SetColor
         {
@@ -106,9 +104,9 @@ namespace ZSS.Colors
             this.SetColor = Color.Red;
             this.DrawStyle = DrawStyle.Hue;
 
-            MouseMoveTimer = new Timer();
-            MouseMoveTimer.Interval = 10;
-            MouseMoveTimer.Tick += new EventHandler(MouseMoveTimer_Tick);
+            mouseMoveTimer = new Timer();
+            mouseMoveTimer.Interval = 10;
+            mouseMoveTimer.Tick += new EventHandler(MouseMoveTimer_Tick);
 
             this.ClientSizeChanged += new System.EventHandler(this.EventClientSizeChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EventMouseDown);
@@ -144,7 +142,7 @@ namespace ZSS.Colors
         {
             drawCrosshair = true;
             mouseDown = true;
-            MouseMoveTimer.Start();
+            mouseMoveTimer.Start();
             //EventMouseMove(this, e);
         }
 
@@ -159,7 +157,7 @@ namespace ZSS.Colors
         private void EventMouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
-            MouseMoveTimer.Stop();
+            mouseMoveTimer.Stop();
         }
 
         private void EventPaint(object sender, PaintEventArgs e)
@@ -172,7 +170,7 @@ namespace ZSS.Colors
         private void MouseMoveTimer_Tick(object sender, EventArgs e)
         {
             Point mousePosition = GetPoint(this.PointToClient(MousePosition));
-            if (mouseDown && (lastPos == null || lastPos != mousePosition))
+            if (mouseDown && lastPos != mousePosition)
             {
                 GetPointColor(mousePosition);
                 ThrowEvent();

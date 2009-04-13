@@ -27,8 +27,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using ZSS.Forms;
-using ZSS.Properties;
-using ZSS.Helpers;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Collections.Generic;
@@ -130,7 +128,7 @@ namespace ZSS
         //    private set { ;}
         //}
 
-        public static string getTextFromFile(string filePath)
+        public static string GetTextFromFile(string filePath)
         {
             string s = "";
             if (File.Exists(filePath))
@@ -143,30 +141,25 @@ namespace ZSS
             return s;
         }
 
-        public static string getConfigFilePath()
+        public static string GetConfigFilePath()
         {
-
-            System.Configuration.Configuration config =
-                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
             return config.FilePath;
-
         }
 
-        public static string getTempFilePath(string fileName)
+        public static string GetTempFilePath(string fileName)
         {
-
             string dir = Program.conf.CacheDir;
             if (string.IsNullOrEmpty(dir))
                 dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
             return Path.Combine(dir, fileName);
-
         }
 
-        public static void appendDebug(string msg)
+        public static void AppendDebug(string msg)
         {
-            mDebug.AppendLine(DateTime.Now.Ticks.ToString() + " " + msg);
+            mDebug.AppendLine(DateTime.Now.Ticks + " " + msg);
         }
 
         //public static void writeDebugFile()
@@ -231,7 +224,6 @@ namespace ZSS
         /// <summary>
         /// Gets a fully qualified unique File Path for a file name provided as a StringBuilder. Save Location is set by the GUI. 
         /// </summary>
-        /// <param name="file">File Name</param>
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
         {
@@ -258,10 +250,12 @@ namespace ZSS
         {
             if (Program.conf.ManualNaming)
             {
-                InputBox ib = new InputBox();
-                ib.Question = "Specify a Screenshot Name...";
-                ib.Answer = fName;
-                ib.Icon = Properties.Resources.zss_main;
+                InputBox ib = new InputBox
+                {
+                    Question = "Specify a Screenshot Name...",
+                    Answer = fName,
+                    Icon = Properties.Resources.zss_main
+                };
                 //Program.MyInputBox.BringToFront();
                 ib.ShowDialog();
                 if (ib.DialogResult == DialogResult.OK)
@@ -320,7 +314,6 @@ namespace ZSS
         /// <summary>
         /// If file exist then adding number end of file name. Example: directory/fileName(2).exe
         /// </summary>
-        /// <param name="fp">File path.</param>
         /// <returns></returns>
         public static string GetUniqueFilePath(string fileName)
         {
@@ -352,22 +345,19 @@ namespace ZSS
             {
                 return String.Format("{0:##.##} GiB", (decimal)bytes / 1073741824);
             }
-            else if (bytes >= 1048576)
+            if (bytes >= 1048576)
             {
                 return String.Format("{0:##.##} MiB", (decimal)bytes / 1048576);
             }
-            else if (bytes >= 1024)
+            if (bytes >= 1024)
             {
                 return String.Format("{0:##.##} KiB", (decimal)bytes / 1024);
             }
-            else if (bytes > 0 & bytes < 1024)
+            if (bytes > 0 & bytes < 1024)
             {
                 return String.Format("{0:##.##} Bytes", bytes);
             }
-            else
-            {
-                return "0 Bytes";
-            }
+            return "0 Bytes";
         }
 
         public static void BackupFTPSettings()

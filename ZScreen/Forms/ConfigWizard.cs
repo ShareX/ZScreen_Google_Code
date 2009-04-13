@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
@@ -34,8 +28,7 @@ namespace ZSS.Forms
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldDir = txtRootFolder.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.ShowNewFolderButton = true;
+            FolderBrowserDialog dlg = new FolderBrowserDialog { ShowNewFolderButton = true };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 txtRootFolder.Text = dlg.SelectedPath;

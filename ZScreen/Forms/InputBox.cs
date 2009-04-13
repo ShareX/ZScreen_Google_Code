@@ -23,16 +23,16 @@
 
 using System;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ZSS.Forms
 {
-    public partial class InputBox : System.Windows.Forms.Form
+    public partial class InputBox : Form
     {
         public string Question { get; set; }
         public string Answer { get; set; }
 
-        public InputBox(string q, string ans) : this()
+        public InputBox(string q, string ans)
+            : this()
         {
             this.Text = q;
             this.txtAns.Text = ans;

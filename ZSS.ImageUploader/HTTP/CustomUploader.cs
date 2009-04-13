@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Net;
@@ -47,7 +46,7 @@ namespace ZSS.ImageUploader
             get { return iHosting.Name; }
         }
 
-        public override ImageFileManager UploadImage(Image image, ImageFormat format)
+        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
         {
             MemoryStream imgStream = new MemoryStream();
             image.Save(imgStream, format);
@@ -98,16 +97,8 @@ namespace ZSS.ImageUploader
                 imgStream.Dispose();
             }
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles);
-            ifm.Source = imgSource;
+            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
-        }
-
-        string StripHTML(string inputString)
-        {
-            string HTML_TAG_PATTERN = "<.*?>";
-            return Regex.Replace
-              (inputString, HTML_TAG_PATTERN, string.Empty);
         }
     }
 }

@@ -21,9 +21,6 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ZSS.ImageUploader.Helpers;
 
 namespace ZSS.ImageUploader

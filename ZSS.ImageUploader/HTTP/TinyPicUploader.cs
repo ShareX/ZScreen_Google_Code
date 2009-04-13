@@ -30,7 +30,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Net;
@@ -49,7 +48,7 @@ namespace ZSS.ImageUploader
 
         private string URLAPI = "http://api.tinypic.com/api.php";
 
-       // public TinyPicUploader() { }
+        // public TinyPicUploader() { }
 
         public TinyPicUploader(string id, string key)
         {
@@ -59,7 +58,7 @@ namespace ZSS.ImageUploader
 
         public TinyPicUploader(string id, string key, UploadMode mode)
             : this(id, key)
-        {            
+        {
             this.UploadMode = mode;
         }
 
@@ -68,7 +67,7 @@ namespace ZSS.ImageUploader
             get { return "TinyPic"; }
         }
 
-        public override ImageFileManager UploadImage(Image image, ImageFormat format)
+        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
         {
             switch (this.UploadMode)
             {
@@ -100,31 +99,30 @@ namespace ZSS.ImageUploader
                 image.Dispose();
                 imgStream.Position = 0;
 
-                string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey, upk = "";
+                string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
 
                 Dictionary<string, string> args = new Dictionary<string, string>()
-            {                 
-                { "action", action },
-                { "tpid", tpid },
-                { "tpk", tpk },
-                { "sig", GetMD5(action + tpid + tpk) }
-            };
+                {                 
+                    { "action", action },
+                    { "tpid", tpid },
+                    { "tpk", tpk },
+                    { "sig", GetMD5(action + tpid + tpk) }
+                };
 
                 string response = GetResponse(URLAPI, args);
-                upk = GetXMLVal(response, "uploadkey");
+                string upk = GetXMLVal(response, "uploadkey");
                 if (string.IsNullOrEmpty(upk))
                 {
                     throw new Exception("Upload Key is Empty.");
                 }
 
-                if(String.IsNullOrEmpty(Shuk))
+                if (String.IsNullOrEmpty(Shuk))
                     action = "upload"; //anonymous upload
                 else
                     action = "userupload"; //user upload
 
                 ServicePointManager.Expect100Continue = false;
                 CookieContainer cookies = new CookieContainer();
-                WebClient webClient = new WebClient();
                 Dictionary<string, string> arguments = new Dictionary<string, string>() 
                 {                 
                     { "action", action },
@@ -136,7 +134,7 @@ namespace ZSS.ImageUploader
                     { "type", "image" }
                 };
 
-                if(!string.IsNullOrEmpty(Shuk))
+                if (!string.IsNullOrEmpty(Shuk))
                     arguments.Add("shuk", Shuk);
 
                 imgSource = PostImage(imgStream, URLAPI, "uploadfile", GetMimeType(format), arguments, cookies, "http://tinypic.com/");
@@ -158,8 +156,7 @@ namespace ZSS.ImageUploader
                 imgStream.Dispose();
             }
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles);
-            ifm.Source = imgSource;
+            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 
@@ -211,15 +208,12 @@ namespace ZSS.ImageUploader
             finally { ServicePointManager.Expect100Continue = oldValue; }
             imgStream.Dispose();
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles);
-            ifm.Source = imgSource;
+            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 
         public string UserAuth(string email, string password)
         {
-            string result = "";
-
             string action = "userauth", tpid = TinyPicID, tpk = TinyPicKey;
 
             Dictionary<string, string> args = new Dictionary<string, string>()
@@ -232,7 +226,7 @@ namespace ZSS.ImageUploader
             };
 
             string response = GetResponse(URLAPI, args);
-            result = GetXMLVal(response, "shuk");
+            string result = GetXMLVal(response, "shuk");
             if (string.IsNullOrEmpty(result))
             {
                 //throw new Exception("Userauth key is Empty.");

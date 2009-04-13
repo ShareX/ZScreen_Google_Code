@@ -32,10 +32,9 @@ namespace ZSS.ImageUploader
 {
     public sealed class FTPUploader : IUploader
     {
-        private FTPAccount mFTPAccount = null;
+        private FTPAccount mFTPAccount;
         private List<string> Errors { get; set; }
         public string Name { get; private set; }
-        private FTPUploader() { }
 
         public FTPUploader(FTPAccount acc)
         {
@@ -107,8 +106,7 @@ namespace ZSS.ImageUploader
             //    //MessageBox.Show(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
             //}
 
-            ImageFileManager ifm = new ImageFileManager(ifl);
-            ifm.LocalFilePath = localFilePath;
+            ImageFileManager ifm = new ImageFileManager(ifl) { LocalFilePath = localFilePath };
             return ifm;
         }
 
@@ -131,7 +129,7 @@ namespace ZSS.ImageUploader
         public Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
         {
             Bitmap result = new Bitmap(nWidth, nHeight);
-            using (Graphics g = Graphics.FromImage((Image)result))
+            using (Graphics g = Graphics.FromImage(result))
                 g.DrawImage(b, 0, 0, nWidth, nHeight);
             return result;
         }
@@ -144,7 +142,6 @@ namespace ZSS.ImageUploader
                 sb.AppendLine(err);
             }
             return sb.ToString();
-
         }
     }
 }
