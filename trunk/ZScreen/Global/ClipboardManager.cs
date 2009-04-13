@@ -23,9 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using ZSS.ImageUploader;
 using ZSS.ImageUploader.Helpers;
 using System.Windows.Forms;
 
@@ -84,7 +82,6 @@ namespace ZSS
 
         private static string GetLastURL()
         {
-
             string url = "";
             if (ScreenshotsHistory.Count > 0)
             {
@@ -100,7 +97,6 @@ namespace ZSS
         /// <summary>
         /// Returns a string representation of URLs per Screenshot List
         /// </summary>
-        /// <param name="ifl"></param>
         /// <returns></returns>
         private static List<string> GetClipboardText(ImageFileManager ifm)
         {

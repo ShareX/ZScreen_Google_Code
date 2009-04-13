@@ -23,11 +23,10 @@
 
 using System;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ZSS.Forms
 {
-    public partial class UserPassBox : System.Windows.Forms.Form
+    public partial class UserPassBox : Form
     {
         public UserPassBox(string q, string userName, string password)
         {
@@ -50,7 +49,6 @@ namespace ZSS.Forms
                 this.Hide();
                 this.Close();
             }
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -68,7 +66,5 @@ namespace ZSS.Forms
             txtUserName.Focus();
             txtUserName.SelectionLength = txtUserName.Text.Length;
         }
-
-
     }
 }

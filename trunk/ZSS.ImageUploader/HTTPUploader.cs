@@ -37,7 +37,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using ZSS.ImageUploader.Helpers;
-using System.ComponentModel;
 
 namespace ZSS.ImageUploader
 {
@@ -46,11 +45,11 @@ namespace ZSS.ImageUploader
         /// <summary>
         /// List of Errors logged by ImageUploader
         /// </summary>
-        public List<string> Errors { get; protected set; }
+        public List<string> Errors { get; private set; }
         /// <summary>
         /// API or Anonymous. Default: Anonymous
         /// </summary>
-        public UploadMode UploadMode { get; set; }
+        protected UploadMode UploadMode { get; set; }
 
         private const string mEndStr = "\r\n";
 
@@ -59,9 +58,9 @@ namespace ZSS.ImageUploader
         /// </summary>
         public abstract string Name { get; }
         private string mFileName = "image";
-        public bool RandomizeFileName { get; set; }
+        private bool RandomizeFileName { get; set; }
 
-        public HTTPUploader()
+        protected HTTPUploader()
         {
             this.Errors = new List<string>();
             this.UploadMode = UploadMode.ANONYMOUS;
@@ -74,9 +73,9 @@ namespace ZSS.ImageUploader
             return "image/unknown";
         }
 
-        public abstract ImageFileManager UploadImage(Image image, ImageFormat format);
+        protected abstract ImageFileManager UploadImage(Image image, ImageFormat format);
 
-        public ImageFileManager UploadImage(Image image)
+        private ImageFileManager UploadImage(Image image)
         {
             ImageFileManager imageFiles = UploadImage(image, image.RawFormat);
             return imageFiles;
@@ -93,14 +92,14 @@ namespace ZSS.ImageUploader
             return ifm;
         }
 
-        public string GetXMLVal(string input, string tag)
+        protected string GetXMLVal(string input, string tag)
         {
             return Regex.Match(input, String.Format("(?<={0}>).+(?=</{0})", tag)).Value;
         }
 
         protected string GetResponse(string url, IDictionary<string, string> arguments)
         {
-            string postData = arguments.Aggregate("?", (current, arg) => current + arg.Key + "=" + arg.Value + "&"); ;
+            string postData = arguments.Aggregate("?", (current, arg) => current + arg.Key + "=" + arg.Value + "&");
             string data = url + postData.Substring(0, postData.Length - 1);
             byte[] bytes = Encoding.ASCII.GetBytes(data);
             Uri postUri = new Uri(data);
@@ -132,7 +131,7 @@ namespace ZSS.ImageUploader
 
             string post = arguments.Aggregate("?", (current, arg) => current + arg.Key + "=" + arg.Value + "&");
             post = post.Substring(0, post.Length - 1);
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(post);
+            byte[] data = Encoding.ASCII.GetBytes(post);
 
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -159,7 +158,7 @@ namespace ZSS.ImageUploader
             return "";
         }
 
-        public string GetMD5(string text)
+        protected string GetMD5(string text)
         {
             MD5CryptoServiceProvider crypto = new MD5CryptoServiceProvider();
             byte[] bytes = Encoding.UTF8.GetBytes(text);
@@ -199,14 +198,12 @@ namespace ZSS.ImageUploader
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
                 byte[] buffer = new byte[((int)Math.Min(4096, imageStream.Length)) - 1];
-                int bytesRead = 0;
-                int bytesReadTotal = 0;
+                int bytesRead;
                 while (true)
                 {
                     bytesRead = imageStream.Read(buffer, 0, buffer.Length);
                     if (bytesRead == 0) break;
                     requestStream.Write(buffer, 0, bytesRead);
-                    bytesReadTotal += bytesRead;
                 }
                 requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
                 WebResponse response = request.GetResponse();

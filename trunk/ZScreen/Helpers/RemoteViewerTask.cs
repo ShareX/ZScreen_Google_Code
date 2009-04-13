@@ -21,10 +21,6 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ZSS
 {
     public class RemoteViewerTask
@@ -53,6 +49,5 @@ namespace ZSS
 
         public string RemoteFile { get; set; }
         public Jobs Job { get; private set; }
-        
     }
 }

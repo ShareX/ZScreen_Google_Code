@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ZSS.Forms
@@ -13,10 +8,10 @@ namespace ZSS.Forms
     {
         public ShowScreenshot()
         {
-            this.BackColor = Color.Black;         
+            this.BackColor = Color.Black;
             this.Cursor = Cursors.Hand;
             this.DoubleBuffered = true;
-            this.FormBorderStyle = FormBorderStyle.None;            
+            this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
             this.Bounds = MyGraphics.GetScreenBounds();
         }

@@ -30,7 +30,7 @@ using System.Web;
 
 namespace ZSS
 {
-    public class GoogleTranslate : ZSS.TextUploader.HTTPTextUploader
+    public class GoogleTranslate : TextUploader.HTTPTextUploader
     {
         public Options LanguageOptions { get; private set; }
 
@@ -42,20 +42,19 @@ namespace ZSS
         /// <summary>Gets "from country" and "to country" lists from google.</summary>
         /// <returns>2 country list, first for "from country list" second for "to country list".</returns>
         public Options GetLanguageOptions()
-        { 
+        {
             Options gtLangOp = new Options();
             // The remote name could not be resolved: 'translate.google.com'
             try
             {
                 WebClient webClient = new WebClient();
                 string source = webClient.DownloadString("http://translate.google.com/translate_t");
-                string[] selectName = new string[] { "sl", "tl" };
+                string[] selectName = new[] { "sl", "tl" };
 
                 for (int i = 0; i < selectName.Length; i++)
                 {
                     string countrySource = Regex.Match(source, "(?<=<select name=" + selectName[i] + ").+?(?=</select>)").Value;
                     MatchCollection countryResults = Regex.Matches(countrySource, "(?<=value=\")(.+?)\">(.+?)(?=</option)");
-                    List<GTLanguage> countryList = new List<GTLanguage>();
                     foreach (Match countryResult in countryResults)
                     {
                         GTLanguage lang = new GTLanguage(countryResult.Groups[1].Value, countryResult.Groups[2].Value);
@@ -79,7 +78,7 @@ namespace ZSS
         }
 
         /// <summary>Translate text from google translate.</summary>
-        /// <param name="TranslationInfo"></param>
+        /// <param name="translateInfo"></param>
         /// <returns>First index: Translated text, Second index: Languages</returns>
         public ResultPacket TranslateText(TranslationInfo translateInfo)
         {
@@ -87,9 +86,9 @@ namespace ZSS
         }
 
         /// <summary>Translate text from google translate.</summary>
-        /// <param name="translateText">Text for translate.</param>
-        /// <param name="fromLanguage"></param>
-        /// <param name="toLanguage"></param>
+        /// <param name="sourceText">Text for translate.</param>
+        /// <param name="sourceLanguage"></param>
+        /// <param name="targetLanguage"></param>
         /// <returns>First index: Translated text, Second index: Languages</returns>
         public ResultPacket TranslateText(string sourceText, GTLanguage sourceLanguage, GTLanguage targetLanguage)
         {
@@ -101,8 +100,7 @@ namespace ZSS
                     sourceLanguage.Value = "auto";
                 }
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
-                WebClient webClient = new WebClient();
-                webClient.Encoding = Encoding.UTF8;
+                WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
                 string wc = webClient.DownloadString(url);
                 result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=:</span> ).+?(?=</td>)").NextMatch().Value);
                 result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value);
@@ -127,7 +125,7 @@ namespace ZSS
             string result = "";
             int foundWords = 0;
 
-            string[] dictionary = new string[] {"", "adverb", "adjective", "conjunction","interjection", "noun", "pronoun", "preposition", "verb"};
+            string[] dictionary = new[] { "", "adverb", "adjective", "conjunction", "interjection", "noun", "pronoun", "preposition", "verb" };
 
             for (int x = 0; x < dictionary.Length; x++)
             {
@@ -145,7 +143,7 @@ namespace ZSS
                     MatchCollection matchesDictionary = Regex.Matches(matchDictionary, "(?<=<li>).+?(?=</li>)");
                     for (int i = 0; i < matchesDictionary.Count; i++)
                     {
-                        result += (i + 1).ToString() + ". " + matchesDictionary[i].Value;
+                        result += (i + 1) + ". " + matchesDictionary[i].Value;
                         if (i != matchesDictionary.Count - 1)
                         {
                             result += "\r\n";
@@ -159,8 +157,8 @@ namespace ZSS
 
         /// <summary>For use in TranslateText returning url.</summary>
         /// <param name="translateText">Text for translate.</param>
-        /// <param name="fromLanguage">From language.</param>
-        /// <param name="toLanguage">To language.</param>
+        /// <param name="sourceLanguage">From language.</param>
+        /// <param name="targetLanguage">To language.</param>
         /// <returns>Returning url for use in TranslateText.</returns>
         public static string GetDownloadLink(string translateText, string sourceLanguage, string targetLanguage)
         {

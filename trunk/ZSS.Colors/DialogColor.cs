@@ -22,11 +22,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ZSS.Colors
@@ -38,7 +35,7 @@ namespace ZSS.Colors
         private MyColor OldColor;
         public bool ScreenPicker;
         private bool oldColorExist;
-        private bool dialogChanged = false;
+        private bool dialogChanged;
 
         public DialogColor()
         {

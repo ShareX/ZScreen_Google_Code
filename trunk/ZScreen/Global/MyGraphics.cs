@@ -22,15 +22,11 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.IO;
-using ZSS.Helpers;
 
 namespace ZSS
 {
@@ -98,7 +94,7 @@ namespace ZSS
 
             if (format == ImageFormat.Jpeg)
             {
-                EncoderParameter quality = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, Program.conf.ImageQuality);
+                EncoderParameter quality = new EncoderParameter(Encoder.Quality, Program.conf.ImageQuality);
                 ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
 
                 EncoderParameters encoderParams = new EncoderParameters(1);
@@ -205,7 +201,7 @@ namespace ZSS
             if (point.X < rect.X)
             {
                 point.X = rect.X;
-            }      
+            }
             else if (point.X > rect.Right)
             {
                 point.X = rect.Right;

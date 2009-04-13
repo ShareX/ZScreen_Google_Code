@@ -34,22 +34,17 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
-using System.Linq;
 using System.Xml;
-using System.Xml.Linq;
-using System.Text.RegularExpressions;
 using ZSS.ImageUploader.Helpers;
 
 namespace ZSS.ImageUploader
 {
     public sealed class ImageShackUploader : HTTPUploader
     {
-        public string DeveloperKey { get; set; }
-        public string RegistrationCode { get; set; }
+        private string DeveloperKey { get; set; }
+        private string RegistrationCode { get; set; }
 
-        public bool Public = false;
-
-        public ImageShackUploader() { }
+        private bool Public;
 
         public ImageShackUploader(string developerKey, string registrationCode)
         {
@@ -68,7 +63,7 @@ namespace ZSS.ImageUploader
             get { return "ImageShack"; }
         }
 
-        public string Email { get; set; }
+        private string Email { get; set; }
 
         private readonly string URLStandard = "http://imageshack.us/index.php";
         private readonly string URLUnifiedAPI = "http://imageshack.us/upload_api.php";
@@ -79,7 +74,7 @@ namespace ZSS.ImageUploader
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public override ImageFileManager UploadImage(Image image, ImageFormat format)
+        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
         {
             switch (this.UploadMode)
             {
@@ -112,19 +107,19 @@ namespace ZSS.ImageUploader
             {
                 ServicePointManager.Expect100Continue = false;
                 CookieContainer cookies = new CookieContainer();
-                Dictionary<string, string> arguments = new Dictionary<string, string>() 
-                { 
-                    { "MAX_FILE_SIZE", "13145728" },
-                    { "refer", "" },
-                    { "brand", "" },
-                    { "optimage", "1" },
-                    { "rembar", "1" },
-                    { "submit", "host it!" },
-                    { "optsize", "resample" },
-                    { "xml", "yes" }
-                };
+                Dictionary<string, string> arguments = new Dictionary<string, string>
+                {
+                                                           {"MAX_FILE_SIZE", "13145728"},
+                                                           {"refer", ""},
+                                                           {"brand", ""},
+                                                           {"optimage", "1"},
+                                                           {"rembar", "1"},
+                                                           {"submit", "host it!"},
+                                                           {"optsize", "resample"},
+                                                           {"xml", "yes"},
+                                                           {"public", Public ? "yes" : "no"}
+                                                       };
 
-                arguments.Add("public", Public ? "yes" : "no");
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
@@ -143,8 +138,7 @@ namespace ZSS.ImageUploader
             { ServicePointManager.Expect100Continue = oldValue; }
             imgStream.Dispose();
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles);
-            ifm.Source = imgSource;
+            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 
@@ -198,22 +192,20 @@ namespace ZSS.ImageUploader
             { ServicePointManager.Expect100Continue = oldValue; }
             imgStream.Dispose();
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles);
-            ifm.Source = imgSource;
+            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 
         /// <summary>
         /// Old method of uploading to ImageShack
         /// </summary>
-        /// <param name="File"></param>
         /// <returns></returns>
         public ImageFileManager UploadImageLegacy(string filePath)
         {
             //use a new guid as the boundary
             string boundary = Guid.NewGuid().ToString().Replace("-", "");
 
-            byte[] fileBytes = null;
+            byte[] fileBytes;
 
             ImageFileManager ifm = null;
             List<ImageFile> imageFiles = new List<ImageFile>();
@@ -229,7 +221,7 @@ namespace ZSS.ImageUploader
                 }
             }
             catch
-            {                
+            {
                 return ifm; // empty
             }
 
@@ -270,21 +262,21 @@ namespace ZSS.ImageUploader
                 httpRequest.UserAgent = "ZScreen [http://brandonz.net/projects/zscreen]";
 
                 //write the file data
-                base.WriteFile(streamWriter, memoryStream, boundary, "fileupload", filePath, fileBytes);
+                WriteFile(streamWriter, memoryStream, boundary, "fileupload", filePath, fileBytes);
 
                 //write the post data fields
 
                 if (URL == URLStandard)
-                    base.WritePost(streamWriter, boundary, "xml", "yes");
+                    WritePost(streamWriter, boundary, "xml", "yes");
 
                 if (!Public)
-                    base.WritePost(streamWriter, boundary, "public", "no");
+                    WritePost(streamWriter, boundary, "public", "no");
 
                 if (RegistrationCode != null)
-                    base.WritePost(streamWriter, boundary, "cookie", RegistrationCode);
+                    WritePost(streamWriter, boundary, "cookie", RegistrationCode);
 
                 if (DeveloperKey != null)
-                    base.WritePost(streamWriter, boundary, "key", DeveloperKey);
+                    WritePost(streamWriter, boundary, "key", DeveloperKey);
 
                 //base.WritePost(streamWriter, boundary, "MAX_FILE_SIZE", (1024 * 1024).ToString()); //1MB file limit
 
@@ -294,7 +286,7 @@ namespace ZSS.ImageUploader
 
                 Stream requestStream = httpRequest.GetRequestStream();
 
-                if (!base.Upload(memoryStream, requestStream))
+                if (!Upload(memoryStream, requestStream))
                     return null;
 
                 memoryStream.Close();

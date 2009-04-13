@@ -44,8 +44,6 @@ namespace ZSS
 
         public void UploadFile(string fileName, string remoteName)
         {
-            int contentLength;
-
             int bufferSize = 2 * 1024;
             byte[] buffer = new byte[bufferSize];
 
@@ -53,7 +51,7 @@ namespace ZSS
 
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/" + fi.Name);
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.ContentLength = fi.Length;
@@ -66,7 +64,7 @@ namespace ZSS
 
             Stream stream = request.GetRequestStream();
 
-            contentLength = fs.Read(buffer, 0, bufferSize);
+            int contentLength = fs.Read(buffer, 0, bufferSize);
 
             while (contentLength != 0)
             {
@@ -85,7 +83,7 @@ namespace ZSS
 
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/" + fileName);
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             FileStream fStream = new FileStream(filePath, FileMode.Create);
 
@@ -97,8 +95,6 @@ namespace ZSS
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             Stream stream = response.GetResponseStream();
-
-            long contentLength = response.ContentLength;
 
             int bytes = stream.Read(buffer, 0, bufferSize);
 
@@ -117,22 +113,16 @@ namespace ZSS
         {
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + "/" + fileName);
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             request.KeepAlive = false;
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
-            string result = "";
-
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-
-            long size = response.ContentLength;
 
             Stream stream = response.GetResponseStream();
             StreamReader streamReader = new StreamReader(stream);
-
-            result = streamReader.ReadToEnd();
 
             streamReader.Close();
             stream.Close();
@@ -143,7 +133,7 @@ namespace ZSS
         {
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + "/" + fileName);
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.Rename;
             request.RenameTo = newFileName;
@@ -161,9 +151,7 @@ namespace ZSS
         {
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + "/" + fileName);
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
-
-            long fileSize = 0;
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.UseBinary = true;
@@ -172,7 +160,7 @@ namespace ZSS
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             Stream stream = response.GetResponseStream();
 
-            fileSize = response.ContentLength;
+            long fileSize = response.ContentLength;
 
             stream.Close();
             response.Close();
@@ -186,7 +174,7 @@ namespace ZSS
 
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/");
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.UseBinary = true;
@@ -217,7 +205,7 @@ namespace ZSS
         {
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + "/" + dirName + "/");
 
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(uri);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
             request.UseBinary = true;

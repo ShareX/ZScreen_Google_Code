@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZSS.Tasks;
 using System.IO;
 using System.Diagnostics;
@@ -10,7 +7,6 @@ using ZSS.ImageUploader;
 using ZSS.Properties;
 using System.Threading;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace ZSS.Helpers
 {
@@ -80,7 +76,7 @@ namespace ZSS.Helpers
                     }
 
                     //Set remote path for Screenshots history
-                    task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
+                    if (task.ImageManager != null) task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
                 }
             }
 
@@ -96,7 +92,7 @@ namespace ZSS.Helpers
                 {
                     Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
-                task.MyWorker.ReportProgress((int)Tasks.MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
+                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
             }
 
             if (task.ImageManager != null)
@@ -105,13 +101,13 @@ namespace ZSS.Helpers
             }
         }
 
-        private void FlashIcon(MainAppTask task)
+        private void FlashIcon(MainAppTask t)
         {
             for (int i = 0; i < (int)Program.conf.FlashTrayCount; i++)
             {
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
+                t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
                 Thread.Sleep(275);
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_green);
+                t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_green);
                 Thread.Sleep(275);
             }
         }
@@ -119,8 +115,6 @@ namespace ZSS.Helpers
         /// <summary>
         /// Funtion to FTP the Screenshot
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="fullFilePath"></param>
         /// <returns>Retuns a List of Screenshots</returns>
         public bool UploadFtp()
         {
@@ -133,11 +127,14 @@ namespace ZSS.Helpers
                     FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
                     task.DestinationName = acc.Name;
 
-                    FileSystem.appendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
 
-                    ImageUploader.FTPUploader fu = new ZSS.ImageUploader.FTPUploader(acc);
-                    fu.EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail; // = true; // ideally this shold be true
-                    fu.WorkingDir = Program.conf.CacheDir;
+                    FTPUploader fu = new FTPUploader(acc)
+                    {
+                        EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) ||
+                        Program.conf.FTPCreateThumbnail,
+                        WorkingDir = Program.conf.CacheDir
+                    };
                     task.ImageManager = fu.UploadImage(fullFilePath);
                     task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
                     return true;
@@ -170,8 +167,10 @@ namespace ZSS.Helpers
             if (File.Exists(task.LocalFilePath))
             {
                 Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.TextEditorActive.Path);
-                psi.Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath);
+                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.TextEditorActive.Path)
+                {
+                    Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
+                };
                 p.StartInfo = psi;
                 p.Start();
                 // Wait till user quits the ScreenshotEditApp
@@ -182,14 +181,15 @@ namespace ZSS.Helpers
         /// <summary>
         /// Edit Image in selected Image Editor
         /// </summary>
-        /// <param name="task"></param>
         public void ImageEdit()
         {
             if (File.Exists(task.LocalFilePath))
             {
                 Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.ImageSoftwareActive.Path);
-                psi.Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath);
+                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.ImageSoftwareActive.Path)
+                {
+                    Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
+                };
                 p.StartInfo = psi;
                 p.Start();
                 // Wait till user quits the ScreenshotEditApp

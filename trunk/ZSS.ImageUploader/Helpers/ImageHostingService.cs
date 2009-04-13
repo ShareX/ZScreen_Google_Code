@@ -23,12 +23,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ZSS
 {
-    [Serializable()]
+    [Serializable]
     public class ImageHostingService
     {
         public string Name { get; set; }
@@ -72,8 +70,7 @@ namespace ZSS
 
         private int CheckSyntax(string str, int i, ref string link)
         {
-            int search;
-            search = CheckString(str, i);
+            int search = CheckString(str, i);
             if (search > 0)
             {
                 link += ReturnString(str, i, search);
@@ -171,7 +168,7 @@ namespace ZSS
         {
             int search;
             str = str.Substring(start + 1, end - start - 1);
-            string conditional = "", cTrue = "", cFalse = "", link = "", result = "";
+            string conditional = "", cTrue = "", cFalse = "", link = "", result;
             for (int i = 0; i < str.Length; i++)
             {
                 //Console.Write(str[i].ToString());

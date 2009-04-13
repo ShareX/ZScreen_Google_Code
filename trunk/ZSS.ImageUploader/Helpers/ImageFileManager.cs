@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
@@ -67,7 +64,7 @@ namespace ZSS.ImageUploader.Helpers
             return "";
         }
 
-        private string GetUrlByImageType(ZSS.ImageUploader.ImageFile.ImageType type)
+        private string GetUrlByImageType(ImageFile.ImageType type)
         {
             foreach (ImageFile imf in this.ImageFileList)
             {

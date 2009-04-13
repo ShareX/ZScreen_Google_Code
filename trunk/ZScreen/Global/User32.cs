@@ -22,7 +22,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
@@ -96,7 +95,11 @@ namespace ZSS
             using (Process currentProc = Process.GetCurrentProcess())
             using (ProcessModule currentMod = currentProc.MainModule)
             {
-                return SetWindowsHookEx(mWH_KEYBOARD_LL, m_Proc, GetModuleHandle(currentMod.ModuleName), 0);
+                if (currentMod != null)
+                {
+                    return SetWindowsHookEx(mWH_KEYBOARD_LL, m_Proc, GetModuleHandle(currentMod.ModuleName), 0);
+                }
+                return IntPtr.Zero;
             }
         }
 
@@ -165,10 +168,7 @@ namespace ZSS
             {
                 return sb.ToString();
             }
-            else
-            {
-                return "";
-            }
+            return "";
         }
 
         public static IntPtr GetWindowHandle()
@@ -181,10 +181,7 @@ namespace ZSS
             {
                 return handle;
             }
-            else
-            {
-                return IntPtr.Zero;
-            }
+            return IntPtr.Zero;
         }
 
         public static MyCursor CaptureCursor()
@@ -199,8 +196,7 @@ namespace ZSS
                     IntPtr hicon = CopyIcon(ci.hCursor);
                     if (GetIconInfo(hicon, out icInfo))
                     {
-                        Point position = new Point(ci.ptScreenPos.X - ((int)icInfo.xHotspot),
-                            ci.ptScreenPos.Y - ((int)icInfo.yHotspot));
+                        Point position = new Point(ci.ptScreenPos.X - icInfo.xHotspot, ci.ptScreenPos.Y - icInfo.yHotspot);
                         Icon ic = Icon.FromHandle(hicon);
                         Bitmap bmp = ic.ToBitmap();
                         return new MyCursor(new Cursor(ci.hCursor), position, bmp);
@@ -212,7 +208,7 @@ namespace ZSS
 
         public static Image CaptureScreen(bool showCursor)
         {
-            Image img = CaptureRectangle(User32.GetDesktopWindow(), MyGraphics.GetScreenBounds());
+            Image img = CaptureRectangle(GetDesktopWindow(), MyGraphics.GetScreenBounds());
             if (showCursor)
             {
                 MyCursor cursor = CaptureCursor();
@@ -225,7 +221,7 @@ namespace ZSS
                 else
                 {
                     Rectangle rect = new Rectangle(new Point(Cursor.Position.X - Cursors.Default.HotSpot.X,
-                        cursor.Position.Y - Cursors.Default.HotSpot.Y), Cursors.Default.Size);
+                        Cursor.Position.Y - Cursors.Default.HotSpot.Y), Cursors.Default.Size);
                     Cursors.Default.Draw(g, rect);
                 }
             }
@@ -235,7 +231,7 @@ namespace ZSS
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
         {
             // get te hDC of the target window
-            IntPtr hdcSrc = User32.GetWindowDC(handle);
+            IntPtr hdcSrc = GetWindowDC(handle);
             // get the size
             int left = rect.X;
             int top = rect.Y;
@@ -254,7 +250,7 @@ namespace ZSS
             GDI32.SelectObject(hdcDest, hOld);
             // clean up
             GDI32.DeleteDC(hdcDest);
-            User32.ReleaseDC(handle, hdcSrc);
+            ReleaseDC(handle, hdcSrc);
             // get a .NET image object for it
             Image img = Image.FromHbitmap(hBitmap);
             // free up the Bitmap object
@@ -264,7 +260,6 @@ namespace ZSS
 
         public static Image GrabWindow(IntPtr handle, bool showCursor)
         {
-            IntPtr hdcSrc = GetWindowDC(handle);
             Rectangle windowRect = GetWindowRectangle(handle);
             Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics gfx = Graphics.FromImage(img);
@@ -282,7 +277,7 @@ namespace ZSS
                 else
                 {
                     Rectangle rect = new Rectangle(new Point(Cursor.Position.X - Cursors.Default.HotSpot.X - windowRect.X,
-                        cursor.Position.Y - Cursors.Default.HotSpot.Y - windowRect.Y), Cursors.Default.Size);
+                        Cursor.Position.Y - Cursors.Default.HotSpot.Y - windowRect.Y), Cursors.Default.Size);
                     Cursors.Default.Draw(g, rect);
                 }
             }
@@ -354,18 +349,18 @@ namespace ZSS
         {
             try
             {
-                return User32.DWMWA_EXTENDED_FRAME_BOUNDS(handle);
+                return DWMWA_EXTENDED_FRAME_BOUNDS(handle);
             }
             catch
             {
-                return User32.GetWindowRect(handle);
+                return GetWindowRect(handle);
             }
         }
 
         public static void ActivateWindow(IntPtr handle)
         {
-            User32.SetForegroundWindow(handle);
-            User32.SetActiveWindow(handle);
+            SetForegroundWindow(handle);
+            SetActiveWindow(handle);
         }
 
         #region Taskbar

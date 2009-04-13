@@ -21,9 +21,6 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ZSS
@@ -72,18 +69,18 @@ namespace ZSS
         public override string ToString()
         {
             string sep = " + ";
-            
+
             //no mods
             if (Mods == null)
                 return Key.ToString();
 
             //one mod
             if (Mods.Length == 1)
-                return Mods[0].ToString() + sep + Key.ToString();
+                return Mods[0] + sep + Key;
 
             //two mods
             if (Mods.Length == 2)
-                return Mods[0].ToString() + sep + Mods[1].ToString() + sep + Key.ToString();
+                return Mods[0] + sep + Mods[1] + sep + Key;
 
             return "None";
         }

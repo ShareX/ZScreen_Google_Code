@@ -1063,8 +1063,8 @@ namespace ZSS
                 }
             }
 
-            FileSystem.appendDebug(".");
-            FileSystem.appendDebug(string.Format("Job started: {0}", task.Job));
+            FileSystem.AppendDebug(".");
+            FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
 
             switch (task.JobCategory)
             {
@@ -1129,7 +1129,7 @@ namespace ZSS
                     if (File.Exists(f))
                     {
                         SaveImageToClipboard(f);
-                        FileSystem.appendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
+                        FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
                     }
                     break;
                 case MainAppTask.ProgressType.FLASH_ICON:
@@ -1155,7 +1155,7 @@ namespace ZSS
             {
                 MainAppTask task = (MainAppTask)e.Result;
 
-                FileSystem.appendDebug(string.Format("Job completed: {0}", task.Job));
+                FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
 
                 if (!RetryUpload(task))
                 {
@@ -1418,7 +1418,7 @@ namespace ZSS
                 e.Cancel = true;
                 Hide();
             }
-            FileSystem.appendDebug("Closed " + Application.ProductName + "\n");
+            FileSystem.AppendDebug("Closed " + Application.ProductName + "\n");
         }
 
         #endregion
@@ -1683,7 +1683,7 @@ namespace ZSS
 
         private void ShowLicense()
         {
-            string lic = FileSystem.getTextFromFile(Path.Combine(Application.StartupPath, "License.txt"));
+            string lic = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, "License.txt"));
             lic = lic != string.Empty ? lic : FileSystem.GetText("License.txt");
             if (lic != string.Empty)
             {
@@ -1695,7 +1695,7 @@ namespace ZSS
 
         private void ShowVersionHistory()
         {
-            string h = FileSystem.getTextFromFile(Path.Combine(Application.StartupPath, "VersionHistory.txt"));
+            string h = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, "VersionHistory.txt"));
             if (h == string.Empty)
             {
                 h = FileSystem.GetText("VersionHistory.txt");

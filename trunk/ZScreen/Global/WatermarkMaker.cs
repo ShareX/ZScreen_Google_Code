@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -24,14 +21,11 @@ namespace ZSS
             {
                 return DrawImageWatermark(img, Program.conf.WatermarkImageLocation, Program.conf.WatermarkPositionMode, (int)Program.conf.WatermarkOffset);
             }
-            else
-            {
-                return DrawWatermark(img, NameParser.Convert(NameParser.NameType.Watermark, true), XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
-                    XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor), (int)Program.conf.WatermarkFontTrans, (int)Program.conf.WatermarkOffset,
-                    (int)Program.conf.WatermarkBackTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1),
-                    XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2), XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor),
-                    Program.conf.WatermarkPositionMode, (int)Program.conf.WatermarkCornerRadius, Program.conf.WatermarkGradientType);
-            }
+            return DrawWatermark(img, NameParser.Convert(NameParser.NameType.Watermark, true), XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
+                                 XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor), (int)Program.conf.WatermarkFontTrans, (int)Program.conf.WatermarkOffset,
+                                 (int)Program.conf.WatermarkBackTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1),
+                                 XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2), XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor),
+                                 Program.conf.WatermarkPositionMode, (int)Program.conf.WatermarkCornerRadius, Program.conf.WatermarkGradientType);
         }
 
         private static Image DrawImageWatermark(Image img, string imgPath, WatermarkPositionType position, int offset)
@@ -42,26 +36,22 @@ namespace ZSS
                 {
                     Image img2 = Image.FromFile(imgPath);
                     img2 = ImageChangeSize((Bitmap)img2);
-                    Point imgPos = Point.Empty;
-                    imgPos = FindPosition(position, offset, img.Size, img2.Size, 0);
+                    Point imgPos = FindPosition(position, offset, img.Size, img2.Size, 0);
                     if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) || (img.Height < img2.Height + offset)))
                     {
                         throw new Exception("Image size smaller than watermark size.");
                     }
-                    else
+                    Graphics g = Graphics.FromImage(img);
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.DrawImage(img2, imgPos);
+                    if (Program.conf.WatermarkAddReflection)
                     {
-                        Graphics g = Graphics.FromImage(img);
-                        g.SmoothingMode = SmoothingMode.HighQuality;
-                        g.DrawImage(img2, imgPos);
-                        if (Program.conf.WatermarkAddReflection)
-                        {
-                            Bitmap bmp = AddReflection((Bitmap)img2);
-                            g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
-                        }
-                        if (Program.conf.WatermarkUseBorder)
-                        {
-                            g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
-                        }
+                        Bitmap bmp = AddReflection((Bitmap)img2);
+                        g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
+                    }
+                    if (Program.conf.WatermarkUseBorder)
+                    {
+                        g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
                     }
                 }
             }
@@ -78,42 +68,38 @@ namespace ZSS
             try
             {
                 Size textSize = TextRenderer.MeasureText(drawText, font);
-                Point labelPosition = Point.Empty;
                 Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
-                labelPosition = FindPosition(position, offset, img.Size, new Size(textSize.Width + 10, textSize.Height + 10), 1);
+                Point labelPosition = FindPosition(position, offset, img.Size, new Size(textSize.Width + 10, textSize.Height + 10), 1);
                 if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) || (img.Height < labelSize.Height + offset)))
                 {
                     throw new Exception("Image size smaller than watermark size.");
                 }
+                Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
+                GraphicsPath gPath;
+                if (cornerRadius > 0)
+                {
+                    gPath = MyGraphics.RoundedRectangle(labelRectangle, cornerRadius);
+                }
                 else
                 {
-                    Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
-                    GraphicsPath gPath;
-                    if (cornerRadius > 0)
-                    {
-                        gPath = MyGraphics.RoundedRectangle(labelRectangle, cornerRadius);
-                    }
-                    else
-                    {
-                        gPath = new GraphicsPath();
-                        gPath.AddRectangle(labelRectangle);
-                    }
-                    Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
-                    Graphics g = Graphics.FromImage(bmp);
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                    g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, backColor1),
-                        Color.FromArgb(backTrans, backColor2), gradientType), gPath);
-                    g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
-                    g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), 5, 5);
-                    Graphics gImg = Graphics.FromImage(img);
-                    gImg.SmoothingMode = SmoothingMode.HighQuality;
-                    gImg.DrawImage(bmp, labelPosition);
-                    if (Program.conf.WatermarkAddReflection)
-                    {
-                        Bitmap bmp2 = AddReflection(bmp);
-                        gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
-                    }
+                    gPath = new GraphicsPath();
+                    gPath.AddRectangle(labelRectangle);
+                }
+                Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
+                Graphics g = Graphics.FromImage(bmp);
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, backColor1),
+                                                   Color.FromArgb(backTrans, backColor2), gradientType), gPath);
+                g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
+                g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), 5, 5);
+                Graphics gImg = Graphics.FromImage(img);
+                gImg.SmoothingMode = SmoothingMode.HighQuality;
+                gImg.DrawImage(bmp, labelPosition);
+                if (Program.conf.WatermarkAddReflection)
+                {
+                    Bitmap bmp2 = AddReflection(bmp);
+                    gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
                 }
             }
             catch (Exception ex)

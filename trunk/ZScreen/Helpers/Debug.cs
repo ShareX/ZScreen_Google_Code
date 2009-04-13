@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using System.Threading;
 
 namespace ZSS
 {
@@ -21,8 +18,7 @@ namespace ZSS
         public Debug()
         {
             StartTime = DateTime.Now;
-            DebugTimer = new System.Windows.Forms.Timer();
-            DebugTimer.Interval = 500;
+            DebugTimer = new System.Windows.Forms.Timer { Interval = 500 };
             DebugTimer.Tick += new EventHandler(TimerTick);
         }
 
@@ -33,10 +29,10 @@ namespace ZSS
             sb.AppendLine();
             sb.AppendLine("Up Time: " + TimeElapsed);
             sb.AppendLine();
-            sb.AppendLine("  Start memory usage: " + StartMemoryUsage.ToString());
-            sb.AppendLine("Current memory usage: " + MemoryUsage.ToString());
-            sb.AppendLine("Minimum memory usage: " + MinMemoryUsage.ToString());
-            sb.AppendLine("Maximum memory usage: " + MaxMemoryUsage.ToString());
+            sb.AppendLine("  Start memory usage: " + StartMemoryUsage);
+            sb.AppendLine("Current memory usage: " + MemoryUsage);
+            sb.AppendLine("Minimum memory usage: " + MinMemoryUsage);
+            sb.AppendLine("Maximum memory usage: " + MaxMemoryUsage);
             sb.AppendLine();
             sb.AppendLine("Running from:");
             sb.AppendLine(System.Windows.Forms.Application.ExecutablePath);
@@ -109,7 +105,6 @@ namespace ZSS
         /// <summary>
         /// Get DuratingString in HH:mm:ss
         /// </summary>
-        /// <param name="dura"></param>
         /// <returns>DuratingString in HH:mm:ss</returns>
         public static string GetDurationString(TimeSpan ts)
         {

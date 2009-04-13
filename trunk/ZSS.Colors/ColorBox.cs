@@ -21,10 +21,8 @@
 */
 #endregion
 
-using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 namespace ZSS.Colors
 {
@@ -40,7 +38,7 @@ namespace ZSS.Colors
         protected override void Initialize()
         {
             this.Name = "ColorBox";
-            this.Size = new System.Drawing.Size(260, 260);
+            this.Size = new Size(260, 260);
             base.Initialize();
         }
 

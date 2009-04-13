@@ -81,7 +81,7 @@ namespace ZSS.Colors
 
         public override string ToString()
         {
-            return String.Format("{0}\r\n{1}\r\n{2}", RGB.ToString(), HSB.ToString(), CMYK.ToString());
+            return String.Format("{0}\r\n{1}\r\n{2}", RGB, HSB, CMYK);
         }
 
         public override int GetHashCode()
@@ -181,15 +181,14 @@ namespace ZSS.Colors
         {
             HSB hsb = new HSB();
 
-            int Max, Min, Diff, Sum;
+            int Max, Min;
 
             if (color.R > color.G) { Max = color.R; Min = color.G; }
             else { Max = color.G; Min = color.R; }
             if (color.B > Max) Max = color.B;
             else if (color.B < Min) Min = color.B;
 
-            Diff = Max - Min;
-            Sum = Max + Min;
+            int Diff = Max - Min;
 
             hsb.Brightness = (double)Max / 255;
 
@@ -202,11 +201,11 @@ namespace ZSS.Colors
 
             if (Max == color.R)
             {
-                if (color.G < color.B) hsb.Hue = (double)(360 + q * (color.G - color.B)) / 360;
-                else hsb.Hue = (double)(q * (color.G - color.B)) / 360;
+                if (color.G < color.B) hsb.Hue = (360 + q * (color.G - color.B)) / 360;
+                else hsb.Hue = q * (color.G - color.B) / 360;
             }
-            else if (Max == color.G) hsb.Hue = (double)(120 + q * (color.B - color.R)) / 360;
-            else if (Max == color.B) hsb.Hue = (double)(240 + q * (color.R - color.G)) / 360;
+            else if (Max == color.G) hsb.Hue = (120 + q * (color.B - color.R)) / 360;
+            else if (Max == color.B) hsb.Hue = (240 + q * (color.R - color.G)) / 360;
             else hsb.Hue = 0.0;
 
             return hsb;
@@ -359,47 +358,43 @@ namespace ZSS.Colors
 
         public static Color ToColor(HSB hsb)
         {
-            int Max, Mid, Min;
-            double q;
+            int Mid;
 
-            Max = Helpers.Round(hsb.Brightness * 255);
-            Min = Helpers.Round((1.0 - hsb.Saturation) * (hsb.Brightness / 1.0) * 255);
-            q = (double)(Max - Min) / 255;
+            int Max = Helpers.Round(hsb.Brightness * 255);
+            int Min = Helpers.Round((1.0 - hsb.Saturation) * (hsb.Brightness / 1.0) * 255);
+            double q = (double)(Max - Min) / 255;
 
             if (hsb.Hue >= 0 && hsb.Hue <= (double)1 / 6)
             {
                 Mid = Helpers.Round(((hsb.Hue - 0) * q) * 1530 + Min);
                 return Color.FromArgb(Max, Mid, Min);
             }
-            else if (hsb.Hue <= (double)1 / 3)
+            if (hsb.Hue <= (double)1 / 3)
             {
                 Mid = Helpers.Round(-((hsb.Hue - (double)1 / 6) * q) * 1530 + Max);
                 return Color.FromArgb(Mid, Max, Min);
             }
-            else if (hsb.Hue <= 0.5)
+            if (hsb.Hue <= 0.5)
             {
                 Mid = Helpers.Round(((hsb.Hue - (double)1 / 3) * q) * 1530 + Min);
                 return Color.FromArgb(Min, Max, Mid);
             }
-            else if (hsb.Hue <= (double)2 / 3)
+            if (hsb.Hue <= (double)2 / 3)
             {
                 Mid = Helpers.Round(-((hsb.Hue - 0.5) * q) * 1530 + Max);
                 return Color.FromArgb(Min, Mid, Max);
             }
-            else if (hsb.Hue <= (double)5 / 6)
+            if (hsb.Hue <= (double)5 / 6)
             {
                 Mid = Helpers.Round(((hsb.Hue - (double)2 / 3) * q) * 1530 + Min);
                 return Color.FromArgb(Mid, Min, Max);
             }
-            else if (hsb.Hue <= 1.0)
+            if (hsb.Hue <= 1.0)
             {
                 Mid = Helpers.Round(-((hsb.Hue - (double)5 / 6) * q) * 1530 + Max);
                 return Color.FromArgb(Max, Min, Mid);
             }
-            else
-            {
-                return Color.FromArgb(0, 0, 0);
-            }
+            return Color.FromArgb(0, 0, 0);
         }
 
         public static Color ToColor(double hue, double saturation, double brightness)
@@ -586,10 +581,9 @@ namespace ZSS.Colors
         {
             if (hex.StartsWith("#")) hex.Remove(0, 1);
 
-            string r, g, b;
-            r = hex.Substring(0, 2);
-            g = hex.Substring(2, 2);
-            b = hex.Substring(4, 2);
+            string r = hex.Substring(0, 2);
+            string g = hex.Substring(2, 2);
+            string b = hex.Substring(4, 2);
 
             return Color.FromArgb(HexToDecimal(r), HexToDecimal(g), HexToDecimal(b));
         }

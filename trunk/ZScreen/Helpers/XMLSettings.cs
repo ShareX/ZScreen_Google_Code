@@ -281,10 +281,7 @@ namespace ZSS
             {
                 return string.Format("{0}:{1}", ColorFormat.NamedColor, color.Name);
             }
-            else
-            {
-                return string.Format("{0}:{1}:{2}:{3}:{4}", ColorFormat.ARGBColor, color.A, color.R, color.G, color.B);
-            }
+            return string.Format("{0}:{1}:{2}:{3}:{4}", ColorFormat.ARGBColor, color.A, color.R, color.G, color.B);
         }
 
         public static Color DeserializeColor(string color)
@@ -296,7 +293,7 @@ namespace ZSS
 
             byte a, r, g, b;
 
-            string[] pieces = color.Split(new char[] { ':' });
+            string[] pieces = color.Split(new[] { ':' });
 
             ColorFormat colorType = (ColorFormat)Enum.Parse(typeof(ColorFormat), pieces[0], true);
 
@@ -371,7 +368,7 @@ namespace ZSS
             }
             catch (Exception e)
             {
-                System.Windows.Forms.MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -410,7 +407,7 @@ namespace ZSS
 
     }
 
-    public class CustomPassConverter : System.ComponentModel.StringConverter
+    public class CustomPassConverter : StringConverter
     {
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
@@ -423,5 +420,4 @@ namespace ZSS
             return pass;
         }
     }
-
 }

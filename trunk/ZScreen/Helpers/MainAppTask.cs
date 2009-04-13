@@ -210,11 +210,10 @@ namespace ZSS.Tasks
         /// <summary>
         /// Check for valid image and update task.Errors with the error message
         /// </summary>
-        /// <param name="task"></param>
         /// <returns></returns>
         public bool IsValidImage()
         {
-            if(!IsImage)
+            if (!IsImage)
             {
                 Errors.Add("Unsupported image.");
             }
@@ -243,7 +242,7 @@ namespace ZSS.Tasks
         {
             if (this.MyImage == null)
             {
-                this.MyImage = User32.GrabWindow((IntPtr)User32.GetWindowHandle(), Program.conf.ShowCursor);
+                this.MyImage = User32.GrabWindow(User32.GetWindowHandle(), Program.conf.ShowCursor);
             }
         }
 
@@ -259,6 +258,5 @@ namespace ZSS.Tasks
         }
 
         #endregion
-
     }
 }
