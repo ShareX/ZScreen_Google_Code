@@ -16,16 +16,26 @@ namespace ZSS.Forms
 
         private Timer timer = new Timer();
         private Tasks.MainAppTask.Jobs job;
+        private int delay;
+        private bool waitUploads;
 
         public AutoScreenshots()
         {
             InitializeComponent();
-            timer.Tick += new EventHandler(TimerTick);
+            timer.Tick += TimerTick;
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
-            EventJob(this, job);
+            if (waitUploads && ClipboardManager.Workers > 0)
+            {
+                timer.Interval = 1000;
+            }
+            else
+            {
+                timer.Interval = delay;
+                EventJob(this, job);
+            }
         }
 
         private void btnExecute_Click(object sender, EventArgs e)
@@ -33,20 +43,27 @@ namespace ZSS.Forms
             if (IsRunning)
             {
                 IsRunning = false;
+                btnExecute.Text = "Start";
             }
             else
             {
                 IsRunning = true;
+                btnExecute.Text = "Stop";
                 switch (cbScreenshotTypes.SelectedText)
                 {
                     case "Entire Screen":
                         job = Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN;
                         break;
+                    case "Active Window":
+                        job = Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE;
+                        break;
                     case "Last Crop Shot":
                         job = Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED;
                         break;
                 }
-                timer.Interval = (int)(nudDelay.Value * 1000);
+                timer.Interval = 1000;
+                delay = (int)(nudDelay.Value * 1000);
+                waitUploads = cbWaitUploads.Checked;
             }
             timer.Enabled = IsRunning;
         }

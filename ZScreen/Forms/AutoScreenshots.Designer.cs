@@ -47,6 +47,7 @@
             this.cbScreenshotTypes.FormattingEnabled = true;
             this.cbScreenshotTypes.Items.AddRange(new object[] {
             "Entire Screen",
+            "Active Window",
             "Last Crop Shot"});
             this.cbScreenshotTypes.Location = new System.Drawing.Point(104, 12);
             this.cbScreenshotTypes.Name = "cbScreenshotTypes";
@@ -95,7 +96,7 @@
             // 
             this.btnExecute.Location = new System.Drawing.Point(16, 96);
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(88, 24);
+            this.btnExecute.Size = new System.Drawing.Size(200, 24);
             this.btnExecute.TabIndex = 3;
             this.btnExecute.Text = "Start";
             this.btnExecute.UseVisualStyleBackColor = true;
