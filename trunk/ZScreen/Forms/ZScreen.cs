@@ -64,6 +64,7 @@ namespace ZSS
         private bool bQuickOptionsOpened;
         private bool bDropWindowOpened;
         private bool bQuickActionsOpened;
+        private bool bAutoScreenshotsOpened;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator;
         private BackgroundWorker bwActiveHelp = new BackgroundWorker();
@@ -4702,6 +4703,23 @@ namespace ZSS
         private void pbLogo_MouseLeave(object sender, EventArgs e)
         {
             pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+        }
+
+        private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!bAutoScreenshotsOpened)
+            {
+                bAutoScreenshotsOpened = true;
+                AutoScreenshots autoScreenshots = new AutoScreenshots { Icon = Resources.zss_main };
+                autoScreenshots.EventJob += new JobsEventHandler(EventJobs);
+                autoScreenshots.FormClosed += new FormClosedEventHandler(autoScreenshots_FormClosed);
+                autoScreenshots.Show();
+            }
+        }
+
+        private void autoScreenshots_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bAutoScreenshotsOpened = false;
         }
     }
 }
