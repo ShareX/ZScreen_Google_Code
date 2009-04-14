@@ -13,7 +13,7 @@ Version 2.8 - 20090412
 2.6.15.0 Prompt for Upload [Issue 51]
 2.6.14.0 Option to automatically switch from TinyPic to ImageShack if the image dimensions are greater than 1600x1600
 2.6.13.0 ZScreen Window is now resizable to increase viewing area in History
-2.6.12.0 Extended Watermark support to use Images
+2.6.12.0 Extended Watermark support to use Images with Reflection and Add Border support
 2.6.11.0 Delay for Entire Screen and Active Window Screenshot is now set in milliseconds
 2.6.10.0 Crop Shot and Selected Window can optionally display a Dynamic Region Border
 2.6.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
