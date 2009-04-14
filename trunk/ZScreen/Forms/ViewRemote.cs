@@ -210,17 +210,8 @@ namespace ZSS
 
         private void ViewRemote_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            /*if (mFTP.IsConnected)
-            {
-                mFTP.Disconnect();
-            }*/
-
             pbViewer.ImageLocation = "";
-            //FileSystem.writeDebugFile();
-            //foreach (string str in toDelete)
-            //{
-            //    System.IO.localFilePath.Delete(str);
-            //}
+            FileSystem.WriteDebugFile();
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)
@@ -229,7 +220,7 @@ namespace ZSS
 
             //choose directory / create directory popup
             //remember old directory and display it
-            folderBrowseDialog.SelectedPath = Program.conf.ImagesDir;
+            folderBrowseDialog.SelectedPath = Program.ImagesDir;
             folderBrowseDialog.ShowNewFolderButton = true;
             folderBrowseDialog.ShowDialog();
 
