@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ZSS.Forms
 {
@@ -15,14 +16,18 @@ namespace ZSS.Forms
         public bool IsRunning;
 
         private Timer timer = new Timer();
+        private Timer statusTimer = new Timer { Interval = 250 };
         private Tasks.MainAppTask.Jobs job;
         private int delay;
         private bool waitUploads;
+        private int count;
+        private Stopwatch stopwatch = new Stopwatch();
 
         public AutoScreenshots()
         {
             InitializeComponent();
             timer.Tick += TimerTick;
+            statusTimer.Tick += StatusTimerTick;
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -33,9 +38,16 @@ namespace ZSS.Forms
             }
             else
             {
+                StartTimer();
                 timer.Interval = delay;
                 EventJob(this, job);
+                count++;
             }
+        }
+
+        private void StatusTimerTick(object sender, EventArgs e)
+        {
+            UpdateStatus();
         }
 
         private void btnExecute_Click(object sender, EventArgs e)
@@ -64,8 +76,24 @@ namespace ZSS.Forms
                 timer.Interval = 1000;
                 delay = (int)(nudDelay.Value * 1000);
                 waitUploads = cbWaitUploads.Checked;
+                count = 0;
             }
             timer.Enabled = IsRunning;
+            statusTimer.Enabled = IsRunning;
+        }
+
+        private void StartTimer()
+        {
+            stopwatch.Reset();
+            stopwatch.Start();
+        }
+
+        private void UpdateStatus()
+        {
+            int progress = (int)stopwatch.ElapsedMilliseconds / delay * 100;
+            if (progress > 100) progress = 100;
+            tspbBar.Value = progress;
+            tsslStatus.Text = "Count: " + count;
         }
     }
 }
