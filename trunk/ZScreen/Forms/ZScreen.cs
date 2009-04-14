@@ -87,6 +87,9 @@ namespace ZSS
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
+            FileSystem.AppendDebug("Started ZScreen");
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
+
             if (Program.conf.OpenMainWindow)
             {
                 WindowState = FormWindowState.Normal;
@@ -1421,13 +1424,17 @@ namespace ZSS
             */
             this.WindowState = FormWindowState.Minimized;
             SaveSettings();
+
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 Hide();
             }
-            FileSystem.AppendDebug("Closed " + Application.ProductName + "\n");
-            FileSystem.WriteDebugFile();
+            else
+            {
+                FileSystem.AppendDebug("Closed " + Application.ProductName + "\n");
+                FileSystem.WriteDebugFile();
+            }
         }
 
         #endregion
