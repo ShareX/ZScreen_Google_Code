@@ -133,7 +133,7 @@ namespace ZSS.Helpers
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) ||
                         Program.conf.FTPCreateThumbnail,
-                        WorkingDir = Program.conf.CacheDir
+                        WorkingDir = Program.CacheDir
                     };
                     task.ImageManager = fu.UploadImage(fullFilePath);
                     task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));

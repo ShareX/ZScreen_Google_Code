@@ -259,16 +259,12 @@ namespace ZSS
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;
+        [DescriptionAttribute("Write Debug Information into a Log File"), CategoryAttribute("Options/General"), DefaultValue(false)]
+        public bool WriteDebugFile { get; set; }
 
         // Paths
-
-        public string ImagesDir = "";
         public bool DeleteLocal = false;
-        public string CacheDir = "";
         public decimal ScreenshotCacheSize = 50;
-        public string SettingsDir = "";
-        public string TextDir = "";
-        public string TempDir = "";
 
         #endregion
 

@@ -424,10 +424,9 @@ namespace ZSS
         private void UpdateGuiControlsPaths()
         {
             Program.InitializeDefaultFolderPaths();
-            Program.ConfigureDirs();
-            txtImagesDir.Text = Program.conf.ImagesDir;
-            txtCacheDir.Text = Program.conf.CacheDir;
-            txtSettingsDir.Text = Program.conf.SettingsDir;
+            txtImagesDir.Text = Program.ImagesDir;
+            txtCacheDir.Text = Program.CacheDir;
+            txtSettingsDir.Text = Program.SettingsDir;
         }
 
         private void UpdateGuiControlsHistory()
@@ -639,7 +638,7 @@ namespace ZSS
 
         private void BwCache_DoWork(object sender, DoWorkEventArgs e)
         {
-            CacheCleanerTask t = new CacheCleanerTask(Program.conf.CacheDir, Program.conf.ScreenshotCacheSize);
+            CacheCleanerTask t = new CacheCleanerTask(Program.CacheDir, Program.conf.ScreenshotCacheSize);
             t.CleanCache();
         }
 
@@ -1428,6 +1427,7 @@ namespace ZSS
                 Hide();
             }
             FileSystem.AppendDebug("Closed " + Application.ProductName + "\n");
+            FileSystem.WriteDebugFile();
         }
 
         #endregion
@@ -1777,7 +1777,7 @@ namespace ZSS
 
         private void btnBrowseDirectory_Click(object sender, EventArgs e)
         {
-            Program.conf.ImagesDir = BrowseDirectory(ref txtImagesDir);
+            Program.ImagesDir = BrowseDirectory(ref txtImagesDir);
         }
 
         private string BrowseDirectory(ref TextBox textBoxDirectory)
@@ -1881,7 +1881,7 @@ namespace ZSS
 
         private void tsmViewDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.conf.ImagesDir);
+            ShowDirectory(Program.ImagesDir);
         }
 
         private void ShowDirectory(string dir)
@@ -1976,7 +1976,7 @@ namespace ZSS
 
         private void btnBrowseConfig_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.conf.SettingsDir);
+            ShowDirectory(Program.SettingsDir);
         }
 
         private void tsmLic_Click(object sender, EventArgs e)
@@ -2076,7 +2076,7 @@ namespace ZSS
 
         private void txtCacheDir_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.CacheDir = txtCacheDir.Text;
+            Program.CacheDir = txtCacheDir.Text;
         }
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
@@ -2294,7 +2294,7 @@ namespace ZSS
 
         private void txtFileDirectory_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ImagesDir = txtImagesDir.Text;
+            Program.ImagesDir = txtImagesDir.Text;
         }
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
@@ -2356,7 +2356,7 @@ namespace ZSS
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
                 File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(
-                    Program.conf.ImagesDir, Path.GetFileName(filePath))), true);
+                    Program.ImagesDir, Path.GetFileName(filePath))), true);
                 ScreenshotUsingDragDrop(filePath);
             }
         }
@@ -2417,7 +2417,7 @@ namespace ZSS
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.conf.TextDir,
+                    cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
                         NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                     File.WriteAllText(cbFilePath, Clipboard.GetText());
                     cbListFilePath.Add(cbFilePath);
@@ -2750,7 +2750,7 @@ namespace ZSS
 
         private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
         {
-            string path = ifm.GetSource(Program.conf.TempDir, sType);
+            string path = ifm.GetSource(Program.TempDir, sType);
             if (!string.IsNullOrEmpty(path))
             {
                 if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
@@ -3623,17 +3623,17 @@ namespace ZSS
 
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.conf.ImagesDir);
+            ShowDirectory(Program.ImagesDir);
         }
 
         private void btnBrowseCacheLocation_Click(object sender, EventArgs e)
         {
-            Program.conf.CacheDir = BrowseDirectory(ref txtCacheDir);
+            Program.CacheDir = BrowseDirectory(ref txtCacheDir);
         }
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.conf.CacheDir);
+            ShowDirectory(Program.CacheDir);
         }
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)

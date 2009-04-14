@@ -47,6 +47,7 @@ namespace ZSS
         public static string CacheDir { get; set; }
         public static string FilesDir { get; set; }
         public static string ImagesDir { get; set; }
+        public static string LogsDir { get; set; }
         public static string SettingsDir { get; set; }
         public static string TempDir { get; set; }
         public static string TextDir { get; set; }
@@ -88,11 +89,12 @@ namespace ZSS
             CacheDir = Path.Combine(RootAppFolder, "Cache");
             FilesDir = Path.Combine(RootAppFolder, "Files");
             ImagesDir = Path.Combine(RootAppFolder, "Images");
+            LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");
             TextDir = Path.Combine(RootAppFolder, "Text");
             TempDir = Path.Combine(RootAppFolder, "Temp");
 
-            AppDirs = new[] { CacheDir, FilesDir, ImagesDir, SettingsDir, TempDir, TextDir };
+            AppDirs = new[] { CacheDir, FilesDir, ImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
 
             foreach (string dp in AppDirs)
             {
@@ -238,35 +240,6 @@ namespace ZSS
             Application.Run(ZScreenWindow);
 
             User32.UnhookWindowsHookEx(ZScreenWindow.KeyboardHookHandle);
-        }
-
-        public static void ConfigureDirs()
-        {
-            // Settings         
-            if (conf.SettingsDir != SettingsDir)
-            {
-                conf.SettingsDir = SettingsDir;
-            }
-            // Images
-            if (conf.ImagesDir != ImagesDir)
-            {
-                conf.ImagesDir = ImagesDir;
-            }
-            // Text
-            if (conf.TextDir != TextDir)
-            {
-                conf.TextDir = TextDir;
-            }
-            // Cache
-            if (conf.CacheDir != CacheDir)
-            {
-                conf.CacheDir = CacheDir;
-            }
-            // Temp
-            if (conf.TempDir != TempDir)
-            {
-                conf.TempDir = TempDir;
-            }
         }
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)

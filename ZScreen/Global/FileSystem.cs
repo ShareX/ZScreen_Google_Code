@@ -40,7 +40,7 @@ namespace ZSS
         public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff, ImageFormat.Emf, ImageFormat.Wmf, ImageFormat.Icon };
 
         private static StringBuilder mDebug = new StringBuilder();
-        //private static string mFilePathDebug = Path.Combine(Program.LocalAppDataFolder, string.Format("{0}-{1}-debug.txt",Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
+        private static string mFilePathDebug = Path.Combine(Program.LogsDir, string.Format("{0}-{1}-debug.txt",Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
 
         /// <summary>
         /// Returns a list of file paths from a collection of files and directories
@@ -149,7 +149,7 @@ namespace ZSS
 
         public static string GetTempFilePath(string fileName)
         {
-            string dir = Program.conf.CacheDir;
+            string dir = Program.CacheDir;
             if (string.IsNullOrEmpty(dir))
                 dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
             if (!Directory.Exists(dir))
@@ -159,20 +159,23 @@ namespace ZSS
 
         public static void AppendDebug(string msg)
         {
-            mDebug.AppendLine(DateTime.Now.Ticks + " " + msg);
+            mDebug.AppendLine(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + " " + msg);
         }
 
-        //public static void writeDebugFile()
-        //{
-        //    if (mDebug.Length > 0)
-        //    {
-        //        using (StreamWriter sw = new StreamWriter(mFilePathDebug, true))
-        //        {
-        //            sw.WriteLine(mDebug.ToString());
-        //            mDebug = new StringBuilder();
-        //        }
-        //    }
-        //}
+        public static void WriteDebugFile()
+        {
+            if (Program.conf.WriteDebugFile)
+            {
+                if (mDebug.Length > 0)
+                {
+                    using (StreamWriter sw = new StreamWriter(mFilePathDebug, true))
+                    {
+                        sw.WriteLine(mDebug.ToString());
+                        mDebug = new StringBuilder();
+                    }
+                }
+            }
+        }
 
         public static bool ExportText(string name, string filePath)
         {
@@ -227,7 +230,7 @@ namespace ZSS
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
         {
-            string filePath = GetUniqueFilePath(Path.Combine(Program.conf.ImagesDir, fileName + "." +
+            string filePath = GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." +
                 Program.zImageFileTypes[Program.conf.FileFormat]));
 
             if (manualNaming)
@@ -367,7 +370,7 @@ namespace ZSS
                 if (Program.conf.FTPAccountList.Count > 0)
                 {
 
-                    string fp = Path.Combine(Program.conf.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
+                    string fp = Path.Combine(Program.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
                     if (!File.Exists(fp))
                     {
                         FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
