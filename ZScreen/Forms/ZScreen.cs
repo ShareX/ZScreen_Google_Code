@@ -3087,8 +3087,6 @@ namespace ZSS
 
             cbShowCursor.Tag = "When checked your mouse cursor will be captured in screenshots. This is useful for quickly pointing to things.";
 
-            cbActiveHelp.Tag = String.Format("When checked a friendly set of information inside of this textbox will be displayed about each control that you hover. You can use the {0} check box to toggle it on or off. The form will automatically resize itself after checking/unchecking the checkbox", cbActiveHelp.Text);
-
             llblBugReports.Tag = String.Format("Send the developers of {0} a bug report or a suggestion so that we can improve the program.", Application.ProductName);
 
             //////////////////////////////////
