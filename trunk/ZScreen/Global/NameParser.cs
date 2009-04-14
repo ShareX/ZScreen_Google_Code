@@ -51,9 +51,9 @@ namespace ZSS
             switch (nameType)
             {
                 case NameType.ActiveWindow:
-                    return Convert(Program.conf.activeWindow, nameType, preview);
+                    return Convert(Program.conf.NamingActiveWindow, nameType, preview);
                 case NameType.EntireScreen:
-                    return Convert(Program.conf.entireScreen, nameType, preview);
+                    return Convert(Program.conf.NamingEntireScreen, nameType, preview);
                 case NameType.Watermark:
                     return Convert(Program.conf.WatermarkText, nameType, preview);
                 default:

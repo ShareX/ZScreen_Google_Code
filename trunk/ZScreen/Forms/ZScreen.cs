@@ -227,8 +227,8 @@ namespace ZSS
             cbCloseQuickActions.Checked = Program.conf.CloseQuickActions;
 
             // Naming Conventions
-            txtActiveWindow.Text = Program.conf.activeWindow;
-            txtEntireScreen.Text = Program.conf.entireScreen;
+            txtActiveWindow.Text = Program.conf.NamingActiveWindow;
+            txtEntireScreen.Text = Program.conf.NamingEntireScreen;
 
             // Watermark
             if (cbWatermarkPosition.Items.Count == 0)
@@ -749,7 +749,7 @@ namespace ZSS
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                     return FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), Program.conf.ManualNaming);
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    return FileSystem.GetFilePath(NameParser.Convert(Program.conf.activeWindow, NameParser.NameType.ActiveWindow), Program.conf.ManualNaming);
+                    return FileSystem.GetFilePath(NameParser.Convert(Program.conf.NamingActiveWindow, NameParser.NameType.ActiveWindow), Program.conf.ManualNaming);
             }
             throw new Exception("Unsupported Job for getting File Path.");
         }
@@ -2311,13 +2311,13 @@ namespace ZSS
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.activeWindow = txtActiveWindow.Text;
+            Program.conf.NamingActiveWindow = txtActiveWindow.Text;
             lblActiveWindowPreview.Text = NameParser.Convert(NameParser.NameType.ActiveWindow, true);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.entireScreen = txtEntireScreen.Text;
+            Program.conf.NamingEntireScreen = txtEntireScreen.Text;
             lblEntireScreenPreview.Text = NameParser.Convert(NameParser.NameType.EntireScreen, true);
         }
 
