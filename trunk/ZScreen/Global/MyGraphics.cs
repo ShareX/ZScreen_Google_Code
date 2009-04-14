@@ -243,5 +243,36 @@ namespace ZSS
             g.DrawRectangle(new Pen(Brushes.Black), 0, 0, size - 1, size - 2);
             return newbmp;
         }
+        public static Bitmap ChangeBrightness(Bitmap bmp, int value)
+        {
+            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite,
+                PixelFormat.Format24bppRgb);
+            int nOffset = bmpData.Stride - bmp.Width * 3;
+            int bmpWidth = bmp.Width * 3;
+            int nVal;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)bmpData.Scan0;
+
+                for (int y = 0; y < bmp.Height; ++y)
+                {
+                    for (int x = 0; x < bmpWidth; ++x)
+                    {
+                        nVal = p[0] + value;
+                        if (nVal < 0) nVal = 0;
+                        else if (nVal > 255) nVal = 255;
+
+                        p[0] = (byte)nVal;
+                        ++p;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
     }
 }
