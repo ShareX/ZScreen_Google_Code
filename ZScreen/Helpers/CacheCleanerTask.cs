@@ -86,7 +86,7 @@ namespace ZSS.Tasks
                     dirSize += f.Size;
                 }
 
-                FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize));
+                FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
 
                 while (dirSize > mCacheSize)
                 {
@@ -100,7 +100,7 @@ namespace ZSS.Tasks
                     }
                 }
 
-                FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize));
+                FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));
             }
         }
     }
