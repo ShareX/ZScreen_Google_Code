@@ -269,6 +269,11 @@ namespace ZSS
                 new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.Black, Color.FromArgb(150, Color.Black)), gPath);
             g.DrawPath(labelBorderPen, gPath);
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
+            if (!Options.SelectedWindowMode && Program.conf.CropShowMagnifyingGlass)
+            {
+                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)mBgImage, mousePos, 100, 5), labelRect.X,
+                labelRect.Y - labelRect.Height - 100 - offset.Y);
+            }
         }
 
         private void DrawGrids(Graphics g)

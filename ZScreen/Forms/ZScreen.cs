@@ -180,6 +180,8 @@ namespace ZSS
             // Crop Shot
             cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
             cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
+            cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
+
             cbCropDynamicCrosshair.Checked = Program.conf.CropDynamicCrosshair;
             nudCropCrosshairInterval.Value = Program.conf.CropInterval;
             nudCropCrosshairStep.Value = Program.conf.CropStep;
@@ -187,6 +189,8 @@ namespace ZSS
             nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
             pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
             cbCropShowBigCross.Checked = Program.conf.CropShowBigCross;
+            cbCropShowMagnifyingGlass.Checked = Program.conf.CropShowMagnifyingGlass;
+
             cbShowCropRuler.Checked = Program.conf.CropShowRuler;
             cbCropDynamicBorderColor.Checked = Program.conf.CropDynamicBorderColor;
             nudCropRegionInterval.Value = Program.conf.CropRegionInterval;
@@ -195,7 +199,6 @@ namespace ZSS
             pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
             nudCropBorderSize.Value = Program.conf.CropBorderSize;
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
-            cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
 
             // Selected Window
             cbSelectedWindowStyle.SelectedIndex = Program.conf.SelectedWindowRegionStyle;
@@ -4678,6 +4681,11 @@ namespace ZSS
         private void cbSelectedWindowAddBorder_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.SelectedWindowAddBorder = cbSelectedWindowAddBorder.Checked;
+        }
+
+        private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CropShowMagnifyingGlass = cbCropShowMagnifyingGlass.Checked;
         }
     }
 }
