@@ -22,7 +22,6 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -1797,37 +1796,6 @@ namespace ZSS
             return settingDir;
         }
 
-        private void btnCopyToClipboard_Click(object sender, EventArgs e)
-        {
-            string str = "";
-
-            ArrayList items = new ArrayList();
-
-            foreach (int i in lbHistory.SelectedIndices)
-            {
-                items.Add(((HistoryItem)lbHistory.Items[i]).ScreenshotManager.GetFullImageUrl());
-            }
-
-            //Changed it back to the way it was. (reversing the list is unreliable when you do it more than one time [when new screenshots are dropping in])
-            if (cbHistoryReverseList.Checked)
-                items.Reverse();
-
-            foreach (string url in items)
-            {
-                str += url + Environment.NewLine;
-            }
-
-            if (str != "")
-            {
-                if (cbHistoryAddSpace.Checked)
-                    str = str.Insert(0, Environment.NewLine);
-                str = str.TrimEnd(Environment.NewLine.ToCharArray());
-
-                //Set clipboard data
-                Clipboard.SetDataObject(str);
-            }
-        }
-
         private void btnUpdateImageSoftware_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtImageSoftwareName.Text) &&
@@ -2375,12 +2343,12 @@ namespace ZSS
             }
         }
 
-        public void ScreenshotUsingDragDrop(string fp)
+        private void ScreenshotUsingDragDrop(string fp)
         {
             StartWorkerImages(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
         }
 
-        public void ScreenshotUsingDragDrop(string[] paths)
+        private void ScreenshotUsingDragDrop(string[] paths)
         {
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
@@ -2772,12 +2740,12 @@ namespace ZSS
             OpenLastSource(ImageFileManager.SourceType.STRING);
         }
 
-        public bool OpenLastSource(ImageFileManager.SourceType sType)
+        private void OpenLastSource(ImageFileManager.SourceType sType)
         {
-            return OpenSource(ClipboardManager.GetLastImageUpload(), sType);
+            OpenSource(ClipboardManager.GetLastImageUpload(), sType);
         }
 
-        public bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
+        private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
         {
             string path = ifm.GetSource(Program.conf.TempDir, sType);
             if (!string.IsNullOrEmpty(path))
@@ -3185,7 +3153,7 @@ namespace ZSS
             cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
         }
 
-        public Image CropImage(Image img, Rectangle rect)
+        private Image CropImage(Image img, Rectangle rect)
         {
             Image cropped = new Bitmap(rect.Width, rect.Height);
             Graphics e = Graphics.FromImage(cropped);
@@ -3205,23 +3173,39 @@ namespace ZSS
         {
             if (lbHistory.SelectedIndex != -1)
             {
-                StringBuilder sb = new StringBuilder();
+                List<string> screenshots = new List<string>();
                 for (int i = 0; i < lbHistory.SelectedItems.Count; i++)
                 {
                     HistoryItem hi = (HistoryItem)lbHistory.SelectedItems[i];
                     if (hi.ScreenshotManager != null)
                     {
-                        sb.Append(hi.ScreenshotManager.GetUrlByType(type));
+                        screenshots.Add(hi.ScreenshotManager.GetUrlByType(type));
+                    }
+                }
+                if (screenshots.Count > 0)
+                {
+                    if (Program.conf.HistoryReverseList)
+                    {
+                        screenshots.Reverse();
+                    }
+                    StringBuilder sb = new StringBuilder();
+                    if (Program.conf.HistoryAddSpace)
+                    {
+                        sb.AppendLine();
+                    }
+                    for (int i = 0; i < screenshots.Count; i++)
+                    {
+                        sb.Append(screenshots[i]);
                         if (i < lbHistory.SelectedItems.Count - 1)
                         {
                             sb.AppendLine();
                         }
                     }
-                }
-                string temp = sb.ToString();
-                if (!string.IsNullOrEmpty(temp))
-                {
-                    Clipboard.SetText(temp);
+                    string result = sb.ToString();
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        Clipboard.SetText(result);
+                    }
                 }
             }
         }
@@ -3298,7 +3282,7 @@ namespace ZSS
             }
         }
 
-        public void HistoryRetryUpload(HistoryItem hi)
+        private void HistoryRetryUpload(HistoryItem hi)
         {
             if (hi != null && File.Exists(hi.LocalPath))
             {
@@ -3429,15 +3413,16 @@ namespace ZSS
             TestWatermark();
         }
 
-        public string FontToString()
+        private string FontToString()
         {
             return FontToString(XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
                  XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor));
         }
 
-        public string FontToString(Font font, Color color)
+        private string FontToString(Font font, Color color)
         {
-            return "Name: " + font.Name + " - Size: " + font.Size + " - Style: " + font.Style;
+            return "Name: " + font.Name + " - Size: " + font.Size + " - Style: " + font.Style + " - Color: " +
+                color.R + "," + color.G + "," + color.B;
             //+ " - Color: " + (color.IsNamedColor ? color.Name : "(R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
         }
 
@@ -4202,7 +4187,7 @@ namespace ZSS
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static Software GetImageSoftware(string name)
+        private static Software GetImageSoftware(string name)
         {
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
