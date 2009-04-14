@@ -37,6 +37,7 @@
             this.lblScreenshotType = new System.Windows.Forms.Label();
             this.lblDelay = new System.Windows.Forms.Label();
             this.lblSeconds = new System.Windows.Forms.Label();
+            this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
             this.ssBar.SuspendLayout();
             this.SuspendLayout();
@@ -80,7 +81,8 @@
             // ssBar
             // 
             this.ssBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tspbBar});
+            this.tspbBar,
+            this.tsslStatus});
             this.ssBar.Location = new System.Drawing.Point(0, 131);
             this.ssBar.Name = "ssBar";
             this.ssBar.Size = new System.Drawing.Size(233, 22);
@@ -90,7 +92,7 @@
             // tspbBar
             // 
             this.tspbBar.Name = "tspbBar";
-            this.tspbBar.Size = new System.Drawing.Size(200, 16);
+            this.tspbBar.Size = new System.Drawing.Size(100, 16);
             // 
             // btnExecute
             // 
@@ -139,6 +141,11 @@
             this.lblSeconds.TabIndex = 7;
             this.lblSeconds.Text = "seconds";
             // 
+            // tsslStatus
+            // 
+            this.tsslStatus.Name = "tsslStatus";
+            this.tsslStatus.Size = new System.Drawing.Size(0, 17);
+            // 
             // AutoScreenshots
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,5 +181,6 @@
         private System.Windows.Forms.Label lblScreenshotType;
         private System.Windows.Forms.Label lblDelay;
         private System.Windows.Forms.Label lblSeconds;
+        private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
     }
 }
