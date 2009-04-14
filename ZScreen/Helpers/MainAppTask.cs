@@ -183,6 +183,10 @@ namespace ZSS.Tasks
         public void SetImage(Image img)
         {
             this.MyImage = img;
+            if (Program.conf.CopyImageUntilURL)
+            {
+                this.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, img);
+            }
         }
 
         public bool SafeToUpload()
@@ -242,7 +246,7 @@ namespace ZSS.Tasks
         {
             if (this.MyImage == null)
             {
-                this.MyImage = User32.GrabWindow(User32.GetWindowHandle(), Program.conf.ShowCursor);
+                this.SetImage(User32.GrabWindow(User32.GetWindowHandle(), Program.conf.ShowCursor));
             }
         }
 
@@ -253,7 +257,7 @@ namespace ZSS.Tasks
         {
             if (this.MyImage == null)
             {
-                this.MyImage = User32.CaptureScreen(Program.conf.ShowCursor);
+                this.SetImage(User32.CaptureScreen(Program.conf.ShowCursor));
             }
         }
 
