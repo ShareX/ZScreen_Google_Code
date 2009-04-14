@@ -35,7 +35,6 @@ namespace ZSS
     [XmlRoot("Settings")]
     public class XMLSettings
     {
-
         public XMLSettings()
         {
             FTPSettingsBackup = true;
@@ -144,8 +143,8 @@ namespace ZSS
 
         // Naming Conventions
 
-        public string activeWindow = "%t-%y.%mo.%d-%h.%mi.%s";
-        public string entireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
+        public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
+        public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
         [DescriptionAttribute("Adjust the current Auto-Increment Number"),
         CategoryAttribute("Capture/File Naming"), DefaultValueAttribute(0)]
         public int AutoIncrement { get; set; }
@@ -263,6 +262,7 @@ namespace ZSS
         public bool WriteDebugFile { get; set; }
 
         // Paths
+
         public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;
 
