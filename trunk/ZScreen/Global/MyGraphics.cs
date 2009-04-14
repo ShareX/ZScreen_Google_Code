@@ -216,5 +216,32 @@ namespace ZSS
             }
             return point;
         }
+
+        public static Bitmap MagnifyingGlass(Bitmap bmp, Point point, int size, int power)
+        {
+            Bitmap newbmp = new Bitmap(size, size);
+            Graphics g = Graphics.FromImage(newbmp);
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+            Rectangle rect = new Rectangle(point.X - (size / power) / 2, point.Y - (size / power) / 2,
+                size / power, size / power);
+            g.DrawImage(bmp, new Rectangle(0, 0, size, size), rect, GraphicsUnit.Pixel);
+            Pen crosshairPen = new Pen(Color.FromArgb(100, Color.Red), power);
+            //g.DrawLine(crosshairPen, size / 2 - power * 2, size / 2 - power / 2, size / 2 - power, size / 2 - power / 2);
+            //g.DrawLine(crosshairPen, size / 2, size / 2 - power / 2, size / 2 + power, size / 2 - power / 2);
+            //g.DrawLine(crosshairPen, size / 2 - power / 2, size / 2 - power * 2, size / 2 - power / 2, size / 2 - power);
+            //g.DrawLine(crosshairPen, size / 2 - power / 2, size / 2, size / 2 - power / 2, size / 2 + power);
+            //Bitmap bmpcrosshair = new Bitmap(power * 3, power * 3);
+            //Graphics g2 = Graphics.FromImage(bmpcrosshair);
+            //Brush crosshairBrush = Brushes.Red;
+            //g2.FillRectangle(crosshairBrush, 0, power, power, power);
+            //g2.FillRectangle(crosshairBrush, power * 2, power, power, power);
+            //g2.FillRectangle(crosshairBrush, power, 0, power, power);
+            //g2.FillRectangle(crosshairBrush, power, power * 2, power, power);
+            //g.DrawImage(bmpcrosshair, size / 2 - power * 2, size / 2 - power * 2);
+            g.DrawLine(crosshairPen, 0, size / 2, size, size / 2);
+            g.DrawLine(crosshairPen, size / 2, 0, size / 2, size - 2);
+            g.DrawRectangle(new Pen(Brushes.Black), 0, 0, size - 1, size - 2);
+            return newbmp;
+        }
     }
 }

@@ -87,7 +87,8 @@ namespace ZSS
         //  Capture
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // General 
+        // General
+
         [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture/General"), DefaultValue(true)]
         public bool CopyImageUntilURL { get; set; }
 
@@ -104,6 +105,7 @@ namespace ZSS
         public int CrosshairLineSize = 25;
         public string CropCrosshairColor = SerializeColor(Color.Black);
         public bool CropShowBigCross = true;
+        public bool CropShowMagnifyingGlass = true;
 
         public bool CropShowRuler = true;
         public bool CropDynamicBorderColor = true;
@@ -223,7 +225,6 @@ namespace ZSS
         public bool TinyPicSizeCheck = false;
 
         // Custom Image Uploaders
-
 
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
@@ -408,7 +409,6 @@ namespace ZSS
         }
 
         #endregion
-
     }
 
     public class CustomPassConverter : StringConverter
