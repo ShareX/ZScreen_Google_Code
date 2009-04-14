@@ -4687,5 +4687,16 @@ namespace ZSS
         {
             Program.conf.CropShowMagnifyingGlass = cbCropShowMagnifyingGlass.Checked;
         }
+
+        private void pbLogo_MouseEnter(object sender, EventArgs e)
+        {
+            Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+            pbLogo.Image = MyGraphics.ChangeBrightness(bmp, new Random().Next(10, 50));
+        }
+
+        private void pbLogo_MouseLeave(object sender, EventArgs e)
+        {
+            pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+        }
     }
 }
