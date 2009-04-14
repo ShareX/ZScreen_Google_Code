@@ -87,6 +87,10 @@ namespace ZSS
         //  Capture
         //~~~~~~~~~~~~~~~~~~~~~
 
+        // General 
+        [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture/General"), DefaultValue(true)]
+        public bool CopyImageUntilURL { get; set; }
+
         // Crop Shot
 
         public int CropRegionStyle = 1;

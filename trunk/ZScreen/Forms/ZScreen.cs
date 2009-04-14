@@ -650,7 +650,7 @@ namespace ZSS
             try
             {
                 task.CaptureActiveWindow();
-                SaveImage(task);
+                WriteImage(task);
                 PublishImage(ref task);
             }
             catch (ArgumentOutOfRangeException aor)
@@ -706,7 +706,7 @@ namespace ZSS
                 mTakingScreenShot = false;
                 if (task.MyImage != null)
                 {
-                    SaveImage(task);
+                    WriteImage(task);
                     PublishImage(ref task);
                 }
             }
@@ -732,7 +732,7 @@ namespace ZSS
         private void CaptureScreen(ref MainAppTask task)
         {
             task.CaptureScreen();
-            SaveImage(task);
+            WriteImage(task);
             PublishImage(ref task);
         }
 
@@ -871,7 +871,7 @@ namespace ZSS
             return sbMsg.ToString();
         }
 
-        private void SaveImage(MainAppTask t)
+        private void WriteImage(MainAppTask t)
         {
             if (t.MyImage != null)
             {
@@ -1125,11 +1125,18 @@ namespace ZSS
                     AddHistoryItem((HistoryItem)e.UserState);
                     break;
                 case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
-                    string f = e.UserState.ToString();
-                    if (File.Exists(f))
+                    if (e.UserState.GetType() == typeof(string))
                     {
-                        SaveImageToClipboard(f);
-                        FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
+                        string f = e.UserState.ToString();
+                        if (File.Exists(f))
+                        {
+                            SaveImageToClipboard(f);
+                            FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
+                        }
+                    }
+                    else if (e.UserState.GetType() == typeof(Bitmap))
+                    {
+                        Clipboard.SetImage((Image)e.UserState);
                     }
                     break;
                 case MainAppTask.ProgressType.FLASH_ICON:
