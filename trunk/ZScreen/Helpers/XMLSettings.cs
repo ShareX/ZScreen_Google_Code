@@ -267,6 +267,15 @@ namespace ZSS
         public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;
 
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Auto Capture
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        public AutoScreenshotterJobs AutoCaptureScreenshotTypes = AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN;
+        public decimal AutoCaptureDelay = 1;
+        public bool AutoCaptureAutoMinimize = false;
+        public bool AutoCaptureWaitUploads = true;
+
         #endregion
 
         #region Serialization Helpers

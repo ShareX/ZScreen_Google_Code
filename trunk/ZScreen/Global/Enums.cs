@@ -87,6 +87,16 @@ namespace ZSS
         BOTTOM
     }
 
+    public enum AutoScreenshotterJobs
+    {
+        [Description("Entire Screen")]
+        TAKE_SCREENSHOT_SCREEN,
+        [Description("Active Window")]
+        TAKE_SCREENSHOT_WINDOW_ACTIVE,
+        [Description("Last Crop Shot")]
+        TAKE_SCREENSHOT_LAST_CROPPED
+    }
+
     public static class Enums
     {
         public static string GetDescription(this Enum value)

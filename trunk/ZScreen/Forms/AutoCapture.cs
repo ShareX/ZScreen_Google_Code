@@ -11,17 +11,6 @@ using ZSS.Tasks;
 
 namespace ZSS.Forms
 {
-
-    public enum AutoScreenshotterJobs
-    {
-        [Description("Entire Screen")]
-        TAKE_SCREENSHOT_SCREEN,
-        [Description("Active Window")]
-        TAKE_SCREENSHOT_WINDOW_ACTIVE,
-        [Description("Last Crop Shot")]
-        TAKE_SCREENSHOT_LAST_CROPPED
-    }
-
     public partial class AutoCapture : Form
     {
         public event JobsEventHandler EventJob;
@@ -29,10 +18,7 @@ namespace ZSS.Forms
 
         private Timer timer = new Timer();
         private Timer statusTimer = new Timer { Interval = 250 };
-        private Tasks.MainAppTask.Jobs mJob;
-        /// <summary>
-        /// Delay in milliseconds
-        /// </summary>
+        private MainAppTask.Jobs mJob;
         private int mDelay;
         private bool waitUploads;
         private int count;
@@ -43,6 +29,16 @@ namespace ZSS.Forms
             InitializeComponent();
             timer.Tick += TimerTick;
             statusTimer.Tick += StatusTimerTick;
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
+            cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetDescriptions());
+            cbScreenshotTypes.SelectedIndex = (int)Program.conf.AutoCaptureScreenshotTypes;
+            nudDelay.Value = Program.conf.AutoCaptureDelay;
+            cbAutoMinimize.Checked = Program.conf.AutoCaptureAutoMinimize;
+            cbWaitUploads.Checked = Program.conf.AutoCaptureWaitUploads;
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -77,8 +73,7 @@ namespace ZSS.Forms
                 IsRunning = true;
                 btnExecute.Text = "Stop";
 
-                AutoScreenshotterJobs job = (AutoScreenshotterJobs)cbScreenshotTypes.SelectedIndex;
-                switch (job)
+                switch (Program.conf.AutoCaptureScreenshotTypes)
                 {
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
                         mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN;
@@ -92,9 +87,10 @@ namespace ZSS.Forms
                 }
 
                 timer.Interval = 1000;
-                mDelay = (int)(nudDelay.Value * 1000);
-                waitUploads = cbWaitUploads.Checked;
+                mDelay = (int)(Program.conf.AutoCaptureDelay * 1000);
+                waitUploads = Program.conf.AutoCaptureWaitUploads;
                 count = 0;
+                if (Program.conf.AutoCaptureAutoMinimize) this.WindowState = FormWindowState.Minimized;
             }
             timer.Enabled = IsRunning;
             statusTimer.Enabled = IsRunning;
@@ -110,14 +106,28 @@ namespace ZSS.Forms
         {
             tspbBar.Maximum = mDelay;
             tspbBar.Value = Math.Min(tspbBar.Maximum, (int)stopwatch.ElapsedMilliseconds);
-                        
+
             tsslStatus.Text = "Count: " + count;
         }
 
-        private void AutoScreenshots_Load(object sender, EventArgs e)
+        private void cbScreenshotTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetDescriptions());
-            cbScreenshotTypes.SelectedIndex = 0;
+            Program.conf.AutoCaptureScreenshotTypes = (AutoScreenshotterJobs)cbScreenshotTypes.SelectedIndex;
+        }
+
+        private void nudDelay_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoCaptureDelay = nudDelay.Value;
+        }
+
+        private void cbAutoMinimize_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoCaptureAutoMinimize = cbAutoMinimize.Checked;
+        }
+
+        private void cbWaitUploads_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoCaptureWaitUploads = cbWaitUploads.Checked;
         }
     }
 }
