@@ -1,6 +1,6 @@
 ﻿namespace ZSS.Forms
 {
-    partial class AutoScreenshots
+    partial class AutoCapture
     {
         /// <summary>
         /// Required designer variable.
@@ -82,6 +82,7 @@
             this.ssBar.Location = new System.Drawing.Point(0, 131);
             this.ssBar.Name = "ssBar";
             this.ssBar.Size = new System.Drawing.Size(233, 22);
+            this.ssBar.SizingGrip = false;
             this.ssBar.TabIndex = 2;
             this.ssBar.Text = "statusStrip1";
             // 
@@ -142,7 +143,7 @@
             this.lblSeconds.TabIndex = 7;
             this.lblSeconds.Text = "seconds";
             // 
-            // AutoScreenshots
+            // AutoCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -156,8 +157,10 @@
             this.Controls.Add(this.nudDelay);
             this.Controls.Add(this.cbScreenshotTypes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "AutoScreenshots";
-            this.Text = "AutoScreenshots";
+            this.MaximizeBox = false;
+            this.Name = "AutoCapture";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Auto Capture";
             this.Load += new System.EventHandler(this.AutoScreenshots_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.ssBar.ResumeLayout(false);

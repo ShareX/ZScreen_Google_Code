@@ -22,7 +22,7 @@ namespace ZSS.Forms
         TAKE_SCREENSHOT_LAST_CROPPED
     }
 
-    public partial class AutoScreenshots : Form
+    public partial class AutoCapture : Form
     {
         public event JobsEventHandler EventJob;
         public bool IsRunning;
@@ -30,12 +30,15 @@ namespace ZSS.Forms
         private Timer timer = new Timer();
         private Timer statusTimer = new Timer { Interval = 250 };
         private Tasks.MainAppTask.Jobs mJob;
-        private int delay;
+        /// <summary>
+        /// Delay in milliseconds
+        /// </summary>
+        private int mDelay;
         private bool waitUploads;
         private int count;
         private Stopwatch stopwatch = new Stopwatch();
 
-        public AutoScreenshots()
+        public AutoCapture()
         {
             InitializeComponent();
             timer.Tick += TimerTick;
@@ -51,7 +54,7 @@ namespace ZSS.Forms
             else
             {
                 StartTimer();
-                timer.Interval = delay;
+                timer.Interval = mDelay;
                 EventJob(this, mJob);
                 count++;
             }
@@ -89,7 +92,7 @@ namespace ZSS.Forms
                 }
 
                 timer.Interval = 1000;
-                delay = (int)(nudDelay.Value * 1000);
+                mDelay = (int)(nudDelay.Value * 1000);
                 waitUploads = cbWaitUploads.Checked;
                 count = 0;
             }
@@ -105,9 +108,9 @@ namespace ZSS.Forms
 
         private void UpdateStatus()
         {
-            int progress = (int)stopwatch.ElapsedMilliseconds / delay * 100;
-            if (progress > 100) progress = 100;
-            tspbBar.Value = progress;
+            tspbBar.Maximum = mDelay;
+            tspbBar.Value = Math.Min(tspbBar.Maximum, (int)stopwatch.ElapsedMilliseconds);
+                        
             tsslStatus.Text = "Count: " + count;
         }
 

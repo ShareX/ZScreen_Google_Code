@@ -4710,7 +4710,7 @@ namespace ZSS
             if (!bAutoScreenshotsOpened)
             {
                 bAutoScreenshotsOpened = true;
-                AutoScreenshots autoScreenshots = new AutoScreenshots { Icon = Resources.zss_main };
+                AutoCapture autoScreenshots = new AutoCapture { Icon = Resources.zss_main };
                 autoScreenshots.EventJob += new JobsEventHandler(EventJobs);
                 autoScreenshots.FormClosed += new FormClosedEventHandler(autoScreenshots_FormClosed);
                 autoScreenshots.Show();
