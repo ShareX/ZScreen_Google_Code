@@ -82,9 +82,9 @@
             this.ssBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tspbBar,
             this.tsslStatus});
-            this.ssBar.Location = new System.Drawing.Point(0, 167);
+            this.ssBar.Location = new System.Drawing.Point(0, 153);
             this.ssBar.Name = "ssBar";
-            this.ssBar.Size = new System.Drawing.Size(233, 22);
+            this.ssBar.Size = new System.Drawing.Size(230, 22);
             this.ssBar.SizingGrip = false;
             this.ssBar.TabIndex = 2;
             this.ssBar.Text = "statusStrip1";
@@ -92,7 +92,7 @@
             // tspbBar
             // 
             this.tspbBar.Name = "tspbBar";
-            this.tspbBar.Size = new System.Drawing.Size(100, 16);
+            this.tspbBar.Size = new System.Drawing.Size(125, 16);
             // 
             // tsslStatus
             // 
@@ -101,7 +101,7 @@
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(16, 128);
+            this.btnExecute.Location = new System.Drawing.Point(16, 120);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(200, 24);
             this.btnExecute.TabIndex = 3;
@@ -112,7 +112,7 @@
             // cbWaitUploads
             // 
             this.cbWaitUploads.AutoSize = true;
-            this.cbWaitUploads.Location = new System.Drawing.Point(16, 104);
+            this.cbWaitUploads.Location = new System.Drawing.Point(16, 96);
             this.cbWaitUploads.Name = "cbWaitUploads";
             this.cbWaitUploads.Size = new System.Drawing.Size(156, 17);
             this.cbWaitUploads.TabIndex = 4;
@@ -150,7 +150,7 @@
             // cbAutoMinimize
             // 
             this.cbAutoMinimize.AutoSize = true;
-            this.cbAutoMinimize.Location = new System.Drawing.Point(16, 80);
+            this.cbAutoMinimize.Location = new System.Drawing.Point(16, 72);
             this.cbAutoMinimize.Name = "cbAutoMinimize";
             this.cbAutoMinimize.Size = new System.Drawing.Size(148, 17);
             this.cbAutoMinimize.TabIndex = 8;
@@ -162,7 +162,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(233, 189);
+            this.ClientSize = new System.Drawing.Size(230, 175);
             this.Controls.Add(this.cbAutoMinimize);
             this.Controls.Add(this.lblSeconds);
             this.Controls.Add(this.lblDelay);

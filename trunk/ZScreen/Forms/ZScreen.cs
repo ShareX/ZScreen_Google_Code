@@ -519,7 +519,7 @@ namespace ZSS
                     }
                     if (CheckKeys(Program.conf.HKActiveWindow, lParam)) //Active Window
                     {
-                        StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
+                        StartBW_ActiveWindow();
                         return KeyboardHookHandle;
                     }
                     if (CheckKeys(Program.conf.HKSelectedWindow, lParam)) //Selected Window
@@ -583,6 +583,11 @@ namespace ZSS
         private void StartBW_EntireScreen()
         {
             StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN);
+        }
+
+        private void StartBW_ActiveWindow()
+        {
+            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
         }
 
         private void StartBW_SelectedWindow()
@@ -683,12 +688,7 @@ namespace ZSS
                 }
                 else
                 {
-                    CropOptions co = new CropOptions
-                    {
-                        MyImage = imgSS,
-                        SelectedWindowMode = task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED
-                    };
-                    Crop c = new Crop(co);
+                    Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
                     if (c.ShowDialog() == DialogResult.OK)
                     {
                         if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
@@ -2794,9 +2794,9 @@ namespace ZSS
         {
             dgvHotkeys.Rows.Clear();
 
+            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HKEntireScreen });
             dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HKActiveWindow });
             dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HKSelectedWindow });
-            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HKEntireScreen });
             dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HKCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HKLastCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HKAutoCapture });
@@ -2814,14 +2814,14 @@ namespace ZSS
         {
             switch (row)
             {
-                case 0: //Active Window
+                case 0: //Entire Screen
+                    Program.conf.HKEntireScreen = hkc;
+                    break;
+                case 1: //Active Window
                     Program.conf.HKActiveWindow = hkc;
                     break;
-                case 1: //Selected Window
+                case 2: //Selected Window
                     Program.conf.HKSelectedWindow = hkc;
-                    break;
-                case 2: //Entire Screen
-                    Program.conf.HKEntireScreen = hkc;
                     break;
                 case 3: //Crop Shot
                     Program.conf.HKCropShot = hkc;
@@ -4342,6 +4342,9 @@ namespace ZSS
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                     StartBW_EntireScreen();
                     break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                    StartBW_ActiveWindow();
+                    break;
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
                     StartBW_SelectedWindow();
                     break;
@@ -4361,7 +4364,10 @@ namespace ZSS
                     ShowDropWindow();
                     break;
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    if (Clipboard.ContainsText()) StartBW_LanguageTranslator(Clipboard.GetText());
+                    if (Clipboard.ContainsText())
+                    {
+                        StartBW_LanguageTranslator(Clipboard.GetText());
+                    }
                     break;
                 case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
                     ScreenColorPicker();

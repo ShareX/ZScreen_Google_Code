@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ZSS.Tasks;
@@ -66,6 +60,7 @@ namespace ZSS.Forms
             if (IsRunning)
             {
                 IsRunning = false;
+                tspbBar.Value = 0;
                 btnExecute.Text = "Start";
             }
             else
@@ -106,8 +101,7 @@ namespace ZSS.Forms
         {
             tspbBar.Maximum = mDelay;
             tspbBar.Value = Math.Min(tspbBar.Maximum, (int)stopwatch.ElapsedMilliseconds);
-
-            tsslStatus.Text = "Count: " + count;
+            tsslStatus.Text = " Count: " + count;
         }
 
         private void cbScreenshotTypes_SelectedIndexChanged(object sender, EventArgs e)
