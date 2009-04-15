@@ -74,6 +74,7 @@ namespace ZSS
         public HKcombo HKSelectedWindow = new HKcombo(Keys.Shift, Keys.PrintScreen);
         public HKcombo HKCropShot = new HKcombo(Keys.Control, Keys.PrintScreen);
         public HKcombo HKLastCropShot = new HKcombo(Keys.None);
+        public HKcombo HKAutoCapture = new HKcombo(Keys.None);
         public HKcombo HKEntireScreen = new HKcombo(Keys.PrintScreen);
         public HKcombo HKClipboardUpload = new HKcombo(Keys.None);
         public HKcombo HKDropWindow = new HKcombo(Keys.None);

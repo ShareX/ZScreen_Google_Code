@@ -512,72 +512,66 @@ namespace ZSS
                 }
                 else
                 {
-                    if (CheckKeys(Program.conf.HKActiveWindow, lParam))
+                    if (CheckKeys(Program.conf.HKEntireScreen, lParam)) //Entire Screen
                     {
-                        //Active window
-                        StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
-                        return KeyboardHookHandle;
-                    }
-                    if (CheckKeys(Program.conf.HKSelectedWindow, lParam))
-                    {
-                        //Selected Window
-                        StartBW_SelectedWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (CheckKeys(Program.conf.HKCropShot, lParam))
-                    {
-                        //Crop Shot
-                        StartBW_CropShot();
-                        return KeyboardHookHandle;
-                    }
-                    if (CheckKeys(Program.conf.HKLastCropShot, lParam))
-                    {
-                        //Last Crop Shot
-                        StartBW_LastCropShot();
-                        return KeyboardHookHandle;
-                    }
-                    if (CheckKeys(Program.conf.HKEntireScreen, lParam))
-                    {
-                        //Entire Screen
                         StartBW_EntireScreen();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKClipboardUpload, lParam))
+                    if (CheckKeys(Program.conf.HKActiveWindow, lParam)) //Active Window
                     {
-                        //Clipboard Upload
+                        StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
+                        return KeyboardHookHandle;
+                    }
+                    if (CheckKeys(Program.conf.HKSelectedWindow, lParam)) //Selected Window
+                    {
+                        StartBW_SelectedWindow();
+                        return KeyboardHookHandle;
+                    }
+                    if (CheckKeys(Program.conf.HKCropShot, lParam)) //Crop Shot
+                    {
+                        StartBW_CropShot();
+                        return KeyboardHookHandle;
+                    }
+                    if (CheckKeys(Program.conf.HKLastCropShot, lParam)) //Last Crop Shot
+                    {
+                        StartBW_LastCropShot();
+                        return KeyboardHookHandle;
+                    }
+                    if (CheckKeys(Program.conf.HKAutoCapture, lParam)) //Auto Capture
+                    {
+                        ShowAutoCapture();
+                        return KeyboardHookHandle;
+                    }
+                    if (CheckKeys(Program.conf.HKClipboardUpload, lParam)) //Clipboard Upload
+                    {
                         UploadUsingClipboard();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKDropWindow, lParam))
+                    if (CheckKeys(Program.conf.HKDropWindow, lParam)) //Drag & Drop Window
                     {
-                        //Drop Window
                         ShowDropWindow();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKActionsToolbar, lParam))
+                    if (CheckKeys(Program.conf.HKActionsToolbar, lParam)) //Actions Toolbar
                     {
-                        //Quick Actions
                         ShowQuickActions();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKQuickOptions, lParam))
+                    if (CheckKeys(Program.conf.HKQuickOptions, lParam)) //Quick Options
                     {
-                        //Quick Options
                         ShowQuickOptions();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKLanguageTranslator, lParam))
+                    if (CheckKeys(Program.conf.HKLanguageTranslator, lParam)) //Language Translator
                     {
-                        //Language Translator
                         if (Clipboard.ContainsText())
                         {
                             StartBW_LanguageTranslator(Clipboard.GetText());
                         }
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKScreenColorPicker, lParam))
+                    if (CheckKeys(Program.conf.HKScreenColorPicker, lParam)) //Screen Color Picker
                     {
-                        //Screen Color Picker
                         ScreenColorPicker();
                         return KeyboardHookHandle;
                     }
@@ -2805,6 +2799,7 @@ namespace ZSS
             dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HKEntireScreen });
             dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HKCropShot });
             dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HKLastCropShot });
+            dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HKAutoCapture });
             dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HKClipboardUpload });
             dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HKActionsToolbar });
             dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HKQuickOptions });
@@ -2834,22 +2829,25 @@ namespace ZSS
                 case 4: //Last Crop Shot
                     Program.conf.HKLastCropShot = hkc;
                     break;
-                case 5: //Clipboard Upload
+                case 5: //Auto Capture
+                    Program.conf.HKAutoCapture = hkc;
+                    break;
+                case 6: //Clipboard Upload
                     Program.conf.HKClipboardUpload = hkc;
                     break;
-                case 6: //Actions Toolbar
+                case 7: //Actions Toolbar
                     Program.conf.HKActionsToolbar = hkc;
                     break;
-                case 7: //Quick Options
+                case 8: //Quick Options
                     Program.conf.HKQuickOptions = hkc;
                     break;
-                case 8: //Drag & Drop Window
+                case 9: //Drag & Drop Window
                     Program.conf.HKDropWindow = hkc;
                     break;
-                case 9: //Language Translator
+                case 10: //Language Translator
                     Program.conf.HKLanguageTranslator = hkc;
                     break;
-                case 10: //Screen Color Picker
+                case 11: //Screen Color Picker
                     Program.conf.HKScreenColorPicker = hkc;
                     break;
             }
