@@ -88,11 +88,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\AutoScreenshots.cs">
+    <Compile Include="Forms\AutoCapture.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AutoScreenshots.Designer.cs">
-      <DependentUpon>AutoScreenshots.cs</DependentUpon>
+    <Compile Include="Forms\AutoCapture.Designer.cs">
+      <DependentUpon>AutoCapture.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ConfigWizard.cs">
       <SubType>Form</SubType>
@@ -326,8 +326,8 @@
     <EmbeddedResource Include="Documents\TODO.txt" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <EmbeddedResource Include="Documents\License.txt" />
-    <EmbeddedResource Include="Forms\AutoScreenshots.resx">
-      <DependentUpon>AutoScreenshots.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AutoCapture.resx">
+      <DependentUpon>AutoCapture.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigWizard.resx">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
@@ -341,6 +341,7 @@
     <None Include="Resources\application_lightning.png" />
     <None Include="Resources\application_form.png" />
     <None Include="Resources\tag_blue_edit.png" />
+    <None Include="Resources\photos.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
