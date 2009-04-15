@@ -7,9 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using ZSS.Tasks;
 
 namespace ZSS.Forms
 {
+
+    public enum AutoScreenshotterJobs
+    {
+        [Description("Entire Screen")]
+        TAKE_SCREENSHOT_SCREEN,
+        [Description("Active Window")]
+        TAKE_SCREENSHOT_WINDOW_ACTIVE,
+        [Description("Last Crop Shot")]
+        TAKE_SCREENSHOT_LAST_CROPPED
+    }
+
     public partial class AutoScreenshots : Form
     {
         public event JobsEventHandler EventJob;
@@ -17,7 +29,7 @@ namespace ZSS.Forms
 
         private Timer timer = new Timer();
         private Timer statusTimer = new Timer { Interval = 250 };
-        private Tasks.MainAppTask.Jobs job;
+        private Tasks.MainAppTask.Jobs mJob;
         private int delay;
         private bool waitUploads;
         private int count;
@@ -40,7 +52,7 @@ namespace ZSS.Forms
             {
                 StartTimer();
                 timer.Interval = delay;
-                EventJob(this, job);
+                EventJob(this, mJob);
                 count++;
             }
         }
@@ -61,18 +73,21 @@ namespace ZSS.Forms
             {
                 IsRunning = true;
                 btnExecute.Text = "Stop";
-                switch (cbScreenshotTypes.SelectedText)
+
+                AutoScreenshotterJobs job = (AutoScreenshotterJobs)cbScreenshotTypes.SelectedIndex;
+                switch (job)
                 {
-                    case "Entire Screen":
-                        job = Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN;
+                    case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
+                        mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN;
                         break;
-                    case "Active Window":
-                        job = Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE;
+                    case AutoScreenshotterJobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                        mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE;
                         break;
-                    case "Last Crop Shot":
-                        job = Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED;
+                    case AutoScreenshotterJobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                        mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED;
                         break;
                 }
+
                 timer.Interval = 1000;
                 delay = (int)(nudDelay.Value * 1000);
                 waitUploads = cbWaitUploads.Checked;
@@ -94,6 +109,12 @@ namespace ZSS.Forms
             if (progress > 100) progress = 100;
             tspbBar.Value = progress;
             tsslStatus.Text = "Count: " + count;
+        }
+
+        private void AutoScreenshots_Load(object sender, EventArgs e)
+        {
+            cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetDescriptions());
+            cbScreenshotTypes.SelectedIndex = 0;
         }
     }
 }

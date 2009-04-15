@@ -32,12 +32,12 @@
             this.nudDelay = new System.Windows.Forms.NumericUpDown();
             this.ssBar = new System.Windows.Forms.StatusStrip();
             this.tspbBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnExecute = new System.Windows.Forms.Button();
             this.cbWaitUploads = new System.Windows.Forms.CheckBox();
             this.lblScreenshotType = new System.Windows.Forms.Label();
             this.lblDelay = new System.Windows.Forms.Label();
             this.lblSeconds = new System.Windows.Forms.Label();
-            this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
             this.ssBar.SuspendLayout();
             this.SuspendLayout();
@@ -46,10 +46,6 @@
             // 
             this.cbScreenshotTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbScreenshotTypes.FormattingEnabled = true;
-            this.cbScreenshotTypes.Items.AddRange(new object[] {
-            "Entire Screen",
-            "Active Window",
-            "Last Crop Shot"});
             this.cbScreenshotTypes.Location = new System.Drawing.Point(104, 12);
             this.cbScreenshotTypes.Name = "cbScreenshotTypes";
             this.cbScreenshotTypes.Size = new System.Drawing.Size(104, 21);
@@ -93,6 +89,11 @@
             // 
             this.tspbBar.Name = "tspbBar";
             this.tspbBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // tsslStatus
+            // 
+            this.tsslStatus.Name = "tsslStatus";
+            this.tsslStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // btnExecute
             // 
@@ -141,11 +142,6 @@
             this.lblSeconds.TabIndex = 7;
             this.lblSeconds.Text = "seconds";
             // 
-            // tsslStatus
-            // 
-            this.tsslStatus.Name = "tsslStatus";
-            this.tsslStatus.Size = new System.Drawing.Size(0, 17);
-            // 
             // AutoScreenshots
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,6 +158,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AutoScreenshots";
             this.Text = "AutoScreenshots";
+            this.Load += new System.EventHandler(this.AutoScreenshots_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.ssBar.ResumeLayout(false);
             this.ssBar.PerformLayout();
