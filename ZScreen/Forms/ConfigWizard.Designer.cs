@@ -42,7 +42,7 @@
             // lblScreenshotDestination
             // 
             this.lblScreenshotDestination.AutoSize = true;
-            this.lblScreenshotDestination.Location = new System.Drawing.Point(32, 108);
+            this.lblScreenshotDestination.Location = new System.Drawing.Point(8, 84);
             this.lblScreenshotDestination.Name = "lblScreenshotDestination";
             this.lblScreenshotDestination.Size = new System.Drawing.Size(95, 13);
             this.lblScreenshotDestination.TabIndex = 3;
@@ -52,7 +52,7 @@
             // 
             this.cboScreenshotDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboScreenshotDest.FormattingEnabled = true;
-            this.cboScreenshotDest.Location = new System.Drawing.Point(144, 104);
+            this.cboScreenshotDest.Location = new System.Drawing.Point(120, 80);
             this.cboScreenshotDest.Name = "cboScreenshotDest";
             this.cboScreenshotDest.Size = new System.Drawing.Size(232, 21);
             this.cboScreenshotDest.TabIndex = 2;
@@ -65,9 +65,9 @@
             this.gbRoot.Controls.Add(this.btnViewRootDir);
             this.gbRoot.Controls.Add(this.btnBrowseRootDir);
             this.gbRoot.Controls.Add(this.txtRootFolder);
-            this.gbRoot.Location = new System.Drawing.Point(16, 16);
+            this.gbRoot.Location = new System.Drawing.Point(8, 8);
             this.gbRoot.Name = "gbRoot";
-            this.gbRoot.Size = new System.Drawing.Size(610, 64);
+            this.gbRoot.Size = new System.Drawing.Size(600, 64);
             this.gbRoot.TabIndex = 118;
             this.gbRoot.TabStop = false;
             this.gbRoot.Text = "Root folder for Settings and Data";
@@ -75,7 +75,7 @@
             // btnViewRootDir
             // 
             this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(490, 24);
+            this.btnViewRootDir.Location = new System.Drawing.Point(480, 24);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewRootDir.TabIndex = 116;
@@ -88,7 +88,7 @@
             this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseRootDir.Location = new System.Drawing.Point(402, 24);
+            this.btnBrowseRootDir.Location = new System.Drawing.Point(392, 24);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseRootDir.TabIndex = 115;
@@ -103,14 +103,14 @@
             this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
-            this.txtRootFolder.Size = new System.Drawing.Size(378, 20);
+            this.txtRootFolder.Size = new System.Drawing.Size(368, 20);
             this.txtRootFolder.TabIndex = 114;
             this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
                 "";
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(528, 176);
+            this.btnOK.Location = new System.Drawing.Point(536, 80);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 117;
@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 214);
+            this.ClientSize = new System.Drawing.Size(625, 117);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbRoot);
             this.Controls.Add(this.lblScreenshotDestination);

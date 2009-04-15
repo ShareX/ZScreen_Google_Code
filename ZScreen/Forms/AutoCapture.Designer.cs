@@ -38,6 +38,7 @@
             this.lblScreenshotType = new System.Windows.Forms.Label();
             this.lblDelay = new System.Windows.Forms.Label();
             this.lblSeconds = new System.Windows.Forms.Label();
+            this.cbAutoMinimize = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
             this.ssBar.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +51,7 @@
             this.cbScreenshotTypes.Name = "cbScreenshotTypes";
             this.cbScreenshotTypes.Size = new System.Drawing.Size(104, 21);
             this.cbScreenshotTypes.TabIndex = 0;
+            this.cbScreenshotTypes.SelectedIndexChanged += new System.EventHandler(this.cbScreenshotTypes_SelectedIndexChanged);
             // 
             // nudDelay
             // 
@@ -73,13 +75,14 @@
             0,
             0,
             0});
+            this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             // 
             // ssBar
             // 
             this.ssBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tspbBar,
             this.tsslStatus});
-            this.ssBar.Location = new System.Drawing.Point(0, 131);
+            this.ssBar.Location = new System.Drawing.Point(0, 167);
             this.ssBar.Name = "ssBar";
             this.ssBar.Size = new System.Drawing.Size(233, 22);
             this.ssBar.SizingGrip = false;
@@ -98,7 +101,7 @@
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(16, 96);
+            this.btnExecute.Location = new System.Drawing.Point(16, 128);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(200, 24);
             this.btnExecute.TabIndex = 3;
@@ -109,12 +112,13 @@
             // cbWaitUploads
             // 
             this.cbWaitUploads.AutoSize = true;
-            this.cbWaitUploads.Location = new System.Drawing.Point(16, 72);
+            this.cbWaitUploads.Location = new System.Drawing.Point(16, 104);
             this.cbWaitUploads.Name = "cbWaitUploads";
             this.cbWaitUploads.Size = new System.Drawing.Size(156, 17);
             this.cbWaitUploads.TabIndex = 4;
             this.cbWaitUploads.Text = "Wait until uploads complete";
             this.cbWaitUploads.UseVisualStyleBackColor = true;
+            this.cbWaitUploads.CheckedChanged += new System.EventHandler(this.cbWaitUploads_CheckedChanged);
             // 
             // lblScreenshotType
             // 
@@ -143,11 +147,23 @@
             this.lblSeconds.TabIndex = 7;
             this.lblSeconds.Text = "seconds";
             // 
+            // cbAutoMinimize
+            // 
+            this.cbAutoMinimize.AutoSize = true;
+            this.cbAutoMinimize.Location = new System.Drawing.Point(16, 80);
+            this.cbAutoMinimize.Name = "cbAutoMinimize";
+            this.cbAutoMinimize.Size = new System.Drawing.Size(148, 17);
+            this.cbAutoMinimize.TabIndex = 8;
+            this.cbAutoMinimize.Text = "Auto minimize this window";
+            this.cbAutoMinimize.UseVisualStyleBackColor = true;
+            this.cbAutoMinimize.CheckedChanged += new System.EventHandler(this.cbAutoMinimize_CheckedChanged);
+            // 
             // AutoCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(233, 153);
+            this.ClientSize = new System.Drawing.Size(233, 189);
+            this.Controls.Add(this.cbAutoMinimize);
             this.Controls.Add(this.lblSeconds);
             this.Controls.Add(this.lblDelay);
             this.Controls.Add(this.lblScreenshotType);
@@ -161,7 +177,6 @@
             this.Name = "AutoCapture";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Auto Capture";
-            this.Load += new System.EventHandler(this.AutoScreenshots_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.ssBar.ResumeLayout(false);
             this.ssBar.PerformLayout();
@@ -182,5 +197,6 @@
         private System.Windows.Forms.Label lblDelay;
         private System.Windows.Forms.Label lblSeconds;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
+        private System.Windows.Forms.CheckBox cbAutoMinimize;
     }
 }
