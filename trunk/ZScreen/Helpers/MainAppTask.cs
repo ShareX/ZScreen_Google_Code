@@ -48,6 +48,8 @@ namespace ZSS.Tasks
             TAKE_SCREENSHOT_CROPPED,
             [Description("Last Crop Shot")]
             TAKE_SCREENSHOT_LAST_CROPPED,
+            [Description("Auto Capture")]
+            AUTO_CAPTURE,
             [Description("Clipboard Upload")]
             UPLOAD_FROM_CLIPBOARD,
             [Description("Drag & Drop Window")]

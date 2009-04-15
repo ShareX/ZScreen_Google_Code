@@ -37,6 +37,7 @@
             this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
             this.tsbLanguageTranslator = new System.Windows.Forms.ToolStripButton();
             this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
+            this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
             this.tsQuickActions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@
             this.tsbSelectedWindow,
             this.tsbCropShot,
             this.tsbLastCropShot,
+            this.tsbAutoCapture,
             this.tsbClipboardUpload,
             this.tsbDragDropWindow,
             this.tsbLanguageTranslator,
@@ -55,7 +57,7 @@
             this.tsQuickActions.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.tsQuickActions.Location = new System.Drawing.Point(0, 0);
             this.tsQuickActions.Name = "tsQuickActions";
-            this.tsQuickActions.Size = new System.Drawing.Size(185, 24);
+            this.tsQuickActions.Size = new System.Drawing.Size(208, 24);
             this.tsQuickActions.TabIndex = 0;
             this.tsQuickActions.Text = "toolStrip1";
             this.tsQuickActions.MouseEnter += new System.EventHandler(this.tsQuickActions_MouseEnter);
@@ -140,16 +142,26 @@
             this.tsbScreenColorPicker.Text = "Screen Color Picker";
             this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
             // 
+            // tsbAutoCapture
+            // 
+            this.tsbAutoCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAutoCapture.Image = global::ZSS.Properties.Resources.images_stack;
+            this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAutoCapture.Name = "tsbAutoCapture";
+            this.tsbAutoCapture.Size = new System.Drawing.Size(23, 20);
+            this.tsbAutoCapture.Text = "Auto Capture";
+            this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
+            // 
             // ToolbarWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(185, 24);
+            this.ClientSize = new System.Drawing.Size(208, 24);
             this.Controls.Add(this.tsQuickActions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "ToolbarWindow";
-            this.Text = "Quick Actions";
+            this.Text = " Actions Toolbar";
             this.TopMost = true;
             this.tsQuickActions.ResumeLayout(false);
             this.tsQuickActions.PerformLayout();
@@ -169,5 +181,6 @@
         private System.Windows.Forms.ToolStripButton tsbDragDropWindow;
         private System.Windows.Forms.ToolStripButton tsbLanguageTranslator;
         private System.Windows.Forms.ToolStripButton tsbScreenColorPicker;
+        private System.Windows.Forms.ToolStripButton tsbAutoCapture;
     }
 }

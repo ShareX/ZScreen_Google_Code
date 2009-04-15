@@ -4353,6 +4353,9 @@ namespace ZSS
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                     StartBW_LastCropShot();
                     break;
+                case MainAppTask.Jobs.AUTO_CAPTURE:
+                    ShowAutoCapture();
+                    break;
                 case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                     UploadUsingClipboard();
                     break;
@@ -4618,8 +4621,6 @@ namespace ZSS
             TestWatermark();
         }
 
-
-
         private void cbWatermarkAddReflection_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
@@ -4706,6 +4707,11 @@ namespace ZSS
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowAutoCapture();
+        }
+
+        private void ShowAutoCapture()
         {
             if (!bAutoScreenshotsOpened)
             {

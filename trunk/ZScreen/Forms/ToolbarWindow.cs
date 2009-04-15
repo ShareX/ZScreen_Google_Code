@@ -42,6 +42,11 @@ namespace ZSS.Forms
             DoJob(this, Tasks.MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
         }
 
+        private void tsbAutoCapture_Click(object sender, EventArgs e)
+        {
+            DoJob(this, Tasks.MainAppTask.Jobs.AUTO_CAPTURE);
+        }
+
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
             DoJob(this, Tasks.MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
