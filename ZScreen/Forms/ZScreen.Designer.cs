@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -248,7 +248,6 @@ namespace ZSS
             this.pbWatermarkBorderColor = new System.Windows.Forms.PictureBox();
             this.pbWatermarkGradient2 = new System.Windows.Forms.PictureBox();
             this.lblWatermarkBackColors = new System.Windows.Forms.Label();
-            this.lblWatermarkBackTransTip = new System.Windows.Forms.Label();
             this.gbWatermarkText = new System.Windows.Forms.GroupBox();
             this.trackWatermarkFontTrans = new System.Windows.Forms.TrackBar();
             this.lblWatermarkTextTip = new System.Windows.Forms.Label();
@@ -259,14 +258,12 @@ namespace ZSS
             this.lblWatermarkFontTrans = new System.Windows.Forms.Label();
             this.txtWatermarkText = new System.Windows.Forms.TextBox();
             this.pbWatermarkFontColor = new System.Windows.Forms.PictureBox();
-            this.lblWatermarkFontTransTip = new System.Windows.Forms.Label();
             this.lblGridSizeWidth = new System.Windows.Forms.Label();
             this.nudCropGridWidth = new System.Windows.Forms.NumericUpDown();
             this.cbDeleteLocal = new System.Windows.Forms.CheckBox();
             this.gbSaveLoc = new System.Windows.Forms.GroupBox();
             this.btnViewImagesDir = new System.Windows.Forms.Button();
             this.txtImagesDir = new System.Windows.Forms.TextBox();
-            this.btnBrowseImagesDir = new System.Windows.Forms.Button();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
@@ -450,7 +447,6 @@ namespace ZSS
             this.btnSettingsImport = new System.Windows.Forms.Button();
             this.gbRemoteDirCache = new System.Windows.Forms.GroupBox();
             this.btnViewCacheDir = new System.Windows.Forms.Button();
-            this.btnBrowseCacheDir = new System.Windows.Forms.Button();
             this.lblCacheSize = new System.Windows.Forms.Label();
             this.lblMebibytes = new System.Windows.Forms.Label();
             this.nudCacheSize = new System.Windows.Forms.NumericUpDown();
@@ -2789,6 +2785,8 @@ namespace ZSS
             // 
             // gbWatermarkBackground
             // 
+            this.gbWatermarkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbWatermarkBackground.Controls.Add(this.trackWatermarkBackgroundTrans);
             this.gbWatermarkBackground.Controls.Add(this.cbWatermarkGradientType);
             this.gbWatermarkBackground.Controls.Add(this.lblWatermarkGradientType);
@@ -2953,18 +2951,10 @@ namespace ZSS
             this.lblWatermarkBackColors.TabIndex = 12;
             this.lblWatermarkBackColors.Text = "Background colors:";
             // 
-            // lblWatermarkBackTransTip
-            // 
-            this.lblWatermarkBackTransTip.AutoSize = true;
-            this.lblWatermarkBackTransTip.Location = new System.Drawing.Point(96, 344);
-            this.lblWatermarkBackTransTip.Name = "lblWatermarkBackTransTip";
-            this.lblWatermarkBackTransTip.Size = new System.Drawing.Size(105, 13);
-            this.lblWatermarkBackTransTip.TabIndex = 9;
-            this.lblWatermarkBackTransTip.Text = "(0 - 255) 0 = Invisible";
-            this.lblWatermarkBackTransTip.Visible = false;
-            // 
             // gbWatermarkText
             // 
+            this.gbWatermarkText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbWatermarkText.Controls.Add(this.trackWatermarkFontTrans);
             this.gbWatermarkText.Controls.Add(this.lblWatermarkTextTip);
             this.gbWatermarkText.Controls.Add(this.lblWatermarkText);
@@ -3080,16 +3070,6 @@ namespace ZSS
             this.pbWatermarkFontColor.TabStop = false;
             this.pbWatermarkFontColor.Click += new System.EventHandler(this.pbWatermarkFontColor_Click);
             // 
-            // lblWatermarkFontTransTip
-            // 
-            this.lblWatermarkFontTransTip.AutoSize = true;
-            this.lblWatermarkFontTransTip.Location = new System.Drawing.Point(96, 312);
-            this.lblWatermarkFontTransTip.Name = "lblWatermarkFontTransTip";
-            this.lblWatermarkFontTransTip.Size = new System.Drawing.Size(105, 13);
-            this.lblWatermarkFontTransTip.TabIndex = 23;
-            this.lblWatermarkFontTransTip.Text = "(0 - 255) 0 = Invisible";
-            this.lblWatermarkFontTransTip.Visible = false;
-            // 
             // lblGridSizeWidth
             // 
             this.lblGridSizeWidth.AutoSize = true;
@@ -3132,7 +3112,6 @@ namespace ZSS
             this.gbSaveLoc.Controls.Add(this.cbDeleteLocal);
             this.gbSaveLoc.Controls.Add(this.btnViewImagesDir);
             this.gbSaveLoc.Controls.Add(this.txtImagesDir);
-            this.gbSaveLoc.Controls.Add(this.btnBrowseImagesDir);
             this.gbSaveLoc.Location = new System.Drawing.Point(8, 80);
             this.gbSaveLoc.Name = "gbSaveLoc";
             this.gbSaveLoc.Size = new System.Drawing.Size(742, 88);
@@ -3163,19 +3142,6 @@ namespace ZSS
             this.txtImagesDir.Size = new System.Drawing.Size(598, 20);
             this.txtImagesDir.TabIndex = 1;
             this.txtImagesDir.TextChanged += new System.EventHandler(this.txtFileDirectory_TextChanged);
-            // 
-            // btnBrowseImagesDir
-            // 
-            this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseImagesDir.Location = new System.Drawing.Point(632, 56);
-            this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
-            this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseImagesDir.TabIndex = 1;
-            this.btnBrowseImagesDir.Text = "Browse...";
-            this.btnBrowseImagesDir.UseVisualStyleBackColor = true;
-            this.btnBrowseImagesDir.Visible = false;
-            this.btnBrowseImagesDir.Click += new System.EventHandler(this.btnBrowseDirectory_Click);
             // 
             // chkManualNaming
             // 
@@ -3750,38 +3716,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4166,9 +4132,7 @@ namespace ZSS
             // tpWatermarkText
             // 
             this.tpWatermarkText.Controls.Add(this.gbWatermarkBackground);
-            this.tpWatermarkText.Controls.Add(this.lblWatermarkFontTransTip);
             this.tpWatermarkText.Controls.Add(this.gbWatermarkText);
-            this.tpWatermarkText.Controls.Add(this.lblWatermarkBackTransTip);
             this.tpWatermarkText.ImageKey = "textfield_rename.png";
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkText.Name = "tpWatermarkText";
@@ -4272,6 +4236,8 @@ namespace ZSS
             // 
             // gbImageUploaderOptions
             // 
+            this.gbImageUploaderOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbImageUploaderOptions.Controls.Add(this.lblUploadDurationLimit);
             this.gbImageUploaderOptions.Controls.Add(this.nudUploadDurationLimit);
             this.gbImageUploaderOptions.Controls.Add(this.cboAutoChangeUploadDestination);
@@ -4386,6 +4352,8 @@ namespace ZSS
             // 
             // gbImageShack
             // 
+            this.gbImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbImageShack.BackColor = System.Drawing.Color.Transparent;
             this.gbImageShack.Controls.Add(this.btnGalleryImageShack);
             this.gbImageShack.Controls.Add(this.btnRegCodeImageShack);
@@ -4400,6 +4368,7 @@ namespace ZSS
             // 
             // btnGalleryImageShack
             // 
+            this.btnGalleryImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGalleryImageShack.Location = new System.Drawing.Point(464, 24);
             this.btnGalleryImageShack.Name = "btnGalleryImageShack";
             this.btnGalleryImageShack.Size = new System.Drawing.Size(75, 23);
@@ -4410,6 +4379,7 @@ namespace ZSS
             // 
             // btnRegCodeImageShack
             // 
+            this.btnRegCodeImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegCodeImageShack.Location = new System.Drawing.Point(383, 24);
             this.btnRegCodeImageShack.Name = "btnRegCodeImageShack";
             this.btnRegCodeImageShack.Size = new System.Drawing.Size(75, 23);
@@ -4429,6 +4399,8 @@ namespace ZSS
             // 
             // txtImageShackRegistrationCode
             // 
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(110, 26);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(267, 20);
@@ -4437,6 +4409,8 @@ namespace ZSS
             // 
             // gbTinyPic
             // 
+            this.gbTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTinyPic.Controls.Add(this.btnGalleryTinyPic);
             this.gbTinyPic.Controls.Add(this.cbTinyPicSizeCheck);
             this.gbTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
@@ -4452,6 +4426,7 @@ namespace ZSS
             // 
             // btnGalleryTinyPic
             // 
+            this.btnGalleryTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGalleryTinyPic.Location = new System.Drawing.Point(464, 24);
             this.btnGalleryTinyPic.Name = "btnGalleryTinyPic";
             this.btnGalleryTinyPic.Size = new System.Drawing.Size(75, 23);
@@ -4485,6 +4460,7 @@ namespace ZSS
             // 
             // btnRegCodeTinyPic
             // 
+            this.btnRegCodeTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegCodeTinyPic.Location = new System.Drawing.Point(384, 24);
             this.btnRegCodeTinyPic.Name = "btnRegCodeTinyPic";
             this.btnRegCodeTinyPic.Size = new System.Drawing.Size(75, 23);
@@ -4504,6 +4480,8 @@ namespace ZSS
             // 
             // txtTinyPicShuk
             // 
+            this.txtTinyPicShuk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicShuk.Location = new System.Drawing.Point(111, 26);
             this.txtTinyPicShuk.Name = "txtTinyPicShuk";
             this.txtTinyPicShuk.ReadOnly = true;
@@ -5285,7 +5263,6 @@ namespace ZSS
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRemoteDirCache.BackColor = System.Drawing.Color.Transparent;
             this.gbRemoteDirCache.Controls.Add(this.btnViewCacheDir);
-            this.gbRemoteDirCache.Controls.Add(this.btnBrowseCacheDir);
             this.gbRemoteDirCache.Controls.Add(this.lblCacheSize);
             this.gbRemoteDirCache.Controls.Add(this.lblMebibytes);
             this.gbRemoteDirCache.Controls.Add(this.nudCacheSize);
@@ -5307,17 +5284,6 @@ namespace ZSS
             this.btnViewCacheDir.Text = "View Directory...";
             this.btnViewCacheDir.UseVisualStyleBackColor = true;
             this.btnViewCacheDir.Click += new System.EventHandler(this.btnViewRemoteDirectory_Click);
-            // 
-            // btnBrowseCacheDir
-            // 
-            this.btnBrowseCacheDir.Location = new System.Drawing.Point(632, 56);
-            this.btnBrowseCacheDir.Name = "btnBrowseCacheDir";
-            this.btnBrowseCacheDir.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseCacheDir.TabIndex = 6;
-            this.btnBrowseCacheDir.Text = "Browse...";
-            this.btnBrowseCacheDir.UseVisualStyleBackColor = true;
-            this.btnBrowseCacheDir.Visible = false;
-            this.btnBrowseCacheDir.Click += new System.EventHandler(this.btnBrowseCacheLocation_Click);
             // 
             // lblCacheSize
             // 
@@ -5389,6 +5355,8 @@ namespace ZSS
             // 
             // gbStatistics
             // 
+            this.gbStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbStatistics.Controls.Add(this.btnDebugStart);
             this.gbStatistics.Controls.Add(this.btnCopyStats);
             this.gbStatistics.Controls.Add(this.lblDebugInfo);
@@ -5421,6 +5389,8 @@ namespace ZSS
             // 
             // lblDebugInfo
             // 
+            this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDebugInfo.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDebugInfo.Location = new System.Drawing.Point(14, 60);
             this.lblDebugInfo.Name = "lblDebugInfo";
@@ -5429,6 +5399,8 @@ namespace ZSS
             // 
             // gbLastSource
             // 
+            this.gbLastSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbLastSource.Controls.Add(this.btnOpenSourceString);
             this.gbLastSource.Controls.Add(this.btnOpenSourceText);
             this.gbLastSource.Controls.Add(this.btnOpenSourceBrowser);
@@ -5676,7 +5648,6 @@ namespace ZSS
             this.tpWatermark.ResumeLayout(false);
             this.tcWatermark.ResumeLayout(false);
             this.tpWatermarkText.ResumeLayout(false);
-            this.tpWatermarkText.PerformLayout();
             this.tpWatermarkImage.ResumeLayout(false);
             this.tpWatermarkImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).EndInit();
@@ -5754,7 +5725,6 @@ namespace ZSS
         private System.Windows.Forms.TextBox txtImagesDir;
         private System.Windows.Forms.TextBox txtEntireScreen;
         private System.Windows.Forms.TextBox txtActiveWindow;
-        private System.Windows.Forms.Button btnBrowseImagesDir;
         private System.Windows.Forms.TabPage tpEditors;
         private System.Windows.Forms.CheckBox cbStartWin;
         private System.Windows.Forms.Button btnUpdateImageSoftware;
@@ -5946,7 +5916,6 @@ namespace ZSS
         private System.Windows.Forms.Label lblWatermarkOffset;
         private System.Windows.Forms.NumericUpDown nudWatermarkBackTrans;
         private System.Windows.Forms.Label lblWatermarkBackTrans;
-        private System.Windows.Forms.Label lblWatermarkBackTransTip;
         private System.Windows.Forms.ToolStripMenuItem tsmActions;
         private System.Windows.Forms.ToolStripMenuItem tsmCropShot;
         private System.Windows.Forms.ToolStripMenuItem tsmClipboardUpload;
@@ -5967,7 +5936,6 @@ namespace ZSS
         private System.Windows.Forms.Label lblWatermarkPosition;
         private System.Windows.Forms.ComboBox cbWatermarkPosition;
         private System.Windows.Forms.Label lblWatermarkBackColorsTip;
-        private System.Windows.Forms.Label lblWatermarkFontTransTip;
         private System.Windows.Forms.NumericUpDown nudWatermarkFontTrans;
         private System.Windows.Forms.Label lblWatermarkFontTrans;
         private System.Windows.Forms.Label lblEntireScreenPreview;
@@ -5987,7 +5955,6 @@ namespace ZSS
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnViewImagesDir;
-        private System.Windows.Forms.Button btnBrowseCacheDir;
         private System.Windows.Forms.Button btnViewCacheDir;
         private System.Windows.Forms.CheckBox cbOpenMainWindow;
         private System.Windows.Forms.CheckBox cbShowTaskbar;
