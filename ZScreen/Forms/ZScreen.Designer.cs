@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -267,7 +267,6 @@ namespace ZSS
             this.btnViewImagesDir = new System.Windows.Forms.Button();
             this.txtImagesDir = new System.Windows.Forms.TextBox();
             this.btnBrowseImagesDir = new System.Windows.Forms.Button();
-            this.cboShowWatermark = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
@@ -637,7 +636,7 @@ namespace ZSS
             // 
             this.tsmMain.Image = global::ZSS.Properties.Resources.application_form;
             this.tsmMain.Name = "tsmMain";
-            this.tsmMain.Size = new System.Drawing.Size(152, 22);
+            this.tsmMain.Size = new System.Drawing.Size(141, 22);
             this.tsmMain.Text = "Main...";
             this.tsmMain.Click += new System.EventHandler(this.tsmMain_Click);
             // 
@@ -645,7 +644,7 @@ namespace ZSS
             // 
             this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
             this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(152, 22);
+            this.tsmHotkeys.Size = new System.Drawing.Size(141, 22);
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -653,7 +652,7 @@ namespace ZSS
             // 
             this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
             this.tsmCapture.Name = "tsmCapture";
-            this.tsmCapture.Size = new System.Drawing.Size(152, 22);
+            this.tsmCapture.Size = new System.Drawing.Size(141, 22);
             this.tsmCapture.Text = "Capture...";
             this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -661,7 +660,7 @@ namespace ZSS
             // 
             this.tsmWatermark.Image = global::ZSS.Properties.Resources.tag_blue_edit;
             this.tsmWatermark.Name = "tsmWatermark";
-            this.tsmWatermark.Size = new System.Drawing.Size(152, 22);
+            this.tsmWatermark.Size = new System.Drawing.Size(141, 22);
             this.tsmWatermark.Text = "Watermark...";
             this.tsmWatermark.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -669,7 +668,7 @@ namespace ZSS
             // 
             this.tsmEditors.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmEditors.Name = "tsmEditors";
-            this.tsmEditors.Size = new System.Drawing.Size(152, 22);
+            this.tsmEditors.Size = new System.Drawing.Size(141, 22);
             this.tsmEditors.Text = "Editors...";
             this.tsmEditors.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -677,7 +676,7 @@ namespace ZSS
             // 
             this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
             this.tsmFTP.Name = "tsmFTP";
-            this.tsmFTP.Size = new System.Drawing.Size(152, 22);
+            this.tsmFTP.Size = new System.Drawing.Size(141, 22);
             this.tsmFTP.Text = "FTP...";
             this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -685,7 +684,7 @@ namespace ZSS
             // 
             this.tsmHTTP.Image = global::ZSS.Properties.Resources.world_edit;
             this.tsmHTTP.Name = "tsmHTTP";
-            this.tsmHTTP.Size = new System.Drawing.Size(152, 22);
+            this.tsmHTTP.Size = new System.Drawing.Size(141, 22);
             this.tsmHTTP.Text = "HTTP...";
             this.tsmHTTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -693,7 +692,7 @@ namespace ZSS
             // 
             this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
             this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(152, 22);
+            this.tsmHistory.Size = new System.Drawing.Size(141, 22);
             this.tsmHistory.Text = "History...";
             this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -701,7 +700,7 @@ namespace ZSS
             // 
             this.tsmOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(152, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(141, 22);
             this.tsmOptions.Text = "Options...";
             this.tsmOptions.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -3175,17 +3174,6 @@ namespace ZSS
             this.btnBrowseImagesDir.Visible = false;
             this.btnBrowseImagesDir.Click += new System.EventHandler(this.btnBrowseDirectory_Click);
             // 
-            // cboShowWatermark
-            // 
-            this.cboShowWatermark.AutoSize = true;
-            this.cboShowWatermark.Location = new System.Drawing.Point(24, 200);
-            this.cboShowWatermark.Name = "cboShowWatermark";
-            this.cboShowWatermark.Size = new System.Drawing.Size(185, 17);
-            this.cboShowWatermark.TabIndex = 0;
-            this.cboShowWatermark.Text = "Show Watermark on Screenshots";
-            this.cboShowWatermark.UseVisualStyleBackColor = true;
-            this.cboShowWatermark.CheckedChanged += new System.EventHandler(this.cbShowWatermark_CheckedChanged);
-            // 
             // chkManualNaming
             // 
             this.chkManualNaming.AutoSize = true;
@@ -3759,38 +3747,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3852,7 +3840,7 @@ namespace ZSS
             this.gbGridMode.Controls.Add(this.lblGridSize);
             this.gbGridMode.Controls.Add(this.lblGridSizeHeight);
             this.gbGridMode.Controls.Add(this.nudCropGridWidth);
-            this.gbGridMode.Location = new System.Drawing.Point(16, 256);
+            this.gbGridMode.Location = new System.Drawing.Point(16, 232);
             this.gbGridMode.Name = "gbGridMode";
             this.gbGridMode.Size = new System.Drawing.Size(376, 80);
             this.gbGridMode.TabIndex = 120;
@@ -3906,7 +3894,7 @@ namespace ZSS
             // 
             this.gbActiveHelp.Controls.Add(this.cbHelpToLanguage);
             this.gbActiveHelp.Controls.Add(this.chkGTActiveHelp);
-            this.gbActiveHelp.Location = new System.Drawing.Point(16, 344);
+            this.gbActiveHelp.Location = new System.Drawing.Point(16, 320);
             this.gbActiveHelp.Name = "gbActiveHelp";
             this.gbActiveHelp.Size = new System.Drawing.Size(376, 56);
             this.gbActiveHelp.TabIndex = 84;
@@ -3989,7 +3977,6 @@ namespace ZSS
             // 
             this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
             this.gbMainOptions.Controls.Add(this.cbPromptforUpload);
-            this.gbMainOptions.Controls.Add(this.cboShowWatermark);
             this.gbMainOptions.Controls.Add(this.lblCopytoClipboard);
             this.gbMainOptions.Controls.Add(this.cboClipboardTextMode);
             this.gbMainOptions.Controls.Add(this.chkManualNaming);
@@ -4001,7 +3988,7 @@ namespace ZSS
             this.gbMainOptions.Controls.Add(this.cboScreenshotDest);
             this.gbMainOptions.Location = new System.Drawing.Point(16, 16);
             this.gbMainOptions.Name = "gbMainOptions";
-            this.gbMainOptions.Size = new System.Drawing.Size(376, 232);
+            this.gbMainOptions.Size = new System.Drawing.Size(376, 208);
             this.gbMainOptions.TabIndex = 79;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "General Settings";
@@ -5949,7 +5936,6 @@ namespace ZSS
         private System.Windows.Forms.Button btnHistoryBrowseURL;
         private System.Windows.Forms.Button btnHistoryOpenLocalFile;
         private System.Windows.Forms.ImageList ilApp;
-        private System.Windows.Forms.CheckBox cboShowWatermark;
         private System.Windows.Forms.CheckBox cbShowCursor;
         private System.Windows.Forms.Label lblWatermarkFont;
         private System.Windows.Forms.Button btnWatermarkFont;
