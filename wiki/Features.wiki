@@ -1,14 +1,24 @@
 #summary ZScreen Features
 #labels Featured
 
- * Multiple-monitor support
- * Auto-update (via code.google.com)
- * Support for uploading screenshots to Tinypic
- * Support for uploading to Imageshack and Tinypic Accounts
- * Support for uploading to custom places (via HTTP)
- * Built-in “Active Help” (that guides you through hard to understand controls)
- * Watermarks
- * New hotkey system
+= Multiple-monitor support = 
+Starting with version 2.6.7.1, ZScreen has complete multi-monitor support. 
+
+= Support for uploading screenshots/images to common Image Hosting Services =
+ZScreen can also upload images to your own personal account in these image hosting services.
+ * Tinypic
+ * Imageshack
+ * Other custom places using Custom Uploader 
+
+= Watermarks =
+Watermark tab lets you pick a text or image watermark. 
+[http://i42.tinypic.com/b7b91j.png]
+
+= Simplified Hotkey System = 
+[http://img7.imageshack.us/img7/5397/zscreen2900beta20090416.png]
+
  * Last Crop hotkey (allows you to redo your last crop shot)
  * Balloon tips, sounds, and ability to show cursor in screenshots
- * Upload images from the filesystem via Clipboard upload or Drag n Drop
+ * Upload images from the File System via Clipboard upload or Drag n Drop
+
+ * Auto-update (via code.google.com)
