@@ -40,7 +40,6 @@ namespace ZSS
         public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff, ImageFormat.Emf, ImageFormat.Wmf, ImageFormat.Icon };
 
         private static StringBuilder mDebug = new StringBuilder();
-        private static string mFilePathDebug = Path.Combine(Program.LogsDir, string.Format("{0}-{1}-debug.txt",Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
 
         /// <summary>
         /// Returns a list of file paths from a collection of files and directories
@@ -164,14 +163,18 @@ namespace ZSS
 
         public static void WriteDebugFile()
         {
-            if (Program.conf.WriteDebugFile)
+            if (!string.IsNullOrEmpty(Program.LogsDir))
             {
-                if (mDebug.Length > 0)
+               string fpDebug = Path.Combine(Program.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
+                if (Program.conf.WriteDebugFile)
                 {
-                    using (StreamWriter sw = new StreamWriter(mFilePathDebug, true))
+                    if (mDebug.Length > 0)
                     {
-                        sw.WriteLine(mDebug.ToString());
-                        mDebug = new StringBuilder();
+                        using (StreamWriter sw = new StreamWriter(fpDebug, true))
+                        {
+                            sw.WriteLine(mDebug.ToString());
+                            mDebug = new StringBuilder();
+                        }
                     }
                 }
             }
