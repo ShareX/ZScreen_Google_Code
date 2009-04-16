@@ -152,8 +152,8 @@ namespace ZSS
 
         // Watermark
 
-        public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public WatermarkType WatermarkMode = WatermarkType.NONE;
+        public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
         public decimal WatermarkOffset = 5;
         public bool WatermarkAddReflection = false;
         public bool WatermarkAutoHide = true;
@@ -169,7 +169,6 @@ namespace ZSS
         public decimal WatermarkBackTrans = 225;
         public System.Drawing.Drawing2D.LinearGradientMode WatermarkGradientType = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
 
-        public bool WatermarkUseImage = false;
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
         public decimal WatermarkImageScale = 100;
