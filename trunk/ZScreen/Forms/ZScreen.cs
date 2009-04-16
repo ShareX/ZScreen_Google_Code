@@ -3040,6 +3040,10 @@ namespace ZSS
             {
                 txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use. To set a Hotkey click on a button and follow the directions provided above.";
             }
+            else if (e.TabPage == tpWatermark)
+            {
+                txtActiveHelp.Text = tabDesc + string.Format("configure Watermark properties. You can choose a text string or an image as the Watermark. If you are using a large Logo then consider setting the Image Scale.");
+            }
             else if (e.TabPage == tpFTP)
             {
                 txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots. You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
