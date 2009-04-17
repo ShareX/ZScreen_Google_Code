@@ -89,7 +89,7 @@ namespace ZSS
             {
                 img = WatermarkMaker.GetImage(img);
 
-                long size = Program.conf.SwitchAfter * 1024;
+                long size = (long)Program.conf.SwitchAfter * 1024;
 
                 MemoryStream ms = new MemoryStream();
                 MyGraphics.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.FileFormat]);

@@ -94,7 +94,7 @@ namespace ZSS
 
             if (format == ImageFormat.Jpeg)
             {
-                EncoderParameter quality = new EncoderParameter(Encoder.Quality, Program.conf.ImageQuality);
+                EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)Program.conf.ImageQuality);
                 ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
 
                 EncoderParameters encoderParams = new EncoderParameters(1);
