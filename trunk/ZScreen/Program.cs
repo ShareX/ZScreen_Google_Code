@@ -112,7 +112,6 @@ namespace ZSS
         {
             get
             {
-
                 if (!Directory.Exists(SettingsDir))
                 {
                     Directory.CreateDirectory(SettingsDir);
