@@ -182,10 +182,7 @@ namespace ZSS
                     // If RootDir is still empty that means it is a new installation
                     cw = new ConfigWizard(DefaultRootAppFolder);
                     cw.ShowDialog();
-                    if (cw.DialogResult == DialogResult.OK)
-                    {
-                        Settings.Default.RootDir = cw.RootFolder;
-                    }
+                    Settings.Default.RootDir = cw.RootFolder;
                 }
             }
 
