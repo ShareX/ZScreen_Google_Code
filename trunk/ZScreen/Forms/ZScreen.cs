@@ -256,7 +256,7 @@ namespace ZSS
             pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2);
             pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor);
             nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
-            trackWatermarkFontTrans.Value = (int)Program.conf.WatermarkBackTrans;
+            trackWatermarkBackgroundTrans.Value = (int)Program.conf.WatermarkBackTrans;
             if (cbWatermarkGradientType.Items.Count == 0)
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
@@ -273,7 +273,7 @@ namespace ZSS
             if (cbFileFormat.Items.Count == 0) cbFileFormat.Items.AddRange(Program.zImageFileTypes);
             cbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudImageQuality.Value = Program.conf.ImageQuality;
-            nudSwitchAfter.Value = Program.conf.SwitchAfter;
+            nudSwitchAfter.Value = Math.Min(Program.conf.SwitchAfter, nudSwitchAfter.Maximum);
             if (cbSwitchFormat.Items.Count == 0) cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
             cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
 
@@ -2323,7 +2323,7 @@ namespace ZSS
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageQuality = (int)nudImageQuality.Value;
+            Program.conf.ImageQuality = nudImageQuality.Value;
         }
 
         private void cmbSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -4439,7 +4439,7 @@ namespace ZSS
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.SwitchAfter = (int)nudSwitchAfter.Value;
+            Program.conf.SwitchAfter = nudSwitchAfter.Value;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
