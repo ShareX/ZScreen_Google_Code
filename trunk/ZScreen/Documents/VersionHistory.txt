@@ -1,5 +1,6 @@
 Version 2.9 - 20090412
 
+2.9.00.1 Closing Config Wizard without pressing OK, crashed ZScreen
 2.9.00.0 Added Auto Capture to Quick Actions in the Tray Menu [Issue 18]
 2.8.00.1 Reactivated missing Debug facilities; Now logged to ZScreen\Logs
 2.8.00.0 Magnifying Glass feature for Crop Shot

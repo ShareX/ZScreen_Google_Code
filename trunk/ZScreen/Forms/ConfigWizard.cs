@@ -15,6 +15,7 @@ namespace ZSS.Forms
         {
             InitializeComponent();
             txtRootFolder.Text = rootDir;
+            this.RootFolder = rootDir;
             cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             cboScreenshotDest.SelectedIndex = (int)ImageDestType.IMAGESHACK;
         }
