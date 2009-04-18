@@ -89,7 +89,7 @@ namespace ZSS
 
         // General
 
-        [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture/General"), DefaultValue(true)]
+        [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture/General")]
         public bool CopyImageUntilURL { get; set; }
 
         // Crop Shot
@@ -146,8 +146,7 @@ namespace ZSS
 
         public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        [DescriptionAttribute("Adjust the current Auto-Increment Number"),
-        CategoryAttribute("Capture/File Naming"), DefaultValueAttribute(0)]
+        [DescriptionAttribute("Adjust the current Auto-Increment Number"), CategoryAttribute("Capture/File Naming")]
         public int AutoIncrement { get; set; }
 
         // Watermark
@@ -199,7 +198,7 @@ namespace ZSS
         public int FTPselected = -1;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
-        [DescriptionAttribute("Periodically backup FTP Settings"), CategoryAttribute("FTP"), DefaultValue(true)]
+        [DescriptionAttribute("Periodically backup FTP Settings"), CategoryAttribute("FTP")]
         public bool FTPSettingsBackup { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -258,7 +257,7 @@ namespace ZSS
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;
-        [DescriptionAttribute("Write Debug Information into a Log File"), CategoryAttribute("Options/General"), DefaultValue(false)]
+        [DescriptionAttribute("Write Debug Information into a Log File"), CategoryAttribute("Options/General")]
         public bool WriteDebugFile { get; set; }
 
         // Paths
