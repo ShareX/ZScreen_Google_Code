@@ -366,6 +366,18 @@ namespace ZSS
             return "0 Bytes";
         }
 
+        public static void BackupAppSettings()
+        {
+            if (Program.conf != null)
+            {
+                string fp = Path.Combine(Program.SettingsDir, string.Format("Settings-{0}-backup.xml", DateTime.Now.ToString("yyyyMM")));
+                if (!File.Exists(fp))
+                {
+                    Program.conf.Save(fp);
+                }
+            }
+        }
+
         public static void BackupFTPSettings()
         {
             if (Program.conf.FTPAccountList != null)

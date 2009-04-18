@@ -2006,9 +2006,13 @@ namespace ZSS
                 Program.conf.RunOnce = true;
             }
 
-            if (Program.conf.FTPSettingsBackup)
+            if (Program.conf.BackupFTPSettings)
             {
                 FileSystem.BackupFTPSettings();
+            }
+            if (Program.conf.BackupAppSettings)
+            {
+                FileSystem.BackupAppSettings();
             }
         }
 
