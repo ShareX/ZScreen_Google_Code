@@ -37,7 +37,8 @@ namespace ZSS
     {
         public XMLSettings()
         {
-            FTPSettingsBackup = true;
+            BackupFTPSettings = true;
+            BackupAppSettings = true;
         }
 
         #region Settings
@@ -199,7 +200,7 @@ namespace ZSS
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
         [DescriptionAttribute("Periodically backup FTP Settings"), CategoryAttribute("FTP")]
-        public bool FTPSettingsBackup { get; set; }
+        public bool BackupFTPSettings { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
@@ -264,6 +265,8 @@ namespace ZSS
 
         public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;
+        [DescriptionAttribute("Periodically backup Application Settings"), CategoryAttribute("Options/Paths")]
+        public bool BackupAppSettings { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture
