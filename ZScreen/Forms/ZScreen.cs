@@ -81,7 +81,7 @@ namespace ZSS
             this.niTray.Text = this.Text;
             lblLogo.Text = this.Text;
 
-            SetupScreen();
+            UpdateGuiControls();
 
             if (Program.conf.CheckUpdates) CheckUpdates();
         }
@@ -2447,14 +2447,36 @@ namespace ZSS
             Program.conf.ShowBalloonTip = cbShowPopup.Checked;
         }
 
+        /// <summary>
+        /// Updates all the GUI Controls in ZScreen by deserializing the Settings.xml; 
+        /// Loads default Settings.xml if fails to load any control
+        /// </summary>
+        private void UpdateGuiControls()
+        {
+            try
+            {
+                SetupScreen();
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex.ToString());
+                LoadSettingsDefault();
+            }
+        }
+
+        private void LoadSettingsDefault()
+        {
+            Program.conf = new XMLSettings();
+            SetupScreen();
+            Program.conf.RunOnce = true;
+            Program.conf.Save();
+        }
+
         private void btnDeleteSettings_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you really want to revert settings to default values?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                Program.conf = new XMLSettings();
-                SetupScreen();
-                Program.conf.RunOnce = true;
-                Program.conf.Save();
+                LoadSettingsDefault();
             }
         }
 
