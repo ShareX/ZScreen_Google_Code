@@ -1,29 +1,29 @@
-Version 2.9 - 20090412
+Version 2.10 - 20090412
 
-2.9.01.0 XML Option to periodically backup Application Settings
-2.9.00.2 Application will load default settings without crashing if Settings.xml was invalid [ravensorb]
-2.9.00.1 Closing Config Wizard without pressing OK, crashed ZScreen
-2.9.00.0 Added Auto Capture to Quick Actions in the Tray Menu [Issue 18]
-2.8.00.1 Reactivated missing Debug facilities; Now logged to ZScreen\Logs
-2.8.00.0 Magnifying Glass feature for Crop Shot
-2.7.01.0 Copy Image to Clipboard until URL is retrieved using XML Settings
-2.7.00.0 Configuration Wizard to initialize settings on First Run
-2.6.19.1 Fixed possible crash when Images folder was moved and ZScreen tries to load History.xml
-2.6.19.0 The Root folder is now relocatable to a different folder
-2.6.18.0 XML Option to periodically backup FTP Settings
-2.6.17.1 More accurate error reporting via BalloonTip
-2.6.17.0 PropertyGrid in Options : Advanced tab exposes XML Settings that are not visible in GUI
-2.6.16.0 Option to set Timeout in milliseconds to retry other Image Uploaders
-2.6.15.0 Prompt for Upload [Issue 51]
-2.6.14.0 Option to automatically switch from TinyPic to ImageShack if the image dimensions are greater than 1600x1600
-2.6.13.0 ZScreen Window is now resizable to increase viewing area in History
-2.6.12.0 Extended Watermark support to use Images with Reflection and Add Border support
-2.6.11.0 Delay for Entire Screen and Active Window Screenshot is now set in milliseconds
-2.6.10.0 Crop Shot and Selected Window can optionally display a Dynamic Region Border
-2.6.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
-2.6.09.0 Added new Clipboard URL Type: Full Image for Wiki
-2.6.08.1 Adding new Image Editors did not work as expected [Issue 47]
-2.6.08.0 Crop Shot and Selected Window can optionally display a Ruler
+2.10.01.0 XML Option to periodically backup Application Settings
+2.10.00.2 Application will load default settings without crashing if Settings.xml was invalid [ravensorb]
+2.10.00.1 Closing Config Wizard without pressing OK, crashed ZScreen
+2.10.00.0 Added Auto Capture to Quick Actions in the Tray Menu [Issue 18]
+2.09.00.1 Reactivated missing Debug facilities; Now logged to ZScreen\Logs
+2.09.00.0 Magnifying Glass feature for Crop Shot
+2.08.01.0 Copy Image to Clipboard until URL is retrieved using XML Settings
+2.08.00.0 Configuration Wizard to initialize settings on First Run
+2.07.02.1 Fixed possible crash when Images folder was moved and ZScreen tries to load History.xml
+2.07.02.0 The Root folder is now relocatable to a different folder
+2.07.01.0 XML Option to periodically backup FTP Settings
+2.07.00.1 More accurate error reporting via BalloonTip
+2.07.00.0 PropertyGrid in Options : Advanced tab exposes XML Settings that are not visible in GUI
+2.06.16.0 Option to set Timeout in milliseconds to retry other Image Uploaders
+2.06.15.0 Prompt for Upload [Issue 51]
+2.06.14.0 Option to automatically switch from TinyPic to ImageShack if the image dimensions are greater than 1600x1600
+2.06.13.0 ZScreen Window is now resizable to increase viewing area in History
+2.06.12.0 Extended Watermark support to use Images with Reflection and Add Border support
+2.06.11.0 Delay for Entire Screen and Active Window Screenshot is now set in milliseconds
+2.06.10.0 Crop Shot and Selected Window can optionally display a Dynamic Region Border
+2.06.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
+2.06.09.0 Added new Clipboard URL Type: Full Image for Wiki
+2.06.08.1 Adding new Image Editors did not work as expected [Issue 47]
+2.06.08.0 Crop Shot and Selected Window can optionally display a Ruler
 
 Version 2.6.7 - 20090401
 
