@@ -1135,7 +1135,15 @@ namespace ZSS
                     }
                     else if (e.UserState.GetType() == typeof(Bitmap))
                     {
-                        Clipboard.SetImage((Image)e.UserState);
+                        try
+                        {
+                            Clipboard.SetImage((Image)e.UserState);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Sometimes there are 'Clipboard Set did not succeed' errors
+                            FileSystem.AppendDebug(ex.Message);
+                        }
                     }
                     break;
                 case MainAppTask.ProgressType.FLASH_ICON:
