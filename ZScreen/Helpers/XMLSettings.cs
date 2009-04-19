@@ -37,8 +37,25 @@ namespace ZSS
     {
         public XMLSettings()
         {
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Capture
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            // General
+            CopyImageUntilURL = true;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  FTP
+            //~~~~~~~~~~~~~~~~~~~~~
             BackupFTPSettings = true;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Options
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            // Paths
             BackupAppSettings = true;
+
         }
 
         #region Settings
