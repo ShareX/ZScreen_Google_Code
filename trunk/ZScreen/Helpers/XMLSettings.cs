@@ -74,7 +74,8 @@ namespace ZSS
         public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
-        public decimal ScreenshotDelay = 0;
+        public long ScreenshotDelayTime = 0;
+        public Times ScreenshotDelayTimes = Times.Second;
         public bool PromptforUpload = false;
         public bool ManualNaming = false;
         public bool ShowCursor = false;

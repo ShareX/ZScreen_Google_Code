@@ -129,9 +129,9 @@ namespace ZSS
 
             confApp.SelectedObject = Program.conf;
             txtRootFolder.Text = Program.RootAppFolder;
-
             UpdateGuiControlsPaths();
-            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over any control and this textbox will be updated with information about the control.", ProductName);
+            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
+                " any control and this textbox will be updated with information about the control.", ProductName);
 
             #endregion
 
@@ -151,15 +151,14 @@ namespace ZSS
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
-            nudScreenshotDelay.Value = Program.conf.ScreenshotDelay;
+            nudtScreenshotDelay.Time = Program.conf.ScreenshotDelayTimes;
+            nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;
             cbPromptforUpload.Checked = Program.conf.PromptforUpload;
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
-            // CheckActiveHelp();
-            // cbActiveHelp.Checked = Program.conf.ActiveHelp;
             chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
 
             #endregion
@@ -231,7 +230,6 @@ namespace ZSS
             txtEntireScreen.Text = Program.conf.NamingEntireScreen;
 
             // Watermark
-
             if (cboWatermarkType.Items.Count == 0)
             {
                 cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
@@ -273,7 +271,7 @@ namespace ZSS
             if (cbFileFormat.Items.Count == 0) cbFileFormat.Items.AddRange(Program.zImageFileTypes);
             cbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudImageQuality.Value = Program.conf.ImageQuality;
-            nudSwitchAfter.Value = Math.Min(Program.conf.SwitchAfter, nudSwitchAfter.Maximum);
+            nudSwitchAfter.Value = Program.conf.SwitchAfter;
             if (cbSwitchFormat.Items.Count == 0) cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
             cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
 
@@ -1056,9 +1054,9 @@ namespace ZSS
 
             if (task.JobCategory == JobCategoryType.SCREENSHOTS)
             {
-                if (Program.conf.ScreenshotDelay != 0)
+                if (Program.conf.ScreenshotDelayTime != 0)
                 {
-                    Thread.Sleep((int)(Program.conf.ScreenshotDelay));
+                    Thread.Sleep((int)(Program.conf.ScreenshotDelayTime));
                 }
             }
 
@@ -1785,6 +1783,7 @@ namespace ZSS
             return false;
         }
 
+        /*
         private void btnBrowseDirectory_Click(object sender, EventArgs e)
         {
             Program.ImagesDir = BrowseDirectory(ref txtImagesDir);
@@ -1808,6 +1807,7 @@ namespace ZSS
             }
             return settingDir;
         }
+        */
 
         private void btnUpdateImageSoftware_Click(object sender, EventArgs e)
         {
@@ -2472,6 +2472,7 @@ namespace ZSS
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
+                MessageBox.Show("Error occured while loading settings. Default settings loading.\n\n" + ex.Message);
                 LoadSettingsDefault();
             }
         }
@@ -2550,11 +2551,6 @@ namespace ZSS
                     Console.WriteLine(ex.ToString());
                 }
             }
-        }
-
-        private void nScreenshotDelay_ValueChanged(object sender, EventArgs e)
-        {
-            Program.conf.ScreenshotDelay = nudScreenshotDelay.Value;
         }
 
         #region Image Uploaders
@@ -3118,7 +3114,7 @@ namespace ZSS
             cboClipboardTextMode.Tag = "Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard.\n\"Full Image\" returns a normal full-size image URL.\n\"Full Image for Forums\" returns BBcode for embedding images into forum posts.\n\"Thumbnail\" returns the thumbnail (a small image) of your uploaded image.\n\"Linked Thumbnail\" is the same as \"Thumbnail\" except that it links the thumbnail to the full-size image.";
 
             //active help inconsistency (uses label because numeric up/down doesn't support mousehover event
-            lblScreenshotDelay.Tag = "The amount of time in second (half-second intervals) that the program will pause before taking a Full Screen or Active Window Screenshot.";
+            nudtScreenshotDelay.Tag = "The amount of time that the program will pause before taking a Full Screen or Active Window Screenshot.";
 
             cbCompleteSound.Tag = "When checked a sound will be played after an image successfully reaches the destination you have set (Clipboard, FTP, etc).";
 
@@ -3660,11 +3656,6 @@ namespace ZSS
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
             ShowDirectory(Program.ImagesDir);
-        }
-
-        private void btnBrowseCacheLocation_Click(object sender, EventArgs e)
-        {
-            Program.CacheDir = BrowseDirectory(ref txtCacheDir);
         }
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
@@ -4749,6 +4740,16 @@ namespace ZSS
         private void autoScreenshots_FormClosed(object sender, FormClosedEventArgs e)
         {
             bAutoScreenshotsOpened = false;
+        }
+
+        private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.ScreenshotDelayTime = nudtScreenshotDelay.Value;
+        }
+
+        private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.ScreenshotDelayTimes = nudtScreenshotDelay.Time;
         }
     }
 }
