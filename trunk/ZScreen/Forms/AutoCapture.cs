@@ -17,6 +17,7 @@ namespace ZSS.Forms
         private bool waitUploads;
         private int count;
         private int timeleft;
+        private int percentage;
         private Stopwatch stopwatch = new Stopwatch();
 
         public AutoCapture()
@@ -69,7 +70,6 @@ namespace ZSS.Forms
             {
                 IsRunning = true;
                 btnExecute.Text = "Stop";
-
                 switch (Program.conf.AutoCaptureScreenshotTypes)
                 {
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
@@ -86,7 +86,6 @@ namespace ZSS.Forms
                 timer.Interval = 1000;
                 mDelay = (int)Program.conf.AutoCaptureDelayTime;
                 waitUploads = Program.conf.AutoCaptureWaitUploads;
-                count = 0;
                 if (Program.conf.AutoCaptureAutoMinimize) this.WindowState = FormWindowState.Minimized;
             }
             timer.Enabled = IsRunning;
@@ -104,7 +103,9 @@ namespace ZSS.Forms
             tspbBar.Maximum = mDelay;
             tspbBar.Value = Math.Min(tspbBar.Maximum, (int)stopwatch.ElapsedMilliseconds);
             timeleft = Math.Max(0, mDelay - (int)stopwatch.ElapsedMilliseconds);
-            tsslStatus.Text = " Count: " + count + " Timeleft: " + timeleft + "ms";
+            percentage = (int)(100 - (double)timeleft / mDelay * 100);
+            tsslStatus.Text = " Timeleft: " + timeleft + "ms (" + percentage + "%)";
+            this.Text = "Auto Capture - Count: " + count;
         }
 
         private void cbScreenshotTypes_SelectedIndexChanged(object sender, EventArgs e)
