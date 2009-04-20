@@ -37,7 +37,7 @@
             // lblDelay
             // 
             this.lblDelay.AutoSize = true;
-            this.lblDelay.Location = new System.Drawing.Point(7, 10);
+            this.lblDelay.Location = new System.Drawing.Point(4, 6);
             this.lblDelay.Name = "lblDelay";
             this.lblDelay.Size = new System.Drawing.Size(37, 13);
             this.lblDelay.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // nudDelay
             // 
-            this.nudDelay.Location = new System.Drawing.Point(47, 7);
+            this.nudDelay.Location = new System.Drawing.Point(44, 3);
             this.nudDelay.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -61,7 +61,7 @@
             this.cbDelay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDelay.FormattingEnabled = true;
             this.cbDelay.ItemHeight = 13;
-            this.cbDelay.Location = new System.Drawing.Point(175, 7);
+            this.cbDelay.Location = new System.Drawing.Point(172, 3);
             this.cbDelay.Name = "cbDelay";
             this.cbDelay.Size = new System.Drawing.Size(121, 21);
             this.cbDelay.TabIndex = 2;
@@ -75,7 +75,7 @@
             this.Controls.Add(this.nudDelay);
             this.Controls.Add(this.lblDelay);
             this.Name = "NumericUpDownTimer";
-            this.Size = new System.Drawing.Size(305, 35);
+            this.Size = new System.Drawing.Size(297, 27);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

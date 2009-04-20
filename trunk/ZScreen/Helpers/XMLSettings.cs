@@ -291,7 +291,8 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public AutoScreenshotterJobs AutoCaptureScreenshotTypes = AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN;
-        public decimal AutoCaptureDelay = 10;
+        public long AutoCaptureDelayTime = 10000;
+        public Times AutoCaptureDelayTimes = Times.Second;
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
 
