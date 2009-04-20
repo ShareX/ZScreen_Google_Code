@@ -122,7 +122,7 @@
             this.nudDelay.TabIndex = 9;
             this.nudDelay.Time = ZSS.Times.Milisecond;
             this.nudDelay.Value = ((long)(0));
-            this.nudDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             this.nudDelay.SelectedIndexChanged += new System.EventHandler(this.nudDelay_SelectedIndexChanged);
             // 
             // AutoCapture

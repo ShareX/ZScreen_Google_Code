@@ -16,6 +16,7 @@ namespace ZSS.Forms
         private int mDelay;
         private bool waitUploads;
         private int count;
+        private int timeleft;
         private Stopwatch stopwatch = new Stopwatch();
 
         public AutoCapture()
@@ -102,17 +103,13 @@ namespace ZSS.Forms
         {
             tspbBar.Maximum = mDelay;
             tspbBar.Value = Math.Min(tspbBar.Maximum, (int)stopwatch.ElapsedMilliseconds);
-            tsslStatus.Text = " Count: " + count;
+            timeleft = Math.Max(0, mDelay - (int)stopwatch.ElapsedMilliseconds);
+            tsslStatus.Text = " Count: " + count + " Timeleft: " + timeleft + "ms";
         }
 
         private void cbScreenshotTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.AutoCaptureScreenshotTypes = (AutoScreenshotterJobs)cbScreenshotTypes.SelectedIndex;
-        }
-
-        private void nudDelay_ValueChanged(object sender, EventArgs e)
-        {
-            //
         }
 
         private void cbAutoMinimize_CheckedChanged(object sender, EventArgs e)
@@ -125,7 +122,7 @@ namespace ZSS.Forms
             Program.conf.AutoCaptureWaitUploads = cbWaitUploads.Checked;
         }
 
-        private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
+        private void nudDelay_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.AutoCaptureDelayTime = nudDelay.Value;
         }
