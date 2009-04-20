@@ -30,7 +30,8 @@ namespace ZSS.Forms
         {
             cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetDescriptions());
             cbScreenshotTypes.SelectedIndex = (int)Program.conf.AutoCaptureScreenshotTypes;
-            nudDelay.Value = Program.conf.AutoCaptureDelay;
+            nudDelay.Time = Program.conf.AutoCaptureDelayTimes;
+            nudDelay.Value = Program.conf.AutoCaptureDelayTime;
             cbAutoMinimize.Checked = Program.conf.AutoCaptureAutoMinimize;
             cbWaitUploads.Checked = Program.conf.AutoCaptureWaitUploads;
         }
@@ -82,7 +83,7 @@ namespace ZSS.Forms
                 }
 
                 timer.Interval = 1000;
-                mDelay = (int)(Program.conf.AutoCaptureDelay * 1000);
+                mDelay = (int)Program.conf.AutoCaptureDelayTime;
                 waitUploads = Program.conf.AutoCaptureWaitUploads;
                 count = 0;
                 if (Program.conf.AutoCaptureAutoMinimize) this.WindowState = FormWindowState.Minimized;
@@ -111,7 +112,7 @@ namespace ZSS.Forms
 
         private void nudDelay_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoCaptureDelay = nudDelay.Value;
+            //
         }
 
         private void cbAutoMinimize_CheckedChanged(object sender, EventArgs e)
@@ -122,6 +123,16 @@ namespace ZSS.Forms
         private void cbWaitUploads_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.AutoCaptureWaitUploads = cbWaitUploads.Checked;
+        }
+
+        private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoCaptureDelayTime = nudDelay.Value;
+        }
+
+        private void nudDelay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoCaptureDelayTimes = nudDelay.Time;
         }
     }
 }
