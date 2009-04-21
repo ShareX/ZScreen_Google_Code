@@ -1,5 +1,6 @@
 Version 2.10 - 20090412
 
+2.10.02.0 Added new Clipboard URL Type: Full Image as HTML [Issue 57]
 2.10.01.0 XML Option to periodically backup Application Settings
 2.10.00.2 Application will load default settings without crashing if Settings.xml was invalid [ravensorb]
 2.10.00.1 Closing Config Wizard without pressing OK, crashed ZScreen
