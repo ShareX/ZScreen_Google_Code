@@ -171,7 +171,6 @@
     </Compile>
     <Compile Include="Helpers\FTPAccountReader.cs" />
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Helpers\ScreenshotEditApp.cs" />
     <Compile Include="Global\GDI32.cs" />
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\User32.cs" />
