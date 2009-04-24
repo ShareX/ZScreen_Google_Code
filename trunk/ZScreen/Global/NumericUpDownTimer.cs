@@ -6,7 +6,7 @@ namespace ZSS
 {
     public enum Times
     {
-        Milliseconds, Seconds, Minute, Hours
+        Milliseconds, Seconds, Minutes, Hours
     }
 
     [DefaultEvent("ValueChanged")]
@@ -64,7 +64,7 @@ namespace ZSS
                         return (long)nudDelay.Value;
                     case Times.Seconds:
                         return (long)(nudDelay.Value * 1000);
-                    case Times.Minute:
+                    case Times.Minutes:
                         return (long)(nudDelay.Value * 60000);
                     case Times.Hours:
                         return (long)(nudDelay.Value * 3600000);
@@ -81,7 +81,7 @@ namespace ZSS
                     case Times.Seconds:
                         nudDelay.Value = value / 1000;
                         break;
-                    case Times.Minute:
+                    case Times.Minutes:
                         nudDelay.Value = value / 60000;
                         break;
                     case Times.Hours:
