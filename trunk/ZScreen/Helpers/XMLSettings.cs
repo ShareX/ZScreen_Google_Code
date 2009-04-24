@@ -75,7 +75,7 @@ namespace ZSS
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
         public long ScreenshotDelayTime = 0;
-        public Times ScreenshotDelayTimes = Times.Second;
+        public Times ScreenshotDelayTimes = Times.Seconds;
         public bool PromptforUpload = false;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
@@ -292,7 +292,7 @@ namespace ZSS
 
         public AutoScreenshotterJobs AutoCaptureScreenshotTypes = AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN;
         public long AutoCaptureDelayTime = 10000;
-        public Times AutoCaptureDelayTimes = Times.Second;
+        public Times AutoCaptureDelayTimes = Times.Seconds;
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
 
