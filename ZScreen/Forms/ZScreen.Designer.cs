@@ -4203,6 +4203,7 @@ namespace ZSS
             this.gbImageUploaderOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbImageUploaderOptions.Controls.Add(this.lblUploadDurationLimit);
+            this.gbImageUploaderOptions.Controls.Add(this.cbTinyPicSizeCheck);
             this.gbImageUploaderOptions.Controls.Add(this.nudUploadDurationLimit);
             this.gbImageUploaderOptions.Controls.Add(this.cboAutoChangeUploadDestination);
             this.gbImageUploaderOptions.Controls.Add(this.cbAddFailedScreenshot);
@@ -4213,7 +4214,7 @@ namespace ZSS
             this.gbImageUploaderOptions.Controls.Add(this.nudErrorRetry);
             this.gbImageUploaderOptions.Location = new System.Drawing.Point(8, 8);
             this.gbImageUploaderOptions.Name = "gbImageUploaderOptions";
-            this.gbImageUploaderOptions.Size = new System.Drawing.Size(752, 144);
+            this.gbImageUploaderOptions.Size = new System.Drawing.Size(752, 168);
             this.gbImageUploaderOptions.TabIndex = 7;
             this.gbImageUploaderOptions.TabStop = false;
             this.gbImageUploaderOptions.Text = "Options";
@@ -4323,7 +4324,7 @@ namespace ZSS
             this.gbImageShack.Controls.Add(this.btnRegCodeImageShack);
             this.gbImageShack.Controls.Add(this.lblImageShackRegistrationCode);
             this.gbImageShack.Controls.Add(this.txtImageShackRegistrationCode);
-            this.gbImageShack.Location = new System.Drawing.Point(8, 160);
+            this.gbImageShack.Location = new System.Drawing.Point(8, 184);
             this.gbImageShack.Name = "gbImageShack";
             this.gbImageShack.Size = new System.Drawing.Size(752, 64);
             this.gbImageShack.TabIndex = 0;
@@ -4376,14 +4377,13 @@ namespace ZSS
             this.gbTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTinyPic.Controls.Add(this.btnGalleryTinyPic);
-            this.gbTinyPic.Controls.Add(this.cbTinyPicSizeCheck);
             this.gbTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
             this.gbTinyPic.Controls.Add(this.btnRegCodeTinyPic);
             this.gbTinyPic.Controls.Add(this.lblRegistrationCode);
             this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
-            this.gbTinyPic.Location = new System.Drawing.Point(8, 232);
+            this.gbTinyPic.Location = new System.Drawing.Point(8, 256);
             this.gbTinyPic.Name = "gbTinyPic";
-            this.gbTinyPic.Size = new System.Drawing.Size(752, 120);
+            this.gbTinyPic.Size = new System.Drawing.Size(752, 96);
             this.gbTinyPic.TabIndex = 4;
             this.gbTinyPic.TabStop = false;
             this.gbTinyPic.Text = "TinyPic";
@@ -4402,7 +4402,7 @@ namespace ZSS
             // cbTinyPicSizeCheck
             // 
             this.cbTinyPicSizeCheck.AutoSize = true;
-            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(16, 88);
+            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(24, 136);
             this.cbTinyPicSizeCheck.Name = "cbTinyPicSizeCheck";
             this.cbTinyPicSizeCheck.Size = new System.Drawing.Size(440, 17);
             this.cbTinyPicSizeCheck.TabIndex = 7;
