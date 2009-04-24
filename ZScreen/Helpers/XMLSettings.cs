@@ -230,7 +230,7 @@ namespace ZSS
         public decimal ErrorRetryCount = 3;
         public bool ImageUploadRetry = true;
         public bool AddFailedScreenshot = false;
-        public bool AutoChangeUploadDestination = false;
+        public bool AutoChangeUploadDestination = true;
         public decimal UploadDurationLimit = 10000;
         public string ImageShackRegistrationCode = "";
         public string TinyPicShuk = "";
