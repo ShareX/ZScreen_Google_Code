@@ -3962,7 +3962,7 @@ namespace ZSS
             this.nudtScreenshotDelay.RealValue = ((long)(0));
             this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
             this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milisecond;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
             this.nudtScreenshotDelay.Value = ((long)(0));
             this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
             this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);

@@ -6,7 +6,7 @@ namespace ZSS
 {
     public enum Times
     {
-        Milisecond, Second, Minute, Hour
+        Milliseconds, Seconds, Minute, Hours
     }
 
     [DefaultEvent("ValueChanged")]
@@ -60,13 +60,13 @@ namespace ZSS
                 switch (Time)
                 {
                     default:
-                    case Times.Milisecond:
+                    case Times.Milliseconds:
                         return (long)nudDelay.Value;
-                    case Times.Second:
+                    case Times.Seconds:
                         return (long)(nudDelay.Value * 1000);
                     case Times.Minute:
                         return (long)(nudDelay.Value * 60000);
-                    case Times.Hour:
+                    case Times.Hours:
                         return (long)(nudDelay.Value * 3600000);
                 }
             }
@@ -75,16 +75,16 @@ namespace ZSS
                 switch (Time)
                 {
                     default:
-                    case Times.Milisecond:
+                    case Times.Milliseconds:
                         nudDelay.Value = value;
                         break;
-                    case Times.Second:
+                    case Times.Seconds:
                         nudDelay.Value = value / 1000;
                         break;
                     case Times.Minute:
                         nudDelay.Value = value / 60000;
                         break;
-                    case Times.Hour:
+                    case Times.Hours:
                         nudDelay.Value = value / 3600000;
                         break;
                 }
@@ -99,7 +99,7 @@ namespace ZSS
         private void cbDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
             Time = (Times)cbDelay.SelectedIndex;
-            if (Time == Times.Milisecond)
+            if (Time == Times.Milliseconds)
             {
                 nudDelay.DecimalPlaces = 0;
             }
