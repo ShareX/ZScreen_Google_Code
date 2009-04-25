@@ -55,6 +55,7 @@ namespace ZSS
 
             // Paths
             BackupAppSettings = true;
+            ImagesDir = Program.ImagesDir;
 
         }
 
@@ -285,6 +286,9 @@ namespace ZSS
         public decimal ScreenshotCacheSize = 50;
         [DescriptionAttribute("Periodically backup Application Settings"), CategoryAttribute("Options/Paths")]
         public bool BackupAppSettings { get; set; }
+        [DescriptionAttribute("Images Directory where Screenshots and Pictures will be stored locally"), CategoryAttribute("Options/Paths")]
+        public string ImagesDir { get; set; }
+
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture

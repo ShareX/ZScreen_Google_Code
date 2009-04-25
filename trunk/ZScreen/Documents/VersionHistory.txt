@@ -1,3 +1,5 @@
+2.10.03.0 Imaged directory location is now confirgurable via XML Options [Issue 62]
+
 Version 2.10 - 20090424
 
 2.10.02.1 Setting HTTP Upload mode to Anonymous made it impossible to auto switch destination
