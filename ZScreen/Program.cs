@@ -46,7 +46,24 @@ namespace ZSS
 
         public static string CacheDir { get; set; }
         public static string FilesDir { get; set; }
-        public static string ImagesDir { get; set; }
+        public static string ImagesDir
+        {
+            get
+            {
+                if (conf != null && !String.IsNullOrEmpty(conf.ImagesDir))
+                {
+                    return Program.ImagesDir = conf.ImagesDir;
+                }
+                else
+                {
+                    return Path.Combine(RootAppFolder, "Images");
+                }
+            }
+            set
+            {
+                ;
+            }
+        }
         public static string LogsDir { get; set; }
         public static string SettingsDir { get; set; }
         public static string TempDir { get; set; }
@@ -88,7 +105,16 @@ namespace ZSS
         {
             CacheDir = Path.Combine(RootAppFolder, "Cache");
             FilesDir = Path.Combine(RootAppFolder, "Files");
-            ImagesDir = Path.Combine(RootAppFolder, "Images");
+
+            if (conf != null && Directory.Exists(conf.ImagesDir))
+            {
+                ImagesDir = conf.ImagesDir;
+            }
+            else
+            {
+                ImagesDir = Path.Combine(RootAppFolder, "Images");
+            }
+
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");
             TextDir = Path.Combine(RootAppFolder, "Text");
