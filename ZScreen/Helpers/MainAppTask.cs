@@ -187,7 +187,8 @@ namespace ZSS.Tasks
             this.MyImage = img;
             if (Program.conf.CopyImageUntilURL)
             {
-                this.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, img);
+                // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
+                this.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
             }
         }
 
