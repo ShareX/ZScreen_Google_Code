@@ -658,11 +658,11 @@ namespace ZSS
             catch (ArgumentOutOfRangeException aor)
             {
                 task.Errors.Add("Invalid FTP Account Selection");
-                Console.WriteLine(aor.ToString());
+                FileSystem.AppendDebug(aor.ToString());
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
                 if (Program.conf.CaptureEntireScreenOnError)
                 {
                     CaptureRegionOrWindow(ref task);
@@ -709,7 +709,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
                 task.Errors.Add(ex.Message);
                 if (Program.conf.CaptureEntireScreenOnError)
                 {
@@ -761,7 +761,7 @@ namespace ZSS
 
             if (task.SafeToUpload())
             {
-                Console.WriteLine("File for HDD: " + task.LocalFilePath);
+                FileSystem.AppendDebug("File for HDD: " + task.LocalFilePath);
                 tm.UploadImage();
             }
         }
@@ -1262,7 +1262,7 @@ namespace ZSS
 
                     if (task.Errors.Count > 0)
                     {
-                        Console.WriteLine(task.Errors[task.Errors.Count - 1]);
+                        FileSystem.AppendDebug(task.Errors[task.Errors.Count - 1]);
                     }
                 }
 
@@ -1273,7 +1273,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
             }
             finally
             {
@@ -2448,7 +2448,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
             }
 
             return cbListFilePath;
@@ -2548,7 +2548,7 @@ namespace ZSS
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    FileSystem.AppendDebug(ex.ToString());
                 }
             }
         }

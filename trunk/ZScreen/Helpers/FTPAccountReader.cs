@@ -70,7 +70,7 @@ namespace ZSS
                                         {
                                             xtr.Read();
                                         }
-                                        // Console.WriteLine("value: " + xtr.Value);
+                                        // FileSystem.AppendDebug("value: " + xtr.Value);
                                         acc = new FTPAccount();
                                         accIndex++;
                                         Accounts.Add(acc);
@@ -85,7 +85,7 @@ namespace ZSS
                                         {
                                             xtr.Read();
                                         }
-                                        // Console.WriteLine("value: " + xtr.Value);
+                                        // FileSystem.AppendDebug("value: " + xtr.Value);
                                         Accounts[accIndex].Password = xtr.Value;
 
                                     }
@@ -96,7 +96,7 @@ namespace ZSS
                                         {
                                             xtr.Read();
                                         }
-                                        // Console.WriteLine("value: " + xtr.Value);
+                                        // FileSystem.AppendDebug("value: " + xtr.Value);
                                         Accounts[accIndex].Username = xtr.Value;
 
                                     }
@@ -107,7 +107,7 @@ namespace ZSS
                                         {
                                             xtr.Read();
                                         }
-                                        // Console.WriteLine("value: " + xtr.Value);
+                                        // FileSystem.AppendDebug("value: " + xtr.Value);
                                         Accounts[accIndex].Path = xtr.Value;
 
                                     }
@@ -118,7 +118,7 @@ namespace ZSS
                                         {
                                             xtr.Read();
                                         }
-                                        // Console.WriteLine("value: " + xtr.Value);
+                                        // FileSystem.AppendDebug("value: " + xtr.Value);
                                         int port = 21;
                                         Int32.TryParse(xtr.Value, out port);
                                         Accounts[accIndex].Port = port;
@@ -130,7 +130,7 @@ namespace ZSS
                                         {
                                             xtr.Read();
                                         }
-                                        // Console.WriteLine("value: " + xtr.Value);
+                                        // FileSystem.AppendDebug("value: " + xtr.Value);
                                         string path = xtr.Value;
                                         if (!path.ToLower().Equals("true") &&
                                             !path.ToLower().Equals("false"))
@@ -149,7 +149,7 @@ namespace ZSS
         public FTPAccountReader()
         {
             string dir = Path.GetDirectoryName(Path.GetDirectoryName(FileSystem.GetConfigFilePath()));
-            // Console.WriteLine(Path.GetDirectoryName(dir));
+            // FileSystem.AppendDebug(Path.GetDirectoryName(dir));
             readConfigFiles(dir);
             // validate ftpUpload accounts
             List<FTPAccount> temp = new List<FTPAccount>();

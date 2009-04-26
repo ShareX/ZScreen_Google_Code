@@ -192,7 +192,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
                 succ = false;
             }
 
@@ -221,7 +221,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                FileSystem.AppendDebug(ex.Message);
             }
 
             return text;

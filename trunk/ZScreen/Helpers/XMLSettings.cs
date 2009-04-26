@@ -53,6 +53,9 @@ namespace ZSS
             //  Options
             //~~~~~~~~~~~~~~~~~~~~~
 
+            // General
+            WriteDebugFile = true;
+
             // Paths
             BackupAppSettings = true;
             ImagesDir = Program.ImagesDir;
@@ -431,7 +434,7 @@ namespace ZSS
                 {
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
-                    Console.WriteLine(ex.ToString());
+                    FileSystem.AppendDebug(ex.ToString());
                 }
             }
 

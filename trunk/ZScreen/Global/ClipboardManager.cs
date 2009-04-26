@@ -48,7 +48,7 @@ namespace ZSS
         public static void Queue()
         {
             Workers++;
-            Console.WriteLine("Clipboard Queued. Total: " + Workers);
+            FileSystem.AppendDebug("Clipboard Queued. Total: " + Workers);
         }
 
         public static void Clear()
@@ -67,7 +67,7 @@ namespace ZSS
             {
                 ScreenshotsHistory.Remove(GetLastImageUpload());
             }
-            Console.WriteLine("Clipboard Commited. Total: " + Workers);
+            FileSystem.AppendDebug("Clipboard Commited. Total: " + Workers);
         }
 
         public static ImageFileManager GetLastImageUpload()
@@ -148,7 +148,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
             }
         }
     }
