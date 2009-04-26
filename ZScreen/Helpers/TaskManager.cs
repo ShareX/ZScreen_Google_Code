@@ -24,8 +24,7 @@ namespace ZSS.Helpers
             task.StartTime = DateTime.Now;
             HTTPUploader imageUploader = null;
 
-            if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC &&
-                !string.IsNullOrEmpty(task.LocalFilePath))
+            if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(task.LocalFilePath))
             {
                 SizeF size = Image.FromFile(task.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
@@ -61,12 +60,19 @@ namespace ZSS.Helpers
             {
                 task.DestinationName = imageUploader.Name;
                 string fullFilePath = task.LocalFilePath;
-                if (File.Exists(fullFilePath))
+                if (File.Exists(fullFilePath) || task.MyImage != null)
                 {
                     for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
                         (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.FileCount < 1)); i++)
                     {
-                        task.ImageManager = imageUploader.UploadImage(fullFilePath);
+                        if (File.Exists(fullFilePath))
+                        {
+                            task.ImageManager = imageUploader.UploadImage(fullFilePath);
+                        }
+                        else if (task.MyImage != null)
+                        {
+                            task.ImageManager = imageUploader.UploadImage(task.MyImage);
+                        }
                         task.Errors = imageUploader.Errors;
                         if (Program.conf.ImageUploadRetry && (task.ImageDestCategory ==
                             ImageDestType.IMAGESHACK || task.ImageDestCategory == ImageDestType.TINYPIC))

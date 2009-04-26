@@ -102,19 +102,20 @@ namespace ZSS
                     MyGraphics.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
 
                     filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
+
+                    if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                    FileStream fi = File.Create(filePath);
+
+                    ms.WriteTo(fi);
+
+                    fi.Close();
+
+                    ms.Dispose();
+                    fi.Dispose();
+
                 }
-
-                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                FileStream fi = File.Create(filePath);
-
-                ms.WriteTo(fi);
-
-                fi.Close();
-
-                ms.Dispose();
-                fi.Dispose();
             }
 
             return filePath;
@@ -165,7 +166,7 @@ namespace ZSS
         {
             if (!string.IsNullOrEmpty(Program.LogsDir))
             {
-               string fpDebug = Path.Combine(Program.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
+                string fpDebug = Path.Combine(Program.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
                 if (Program.conf.WriteDebugFile)
                 {
                     if (mDebug.Length > 0)
