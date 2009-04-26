@@ -75,36 +75,28 @@ namespace ZSS.ImageUploader
 
             if (this.EnableThumbnail)
             {
-                // load img to memory
-                Bitmap img = LoadBitmap(localFilePath);
-                double sf = 128.0 / img.Width;
-                img = ResizeBitmap(img, (int)(img.Width * sf), (int)(img.Height * sf));
-                StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
-                sb.Append(".th");
-                sb.Append(Path.GetExtension(fName));
-                string thPath = Path.Combine(this.WorkingDir, sb.ToString());
-                img.Save(thPath);
-                if (File.Exists(thPath))
+                try
                 {
-                    ftpClient.UploadFile(thPath, Path.GetFileName(thPath));
-                    //while (ftpClient.DoUpload() > 0)
-                    //{
-                    //     Do nothing
-                    //}
+                    // load img to memory
+                    Bitmap img = LoadBitmap(localFilePath);
+                    double sf = 128.0 / img.Width;
+                    img = ResizeBitmap(img, (int)(img.Width * sf), (int)(img.Height * sf));
+                    StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
+                    sb.Append(".th");
+                    sb.Append(Path.GetExtension(fName));
+                    string thPath = Path.Combine(this.WorkingDir, sb.ToString());
+                    img.Save(thPath);
+                    if (File.Exists(thPath))
+                    {
+                        ftpClient.UploadFile(thPath, Path.GetFileName(thPath));
+                    }
+                    ifl.Add(new ImageFile(this.mFTPAccount.getUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
                 }
-                ifl.Add(new ImageFile(this.mFTPAccount.getUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
-                // ifl.Add(ImageFile.getThumbnailForum1ImageFile(this.mFTPAccount.getUriPath(fName),this.mFTPAccount.getUriPath(Path.GetFileName(thPath))));
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
-
-            //We do not want to disconnect here. We would rather have the connection time out.
-            //ftpClient.Disconnect();
-            //}
-            //catch (Exception ex)
-            //{
-            //    FileSystem.AppendDebug(ex.Message);
-            //    //FileSystem.AppendDebug(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
-            //    //MessageBox.Show(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
-            //}
 
             ImageFileManager ifm = new ImageFileManager(ifl) { LocalFilePath = localFilePath };
             return ifm;

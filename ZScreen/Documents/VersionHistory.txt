@@ -1,3 +1,6 @@
+2.10.05.0 FTP Viewer can now preview text files
+2.10.04.0 Upload File to FTP will use the original file path instead of copying to Files folder
+2.10.03.1 Upload File to FTP could have failed if Enable Thumbnail was turned on for FTP
 2.10.03.0 Imaged directory location is now confirgurable via XML Options [Issue 62]
 
 Version 2.10 - 20090424
