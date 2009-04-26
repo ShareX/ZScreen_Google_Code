@@ -200,7 +200,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -492,7 +492,7 @@ namespace ZSS
                     {
                         pBar.Maximum = (int)mBytesTotal;
                         pBar.Value = (int)mBytesDownloaded;
-                        // System.Console.WriteLine(string.Format("{0}/{1}", pBar.Value, pBar.Maximum));
+                        // System.FileSystem.AppendDebug(string.Format("{0}/{1}", pBar.Value, pBar.Maximum));
                     }
                 }
             }

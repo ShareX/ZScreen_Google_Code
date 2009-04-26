@@ -564,7 +564,7 @@ namespace ZSS
                 currentStep = step;
             }
             ColorHue += currentStep;
-            //Console.WriteLine(colorHue + " " + colorHueMin + " " + colorHueMax + " " + (double)currentStep);
+            //FileSystem.AppendDebug(colorHue + " " + colorHueMin + " " + colorHueMax + " " + (double)currentStep);
         }
     }
 

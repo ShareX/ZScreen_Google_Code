@@ -101,8 +101,8 @@ namespace ZSS.ImageUploader
             //}
             //catch (Exception ex)
             //{
-            //    Console.WriteLine(ex.Message);
-            //    //Console.WriteLine(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
+            //    FileSystem.AppendDebug(ex.Message);
+            //    //FileSystem.AppendDebug(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
             //    //MessageBox.Show(Program.replaceErrorMessages(ex.Message), "ZScreen FTP");
             //}
 
