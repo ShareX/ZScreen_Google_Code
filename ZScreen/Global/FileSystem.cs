@@ -96,37 +96,34 @@ namespace ZSS
 
                 long len = ms.Length;
 
+                // Change PNG to JPG (Lossy) if file size is large
+
                 if (len > size && size != 0)
                 {
                     ms = new MemoryStream();
+
                     MyGraphics.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
 
                     filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
 
-                    if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                    FileStream fi = File.Create(filePath);
-
-                    ms.WriteTo(fi);
-
-                    fi.Close();
-
-                    ms.Dispose();
-                    fi.Dispose();
-
                 }
+
+                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                FileStream fi = File.Create(filePath);
+
+                ms.WriteTo(fi);
+
+                fi.Close();
+
+                ms.Dispose();
+                fi.Dispose();
+
             }
 
             return filePath;
         }
-
-        //public static string DebugFilePath
-        //{
-        //    get
-        //    { return mFilePathDebug; }
-        //    private set { ;}
-        //}
 
         public static string GetTextFromFile(string filePath)
         {
