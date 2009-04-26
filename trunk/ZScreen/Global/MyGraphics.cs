@@ -104,7 +104,14 @@ namespace ZSS
             }
             else
             {
-                img.Save(ms, format);
+                try
+                {
+                    img.Save(ms, format);
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.ToString());
+                }
             }
         }
 

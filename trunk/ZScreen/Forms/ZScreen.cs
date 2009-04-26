@@ -1101,7 +1101,7 @@ namespace ZSS
                     break;
             }
 
-            if (!string.IsNullOrEmpty(task.LocalFilePath))
+            if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
                 if (Program.conf.AddFailedScreenshot ||
                     (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 ||

@@ -75,7 +75,7 @@ namespace ZSS.ImageUploader
 
         protected abstract ImageFileManager UploadImage(Image image, ImageFormat format);
 
-        private ImageFileManager UploadImage(Image image)
+        public ImageFileManager UploadImage(Image image)
         {
             ImageFileManager imageFiles = UploadImage(image, image.RawFormat);
             return imageFiles;
