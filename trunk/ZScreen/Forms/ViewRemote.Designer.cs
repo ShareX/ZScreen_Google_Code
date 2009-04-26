@@ -46,6 +46,7 @@ namespace ZSS
             this.pBar = new System.Windows.Forms.ToolStripProgressBar();
             this.bwRemoteViewer = new System.ComponentModel.BackgroundWorker();
             this.tmrFetchFile = new System.Windows.Forms.Timer(this.components);
+            this.txtViewer = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).BeginInit();
             this.pnlControls.SuspendLayout();
             this.pnlViewer.SuspendLayout();
@@ -102,11 +103,10 @@ namespace ZSS
             // cbReverse
             // 
             this.cbReverse.AutoSize = true;
-//         this.cbReverse.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
             this.cbReverse.Location = new System.Drawing.Point(7, 25);
             this.cbReverse.Margin = new System.Windows.Forms.Padding(0);
             this.cbReverse.Name = "cbReverse";
-            this.cbReverse.Size = new System.Drawing.Size(87, 16);
+            this.cbReverse.Size = new System.Drawing.Size(85, 17);
             this.cbReverse.TabIndex = 36;
             this.cbReverse.Text = "Reverse List";
             this.cbReverse.UseVisualStyleBackColor = true;
@@ -114,11 +114,10 @@ namespace ZSS
             // cbAddSpace
             // 
             this.cbAddSpace.AutoSize = true;
-//            this.cbAddSpace.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
             this.cbAddSpace.Location = new System.Drawing.Point(7, 7);
             this.cbAddSpace.Margin = new System.Windows.Forms.Padding(0);
             this.cbAddSpace.Name = "cbAddSpace";
-            this.cbAddSpace.Size = new System.Drawing.Size(110, 16);
+            this.cbAddSpace.Size = new System.Drawing.Size(110, 17);
             this.cbAddSpace.TabIndex = 35;
             this.cbAddSpace.Text = "Add space before";
             this.cbAddSpace.UseVisualStyleBackColor = true;
@@ -149,6 +148,7 @@ namespace ZSS
             // 
             // pnlViewer
             // 
+            this.pnlViewer.Controls.Add(this.txtViewer);
             this.pnlViewer.Controls.Add(this.ssViewer);
             this.pnlViewer.Controls.Add(this.pbViewer);
             this.pnlViewer.Location = new System.Drawing.Point(0, 0);
@@ -207,6 +207,16 @@ namespace ZSS
             this.tmrFetchFile.Enabled = true;
             this.tmrFetchFile.Tick += new System.EventHandler(this.tmrFetchFile_Tick);
             // 
+            // txtViewer
+            // 
+            this.txtViewer.BackColor = System.Drawing.SystemColors.Info;
+            this.txtViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtViewer.Location = new System.Drawing.Point(0, 0);
+            this.txtViewer.Multiline = true;
+            this.txtViewer.Name = "txtViewer";
+            this.txtViewer.Size = new System.Drawing.Size(525, 538);
+            this.txtViewer.TabIndex = 2;            
+            // 
             // ViewRemote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,5 +264,6 @@ namespace ZSS
         private System.Windows.Forms.ToolStripProgressBar pBar;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Timer tmrFetchFile;
+        private System.Windows.Forms.TextBox txtViewer;
     }
 }

@@ -2440,9 +2440,16 @@ namespace ZSS
                 {
                     foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
                     {
-                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(MyGraphics.IsValidImage(fp) ? Program.ImagesDir : Program.FilesDir, Path.GetFileName(fp)));
-                        File.Copy(fp, cbFilePath, true);
-                        cbListFilePath.Add(cbFilePath);
+                        if (MyGraphics.IsValidImage(fp))
+                        {
+                            cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
+                            File.Copy(fp, cbFilePath, true);
+                            cbListFilePath.Add(cbFilePath);
+                        }
+                        else
+                        {
+                            cbListFilePath.Add(fp); // yes we use the orignal file path
+                        }
                     }
                 }
             }

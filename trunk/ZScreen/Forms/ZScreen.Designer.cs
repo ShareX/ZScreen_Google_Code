@@ -352,6 +352,7 @@ namespace ZSS
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
             this.lblUploadDurationLimit = new System.Windows.Forms.Label();
+            this.cbTinyPicSizeCheck = new System.Windows.Forms.CheckBox();
             this.nudUploadDurationLimit = new System.Windows.Forms.NumericUpDown();
             this.cboAutoChangeUploadDestination = new System.Windows.Forms.CheckBox();
             this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
@@ -367,7 +368,6 @@ namespace ZSS
             this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
-            this.cbTinyPicSizeCheck = new System.Windows.Forms.CheckBox();
             this.chkRememberTinyPicUserPass = new System.Windows.Forms.CheckBox();
             this.btnRegCodeTinyPic = new System.Windows.Forms.Button();
             this.lblRegistrationCode = new System.Windows.Forms.Label();
@@ -604,7 +604,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmViewSettingsMenu
             // 
@@ -779,10 +779,10 @@ namespace ZSS
             // 
             // tsmViewRemoteDirectory
             // 
-            this.tsmViewRemoteDirectory.Image = global::ZSS.Properties.Resources.drive_network;
+            this.tsmViewRemoteDirectory.Image = global::ZSS.Properties.Resources.server;
             this.tsmViewRemoteDirectory.Name = "tsmViewRemoteDirectory";
             this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(205, 22);
-            this.tsmViewRemoteDirectory.Text = "View Remote Directory...";
+            this.tsmViewRemoteDirectory.Text = "&FTP Viewer...";
             this.tsmViewRemoteDirectory.Click += new System.EventHandler(this.tsmViewRemote_Click);
             // 
             // tsmViewLocalDirectory
@@ -790,7 +790,7 @@ namespace ZSS
             this.tsmViewLocalDirectory.Image = global::ZSS.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
             this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
-            this.tsmViewLocalDirectory.Text = "View Local Directory...";
+            this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
@@ -4228,6 +4228,18 @@ namespace ZSS
             this.lblUploadDurationLimit.TabIndex = 10;
             this.lblUploadDurationLimit.Text = "miliseconds";
             // 
+            // cbTinyPicSizeCheck
+            // 
+            this.cbTinyPicSizeCheck.AutoSize = true;
+            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(24, 136);
+            this.cbTinyPicSizeCheck.Name = "cbTinyPicSizeCheck";
+            this.cbTinyPicSizeCheck.Size = new System.Drawing.Size(440, 17);
+            this.cbTinyPicSizeCheck.TabIndex = 7;
+            this.cbTinyPicSizeCheck.Text = "Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 p" +
+                "ixels";
+            this.cbTinyPicSizeCheck.UseVisualStyleBackColor = true;
+            this.cbTinyPicSizeCheck.CheckedChanged += new System.EventHandler(this.cbTinyPicSizeCheck_CheckedChanged);
+            // 
             // nudUploadDurationLimit
             // 
             this.nudUploadDurationLimit.Location = new System.Drawing.Point(296, 108);
@@ -4398,18 +4410,6 @@ namespace ZSS
             this.btnGalleryTinyPic.Text = "&MyImages...";
             this.btnGalleryTinyPic.UseVisualStyleBackColor = true;
             this.btnGalleryTinyPic.Click += new System.EventHandler(this.btnGalleryTinyPic_Click);
-            // 
-            // cbTinyPicSizeCheck
-            // 
-            this.cbTinyPicSizeCheck.AutoSize = true;
-            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(24, 136);
-            this.cbTinyPicSizeCheck.Name = "cbTinyPicSizeCheck";
-            this.cbTinyPicSizeCheck.Size = new System.Drawing.Size(440, 17);
-            this.cbTinyPicSizeCheck.TabIndex = 7;
-            this.cbTinyPicSizeCheck.Text = "Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 p" +
-                "ixels";
-            this.cbTinyPicSizeCheck.UseVisualStyleBackColor = true;
-            this.cbTinyPicSizeCheck.CheckedChanged += new System.EventHandler(this.cbTinyPicSizeCheck_CheckedChanged);
             // 
             // chkRememberTinyPicUserPass
             // 

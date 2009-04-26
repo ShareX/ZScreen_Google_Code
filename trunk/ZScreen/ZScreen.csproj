@@ -351,6 +351,7 @@
     <None Include="Resources\tag_blue_edit.png" />
     <None Include="Resources\photos.png" />
     <None Include="Resources\images_stack.png" />
+    <None Include="Resources\server.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

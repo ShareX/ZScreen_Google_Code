@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using ZSS.Properties;
 using ZSS.Tasks;
+using System.IO;
 
 namespace ZSS
 {
@@ -252,17 +253,17 @@ namespace ZSS
             {
                 string fp = (string)lbFiles.SelectedItem;
 
+                if (!bwRemoteViewer.IsBusy)
+                {
+                    RemoteViewerTask rvt = new RemoteViewerTask(RemoteViewerTask.Jobs.VIEW_FILE);
+                    rvt.RemoteFile = fp;
+                    bwRemoteViewer.RunWorkerAsync(rvt);
+                }
+
                 if (FileSystem.IsValidImageFile(fp))
                 {
                     pbViewer.Left = 0;
-                    pbViewer.Top = 0;
-
-                    if (!bwRemoteViewer.IsBusy)
-                    {
-                        RemoteViewerTask rvt = new RemoteViewerTask(RemoteViewerTask.Jobs.VIEW_FILE);
-                        rvt.RemoteFile = fp;
-                        bwRemoteViewer.RunWorkerAsync(rvt);
-                    }
+                    pbViewer.Top = 0;  
                 }
             }
         }
@@ -336,15 +337,6 @@ namespace ZSS
                     //mFTP.ChangeDir(mAcc.Path);
                     mFTP.DownloadFile(file, localfile);
 
-                    //mBytesDownloaded = mFTP.DoDownload();
-
-                    //while (mBytesDownloaded > 0)
-                    //{
-                    //    mBytesDownloaded += mFTP.DoDownload();
-                    //}
-                    //mBytesTotal = 0;
-                    //mBytesDownloaded = 0;
-                    //mFTP.Disconnect();
                 }
                 catch (System.Exception ex)
                 {
@@ -431,7 +423,20 @@ namespace ZSS
                 case RemoteViewerTask.ProgressType.VIEWING_FILE:
                     fp = (string)e.UserState;
                     FileSystem.AppendDebug(string.Format("Viewing file: {0}", fp));
-                    pbViewer.ImageLocation = fp;
+                    if (FileSystem.IsValidImageFile(fp))
+                    {
+                        pbViewer.Visible = true;
+                        txtViewer.Visible = false;
+                        pbViewer.ImageLocation = fp;
+                    }
+                    else if (FileSystem.IsValidTextFile(fp))
+                    {
+                        pbViewer.Visible = false ;
+                        txtViewer.Visible = true;
+                        txtViewer.Text = File.ReadAllText(fp);
+                    }
+
+           
                     break;
 
             }
@@ -445,7 +450,7 @@ namespace ZSS
             switch (rvt.Job)
             {
                 case RemoteViewerTask.Jobs.FETCH_LIST:
-                    sBar.Text = string.Format("Ready. Loaded {0} screenshots.", lbFiles.Items.Count);
+                    sBar.Text = string.Format("Ready. Loaded {0} files.", lbFiles.Items.Count);
                     break;
                 case RemoteViewerTask.Jobs.VIEW_FILE:
                     sBar.Text = string.Format("Showing {0}.", rvt.RemoteFile);
@@ -498,7 +503,6 @@ namespace ZSS
             }
 
         }
-
 
     }
 }
