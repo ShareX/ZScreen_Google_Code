@@ -4727,7 +4727,23 @@ namespace ZSS
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
-            pbLogo.Image = MyGraphics.ChangeBrightness(bmp, new Random().Next(10, 50));
+            Random rand = new Random();
+            switch (rand.Next(1, 5))
+            {
+                case 1:
+                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.BrightnessFilter(rand.Next(0, 101) - 50));
+                    break;
+                case 2:
+                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.InverseFilter());
+                    break;
+                case 3:
+                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.GrayscaleFilter());
+                    break;
+                case 4:
+                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.ColorFilter(
+                        Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256))));
+                    break;
+            }
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
