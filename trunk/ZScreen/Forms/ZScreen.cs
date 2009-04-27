@@ -371,8 +371,9 @@ namespace ZSS
             ///////////////////////////////////
 
             cbStartWin.Checked = CheckStartWithWindows();
-
-            nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
+            cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
+            cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
+            cbAutoSaveSettings.Checked = Program.conf.AutoSaveSettings;
             if (cboUpdateCheckType.Items.Count == 0)
             {
                 cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
@@ -380,8 +381,7 @@ namespace ZSS
             cboUpdateCheckType.SelectedIndex = (int)Program.conf.UpdateCheckType;
             cbCheckUpdates.Checked = Program.conf.CheckUpdates;
             cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
-            cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
-            cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
+            nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
@@ -1411,7 +1411,6 @@ namespace ZSS
             {
                 if (this.WindowState == FormWindowState.Minimized)
                 {
-                    Program.conf.Save();
                     if (!Program.conf.ShowInTaskbar)
                     {
                         this.Hide();
@@ -1422,6 +1421,7 @@ namespace ZSS
                     Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
+                if (Program.conf.AutoSaveSettings) SaveSettings();
             }
         }
 
@@ -2502,7 +2502,8 @@ namespace ZSS
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to revert settings to default values?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you really want to revert settings to default values?", Application.ProductName,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 LoadSettingsDefault();
             }
@@ -3079,19 +3080,24 @@ namespace ZSS
 
             if (e.TabPage == tpMain)
             {
-                txtActiveHelp.Text = tabDesc + "select the destination that images are uploaded to, enable/disable crop settings, and turn Active Help on and off.";
+                txtActiveHelp.Text = tabDesc + "select the destination that images are uploaded to," +
+                    " enable/disable crop settings, and turn Active Help on and off.";
             }
             else if (e.TabPage == tpHotkeys)
             {
-                txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use. To set a Hotkey click on a button and follow the directions provided above.";
+                txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use." +
+                " To set a Hotkey click on a button and follow the directions provided above.";
             }
             else if (e.TabPage == tpWatermark)
             {
-                txtActiveHelp.Text = tabDesc + string.Format("configure Watermark properties. You can choose a text string or an image as the Watermark. If you are using a large Logo then consider setting the Image Scale.");
+                txtActiveHelp.Text = tabDesc + string.Format("configure Watermark properties." +
+                    " You can choose a text string or an image as the Watermark." +
+                    " If you are using a large Logo then consider setting the Image Scale.");
             }
             else if (e.TabPage == tpFTP)
             {
-                txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots. You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
+                txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots." +
+                    " You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
             }
             else if (e.TabPage == tpHTTP)
             {
@@ -3099,7 +3105,8 @@ namespace ZSS
             }
             else if (e.TabPage == tpEditors)
             {
-                txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot. {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
+                txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot." +
+                    " {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
             }
             else if (e.TabPage == tpCapture)
             {
@@ -3107,7 +3114,8 @@ namespace ZSS
             }
             else if (e.TabPage == tpHistory)
             {
-                txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots. To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
+                txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots." +
+                    " To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
             }
             else if (e.TabPage == tpOptions)
             {
@@ -3117,6 +3125,8 @@ namespace ZSS
             {
                 txtActiveHelp.Text = "Wiki: http://code.google.com/p/zscreen/wiki/CustomUploadersHelp";
             }
+
+            if (Program.conf.AutoSaveSettings) SaveSettings();
         }
 
         private void ActiveHelpTagsConfig()
@@ -3126,7 +3136,10 @@ namespace ZSS
             //////////////////////////////////
             cboScreenshotDest.Tag = "Select destination for the Screenshot. Destination can also be changed using the Tray menu.";
 
-            cboClipboardTextMode.Tag = "Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard.\n\"Full Image\" returns a normal full-size image URL.\n\"Full Image for Forums\" returns BBcode for embedding images into forum posts.\n\"Thumbnail\" returns the thumbnail (a small image) of your uploaded image.\n\"Linked Thumbnail\" is the same as \"Thumbnail\" except that it links the thumbnail to the full-size image.";
+            cboClipboardTextMode.Tag = "Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard." +
+                "\n\"Full Image\" returns a normal full-size image URL.\n\"Full Image for Forums\" returns BBcode for embedding images into forum posts." +
+                "\n\"Thumbnail\" returns the thumbnail (a small image) of your uploaded image.\n\"Linked Thumbnail\" is the same as \"Thumbnail\" except " +
+                "that it links the thumbnail to the full-size image.";
 
             //active help inconsistency (uses label because numeric up/down doesn't support mousehover event
             nudtScreenshotDelay.Tag = "The amount of time that the program will pause before taking a Full Screen or Active Window Screenshot.";
@@ -3662,7 +3675,8 @@ namespace ZSS
                     lbHistory.Items.Remove(hi);
                     if (File.Exists(hi.LocalPath))
                     {
-                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(hi.LocalPath, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(hi.LocalPath,
+                            Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
                     }
                 }
             }
@@ -4338,7 +4352,8 @@ namespace ZSS
 
         private void btnHistoryClear_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to clear the History List?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show("Do you really want to clear the History List?", this.Text, MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbHistory.Items.Clear();
                 CheckHistoryItems();
@@ -4703,11 +4718,6 @@ namespace ZSS
             TestWatermark();
         }
 
-        private void btnSaveSettings_Click(object sender, EventArgs e)
-        {
-            SaveSettings();
-        }
-
         private void cboWatermarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
@@ -4781,6 +4791,11 @@ namespace ZSS
         private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.ScreenshotDelayTimes = nudtScreenshotDelay.Time;
+        }
+
+        private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
         }
     }
 }
