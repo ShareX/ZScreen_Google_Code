@@ -50,24 +50,14 @@ namespace ZSS
         #region Variables
 
         public IntPtr KeyboardHookHandle = (IntPtr)1; //Used for the keyboard hook
-
-        private bool mGuiIsReady;
-        private bool mClose;
-        private bool mTakingScreenShot;
-        private bool mSetHotkeys;
-        private int mHKSelectedRow = -1;
+        private bool mGuiIsReady, mClose, mTakingScreenShot, mSetHotkeys, bQuickOptionsOpened, bDropWindowOpened,
+            bQuickActionsOpened, bAutoScreenshotsOpened;
+        private int mHKSelectedRow = -1, mHadFocusAt;
         private HKcombo mHKSetcombo;
         private TextBox mHadFocus;
-        private int mHadFocusAt;
-        private const int mWM_KEYDOWN = 0x0100;
-        private const int mWM_SYSKEYDOWN = 0x0104;
-        private bool bQuickOptionsOpened;
-        private bool bDropWindowOpened;
-        private bool bQuickActionsOpened;
-        private bool bAutoScreenshotsOpened;
+        private const int mWM_KEYDOWN = 0x0100, mWM_SYSKEYDOWN = 0x0104;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator;
-        private BackgroundWorker bwActiveHelp = new BackgroundWorker();
         private Debug debug;
 
         #endregion
@@ -132,6 +122,7 @@ namespace ZSS
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
                 " any control and this textbox will be updated with information about the control.", ProductName);
+            CheckActiveHelp();
 
             #endregion
 
@@ -3018,6 +3009,7 @@ namespace ZSS
 
         private void StartGTActiveHelp(string help)
         {
+            BackgroundWorker bwActiveHelp = new BackgroundWorker();
             bwActiveHelp.DoWork += new DoWorkEventHandler(bwActiveHelp_DoWork);
             GoogleTranslate.TranslationInfo ti =
                 new GoogleTranslate.TranslationInfo(help, new GoogleTranslate.GTLanguage("en", "English"),
@@ -3123,7 +3115,13 @@ namespace ZSS
                 txtActiveHelp.Text = "Wiki: http://code.google.com/p/zscreen/wiki/CustomUploadersHelp";
             }
 
+            CheckActiveHelp();
             if (Program.conf.AutoSaveSettings) SaveSettings();
+        }
+
+        private void CheckActiveHelp()
+        {
+            splitContainerApp.Panel2Collapsed = Program.conf.HideActiveHelp;
         }
 
         private void ActiveHelpTagsConfig()
