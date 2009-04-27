@@ -37,15 +37,10 @@ namespace ZSS
 {
     partial class Crop : Form
     {
-        private bool mMouseDown;
-        private Image mBgImage;
-        private Point mousePos, mousePosOnClick, oldMousePos;
-        private Point screenMousePos;
-        private Rectangle screenBound;
-        private Rectangle clientBound;
-        private Rectangle cropRegion;
-        private Rectangle rectRegion;
-        private Bitmap bmpBgImage;
+        private bool mMouseDown, selectedWindowMode, forceCheck;
+        private Bitmap bmpClean, bmpBackground, bmpRegion;
+        private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
+        private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
         private Pen labelBorderPen = new Pen(Color.Black);
         private Pen crosshairPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor));
         private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
@@ -54,12 +49,9 @@ namespace ZSS
         private string strMouseDown = "Mouse Left Up: Capture Screenshot" +
             "\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle Crop Grid mode";
         private Queue windows = new Queue();
-        private Timer timer = new Timer();
-        private Timer windowCheck = new Timer();
-        private bool selectedWindowMode;
-        private bool forceCheck;
-        private Rectangle rectIntersect;
-        private DynamicCrosshair crosshair;
+        private Timer timer = new Timer { Interval = 10 };
+        private Timer windowCheck = new Timer { Interval = 250 };
+        private DynamicCrosshair crosshair = new DynamicCrosshair();
         private DynamicRectangle myRectangle;
 
         private Rectangle CropRegion
@@ -78,23 +70,17 @@ namespace ZSS
 
         public Crop(Image myImage, bool windowMode)
         {
-            selectedWindowMode = windowMode;
-            mBgImage = new Bitmap(myImage);
-            bmpBgImage = new Bitmap(mBgImage);
             InitializeComponent();
+            selectedWindowMode = windowMode;
+            bmpClean = new Bitmap(myImage);
+            bmpBackground = new Bitmap(bmpClean);
+            bmpRegion = new Bitmap(bmpClean);
             Bounds = MyGraphics.GetScreenBounds();
-            //This should not be used anymore since we will normalize points to client's coordinate
-            //rectIntersect.Location = this.Bounds.Location;
             rectIntersect.Size = new Size(Bounds.Width - 1, Bounds.Height - 1);
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-
             CalculateBoundaryFromMousePosition();
-
-            timer.Interval = 10;
             timer.Tick += new EventHandler(TimerTick);
-            windowCheck.Interval = 250;
             windowCheck.Tick += new EventHandler(WindowCheckTick);
-            crosshair = new DynamicCrosshair();
 
             if (selectedWindowMode)
             {
@@ -108,22 +94,46 @@ namespace ZSS
                 Cursor.Hide();
             }
 
-            Graphics g = Graphics.FromImage(mBgImage);
-            g.SmoothingMode = SmoothingMode.HighQuality;
+            Graphics gBackground = Graphics.FromImage(bmpBackground);
+            gBackground.SmoothingMode = SmoothingMode.HighQuality;
+            Graphics gRegion = Graphics.FromImage(bmpRegion);
+            gRegion.SmoothingMode = SmoothingMode.HighQuality;
 
-            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
+            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT))
+            { //If Region Transparent
+                gRegion.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)),
+                    new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height));
+            }
+            else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS))
+            { //If Region Brightness
+                ImageAttributes imgattr = new ImageAttributes();
+                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(10));
+                gRegion.DrawImage(bmpClean, new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height), 0, 0,
+                    bmpRegion.Width, bmpRegion.Height, GraphicsUnit.Pixel, imgattr);
+            }
+            else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT))
             { //If Background Region Transparent
-                g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)),
-                    new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
+                gBackground.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)),
+                    new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height));
             }
             else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
             { //If Background Region Grayscale
                 ImageAttributes imgattr = new ImageAttributes();
                 imgattr.SetColorMatrix(MyGraphics.GrayscaleFilter());
-                g.DrawImage(mBgImage, new Rectangle(0, 0, mBgImage.Width, mBgImage.Height), 0, 0,
-                    mBgImage.Width, mBgImage.Height, GraphicsUnit.Pixel, imgattr);
+                gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
+                    bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
+            }
+            else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
+            { //If Background Region Brightness  
+                ImageAttributes imgattr = new ImageAttributes();
+                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(10));
+                gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
+                    bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
             }
         }
 
@@ -195,21 +205,28 @@ namespace ZSS
         {
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.DrawImage(mBgImage, 0, 0, mBgImage.Width, mBgImage.Height); //Draw background
 
-            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
-                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT && mMouseDown))
-            { //If Region Transparent
-                g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), CropRegion);
+            //Draw background
+            g.DrawImage(bmpBackground, 0, 0, bmpBackground.Width, bmpBackground.Height);
+
+            //Draw region
+            if ((selectedWindowMode && (Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT ||
+                Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS)) ||
+                (!selectedWindowMode && (Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT ||
+                Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS)) && mMouseDown)
+            { //If Region Transparent or Region Brightness
+                g.DrawImage(bmpRegion, CropRegion, CropRegion, GraphicsUnit.Pixel);
             }
             else if (((selectedWindowMode &&
                 (Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
-                Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE)) ||
+                Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
+                Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS)) ||
                 (!selectedWindowMode && (Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
-                Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) &&
-                mMouseDown)) && CropRegion.Width > 0 && CropRegion.Height > 0)
-            { //If Background Region Transparent or Background Region Grayscale
-                g.DrawImage(bmpBgImage, CropRegion, CropRegion, GraphicsUnit.Pixel);
+                Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
+                Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) && mMouseDown))
+                && CropRegion.Width > 0 && CropRegion.Height > 0)
+            { //If Background Region Transparent or Background Region Grayscale or Background Region Brightness
+                g.DrawImage(bmpClean, CropRegion, CropRegion, GraphicsUnit.Pixel);
             }
 
             if (selectedWindowMode)
@@ -234,8 +251,8 @@ namespace ZSS
             {
                 if (Program.conf.CropShowBigCross)
                 {
-                    g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(mBgImage.Width, mousePos.Y));
-                    g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, mBgImage.Height));
+                    g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(bmpBackground.Width, mousePos.Y));
+                    g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, bmpBackground.Height));
                 }
                 if (mMouseDown)
                 {
@@ -282,7 +299,7 @@ namespace ZSS
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
             if (!selectedWindowMode && Program.conf.CropShowMagnifyingGlass)
             {
-                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)bmpBgImage, mousePos, 100, 5), labelRect.X,
+                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X,
                 labelRect.Y - labelRect.Height - 100 - offset.Y);
             }
         }
@@ -389,7 +406,7 @@ namespace ZSS
             {
                 if (e.KeyChar == (int)Keys.Space)
                 {
-                    CropRegion = new Rectangle(0, 0, mBgImage.Width, mBgImage.Height);
+                    CropRegion = new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height);
                     ReturnImageAndExit();
                 }
                 if (e.KeyChar == (int)Keys.Escape)
@@ -450,8 +467,8 @@ namespace ZSS
 
         private void DisposeImages()
         {
-            mBgImage.Dispose();
-            bmpBgImage.Dispose();
+            bmpBackground.Dispose();
+            bmpClean.Dispose();
         }
     }
 

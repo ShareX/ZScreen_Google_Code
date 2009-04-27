@@ -252,8 +252,7 @@ namespace ZSS
         }
         public static Bitmap ChangeBrightness(Bitmap bmp, int value)
         {
-            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite,
-                PixelFormat.Format24bppRgb);
+            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             int nOffset = bmpData.Stride - bmp.Width * 3;
             int bmpWidth = bmp.Width * 3;
             int nVal;
