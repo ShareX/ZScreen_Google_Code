@@ -31,6 +31,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using ZSS.Colors;
+using System.Drawing.Imaging;
 
 namespace ZSS
 {
@@ -106,6 +107,24 @@ namespace ZSS
                 myRectangle = new DynamicRectangle(CaptureType.CROP);
                 Cursor.Hide();
             }
+
+            Graphics g = Graphics.FromImage(mBgImage);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+
+            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT))
+            { //If Background Region Transparent
+                g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)),
+                    new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
+            }
+            else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
+            { //If Background Region Grayscale
+                ImageAttributes imgattr = new ImageAttributes();
+                imgattr.SetColorMatrix(MyGraphics.GrayscaleFilter());
+                g.DrawImage(mBgImage, new Rectangle(0, 0, mBgImage.Width, mBgImage.Height), 0, 0,
+                    mBgImage.Width, mBgImage.Height, GraphicsUnit.Pixel, imgattr);
+            }
         }
 
         private void Crop_Shown(object sender, EventArgs e)
@@ -172,32 +191,24 @@ namespace ZSS
             return true;
         }
 
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
-            e.Graphics.DrawImage(mBgImage, 0, 0, mBgImage.Width, mBgImage.Height);
-            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
-                (!selectedWindowMode && Program.conf.CropRegionStyle == 2))
-            {
-                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)),
-                    new Rectangle(0, 0, mBgImage.Width, mBgImage.Height));
-            }
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
+            g.DrawImage(mBgImage, 0, 0, mBgImage.Width, mBgImage.Height); //Draw background
 
-            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyle == 1) ||
-                (!selectedWindowMode && Program.conf.CropRegionStyle == 1 && mMouseDown))
-            {
+            if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT && mMouseDown))
+            { //If Region Transparent
                 g.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)), CropRegion);
             }
-            else if (((selectedWindowMode && Program.conf.SelectedWindowRegionStyle == 2) ||
-                (!selectedWindowMode && Program.conf.CropRegionStyle == 2 && mMouseDown)) &&
-                CropRegion.Width > 0 && CropRegion.Height > 0)
-            {
+            else if (((selectedWindowMode &&
+                (Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
+                Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE)) ||
+                (!selectedWindowMode && (Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
+                Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) &&
+                mMouseDown)) && CropRegion.Width > 0 && CropRegion.Height > 0)
+            { //If Background Region Transparent or Background Region Grayscale
                 g.DrawImage(bmpBgImage, CropRegion, CropRegion, GraphicsUnit.Pixel);
             }
 
@@ -271,7 +282,7 @@ namespace ZSS
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
             if (!selectedWindowMode && Program.conf.CropShowMagnifyingGlass)
             {
-                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)mBgImage, mousePos, 100, 5), labelRect.X,
+                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)bmpBgImage, mousePos, 100, 5), labelRect.X,
                 labelRect.Y - labelRect.Height - 100 - offset.Y);
             }
         }

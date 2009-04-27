@@ -604,7 +604,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
             // tsmViewSettingsMenu
             // 
@@ -1767,10 +1767,6 @@ namespace ZSS
             // 
             this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCropStyle.FormattingEnabled = true;
-            this.cbCropStyle.Items.AddRange(new object[] {
-            "No Transparency",
-            "Region Transparent",
-            "Background Region Transparent"});
             this.cbCropStyle.Location = new System.Drawing.Point(112, 12);
             this.cbCropStyle.Name = "cbCropStyle";
             this.cbCropStyle.Size = new System.Drawing.Size(208, 21);
@@ -1932,10 +1928,6 @@ namespace ZSS
             // 
             this.cbSelectedWindowStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedWindowStyle.FormattingEnabled = true;
-            this.cbSelectedWindowStyle.Items.AddRange(new object[] {
-            "No Transparency",
-            "Region Transparent",
-            "Background Region Transparent"});
             this.cbSelectedWindowStyle.Location = new System.Drawing.Point(168, 12);
             this.cbSelectedWindowStyle.Name = "cbSelectedWindowStyle";
             this.cbSelectedWindowStyle.Size = new System.Drawing.Size(208, 21);

@@ -180,7 +180,11 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
 
             // Crop Shot
-            cbCropStyle.SelectedIndex = Program.conf.CropRegionStyle;
+            if (cbCropStyle.Items.Count == 0)
+            {
+                cbCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
+            }
+            cbCropStyle.SelectedIndex = (int)Program.conf.CropRegionStyles;
             cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
 
@@ -203,7 +207,11 @@ namespace ZSS
             cbCropShowGrids.Checked = Program.conf.CropShowGrids;
 
             // Selected Window
-            cbSelectedWindowStyle.SelectedIndex = Program.conf.SelectedWindowRegionStyle;
+            if (cbSelectedWindowStyle.Items.Count == 0)
+            {
+                cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
+            }
+            cbSelectedWindowStyle.SelectedIndex = (int)Program.conf.SelectedWindowRegionStyles;
             cbSelectedWindowFront.Checked = Program.conf.SelectedWindowFront;
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
             cbSelectedWindowRuler.Checked = Program.conf.SelectedWindowRuler;
@@ -3172,7 +3180,7 @@ namespace ZSS
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.CropRegionStyle = cbCropStyle.SelectedIndex;
+            Program.conf.CropRegionStyles = (RegionStyles)cbCropStyle.SelectedIndex;
         }
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
@@ -4283,7 +4291,7 @@ namespace ZSS
 
         private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowRegionStyle = cbSelectedWindowStyle.SelectedIndex;
+            Program.conf.SelectedWindowRegionStyles = (RegionStyles)cbSelectedWindowStyle.SelectedIndex;
         }
 
         private void nudCropGridSize_ValueChanged(object sender, EventArgs e)

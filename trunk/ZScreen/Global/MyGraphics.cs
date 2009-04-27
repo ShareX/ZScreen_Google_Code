@@ -281,5 +281,60 @@ namespace ZSS
 
             return bmp;
         }
+
+        public static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix matrix)
+        {
+            Graphics g = Graphics.FromImage(img);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            ImageAttributes imgattr = new ImageAttributes();
+            imgattr.SetColorMatrix(matrix);
+            g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imgattr);
+            return img;
+        }
+
+        public static ColorMatrix InverseFilter()
+        {
+            return new ColorMatrix(new[]{
+                new float[] {-1, 0, 0, 0, 0},
+                new float[] {0, -1, 0, 0, 0},
+                new float[] {0, 0, -1, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {1, 1, 1, 0, 1}
+            });
+        }
+
+        public static ColorMatrix GrayscaleFilter()
+        {
+            return new ColorMatrix(new[]{
+                new float[] {0.3f, 0.3f, 0.3f, 0, 0},
+                new float[] {0.59f, 0.59f, 0.59f, 0, 0},
+                new float[] {0.11f, 0.11f, 0.11f, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {0, 0, 0, 0, 1}
+            });
+        }
+
+        public static ColorMatrix BrightnessFilter(int percentage)
+        {
+            float perc = (float)percentage / 100;
+            return new ColorMatrix(new[]{
+                new float[] {1, 0, 0, 0, 0},
+                new float[] {0, 1, 0, 0, 0},
+                new float[] {0, 0, 1, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {perc, perc, perc, 0, 1}
+            });
+        }
+
+        public static ColorMatrix ColorFilter(Color color)
+        {
+            return new ColorMatrix(new[]{
+                new float[] {1, 0, 0, 0, 0},
+                new float[] {0, 1, 0, 0, 0},
+                new float[] {0, 0, 1, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {(float)color.R / 255, (float)color.G / 255, (float)color.B / 255, (float)color.A / 255, 1}
+            });
+        }
     }
 }
