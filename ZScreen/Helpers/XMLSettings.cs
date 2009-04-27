@@ -289,6 +289,7 @@ namespace ZSS
 
         public bool OpenMainWindow = false;
         public bool ShowInTaskbar = true;
+        public bool AutoSaveSettings = false;
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;

@@ -213,7 +213,7 @@ namespace ZSS
             if ((selectedWindowMode && (Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT ||
                 Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS)) ||
                 (!selectedWindowMode && (Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT ||
-                Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS)) && mMouseDown)
+                Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS) && mMouseDown))
             { //If Region Transparent or Region Brightness
                 g.DrawImage(bmpRegion, CropRegion, CropRegion, GraphicsUnit.Pixel);
             }
