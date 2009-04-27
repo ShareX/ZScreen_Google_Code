@@ -68,7 +68,7 @@ namespace ZSS
             }
         }
 
-        public Crop(Image myImage, bool windowMode)
+        public Crop(Bitmap myImage, bool windowMode)
         {
             InitializeComponent();
             selectedWindowMode = windowMode;
@@ -102,36 +102,36 @@ namespace ZSS
             if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT))
             { //If Region Transparent
-                gRegion.FillRectangle(new SolidBrush(Color.FromArgb(75, Color.White)),
+                gRegion.FillRectangle(new SolidBrush(Color.FromArgb(Program.conf.RegionTransparentValue, Color.White)),
                     new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height));
             }
             else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS) ||
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS))
             { //If Region Brightness
                 ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(10));
+                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(Program.conf.RegionBrightnessValue));
                 gRegion.DrawImage(bmpClean, new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height), 0, 0,
                     bmpRegion.Width, bmpRegion.Height, GraphicsUnit.Pixel, imgattr);
             }
             else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT))
             { //If Background Region Transparent
-                gBackground.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.White)),
+                gBackground.FillRectangle(new SolidBrush(Color.FromArgb(Program.conf.BackgroundRegionTransparentValue, Color.White)),
                     new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height));
+            }
+            else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
+                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
+            { //If Background Region Brightness  
+                ImageAttributes imgattr = new ImageAttributes();
+                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(Program.conf.BackgroundRegionBrightnessValue));
+                gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
+                    bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
             }
             else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
             { //If Background Region Grayscale
                 ImageAttributes imgattr = new ImageAttributes();
                 imgattr.SetColorMatrix(MyGraphics.GrayscaleFilter());
-                gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
-                    bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
-            }
-            else if ((selectedWindowMode && Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
-                (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
-            { //If Background Region Brightness  
-                ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(10));
                 gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
                     bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
             }
@@ -467,8 +467,9 @@ namespace ZSS
 
         private void DisposeImages()
         {
-            bmpBackground.Dispose();
             bmpClean.Dispose();
+            bmpBackground.Dispose();
+            bmpRegion.Dispose();
         }
     }
 

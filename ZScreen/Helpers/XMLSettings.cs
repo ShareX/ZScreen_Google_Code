@@ -43,10 +43,15 @@ namespace ZSS
 
             // General
             CopyImageUntilURL = true;
+            RegionTransparentValue = 75;
+            RegionBrightnessValue = 15;
+            BackgroundRegionTransparentValue = 100;
+            BackgroundRegionBrightnessValue = 15;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  FTP
             //~~~~~~~~~~~~~~~~~~~~~
+
             BackupFTPSettings = true;
 
             //~~~~~~~~~~~~~~~~~~~~~
@@ -59,7 +64,6 @@ namespace ZSS
             // Paths
             BackupAppSettings = true;
             ImagesDir = Program.ImagesDir;
-
         }
 
         #region Settings
@@ -112,8 +116,16 @@ namespace ZSS
 
         // General
 
-        [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture/General")]
+        [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture / General")]
         public bool CopyImageUntilURL { get; set; }
+        [CategoryAttribute("Capture / Region Styles")]
+        public int RegionTransparentValue { get; set; }
+        [CategoryAttribute("Capture / Region Styles")]
+        public int RegionBrightnessValue { get; set; }
+        [CategoryAttribute("Capture / Region Styles")]
+        public int BackgroundRegionTransparentValue { get; set; }
+        [CategoryAttribute("Capture / Region Styles")]
+        public int BackgroundRegionBrightnessValue { get; set; }
 
         // Crop Shot
 
@@ -169,7 +181,7 @@ namespace ZSS
 
         public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        [DescriptionAttribute("Adjust the current Auto-Increment Number"), CategoryAttribute("Capture/File Naming")]
+        [DescriptionAttribute("Adjust the current Auto-Increment Number"), CategoryAttribute("Capture / File Naming")]
         public int AutoIncrement { get; set; }
 
         // Watermark
@@ -207,7 +219,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<Software> ImageSoftwareList = new List<Software>();
-        public Software ImageSoftwareActive = null; // this has to be initially null to get Paint added - McoreD
+        public Software ImageSoftwareActive = null;
         public bool ImageSoftwareEnabled = false;
         public Software TextEditorActive = new Software();
         public List<Software> TextEditors = new List<Software>();
@@ -238,9 +250,9 @@ namespace ZSS
         public decimal UploadDurationLimit = 10000;
         public string ImageShackRegistrationCode = "";
         public string TinyPicShuk = "";
-        [CategoryAttribute("HTTP/TinyPic")]
+        [CategoryAttribute("HTTP / TinyPic")]
         public string TinyPicUserName { get; set; }
-        [CategoryAttribute("HTTP/TinyPic"), TypeConverter(typeof(CustomPassConverter))]
+        [CategoryAttribute("HTTP / TinyPic"), TypeConverter(typeof(CustomPassConverter))]
         public string TinyPicPassword { get; set; }
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = false;
@@ -280,16 +292,16 @@ namespace ZSS
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;
-        [DescriptionAttribute("Write Debug Information into a Log File"), CategoryAttribute("Options/General")]
+        [DescriptionAttribute("Write Debug Information into a Log File"), CategoryAttribute("Options / General")]
         public bool WriteDebugFile { get; set; }
 
         // Paths
 
         public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;
-        [DescriptionAttribute("Periodically backup Application Settings"), CategoryAttribute("Options/Paths")]
+        [DescriptionAttribute("Periodically backup Application Settings"), CategoryAttribute("Options / Paths")]
         public bool BackupAppSettings { get; set; }
-        [DescriptionAttribute("Images Directory where Screenshots and Pictures will be stored locally"), CategoryAttribute("Options/Paths")]
+        [DescriptionAttribute("Images Directory where Screenshots and Pictures will be stored locally"), CategoryAttribute("Options / Paths")]
         public string ImagesDir { get; set; }
 
 

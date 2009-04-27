@@ -694,7 +694,7 @@ namespace ZSS
                 }
                 else
                 {
-                    Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                    Crop c = new Crop((Bitmap)imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
                     if (c.ShowDialog() == DialogResult.OK)
                     {
                         if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
