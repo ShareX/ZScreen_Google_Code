@@ -117,7 +117,7 @@ namespace ZSS
 
         // Crop Shot
 
-        public int CropRegionStyle = 1;
+        public RegionStyles CropRegionStyles = RegionStyles.REGION_TRANSPARENT;
         public bool CropRegionRectangleInfo = true;
         public bool CropRegionHotkeyInfo = true;
 
@@ -141,7 +141,7 @@ namespace ZSS
 
         // Selected Window
 
-        public int SelectedWindowRegionStyle = 2;
+        public RegionStyles SelectedWindowRegionStyles = RegionStyles.BACKGROUND_REGION_TRANSPARENT;
         public bool SelectedWindowFront = false;
         public bool SelectedWindowRectangleInfo = true;
         public bool SelectedWindowRuler = true;

@@ -43,6 +43,18 @@ namespace ZSS
         SELECTED_WINDOW
     }
 
+    public enum RegionStyles
+    {
+        [Description("No Transparency")]
+        NO_TRANSPARENCY,
+        [Description("Region Transparent")]
+        REGION_TRANSPARENT,
+        [Description("Background Region Transparent")]
+        BACKGROUND_REGION_TRANSPARENT,
+        [Description("Background Region Grayscale")]
+        BACKGROUND_REGION_GRAYSCALE
+    }
+
     public enum HistoryListFormat
     {
         [Description("FileName")]

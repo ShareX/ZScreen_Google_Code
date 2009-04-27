@@ -100,10 +100,9 @@ namespace ZSS.Forms
 
         private void UpdateStatus()
         {
-            tspbBar.Maximum = mDelay;
-            tspbBar.Value = Math.Min(tspbBar.Maximum, (int)stopwatch.ElapsedMilliseconds);
             timeleft = Math.Max(0, mDelay - (int)stopwatch.ElapsedMilliseconds);
             percentage = (int)(100 - (double)timeleft / mDelay * 100);
+            tspbBar.Value = percentage;
             tsslStatus.Text = " Timeleft: " + timeleft + "ms (" + percentage + "%)";
             this.Text = "Auto Capture - Count: " + count;
         }
