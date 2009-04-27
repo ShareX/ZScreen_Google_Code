@@ -4,76 +4,92 @@
 = Main Window =
 == Main ==
 
-[http://img18.imageshack.us/img18/6884/zscreen231beta180320090o.png]
+[http://img528.imageshack.us/img528/4680/zscreen21051beta2009042u.png]
 
 == Hotkeys == 
 
-[http://img18.imageshack.us/img18/5266/zscreen231beta180320090z.png]
+[http://img528.imageshack.us/img528/1440/zscreen21051beta2009042m.png]
 
 == Capture == 
-=== Selected Window & Crop Shot ===
+=== Crop Shot ===
 
-[http://img18.imageshack.us/img18/2176/zscreen231beta180320090n.png]
+[http://img528.imageshack.us/img528/2333/zscreen21051beta2009042l.png]
+
+=== Selected Window ===
+
+[http://img528.imageshack.us/img528/3394/zscreen21051beta2009042x.png]
 
 === Interaction ===
 
-[http://img18.imageshack.us/img18/7282/zscreen231beta180320090nwf.png]
+[http://img528.imageshack.us/img528/4011/zscreen21051beta2009042lqr.png]
 
 === Naming Conventions ===
 
-[http://img18.imageshack.us/img18/7120/zscreen231beta180320090hve.png]
-
-=== Watermark ===
-
-[http://img18.imageshack.us/img18/9508/zscreen231beta180320090zhc.png]
+[http://img528.imageshack.us/img528/751/zscreen21051beta2009042mtc.png]
 
 === Quality ===
 
-[http://img18.imageshack.us/img18/808/zscreen231beta180320090jos.png]
+[http://img528.imageshack.us/img528/1447/zscreen21051beta2009042e.png]
 
-== Image Software ==
+== Watermark ==
 
-[http://img18.imageshack.us/img18/1600/zscreen231beta180320090ofh.png]
+[http://img528.imageshack.us/img528/845/zscreen21051beta2009042g.png]
+
+== Editors ==
+
+[http://img528.imageshack.us/img528/5083/zscreen21051beta2009042d.png]
 
 == FTP == 
 
-[http://img18.imageshack.us/img18/723/zscreen231beta180320090jls.png]
+[http://img528.imageshack.us/img528/5523/zscreen21051beta2009042h.png]
 
 == HTTP == 
 === Image Uploaders ===
 
-[http://img18.imageshack.us/img18/920/zscreen231beta180320090p.png]
+[http://img528.imageshack.us/img528/6967/zscreen21051beta2009042r.png]
 
 === Custom Image Uploaders ===
 
-[http://img18.imageshack.us/img18/6117/zscreen231beta180320090r.png]
+[http://img528.imageshack.us/img528/7177/zscreen21051beta2009042mhi.png]
 
 === Language Translator ===
 
-[http://img18.imageshack.us/img18/103/zscreen231beta180320090d.png]
+[http://img528.imageshack.us/img528/4469/zscreen21051beta2009042mmi.png]
 
-== Advanced == 
+== History ==
+=== History List ===
+
+[http://img211.imageshack.us/img211/566/zscreen21051beta2009042.png]
+
+=== History Settings ===
+
+[http://img211.imageshack.us/img211/2407/zscreen21051beta2009042y.png]
+
+== Options == 
 === General ===
 
-[http://img18.imageshack.us/img18/8519/zscreen231beta180320090i.png]
+[http://img211.imageshack.us/img211/9059/zscreen21051beta2009042c.png]
 
 === Paths ===
 
-[http://img18.imageshack.us/img18/5461/zscreen231beta180320090l.png]
+[http://img211.imageshack.us/img211/3394/zscreen21051beta2009042x.png]
 
 === Debug ===
 
-[http://img18.imageshack.us/img18/3361/zscreen231beta180320090ndy.png]
+[http://img211.imageshack.us/img211/7942/zscreen21051beta2009042q.png]
 
-== History ==
+=== Advanced ===
 
-[http://img18.imageshack.us/img18/7809/zscreen231beta180320090k.png]
+[http://img211.imageshack.us/img211/7844/zscreen21051beta2009042v.png]
 
-= Screen Color Picker =
+== Screen Color Picker ==
 
-[http://img18.imageshack.us/img18/3881/colordialog180320090838.png]
+[http://img211.imageshack.us/img211/6528/colordialog200904271733.png]
 
-= Tray Menu =
-== Root Menu ==
+== Tray Menu ==
 
-[http://img18.imageshack.us/img18/200/ss18032009083507.png]
+[http://img211.imageshack.us/img211/2959/ss20090427173427.png]
+
+== Auto Capture ==
+
+[http://img211.imageshack.us/img211/8439/autocapturecount1200904y.png]
