@@ -53,10 +53,10 @@ namespace ZSS
         REGION_BRIGHTNESS,
         [Description("Background Region Transparent")]
         BACKGROUND_REGION_TRANSPARENT,
-        [Description("Background Region Grayscale")]
-        BACKGROUND_REGION_GRAYSCALE,
         [Description("Background Region Brightness")]
-        BACKGROUND_REGION_BRIGHTNESS
+        BACKGROUND_REGION_BRIGHTNESS,
+        [Description("Background Region Grayscale")]
+        BACKGROUND_REGION_GRAYSCALE
     }
 
     public enum HistoryListFormat
