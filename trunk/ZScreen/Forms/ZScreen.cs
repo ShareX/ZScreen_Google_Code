@@ -427,8 +427,6 @@ namespace ZSS
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
             LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
-
-            UpdateGuiControlsHistory();
         }
 
         private void UpdateGuiControlsPaths()
@@ -1275,9 +1273,6 @@ namespace ZSS
                 }
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
-
-                UpdateGuiControlsHistory();
-
             }
             catch (Exception ex)
             {
@@ -1325,6 +1320,7 @@ namespace ZSS
             {
                 lbHistory.SelectedIndex = 0;
             }
+            UpdateGuiControlsHistory();
         }
 
         private void AddHistoryItem(HistoryItem hi)
@@ -1348,6 +1344,7 @@ namespace ZSS
                     lbHistory.Items.RemoveAt(i);
                 }
             }
+            UpdateGuiControlsHistory();
         }
 
         private void SaveHistoryItems()
