@@ -74,6 +74,8 @@ namespace ZSS
 
         public bool RunOnce = false;
         public Size WindowSize = new Size();
+        [CategoryAttribute("Misc Settings")]
+        public bool HideActiveHelp { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
