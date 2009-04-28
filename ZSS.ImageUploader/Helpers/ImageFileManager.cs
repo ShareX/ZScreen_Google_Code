@@ -58,7 +58,9 @@ namespace ZSS.ImageUploader.Helpers
                 case ClipboardUriType.FULL_IMAGE_WIKI:
                     return GetFullImageWiki();
                 case ClipboardUriType.LINKED_THUMBNAIL:
-                    return GetLinkedThumbnailUrl();
+                    return GetLinkedThumbnailForumUrl();
+                case ClipboardUriType.LINKED_THUMBNAIL_WIKI:
+                    return GetLinkedThumbnailWikiUrl();
                 case ClipboardUriType.THUMBNAIL:
                     return GetThumbnailUrl();
             }
@@ -112,9 +114,15 @@ namespace ZSS.ImageUploader.Helpers
             return string.Format("[{0}]", this.GetFullImageUrl());
         }
 
-        public string GetLinkedThumbnailUrl()
+        public string GetLinkedThumbnailForumUrl()
         {
             return string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", GetFullImageUrl(), GetThumbnailUrl());
+        }
+
+        public string GetLinkedThumbnailWikiUrl()
+        {
+            // [http://code.google.com/ http://code.google.com/images/code_sm.png]
+            return string.Format("[{0} {1}]", GetFullImageUrl(), GetThumbnailUrl());
         }
 
         public string GetFullImageHTML()
