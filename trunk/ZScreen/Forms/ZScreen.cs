@@ -4792,5 +4792,26 @@ namespace ZSS
         {
             Program.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
         }
+
+        private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (cbToLanguage.SelectedItem != null)
+            {
+                cbToLanguage.DoDragDrop(cbToLanguage.SelectedItem, DragDropEffects.Move);
+            }
+        }
+
+        private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.StringFormat) && e.AllowedEffect == DragDropEffects.Move)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
+        {
+            btnTranslateTo1.Text = "To " + e.Data.GetData(DataFormats.Text);
+        }
     }
 }
