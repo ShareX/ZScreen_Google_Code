@@ -268,6 +268,7 @@ namespace ZSS
 
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
+        public string ToLanguage2 = "?";
         public bool ClipboardTranslate = false;
 
         //~~~~~~~~~~~~~~~~~~~~~

@@ -166,6 +166,18 @@ namespace ZSS
                 "&langpair=" + sourceLanguage + "|" + targetLanguage; //translateText.Replace(Environment.NewLine, "%0A")
         }
 
+        public static GTLanguage FindLanguage(string language, List<GTLanguage> languages)
+        {
+            foreach (GTLanguage gtlanguage in languages)
+            {
+                if (gtlanguage.Value == language)
+                {
+                    return gtlanguage;
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Represents current possible translation options of Google Translate
         /// </summary>

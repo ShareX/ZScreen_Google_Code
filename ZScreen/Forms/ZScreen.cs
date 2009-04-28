@@ -558,10 +558,7 @@ namespace ZSS
                     }
                     if (CheckKeys(Program.conf.HKLanguageTranslator, lParam)) //Language Translator
                     {
-                        if (Clipboard.ContainsText())
-                        {
-                            StartBW_LanguageTranslator(Clipboard.GetText());
-                        }
+                        StartBW_LanguageTranslator();
                         return KeyboardHookHandle;
                     }
                     if (CheckKeys(Program.conf.HKScreenColorPicker, lParam)) //Screen Color Picker
@@ -607,14 +604,24 @@ namespace ZSS
 
         private void StartBW_LanguageTranslator()
         {
-            StartBW_LanguageTranslator("");
+            if (Clipboard.ContainsText())
+            {
+                StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(Clipboard.GetText(),
+                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
+                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage, mGTranslator.LanguageOptions.TargetLangList)));
+            }
         }
 
-        private void StartBW_LanguageTranslator(string clipboard)
+        private void StartBW_LanguageTranslator(GoogleTranslate.TranslationInfo translationInfo)
         {
-            if (cbFromLanguage.Items.Count > 0 && cbToLanguage.Items.Count > 0)
+            if (cbFromLanguage.Items.Count > 0 && cbToLanguage.Items.Count > 0 && !translationInfo.IsEmpty())
             {
-                StartWorkerText(MainAppTask.Jobs.LANGUAGE_TRANSLATOR, clipboard, "");
+                MainAppTask t = CreateTask(MainAppTask.Jobs.LANGUAGE_TRANSLATOR);
+                t.JobCategory = JobCategoryType.TEXT;
+                btnTranslate.Enabled = false;
+                btnTranslateTo1.Enabled = false;
+                t.TranslationInfo = translationInfo;
+                t.MyWorker.RunWorkerAsync(t);
             }
         }
 
@@ -1182,6 +1189,7 @@ namespace ZSS
                                         Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
                                     }
                                     btnTranslate.Enabled = true;
+                                    btnTranslateTo1.Enabled = true;
                                     break;
                                 case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
@@ -3531,7 +3539,7 @@ namespace ZSS
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Clipboard.ContainsText()) StartBW_LanguageTranslator(Clipboard.GetText());
+            StartBW_LanguageTranslator();
         }
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3794,6 +3802,12 @@ namespace ZSS
                     cbHelpToLanguage.Items.Add(gtLang.Name);
                 }
                 SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
+                GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Program.conf.ToLanguage2,
+                    mGTranslator.LanguageOptions.TargetLangList);
+                if (secondLang != null)
+                {
+                    btnTranslateTo1.Text = "To " + secondLang.Name;
+                }
                 if (cbFromLanguage.Items.Count > 0) cbFromLanguage.Enabled = true;
                 if (cbToLanguage.Items.Count > 0) cbToLanguage.Enabled = true;
                 if (cbHelpToLanguage.Items.Count > 0) cbHelpToLanguage.Enabled = true;
@@ -3829,7 +3843,14 @@ namespace ZSS
 
         private void btnTranslate_Click(object sender, EventArgs e)
         {
-            StartBW_LanguageTranslator();
+            btnTranslateMethod();
+        }
+
+        private void btnTranslateMethod()
+        {
+            StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
+                GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
+                GoogleTranslate.FindLanguage(Program.conf.ToLanguage, mGTranslator.LanguageOptions.TargetLangList)));
         }
 
         private void LanguageTranslator(ref MainAppTask t)
@@ -3857,7 +3878,7 @@ namespace ZSS
             if (e.Control && e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                StartBW_LanguageTranslator();
+                btnTranslateMethod();
             }
         }
 
@@ -4411,10 +4432,7 @@ namespace ZSS
                     ShowDropWindow();
                     break;
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    if (Clipboard.ContainsText())
-                    {
-                        StartBW_LanguageTranslator(Clipboard.GetText());
-                    }
+                    StartBW_LanguageTranslator();
                     break;
                 case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
                     ScreenColorPicker();
@@ -4789,15 +4807,15 @@ namespace ZSS
 
         private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
         {
-            if (cbToLanguage.SelectedItem != null)
+            if (cbToLanguage.SelectedIndex > -1)
             {
-                cbToLanguage.DoDragDrop(cbToLanguage.SelectedItem, DragDropEffects.Move);
+                cbToLanguage.DoDragDrop(Program.conf.ToLanguage, DragDropEffects.Move);
             }
         }
 
         private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.StringFormat) && e.AllowedEffect == DragDropEffects.Move)
+            if (e.Data.GetDataPresent(DataFormats.Text) && e.AllowedEffect == DragDropEffects.Move)
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -4805,7 +4823,25 @@ namespace ZSS
 
         private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
         {
-            btnTranslateTo1.Text = "To " + e.Data.GetData(DataFormats.Text);
+            GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
+                mGTranslator.LanguageOptions.TargetLangList);
+            Program.conf.ToLanguage2 = lang.Value;
+            btnTranslateTo1.Text = "To " + lang.Name;
+        }
+
+        private void btnTranslateTo1_Click(object sender, EventArgs e)
+        {
+            if (Program.conf.ToLanguage2 == "?")
+            {
+                MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", this.Text,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
+                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
+                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage2, mGTranslator.LanguageOptions.TargetLangList)));
+            }
         }
     }
 }
