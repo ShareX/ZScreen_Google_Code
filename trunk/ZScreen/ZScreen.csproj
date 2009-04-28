@@ -113,6 +113,7 @@
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\EventHandlers.cs" />
+    <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>
