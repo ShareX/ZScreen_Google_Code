@@ -1,3 +1,7 @@
+2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via XML Options
+2.10.07.0 XML Option to hide Active Help from the GUI
+2.10.06.1 Clearing the screen history did not reset history list count [Issue 63]
+2.10.06.0 Added new Clipboard URL Type: Linked Thumbnail for Wiki
 2.10.05.1 Fixed possibile uploading errors if Copy Image to Clipboard is turned on
 2.10.05.0 FTP Viewer can now preview text files
 2.10.04.0 Upload File to FTP will use the original file path instead of copying to Files folder
