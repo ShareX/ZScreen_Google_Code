@@ -291,7 +291,8 @@ namespace ZSS
 
         public bool OpenMainWindow = false;
         public bool ShowInTaskbar = true;
-        public bool AutoSaveSettings = false;
+        [DescriptionAttribute("Auto save settings whenever form is resized or main tabs are changed. Normally settings are saved only after form is closed."), CategoryAttribute("Options / General")]
+        public bool AutoSaveSettings { get; set; }
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;

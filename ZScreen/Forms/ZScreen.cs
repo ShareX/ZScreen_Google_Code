@@ -364,7 +364,6 @@ namespace ZSS
             cbStartWin.Checked = CheckStartWithWindows();
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
-            cbAutoSaveSettings.Checked = Program.conf.AutoSaveSettings;
             if (cboUpdateCheckType.Items.Count == 0)
             {
                 cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
@@ -4786,11 +4785,6 @@ namespace ZSS
         private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.ScreenshotDelayTimes = nudtScreenshotDelay.Time;
-        }
-
-        private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
         }
 
         private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
