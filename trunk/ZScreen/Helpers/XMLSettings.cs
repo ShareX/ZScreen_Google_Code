@@ -41,12 +41,23 @@ namespace ZSS
             //  Capture
             //~~~~~~~~~~~~~~~~~~~~~
 
-            // General
-            CopyImageUntilURL = true;
+            CopyImageUntilURL = false;
             RegionTransparentValue = 75;
             RegionBrightnessValue = 15;
             BackgroundRegionTransparentValue = 100;
             BackgroundRegionBrightnessValue = 15;
+            AutoIncrement = 0;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Watermark
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            DrawReflection = false;
+            ReflectionPercentage = 20;
+            ReflectionTransparency = 255;
+            ReflectionOffset = 0;
+            ReflectionSkew = true;
+            ReflectionSkewSize = 25;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  FTP
@@ -62,7 +73,7 @@ namespace ZSS
             WriteDebugFile = true;
 
             // Paths
-            BackupAppSettings = true;
+            BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
         }
 
@@ -74,7 +85,7 @@ namespace ZSS
 
         public bool RunOnce = false;
         public Size WindowSize = new Size();
-        [CategoryAttribute("Options / General")]
+        [CategoryAttribute("Options / General"), DescriptionAttribute("Hides active help in bottom of form.")]
         public bool HideActiveHelp { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -118,16 +129,29 @@ namespace ZSS
 
         // General
 
-        [DescriptionAttribute("Copy Image to Clipboard until URL is retrieved"), CategoryAttribute("Capture / General")]
+        [CategoryAttribute("Capture / General"), DefaultValue(false), DescriptionAttribute("Copy image to clipboard until URL is retrieved.")]
         public bool CopyImageUntilURL { get; set; }
-        [CategoryAttribute("Capture / Region Styles")]
+        [CategoryAttribute("Capture / General"), DefaultValue(75), DescriptionAttribute("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
-        [CategoryAttribute("Capture / Region Styles")]
+        [CategoryAttribute("Capture / General"), DefaultValue(15), DescriptionAttribute("Region style setting. Must be between these values: -100, 100")]
         public int RegionBrightnessValue { get; set; }
-        [CategoryAttribute("Capture / Region Styles")]
+        [CategoryAttribute("Capture / General"), DefaultValue(100), DescriptionAttribute("Region style setting. Must be between these values: 0, 255")]
         public int BackgroundRegionTransparentValue { get; set; }
-        [CategoryAttribute("Capture / Region Styles")]
+        [CategoryAttribute("Capture / General"), DefaultValue(15), DescriptionAttribute("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }
+
+        [CategoryAttribute("Capture / Watermark"), DefaultValue(false), DescriptionAttribute("Draw reflection bottom of screenshots.")]
+        public bool DrawReflection { get; set; }
+        [CategoryAttribute("Capture / Watermark"), DefaultValue(20), DescriptionAttribute("Reflection height size relative to screenshot height.")]
+        public int ReflectionPercentage { get; set; }
+        [CategoryAttribute("Capture / Watermark"), DefaultValue(255), DescriptionAttribute("Reflection transparency start from this value to 0.")]
+        public int ReflectionTransparency { get; set; }
+        [CategoryAttribute("Capture / Watermark"), DefaultValue(0), DescriptionAttribute("Reflection position will be start: Screenshot height + Offset")]
+        public int ReflectionOffset { get; set; }
+        [CategoryAttribute("Capture / Watermark"), DefaultValue(true), DescriptionAttribute("Adding skew to reflection from bottom left to bottom right.")]
+        public bool ReflectionSkew { get; set; }
+        [CategoryAttribute("Capture / Watermark"), DefaultValue(25), DescriptionAttribute("How much pixel skew left to right.")]
+        public int ReflectionSkewSize { get; set; }
 
         // Crop Shot
 
@@ -183,10 +207,19 @@ namespace ZSS
 
         public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        [DescriptionAttribute("Adjust the current Auto-Increment Number"), CategoryAttribute("Capture / File Naming")]
+        [CategoryAttribute("Capture / File Naming"), DefaultValue(0), DescriptionAttribute("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
-        // Watermark
+        // Quality
+
+        public int FileFormat = 0;
+        public decimal ImageQuality = 90;
+        public decimal SwitchAfter = 512;
+        public int SwitchFormat = 1;
+
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Watermark
+        //~~~~~~~~~~~~~~~~~~~~~
 
         public WatermarkType WatermarkMode = WatermarkType.NONE;
         public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
@@ -209,13 +242,6 @@ namespace ZSS
         public bool WatermarkUseBorder = false;
         public decimal WatermarkImageScale = 100;
 
-        // Quality
-
-        public int FileFormat = 0;
-        public decimal ImageQuality = 90;
-        public decimal SwitchAfter = 512;
-        public int SwitchFormat = 1;
-
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
@@ -235,7 +261,7 @@ namespace ZSS
         public int FTPselected = -1;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
-        [DescriptionAttribute("Periodically backup FTP Settings"), CategoryAttribute("FTP")]
+        [CategoryAttribute("FTP"), DefaultValue(true), DescriptionAttribute("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -292,21 +318,22 @@ namespace ZSS
 
         public bool OpenMainWindow = false;
         public bool ShowInTaskbar = true;
-        [DescriptionAttribute("Auto save settings whenever form is resized or main tabs are changed. Normally settings are saved only after form is closed."), CategoryAttribute("Options / General")]
+        [CategoryAttribute("Options / General"), DescriptionAttribute("Auto save settings whenever form is resized or main" +
+            " tabs are changed. Normally settings are saved only after form is closed.")]
         public bool AutoSaveSettings { get; set; }
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;
-        [DescriptionAttribute("Write Debug Information into a Log File"), CategoryAttribute("Options / General")]
+        [CategoryAttribute("Options / General"), DefaultValue(true), DescriptionAttribute("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
 
         // Paths
 
         public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;
-        [DescriptionAttribute("Periodically backup Application Settings"), CategoryAttribute("Options / Paths")]
-        public bool BackupAppSettings { get; set; }
-        [DescriptionAttribute("Images Directory where Screenshots and Pictures will be stored locally"), CategoryAttribute("Options / Paths")]
+        [CategoryAttribute("Options / Paths"), DefaultValue(true), DescriptionAttribute("Periodically backup application settings.")]
+        public bool BackupApplicationSettings { get; set; }
+        [CategoryAttribute("Options / Paths"), DescriptionAttribute("Images directory where screenshots and pictures will be stored locally.")]
         public string ImagesDir { get; set; }
 
 

@@ -15,6 +15,11 @@ namespace ZSS
             return Convert.ToInt32(str);
         }
 
+        public static int Mid(this int number, int min, int max)
+        {
+            return Math.Min(Math.Max(number, min), max);
+        }
+
         public static string GetDescription(this Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());

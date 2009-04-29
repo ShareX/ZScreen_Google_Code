@@ -15,8 +15,12 @@ namespace ZSS
         /// </summary>
         /// <param name="img"></param>
         /// <returns></returns>
-        public static Image GetImage(Image img)
+        public static Bitmap GetImage(Bitmap img)
         {
+            if (Program.conf.DrawReflection)
+            {
+                img = WatermarkMaker.DrawReflection((Bitmap)img);
+            }
             switch (Program.conf.WatermarkMode)
             {
                 case WatermarkType.NONE:
@@ -39,7 +43,7 @@ namespace ZSS
             }
         }
 
-        private static Image DrawWatermark(Image img, string drawText, Font font, Color fontColor, int fontTrans,
+        private static Bitmap DrawWatermark(Bitmap img, string drawText, Font font, Color fontColor, int fontTrans,
             int offset, int backTrans, Color backColor1, Color backColor2, Color borderColor,
             WatermarkPositionType position, int cornerRadius, LinearGradientMode gradientType)
         {
@@ -78,7 +82,7 @@ namespace ZSS
                 gImg.DrawImage(bmp, labelPosition);
                 if (Program.conf.WatermarkAddReflection)
                 {
-                    Bitmap bmp2 = AddReflection(bmp);
+                    Bitmap bmp2 = AddReflection(bmp, 50, 200);
                     gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
                 }
             }
@@ -89,7 +93,7 @@ namespace ZSS
             return img;
         }
 
-        private static Image DrawImageWatermark(Image img, string imgPath, WatermarkPositionType position, int offset)
+        private static Bitmap DrawImageWatermark(Bitmap img, string imgPath, WatermarkPositionType position, int offset)
         {
             try
             {
@@ -108,12 +112,12 @@ namespace ZSS
                     g.DrawImage(img2, imgPos);
                     if (Program.conf.WatermarkAddReflection)
                     {
-                        Bitmap bmp = AddReflection((Bitmap)img2);
+                        Bitmap bmp = AddReflection((Bitmap)img2, 50, 200);
                         g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
                     }
                     if (Program.conf.WatermarkUseBorder)
                     {
-                        g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X - 1, imgPos.Y - 1, img2.Width, img2.Height));
+                        g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X, imgPos.Y, img2.Width - 1, img2.Height - 1));
                     }
                 }
             }
@@ -124,14 +128,40 @@ namespace ZSS
             return img;
         }
 
-        private static Bitmap AddReflection(Bitmap b)
+        public static Bitmap DrawReflection(Bitmap bmp)
         {
+            Bitmap reflection = AddReflection(bmp, Program.conf.ReflectionPercentage, Program.conf.ReflectionTransparency);
+            if (Program.conf.ReflectionSkew)
+            {
+                reflection = AddSkew(reflection, Program.conf.ReflectionSkewSize);
+            }
+            Bitmap result = new Bitmap(reflection.Width, bmp.Height + reflection.Height + Program.conf.ReflectionOffset);
+            Graphics g = Graphics.FromImage(result);
+            g.DrawImage(bmp, new Point(0, 0));
+            g.DrawImage(reflection, new Point(0, bmp.Height + Program.conf.ReflectionOffset));
+            return result;
+        }
+
+        private static Bitmap AddSkew(Bitmap bmp, int skew)
+        {
+            Bitmap result = new Bitmap(bmp.Width + skew, bmp.Height);
+            Graphics g = Graphics.FromImage(result);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            Point[] destinationPoints = { new Point(0, 0), new Point(bmp.Width - 1, 0), new Point(skew, bmp.Height - 1) };
+            g.DrawImage(bmp, destinationPoints);
+            return result;
+        }
+
+        private static Bitmap AddReflection(Bitmap bmp, int percentage, int transparency)
+        {
+            Bitmap b = new Bitmap(bmp);
             b.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            b = b.Clone(new Rectangle(0, 0, b.Width, (int)(b.Height / 1.5)), PixelFormat.Format32bppArgb);
+            b = b.Clone(new Rectangle(0, 0, b.Width, (int)(b.Height * ((float)percentage / 100))), PixelFormat.Format32bppArgb);
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             byte alpha;
             int nOffset = bmData.Stride - b.Width * 4;
+            transparency.Mid(0, 255);
 
             unsafe
             {
@@ -141,7 +171,7 @@ namespace ZSS
                 {
                     for (int x = 0; x < b.Width; ++x)
                     {
-                        alpha = (byte)(200 - 200 * (y + 1) / b.Height);
+                        alpha = (byte)(transparency - transparency * (y + 1) / b.Height);
                         if (p[3] > alpha) p[3] = alpha;
                         p += 4;
                     }

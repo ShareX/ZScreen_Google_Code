@@ -87,7 +87,7 @@ namespace ZSS
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                img = WatermarkMaker.GetImage(img);
+                img = WatermarkMaker.GetImage((Bitmap)img);
 
                 long size = (long)Program.conf.SwitchAfter * 1024;
 

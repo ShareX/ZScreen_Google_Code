@@ -1417,6 +1417,7 @@ namespace ZSS
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
                 if (Program.conf.AutoSaveSettings) SaveSettings();
+                this.Refresh();
             }
         }
 
@@ -2021,7 +2022,7 @@ namespace ZSS
             {
                 FileSystem.BackupFTPSettings();
             }
-            if (Program.conf.BackupAppSettings)
+            if (Program.conf.BackupApplicationSettings)
             {
                 FileSystem.BackupAppSettings();
             }
@@ -4750,7 +4751,7 @@ namespace ZSS
         {
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             Random rand = new Random();
-            switch (rand.Next(1, 6))
+            switch (rand.Next(1, 7))
             {
                 case 1:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.BrightnessFilter(rand.Next(0, 101) - 50));
@@ -4767,6 +4768,9 @@ namespace ZSS
                     break;
                 case 5:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
+                    break;
+                case 6:
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.ContrastFilter(rand.Next(0, 501) - 50));
                     break;
             }
         }
