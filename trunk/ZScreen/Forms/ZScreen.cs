@@ -122,7 +122,7 @@ namespace ZSS
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
                 " any control and this textbox will be updated with information about the control.", ProductName);
-            CheckActiveHelp();
+            CheckFormSettings();
 
             #endregion
 
@@ -364,6 +364,7 @@ namespace ZSS
             cbStartWin.Checked = CheckStartWithWindows();
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
+            cbLockFormSize.Checked = Program.conf.LockFormSize;
             if (cboUpdateCheckType.Items.Count == 0)
             {
                 cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
@@ -1415,9 +1416,9 @@ namespace ZSS
                 {
                     Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
+                    this.Refresh();
                 }
                 if (Program.conf.AutoSaveSettings) SaveSettings();
-                this.Refresh();
             }
         }
 
@@ -3123,13 +3124,34 @@ namespace ZSS
                 txtActiveHelp.Text = "Wiki: http://code.google.com/p/zscreen/wiki/CustomUploadersHelp";
             }
 
-            CheckActiveHelp();
+            CheckFormSettings();
             if (Program.conf.AutoSaveSettings) SaveSettings();
         }
 
-        private void CheckActiveHelp()
+        private void CheckFormSettings()
         {
-            splitContainerApp.Panel2Collapsed = Program.conf.HideActiveHelp;
+            if (Program.conf.LockFormSize)
+            {
+                if (this.FormBorderStyle != FormBorderStyle.FixedSingle)
+                {
+                    this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                }
+                if (this.Size != this.MinimumSize)
+                {
+                    this.Size = this.MinimumSize;
+                }
+            }
+            else
+            {
+                if (this.FormBorderStyle != FormBorderStyle.Sizable)
+                {
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                }
+            }
+            if (splitContainerApp.Panel2Collapsed != Program.conf.HideActiveHelp)
+            {
+                splitContainerApp.Panel2Collapsed = Program.conf.HideActiveHelp;
+            }
         }
 
         private void ActiveHelpTagsConfig()
@@ -4851,6 +4873,12 @@ namespace ZSS
                     GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
                     GoogleTranslate.FindLanguage(Program.conf.ToLanguage2, mGTranslator.LanguageOptions.TargetLangList)));
             }
+        }
+
+        private void cbLockFormSize_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.LockFormSize = cbLockFormSize.Checked;
+            CheckFormSettings();
         }
     }
 }
