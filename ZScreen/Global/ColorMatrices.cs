@@ -71,9 +71,9 @@ namespace ZSS
             });
         }
 
-        public static ColorMatrix SaturationFilter(int saturation)
+        public static ColorMatrix SaturationFilter(int percentage)
         {
-            float s = 1 + (float)saturation / 100;
+            float s = 1 + (float)percentage / 100;
             return new ColorMatrix(new[]{
                 new float[] {(1.0f - s) * rw + s, (1.0f - s) * rw, (1.0f - s) * rw, 0, 0},
                 new float[] {(1.0f - s) * gw, (1.0f - s) * gw + s, (1.0f - s) * gw, 0, 0},
