@@ -69,10 +69,9 @@ namespace ZSS
             //  Options
             //~~~~~~~~~~~~~~~~~~~~~
 
-            // General
+            AutoSaveSettings = false;
+            HideActiveHelp = false;
             WriteDebugFile = true;
-
-            // Paths
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
         }
@@ -85,8 +84,6 @@ namespace ZSS
 
         public bool RunOnce = false;
         public Size WindowSize = new Size();
-        [CategoryAttribute("Options / General"), DescriptionAttribute("Hides active help in bottom of form.")]
-        public bool HideActiveHelp { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
@@ -318,7 +315,8 @@ namespace ZSS
 
         public bool OpenMainWindow = false;
         public bool ShowInTaskbar = true;
-        [CategoryAttribute("Options / General"), DescriptionAttribute("Auto save settings whenever form is resized or main" +
+        public bool LockFormSize = false;
+        [CategoryAttribute("Options / General"), DefaultValue(false), DescriptionAttribute("Auto save settings whenever form is resized or main" +
             " tabs are changed. Normally settings are saved only after form is closed.")]
         public bool AutoSaveSettings { get; set; }
         public bool CheckUpdates = true;
@@ -326,6 +324,8 @@ namespace ZSS
         public bool CheckExperimental = false;
         [CategoryAttribute("Options / General"), DefaultValue(true), DescriptionAttribute("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
+        [CategoryAttribute("Options / General"), DefaultValue(false), DescriptionAttribute("Hides active help in bottom of form.")]
+        public bool HideActiveHelp { get; set; }
 
         // Paths
 
