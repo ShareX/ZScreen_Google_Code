@@ -109,7 +109,7 @@ namespace ZSS
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS))
             { //If Region Brightness
                 ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(Program.conf.RegionBrightnessValue));
+                imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Program.conf.RegionBrightnessValue));
                 gRegion.DrawImage(bmpClean, new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height), 0, 0,
                     bmpRegion.Width, bmpRegion.Height, GraphicsUnit.Pixel, imgattr);
             }
@@ -123,7 +123,7 @@ namespace ZSS
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
             { //If Background Region Brightness  
                 ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(MyGraphics.BrightnessFilter(Program.conf.BackgroundRegionBrightnessValue));
+                imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Program.conf.BackgroundRegionBrightnessValue));
                 gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
                     bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
             }
@@ -131,7 +131,7 @@ namespace ZSS
                 (!selectedWindowMode && Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
             { //If Background Region Grayscale
                 ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(MyGraphics.GrayscaleFilter());
+                imgattr.SetColorMatrix(ColorMatrices.GrayscaleFilter());
                 gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
                     bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
             }

@@ -4750,20 +4750,23 @@ namespace ZSS
         {
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             Random rand = new Random();
-            switch (rand.Next(1, 5))
+            switch (rand.Next(1, 6))
             {
                 case 1:
-                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.BrightnessFilter(rand.Next(0, 101) - 50));
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.BrightnessFilter(rand.Next(0, 101) - 50));
                     break;
                 case 2:
-                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.InverseFilter());
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     break;
                 case 3:
-                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.GrayscaleFilter());
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
                     break;
                 case 4:
-                    pbLogo.Image = MyGraphics.ApplyColorMatrix(bmp, MyGraphics.ColorFilter(
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.ColorFilter(
                         Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256))));
+                    break;
+                case 5:
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
                     break;
             }
         }
@@ -4833,8 +4836,10 @@ namespace ZSS
         {
             if (Program.conf.ToLanguage2 == "?")
             {
+                lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
                 MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", this.Text,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblToLanguage.BorderStyle = BorderStyle.None;
             }
             else
             {

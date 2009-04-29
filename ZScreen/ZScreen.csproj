@@ -112,6 +112,7 @@
     <Compile Include="Forms\ShowScreenshot.Designer.cs">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\NumericUpDownTimer.cs">
