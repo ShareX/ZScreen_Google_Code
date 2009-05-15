@@ -1,0 +1,18 @@
+#summary Archive of outdated information in Project Home
+
+= 2009-05-16 =
+----
+=Downloads=
+Downloads will be available in two flavors. The installer will automatically download and install the required Microsoft .NET Framework version if it is not present in your system.
+
+== Main Installer == 
+This release will be usually packed with ZScreen.exe and its dynamic link libraries. 
+{{{
+ZScreen-x.x.x.x-setup.exe
+}}}
+
+== Single Executable  == 
+This release is a single executable that merges ZScreen.exe and its dynamic link libraries into a single executable file. 
+{{{
+ZScreen-x.x.x.x-bin.exe
+}}}
