@@ -1,3 +1,6 @@
+Version 2.10.8 - 20090615
+
+2.10.08.1 Preview in History did not update if the file extensions were in CAPS
 2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via XML Options
 2.10.07.0 XML Option to hide Active Help from the GUI
 2.10.06.1 Clearing the screen history did not reset history list count [Issue 63]

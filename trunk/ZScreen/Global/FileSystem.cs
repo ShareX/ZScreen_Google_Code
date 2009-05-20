@@ -289,7 +289,7 @@ namespace ZSS
             {
                 foreach (string s in Program.zImageFileTypes)
                 {
-                    if (fp.EndsWith(s))
+                    if (Path.GetExtension(fp).ToLower().EndsWith(s))
                         b = true;
                 }
             }
