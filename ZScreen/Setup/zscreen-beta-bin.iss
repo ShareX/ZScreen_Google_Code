@@ -72,7 +72,7 @@ AppPublisher=ZScreen
 AppPublisherURL=http://www.brandonz.net/projects/zscreen/
 AppSupportURL=http://code.google.com/p/zscreen/issues/list
 AppUpdatesURL=http://code.google.com/p/zscreen
-DefaultDirName={pf}\ZScreen
+DefaultDirName={userdocs}\Applications\ZScreen
 DefaultGroupName={#ExeName}
 AllowNoIcons=yes
 InfoBeforeFile=..\Documents\VersionHistory.txt
@@ -92,7 +92,7 @@ Compression=lzma
 
 ;required by products
 MinVersion=4.1,5.0
-PrivilegesRequired=admin
+PrivilegesRequired=none
 ;ArchitecturesAllowed=x86
 
 [Languages]
