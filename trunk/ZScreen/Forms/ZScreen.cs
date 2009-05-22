@@ -312,7 +312,7 @@ namespace ZSS
             }
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
             chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
-            DownloadLanguagesList();
+            PerformOnlineTasks();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
             cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
@@ -3790,12 +3790,12 @@ namespace ZSS
 
         #region Language Translator
 
-        private void DownloadLanguagesList()
+        private void PerformOnlineTasks()
         {
-            BackgroundWorker bwLanguages = new BackgroundWorker();
-            bwLanguages.DoWork += new DoWorkEventHandler(bwOnlineTasks_DoWork);
-            bwLanguages.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwOnlineTasks_RunWorkerCompleted);
-            bwLanguages.RunWorkerAsync();
+            BackgroundWorker bwOnlineWorker = new BackgroundWorker();
+            bwOnlineWorker.DoWork += new DoWorkEventHandler(bwOnlineTasks_DoWork);
+            bwOnlineWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwOnlineTasks_RunWorkerCompleted);
+            bwOnlineWorker.RunWorkerAsync();
         }
 
         private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
@@ -4879,6 +4879,16 @@ namespace ZSS
         {
             Program.conf.LockFormSize = cbLockFormSize.Checked;
             CheckFormSettings();
+        }
+
+        /// <summary>
+        /// Method to periodically (every 6 hours) perform online tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tmrApp_Tick(object sender, EventArgs e)
+        {
+            PerformOnlineTasks();
         }
     }
 }
