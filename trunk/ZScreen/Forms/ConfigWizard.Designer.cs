@@ -36,13 +36,24 @@
             this.btnBrowseRootDir = new System.Windows.Forms.Button();
             this.txtRootFolder = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.gbWatermark = new System.Windows.Forms.GroupBox();
+            this.lblWatermarkImage = new System.Windows.Forms.Label();
+            this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
+            this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
+            this.lblWatermarkText = new System.Windows.Forms.Label();
+            this.txtWatermarkText = new System.Windows.Forms.TextBox();
+            this.cboWatermarkType = new System.Windows.Forms.ComboBox();
+            this.lblWatermarkType = new System.Windows.Forms.Label();
+            this.gbPublishOptions = new System.Windows.Forms.GroupBox();
             this.gbRoot.SuspendLayout();
+            this.gbWatermark.SuspendLayout();
+            this.gbPublishOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblScreenshotDestination
             // 
             this.lblScreenshotDestination.AutoSize = true;
-            this.lblScreenshotDestination.Location = new System.Drawing.Point(8, 84);
+            this.lblScreenshotDestination.Location = new System.Drawing.Point(16, 32);
             this.lblScreenshotDestination.Name = "lblScreenshotDestination";
             this.lblScreenshotDestination.Size = new System.Drawing.Size(95, 13);
             this.lblScreenshotDestination.TabIndex = 3;
@@ -52,7 +63,7 @@
             // 
             this.cboScreenshotDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboScreenshotDest.FormattingEnabled = true;
-            this.cboScreenshotDest.Location = new System.Drawing.Point(120, 80);
+            this.cboScreenshotDest.Location = new System.Drawing.Point(120, 28);
             this.cboScreenshotDest.Name = "cboScreenshotDest";
             this.cboScreenshotDest.Size = new System.Drawing.Size(232, 21);
             this.cboScreenshotDest.TabIndex = 2;
@@ -110,7 +121,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(536, 80);
+            this.btnOK.Location = new System.Drawing.Point(520, 296);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 117;
@@ -118,15 +129,106 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // gbWatermark
+            // 
+            this.gbWatermark.Controls.Add(this.lblWatermarkImage);
+            this.gbWatermark.Controls.Add(this.btwWatermarkBrowseImage);
+            this.gbWatermark.Controls.Add(this.txtWatermarkImageLocation);
+            this.gbWatermark.Controls.Add(this.lblWatermarkText);
+            this.gbWatermark.Controls.Add(this.txtWatermarkText);
+            this.gbWatermark.Controls.Add(this.cboWatermarkType);
+            this.gbWatermark.Controls.Add(this.lblWatermarkType);
+            this.gbWatermark.Enabled = false;
+            this.gbWatermark.Location = new System.Drawing.Point(8, 80);
+            this.gbWatermark.Name = "gbWatermark";
+            this.gbWatermark.Size = new System.Drawing.Size(600, 120);
+            this.gbWatermark.TabIndex = 119;
+            this.gbWatermark.TabStop = false;
+            this.gbWatermark.Text = "Watermark Options";
+            // 
+            // lblWatermarkImage
+            // 
+            this.lblWatermarkImage.AutoSize = true;
+            this.lblWatermarkImage.Location = new System.Drawing.Point(56, 88);
+            this.lblWatermarkImage.Name = "lblWatermarkImage";
+            this.lblWatermarkImage.Size = new System.Drawing.Size(39, 13);
+            this.lblWatermarkImage.TabIndex = 40;
+            this.lblWatermarkImage.Text = "Image:";
+            // 
+            // btwWatermarkBrowseImage
+            // 
+            this.btwWatermarkBrowseImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(464, 88);
+            this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
+            this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
+            this.btwWatermarkBrowseImage.TabIndex = 39;
+            this.btwWatermarkBrowseImage.Tag = "Browse for a Watermark Image";
+            this.btwWatermarkBrowseImage.Text = "Browse...";
+            this.btwWatermarkBrowseImage.UseVisualStyleBackColor = true;
+            // 
+            // txtWatermarkImageLocation
+            // 
+            this.txtWatermarkImageLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(120, 88);
+            this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
+            this.txtWatermarkImageLocation.Size = new System.Drawing.Size(339, 20);
+            this.txtWatermarkImageLocation.TabIndex = 38;
+            // 
+            // lblWatermarkText
+            // 
+            this.lblWatermarkText.AutoSize = true;
+            this.lblWatermarkText.Location = new System.Drawing.Point(64, 60);
+            this.lblWatermarkText.Name = "lblWatermarkText";
+            this.lblWatermarkText.Size = new System.Drawing.Size(31, 13);
+            this.lblWatermarkText.TabIndex = 37;
+            this.lblWatermarkText.Text = "Text:";
+            // 
+            // txtWatermarkText
+            // 
+            this.txtWatermarkText.Location = new System.Drawing.Point(120, 56);
+            this.txtWatermarkText.Name = "txtWatermarkText";
+            this.txtWatermarkText.Size = new System.Drawing.Size(248, 20);
+            this.txtWatermarkText.TabIndex = 36;
+            // 
+            // cboWatermarkType
+            // 
+            this.cboWatermarkType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboWatermarkType.FormattingEnabled = true;
+            this.cboWatermarkType.Location = new System.Drawing.Point(120, 24);
+            this.cboWatermarkType.Name = "cboWatermarkType";
+            this.cboWatermarkType.Size = new System.Drawing.Size(120, 21);
+            this.cboWatermarkType.TabIndex = 35;
+            // 
+            // lblWatermarkType
+            // 
+            this.lblWatermarkType.AutoSize = true;
+            this.lblWatermarkType.Location = new System.Drawing.Point(61, 32);
+            this.lblWatermarkType.Name = "lblWatermarkType";
+            this.lblWatermarkType.Size = new System.Drawing.Size(34, 13);
+            this.lblWatermarkType.TabIndex = 34;
+            this.lblWatermarkType.Text = "Type:";
+            // 
+            // gbPublishOptions
+            // 
+            this.gbPublishOptions.Controls.Add(this.lblScreenshotDestination);
+            this.gbPublishOptions.Controls.Add(this.cboScreenshotDest);
+            this.gbPublishOptions.Location = new System.Drawing.Point(8, 208);
+            this.gbPublishOptions.Name = "gbPublishOptions";
+            this.gbPublishOptions.Size = new System.Drawing.Size(600, 72);
+            this.gbPublishOptions.TabIndex = 120;
+            this.gbPublishOptions.TabStop = false;
+            this.gbPublishOptions.Text = "Publish Options";
+            // 
             // ConfigWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 117);
+            this.ClientSize = new System.Drawing.Size(625, 336);
+            this.Controls.Add(this.gbPublishOptions);
+            this.Controls.Add(this.gbWatermark);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbRoot);
-            this.Controls.Add(this.lblScreenshotDestination);
-            this.Controls.Add(this.cboScreenshotDest);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -135,8 +237,11 @@
             this.Text = "ZScreen - Configuration Wizard";
             this.gbRoot.ResumeLayout(false);
             this.gbRoot.PerformLayout();
+            this.gbWatermark.ResumeLayout(false);
+            this.gbWatermark.PerformLayout();
+            this.gbPublishOptions.ResumeLayout(false);
+            this.gbPublishOptions.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -149,5 +254,14 @@
         private System.Windows.Forms.Button btnBrowseRootDir;
         private System.Windows.Forms.TextBox txtRootFolder;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.GroupBox gbWatermark;
+        private System.Windows.Forms.ComboBox cboWatermarkType;
+        private System.Windows.Forms.Label lblWatermarkType;
+        private System.Windows.Forms.Label lblWatermarkText;
+        private System.Windows.Forms.TextBox txtWatermarkText;
+        private System.Windows.Forms.Label lblWatermarkImage;
+        private System.Windows.Forms.Button btwWatermarkBrowseImage;
+        private System.Windows.Forms.TextBox txtWatermarkImageLocation;
+        private System.Windows.Forms.GroupBox gbPublishOptions;
     }
 }
