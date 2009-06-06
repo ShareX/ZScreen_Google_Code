@@ -81,16 +81,25 @@ namespace ZSS
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
-            if (Program.conf.OpenMainWindow)
+            if (Program.conf.ActionsToolbarMode)
             {
-                WindowState = FormWindowState.Normal;
-                Size = Program.conf.WindowSize;
-                ShowInTaskbar = Program.conf.ShowInTaskbar;
+                this.Hide();
+                this.ShowActionsToolbar(false);
             }
             else
             {
-                Hide();
+                if (Program.conf.OpenMainWindow)
+                {
+                    WindowState = FormWindowState.Normal;
+                    Size = Program.conf.WindowSize;
+                    ShowInTaskbar = Program.conf.ShowInTaskbar;
+                }
+                else
+                {
+                    Hide();
+                }
             }
+
 
             CleanCache();
             StartDebug();
@@ -549,7 +558,7 @@ namespace ZSS
                     }
                     if (CheckKeys(Program.conf.HKActionsToolbar, lParam)) //Actions Toolbar
                     {
-                        ShowQuickActions();
+                        ShowActionsToolbar(true);
                         return KeyboardHookHandle;
                     }
                     if (CheckKeys(Program.conf.HKQuickOptions, lParam)) //Quick Options
@@ -4401,23 +4410,35 @@ namespace ZSS
 
         private void tsmQuickActions_Click(object sender, EventArgs e)
         {
-            ShowQuickActions();
+            ShowActionsToolbar(true);
         }
 
         #region Quick Actions
 
-        private void ShowQuickActions()
+        /// <summary>
+        /// Show Actions Toolbar
+        /// </summary>
+        /// <param name="manual">If user clicks from Tray Menu then Manual is set to true.</param>
+        private void ShowActionsToolbar(bool manual)
         {
             if (!bQuickActionsOpened)
             {
                 bQuickActionsOpened = true;
-                ToolbarWindow quickActions = new ToolbarWindow { Icon = Resources.zss_main };
-                quickActions.EventJob += new JobsEventHandler(EventJobs);
-                quickActions.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
-                quickActions.Show();
-                Rectangle taskbar = User32.GetTaskbarRectangle();
-                quickActions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickActions.Width - 100,
-                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - quickActions.Height - 10);
+                ToolbarWindow actionsToolbar = new ToolbarWindow { Icon = Resources.zss_main };
+                actionsToolbar.EventJob += new JobsEventHandler(EventJobs);
+                actionsToolbar.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
+                actionsToolbar.Show();
+                if (manual)
+                {
+                    actionsToolbar.Show();
+                    Rectangle taskbar = User32.GetTaskbarRectangle();
+                    actionsToolbar.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - actionsToolbar.Width - 100,
+                        SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - actionsToolbar.Height - 10);
+                }
+                else
+                {
+                    actionsToolbar.Location = Program.conf.ActionToolbarLocation;
+                }
             }
         }
 

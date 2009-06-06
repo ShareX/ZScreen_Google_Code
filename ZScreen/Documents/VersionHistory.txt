@@ -1,5 +1,6 @@
-Version 2.10.9 - 20090615
+Version 2.10.10 - 20090615
 
+2.10.10.0 Actions Toolbar Mode to automatically open Toolbar on ZScreen startup
 2.10.09.0 Online Tasks such as updating TinyPic Registration Code will automatically happen every 6 hours
 2.10.08.1 Preview in History did not update if the file extensions were in CAPS
 2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via XML Options
