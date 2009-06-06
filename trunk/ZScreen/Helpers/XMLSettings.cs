@@ -311,6 +311,12 @@ namespace ZSS
         //  Options
         //~~~~~~~~~~~~~~~~~~~~~
 
+        // Actions Toolbar 
+        [Category("Options / Actions Toolbar"), Description("Open Actions Toolbar on startup.")]
+        public bool ActionsToolbarMode { get; set; }
+        [Category("Options / Actions Toolbar"), Description("Action Toolbar Location.")]
+        public Point ActionToolbarLocation { get; set; }
+
         // General
 
         public bool OpenMainWindow = false;

@@ -71,5 +71,10 @@ namespace ZSS.Forms
         {
             User32.SetActiveWindow(this.Handle);
         }
+
+        private void ToolbarWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.conf.ActionToolbarLocation = this.Location;
+        }
     }
 }

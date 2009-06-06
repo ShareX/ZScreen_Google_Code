@@ -33,11 +33,11 @@
             this.tsbSelectedWindow = new System.Windows.Forms.ToolStripButton();
             this.tsbCropShot = new System.Windows.Forms.ToolStripButton();
             this.tsbLastCropShot = new System.Windows.Forms.ToolStripButton();
+            this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
             this.tsbLanguageTranslator = new System.Windows.Forms.ToolStripButton();
             this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
-            this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
             this.tsQuickActions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,6 +102,16 @@
             this.tsbLastCropShot.Text = "Last Crop Shot";
             this.tsbLastCropShot.Click += new System.EventHandler(this.tsbLastCropShot_Click);
             // 
+            // tsbAutoCapture
+            // 
+            this.tsbAutoCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAutoCapture.Image = global::ZSS.Properties.Resources.images_stack;
+            this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAutoCapture.Name = "tsbAutoCapture";
+            this.tsbAutoCapture.Size = new System.Drawing.Size(23, 20);
+            this.tsbAutoCapture.Text = "Auto Capture";
+            this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
+            // 
             // tsbClipboardUpload
             // 
             this.tsbClipboardUpload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -142,16 +152,6 @@
             this.tsbScreenColorPicker.Text = "Screen Color Picker";
             this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
             // 
-            // tsbAutoCapture
-            // 
-            this.tsbAutoCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbAutoCapture.Image = global::ZSS.Properties.Resources.images_stack;
-            this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAutoCapture.Name = "tsbAutoCapture";
-            this.tsbAutoCapture.Size = new System.Drawing.Size(23, 20);
-            this.tsbAutoCapture.Text = "Auto Capture";
-            this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
-            // 
             // ToolbarWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,6 +163,7 @@
             this.Name = "ToolbarWindow";
             this.Text = " Actions Toolbar";
             this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ToolbarWindow_FormClosed);
             this.tsQuickActions.ResumeLayout(false);
             this.tsQuickActions.PerformLayout();
             this.ResumeLayout(false);
