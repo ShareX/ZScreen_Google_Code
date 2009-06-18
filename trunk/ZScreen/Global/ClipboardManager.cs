@@ -63,11 +63,12 @@ namespace ZSS
         public static void Commit()
         {
             Workers--;
-            if (ScreenshotsHistory.Count > 1)
-            {
-                ScreenshotsHistory.Remove(GetLastImageUpload());
-            }
-            FileSystem.AppendDebug("Clipboard Commited. Total: " + Workers);
+            //if (ScreenshotsHistory.Count > 1)
+            //{
+            //    ScreenshotsHistory.Remove(GetLastImageUpload());
+            //}
+            //FileSystem.AppendDebug("Clipboard Commited. Total: " + Workers);
+            ScreenshotsHistory.Clear();
         }
 
         public static ImageFileManager GetLastImageUpload()
