@@ -2,8 +2,9 @@
 {
     interface ITextUploader
     {
-        TextFileManager UploadTextFromClipboard(string cb);
-        TextFileManager UploadTextFromFile(string filePath);
+        string UploadText(string text);
+        string UploadTextFromClipboard();
+        string UploadTextFromFile(string filePath);
         string ToErrorString();
     }
 }

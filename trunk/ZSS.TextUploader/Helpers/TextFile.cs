@@ -14,9 +14,6 @@
         }
 
         public string LocalText { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string RemoteText { get; set; }
         public string LocalFilePath { get; set; }
         /// <summary>

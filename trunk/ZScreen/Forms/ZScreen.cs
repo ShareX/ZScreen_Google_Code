@@ -42,6 +42,7 @@ using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.Colors;
 using ZSS.UpdateCheckerLib;
+using ZSS.TextUploader;
 
 namespace ZSS
 {
@@ -66,6 +67,8 @@ namespace ZSS
         {
             InitializeComponent();
 
+            PastebinUploaderTest();
+
             this.Icon = Resources.zss_main;
             this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
             this.niTray.Text = this.Text;
@@ -74,6 +77,15 @@ namespace ZSS
             UpdateGuiControls();
 
             if (Program.conf.CheckUpdates) CheckUpdates();
+        }
+
+        private void PastebinUploaderTest()
+        {
+            PastebinUploader pastebin = new PastebinUploader("http://kopyala.org");
+            pastebin.HostSettings.Name = "Jaex";
+            pastebin.HostSettings.TextFormat = "csharp";
+            pastebin.HostSettings.ExpireTime = PastebinUploader.Settings.TimeTypes.Day;
+            MessageBox.Show(pastebin.UploadText("ZScreen test"));
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
