@@ -252,5 +252,15 @@ namespace ZSS
                 return string.IsNullOrEmpty(SourceText) || SourceLanguage.IsEmpty() || TargetLanguage.IsEmpty();
             }
         }
+
+        public override string Name
+        {
+            get { return "Google Translate"; }
+        }
+
+        protected override ZSS.TextUploader.Helpers.TextFileManager UploadText(string txt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

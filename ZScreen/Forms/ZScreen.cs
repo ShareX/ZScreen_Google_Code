@@ -3157,10 +3157,18 @@ namespace ZSS
                     this.FormBorderStyle = FormBorderStyle.Sizable;
                 }
             }
-            if (splitContainerApp.Panel2Collapsed != Program.conf.HideActiveHelp)
+
+            if (Program.conf.HideActiveHelp)
             {
-                splitContainerApp.Panel2Collapsed = Program.conf.HideActiveHelp;
+                this.ZScreenPanels.RowStyles[0].Height = 100F;
+                this.ZScreenPanels.RowStyles[1].Height = 0F;
             }
+            else
+            {
+                this.ZScreenPanels.RowStyles[0].Height = 95F;
+                this.ZScreenPanels.RowStyles[1].Height = 05F;
+            }
+ 
         }
 
         private void ActiveHelpTagsConfig()
@@ -4910,6 +4918,11 @@ namespace ZSS
         private void tmrApp_Tick(object sender, EventArgs e)
         {
             PerformOnlineTasks();
+        }
+
+        private void confApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            this.UpdateGuiControls();
         }
     }
 }
