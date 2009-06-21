@@ -61,6 +61,7 @@ namespace ZSS
         private GoogleTranslate mGTranslator;
         private Debug debug;
         private PastebinUploader pastebin;
+        private Paste2Uploader paste2;
 
         #endregion
 
@@ -132,8 +133,9 @@ namespace ZSS
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
                 " any control and this textbox will be updated with information about the control.", ProductName);
-            pastebin = new PastebinUploader("http://kopyala.org/index.php");
-            pgTextUploaderSettings.SelectedObject = pastebin.Settings;
+            pastebin = new PastebinUploader();
+            paste2 = new Paste2Uploader();
+            pgTextUploaderSettings.SelectedObject = paste2.Settings;
             CheckFormSettings();
 
             #endregion
@@ -4931,7 +4933,7 @@ namespace ZSS
         private void btnUploadText_Click(object sender, EventArgs e)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            string result = pastebin.UploadText(txtTextUploaderContent.Text);
+            string result = paste2.UploadText(txtTextUploaderContent.Text);
             if (!string.IsNullOrEmpty(result))
             {
                 MessageBox.Show(string.Format("Uploaded in {0}ms: {1}", stopwatch.ElapsedMilliseconds, result));
