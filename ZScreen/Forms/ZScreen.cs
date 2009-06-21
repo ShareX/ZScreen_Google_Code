@@ -60,14 +60,13 @@ namespace ZSS
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator;
         private Debug debug;
+        private PastebinUploader pastebin;
 
         #endregion
 
         public ZScreen()
         {
             InitializeComponent();
-
-            //PastebinUploaderTest();
 
             this.Icon = Resources.zss_main;
             this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
@@ -77,12 +76,6 @@ namespace ZSS
             UpdateGuiControls();
 
             if (Program.conf.CheckUpdates) CheckUpdates();
-        }
-
-        private void PastebinUploaderTest()
-        {
-            PastebinUploader pastebin = new PastebinUploader("http://kopyala.org/index.php");
-            MessageBox.Show(pastebin.UploadText("ZScreen test"));
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -108,7 +101,6 @@ namespace ZSS
                     Hide();
                 }
             }
-
 
             CleanCache();
             StartDebug();
@@ -140,6 +132,8 @@ namespace ZSS
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
                 " any control and this textbox will be updated with information about the control.", ProductName);
+            pastebin = new PastebinUploader("http://kopyala.org/index.php");
+            pgTextUploaderSettings.SelectedObject = pastebin.Settings;
             CheckFormSettings();
 
             #endregion
@@ -4932,6 +4926,17 @@ namespace ZSS
         private void confApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             this.UpdateGuiControls();
+        }
+
+        private void btnUploadText_Click(object sender, EventArgs e)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            string result = pastebin.UploadText(txtTextUploaderContent.Text);
+            if (!string.IsNullOrEmpty(result))
+            {
+                MessageBox.Show(string.Format("Uploaded in {0}ms: {1}", stopwatch.ElapsedMilliseconds, result));
+                Clipboard.SetText(result);
+            }
         }
     }
 }
