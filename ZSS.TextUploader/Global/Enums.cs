@@ -6,8 +6,10 @@ namespace ZSS.TextUploader.Global
     {
         [Description("FTP")]
         FTP,
-        [Description("Paste2")]
-        PASTE2,
+        [Description("pastebin.com")]
+        PASTEBIN_COM,
+        [Description("paste2.org")]
+        PASTE2_ORG,
         [Description("pastebin.ca")]
         PASTEBIN_CA
     }

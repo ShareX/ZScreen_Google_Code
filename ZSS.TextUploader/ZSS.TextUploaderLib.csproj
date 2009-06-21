@@ -44,6 +44,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -56,12 +57,9 @@
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
-    <Compile Include="HTTPTextUploader.cs" />
-    <Compile Include="HTTP\CustomTextUploader.cs" />
+    <Compile Include="TextUploader.cs" />
     <Compile Include="Helpers\TextFile.cs" />
-    <Compile Include="Helpers\TextFileManager.cs" />
     <Compile Include="HTTP\GoogleTranslate.cs" />
-    <Compile Include="HTTP\Paste2Uploader.cs" />
     <Compile Include="HTTP\PastebinUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
