@@ -27,7 +27,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Drawing;
-using ZSS.TextUploader.Global;
+using ZSS.TextUploaders.Global;
 using System.ComponentModel;
 
 namespace ZSS
@@ -240,6 +240,13 @@ namespace ZSS
         public decimal WatermarkImageScale = 100;
 
         //~~~~~~~~~~~~~~~~~~~~~
+        //  Text Uploaders
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        public List<object> TextUploadersSettings = new List<object>();
+        public int SelectedTextUploader = -1;
+
+        //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
 
@@ -443,21 +450,22 @@ namespace ZSS
 
         public void Save(string filePath)
         {
-            try
-            {
-                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            /* try
+             {
+ */
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-                XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
-                {
-                    xs.Serialize(fs, this);
-                }
-            }
-            catch (Exception e)
+            XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
-                MessageBox.Show(e.Message);
+                xs.Serialize(fs, this);
             }
+            /* }
+             catch (Exception e)
+             {
+                 MessageBox.Show(e.Message);
+             }*/
         }
 
         public static XMLSettings Read()

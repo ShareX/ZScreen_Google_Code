@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploader.Helpers;
+using ZSS.TextUploaders.Helpers;
 using System.Net;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ZSS.TextUploader
+namespace ZSS.TextUploaders
 {
     public abstract class TextUploader : ITextUploader
     {

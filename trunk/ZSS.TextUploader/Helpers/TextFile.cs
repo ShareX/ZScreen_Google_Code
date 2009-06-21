@@ -1,4 +1,4 @@
-﻿namespace ZSS.TextUploader.Helpers
+﻿namespace ZSS.TextUploaders.Helpers
 {
     public class TextFile
     {

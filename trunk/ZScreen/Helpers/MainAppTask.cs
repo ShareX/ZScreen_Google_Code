@@ -28,8 +28,8 @@ using System.ComponentModel;
 using System.Drawing;
 using ZSS.ImageUploader.Helpers;
 using System.IO;
-using ZSS.TextUploader.Global;
-using ZSS.TextUploader;
+using ZSS.TextUploaders.Global;
+using ZSS.TextUploaders;
 
 namespace ZSS.Tasks
 {

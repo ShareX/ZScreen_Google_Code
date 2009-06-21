@@ -42,7 +42,7 @@ using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.Colors;
 using ZSS.UpdateCheckerLib;
-using ZSS.TextUploader;
+using ZSS.TextUploaders;
 
 namespace ZSS
 {
@@ -60,8 +60,6 @@ namespace ZSS
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator;
         private Debug debug;
-        private PastebinUploader pastebin;
-        private Paste2Uploader paste2;
 
         #endregion
 
@@ -133,9 +131,6 @@ namespace ZSS
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
                 " any control and this textbox will be updated with information about the control.", ProductName);
-            pastebin = new PastebinUploader();
-            paste2 = new Paste2Uploader();
-            pgTextUploaderSettings.SelectedObject = paste2.Settings;
             CheckFormSettings();
 
             #endregion
@@ -291,6 +286,19 @@ namespace ZSS
             #endregion
 
             ///////////////////////////////////
+            // Text Uploader Settings
+            ///////////////////////////////////
+
+            foreach (object textUploader in Program.conf.TextUploadersSettings)
+            {
+                AddTextUploader(textUploader);
+            }
+            if (Program.conf.SelectedTextUploader > lvTextUploaders.Items.Count - 1)
+            {
+                lvTextUploaders.Items[Program.conf.SelectedTextUploader].Selected = true;
+            }
+
+            ///////////////////////////////////
             // FTP Settings
             ///////////////////////////////////
 
@@ -440,6 +448,12 @@ namespace ZSS
             txtImagesDir.Text = Program.ImagesDir;
             txtCacheDir.Text = Program.CacheDir;
             txtSettingsDir.Text = Program.SettingsDir;
+        }
+
+        private void AddTextUploader(object obj)
+        {
+            string name = ((TextUploader)obj).Name;
+            lvTextUploaders.Items.Add(name).Tag = obj;
         }
 
         private void UpdateGuiControlsHistory()
@@ -4933,11 +4947,51 @@ namespace ZSS
         private void btnUploadText_Click(object sender, EventArgs e)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            string result = paste2.UploadText(txtTextUploaderContent.Text);
+            string result = "";// paste2.UploadText(txtTextUploaderContent.Text);
             if (!string.IsNullOrEmpty(result))
             {
                 MessageBox.Show(string.Format("Uploaded in {0}ms: {1}", stopwatch.ElapsedMilliseconds, result));
                 Clipboard.SetText(result);
+            }
+        }
+
+        private void lvTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvTextUploaders.SelectedItems.Count > 0)
+            {
+                object textUploader = lvTextUploaders.SelectedItems[0].Tag;
+                pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
+            }
+        }
+
+        private object FindTextUploader(string name)
+        {
+            switch (name)
+            {
+                case (PastebinUploader.Hostname):
+                    return new PastebinUploader();
+                case (Paste2Uploader.Hostname):
+                    return new Paste2Uploader();
+            }
+            return null;
+        }
+
+        private object GetTextUploaderSettings(object textUploader)
+        {
+            return ((TextUploader)textUploader).Settings;
+        }
+
+        private void btnAddTextUploader_Click(object sender, EventArgs e)
+        {
+            if (cbTextUploaders.SelectedIndex > -1)
+            {
+                string name = (string)cbTextUploaders.SelectedItem;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    object textUploader = FindTextUploader(name);
+                    Program.conf.TextUploadersSettings.Add(textUploader);
+                    AddTextUploader(textUploader);
+                }
             }
         }
     }

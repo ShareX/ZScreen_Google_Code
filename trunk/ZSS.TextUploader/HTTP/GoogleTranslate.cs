@@ -28,7 +28,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace ZSS.TextUploader
+namespace ZSS.TextUploaders
 {
     public class GoogleTranslate : TextUploader
     {

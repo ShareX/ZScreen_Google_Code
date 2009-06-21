@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ZSS.TextUploader.Global
+namespace ZSS.TextUploaders.Global
 {
     public enum TextDestType
     {
