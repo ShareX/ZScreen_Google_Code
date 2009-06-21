@@ -10,6 +10,7 @@ namespace ZSS.TextUploader
 {
     public abstract class HTTPTextUploader : ITextUploader
     {
+        public abstract string Name { get; }
         public List<string> Errors { get; protected set; }
 
         protected string GetResponse(string url, IDictionary<string, string> arguments)
