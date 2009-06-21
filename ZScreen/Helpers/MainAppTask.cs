@@ -29,6 +29,7 @@ using System.Drawing;
 using ZSS.ImageUploader.Helpers;
 using System.IO;
 using ZSS.TextUploader.Global;
+using ZSS.TextUploader;
 
 namespace ZSS.Tasks
 {
