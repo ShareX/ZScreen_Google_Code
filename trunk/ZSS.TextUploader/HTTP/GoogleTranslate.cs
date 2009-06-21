@@ -258,7 +258,7 @@ namespace ZSS.TextUploader
             get { return "Google Translate"; }
         }
 
-        protected override ZSS.TextUploader.Helpers.TextFileManager UploadText(string txt)
+        public override string UploadText(string txt)
         {
             throw new NotImplementedException();
         }

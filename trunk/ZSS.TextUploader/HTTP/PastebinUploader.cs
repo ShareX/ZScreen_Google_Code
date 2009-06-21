@@ -36,7 +36,19 @@ namespace ZSS.TextUploader
     {
         public string URL { get; set; }
 
-        public Settings HostSettings = new Settings();
+        public override object Settings
+        {
+            get
+            {
+                return (object)HostSettings;
+            }
+            set
+            {
+                HostSettings = (PastebinSettings)value;
+            }
+        }
+
+        public PastebinSettings HostSettings = new PastebinSettings();
 
         public PastebinUploader()
         {
@@ -55,7 +67,11 @@ namespace ZSS.TextUploader
 
         private string CreateURL(string url)
         {
-            return CombineURL(url, "pastebin.php");
+            if (!url.EndsWith(".php"))
+            {
+                return CombineURL(url, "pastebin.php");
+            }
+            return url;
         }
 
         public override string UploadText(string text)
@@ -74,7 +90,7 @@ namespace ZSS.TextUploader
                     arguments.Add("format", HostSettings.TextFormat);
                     arguments.Add("poster", HostSettings.Name);
                     //arguments.Add("parent_pid", "");
-                    //arguments.Add("paste", "Send");
+                    arguments.Add("paste", "Send");
 
                     string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
                     byte[] data = Encoding.UTF8.GetBytes(post);
@@ -100,13 +116,13 @@ namespace ZSS.TextUploader
             return "";
         }
 
-        public class Settings
+        public class PastebinSettings
         {
             public TimeTypes ExpireTime { get; set; }
             public string TextFormat { get; set; }
             public string Name { get; set; }
 
-            public Settings()
+            public PastebinSettings()
             {
                 ExpireTime = TimeTypes.Month;
                 TextFormat = "text";

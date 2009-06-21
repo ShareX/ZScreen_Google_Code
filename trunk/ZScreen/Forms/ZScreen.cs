@@ -67,7 +67,7 @@ namespace ZSS
         {
             InitializeComponent();
 
-            PastebinUploaderTest();
+            //PastebinUploaderTest();
 
             this.Icon = Resources.zss_main;
             this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
@@ -81,10 +81,7 @@ namespace ZSS
 
         private void PastebinUploaderTest()
         {
-            PastebinUploader pastebin = new PastebinUploader("http://kopyala.org");
-            pastebin.HostSettings.Name = "Jaex";
-            pastebin.HostSettings.TextFormat = "csharp";
-            pastebin.HostSettings.ExpireTime = PastebinUploader.Settings.TimeTypes.Day;
+            PastebinUploader pastebin = new PastebinUploader("http://kopyala.org/index.php");
             MessageBox.Show(pastebin.UploadText("ZScreen test"));
         }
 
@@ -3180,7 +3177,7 @@ namespace ZSS
                 this.ZScreenPanels.RowStyles[0].Height = 95F;
                 this.ZScreenPanels.RowStyles[1].Height = 05F;
             }
- 
+
         }
 
         private void ActiveHelpTagsConfig()

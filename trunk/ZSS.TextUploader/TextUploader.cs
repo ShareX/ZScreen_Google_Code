@@ -13,11 +13,11 @@ namespace ZSS.TextUploader
     {
         public List<string> Errors { get; protected set; }
 
+        public abstract string Name { get; }
+
         public abstract string UploadText(string txt);
 
-        public Settings HostSettings { get; set; }
-
-        public class Settings { };
+        public virtual object Settings { get; set; }
 
         public string UploadTextFromClipboard()
         {
