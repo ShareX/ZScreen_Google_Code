@@ -48,14 +48,22 @@ namespace ZSS.TextUploader
             return "";
         }
 
+        protected abstract TextFileManager UploadText(string txt);
+
         public TextFileManager UploadTextFromClipboard(string cb)
         {
-            throw new NotImplementedException();
+            TextFileManager tfm = UploadText(cb);
+            return tfm;
         }
 
         public TextFileManager UploadTextFromFile(string filePath)
         {
-            throw new NotImplementedException();
+            TextFileManager tfm;
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                tfm = UploadText(sr.ReadToEnd());
+            }
+            return tfm;
         }
 
         public string ToErrorString()
