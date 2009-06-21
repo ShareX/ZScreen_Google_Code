@@ -2,6 +2,17 @@
 {
     public class TextFile
     {
+        public TextFile(string localText)
+        {
+            this.LocalText = localText;
+        }
+
+        public TextFile(string localText, string url)
+            : this(localText)
+        {
+            this.URL = url;
+        }
+
         public string LocalText { get; set; }
         /// <summary>
         /// 
@@ -9,7 +20,7 @@
         public string RemoteText { get; set; }
         public string LocalFilePath { get; set; }
         /// <summary>
-        /// URL of the Text: pastebin url, paste2 url
+        /// URL of the Text: pastebin URL, paste2 URL
         /// </summary>
         public string URL { get; set; }
     }

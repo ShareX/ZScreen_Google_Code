@@ -155,11 +155,11 @@ namespace ZSS
             return HttpUtility.HtmlDecode(result);
         }
 
-        /// <summary>For use in TranslateText returning url.</summary>
+        /// <summary>For use in TranslateText returning URL.</summary>
         /// <param name="translateText">Text for translate.</param>
         /// <param name="sourceLanguage">From language.</param>
         /// <param name="targetLanguage">To language.</param>
-        /// <returns>Returning url for use in TranslateText.</returns>
+        /// <returns>Returning URL for use in TranslateText.</returns>
         public static string GetDownloadLink(string translateText, string sourceLanguage, string targetLanguage)
         {
             return "http://www.google.com/translate_t?hl=en&ie=UTF8&oe=UTF8&text=" + HttpUtility.HtmlEncode(translateText) +
