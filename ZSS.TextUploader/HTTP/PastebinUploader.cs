@@ -28,12 +28,15 @@ using System.Net;
 using System.Web;
 using System.Text;
 using System.IO;
-using ZSS.TextUploader.Helpers;
+using ZSS.TextUploaders.Helpers;
+using System.Xml.Serialization;
 
-namespace ZSS.TextUploader
+namespace ZSS.TextUploaders
 {
     public sealed class PastebinUploader : TextUploader
     {
+        public const string Hostname = "pastebin.com";
+
         public override object Settings
         {
             get
@@ -60,7 +63,7 @@ namespace ZSS.TextUploader
 
         public override string Name
         {
-            get { return "pastebin.com - " + HostSettings.URL; }
+            get { return Hostname; }
         }
 
         private string CreateURL(string url)

@@ -28,12 +28,15 @@ using System.Net;
 using System.Web;
 using System.Text;
 using System.IO;
-using ZSS.TextUploader.Helpers;
+using ZSS.TextUploaders.Helpers;
+using System.Xml.Serialization;
 
-namespace ZSS.TextUploader
+namespace ZSS.TextUploaders
 {
     public sealed class Paste2Uploader : TextUploader
     {
+        public const string Hostname = "paste2.org";
+
         public override object Settings
         {
             get
@@ -55,7 +58,7 @@ namespace ZSS.TextUploader
 
         public override string Name
         {
-            get { return "paste2.org - " + HostSettings.URL; }
+            get { return Hostname; }
         }
 
         public override string UploadText(string text)
