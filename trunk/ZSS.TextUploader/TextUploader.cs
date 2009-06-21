@@ -34,7 +34,7 @@ namespace ZSS.TextUploader
             string link = "";
             if (File.Exists(filePath))
             {
-                string text = File.ReadAllText(filePath, Encoding.UTF8);
+                string text = File.ReadAllText(filePath);
                 link = UploadText(text);
             }
             return link;
@@ -42,12 +42,7 @@ namespace ZSS.TextUploader
 
         public string ToErrorString()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (string err in this.Errors)
-            {
-                sb.AppendLine(err);
-            }
-            return sb.ToString();
+            return string.Join("\r\n", Errors.ToArray());
         }
 
         protected string CombineURL(string url1, string url2)

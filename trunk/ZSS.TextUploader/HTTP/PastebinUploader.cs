@@ -34,8 +34,6 @@ namespace ZSS.TextUploader
 {
     public sealed class PastebinUploader : TextUploader
     {
-        public string URL { get; set; }
-
         public override object Settings
         {
             get
@@ -52,17 +50,17 @@ namespace ZSS.TextUploader
 
         public PastebinUploader()
         {
-            this.URL = CreateURL("http://pastebin.com");
+            HostSettings.URL = CreateURL("http://pastebin.com");
         }
 
         public PastebinUploader(string url)
         {
-            this.URL = CreateURL(url);
+            HostSettings.URL = CreateURL(url);
         }
 
         public override string Name
         {
-            get { return "pastebin.com"; }
+            get { return "pastebin.com - " + HostSettings.URL; }
         }
 
         private string CreateURL(string url)
@@ -80,7 +78,7 @@ namespace ZSS.TextUploader
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.URL);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(HostSettings.URL);
                     request.AllowAutoRedirect = true;
                     request.Method = "post";
 
@@ -118,6 +116,7 @@ namespace ZSS.TextUploader
 
         public class PastebinSettings
         {
+            public string URL { get; set; }
             public TimeTypes ExpireTime { get; set; }
             public string TextFormat { get; set; }
             public string Name { get; set; }
@@ -126,6 +125,7 @@ namespace ZSS.TextUploader
             {
                 ExpireTime = TimeTypes.Month;
                 TextFormat = "text";
+                Name = "ZScreen";
             }
 
             public enum TimeTypes { Day = 'd', Month = 'm', Forever = 'f' }
