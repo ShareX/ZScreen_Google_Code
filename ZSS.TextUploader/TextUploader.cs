@@ -45,6 +45,37 @@ namespace ZSS.TextUploader
             return string.Join("\r\n", Errors.ToArray());
         }
 
+        protected string GetResponse(string url, Dictionary<string, string> arguments)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.AllowAutoRedirect = true;
+                request.Method = "post";
+
+                string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                byte[] data = Encoding.UTF8.GetBytes(post);
+
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
+
+                Stream response = request.GetRequestStream();
+                response.Write(data, 0, data.Length);
+                response.Close();
+
+                HttpWebResponse res = (HttpWebResponse)request.GetResponse();
+                res.Close();
+
+                return res.ResponseUri.OriginalString;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return "";
+        }
+
         protected string CombineURL(string url1, string url2)
         {
             if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))

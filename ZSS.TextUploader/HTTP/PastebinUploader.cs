@@ -76,39 +76,15 @@ namespace ZSS.TextUploader
         {
             if (!string.IsNullOrEmpty(text))
             {
-                try
-                {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(HostSettings.URL);
-                    request.AllowAutoRedirect = true;
-                    request.Method = "post";
+                Dictionary<string, string> arguments = new Dictionary<string, string>();
+                arguments.Add("code2", HttpUtility.UrlEncode(text));
+                arguments.Add("expiry", ((char)HostSettings.ExpireTime).ToString());
+                arguments.Add("format", HostSettings.TextFormat);
+                arguments.Add("poster", HostSettings.Name);
+                //arguments.Add("parent_pid", "");
+                arguments.Add("paste", "Send");
 
-                    Dictionary<string, string> arguments = new Dictionary<string, string>();
-                    arguments.Add("code2", HttpUtility.UrlEncode(text));
-                    arguments.Add("expiry", ((char)HostSettings.ExpireTime).ToString());
-                    arguments.Add("format", HostSettings.TextFormat);
-                    arguments.Add("poster", HostSettings.Name);
-                    //arguments.Add("parent_pid", "");
-                    arguments.Add("paste", "Send");
-
-                    string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
-                    byte[] data = Encoding.UTF8.GetBytes(post);
-
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    request.ContentLength = data.Length;
-
-                    Stream response = request.GetRequestStream();
-                    response.Write(data, 0, data.Length);
-                    response.Close();
-
-                    HttpWebResponse res = (HttpWebResponse)request.GetResponse();
-                    res.Close();
-
-                    return res.ResponseUri.OriginalString;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
+                return GetResponse(HostSettings.URL, arguments);
             }
 
             return "";
@@ -125,7 +101,6 @@ namespace ZSS.TextUploader
             {
                 ExpireTime = TimeTypes.Month;
                 TextFormat = "text";
-                Name = "ZScreen";
             }
 
             public enum TimeTypes { Day = 'd', Month = 'm', Forever = 'f' }

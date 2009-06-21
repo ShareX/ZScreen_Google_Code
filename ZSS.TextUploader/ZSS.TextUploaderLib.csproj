@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
+    <Compile Include="HTTP\Paste2Uploader.cs" />
     <Compile Include="TextUploader.cs" />
     <Compile Include="Helpers\TextFile.cs" />
     <Compile Include="HTTP\GoogleTranslate.cs" />
