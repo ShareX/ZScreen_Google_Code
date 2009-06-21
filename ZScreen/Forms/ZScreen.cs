@@ -4946,13 +4946,49 @@ namespace ZSS
 
         private void btnUploadText_Click(object sender, EventArgs e)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            string result = "";// paste2.UploadText(txtTextUploaderContent.Text);
-            if (!string.IsNullOrEmpty(result))
+            txtUploadTextResult.Text = UploadText(txtTextUploaderContent.Text, UploadTextType.UploadText);
+        }
+
+        private void btnUploadTextClipboard_Click(object sender, EventArgs e)
+        {
+            txtUploadTextResult.Text = UploadText(null, UploadTextType.UploadTextFromClipboard);
+        }
+
+        private void btnUploadTextClipboardFile_Click(object sender, EventArgs e)
+        {
+            txtUploadTextResult.Text = UploadText(txtTextUploaderContent.Text, UploadTextType.UploadTextFromFile);
+        }
+
+        private string UploadText(string text, UploadTextType type)
+        {
+            if (lvTextUploaders.SelectedItems.Count > 0 && (type == UploadTextType.UploadTextFromClipboard || !string.IsNullOrEmpty(text)))
             {
-                MessageBox.Show(string.Format("Uploaded in {0}ms: {1}", stopwatch.ElapsedMilliseconds, result));
-                Clipboard.SetText(result);
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                TextUploader textUploader = (TextUploader)lvTextUploaders.SelectedItems[0].Tag;
+                string result = "";
+                switch (type)
+                {
+                    case UploadTextType.UploadText:
+                        result = textUploader.UploadText(text);
+                        break;
+                    case UploadTextType.UploadTextFromClipboard:
+                        result = textUploader.UploadTextFromClipboard();
+                        break;
+                    case UploadTextType.UploadTextFromFile:
+                        result = textUploader.UploadTextFromFile(text);
+                        break;
+                }
+                if (!string.IsNullOrEmpty(result))
+                {
+                    if (MessageBox.Show(string.Format("Uploaded in {0}ms: {1}\r\nLink will be paste to clipboard if you press OK.",
+                        stopwatch.ElapsedMilliseconds, result), this.Text, MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        Clipboard.SetText(result);
+                    }
+                    return result;
+                }
             }
+            return "";
         }
 
         private void lvTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
@@ -4991,6 +5027,7 @@ namespace ZSS
                     object textUploader = FindTextUploader(name);
                     Program.conf.TextUploadersSettings.Add(textUploader);
                     AddTextUploader(textUploader);
+                    lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
                 }
             }
         }

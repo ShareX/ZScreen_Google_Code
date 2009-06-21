@@ -112,4 +112,11 @@ namespace ZSS
         [Description("Last Crop Shot")]
         TAKE_SCREENSHOT_LAST_CROPPED
     }
+
+    public enum UploadTextType
+    {
+        UploadText,
+        UploadTextFromClipboard,
+        UploadTextFromFile
+    }
 }
