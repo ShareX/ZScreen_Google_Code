@@ -43,6 +43,7 @@ using ZSS.Tasks;
 using ZSS.Colors;
 using ZSS.UpdateCheckerLib;
 using ZSS.TextUploaders;
+using ZSS.TextUploaders.Global;
 
 namespace ZSS
 {
@@ -145,6 +146,7 @@ namespace ZSS
             {
                 cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
+
             cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             if (cboClipboardTextMode.Items.Count == 0)
             {
@@ -298,6 +300,15 @@ namespace ZSS
             {
                 lvTextUploaders.Items[Program.conf.SelectedTextUploader].Selected = true;
             }
+            cboTextUploaders.Items.Clear();
+            //foreach (TextDestType tdt in Enum.GetValues(typeof(TextDestType)))
+            //{
+            //    if (FindTextUploader(tdt.GetDescription()) != null)
+            //    {
+            //        cboTextUploaders.Items.Add(tdt.GetDescription());
+            //    }
+            //}
+            cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
 
             ///////////////////////////////////
             // FTP Settings
@@ -453,8 +464,11 @@ namespace ZSS
 
         private void AddTextUploader(object obj)
         {
-            string name = ((TextUploader)obj).Name;
-            lvTextUploaders.Items.Add(name).Tag = obj;
+            if (obj != null && obj.GetType() != typeof(System.String))
+            {
+                string name = ((TextUploader)obj).Name;
+                lvTextUploaders.Items.Add(name).Tag = obj;
+            }
         }
 
         private void UpdateGuiControlsHistory()
@@ -5008,7 +5022,11 @@ namespace ZSS
             if (lvTextUploaders.SelectedItems.Count > 0)
             {
                 object textUploader = lvTextUploaders.SelectedItems[0].Tag;
-                pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
+                pgTextUploaderSettings.Visible = textUploader != null && textUploader.GetType() != typeof(System.String);
+                if (pgTextUploaderSettings.Visible)
+                {
+                    pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
+                }
             }
         }
 
@@ -5031,14 +5049,29 @@ namespace ZSS
 
         private void btnAddTextUploader_Click(object sender, EventArgs e)
         {
-            if (cbTextUploaders.SelectedIndex > -1)
+            if (cboTextUploaders.SelectedIndex > -1)
             {
-                string name = (string)cbTextUploaders.SelectedItem;
+                string name = (string)cboTextUploaders.SelectedItem;
                 if (!string.IsNullOrEmpty(name))
                 {
                     object textUploader = FindTextUploader(name);
-                    AddTextUploader(textUploader);
-                    lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
+                    if (textUploader != null)
+                    {
+                        AddTextUploader(textUploader);
+                        lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
+                    }
+                    else
+                    {
+                        bool found = lvTextUploaders.Items.Count > 0;
+                        foreach (ListViewItem lv in lvTextUploaders.Items)
+                        {
+                            found = found && lv.Text == name;
+                        }
+                        if (!found)
+                        {
+                            lvTextUploaders.Items.Add(name).Tag = name;
+                        }
+                    }
                 }
             }
         }

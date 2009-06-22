@@ -38,7 +38,7 @@ namespace ZSS
 
         private static readonly string XMLFileName = "Settings.xml";
         private static readonly string HistoryFileName = "History.xml";
-        private static readonly string TextUploadersFileName = "TextUploaders.xml";
+        private static readonly string TextUploadersFileName = "TextUploaders.bin";
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
         private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
