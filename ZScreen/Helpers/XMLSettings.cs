@@ -241,9 +241,7 @@ namespace ZSS
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Text Uploaders
-        //~~~~~~~~~~~~~~~~~~~~~
-
-        public List<object> TextUploadersSettings = new List<object>();
+        //~~~~~~~~~~~~~~~~~~~~~        
         public int SelectedTextUploader = -1;
 
         //~~~~~~~~~~~~~~~~~~~~~

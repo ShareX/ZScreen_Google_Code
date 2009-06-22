@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace ZSS.TextUploaders
 {
+    [Serializable]
     public abstract class TextUploader : ITextUploader
     {
         public List<string> Errors { get; protected set; }

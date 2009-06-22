@@ -33,6 +33,7 @@ using System.Xml.Serialization;
 
 namespace ZSS.TextUploaders
 {
+    [Serializable]
     public sealed class PastebinUploader : TextUploader
     {
         public const string Hostname = "pastebin.com";
@@ -93,6 +94,7 @@ namespace ZSS.TextUploaders
             return "";
         }
 
+        [Serializable]
         public class PastebinSettings
         {
             public string URL { get; set; }
