@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +112,7 @@ namespace ZSS
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblFirstRun = new System.Windows.Forms.Label();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
@@ -277,6 +278,9 @@ namespace ZSS
             this.tpTextUploader = new System.Windows.Forms.TabPage();
             this.tcTextUploader = new System.Windows.Forms.TabControl();
             this.tpUploadText = new System.Windows.Forms.TabPage();
+            this.txtUploadTextResult = new System.Windows.Forms.TextBox();
+            this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
+            this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadText = new System.Windows.Forms.Button();
             this.txtTextUploaderContent = new System.Windows.Forms.TextBox();
             this.tpTextUploaderSettings = new System.Windows.Forms.TabPage();
@@ -477,10 +481,6 @@ namespace ZSS
             this.confApp = new System.Windows.Forms.PropertyGrid();
             this.txtActiveHelp = new System.Windows.Forms.RichTextBox();
             this.ZScreenPanels = new System.Windows.Forms.TableLayoutPanel();
-            this.btnUploadTextClipboard = new System.Windows.Forms.Button();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
-            this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
-            this.txtUploadTextResult = new System.Windows.Forms.TextBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1334,6 +1334,18 @@ namespace ZSS
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "General Settings";
             // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
             // cbPromptforUpload
             // 
             this.cbPromptforUpload.AutoSize = true;
@@ -1468,38 +1480,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3302,7 +3314,7 @@ namespace ZSS
             this.tpTextUploader.Padding = new System.Windows.Forms.Padding(3);
             this.tpTextUploader.Size = new System.Drawing.Size(780, 434);
             this.tpTextUploader.TabIndex = 12;
-            this.tpTextUploader.Text = "Text Uploader";
+            this.tpTextUploader.Text = "Text Uploaders";
             this.tpTextUploader.UseVisualStyleBackColor = true;
             // 
             // tcTextUploader
@@ -3330,6 +3342,33 @@ namespace ZSS
             this.tpUploadText.TabIndex = 0;
             this.tpUploadText.Text = "Upload text";
             this.tpUploadText.UseVisualStyleBackColor = true;
+            // 
+            // txtUploadTextResult
+            // 
+            this.txtUploadTextResult.Location = new System.Drawing.Point(488, 368);
+            this.txtUploadTextResult.Name = "txtUploadTextResult";
+            this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
+            this.txtUploadTextResult.TabIndex = 5;
+            // 
+            // btnUploadTextClipboardFile
+            // 
+            this.btnUploadTextClipboardFile.Location = new System.Drawing.Point(328, 368);
+            this.btnUploadTextClipboardFile.Name = "btnUploadTextClipboardFile";
+            this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(151, 23);
+            this.btnUploadTextClipboardFile.TabIndex = 4;
+            this.btnUploadTextClipboardFile.Text = "Upload text from file";
+            this.btnUploadTextClipboardFile.UseVisualStyleBackColor = true;
+            this.btnUploadTextClipboardFile.Click += new System.EventHandler(this.btnUploadTextClipboardFile_Click);
+            // 
+            // btnUploadTextClipboard
+            // 
+            this.btnUploadTextClipboard.Location = new System.Drawing.Point(168, 368);
+            this.btnUploadTextClipboard.Name = "btnUploadTextClipboard";
+            this.btnUploadTextClipboard.Size = new System.Drawing.Size(152, 23);
+            this.btnUploadTextClipboard.TabIndex = 3;
+            this.btnUploadTextClipboard.Text = "Upload text from clipboard";
+            this.btnUploadTextClipboard.UseVisualStyleBackColor = true;
+            this.btnUploadTextClipboard.Click += new System.EventHandler(this.btnUploadTextClipboard_Click);
             // 
             // btnUploadText
             // 
@@ -3385,6 +3424,7 @@ namespace ZSS
             this.cbTextUploaders.Name = "cbTextUploaders";
             this.cbTextUploaders.Size = new System.Drawing.Size(208, 21);
             this.cbTextUploaders.TabIndex = 3;
+            this.cbTextUploaders.SelectedIndexChanged += new System.EventHandler(this.cbTextUploaders_SelectedIndexChanged);
             // 
             // lvTextUploaders
             // 
@@ -5622,45 +5662,6 @@ namespace ZSS
             this.ZScreenPanels.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.ZScreenPanels.Size = new System.Drawing.Size(794, 492);
             this.ZScreenPanels.TabIndex = 76;
-            // 
-            // btnUploadTextClipboard
-            // 
-            this.btnUploadTextClipboard.Location = new System.Drawing.Point(168, 368);
-            this.btnUploadTextClipboard.Name = "btnUploadTextClipboard";
-            this.btnUploadTextClipboard.Size = new System.Drawing.Size(152, 23);
-            this.btnUploadTextClipboard.TabIndex = 3;
-            this.btnUploadTextClipboard.Text = "Upload text from clipboard";
-            this.btnUploadTextClipboard.UseVisualStyleBackColor = true;
-            this.btnUploadTextClipboard.Click += new System.EventHandler(this.btnUploadTextClipboard_Click);
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
-            // btnUploadTextClipboardFile
-            // 
-            this.btnUploadTextClipboardFile.Location = new System.Drawing.Point(328, 368);
-            this.btnUploadTextClipboardFile.Name = "btnUploadTextClipboardFile";
-            this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(151, 23);
-            this.btnUploadTextClipboardFile.TabIndex = 4;
-            this.btnUploadTextClipboardFile.Text = "Upload text from file";
-            this.btnUploadTextClipboardFile.UseVisualStyleBackColor = true;
-            this.btnUploadTextClipboardFile.Click += new System.EventHandler(this.btnUploadTextClipboardFile_Click);
-            // 
-            // txtUploadTextResult
-            // 
-            this.txtUploadTextResult.Location = new System.Drawing.Point(488, 368);
-            this.txtUploadTextResult.Name = "txtUploadTextResult";
-            this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
-            this.txtUploadTextResult.TabIndex = 5;
             // 
             // ZScreen
             // 
