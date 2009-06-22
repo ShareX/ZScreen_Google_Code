@@ -33,6 +33,7 @@ using System.Xml.Serialization;
 
 namespace ZSS.TextUploaders
 {
+    [Serializable]
     public sealed class Paste2Uploader : TextUploader
     {
         public const string Hostname = "paste2.org";
@@ -77,6 +78,7 @@ namespace ZSS.TextUploaders
             return "";
         }
 
+        [Serializable]
         public class Paste2Settings
         {
             public string URL { get; set; }

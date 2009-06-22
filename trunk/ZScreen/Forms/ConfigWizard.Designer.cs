@@ -138,7 +138,6 @@
             this.gbWatermark.Controls.Add(this.txtWatermarkText);
             this.gbWatermark.Controls.Add(this.cboWatermarkType);
             this.gbWatermark.Controls.Add(this.lblWatermarkType);
-            this.gbWatermark.Enabled = false;
             this.gbWatermark.Location = new System.Drawing.Point(8, 80);
             this.gbWatermark.Name = "gbWatermark";
             this.gbWatermark.Size = new System.Drawing.Size(600, 120);

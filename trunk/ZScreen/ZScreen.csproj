@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="Global\WatermarkMaker.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
+    <Compile Include="Helpers\TextUploadersManager.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>

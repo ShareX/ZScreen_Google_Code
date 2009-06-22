@@ -289,7 +289,8 @@ namespace ZSS
             // Text Uploader Settings
             ///////////////////////////////////
 
-            foreach (object textUploader in Program.conf.TextUploadersSettings)
+            TextUploadersManager textUploaders = TextUploadersManager.Read();
+            foreach (object textUploader in textUploaders.TextUploadersSettings)
             {
                 AddTextUploader(textUploader);
             }
@@ -1473,10 +1474,21 @@ namespace ZSS
 
         #endregion
 
+        private void SaveTextUploadersManager()
+        {
+            TextUploadersManager tum = new TextUploadersManager();
+            foreach (ListViewItem item in lvTextUploaders.Items)
+            {
+                tum.TextUploadersSettings.Add(item.Tag);
+            }
+            tum.Save();
+        }
+
         private void SaveSettings()
         {
             Program.conf.Save();
             SaveHistoryItems();
+            SaveTextUploadersManager();
             Settings.Default.Save();
         }
 
@@ -5025,7 +5037,6 @@ namespace ZSS
                 if (!string.IsNullOrEmpty(name))
                 {
                     object textUploader = FindTextUploader(name);
-                    Program.conf.TextUploadersSettings.Add(textUploader);
                     AddTextUploader(textUploader);
                     lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
                 }
