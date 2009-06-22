@@ -226,7 +226,7 @@ namespace ZSS
         }
 
         /// <summary>
-        /// Gets a fully qualified unique File Path for a file name provided as a StringBuilder. Save Location is set by the GUI. 
+        /// Gets a fully qualified unique File Path for a file name provided as a StringBuilder. WriteBF Location is set by the GUI. 
         /// </summary>
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
