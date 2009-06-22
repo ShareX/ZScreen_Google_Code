@@ -10,7 +10,5 @@ namespace ZSS.TextUploaders.Global
         PASTEBIN_COM,
         [Description("paste2.org")]
         PASTE2_ORG,
-        [Description("pastebin.ca")]
-        PASTEBIN_CA
     }
 }
