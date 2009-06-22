@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace ZSS.Helpers
 {
@@ -13,12 +14,12 @@ namespace ZSS.Helpers
 
         public List<object> TextUploadersSettings = new List<object>();
 
-        public void Save()
+        public void Write()
         {
-            Save(Program.TextUploadersFilePath);
+            WriteBF(Program.TextUploadersFilePath);
         }
 
-        public void Save(string filePath)
+        public void WriteBF(string filePath)
         {
             try
             {
@@ -37,12 +38,31 @@ namespace ZSS.Helpers
             }
         }
 
-        public static TextUploadersManager Read()
+        private void WriteXML(string filePath)
         {
-            return Read(Program.TextUploadersFilePath);
+            try
+            {
+                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                XmlSerializer xs = new XmlSerializer(typeof(TextUploadersManager));
+                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                {
+                    xs.Serialize(fs, this);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+            }
         }
 
-        public static TextUploadersManager Read(string filePath)
+        public static TextUploadersManager Read()
+        {
+            return ReadBF(Program.TextUploadersFilePath);
+        }
+
+        public static TextUploadersManager ReadBF(string filePath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -65,5 +85,31 @@ namespace ZSS.Helpers
 
             return new TextUploadersManager();
         }
+
+        private static TextUploadersManager ReadXML(string filePath)
+        {
+
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(TextUploadersManager));
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                    {
+                        return (TextUploadersManager)xs.Deserialize(fs);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.ToString());
+                }
+            }
+
+            return new TextUploadersManager();
+        }
+
     }
 }

@@ -1481,7 +1481,7 @@ namespace ZSS
             {
                 tum.TextUploadersSettings.Add(item.Tag);
             }
-            tum.Save();
+            tum.Write();
         }
 
         private void SaveSettings()
@@ -4992,7 +4992,7 @@ namespace ZSS
                 }
                 if (!string.IsNullOrEmpty(result))
                 {
-                    if (MessageBox.Show(string.Format("Uploaded in {0}ms: {1}\r\nLink will be paste to clipboard if you press OK.",
+                    if (MessageBox.Show(string.Format("Uploaded in {0} ms: {1}\r\nLink will be paste to clipboard if you press OK.",
                         stopwatch.ElapsedMilliseconds, result), this.Text, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         Clipboard.SetText(result);
