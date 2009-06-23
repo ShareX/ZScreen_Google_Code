@@ -469,6 +469,10 @@ namespace ZSS
                 string name = ((TextUploader)obj).Name;
                 lvTextUploaders.Items.Add(name).Tag = obj;
             }
+            else
+            {
+                lvTextUploaders.Items.Add(obj.ToString()).Tag = obj;
+            }
         }
 
         private void UpdateGuiControlsHistory()
@@ -1797,13 +1801,13 @@ namespace ZSS
         private bool SoftwareCheck(string regPath, string sName)
         {
             RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(regPath, false);
-            if (regKey != null) //If registry found
+            if (regKey != null) //If registry notFound
             {
                 string stringReg = regKey.GetValue("").ToString();
                 if (!string.IsNullOrEmpty(stringReg)) //If registry value not empty
                 {
                     string filePath = stringReg.Substring(1, stringReg.LastIndexOf("%") - 4);
-                    if (File.Exists(filePath)) //If found path exist
+                    if (File.Exists(filePath)) //If notFound path exist
                     {
                         if (!SoftwareExist(sName)) //If not added to Software list before
                         {
@@ -5062,12 +5066,12 @@ namespace ZSS
                     }
                     else
                     {
-                        bool found = lvTextUploaders.Items.Count > 0;
+                        bool notFound = true;
                         foreach (ListViewItem lv in lvTextUploaders.Items)
                         {
-                            found = found && lv.Text == name;
+                            notFound = notFound && lv.Text != name;
                         }
-                        if (!found)
+                        if (notFound)
                         {
                             lvTextUploaders.Items.Add(name).Tag = name;
                         }
