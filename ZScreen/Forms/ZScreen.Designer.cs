@@ -112,6 +112,7 @@ namespace ZSS
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblFirstRun = new System.Windows.Forms.Label();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
@@ -274,11 +275,6 @@ namespace ZSS
             this.cbWatermarkUseBorder = new System.Windows.Forms.CheckBox();
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
-            this.btnAddTextUploader = new System.Windows.Forms.Button();
-            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
-            this.lvTextUploaders = new System.Windows.Forms.ListView();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.pgTextUploaderSettings = new System.Windows.Forms.PropertyGrid();
             this.tpEditors = new System.Windows.Forms.TabPage();
             this.tcEditors = new System.Windows.Forms.TabControl();
             this.tpEditorsImages = new System.Windows.Forms.TabPage();
@@ -386,6 +382,11 @@ namespace ZSS
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
+            this.btnAddTextUploader = new System.Windows.Forms.Button();
+            this.lvTextUploaders = new System.Windows.Forms.ListView();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.pgTextUploaderSettings = new System.Windows.Forms.PropertyGrid();
+            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
             this.tpLanguageTranslator = new System.Windows.Forms.TabPage();
             this.btnTranslateTo1 = new System.Windows.Forms.Button();
             this.lblDictionary = new System.Windows.Forms.Label();
@@ -478,7 +479,6 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1327,6 +1327,18 @@ namespace ZSS
             this.gbMainOptions.TabIndex = 79;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "General Settings";
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // cbPromptforUpload
             // 
@@ -3288,61 +3300,6 @@ namespace ZSS
             this.txtWatermarkImageLocation.TabIndex = 21;
             this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
             // 
-            // btnAddTextUploader
-            // 
-            this.btnAddTextUploader.Location = new System.Drawing.Point(208, 8);
-            this.btnAddTextUploader.Name = "btnAddTextUploader";
-            this.btnAddTextUploader.Size = new System.Drawing.Size(75, 23);
-            this.btnAddTextUploader.TabIndex = 4;
-            this.btnAddTextUploader.Text = "Add";
-            this.btnAddTextUploader.UseVisualStyleBackColor = true;
-            this.btnAddTextUploader.Click += new System.EventHandler(this.btnAddTextUploader_Click);
-            // 
-            // cboTextUploaders
-            // 
-            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(288, 8);
-            this.cboTextUploaders.Name = "cboTextUploaders";
-            this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
-            this.cboTextUploaders.TabIndex = 3;
-            this.cboTextUploaders.SelectedIndexChanged += new System.EventHandler(this.cbTextUploaders_SelectedIndexChanged);
-            // 
-            // lvTextUploaders
-            // 
-            this.lvTextUploaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3});
-            this.lvTextUploaders.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lvTextUploaders.FullRowSelect = true;
-            this.lvTextUploaders.GridLines = true;
-            this.lvTextUploaders.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvTextUploaders.HideSelection = false;
-            this.lvTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.lvTextUploaders.MultiSelect = false;
-            this.lvTextUploaders.Name = "lvTextUploaders";
-            this.lvTextUploaders.Size = new System.Drawing.Size(197, 395);
-            this.lvTextUploaders.TabIndex = 2;
-            this.lvTextUploaders.UseCompatibleStateImageBehavior = false;
-            this.lvTextUploaders.View = System.Windows.Forms.View.List;
-            this.lvTextUploaders.SelectedIndexChanged += new System.EventHandler(this.lvTextUploaders_SelectedIndexChanged);
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Width = 332;
-            // 
-            // pgTextUploaderSettings
-            // 
-            this.pgTextUploaderSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgTextUploaderSettings.HelpVisible = false;
-            this.pgTextUploaderSettings.Location = new System.Drawing.Point(208, 40);
-            this.pgTextUploaderSettings.Name = "pgTextUploaderSettings";
-            this.pgTextUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.pgTextUploaderSettings.Size = new System.Drawing.Size(555, 352);
-            this.pgTextUploaderSettings.TabIndex = 1;
-            this.pgTextUploaderSettings.ToolbarVisible = false;
-            // 
             // tpEditors
             // 
             this.tpEditors.Controls.Add(this.tcEditors);
@@ -4513,6 +4470,61 @@ namespace ZSS
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
+            // btnAddTextUploader
+            // 
+            this.btnAddTextUploader.Location = new System.Drawing.Point(208, 8);
+            this.btnAddTextUploader.Name = "btnAddTextUploader";
+            this.btnAddTextUploader.Size = new System.Drawing.Size(75, 23);
+            this.btnAddTextUploader.TabIndex = 4;
+            this.btnAddTextUploader.Text = "Add";
+            this.btnAddTextUploader.UseVisualStyleBackColor = true;
+            this.btnAddTextUploader.Click += new System.EventHandler(this.btnAddTextUploader_Click);
+            // 
+            // lvTextUploaders
+            // 
+            this.lvTextUploaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3});
+            this.lvTextUploaders.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lvTextUploaders.FullRowSelect = true;
+            this.lvTextUploaders.GridLines = true;
+            this.lvTextUploaders.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvTextUploaders.HideSelection = false;
+            this.lvTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.lvTextUploaders.MultiSelect = false;
+            this.lvTextUploaders.Name = "lvTextUploaders";
+            this.lvTextUploaders.Size = new System.Drawing.Size(197, 395);
+            this.lvTextUploaders.TabIndex = 2;
+            this.lvTextUploaders.UseCompatibleStateImageBehavior = false;
+            this.lvTextUploaders.View = System.Windows.Forms.View.List;
+            this.lvTextUploaders.SelectedIndexChanged += new System.EventHandler(this.lvTextUploaders_SelectedIndexChanged);
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Width = 332;
+            // 
+            // pgTextUploaderSettings
+            // 
+            this.pgTextUploaderSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgTextUploaderSettings.HelpVisible = false;
+            this.pgTextUploaderSettings.Location = new System.Drawing.Point(208, 40);
+            this.pgTextUploaderSettings.Name = "pgTextUploaderSettings";
+            this.pgTextUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+            this.pgTextUploaderSettings.Size = new System.Drawing.Size(555, 358);
+            this.pgTextUploaderSettings.TabIndex = 1;
+            this.pgTextUploaderSettings.ToolbarVisible = false;
+            // 
+            // cboTextUploaders
+            // 
+            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTextUploaders.FormattingEnabled = true;
+            this.cboTextUploaders.Location = new System.Drawing.Point(288, 8);
+            this.cboTextUploaders.Name = "cboTextUploaders";
+            this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
+            this.cboTextUploaders.TabIndex = 3;
+            this.cboTextUploaders.SelectedIndexChanged += new System.EventHandler(this.cbTextUploaders_SelectedIndexChanged);
+            // 
             // tpLanguageTranslator
             // 
             this.tpLanguageTranslator.Controls.Add(this.btnTranslateTo1);
@@ -5619,18 +5631,6 @@ namespace ZSS
             this.txtUploadTextResult.Name = "txtUploadTextResult";
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // ZScreen
             // 
