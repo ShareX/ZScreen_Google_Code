@@ -23,6 +23,7 @@
 
 using System;
 using System.Text;
+using System.ComponentModel;
 
 namespace ZSS
 {
@@ -32,6 +33,7 @@ namespace ZSS
         public string Name { get; set; }
         public string Server { get; set; }
         public string Username { get; set; }
+        [Category("Password"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
         private string mPath = "/";

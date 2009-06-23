@@ -30,17 +30,19 @@ using ZSS.ImageUploader.Helpers;
 
 namespace ZSS.ImageUploader
 {
+    [Serializable]
     public sealed class FTPUploader : IUploader
     {
-        private FTPAccount mFTPAccount;
+        public FTPAccount FTPAccount;
         private List<string> Errors { get; set; }
         public string Name { get; private set; }
+        public const string HostName = "FTP";
 
         public FTPUploader(FTPAccount acc)
         {
-            this.mFTPAccount = acc;
+            this.FTPAccount = acc;
             this.Errors = new List<string>();
-            this.Name = mFTPAccount.Name;
+            this.Name = FTPAccount.Name;
         }
 
         public bool Resume { get; set; }
@@ -60,7 +62,7 @@ namespace ZSS.ImageUploader
 
             //try
             //{
-            FTP ftpClient = new FTP(ref this.mFTPAccount);
+            FTP ftpClient = new FTP(ref this.FTPAccount);
             //removed binary mode code line
 
             string fName = Path.GetFileName(localFilePath);
@@ -71,7 +73,7 @@ namespace ZSS.ImageUploader
             //perc = (int)(((ff.BytesTotal) * 100) / ff.FileSize);
             //}
 
-            ifl.Add(new ImageFile(this.mFTPAccount.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
+            ifl.Add(new ImageFile(this.FTPAccount.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
 
             if (this.EnableThumbnail)
             {
@@ -90,7 +92,7 @@ namespace ZSS.ImageUploader
                     {
                         ftpClient.UploadFile(thPath, Path.GetFileName(thPath));
                     }
-                    ifl.Add(new ImageFile(this.mFTPAccount.getUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
+                    ifl.Add(new ImageFile(this.FTPAccount.getUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
                 }
                 catch (Exception ex)
                 {

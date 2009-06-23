@@ -28,6 +28,7 @@ using System.Drawing;
 using System.Threading;
 using ZSS.Properties;
 using ZSS.Forms;
+using ZSS.Helpers;
 
 namespace ZSS
 {
@@ -182,6 +183,7 @@ namespace ZSS
 
 
         public static XMLSettings conf;
+        public static TextUploadersManager mgrTextUploaders;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
@@ -234,6 +236,7 @@ namespace ZSS
 
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
+            mgrTextUploaders = TextUploadersManager.Read();
 
             // Use Configuration Wizard Settings if applied
             if (cw != null)

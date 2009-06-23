@@ -7,6 +7,7 @@ using ZSS.ImageUploader;
 using ZSS.Properties;
 using System.Threading;
 using System.Drawing;
+using ZSS.TextUploaders;
 
 namespace ZSS.Helpers
 {
@@ -164,8 +165,18 @@ namespace ZSS.Helpers
                 case TextDestType.FTP:
                     UploadFtp();
                     break;
+                case TextDestType.PASTEBIN_COM:
+                case TextDestType.PASTE2_ORG:
+                    UploadPastebin();
+                    break;
             }
             task.EndTime = DateTime.Now;
+        }
+
+        private void UploadPastebin()
+        {
+            TextUploader textUploader = (TextUploader)task.TextUploader;
+            task.RemoteFilePath = textUploader.UploadTextFromFile(task.LocalFilePath);            
         }
 
         public void TextEdit()

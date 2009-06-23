@@ -13,13 +13,14 @@ namespace ZSS.Helpers
     {
 
         public List<object> TextUploadersSettings = new List<object>();
+        public object TextUploaderActive;
 
         public void Write()
         {
             WriteBF(Program.TextUploadersFilePath);
         }
 
-        public void WriteBF(string filePath)
+        private void WriteBF(string filePath)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace ZSS.Helpers
             return ReadBF(Program.TextUploadersFilePath);
         }
 
-        public static TextUploadersManager ReadBF(string filePath)
+        private static TextUploadersManager ReadBF(string filePath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
