@@ -58,7 +58,7 @@ namespace ZSS.Helpers
             this.JobName = task.Job.GetDescription();
             this.FileName = task.FileName.ToString();
             this.LocalPath = task.LocalFilePath;
-            this.RemotePath = task.RemoteFilePath;            
+            this.RemotePath = task.RemoteFilePath;
             this.DestinationMode = task.ImageDestCategory.GetDescription();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.ImageManager;
@@ -112,14 +112,22 @@ namespace ZSS.Helpers
 
         private string GetDestinationName(MainAppTask t)
         {
-            switch (t.ImageDestCategory)
+            switch (t.JobCategory)
             {
-                case ImageDestType.FTP:
-                case ImageDestType.CUSTOM_UPLOADER:
-                    return string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.DestinationName);
-                default:
-                    return string.Format("{0}", t.ImageDestCategory.GetDescription());
+                case JobCategoryType.PICTURES:
+                case JobCategoryType.SCREENSHOTS:
+                    switch (t.ImageDestCategory)
+                    {
+                        case ImageDestType.FTP:
+                        case ImageDestType.CUSTOM_UPLOADER:
+                            return string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.DestinationName);
+                        default:
+                            return string.Format("{0}", t.ImageDestCategory.GetDescription());
+                    }
+                case JobCategoryType.TEXT:
+                    return string.Format("{0}", t.TextDestCategory.GetDescription());
             }
+            return "";
         }
     }
 }
