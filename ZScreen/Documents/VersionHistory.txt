@@ -1,5 +1,6 @@
-Version 2.10.10 - 20090701
+Version 2.11 - 20090701
 
+2.11.00.0 Clipboard Upload to paste2.org and pastebin.com
 2.10.10.1 URLs will only be appended in the History tab
 2.10.10.0 Actions Toolbar Mode to automatically open Toolbar on ZScreen startup
 2.10.09.0 Online Tasks such as updating TinyPic Registration Code will automatically happen every 6 hours
