@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +112,7 @@ namespace ZSS
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblFirstRun = new System.Windows.Forms.Label();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
@@ -274,15 +275,6 @@ namespace ZSS
             this.cbWatermarkUseBorder = new System.Windows.Forms.CheckBox();
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
-            this.tpTextUploader = new System.Windows.Forms.TabPage();
-            this.tcTextUploader = new System.Windows.Forms.TabControl();
-            this.tpUploadText = new System.Windows.Forms.TabPage();
-            this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
-            this.btnUploadTextClipboard = new System.Windows.Forms.Button();
-            this.btnUploadText = new System.Windows.Forms.Button();
-            this.txtTextUploaderContent = new System.Windows.Forms.TextBox();
-            this.tpTextUploaderSettings = new System.Windows.Forms.TabPage();
             this.btnAddTextUploader = new System.Windows.Forms.Button();
             this.cboTextUploaders = new System.Windows.Forms.ComboBox();
             this.lvTextUploaders = new System.Windows.Forms.ListView();
@@ -481,7 +473,12 @@ namespace ZSS
             this.confApp = new System.Windows.Forms.PropertyGrid();
             this.txtActiveHelp = new System.Windows.Forms.RichTextBox();
             this.ZScreenPanels = new System.Windows.Forms.TableLayoutPanel();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.tpUploadText = new System.Windows.Forms.TabPage();
+            this.txtTextUploaderContent = new System.Windows.Forms.TextBox();
+            this.btnUploadText = new System.Windows.Forms.Button();
+            this.btnUploadTextClipboard = new System.Windows.Forms.Button();
+            this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
+            this.txtUploadTextResult = new System.Windows.Forms.TextBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -547,10 +544,6 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkFontColor)).BeginInit();
             this.tpWatermarkImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).BeginInit();
-            this.tpTextUploader.SuspendLayout();
-            this.tcTextUploader.SuspendLayout();
-            this.tpUploadText.SuspendLayout();
-            this.tpTextUploaderSettings.SuspendLayout();
             this.tpEditors.SuspendLayout();
             this.tcEditors.SuspendLayout();
             this.tpEditorsImages.SuspendLayout();
@@ -572,6 +565,7 @@ namespace ZSS
             this.gbImageUploaders.SuspendLayout();
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
+            this.tpTextUploaders.SuspendLayout();
             this.tpLanguageTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -1116,7 +1110,6 @@ namespace ZSS
             this.tcApp.Controls.Add(this.tpHotkeys);
             this.tcApp.Controls.Add(this.tpCapture);
             this.tcApp.Controls.Add(this.tpWatermark);
-            this.tcApp.Controls.Add(this.tpTextUploader);
             this.tcApp.Controls.Add(this.tpEditors);
             this.tcApp.Controls.Add(this.tpFTP);
             this.tcApp.Controls.Add(this.tpHTTP);
@@ -1335,6 +1328,18 @@ namespace ZSS
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "General Settings";
             // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
             // cbPromptforUpload
             // 
             this.cbPromptforUpload.AutoSize = true;
@@ -1469,38 +1474,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3295,103 +3300,6 @@ namespace ZSS
             this.txtWatermarkImageLocation.TabIndex = 21;
             this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
             // 
-            // tpTextUploader
-            // 
-            this.tpTextUploader.Controls.Add(this.tcTextUploader);
-            this.tpTextUploader.Location = new System.Drawing.Point(4, 23);
-            this.tpTextUploader.Name = "tpTextUploader";
-            this.tpTextUploader.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploader.Size = new System.Drawing.Size(780, 434);
-            this.tpTextUploader.TabIndex = 12;
-            this.tpTextUploader.Text = "Text Uploaders";
-            this.tpTextUploader.UseVisualStyleBackColor = true;
-            // 
-            // tcTextUploader
-            // 
-            this.tcTextUploader.Controls.Add(this.tpUploadText);
-            this.tcTextUploader.Controls.Add(this.tpTextUploaderSettings);
-            this.tcTextUploader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcTextUploader.Location = new System.Drawing.Point(3, 3);
-            this.tcTextUploader.Name = "tcTextUploader";
-            this.tcTextUploader.SelectedIndex = 0;
-            this.tcTextUploader.Size = new System.Drawing.Size(774, 428);
-            this.tcTextUploader.TabIndex = 3;
-            // 
-            // tpUploadText
-            // 
-            this.tpUploadText.Controls.Add(this.txtUploadTextResult);
-            this.tpUploadText.Controls.Add(this.btnUploadTextClipboardFile);
-            this.tpUploadText.Controls.Add(this.btnUploadTextClipboard);
-            this.tpUploadText.Controls.Add(this.btnUploadText);
-            this.tpUploadText.Controls.Add(this.txtTextUploaderContent);
-            this.tpUploadText.Location = new System.Drawing.Point(4, 22);
-            this.tpUploadText.Name = "tpUploadText";
-            this.tpUploadText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpUploadText.Size = new System.Drawing.Size(766, 402);
-            this.tpUploadText.TabIndex = 0;
-            this.tpUploadText.Text = "Upload text";
-            this.tpUploadText.UseVisualStyleBackColor = true;
-            // 
-            // txtUploadTextResult
-            // 
-            this.txtUploadTextResult.Location = new System.Drawing.Point(488, 368);
-            this.txtUploadTextResult.Name = "txtUploadTextResult";
-            this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
-            this.txtUploadTextResult.TabIndex = 5;
-            // 
-            // btnUploadTextClipboardFile
-            // 
-            this.btnUploadTextClipboardFile.Location = new System.Drawing.Point(328, 368);
-            this.btnUploadTextClipboardFile.Name = "btnUploadTextClipboardFile";
-            this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(151, 23);
-            this.btnUploadTextClipboardFile.TabIndex = 4;
-            this.btnUploadTextClipboardFile.Text = "Upload text from file";
-            this.btnUploadTextClipboardFile.UseVisualStyleBackColor = true;
-            this.btnUploadTextClipboardFile.Click += new System.EventHandler(this.btnUploadTextClipboardFile_Click);
-            // 
-            // btnUploadTextClipboard
-            // 
-            this.btnUploadTextClipboard.Location = new System.Drawing.Point(168, 368);
-            this.btnUploadTextClipboard.Name = "btnUploadTextClipboard";
-            this.btnUploadTextClipboard.Size = new System.Drawing.Size(152, 23);
-            this.btnUploadTextClipboard.TabIndex = 3;
-            this.btnUploadTextClipboard.Text = "Upload text from clipboard";
-            this.btnUploadTextClipboard.UseVisualStyleBackColor = true;
-            this.btnUploadTextClipboard.Click += new System.EventHandler(this.btnUploadTextClipboard_Click);
-            // 
-            // btnUploadText
-            // 
-            this.btnUploadText.Location = new System.Drawing.Point(8, 368);
-            this.btnUploadText.Name = "btnUploadText";
-            this.btnUploadText.Size = new System.Drawing.Size(152, 24);
-            this.btnUploadText.TabIndex = 2;
-            this.btnUploadText.Text = "Upload text";
-            this.btnUploadText.UseVisualStyleBackColor = true;
-            this.btnUploadText.Click += new System.EventHandler(this.btnUploadText_Click);
-            // 
-            // txtTextUploaderContent
-            // 
-            this.txtTextUploaderContent.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtTextUploaderContent.Location = new System.Drawing.Point(3, 3);
-            this.txtTextUploaderContent.Multiline = true;
-            this.txtTextUploaderContent.Name = "txtTextUploaderContent";
-            this.txtTextUploaderContent.Size = new System.Drawing.Size(760, 357);
-            this.txtTextUploaderContent.TabIndex = 1;
-            // 
-            // tpTextUploaderSettings
-            // 
-            this.tpTextUploaderSettings.Controls.Add(this.btnAddTextUploader);
-            this.tpTextUploaderSettings.Controls.Add(this.cboTextUploaders);
-            this.tpTextUploaderSettings.Controls.Add(this.lvTextUploaders);
-            this.tpTextUploaderSettings.Controls.Add(this.pgTextUploaderSettings);
-            this.tpTextUploaderSettings.Location = new System.Drawing.Point(4, 22);
-            this.tpTextUploaderSettings.Name = "tpTextUploaderSettings";
-            this.tpTextUploaderSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaderSettings.Size = new System.Drawing.Size(766, 402);
-            this.tpTextUploaderSettings.TabIndex = 1;
-            this.tpTextUploaderSettings.Text = "Settings";
-            this.tpTextUploaderSettings.UseVisualStyleBackColor = true;
-            // 
             // btnAddTextUploader
             // 
             this.btnAddTextUploader.Location = new System.Drawing.Point(184, 8);
@@ -3424,7 +3332,7 @@ namespace ZSS
             this.lvTextUploaders.Location = new System.Drawing.Point(3, 3);
             this.lvTextUploaders.MultiSelect = false;
             this.lvTextUploaders.Name = "lvTextUploaders";
-            this.lvTextUploaders.Size = new System.Drawing.Size(173, 396);
+            this.lvTextUploaders.Size = new System.Drawing.Size(173, 395);
             this.lvTextUploaders.TabIndex = 2;
             this.lvTextUploaders.UseCompatibleStateImageBehavior = false;
             this.lvTextUploaders.View = System.Windows.Forms.View.Details;
@@ -3443,7 +3351,7 @@ namespace ZSS
             this.pgTextUploaderSettings.Location = new System.Drawing.Point(184, 40);
             this.pgTextUploaderSettings.Name = "pgTextUploaderSettings";
             this.pgTextUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.pgTextUploaderSettings.Size = new System.Drawing.Size(576, 360);
+            this.pgTextUploaderSettings.Size = new System.Drawing.Size(579, 352);
             this.pgTextUploaderSettings.TabIndex = 1;
             this.pgTextUploaderSettings.ToolbarVisible = false;
             // 
@@ -4605,6 +4513,10 @@ namespace ZSS
             // 
             // tpTextUploaders
             // 
+            this.tpTextUploaders.Controls.Add(this.btnAddTextUploader);
+            this.tpTextUploaders.Controls.Add(this.lvTextUploaders);
+            this.tpTextUploaders.Controls.Add(this.pgTextUploaderSettings);
+            this.tpTextUploaders.Controls.Add(this.cboTextUploaders);
             this.tpTextUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpTextUploaders.Name = "tpTextUploaders";
             this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
@@ -5654,7 +5566,6 @@ namespace ZSS
             this.ZScreenPanels.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ZScreenPanels.Controls.Add(this.txtActiveHelp, 0, 1);
             this.ZScreenPanels.Controls.Add(this.tcApp, 0, 0);
-            this.ZScreenPanels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ZScreenPanels.Location = new System.Drawing.Point(0, 0);
             this.ZScreenPanels.Name = "ZScreenPanels";
             this.ZScreenPanels.RowCount = 2;
@@ -5663,17 +5574,62 @@ namespace ZSS
             this.ZScreenPanels.Size = new System.Drawing.Size(794, 492);
             this.ZScreenPanels.TabIndex = 76;
             // 
-            // nudtScreenshotDelay
+            // tpUploadText
             // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.tpUploadText.Location = new System.Drawing.Point(4, 22);
+            this.tpUploadText.Name = "tpUploadText";
+            this.tpUploadText.Padding = new System.Windows.Forms.Padding(3);
+            this.tpUploadText.Size = new System.Drawing.Size(766, 402);
+            this.tpUploadText.TabIndex = 0;
+            this.tpUploadText.Text = "Upload text";
+            this.tpUploadText.UseVisualStyleBackColor = true;
+            // 
+            // txtTextUploaderContent
+            // 
+            this.txtTextUploaderContent.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtTextUploaderContent.Location = new System.Drawing.Point(3, 3);
+            this.txtTextUploaderContent.Multiline = true;
+            this.txtTextUploaderContent.Name = "txtTextUploaderContent";
+            this.txtTextUploaderContent.Size = new System.Drawing.Size(760, 357);
+            this.txtTextUploaderContent.TabIndex = 1;
+            this.txtTextUploaderContent.TextChanged += new System.EventHandler(this.txtTextUploaderContent_TextChanged);
+            // 
+            // btnUploadText
+            // 
+            this.btnUploadText.Location = new System.Drawing.Point(8, 368);
+            this.btnUploadText.Name = "btnUploadText";
+            this.btnUploadText.Size = new System.Drawing.Size(152, 24);
+            this.btnUploadText.TabIndex = 2;
+            this.btnUploadText.Text = "Upload text";
+            this.btnUploadText.UseVisualStyleBackColor = true;
+            this.btnUploadText.Click += new System.EventHandler(this.btnUploadText_Click);
+            // 
+            // btnUploadTextClipboard
+            // 
+            this.btnUploadTextClipboard.Location = new System.Drawing.Point(168, 368);
+            this.btnUploadTextClipboard.Name = "btnUploadTextClipboard";
+            this.btnUploadTextClipboard.Size = new System.Drawing.Size(152, 23);
+            this.btnUploadTextClipboard.TabIndex = 3;
+            this.btnUploadTextClipboard.Text = "Upload text from clipboard";
+            this.btnUploadTextClipboard.UseVisualStyleBackColor = true;
+            this.btnUploadTextClipboard.Click += new System.EventHandler(this.btnUploadTextClipboard_Click);
+            // 
+            // btnUploadTextClipboardFile
+            // 
+            this.btnUploadTextClipboardFile.Location = new System.Drawing.Point(328, 368);
+            this.btnUploadTextClipboardFile.Name = "btnUploadTextClipboardFile";
+            this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(151, 23);
+            this.btnUploadTextClipboardFile.TabIndex = 4;
+            this.btnUploadTextClipboardFile.Text = "Upload text from file";
+            this.btnUploadTextClipboardFile.UseVisualStyleBackColor = true;
+            this.btnUploadTextClipboardFile.Click += new System.EventHandler(this.btnUploadTextClipboardFile_Click);
+            // 
+            // txtUploadTextResult
+            // 
+            this.txtUploadTextResult.Location = new System.Drawing.Point(488, 368);
+            this.txtUploadTextResult.Name = "txtUploadTextResult";
+            this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
+            this.txtUploadTextResult.TabIndex = 5;
             // 
             // ZScreen
             // 
@@ -5782,11 +5738,6 @@ namespace ZSS
             this.tpWatermarkImage.ResumeLayout(false);
             this.tpWatermarkImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).EndInit();
-            this.tpTextUploader.ResumeLayout(false);
-            this.tcTextUploader.ResumeLayout(false);
-            this.tpUploadText.ResumeLayout(false);
-            this.tpUploadText.PerformLayout();
-            this.tpTextUploaderSettings.ResumeLayout(false);
             this.tpEditors.ResumeLayout(false);
             this.tcEditors.ResumeLayout(false);
             this.tpEditorsImages.ResumeLayout(false);
@@ -5819,6 +5770,7 @@ namespace ZSS
             this.gbRegexp.PerformLayout();
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
+            this.tpTextUploaders.ResumeLayout(false);
             this.tpLanguageTranslator.ResumeLayout(false);
             this.tpLanguageTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
@@ -6291,21 +6243,18 @@ namespace ZSS
         private System.Windows.Forms.PropertyGrid confApp;
         private System.Windows.Forms.RichTextBox txtActiveHelp;
         private System.Windows.Forms.TableLayoutPanel ZScreenPanels;
-        private System.Windows.Forms.TabPage tpTextUploader;
-        private System.Windows.Forms.TabControl tcTextUploader;
-        private System.Windows.Forms.TabPage tpUploadText;
-        private System.Windows.Forms.TextBox txtTextUploaderContent;
-        private System.Windows.Forms.TabPage tpTextUploaderSettings;
-        private System.Windows.Forms.Button btnUploadText;
         private System.Windows.Forms.PropertyGrid pgTextUploaderSettings;
         private System.Windows.Forms.ListView lvTextUploaders;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ComboBox cboTextUploaders;
         private System.Windows.Forms.Button btnAddTextUploader;
+        private System.Windows.Forms.TabPage tpTextUploaders;
+        private System.Windows.Forms.TabPage tpUploadText;
+        private System.Windows.Forms.TextBox txtTextUploaderContent;
+        private System.Windows.Forms.Button btnUploadText;
         private System.Windows.Forms.Button btnUploadTextClipboard;
         private System.Windows.Forms.Button btnUploadTextClipboardFile;
         private System.Windows.Forms.TextBox txtUploadTextResult;
-        private System.Windows.Forms.TabPage tpTextUploaders;
 
     }
 }

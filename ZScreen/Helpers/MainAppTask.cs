@@ -169,6 +169,10 @@ namespace ZSS.Tasks
         /// FTP, Paste2, pastebin.ca
         /// </summary>
         public TextDestType TextDestCategory { get; set; }
+        /// <summary>
+        /// TextUploader Object
+        /// </summary>
+        public object TextUploader { get; set; }
         #endregion
 
         /// <summary>

@@ -291,8 +291,7 @@ namespace ZSS
             // Text Uploader Settings
             ///////////////////////////////////
 
-            TextUploadersManager textUploaders = TextUploadersManager.Read();
-            foreach (object textUploader in textUploaders.TextUploadersSettings)
+            foreach (object textUploader in Program.mgrTextUploaders.TextUploadersSettings)
             {
                 AddTextUploader(textUploader);
             }
@@ -466,8 +465,16 @@ namespace ZSS
         {
             if (obj != null && obj.GetType() != typeof(System.String))
             {
-                string name = ((TextUploader)obj).Name;
-                lvTextUploaders.Items.Add(name).Tag = obj;
+                if (obj.GetType() == typeof(FTPUploader))
+                {
+                    string name = ((FTPUploader)obj).Name;
+                    lvTextUploaders.Items.Add(name).Tag = obj;
+                }
+                else
+                {
+                    string name = ((TextUploader)obj).Name;
+                    lvTextUploaders.Items.Add(name).Tag = obj;
+                }
             }
             else
             {
@@ -848,18 +855,36 @@ namespace ZSS
             }
             else
             {
-                switch (t.ImageDestCategory)
+                switch (t.JobCategory)
                 {
-                    case ImageDestType.FTP:
-                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
+                    case JobCategoryType.TEXT:
+                        switch (t.TextDestCategory)
+                        {
+                            case TextDestType.FTP:
+                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.TextDestCategory.GetDescription(), t.DestinationName));
+                                break;
+                            default:
+                                sbMsg.AppendLine(string.Format("Destination: {0}", t.TextDestCategory.GetDescription()));
+                                break;
+                        }
                         break;
-                    case ImageDestType.CUSTOM_UPLOADER:
-                        sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
-                        break;
-                    default:
-                        sbMsg.AppendLine(string.Format("Destination: {0}", t.ImageDestCategory.GetDescription()));
+                    case JobCategoryType.SCREENSHOTS:
+                    case JobCategoryType.PICTURES:
+                        switch (t.ImageDestCategory)
+                        {
+                            case ImageDestType.FTP:
+                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
+                                break;
+                            case ImageDestType.CUSTOM_UPLOADER:
+                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
+                                break;
+                            default:
+                                sbMsg.AppendLine(string.Format("Destination: {0}", t.ImageDestCategory.GetDescription()));
+                                break;
+                        }
                         break;
                 }
+
 
                 string fileOrUrl = "";
 
@@ -1043,6 +1068,19 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
+            t.TextUploader = Program.mgrTextUploaders.TextUploaderActive;
+            if (t.TextUploader.GetType() == typeof(FTPUploader))
+            {
+                t.TextDestCategory = TextDestType.FTP;
+            }
+            else if (t.TextUploader.GetType().ToString().ToLower().Contains("pastebin"))
+            {
+                t.TextDestCategory = TextDestType.PASTEBIN_COM;
+            }
+            else if (t.TextUploader.GetType().ToString().ToLower().Contains("paste2"))
+            {
+                t.TextDestCategory = TextDestType.PASTE2_ORG;
+            }
             t.SetLocalFilePath(localFilePath);
 
             switch (job)
@@ -1492,21 +1530,24 @@ namespace ZSS
 
         #endregion
 
-        private void SaveTextUploadersManager()
+        private void WriteTextUploadersManager()
         {
-            TextUploadersManager tum = new TextUploadersManager();
-            foreach (ListViewItem item in lvTextUploaders.Items)
+            if (lvTextUploaders.Items.Count > 0)
             {
-                tum.TextUploadersSettings.Add(item.Tag);
+                Program.mgrTextUploaders.TextUploadersSettings.Clear();
+                foreach (ListViewItem item in lvTextUploaders.Items)
+                {
+                    Program.mgrTextUploaders.TextUploadersSettings.Add(item.Tag);
+                }
+                Program.mgrTextUploaders.Write();
             }
-            tum.Write();
         }
 
         private void SaveSettings()
         {
             Program.conf.Save();
             SaveHistoryItems();
-            SaveTextUploadersManager();
+            WriteTextUploadersManager();
             Settings.Default.Save();
         }
 
@@ -5025,8 +5066,13 @@ namespace ZSS
         {
             if (lvTextUploaders.SelectedItems.Count > 0)
             {
+                Program.conf.SelectedTextUploader = lvTextUploaders.SelectedItems[0].Index;
+
                 object textUploader = lvTextUploaders.SelectedItems[0].Tag;
-                pgTextUploaderSettings.Visible = textUploader != null && textUploader.GetType() != typeof(System.String);
+                bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
+                Program.mgrTextUploaders.TextUploaderActive = textUploader;
+                pgTextUploaderSettings.Visible = hasOptions;
+
                 if (pgTextUploaderSettings.Visible)
                 {
                     pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
@@ -5042,13 +5088,27 @@ namespace ZSS
                     return new PastebinUploader();
                 case (Paste2Uploader.Hostname):
                     return new Paste2Uploader();
+                case (FTPUploader.HostName):
+                    if (Program.conf.FTPselected > 0 && Program.conf.FTPAccountList.Count > 0)
+                    {
+                        FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
+                        return new FTPUploader(acc);
+                    }
+                    break;
             }
             return null;
         }
 
         private object GetTextUploaderSettings(object textUploader)
         {
-            return ((TextUploader)textUploader).Settings;
+            if (textUploader.GetType() == typeof(FTPUploader))
+            {
+                return ((FTPUploader)textUploader).FTPAccount;
+            }
+            else
+            {
+                return ((TextUploader)textUploader).Settings;
+            }
         }
 
         private void btnAddTextUploader_Click(object sender, EventArgs e)
@@ -5064,23 +5124,28 @@ namespace ZSS
                         AddTextUploader(textUploader);
                         lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
                     }
-                    else
-                    {
-                        bool notFound = true;
-                        foreach (ListViewItem lv in lvTextUploaders.Items)
-                        {
-                            notFound = notFound && lv.Text != name;
-                        }
-                        if (notFound)
-                        {
-                            lvTextUploaders.Items.Add(name).Tag = name;
-                        }
-                    }
+                    //else
+                    //{
+                    //    bool notFound = true;
+                    //    foreach (ListViewItem lv in lvTextUploaders.Items)
+                    //    {
+                    //        notFound = notFound && lv.Text != name;
+                    //    }
+                    //    if (notFound)
+                    //    {
+                    //        lvTextUploaders.Items.Add(name).Tag = name;
+                    //    }
+                    //}
                 }
             }
         }
 
         private void cbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTextUploaderContent_TextChanged(object sender, EventArgs e)
         {
 
         }
