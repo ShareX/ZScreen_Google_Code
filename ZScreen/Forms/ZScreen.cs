@@ -3444,17 +3444,19 @@ namespace ZSS
                 {
                     bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
+                    bool checkImage = checkLocal && FileSystem.IsValidImageFile(hi.LocalPath);
+
                     tsmCopyCbHistory.Enabled = checkRemote;
                     browseURLToolStripMenuItem.Enabled = checkRemote;
                     btnHistoryCopyLink.Enabled = checkRemote;
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
+                    btnHistoryCopyImage.Enabled = checkImage;
+                    pbPreview.Visible = checkImage;
+                    txtPreview.Visible = !pbPreview.Visible;
 
                     if (FileSystem.IsValidImageFile(hi.LocalPath))
                     {
-                        pbPreview.Visible = true;
-                        txtPreview.Visible = false;
-                        btnHistoryCopyImage.Enabled = true;
                         if (checkLocal)
                         {
                             pbPreview.ImageLocation = hi.LocalPath;
@@ -3466,8 +3468,6 @@ namespace ZSS
                     }
                     else if (FileSystem.IsValidTextFile(hi.LocalPath))
                     {
-                        pbPreview.Visible = false;
-                        txtPreview.Visible = true;
                         txtPreview.Text = File.ReadAllText(hi.LocalPath);
                     }
                     txtHistoryLocalPath.Text = hi.LocalPath;
