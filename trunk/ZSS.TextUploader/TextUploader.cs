@@ -27,6 +27,14 @@ namespace ZSS.TextUploaders
             {
                 link = UploadText(Clipboard.GetText());
             }
+            else if (Clipboard.ContainsFileDropList())
+            {
+                string filePath = Clipboard.GetFileDropList()[0];
+                if (filePath.EndsWith(".txt"))
+                {
+                    link = UploadTextFromFile(filePath);
+                }
+            }
             return link;
         }
 

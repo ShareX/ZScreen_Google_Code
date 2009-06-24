@@ -291,22 +291,16 @@ namespace ZSS
             // Text Uploader Settings
             ///////////////////////////////////
 
+            lvTextUploaders.Items.Clear();
             foreach (object textUploader in Program.mgrTextUploaders.TextUploadersSettings)
             {
                 AddTextUploader(textUploader);
             }
-            if (Program.conf.SelectedTextUploader > lvTextUploaders.Items.Count - 1)
+            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lvTextUploaders.Items.Count)
             {
                 lvTextUploaders.Items[Program.conf.SelectedTextUploader].Selected = true;
             }
             cboTextUploaders.Items.Clear();
-            //foreach (TextDestType tdt in Enum.GetValues(typeof(TextDestType)))
-            //{
-            //    if (FindTextUploader(tdt.GetDescription()) != null)
-            //    {
-            //        cboTextUploaders.Items.Add(tdt.GetDescription());
-            //    }
-            //}
             cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
 
             ///////////////////////////////////
@@ -323,7 +317,7 @@ namespace ZSS
                 FTPSetup(Program.conf.FTPAccountList);
                 if (lbFTPAccounts.Items.Count > 0)
                 {
-                    lbFTPAccounts.SelectedIndex = Program.conf.FTPselected;
+                    lbFTPAccounts.SelectedIndex = Program.conf.FTPSelected;
                 }
             }
             chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
@@ -1532,15 +1526,12 @@ namespace ZSS
 
         private void WriteTextUploadersManager()
         {
-            if (lvTextUploaders.Items.Count > 0)
+            Program.mgrTextUploaders.TextUploadersSettings.Clear();
+            foreach (ListViewItem item in lvTextUploaders.Items)
             {
-                Program.mgrTextUploaders.TextUploadersSettings.Clear();
-                foreach (ListViewItem item in lvTextUploaders.Items)
-                {
-                    Program.mgrTextUploaders.TextUploadersSettings.Add(item.Tag);
-                }
-                Program.mgrTextUploaders.Write();
+                Program.mgrTextUploaders.TextUploadersSettings.Add(item.Tag);
             }
+            Program.mgrTextUploaders.Write();
         }
 
         private void SaveSettings()
@@ -1747,7 +1738,7 @@ namespace ZSS
                 }
 
                 //check the active ftpUpload account
-                CheckCorrectMenuItemClicked(ref tsmDestFTP, Program.conf.FTPselected);
+                CheckCorrectMenuItemClicked(ref tsmDestFTP, Program.conf.FTPSelected);
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
@@ -2509,7 +2500,10 @@ namespace ZSS
             {
                 if (FileSystem.IsValidTextFile(filePath))
                 {
-                    StartWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, "", filePath);
+                    if (Program.mgrTextUploaders.TextUploaderActive != null)
+                    {
+                        StartWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, "", filePath);
+                    }
                 }
                 else
                 {
@@ -4210,7 +4204,7 @@ namespace ZSS
             if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
                 FTPLoad(Program.conf.FTPAccountList[sel]);
-                Program.conf.FTPselected = lbFTPAccounts.SelectedIndex;
+                Program.conf.FTPSelected = lbFTPAccounts.SelectedIndex;
                 RewriteFTPRightClickMenu();
             }
         }
@@ -5066,7 +5060,7 @@ namespace ZSS
         {
             if (lvTextUploaders.SelectedItems.Count > 0)
             {
-                Program.conf.SelectedTextUploader = lvTextUploaders.SelectedItems[0].Index;
+                Program.conf.SelectedTextUploader = lvTextUploaders.SelectedIndices[0];
 
                 object textUploader = lvTextUploaders.SelectedItems[0].Tag;
                 bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
@@ -5078,6 +5072,11 @@ namespace ZSS
                     pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
                 }
             }
+            else
+            {
+                Program.conf.SelectedTextUploader = -1;
+                Program.mgrTextUploaders.TextUploaderActive = null;
+            }
         }
 
         private object FindTextUploader(string name)
@@ -5088,10 +5087,10 @@ namespace ZSS
                     return new PastebinUploader();
                 case (Paste2Uploader.Hostname):
                     return new Paste2Uploader();
-                case (FTPUploader.HostName):
-                    if (Program.conf.FTPselected > 0 && Program.conf.FTPAccountList.Count > 0)
+                case (FTPUploader.Hostname):
+                    if (Program.conf.FTPSelected > -1 && Program.conf.FTPAccountList.Count > 0)
                     {
-                        FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
+                        FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                         return new FTPUploader(acc);
                     }
                     break;
@@ -5140,14 +5139,17 @@ namespace ZSS
             }
         }
 
-        private void cbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnRemoveTextUploader_Click(object sender, EventArgs e)
         {
-
+            if (lvTextUploaders.SelectedItems.Count > 0)
+            {
+                lvTextUploaders.Items.RemoveAt(lvTextUploaders.SelectedIndices[0]);
+            }
         }
 
-        private void txtTextUploaderContent_TextChanged(object sender, EventArgs e)
+        private void btnClearTextUploaders_Click(object sender, EventArgs e)
         {
-
+            lvTextUploaders.Items.Clear();
         }
     }
 }

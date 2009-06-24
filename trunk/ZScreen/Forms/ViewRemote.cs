@@ -304,7 +304,7 @@ namespace ZSS
         private void sBwFetchlist()
         {
             if (Program.conf.FTPAccountList != null)
-                mAcc = Program.conf.FTPAccountList[Program.conf.FTPselected];
+                mAcc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
                 string.Format("Fetching files from {0}", mAcc.Name));
 

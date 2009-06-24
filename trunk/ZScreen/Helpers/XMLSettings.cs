@@ -241,7 +241,8 @@ namespace ZSS
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Text Uploaders
-        //~~~~~~~~~~~~~~~~~~~~~        
+        //~~~~~~~~~~~~~~~~~~~~~
+
         public int SelectedTextUploader = -1;
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -260,7 +261,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FTPselected = -1;
+        public int FTPSelected = -1;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
         [Category("FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]

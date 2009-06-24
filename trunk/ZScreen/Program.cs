@@ -181,7 +181,6 @@ namespace ZSS
             }
         }
 
-
         public static XMLSettings conf;
         public static TextUploadersManager mgrTextUploaders;
 
@@ -279,7 +278,7 @@ namespace ZSS
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
         {
-            if (conf.FTPAccountList.Count > 0 && conf.FTPselected != -1 && conf.FTPAccountList.Count > conf.FTPselected)
+            if (conf.FTPAccountList.Count > 0 && conf.FTPSelected != -1 && conf.FTPAccountList.Count > conf.FTPSelected)
             {
                 return true;
             }
