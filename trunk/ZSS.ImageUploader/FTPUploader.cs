@@ -137,5 +137,10 @@ namespace ZSS.ImageUploader
             }
             return sb.ToString();
         }
+
+        public override string ToString()
+        {
+            return string.Format("FTP ({0})", this.Name);
+        }
     }
 }

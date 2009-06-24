@@ -54,6 +54,11 @@ namespace ZSS.TextUploaders
             return string.Join("\r\n", Errors.ToArray());
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         protected string GetResponse(string url, Dictionary<string, string> arguments)
         {
             try

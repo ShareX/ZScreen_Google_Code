@@ -97,6 +97,7 @@ namespace ZSS
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.cboTextDest = new System.Windows.Forms.ComboBox();
             this.gbGridMode = new System.Windows.Forms.GroupBox();
             this.cboCropGridMode = new System.Windows.Forms.CheckBox();
             this.nudCropGridHeight = new System.Windows.Forms.NumericUpDown();
@@ -112,23 +113,48 @@ namespace ZSS
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblFirstRun = new System.Windows.Forms.Label();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
-            this.lblScreenshotDestination = new System.Windows.Forms.Label();
-            this.cboScreenshotDest = new System.Windows.Forms.ComboBox();
+            this.lblImageDest = new System.Windows.Forms.Label();
+            this.cboImagesDest = new System.Windows.Forms.ComboBox();
             this.lblLogo = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
+            this.tpAccounts = new System.Windows.Forms.TabPage();
+            this.tcAccounts = new System.Windows.Forms.TabControl();
+            this.tpFTP = new System.Windows.Forms.TabPage();
+            this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
+            this.lbFTPAccounts = new System.Windows.Forms.ListBox();
+            this.gbFTPSettings = new System.Windows.Forms.GroupBox();
+            this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
+            this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
+            this.btnFTPAdd = new System.Windows.Forms.Button();
+            this.btnFTPImport = new System.Windows.Forms.Button();
+            this.btnFTPTest = new System.Windows.Forms.Button();
+            this.btnFTPExport = new System.Windows.Forms.Button();
+            this.btnFTPDelete = new System.Windows.Forms.Button();
+            this.tpTinyPic = new System.Windows.Forms.TabPage();
+            this.gbTinyPic = new System.Windows.Forms.GroupBox();
+            this.btnGalleryTinyPic = new System.Windows.Forms.Button();
+            this.chkRememberTinyPicUserPass = new System.Windows.Forms.CheckBox();
+            this.btnRegCodeTinyPic = new System.Windows.Forms.Button();
+            this.lblRegistrationCode = new System.Windows.Forms.Label();
+            this.txtTinyPicShuk = new System.Windows.Forms.TextBox();
+            this.tpImageShack = new System.Windows.Forms.TabPage();
+            this.gbImageShack = new System.Windows.Forms.GroupBox();
+            this.btnGalleryImageShack = new System.Windows.Forms.Button();
+            this.btnRegCodeImageShack = new System.Windows.Forms.Button();
+            this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
+            this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
             this.chHotkeys_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chHotkeys_Keys = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.tpCapture = new System.Windows.Forms.TabPage();
-            this.tcFileSettings = new System.Windows.Forms.TabControl();
+            this.tpScreenshots = new System.Windows.Forms.TabPage();
+            this.tcScreenshots = new System.Windows.Forms.TabControl();
             this.tpCropShot = new System.Windows.Forms.TabPage();
             this.gbCropRegionSettings = new System.Windows.Forms.GroupBox();
             this.nudCropHueRange = new System.Windows.Forms.NumericUpDown();
@@ -180,58 +206,6 @@ namespace ZSS
             this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
             this.cbSelectedWindowFront = new System.Windows.Forms.CheckBox();
             this.pbSelectedWindowBorderColor = new System.Windows.Forms.PictureBox();
-            this.tpInteraction = new System.Windows.Forms.TabPage();
-            this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
-            this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
-            this.gbDropBox = new System.Windows.Forms.GroupBox();
-            this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
-            this.gbAppearance = new System.Windows.Forms.GroupBox();
-            this.cbCompleteSound = new System.Windows.Forms.CheckBox();
-            this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
-            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
-            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
-            this.cbShowPopup = new System.Windows.Forms.CheckBox();
-            this.lblTrayFlash = new System.Windows.Forms.Label();
-            this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
-            this.tpFileNaming = new System.Windows.Forms.TabPage();
-            this.btnResetIncrement = new System.Windows.Forms.Button();
-            this.gbOthersNaming = new System.Windows.Forms.GroupBox();
-            this.lblEntireScreenPreview = new System.Windows.Forms.Label();
-            this.txtEntireScreen = new System.Windows.Forms.TextBox();
-            this.gbCodeTitle = new System.Windows.Forms.GroupBox();
-            this.btnCodesI = new System.Windows.Forms.Button();
-            this.btnCodesPm = new System.Windows.Forms.Button();
-            this.btnCodesS = new System.Windows.Forms.Button();
-            this.btnCodesMi = new System.Windows.Forms.Button();
-            this.btnCodesH = new System.Windows.Forms.Button();
-            this.btnCodesY = new System.Windows.Forms.Button();
-            this.btnCodesD = new System.Windows.Forms.Button();
-            this.btnCodesMo = new System.Windows.Forms.Button();
-            this.btnCodesT = new System.Windows.Forms.Button();
-            this.lblCodeI = new System.Windows.Forms.Label();
-            this.lblCodeT = new System.Windows.Forms.Label();
-            this.lblCodeMo = new System.Windows.Forms.Label();
-            this.lblCodePm = new System.Windows.Forms.Label();
-            this.lblCodeD = new System.Windows.Forms.Label();
-            this.lblCodeS = new System.Windows.Forms.Label();
-            this.lblCodeMi = new System.Windows.Forms.Label();
-            this.lblCodeY = new System.Windows.Forms.Label();
-            this.lblCodeH = new System.Windows.Forms.Label();
-            this.gbActiveWindowNaming = new System.Windows.Forms.GroupBox();
-            this.lblActiveWindowPreview = new System.Windows.Forms.Label();
-            this.txtActiveWindow = new System.Windows.Forms.TextBox();
-            this.tpCaptureQuality = new System.Windows.Forms.TabPage();
-            this.gbPictureQuality = new System.Windows.Forms.GroupBox();
-            this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
-            this.nudImageQuality = new System.Windows.Forms.NumericUpDown();
-            this.lblJPEGQualityPercentage = new System.Windows.Forms.Label();
-            this.lblQuality = new System.Windows.Forms.Label();
-            this.cbSwitchFormat = new System.Windows.Forms.ComboBox();
-            this.lblFileFormat = new System.Windows.Forms.Label();
-            this.cbFileFormat = new System.Windows.Forms.ComboBox();
-            this.lblKB = new System.Windows.Forms.Label();
-            this.lblAfter = new System.Windows.Forms.Label();
-            this.lblSwitchTo = new System.Windows.Forms.Label();
             this.tpWatermark = new System.Windows.Forms.TabPage();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
@@ -275,6 +249,45 @@ namespace ZSS
             this.cbWatermarkUseBorder = new System.Windows.Forms.CheckBox();
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
+            this.tpFileNaming = new System.Windows.Forms.TabPage();
+            this.btnResetIncrement = new System.Windows.Forms.Button();
+            this.gbOthersNaming = new System.Windows.Forms.GroupBox();
+            this.lblEntireScreenPreview = new System.Windows.Forms.Label();
+            this.txtEntireScreen = new System.Windows.Forms.TextBox();
+            this.gbCodeTitle = new System.Windows.Forms.GroupBox();
+            this.btnCodesI = new System.Windows.Forms.Button();
+            this.btnCodesPm = new System.Windows.Forms.Button();
+            this.btnCodesS = new System.Windows.Forms.Button();
+            this.btnCodesMi = new System.Windows.Forms.Button();
+            this.btnCodesH = new System.Windows.Forms.Button();
+            this.btnCodesY = new System.Windows.Forms.Button();
+            this.btnCodesD = new System.Windows.Forms.Button();
+            this.btnCodesMo = new System.Windows.Forms.Button();
+            this.btnCodesT = new System.Windows.Forms.Button();
+            this.lblCodeI = new System.Windows.Forms.Label();
+            this.lblCodeT = new System.Windows.Forms.Label();
+            this.lblCodeMo = new System.Windows.Forms.Label();
+            this.lblCodePm = new System.Windows.Forms.Label();
+            this.lblCodeD = new System.Windows.Forms.Label();
+            this.lblCodeS = new System.Windows.Forms.Label();
+            this.lblCodeMi = new System.Windows.Forms.Label();
+            this.lblCodeY = new System.Windows.Forms.Label();
+            this.lblCodeH = new System.Windows.Forms.Label();
+            this.gbActiveWindowNaming = new System.Windows.Forms.GroupBox();
+            this.lblActiveWindowPreview = new System.Windows.Forms.Label();
+            this.txtActiveWindow = new System.Windows.Forms.TextBox();
+            this.tpCaptureQuality = new System.Windows.Forms.TabPage();
+            this.gbPictureQuality = new System.Windows.Forms.GroupBox();
+            this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
+            this.nudImageQuality = new System.Windows.Forms.NumericUpDown();
+            this.lblJPEGQualityPercentage = new System.Windows.Forms.Label();
+            this.lblQuality = new System.Windows.Forms.Label();
+            this.cbSwitchFormat = new System.Windows.Forms.ComboBox();
+            this.lblFileFormat = new System.Windows.Forms.Label();
+            this.cbFileFormat = new System.Windows.Forms.ComboBox();
+            this.lblKB = new System.Windows.Forms.Label();
+            this.lblAfter = new System.Windows.Forms.Label();
+            this.lblSwitchTo = new System.Windows.Forms.Label();
             this.tpEditors = new System.Windows.Forms.TabPage();
             this.tcEditors = new System.Windows.Forms.TabControl();
             this.tpEditorsImages = new System.Windows.Forms.TabPage();
@@ -283,19 +296,8 @@ namespace ZSS
             this.btnBrowseImageSoftware = new System.Windows.Forms.Button();
             this.lbImageSoftware = new System.Windows.Forms.ListBox();
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
-            this.tpFTP = new System.Windows.Forms.TabPage();
-            this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
-            this.lbFTPAccounts = new System.Windows.Forms.ListBox();
-            this.gbFTPSettings = new System.Windows.Forms.GroupBox();
-            this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
-            this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
-            this.btnFTPAdd = new System.Windows.Forms.Button();
-            this.btnFTPImport = new System.Windows.Forms.Button();
-            this.btnFTPTest = new System.Windows.Forms.Button();
-            this.btnFTPExport = new System.Windows.Forms.Button();
-            this.btnFTPDelete = new System.Windows.Forms.Button();
-            this.tpHTTP = new System.Windows.Forms.TabPage();
-            this.tcHTTP = new System.Windows.Forms.TabControl();
+            this.tpImages = new System.Windows.Forms.TabPage();
+            this.tcImages = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
             this.lblUploadDurationLimit = new System.Windows.Forms.Label();
@@ -308,17 +310,6 @@ namespace ZSS
             this.lblUploadAs = new System.Windows.Forms.Label();
             this.lblErrorRetry = new System.Windows.Forms.Label();
             this.nudErrorRetry = new System.Windows.Forms.NumericUpDown();
-            this.gbImageShack = new System.Windows.Forms.GroupBox();
-            this.btnGalleryImageShack = new System.Windows.Forms.Button();
-            this.btnRegCodeImageShack = new System.Windows.Forms.Button();
-            this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
-            this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
-            this.gbTinyPic = new System.Windows.Forms.GroupBox();
-            this.btnGalleryTinyPic = new System.Windows.Forms.Button();
-            this.chkRememberTinyPicUserPass = new System.Windows.Forms.CheckBox();
-            this.btnRegCodeTinyPic = new System.Windows.Forms.Button();
-            this.lblRegistrationCode = new System.Windows.Forms.Label();
-            this.txtTinyPicShuk = new System.Windows.Forms.TextBox();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtUploadersLog = new System.Windows.Forms.RichTextBox();
             this.btnUploadersTest = new System.Windows.Forms.Button();
@@ -355,28 +346,16 @@ namespace ZSS
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
+            this.tpText = new System.Windows.Forms.TabPage();
+            this.tcText = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
+            this.lbTextUploaders = new System.Windows.Forms.ListBox();
             this.btnTestTextUploader = new System.Windows.Forms.Button();
             this.btnClearTextUploaders = new System.Windows.Forms.Button();
             this.btnRemoveTextUploader = new System.Windows.Forms.Button();
             this.btnAddTextUploader = new System.Windows.Forms.Button();
-            this.lvTextUploaders = new System.Windows.Forms.ListView();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.pgTextUploaderSettings = new System.Windows.Forms.PropertyGrid();
             this.cboTextUploaders = new System.Windows.Forms.ComboBox();
-            this.tpLanguageTranslator = new System.Windows.Forms.TabPage();
-            this.btnTranslateTo1 = new System.Windows.Forms.Button();
-            this.lblDictionary = new System.Windows.Forms.Label();
-            this.txtDictionary = new System.Windows.Forms.TextBox();
-            this.cbClipboardTranslate = new System.Windows.Forms.CheckBox();
-            this.txtTranslateResult = new System.Windows.Forms.TextBox();
-            this.txtLanguages = new System.Windows.Forms.TextBox();
-            this.btnTranslate = new System.Windows.Forms.Button();
-            this.txtTranslateText = new System.Windows.Forms.TextBox();
-            this.lblToLanguage = new System.Windows.Forms.Label();
-            this.lblFromLanguage = new System.Windows.Forms.Label();
-            this.cbToLanguage = new System.Windows.Forms.ComboBox();
-            this.cbFromLanguage = new System.Windows.Forms.ComboBox();
             this.tpHistory = new System.Windows.Forms.TabPage();
             this.tcHistory = new System.Windows.Forms.TabControl();
             this.tpHistoryList = new System.Windows.Forms.TabPage();
@@ -402,9 +381,22 @@ namespace ZSS
             this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.cbHistoryAddSpace = new System.Windows.Forms.CheckBox();
             this.cbHistoryReverseList = new System.Windows.Forms.CheckBox();
+            this.tpLanguageTranslator = new System.Windows.Forms.TabPage();
+            this.btnTranslateTo1 = new System.Windows.Forms.Button();
+            this.lblDictionary = new System.Windows.Forms.Label();
+            this.txtDictionary = new System.Windows.Forms.TextBox();
+            this.cbClipboardTranslate = new System.Windows.Forms.CheckBox();
+            this.txtTranslateResult = new System.Windows.Forms.TextBox();
+            this.txtLanguages = new System.Windows.Forms.TextBox();
+            this.btnTranslate = new System.Windows.Forms.Button();
+            this.txtTranslateText = new System.Windows.Forms.TextBox();
+            this.lblToLanguage = new System.Windows.Forms.Label();
+            this.lblFromLanguage = new System.Windows.Forms.Label();
+            this.cbToLanguage = new System.Windows.Forms.ComboBox();
+            this.cbFromLanguage = new System.Windows.Forms.ComboBox();
             this.tpOptions = new System.Windows.Forms.TabPage();
-            this.tcAdvanced = new System.Windows.Forms.TabControl();
-            this.tpAdvAppearance = new System.Windows.Forms.TabPage();
+            this.tcOptions = new System.Windows.Forms.TabControl();
+            this.tpGeneral = new System.Windows.Forms.TabPage();
             this.gbUpdates = new System.Windows.Forms.GroupBox();
             this.cboUpdateCheckType = new System.Windows.Forms.ComboBox();
             this.lblUpdateInfo = new System.Windows.Forms.Label();
@@ -416,6 +408,19 @@ namespace ZSS
             this.cbShowTaskbar = new System.Windows.Forms.CheckBox();
             this.cbOpenMainWindow = new System.Windows.Forms.CheckBox();
             this.cbStartWin = new System.Windows.Forms.CheckBox();
+            this.tpInteraction = new System.Windows.Forms.TabPage();
+            this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
+            this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
+            this.gbDropBox = new System.Windows.Forms.GroupBox();
+            this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
+            this.gbAppearance = new System.Windows.Forms.GroupBox();
+            this.cbCompleteSound = new System.Windows.Forms.CheckBox();
+            this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
+            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
+            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
+            this.cbShowPopup = new System.Windows.Forms.CheckBox();
+            this.lblTrayFlash = new System.Windows.Forms.Label();
+            this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.tpAdvPaths = new System.Windows.Forms.TabPage();
             this.gbRoot = new System.Windows.Forms.GroupBox();
             this.btnViewRootDir = new System.Windows.Forms.Button();
@@ -456,6 +461,9 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
+            this.lblTextDest = new System.Windows.Forms.Label();
+            this.gbImageSettings = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -466,10 +474,18 @@ namespace ZSS
             this.gbActiveHelp.SuspendLayout();
             this.gbMainOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
+            this.tpAccounts.SuspendLayout();
+            this.tcAccounts.SuspendLayout();
+            this.tpFTP.SuspendLayout();
+            this.gbFTPSettings.SuspendLayout();
+            this.tpTinyPic.SuspendLayout();
+            this.gbTinyPic.SuspendLayout();
+            this.tpImageShack.SuspendLayout();
+            this.gbImageShack.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
-            this.tpCapture.SuspendLayout();
-            this.tcFileSettings.SuspendLayout();
+            this.tpScreenshots.SuspendLayout();
+            this.tcScreenshots.SuspendLayout();
             this.tpCropShot.SuspendLayout();
             this.gbCropRegionSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).BeginInit();
@@ -489,19 +505,6 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).BeginInit();
-            this.tpInteraction.SuspendLayout();
-            this.gbActionsToolbarSettings.SuspendLayout();
-            this.gbDropBox.SuspendLayout();
-            this.gbAppearance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
-            this.tpFileNaming.SuspendLayout();
-            this.gbOthersNaming.SuspendLayout();
-            this.gbCodeTitle.SuspendLayout();
-            this.gbActiveWindowNaming.SuspendLayout();
-            this.tpCaptureQuality.SuspendLayout();
-            this.gbPictureQuality.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).BeginInit();
             this.tpWatermark.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).BeginInit();
             this.gbWatermarkGeneral.SuspendLayout();
@@ -521,36 +524,47 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkFontColor)).BeginInit();
             this.tpWatermarkImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).BeginInit();
+            this.tpFileNaming.SuspendLayout();
+            this.gbOthersNaming.SuspendLayout();
+            this.gbCodeTitle.SuspendLayout();
+            this.gbActiveWindowNaming.SuspendLayout();
+            this.tpCaptureQuality.SuspendLayout();
+            this.gbPictureQuality.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).BeginInit();
             this.tpEditors.SuspendLayout();
             this.tcEditors.SuspendLayout();
             this.tpEditorsImages.SuspendLayout();
-            this.tpFTP.SuspendLayout();
-            this.gbFTPSettings.SuspendLayout();
-            this.tpHTTP.SuspendLayout();
-            this.tcHTTP.SuspendLayout();
+            this.tpImages.SuspendLayout();
+            this.tcImages.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.gbImageUploaderOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorRetry)).BeginInit();
-            this.gbImageShack.SuspendLayout();
-            this.gbTinyPic.SuspendLayout();
             this.tpCustomUploaders.SuspendLayout();
             this.gbImageUploaders.SuspendLayout();
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
+            this.tpText.SuspendLayout();
+            this.tcText.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
-            this.tpLanguageTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
             this.tpHistoryList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.tpHistorySettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
+            this.tpLanguageTranslator.SuspendLayout();
             this.tpOptions.SuspendLayout();
-            this.tcAdvanced.SuspendLayout();
-            this.tpAdvAppearance.SuspendLayout();
+            this.tcOptions.SuspendLayout();
+            this.tpGeneral.SuspendLayout();
             this.gbUpdates.SuspendLayout();
             this.gbMisc.SuspendLayout();
+            this.tpInteraction.SuspendLayout();
+            this.gbActionsToolbarSettings.SuspendLayout();
+            this.gbDropBox.SuspendLayout();
+            this.gbAppearance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
             this.tpAdvPaths.SuspendLayout();
             this.gbRoot.SuspendLayout();
             this.gbSaveLoc.SuspendLayout();
@@ -562,6 +576,7 @@ namespace ZSS
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
             this.ZScreenPanels.SuspendLayout();
+            this.gbImageSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1057,6 +1072,7 @@ namespace ZSS
             this.ilApp.Images.SetKeyName(11, "shape_square.png");
             this.ilApp.Images.SetKeyName(12, "application_double.png");
             this.ilApp.Images.SetKeyName(13, "comments.png");
+            this.ilApp.Images.SetKeyName(14, "text_signature.png");
             // 
             // toolStripSeparator5
             // 
@@ -1079,13 +1095,14 @@ namespace ZSS
             // 
             this.tcApp.AllowDrop = true;
             this.tcApp.Controls.Add(this.tpMain);
+            this.tcApp.Controls.Add(this.tpAccounts);
             this.tcApp.Controls.Add(this.tpHotkeys);
-            this.tcApp.Controls.Add(this.tpCapture);
-            this.tcApp.Controls.Add(this.tpWatermark);
+            this.tcApp.Controls.Add(this.tpScreenshots);
             this.tcApp.Controls.Add(this.tpEditors);
-            this.tcApp.Controls.Add(this.tpFTP);
-            this.tcApp.Controls.Add(this.tpHTTP);
+            this.tcApp.Controls.Add(this.tpImages);
+            this.tcApp.Controls.Add(this.tpText);
             this.tcApp.Controls.Add(this.tpHistory);
+            this.tcApp.Controls.Add(this.tpLanguageTranslator);
             this.tcApp.Controls.Add(this.tpOptions);
             this.tcApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcApp.ImageList = this.ilApp;
@@ -1099,6 +1116,7 @@ namespace ZSS
             // tpMain
             // 
             this.tpMain.AllowDrop = true;
+            this.tpMain.Controls.Add(this.gbImageSettings);
             this.tpMain.Controls.Add(this.gbGridMode);
             this.tpMain.Controls.Add(this.gbActiveHelp);
             this.tpMain.Controls.Add(this.llProjectPage);
@@ -1119,6 +1137,16 @@ namespace ZSS
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
             this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
             // 
+            // cboTextDest
+            // 
+            this.cboTextDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTextDest.FormattingEnabled = true;
+            this.cboTextDest.Location = new System.Drawing.Point(128, 52);
+            this.cboTextDest.Name = "cboTextDest";
+            this.cboTextDest.Size = new System.Drawing.Size(232, 21);
+            this.cboTextDest.TabIndex = 121;
+            this.cboTextDest.SelectedIndexChanged += new System.EventHandler(this.cboTextDest_SelectedIndexChanged);
+            // 
             // gbGridMode
             // 
             this.gbGridMode.Controls.Add(this.cboCropGridMode);
@@ -1127,7 +1155,7 @@ namespace ZSS
             this.gbGridMode.Controls.Add(this.lblGridSize);
             this.gbGridMode.Controls.Add(this.lblGridSizeHeight);
             this.gbGridMode.Controls.Add(this.nudCropGridWidth);
-            this.gbGridMode.Location = new System.Drawing.Point(16, 232);
+            this.gbGridMode.Location = new System.Drawing.Point(16, 288);
             this.gbGridMode.Name = "gbGridMode";
             this.gbGridMode.Size = new System.Drawing.Size(376, 80);
             this.gbGridMode.TabIndex = 120;
@@ -1203,9 +1231,9 @@ namespace ZSS
             // 
             this.gbActiveHelp.Controls.Add(this.cbHelpToLanguage);
             this.gbActiveHelp.Controls.Add(this.chkGTActiveHelp);
-            this.gbActiveHelp.Location = new System.Drawing.Point(16, 320);
+            this.gbActiveHelp.Location = new System.Drawing.Point(16, 376);
             this.gbActiveHelp.Name = "gbActiveHelp";
-            this.gbActiveHelp.Size = new System.Drawing.Size(376, 56);
+            this.gbActiveHelp.Size = new System.Drawing.Size(376, 48);
             this.gbActiveHelp.TabIndex = 84;
             this.gbActiveHelp.TabStop = false;
             this.gbActiveHelp.Text = "Active Help";
@@ -1285,37 +1313,21 @@ namespace ZSS
             // gbMainOptions
             // 
             this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-            this.gbMainOptions.Controls.Add(this.nudtScreenshotDelay);
-            this.gbMainOptions.Controls.Add(this.cbPromptforUpload);
-            this.gbMainOptions.Controls.Add(this.lblCopytoClipboard);
-            this.gbMainOptions.Controls.Add(this.cboClipboardTextMode);
-            this.gbMainOptions.Controls.Add(this.chkManualNaming);
-            this.gbMainOptions.Controls.Add(this.cbShowCursor);
-            this.gbMainOptions.Controls.Add(this.lblScreenshotDestination);
-            this.gbMainOptions.Controls.Add(this.cboScreenshotDest);
+            this.gbMainOptions.Controls.Add(this.lblImageDest);
+            this.gbMainOptions.Controls.Add(this.lblTextDest);
+            this.gbMainOptions.Controls.Add(this.cboImagesDest);
+            this.gbMainOptions.Controls.Add(this.cboTextDest);
             this.gbMainOptions.Location = new System.Drawing.Point(16, 16);
             this.gbMainOptions.Name = "gbMainOptions";
-            this.gbMainOptions.Size = new System.Drawing.Size(376, 208);
+            this.gbMainOptions.Size = new System.Drawing.Size(376, 88);
             this.gbMainOptions.TabIndex = 79;
             this.gbMainOptions.TabStop = false;
-            this.gbMainOptions.Text = "General Settings";
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.gbMainOptions.Text = "Destinations";
             // 
             // cbPromptforUpload
             // 
             this.cbPromptforUpload.AutoSize = true;
-            this.cbPromptforUpload.Location = new System.Drawing.Point(24, 128);
+            this.cbPromptforUpload.Location = new System.Drawing.Point(24, 88);
             this.cbPromptforUpload.Name = "cbPromptforUpload";
             this.cbPromptforUpload.Size = new System.Drawing.Size(111, 17);
             this.cbPromptforUpload.TabIndex = 120;
@@ -1327,7 +1339,7 @@ namespace ZSS
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
-            this.lblCopytoClipboard.Location = new System.Drawing.Point(24, 60);
+            this.lblCopytoClipboard.Location = new System.Drawing.Point(24, 24);
             this.lblCopytoClipboard.Name = "lblCopytoClipboard";
             this.lblCopytoClipboard.Size = new System.Drawing.Size(93, 13);
             this.lblCopytoClipboard.TabIndex = 117;
@@ -1337,7 +1349,7 @@ namespace ZSS
             // 
             this.cboClipboardTextMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboClipboardTextMode.FormattingEnabled = true;
-            this.cboClipboardTextMode.Location = new System.Drawing.Point(128, 56);
+            this.cboClipboardTextMode.Location = new System.Drawing.Point(128, 20);
             this.cboClipboardTextMode.Name = "cboClipboardTextMode";
             this.cboClipboardTextMode.Size = new System.Drawing.Size(232, 21);
             this.cboClipboardTextMode.TabIndex = 116;
@@ -1347,7 +1359,7 @@ namespace ZSS
             // 
             this.chkManualNaming.AutoSize = true;
             this.chkManualNaming.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkManualNaming.Location = new System.Drawing.Point(24, 152);
+            this.chkManualNaming.Location = new System.Drawing.Point(24, 112);
             this.chkManualNaming.Name = "chkManualNaming";
             this.chkManualNaming.Size = new System.Drawing.Size(124, 17);
             this.chkManualNaming.TabIndex = 112;
@@ -1358,7 +1370,7 @@ namespace ZSS
             // cbShowCursor
             // 
             this.cbShowCursor.AutoSize = true;
-            this.cbShowCursor.Location = new System.Drawing.Point(24, 176);
+            this.cbShowCursor.Location = new System.Drawing.Point(24, 136);
             this.cbShowCursor.Name = "cbShowCursor";
             this.cbShowCursor.Size = new System.Drawing.Size(159, 17);
             this.cbShowCursor.TabIndex = 8;
@@ -1366,24 +1378,24 @@ namespace ZSS
             this.cbShowCursor.UseVisualStyleBackColor = true;
             this.cbShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
             // 
-            // lblScreenshotDestination
+            // lblImageDest
             // 
-            this.lblScreenshotDestination.AutoSize = true;
-            this.lblScreenshotDestination.Location = new System.Drawing.Point(24, 28);
-            this.lblScreenshotDestination.Name = "lblScreenshotDestination";
-            this.lblScreenshotDestination.Size = new System.Drawing.Size(95, 13);
-            this.lblScreenshotDestination.TabIndex = 1;
-            this.lblScreenshotDestination.Text = "Image Destination:";
+            this.lblImageDest.AutoSize = true;
+            this.lblImageDest.Location = new System.Drawing.Point(8, 28);
+            this.lblImageDest.Name = "lblImageDest";
+            this.lblImageDest.Size = new System.Drawing.Size(112, 13);
+            this.lblImageDest.TabIndex = 1;
+            this.lblImageDest.Text = "Screenshots/Pictures:\r\n";
             // 
-            // cboScreenshotDest
+            // cboImagesDest
             // 
-            this.cboScreenshotDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboScreenshotDest.FormattingEnabled = true;
-            this.cboScreenshotDest.Location = new System.Drawing.Point(128, 24);
-            this.cboScreenshotDest.Name = "cboScreenshotDest";
-            this.cboScreenshotDest.Size = new System.Drawing.Size(232, 21);
-            this.cboScreenshotDest.TabIndex = 0;
-            this.cboScreenshotDest.SelectedIndexChanged += new System.EventHandler(this.cboScreenshotDest_SelectedIndexChanged);
+            this.cboImagesDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboImagesDest.FormattingEnabled = true;
+            this.cboImagesDest.Location = new System.Drawing.Point(128, 24);
+            this.cboImagesDest.Name = "cboImagesDest";
+            this.cboImagesDest.Size = new System.Drawing.Size(232, 21);
+            this.cboImagesDest.TabIndex = 0;
+            this.cboImagesDest.SelectedIndexChanged += new System.EventHandler(this.cboScreenshotDest_SelectedIndexChanged);
             // 
             // lblLogo
             // 
@@ -1413,6 +1425,314 @@ namespace ZSS
             this.pbLogo.TabStop = false;
             this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
             this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
+            // 
+            // tpAccounts
+            // 
+            this.tpAccounts.Controls.Add(this.tcAccounts);
+            this.tpAccounts.ImageKey = "server_edit.png";
+            this.tpAccounts.Location = new System.Drawing.Point(4, 23);
+            this.tpAccounts.Name = "tpAccounts";
+            this.tpAccounts.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAccounts.Size = new System.Drawing.Size(780, 448);
+            this.tpAccounts.TabIndex = 12;
+            this.tpAccounts.Text = "Accounts";
+            this.tpAccounts.UseVisualStyleBackColor = true;
+            // 
+            // tcAccounts
+            // 
+            this.tcAccounts.Controls.Add(this.tpFTP);
+            this.tcAccounts.Controls.Add(this.tpTinyPic);
+            this.tcAccounts.Controls.Add(this.tpImageShack);
+            this.tcAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcAccounts.Location = new System.Drawing.Point(3, 3);
+            this.tcAccounts.Name = "tcAccounts";
+            this.tcAccounts.SelectedIndex = 0;
+            this.tcAccounts.Size = new System.Drawing.Size(774, 442);
+            this.tcAccounts.TabIndex = 0;
+            // 
+            // tpFTP
+            // 
+            this.tpFTP.Controls.Add(this.pgFTPSettings);
+            this.tpFTP.Controls.Add(this.lbFTPAccounts);
+            this.tpFTP.Controls.Add(this.gbFTPSettings);
+            this.tpFTP.Controls.Add(this.btnFTPAdd);
+            this.tpFTP.Controls.Add(this.btnFTPImport);
+            this.tpFTP.Controls.Add(this.btnFTPTest);
+            this.tpFTP.Controls.Add(this.btnFTPExport);
+            this.tpFTP.Controls.Add(this.btnFTPDelete);
+            this.tpFTP.ImageIndex = 4;
+            this.tpFTP.Location = new System.Drawing.Point(4, 22);
+            this.tpFTP.Name = "tpFTP";
+            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFTP.Size = new System.Drawing.Size(766, 416);
+            this.tpFTP.TabIndex = 3;
+            this.tpFTP.Text = "FTP";
+            this.tpFTP.UseVisualStyleBackColor = true;
+            // 
+            // pgFTPSettings
+            // 
+            this.pgFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFTPSettings.Location = new System.Drawing.Point(304, 40);
+            this.pgFTPSettings.Name = "pgFTPSettings";
+            this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgFTPSettings.Size = new System.Drawing.Size(456, 272);
+            this.pgFTPSettings.TabIndex = 116;
+            this.pgFTPSettings.ToolbarVisible = false;
+            this.pgFTPSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPSettings_PropertyValueChanged);
+            // 
+            // lbFTPAccounts
+            // 
+            this.lbFTPAccounts.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbFTPAccounts.FormattingEnabled = true;
+            this.lbFTPAccounts.IntegralHeight = false;
+            this.lbFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.lbFTPAccounts.Name = "lbFTPAccounts";
+            this.lbFTPAccounts.Size = new System.Drawing.Size(285, 410);
+            this.lbFTPAccounts.TabIndex = 40;
+            this.lbFTPAccounts.SelectedIndexChanged += new System.EventHandler(this.lbFTPAccounts_SelectedIndexChanged);
+            // 
+            // gbFTPSettings
+            // 
+            this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbFTPSettings.Controls.Add(this.cbAutoSwitchFTP);
+            this.gbFTPSettings.Controls.Add(this.chkEnableThumbnail);
+            this.gbFTPSettings.Location = new System.Drawing.Point(296, 320);
+            this.gbFTPSettings.Name = "gbFTPSettings";
+            this.gbFTPSettings.Size = new System.Drawing.Size(464, 88);
+            this.gbFTPSettings.TabIndex = 115;
+            this.gbFTPSettings.TabStop = false;
+            this.gbFTPSettings.Text = "FTP Settings";
+            // 
+            // cbAutoSwitchFTP
+            // 
+            this.cbAutoSwitchFTP.AutoSize = true;
+            this.cbAutoSwitchFTP.Location = new System.Drawing.Point(16, 48);
+            this.cbAutoSwitchFTP.Name = "cbAutoSwitchFTP";
+            this.cbAutoSwitchFTP.Size = new System.Drawing.Size(333, 17);
+            this.cbAutoSwitchFTP.TabIndex = 114;
+            this.cbAutoSwitchFTP.Text = "Automatically switch to FTP if a user drags or copies a non-Image";
+            this.cbAutoSwitchFTP.UseVisualStyleBackColor = true;
+            this.cbAutoSwitchFTP.CheckedChanged += new System.EventHandler(this.cbAutoSwitchFTP_CheckedChanged);
+            // 
+            // chkEnableThumbnail
+            // 
+            this.chkEnableThumbnail.AutoSize = true;
+            this.chkEnableThumbnail.BackColor = System.Drawing.Color.Transparent;
+            this.chkEnableThumbnail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkEnableThumbnail.Location = new System.Drawing.Point(16, 24);
+            this.chkEnableThumbnail.Name = "chkEnableThumbnail";
+            this.chkEnableThumbnail.Size = new System.Drawing.Size(105, 17);
+            this.chkEnableThumbnail.TabIndex = 113;
+            this.chkEnableThumbnail.Text = "Create thumbnail";
+            this.chkEnableThumbnail.UseVisualStyleBackColor = false;
+            this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
+            // 
+            // btnFTPAdd
+            // 
+            this.btnFTPAdd.BackColor = System.Drawing.Color.Transparent;
+            this.btnFTPAdd.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPAdd.Location = new System.Drawing.Point(304, 8);
+            this.btnFTPAdd.Name = "btnFTPAdd";
+            this.btnFTPAdd.Size = new System.Drawing.Size(64, 24);
+            this.btnFTPAdd.TabIndex = 14;
+            this.btnFTPAdd.Text = "Add";
+            this.btnFTPAdd.UseVisualStyleBackColor = false;
+            this.btnFTPAdd.Click += new System.EventHandler(this.btnAddAccount_Click);
+            // 
+            // btnFTPImport
+            // 
+            this.btnFTPImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPImport.Location = new System.Drawing.Point(520, 8);
+            this.btnFTPImport.Name = "btnFTPImport";
+            this.btnFTPImport.Size = new System.Drawing.Size(64, 24);
+            this.btnFTPImport.TabIndex = 39;
+            this.btnFTPImport.Text = "Import...";
+            this.btnFTPImport.UseVisualStyleBackColor = true;
+            this.btnFTPImport.Click += new System.EventHandler(this.btnAccsImport_Click);
+            // 
+            // btnFTPTest
+            // 
+            this.btnFTPTest.BackColor = System.Drawing.Color.Transparent;
+            this.btnFTPTest.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPTest.Location = new System.Drawing.Point(448, 8);
+            this.btnFTPTest.Name = "btnFTPTest";
+            this.btnFTPTest.Size = new System.Drawing.Size(64, 24);
+            this.btnFTPTest.TabIndex = 7;
+            this.btnFTPTest.Text = "Test";
+            this.btnFTPTest.UseVisualStyleBackColor = false;
+            this.btnFTPTest.Click += new System.EventHandler(this.btnTestConnection_Click);
+            // 
+            // btnFTPExport
+            // 
+            this.btnFTPExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPExport.Location = new System.Drawing.Point(592, 8);
+            this.btnFTPExport.Name = "btnFTPExport";
+            this.btnFTPExport.Size = new System.Drawing.Size(64, 24);
+            this.btnFTPExport.TabIndex = 38;
+            this.btnFTPExport.Text = "Export...";
+            this.btnFTPExport.UseVisualStyleBackColor = true;
+            this.btnFTPExport.Click += new System.EventHandler(this.btnExportAccounts_Click);
+            // 
+            // btnFTPDelete
+            // 
+            this.btnFTPDelete.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPDelete.Location = new System.Drawing.Point(376, 8);
+            this.btnFTPDelete.Name = "btnFTPDelete";
+            this.btnFTPDelete.Size = new System.Drawing.Size(64, 24);
+            this.btnFTPDelete.TabIndex = 12;
+            this.btnFTPDelete.Text = "Remove";
+            this.btnFTPDelete.UseVisualStyleBackColor = true;
+            this.btnFTPDelete.Click += new System.EventHandler(this.btnDeleteFTP_Click);
+            // 
+            // tpTinyPic
+            // 
+            this.tpTinyPic.Controls.Add(this.gbTinyPic);
+            this.tpTinyPic.Location = new System.Drawing.Point(4, 22);
+            this.tpTinyPic.Name = "tpTinyPic";
+            this.tpTinyPic.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTinyPic.Size = new System.Drawing.Size(766, 416);
+            this.tpTinyPic.TabIndex = 0;
+            this.tpTinyPic.Text = "TinyPic";
+            this.tpTinyPic.UseVisualStyleBackColor = true;
+            // 
+            // gbTinyPic
+            // 
+            this.gbTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbTinyPic.Controls.Add(this.btnGalleryTinyPic);
+            this.gbTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
+            this.gbTinyPic.Controls.Add(this.btnRegCodeTinyPic);
+            this.gbTinyPic.Controls.Add(this.lblRegistrationCode);
+            this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
+            this.gbTinyPic.Location = new System.Drawing.Point(8, 8);
+            this.gbTinyPic.Name = "gbTinyPic";
+            this.gbTinyPic.Size = new System.Drawing.Size(738, 88);
+            this.gbTinyPic.TabIndex = 4;
+            this.gbTinyPic.TabStop = false;
+            this.gbTinyPic.Text = "TinyPic";
+            // 
+            // btnGalleryTinyPic
+            // 
+            this.btnGalleryTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGalleryTinyPic.Location = new System.Drawing.Point(512, 24);
+            this.btnGalleryTinyPic.Name = "btnGalleryTinyPic";
+            this.btnGalleryTinyPic.Size = new System.Drawing.Size(75, 23);
+            this.btnGalleryTinyPic.TabIndex = 8;
+            this.btnGalleryTinyPic.Text = "&MyImages...";
+            this.btnGalleryTinyPic.UseVisualStyleBackColor = true;
+            this.btnGalleryTinyPic.Click += new System.EventHandler(this.btnGalleryTinyPic_Click);
+            // 
+            // chkRememberTinyPicUserPass
+            // 
+            this.chkRememberTinyPicUserPass.AutoSize = true;
+            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(16, 56);
+            this.chkRememberTinyPicUserPass.Name = "chkRememberTinyPicUserPass";
+            this.chkRememberTinyPicUserPass.Size = new System.Drawing.Size(241, 17);
+            this.chkRememberTinyPicUserPass.TabIndex = 6;
+            this.chkRememberTinyPicUserPass.Text = "Remember TinyPic User Name and Password";
+            this.chkRememberTinyPicUserPass.UseVisualStyleBackColor = true;
+            this.chkRememberTinyPicUserPass.CheckedChanged += new System.EventHandler(this.chkRememberTinyPicUserPass_CheckedChanged);
+            // 
+            // btnRegCodeTinyPic
+            // 
+            this.btnRegCodeTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRegCodeTinyPic.Location = new System.Drawing.Point(432, 24);
+            this.btnRegCodeTinyPic.Name = "btnRegCodeTinyPic";
+            this.btnRegCodeTinyPic.Size = new System.Drawing.Size(75, 23);
+            this.btnRegCodeTinyPic.TabIndex = 5;
+            this.btnRegCodeTinyPic.Text = "&RegCode...";
+            this.btnRegCodeTinyPic.UseVisualStyleBackColor = true;
+            this.btnRegCodeTinyPic.Click += new System.EventHandler(this.btnRegCodeTinyPic_Click);
+            // 
+            // lblRegistrationCode
+            // 
+            this.lblRegistrationCode.AutoSize = true;
+            this.lblRegistrationCode.Location = new System.Drawing.Point(8, 28);
+            this.lblRegistrationCode.Name = "lblRegistrationCode";
+            this.lblRegistrationCode.Size = new System.Drawing.Size(93, 13);
+            this.lblRegistrationCode.TabIndex = 4;
+            this.lblRegistrationCode.Text = "Registration code:";
+            // 
+            // txtTinyPicShuk
+            // 
+            this.txtTinyPicShuk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicShuk.Location = new System.Drawing.Point(112, 24);
+            this.txtTinyPicShuk.Name = "txtTinyPicShuk";
+            this.txtTinyPicShuk.Size = new System.Drawing.Size(312, 20);
+            this.txtTinyPicShuk.TabIndex = 3;
+            this.txtTinyPicShuk.TextChanged += new System.EventHandler(this.txtTinyPicShuk_TextChanged);
+            // 
+            // tpImageShack
+            // 
+            this.tpImageShack.Controls.Add(this.gbImageShack);
+            this.tpImageShack.Location = new System.Drawing.Point(4, 22);
+            this.tpImageShack.Name = "tpImageShack";
+            this.tpImageShack.Padding = new System.Windows.Forms.Padding(3);
+            this.tpImageShack.Size = new System.Drawing.Size(766, 416);
+            this.tpImageShack.TabIndex = 1;
+            this.tpImageShack.Text = "ImageShack";
+            this.tpImageShack.UseVisualStyleBackColor = true;
+            // 
+            // gbImageShack
+            // 
+            this.gbImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImageShack.BackColor = System.Drawing.Color.Transparent;
+            this.gbImageShack.Controls.Add(this.btnGalleryImageShack);
+            this.gbImageShack.Controls.Add(this.btnRegCodeImageShack);
+            this.gbImageShack.Controls.Add(this.lblImageShackRegistrationCode);
+            this.gbImageShack.Controls.Add(this.txtImageShackRegistrationCode);
+            this.gbImageShack.Location = new System.Drawing.Point(8, 8);
+            this.gbImageShack.Name = "gbImageShack";
+            this.gbImageShack.Size = new System.Drawing.Size(738, 64);
+            this.gbImageShack.TabIndex = 0;
+            this.gbImageShack.TabStop = false;
+            this.gbImageShack.Text = "ImageShack";
+            // 
+            // btnGalleryImageShack
+            // 
+            this.btnGalleryImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGalleryImageShack.Location = new System.Drawing.Point(512, 24);
+            this.btnGalleryImageShack.Name = "btnGalleryImageShack";
+            this.btnGalleryImageShack.Size = new System.Drawing.Size(75, 23);
+            this.btnGalleryImageShack.TabIndex = 3;
+            this.btnGalleryImageShack.Text = "&MyImages...";
+            this.btnGalleryImageShack.UseVisualStyleBackColor = true;
+            this.btnGalleryImageShack.Click += new System.EventHandler(this.btnGalleryImageShack_Click);
+            // 
+            // btnRegCodeImageShack
+            // 
+            this.btnRegCodeImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRegCodeImageShack.Location = new System.Drawing.Point(432, 24);
+            this.btnRegCodeImageShack.Name = "btnRegCodeImageShack";
+            this.btnRegCodeImageShack.Size = new System.Drawing.Size(75, 23);
+            this.btnRegCodeImageShack.TabIndex = 2;
+            this.btnRegCodeImageShack.Text = "&RegCode...";
+            this.btnRegCodeImageShack.UseVisualStyleBackColor = true;
+            this.btnRegCodeImageShack.Click += new System.EventHandler(this.btnRegCodeImageShack_Click);
+            // 
+            // lblImageShackRegistrationCode
+            // 
+            this.lblImageShackRegistrationCode.AutoSize = true;
+            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(8, 28);
+            this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
+            this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(93, 13);
+            this.lblImageShackRegistrationCode.TabIndex = 1;
+            this.lblImageShackRegistrationCode.Text = "Registration code:";
+            // 
+            // txtImageShackRegistrationCode
+            // 
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(112, 24);
+            this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
+            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(312, 20);
+            this.txtImageShackRegistrationCode.TabIndex = 0;
+            this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
             // 
             // tpHotkeys
             // 
@@ -1508,32 +1828,32 @@ namespace ZSS
             this.chHotkeys_Keys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.chHotkeys_Keys.Width = 250;
             // 
-            // tpCapture
+            // tpScreenshots
             // 
-            this.tpCapture.Controls.Add(this.tcFileSettings);
-            this.tpCapture.ImageIndex = 2;
-            this.tpCapture.Location = new System.Drawing.Point(4, 23);
-            this.tpCapture.Name = "tpCapture";
-            this.tpCapture.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCapture.Size = new System.Drawing.Size(780, 448);
-            this.tpCapture.TabIndex = 4;
-            this.tpCapture.Text = "Capture";
-            this.tpCapture.UseVisualStyleBackColor = true;
+            this.tpScreenshots.Controls.Add(this.tcScreenshots);
+            this.tpScreenshots.ImageIndex = 2;
+            this.tpScreenshots.Location = new System.Drawing.Point(4, 23);
+            this.tpScreenshots.Name = "tpScreenshots";
+            this.tpScreenshots.Padding = new System.Windows.Forms.Padding(3);
+            this.tpScreenshots.Size = new System.Drawing.Size(780, 448);
+            this.tpScreenshots.TabIndex = 4;
+            this.tpScreenshots.Text = "Screenshots";
+            this.tpScreenshots.UseVisualStyleBackColor = true;
             // 
-            // tcFileSettings
+            // tcScreenshots
             // 
-            this.tcFileSettings.Controls.Add(this.tpCropShot);
-            this.tcFileSettings.Controls.Add(this.tpSelectedWindow);
-            this.tcFileSettings.Controls.Add(this.tpInteraction);
-            this.tcFileSettings.Controls.Add(this.tpFileNaming);
-            this.tcFileSettings.Controls.Add(this.tpCaptureQuality);
-            this.tcFileSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcFileSettings.ImageList = this.ilApp;
-            this.tcFileSettings.Location = new System.Drawing.Point(3, 3);
-            this.tcFileSettings.Name = "tcFileSettings";
-            this.tcFileSettings.SelectedIndex = 0;
-            this.tcFileSettings.Size = new System.Drawing.Size(774, 442);
-            this.tcFileSettings.TabIndex = 77;
+            this.tcScreenshots.Controls.Add(this.tpCropShot);
+            this.tcScreenshots.Controls.Add(this.tpSelectedWindow);
+            this.tcScreenshots.Controls.Add(this.tpWatermark);
+            this.tcScreenshots.Controls.Add(this.tpFileNaming);
+            this.tcScreenshots.Controls.Add(this.tpCaptureQuality);
+            this.tcScreenshots.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcScreenshots.ImageList = this.ilApp;
+            this.tcScreenshots.Location = new System.Drawing.Point(3, 3);
+            this.tcScreenshots.Name = "tcScreenshots";
+            this.tcScreenshots.SelectedIndex = 0;
+            this.tcScreenshots.Size = new System.Drawing.Size(774, 442);
+            this.tcScreenshots.TabIndex = 77;
             // 
             // tpCropShot
             // 
@@ -2138,155 +2458,519 @@ namespace ZSS
             this.pbSelectedWindowBorderColor.TabStop = false;
             this.pbSelectedWindowBorderColor.Click += new System.EventHandler(this.pbSelectedWindowBorderColor_Click);
             // 
-            // tpInteraction
+            // tpWatermark
             // 
-            this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
-            this.tpInteraction.Controls.Add(this.gbDropBox);
-            this.tpInteraction.Controls.Add(this.gbAppearance);
-            this.tpInteraction.Location = new System.Drawing.Point(4, 23);
-            this.tpInteraction.Name = "tpInteraction";
-            this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInteraction.Size = new System.Drawing.Size(766, 415);
-            this.tpInteraction.TabIndex = 5;
-            this.tpInteraction.Text = "Interaction";
-            this.tpInteraction.UseVisualStyleBackColor = true;
+            this.tpWatermark.Controls.Add(this.pbWatermarkShow);
+            this.tpWatermark.Controls.Add(this.gbWatermarkGeneral);
+            this.tpWatermark.Controls.Add(this.tcWatermark);
+            this.tpWatermark.ImageIndex = 8;
+            this.tpWatermark.Location = new System.Drawing.Point(4, 23);
+            this.tpWatermark.Name = "tpWatermark";
+            this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWatermark.Size = new System.Drawing.Size(766, 415);
+            this.tpWatermark.TabIndex = 11;
+            this.tpWatermark.Text = "Watermark";
+            this.tpWatermark.UseVisualStyleBackColor = true;
             // 
-            // gbActionsToolbarSettings
+            // pbWatermarkShow
             // 
-            this.gbActionsToolbarSettings.Controls.Add(this.cbCloseQuickActions);
-            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 264);
-            this.gbActionsToolbarSettings.Name = "gbActionsToolbarSettings";
-            this.gbActionsToolbarSettings.Size = new System.Drawing.Size(752, 56);
-            this.gbActionsToolbarSettings.TabIndex = 7;
-            this.gbActionsToolbarSettings.TabStop = false;
-            this.gbActionsToolbarSettings.Text = "Actions Toolbar Settings";
+            this.pbWatermarkShow.BackColor = System.Drawing.Color.White;
+            this.pbWatermarkShow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbWatermarkShow.Location = new System.Drawing.Point(8, 184);
+            this.pbWatermarkShow.Name = "pbWatermarkShow";
+            this.pbWatermarkShow.Size = new System.Drawing.Size(320, 248);
+            this.pbWatermarkShow.TabIndex = 13;
+            this.pbWatermarkShow.TabStop = false;
             // 
-            // cbCloseQuickActions
+            // gbWatermarkGeneral
             // 
-            this.cbCloseQuickActions.AutoSize = true;
-            this.cbCloseQuickActions.Location = new System.Drawing.Point(16, 24);
-            this.cbCloseQuickActions.Name = "cbCloseQuickActions";
-            this.cbCloseQuickActions.Size = new System.Drawing.Size(214, 17);
-            this.cbCloseQuickActions.TabIndex = 0;
-            this.cbCloseQuickActions.Text = "Close Actions Toolbar after Mouse Click";
-            this.cbCloseQuickActions.UseVisualStyleBackColor = true;
-            this.cbCloseQuickActions.CheckedChanged += new System.EventHandler(this.cbCloseQuickActions_CheckedChanged);
+            this.gbWatermarkGeneral.Controls.Add(this.cboWatermarkType);
+            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAutoHide);
+            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAddReflection);
+            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkType);
+            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkPosition);
+            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkPosition);
+            this.gbWatermarkGeneral.Controls.Add(this.nudWatermarkOffset);
+            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffset);
+            this.gbWatermarkGeneral.Location = new System.Drawing.Point(8, 8);
+            this.gbWatermarkGeneral.Name = "gbWatermarkGeneral";
+            this.gbWatermarkGeneral.Size = new System.Drawing.Size(320, 168);
+            this.gbWatermarkGeneral.TabIndex = 26;
+            this.gbWatermarkGeneral.TabStop = false;
+            this.gbWatermarkGeneral.Text = "Watermark Settings";
             // 
-            // gbDropBox
+            // cboWatermarkType
             // 
-            this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 200);
-            this.gbDropBox.Name = "gbDropBox";
-            this.gbDropBox.Size = new System.Drawing.Size(752, 56);
-            this.gbDropBox.TabIndex = 6;
-            this.gbDropBox.TabStop = false;
-            this.gbDropBox.Text = "Drop Window Settings";
+            this.cboWatermarkType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboWatermarkType.FormattingEnabled = true;
+            this.cboWatermarkType.Location = new System.Drawing.Point(72, 19);
+            this.cboWatermarkType.Name = "cboWatermarkType";
+            this.cboWatermarkType.Size = new System.Drawing.Size(120, 21);
+            this.cboWatermarkType.TabIndex = 33;
+            this.cboWatermarkType.SelectedIndexChanged += new System.EventHandler(this.cboWatermarkType_SelectedIndexChanged);
             // 
-            // cbCloseDropBox
+            // cbWatermarkAutoHide
             // 
-            this.cbCloseDropBox.AutoSize = true;
-            this.cbCloseDropBox.Location = new System.Drawing.Point(16, 24);
-            this.cbCloseDropBox.Name = "cbCloseDropBox";
-            this.cbCloseDropBox.Size = new System.Drawing.Size(205, 17);
-            this.cbCloseDropBox.TabIndex = 0;
-            this.cbCloseDropBox.Text = "Close Drop Window after Drag n Drop";
-            this.cbCloseDropBox.UseVisualStyleBackColor = true;
-            this.cbCloseDropBox.CheckedChanged += new System.EventHandler(this.cbCloseDropBox_CheckedChanged);
+            this.cbWatermarkAutoHide.AutoSize = true;
+            this.cbWatermarkAutoHide.Location = new System.Drawing.Point(16, 136);
+            this.cbWatermarkAutoHide.Name = "cbWatermarkAutoHide";
+            this.cbWatermarkAutoHide.Size = new System.Drawing.Size(188, 17);
+            this.cbWatermarkAutoHide.TabIndex = 32;
+            this.cbWatermarkAutoHide.Text = "Hide Watermark if Image is smaller";
+            this.cbWatermarkAutoHide.UseVisualStyleBackColor = true;
+            this.cbWatermarkAutoHide.CheckedChanged += new System.EventHandler(this.cbWatermarkAutoHide_CheckedChanged);
             // 
-            // gbAppearance
+            // cbWatermarkAddReflection
             // 
-            this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.gbAppearance.Controls.Add(this.cbCompleteSound);
-            this.gbAppearance.Controls.Add(this.chkCaptureFallback);
-            this.gbAppearance.Controls.Add(this.cbShowUploadDuration);
-            this.gbAppearance.Controls.Add(this.chkBalloonTipOpenLink);
-            this.gbAppearance.Controls.Add(this.cbShowPopup);
-            this.gbAppearance.Controls.Add(this.lblTrayFlash);
-            this.gbAppearance.Controls.Add(this.nudFlashIconCount);
-            this.gbAppearance.Location = new System.Drawing.Point(8, 8);
-            this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(752, 184);
-            this.gbAppearance.TabIndex = 5;
-            this.gbAppearance.TabStop = false;
-            this.gbAppearance.Text = "After taking a Screenshot";
+            this.cbWatermarkAddReflection.AutoSize = true;
+            this.cbWatermarkAddReflection.Location = new System.Drawing.Point(16, 112);
+            this.cbWatermarkAddReflection.Name = "cbWatermarkAddReflection";
+            this.cbWatermarkAddReflection.Size = new System.Drawing.Size(96, 17);
+            this.cbWatermarkAddReflection.TabIndex = 24;
+            this.cbWatermarkAddReflection.Text = "Add Reflection";
+            this.cbWatermarkAddReflection.UseVisualStyleBackColor = true;
+            this.cbWatermarkAddReflection.CheckedChanged += new System.EventHandler(this.cbWatermarkAddReflection_CheckedChanged);
             // 
-            // cbCompleteSound
+            // lblWatermarkType
             // 
-            this.cbCompleteSound.AutoSize = true;
-            this.cbCompleteSound.Location = new System.Drawing.Point(16, 152);
-            this.cbCompleteSound.Name = "cbCompleteSound";
-            this.cbCompleteSound.Size = new System.Drawing.Size(228, 17);
-            this.cbCompleteSound.TabIndex = 5;
-            this.cbCompleteSound.Text = "Play sound after image reaches destination";
-            this.cbCompleteSound.UseVisualStyleBackColor = true;
-            this.cbCompleteSound.CheckedChanged += new System.EventHandler(this.cbCompleteSound_CheckedChanged);
+            this.lblWatermarkType.AutoSize = true;
+            this.lblWatermarkType.Location = new System.Drawing.Point(16, 24);
+            this.lblWatermarkType.Name = "lblWatermarkType";
+            this.lblWatermarkType.Size = new System.Drawing.Size(34, 13);
+            this.lblWatermarkType.TabIndex = 31;
+            this.lblWatermarkType.Text = "Type:";
             // 
-            // chkCaptureFallback
+            // cbWatermarkPosition
             // 
-            this.chkCaptureFallback.AutoSize = true;
-            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 56);
-            this.chkCaptureFallback.Name = "chkCaptureFallback";
-            this.chkCaptureFallback.Size = new System.Drawing.Size(302, 17);
-            this.chkCaptureFallback.TabIndex = 7;
-            this.chkCaptureFallback.Text = "Capture entire screen if active window capture or crop fails";
-            this.chkCaptureFallback.UseVisualStyleBackColor = true;
-            this.chkCaptureFallback.CheckedChanged += new System.EventHandler(this.chkCaptureFallback_CheckedChanged);
+            this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbWatermarkPosition.FormattingEnabled = true;
+            this.cbWatermarkPosition.Location = new System.Drawing.Point(72, 48);
+            this.cbWatermarkPosition.Name = "cbWatermarkPosition";
+            this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
+            this.cbWatermarkPosition.TabIndex = 18;
+            this.cbWatermarkPosition.SelectedIndexChanged += new System.EventHandler(this.cbWatermarkPosition_SelectedIndexChanged);
             // 
-            // cbShowUploadDuration
+            // lblWatermarkPosition
             // 
-            this.cbShowUploadDuration.AutoSize = true;
-            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 128);
-            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
-            this.cbShowUploadDuration.Size = new System.Drawing.Size(196, 17);
-            this.cbShowUploadDuration.TabIndex = 8;
-            this.cbShowUploadDuration.Text = "Show upload duration in Balloon Tip";
-            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
-            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
+            this.lblWatermarkPosition.AutoSize = true;
+            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 56);
+            this.lblWatermarkPosition.Name = "lblWatermarkPosition";
+            this.lblWatermarkPosition.Size = new System.Drawing.Size(47, 13);
+            this.lblWatermarkPosition.TabIndex = 19;
+            this.lblWatermarkPosition.Text = "Position:";
             // 
-            // chkBalloonTipOpenLink
+            // nudWatermarkOffset
             // 
-            this.chkBalloonTipOpenLink.AutoSize = true;
-            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 104);
-            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
-            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(250, 17);
-            this.chkBalloonTipOpenLink.TabIndex = 6;
-            this.chkBalloonTipOpenLink.Text = "Open screenshot URL/File on Balloon Tip Click";
-            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
-            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
+            this.nudWatermarkOffset.Location = new System.Drawing.Point(72, 80);
+            this.nudWatermarkOffset.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.nudWatermarkOffset.Name = "nudWatermarkOffset";
+            this.nudWatermarkOffset.Size = new System.Drawing.Size(64, 20);
+            this.nudWatermarkOffset.TabIndex = 6;
+            this.nudWatermarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudWatermarkOffset.ValueChanged += new System.EventHandler(this.nudWatermarkOffset_ValueChanged);
             // 
-            // cbShowPopup
+            // lblWatermarkOffset
             // 
-            this.cbShowPopup.AutoSize = true;
-            this.cbShowPopup.Location = new System.Drawing.Point(16, 80);
-            this.cbShowPopup.Name = "cbShowPopup";
-            this.cbShowPopup.Size = new System.Drawing.Size(230, 17);
-            this.cbShowPopup.TabIndex = 5;
-            this.cbShowPopup.Text = "Show Balloon Tip after upload is completed";
-            this.cbShowPopup.UseVisualStyleBackColor = true;
-            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
+            this.lblWatermarkOffset.AutoSize = true;
+            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 84);
+            this.lblWatermarkOffset.Name = "lblWatermarkOffset";
+            this.lblWatermarkOffset.Size = new System.Drawing.Size(38, 13);
+            this.lblWatermarkOffset.TabIndex = 5;
+            this.lblWatermarkOffset.Text = "Offset:";
             // 
-            // lblTrayFlash
+            // tcWatermark
             // 
-            this.lblTrayFlash.AutoSize = true;
-            this.lblTrayFlash.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTrayFlash.Location = new System.Drawing.Point(14, 26);
-            this.lblTrayFlash.Name = "lblTrayFlash";
-            this.lblTrayFlash.Size = new System.Drawing.Size(315, 13);
-            this.lblTrayFlash.TabIndex = 3;
-            this.lblTrayFlash.Text = "Number of times tray icon should flash after an upload is complete";
+            this.tcWatermark.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcWatermark.Controls.Add(this.tpWatermarkText);
+            this.tcWatermark.Controls.Add(this.tpWatermarkImage);
+            this.tcWatermark.ImageList = this.ilApp;
+            this.tcWatermark.Location = new System.Drawing.Point(336, 8);
+            this.tcWatermark.Name = "tcWatermark";
+            this.tcWatermark.SelectedIndex = 0;
+            this.tcWatermark.Size = new System.Drawing.Size(434, 391);
+            this.tcWatermark.TabIndex = 29;
             // 
-            // nudFlashIconCount
+            // tpWatermarkText
             // 
-            this.nudFlashIconCount.Location = new System.Drawing.Point(336, 24);
-            this.nudFlashIconCount.Maximum = new decimal(new int[] {
+            this.tpWatermarkText.Controls.Add(this.gbWatermarkBackground);
+            this.tpWatermarkText.Controls.Add(this.gbWatermarkText);
+            this.tpWatermarkText.ImageKey = "textfield_rename.png";
+            this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
+            this.tpWatermarkText.Name = "tpWatermarkText";
+            this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWatermarkText.Size = new System.Drawing.Size(426, 364);
+            this.tpWatermarkText.TabIndex = 0;
+            this.tpWatermarkText.Text = "Text";
+            this.tpWatermarkText.UseVisualStyleBackColor = true;
+            // 
+            // gbWatermarkBackground
+            // 
+            this.gbWatermarkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbWatermarkBackground.Controls.Add(this.trackWatermarkBackgroundTrans);
+            this.gbWatermarkBackground.Controls.Add(this.cbWatermarkGradientType);
+            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkGradientType);
+            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkCornerRadiusTip);
+            this.gbWatermarkBackground.Controls.Add(this.nudWatermarkBackTrans);
+            this.gbWatermarkBackground.Controls.Add(this.nudWatermarkCornerRadius);
+            this.gbWatermarkBackground.Controls.Add(this.lblRectangleCornerRadius);
+            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColorsTip);
+            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackTrans);
+            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient1);
+            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkBorderColor);
+            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient2);
+            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
+            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 136);
+            this.gbWatermarkBackground.Name = "gbWatermarkBackground";
+            this.gbWatermarkBackground.Size = new System.Drawing.Size(405, 160);
+            this.gbWatermarkBackground.TabIndex = 25;
+            this.gbWatermarkBackground.TabStop = false;
+            this.gbWatermarkBackground.Text = "Text Background Settings";
+            // 
+            // trackWatermarkBackgroundTrans
+            // 
+            this.trackWatermarkBackgroundTrans.AutoSize = false;
+            this.trackWatermarkBackgroundTrans.BackColor = System.Drawing.SystemColors.Window;
+            this.trackWatermarkBackgroundTrans.Location = new System.Drawing.Point(144, 80);
+            this.trackWatermarkBackgroundTrans.Maximum = 255;
+            this.trackWatermarkBackgroundTrans.Name = "trackWatermarkBackgroundTrans";
+            this.trackWatermarkBackgroundTrans.Size = new System.Drawing.Size(200, 24);
+            this.trackWatermarkBackgroundTrans.TabIndex = 31;
+            this.trackWatermarkBackgroundTrans.Tag = "Adjust Background Transparency. 0 = Invisible. ";
+            this.trackWatermarkBackgroundTrans.TickFrequency = 5;
+            this.trackWatermarkBackgroundTrans.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackWatermarkBackgroundTrans.Scroll += new System.EventHandler(this.trackWatermarkBackgroundTrans_Scroll);
+            // 
+            // cbWatermarkGradientType
+            // 
+            this.cbWatermarkGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbWatermarkGradientType.FormattingEnabled = true;
+            this.cbWatermarkGradientType.Location = new System.Drawing.Point(88, 120);
+            this.cbWatermarkGradientType.Name = "cbWatermarkGradientType";
+            this.cbWatermarkGradientType.Size = new System.Drawing.Size(121, 21);
+            this.cbWatermarkGradientType.TabIndex = 25;
+            this.cbWatermarkGradientType.SelectedIndexChanged += new System.EventHandler(this.cbWatermarkGradientType_SelectedIndexChanged);
+            // 
+            // lblWatermarkGradientType
+            // 
+            this.lblWatermarkGradientType.AutoSize = true;
+            this.lblWatermarkGradientType.Location = new System.Drawing.Point(8, 128);
+            this.lblWatermarkGradientType.Name = "lblWatermarkGradientType";
+            this.lblWatermarkGradientType.Size = new System.Drawing.Size(73, 13);
+            this.lblWatermarkGradientType.TabIndex = 24;
+            this.lblWatermarkGradientType.Text = "Gradient type:";
+            // 
+            // lblWatermarkCornerRadiusTip
+            // 
+            this.lblWatermarkCornerRadiusTip.AutoSize = true;
+            this.lblWatermarkCornerRadiusTip.Location = new System.Drawing.Point(200, 24);
+            this.lblWatermarkCornerRadiusTip.Name = "lblWatermarkCornerRadiusTip";
+            this.lblWatermarkCornerRadiusTip.Size = new System.Drawing.Size(146, 13);
+            this.lblWatermarkCornerRadiusTip.TabIndex = 23;
+            this.lblWatermarkCornerRadiusTip.Text = "(0 - 10) 0 = Normal Rectangle";
+            // 
+            // nudWatermarkBackTrans
+            // 
+            this.nudWatermarkBackTrans.BackColor = System.Drawing.SystemColors.Window;
+            this.nudWatermarkBackTrans.Location = new System.Drawing.Point(352, 80);
+            this.nudWatermarkBackTrans.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nudWatermarkBackTrans.Name = "nudWatermarkBackTrans";
+            this.nudWatermarkBackTrans.ReadOnly = true;
+            this.nudWatermarkBackTrans.Size = new System.Drawing.Size(48, 20);
+            this.nudWatermarkBackTrans.TabIndex = 8;
+            this.nudWatermarkBackTrans.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudWatermarkBackTrans.ValueChanged += new System.EventHandler(this.nudWatermarkBackTrans_ValueChanged);
+            // 
+            // nudWatermarkCornerRadius
+            // 
+            this.nudWatermarkCornerRadius.Location = new System.Drawing.Point(144, 16);
+            this.nudWatermarkCornerRadius.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nudFlashIconCount.Name = "nudFlashIconCount";
-            this.nudFlashIconCount.Size = new System.Drawing.Size(58, 20);
-            this.nudFlashIconCount.TabIndex = 4;
-            this.nudFlashIconCount.ValueChanged += new System.EventHandler(this.nudFlashIconCount_ValueChanged);
+            this.nudWatermarkCornerRadius.Name = "nudWatermarkCornerRadius";
+            this.nudWatermarkCornerRadius.Size = new System.Drawing.Size(48, 20);
+            this.nudWatermarkCornerRadius.TabIndex = 22;
+            this.nudWatermarkCornerRadius.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudWatermarkCornerRadius.ValueChanged += new System.EventHandler(this.nudWatermarkCornerRadius_ValueChanged);
+            // 
+            // lblRectangleCornerRadius
+            // 
+            this.lblRectangleCornerRadius.AutoSize = true;
+            this.lblRectangleCornerRadius.Location = new System.Drawing.Point(8, 24);
+            this.lblRectangleCornerRadius.Name = "lblRectangleCornerRadius";
+            this.lblRectangleCornerRadius.Size = new System.Drawing.Size(123, 13);
+            this.lblRectangleCornerRadius.TabIndex = 21;
+            this.lblRectangleCornerRadius.Text = "Rectangle corner radius:";
+            // 
+            // lblWatermarkBackColorsTip
+            // 
+            this.lblWatermarkBackColorsTip.AutoSize = true;
+            this.lblWatermarkBackColorsTip.Location = new System.Drawing.Point(208, 56);
+            this.lblWatermarkBackColorsTip.Name = "lblWatermarkBackColorsTip";
+            this.lblWatermarkBackColorsTip.Size = new System.Drawing.Size(195, 13);
+            this.lblWatermarkBackColorsTip.TabIndex = 20;
+            this.lblWatermarkBackColorsTip.Text = "1 && 2 = Gradient colors, 3 = Border color";
+            // 
+            // lblWatermarkBackTrans
+            // 
+            this.lblWatermarkBackTrans.AutoSize = true;
+            this.lblWatermarkBackTrans.Location = new System.Drawing.Point(8, 88);
+            this.lblWatermarkBackTrans.Name = "lblWatermarkBackTrans";
+            this.lblWatermarkBackTrans.Size = new System.Drawing.Size(136, 13);
+            this.lblWatermarkBackTrans.TabIndex = 7;
+            this.lblWatermarkBackTrans.Text = "Background Transparency:";
+            // 
+            // pbWatermarkGradient1
+            // 
+            this.pbWatermarkGradient1.BackColor = System.Drawing.Color.White;
+            this.pbWatermarkGradient1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbWatermarkGradient1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbWatermarkGradient1.Location = new System.Drawing.Point(112, 48);
+            this.pbWatermarkGradient1.Name = "pbWatermarkGradient1";
+            this.pbWatermarkGradient1.Size = new System.Drawing.Size(24, 24);
+            this.pbWatermarkGradient1.TabIndex = 10;
+            this.pbWatermarkGradient1.TabStop = false;
+            this.pbWatermarkGradient1.Click += new System.EventHandler(this.pbWatermarkGradient1_Click);
+            // 
+            // pbWatermarkBorderColor
+            // 
+            this.pbWatermarkBorderColor.BackColor = System.Drawing.Color.Black;
+            this.pbWatermarkBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbWatermarkBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbWatermarkBorderColor.Location = new System.Drawing.Point(176, 48);
+            this.pbWatermarkBorderColor.Name = "pbWatermarkBorderColor";
+            this.pbWatermarkBorderColor.Size = new System.Drawing.Size(24, 24);
+            this.pbWatermarkBorderColor.TabIndex = 14;
+            this.pbWatermarkBorderColor.TabStop = false;
+            this.pbWatermarkBorderColor.Click += new System.EventHandler(this.pbWatermarkBorderColor_Click);
+            // 
+            // pbWatermarkGradient2
+            // 
+            this.pbWatermarkGradient2.BackColor = System.Drawing.Color.Gray;
+            this.pbWatermarkGradient2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbWatermarkGradient2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbWatermarkGradient2.Location = new System.Drawing.Point(144, 48);
+            this.pbWatermarkGradient2.Name = "pbWatermarkGradient2";
+            this.pbWatermarkGradient2.Size = new System.Drawing.Size(24, 24);
+            this.pbWatermarkGradient2.TabIndex = 11;
+            this.pbWatermarkGradient2.TabStop = false;
+            this.pbWatermarkGradient2.Click += new System.EventHandler(this.pbWatermarkGradient2_Click);
+            // 
+            // lblWatermarkBackColors
+            // 
+            this.lblWatermarkBackColors.AutoSize = true;
+            this.lblWatermarkBackColors.Location = new System.Drawing.Point(8, 56);
+            this.lblWatermarkBackColors.Name = "lblWatermarkBackColors";
+            this.lblWatermarkBackColors.Size = new System.Drawing.Size(99, 13);
+            this.lblWatermarkBackColors.TabIndex = 12;
+            this.lblWatermarkBackColors.Text = "Background colors:";
+            // 
+            // gbWatermarkText
+            // 
+            this.gbWatermarkText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbWatermarkText.Controls.Add(this.trackWatermarkFontTrans);
+            this.gbWatermarkText.Controls.Add(this.lblWatermarkTextTip);
+            this.gbWatermarkText.Controls.Add(this.lblWatermarkText);
+            this.gbWatermarkText.Controls.Add(this.nudWatermarkFontTrans);
+            this.gbWatermarkText.Controls.Add(this.lblWatermarkFont);
+            this.gbWatermarkText.Controls.Add(this.btnWatermarkFont);
+            this.gbWatermarkText.Controls.Add(this.lblWatermarkFontTrans);
+            this.gbWatermarkText.Controls.Add(this.txtWatermarkText);
+            this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
+            this.gbWatermarkText.Location = new System.Drawing.Point(8, 8);
+            this.gbWatermarkText.Name = "gbWatermarkText";
+            this.gbWatermarkText.Size = new System.Drawing.Size(405, 120);
+            this.gbWatermarkText.TabIndex = 24;
+            this.gbWatermarkText.TabStop = false;
+            this.gbWatermarkText.Text = "Text Settings";
+            // 
+            // trackWatermarkFontTrans
+            // 
+            this.trackWatermarkFontTrans.AutoSize = false;
+            this.trackWatermarkFontTrans.BackColor = System.Drawing.SystemColors.Window;
+            this.trackWatermarkFontTrans.Location = new System.Drawing.Point(144, 80);
+            this.trackWatermarkFontTrans.Maximum = 255;
+            this.trackWatermarkFontTrans.Name = "trackWatermarkFontTrans";
+            this.trackWatermarkFontTrans.Size = new System.Drawing.Size(200, 24);
+            this.trackWatermarkFontTrans.TabIndex = 30;
+            this.trackWatermarkFontTrans.Tag = "Adjust Font Transparency. 0 = Invisible. ";
+            this.trackWatermarkFontTrans.TickFrequency = 5;
+            this.trackWatermarkFontTrans.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackWatermarkFontTrans.Scroll += new System.EventHandler(this.trackWatermarkFontTrans_Scroll);
+            // 
+            // lblWatermarkTextTip
+            // 
+            this.lblWatermarkTextTip.AutoSize = true;
+            this.lblWatermarkTextTip.Location = new System.Drawing.Point(312, 24);
+            this.lblWatermarkTextTip.Name = "lblWatermarkTextTip";
+            this.lblWatermarkTextTip.Size = new System.Drawing.Size(95, 13);
+            this.lblWatermarkTextTip.TabIndex = 24;
+            this.lblWatermarkTextTip.Text = "\\n = New line char";
+            // 
+            // lblWatermarkText
+            // 
+            this.lblWatermarkText.AutoSize = true;
+            this.lblWatermarkText.Location = new System.Drawing.Point(8, 24);
+            this.lblWatermarkText.Name = "lblWatermarkText";
+            this.lblWatermarkText.Size = new System.Drawing.Size(86, 13);
+            this.lblWatermarkText.TabIndex = 16;
+            this.lblWatermarkText.Text = "Watermark Text:";
+            // 
+            // nudWatermarkFontTrans
+            // 
+            this.nudWatermarkFontTrans.BackColor = System.Drawing.SystemColors.Window;
+            this.nudWatermarkFontTrans.Location = new System.Drawing.Point(352, 80);
+            this.nudWatermarkFontTrans.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nudWatermarkFontTrans.Name = "nudWatermarkFontTrans";
+            this.nudWatermarkFontTrans.ReadOnly = true;
+            this.nudWatermarkFontTrans.Size = new System.Drawing.Size(48, 20);
+            this.nudWatermarkFontTrans.TabIndex = 22;
+            this.nudWatermarkFontTrans.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudWatermarkFontTrans.ValueChanged += new System.EventHandler(this.nudWatermarkFontTrans_ValueChanged);
+            // 
+            // lblWatermarkFont
+            // 
+            this.lblWatermarkFont.AutoSize = true;
+            this.lblWatermarkFont.Location = new System.Drawing.Point(136, 56);
+            this.lblWatermarkFont.Name = "lblWatermarkFont";
+            this.lblWatermarkFont.Size = new System.Drawing.Size(83, 13);
+            this.lblWatermarkFont.TabIndex = 4;
+            this.lblWatermarkFont.Text = "Font Information";
+            // 
+            // btnWatermarkFont
+            // 
+            this.btnWatermarkFont.Location = new System.Drawing.Point(8, 48);
+            this.btnWatermarkFont.Name = "btnWatermarkFont";
+            this.btnWatermarkFont.Size = new System.Drawing.Size(88, 24);
+            this.btnWatermarkFont.TabIndex = 3;
+            this.btnWatermarkFont.Text = "Change Font...";
+            this.btnWatermarkFont.UseVisualStyleBackColor = true;
+            this.btnWatermarkFont.Click += new System.EventHandler(this.btnWatermarkFont_Click);
+            // 
+            // lblWatermarkFontTrans
+            // 
+            this.lblWatermarkFontTrans.AutoSize = true;
+            this.lblWatermarkFontTrans.Location = new System.Drawing.Point(8, 88);
+            this.lblWatermarkFontTrans.Name = "lblWatermarkFontTrans";
+            this.lblWatermarkFontTrans.Size = new System.Drawing.Size(99, 13);
+            this.lblWatermarkFontTrans.TabIndex = 21;
+            this.lblWatermarkFontTrans.Text = "Font Transparency:";
+            // 
+            // txtWatermarkText
+            // 
+            this.txtWatermarkText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtWatermarkText.Location = new System.Drawing.Point(104, 16);
+            this.txtWatermarkText.Name = "txtWatermarkText";
+            this.txtWatermarkText.Size = new System.Drawing.Size(200, 20);
+            this.txtWatermarkText.TabIndex = 15;
+            this.txtWatermarkText.TextChanged += new System.EventHandler(this.txtWatermarkText_TextChanged);
+            this.txtWatermarkText.Leave += new System.EventHandler(this.txtWatermarkText_Leave);
+            this.txtWatermarkText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txtWatermarkText_MouseDown);
+            // 
+            // pbWatermarkFontColor
+            // 
+            this.pbWatermarkFontColor.BackColor = System.Drawing.Color.Black;
+            this.pbWatermarkFontColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbWatermarkFontColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbWatermarkFontColor.Location = new System.Drawing.Point(104, 48);
+            this.pbWatermarkFontColor.Name = "pbWatermarkFontColor";
+            this.pbWatermarkFontColor.Size = new System.Drawing.Size(24, 24);
+            this.pbWatermarkFontColor.TabIndex = 17;
+            this.pbWatermarkFontColor.TabStop = false;
+            this.pbWatermarkFontColor.Click += new System.EventHandler(this.pbWatermarkFontColor_Click);
+            // 
+            // tpWatermarkImage
+            // 
+            this.tpWatermarkImage.Controls.Add(this.lblWatermarkImageScale);
+            this.tpWatermarkImage.Controls.Add(this.nudWatermarkImageScale);
+            this.tpWatermarkImage.Controls.Add(this.cbWatermarkUseBorder);
+            this.tpWatermarkImage.Controls.Add(this.btwWatermarkBrowseImage);
+            this.tpWatermarkImage.Controls.Add(this.txtWatermarkImageLocation);
+            this.tpWatermarkImage.ImageKey = "image_edit.png";
+            this.tpWatermarkImage.Location = new System.Drawing.Point(4, 23);
+            this.tpWatermarkImage.Name = "tpWatermarkImage";
+            this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(426, 364);
+            this.tpWatermarkImage.TabIndex = 1;
+            this.tpWatermarkImage.Text = "Image";
+            this.tpWatermarkImage.UseVisualStyleBackColor = true;
+            // 
+            // lblWatermarkImageScale
+            // 
+            this.lblWatermarkImageScale.AutoSize = true;
+            this.lblWatermarkImageScale.Location = new System.Drawing.Point(16, 76);
+            this.lblWatermarkImageScale.Name = "lblWatermarkImageScale";
+            this.lblWatermarkImageScale.Size = new System.Drawing.Size(117, 13);
+            this.lblWatermarkImageScale.TabIndex = 25;
+            this.lblWatermarkImageScale.Text = "Image size percentage:";
+            // 
+            // nudWatermarkImageScale
+            // 
+            this.nudWatermarkImageScale.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudWatermarkImageScale.Location = new System.Drawing.Point(136, 72);
+            this.nudWatermarkImageScale.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.nudWatermarkImageScale.Name = "nudWatermarkImageScale";
+            this.nudWatermarkImageScale.Size = new System.Drawing.Size(56, 20);
+            this.nudWatermarkImageScale.TabIndex = 24;
+            this.nudWatermarkImageScale.ValueChanged += new System.EventHandler(this.nudWatermarkImageScale_ValueChanged);
+            // 
+            // cbWatermarkUseBorder
+            // 
+            this.cbWatermarkUseBorder.AutoSize = true;
+            this.cbWatermarkUseBorder.Location = new System.Drawing.Point(16, 48);
+            this.cbWatermarkUseBorder.Name = "cbWatermarkUseBorder";
+            this.cbWatermarkUseBorder.Size = new System.Drawing.Size(79, 17);
+            this.cbWatermarkUseBorder.TabIndex = 23;
+            this.cbWatermarkUseBorder.Text = "Add Border";
+            this.cbWatermarkUseBorder.UseVisualStyleBackColor = true;
+            this.cbWatermarkUseBorder.CheckedChanged += new System.EventHandler(this.cbWatermarkUseBorder_CheckedChanged);
+            // 
+            // btwWatermarkBrowseImage
+            // 
+            this.btwWatermarkBrowseImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(363, 13);
+            this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
+            this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
+            this.btwWatermarkBrowseImage.TabIndex = 22;
+            this.btwWatermarkBrowseImage.Tag = "Browse for a Watermark Image";
+            this.btwWatermarkBrowseImage.Text = "Browse...";
+            this.btwWatermarkBrowseImage.UseVisualStyleBackColor = true;
+            this.btwWatermarkBrowseImage.Click += new System.EventHandler(this.btwWatermarkBrowseImage_Click);
+            // 
+            // txtWatermarkImageLocation
+            // 
+            this.txtWatermarkImageLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(16, 16);
+            this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
+            this.txtWatermarkImageLocation.Size = new System.Drawing.Size(339, 20);
+            this.txtWatermarkImageLocation.TabIndex = 21;
+            this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
             // 
             // tpFileNaming
             // 
@@ -2761,520 +3445,6 @@ namespace ZSS
             this.lblSwitchTo.TabIndex = 92;
             this.lblSwitchTo.Text = "Switch to:";
             // 
-            // tpWatermark
-            // 
-            this.tpWatermark.Controls.Add(this.pbWatermarkShow);
-            this.tpWatermark.Controls.Add(this.gbWatermarkGeneral);
-            this.tpWatermark.Controls.Add(this.tcWatermark);
-            this.tpWatermark.ImageIndex = 8;
-            this.tpWatermark.Location = new System.Drawing.Point(4, 23);
-            this.tpWatermark.Name = "tpWatermark";
-            this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermark.Size = new System.Drawing.Size(780, 448);
-            this.tpWatermark.TabIndex = 11;
-            this.tpWatermark.Text = "Watermark";
-            this.tpWatermark.UseVisualStyleBackColor = true;
-            // 
-            // pbWatermarkShow
-            // 
-            this.pbWatermarkShow.BackColor = System.Drawing.Color.White;
-            this.pbWatermarkShow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbWatermarkShow.Location = new System.Drawing.Point(8, 184);
-            this.pbWatermarkShow.Name = "pbWatermarkShow";
-            this.pbWatermarkShow.Size = new System.Drawing.Size(320, 248);
-            this.pbWatermarkShow.TabIndex = 13;
-            this.pbWatermarkShow.TabStop = false;
-            // 
-            // gbWatermarkGeneral
-            // 
-            this.gbWatermarkGeneral.Controls.Add(this.cboWatermarkType);
-            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAutoHide);
-            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAddReflection);
-            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkType);
-            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkPosition);
-            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkPosition);
-            this.gbWatermarkGeneral.Controls.Add(this.nudWatermarkOffset);
-            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffset);
-            this.gbWatermarkGeneral.Location = new System.Drawing.Point(8, 8);
-            this.gbWatermarkGeneral.Name = "gbWatermarkGeneral";
-            this.gbWatermarkGeneral.Size = new System.Drawing.Size(320, 168);
-            this.gbWatermarkGeneral.TabIndex = 26;
-            this.gbWatermarkGeneral.TabStop = false;
-            this.gbWatermarkGeneral.Text = "Watermark Settings";
-            // 
-            // cboWatermarkType
-            // 
-            this.cboWatermarkType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboWatermarkType.FormattingEnabled = true;
-            this.cboWatermarkType.Location = new System.Drawing.Point(72, 19);
-            this.cboWatermarkType.Name = "cboWatermarkType";
-            this.cboWatermarkType.Size = new System.Drawing.Size(120, 21);
-            this.cboWatermarkType.TabIndex = 33;
-            this.cboWatermarkType.SelectedIndexChanged += new System.EventHandler(this.cboWatermarkType_SelectedIndexChanged);
-            // 
-            // cbWatermarkAutoHide
-            // 
-            this.cbWatermarkAutoHide.AutoSize = true;
-            this.cbWatermarkAutoHide.Location = new System.Drawing.Point(16, 136);
-            this.cbWatermarkAutoHide.Name = "cbWatermarkAutoHide";
-            this.cbWatermarkAutoHide.Size = new System.Drawing.Size(188, 17);
-            this.cbWatermarkAutoHide.TabIndex = 32;
-            this.cbWatermarkAutoHide.Text = "Hide Watermark if Image is smaller";
-            this.cbWatermarkAutoHide.UseVisualStyleBackColor = true;
-            this.cbWatermarkAutoHide.CheckedChanged += new System.EventHandler(this.cbWatermarkAutoHide_CheckedChanged);
-            // 
-            // cbWatermarkAddReflection
-            // 
-            this.cbWatermarkAddReflection.AutoSize = true;
-            this.cbWatermarkAddReflection.Location = new System.Drawing.Point(16, 112);
-            this.cbWatermarkAddReflection.Name = "cbWatermarkAddReflection";
-            this.cbWatermarkAddReflection.Size = new System.Drawing.Size(96, 17);
-            this.cbWatermarkAddReflection.TabIndex = 24;
-            this.cbWatermarkAddReflection.Text = "Add Reflection";
-            this.cbWatermarkAddReflection.UseVisualStyleBackColor = true;
-            this.cbWatermarkAddReflection.CheckedChanged += new System.EventHandler(this.cbWatermarkAddReflection_CheckedChanged);
-            // 
-            // lblWatermarkType
-            // 
-            this.lblWatermarkType.AutoSize = true;
-            this.lblWatermarkType.Location = new System.Drawing.Point(16, 24);
-            this.lblWatermarkType.Name = "lblWatermarkType";
-            this.lblWatermarkType.Size = new System.Drawing.Size(34, 13);
-            this.lblWatermarkType.TabIndex = 31;
-            this.lblWatermarkType.Text = "Type:";
-            // 
-            // cbWatermarkPosition
-            // 
-            this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(72, 48);
-            this.cbWatermarkPosition.Name = "cbWatermarkPosition";
-            this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
-            this.cbWatermarkPosition.TabIndex = 18;
-            this.cbWatermarkPosition.SelectedIndexChanged += new System.EventHandler(this.cbWatermarkPosition_SelectedIndexChanged);
-            // 
-            // lblWatermarkPosition
-            // 
-            this.lblWatermarkPosition.AutoSize = true;
-            this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 56);
-            this.lblWatermarkPosition.Name = "lblWatermarkPosition";
-            this.lblWatermarkPosition.Size = new System.Drawing.Size(47, 13);
-            this.lblWatermarkPosition.TabIndex = 19;
-            this.lblWatermarkPosition.Text = "Position:";
-            // 
-            // nudWatermarkOffset
-            // 
-            this.nudWatermarkOffset.Location = new System.Drawing.Point(72, 80);
-            this.nudWatermarkOffset.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.nudWatermarkOffset.Name = "nudWatermarkOffset";
-            this.nudWatermarkOffset.Size = new System.Drawing.Size(64, 20);
-            this.nudWatermarkOffset.TabIndex = 6;
-            this.nudWatermarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudWatermarkOffset.ValueChanged += new System.EventHandler(this.nudWatermarkOffset_ValueChanged);
-            // 
-            // lblWatermarkOffset
-            // 
-            this.lblWatermarkOffset.AutoSize = true;
-            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 84);
-            this.lblWatermarkOffset.Name = "lblWatermarkOffset";
-            this.lblWatermarkOffset.Size = new System.Drawing.Size(38, 13);
-            this.lblWatermarkOffset.TabIndex = 5;
-            this.lblWatermarkOffset.Text = "Offset:";
-            // 
-            // tcWatermark
-            // 
-            this.tcWatermark.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcWatermark.Controls.Add(this.tpWatermarkText);
-            this.tcWatermark.Controls.Add(this.tpWatermarkImage);
-            this.tcWatermark.ImageList = this.ilApp;
-            this.tcWatermark.Location = new System.Drawing.Point(336, 8);
-            this.tcWatermark.Name = "tcWatermark";
-            this.tcWatermark.SelectedIndex = 0;
-            this.tcWatermark.Size = new System.Drawing.Size(448, 424);
-            this.tcWatermark.TabIndex = 29;
-            // 
-            // tpWatermarkText
-            // 
-            this.tpWatermarkText.Controls.Add(this.gbWatermarkBackground);
-            this.tpWatermarkText.Controls.Add(this.gbWatermarkText);
-            this.tpWatermarkText.ImageKey = "textfield_rename.png";
-            this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
-            this.tpWatermarkText.Name = "tpWatermarkText";
-            this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(440, 397);
-            this.tpWatermarkText.TabIndex = 0;
-            this.tpWatermarkText.Text = "Text";
-            this.tpWatermarkText.UseVisualStyleBackColor = true;
-            // 
-            // gbWatermarkBackground
-            // 
-            this.gbWatermarkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbWatermarkBackground.Controls.Add(this.trackWatermarkBackgroundTrans);
-            this.gbWatermarkBackground.Controls.Add(this.cbWatermarkGradientType);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkGradientType);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkCornerRadiusTip);
-            this.gbWatermarkBackground.Controls.Add(this.nudWatermarkBackTrans);
-            this.gbWatermarkBackground.Controls.Add(this.nudWatermarkCornerRadius);
-            this.gbWatermarkBackground.Controls.Add(this.lblRectangleCornerRadius);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColorsTip);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackTrans);
-            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient1);
-            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkBorderColor);
-            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient2);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
-            this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 136);
-            this.gbWatermarkBackground.Name = "gbWatermarkBackground";
-            this.gbWatermarkBackground.Size = new System.Drawing.Size(419, 160);
-            this.gbWatermarkBackground.TabIndex = 25;
-            this.gbWatermarkBackground.TabStop = false;
-            this.gbWatermarkBackground.Text = "Text Background Settings";
-            // 
-            // trackWatermarkBackgroundTrans
-            // 
-            this.trackWatermarkBackgroundTrans.AutoSize = false;
-            this.trackWatermarkBackgroundTrans.BackColor = System.Drawing.SystemColors.Window;
-            this.trackWatermarkBackgroundTrans.Location = new System.Drawing.Point(144, 80);
-            this.trackWatermarkBackgroundTrans.Maximum = 255;
-            this.trackWatermarkBackgroundTrans.Name = "trackWatermarkBackgroundTrans";
-            this.trackWatermarkBackgroundTrans.Size = new System.Drawing.Size(200, 24);
-            this.trackWatermarkBackgroundTrans.TabIndex = 31;
-            this.trackWatermarkBackgroundTrans.Tag = "Adjust Background Transparency. 0 = Invisible. ";
-            this.trackWatermarkBackgroundTrans.TickFrequency = 5;
-            this.trackWatermarkBackgroundTrans.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackWatermarkBackgroundTrans.Scroll += new System.EventHandler(this.trackWatermarkBackgroundTrans_Scroll);
-            // 
-            // cbWatermarkGradientType
-            // 
-            this.cbWatermarkGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbWatermarkGradientType.FormattingEnabled = true;
-            this.cbWatermarkGradientType.Location = new System.Drawing.Point(88, 120);
-            this.cbWatermarkGradientType.Name = "cbWatermarkGradientType";
-            this.cbWatermarkGradientType.Size = new System.Drawing.Size(121, 21);
-            this.cbWatermarkGradientType.TabIndex = 25;
-            this.cbWatermarkGradientType.SelectedIndexChanged += new System.EventHandler(this.cbWatermarkGradientType_SelectedIndexChanged);
-            // 
-            // lblWatermarkGradientType
-            // 
-            this.lblWatermarkGradientType.AutoSize = true;
-            this.lblWatermarkGradientType.Location = new System.Drawing.Point(8, 128);
-            this.lblWatermarkGradientType.Name = "lblWatermarkGradientType";
-            this.lblWatermarkGradientType.Size = new System.Drawing.Size(73, 13);
-            this.lblWatermarkGradientType.TabIndex = 24;
-            this.lblWatermarkGradientType.Text = "Gradient type:";
-            // 
-            // lblWatermarkCornerRadiusTip
-            // 
-            this.lblWatermarkCornerRadiusTip.AutoSize = true;
-            this.lblWatermarkCornerRadiusTip.Location = new System.Drawing.Point(200, 24);
-            this.lblWatermarkCornerRadiusTip.Name = "lblWatermarkCornerRadiusTip";
-            this.lblWatermarkCornerRadiusTip.Size = new System.Drawing.Size(146, 13);
-            this.lblWatermarkCornerRadiusTip.TabIndex = 23;
-            this.lblWatermarkCornerRadiusTip.Text = "(0 - 10) 0 = Normal Rectangle";
-            // 
-            // nudWatermarkBackTrans
-            // 
-            this.nudWatermarkBackTrans.BackColor = System.Drawing.SystemColors.Window;
-            this.nudWatermarkBackTrans.Location = new System.Drawing.Point(352, 80);
-            this.nudWatermarkBackTrans.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nudWatermarkBackTrans.Name = "nudWatermarkBackTrans";
-            this.nudWatermarkBackTrans.ReadOnly = true;
-            this.nudWatermarkBackTrans.Size = new System.Drawing.Size(48, 20);
-            this.nudWatermarkBackTrans.TabIndex = 8;
-            this.nudWatermarkBackTrans.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudWatermarkBackTrans.ValueChanged += new System.EventHandler(this.nudWatermarkBackTrans_ValueChanged);
-            // 
-            // nudWatermarkCornerRadius
-            // 
-            this.nudWatermarkCornerRadius.Location = new System.Drawing.Point(144, 16);
-            this.nudWatermarkCornerRadius.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudWatermarkCornerRadius.Name = "nudWatermarkCornerRadius";
-            this.nudWatermarkCornerRadius.Size = new System.Drawing.Size(48, 20);
-            this.nudWatermarkCornerRadius.TabIndex = 22;
-            this.nudWatermarkCornerRadius.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudWatermarkCornerRadius.ValueChanged += new System.EventHandler(this.nudWatermarkCornerRadius_ValueChanged);
-            // 
-            // lblRectangleCornerRadius
-            // 
-            this.lblRectangleCornerRadius.AutoSize = true;
-            this.lblRectangleCornerRadius.Location = new System.Drawing.Point(8, 24);
-            this.lblRectangleCornerRadius.Name = "lblRectangleCornerRadius";
-            this.lblRectangleCornerRadius.Size = new System.Drawing.Size(123, 13);
-            this.lblRectangleCornerRadius.TabIndex = 21;
-            this.lblRectangleCornerRadius.Text = "Rectangle corner radius:";
-            // 
-            // lblWatermarkBackColorsTip
-            // 
-            this.lblWatermarkBackColorsTip.AutoSize = true;
-            this.lblWatermarkBackColorsTip.Location = new System.Drawing.Point(208, 56);
-            this.lblWatermarkBackColorsTip.Name = "lblWatermarkBackColorsTip";
-            this.lblWatermarkBackColorsTip.Size = new System.Drawing.Size(195, 13);
-            this.lblWatermarkBackColorsTip.TabIndex = 20;
-            this.lblWatermarkBackColorsTip.Text = "1 && 2 = Gradient colors, 3 = Border color";
-            // 
-            // lblWatermarkBackTrans
-            // 
-            this.lblWatermarkBackTrans.AutoSize = true;
-            this.lblWatermarkBackTrans.Location = new System.Drawing.Point(8, 88);
-            this.lblWatermarkBackTrans.Name = "lblWatermarkBackTrans";
-            this.lblWatermarkBackTrans.Size = new System.Drawing.Size(136, 13);
-            this.lblWatermarkBackTrans.TabIndex = 7;
-            this.lblWatermarkBackTrans.Text = "Background Transparency:";
-            // 
-            // pbWatermarkGradient1
-            // 
-            this.pbWatermarkGradient1.BackColor = System.Drawing.Color.White;
-            this.pbWatermarkGradient1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbWatermarkGradient1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkGradient1.Location = new System.Drawing.Point(112, 48);
-            this.pbWatermarkGradient1.Name = "pbWatermarkGradient1";
-            this.pbWatermarkGradient1.Size = new System.Drawing.Size(24, 24);
-            this.pbWatermarkGradient1.TabIndex = 10;
-            this.pbWatermarkGradient1.TabStop = false;
-            this.pbWatermarkGradient1.Click += new System.EventHandler(this.pbWatermarkGradient1_Click);
-            // 
-            // pbWatermarkBorderColor
-            // 
-            this.pbWatermarkBorderColor.BackColor = System.Drawing.Color.Black;
-            this.pbWatermarkBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbWatermarkBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkBorderColor.Location = new System.Drawing.Point(176, 48);
-            this.pbWatermarkBorderColor.Name = "pbWatermarkBorderColor";
-            this.pbWatermarkBorderColor.Size = new System.Drawing.Size(24, 24);
-            this.pbWatermarkBorderColor.TabIndex = 14;
-            this.pbWatermarkBorderColor.TabStop = false;
-            this.pbWatermarkBorderColor.Click += new System.EventHandler(this.pbWatermarkBorderColor_Click);
-            // 
-            // pbWatermarkGradient2
-            // 
-            this.pbWatermarkGradient2.BackColor = System.Drawing.Color.Gray;
-            this.pbWatermarkGradient2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbWatermarkGradient2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkGradient2.Location = new System.Drawing.Point(144, 48);
-            this.pbWatermarkGradient2.Name = "pbWatermarkGradient2";
-            this.pbWatermarkGradient2.Size = new System.Drawing.Size(24, 24);
-            this.pbWatermarkGradient2.TabIndex = 11;
-            this.pbWatermarkGradient2.TabStop = false;
-            this.pbWatermarkGradient2.Click += new System.EventHandler(this.pbWatermarkGradient2_Click);
-            // 
-            // lblWatermarkBackColors
-            // 
-            this.lblWatermarkBackColors.AutoSize = true;
-            this.lblWatermarkBackColors.Location = new System.Drawing.Point(8, 56);
-            this.lblWatermarkBackColors.Name = "lblWatermarkBackColors";
-            this.lblWatermarkBackColors.Size = new System.Drawing.Size(99, 13);
-            this.lblWatermarkBackColors.TabIndex = 12;
-            this.lblWatermarkBackColors.Text = "Background colors:";
-            // 
-            // gbWatermarkText
-            // 
-            this.gbWatermarkText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbWatermarkText.Controls.Add(this.trackWatermarkFontTrans);
-            this.gbWatermarkText.Controls.Add(this.lblWatermarkTextTip);
-            this.gbWatermarkText.Controls.Add(this.lblWatermarkText);
-            this.gbWatermarkText.Controls.Add(this.nudWatermarkFontTrans);
-            this.gbWatermarkText.Controls.Add(this.lblWatermarkFont);
-            this.gbWatermarkText.Controls.Add(this.btnWatermarkFont);
-            this.gbWatermarkText.Controls.Add(this.lblWatermarkFontTrans);
-            this.gbWatermarkText.Controls.Add(this.txtWatermarkText);
-            this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
-            this.gbWatermarkText.Location = new System.Drawing.Point(8, 8);
-            this.gbWatermarkText.Name = "gbWatermarkText";
-            this.gbWatermarkText.Size = new System.Drawing.Size(419, 120);
-            this.gbWatermarkText.TabIndex = 24;
-            this.gbWatermarkText.TabStop = false;
-            this.gbWatermarkText.Text = "Text Settings";
-            // 
-            // trackWatermarkFontTrans
-            // 
-            this.trackWatermarkFontTrans.AutoSize = false;
-            this.trackWatermarkFontTrans.BackColor = System.Drawing.SystemColors.Window;
-            this.trackWatermarkFontTrans.Location = new System.Drawing.Point(144, 80);
-            this.trackWatermarkFontTrans.Maximum = 255;
-            this.trackWatermarkFontTrans.Name = "trackWatermarkFontTrans";
-            this.trackWatermarkFontTrans.Size = new System.Drawing.Size(200, 24);
-            this.trackWatermarkFontTrans.TabIndex = 30;
-            this.trackWatermarkFontTrans.Tag = "Adjust Font Transparency. 0 = Invisible. ";
-            this.trackWatermarkFontTrans.TickFrequency = 5;
-            this.trackWatermarkFontTrans.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackWatermarkFontTrans.Scroll += new System.EventHandler(this.trackWatermarkFontTrans_Scroll);
-            // 
-            // lblWatermarkTextTip
-            // 
-            this.lblWatermarkTextTip.AutoSize = true;
-            this.lblWatermarkTextTip.Location = new System.Drawing.Point(312, 24);
-            this.lblWatermarkTextTip.Name = "lblWatermarkTextTip";
-            this.lblWatermarkTextTip.Size = new System.Drawing.Size(95, 13);
-            this.lblWatermarkTextTip.TabIndex = 24;
-            this.lblWatermarkTextTip.Text = "\\n = New line char";
-            // 
-            // lblWatermarkText
-            // 
-            this.lblWatermarkText.AutoSize = true;
-            this.lblWatermarkText.Location = new System.Drawing.Point(8, 24);
-            this.lblWatermarkText.Name = "lblWatermarkText";
-            this.lblWatermarkText.Size = new System.Drawing.Size(86, 13);
-            this.lblWatermarkText.TabIndex = 16;
-            this.lblWatermarkText.Text = "Watermark Text:";
-            // 
-            // nudWatermarkFontTrans
-            // 
-            this.nudWatermarkFontTrans.BackColor = System.Drawing.SystemColors.Window;
-            this.nudWatermarkFontTrans.Location = new System.Drawing.Point(352, 80);
-            this.nudWatermarkFontTrans.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nudWatermarkFontTrans.Name = "nudWatermarkFontTrans";
-            this.nudWatermarkFontTrans.ReadOnly = true;
-            this.nudWatermarkFontTrans.Size = new System.Drawing.Size(48, 20);
-            this.nudWatermarkFontTrans.TabIndex = 22;
-            this.nudWatermarkFontTrans.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudWatermarkFontTrans.ValueChanged += new System.EventHandler(this.nudWatermarkFontTrans_ValueChanged);
-            // 
-            // lblWatermarkFont
-            // 
-            this.lblWatermarkFont.AutoSize = true;
-            this.lblWatermarkFont.Location = new System.Drawing.Point(136, 56);
-            this.lblWatermarkFont.Name = "lblWatermarkFont";
-            this.lblWatermarkFont.Size = new System.Drawing.Size(83, 13);
-            this.lblWatermarkFont.TabIndex = 4;
-            this.lblWatermarkFont.Text = "Font Information";
-            // 
-            // btnWatermarkFont
-            // 
-            this.btnWatermarkFont.Location = new System.Drawing.Point(8, 48);
-            this.btnWatermarkFont.Name = "btnWatermarkFont";
-            this.btnWatermarkFont.Size = new System.Drawing.Size(88, 24);
-            this.btnWatermarkFont.TabIndex = 3;
-            this.btnWatermarkFont.Text = "Change Font...";
-            this.btnWatermarkFont.UseVisualStyleBackColor = true;
-            this.btnWatermarkFont.Click += new System.EventHandler(this.btnWatermarkFont_Click);
-            // 
-            // lblWatermarkFontTrans
-            // 
-            this.lblWatermarkFontTrans.AutoSize = true;
-            this.lblWatermarkFontTrans.Location = new System.Drawing.Point(8, 88);
-            this.lblWatermarkFontTrans.Name = "lblWatermarkFontTrans";
-            this.lblWatermarkFontTrans.Size = new System.Drawing.Size(99, 13);
-            this.lblWatermarkFontTrans.TabIndex = 21;
-            this.lblWatermarkFontTrans.Text = "Font Transparency:";
-            // 
-            // txtWatermarkText
-            // 
-            this.txtWatermarkText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtWatermarkText.Location = new System.Drawing.Point(104, 16);
-            this.txtWatermarkText.Name = "txtWatermarkText";
-            this.txtWatermarkText.Size = new System.Drawing.Size(200, 20);
-            this.txtWatermarkText.TabIndex = 15;
-            this.txtWatermarkText.TextChanged += new System.EventHandler(this.txtWatermarkText_TextChanged);
-            this.txtWatermarkText.Leave += new System.EventHandler(this.txtWatermarkText_Leave);
-            this.txtWatermarkText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txtWatermarkText_MouseDown);
-            // 
-            // pbWatermarkFontColor
-            // 
-            this.pbWatermarkFontColor.BackColor = System.Drawing.Color.Black;
-            this.pbWatermarkFontColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbWatermarkFontColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkFontColor.Location = new System.Drawing.Point(104, 48);
-            this.pbWatermarkFontColor.Name = "pbWatermarkFontColor";
-            this.pbWatermarkFontColor.Size = new System.Drawing.Size(24, 24);
-            this.pbWatermarkFontColor.TabIndex = 17;
-            this.pbWatermarkFontColor.TabStop = false;
-            this.pbWatermarkFontColor.Click += new System.EventHandler(this.pbWatermarkFontColor_Click);
-            // 
-            // tpWatermarkImage
-            // 
-            this.tpWatermarkImage.Controls.Add(this.lblWatermarkImageScale);
-            this.tpWatermarkImage.Controls.Add(this.nudWatermarkImageScale);
-            this.tpWatermarkImage.Controls.Add(this.cbWatermarkUseBorder);
-            this.tpWatermarkImage.Controls.Add(this.btwWatermarkBrowseImage);
-            this.tpWatermarkImage.Controls.Add(this.txtWatermarkImageLocation);
-            this.tpWatermarkImage.ImageKey = "image_edit.png";
-            this.tpWatermarkImage.Location = new System.Drawing.Point(4, 23);
-            this.tpWatermarkImage.Name = "tpWatermarkImage";
-            this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkImage.Size = new System.Drawing.Size(440, 397);
-            this.tpWatermarkImage.TabIndex = 1;
-            this.tpWatermarkImage.Text = "Image";
-            this.tpWatermarkImage.UseVisualStyleBackColor = true;
-            // 
-            // lblWatermarkImageScale
-            // 
-            this.lblWatermarkImageScale.AutoSize = true;
-            this.lblWatermarkImageScale.Location = new System.Drawing.Point(16, 76);
-            this.lblWatermarkImageScale.Name = "lblWatermarkImageScale";
-            this.lblWatermarkImageScale.Size = new System.Drawing.Size(117, 13);
-            this.lblWatermarkImageScale.TabIndex = 25;
-            this.lblWatermarkImageScale.Text = "Image size percentage:";
-            // 
-            // nudWatermarkImageScale
-            // 
-            this.nudWatermarkImageScale.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudWatermarkImageScale.Location = new System.Drawing.Point(136, 72);
-            this.nudWatermarkImageScale.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.nudWatermarkImageScale.Name = "nudWatermarkImageScale";
-            this.nudWatermarkImageScale.Size = new System.Drawing.Size(56, 20);
-            this.nudWatermarkImageScale.TabIndex = 24;
-            this.nudWatermarkImageScale.ValueChanged += new System.EventHandler(this.nudWatermarkImageScale_ValueChanged);
-            // 
-            // cbWatermarkUseBorder
-            // 
-            this.cbWatermarkUseBorder.AutoSize = true;
-            this.cbWatermarkUseBorder.Location = new System.Drawing.Point(16, 48);
-            this.cbWatermarkUseBorder.Name = "cbWatermarkUseBorder";
-            this.cbWatermarkUseBorder.Size = new System.Drawing.Size(79, 17);
-            this.cbWatermarkUseBorder.TabIndex = 23;
-            this.cbWatermarkUseBorder.Text = "Add Border";
-            this.cbWatermarkUseBorder.UseVisualStyleBackColor = true;
-            this.cbWatermarkUseBorder.CheckedChanged += new System.EventHandler(this.cbWatermarkUseBorder_CheckedChanged);
-            // 
-            // btwWatermarkBrowseImage
-            // 
-            this.btwWatermarkBrowseImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btwWatermarkBrowseImage.Location = new System.Drawing.Point(363, 13);
-            this.btwWatermarkBrowseImage.Name = "btwWatermarkBrowseImage";
-            this.btwWatermarkBrowseImage.Size = new System.Drawing.Size(64, 24);
-            this.btwWatermarkBrowseImage.TabIndex = 22;
-            this.btwWatermarkBrowseImage.Tag = "Browse for a Watermark Image";
-            this.btwWatermarkBrowseImage.Text = "Browse...";
-            this.btwWatermarkBrowseImage.UseVisualStyleBackColor = true;
-            this.btwWatermarkBrowseImage.Click += new System.EventHandler(this.btwWatermarkBrowseImage_Click);
-            // 
-            // txtWatermarkImageLocation
-            // 
-            this.txtWatermarkImageLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWatermarkImageLocation.Location = new System.Drawing.Point(16, 16);
-            this.txtWatermarkImageLocation.Name = "txtWatermarkImageLocation";
-            this.txtWatermarkImageLocation.Size = new System.Drawing.Size(339, 20);
-            this.txtWatermarkImageLocation.TabIndex = 21;
-            this.txtWatermarkImageLocation.TextChanged += new System.EventHandler(this.txtWatermarkImageLocation_TextChanged);
-            // 
             // tpEditors
             // 
             this.tpEditors.Controls.Add(this.tcEditors);
@@ -3372,174 +3542,33 @@ namespace ZSS
             this.btnAddImageSoftware.UseVisualStyleBackColor = false;
             this.btnAddImageSoftware.Click += new System.EventHandler(this.btnAddImageSoftware_Click);
             // 
-            // tpFTP
+            // tpImages
             // 
-            this.tpFTP.Controls.Add(this.pgFTPSettings);
-            this.tpFTP.Controls.Add(this.lbFTPAccounts);
-            this.tpFTP.Controls.Add(this.gbFTPSettings);
-            this.tpFTP.Controls.Add(this.btnFTPAdd);
-            this.tpFTP.Controls.Add(this.btnFTPImport);
-            this.tpFTP.Controls.Add(this.btnFTPTest);
-            this.tpFTP.Controls.Add(this.btnFTPExport);
-            this.tpFTP.Controls.Add(this.btnFTPDelete);
-            this.tpFTP.ImageIndex = 4;
-            this.tpFTP.Location = new System.Drawing.Point(4, 23);
-            this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(780, 448);
-            this.tpFTP.TabIndex = 3;
-            this.tpFTP.Text = "FTP";
-            this.tpFTP.UseVisualStyleBackColor = true;
+            this.tpImages.Controls.Add(this.tcImages);
+            this.tpImages.ImageIndex = 5;
+            this.tpImages.Location = new System.Drawing.Point(4, 23);
+            this.tpImages.Name = "tpImages";
+            this.tpImages.Padding = new System.Windows.Forms.Padding(3);
+            this.tpImages.Size = new System.Drawing.Size(780, 448);
+            this.tpImages.TabIndex = 10;
+            this.tpImages.Text = "Images";
+            this.tpImages.UseVisualStyleBackColor = true;
             // 
-            // pgFTPSettings
+            // tcImages
             // 
-            this.pgFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgFTPSettings.Location = new System.Drawing.Point(304, 40);
-            this.pgFTPSettings.Name = "pgFTPSettings";
-            this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(464, 304);
-            this.pgFTPSettings.TabIndex = 116;
-            this.pgFTPSettings.ToolbarVisible = false;
-            this.pgFTPSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPSettings_PropertyValueChanged);
-            // 
-            // lbFTPAccounts
-            // 
-            this.lbFTPAccounts.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lbFTPAccounts.FormattingEnabled = true;
-            this.lbFTPAccounts.IntegralHeight = false;
-            this.lbFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.lbFTPAccounts.Name = "lbFTPAccounts";
-            this.lbFTPAccounts.Size = new System.Drawing.Size(285, 442);
-            this.lbFTPAccounts.TabIndex = 40;
-            this.lbFTPAccounts.SelectedIndexChanged += new System.EventHandler(this.lbFTPAccounts_SelectedIndexChanged);
-            // 
-            // gbFTPSettings
-            // 
-            this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbFTPSettings.Controls.Add(this.cbAutoSwitchFTP);
-            this.gbFTPSettings.Controls.Add(this.chkEnableThumbnail);
-            this.gbFTPSettings.Location = new System.Drawing.Point(296, 352);
-            this.gbFTPSettings.Name = "gbFTPSettings";
-            this.gbFTPSettings.Size = new System.Drawing.Size(472, 88);
-            this.gbFTPSettings.TabIndex = 115;
-            this.gbFTPSettings.TabStop = false;
-            this.gbFTPSettings.Text = "FTP Settings";
-            // 
-            // cbAutoSwitchFTP
-            // 
-            this.cbAutoSwitchFTP.AutoSize = true;
-            this.cbAutoSwitchFTP.Location = new System.Drawing.Point(16, 48);
-            this.cbAutoSwitchFTP.Name = "cbAutoSwitchFTP";
-            this.cbAutoSwitchFTP.Size = new System.Drawing.Size(333, 17);
-            this.cbAutoSwitchFTP.TabIndex = 114;
-            this.cbAutoSwitchFTP.Text = "Automatically switch to FTP if a user drags or copies a non-Image";
-            this.cbAutoSwitchFTP.UseVisualStyleBackColor = true;
-            this.cbAutoSwitchFTP.CheckedChanged += new System.EventHandler(this.cbAutoSwitchFTP_CheckedChanged);
-            // 
-            // chkEnableThumbnail
-            // 
-            this.chkEnableThumbnail.AutoSize = true;
-            this.chkEnableThumbnail.BackColor = System.Drawing.Color.Transparent;
-            this.chkEnableThumbnail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkEnableThumbnail.Location = new System.Drawing.Point(16, 24);
-            this.chkEnableThumbnail.Name = "chkEnableThumbnail";
-            this.chkEnableThumbnail.Size = new System.Drawing.Size(105, 17);
-            this.chkEnableThumbnail.TabIndex = 113;
-            this.chkEnableThumbnail.Text = "Create thumbnail";
-            this.chkEnableThumbnail.UseVisualStyleBackColor = false;
-            this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
-            // 
-            // btnFTPAdd
-            // 
-            this.btnFTPAdd.BackColor = System.Drawing.Color.Transparent;
-            this.btnFTPAdd.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPAdd.Location = new System.Drawing.Point(304, 8);
-            this.btnFTPAdd.Name = "btnFTPAdd";
-            this.btnFTPAdd.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPAdd.TabIndex = 14;
-            this.btnFTPAdd.Text = "Add";
-            this.btnFTPAdd.UseVisualStyleBackColor = false;
-            this.btnFTPAdd.Click += new System.EventHandler(this.btnAddAccount_Click);
-            // 
-            // btnFTPImport
-            // 
-            this.btnFTPImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPImport.Location = new System.Drawing.Point(520, 8);
-            this.btnFTPImport.Name = "btnFTPImport";
-            this.btnFTPImport.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPImport.TabIndex = 39;
-            this.btnFTPImport.Text = "Import...";
-            this.btnFTPImport.UseVisualStyleBackColor = true;
-            this.btnFTPImport.Click += new System.EventHandler(this.btnAccsImport_Click);
-            // 
-            // btnFTPTest
-            // 
-            this.btnFTPTest.BackColor = System.Drawing.Color.Transparent;
-            this.btnFTPTest.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPTest.Location = new System.Drawing.Point(448, 8);
-            this.btnFTPTest.Name = "btnFTPTest";
-            this.btnFTPTest.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPTest.TabIndex = 7;
-            this.btnFTPTest.Text = "Test";
-            this.btnFTPTest.UseVisualStyleBackColor = false;
-            this.btnFTPTest.Click += new System.EventHandler(this.btnTestConnection_Click);
-            // 
-            // btnFTPExport
-            // 
-            this.btnFTPExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPExport.Location = new System.Drawing.Point(592, 8);
-            this.btnFTPExport.Name = "btnFTPExport";
-            this.btnFTPExport.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPExport.TabIndex = 38;
-            this.btnFTPExport.Text = "Export...";
-            this.btnFTPExport.UseVisualStyleBackColor = true;
-            this.btnFTPExport.Click += new System.EventHandler(this.btnExportAccounts_Click);
-            // 
-            // btnFTPDelete
-            // 
-            this.btnFTPDelete.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPDelete.Location = new System.Drawing.Point(376, 8);
-            this.btnFTPDelete.Name = "btnFTPDelete";
-            this.btnFTPDelete.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPDelete.TabIndex = 12;
-            this.btnFTPDelete.Text = "Remove";
-            this.btnFTPDelete.UseVisualStyleBackColor = true;
-            this.btnFTPDelete.Click += new System.EventHandler(this.btnDeleteFTP_Click);
-            // 
-            // tpHTTP
-            // 
-            this.tpHTTP.Controls.Add(this.tcHTTP);
-            this.tpHTTP.ImageIndex = 5;
-            this.tpHTTP.Location = new System.Drawing.Point(4, 23);
-            this.tpHTTP.Name = "tpHTTP";
-            this.tpHTTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHTTP.Size = new System.Drawing.Size(780, 448);
-            this.tpHTTP.TabIndex = 10;
-            this.tpHTTP.Text = "HTTP";
-            this.tpHTTP.UseVisualStyleBackColor = true;
-            // 
-            // tcHTTP
-            // 
-            this.tcHTTP.Controls.Add(this.tpImageUploaders);
-            this.tcHTTP.Controls.Add(this.tpCustomUploaders);
-            this.tcHTTP.Controls.Add(this.tpTextUploaders);
-            this.tcHTTP.Controls.Add(this.tpLanguageTranslator);
-            this.tcHTTP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcHTTP.ImageList = this.ilApp;
-            this.tcHTTP.Location = new System.Drawing.Point(3, 3);
-            this.tcHTTP.Name = "tcHTTP";
-            this.tcHTTP.SelectedIndex = 0;
-            this.tcHTTP.Size = new System.Drawing.Size(774, 442);
-            this.tcHTTP.TabIndex = 5;
+            this.tcImages.Controls.Add(this.tpImageUploaders);
+            this.tcImages.Controls.Add(this.tpCustomUploaders);
+            this.tcImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcImages.ImageList = this.ilApp;
+            this.tcImages.Location = new System.Drawing.Point(3, 3);
+            this.tcImages.Name = "tcImages";
+            this.tcImages.SelectedIndex = 0;
+            this.tcImages.Size = new System.Drawing.Size(774, 442);
+            this.tcImages.TabIndex = 5;
             // 
             // tpImageUploaders
             // 
             this.tpImageUploaders.Controls.Add(this.gbImageUploaderOptions);
-            this.tpImageUploaders.Controls.Add(this.gbImageShack);
-            this.tpImageUploaders.Controls.Add(this.gbTinyPic);
             this.tpImageUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpImageUploaders.Name = "tpImageUploaders";
             this.tpImageUploaders.Padding = new System.Windows.Forms.Padding(3);
@@ -3676,131 +3705,6 @@ namespace ZSS
             0,
             0});
             this.nudErrorRetry.ValueChanged += new System.EventHandler(this.nErrorRetry_ValueChanged);
-            // 
-            // gbImageShack
-            // 
-            this.gbImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbImageShack.BackColor = System.Drawing.Color.Transparent;
-            this.gbImageShack.Controls.Add(this.btnGalleryImageShack);
-            this.gbImageShack.Controls.Add(this.btnRegCodeImageShack);
-            this.gbImageShack.Controls.Add(this.lblImageShackRegistrationCode);
-            this.gbImageShack.Controls.Add(this.txtImageShackRegistrationCode);
-            this.gbImageShack.Location = new System.Drawing.Point(8, 184);
-            this.gbImageShack.Name = "gbImageShack";
-            this.gbImageShack.Size = new System.Drawing.Size(738, 64);
-            this.gbImageShack.TabIndex = 0;
-            this.gbImageShack.TabStop = false;
-            this.gbImageShack.Text = "ImageShack";
-            // 
-            // btnGalleryImageShack
-            // 
-            this.btnGalleryImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGalleryImageShack.Location = new System.Drawing.Point(512, 24);
-            this.btnGalleryImageShack.Name = "btnGalleryImageShack";
-            this.btnGalleryImageShack.Size = new System.Drawing.Size(75, 23);
-            this.btnGalleryImageShack.TabIndex = 3;
-            this.btnGalleryImageShack.Text = "&MyImages...";
-            this.btnGalleryImageShack.UseVisualStyleBackColor = true;
-            this.btnGalleryImageShack.Click += new System.EventHandler(this.btnGalleryImageShack_Click);
-            // 
-            // btnRegCodeImageShack
-            // 
-            this.btnRegCodeImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegCodeImageShack.Location = new System.Drawing.Point(432, 24);
-            this.btnRegCodeImageShack.Name = "btnRegCodeImageShack";
-            this.btnRegCodeImageShack.Size = new System.Drawing.Size(75, 23);
-            this.btnRegCodeImageShack.TabIndex = 2;
-            this.btnRegCodeImageShack.Text = "&RegCode...";
-            this.btnRegCodeImageShack.UseVisualStyleBackColor = true;
-            this.btnRegCodeImageShack.Click += new System.EventHandler(this.btnRegCodeImageShack_Click);
-            // 
-            // lblImageShackRegistrationCode
-            // 
-            this.lblImageShackRegistrationCode.AutoSize = true;
-            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(8, 28);
-            this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
-            this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(93, 13);
-            this.lblImageShackRegistrationCode.TabIndex = 1;
-            this.lblImageShackRegistrationCode.Text = "Registration code:";
-            // 
-            // txtImageShackRegistrationCode
-            // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(112, 24);
-            this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
-            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(312, 20);
-            this.txtImageShackRegistrationCode.TabIndex = 0;
-            this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
-            // 
-            // gbTinyPic
-            // 
-            this.gbTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbTinyPic.Controls.Add(this.btnGalleryTinyPic);
-            this.gbTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
-            this.gbTinyPic.Controls.Add(this.btnRegCodeTinyPic);
-            this.gbTinyPic.Controls.Add(this.lblRegistrationCode);
-            this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
-            this.gbTinyPic.Location = new System.Drawing.Point(8, 256);
-            this.gbTinyPic.Name = "gbTinyPic";
-            this.gbTinyPic.Size = new System.Drawing.Size(738, 88);
-            this.gbTinyPic.TabIndex = 4;
-            this.gbTinyPic.TabStop = false;
-            this.gbTinyPic.Text = "TinyPic";
-            // 
-            // btnGalleryTinyPic
-            // 
-            this.btnGalleryTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGalleryTinyPic.Location = new System.Drawing.Point(512, 24);
-            this.btnGalleryTinyPic.Name = "btnGalleryTinyPic";
-            this.btnGalleryTinyPic.Size = new System.Drawing.Size(75, 23);
-            this.btnGalleryTinyPic.TabIndex = 8;
-            this.btnGalleryTinyPic.Text = "&MyImages...";
-            this.btnGalleryTinyPic.UseVisualStyleBackColor = true;
-            this.btnGalleryTinyPic.Click += new System.EventHandler(this.btnGalleryTinyPic_Click);
-            // 
-            // chkRememberTinyPicUserPass
-            // 
-            this.chkRememberTinyPicUserPass.AutoSize = true;
-            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(16, 56);
-            this.chkRememberTinyPicUserPass.Name = "chkRememberTinyPicUserPass";
-            this.chkRememberTinyPicUserPass.Size = new System.Drawing.Size(241, 17);
-            this.chkRememberTinyPicUserPass.TabIndex = 6;
-            this.chkRememberTinyPicUserPass.Text = "Remember TinyPic User Name and Password";
-            this.chkRememberTinyPicUserPass.UseVisualStyleBackColor = true;
-            this.chkRememberTinyPicUserPass.CheckedChanged += new System.EventHandler(this.chkRememberTinyPicUserPass_CheckedChanged);
-            // 
-            // btnRegCodeTinyPic
-            // 
-            this.btnRegCodeTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegCodeTinyPic.Location = new System.Drawing.Point(432, 24);
-            this.btnRegCodeTinyPic.Name = "btnRegCodeTinyPic";
-            this.btnRegCodeTinyPic.Size = new System.Drawing.Size(75, 23);
-            this.btnRegCodeTinyPic.TabIndex = 5;
-            this.btnRegCodeTinyPic.Text = "&RegCode...";
-            this.btnRegCodeTinyPic.UseVisualStyleBackColor = true;
-            this.btnRegCodeTinyPic.Click += new System.EventHandler(this.btnRegCodeTinyPic_Click);
-            // 
-            // lblRegistrationCode
-            // 
-            this.lblRegistrationCode.AutoSize = true;
-            this.lblRegistrationCode.Location = new System.Drawing.Point(8, 28);
-            this.lblRegistrationCode.Name = "lblRegistrationCode";
-            this.lblRegistrationCode.Size = new System.Drawing.Size(93, 13);
-            this.lblRegistrationCode.TabIndex = 4;
-            this.lblRegistrationCode.Text = "Registration code:";
-            // 
-            // txtTinyPicShuk
-            // 
-            this.txtTinyPicShuk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTinyPicShuk.Location = new System.Drawing.Point(112, 24);
-            this.txtTinyPicShuk.Name = "txtTinyPicShuk";
-            this.txtTinyPicShuk.Size = new System.Drawing.Size(312, 20);
-            this.txtTinyPicShuk.TabIndex = 3;
-            this.txtTinyPicShuk.TextChanged += new System.EventHandler(this.txtTinyPicShuk_TextChanged);
             // 
             // tpCustomUploaders
             // 
@@ -4158,22 +4062,54 @@ namespace ZSS
             this.txtArg1.Size = new System.Drawing.Size(112, 20);
             this.txtArg1.TabIndex = 0;
             // 
+            // tpText
+            // 
+            this.tpText.Controls.Add(this.tcText);
+            this.tpText.ImageKey = "text_signature.png";
+            this.tpText.Location = new System.Drawing.Point(4, 23);
+            this.tpText.Name = "tpText";
+            this.tpText.Padding = new System.Windows.Forms.Padding(3);
+            this.tpText.Size = new System.Drawing.Size(780, 448);
+            this.tpText.TabIndex = 13;
+            this.tpText.Text = "Text";
+            this.tpText.UseVisualStyleBackColor = true;
+            // 
+            // tcText
+            // 
+            this.tcText.Controls.Add(this.tpTextUploaders);
+            this.tcText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcText.Location = new System.Drawing.Point(3, 3);
+            this.tcText.Name = "tcText";
+            this.tcText.SelectedIndex = 0;
+            this.tcText.Size = new System.Drawing.Size(774, 442);
+            this.tcText.TabIndex = 0;
+            // 
             // tpTextUploaders
             // 
+            this.tpTextUploaders.Controls.Add(this.lbTextUploaders);
             this.tpTextUploaders.Controls.Add(this.btnTestTextUploader);
             this.tpTextUploaders.Controls.Add(this.btnClearTextUploaders);
             this.tpTextUploaders.Controls.Add(this.btnRemoveTextUploader);
             this.tpTextUploaders.Controls.Add(this.btnAddTextUploader);
-            this.tpTextUploaders.Controls.Add(this.lvTextUploaders);
             this.tpTextUploaders.Controls.Add(this.pgTextUploaderSettings);
             this.tpTextUploaders.Controls.Add(this.cboTextUploaders);
-            this.tpTextUploaders.Location = new System.Drawing.Point(4, 23);
+            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpTextUploaders.Name = "tpTextUploaders";
             this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(766, 415);
+            this.tpTextUploaders.Size = new System.Drawing.Size(766, 416);
             this.tpTextUploaders.TabIndex = 12;
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
+            // 
+            // lbTextUploaders
+            // 
+            this.lbTextUploaders.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbTextUploaders.FormattingEnabled = true;
+            this.lbTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.lbTextUploaders.Name = "lbTextUploaders";
+            this.lbTextUploaders.Size = new System.Drawing.Size(197, 407);
+            this.lbTextUploaders.TabIndex = 8;
+            this.lbTextUploaders.SelectedIndexChanged += new System.EventHandler(this.lbTextUploaders_SelectedIndexChanged);
             // 
             // btnTestTextUploader
             // 
@@ -4215,28 +4151,6 @@ namespace ZSS
             this.btnAddTextUploader.UseVisualStyleBackColor = true;
             this.btnAddTextUploader.Click += new System.EventHandler(this.btnAddTextUploader_Click);
             // 
-            // lvTextUploaders
-            // 
-            this.lvTextUploaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4});
-            this.lvTextUploaders.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lvTextUploaders.FullRowSelect = true;
-            this.lvTextUploaders.GridLines = true;
-            this.lvTextUploaders.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvTextUploaders.HideSelection = false;
-            this.lvTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.lvTextUploaders.MultiSelect = false;
-            this.lvTextUploaders.Name = "lvTextUploaders";
-            this.lvTextUploaders.Size = new System.Drawing.Size(197, 409);
-            this.lvTextUploaders.TabIndex = 2;
-            this.lvTextUploaders.UseCompatibleStateImageBehavior = false;
-            this.lvTextUploaders.View = System.Windows.Forms.View.Details;
-            this.lvTextUploaders.SelectedIndexChanged += new System.EventHandler(this.lvTextUploaders_SelectedIndexChanged);
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Width = 193;
-            // 
             // pgTextUploaderSettings
             // 
             this.pgTextUploaderSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -4246,7 +4160,7 @@ namespace ZSS
             this.pgTextUploaderSettings.Location = new System.Drawing.Point(208, 40);
             this.pgTextUploaderSettings.Name = "pgTextUploaderSettings";
             this.pgTextUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgTextUploaderSettings.Size = new System.Drawing.Size(555, 368);
+            this.pgTextUploaderSettings.Size = new System.Drawing.Size(555, 369);
             this.pgTextUploaderSettings.TabIndex = 1;
             this.pgTextUploaderSettings.ToolbarVisible = false;
             // 
@@ -4258,155 +4172,6 @@ namespace ZSS
             this.cboTextUploaders.Name = "cboTextUploaders";
             this.cboTextUploaders.Size = new System.Drawing.Size(224, 21);
             this.cboTextUploaders.TabIndex = 3;
-            // 
-            // tpLanguageTranslator
-            // 
-            this.tpLanguageTranslator.Controls.Add(this.btnTranslateTo1);
-            this.tpLanguageTranslator.Controls.Add(this.lblDictionary);
-            this.tpLanguageTranslator.Controls.Add(this.txtDictionary);
-            this.tpLanguageTranslator.Controls.Add(this.cbClipboardTranslate);
-            this.tpLanguageTranslator.Controls.Add(this.txtTranslateResult);
-            this.tpLanguageTranslator.Controls.Add(this.txtLanguages);
-            this.tpLanguageTranslator.Controls.Add(this.btnTranslate);
-            this.tpLanguageTranslator.Controls.Add(this.txtTranslateText);
-            this.tpLanguageTranslator.Controls.Add(this.lblToLanguage);
-            this.tpLanguageTranslator.Controls.Add(this.lblFromLanguage);
-            this.tpLanguageTranslator.Controls.Add(this.cbToLanguage);
-            this.tpLanguageTranslator.Controls.Add(this.cbFromLanguage);
-            this.tpLanguageTranslator.ImageKey = "comments.png";
-            this.tpLanguageTranslator.Location = new System.Drawing.Point(4, 23);
-            this.tpLanguageTranslator.Name = "tpLanguageTranslator";
-            this.tpLanguageTranslator.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLanguageTranslator.Size = new System.Drawing.Size(766, 415);
-            this.tpLanguageTranslator.TabIndex = 1;
-            this.tpLanguageTranslator.Text = "Language Translator";
-            this.tpLanguageTranslator.UseVisualStyleBackColor = true;
-            // 
-            // btnTranslateTo1
-            // 
-            this.btnTranslateTo1.AllowDrop = true;
-            this.btnTranslateTo1.Location = new System.Drawing.Point(216, 176);
-            this.btnTranslateTo1.Name = "btnTranslateTo1";
-            this.btnTranslateTo1.Size = new System.Drawing.Size(136, 24);
-            this.btnTranslateTo1.TabIndex = 9;
-            this.btnTranslateTo1.Text = "???";
-            this.btnTranslateTo1.UseVisualStyleBackColor = true;
-            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
-            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
-            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
-            // 
-            // lblDictionary
-            // 
-            this.lblDictionary.AutoSize = true;
-            this.lblDictionary.Location = new System.Drawing.Point(368, 24);
-            this.lblDictionary.Name = "lblDictionary";
-            this.lblDictionary.Size = new System.Drawing.Size(54, 13);
-            this.lblDictionary.TabIndex = 8;
-            this.lblDictionary.Text = "Dictionary";
-            // 
-            // txtDictionary
-            // 
-            this.txtDictionary.BackColor = System.Drawing.SystemColors.Info;
-            this.txtDictionary.Location = new System.Drawing.Point(368, 48);
-            this.txtDictionary.Multiline = true;
-            this.txtDictionary.Name = "txtDictionary";
-            this.txtDictionary.ReadOnly = true;
-            this.txtDictionary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDictionary.Size = new System.Drawing.Size(392, 304);
-            this.txtDictionary.TabIndex = 7;
-            // 
-            // cbClipboardTranslate
-            // 
-            this.cbClipboardTranslate.AutoSize = true;
-            this.cbClipboardTranslate.Location = new System.Drawing.Point(16, 360);
-            this.cbClipboardTranslate.Name = "cbClipboardTranslate";
-            this.cbClipboardTranslate.Size = new System.Drawing.Size(230, 17);
-            this.cbClipboardTranslate.TabIndex = 6;
-            this.cbClipboardTranslate.Text = "Auto paste result to clipboard after translate";
-            this.cbClipboardTranslate.UseVisualStyleBackColor = true;
-            this.cbClipboardTranslate.CheckedChanged += new System.EventHandler(this.cbClipboardTranslate_CheckedChanged);
-            // 
-            // txtTranslateResult
-            // 
-            this.txtTranslateResult.Location = new System.Drawing.Point(16, 232);
-            this.txtTranslateResult.Multiline = true;
-            this.txtTranslateResult.Name = "txtTranslateResult";
-            this.txtTranslateResult.ReadOnly = true;
-            this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateResult.Size = new System.Drawing.Size(336, 120);
-            this.txtTranslateResult.TabIndex = 5;
-            // 
-            // txtLanguages
-            // 
-            this.txtLanguages.Location = new System.Drawing.Point(16, 208);
-            this.txtLanguages.Name = "txtLanguages";
-            this.txtLanguages.ReadOnly = true;
-            this.txtLanguages.Size = new System.Drawing.Size(336, 20);
-            this.txtLanguages.TabIndex = 4;
-            // 
-            // btnTranslate
-            // 
-            this.btnTranslate.Location = new System.Drawing.Point(16, 176);
-            this.btnTranslate.Name = "btnTranslate";
-            this.btnTranslate.Size = new System.Drawing.Size(192, 24);
-            this.btnTranslate.TabIndex = 3;
-            this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
-            this.btnTranslate.UseVisualStyleBackColor = true;
-            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
-            // 
-            // txtTranslateText
-            // 
-            this.txtTranslateText.Location = new System.Drawing.Point(16, 48);
-            this.txtTranslateText.Multiline = true;
-            this.txtTranslateText.Name = "txtTranslateText";
-            this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
-            this.txtTranslateText.TabIndex = 2;
-            this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
-            // 
-            // lblToLanguage
-            // 
-            this.lblToLanguage.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.lblToLanguage.Location = new System.Drawing.Point(192, 8);
-            this.lblToLanguage.Name = "lblToLanguage";
-            this.lblToLanguage.Size = new System.Drawing.Size(28, 32);
-            this.lblToLanguage.TabIndex = 3;
-            this.lblToLanguage.Text = "To:";
-            this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
-            // 
-            // lblFromLanguage
-            // 
-            this.lblFromLanguage.Location = new System.Drawing.Point(16, 8);
-            this.lblFromLanguage.Name = "lblFromLanguage";
-            this.lblFromLanguage.Size = new System.Drawing.Size(33, 32);
-            this.lblFromLanguage.TabIndex = 2;
-            this.lblFromLanguage.Text = "From:";
-            this.lblFromLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cbToLanguage
-            // 
-            this.cbToLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbToLanguage.Enabled = false;
-            this.cbToLanguage.FormattingEnabled = true;
-            this.cbToLanguage.Location = new System.Drawing.Point(224, 16);
-            this.cbToLanguage.MaxDropDownItems = 20;
-            this.cbToLanguage.Name = "cbToLanguage";
-            this.cbToLanguage.Size = new System.Drawing.Size(128, 21);
-            this.cbToLanguage.TabIndex = 1;
-            this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
-            // 
-            // cbFromLanguage
-            // 
-            this.cbFromLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFromLanguage.Enabled = false;
-            this.cbFromLanguage.FormattingEnabled = true;
-            this.cbFromLanguage.Location = new System.Drawing.Point(56, 16);
-            this.cbFromLanguage.MaxDropDownItems = 20;
-            this.cbFromLanguage.Name = "cbFromLanguage";
-            this.cbFromLanguage.Size = new System.Drawing.Size(128, 21);
-            this.cbFromLanguage.TabIndex = 0;
-            this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
             // tpHistory
             // 
@@ -4720,9 +4485,158 @@ namespace ZSS
             this.cbHistoryReverseList.UseVisualStyleBackColor = false;
             this.cbHistoryReverseList.CheckedChanged += new System.EventHandler(this.cbReverse_CheckedChanged);
             // 
+            // tpLanguageTranslator
+            // 
+            this.tpLanguageTranslator.Controls.Add(this.btnTranslateTo1);
+            this.tpLanguageTranslator.Controls.Add(this.lblDictionary);
+            this.tpLanguageTranslator.Controls.Add(this.txtDictionary);
+            this.tpLanguageTranslator.Controls.Add(this.cbClipboardTranslate);
+            this.tpLanguageTranslator.Controls.Add(this.txtTranslateResult);
+            this.tpLanguageTranslator.Controls.Add(this.txtLanguages);
+            this.tpLanguageTranslator.Controls.Add(this.btnTranslate);
+            this.tpLanguageTranslator.Controls.Add(this.txtTranslateText);
+            this.tpLanguageTranslator.Controls.Add(this.lblToLanguage);
+            this.tpLanguageTranslator.Controls.Add(this.lblFromLanguage);
+            this.tpLanguageTranslator.Controls.Add(this.cbToLanguage);
+            this.tpLanguageTranslator.Controls.Add(this.cbFromLanguage);
+            this.tpLanguageTranslator.ImageKey = "comments.png";
+            this.tpLanguageTranslator.Location = new System.Drawing.Point(4, 23);
+            this.tpLanguageTranslator.Name = "tpLanguageTranslator";
+            this.tpLanguageTranslator.Padding = new System.Windows.Forms.Padding(3);
+            this.tpLanguageTranslator.Size = new System.Drawing.Size(780, 448);
+            this.tpLanguageTranslator.TabIndex = 1;
+            this.tpLanguageTranslator.Text = "Language Translator";
+            this.tpLanguageTranslator.UseVisualStyleBackColor = true;
+            // 
+            // btnTranslateTo1
+            // 
+            this.btnTranslateTo1.AllowDrop = true;
+            this.btnTranslateTo1.Location = new System.Drawing.Point(216, 176);
+            this.btnTranslateTo1.Name = "btnTranslateTo1";
+            this.btnTranslateTo1.Size = new System.Drawing.Size(136, 24);
+            this.btnTranslateTo1.TabIndex = 9;
+            this.btnTranslateTo1.Text = "???";
+            this.btnTranslateTo1.UseVisualStyleBackColor = true;
+            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
+            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
+            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
+            // 
+            // lblDictionary
+            // 
+            this.lblDictionary.AutoSize = true;
+            this.lblDictionary.Location = new System.Drawing.Point(368, 24);
+            this.lblDictionary.Name = "lblDictionary";
+            this.lblDictionary.Size = new System.Drawing.Size(54, 13);
+            this.lblDictionary.TabIndex = 8;
+            this.lblDictionary.Text = "Dictionary";
+            // 
+            // txtDictionary
+            // 
+            this.txtDictionary.BackColor = System.Drawing.SystemColors.Info;
+            this.txtDictionary.Location = new System.Drawing.Point(368, 48);
+            this.txtDictionary.Multiline = true;
+            this.txtDictionary.Name = "txtDictionary";
+            this.txtDictionary.ReadOnly = true;
+            this.txtDictionary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDictionary.Size = new System.Drawing.Size(392, 304);
+            this.txtDictionary.TabIndex = 7;
+            // 
+            // cbClipboardTranslate
+            // 
+            this.cbClipboardTranslate.AutoSize = true;
+            this.cbClipboardTranslate.Location = new System.Drawing.Point(16, 360);
+            this.cbClipboardTranslate.Name = "cbClipboardTranslate";
+            this.cbClipboardTranslate.Size = new System.Drawing.Size(230, 17);
+            this.cbClipboardTranslate.TabIndex = 6;
+            this.cbClipboardTranslate.Text = "Auto paste result to clipboard after translate";
+            this.cbClipboardTranslate.UseVisualStyleBackColor = true;
+            this.cbClipboardTranslate.CheckedChanged += new System.EventHandler(this.cbClipboardTranslate_CheckedChanged);
+            // 
+            // txtTranslateResult
+            // 
+            this.txtTranslateResult.Location = new System.Drawing.Point(16, 232);
+            this.txtTranslateResult.Multiline = true;
+            this.txtTranslateResult.Name = "txtTranslateResult";
+            this.txtTranslateResult.ReadOnly = true;
+            this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTranslateResult.Size = new System.Drawing.Size(336, 120);
+            this.txtTranslateResult.TabIndex = 5;
+            // 
+            // txtLanguages
+            // 
+            this.txtLanguages.Location = new System.Drawing.Point(16, 208);
+            this.txtLanguages.Name = "txtLanguages";
+            this.txtLanguages.ReadOnly = true;
+            this.txtLanguages.Size = new System.Drawing.Size(336, 20);
+            this.txtLanguages.TabIndex = 4;
+            // 
+            // btnTranslate
+            // 
+            this.btnTranslate.Location = new System.Drawing.Point(16, 176);
+            this.btnTranslate.Name = "btnTranslate";
+            this.btnTranslate.Size = new System.Drawing.Size(192, 24);
+            this.btnTranslate.TabIndex = 3;
+            this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
+            this.btnTranslate.UseVisualStyleBackColor = true;
+            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
+            // 
+            // txtTranslateText
+            // 
+            this.txtTranslateText.Location = new System.Drawing.Point(16, 48);
+            this.txtTranslateText.Multiline = true;
+            this.txtTranslateText.Name = "txtTranslateText";
+            this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
+            this.txtTranslateText.TabIndex = 2;
+            this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
+            // 
+            // lblToLanguage
+            // 
+            this.lblToLanguage.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.lblToLanguage.Location = new System.Drawing.Point(192, 8);
+            this.lblToLanguage.Name = "lblToLanguage";
+            this.lblToLanguage.Size = new System.Drawing.Size(28, 32);
+            this.lblToLanguage.TabIndex = 3;
+            this.lblToLanguage.Text = "To:";
+            this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
+            // 
+            // lblFromLanguage
+            // 
+            this.lblFromLanguage.Location = new System.Drawing.Point(16, 8);
+            this.lblFromLanguage.Name = "lblFromLanguage";
+            this.lblFromLanguage.Size = new System.Drawing.Size(33, 32);
+            this.lblFromLanguage.TabIndex = 2;
+            this.lblFromLanguage.Text = "From:";
+            this.lblFromLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cbToLanguage
+            // 
+            this.cbToLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbToLanguage.Enabled = false;
+            this.cbToLanguage.FormattingEnabled = true;
+            this.cbToLanguage.Location = new System.Drawing.Point(224, 16);
+            this.cbToLanguage.MaxDropDownItems = 20;
+            this.cbToLanguage.Name = "cbToLanguage";
+            this.cbToLanguage.Size = new System.Drawing.Size(128, 21);
+            this.cbToLanguage.TabIndex = 1;
+            this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
+            // 
+            // cbFromLanguage
+            // 
+            this.cbFromLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFromLanguage.Enabled = false;
+            this.cbFromLanguage.FormattingEnabled = true;
+            this.cbFromLanguage.Location = new System.Drawing.Point(56, 16);
+            this.cbFromLanguage.MaxDropDownItems = 20;
+            this.cbFromLanguage.Name = "cbFromLanguage";
+            this.cbFromLanguage.Size = new System.Drawing.Size(128, 21);
+            this.cbFromLanguage.TabIndex = 0;
+            this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
+            // 
             // tpOptions
             // 
-            this.tpOptions.Controls.Add(this.tcAdvanced);
+            this.tpOptions.Controls.Add(this.tcOptions);
             this.tpOptions.ImageIndex = 7;
             this.tpOptions.Location = new System.Drawing.Point(4, 23);
             this.tpOptions.Name = "tpOptions";
@@ -4732,30 +4646,31 @@ namespace ZSS
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
             // 
-            // tcAdvanced
+            // tcOptions
             // 
-            this.tcAdvanced.Controls.Add(this.tpAdvAppearance);
-            this.tcAdvanced.Controls.Add(this.tpAdvPaths);
-            this.tcAdvanced.Controls.Add(this.tpAdvDebug);
-            this.tcAdvanced.Controls.Add(this.tpOptionsAdv);
-            this.tcAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcAdvanced.Location = new System.Drawing.Point(3, 3);
-            this.tcAdvanced.Name = "tcAdvanced";
-            this.tcAdvanced.SelectedIndex = 0;
-            this.tcAdvanced.Size = new System.Drawing.Size(774, 442);
-            this.tcAdvanced.TabIndex = 8;
+            this.tcOptions.Controls.Add(this.tpGeneral);
+            this.tcOptions.Controls.Add(this.tpInteraction);
+            this.tcOptions.Controls.Add(this.tpAdvPaths);
+            this.tcOptions.Controls.Add(this.tpAdvDebug);
+            this.tcOptions.Controls.Add(this.tpOptionsAdv);
+            this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcOptions.Location = new System.Drawing.Point(3, 3);
+            this.tcOptions.Name = "tcOptions";
+            this.tcOptions.SelectedIndex = 0;
+            this.tcOptions.Size = new System.Drawing.Size(774, 442);
+            this.tcOptions.TabIndex = 8;
             // 
-            // tpAdvAppearance
+            // tpGeneral
             // 
-            this.tpAdvAppearance.Controls.Add(this.gbUpdates);
-            this.tpAdvAppearance.Controls.Add(this.gbMisc);
-            this.tpAdvAppearance.Location = new System.Drawing.Point(4, 22);
-            this.tpAdvAppearance.Name = "tpAdvAppearance";
-            this.tpAdvAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvAppearance.Size = new System.Drawing.Size(766, 416);
-            this.tpAdvAppearance.TabIndex = 0;
-            this.tpAdvAppearance.Text = "General";
-            this.tpAdvAppearance.UseVisualStyleBackColor = true;
+            this.tpGeneral.Controls.Add(this.gbUpdates);
+            this.tpGeneral.Controls.Add(this.gbMisc);
+            this.tpGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tpGeneral.Name = "tpGeneral";
+            this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGeneral.Size = new System.Drawing.Size(766, 416);
+            this.tpGeneral.TabIndex = 0;
+            this.tpGeneral.Text = "General";
+            this.tpGeneral.UseVisualStyleBackColor = true;
             // 
             // gbUpdates
             // 
@@ -4882,6 +4797,156 @@ namespace ZSS
             this.cbStartWin.Text = "Start with Windows";
             this.cbStartWin.UseVisualStyleBackColor = true;
             this.cbStartWin.CheckedChanged += new System.EventHandler(this.cbStartWin_CheckedChanged);
+            // 
+            // tpInteraction
+            // 
+            this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
+            this.tpInteraction.Controls.Add(this.gbDropBox);
+            this.tpInteraction.Controls.Add(this.gbAppearance);
+            this.tpInteraction.Location = new System.Drawing.Point(4, 22);
+            this.tpInteraction.Name = "tpInteraction";
+            this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
+            this.tpInteraction.Size = new System.Drawing.Size(766, 416);
+            this.tpInteraction.TabIndex = 5;
+            this.tpInteraction.Text = "Interaction";
+            this.tpInteraction.UseVisualStyleBackColor = true;
+            // 
+            // gbActionsToolbarSettings
+            // 
+            this.gbActionsToolbarSettings.Controls.Add(this.cbCloseQuickActions);
+            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 264);
+            this.gbActionsToolbarSettings.Name = "gbActionsToolbarSettings";
+            this.gbActionsToolbarSettings.Size = new System.Drawing.Size(752, 56);
+            this.gbActionsToolbarSettings.TabIndex = 7;
+            this.gbActionsToolbarSettings.TabStop = false;
+            this.gbActionsToolbarSettings.Text = "Actions Toolbar Settings";
+            // 
+            // cbCloseQuickActions
+            // 
+            this.cbCloseQuickActions.AutoSize = true;
+            this.cbCloseQuickActions.Location = new System.Drawing.Point(16, 24);
+            this.cbCloseQuickActions.Name = "cbCloseQuickActions";
+            this.cbCloseQuickActions.Size = new System.Drawing.Size(214, 17);
+            this.cbCloseQuickActions.TabIndex = 0;
+            this.cbCloseQuickActions.Text = "Close Actions Toolbar after Mouse Click";
+            this.cbCloseQuickActions.UseVisualStyleBackColor = true;
+            this.cbCloseQuickActions.CheckedChanged += new System.EventHandler(this.cbCloseQuickActions_CheckedChanged);
+            // 
+            // gbDropBox
+            // 
+            this.gbDropBox.Controls.Add(this.cbCloseDropBox);
+            this.gbDropBox.Location = new System.Drawing.Point(8, 200);
+            this.gbDropBox.Name = "gbDropBox";
+            this.gbDropBox.Size = new System.Drawing.Size(752, 56);
+            this.gbDropBox.TabIndex = 6;
+            this.gbDropBox.TabStop = false;
+            this.gbDropBox.Text = "Drop Window Settings";
+            // 
+            // cbCloseDropBox
+            // 
+            this.cbCloseDropBox.AutoSize = true;
+            this.cbCloseDropBox.Location = new System.Drawing.Point(16, 24);
+            this.cbCloseDropBox.Name = "cbCloseDropBox";
+            this.cbCloseDropBox.Size = new System.Drawing.Size(205, 17);
+            this.cbCloseDropBox.TabIndex = 0;
+            this.cbCloseDropBox.Text = "Close Drop Window after Drag n Drop";
+            this.cbCloseDropBox.UseVisualStyleBackColor = true;
+            this.cbCloseDropBox.CheckedChanged += new System.EventHandler(this.cbCloseDropBox_CheckedChanged);
+            // 
+            // gbAppearance
+            // 
+            this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
+            this.gbAppearance.Controls.Add(this.cbCompleteSound);
+            this.gbAppearance.Controls.Add(this.chkCaptureFallback);
+            this.gbAppearance.Controls.Add(this.cbShowUploadDuration);
+            this.gbAppearance.Controls.Add(this.chkBalloonTipOpenLink);
+            this.gbAppearance.Controls.Add(this.cbShowPopup);
+            this.gbAppearance.Controls.Add(this.lblTrayFlash);
+            this.gbAppearance.Controls.Add(this.nudFlashIconCount);
+            this.gbAppearance.Location = new System.Drawing.Point(8, 8);
+            this.gbAppearance.Name = "gbAppearance";
+            this.gbAppearance.Size = new System.Drawing.Size(752, 184);
+            this.gbAppearance.TabIndex = 5;
+            this.gbAppearance.TabStop = false;
+            this.gbAppearance.Text = "After completing a task";
+            // 
+            // cbCompleteSound
+            // 
+            this.cbCompleteSound.AutoSize = true;
+            this.cbCompleteSound.Location = new System.Drawing.Point(16, 152);
+            this.cbCompleteSound.Name = "cbCompleteSound";
+            this.cbCompleteSound.Size = new System.Drawing.Size(228, 17);
+            this.cbCompleteSound.TabIndex = 5;
+            this.cbCompleteSound.Text = "Play sound after image reaches destination";
+            this.cbCompleteSound.UseVisualStyleBackColor = true;
+            this.cbCompleteSound.CheckedChanged += new System.EventHandler(this.cbCompleteSound_CheckedChanged);
+            // 
+            // chkCaptureFallback
+            // 
+            this.chkCaptureFallback.AutoSize = true;
+            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 56);
+            this.chkCaptureFallback.Name = "chkCaptureFallback";
+            this.chkCaptureFallback.Size = new System.Drawing.Size(302, 17);
+            this.chkCaptureFallback.TabIndex = 7;
+            this.chkCaptureFallback.Text = "Capture entire screen if active window capture or crop fails";
+            this.chkCaptureFallback.UseVisualStyleBackColor = true;
+            this.chkCaptureFallback.CheckedChanged += new System.EventHandler(this.chkCaptureFallback_CheckedChanged);
+            // 
+            // cbShowUploadDuration
+            // 
+            this.cbShowUploadDuration.AutoSize = true;
+            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 128);
+            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
+            this.cbShowUploadDuration.Size = new System.Drawing.Size(196, 17);
+            this.cbShowUploadDuration.TabIndex = 8;
+            this.cbShowUploadDuration.Text = "Show upload duration in Balloon Tip";
+            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
+            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
+            // 
+            // chkBalloonTipOpenLink
+            // 
+            this.chkBalloonTipOpenLink.AutoSize = true;
+            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 104);
+            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
+            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(250, 17);
+            this.chkBalloonTipOpenLink.TabIndex = 6;
+            this.chkBalloonTipOpenLink.Text = "Open screenshot URL/File on Balloon Tip Click";
+            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
+            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
+            // 
+            // cbShowPopup
+            // 
+            this.cbShowPopup.AutoSize = true;
+            this.cbShowPopup.Location = new System.Drawing.Point(16, 80);
+            this.cbShowPopup.Name = "cbShowPopup";
+            this.cbShowPopup.Size = new System.Drawing.Size(230, 17);
+            this.cbShowPopup.TabIndex = 5;
+            this.cbShowPopup.Text = "Show Balloon Tip after upload is completed";
+            this.cbShowPopup.UseVisualStyleBackColor = true;
+            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
+            // 
+            // lblTrayFlash
+            // 
+            this.lblTrayFlash.AutoSize = true;
+            this.lblTrayFlash.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTrayFlash.Location = new System.Drawing.Point(14, 26);
+            this.lblTrayFlash.Name = "lblTrayFlash";
+            this.lblTrayFlash.Size = new System.Drawing.Size(315, 13);
+            this.lblTrayFlash.TabIndex = 3;
+            this.lblTrayFlash.Text = "Number of times tray icon should flash after an upload is complete";
+            // 
+            // nudFlashIconCount
+            // 
+            this.nudFlashIconCount.Location = new System.Drawing.Point(336, 24);
+            this.nudFlashIconCount.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudFlashIconCount.Name = "nudFlashIconCount";
+            this.nudFlashIconCount.Size = new System.Drawing.Size(58, 20);
+            this.nudFlashIconCount.TabIndex = 4;
+            this.nudFlashIconCount.ValueChanged += new System.EventHandler(this.nudFlashIconCount_ValueChanged);
             // 
             // tpAdvPaths
             // 
@@ -5365,6 +5430,43 @@ namespace ZSS
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
             // 
+            // lblTextDest
+            // 
+            this.lblTextDest.AutoSize = true;
+            this.lblTextDest.Location = new System.Drawing.Point(15, 56);
+            this.lblTextDest.Name = "lblTextDest";
+            this.lblTextDest.Size = new System.Drawing.Size(105, 13);
+            this.lblTextDest.TabIndex = 122;
+            this.lblTextDest.Text = "Source Code/Notes:";
+            // 
+            // gbImageSettings
+            // 
+            this.gbImageSettings.Controls.Add(this.nudtScreenshotDelay);
+            this.gbImageSettings.Controls.Add(this.cbPromptforUpload);
+            this.gbImageSettings.Controls.Add(this.lblCopytoClipboard);
+            this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
+            this.gbImageSettings.Controls.Add(this.cbShowCursor);
+            this.gbImageSettings.Controls.Add(this.chkManualNaming);
+            this.gbImageSettings.Location = new System.Drawing.Point(16, 112);
+            this.gbImageSettings.Name = "gbImageSettings";
+            this.gbImageSettings.Size = new System.Drawing.Size(376, 168);
+            this.gbImageSettings.TabIndex = 123;
+            this.gbImageSettings.TabStop = false;
+            this.gbImageSettings.Text = "Image Settings";
+            this.gbImageSettings.Enter += new System.EventHandler(this.gbImageSettings_Enter);
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(24, 48);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5401,11 +5503,22 @@ namespace ZSS
             this.gbMainOptions.ResumeLayout(false);
             this.gbMainOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
+            this.tpAccounts.ResumeLayout(false);
+            this.tcAccounts.ResumeLayout(false);
+            this.tpFTP.ResumeLayout(false);
+            this.gbFTPSettings.ResumeLayout(false);
+            this.gbFTPSettings.PerformLayout();
+            this.tpTinyPic.ResumeLayout(false);
+            this.gbTinyPic.ResumeLayout(false);
+            this.gbTinyPic.PerformLayout();
+            this.tpImageShack.ResumeLayout(false);
+            this.gbImageShack.ResumeLayout(false);
+            this.gbImageShack.PerformLayout();
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
-            this.tpCapture.ResumeLayout(false);
-            this.tcFileSettings.ResumeLayout(false);
+            this.tpScreenshots.ResumeLayout(false);
+            this.tcScreenshots.ResumeLayout(false);
             this.tpCropShot.ResumeLayout(false);
             this.tpCropShot.PerformLayout();
             this.gbCropRegionSettings.ResumeLayout(false);
@@ -5429,26 +5542,6 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).EndInit();
-            this.tpInteraction.ResumeLayout(false);
-            this.gbActionsToolbarSettings.ResumeLayout(false);
-            this.gbActionsToolbarSettings.PerformLayout();
-            this.gbDropBox.ResumeLayout(false);
-            this.gbDropBox.PerformLayout();
-            this.gbAppearance.ResumeLayout(false);
-            this.gbAppearance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
-            this.tpFileNaming.ResumeLayout(false);
-            this.gbOthersNaming.ResumeLayout(false);
-            this.gbOthersNaming.PerformLayout();
-            this.gbCodeTitle.ResumeLayout(false);
-            this.gbCodeTitle.PerformLayout();
-            this.gbActiveWindowNaming.ResumeLayout(false);
-            this.gbActiveWindowNaming.PerformLayout();
-            this.tpCaptureQuality.ResumeLayout(false);
-            this.gbPictureQuality.ResumeLayout(false);
-            this.gbPictureQuality.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).EndInit();
             this.tpWatermark.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).EndInit();
             this.gbWatermarkGeneral.ResumeLayout(false);
@@ -5472,24 +5565,29 @@ namespace ZSS
             this.tpWatermarkImage.ResumeLayout(false);
             this.tpWatermarkImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).EndInit();
+            this.tpFileNaming.ResumeLayout(false);
+            this.gbOthersNaming.ResumeLayout(false);
+            this.gbOthersNaming.PerformLayout();
+            this.gbCodeTitle.ResumeLayout(false);
+            this.gbCodeTitle.PerformLayout();
+            this.gbActiveWindowNaming.ResumeLayout(false);
+            this.gbActiveWindowNaming.PerformLayout();
+            this.tpCaptureQuality.ResumeLayout(false);
+            this.gbPictureQuality.ResumeLayout(false);
+            this.gbPictureQuality.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).EndInit();
             this.tpEditors.ResumeLayout(false);
             this.tcEditors.ResumeLayout(false);
             this.tpEditorsImages.ResumeLayout(false);
             this.tpEditorsImages.PerformLayout();
-            this.tpFTP.ResumeLayout(false);
-            this.gbFTPSettings.ResumeLayout(false);
-            this.gbFTPSettings.PerformLayout();
-            this.tpHTTP.ResumeLayout(false);
-            this.tcHTTP.ResumeLayout(false);
+            this.tpImages.ResumeLayout(false);
+            this.tcImages.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
             this.gbImageUploaderOptions.ResumeLayout(false);
             this.gbImageUploaderOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorRetry)).EndInit();
-            this.gbImageShack.ResumeLayout(false);
-            this.gbImageShack.PerformLayout();
-            this.gbTinyPic.ResumeLayout(false);
-            this.gbTinyPic.PerformLayout();
             this.tpCustomUploaders.ResumeLayout(false);
             this.tpCustomUploaders.PerformLayout();
             this.gbImageUploaders.ResumeLayout(false);
@@ -5498,9 +5596,9 @@ namespace ZSS
             this.gbRegexp.PerformLayout();
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
+            this.tpText.ResumeLayout(false);
+            this.tcText.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
-            this.tpLanguageTranslator.ResumeLayout(false);
-            this.tpLanguageTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
             this.tcHistory.ResumeLayout(false);
             this.tpHistoryList.ResumeLayout(false);
@@ -5509,13 +5607,23 @@ namespace ZSS
             this.tpHistorySettings.ResumeLayout(false);
             this.tpHistorySettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
+            this.tpLanguageTranslator.ResumeLayout(false);
+            this.tpLanguageTranslator.PerformLayout();
             this.tpOptions.ResumeLayout(false);
-            this.tcAdvanced.ResumeLayout(false);
-            this.tpAdvAppearance.ResumeLayout(false);
+            this.tcOptions.ResumeLayout(false);
+            this.tpGeneral.ResumeLayout(false);
             this.gbUpdates.ResumeLayout(false);
             this.gbUpdates.PerformLayout();
             this.gbMisc.ResumeLayout(false);
             this.gbMisc.PerformLayout();
+            this.tpInteraction.ResumeLayout(false);
+            this.gbActionsToolbarSettings.ResumeLayout(false);
+            this.gbActionsToolbarSettings.PerformLayout();
+            this.gbDropBox.ResumeLayout(false);
+            this.gbDropBox.PerformLayout();
+            this.gbAppearance.ResumeLayout(false);
+            this.gbAppearance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
             this.tpAdvPaths.ResumeLayout(false);
             this.gbRoot.ResumeLayout(false);
             this.gbRoot.PerformLayout();
@@ -5531,6 +5639,8 @@ namespace ZSS
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
             this.ZScreenPanels.ResumeLayout(false);
+            this.gbImageSettings.ResumeLayout(false);
+            this.gbImageSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5622,8 +5732,8 @@ namespace ZSS
         private System.Windows.Forms.ComboBox cboClipboardTextMode;
         private System.Windows.Forms.CheckBox chkManualNaming;
         private System.Windows.Forms.CheckBox cbShowCursor;
-        private System.Windows.Forms.Label lblScreenshotDestination;
-        private System.Windows.Forms.ComboBox cboScreenshotDest;
+        private System.Windows.Forms.Label lblImageDest;
+        private System.Windows.Forms.ComboBox cboImagesDest;
         private System.Windows.Forms.Label lblLogo;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.TabPage tpHotkeys;
@@ -5631,8 +5741,8 @@ namespace ZSS
         private System.Windows.Forms.DataGridView dgvHotkeys;
         private System.Windows.Forms.DataGridViewTextBoxColumn chHotkeys_Description;
         private System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
-        private System.Windows.Forms.TabPage tpCapture;
-        private System.Windows.Forms.TabControl tcFileSettings;
+        private System.Windows.Forms.TabPage tpScreenshots;
+        private System.Windows.Forms.TabControl tcScreenshots;
         private System.Windows.Forms.TabPage tpCropShot;
         private System.Windows.Forms.GroupBox gbCropRegionSettings;
         private System.Windows.Forms.NumericUpDown nudCropHueRange;
@@ -5796,8 +5906,8 @@ namespace ZSS
         private System.Windows.Forms.Button btnFTPTest;
         private System.Windows.Forms.Button btnFTPExport;
         private System.Windows.Forms.Button btnFTPDelete;
-        private System.Windows.Forms.TabPage tpHTTP;
-        private System.Windows.Forms.TabControl tcHTTP;
+        private System.Windows.Forms.TabPage tpImages;
+        private System.Windows.Forms.TabControl tcImages;
         private System.Windows.Forms.TabPage tpImageUploaders;
         private System.Windows.Forms.GroupBox gbImageUploaderOptions;
         private System.Windows.Forms.Label lblUploadDurationLimit;
@@ -5896,8 +6006,8 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbHistoryAddSpace;
         private System.Windows.Forms.CheckBox cbHistoryReverseList;
         private System.Windows.Forms.TabPage tpOptions;
-        private System.Windows.Forms.TabControl tcAdvanced;
-        private System.Windows.Forms.TabPage tpAdvAppearance;
+        private System.Windows.Forms.TabControl tcOptions;
+        private System.Windows.Forms.TabPage tpGeneral;
         private System.Windows.Forms.GroupBox gbUpdates;
         private System.Windows.Forms.ComboBox cboUpdateCheckType;
         private System.Windows.Forms.Label lblUpdateInfo;
@@ -5944,7 +6054,6 @@ namespace ZSS
         private System.Windows.Forms.RichTextBox txtActiveHelp;
         private System.Windows.Forms.TableLayoutPanel ZScreenPanels;
         private System.Windows.Forms.PropertyGrid pgTextUploaderSettings;
-        private System.Windows.Forms.ListView lvTextUploaders;
         private System.Windows.Forms.ComboBox cboTextUploaders;
         private System.Windows.Forms.Button btnAddTextUploader;
         private System.Windows.Forms.TabPage tpTextUploaders;
@@ -5956,10 +6065,19 @@ namespace ZSS
         private System.Windows.Forms.TextBox txtUploadTextResult;
         private System.Windows.Forms.Button btnClearTextUploaders;
         private System.Windows.Forms.Button btnRemoveTextUploader;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Button btnTestTextUploader;
         private System.Windows.Forms.PropertyGrid pgFTPSettings;
         private System.Windows.Forms.PropertyGrid pgEditorsImage;
+        private System.Windows.Forms.TabPage tpAccounts;
+        private System.Windows.Forms.TabControl tcAccounts;
+        private System.Windows.Forms.TabPage tpTinyPic;
+        private System.Windows.Forms.TabPage tpImageShack;
+        private System.Windows.Forms.TabPage tpText;
+        private System.Windows.Forms.TabControl tcText;
+        private System.Windows.Forms.ComboBox cboTextDest;
+        private System.Windows.Forms.ListBox lbTextUploaders;
+        private System.Windows.Forms.Label lblTextDest;
+        private System.Windows.Forms.GroupBox gbImageSettings;
 
     }
 }
