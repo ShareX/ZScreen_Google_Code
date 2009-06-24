@@ -277,21 +277,17 @@ namespace ZSS
             this.tpEditors = new System.Windows.Forms.TabPage();
             this.tcEditors = new System.Windows.Forms.TabControl();
             this.tpEditorsImages = new System.Windows.Forms.TabPage();
-            this.gbImageSoftwaresList = new System.Windows.Forms.GroupBox();
-            this.lblImageSoftwareName = new System.Windows.Forms.Label();
+            this.pgEditorsImage = new System.Windows.Forms.PropertyGrid();
             this.btnDeleteImageSoftware = new System.Windows.Forms.Button();
             this.btnBrowseImageSoftware = new System.Windows.Forms.Button();
             this.lbImageSoftware = new System.Windows.Forms.ListBox();
-            this.txtImageSoftwarePath = new System.Windows.Forms.TextBox();
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
-            this.btnUpdateImageSoftware = new System.Windows.Forms.Button();
-            this.lblImageSoftwarePath = new System.Windows.Forms.Label();
-            this.txtImageSoftwareName = new System.Windows.Forms.TextBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
+            this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
+            this.lbFTPAccounts = new System.Windows.Forms.ListBox();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
-            this.lbFTPAccounts = new System.Windows.Forms.ListBox();
             this.btnFTPAdd = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFTPTest = new System.Windows.Forms.Button();
@@ -459,7 +455,6 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
             this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
@@ -529,7 +524,6 @@ namespace ZSS
             this.tpEditors.SuspendLayout();
             this.tcEditors.SuspendLayout();
             this.tpEditorsImages.SuspendLayout();
-            this.gbImageSoftwaresList.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
             this.tpHTTP.SuspendLayout();
@@ -3294,7 +3288,11 @@ namespace ZSS
             // 
             // tpEditorsImages
             // 
-            this.tpEditorsImages.Controls.Add(this.gbImageSoftwaresList);
+            this.tpEditorsImages.Controls.Add(this.pgEditorsImage);
+            this.tpEditorsImages.Controls.Add(this.btnDeleteImageSoftware);
+            this.tpEditorsImages.Controls.Add(this.btnBrowseImageSoftware);
+            this.tpEditorsImages.Controls.Add(this.lbImageSoftware);
+            this.tpEditorsImages.Controls.Add(this.btnAddImageSoftware);
             this.tpEditorsImages.Location = new System.Drawing.Point(4, 22);
             this.tpEditorsImages.Name = "tpEditorsImages";
             this.tpEditorsImages.Padding = new System.Windows.Forms.Padding(3);
@@ -3303,42 +3301,27 @@ namespace ZSS
             this.tpEditorsImages.Text = "Image Editors";
             this.tpEditorsImages.UseVisualStyleBackColor = true;
             // 
-            // gbImageSoftwaresList
+            // pgEditorsImage
             // 
-            this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwareName);
-            this.gbImageSoftwaresList.Controls.Add(this.btnDeleteImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.btnBrowseImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.lbImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwarePath);
-            this.gbImageSoftwaresList.Controls.Add(this.btnAddImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.btnUpdateImageSoftware);
-            this.gbImageSoftwaresList.Controls.Add(this.lblImageSoftwarePath);
-            this.gbImageSoftwaresList.Controls.Add(this.txtImageSoftwareName);
-            this.gbImageSoftwaresList.Location = new System.Drawing.Point(8, 8);
-            this.gbImageSoftwaresList.Name = "gbImageSoftwaresList";
-            this.gbImageSoftwaresList.Size = new System.Drawing.Size(704, 304);
-            this.gbImageSoftwaresList.TabIndex = 63;
-            this.gbImageSoftwaresList.TabStop = false;
-            this.gbImageSoftwaresList.Text = "Image Editors List";
-            // 
-            // lblImageSoftwareName
-            // 
-            this.lblImageSoftwareName.AutoSize = true;
-            this.lblImageSoftwareName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblImageSoftwareName.Location = new System.Drawing.Point(16, 24);
-            this.lblImageSoftwareName.Name = "lblImageSoftwareName";
-            this.lblImageSoftwareName.Size = new System.Drawing.Size(38, 13);
-            this.lblImageSoftwareName.TabIndex = 61;
-            this.lblImageSoftwareName.Text = "Name:";
+            this.pgEditorsImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgEditorsImage.HelpVisible = false;
+            this.pgEditorsImage.Location = new System.Drawing.Point(296, 40);
+            this.pgEditorsImage.Name = "pgEditorsImage";
+            this.pgEditorsImage.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgEditorsImage.Size = new System.Drawing.Size(440, 72);
+            this.pgEditorsImage.TabIndex = 64;
+            this.pgEditorsImage.ToolbarVisible = false;
+            this.pgEditorsImage.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgEditorsImage_PropertyValueChanged);
             // 
             // btnDeleteImageSoftware
             // 
             this.btnDeleteImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnDeleteImageSoftware.Location = new System.Drawing.Point(208, 120);
+            this.btnDeleteImageSoftware.Location = new System.Drawing.Point(392, 8);
             this.btnDeleteImageSoftware.Name = "btnDeleteImageSoftware";
             this.btnDeleteImageSoftware.Size = new System.Drawing.Size(88, 24);
             this.btnDeleteImageSoftware.TabIndex = 58;
-            this.btnDeleteImageSoftware.Text = "Delete";
+            this.btnDeleteImageSoftware.Text = "&Remove";
             this.btnDeleteImageSoftware.UseVisualStyleBackColor = true;
             this.btnDeleteImageSoftware.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
             // 
@@ -3346,7 +3329,7 @@ namespace ZSS
             // 
             this.btnBrowseImageSoftware.AutoSize = true;
             this.btnBrowseImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseImageSoftware.Location = new System.Drawing.Point(16, 120);
+            this.btnBrowseImageSoftware.Location = new System.Drawing.Point(488, 8);
             this.btnBrowseImageSoftware.Name = "btnBrowseImageSoftware";
             this.btnBrowseImageSoftware.Size = new System.Drawing.Size(88, 23);
             this.btnBrowseImageSoftware.TabIndex = 6;
@@ -3356,62 +3339,27 @@ namespace ZSS
             // 
             // lbImageSoftware
             // 
+            this.lbImageSoftware.Dock = System.Windows.Forms.DockStyle.Left;
             this.lbImageSoftware.FormattingEnabled = true;
             this.lbImageSoftware.IntegralHeight = false;
-            this.lbImageSoftware.Location = new System.Drawing.Point(408, 24);
+            this.lbImageSoftware.Location = new System.Drawing.Point(3, 3);
             this.lbImageSoftware.Name = "lbImageSoftware";
-            this.lbImageSoftware.Size = new System.Drawing.Size(280, 264);
+            this.lbImageSoftware.Size = new System.Drawing.Size(280, 410);
             this.lbImageSoftware.TabIndex = 59;
             this.lbImageSoftware.SelectedIndexChanged += new System.EventHandler(this.lbImageSoftware_SelectedIndexChanged);
-            // 
-            // txtImageSoftwarePath
-            // 
-            this.txtImageSoftwarePath.Enabled = false;
-            this.txtImageSoftwarePath.Location = new System.Drawing.Point(16, 88);
-            this.txtImageSoftwarePath.Name = "txtImageSoftwarePath";
-            this.txtImageSoftwarePath.Size = new System.Drawing.Size(376, 20);
-            this.txtImageSoftwarePath.TabIndex = 5;
             // 
             // btnAddImageSoftware
             // 
             this.btnAddImageSoftware.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddImageSoftware.BackColor = System.Drawing.Color.Transparent;
             this.btnAddImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnAddImageSoftware.Location = new System.Drawing.Point(304, 120);
+            this.btnAddImageSoftware.Location = new System.Drawing.Point(296, 8);
             this.btnAddImageSoftware.Name = "btnAddImageSoftware";
             this.btnAddImageSoftware.Size = new System.Drawing.Size(88, 24);
             this.btnAddImageSoftware.TabIndex = 59;
             this.btnAddImageSoftware.Text = "Add";
             this.btnAddImageSoftware.UseVisualStyleBackColor = false;
             this.btnAddImageSoftware.Click += new System.EventHandler(this.btnAddImageSoftware_Click);
-            // 
-            // btnUpdateImageSoftware
-            // 
-            this.btnUpdateImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUpdateImageSoftware.Location = new System.Drawing.Point(112, 120);
-            this.btnUpdateImageSoftware.Name = "btnUpdateImageSoftware";
-            this.btnUpdateImageSoftware.Size = new System.Drawing.Size(88, 24);
-            this.btnUpdateImageSoftware.TabIndex = 7;
-            this.btnUpdateImageSoftware.Text = "Update";
-            this.btnUpdateImageSoftware.UseVisualStyleBackColor = true;
-            this.btnUpdateImageSoftware.Click += new System.EventHandler(this.btnUpdateImageSoftware_Click);
-            // 
-            // lblImageSoftwarePath
-            // 
-            this.lblImageSoftwarePath.AutoSize = true;
-            this.lblImageSoftwarePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblImageSoftwarePath.Location = new System.Drawing.Point(16, 72);
-            this.lblImageSoftwarePath.Name = "lblImageSoftwarePath";
-            this.lblImageSoftwarePath.Size = new System.Drawing.Size(32, 13);
-            this.lblImageSoftwarePath.TabIndex = 62;
-            this.lblImageSoftwarePath.Text = "Path:";
-            // 
-            // txtImageSoftwareName
-            // 
-            this.txtImageSoftwareName.Location = new System.Drawing.Point(16, 40);
-            this.txtImageSoftwareName.Name = "txtImageSoftwareName";
-            this.txtImageSoftwareName.Size = new System.Drawing.Size(376, 20);
-            this.txtImageSoftwareName.TabIndex = 60;
             // 
             // tpFTP
             // 
@@ -3431,6 +3379,30 @@ namespace ZSS
             this.tpFTP.TabIndex = 3;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
+            // 
+            // pgFTPSettings
+            // 
+            this.pgFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFTPSettings.Location = new System.Drawing.Point(304, 40);
+            this.pgFTPSettings.Name = "pgFTPSettings";
+            this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgFTPSettings.Size = new System.Drawing.Size(464, 304);
+            this.pgFTPSettings.TabIndex = 116;
+            this.pgFTPSettings.ToolbarVisible = false;
+            this.pgFTPSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPSettings_PropertyValueChanged);
+            // 
+            // lbFTPAccounts
+            // 
+            this.lbFTPAccounts.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbFTPAccounts.FormattingEnabled = true;
+            this.lbFTPAccounts.IntegralHeight = false;
+            this.lbFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.lbFTPAccounts.Name = "lbFTPAccounts";
+            this.lbFTPAccounts.Size = new System.Drawing.Size(285, 442);
+            this.lbFTPAccounts.TabIndex = 40;
+            this.lbFTPAccounts.SelectedIndexChanged += new System.EventHandler(this.lbFTPAccounts_SelectedIndexChanged);
             // 
             // gbFTPSettings
             // 
@@ -3468,17 +3440,6 @@ namespace ZSS
             this.chkEnableThumbnail.Text = "Create thumbnail";
             this.chkEnableThumbnail.UseVisualStyleBackColor = false;
             this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
-            // 
-            // lbFTPAccounts
-            // 
-            this.lbFTPAccounts.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lbFTPAccounts.FormattingEnabled = true;
-            this.lbFTPAccounts.IntegralHeight = false;
-            this.lbFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.lbFTPAccounts.Name = "lbFTPAccounts";
-            this.lbFTPAccounts.Size = new System.Drawing.Size(285, 442);
-            this.lbFTPAccounts.TabIndex = 40;
-            this.lbFTPAccounts.SelectedIndexChanged += new System.EventHandler(this.lbFTPAccounts_SelectedIndexChanged);
             // 
             // btnFTPAdd
             // 
@@ -5393,19 +5354,6 @@ namespace ZSS
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
             // 
-            // pgFTPSettings
-            // 
-            this.pgFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgFTPSettings.Location = new System.Drawing.Point(304, 40);
-            this.pgFTPSettings.Name = "pgFTPSettings";
-            this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(464, 304);
-            this.pgFTPSettings.TabIndex = 116;
-            this.pgFTPSettings.ToolbarVisible = false;
-            this.pgFTPSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPSettings_PropertyValueChanged);
-            // 
             // nudtScreenshotDelay
             // 
             this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 88);
@@ -5528,8 +5476,7 @@ namespace ZSS
             this.tpEditors.ResumeLayout(false);
             this.tcEditors.ResumeLayout(false);
             this.tpEditorsImages.ResumeLayout(false);
-            this.gbImageSoftwaresList.ResumeLayout(false);
-            this.gbImageSoftwaresList.PerformLayout();
+            this.tpEditorsImages.PerformLayout();
             this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
@@ -5836,16 +5783,10 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpEditors;
         private System.Windows.Forms.TabControl tcEditors;
         private System.Windows.Forms.TabPage tpEditorsImages;
-        private System.Windows.Forms.GroupBox gbImageSoftwaresList;
-        private System.Windows.Forms.Label lblImageSoftwareName;
         private System.Windows.Forms.Button btnDeleteImageSoftware;
         private System.Windows.Forms.Button btnBrowseImageSoftware;
         private System.Windows.Forms.ListBox lbImageSoftware;
-        private System.Windows.Forms.TextBox txtImageSoftwarePath;
         private System.Windows.Forms.Button btnAddImageSoftware;
-        private System.Windows.Forms.Button btnUpdateImageSoftware;
-        private System.Windows.Forms.Label lblImageSoftwarePath;
-        private System.Windows.Forms.TextBox txtImageSoftwareName;
         private System.Windows.Forms.TabPage tpFTP;
         private System.Windows.Forms.GroupBox gbFTPSettings;
         private System.Windows.Forms.CheckBox cbAutoSwitchFTP;
@@ -6019,6 +5960,7 @@ namespace ZSS
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Button btnTestTextUploader;
         private System.Windows.Forms.PropertyGrid pgFTPSettings;
+        private System.Windows.Forms.PropertyGrid pgEditorsImage;
 
     }
 }
