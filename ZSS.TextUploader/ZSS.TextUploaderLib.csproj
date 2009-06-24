@@ -57,13 +57,13 @@
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
-    <Compile Include="HTTP\Paste2Uploader.cs" />
-    <Compile Include="HTTP\Slexy.cs" />
-    <Compile Include="HTTP\Snipt.cs" />
+    <Compile Include="Uploaders\Paste2.cs" />
+    <Compile Include="Uploaders\Slexy.cs" />
+    <Compile Include="Uploaders\Snipt.cs" />
     <Compile Include="TextUploader.cs" />
     <Compile Include="Helpers\TextFile.cs" />
-    <Compile Include="HTTP\GoogleTranslate.cs" />
-    <Compile Include="HTTP\PastebinUploader.cs" />
+    <Compile Include="Uploaders\GoogleTranslate.cs" />
+    <Compile Include="Uploaders\Pastebin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
