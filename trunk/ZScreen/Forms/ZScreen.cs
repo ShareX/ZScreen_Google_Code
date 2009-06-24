@@ -117,6 +117,8 @@ namespace ZSS
             CreateCodesMenu();
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
+
+            niTray.Visible = true;
         }
 
         private void SetupScreen()
@@ -4936,10 +4938,10 @@ namespace ZSS
         {
             switch (name)
             {
-                case PastebinUploader.Hostname:
-                    return new PastebinUploader();
-                case Paste2Uploader.Hostname:
-                    return new Paste2Uploader();
+                case Pastebin.Hostname:
+                    return new Pastebin();
+                case Paste2.Hostname:
+                    return new Paste2();
                 case Slexy.Hostname:
                     return new Slexy();
                 case Snipt.Hostname:

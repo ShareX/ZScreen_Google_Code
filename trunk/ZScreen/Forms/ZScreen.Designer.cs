@@ -568,7 +568,6 @@ namespace ZSS
             // 
             this.niTray.ContextMenuStrip = this.cmTray;
             this.niTray.Icon = ((System.Drawing.Icon)(resources.GetObject("niTray.Icon")));
-            this.niTray.Visible = true;
             this.niTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.niTray_MouseDoubleClick);
             // 
             // cmTray

@@ -31,11 +31,12 @@ using System.IO;
 using ZSS.TextUploaders.Helpers;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    public sealed class PastebinUploader : TextUploader
+    public sealed class Pastebin : TextUploader
     {
         public const string Hostname = "pastebin.com";
 
@@ -53,12 +54,12 @@ namespace ZSS.TextUploaders
 
         public PastebinSettings HostSettings = new PastebinSettings();
 
-        public PastebinUploader()
+        public Pastebin()
         {
             HostSettings.URL = CreateURL("http://pastebin.com");
         }
 
-        public PastebinUploader(string url)
+        public Pastebin(string url)
         {
             HostSettings.URL = CreateURL(url);
         }
@@ -93,6 +94,39 @@ namespace ZSS.TextUploaders
             }
 
             return "";
+        }
+
+        public List<TextFormat> DownloadTextFormats()
+        {
+            List<TextFormat> textFormats = new List<TextFormat>();
+            try
+            {
+                WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
+                string source = webClient.DownloadString(HostSettings.URL);
+                Match match = Regex.Match(source, "-</option>(.+?)</select>");
+                if (match.Success)
+                {
+                    MatchCollection matches = Regex.Matches(match.Groups[1].Value, "value=\"(.+?)\">(.+?)</");
+                    foreach (Match m in matches)
+                    {
+                        if (m.Success)
+                        {
+                            textFormats.Add(new TextFormat { Value = m.Groups[1].Value, Name = m.Groups[2].Value });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return textFormats;
+        }
+
+        public struct TextFormat
+        {
+            public string Value;
+            public string Name;
         }
 
         [Serializable]
