@@ -144,12 +144,12 @@ namespace ZSS
             //  Main
             //~~~~~~~~~~~~~~~~~~~~~
 
-            if (cboScreenshotDest.Items.Count == 0)
+            if (cboImagesDest.Items.Count == 0)
             {
-                cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+                cboImagesDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
 
-            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
@@ -293,14 +293,16 @@ namespace ZSS
             // Text Uploader Settings
             ///////////////////////////////////
 
-            lvTextUploaders.Items.Clear();
+            lbTextUploaders.Items.Clear();
+            cboTextDest.Items.Clear();
             foreach (object textUploader in Program.mgrTextUploaders.TextUploadersSettings)
             {
                 AddTextUploader(textUploader);
             }
-            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lvTextUploaders.Items.Count)
+            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lbTextUploaders.Items.Count)
             {
-                lvTextUploaders.Items[Program.conf.SelectedTextUploader].Selected = true;
+                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
+                cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
             }
             cboTextUploaders.Items.Clear();
             cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
@@ -462,18 +464,18 @@ namespace ZSS
             {
                 if (obj.GetType() == typeof(FTPUploader))
                 {
-                    string name = string.Format("FTP ({0})", ((FTPUploader)obj).Name);
-                    lvTextUploaders.Items.Add(name).Tag = obj;
+                    lbTextUploaders.Items.Add(obj);
+                    cboTextDest.Items.Add(obj);
                 }
                 else
                 {
-                    string name = ((TextUploader)obj).Name;
-                    lvTextUploaders.Items.Add(name).Tag = obj;
+                    lbTextUploaders.Items.Add(obj);
+                    cboTextDest.Items.Add(obj);
                 }
             }
             else
             {
-                lvTextUploaders.Items.Add(obj.ToString()).Tag = obj;
+                lbTextUploaders.Items.Add(obj);
             }
         }
 
@@ -859,7 +861,7 @@ namespace ZSS
                                 sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.TextDestCategory.GetDescription(), t.DestinationName));
                                 break;
                             default:
-                                sbMsg.AppendLine(string.Format("Destination: {0}", t.TextDestCategory.GetDescription()));
+                                sbMsg.AppendLine(string.Format("Destination: {0}", ((TextUploader)t.TextUploader).Name));
                                 break;
                         }
                         break;
@@ -996,7 +998,7 @@ namespace ZSS
 
         private void QuickOptionsApplySettings(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
         }
 
@@ -1236,7 +1238,7 @@ namespace ZSS
                     cboCropGridMode.Checked = Program.conf.CropGridToggle;
                     break;
                 case MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION:
-                    cboScreenshotDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+                    cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
                     break;
             }
         }
@@ -1524,9 +1526,9 @@ namespace ZSS
         private void WriteTextUploadersManager()
         {
             Program.mgrTextUploaders.TextUploadersSettings.Clear();
-            foreach (ListViewItem item in lvTextUploaders.Items)
+            foreach (Object item in lbTextUploaders.Items)
             {
-                Program.mgrTextUploaders.TextUploadersSettings.Add(item.Tag);
+                Program.mgrTextUploaders.TextUploadersSettings.Add(item);
             }
             Program.mgrTextUploaders.Write();
         }
@@ -1979,7 +1981,7 @@ namespace ZSS
             if (tsm == tsmHotkeys)
                 sel = tpHotkeys;
             else if (tsm == tsmCapture)
-                sel = tpCapture;
+                sel = tpScreenshots;
             else if (tsm == tsmWatermark)
                 sel = tpWatermark;
             else if (tsm == tsmEditors)
@@ -1987,7 +1989,7 @@ namespace ZSS
             else if (tsm == tsmFTP)
                 sel = tpFTP;
             else if (tsm == tsmHTTP)
-                sel = tpHTTP;
+                sel = tpImages;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
             else if (tsm == tsmOptions)
@@ -2171,7 +2173,7 @@ namespace ZSS
 
         private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageDestType sdt = (ImageDestType)cboScreenshotDest.SelectedIndex;
+            ImageDestType sdt = (ImageDestType)cboImagesDest.SelectedIndex;
             Program.conf.ScreenshotDestMode = sdt;
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
@@ -2210,38 +2212,38 @@ namespace ZSS
                 tsmi.Checked = tsmi == item;
             }
 
-            tsmCopytoClipboardMode.Enabled = cboScreenshotDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
-                cboScreenshotDest.SelectedIndex != (int)ImageDestType.FILE;
+            tsmCopytoClipboardMode.Enabled = cboImagesDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
+                cboImagesDest.SelectedIndex != (int)ImageDestType.FILE;
         }
 
         private void tsmDestClipboard_Click(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
+            cboImagesDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
         }
 
         private void tsmDestFile_Click(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.FILE;
+            cboImagesDest.SelectedIndex = (int)ImageDestType.FILE;
         }
 
         private void tsmDestFTP_Click(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.FTP;
+            cboImagesDest.SelectedIndex = (int)ImageDestType.FTP;
         }
 
         private void tsmDestImageShack_Click(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.IMAGESHACK;
+            cboImagesDest.SelectedIndex = (int)ImageDestType.IMAGESHACK;
         }
 
         private void tsmDestTinyPic_Click(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.TINYPIC;
+            cboImagesDest.SelectedIndex = (int)ImageDestType.TINYPIC;
         }
 
         private void tsmDestCustomHTTP_Click(object sender, EventArgs e)
         {
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.CUSTOM_UPLOADER;
+            cboImagesDest.SelectedIndex = (int)ImageDestType.CUSTOM_UPLOADER;
         }
 
         private void SetActiveImageSoftware()
@@ -3096,7 +3098,7 @@ namespace ZSS
                 txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots." +
                     " You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
             }
-            else if (e.TabPage == tpHTTP)
+            else if (e.TabPage == tpImages)
             {
                 txtActiveHelp.Text = tabDesc + "configure the Image Hosting Service you prefer to upload the screenshot.";
             }
@@ -3105,7 +3107,7 @@ namespace ZSS
                 txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot." +
                     " {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
             }
-            else if (e.TabPage == tpCapture)
+            else if (e.TabPage == tpScreenshots)
             {
                 txtActiveHelp.Text = tabDesc + string.Format("customize file naming patterns for the screenshot you are taking.");
             }
@@ -3166,7 +3168,7 @@ namespace ZSS
             //////////////////////////////////
             // Main Tab
             //////////////////////////////////
-            cboScreenshotDest.Tag = "Select destination for the Screenshot. Destination can also be changed using the Tray menu.";
+            cboImagesDest.Tag = "Select destination for the Screenshot. Destination can also be changed using the Tray menu.";
 
             cboClipboardTextMode.Tag = "Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard." +
                 "\n\"Full Image\" returns a normal full-size image URL.\n\"Full Image for Forums\" returns BBcode for embedding images into forum posts." +
@@ -4882,10 +4884,10 @@ namespace ZSS
 
         private string UploadText(string text, UploadTextType type)
         {
-            if (lvTextUploaders.SelectedItems.Count > 0 && (type == UploadTextType.UploadTextFromClipboard || !string.IsNullOrEmpty(text)))
+            if (lbTextUploaders.SelectedItems.Count > 0 && (type == UploadTextType.UploadTextFromClipboard || !string.IsNullOrEmpty(text)))
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
-                TextUploader textUploader = (TextUploader)lvTextUploaders.SelectedItems[0].Tag;
+                TextUploader textUploader = (TextUploader)lbTextUploaders.SelectedItem;
                 string result = "";
                 switch (type)
                 {
@@ -4910,30 +4912,7 @@ namespace ZSS
                 }
             }
             return "";
-        }
-
-        private void lvTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lvTextUploaders.SelectedItems.Count > 0)
-            {
-                Program.conf.SelectedTextUploader = lvTextUploaders.SelectedIndices[0];
-
-                object textUploader = lvTextUploaders.SelectedItems[0].Tag;
-                bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
-                Program.mgrTextUploaders.TextUploaderActive = textUploader;
-                pgTextUploaderSettings.Visible = hasOptions;
-
-                if (pgTextUploaderSettings.Visible)
-                {
-                    pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
-                }
-            }
-            else
-            {
-                Program.conf.SelectedTextUploader = -1;
-                Program.mgrTextUploaders.TextUploaderActive = null;
-            }
-        }
+        } 
 
         private object FindTextUploader(string name)
         {
@@ -4983,7 +4962,7 @@ namespace ZSS
                     if (textUploader != null)
                     {
                         AddTextUploader(textUploader);
-                        lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
+                        lbTextUploaders.SelectedIndex = lbTextUploaders.Items.Count - 1;
                     }
                 }
             }
@@ -4991,15 +4970,16 @@ namespace ZSS
 
         private void btnRemoveTextUploader_Click(object sender, EventArgs e)
         {
-            if (lvTextUploaders.SelectedItems.Count > 0)
+            if (lbTextUploaders.SelectedItems.Count > 0)
             {
-                lvTextUploaders.Items.RemoveAt(lvTextUploaders.SelectedIndices[0]);
+                lbTextUploaders.Items.RemoveAt(lbTextUploaders.SelectedIndices[0]);
+                cboTextDest.Items.RemoveAt(lbTextUploaders.SelectedIndices[0]);
             }
         }
 
         private void btnClearTextUploaders_Click(object sender, EventArgs e)
         {
-            lvTextUploaders.Items.Clear();
+            lbTextUploaders.Items.Clear();
         }
 
         private void btnTestTextUploader_Click(object sender, EventArgs e)
@@ -5042,6 +5022,41 @@ namespace ZSS
             Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
+        }
+
+        private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbTextUploaders.SelectedItems.Count > 0)
+            {
+                Program.conf.SelectedTextUploader = lbTextUploaders.SelectedIndices[0];
+
+                object textUploader = lbTextUploaders.SelectedItem;
+                bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);                
+                pgTextUploaderSettings.Visible = hasOptions;
+
+                if (pgTextUploaderSettings.Visible)
+                {
+                    pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
+                }
+            }
+            else
+            {
+                Program.conf.SelectedTextUploader = -1;
+                Program.mgrTextUploaders.TextUploaderActive = null;
+            }
+        }
+
+        private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.mGuiIsReady)
+            {
+                Program.mgrTextUploaders.TextUploaderActive = cboTextDest.SelectedItem;
+            }
+        }
+
+        private void gbImageSettings_Enter(object sender, EventArgs e)
+        {
+
         }
 
     }
