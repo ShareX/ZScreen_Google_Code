@@ -1495,7 +1495,7 @@ namespace ZSS
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                     this.Refresh();
                 }
-                if (Program.conf.AutoSaveSettings) SaveSettings();
+                if (Program.conf.AutoSaveSettings) WriteSettings();
             }
         }
 
@@ -1506,7 +1506,7 @@ namespace ZSS
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
             */
             this.WindowState = FormWindowState.Minimized;
-            SaveSettings();
+            WriteSettings();
 
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
@@ -1532,7 +1532,7 @@ namespace ZSS
             Program.mgrTextUploaders.Write();
         }
 
-        private void SaveSettings()
+        private void WriteSettings()
         {
             Program.conf.Save();
             SaveHistoryItems();
@@ -1847,7 +1847,7 @@ namespace ZSS
                     }
                 }
             }
-            SoftwareRemove(sName);
+            //SoftwareRemove(sName); this was causing Paint.NET to remove itself at some cases
             return false;
         }
 
@@ -1880,7 +1880,7 @@ namespace ZSS
 
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
         {
-            BrowseImageSoftware();            
+            BrowseImageSoftware();
         }
 
         private void BrowseImageSoftware()
@@ -2142,8 +2142,8 @@ namespace ZSS
         {
             Software temp = new Software("New", "");
             Program.conf.ImageSoftwareList.Add(temp);
-            lbImageSoftware.Items.Add(temp.Name);
-            lbImageSoftware.SelectedItem = temp.Name;
+            lbImageSoftware.Items.Add(temp);
+            lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
         }
 
         private void btnAddImageSoftware_Click(object sender, EventArgs e)
@@ -3125,7 +3125,7 @@ namespace ZSS
             }
 
             CheckFormSettings();
-            if (Program.conf.AutoSaveSettings) SaveSettings();
+            if (Program.conf.AutoSaveSettings) WriteSettings();
         }
 
         private void CheckFormSettings()
@@ -4073,15 +4073,6 @@ namespace ZSS
             Program.conf.FTPAccountList.Add(acc);
             lbFTPAccounts.Items.Add(acc);
             lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-
-            //if (ValidateFTP())
-            //{
-
-            //}
-            //else
-            //{
-            //    txtFTPStatus.Text = "Not Updated."; //change to FTP Account not added?
-            //}
         }
 
         private void btnUpdateFTP_Click(object sender, EventArgs e)
@@ -5057,6 +5048,7 @@ namespace ZSS
         {
             Software temp = Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1];
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
+            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
         }
