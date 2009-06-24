@@ -56,26 +56,17 @@ namespace ZSS.TextUploaders
 
         public Pastebin()
         {
-            HostSettings.URL = CreateURL("http://pastebin.com");
+            HostSettings.URL = "http://pastebin.com/pastebin.php";
         }
 
         public Pastebin(string url)
         {
-            HostSettings.URL = CreateURL(url);
+            HostSettings.URL = url;
         }
 
         public override string Name
         {
             get { return Hostname; }
-        }
-
-        private string CreateURL(string url)
-        {
-            if (!url.EndsWith(".php"))
-            {
-                return CombineURL(url, "pastebin.php");
-            }
-            return url;
         }
 
         public override string UploadText(string text)
@@ -123,6 +114,25 @@ namespace ZSS.TextUploaders
             return textFormats;
         }
 
+        public string DownloadTextContent(string url)
+        {
+            try
+            {
+                WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
+                string source = webClient.DownloadString(url);
+                Match match = Regex.Match(source, "<textarea.+?>(.*?)</textarea>", RegexOptions.Singleline);
+                if (match.Success)
+                {
+                    return HttpUtility.HtmlDecode(match.Groups[1].Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return null;
+        }
+
         public struct TextFormat
         {
             public string Value;
@@ -145,11 +155,8 @@ namespace ZSS.TextUploaders
 
             public enum TimeTypes
             {
-                [Description("Day")]
                 Day = 'd',
-                [Description("After a Month")]
                 Month = 'm',
-                [Description("Forever")]
                 Forever = 'f'
             }
         }
