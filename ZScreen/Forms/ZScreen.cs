@@ -3518,8 +3518,7 @@ namespace ZSS
         private string FontToString(Font font, Color color)
         {
             return "Name: " + font.Name + " - Size: " + font.Size + " - Style: " + font.Style + " - Color: " +
-                color.R + "," + color.G + "," + color.B;
-            //+ " - Color: " + (color.IsNamedColor ? color.Name : "(R:" + color.R + " G:" + color.G + " B:" + color.B + ")");
+                color.R + "," + color.G + "," + color.B;            
         }
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
@@ -4059,8 +4058,7 @@ namespace ZSS
             int sel = lbFTPAccounts.SelectedIndex;
             if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
-                FTPAccount acc = Program.conf.FTPAccountList[sel];
-                // gbFTPAccount.Text = string.Format("Settings: {0} - {1}", acc.Name, acc.Server);
+                FTPAccount acc = Program.conf.FTPAccountList[sel];                
                 pgFTPSettings.SelectedObject = acc;
                 Program.conf.FTPSelected = lbFTPAccounts.SelectedIndex;
                 RewriteFTPRightClickMenu();
@@ -4982,18 +4980,6 @@ namespace ZSS
                         AddTextUploader(textUploader);
                         lvTextUploaders.Items[lvTextUploaders.Items.Count - 1].Selected = true;
                     }
-                    //else
-                    //{
-                    //    bool notFound = true;
-                    //    foreach (ListViewItem lv in lvTextUploaders.Items)
-                    //    {
-                    //        notFound = notFound && lv.Text != name;
-                    //    }
-                    //    if (notFound)
-                    //    {
-                    //        lvTextUploaders.Items.Add(name).Tag = name;
-                    //    }
-                    //}
                 }
             }
         }
