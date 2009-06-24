@@ -1065,13 +1065,9 @@ namespace ZSS
             {
                 t.TextDestCategory = TextDestType.FTP;
             }
-            else if (t.TextUploader.GetType() == typeof(PastebinUploader))
+            else if (t.TextUploader.GetType().BaseType == typeof(TextUploader))
             {
-                t.TextDestCategory = TextDestType.PASTEBIN_COM;
-            }
-            else if (t.TextUploader.GetType() == typeof(Paste2Uploader))
-            {
-                t.TextDestCategory = TextDestType.PASTE2_ORG;
+                t.TextDestCategory = TextDestType.PASTEBIN;
             }
             t.SetLocalFilePath(localFilePath);
 
@@ -4940,11 +4936,13 @@ namespace ZSS
         {
             switch (name)
             {
-                case (PastebinUploader.Hostname):
+                case PastebinUploader.Hostname:
                     return new PastebinUploader();
-                case (Paste2Uploader.Hostname):
+                case Paste2Uploader.Hostname:
                     return new Paste2Uploader();
-                case (FTPUploader.Hostname):
+                case Slexy.Hostname:
+                    return new Slexy();
+                case FTPUploader.Hostname:
                     if (Program.conf.FTPSelected > -1 && Program.conf.FTPAccountList.Count > 0)
                     {
                         FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
