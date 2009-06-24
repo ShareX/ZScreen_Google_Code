@@ -16,3 +16,5 @@ This release is a single executable that merges ZScreen.exe and its dynamic link
 {{{
 ZScreen-x.x.x.x-bin.exe
 }}}
+
+[http://inf1ni.wik.is/@api/deki/pages/=User%253aAdmin/files/=ZScreen_2.10.9.0_Beta-2009.06.24-02.32.51.png]
