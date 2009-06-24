@@ -461,7 +461,7 @@ namespace ZSS
             {
                 if (obj.GetType() == typeof(FTPUploader))
                 {
-                    string name = string.Format("FTP({0})", ((FTPUploader)obj).Name);
+                    string name = string.Format("FTP ({0})", ((FTPUploader)obj).Name);
                     lvTextUploaders.Items.Add(name).Tag = obj;
                 }
                 else
