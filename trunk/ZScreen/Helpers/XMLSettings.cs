@@ -243,7 +243,7 @@ namespace ZSS
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public int SelectedTextUploader = -1;
+        public int SelectedTextUploader = 0;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
