@@ -30,6 +30,7 @@ using System.Text;
 using System.IO;
 using ZSS.TextUploaders.Helpers;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace ZSS.TextUploaders
 {
@@ -108,7 +109,15 @@ namespace ZSS.TextUploaders
                 TextFormat = "text";
             }
 
-            public enum TimeTypes { Day = 'd', Month = 'm', Forever = 'f' }
+            public enum TimeTypes
+            {
+                [Description("Day")]
+                Day = 'd',
+                [Description("After a Month")]
+                Month = 'm',
+                [Description("Forever")]
+                Forever = 'f'
+            }
         }
     }
 }
