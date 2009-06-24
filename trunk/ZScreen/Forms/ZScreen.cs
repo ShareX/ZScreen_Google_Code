@@ -310,7 +310,6 @@ namespace ZSS
             if (Program.conf.FTPAccountList == null || Program.conf.FTPAccountList.Count == 0)
             {
                 FTPSetup(new List<FTPAccount>());
-                FTPLoad(new FTPAccount());
             }
             else
             {
@@ -1971,18 +1970,18 @@ namespace ZSS
             BringUpMenu();
         }
 
-        private void TrimFTPControls()
-        {
-            TextBox[] arr = { txtFTPServer, txtFTPPath, txtFTPHTTPPath };
-            foreach (TextBox tb in arr)
-            {
-                if (tb.Text != "/")
-                {
-                    tb.Text = tb.Text.TrimEnd("/".ToCharArray()).TrimEnd("\\".ToCharArray());
-                    tb.Update();
-                }
-            }
-        }
+        //private void TrimFTPControls()
+        //{
+        //    TextBox[] arr = { txtFTPServer, txtFTPPath, txtFTPHTTPPath };
+        //    foreach (TextBox tb in arr)
+        //    {
+        //        if (tb.Text != "/")
+        //        {
+        //            tb.Text = tb.Text.TrimEnd("/".ToCharArray()).TrimEnd("\\".ToCharArray());
+        //            tb.Update();
+        //        }
+        //    }
+        //}
 
         private void tsmViewDirectory_Click(object sender, EventArgs e)
         {
@@ -4089,20 +4088,6 @@ namespace ZSS
             return acc.Name + " - " + acc.Server + ":" + acc.Port;
         }
 
-        private void FTPLoad(FTPAccount acc)
-        {
-            txtFTPName.Text = acc.Name;
-            txtFTPServer.Text = acc.Server;
-            nudFTPServerPort.Value = acc.Port;
-            txtFTPUsername.Text = acc.Username;
-            txtFTPPassword.Text = acc.Password;
-            txtFTPPath.Text = acc.Path;
-            txtFTPHTTPPath.Text = acc.HttpPath;
-            rbFTPActive.Checked = acc.IsActive;
-            rbFTPPassive.Checked = !acc.IsActive;
-            gbFTPAccount.Text = string.Format("Settings: {0} - {1}", acc.Name, acc.Server);
-        }
-
         private void FTPSetup(IEnumerable<FTPAccount> accs)
         {
             if (accs != null)
@@ -4117,50 +4102,14 @@ namespace ZSS
             }
         }
 
-        private FTPAccount GetFTPAccountFromFields()
-        {
-            TrimFTPControls();
-
-            FTPAccount acc = new FTPAccount
-            {
-                Name = txtFTPName.Text,
-                Server = txtFTPServer.Text,
-                Port = (int)nudFTPServerPort.Value,
-                Username = txtFTPUsername.Text,
-                Password = txtFTPPassword.Text
-            };
-            if (!txtFTPPath.Text.StartsWith("/"))
-            {
-                txtFTPPath.Text = string.Concat("/", txtFTPPath.Text);
-            }
-            acc.Path = txtFTPPath.Text;
-            acc.HttpPath = txtFTPHTTPPath.Text;
-            acc.IsActive = rbFTPActive.Checked;
-
-            return acc;
-        }
-
-        private bool ValidateFTP()
-        {
-            Control[] controls = { txtFTPServer, txtFTPUsername, txtFTPPassword, txtFTPPath };
-
-            foreach (Control c in controls)
-            {
-                if (String.IsNullOrEmpty(c.Text))
-                    return false;
-            }
-
-            return true;
-        }
-
         private void UpdateFTP()
         {
-            if (ValidateFTP() //txtServer.Text != "" && txtUsername.Text != "" && txtPassword.Text != "" && txtPath.Text != ""
-                && lbFTPAccounts.SelectedIndices.Count == 1 && lbFTPAccounts.SelectedIndex != -1)
+            string msg = "";
+            if (lbFTPAccounts.SelectedIndices.Count == 1 && lbFTPAccounts.SelectedIndex != -1)
             {
-                txtFTPStatus.Text = "Updated.";
+                msg = "Updated.";
 
-                FTPAccount acc = GetFTPAccountFromFields();
+                FTPAccount acc = GetSelectedFTP();
 
                 if (Program.conf.FTPAccountList != null)
                 {
@@ -4177,7 +4126,11 @@ namespace ZSS
             }
             else
             {
-                txtFTPStatus.Text = "Not Updated.";
+               msg = "Not Updated.";
+            }
+            if (!string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -4203,7 +4156,9 @@ namespace ZSS
             int sel = lbFTPAccounts.SelectedIndex;
             if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
-                FTPLoad(Program.conf.FTPAccountList[sel]);
+                FTPAccount acc = Program.conf.FTPAccountList[sel];
+                // gbFTPAccount.Text = string.Format("Settings: {0} - {1}", acc.Name, acc.Server);
+                pgFTPSettings.SelectedObject = acc;
                 Program.conf.FTPSelected = lbFTPAccounts.SelectedIndex;
                 RewriteFTPRightClickMenu();
             }
@@ -4211,17 +4166,19 @@ namespace ZSS
 
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
-            if (ValidateFTP())
-            {
-                FTPAccount acc = GetFTPAccountFromFields();
-                Program.conf.FTPAccountList.Add(acc);
-                lbFTPAccounts.Items.Add(FTPAdd(acc));
-                lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-            }
-            else
-            {
-                txtFTPStatus.Text = "Not Updated."; //change to FTP Account not added?
-            }
+            FTPAccount acc = new FTPAccount("New Account");
+            Program.conf.FTPAccountList.Add(acc);
+            lbFTPAccounts.Items.Add(FTPAdd(acc));
+            lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
+
+            //if (ValidateFTP())
+            //{
+
+            //}
+            //else
+            //{
+            //    txtFTPStatus.Text = "Not Updated."; //change to FTP Account not added?
+            //}
         }
 
         private void btnUpdateFTP_Click(object sender, EventArgs e)
@@ -4231,7 +4188,10 @@ namespace ZSS
 
         private void btnClearFTP_Click(object sender, EventArgs e)
         {
-            FTPLoad(new FTPAccount());
+            if (lbFTPAccounts.SelectedIndex != -1)
+            {
+                Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = new FTPAccount();                
+            }
         }
 
         private void btnExportAccounts_Click(object sender, EventArgs e)
@@ -4261,39 +4221,44 @@ namespace ZSS
             }
         }
 
+        private FTPAccount GetSelectedFTP()
+        {
+            FTPAccount acc = new FTPAccount("New Account");
+            if (lbFTPAccounts.SelectedIndex != -1 && Program.conf.FTPAccountList.Count >= lbFTPAccounts.Items.Count)
+            {
+                acc = Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex];
+            }
+            return acc;
+        }
+
         private void btnTestConnection_Click(object sender, EventArgs e)
         {
-            txtFTPStatus.Text = "Testing..."; //Testing
-            txtFTPStatus.Update();
-            TrimFTPControls();
-            int port = (int)nudFTPServerPort.Value;
+            string msg = ""; 
+
+            FTPAccount acc = GetSelectedFTP();
 
             try
-            {
-                FTPAccount acc = new FTPAccount
-                {
-                    Server = txtFTPServer.Text,
-                    Port = port,
-                    Username = txtFTPUsername.Text,
-                    Password = txtFTPPassword.Text,
-                    IsActive = rbFTPActive.Checked,
-                    Path = txtFTPPath.Text
-                };
-
+            {               
                 FTP ftp = new FTP(ref acc);
                 if (ftp.ListDirectory() != null)
                 {
-                    txtFTPStatus.Text = "Success"; //Success
+                    msg = "Success"; //Success
                 }
                 else
                 {
-                    txtFTPStatus.Text = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
+                    msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
                 }
             }
             catch (Exception t)
             {
-                txtFTPStatus.Text = t.Message;
+                msg = t.Message;
             }
+
+            if (!string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
@@ -5177,6 +5142,12 @@ namespace ZSS
             {
                 MessageBox.Show("Select text uploader.");
             }
+        }
+
+        private void pgFTPSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = FTPAdd(Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex]);
+            RewriteFTPRightClickMenu();
         }
     }
 }

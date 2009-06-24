@@ -33,18 +33,22 @@ namespace ZSS
         public string Name { get; set; }
         public string Server { get; set; }
         public string Username { get; set; }
-        [Category("Password"), PasswordPropertyText(true)]
+        [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
         private string mPath = "/";
+        [Category("FTP"), Description("FTP Path: (ex: / or /htdocs/screenshots)")]
         public string Path { get { return mPath; } set { mPath = value; } }
 
         private string mHttpPath = "%/";
+        [Category("FTP"), Description("HTTP Path: (ex: brandonz.net/screenshots)")]
         public string HttpPath { get { return mHttpPath; } set { mHttpPath = value; } }
 
         private int mPort = 21;
+        [Category("FTP"), Description("Port Number")]
         public int Port { get { return mPort; } set { mPort = value; } }
 
+        [Category("FTP"), Description("Set True if Active, False if Passive")]
         public bool IsActive { get; set; }
 
         public FTPAccount() { }
