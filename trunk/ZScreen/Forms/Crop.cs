@@ -299,8 +299,9 @@ namespace ZSS
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
             if (!selectedWindowMode && Program.conf.CropShowMagnifyingGlass)
             {
-                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X,
-                labelRect.Y - labelRect.Height - 100 - offset.Y);
+                int posY = labelRect.Y - labelRect.Height - 100 - offset.Y;
+                if (posY < 5) posY = labelRect.Y + labelRect.Height + 10;
+                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X, posY);
             }
         }
 
