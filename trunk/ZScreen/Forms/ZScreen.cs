@@ -1540,7 +1540,7 @@ namespace ZSS
             Settings.Default.Save();
         }
 
-        private void RewriteIsRightClickMenu()
+        private void RewriteImageEditorsRightClickMenu()
         {
             if (Program.conf.ImageSoftwareList != null)
             {
@@ -1876,11 +1876,11 @@ namespace ZSS
             return false;
         }
 
-   
+
 
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
         {
-            BrowseImageSoftware();
+            BrowseImageSoftware();            
         }
 
         private void BrowseImageSoftware()
@@ -1896,11 +1896,13 @@ namespace ZSS
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 temp.Name = Path.GetFileNameWithoutExtension(dlg.FileName);
-                temp.Path = dlg.FileName;  
+                temp.Path = dlg.FileName;
             }
 
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex-1] = temp; 
+            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1] = temp;
+
+            ShowImageEditorsSettings();
 
         }
 
@@ -2151,30 +2153,21 @@ namespace ZSS
 
         private void btnDeleteImageSoftware_Click(object sender, EventArgs e)
         {
-            int wasActiveSetLower = -1;
+            int sel = lbImageSoftware.SelectedIndex;
 
-            if (lbImageSoftware.SelectedIndex > 0)
+            if (sel != -1)
             {
-                //If Active then set one step lower in the list
-                if (Program.conf.ImageSoftwareActive.Name == lbImageSoftware.SelectedItem.ToString())
-                {
-                    wasActiveSetLower = lbImageSoftware.SelectedIndex - 1;
-                }
+                Program.conf.ImageSoftwareList.RemoveAt(sel - 1);
 
-                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
-                if (temp != null)
-                {
-                    Program.conf.ImageSoftwareList.Remove(temp);
-                    lbImageSoftware.Items.Remove(lbImageSoftware.SelectedItem.ToString());
-                }
+                lbImageSoftware.Items.RemoveAt(sel);
 
-                if (wasActiveSetLower != -1)
+                if (lbImageSoftware.Items.Count > 0)
                 {
-                    lbImageSoftware.SelectedIndex = wasActiveSetLower;
+                    lbImageSoftware.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
                 }
-
-                RewriteIsRightClickMenu();
             }
+
+            RewriteImageEditorsRightClickMenu();
         }
 
         private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
@@ -2261,13 +2254,13 @@ namespace ZSS
                 Program.conf.ImageSoftwareEnabled = true;
 
                 Program.conf.ImageSoftwareActive = Program.conf.ImageSoftwareList[sel - 1];
-                RewriteIsRightClickMenu();
+                RewriteImageEditorsRightClickMenu();
                 //checkCorrectISRightClickMenu(Program.conf.ImageSoftwareActive.Name);
                 //cbRunImageSoftware.Checked = true;
             }
         }
 
-        private void lbImageSoftware_SelectedIndexChanged(object sender, EventArgs e)
+        private void ShowImageEditorsSettings()
         {
             int sel = lbImageSoftware.SelectedIndex;
 
@@ -2276,11 +2269,11 @@ namespace ZSS
             if (sel == 0)
             {
                 Program.conf.ImageSoftwareEnabled = false;
-                RewriteIsRightClickMenu();
+                RewriteImageEditorsRightClickMenu();
             }
             else if (b)
             {
-                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());                
+                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
                 if (temp != null)
                 {
                     pgEditorsImage.SelectedObject = temp;
@@ -2292,6 +2285,11 @@ namespace ZSS
             btnDeleteImageSoftware.Enabled = b;
             btnBrowseImageSoftware.Enabled = b;
             pgEditorsImage.Visible = b;
+        }
+
+        private void lbImageSoftware_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowImageEditorsSettings();
         }
 
         private void cboClipboardTextMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -3993,11 +3991,6 @@ namespace ZSS
 
         #region FTP
 
-        private string FTPAdd(FTPAccount acc)
-        {
-            return acc.Name + " - " + acc.Server + ":" + acc.Port;
-        }
-
         private void FTPSetup(IEnumerable<FTPAccount> accs)
         {
             if (accs != null)
@@ -4007,7 +4000,7 @@ namespace ZSS
                 Program.conf.FTPAccountList.AddRange(accs);
                 foreach (FTPAccount acc in Program.conf.FTPAccountList)
                 {
-                    lbFTPAccounts.Items.Add(FTPAdd(acc));
+                    lbFTPAccounts.Items.Add(acc);
                 }
             }
         }
@@ -4030,7 +4023,7 @@ namespace ZSS
                     Program.conf.FTPAccountList = new List<FTPAccount> { acc };
                 }
 
-                lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = FTPAdd(acc);
+                lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = acc;
 
                 RewriteFTPRightClickMenu();
             }
@@ -4078,7 +4071,7 @@ namespace ZSS
         {
             FTPAccount acc = new FTPAccount("New Account");
             Program.conf.FTPAccountList.Add(acc);
-            lbFTPAccounts.Items.Add(FTPAdd(acc));
+            lbFTPAccounts.Items.Add(acc);
             lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
 
             //if (ValidateFTP())
@@ -5056,15 +5049,16 @@ namespace ZSS
 
         private void pgFTPSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = FTPAdd(Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex]);
+            lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex];
             RewriteFTPRightClickMenu();
         }
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+            Software temp = Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1];
+            lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
-            RewriteIsRightClickMenu();
+            RewriteImageEditorsRightClickMenu();
         }
 
     }

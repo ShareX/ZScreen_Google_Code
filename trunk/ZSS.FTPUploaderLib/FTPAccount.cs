@@ -75,5 +75,10 @@ namespace ZSS
 
             return sb.ToString();
         }
+
+        public override string ToString()
+        {
+            return this.Name + " - " + this.Server + ":" + this.Port;
+        }
     }
 }
