@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +97,12 @@ namespace ZSS
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.cboTextDest = new System.Windows.Forms.ComboBox();
+            this.gbImageSettings = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.lblCopytoClipboard = new System.Windows.Forms.Label();
+            this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
+            this.cbShowCursor = new System.Windows.Forms.CheckBox();
+            this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.gbGridMode = new System.Windows.Forms.GroupBox();
             this.cboCropGridMode = new System.Windows.Forms.CheckBox();
             this.nudCropGridHeight = new System.Windows.Forms.NumericUpDown();
@@ -113,13 +118,10 @@ namespace ZSS
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblFirstRun = new System.Windows.Forms.Label();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
-            this.cbPromptforUpload = new System.Windows.Forms.CheckBox();
-            this.lblCopytoClipboard = new System.Windows.Forms.Label();
-            this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
-            this.chkManualNaming = new System.Windows.Forms.CheckBox();
-            this.cbShowCursor = new System.Windows.Forms.CheckBox();
             this.lblImageDest = new System.Windows.Forms.Label();
+            this.lblTextDest = new System.Windows.Forms.Label();
             this.cboImagesDest = new System.Windows.Forms.ComboBox();
+            this.cboTextDest = new System.Windows.Forms.ComboBox();
             this.lblLogo = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.tpAccounts = new System.Windows.Forms.TabPage();
@@ -461,13 +463,11 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.lblTextDest = new System.Windows.Forms.Label();
-            this.gbImageSettings = new System.Windows.Forms.GroupBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpMain.SuspendLayout();
+            this.gbImageSettings.SuspendLayout();
             this.gbGridMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).BeginInit();
@@ -576,7 +576,6 @@ namespace ZSS
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
             this.ZScreenPanels.SuspendLayout();
-            this.gbImageSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1137,15 +1136,74 @@ namespace ZSS
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
             this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
             // 
-            // cboTextDest
+            // gbImageSettings
             // 
-            this.cboTextDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTextDest.FormattingEnabled = true;
-            this.cboTextDest.Location = new System.Drawing.Point(128, 52);
-            this.cboTextDest.Name = "cboTextDest";
-            this.cboTextDest.Size = new System.Drawing.Size(232, 21);
-            this.cboTextDest.TabIndex = 121;
-            this.cboTextDest.SelectedIndexChanged += new System.EventHandler(this.cboTextDest_SelectedIndexChanged);
+            this.gbImageSettings.Controls.Add(this.nudtScreenshotDelay);
+            this.gbImageSettings.Controls.Add(this.lblCopytoClipboard);
+            this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
+            this.gbImageSettings.Controls.Add(this.cbShowCursor);
+            this.gbImageSettings.Controls.Add(this.chkManualNaming);
+            this.gbImageSettings.Location = new System.Drawing.Point(16, 112);
+            this.gbImageSettings.Name = "gbImageSettings";
+            this.gbImageSettings.Size = new System.Drawing.Size(376, 152);
+            this.gbImageSettings.TabIndex = 123;
+            this.gbImageSettings.TabStop = false;
+            this.gbImageSettings.Text = "Image Settings";
+            this.gbImageSettings.Enter += new System.EventHandler(this.gbImageSettings_Enter);
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(24, 24);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // lblCopytoClipboard
+            // 
+            this.lblCopytoClipboard.AutoSize = true;
+            this.lblCopytoClipboard.Location = new System.Drawing.Point(24, 64);
+            this.lblCopytoClipboard.Name = "lblCopytoClipboard";
+            this.lblCopytoClipboard.Size = new System.Drawing.Size(93, 13);
+            this.lblCopytoClipboard.TabIndex = 117;
+            this.lblCopytoClipboard.Text = "Copy to Clipboard:";
+            // 
+            // cboClipboardTextMode
+            // 
+            this.cboClipboardTextMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClipboardTextMode.FormattingEnabled = true;
+            this.cboClipboardTextMode.Location = new System.Drawing.Point(128, 60);
+            this.cboClipboardTextMode.Name = "cboClipboardTextMode";
+            this.cboClipboardTextMode.Size = new System.Drawing.Size(232, 21);
+            this.cboClipboardTextMode.TabIndex = 116;
+            this.cboClipboardTextMode.SelectedIndexChanged += new System.EventHandler(this.cboClipboardTextMode_SelectedIndexChanged);
+            // 
+            // cbShowCursor
+            // 
+            this.cbShowCursor.AutoSize = true;
+            this.cbShowCursor.Location = new System.Drawing.Point(24, 120);
+            this.cbShowCursor.Name = "cbShowCursor";
+            this.cbShowCursor.Size = new System.Drawing.Size(159, 17);
+            this.cbShowCursor.TabIndex = 8;
+            this.cbShowCursor.Text = "Show Cursor in Screenshots";
+            this.cbShowCursor.UseVisualStyleBackColor = true;
+            this.cbShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
+            // 
+            // chkManualNaming
+            // 
+            this.chkManualNaming.AutoSize = true;
+            this.chkManualNaming.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkManualNaming.Location = new System.Drawing.Point(24, 96);
+            this.chkManualNaming.Name = "chkManualNaming";
+            this.chkManualNaming.Size = new System.Drawing.Size(124, 17);
+            this.chkManualNaming.TabIndex = 112;
+            this.chkManualNaming.Text = "Prompt for File Name";
+            this.chkManualNaming.UseVisualStyleBackColor = true;
+            this.chkManualNaming.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
             // 
             // gbGridMode
             // 
@@ -1155,7 +1213,7 @@ namespace ZSS
             this.gbGridMode.Controls.Add(this.lblGridSize);
             this.gbGridMode.Controls.Add(this.lblGridSizeHeight);
             this.gbGridMode.Controls.Add(this.nudCropGridWidth);
-            this.gbGridMode.Location = new System.Drawing.Point(16, 288);
+            this.gbGridMode.Location = new System.Drawing.Point(16, 272);
             this.gbGridMode.Name = "gbGridMode";
             this.gbGridMode.Size = new System.Drawing.Size(376, 80);
             this.gbGridMode.TabIndex = 120;
@@ -1231,7 +1289,7 @@ namespace ZSS
             // 
             this.gbActiveHelp.Controls.Add(this.cbHelpToLanguage);
             this.gbActiveHelp.Controls.Add(this.chkGTActiveHelp);
-            this.gbActiveHelp.Location = new System.Drawing.Point(16, 376);
+            this.gbActiveHelp.Location = new System.Drawing.Point(16, 360);
             this.gbActiveHelp.Name = "gbActiveHelp";
             this.gbActiveHelp.Size = new System.Drawing.Size(376, 48);
             this.gbActiveHelp.TabIndex = 84;
@@ -1324,60 +1382,6 @@ namespace ZSS
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Destinations";
             // 
-            // cbPromptforUpload
-            // 
-            this.cbPromptforUpload.AutoSize = true;
-            this.cbPromptforUpload.Location = new System.Drawing.Point(24, 88);
-            this.cbPromptforUpload.Name = "cbPromptforUpload";
-            this.cbPromptforUpload.Size = new System.Drawing.Size(111, 17);
-            this.cbPromptforUpload.TabIndex = 120;
-            this.cbPromptforUpload.Tag = "Show Confirmation for Entire Screen or Active Window";
-            this.cbPromptforUpload.Text = "Prompt for Upload";
-            this.cbPromptforUpload.UseVisualStyleBackColor = true;
-            this.cbPromptforUpload.CheckedChanged += new System.EventHandler(this.cbPromptforUpload_CheckedChanged);
-            // 
-            // lblCopytoClipboard
-            // 
-            this.lblCopytoClipboard.AutoSize = true;
-            this.lblCopytoClipboard.Location = new System.Drawing.Point(24, 24);
-            this.lblCopytoClipboard.Name = "lblCopytoClipboard";
-            this.lblCopytoClipboard.Size = new System.Drawing.Size(93, 13);
-            this.lblCopytoClipboard.TabIndex = 117;
-            this.lblCopytoClipboard.Text = "Copy to Clipboard:";
-            // 
-            // cboClipboardTextMode
-            // 
-            this.cboClipboardTextMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboClipboardTextMode.FormattingEnabled = true;
-            this.cboClipboardTextMode.Location = new System.Drawing.Point(128, 20);
-            this.cboClipboardTextMode.Name = "cboClipboardTextMode";
-            this.cboClipboardTextMode.Size = new System.Drawing.Size(232, 21);
-            this.cboClipboardTextMode.TabIndex = 116;
-            this.cboClipboardTextMode.SelectedIndexChanged += new System.EventHandler(this.cboClipboardTextMode_SelectedIndexChanged);
-            // 
-            // chkManualNaming
-            // 
-            this.chkManualNaming.AutoSize = true;
-            this.chkManualNaming.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkManualNaming.Location = new System.Drawing.Point(24, 112);
-            this.chkManualNaming.Name = "chkManualNaming";
-            this.chkManualNaming.Size = new System.Drawing.Size(124, 17);
-            this.chkManualNaming.TabIndex = 112;
-            this.chkManualNaming.Text = "Prompt for File Name";
-            this.chkManualNaming.UseVisualStyleBackColor = true;
-            this.chkManualNaming.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
-            // 
-            // cbShowCursor
-            // 
-            this.cbShowCursor.AutoSize = true;
-            this.cbShowCursor.Location = new System.Drawing.Point(24, 136);
-            this.cbShowCursor.Name = "cbShowCursor";
-            this.cbShowCursor.Size = new System.Drawing.Size(159, 17);
-            this.cbShowCursor.TabIndex = 8;
-            this.cbShowCursor.Text = "Show Cursor in Screenshots";
-            this.cbShowCursor.UseVisualStyleBackColor = true;
-            this.cbShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
-            // 
             // lblImageDest
             // 
             this.lblImageDest.AutoSize = true;
@@ -1386,6 +1390,15 @@ namespace ZSS
             this.lblImageDest.Size = new System.Drawing.Size(112, 13);
             this.lblImageDest.TabIndex = 1;
             this.lblImageDest.Text = "Screenshots/Pictures:\r\n";
+            // 
+            // lblTextDest
+            // 
+            this.lblTextDest.AutoSize = true;
+            this.lblTextDest.Location = new System.Drawing.Point(15, 56);
+            this.lblTextDest.Name = "lblTextDest";
+            this.lblTextDest.Size = new System.Drawing.Size(105, 13);
+            this.lblTextDest.TabIndex = 122;
+            this.lblTextDest.Text = "Source Code/Notes:";
             // 
             // cboImagesDest
             // 
@@ -1396,6 +1409,16 @@ namespace ZSS
             this.cboImagesDest.Size = new System.Drawing.Size(232, 21);
             this.cboImagesDest.TabIndex = 0;
             this.cboImagesDest.SelectedIndexChanged += new System.EventHandler(this.cboScreenshotDest_SelectedIndexChanged);
+            // 
+            // cboTextDest
+            // 
+            this.cboTextDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTextDest.FormattingEnabled = true;
+            this.cboTextDest.Location = new System.Drawing.Point(128, 52);
+            this.cboTextDest.Name = "cboTextDest";
+            this.cboTextDest.Size = new System.Drawing.Size(232, 21);
+            this.cboTextDest.TabIndex = 121;
+            this.cboTextDest.SelectedIndexChanged += new System.EventHandler(this.cboTextDest_SelectedIndexChanged);
             // 
             // lblLogo
             // 
@@ -1766,38 +1789,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle23;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5430,43 +5453,6 @@ namespace ZSS
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
             // 
-            // lblTextDest
-            // 
-            this.lblTextDest.AutoSize = true;
-            this.lblTextDest.Location = new System.Drawing.Point(15, 56);
-            this.lblTextDest.Name = "lblTextDest";
-            this.lblTextDest.Size = new System.Drawing.Size(105, 13);
-            this.lblTextDest.TabIndex = 122;
-            this.lblTextDest.Text = "Source Code/Notes:";
-            // 
-            // gbImageSettings
-            // 
-            this.gbImageSettings.Controls.Add(this.nudtScreenshotDelay);
-            this.gbImageSettings.Controls.Add(this.cbPromptforUpload);
-            this.gbImageSettings.Controls.Add(this.lblCopytoClipboard);
-            this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
-            this.gbImageSettings.Controls.Add(this.cbShowCursor);
-            this.gbImageSettings.Controls.Add(this.chkManualNaming);
-            this.gbImageSettings.Location = new System.Drawing.Point(16, 112);
-            this.gbImageSettings.Name = "gbImageSettings";
-            this.gbImageSettings.Size = new System.Drawing.Size(376, 168);
-            this.gbImageSettings.TabIndex = 123;
-            this.gbImageSettings.TabStop = false;
-            this.gbImageSettings.Text = "Image Settings";
-            this.gbImageSettings.Enter += new System.EventHandler(this.gbImageSettings_Enter);
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(24, 48);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5494,6 +5480,8 @@ namespace ZSS
             this.tcApp.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
+            this.gbImageSettings.ResumeLayout(false);
+            this.gbImageSettings.PerformLayout();
             this.gbGridMode.ResumeLayout(false);
             this.gbGridMode.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).EndInit();
@@ -5639,8 +5627,6 @@ namespace ZSS
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
             this.ZScreenPanels.ResumeLayout(false);
-            this.gbImageSettings.ResumeLayout(false);
-            this.gbImageSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5727,7 +5713,6 @@ namespace ZSS
         private System.Windows.Forms.Label lblFirstRun;
         private System.Windows.Forms.GroupBox gbMainOptions;
         private NumericUpDownTimer nudtScreenshotDelay;
-        private System.Windows.Forms.CheckBox cbPromptforUpload;
         private System.Windows.Forms.Label lblCopytoClipboard;
         private System.Windows.Forms.ComboBox cboClipboardTextMode;
         private System.Windows.Forms.CheckBox chkManualNaming;

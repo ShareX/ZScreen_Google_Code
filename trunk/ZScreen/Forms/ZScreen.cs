@@ -156,8 +156,7 @@ namespace ZSS
             }
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Program.conf.ScreenshotDelayTimes;
-            nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;
-            cbPromptforUpload.Checked = Program.conf.PromptforUpload;
+            nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;            
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
@@ -1109,7 +1108,7 @@ namespace ZSS
             task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
             ClipboardManager.Queue();
 
-            if (Program.conf.PromptforUpload && task.ImageDestCategory != ImageDestType.CLIPBOARD &
+            if (Program.conf.PromptForUpload && task.ImageDestCategory != ImageDestType.CLIPBOARD &
                 task.ImageDestCategory != ImageDestType.FILE &&
                 (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
                 task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
@@ -4612,11 +4611,6 @@ namespace ZSS
             {
                 txtWatermarkImageLocation.Text = fd.FileName;
             }
-        }
-
-        private void cbPromptforUpload_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.PromptforUpload = cbPromptforUpload.Checked;
         }
 
         private void cbAutoChangeUploadDestination_CheckedChanged(object sender, EventArgs e)
