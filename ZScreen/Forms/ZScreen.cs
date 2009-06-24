@@ -3514,7 +3514,7 @@ namespace ZSS
         private string FontToString(Font font, Color color)
         {
             return "Name: " + font.Name + " - Size: " + font.Size + " - Style: " + font.Style + " - Color: " +
-                color.R + "," + color.G + "," + color.B;            
+                color.R + "," + color.G + "," + color.B;
         }
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
@@ -4054,7 +4054,7 @@ namespace ZSS
             int sel = lbFTPAccounts.SelectedIndex;
             if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
-                FTPAccount acc = Program.conf.FTPAccountList[sel];                
+                FTPAccount acc = Program.conf.FTPAccountList[sel];
                 pgFTPSettings.SelectedObject = acc;
                 Program.conf.FTPSelected = lbFTPAccounts.SelectedIndex;
                 RewriteFTPRightClickMenu();
@@ -4942,6 +4942,8 @@ namespace ZSS
                     return new Paste2Uploader();
                 case Slexy.Hostname:
                     return new Slexy();
+                case Snipt.Hostname:
+                    return new Snipt();
                 case FTPUploader.Hostname:
                     if (Program.conf.FTPSelected > -1 && Program.conf.FTPAccountList.Count > 0)
                     {
