@@ -5160,7 +5160,7 @@ namespace ZSS
                 string name = "";
                 if (uploader.GetType() == typeof(FTPUploader))
                 {
-                    name = string.Format("FTP({0})", ((FTPUploader)uploader).Name);
+                    name = string.Format("FTP ({0})", ((FTPUploader)uploader).Name);
                 }
                 else if (uploader.GetType().BaseType == typeof(TextUploader))
                 {
