@@ -131,7 +131,7 @@ namespace ZSS.Helpers
 
                 if (Program.CheckFTPAccounts(ref task) && File.Exists(fullFilePath))
                 {
-                    FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPselected];
+                    FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                     task.DestinationName = acc.Name;
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
@@ -160,8 +160,6 @@ namespace ZSS.Helpers
             task.StartTime = DateTime.Now;
             switch (task.TextDestCategory)
             {
-                // WE ARE ONLY SUPPORTING TXT UPLOADING VIA FTP SO FAR, PASTE2 AND PASTEBIN SUPPORT WILL COME LATER
-
                 case TextDestType.FTP:
                     UploadFtp();
                     break;
@@ -176,7 +174,7 @@ namespace ZSS.Helpers
         private void UploadPastebin()
         {
             TextUploader textUploader = (TextUploader)task.TextUploader;
-            task.RemoteFilePath = textUploader.UploadTextFromFile(task.LocalFilePath);            
+            task.RemoteFilePath = textUploader.UploadTextFromFile(task.LocalFilePath);
         }
 
         public void TextEdit()

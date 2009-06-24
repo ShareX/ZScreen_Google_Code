@@ -36,7 +36,7 @@ namespace ZSS.ImageUploader
         public FTPAccount FTPAccount;
         private List<string> Errors { get; set; }
         public string Name { get; private set; }
-        public const string HostName = "FTP";
+        public const string Hostname = "FTP";
 
         public FTPUploader(FTPAccount acc)
         {

@@ -11,7 +11,6 @@ namespace ZSS.Helpers
     [Serializable]
     public class TextUploadersManager
     {
-
         public List<object> TextUploadersSettings = new List<object>();
         public object TextUploaderActive;
 
