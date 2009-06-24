@@ -94,7 +94,8 @@ namespace ZSS
         public TextDestType TextDestMode = TextDestType.FTP;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
-        public bool PromptforUpload = false;
+        [Category("Screenshots / General"), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window")]
+        public bool PromptForUpload { get; set; }
         public bool ManualNaming = false;
         public bool ShowCursor = false;
         public bool ShowWatermark = false;
@@ -126,28 +127,28 @@ namespace ZSS
 
         // General
 
-        [Category("Capture / General"), DefaultValue(false), Description("Copy image to clipboard until URL is retrieved.")]
+        [Category("Screenshots / General"), DefaultValue(false), Description("Copy image to clipboard until URL is retrieved.")]
         public bool CopyImageUntilURL { get; set; }
-        [Category("Capture / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
+        [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
-        [Category("Capture / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
+        [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int RegionBrightnessValue { get; set; }
-        [Category("Capture / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
+        [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
         public int BackgroundRegionTransparentValue { get; set; }
-        [Category("Capture / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
+        [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }
 
-        [Category("Capture / Watermark"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
+        [Category("Screenshots / Watermark"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
         public bool DrawReflection { get; set; }
-        [Category("Capture / Watermark"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
+        [Category("Screenshots / Watermark"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
         public int ReflectionPercentage { get; set; }
-        [Category("Capture / Watermark"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
+        [Category("Screenshots / Watermark"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
         public int ReflectionTransparency { get; set; }
-        [Category("Capture / Watermark"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
+        [Category("Screenshots / Watermark"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
         public int ReflectionOffset { get; set; }
-        [Category("Capture / Watermark"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
+        [Category("Screenshots / Watermark"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
         public bool ReflectionSkew { get; set; }
-        [Category("Capture / Watermark"), DefaultValue(25), Description("How much pixel skew left to right.")]
+        [Category("Screenshots / Watermark"), DefaultValue(25), Description("How much pixel skew left to right.")]
         public int ReflectionSkewSize { get; set; }
 
         // Crop Shot
@@ -204,7 +205,7 @@ namespace ZSS
 
         public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        [Category("Capture / File Naming"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
+        [Category("Screenshots / File Naming"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
         // Quality
@@ -264,7 +265,7 @@ namespace ZSS
         public int FTPSelected = -1;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
-        [Category("FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
+        [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -281,9 +282,9 @@ namespace ZSS
         public decimal UploadDurationLimit = 10000;
         public string ImageShackRegistrationCode = "";
         public string TinyPicShuk = "";
-        [Category("HTTP / TinyPic")]
+        [Category("Accounts / TinyPic")]
         public string TinyPicUserName { get; set; }
-        [Category("HTTP / TinyPic"), PasswordPropertyText(true)]
+        [Category("Accounts / TinyPic"), PasswordPropertyText(true)]
         public string TinyPicPassword { get; set; }
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = false;
