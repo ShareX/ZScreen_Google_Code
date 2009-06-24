@@ -461,7 +461,7 @@ namespace ZSS
             {
                 if (obj.GetType() == typeof(FTPUploader))
                 {
-                    string name = ((FTPUploader)obj).Name;
+                    string name = string.Format("FTP({0})", ((FTPUploader)obj).Name);
                     lvTextUploaders.Items.Add(name).Tag = obj;
                 }
                 else
@@ -1067,11 +1067,11 @@ namespace ZSS
             {
                 t.TextDestCategory = TextDestType.FTP;
             }
-            else if (t.TextUploader.GetType().ToString().ToLower().Contains("pastebin"))
+            else if (t.TextUploader.GetType() == typeof(PastebinUploader))
             {
                 t.TextDestCategory = TextDestType.PASTEBIN_COM;
             }
-            else if (t.TextUploader.GetType().ToString().ToLower().Contains("paste2"))
+            else if (t.TextUploader.GetType() == typeof(Paste2Uploader))
             {
                 t.TextDestCategory = TextDestType.PASTE2_ORG;
             }
@@ -5150,6 +5150,33 @@ namespace ZSS
         private void btnClearTextUploaders_Click(object sender, EventArgs e)
         {
             lvTextUploaders.Items.Clear();
+        }
+
+        private void btnTestTextUploader_Click(object sender, EventArgs e)
+        {
+            object uploader = Program.mgrTextUploaders.TextUploaderActive;
+            if (uploader != null)
+            {
+                string name = "";
+                if (uploader.GetType() == typeof(FTPUploader))
+                {
+                    name = string.Format("FTP({0})", ((FTPUploader)uploader).Name);
+                }
+                else if (uploader.GetType().BaseType == typeof(TextUploader))
+                {
+                    name = ((TextUploader)uploader).Name;
+                }
+                if (!string.IsNullOrEmpty(name))
+                {
+                    string filePath = Path.Combine(Program.TempDir, "TextUploaderTest.txt");
+                    File.WriteAllText(filePath, "Testing: " + name);
+                    StartWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, "", filePath);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select text uploader.");
+            }
         }
     }
 }
