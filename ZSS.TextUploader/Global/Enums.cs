@@ -7,8 +7,10 @@ namespace ZSS.TextUploaders.Global
         [Description("FTP")]
         FTP,
         [Description("pastebin.com")]
-        PASTEBIN_COM,
+        PASTEBIN,
         [Description("paste2.org")]
-        PASTE2_ORG,
+        PASTE2,
+        [Description("slexy.org")]
+        SLEXY
     }
 }

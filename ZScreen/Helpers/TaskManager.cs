@@ -163,8 +163,7 @@ namespace ZSS.Helpers
                 case TextDestType.FTP:
                     UploadFtp();
                     break;
-                case TextDestType.PASTEBIN_COM:
-                case TextDestType.PASTE2_ORG:
+                case TextDestType.PASTEBIN:
                     UploadPastebin();
                     break;
             }
