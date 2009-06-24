@@ -381,7 +381,6 @@ namespace ZSS
             {
                 lbImageSoftware.SelectedIndex = 0; //Set to disabled
             }
-            txtImageSoftwarePath.Enabled = false;
 
             ///////////////////////////////////
             // Advanced Settings
@@ -1877,62 +1876,7 @@ namespace ZSS
             return false;
         }
 
-        /*
-        private void btnBrowseDirectory_Click(object sender, EventArgs e)
-        {
-            Program.ImagesDir = BrowseDirectory(ref txtImagesDir);
-        }
-
-        private string BrowseDirectory(ref TextBox textBoxDirectory)
-        {
-            string settingDir = textBoxDirectory.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog
-            {
-                SelectedPath = textBoxDirectory.Text,
-                ShowNewFolderButton = true
-            };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                if (dlg.SelectedPath != "")
-                {
-                    settingDir = dlg.SelectedPath;
-                    textBoxDirectory.Text = dlg.SelectedPath;
-                }
-            }
-            return settingDir;
-        }
-        */
-
-        private void btnUpdateImageSoftware_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtImageSoftwareName.Text) &&
-                GetImageSoftware(txtImageSoftwareName.Text) == null &&
-                !string.IsNullOrEmpty(txtImageSoftwarePath.Text))
-            {
-                int sel;
-                bool isActiveImageSoftware = false;
-
-                if ((sel = lbImageSoftware.SelectedIndex) > 0)
-                {
-                    if (Program.conf.ImageSoftwareActive.Name == (string)lbImageSoftware.SelectedItem)
-                        isActiveImageSoftware = true;
-                    Software temp = new Software { Name = txtImageSoftwareName.Text, Path = txtImageSoftwarePath.Text };
-                    Program.conf.ImageSoftwareList[sel - 1] = temp;
-                    lbImageSoftware.Items[sel] = temp.Name;
-
-                    if (isActiveImageSoftware)
-                    {
-                        if (Program.conf.ImageSoftwareEnabled)
-                        {
-                            Program.conf.ImageSoftwareActive = temp;
-                            CheckCorrectIsRightClickMenu(temp.Name);
-                        }
-                    }
-                }
-            }
-
-            RewriteIsRightClickMenu();
-        }
+   
 
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
         {
@@ -1941,47 +1885,29 @@ namespace ZSS
 
         private void BrowseImageSoftware()
         {
-            txtImageSoftwarePath.Enabled = true;
 
             //choose path / create path popup
             //remember old path and display it
 
             OpenFileDialog dlg = new OpenFileDialog();
-            if (txtImageSoftwarePath.Text != "")
-                dlg.FileName = txtImageSoftwarePath.Text;
-
+            Software temp = new Software();
             dlg.Filter = "Executable files (*.exe)|*.exe";
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                txtImageSoftwarePath.Text = dlg.FileName;
-                if (String.IsNullOrEmpty(txtImageSoftwareName.Text))
-                {
-                    txtImageSoftwareName.Text =
-                        Path.GetFileNameWithoutExtension(dlg.FileName);
-                }
+                temp.Name = Path.GetFileNameWithoutExtension(dlg.FileName);
+                temp.Path = dlg.FileName;  
             }
 
-            txtImageSoftwarePath.Enabled = false;
+            lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
+            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex-1] = temp; 
+
         }
 
         private void tsmSettings_Click(object sender, EventArgs e)
         {
             BringUpMenu();
         }
-
-        //private void TrimFTPControls()
-        //{
-        //    TextBox[] arr = { txtFTPServer, txtFTPPath, txtFTPHTTPPath };
-        //    foreach (TextBox tb in arr)
-        //    {
-        //        if (tb.Text != "/")
-        //        {
-        //            tb.Text = tb.Text.TrimEnd("/".ToCharArray()).TrimEnd("\\".ToCharArray());
-        //            tb.Update();
-        //        }
-        //    }
-        //}
 
         private void tsmViewDirectory_Click(object sender, EventArgs e)
         {
@@ -2212,23 +2138,10 @@ namespace ZSS
 
         private void AddImageSoftwareToList()
         {
-            if (!string.IsNullOrEmpty(txtImageSoftwareName.Text))
-            {
-                if (GetImageSoftware(txtImageSoftwareName.Text) == null)
-                {
-                    if (!string.IsNullOrEmpty(txtImageSoftwarePath.Text))
-                    {
-                        Software temp = new Software
-                        {
-                            Name = txtImageSoftwareName.Text,
-                            Path = txtImageSoftwarePath.Text
-                        };
-                        Program.conf.ImageSoftwareList.Add(temp);
-                        lbImageSoftware.Items.Add(temp.Name);
-                        lbImageSoftware.SelectedItem = temp.Name;
-                    }
-                }
-            }
+            Software temp = new Software("New", "");
+            Program.conf.ImageSoftwareList.Add(temp);
+            lbImageSoftware.Items.Add(temp.Name);
+            lbImageSoftware.SelectedItem = temp.Name;
         }
 
         private void btnAddImageSoftware_Click(object sender, EventArgs e)
@@ -2362,26 +2275,23 @@ namespace ZSS
 
             if (sel == 0)
             {
-                txtImageSoftwareName.Text = "";
-                txtImageSoftwarePath.Text = "";
-
                 Program.conf.ImageSoftwareEnabled = false;
                 RewriteIsRightClickMenu();
             }
             else if (b)
             {
-                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());                
                 if (temp != null)
                 {
-                    txtImageSoftwareName.Text = temp.Name;
-                    txtImageSoftwarePath.Text = temp.Path;
+                    pgEditorsImage.SelectedObject = temp;
                 }
 
                 SetActiveImageSoftware();
             }
 
-            btnUpdateImageSoftware.Enabled = b;
             btnDeleteImageSoftware.Enabled = b;
+            btnBrowseImageSoftware.Enabled = b;
+            pgEditorsImage.Visible = b;
         }
 
         private void cboClipboardTextMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -4126,7 +4036,7 @@ namespace ZSS
             }
             else
             {
-               msg = "Not Updated.";
+                msg = "Not Updated.";
             }
             if (!string.IsNullOrEmpty(msg))
             {
@@ -4190,7 +4100,7 @@ namespace ZSS
         {
             if (lbFTPAccounts.SelectedIndex != -1)
             {
-                Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = new FTPAccount();                
+                Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = new FTPAccount();
             }
         }
 
@@ -4233,12 +4143,12 @@ namespace ZSS
 
         private void btnTestConnection_Click(object sender, EventArgs e)
         {
-            string msg = ""; 
+            string msg = "";
 
             FTPAccount acc = GetSelectedFTP();
 
             try
-            {               
+            {
                 FTP ftp = new FTP(ref acc);
                 if (ftp.ListDirectory() != null)
                 {
@@ -5149,5 +5059,13 @@ namespace ZSS
             lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = FTPAdd(Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex]);
             RewriteFTPRightClickMenu();
         }
+
+        private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+            CheckCorrectIsRightClickMenu(temp.Name);
+            RewriteIsRightClickMenu();
+        }
+
     }
 }
