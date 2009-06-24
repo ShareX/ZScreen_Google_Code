@@ -3249,8 +3249,8 @@ namespace ZSS
             }
             else
             {
-                this.ZScreenPanels.RowStyles[0].Height = 95F;
-                this.ZScreenPanels.RowStyles[1].Height = 05F;
+                this.ZScreenPanels.RowStyles[0].Height = 92F;
+                this.ZScreenPanels.RowStyles[1].Height = 08F;
             }
 
         }
