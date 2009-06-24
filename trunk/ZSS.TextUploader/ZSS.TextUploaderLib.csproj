@@ -58,6 +58,7 @@
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
     <Compile Include="Uploaders\Paste2.cs" />
+    <Compile Include="Uploaders\PastebinCa.cs" />
     <Compile Include="Uploaders\Slexy.cs" />
     <Compile Include="Uploaders\Snipt.cs" />
     <Compile Include="TextUploader.cs" />

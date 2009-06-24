@@ -4941,6 +4941,8 @@ namespace ZSS
             {
                 case Pastebin.Hostname:
                     return new Pastebin();
+                case PastebinCa.Hostname:
+                    return new PastebinCa();
                 case Paste2.Hostname:
                     return new Paste2();
                 case Slexy.Hostname:
