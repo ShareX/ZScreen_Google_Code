@@ -304,6 +304,7 @@ namespace ZSS
             }
             cboTextUploaders.Items.Clear();
             cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
+            cboTextUploaders.SelectedIndex = 1;
 
             ///////////////////////////////////
             // FTP Settings

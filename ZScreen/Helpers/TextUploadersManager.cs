@@ -5,13 +5,14 @@ using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using ZSS.TextUploaders;
 
 namespace ZSS.Helpers
 {
     [Serializable]
     public class TextUploadersManager
     {
-        public List<object> TextUploadersSettings = new List<object>();
+        public List<object> TextUploadersSettings = new List<object> { new Pastebin(), new Paste2(), new Slexy() };
         public object TextUploaderActive;
 
         public void Write()
@@ -110,6 +111,5 @@ namespace ZSS.Helpers
 
             return new TextUploadersManager();
         }
-
     }
 }
