@@ -1982,14 +1982,14 @@ namespace ZSS
                 sel = tpHotkeys;
             else if (tsm == tsmCapture)
                 sel = tpScreenshots;
-            else if (tsm == tsmWatermark)
-                sel = tpWatermark;
             else if (tsm == tsmEditors)
                 sel = tpEditors;
             else if (tsm == tsmFTP)
-                sel = tpFTP;
-            else if (tsm == tsmHTTP)
+                sel = tpAccounts;
+            else if (tsm == tsmImages)
                 sel = tpImages;
+            else if (tsm == tsmText)
+                sel = tpText;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
             else if (tsm == tsmOptions)
@@ -4974,7 +4974,12 @@ namespace ZSS
 
         private void btnClearTextUploaders_Click(object sender, EventArgs e)
         {
-            lbTextUploaders.Items.Clear();
+            if (MessageBox.Show("Are you sure you want to clear the Text Uploaders list?", 
+                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, 
+                MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                lbTextUploaders.Items.Clear();
+            }            
         }
 
         private void btnTestTextUploader_Click(object sender, EventArgs e)
