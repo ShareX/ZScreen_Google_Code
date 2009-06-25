@@ -134,7 +134,6 @@ namespace ZSS
             UpdateGuiControlsPaths();
             txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
                 " any control and this textbox will be updated with information about the control.", ProductName);
-            CheckFormSettings();
 
             #endregion
 
@@ -162,6 +161,7 @@ namespace ZSS
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
+            cbShowActiveHelp.Checked = Program.conf.ShowActiveHelp;
             chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
 
             #endregion
@@ -2491,6 +2491,7 @@ namespace ZSS
             try
             {
                 SetupScreen();
+                CheckFormSettings();
             }
             catch (Exception ex)
             {
@@ -3159,18 +3160,16 @@ namespace ZSS
                     this.FormBorderStyle = FormBorderStyle.Sizable;
                 }
             }
-
-            if (Program.conf.HideActiveHelp)
-            {
-                this.ZScreenPanels.RowStyles[0].Height = 100F;
-                this.ZScreenPanels.RowStyles[1].Height = 0F;
-            }
-            else
+            if (Program.conf.ShowActiveHelp)
             {
                 this.ZScreenPanels.RowStyles[0].Height = 92F;
                 this.ZScreenPanels.RowStyles[1].Height = 08F;
             }
-
+            else
+            {
+                this.ZScreenPanels.RowStyles[0].Height = 100F;
+                this.ZScreenPanels.RowStyles[1].Height = 0F;
+            }
         }
 
         private void ActiveHelpTagsConfig()
@@ -5076,5 +5075,10 @@ namespace ZSS
             }
         }
 
+        private void cbShowActiveHelp_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ShowActiveHelp = cbShowActiveHelp.Checked;
+            CheckFormSettings();
+        }
     }
 }

@@ -70,7 +70,6 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
 
             AutoSaveSettings = false;
-            HideActiveHelp = false;
             WriteDebugFile = true;
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
@@ -101,6 +100,7 @@ namespace ZSS
         public bool ShowWatermark = false;
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
+        public bool ShowActiveHelp = true;
         public bool GTActiveHelp = false;
         public string HelpToLanguage = "en";
 
@@ -337,8 +337,6 @@ namespace ZSS
         public bool CheckExperimental = false;
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
-        [Category("Options / General"), DefaultValue(false), Description("Hides active help in bottom of form.")]
-        public bool HideActiveHelp { get; set; }
 
         // Paths
 
