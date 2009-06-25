@@ -36,8 +36,8 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using ZSS.Forms;
 using ZSS.Helpers;
-using ZSS.ImageUploader;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders;
+using ZSS.ImageUploaders.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.Colors;
@@ -480,18 +480,7 @@ namespace ZSS
 
         private void AddTextUploader(object obj)
         {
-            if (obj != null && obj.GetType() != typeof(System.String))
-            {
-                if (obj.GetType() == typeof(FTPUploader))
-                {
-                    lbTextUploaders.Items.Add(obj);
-                }
-                else
-                {
-                    lbTextUploaders.Items.Add(obj);
-                }
-            }
-            else
+            if (obj != null)
             {
                 lbTextUploaders.Items.Add(obj);
             }
@@ -873,15 +862,7 @@ namespace ZSS
                 switch (t.JobCategory)
                 {
                     case JobCategoryType.TEXT:
-                        switch (t.TextDestCategory)
-                        {
-                            case TextDestType.FTP:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.TextDestCategory.GetDescription(), t.DestinationName));
-                                break;
-                            default:
-                                sbMsg.AppendLine(string.Format("Destination: {0}", ((TextUploader)t.TextUploader).Name));
-                                break;
-                        }
+                        sbMsg.AppendLine(string.Format("Destination: {0}", ((TextUploader)t.TextUploader).ToString()));
                         break;
                     case JobCategoryType.SCREENSHOTS:
                     case JobCategoryType.PICTURES:
@@ -1040,8 +1021,7 @@ namespace ZSS
             MainAppTask task = new MainAppTask(bwApp, job);
             if (task.Job != MainAppTask.Jobs.CUSTOM_UPLOADER_TEST)
             {
-                task.ImageDestCategory = Program.conf.ScreenshotDestMode;
-                task.TextDestCategory = Program.conf.TextDestMode;
+                task.ImageDestCategory = Program.conf.ScreenshotDestMode;                
             }
             else
             {
@@ -1095,14 +1075,6 @@ namespace ZSS
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
             t.TextUploader = Program.mgrTextUploaders.TextUploaderActive;
-            if (t.TextUploader.GetType() == typeof(FTPUploader))
-            {
-                t.TextDestCategory = TextDestType.FTP;
-            }
-            else if (t.TextUploader.GetType().BaseType == typeof(TextUploader))
-            {
-                t.TextDestCategory = TextDestType.PASTEBIN;
-            }
             t.SetLocalFilePath(localFilePath);
 
             switch (job)
@@ -1113,7 +1085,7 @@ namespace ZSS
                         mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex]);
                     if (t.TranslationInfo.IsEmpty())
                     {
-                        btnTranslate.Enabled = true; 
+                        btnTranslate.Enabled = true;
                     }
                     break;
             }
@@ -2433,7 +2405,7 @@ namespace ZSS
                 {
                     if (Program.mgrTextUploaders.TextUploaderActive != null)
                     {
-                        RunWorker(GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath));                        
+                        RunWorker(GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath));
                     }
                 }
                 else
@@ -4889,54 +4861,7 @@ namespace ZSS
             this.UpdateGuiControls();
         }
 
-        private void btnUploadText_Click(object sender, EventArgs e)
-        {
-            txtUploadTextResult.Text = UploadText(txtTextUploaderContent.Text, UploadTextType.UploadText);
-        }
-
-        private void btnUploadTextClipboard_Click(object sender, EventArgs e)
-        {
-            txtUploadTextResult.Text = UploadText(null, UploadTextType.UploadTextFromClipboard);
-        }
-
-        private void btnUploadTextClipboardFile_Click(object sender, EventArgs e)
-        {
-            txtUploadTextResult.Text = UploadText(txtTextUploaderContent.Text, UploadTextType.UploadTextFromFile);
-        }
-
-        private string UploadText(string text, UploadTextType type)
-        {
-            if (lbTextUploaders.SelectedItems.Count > 0 && (type == UploadTextType.UploadTextFromClipboard || !string.IsNullOrEmpty(text)))
-            {
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                TextUploader textUploader = (TextUploader)lbTextUploaders.SelectedItem;
-                string result = "";
-                switch (type)
-                {
-                    case UploadTextType.UploadText:
-                        result = textUploader.UploadText(text);
-                        break;
-                    case UploadTextType.UploadTextFromClipboard:
-                        result = textUploader.UploadTextFromClipboard();
-                        break;
-                    case UploadTextType.UploadTextFromFile:
-                        result = textUploader.UploadTextFromFile(text);
-                        break;
-                }
-                if (!string.IsNullOrEmpty(result))
-                {
-                    if (MessageBox.Show(string.Format("Uploaded in {0} ms: {1}\r\nLink will be paste to clipboard if you press OK.",
-                        stopwatch.ElapsedMilliseconds, result), this.Text, MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        Clipboard.SetText(result);
-                    }
-                    return result;
-                }
-            }
-            return "";
-        }
-
-        private object FindTextUploader(string name)
+        private TextUploader FindTextUploader(string name)
         {
             switch (name)
             {
@@ -4952,31 +4877,22 @@ namespace ZSS
                     return new Snipt();
                 case TinyURL.Hostname:
                     return new TinyURL();
-                case FTPUploader.Hostname:
-                    if (Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > 0)
+                default:
+                    if (name == ZSS.TextUploaders.FTPUploader.Hostname)
                     {
-                        FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                        if (acc == null)
+                        if (Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > 0)
                         {
-                            acc = Program.conf.FTPAccountList[0];
+                            FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                            if (acc == null)
+                            {
+                                acc = Program.conf.FTPAccountList[0];
+                            }
+                            return new ZSS.TextUploaders.FTPUploader(acc);
                         }
-                        return new FTPUploader(acc);
                     }
                     break;
             }
             return null;
-        }
-
-        private object GetTextUploaderSettings(object textUploader)
-        {
-            if (textUploader.GetType() == typeof(FTPUploader))
-            {
-                return ((FTPUploader)textUploader).FTPAccount;
-            }
-            else
-            {
-                return ((TextUploader)textUploader).Settings;
-            }
         }
 
         private void btnAddTextUploader_Click(object sender, EventArgs e)
@@ -5005,6 +4921,7 @@ namespace ZSS
                 lbTextUploaders.Items.RemoveAt(index);
                 cboTextDest.Items.RemoveAt(index);
                 UpdateTextDest();
+                lbTextUploaders.SelectedIndex = lbTextUploaders.Items.Count - 1;
             }
         }
 
@@ -5013,22 +4930,16 @@ namespace ZSS
             object uploader = lbTextUploaders.SelectedItem;
             if (uploader != null)
             {
-                string name = "";
-                if (uploader.GetType() == typeof(FTPUploader))
-                {
-                    name = ((FTPUploader)uploader).ToString();
-                }
-                else if (uploader.GetType().BaseType == typeof(TextUploader))
-                {
-                    name = ((TextUploader)uploader).Name;
-                }
+                string name = ((TextUploader)uploader).ToString();                    
+                string testString = ((TextUploader)uploader).TesterString;
+
                 if (!string.IsNullOrEmpty(name))
                 {
                     string filePath = Path.Combine(Program.TempDir, "TextUploaderTest.txt");
-                    File.WriteAllText(filePath, "Testing: " + name);
+                    File.WriteAllText(filePath, testString);
                     MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     task.TextUploader = uploader;
-                    RunWorker(task);                    
+                    RunWorker(task);
                 }
             }
             else
@@ -5062,7 +4973,7 @@ namespace ZSS
 
                 if (hasOptions)
                 {
-                    pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
+                    pgTextUploaderSettings.SelectedObject = ((TextUploader)textUploader).Settings;
                 }
             }
             else

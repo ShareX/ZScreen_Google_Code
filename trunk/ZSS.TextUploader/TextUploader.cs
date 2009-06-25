@@ -16,7 +16,17 @@ namespace ZSS.TextUploaders
 
         public abstract string Name { get; }
 
-        public abstract string UploadText(string txt);
+        /// <summary>
+        /// String that is uploaded
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
+        public abstract string UploadText(TextFile txt);
+
+        /// <summary>
+        /// String used to test the functionality
+        /// </summary>
+        public abstract string TesterString { get; }
 
         public virtual object Settings { get; set; }
 
@@ -25,7 +35,7 @@ namespace ZSS.TextUploaders
             string link = "";
             if (Clipboard.ContainsText())
             {
-                link = UploadText(Clipboard.GetText());
+                link = UploadText(new TextFile(Clipboard.GetText()));
             }
             else if (Clipboard.ContainsFileDropList())
             {
@@ -43,8 +53,9 @@ namespace ZSS.TextUploaders
             string link = "";
             if (File.Exists(filePath))
             {
-                string text = File.ReadAllText(filePath);
-                link = UploadText(text);
+                TextFile tf = new TextFile(File.ReadAllText(filePath));               
+                tf.LocalFilePath = filePath;                
+                link = UploadText(tf);
             }
             return link;
         }

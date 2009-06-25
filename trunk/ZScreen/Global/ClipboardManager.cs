@@ -24,7 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders.Helpers;
 using System.Windows.Forms;
 
 namespace ZSS

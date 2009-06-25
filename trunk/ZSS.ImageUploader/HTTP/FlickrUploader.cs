@@ -23,9 +23,9 @@
 
 using System.Drawing;
 using System.Drawing.Imaging;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders.Helpers;
 
-namespace ZSS.ImageUploader
+namespace ZSS.ImageUploaders
 {
     public class FlickrUploader : HTTPUploader
     {

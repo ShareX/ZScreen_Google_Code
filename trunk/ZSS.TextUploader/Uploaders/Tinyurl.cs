@@ -63,12 +63,17 @@ namespace ZSS.TextUploaders
             get { return Hostname; }
         }
 
-        public override string UploadText(string text)
+        public override string TesterString
         {
-            if (!string.IsNullOrEmpty(text))
+            get { return "http://code.google.com/p/zscreen"; }
+        }
+
+        public override string UploadText(TextFile text)
+        {
+            if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("url", HttpUtility.UrlEncode(text));
+                arguments.Add("url", HttpUtility.UrlEncode(text.LocalString));
 
                 return GetResponse2(HostSettings.URL, arguments);
             }

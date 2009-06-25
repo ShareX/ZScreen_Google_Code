@@ -35,9 +35,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Xml;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders.Helpers;
 
-namespace ZSS.ImageUploader
+namespace ZSS.ImageUploaders
 {
     public sealed class ImageShackUploader : HTTPUploader
     {
