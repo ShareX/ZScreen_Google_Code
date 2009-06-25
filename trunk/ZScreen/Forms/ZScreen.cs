@@ -1992,6 +1992,8 @@ namespace ZSS
                 sel = tpText;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
+            else if (tsm == tsmTranslator)
+                sel = tpTranslator;
             else if (tsm == tsmOptions)
                 sel = tpOptions;
 
@@ -3168,7 +3170,7 @@ namespace ZSS
             //////////////////////////////////
             // Main Tab
             //////////////////////////////////
-            cboImagesDest.Tag = "Select destination for the Screenshot. Destination can also be changed using the Tray menu.";
+            cboImagesDest.Tag = "Select destination for the Screenshot. Destination can also be changed using the Tray menu. You can setup your own Custom Images Uploader from Images tab.";
 
             cboClipboardTextMode.Tag = "Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard." +
                 "\n\"Full Image\" returns a normal full-size image URL.\n\"Full Image for Forums\" returns BBcode for embedding images into forum posts." +
