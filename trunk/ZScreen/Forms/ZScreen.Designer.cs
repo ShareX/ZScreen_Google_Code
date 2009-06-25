@@ -99,7 +99,6 @@ namespace ZSS
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -112,6 +111,7 @@ namespace ZSS
             this.lblGridSizeHeight = new System.Windows.Forms.Label();
             this.nudCropGridWidth = new System.Windows.Forms.NumericUpDown();
             this.gbActiveHelp = new System.Windows.Forms.GroupBox();
+            this.cbShowActiveHelp = new System.Windows.Forms.CheckBox();
             this.cbHelpToLanguage = new System.Windows.Forms.ComboBox();
             this.chkGTActiveHelp = new System.Windows.Forms.CheckBox();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
@@ -354,7 +354,6 @@ namespace ZSS
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.lbTextUploaders = new System.Windows.Forms.ListBox();
             this.btnTestTextUploader = new System.Windows.Forms.Button();
-            this.btnClearTextUploaders = new System.Windows.Forms.Button();
             this.btnRemoveTextUploader = new System.Windows.Forms.Button();
             this.btnAddTextUploader = new System.Windows.Forms.Button();
             this.pgTextUploaderSettings = new System.Windows.Forms.PropertyGrid();
@@ -464,7 +463,7 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.cbShowActiveHelp = new System.Windows.Forms.CheckBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1161,18 +1160,6 @@ namespace ZSS
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
             // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
@@ -1306,6 +1293,17 @@ namespace ZSS
             this.gbActiveHelp.TabIndex = 84;
             this.gbActiveHelp.TabStop = false;
             this.gbActiveHelp.Text = "Active Help";
+            // 
+            // cbShowActiveHelp
+            // 
+            this.cbShowActiveHelp.AutoSize = true;
+            this.cbShowActiveHelp.Location = new System.Drawing.Point(24, 24);
+            this.cbShowActiveHelp.Name = "cbShowActiveHelp";
+            this.cbShowActiveHelp.Size = new System.Drawing.Size(108, 17);
+            this.cbShowActiveHelp.TabIndex = 10;
+            this.cbShowActiveHelp.Text = "Show active help";
+            this.cbShowActiveHelp.UseVisualStyleBackColor = true;
+            this.cbShowActiveHelp.CheckedChanged += new System.EventHandler(this.cbShowActiveHelp_CheckedChanged);
             // 
             // cbHelpToLanguage
             // 
@@ -4122,7 +4120,6 @@ namespace ZSS
             // 
             this.tpTextUploaders.Controls.Add(this.lbTextUploaders);
             this.tpTextUploaders.Controls.Add(this.btnTestTextUploader);
-            this.tpTextUploaders.Controls.Add(this.btnClearTextUploaders);
             this.tpTextUploaders.Controls.Add(this.btnRemoveTextUploader);
             this.tpTextUploaders.Controls.Add(this.btnAddTextUploader);
             this.tpTextUploaders.Controls.Add(this.pgTextUploaderSettings);
@@ -4155,19 +4152,9 @@ namespace ZSS
             this.btnTestTextUploader.UseVisualStyleBackColor = true;
             this.btnTestTextUploader.Click += new System.EventHandler(this.btnTestTextUploader_Click);
             // 
-            // btnClearTextUploaders
-            // 
-            this.btnClearTextUploaders.Location = new System.Drawing.Point(600, 8);
-            this.btnClearTextUploaders.Name = "btnClearTextUploaders";
-            this.btnClearTextUploaders.Size = new System.Drawing.Size(75, 23);
-            this.btnClearTextUploaders.TabIndex = 6;
-            this.btnClearTextUploaders.Text = "Clear...";
-            this.btnClearTextUploaders.UseVisualStyleBackColor = true;
-            this.btnClearTextUploaders.Click += new System.EventHandler(this.btnClearTextUploaders_Click);
-            // 
             // btnRemoveTextUploader
             // 
-            this.btnRemoveTextUploader.Location = new System.Drawing.Point(520, 8);
+            this.btnRemoveTextUploader.Location = new System.Drawing.Point(600, 8);
             this.btnRemoveTextUploader.Name = "btnRemoveTextUploader";
             this.btnRemoveTextUploader.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveTextUploader.TabIndex = 5;
@@ -4204,7 +4191,7 @@ namespace ZSS
             this.cboTextUploaders.FormattingEnabled = true;
             this.cboTextUploaders.Location = new System.Drawing.Point(288, 8);
             this.cboTextUploaders.Name = "cboTextUploaders";
-            this.cboTextUploaders.Size = new System.Drawing.Size(224, 21);
+            this.cboTextUploaders.Size = new System.Drawing.Size(304, 21);
             this.cboTextUploaders.TabIndex = 3;
             // 
             // tpHistory
@@ -5464,16 +5451,17 @@ namespace ZSS
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
             // 
-            // cbShowActiveHelp
+            // nudtScreenshotDelay
             // 
-            this.cbShowActiveHelp.AutoSize = true;
-            this.cbShowActiveHelp.Location = new System.Drawing.Point(24, 24);
-            this.cbShowActiveHelp.Name = "cbShowActiveHelp";
-            this.cbShowActiveHelp.Size = new System.Drawing.Size(108, 17);
-            this.cbShowActiveHelp.TabIndex = 10;
-            this.cbShowActiveHelp.Text = "Show active help";
-            this.cbShowActiveHelp.UseVisualStyleBackColor = true;
-            this.cbShowActiveHelp.CheckedChanged += new System.EventHandler(this.cbShowActiveHelp_CheckedChanged);
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // ZScreen
             // 
@@ -6069,7 +6057,6 @@ namespace ZSS
         private System.Windows.Forms.Button btnUploadTextClipboard;
         private System.Windows.Forms.Button btnUploadTextClipboardFile;
         private System.Windows.Forms.TextBox txtUploadTextResult;
-        private System.Windows.Forms.Button btnClearTextUploaders;
         private System.Windows.Forms.Button btnRemoveTextUploader;
         private System.Windows.Forms.Button btnTestTextUploader;
         private System.Windows.Forms.PropertyGrid pgFTPSettings;
