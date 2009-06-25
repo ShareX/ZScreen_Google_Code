@@ -262,7 +262,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FTPSelected = -1;
+        public int FTPSelected = 0;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
         [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]

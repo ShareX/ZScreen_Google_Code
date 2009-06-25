@@ -4941,7 +4941,7 @@ namespace ZSS
                 case Snipt.Hostname:
                     return new Snipt();
                 case FTPUploader.Hostname:
-                    if (Program.conf.FTPSelected > -1 && Program.conf.FTPAccountList.Count > 0)
+                    if (Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > 0)
                     {
                         FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                         if (acc == null)

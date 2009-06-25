@@ -278,12 +278,15 @@ namespace ZSS
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
         {
-            if (conf.FTPAccountList.Count > 0 && conf.FTPSelected != -1 && conf.FTPAccountList.Count > conf.FTPSelected)
+            if (conf.FTPAccountList.Count > 0 && conf.FTPSelected >= 0 && conf.FTPAccountList.Count > conf.FTPSelected)
             {
                 return true;
             }
-            task.Errors.Add("An FTP account does not exist or not selected properly.");
-            return false;
+            else
+            {
+                task.Errors.Add("An FTP account does not exist or not selected properly.");
+                return false;
+            }            
         }
     }
 }
