@@ -103,13 +103,6 @@ namespace ZSS
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
-            this.gbGridMode = new System.Windows.Forms.GroupBox();
-            this.cboCropGridMode = new System.Windows.Forms.CheckBox();
-            this.nudCropGridHeight = new System.Windows.Forms.NumericUpDown();
-            this.lblGridSizeWidth = new System.Windows.Forms.Label();
-            this.lblGridSize = new System.Windows.Forms.Label();
-            this.lblGridSizeHeight = new System.Windows.Forms.Label();
-            this.nudCropGridWidth = new System.Windows.Forms.NumericUpDown();
             this.gbActiveHelp = new System.Windows.Forms.GroupBox();
             this.cbShowActiveHelp = new System.Windows.Forms.CheckBox();
             this.cbHelpToLanguage = new System.Windows.Forms.ComboBox();
@@ -159,6 +152,11 @@ namespace ZSS
             this.tpScreenshots = new System.Windows.Forms.TabPage();
             this.tcScreenshots = new System.Windows.Forms.TabControl();
             this.tpCropShot = new System.Windows.Forms.TabPage();
+            this.gpCropRegion = new System.Windows.Forms.GroupBox();
+            this.lblCropRegionStyle = new System.Windows.Forms.Label();
+            this.cbRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
+            this.cbCropStyle = new System.Windows.Forms.ComboBox();
+            this.cbRegionRectangleInfo = new System.Windows.Forms.CheckBox();
             this.gbCropRegionSettings = new System.Windows.Forms.GroupBox();
             this.nudCropHueRange = new System.Windows.Forms.NumericUpDown();
             this.lblCropHueRange = new System.Windows.Forms.Label();
@@ -187,10 +185,13 @@ namespace ZSS
             this.nudCrosshairLineSize = new System.Windows.Forms.NumericUpDown();
             this.lblCrosshairLineSize = new System.Windows.Forms.Label();
             this.lblCrosshairLineCount = new System.Windows.Forms.Label();
-            this.lblCropRegionStyle = new System.Windows.Forms.Label();
-            this.cbRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
-            this.cbCropStyle = new System.Windows.Forms.ComboBox();
-            this.cbRegionRectangleInfo = new System.Windows.Forms.CheckBox();
+            this.gbGridMode = new System.Windows.Forms.GroupBox();
+            this.cboCropGridMode = new System.Windows.Forms.CheckBox();
+            this.nudCropGridHeight = new System.Windows.Forms.NumericUpDown();
+            this.lblGridSizeWidth = new System.Windows.Forms.Label();
+            this.lblGridSize = new System.Windows.Forms.Label();
+            this.lblGridSizeHeight = new System.Windows.Forms.Label();
+            this.nudCropGridWidth = new System.Windows.Forms.NumericUpDown();
             this.tpSelectedWindow = new System.Windows.Forms.TabPage();
             this.cbSelectedWindowAddBorder = new System.Windows.Forms.CheckBox();
             this.nudSelectedWindowHueRange = new System.Windows.Forms.NumericUpDown();
@@ -463,16 +464,12 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.gpCropRegion = new System.Windows.Forms.GroupBox();
             this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.gbImageSettings.SuspendLayout();
-            this.gbGridMode.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).BeginInit();
             this.gbActiveHelp.SuspendLayout();
             this.gbMainOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
@@ -489,6 +486,7 @@ namespace ZSS
             this.tpScreenshots.SuspendLayout();
             this.tcScreenshots.SuspendLayout();
             this.tpCropShot.SuspendLayout();
+            this.gpCropRegion.SuspendLayout();
             this.gbCropRegionSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).BeginInit();
@@ -501,6 +499,9 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).BeginInit();
+            this.gbGridMode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).BeginInit();
             this.tpSelectedWindow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowHueRange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowRegionStep)).BeginInit();
@@ -578,7 +579,6 @@ namespace ZSS
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
             this.ZScreenPanels.SuspendLayout();
-            this.gpCropRegion.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1203,86 +1203,6 @@ namespace ZSS
             this.chkManualNaming.UseVisualStyleBackColor = true;
             this.chkManualNaming.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
             // 
-            // gbGridMode
-            // 
-            this.gbGridMode.Controls.Add(this.cboCropGridMode);
-            this.gbGridMode.Controls.Add(this.nudCropGridHeight);
-            this.gbGridMode.Controls.Add(this.lblGridSizeWidth);
-            this.gbGridMode.Controls.Add(this.lblGridSize);
-            this.gbGridMode.Controls.Add(this.lblGridSizeHeight);
-            this.gbGridMode.Controls.Add(this.nudCropGridWidth);
-            this.gbGridMode.Location = new System.Drawing.Point(368, 16);
-            this.gbGridMode.Name = "gbGridMode";
-            this.gbGridMode.Size = new System.Drawing.Size(392, 104);
-            this.gbGridMode.TabIndex = 120;
-            this.gbGridMode.TabStop = false;
-            this.gbGridMode.Tag = "With Grid Mode you can take screenshots of preset portions of the Screen";
-            this.gbGridMode.Text = "Grid Mode Settings";
-            // 
-            // cboCropGridMode
-            // 
-            this.cboCropGridMode.AutoSize = true;
-            this.cboCropGridMode.Location = new System.Drawing.Point(24, 24);
-            this.cboCropGridMode.Name = "cboCropGridMode";
-            this.cboCropGridMode.Size = new System.Drawing.Size(178, 17);
-            this.cboCropGridMode.TabIndex = 119;
-            this.cboCropGridMode.Text = "Activate Grid Mode in Crop Shot";
-            this.cboCropGridMode.UseVisualStyleBackColor = true;
-            this.cboCropGridMode.CheckedChanged += new System.EventHandler(this.cbCropGridMode_CheckedChanged);
-            // 
-            // nudCropGridHeight
-            // 
-            this.nudCropGridHeight.Location = new System.Drawing.Point(280, 48);
-            this.nudCropGridHeight.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.nudCropGridHeight.Name = "nudCropGridHeight";
-            this.nudCropGridHeight.Size = new System.Drawing.Size(48, 20);
-            this.nudCropGridHeight.TabIndex = 15;
-            this.nudCropGridHeight.ValueChanged += new System.EventHandler(this.nudCropGridHeight_ValueChanged);
-            // 
-            // lblGridSizeWidth
-            // 
-            this.lblGridSizeWidth.AutoSize = true;
-            this.lblGridSizeWidth.Location = new System.Drawing.Point(144, 51);
-            this.lblGridSizeWidth.Name = "lblGridSizeWidth";
-            this.lblGridSizeWidth.Size = new System.Drawing.Size(35, 13);
-            this.lblGridSizeWidth.TabIndex = 14;
-            this.lblGridSizeWidth.Text = "Width";
-            // 
-            // lblGridSize
-            // 
-            this.lblGridSize.AutoSize = true;
-            this.lblGridSize.Location = new System.Drawing.Point(24, 51);
-            this.lblGridSize.Name = "lblGridSize";
-            this.lblGridSize.Size = new System.Drawing.Size(117, 13);
-            this.lblGridSize.TabIndex = 118;
-            this.lblGridSize.Text = "Grid Size ( 0 = Disable )";
-            // 
-            // lblGridSizeHeight
-            // 
-            this.lblGridSizeHeight.AutoSize = true;
-            this.lblGridSizeHeight.Location = new System.Drawing.Point(240, 51);
-            this.lblGridSizeHeight.Name = "lblGridSizeHeight";
-            this.lblGridSizeHeight.Size = new System.Drawing.Size(38, 13);
-            this.lblGridSizeHeight.TabIndex = 16;
-            this.lblGridSizeHeight.Text = "Height";
-            // 
-            // nudCropGridWidth
-            // 
-            this.nudCropGridWidth.Location = new System.Drawing.Point(184, 48);
-            this.nudCropGridWidth.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.nudCropGridWidth.Name = "nudCropGridWidth";
-            this.nudCropGridWidth.Size = new System.Drawing.Size(48, 20);
-            this.nudCropGridWidth.TabIndex = 13;
-            this.nudCropGridWidth.ValueChanged += new System.EventHandler(this.nudCropGridSize_ValueChanged);
-            // 
             // gbActiveHelp
             // 
             this.gbActiveHelp.Controls.Add(this.cbShowActiveHelp);
@@ -1903,6 +1823,60 @@ namespace ZSS
             this.tpCropShot.Text = "Crop Shot";
             this.tpCropShot.UseVisualStyleBackColor = true;
             // 
+            // gpCropRegion
+            // 
+            this.gpCropRegion.Controls.Add(this.lblCropRegionStyle);
+            this.gpCropRegion.Controls.Add(this.cbRegionHotkeyInfo);
+            this.gpCropRegion.Controls.Add(this.cbCropStyle);
+            this.gpCropRegion.Controls.Add(this.cbRegionRectangleInfo);
+            this.gpCropRegion.Location = new System.Drawing.Point(8, 16);
+            this.gpCropRegion.Name = "gpCropRegion";
+            this.gpCropRegion.Size = new System.Drawing.Size(352, 104);
+            this.gpCropRegion.TabIndex = 121;
+            this.gpCropRegion.TabStop = false;
+            this.gpCropRegion.Text = "Crop Region Settings";
+            // 
+            // lblCropRegionStyle
+            // 
+            this.lblCropRegionStyle.AutoSize = true;
+            this.lblCropRegionStyle.Location = new System.Drawing.Point(16, 24);
+            this.lblCropRegionStyle.Name = "lblCropRegionStyle";
+            this.lblCropRegionStyle.Size = new System.Drawing.Size(88, 13);
+            this.lblCropRegionStyle.TabIndex = 9;
+            this.lblCropRegionStyle.Text = "Crop region style:";
+            // 
+            // cbRegionHotkeyInfo
+            // 
+            this.cbRegionHotkeyInfo.AutoSize = true;
+            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 72);
+            this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
+            this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
+            this.cbRegionHotkeyInfo.TabIndex = 6;
+            this.cbRegionHotkeyInfo.Text = "Show crop region hotkey instructions";
+            this.cbRegionHotkeyInfo.UseVisualStyleBackColor = true;
+            this.cbRegionHotkeyInfo.CheckedChanged += new System.EventHandler(this.cbRegionHotkeyInfo_CheckedChanged);
+            // 
+            // cbCropStyle
+            // 
+            this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCropStyle.FormattingEnabled = true;
+            this.cbCropStyle.Location = new System.Drawing.Point(112, 20);
+            this.cbCropStyle.Name = "cbCropStyle";
+            this.cbCropStyle.Size = new System.Drawing.Size(208, 21);
+            this.cbCropStyle.TabIndex = 8;
+            this.cbCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
+            // 
+            // cbRegionRectangleInfo
+            // 
+            this.cbRegionRectangleInfo.AutoSize = true;
+            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 48);
+            this.cbRegionRectangleInfo.Name = "cbRegionRectangleInfo";
+            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
+            this.cbRegionRectangleInfo.TabIndex = 5;
+            this.cbRegionRectangleInfo.Text = "Show crop region coordinates and size";
+            this.cbRegionRectangleInfo.UseVisualStyleBackColor = true;
+            this.cbRegionRectangleInfo.CheckedChanged += new System.EventHandler(this.cbRegionRectangleInfo_CheckedChanged);
+            // 
             // gbCropRegionSettings
             // 
             this.gbCropRegionSettings.Controls.Add(this.nudCropHueRange);
@@ -2236,46 +2210,85 @@ namespace ZSS
             this.lblCrosshairLineCount.TabIndex = 19;
             this.lblCrosshairLineCount.Text = "Crosshair line count:";
             // 
-            // lblCropRegionStyle
+            // gbGridMode
             // 
-            this.lblCropRegionStyle.AutoSize = true;
-            this.lblCropRegionStyle.Location = new System.Drawing.Point(16, 24);
-            this.lblCropRegionStyle.Name = "lblCropRegionStyle";
-            this.lblCropRegionStyle.Size = new System.Drawing.Size(88, 13);
-            this.lblCropRegionStyle.TabIndex = 9;
-            this.lblCropRegionStyle.Text = "Crop region style:";
+            this.gbGridMode.Controls.Add(this.cboCropGridMode);
+            this.gbGridMode.Controls.Add(this.nudCropGridHeight);
+            this.gbGridMode.Controls.Add(this.lblGridSizeWidth);
+            this.gbGridMode.Controls.Add(this.lblGridSize);
+            this.gbGridMode.Controls.Add(this.lblGridSizeHeight);
+            this.gbGridMode.Controls.Add(this.nudCropGridWidth);
+            this.gbGridMode.Location = new System.Drawing.Point(368, 16);
+            this.gbGridMode.Name = "gbGridMode";
+            this.gbGridMode.Size = new System.Drawing.Size(392, 104);
+            this.gbGridMode.TabIndex = 120;
+            this.gbGridMode.TabStop = false;
+            this.gbGridMode.Tag = "With Grid Mode you can take screenshots of preset portions of the Screen";
+            this.gbGridMode.Text = "Grid Mode Settings";
             // 
-            // cbRegionHotkeyInfo
+            // cboCropGridMode
             // 
-            this.cbRegionHotkeyInfo.AutoSize = true;
-            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 72);
-            this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
-            this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
-            this.cbRegionHotkeyInfo.TabIndex = 6;
-            this.cbRegionHotkeyInfo.Text = "Show crop region hotkey instructions";
-            this.cbRegionHotkeyInfo.UseVisualStyleBackColor = true;
-            this.cbRegionHotkeyInfo.CheckedChanged += new System.EventHandler(this.cbRegionHotkeyInfo_CheckedChanged);
+            this.cboCropGridMode.AutoSize = true;
+            this.cboCropGridMode.Location = new System.Drawing.Point(24, 24);
+            this.cboCropGridMode.Name = "cboCropGridMode";
+            this.cboCropGridMode.Size = new System.Drawing.Size(178, 17);
+            this.cboCropGridMode.TabIndex = 119;
+            this.cboCropGridMode.Text = "Activate Grid Mode in Crop Shot";
+            this.cboCropGridMode.UseVisualStyleBackColor = true;
+            this.cboCropGridMode.CheckedChanged += new System.EventHandler(this.cbCropGridMode_CheckedChanged);
             // 
-            // cbCropStyle
+            // nudCropGridHeight
             // 
-            this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCropStyle.FormattingEnabled = true;
-            this.cbCropStyle.Location = new System.Drawing.Point(112, 20);
-            this.cbCropStyle.Name = "cbCropStyle";
-            this.cbCropStyle.Size = new System.Drawing.Size(208, 21);
-            this.cbCropStyle.TabIndex = 8;
-            this.cbCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
+            this.nudCropGridHeight.Location = new System.Drawing.Point(280, 48);
+            this.nudCropGridHeight.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nudCropGridHeight.Name = "nudCropGridHeight";
+            this.nudCropGridHeight.Size = new System.Drawing.Size(48, 20);
+            this.nudCropGridHeight.TabIndex = 15;
+            this.nudCropGridHeight.ValueChanged += new System.EventHandler(this.nudCropGridHeight_ValueChanged);
             // 
-            // cbRegionRectangleInfo
+            // lblGridSizeWidth
             // 
-            this.cbRegionRectangleInfo.AutoSize = true;
-            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 48);
-            this.cbRegionRectangleInfo.Name = "cbRegionRectangleInfo";
-            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
-            this.cbRegionRectangleInfo.TabIndex = 5;
-            this.cbRegionRectangleInfo.Text = "Show crop region coordinates and size";
-            this.cbRegionRectangleInfo.UseVisualStyleBackColor = true;
-            this.cbRegionRectangleInfo.CheckedChanged += new System.EventHandler(this.cbRegionRectangleInfo_CheckedChanged);
+            this.lblGridSizeWidth.AutoSize = true;
+            this.lblGridSizeWidth.Location = new System.Drawing.Point(144, 51);
+            this.lblGridSizeWidth.Name = "lblGridSizeWidth";
+            this.lblGridSizeWidth.Size = new System.Drawing.Size(35, 13);
+            this.lblGridSizeWidth.TabIndex = 14;
+            this.lblGridSizeWidth.Text = "Width";
+            // 
+            // lblGridSize
+            // 
+            this.lblGridSize.AutoSize = true;
+            this.lblGridSize.Location = new System.Drawing.Point(24, 51);
+            this.lblGridSize.Name = "lblGridSize";
+            this.lblGridSize.Size = new System.Drawing.Size(117, 13);
+            this.lblGridSize.TabIndex = 118;
+            this.lblGridSize.Text = "Grid Size ( 0 = Disable )";
+            // 
+            // lblGridSizeHeight
+            // 
+            this.lblGridSizeHeight.AutoSize = true;
+            this.lblGridSizeHeight.Location = new System.Drawing.Point(240, 51);
+            this.lblGridSizeHeight.Name = "lblGridSizeHeight";
+            this.lblGridSizeHeight.Size = new System.Drawing.Size(38, 13);
+            this.lblGridSizeHeight.TabIndex = 16;
+            this.lblGridSizeHeight.Text = "Height";
+            // 
+            // nudCropGridWidth
+            // 
+            this.nudCropGridWidth.Location = new System.Drawing.Point(184, 48);
+            this.nudCropGridWidth.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nudCropGridWidth.Name = "nudCropGridWidth";
+            this.nudCropGridWidth.Size = new System.Drawing.Size(48, 20);
+            this.nudCropGridWidth.TabIndex = 13;
+            this.nudCropGridWidth.ValueChanged += new System.EventHandler(this.nudCropGridSize_ValueChanged);
             // 
             // tpSelectedWindow
             // 
@@ -5450,19 +5463,6 @@ namespace ZSS
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
             // 
-            // gpCropRegion
-            // 
-            this.gpCropRegion.Controls.Add(this.lblCropRegionStyle);
-            this.gpCropRegion.Controls.Add(this.cbRegionHotkeyInfo);
-            this.gpCropRegion.Controls.Add(this.cbCropStyle);
-            this.gpCropRegion.Controls.Add(this.cbRegionRectangleInfo);
-            this.gpCropRegion.Location = new System.Drawing.Point(8, 16);
-            this.gpCropRegion.Name = "gpCropRegion";
-            this.gpCropRegion.Size = new System.Drawing.Size(352, 104);
-            this.gpCropRegion.TabIndex = 121;
-            this.gpCropRegion.TabStop = false;
-            this.gpCropRegion.Text = "Crop Region Settings";
-            // 
             // nudtScreenshotDelay
             // 
             this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
@@ -5504,10 +5504,6 @@ namespace ZSS
             this.tpMain.PerformLayout();
             this.gbImageSettings.ResumeLayout(false);
             this.gbImageSettings.PerformLayout();
-            this.gbGridMode.ResumeLayout(false);
-            this.gbGridMode.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).EndInit();
             this.gbActiveHelp.ResumeLayout(false);
             this.gbActiveHelp.PerformLayout();
             this.gbMainOptions.ResumeLayout(false);
@@ -5530,6 +5526,8 @@ namespace ZSS
             this.tpScreenshots.ResumeLayout(false);
             this.tcScreenshots.ResumeLayout(false);
             this.tpCropShot.ResumeLayout(false);
+            this.gpCropRegion.ResumeLayout(false);
+            this.gpCropRegion.PerformLayout();
             this.gbCropRegionSettings.ResumeLayout(false);
             this.gbCropRegionSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).EndInit();
@@ -5544,6 +5542,10 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).EndInit();
+            this.gbGridMode.ResumeLayout(false);
+            this.gbGridMode.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).EndInit();
             this.tpSelectedWindow.ResumeLayout(false);
             this.tpSelectedWindow.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowHueRange)).EndInit();
@@ -5648,8 +5650,6 @@ namespace ZSS
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
             this.ZScreenPanels.ResumeLayout(false);
-            this.gpCropRegion.ResumeLayout(false);
-            this.gpCropRegion.PerformLayout();
             this.ResumeLayout(false);
 
         }
