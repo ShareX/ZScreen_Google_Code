@@ -29,6 +29,8 @@ using System.Xml.Serialization;
 using System.Drawing;
 using ZSS.TextUploaders.Global;
 using System.ComponentModel;
+using System.Net;
+using ZSS.Helpers;
 
 namespace ZSS
 {
@@ -48,6 +50,9 @@ namespace ZSS
             BackgroundRegionBrightnessValue = 15;
             AutoIncrement = 0;
 
+            NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
+            NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
+
             //~~~~~~~~~~~~~~~~~~~~~
             //  Watermark
             //~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +69,12 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
 
             BackupFTPSettings = true;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Translator
+            //~~~~~~~~~~~~~~~~~~~~~
+            AutoTranslate = false;
+            AutoTranslateLength = 20;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options
@@ -203,9 +214,11 @@ namespace ZSS
 
         // Naming Conventions
 
-        public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
-        public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        [Category("Screenshots / File Naming"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
+        [Category("Screenshots / File Naming"), Description("File Naming convention for Active Window Screenshots")]
+        public string NamingActiveWindow { get; set; }
+        [Category("Screenshots / File Naming"), Description("File Naming convention for Active Window Entire Screen")]
+        public string NamingEntireScreen { get; set; }
+        [Category("Screenshots / File Naming"), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
         // Quality
@@ -299,9 +312,12 @@ namespace ZSS
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
         public string ToLanguage2 = "?";
-        public bool ClipboardTranslate = false;
-        public bool AutoTranslate = false;
-        public int AutoTranslateLength = 20;
+        [Category("Translator"), Description("Automatically copy translated text to Clipboard")]
+        public bool ClipboardTranslate { get; set; }
+        [Category("Translator"), Description("Set true to enable translating clipboard text instead of uploading.")]
+        public bool AutoTranslate { get; set; }
+        [Category("Translator"), Description("Maximum number of charactors before Clipboard Upload switches from Translate to Text Upload.")]
+        public int AutoTranslateLength { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  History
@@ -349,6 +365,8 @@ namespace ZSS
         [Category("Options / Paths"), Description("Images directory where screenshots and pictures will be stored locally.")]
         public string ImagesDir { get; set; }
 
+        // Proxy Settings 
+        // public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture
