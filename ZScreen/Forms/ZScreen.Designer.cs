@@ -603,7 +603,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
             // tsmViewSettingsMenu
             // 
@@ -667,7 +667,7 @@ namespace ZSS
             // tsmImages
             // 
             this.tsmImages.Image = global::ZSS.Properties.Resources.world_edit;
-            this.tsmImages.Name = "tsmHTTP";
+            this.tsmImages.Name = "tsmImages";
             this.tsmImages.Size = new System.Drawing.Size(152, 22);
             this.tsmImages.Text = "Images...";
             this.tsmImages.Click += new System.EventHandler(this.tsm_Click);
@@ -4527,7 +4527,7 @@ namespace ZSS
             this.tpLanguageTranslator.Padding = new System.Windows.Forms.Padding(3);
             this.tpLanguageTranslator.Size = new System.Drawing.Size(780, 448);
             this.tpLanguageTranslator.TabIndex = 1;
-            this.tpLanguageTranslator.Text = "Language Translator";
+            this.tpLanguageTranslator.Text = "Translator";
             this.tpLanguageTranslator.UseVisualStyleBackColor = true;
             // 
             // btnTranslateTo1
