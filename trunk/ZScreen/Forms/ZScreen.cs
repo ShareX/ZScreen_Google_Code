@@ -2513,7 +2513,7 @@ namespace ZSS
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
-                if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.ToString(), 
+                if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.ToString(),
                     Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     LoadSettingsDefault();
@@ -3167,9 +3167,6 @@ namespace ZSS
                 if (this.FormBorderStyle != FormBorderStyle.FixedSingle)
                 {
                     this.FormBorderStyle = FormBorderStyle.FixedSingle;
-                }
-                if (this.Size != this.MinimumSize)
-                {
                     this.Size = this.MinimumSize;
                 }
             }
@@ -3178,6 +3175,7 @@ namespace ZSS
                 if (this.FormBorderStyle != FormBorderStyle.Sizable)
                 {
                     this.FormBorderStyle = FormBorderStyle.Sizable;
+                    this.Size = this.MinimumSize;
                 }
             }
             if (Program.conf.ShowActiveHelp)
@@ -4949,6 +4947,8 @@ namespace ZSS
                     return new Slexy();
                 case Snipt.Hostname:
                     return new Snipt();
+                case TinyURL.Hostname:
+                    return new TinyURL();
                 case FTPUploader.Hostname:
                     if (Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > 0)
                     {
