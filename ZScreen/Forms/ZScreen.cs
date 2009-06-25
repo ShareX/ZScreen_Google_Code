@@ -2513,9 +2513,8 @@ namespace ZSS
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
-                if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.Message, 
-                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, 
-                    MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.ToString(), 
+                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     LoadSettingsDefault();
                 }
@@ -4405,6 +4404,7 @@ namespace ZSS
             {
                 bQuickActionsOpened = true;
                 ToolbarWindow actionsToolbar = new ToolbarWindow { Icon = Resources.zss_main };
+                actionsToolbar.Location = Program.conf.ActionToolbarLocation;
                 actionsToolbar.EventJob += new JobsEventHandler(EventJobs);
                 actionsToolbar.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
                 actionsToolbar.Show();
@@ -4414,10 +4414,6 @@ namespace ZSS
                     Rectangle taskbar = User32.GetTaskbarRectangle();
                     actionsToolbar.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - actionsToolbar.Width - 100,
                         SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - actionsToolbar.Height - 10);
-                }
-                else
-                {
-                    actionsToolbar.Location = Program.conf.ActionToolbarLocation;
                 }
             }
         }
