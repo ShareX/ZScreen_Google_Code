@@ -2513,8 +2513,12 @@ namespace ZSS
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
-                MessageBox.Show("Error occured while loading settings. Default settings loading.\n\n" + ex.Message);
-                LoadSettingsDefault();
+                if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.Message, 
+                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, 
+                    MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                {
+                    LoadSettingsDefault();
+                }
             }
         }
 
