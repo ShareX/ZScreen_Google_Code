@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -464,6 +464,7 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
+            this.cbShowActiveHelp = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1162,10 +1163,10 @@ namespace ZSS
             // 
             // nudtScreenshotDelay
             // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(24, 24);
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
             this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
             this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 35);
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
             this.nudtScreenshotDelay.TabIndex = 121;
             this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
             this.nudtScreenshotDelay.Value = ((long)(0));
@@ -1296,11 +1297,12 @@ namespace ZSS
             // 
             // gbActiveHelp
             // 
+            this.gbActiveHelp.Controls.Add(this.cbShowActiveHelp);
             this.gbActiveHelp.Controls.Add(this.cbHelpToLanguage);
             this.gbActiveHelp.Controls.Add(this.chkGTActiveHelp);
             this.gbActiveHelp.Location = new System.Drawing.Point(16, 360);
             this.gbActiveHelp.Name = "gbActiveHelp";
-            this.gbActiveHelp.Size = new System.Drawing.Size(376, 56);
+            this.gbActiveHelp.Size = new System.Drawing.Size(376, 80);
             this.gbActiveHelp.TabIndex = 84;
             this.gbActiveHelp.TabStop = false;
             this.gbActiveHelp.Text = "Active Help";
@@ -1310,7 +1312,7 @@ namespace ZSS
             this.cbHelpToLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHelpToLanguage.Enabled = false;
             this.cbHelpToLanguage.FormattingEnabled = true;
-            this.cbHelpToLanguage.Location = new System.Drawing.Point(184, 21);
+            this.cbHelpToLanguage.Location = new System.Drawing.Point(184, 48);
             this.cbHelpToLanguage.MaxDropDownItems = 20;
             this.cbHelpToLanguage.Name = "cbHelpToLanguage";
             this.cbHelpToLanguage.Size = new System.Drawing.Size(128, 21);
@@ -1320,7 +1322,7 @@ namespace ZSS
             // chkGTActiveHelp
             // 
             this.chkGTActiveHelp.AutoSize = true;
-            this.chkGTActiveHelp.Location = new System.Drawing.Point(24, 24);
+            this.chkGTActiveHelp.Location = new System.Drawing.Point(24, 51);
             this.chkGTActiveHelp.Name = "chkGTActiveHelp";
             this.chkGTActiveHelp.Size = new System.Drawing.Size(156, 17);
             this.chkGTActiveHelp.TabIndex = 8;
@@ -1798,38 +1800,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3757,7 +3759,7 @@ namespace ZSS
             this.tpCustomUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpCustomUploaders.Name = "tpCustomUploaders";
             this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploaders.Size = new System.Drawing.Size(766, 415);
+            this.tpCustomUploaders.Size = new System.Drawing.Size(766, 443);
             this.tpCustomUploaders.TabIndex = 11;
             this.tpCustomUploaders.Text = "Custom Image Uploaders";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
@@ -4409,7 +4411,7 @@ namespace ZSS
             this.tpHistorySettings.Location = new System.Drawing.Point(4, 22);
             this.tpHistorySettings.Name = "tpHistorySettings";
             this.tpHistorySettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistorySettings.Size = new System.Drawing.Size(766, 416);
+            this.tpHistorySettings.Size = new System.Drawing.Size(766, 444);
             this.tpHistorySettings.TabIndex = 1;
             this.tpHistorySettings.Text = "History Settings";
             this.tpHistorySettings.UseVisualStyleBackColor = true;
@@ -4838,7 +4840,7 @@ namespace ZSS
             this.tpInteraction.Location = new System.Drawing.Point(4, 22);
             this.tpInteraction.Name = "tpInteraction";
             this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInteraction.Size = new System.Drawing.Size(766, 416);
+            this.tpInteraction.Size = new System.Drawing.Size(766, 444);
             this.tpInteraction.TabIndex = 5;
             this.tpInteraction.Text = "Interaction";
             this.tpInteraction.UseVisualStyleBackColor = true;
@@ -4988,7 +4990,7 @@ namespace ZSS
             this.tpAdvPaths.Controls.Add(this.gbRemoteDirCache);
             this.tpAdvPaths.Location = new System.Drawing.Point(4, 22);
             this.tpAdvPaths.Name = "tpAdvPaths";
-            this.tpAdvPaths.Size = new System.Drawing.Size(766, 416);
+            this.tpAdvPaths.Size = new System.Drawing.Size(766, 444);
             this.tpAdvPaths.TabIndex = 2;
             this.tpAdvPaths.Text = "Paths";
             this.tpAdvPaths.UseVisualStyleBackColor = true;
@@ -5262,7 +5264,7 @@ namespace ZSS
             this.tpAdvDebug.Location = new System.Drawing.Point(4, 22);
             this.tpAdvDebug.Name = "tpAdvDebug";
             this.tpAdvDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvDebug.Size = new System.Drawing.Size(766, 416);
+            this.tpAdvDebug.Size = new System.Drawing.Size(766, 444);
             this.tpAdvDebug.TabIndex = 1;
             this.tpAdvDebug.Text = "Debug";
             this.tpAdvDebug.UseVisualStyleBackColor = true;
@@ -5364,7 +5366,7 @@ namespace ZSS
             this.tpOptionsAdv.Location = new System.Drawing.Point(4, 22);
             this.tpOptionsAdv.Name = "tpOptionsAdv";
             this.tpOptionsAdv.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptionsAdv.Size = new System.Drawing.Size(766, 416);
+            this.tpOptionsAdv.Size = new System.Drawing.Size(766, 444);
             this.tpOptionsAdv.TabIndex = 3;
             this.tpOptionsAdv.Text = "Advanced";
             this.tpOptionsAdv.UseVisualStyleBackColor = true;
@@ -5374,7 +5376,7 @@ namespace ZSS
             this.confApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.confApp.Location = new System.Drawing.Point(3, 3);
             this.confApp.Name = "confApp";
-            this.confApp.Size = new System.Drawing.Size(760, 410);
+            this.confApp.Size = new System.Drawing.Size(760, 438);
             this.confApp.TabIndex = 0;
             this.confApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.confApp_PropertyValueChanged);
             // 
@@ -5461,6 +5463,17 @@ namespace ZSS
             this.txtUploadTextResult.Name = "txtUploadTextResult";
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
+            // 
+            // cbShowActiveHelp
+            // 
+            this.cbShowActiveHelp.AutoSize = true;
+            this.cbShowActiveHelp.Location = new System.Drawing.Point(24, 24);
+            this.cbShowActiveHelp.Name = "cbShowActiveHelp";
+            this.cbShowActiveHelp.Size = new System.Drawing.Size(108, 17);
+            this.cbShowActiveHelp.TabIndex = 10;
+            this.cbShowActiveHelp.Text = "Show active help";
+            this.cbShowActiveHelp.UseVisualStyleBackColor = true;
+            this.cbShowActiveHelp.CheckedChanged += new System.EventHandler(this.cbShowActiveHelp_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -6073,6 +6086,7 @@ namespace ZSS
         private System.Windows.Forms.GroupBox gbImageSettings;
         private System.Windows.Forms.ToolStripMenuItem tsmText;
         private System.Windows.Forms.ToolStripMenuItem tsmTranslator;
+        private System.Windows.Forms.CheckBox cbShowActiveHelp;
 
     }
 }
