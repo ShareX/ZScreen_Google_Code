@@ -1,5 +1,6 @@
 Version 2.11 - 20090701
 
+2.11.01.0 Rearranged Main Tabs to follow more logical sense
 2.11.00.1 Fixed Magnifier off the top [Issue 71]
 2.11.00.0 Clipboard Upload to paste2.org, pastebin.com and slexy.org
 2.10.10.1 URLs will only be appended in the History tab
