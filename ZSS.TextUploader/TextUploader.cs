@@ -65,7 +65,7 @@ namespace ZSS.TextUploaders
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.AllowAutoRedirect = true;
-                request.Method = "post";
+                request.Method = "POST";
 
                 string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
                 byte[] data = Encoding.UTF8.GetBytes(post);
@@ -86,7 +86,23 @@ namespace ZSS.TextUploaders
             {
                 Console.WriteLine(e.ToString());
             }
+            return "";
+        }
 
+        protected string GetResponse2(string url, Dictionary<string, string> arguments)
+        {
+            try
+            {
+                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse res = (HttpWebResponse)request.GetResponse();
+                StreamReader reader = new StreamReader(res.GetResponseStream());
+                return reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             return "";
         }
 

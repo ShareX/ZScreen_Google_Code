@@ -66,6 +66,7 @@
     <Compile Include="Uploaders\GoogleTranslate.cs" />
     <Compile Include="Uploaders\Pastebin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Uploaders\TinyURL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="VersionHistory.txt" />

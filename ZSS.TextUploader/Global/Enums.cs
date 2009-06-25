@@ -13,6 +13,8 @@ namespace ZSS.TextUploaders.Global
         [Description("paste2.org")]
         PASTE2,
         [Description("slexy.org")]
-        SLEXY
+        SLEXY,
+        [Description("tinyurl.com")]
+        TINYURL
     }
 }
