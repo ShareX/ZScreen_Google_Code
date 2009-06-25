@@ -300,9 +300,9 @@ namespace ZSS
             }
             if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lbTextUploaders.Items.Count)
             {
-                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
-                cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
+                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;               
             }
+            UpdateTextDest();
 
             cboTextUploaders.Items.Clear();
             cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
@@ -450,6 +450,16 @@ namespace ZSS
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
+        private void UpdateTextDest()
+        {
+            cboTextDest.Items.Clear();
+            foreach (object textUploader in lbTextUploaders.Items)
+            {
+                cboTextDest.Items.Add(textUploader);
+            }
+            cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
+        }
+
         private void UpdateGuiControlsPaths()
         {
             Program.InitializeDefaultFolderPaths();
@@ -465,12 +475,10 @@ namespace ZSS
                 if (obj.GetType() == typeof(FTPUploader))
                 {
                     lbTextUploaders.Items.Add(obj);
-                    cboTextDest.Items.Add(obj);
                 }
                 else
                 {
                     lbTextUploaders.Items.Add(obj);
-                    cboTextDest.Items.Add(obj);
                 }
             }
             else
@@ -4962,6 +4970,7 @@ namespace ZSS
                         lbTextUploaders.SelectedIndex = lbTextUploaders.Items.Count - 1;
                     }
                 }
+                UpdateTextDest();
             }
         }
 
@@ -4971,6 +4980,7 @@ namespace ZSS
             {
                 lbTextUploaders.Items.RemoveAt(lbTextUploaders.SelectedIndices[0]);
                 cboTextDest.Items.RemoveAt(lbTextUploaders.SelectedIndices[0]);
+                UpdateTextDest();
             }
         }
 
@@ -4981,6 +4991,7 @@ namespace ZSS
                 MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbTextUploaders.Items.Clear();
+                UpdateTextDest();
             }            
         }
 
