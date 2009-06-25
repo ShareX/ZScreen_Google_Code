@@ -4937,6 +4937,10 @@ namespace ZSS
                     if (Program.conf.FTPSelected > -1 && Program.conf.FTPAccountList.Count > 0)
                     {
                         FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                        if (acc == null)
+                        {
+                            acc = Program.conf.FTPAccountList[0];
+                        }
                         return new FTPUploader(acc);
                     }
                     break;
