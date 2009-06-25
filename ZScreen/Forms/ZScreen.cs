@@ -457,6 +457,14 @@ namespace ZSS
             {
                 cboTextDest.Items.Add(textUploader);
             }
+            if (Program.conf.SelectedTextUploader > cboTextDest.Items.Count - 1)
+            {
+                Program.conf.SelectedTextUploader = cboTextDest.Items.Count - 1;
+            }
+            else if (Program.conf.SelectedTextUploader < 0)
+            {
+                Program.conf.SelectedTextUploader = 0;
+            }
             cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
         }
 
@@ -4979,22 +4987,11 @@ namespace ZSS
 
         private void btnRemoveTextUploader_Click(object sender, EventArgs e)
         {
-            if (lbTextUploaders.SelectedIndex > -1)
+            if (lbTextUploaders.SelectedIndex > 0)
             {
                 int index = lbTextUploaders.SelectedIndex;
                 lbTextUploaders.Items.RemoveAt(index);
                 cboTextDest.Items.RemoveAt(index);
-                UpdateTextDest();
-            }
-        }
-
-        private void btnClearTextUploaders_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to clear the Text Uploaders list?",
-                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            {
-                lbTextUploaders.Items.Clear();
                 UpdateTextDest();
             }
         }
@@ -5064,6 +5061,7 @@ namespace ZSS
         private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowTextUploaderSettings();
+            btnRemoveTextUploader.Enabled = lbTextUploaders.SelectedIndex > 0;
         }
 
         private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
