@@ -54,6 +54,10 @@ namespace ZSS.TextUploaders
             return string.Join("\r\n", Errors.ToArray());
         }
 
+        /// <summary>
+        /// Descriptive name for the Text Uploader
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.Name;
