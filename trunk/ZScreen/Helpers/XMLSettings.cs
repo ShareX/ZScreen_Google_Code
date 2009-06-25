@@ -312,11 +312,11 @@ namespace ZSS
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
         public string ToLanguage2 = "?";
-        [Category("Translator"), Description("Automatically copy translated text to Clipboard")]
+        [Category("Translator"), DefaultValue(false), Description("Automatically copy translated text to Clipboard")]
         public bool ClipboardTranslate { get; set; }
-        [Category("Translator"), Description("Set true to enable translating clipboard text instead of uploading.")]
+        [Category("Translator"), DefaultValue(false), Description("Set true to enable translating text instead of uploading for a text length less than AutoTranslateLength when the Clipboard Upload hotkey is pressed.")]
         public bool AutoTranslate { get; set; }
-        [Category("Translator"), Description("Maximum number of charactors before Clipboard Upload switches from Translate to Text Upload.")]
+        [Category("Translator"), DefaultValue(20), Description("Maximum number of charactors before Clipboard Upload switches from Translate to Text Upload.")]
         public int AutoTranslateLength { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
