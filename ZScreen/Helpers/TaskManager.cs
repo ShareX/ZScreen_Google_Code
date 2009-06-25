@@ -3,7 +3,7 @@ using ZSS.Tasks;
 using System.IO;
 using System.Diagnostics;
 using ZSS.TextUploaders.Global;
-using ZSS.ImageUploader;
+using ZSS.ImageUploaders;
 using ZSS.Properties;
 using System.Threading;
 using System.Drawing;
@@ -46,7 +46,7 @@ namespace ZSS.Helpers
                     }
                     break;
                 case ImageDestType.FTP:
-                    UploadFtp();
+                    UploadFtpImages();
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
@@ -123,7 +123,7 @@ namespace ZSS.Helpers
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public bool UploadFtp()
+        public bool UploadFtpImages()
         {
             try
             {
@@ -136,7 +136,7 @@ namespace ZSS.Helpers
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
 
-                    FTPUploader fu = new FTPUploader(acc)
+                    ZSS.ImageUploaders.FTPUploader fu = new ZSS.ImageUploaders.FTPUploader(acc)
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) ||
                         Program.conf.FTPCreateThumbnail,
@@ -158,22 +158,21 @@ namespace ZSS.Helpers
         public void UploadText()
         {
             task.StartTime = DateTime.Now;
-            switch (task.TextDestCategory)
-            {
-                case TextDestType.FTP:
-                    UploadFtp();
-                    break;
-                case TextDestType.PASTEBIN:
-                    UploadPastebin();
-                    break;
-            }
-            task.EndTime = DateTime.Now;
-        }
 
-        private void UploadPastebin()
-        {
+            //switch (task.TextDestCategory)
+            //{
+            //    case TextDestType.FTP:
+            //        UploadFtpText();
+            //        break;
+            //    case TextDestType.PASTEBIN:
+            //        UploadPastebin();
+            //        break;
+            //}
+
             TextUploader textUploader = (TextUploader)task.TextUploader;
             task.RemoteFilePath = textUploader.UploadTextFromFile(task.LocalFilePath);
+
+            task.EndTime = DateTime.Now;
         }
 
         public void TextEdit()

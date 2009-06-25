@@ -22,7 +22,7 @@
 #endregion
 
 using System;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders.Helpers;
 using ZSS.Tasks;
 using System.Text;
 using System.IO;
@@ -125,7 +125,7 @@ namespace ZSS.Helpers
                             return string.Format("{0}", t.ImageDestCategory.GetDescription());
                     }
                 case JobCategoryType.TEXT:
-                    return string.Format("{0}", t.TextDestCategory.GetDescription());
+                    return string.Format("{0}", t.TextUploader.ToString());
             }
             return "";
         }

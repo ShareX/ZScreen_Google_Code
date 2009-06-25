@@ -23,7 +23,7 @@
 
 using System;
 
-namespace ZSS.ImageUploader
+namespace ZSS.ImageUploaders
 {
     public class ImageFile : IComparable<ImageFile>
     {

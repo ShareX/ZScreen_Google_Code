@@ -27,6 +27,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using ZSS.TextUploaders.Helpers;
 
 namespace ZSS.TextUploaders
 {
@@ -37,6 +38,11 @@ namespace ZSS.TextUploaders
         public GoogleTranslate()
         {
             this.LanguageOptions = this.GetLanguageOptions();
+        }
+
+        public override string TesterString
+        {
+            get { return "Hello"; }
         }
 
         /// <summary>Gets "from country" and "to country" lists from google.</summary>
@@ -258,7 +264,7 @@ namespace ZSS.TextUploaders
             get { return "Google Translate"; }
         }
 
-        public override string UploadText(string txt)
+        public override string UploadText(TextFile txt)
         {
             throw new NotImplementedException();
         }

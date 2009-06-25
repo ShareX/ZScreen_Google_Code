@@ -466,7 +466,6 @@ namespace ZSS
             this.btnUploadText = new System.Windows.Forms.Button();
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
-            this.txtUploadTextResult = new System.Windows.Forms.TextBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -5464,40 +5463,24 @@ namespace ZSS
             // 
             // btnUploadText
             // 
-            this.btnUploadText.Location = new System.Drawing.Point(8, 368);
+            this.btnUploadText.Location = new System.Drawing.Point(0, 0);
             this.btnUploadText.Name = "btnUploadText";
-            this.btnUploadText.Size = new System.Drawing.Size(152, 24);
-            this.btnUploadText.TabIndex = 2;
-            this.btnUploadText.Text = "Upload text";
-            this.btnUploadText.UseVisualStyleBackColor = true;
-            this.btnUploadText.Click += new System.EventHandler(this.btnUploadText_Click);
+            this.btnUploadText.Size = new System.Drawing.Size(75, 23);
+            this.btnUploadText.TabIndex = 0;
             // 
             // btnUploadTextClipboard
             // 
-            this.btnUploadTextClipboard.Location = new System.Drawing.Point(168, 368);
+            this.btnUploadTextClipboard.Location = new System.Drawing.Point(0, 0);
             this.btnUploadTextClipboard.Name = "btnUploadTextClipboard";
-            this.btnUploadTextClipboard.Size = new System.Drawing.Size(152, 23);
-            this.btnUploadTextClipboard.TabIndex = 3;
-            this.btnUploadTextClipboard.Text = "Upload text from clipboard";
-            this.btnUploadTextClipboard.UseVisualStyleBackColor = true;
-            this.btnUploadTextClipboard.Click += new System.EventHandler(this.btnUploadTextClipboard_Click);
+            this.btnUploadTextClipboard.Size = new System.Drawing.Size(75, 23);
+            this.btnUploadTextClipboard.TabIndex = 0;
             // 
             // btnUploadTextClipboardFile
             // 
-            this.btnUploadTextClipboardFile.Location = new System.Drawing.Point(328, 368);
+            this.btnUploadTextClipboardFile.Location = new System.Drawing.Point(0, 0);
             this.btnUploadTextClipboardFile.Name = "btnUploadTextClipboardFile";
-            this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(151, 23);
-            this.btnUploadTextClipboardFile.TabIndex = 4;
-            this.btnUploadTextClipboardFile.Text = "Upload text from file";
-            this.btnUploadTextClipboardFile.UseVisualStyleBackColor = true;
-            this.btnUploadTextClipboardFile.Click += new System.EventHandler(this.btnUploadTextClipboardFile_Click);
-            // 
-            // txtUploadTextResult
-            // 
-            this.txtUploadTextResult.Location = new System.Drawing.Point(488, 368);
-            this.txtUploadTextResult.Name = "txtUploadTextResult";
-            this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
-            this.txtUploadTextResult.TabIndex = 5;
+            this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(75, 23);
+            this.btnUploadTextClipboardFile.TabIndex = 0;
             // 
             // ZScreen
             // 
@@ -6092,8 +6075,7 @@ namespace ZSS
         private System.Windows.Forms.TextBox txtTextUploaderContent;
         private System.Windows.Forms.Button btnUploadText;
         private System.Windows.Forms.Button btnUploadTextClipboard;
-        private System.Windows.Forms.Button btnUploadTextClipboardFile;
-        private System.Windows.Forms.TextBox txtUploadTextResult;
+        private System.Windows.Forms.Button btnUploadTextClipboardFile;        
         private System.Windows.Forms.Button btnRemoveTextUploader;
         private System.Windows.Forms.Button btnTestTextUploader;
         private System.Windows.Forms.PropertyGrid pgFTPSettings;

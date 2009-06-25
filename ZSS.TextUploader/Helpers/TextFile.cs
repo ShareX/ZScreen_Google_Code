@@ -3,8 +3,8 @@
     public class TextFile
     {
         public TextFile(string localText)
-        {
-            this.LocalText = localText;
+        {            
+            this.LocalString = localText;
         }
 
         public TextFile(string localText, string url)
@@ -13,8 +13,8 @@
             this.URL = url;
         }
 
-        public string LocalText { get; set; }
-        public string RemoteText { get; set; }
+        public string LocalString { get; set; }
+        public string RemoteString { get; set; }
         public string LocalFilePath { get; set; }
         /// <summary>
         /// URL of the Text: pastebin URL, paste2 URL

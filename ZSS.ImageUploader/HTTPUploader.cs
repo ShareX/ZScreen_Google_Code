@@ -36,14 +36,14 @@ using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders.Helpers;
 
-namespace ZSS.ImageUploader
+namespace ZSS.ImageUploaders
 {
     public abstract class HTTPUploader : IUploader
     {
         /// <summary>
-        /// List of Errors logged by ImageUploader
+        /// List of Errors logged by ImageUploaders
         /// </summary>
         public List<string> Errors { get; private set; }
         /// <summary>

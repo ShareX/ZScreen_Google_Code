@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.Drawing;
-using ZSS.ImageUploader.Helpers;
+using ZSS.ImageUploaders.Helpers;
 using System.IO;
 using ZSS.TextUploaders.Global;
 using ZSS.TextUploaders;
@@ -164,11 +164,7 @@ namespace ZSS.Tasks
         /// String object: Text captured from Clipboard
         /// </summary>
         public string MyText { get; set; }
-        public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
-        /// <summary>
-        /// FTP, Paste2, pastebin.ca
-        /// </summary>
-        public TextDestType TextDestCategory { get; set; }
+        public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }        
         /// <summary>
         /// TextUploader Object
         /// </summary>
