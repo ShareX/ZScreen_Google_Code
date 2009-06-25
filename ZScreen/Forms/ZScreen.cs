@@ -300,7 +300,7 @@ namespace ZSS
             }
             if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lbTextUploaders.Items.Count)
             {
-                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;               
+                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
             }
             UpdateTextDest();
 
@@ -4980,23 +4980,24 @@ namespace ZSS
 
         private void btnRemoveTextUploader_Click(object sender, EventArgs e)
         {
-            if (lbTextUploaders.SelectedItems.Count > 0)
+            if (lbTextUploaders.SelectedIndex > -1)
             {
-                lbTextUploaders.Items.RemoveAt(lbTextUploaders.SelectedIndices[0]);
-                cboTextDest.Items.RemoveAt(lbTextUploaders.SelectedIndices[0]);
+                int index = lbTextUploaders.SelectedIndex;
+                lbTextUploaders.Items.RemoveAt(index);
+                cboTextDest.Items.RemoveAt(index);
                 UpdateTextDest();
             }
         }
 
         private void btnClearTextUploaders_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the Text Uploaders list?", 
-                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, 
+            if (MessageBox.Show("Are you sure you want to clear the Text Uploaders list?",
+                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbTextUploaders.Items.Clear();
                 UpdateTextDest();
-            }            
+            }
         }
 
         private void btnTestTextUploader_Click(object sender, EventArgs e)
@@ -5049,7 +5050,7 @@ namespace ZSS
                 bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
                 pgTextUploaderSettings.Visible = hasOptions;
 
-                if (pgTextUploaderSettings.Visible)
+                if (hasOptions)
                 {
                     pgTextUploaderSettings.SelectedObject = GetTextUploaderSettings(textUploader);
                 }
