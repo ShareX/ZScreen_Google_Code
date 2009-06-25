@@ -156,7 +156,7 @@ namespace ZSS
             }
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Program.conf.ScreenshotDelayTimes;
-            nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;            
+            nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;
             chkManualNaming.Checked = Program.conf.ManualNaming;
             cbShowCursor.Checked = Program.conf.ShowCursor;
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
@@ -303,6 +303,7 @@ namespace ZSS
                 lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
                 cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
             }
+
             cboTextUploaders.Items.Clear();
             cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
             cboTextUploaders.SelectedIndex = 1;
@@ -4906,7 +4907,7 @@ namespace ZSS
                 }
             }
             return "";
-        } 
+        }
 
         private object FindTextUploader(string name)
         {
@@ -5018,14 +5019,12 @@ namespace ZSS
             RewriteImageEditorsRightClickMenu();
         }
 
-        private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        private void ShowTextUploaderSettings()
         {
             if (lbTextUploaders.SelectedItems.Count > 0)
             {
-                Program.conf.SelectedTextUploader = lbTextUploaders.SelectedIndices[0];
-
                 object textUploader = lbTextUploaders.SelectedItem;
-                bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);                
+                bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
                 pgTextUploaderSettings.Visible = hasOptions;
 
                 if (pgTextUploaderSettings.Visible)
@@ -5040,17 +5039,18 @@ namespace ZSS
             }
         }
 
-        private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.mGuiIsReady)
-            {
-                Program.mgrTextUploaders.TextUploaderActive = cboTextDest.SelectedItem;
-            }
+            ShowTextUploaderSettings();
         }
 
-        private void gbImageSettings_Enter(object sender, EventArgs e)
+        private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            Program.mgrTextUploaders.TextUploaderActive = cboTextDest.SelectedItem;
+            if (mGuiIsReady)
+            {
+                Program.conf.SelectedTextUploader = lbTextUploaders.SelectedIndex;
+            }
         }
 
     }
