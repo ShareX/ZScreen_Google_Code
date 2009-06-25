@@ -163,7 +163,8 @@
             this.Name = "ToolbarWindow";
             this.Text = " Actions Toolbar";
             this.TopMost = true;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ToolbarWindow_FormClosed);
+            this.Shown += new System.EventHandler(this.ToolbarWindow_Shown);
+            this.Move += new System.EventHandler(this.ToolbarWindow_Move);
             this.tsQuickActions.ResumeLayout(false);
             this.tsQuickActions.PerformLayout();
             this.ResumeLayout(false);

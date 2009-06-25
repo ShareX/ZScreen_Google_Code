@@ -6,6 +6,7 @@ namespace ZSS.Forms
     public partial class ToolbarWindow : Form
     {
         public event JobsEventHandler EventJob;
+        private bool mGuiReady = false;
 
         public ToolbarWindow()
         {
@@ -72,9 +73,18 @@ namespace ZSS.Forms
             User32.SetActiveWindow(this.Handle);
         }
 
-        private void ToolbarWindow_FormClosed(object sender, FormClosedEventArgs e)
+        private void ToolbarWindow_Move(object sender, EventArgs e)
         {
-            Program.conf.ActionToolbarLocation = this.Location;
+            if (mGuiReady)
+            {
+                Program.conf.ActionToolbarLocation = this.Location;
+            }
         }
+
+        private void ToolbarWindow_Shown(object sender, EventArgs e)
+        {
+            mGuiReady = true;
+        }
+
     }
 }
