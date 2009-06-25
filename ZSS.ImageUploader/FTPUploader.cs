@@ -138,6 +138,10 @@ namespace ZSS.ImageUploader
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Descriptive name for the FTP Uploader
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("FTP ({0})", this.Name);

@@ -862,11 +862,11 @@ namespace ZSS
 
             if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR)
             {
-                //sbMsg.AppendLine("Languages: " + t.TranslationInfo.Result.TranslationType);
+                //sbMsg.AppendLine("Languages: " + task.TranslationInfo.Result.TranslationType);
                 sbMsg.AppendLine(t.TranslationInfo.Result.TranslationType);
                 sbMsg.AppendLine("Source: " + t.TranslationInfo.SourceText);
                 sbMsg.AppendLine("Result: " + t.TranslationInfo.Result.TranslatedText);
-                //sbMsg.AppendLine(string.Format("{0} >> {1}", t.TranslationInfo.Result.SourceText, t.TranslationInfo.Result.TranslatedText));
+                //sbMsg.AppendLine(string.Format("{0} >> {1}", task.TranslationInfo.Result.SourceText, task.TranslationInfo.Result.TranslatedText));
             }
             else
             {
@@ -1076,10 +1076,21 @@ namespace ZSS
         }
 
         /// <summary>
-        /// Worker for Text: Google Translate, Paste2, Pastebin
+        /// Method to run the Main App Task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        private bool RunWorker(MainAppTask task)
+        {
+            task.MyWorker.RunWorkerAsync(task);
+            return true;
+        }
+
+        /// <summary>
+        /// Worker for Text: Paste2, Pastebin
         /// </summary>
         /// <returns></returns>
-        private bool StartWorkerText(MainAppTask.Jobs job, string txt, string localFilePath)
+        private MainAppTask GetWorkerText(MainAppTask.Jobs job, string localFilePath)
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
@@ -1098,23 +1109,15 @@ namespace ZSS
             {
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
                     btnTranslate.Enabled = false;
-
-                    if (txt == "")
-                    {
-                        txt = txtTranslateText.Text;
-                    }
-                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(txt, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
+                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(txtTranslateText.Text, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
                         mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex]);
                     if (t.TranslationInfo.IsEmpty())
                     {
-                        btnTranslate.Enabled = true;
-                        return false;
+                        btnTranslate.Enabled = true; 
                     }
                     break;
             }
-
-            t.MyWorker.RunWorkerAsync(t);
-            return true;
+            return t;
         }
 
         #endregion
@@ -2430,7 +2433,7 @@ namespace ZSS
                 {
                     if (Program.mgrTextUploaders.TextUploaderActive != null)
                     {
-                        StartWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, "", filePath);
+                        RunWorker(GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath));                        
                     }
                 }
                 else
@@ -3202,7 +3205,7 @@ namespace ZSS
                 "\n\"Thumbnail\" returns the thumbnail (a small image) of your uploaded image.\n\"Linked Thumbnail\" is the same as \"Thumbnail\" except " +
                 "that it links the thumbnail to the full-size image.";
 
-            //active help inconsistency (uses label because numeric up/down doesn't support mousehover event
+            //active help inconsistency (uses label because numeric up/down doesn'task support mousehover event
             nudtScreenshotDelay.Tag = "The amount of time that the program will pause before taking a Full Screen or Active Window Screenshot.";
 
             cbCompleteSound.Tag = "When checked a sound will be played after an image successfully reaches the destination you have set (Clipboard, FTP, etc).";
@@ -3231,7 +3234,7 @@ namespace ZSS
 
             cbFileFormat.Tag = "The format that screenshots will be saved as.";
 
-            //active help inconsistency (uses label because numeric up/down doesn't support mousehover event
+            //active help inconsistency (uses label because numeric up/down doesn'task support mousehover event
             lblQuality.Tag = "The quality (1-100%) of JPEG screenshots. This quality setting does not effect any other type of Image Format.";
 
             cbSwitchFormat.Tag = "The secondary format that the program will switch to after a user-specified limit has been reached.";
@@ -5007,13 +5010,13 @@ namespace ZSS
 
         private void btnTestTextUploader_Click(object sender, EventArgs e)
         {
-            object uploader = Program.mgrTextUploaders.TextUploaderActive;
+            object uploader = lbTextUploaders.SelectedItem;
             if (uploader != null)
             {
                 string name = "";
                 if (uploader.GetType() == typeof(FTPUploader))
                 {
-                    name = string.Format("FTP ({0})", ((FTPUploader)uploader).Name);
+                    name = ((FTPUploader)uploader).ToString();
                 }
                 else if (uploader.GetType().BaseType == typeof(TextUploader))
                 {
@@ -5023,7 +5026,9 @@ namespace ZSS
                 {
                     string filePath = Path.Combine(Program.TempDir, "TextUploaderTest.txt");
                     File.WriteAllText(filePath, "Testing: " + name);
-                    StartWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, "", filePath);
+                    MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    task.TextUploader = uploader;
+                    RunWorker(task);                    
                 }
             }
             else
