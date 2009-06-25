@@ -293,15 +293,14 @@ namespace ZSS
             ///////////////////////////////////
 
             lbTextUploaders.Items.Clear();
-            cboTextDest.Items.Clear();
-            foreach (object textUploader in Program.mgrTextUploaders.TextUploadersSettings)
+            foreach (TextUploader textUploader in Program.mgrTextUploaders.TextUploadersSettings)
             {
                 AddTextUploader(textUploader);
             }
-            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lbTextUploaders.Items.Count)
-            {
-                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
-            }
+            //if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lbTextUploaders.Items.Count)
+            //{
+            //    lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
+            //}
             UpdateTextDest();
 
             cboTextUploaders.Items.Clear();
@@ -455,7 +454,7 @@ namespace ZSS
         private void UpdateTextDest()
         {
             cboTextDest.Items.Clear();
-            foreach (object textUploader in lbTextUploaders.Items)
+            foreach (TextUploader textUploader in lbTextUploaders.Items)
             {
                 cboTextDest.Items.Add(textUploader);
             }
@@ -2405,7 +2404,8 @@ namespace ZSS
                 {
                     if (Program.mgrTextUploaders.TextUploaderActive != null)
                     {
-                        RunWorker(GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath));
+                        // RunWorker(GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath));
+                        (GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath)).RunWorker();
                     }
                 }
                 else
@@ -4927,11 +4927,11 @@ namespace ZSS
 
         private void btnTestTextUploader_Click(object sender, EventArgs e)
         {
-            object uploader = lbTextUploaders.SelectedItem;
+            TextUploader uploader = (TextUploader)lbTextUploaders.SelectedItem;
             if (uploader != null)
             {
-                string name = ((TextUploader)uploader).ToString();                    
-                string testString = ((TextUploader)uploader).TesterString;
+                string name = uploader.ToString();                    
+                string testString = uploader.TesterString;
 
                 if (!string.IsNullOrEmpty(name))
                 {
@@ -4939,7 +4939,7 @@ namespace ZSS
                     File.WriteAllText(filePath, testString);
                     MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     task.TextUploader = uploader;
-                    RunWorker(task);
+                    task.RunWorker(); // RunWorker(task);
                 }
             }
             else
@@ -4976,11 +4976,6 @@ namespace ZSS
                     pgTextUploaderSettings.SelectedObject = ((TextUploader)textUploader).Settings;
                 }
             }
-            else
-            {
-                Program.conf.SelectedTextUploader = -1;
-                Program.mgrTextUploaders.TextUploaderActive = null;
-            }
         }
 
         private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
@@ -4994,7 +4989,7 @@ namespace ZSS
             Program.mgrTextUploaders.TextUploaderActive = cboTextDest.SelectedItem;
             if (mGuiIsReady)
             {
-                Program.conf.SelectedTextUploader = lbTextUploaders.SelectedIndex;
+                Program.conf.SelectedTextUploader = cboTextDest.SelectedIndex;
             }
         }
 

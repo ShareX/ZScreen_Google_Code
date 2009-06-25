@@ -241,6 +241,7 @@ namespace ZSS.Tasks
             }
         }
 
+
         #region "Functions"
 
         /// <summary>
@@ -263,6 +264,11 @@ namespace ZSS.Tasks
             {
                 this.SetImage(User32.CaptureScreen(Program.conf.ShowCursor));
             }
+        }
+
+        public void RunWorker()
+        {
+            this.MyWorker.RunWorkerAsync(this);
         }
 
         #endregion
