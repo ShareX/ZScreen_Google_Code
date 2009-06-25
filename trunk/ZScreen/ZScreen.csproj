@@ -356,6 +356,7 @@
     <None Include="Resources\photos.png" />
     <None Include="Resources\images_stack.png" />
     <None Include="Resources\server.png" />
+    <None Include="Resources\text_signature.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
