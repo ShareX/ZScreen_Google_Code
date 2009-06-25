@@ -345,6 +345,8 @@ namespace ZSS
             chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
             PerformOnlineTasks();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
+            cbAutoTranslate.Checked = Program.conf.AutoTranslate;
+            txtAutoTranslate.Text = Program.conf.AutoTranslateLength.ToString();
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
             cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
 
@@ -2455,10 +2457,17 @@ namespace ZSS
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
-                        NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
-                    File.WriteAllText(cbFilePath, Clipboard.GetText());
-                    cbListFilePath.Add(cbFilePath);
+                    if (Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
+                    {
+                        StartBW_LanguageTranslator();
+                    }
+                    else
+                    {
+                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
+                            NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
+                        File.WriteAllText(cbFilePath, Clipboard.GetText());
+                        cbListFilePath.Add(cbFilePath);
+                    }
                 }
                 else if (Clipboard.ContainsFileDropList())
                 {
@@ -4072,13 +4081,13 @@ namespace ZSS
         }
 
         private void lbFTPAccounts_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
             int sel = lbFTPAccounts.SelectedIndex;
             Program.conf.FTPSelected = sel;
             if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
                 FTPAccount acc = Program.conf.FTPAccountList[sel];
-                pgFTPSettings.SelectedObject = acc;                
+                pgFTPSettings.SelectedObject = acc;
                 RewriteFTPRightClickMenu();
             }
         }
@@ -5077,6 +5086,20 @@ namespace ZSS
         {
             Program.conf.ShowActiveHelp = cbShowActiveHelp.Checked;
             CheckFormSettings();
+        }
+
+        private void cbAutoTranslate_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoTranslate = cbAutoTranslate.Checked;
+        }
+
+        private void txtAutoTranslate_TextChanged(object sender, EventArgs e)
+        {
+            int number;
+            if (int.TryParse(txtAutoTranslate.Text, out number))
+            {
+                Program.conf.AutoTranslateLength = number;
+            }
         }
     }
 }

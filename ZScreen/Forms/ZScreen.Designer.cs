@@ -99,6 +99,7 @@ namespace ZSS
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -359,6 +360,21 @@ namespace ZSS
             this.btnAddTextUploader = new System.Windows.Forms.Button();
             this.pgTextUploaderSettings = new System.Windows.Forms.PropertyGrid();
             this.cboTextUploaders = new System.Windows.Forms.ComboBox();
+            this.tpTranslator = new System.Windows.Forms.TabPage();
+            this.txtAutoTranslate = new System.Windows.Forms.TextBox();
+            this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
+            this.btnTranslateTo1 = new System.Windows.Forms.Button();
+            this.lblDictionary = new System.Windows.Forms.Label();
+            this.txtDictionary = new System.Windows.Forms.TextBox();
+            this.cbClipboardTranslate = new System.Windows.Forms.CheckBox();
+            this.txtTranslateResult = new System.Windows.Forms.TextBox();
+            this.txtLanguages = new System.Windows.Forms.TextBox();
+            this.btnTranslate = new System.Windows.Forms.Button();
+            this.txtTranslateText = new System.Windows.Forms.TextBox();
+            this.lblToLanguage = new System.Windows.Forms.Label();
+            this.lblFromLanguage = new System.Windows.Forms.Label();
+            this.cbToLanguage = new System.Windows.Forms.ComboBox();
+            this.cbFromLanguage = new System.Windows.Forms.ComboBox();
             this.tpHistory = new System.Windows.Forms.TabPage();
             this.tcHistory = new System.Windows.Forms.TabControl();
             this.tpHistoryList = new System.Windows.Forms.TabPage();
@@ -384,19 +400,6 @@ namespace ZSS
             this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.cbHistoryAddSpace = new System.Windows.Forms.CheckBox();
             this.cbHistoryReverseList = new System.Windows.Forms.CheckBox();
-            this.tpTranslator = new System.Windows.Forms.TabPage();
-            this.btnTranslateTo1 = new System.Windows.Forms.Button();
-            this.lblDictionary = new System.Windows.Forms.Label();
-            this.txtDictionary = new System.Windows.Forms.TextBox();
-            this.cbClipboardTranslate = new System.Windows.Forms.CheckBox();
-            this.txtTranslateResult = new System.Windows.Forms.TextBox();
-            this.txtLanguages = new System.Windows.Forms.TextBox();
-            this.btnTranslate = new System.Windows.Forms.Button();
-            this.txtTranslateText = new System.Windows.Forms.TextBox();
-            this.lblToLanguage = new System.Windows.Forms.Label();
-            this.lblFromLanguage = new System.Windows.Forms.Label();
-            this.cbToLanguage = new System.Windows.Forms.ComboBox();
-            this.cbFromLanguage = new System.Windows.Forms.ComboBox();
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
@@ -464,7 +467,6 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.txtUploadTextResult = new System.Windows.Forms.TextBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -551,13 +553,13 @@ namespace ZSS
             this.tpText.SuspendLayout();
             this.tcText.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
+            this.tpTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
             this.tpHistoryList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.tpHistorySettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
-            this.tpTranslator.SuspendLayout();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
             this.tpGeneral.SuspendLayout();
@@ -1160,6 +1162,18 @@ namespace ZSS
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -4206,6 +4220,177 @@ namespace ZSS
             this.cboTextUploaders.Size = new System.Drawing.Size(304, 21);
             this.cboTextUploaders.TabIndex = 3;
             // 
+            // tpTranslator
+            // 
+            this.tpTranslator.Controls.Add(this.txtAutoTranslate);
+            this.tpTranslator.Controls.Add(this.cbAutoTranslate);
+            this.tpTranslator.Controls.Add(this.btnTranslateTo1);
+            this.tpTranslator.Controls.Add(this.lblDictionary);
+            this.tpTranslator.Controls.Add(this.txtDictionary);
+            this.tpTranslator.Controls.Add(this.cbClipboardTranslate);
+            this.tpTranslator.Controls.Add(this.txtTranslateResult);
+            this.tpTranslator.Controls.Add(this.txtLanguages);
+            this.tpTranslator.Controls.Add(this.btnTranslate);
+            this.tpTranslator.Controls.Add(this.txtTranslateText);
+            this.tpTranslator.Controls.Add(this.lblToLanguage);
+            this.tpTranslator.Controls.Add(this.lblFromLanguage);
+            this.tpTranslator.Controls.Add(this.cbToLanguage);
+            this.tpTranslator.Controls.Add(this.cbFromLanguage);
+            this.tpTranslator.ImageKey = "comments.png";
+            this.tpTranslator.Location = new System.Drawing.Point(4, 23);
+            this.tpTranslator.Name = "tpTranslator";
+            this.tpTranslator.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTranslator.Size = new System.Drawing.Size(780, 476);
+            this.tpTranslator.TabIndex = 1;
+            this.tpTranslator.Text = "Translator";
+            this.tpTranslator.UseVisualStyleBackColor = true;
+            // 
+            // txtAutoTranslate
+            // 
+            this.txtAutoTranslate.Location = new System.Drawing.Point(432, 376);
+            this.txtAutoTranslate.Name = "txtAutoTranslate";
+            this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
+            this.txtAutoTranslate.TabIndex = 11;
+            this.txtAutoTranslate.TextChanged += new System.EventHandler(this.txtAutoTranslate_TextChanged);
+            // 
+            // cbAutoTranslate
+            // 
+            this.cbAutoTranslate.AutoSize = true;
+            this.cbAutoTranslate.Location = new System.Drawing.Point(16, 384);
+            this.cbAutoTranslate.Name = "cbAutoTranslate";
+            this.cbAutoTranslate.Size = new System.Drawing.Size(408, 17);
+            this.cbAutoTranslate.TabIndex = 10;
+            this.cbAutoTranslate.Text = "If clipboard text length smaller than this number then instead text upload, trans" +
+                "late";
+            this.cbAutoTranslate.UseVisualStyleBackColor = true;
+            this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
+            // 
+            // btnTranslateTo1
+            // 
+            this.btnTranslateTo1.AllowDrop = true;
+            this.btnTranslateTo1.Location = new System.Drawing.Point(216, 176);
+            this.btnTranslateTo1.Name = "btnTranslateTo1";
+            this.btnTranslateTo1.Size = new System.Drawing.Size(136, 24);
+            this.btnTranslateTo1.TabIndex = 9;
+            this.btnTranslateTo1.Text = "???";
+            this.btnTranslateTo1.UseVisualStyleBackColor = true;
+            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
+            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
+            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
+            // 
+            // lblDictionary
+            // 
+            this.lblDictionary.AutoSize = true;
+            this.lblDictionary.Location = new System.Drawing.Point(368, 24);
+            this.lblDictionary.Name = "lblDictionary";
+            this.lblDictionary.Size = new System.Drawing.Size(54, 13);
+            this.lblDictionary.TabIndex = 8;
+            this.lblDictionary.Text = "Dictionary";
+            // 
+            // txtDictionary
+            // 
+            this.txtDictionary.BackColor = System.Drawing.SystemColors.Info;
+            this.txtDictionary.Location = new System.Drawing.Point(368, 48);
+            this.txtDictionary.Multiline = true;
+            this.txtDictionary.Name = "txtDictionary";
+            this.txtDictionary.ReadOnly = true;
+            this.txtDictionary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDictionary.Size = new System.Drawing.Size(392, 304);
+            this.txtDictionary.TabIndex = 7;
+            // 
+            // cbClipboardTranslate
+            // 
+            this.cbClipboardTranslate.AutoSize = true;
+            this.cbClipboardTranslate.Location = new System.Drawing.Point(16, 360);
+            this.cbClipboardTranslate.Name = "cbClipboardTranslate";
+            this.cbClipboardTranslate.Size = new System.Drawing.Size(230, 17);
+            this.cbClipboardTranslate.TabIndex = 6;
+            this.cbClipboardTranslate.Text = "Auto paste result to clipboard after translate";
+            this.cbClipboardTranslate.UseVisualStyleBackColor = true;
+            this.cbClipboardTranslate.CheckedChanged += new System.EventHandler(this.cbClipboardTranslate_CheckedChanged);
+            // 
+            // txtTranslateResult
+            // 
+            this.txtTranslateResult.Location = new System.Drawing.Point(16, 232);
+            this.txtTranslateResult.Multiline = true;
+            this.txtTranslateResult.Name = "txtTranslateResult";
+            this.txtTranslateResult.ReadOnly = true;
+            this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTranslateResult.Size = new System.Drawing.Size(336, 120);
+            this.txtTranslateResult.TabIndex = 5;
+            // 
+            // txtLanguages
+            // 
+            this.txtLanguages.Location = new System.Drawing.Point(16, 208);
+            this.txtLanguages.Name = "txtLanguages";
+            this.txtLanguages.ReadOnly = true;
+            this.txtLanguages.Size = new System.Drawing.Size(336, 20);
+            this.txtLanguages.TabIndex = 4;
+            // 
+            // btnTranslate
+            // 
+            this.btnTranslate.Location = new System.Drawing.Point(16, 176);
+            this.btnTranslate.Name = "btnTranslate";
+            this.btnTranslate.Size = new System.Drawing.Size(192, 24);
+            this.btnTranslate.TabIndex = 3;
+            this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
+            this.btnTranslate.UseVisualStyleBackColor = true;
+            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
+            // 
+            // txtTranslateText
+            // 
+            this.txtTranslateText.Location = new System.Drawing.Point(16, 48);
+            this.txtTranslateText.Multiline = true;
+            this.txtTranslateText.Name = "txtTranslateText";
+            this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
+            this.txtTranslateText.TabIndex = 2;
+            this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
+            // 
+            // lblToLanguage
+            // 
+            this.lblToLanguage.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.lblToLanguage.Location = new System.Drawing.Point(192, 8);
+            this.lblToLanguage.Name = "lblToLanguage";
+            this.lblToLanguage.Size = new System.Drawing.Size(28, 32);
+            this.lblToLanguage.TabIndex = 3;
+            this.lblToLanguage.Text = "To:";
+            this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
+            // 
+            // lblFromLanguage
+            // 
+            this.lblFromLanguage.Location = new System.Drawing.Point(16, 8);
+            this.lblFromLanguage.Name = "lblFromLanguage";
+            this.lblFromLanguage.Size = new System.Drawing.Size(33, 32);
+            this.lblFromLanguage.TabIndex = 2;
+            this.lblFromLanguage.Text = "From:";
+            this.lblFromLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cbToLanguage
+            // 
+            this.cbToLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbToLanguage.Enabled = false;
+            this.cbToLanguage.FormattingEnabled = true;
+            this.cbToLanguage.Location = new System.Drawing.Point(224, 16);
+            this.cbToLanguage.MaxDropDownItems = 20;
+            this.cbToLanguage.Name = "cbToLanguage";
+            this.cbToLanguage.Size = new System.Drawing.Size(128, 21);
+            this.cbToLanguage.TabIndex = 1;
+            this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
+            // 
+            // cbFromLanguage
+            // 
+            this.cbFromLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFromLanguage.Enabled = false;
+            this.cbFromLanguage.FormattingEnabled = true;
+            this.cbFromLanguage.Location = new System.Drawing.Point(56, 16);
+            this.cbFromLanguage.MaxDropDownItems = 20;
+            this.cbFromLanguage.Name = "cbFromLanguage";
+            this.cbFromLanguage.Size = new System.Drawing.Size(128, 21);
+            this.cbFromLanguage.TabIndex = 0;
+            this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
+            // 
             // tpHistory
             // 
             this.tpHistory.Controls.Add(this.tcHistory);
@@ -4517,155 +4702,6 @@ namespace ZSS
             this.cbHistoryReverseList.Text = "Reverse List in Clipboard";
             this.cbHistoryReverseList.UseVisualStyleBackColor = false;
             this.cbHistoryReverseList.CheckedChanged += new System.EventHandler(this.cbReverse_CheckedChanged);
-            // 
-            // tpTranslator
-            // 
-            this.tpTranslator.Controls.Add(this.btnTranslateTo1);
-            this.tpTranslator.Controls.Add(this.lblDictionary);
-            this.tpTranslator.Controls.Add(this.txtDictionary);
-            this.tpTranslator.Controls.Add(this.cbClipboardTranslate);
-            this.tpTranslator.Controls.Add(this.txtTranslateResult);
-            this.tpTranslator.Controls.Add(this.txtLanguages);
-            this.tpTranslator.Controls.Add(this.btnTranslate);
-            this.tpTranslator.Controls.Add(this.txtTranslateText);
-            this.tpTranslator.Controls.Add(this.lblToLanguage);
-            this.tpTranslator.Controls.Add(this.lblFromLanguage);
-            this.tpTranslator.Controls.Add(this.cbToLanguage);
-            this.tpTranslator.Controls.Add(this.cbFromLanguage);
-            this.tpTranslator.ImageKey = "comments.png";
-            this.tpTranslator.Location = new System.Drawing.Point(4, 23);
-            this.tpTranslator.Name = "tpTranslator";
-            this.tpTranslator.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTranslator.Size = new System.Drawing.Size(780, 476);
-            this.tpTranslator.TabIndex = 1;
-            this.tpTranslator.Text = "Translator";
-            this.tpTranslator.UseVisualStyleBackColor = true;
-            // 
-            // btnTranslateTo1
-            // 
-            this.btnTranslateTo1.AllowDrop = true;
-            this.btnTranslateTo1.Location = new System.Drawing.Point(216, 176);
-            this.btnTranslateTo1.Name = "btnTranslateTo1";
-            this.btnTranslateTo1.Size = new System.Drawing.Size(136, 24);
-            this.btnTranslateTo1.TabIndex = 9;
-            this.btnTranslateTo1.Text = "???";
-            this.btnTranslateTo1.UseVisualStyleBackColor = true;
-            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
-            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
-            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
-            // 
-            // lblDictionary
-            // 
-            this.lblDictionary.AutoSize = true;
-            this.lblDictionary.Location = new System.Drawing.Point(368, 24);
-            this.lblDictionary.Name = "lblDictionary";
-            this.lblDictionary.Size = new System.Drawing.Size(54, 13);
-            this.lblDictionary.TabIndex = 8;
-            this.lblDictionary.Text = "Dictionary";
-            // 
-            // txtDictionary
-            // 
-            this.txtDictionary.BackColor = System.Drawing.SystemColors.Info;
-            this.txtDictionary.Location = new System.Drawing.Point(368, 48);
-            this.txtDictionary.Multiline = true;
-            this.txtDictionary.Name = "txtDictionary";
-            this.txtDictionary.ReadOnly = true;
-            this.txtDictionary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDictionary.Size = new System.Drawing.Size(392, 304);
-            this.txtDictionary.TabIndex = 7;
-            // 
-            // cbClipboardTranslate
-            // 
-            this.cbClipboardTranslate.AutoSize = true;
-            this.cbClipboardTranslate.Location = new System.Drawing.Point(16, 360);
-            this.cbClipboardTranslate.Name = "cbClipboardTranslate";
-            this.cbClipboardTranslate.Size = new System.Drawing.Size(230, 17);
-            this.cbClipboardTranslate.TabIndex = 6;
-            this.cbClipboardTranslate.Text = "Auto paste result to clipboard after translate";
-            this.cbClipboardTranslate.UseVisualStyleBackColor = true;
-            this.cbClipboardTranslate.CheckedChanged += new System.EventHandler(this.cbClipboardTranslate_CheckedChanged);
-            // 
-            // txtTranslateResult
-            // 
-            this.txtTranslateResult.Location = new System.Drawing.Point(16, 232);
-            this.txtTranslateResult.Multiline = true;
-            this.txtTranslateResult.Name = "txtTranslateResult";
-            this.txtTranslateResult.ReadOnly = true;
-            this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateResult.Size = new System.Drawing.Size(336, 120);
-            this.txtTranslateResult.TabIndex = 5;
-            // 
-            // txtLanguages
-            // 
-            this.txtLanguages.Location = new System.Drawing.Point(16, 208);
-            this.txtLanguages.Name = "txtLanguages";
-            this.txtLanguages.ReadOnly = true;
-            this.txtLanguages.Size = new System.Drawing.Size(336, 20);
-            this.txtLanguages.TabIndex = 4;
-            // 
-            // btnTranslate
-            // 
-            this.btnTranslate.Location = new System.Drawing.Point(16, 176);
-            this.btnTranslate.Name = "btnTranslate";
-            this.btnTranslate.Size = new System.Drawing.Size(192, 24);
-            this.btnTranslate.TabIndex = 3;
-            this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
-            this.btnTranslate.UseVisualStyleBackColor = true;
-            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
-            // 
-            // txtTranslateText
-            // 
-            this.txtTranslateText.Location = new System.Drawing.Point(16, 48);
-            this.txtTranslateText.Multiline = true;
-            this.txtTranslateText.Name = "txtTranslateText";
-            this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
-            this.txtTranslateText.TabIndex = 2;
-            this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
-            // 
-            // lblToLanguage
-            // 
-            this.lblToLanguage.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.lblToLanguage.Location = new System.Drawing.Point(192, 8);
-            this.lblToLanguage.Name = "lblToLanguage";
-            this.lblToLanguage.Size = new System.Drawing.Size(28, 32);
-            this.lblToLanguage.TabIndex = 3;
-            this.lblToLanguage.Text = "To:";
-            this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
-            // 
-            // lblFromLanguage
-            // 
-            this.lblFromLanguage.Location = new System.Drawing.Point(16, 8);
-            this.lblFromLanguage.Name = "lblFromLanguage";
-            this.lblFromLanguage.Size = new System.Drawing.Size(33, 32);
-            this.lblFromLanguage.TabIndex = 2;
-            this.lblFromLanguage.Text = "From:";
-            this.lblFromLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cbToLanguage
-            // 
-            this.cbToLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbToLanguage.Enabled = false;
-            this.cbToLanguage.FormattingEnabled = true;
-            this.cbToLanguage.Location = new System.Drawing.Point(224, 16);
-            this.cbToLanguage.MaxDropDownItems = 20;
-            this.cbToLanguage.Name = "cbToLanguage";
-            this.cbToLanguage.Size = new System.Drawing.Size(128, 21);
-            this.cbToLanguage.TabIndex = 1;
-            this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
-            // 
-            // cbFromLanguage
-            // 
-            this.cbFromLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFromLanguage.Enabled = false;
-            this.cbFromLanguage.FormattingEnabled = true;
-            this.cbFromLanguage.Location = new System.Drawing.Point(56, 16);
-            this.cbFromLanguage.MaxDropDownItems = 20;
-            this.cbFromLanguage.Name = "cbFromLanguage";
-            this.cbFromLanguage.Size = new System.Drawing.Size(128, 21);
-            this.cbFromLanguage.TabIndex = 0;
-            this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
             // tpOptions
             // 
@@ -5463,18 +5499,6 @@ namespace ZSS
             this.txtUploadTextResult.Size = new System.Drawing.Size(264, 20);
             this.txtUploadTextResult.TabIndex = 5;
             // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5610,6 +5634,8 @@ namespace ZSS
             this.tpText.ResumeLayout(false);
             this.tcText.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
+            this.tpTranslator.ResumeLayout(false);
+            this.tpTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
             this.tcHistory.ResumeLayout(false);
             this.tpHistoryList.ResumeLayout(false);
@@ -5618,8 +5644,6 @@ namespace ZSS
             this.tpHistorySettings.ResumeLayout(false);
             this.tpHistorySettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
-            this.tpTranslator.ResumeLayout(false);
-            this.tpTranslator.PerformLayout();
             this.tpOptions.ResumeLayout(false);
             this.tcOptions.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);
@@ -6088,6 +6112,8 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmTranslator;
         private System.Windows.Forms.CheckBox cbShowActiveHelp;
         private System.Windows.Forms.GroupBox gpCropRegion;
+        private System.Windows.Forms.TextBox txtAutoTranslate;
+        private System.Windows.Forms.CheckBox cbAutoTranslate;
 
     }
 }
