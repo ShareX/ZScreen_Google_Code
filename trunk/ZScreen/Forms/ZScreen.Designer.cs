@@ -1112,8 +1112,8 @@ namespace ZSS
             this.tcApp.Controls.Add(this.tpEditors);
             this.tcApp.Controls.Add(this.tpImages);
             this.tcApp.Controls.Add(this.tpText);
-            this.tcApp.Controls.Add(this.tpHistory);
             this.tcApp.Controls.Add(this.tpTranslator);
+            this.tcApp.Controls.Add(this.tpHistory);
             this.tcApp.Controls.Add(this.tpOptions);
             this.tcApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcApp.ImageList = this.ilApp;

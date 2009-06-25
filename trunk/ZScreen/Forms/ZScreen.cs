@@ -4072,13 +4072,13 @@ namespace ZSS
         }
 
         private void lbFTPAccounts_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {            
             int sel = lbFTPAccounts.SelectedIndex;
+            Program.conf.FTPSelected = sel;
             if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
             {
                 FTPAccount acc = Program.conf.FTPAccountList[sel];
-                pgFTPSettings.SelectedObject = acc;
-                Program.conf.FTPSelected = lbFTPAccounts.SelectedIndex;
+                pgFTPSettings.SelectedObject = acc;                
                 RewriteFTPRightClickMenu();
             }
         }
