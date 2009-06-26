@@ -41,7 +41,7 @@ using ZSS.ImageUploaders;
 using ZSS.ImageUploaders.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.TextUploaders;
+using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
 
 namespace ZSS
@@ -4739,7 +4739,7 @@ namespace ZSS
                 case TinyURLUploader.Hostname:
                     return new TinyURLUploader();
                 default:
-                    if (name == ZSS.TextUploaders.FTPUploader.Hostname)
+                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
                     {
                         if (Program.conf.FTPAccountList.Count > 0)
                         {
@@ -4752,7 +4752,7 @@ namespace ZSS
                             {
                                 acc = Program.conf.FTPAccountList[0];
                             }
-                            return new ZSS.TextUploaders.FTPUploader(acc);
+                            return new ZSS.TextUploadersLib.FTPUploader(acc);
                         }
                     }
                     break;

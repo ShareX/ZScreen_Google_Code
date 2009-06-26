@@ -6,7 +6,7 @@ using ZSS.ImageUploaders;
 using ZSS.Properties;
 using System.Threading;
 using System.Drawing;
-using ZSS.TextUploaders;
+using ZSS.TextUploadersLib;
 
 namespace ZSS.Helpers
 {

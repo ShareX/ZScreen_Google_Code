@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploaders.Helpers;
+using ZSS.TextUploadersLib.Helpers;
 using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace ZSS.TextUploaders
+namespace ZSS.TextUploadersLib
 {
     [Serializable]
     public abstract class TextUploader : ITextUploader

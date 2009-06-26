@@ -29,7 +29,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ZSS.Properties;
-using ZSS.TextUploaders;
+using ZSS.TextUploadersLib;
 
 namespace ZSS
 {
