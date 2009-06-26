@@ -153,7 +153,6 @@ namespace ZSS
             {
                 cboImagesDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
-
             cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             if (cboClipboardTextMode.Items.Count == 0)
             {
@@ -425,6 +424,7 @@ namespace ZSS
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
             cbLockFormSize.Checked = Program.conf.LockFormSize;
+            cbShowHelpBalloonTips.Checked = Program.conf.ShowHelpBalloonTips;
             if (cboUpdateCheckType.Items.Count == 0)
             {
                 cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
@@ -2018,7 +2018,7 @@ namespace ZSS
                 Show();
                 WindowState = FormWindowState.Normal;
                 this.Activate();
-                this.BringToFront();                
+                this.BringToFront();
                 Program.conf.RunOnce = true;
             }
 
@@ -4933,6 +4933,11 @@ namespace ZSS
                     ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
                 }
             }
+        }
+
+        private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
         }
     }
 }
