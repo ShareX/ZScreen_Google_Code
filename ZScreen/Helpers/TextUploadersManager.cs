@@ -6,14 +6,18 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using ZSS.TextUploaders;
+using System.Runtime.Serialization;
 
 namespace ZSS.Helpers
 {
     [Serializable]
+    [XmlInclude(typeof(TextUploadersManager))]
     public class TextUploadersManager
     {
 
+        [XmlAttribute("TextUploadersSettings")]
         public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+        [XmlAttribute("UrlShortenerSettings")]
         public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURLUploader() };
 
         public TextUploader TextUploaderActive = new Paste2Uploader();
@@ -116,5 +120,6 @@ namespace ZSS.Helpers
 
             return new TextUploadersManager();
         }
+
     }
 }

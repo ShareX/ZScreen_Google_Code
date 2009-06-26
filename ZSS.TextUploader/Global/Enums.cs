@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System;
 
 namespace ZSS.TextUploaders.Global
 {
+    [Serializable]
     public enum TextDestType
     {
         [Description("FTP")]
@@ -16,6 +18,7 @@ namespace ZSS.TextUploaders.Global
         SLEXY,
     }
 
+    [Serializable]
     public enum UrlShortenerType
     {
         [Description("tinyurl.com")]

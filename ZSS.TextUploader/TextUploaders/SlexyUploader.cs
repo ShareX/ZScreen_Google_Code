@@ -39,6 +39,7 @@ namespace ZSS.TextUploaders
     {
         public const string Hostname = "slexy.org";
 
+        [XmlAttribute("SlexySettings")]
         public override object Settings
         {
             get
