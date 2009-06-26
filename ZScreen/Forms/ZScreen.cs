@@ -119,8 +119,6 @@ namespace ZSS
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
             AddToClipboardByDoubleClick(tpHistory);
 
-            ActiveHelpTagsConfig();
-
             FillClipboardCopyMenu();
             FillClipboardMenu();
 
@@ -2020,8 +2018,7 @@ namespace ZSS
                 Show();
                 WindowState = FormWindowState.Normal;
                 this.Activate();
-                this.BringToFront();
-                lblFirstRun.Visible = true;
+                this.BringToFront();                
                 Program.conf.RunOnce = true;
             }
 
