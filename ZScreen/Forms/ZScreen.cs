@@ -44,6 +44,8 @@ using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
 using ZSS.TextUploaderLib.URLShorteners;
+using ZSS.TextUploadersLib.Helpers;
+using ZSS.Global;
 
 namespace ZSS
 {
@@ -1230,6 +1232,9 @@ namespace ZSS
                         }
                     }
                     break;
+                case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_URL:
+
+                    break;
                 case MainAppTask.ProgressType.FLASH_ICON:
                     niTray.Icon = (Icon)e.UserState;
                     break;
@@ -1315,7 +1320,11 @@ namespace ZSS
                     if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                     {
                         ClipboardManager.AddScreenshotList(task.ImageManager);
-                        ClipboardManager.SetClipboardText();
+                        string url = ClipboardManager.SetClipboardText();
+                        if (Program.conf.ClipboardUriMode == ClipboardUriType.FULL)
+                        {
+                            task.RemoteFilePath = url;
+                        }
                     }
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))

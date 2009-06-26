@@ -7,6 +7,7 @@ using ZSS.Properties;
 using System.Threading;
 using System.Drawing;
 using ZSS.TextUploadersLib;
+using ZSS.Global;
 
 namespace ZSS.Helpers
 {
@@ -158,18 +159,9 @@ namespace ZSS.Helpers
         {
             task.StartTime = DateTime.Now;
 
-            //switch (task.TextDestCategory)
-            //{
-            //    case TextDestType.FTP:
-            //        UploadFtpText();
-            //        break;
-            //    case TextDestType.PASTEBIN:
-            //        UploadPastebin();
-            //        break;
-            //}
-
             TextUploader textUploader = (TextUploader)task.MyTextUploader;
-            task.RemoteFilePath = textUploader.UploadTextFromFile(task.LocalFilePath);
+            string url = textUploader.UploadTextFromFile(task.LocalFilePath);
+            task.RemoteFilePath = OnlineTasks.TryShortenURL(url);
 
             task.EndTime = DateTime.Now;
         }
