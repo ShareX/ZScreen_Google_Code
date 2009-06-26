@@ -14,8 +14,6 @@ namespace ZSS.TextUploaders.Global
         PASTE2,
         [Description("slexy.org")]
         SLEXY,
-        [Description("tinyurl.com")]
-        TINYURL
     }
 
     public enum UrlShortenerType

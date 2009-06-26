@@ -258,6 +258,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public int SelectedTextUploader = 0;
+        public int SelectedUrlShortener = 0;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors

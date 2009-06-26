@@ -12,8 +12,17 @@ namespace ZSS.Helpers
     [Serializable]
     public class TextUploadersManager
     {
-        public List<object> TextUploadersSettings = new List<object> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-        public object TextUploaderActive;
+
+        public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+        public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURL() };
+
+        public TextUploader TextUploaderActive;
+        public TextUploader UrlShortenerActive;
+
+        public static TextUploadersManager Read()
+        {
+            return ReadBF(Program.TextUploadersFilePath);
+        }
 
         public void Write()
         {
@@ -56,11 +65,6 @@ namespace ZSS.Helpers
             {
                 System.Windows.Forms.MessageBox.Show(e.Message);
             }
-        }
-
-        public static TextUploadersManager Read()
-        {
-            return ReadBF(Program.TextUploadersFilePath);
         }
 
         private static TextUploadersManager ReadBF(string filePath)
