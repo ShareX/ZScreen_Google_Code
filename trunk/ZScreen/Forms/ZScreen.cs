@@ -142,7 +142,7 @@ namespace ZSS
             if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
             {
 
-                Program.mgrTextUploaders.UrlShortenerActive = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
+                Program.conf.UrlShortenerActive = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
                 Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
 
                 TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
@@ -168,7 +168,7 @@ namespace ZSS
             {
                 int index = ucUrlShorteners.MyCollection.SelectedIndex;
                 ucUrlShorteners.MyCollection.Items.RemoveAt(index);
-                Program.mgrTextUploaders.UrlShortenerSettings.RemoveAt(index);
+                Program.conf.UrlShortenerSettings.RemoveAt(index);
                 ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
             }
         }
@@ -189,7 +189,7 @@ namespace ZSS
                     if (textUploader != null)
                     {
                         ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                        Program.mgrTextUploaders.UrlShortenerSettings.Add(textUploader);
+                        Program.conf.UrlShortenerSettings.Add(textUploader);
                     }
                     ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
                 }
@@ -369,7 +369,7 @@ namespace ZSS
             ///////////////////////////////////
 
             ucTextUploaders.MyCollection.Items.Clear();
-            foreach (TextUploader textUploader in Program.mgrTextUploaders.TextUploadersSettings)
+            foreach (TextUploader textUploader in Program.conf.TextUploadersSettings)
             {
                 if (textUploader != null)
                 {
@@ -392,7 +392,7 @@ namespace ZSS
             ///////////////////////////////////
 
             ucUrlShorteners.MyCollection.Items.Clear();
-            foreach (TextUploader textUploader in Program.mgrTextUploaders.UrlShortenerSettings)
+            foreach (TextUploader textUploader in Program.conf.UrlShortenerSettings)
             {
                 if (textUploader != null)
                 {
@@ -1611,7 +1611,6 @@ namespace ZSS
         {
             Program.conf.Save();
             SaveHistoryItems();
-            Program.mgrTextUploaders.Write();
             Settings.Default.Save();
         }
 
@@ -2489,15 +2488,15 @@ namespace ZSS
 
                     if (FileSystem.IsValidLink(textString))
                     {
-                        if (Program.mgrTextUploaders.UrlShortenerActive != null)
+                        if (Program.conf.UrlShortenerActive != null)
                         {
-                            temp.MyTextUploader = Program.mgrTextUploaders.UrlShortenerActive;
+                            temp.MyTextUploader = Program.conf.UrlShortenerActive;
                             temp.RunWorker();
                         }
                     }
                     else
                     {
-                        if (Program.mgrTextUploaders.TextUploaderActive != null)
+                        if (Program.conf.TextUploaderActive != null)
                         {
                             temp.RunWorker();
                         }
@@ -5011,7 +5010,7 @@ namespace ZSS
                     if (textUploader != null)
                     {
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
-                        Program.mgrTextUploaders.TextUploadersSettings.Add(textUploader);
+                        Program.conf.TextUploadersSettings.Add(textUploader);
                     }
                     ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
@@ -5081,7 +5080,7 @@ namespace ZSS
             {
                 TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
 
-                Program.mgrTextUploaders.TextUploaderActive = textUploader;
+                Program.conf.TextUploaderActive = textUploader;
 
                 if (mGuiIsReady)
                 {

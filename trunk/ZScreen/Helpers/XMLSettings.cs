@@ -31,6 +31,7 @@ using ZSS.TextUploaders.Global;
 using System.ComponentModel;
 using System.Net;
 using ZSS.Helpers;
+using ZSS.TextUploaders;
 
 namespace ZSS
 {
@@ -254,11 +255,15 @@ namespace ZSS
         public decimal WatermarkImageScale = 100;
 
         //~~~~~~~~~~~~~~~~~~~~~
-        //  Text Collection
+        //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
-
+        public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
         public int SelectedTextUploader = 0;
+        public TextUploader TextUploaderActive = new Paste2Uploader();
+
+        public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURLUploader() };
         public int SelectedUrlShortener = 0;
+        public TextUploader UrlShortenerActive = new TinyURLUploader();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
@@ -475,7 +480,7 @@ namespace ZSS
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-            XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
+            XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 xs.Serialize(fs, this);
