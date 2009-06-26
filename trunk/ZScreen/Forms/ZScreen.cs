@@ -43,6 +43,7 @@ using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
+using ZSS.TextUploaderLib.URLShorteners;
 
 namespace ZSS
 {
@@ -4718,6 +4719,8 @@ namespace ZSS
             {
                 case TinyURLUploader.Hostname:
                     return new TinyURLUploader();
+                case ThreelyUploader.Hostname:
+                    return new ThreelyUploader();
             }
             return null;
         }
@@ -4736,8 +4739,6 @@ namespace ZSS
                     return new SlexyUploader();
                 case SniptUploader.Hostname:
                     return new SniptUploader();
-                case TinyURLUploader.Hostname:
-                    return new TinyURLUploader();
                 default:
                     if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
                     {
