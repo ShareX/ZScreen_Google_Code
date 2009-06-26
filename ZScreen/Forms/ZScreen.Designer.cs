@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,6 +99,7 @@ namespace ZSS
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -352,8 +353,10 @@ namespace ZSS
             this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpText = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
-            this.tpURLShorteners = new System.Windows.Forms.TabPage();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.tpURLShorteners = new System.Windows.Forms.TabPage();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -460,9 +463,6 @@ namespace ZSS
             this.btnUploadText = new System.Windows.Forms.Button();
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -548,8 +548,8 @@ namespace ZSS
             this.gbArguments.SuspendLayout();
             this.tpText.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
-            this.tpURLShorteners.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
+            this.tpURLShorteners.SuspendLayout();
             this.tpTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -1119,7 +1119,7 @@ namespace ZSS
             this.tcApp.Location = new System.Drawing.Point(3, 3);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(788, 456);
+            this.tcApp.Size = new System.Drawing.Size(788, 455);
             this.tcApp.TabIndex = 74;
             this.tcApp.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
@@ -1159,6 +1159,18 @@ namespace ZSS
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -1718,38 +1730,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4128,6 +4140,25 @@ namespace ZSS
             this.tcTextUploaders.Size = new System.Drawing.Size(774, 423);
             this.tcTextUploaders.TabIndex = 0;
             // 
+            // tpTextUploaders
+            // 
+            this.tpTextUploaders.Controls.Add(this.ucTextUploaders);
+            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpTextUploaders.Name = "tpTextUploaders";
+            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTextUploaders.Size = new System.Drawing.Size(766, 397);
+            this.tpTextUploaders.TabIndex = 14;
+            this.tpTextUploaders.Text = "Text Uploaders";
+            this.tpTextUploaders.UseVisualStyleBackColor = true;
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(760, 391);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4139,16 +4170,13 @@ namespace ZSS
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
             // 
-            // tpTextUploaders
+            // ucUrlShorteners
             // 
-            this.tpTextUploaders.Controls.Add(this.ucTextUploaders);
-            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
-            this.tpTextUploaders.Name = "tpTextUploaders";
-            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(766, 397);
-            this.tpTextUploaders.TabIndex = 14;
-            this.tpTextUploaders.Text = "Text Uploaders";
-            this.tpTextUploaders.UseVisualStyleBackColor = true;
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(760, 391);
+            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -4328,7 +4356,7 @@ namespace ZSS
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(780, 429);
+            this.tpHistory.Size = new System.Drawing.Size(780, 428);
             this.tpHistory.TabIndex = 8;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -4341,7 +4369,7 @@ namespace ZSS
             this.tcHistory.Location = new System.Drawing.Point(3, 3);
             this.tcHistory.Name = "tcHistory";
             this.tcHistory.SelectedIndex = 0;
-            this.tcHistory.Size = new System.Drawing.Size(774, 423);
+            this.tcHistory.Size = new System.Drawing.Size(774, 422);
             this.tcHistory.TabIndex = 3;
             // 
             // tpHistoryList
@@ -4361,7 +4389,7 @@ namespace ZSS
             this.tpHistoryList.Location = new System.Drawing.Point(4, 22);
             this.tpHistoryList.Name = "tpHistoryList";
             this.tpHistoryList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistoryList.Size = new System.Drawing.Size(766, 397);
+            this.tpHistoryList.Size = new System.Drawing.Size(766, 396);
             this.tpHistoryList.TabIndex = 0;
             this.tpHistoryList.Text = "History List";
             this.tpHistoryList.UseVisualStyleBackColor = true;
@@ -4479,7 +4507,7 @@ namespace ZSS
             this.lbHistory.Name = "lbHistory";
             this.lbHistory.ScrollAlwaysVisible = true;
             this.lbHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbHistory.Size = new System.Drawing.Size(383, 385);
+            this.lbHistory.Size = new System.Drawing.Size(383, 384);
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
@@ -5349,11 +5377,11 @@ namespace ZSS
             // 
             this.txtActiveHelp.BackColor = System.Drawing.SystemColors.Info;
             this.txtActiveHelp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtActiveHelp.Location = new System.Drawing.Point(3, 465);
+            this.txtActiveHelp.Location = new System.Drawing.Point(3, 464);
             this.txtActiveHelp.Name = "txtActiveHelp";
             this.txtActiveHelp.ReadOnly = true;
             this.txtActiveHelp.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txtActiveHelp.Size = new System.Drawing.Size(788, 24);
+            this.txtActiveHelp.Size = new System.Drawing.Size(788, 35);
             this.txtActiveHelp.TabIndex = 75;
             this.txtActiveHelp.Text = "";
             this.txtActiveHelp.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtActiveHelp_LinkClicked);
@@ -5368,9 +5396,9 @@ namespace ZSS
             this.ZScreenPanels.Location = new System.Drawing.Point(0, 0);
             this.ZScreenPanels.Name = "ZScreenPanels";
             this.ZScreenPanels.RowCount = 2;
-            this.ZScreenPanels.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94F));
-            this.ZScreenPanels.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6F));
-            this.ZScreenPanels.Size = new System.Drawing.Size(794, 492);
+            this.ZScreenPanels.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92F));
+            this.ZScreenPanels.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
+            this.ZScreenPanels.Size = new System.Drawing.Size(794, 502);
             this.ZScreenPanels.TabIndex = 76;
             // 
             // tpUploadText
@@ -5413,43 +5441,15 @@ namespace ZSS
             this.btnUploadTextClipboardFile.Size = new System.Drawing.Size(75, 23);
             this.btnUploadTextClipboardFile.TabIndex = 0;
             // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(305, 32);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(760, 391);
-            this.ucUrlShorteners.TabIndex = 0;
-            // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(760, 391);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(794, 492);
+            this.ClientSize = new System.Drawing.Size(794, 502);
             this.Controls.Add(this.ZScreenPanels);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(810, 530);
+            this.MinimumSize = new System.Drawing.Size(810, 540);
             this.Name = "ZScreen";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -5575,8 +5575,8 @@ namespace ZSS
             this.gbArguments.PerformLayout();
             this.tpText.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
-            this.tpURLShorteners.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
+            this.tpURLShorteners.ResumeLayout(false);
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
