@@ -360,6 +360,7 @@ namespace ZSS
         [Category("Options / General"), DefaultValue(false), Description("Auto save settings whenever form is resized or main" +
             " tabs are changed. Normally settings are saved only after form is closed.")]
         public bool AutoSaveSettings { get; set; }
+        public bool ShowHelpBalloonTips = true;
         public bool CheckUpdates = true;
         public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
         public bool CheckExperimental = false;
@@ -478,22 +479,21 @@ namespace ZSS
 
         public void Save(string filePath)
         {
-            /* try
-             {
- */
-            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-            XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
-            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            try
             {
-                xs.Serialize(fs, this);
+                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
+                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                {
+                    xs.Serialize(fs, this);
+                }
             }
-            /* }
-             catch (Exception e)
-             {
-                 MessageBox.Show(e.Message);
-             }*/
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public static XMLSettings Read()
