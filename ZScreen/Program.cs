@@ -39,7 +39,6 @@ namespace ZSS
 
         private static readonly string XMLFileName = "Settings.xml";
         private static readonly string HistoryFileName = "History.xml";
-        private static readonly string TextUploadersFileName = "TextUploaders.bin";
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
         private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
@@ -173,17 +172,8 @@ namespace ZSS
             }
         }
 
-        public static string TextUploadersFilePath
-        {
-            get
-            {
-                return Path.Combine(SettingsDir, TextUploadersFileName);
-            }
-        }
-
         public static XMLSettings conf;
-        public static TextUploadersManager mgrTextUploaders;
-
+        
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
@@ -235,8 +225,7 @@ namespace ZSS
 
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
-            mgrTextUploaders = TextUploadersManager.Read();
-
+            
             // Use Configuration Wizard Settings if applied
             if (cw != null)
             {
