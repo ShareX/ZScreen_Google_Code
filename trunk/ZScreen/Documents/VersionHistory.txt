@@ -1,10 +1,13 @@
-Version 2.12 - 20090701
+Version 2.14 - 20090701
 
-2.12.00.0 Added support for URL Shorteners starting with TinyURL and 3.ly
-2.11.01.1 Prevent automatically loading Default Settings when an error is occured
-2.11.01.0 Rearranged Main Tabs to follow a more logical sense
-2.11.00.1 Fixed Magnifier off the top [Issue 71]
-2.11.00.0 Added support for Text Uploading via Clipboard starting with paste2.org, pastebin.com and slexy.org
+2.14.00.0 Added support for URL Shortener: 3.ly
+2.13.00.0 Added support for URL Shorteners starting with TinyURL
+2.13.01.1 Prevent automatically loading Default Settings when an error is occured
+2.13.01.0 Rearranged Main Tabs to follow a more logical sense
+2.13.00.1 Fixed Magnifier off the top [Issue 71]
+2.13.00.0 Added support for Text Uploader: slexy.org
+2.12.00.0 Added support for Text Uploader: pastebin.com
+2.11.00.0 Added support for Text Uploading via Clipboard starting with paste2.org
 2.10.10.1 URLs will only be appended in the History tab
 2.10.10.0 Actions Toolbar Mode to automatically open Toolbar on ZScreen startup
 2.10.09.0 Online Tasks such as updating TinyPic Registration Code will automatically happen every 6 hours
