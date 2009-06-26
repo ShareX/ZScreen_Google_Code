@@ -11,13 +11,9 @@ using System.Runtime.Serialization;
 namespace ZSS.Helpers
 {
     [Serializable]
-    [XmlInclude(typeof(TextUploadersManager))]
     public class TextUploadersManager
     {
-
-        [XmlAttribute("TextUploadersSettings")]
-        public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-        [XmlAttribute("UrlShortenerSettings")]
+        public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
         public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURLUploader() };
 
         public TextUploader TextUploaderActive = new Paste2Uploader();
@@ -31,7 +27,7 @@ namespace ZSS.Helpers
         public void Write()
         {
             WriteXML(Program.TextUploadersFilePath);
-          //  WriteBF(Program.TextUploadersFilePath);
+            //WriteBF(Program.TextUploadersFilePath);
         }
 
         private void WriteBF(string filePath)
@@ -60,7 +56,7 @@ namespace ZSS.Helpers
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-                XmlSerializer xs = new XmlSerializer(typeof(TextUploadersManager));
+                XmlSerializer xs = new XmlSerializer(typeof(TextUploadersManager), TextUploader.Types.ToArray());
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
                     xs.Serialize(fs, this);
@@ -120,6 +116,5 @@ namespace ZSS.Helpers
 
             return new TextUploadersManager();
         }
-
     }
 }

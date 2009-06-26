@@ -34,14 +34,14 @@ namespace ZSS.TextUploaders
         {
             get
             {
-                return (object)this.FTPAccount;
+                return this.FTPAccount;
             }
             set
             {
                 this.FTPAccount = (FTPAccount)value;
             }
         }
-        
+
         /// <summary>
         /// Uploads Text to the FTP. 
         /// If the method fails, it will return a list of zero images

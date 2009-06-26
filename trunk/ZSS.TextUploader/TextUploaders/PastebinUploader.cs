@@ -40,12 +40,11 @@ namespace ZSS.TextUploaders
     {
         public const string Hostname = "pastebin.com";
 
-        [XmlAttribute("PastebinSettings")]
         public override object Settings
         {
             get
             {
-                return (PastebinSettings)HostSettings;
+                return HostSettings;
             }
             set
             {

@@ -11,11 +11,16 @@ using System.Xml.Serialization;
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    [XmlInclude(typeof(PastebinUploader)), XmlInclude(typeof(Paste2Uploader)), XmlInclude(typeof(SlexyUploader)),
-    XmlInclude(typeof(FTPUploader)), XmlInclude(typeof(PastebinCaUploader)), XmlInclude(typeof(SniptUploader)),
-    XmlInclude(typeof(TinyURLUploader))]
     public abstract class TextUploader : ITextUploader
     {
+        public static List<Type> Types = new List<Type>();
+
+        public TextUploader()
+        {
+            Type type = this.GetType();
+            if (!Types.Contains(type)) Types.Add(type);
+        }
+
         public List<string> Errors { get; set; }
 
         public abstract string Name { get; }

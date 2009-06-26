@@ -31,18 +31,13 @@ using ZSS.TextUploaders.Helpers;
 
 namespace ZSS.TextUploaders
 {
-    public class GoogleTranslate : TextUploader
+    public class GoogleTranslate
     {
         public Options LanguageOptions { get; private set; }
 
         public GoogleTranslate()
         {
             this.LanguageOptions = this.GetLanguageOptions();
-        }
-
-        public override string TesterString
-        {
-            get { return "Hello"; }
         }
 
         /// <summary>Gets "from country" and "to country" lists from google.</summary>
@@ -257,16 +252,6 @@ namespace ZSS.TextUploaders
             {
                 return string.IsNullOrEmpty(SourceText) || SourceLanguage.IsEmpty() || TargetLanguage.IsEmpty();
             }
-        }
-
-        public override string Name
-        {
-            get { return "Google Translate"; }
-        }
-
-        public override string UploadText(TextFile txt)
-        {
-            throw new NotImplementedException();
         }
     }
 }
