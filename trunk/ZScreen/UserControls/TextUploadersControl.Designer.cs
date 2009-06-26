@@ -28,49 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TextUploaders = new System.Windows.Forms.ListBox();
-            this.btnTextUploaderTest = new System.Windows.Forms.Button();
-            this.btnTextUploaderRemove = new System.Windows.Forms.Button();
-            this.btnTextUploaderAdd = new System.Windows.Forms.Button();
+            this.MyCollection = new System.Windows.Forms.ListBox();
+            this.btnItemTest = new System.Windows.Forms.Button();
+            this.btnItemRemove = new System.Windows.Forms.Button();
+            this.btnItemAdd = new System.Windows.Forms.Button();
             this.SettingsGrid = new System.Windows.Forms.PropertyGrid();
             this.Templates = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // TextUploaders
+            // MyCollection
             // 
-            this.TextUploaders.Dock = System.Windows.Forms.DockStyle.Left;
-            this.TextUploaders.FormattingEnabled = true;
-            this.TextUploaders.Location = new System.Drawing.Point(0, 0);
-            this.TextUploaders.Name = "lbTextUploaders";
-            this.TextUploaders.Size = new System.Drawing.Size(197, 433);
-            this.TextUploaders.TabIndex = 14;
+            this.MyCollection.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MyCollection.FormattingEnabled = true;
+            this.MyCollection.Location = new System.Drawing.Point(0, 0);
+            this.MyCollection.Name = "MyCollection";
+            this.MyCollection.Size = new System.Drawing.Size(197, 433);
+            this.MyCollection.TabIndex = 14;
+            this.MyCollection.SelectedIndexChanged += new System.EventHandler(this.MyCollection_SelectedIndexChanged);
             // 
-            // btnTextUploaderTest
+            // btnItemTest
             // 
-            this.btnTextUploaderTest.Location = new System.Drawing.Point(679, 9);
-            this.btnTextUploaderTest.Name = "btnTestTextUploader";
-            this.btnTextUploaderTest.Size = new System.Drawing.Size(75, 23);
-            this.btnTextUploaderTest.TabIndex = 13;
-            this.btnTextUploaderTest.Text = "Test";
-            this.btnTextUploaderTest.UseVisualStyleBackColor = true;
+            this.btnItemTest.Location = new System.Drawing.Point(679, 9);
+            this.btnItemTest.Name = "btnItemTest";
+            this.btnItemTest.Size = new System.Drawing.Size(75, 23);
+            this.btnItemTest.TabIndex = 13;
+            this.btnItemTest.Text = "Test";
+            this.btnItemTest.UseVisualStyleBackColor = true;
             // 
-            // btnTextUploaderRemove
+            // btnItemRemove
             // 
-            this.btnTextUploaderRemove.Location = new System.Drawing.Point(599, 9);
-            this.btnTextUploaderRemove.Name = "btnRemoveTextUploader";
-            this.btnTextUploaderRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnTextUploaderRemove.TabIndex = 12;
-            this.btnTextUploaderRemove.Text = "Remove";
-            this.btnTextUploaderRemove.UseVisualStyleBackColor = true;
+            this.btnItemRemove.Location = new System.Drawing.Point(599, 9);
+            this.btnItemRemove.Name = "btnItemRemove";
+            this.btnItemRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnItemRemove.TabIndex = 12;
+            this.btnItemRemove.Text = "Remove";
+            this.btnItemRemove.UseVisualStyleBackColor = true;
             // 
-            // btnTextUploaderAdd
+            // btnItemAdd
             // 
-            this.btnTextUploaderAdd.Location = new System.Drawing.Point(207, 9);
-            this.btnTextUploaderAdd.Name = "btnAddTextUploader";
-            this.btnTextUploaderAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnTextUploaderAdd.TabIndex = 11;
-            this.btnTextUploaderAdd.Text = "Add";
-            this.btnTextUploaderAdd.UseVisualStyleBackColor = true;
+            this.btnItemAdd.Location = new System.Drawing.Point(207, 9);
+            this.btnItemAdd.Name = "btnItemAdd";
+            this.btnItemAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnItemAdd.TabIndex = 11;
+            this.btnItemAdd.Text = "Add";
+            this.btnItemAdd.UseVisualStyleBackColor = true;
             // 
             // SettingsGrid
             // 
@@ -79,7 +80,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.SettingsGrid.HelpVisible = false;
             this.SettingsGrid.Location = new System.Drawing.Point(207, 40);
-            this.SettingsGrid.Name = "pgTextUploaderSettings";
+            this.SettingsGrid.Name = "SettingsGrid";
             this.SettingsGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SettingsGrid.Size = new System.Drawing.Size(545, 393);
             this.SettingsGrid.TabIndex = 9;
@@ -90,7 +91,7 @@
             this.Templates.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Templates.FormattingEnabled = true;
             this.Templates.Location = new System.Drawing.Point(287, 9);
-            this.Templates.Name = "cboTextUploaders";
+            this.Templates.Name = "Templates";
             this.Templates.Size = new System.Drawing.Size(304, 21);
             this.Templates.TabIndex = 10;
             // 
@@ -98,10 +99,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.TextUploaders);
-            this.Controls.Add(this.btnTextUploaderTest);
-            this.Controls.Add(this.btnTextUploaderRemove);
-            this.Controls.Add(this.btnTextUploaderAdd);
+            this.Controls.Add(this.MyCollection);
+            this.Controls.Add(this.btnItemTest);
+            this.Controls.Add(this.btnItemRemove);
+            this.Controls.Add(this.btnItemAdd);
             this.Controls.Add(this.SettingsGrid);
             this.Controls.Add(this.Templates);
             this.Name = "TextUploadersControl";
@@ -112,10 +113,10 @@
 
         #endregion
 
-        internal System.Windows.Forms.ListBox TextUploaders;
-        internal System.Windows.Forms.Button btnTextUploaderTest;
-        internal System.Windows.Forms.Button btnTextUploaderRemove;
-        internal System.Windows.Forms.Button btnTextUploaderAdd;
+        internal System.Windows.Forms.ListBox MyCollection;
+        internal System.Windows.Forms.Button btnItemTest;
+        internal System.Windows.Forms.Button btnItemRemove;
+        internal System.Windows.Forms.Button btnItemAdd;
         internal System.Windows.Forms.PropertyGrid SettingsGrid;
         internal System.Windows.Forms.ComboBox Templates;
     }

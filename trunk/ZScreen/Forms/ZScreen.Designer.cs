@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -351,15 +351,9 @@ namespace ZSS
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpText = new System.Windows.Forms.TabPage();
-            this.tcText = new System.Windows.Forms.TabControl();
-            this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.lbTextUploaders = new System.Windows.Forms.ListBox();
-            this.btnTestTextUploader = new System.Windows.Forms.Button();
-            this.btnRemoveTextUploader = new System.Windows.Forms.Button();
-            this.btnAddTextUploader = new System.Windows.Forms.Button();
-            this.pgTextUploaderSettings = new System.Windows.Forms.PropertyGrid();
-            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
+            this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
+            this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -468,6 +462,7 @@ namespace ZSS
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -552,9 +547,9 @@ namespace ZSS
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
             this.tpText.SuspendLayout();
-            this.tcText.SuspendLayout();
-            this.tpTextUploaders.SuspendLayout();
+            this.tcTextUploaders.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
+            this.tpTextUploaders.SuspendLayout();
             this.tpTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -1723,38 +1718,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -4112,7 +4107,7 @@ namespace ZSS
             // 
             // tpText
             // 
-            this.tpText.Controls.Add(this.tcText);
+            this.tpText.Controls.Add(this.tcTextUploaders);
             this.tpText.ImageKey = "text_signature.png";
             this.tpText.Location = new System.Drawing.Point(4, 23);
             this.tpText.Name = "tpText";
@@ -4122,94 +4117,16 @@ namespace ZSS
             this.tpText.Text = "Text";
             this.tpText.UseVisualStyleBackColor = true;
             // 
-            // tcText
+            // tcTextUploaders
             // 
-            this.tcText.Controls.Add(this.tpTextUploaders);
-            this.tcText.Controls.Add(this.tpURLShorteners);
-            this.tcText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcText.Location = new System.Drawing.Point(3, 3);
-            this.tcText.Name = "tcText";
-            this.tcText.SelectedIndex = 0;
-            this.tcText.Size = new System.Drawing.Size(774, 423);
-            this.tcText.TabIndex = 0;
-            // 
-            // tpTextUploaders
-            // 
-            this.tpTextUploaders.Controls.Add(this.lbTextUploaders);
-            this.tpTextUploaders.Controls.Add(this.btnTestTextUploader);
-            this.tpTextUploaders.Controls.Add(this.btnRemoveTextUploader);
-            this.tpTextUploaders.Controls.Add(this.btnAddTextUploader);
-            this.tpTextUploaders.Controls.Add(this.pgTextUploaderSettings);
-            this.tpTextUploaders.Controls.Add(this.cboTextUploaders);
-            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
-            this.tpTextUploaders.Name = "tpTextUploaders";
-            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(766, 397);
-            this.tpTextUploaders.TabIndex = 12;
-            this.tpTextUploaders.Text = "Text Uploaders";
-            this.tpTextUploaders.UseVisualStyleBackColor = true;
-            // 
-            // lbTextUploaders
-            // 
-            this.lbTextUploaders.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lbTextUploaders.FormattingEnabled = true;
-            this.lbTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.lbTextUploaders.Name = "lbTextUploaders";
-            this.lbTextUploaders.Size = new System.Drawing.Size(197, 381);
-            this.lbTextUploaders.TabIndex = 8;
-            this.lbTextUploaders.SelectedIndexChanged += new System.EventHandler(this.lbTextUploaders_SelectedIndexChanged);
-            // 
-            // btnTestTextUploader
-            // 
-            this.btnTestTextUploader.Location = new System.Drawing.Point(680, 8);
-            this.btnTestTextUploader.Name = "btnTestTextUploader";
-            this.btnTestTextUploader.Size = new System.Drawing.Size(75, 23);
-            this.btnTestTextUploader.TabIndex = 7;
-            this.btnTestTextUploader.Text = "Test";
-            this.btnTestTextUploader.UseVisualStyleBackColor = true;
-            this.btnTestTextUploader.Click += new System.EventHandler(this.btnTestTextUploader_Click);
-            // 
-            // btnRemoveTextUploader
-            // 
-            this.btnRemoveTextUploader.Location = new System.Drawing.Point(600, 8);
-            this.btnRemoveTextUploader.Name = "btnRemoveTextUploader";
-            this.btnRemoveTextUploader.Size = new System.Drawing.Size(75, 23);
-            this.btnRemoveTextUploader.TabIndex = 5;
-            this.btnRemoveTextUploader.Text = "Remove";
-            this.btnRemoveTextUploader.UseVisualStyleBackColor = true;
-            this.btnRemoveTextUploader.Click += new System.EventHandler(this.btnRemoveTextUploader_Click);
-            // 
-            // btnAddTextUploader
-            // 
-            this.btnAddTextUploader.Location = new System.Drawing.Point(208, 8);
-            this.btnAddTextUploader.Name = "btnAddTextUploader";
-            this.btnAddTextUploader.Size = new System.Drawing.Size(75, 23);
-            this.btnAddTextUploader.TabIndex = 4;
-            this.btnAddTextUploader.Text = "Add";
-            this.btnAddTextUploader.UseVisualStyleBackColor = true;
-            this.btnAddTextUploader.Click += new System.EventHandler(this.btnAddTextUploader_Click);
-            // 
-            // pgTextUploaderSettings
-            // 
-            this.pgTextUploaderSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgTextUploaderSettings.HelpVisible = false;
-            this.pgTextUploaderSettings.Location = new System.Drawing.Point(208, 40);
-            this.pgTextUploaderSettings.Name = "pgTextUploaderSettings";
-            this.pgTextUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgTextUploaderSettings.Size = new System.Drawing.Size(555, 350);
-            this.pgTextUploaderSettings.TabIndex = 1;
-            this.pgTextUploaderSettings.ToolbarVisible = false;
-            // 
-            // cboTextUploaders
-            // 
-            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(288, 8);
-            this.cboTextUploaders.Name = "cboTextUploaders";
-            this.cboTextUploaders.Size = new System.Drawing.Size(304, 21);
-            this.cboTextUploaders.TabIndex = 3;
+            this.tcTextUploaders.Controls.Add(this.tpTextUploaders);
+            this.tcTextUploaders.Controls.Add(this.tpURLShorteners);
+            this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.tcTextUploaders.Name = "tcTextUploaders";
+            this.tcTextUploaders.SelectedIndex = 0;
+            this.tcTextUploaders.Size = new System.Drawing.Size(774, 423);
+            this.tcTextUploaders.TabIndex = 0;
             // 
             // tpURLShorteners
             // 
@@ -4221,6 +4138,17 @@ namespace ZSS
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
+            // 
+            // tpTextUploaders
+            // 
+            this.tpTextUploaders.Controls.Add(this.ucTextUploaders);
+            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpTextUploaders.Name = "tpTextUploaders";
+            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTextUploaders.Size = new System.Drawing.Size(766, 397);
+            this.tpTextUploaders.TabIndex = 14;
+            this.tpTextUploaders.Text = "Text Uploaders";
+            this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
             // tpTranslator
             // 
@@ -5505,6 +5433,14 @@ namespace ZSS
             this.ucUrlShorteners.Size = new System.Drawing.Size(760, 391);
             this.ucUrlShorteners.TabIndex = 0;
             // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(760, 391);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5638,9 +5574,9 @@ namespace ZSS
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
             this.tpText.ResumeLayout(false);
-            this.tcText.ResumeLayout(false);
-            this.tpTextUploaders.ResumeLayout(false);
+            this.tcTextUploaders.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
+            this.tpTextUploaders.ResumeLayout(false);
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
@@ -6091,17 +6027,11 @@ namespace ZSS
         private System.Windows.Forms.PropertyGrid confApp;
         private System.Windows.Forms.RichTextBox txtActiveHelp;
         private System.Windows.Forms.TableLayoutPanel ZScreenPanels;
-        private System.Windows.Forms.PropertyGrid pgTextUploaderSettings;
-        private System.Windows.Forms.ComboBox cboTextUploaders;
-        private System.Windows.Forms.Button btnAddTextUploader;
-        private System.Windows.Forms.TabPage tpTextUploaders;
         private System.Windows.Forms.TabPage tpUploadText;
         private System.Windows.Forms.TextBox txtTextUploaderContent;
         private System.Windows.Forms.Button btnUploadText;
         private System.Windows.Forms.Button btnUploadTextClipboard;
-        private System.Windows.Forms.Button btnUploadTextClipboardFile;        
-        private System.Windows.Forms.Button btnRemoveTextUploader;
-        private System.Windows.Forms.Button btnTestTextUploader;
+        private System.Windows.Forms.Button btnUploadTextClipboardFile;
         private System.Windows.Forms.PropertyGrid pgFTPSettings;
         private System.Windows.Forms.PropertyGrid pgEditorsImage;
         private System.Windows.Forms.TabPage tpAccounts;
@@ -6109,9 +6039,8 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpTinyPic;
         private System.Windows.Forms.TabPage tpImageShack;
         private System.Windows.Forms.TabPage tpText;
-        private System.Windows.Forms.TabControl tcText;
+        private System.Windows.Forms.TabControl tcTextUploaders;
         private System.Windows.Forms.ComboBox cboTextDest;
-        private System.Windows.Forms.ListBox lbTextUploaders;
         private System.Windows.Forms.Label lblTextDest;
         private System.Windows.Forms.GroupBox gbImageSettings;
         private System.Windows.Forms.ToolStripMenuItem tsmText;
@@ -6122,6 +6051,8 @@ namespace ZSS
         private System.Windows.Forms.CheckBox cbAutoTranslate;
         private System.Windows.Forms.TabPage tpURLShorteners;
         private ZSS.UserControls.TextUploadersControl ucUrlShorteners;
+        private System.Windows.Forms.TabPage tpTextUploaders;
+        private ZSS.UserControls.TextUploadersControl ucTextUploaders;
 
     }
 }
