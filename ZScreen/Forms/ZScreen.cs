@@ -2484,7 +2484,7 @@ namespace ZSS
                     MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     string textString = File.ReadAllText(filePath);
 
-                    if (FileSystem.ValidLink(textString))
+                    if (FileSystem.IsValidLink(textString))
                     {
                         if (Program.mgrTextUploaders.UrlShortenerActive != null)
                         {
@@ -5095,10 +5095,10 @@ namespace ZSS
         private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.mgrTextUploaders.TextUploaderActive = (TextUploader)cboTextDest.SelectedItem;
-                        
+
             if (mGuiIsReady)
             {
-                Program.conf.SelectedTextUploader = cboTextDest.SelectedIndex;                
+                Program.conf.SelectedTextUploader = cboTextDest.SelectedIndex;
             }
         }
 
