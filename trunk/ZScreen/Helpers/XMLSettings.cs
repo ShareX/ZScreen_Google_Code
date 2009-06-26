@@ -259,13 +259,13 @@ namespace ZSS
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // public List<TextUploader> TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
-        public List<TextUploader> TextUploadersList = new List<TextUploader>();
+        // ** YOU CANNOT ADD NEW ITMES TO THE LIST HERE BECAUSE THAT IS GOING TO CAUSE DUPLATES **
+        public List<TextUploader> TextUploadersList = new List<TextUploader>(); 
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
 
-        // public List<TextUploader> UrlShortenersList = new List<TextUploader> { new TinyURLUploader() };
-        public List<TextUploader> UrlShortenersList = new List<TextUploader>();
+        // ** YOU CANNOT ADD NEW ITMES TO THE LIST HERE BECAUSE THAT IS GOING TO CAUSE DUPLATES **
+        public List<TextUploader> UrlShortenersList = new List<TextUploader>(); 
         public int SelectedUrlShortener = 0;
         public TextUploader UrlShortenerActive = new TinyURLUploader();
 
@@ -492,6 +492,8 @@ namespace ZSS
             }
             catch (Exception ex)
             {
+                FileSystem.AppendDebug(ex.ToString());
+                Console.WriteLine(ex.ToString());
                 MessageBox.Show(ex.Message);
             }
         }
@@ -503,7 +505,6 @@ namespace ZSS
 
         public static XMLSettings Read(string filePath)
         {
-            XMLSettings temp = new XMLSettings();
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
@@ -514,7 +515,7 @@ namespace ZSS
                     XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
                     using (FileStream fs = new FileStream(filePath, FileMode.Open))
                     {
-                        temp = (XMLSettings)xs.Deserialize(fs);
+                        return xs.Deserialize(fs) as XMLSettings;
                     }
                 }
                 catch (Exception ex)
@@ -528,12 +529,12 @@ namespace ZSS
                     dlg.InitialDirectory = Settings.Default.RootDir;
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        temp = XMLSettings.Read(dlg.FileName);
+                        return XMLSettings.Read(dlg.FileName);
                     }
                 }
             }
 
-            return temp;
+            return new XMLSettings();
         }
 
         #endregion

@@ -294,6 +294,15 @@ namespace ZSS
             // Text Uploader Settings
             ///////////////////////////////////
 
+            if (Program.conf.TextUploadersList.Count == 0)
+            {
+                Program.conf.TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
+            }
+            if (Program.conf.UrlShortenersList.Count == 0)
+            {
+                Program.conf.UrlShortenersList = new List<TextUploader> { new TinyURLUploader() };
+            }
+
             ucTextUploaders.MyCollection.Items.Clear();
             cboTextDest.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.TextUploadersList)

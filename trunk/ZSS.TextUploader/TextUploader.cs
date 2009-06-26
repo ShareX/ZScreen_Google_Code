@@ -13,14 +13,11 @@ namespace ZSS.TextUploaders
     [Serializable]
     public abstract class TextUploader : ITextUploader
     {
-        public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof(SlexyUploader), 
-                                                          typeof(SniptUploader), typeof (TinyURLUploader), typeof(TextUploader)};
+        // ** THIS HAS TO BE UPTODATE OTHERWISE XML SERIALZING IS GOING TO FUCK UP ** 
+        public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
+                                                          typeof(SlexyUploader), typeof(SniptUploader), typeof (TinyURLUploader), typeof(TextUploader)};
 
-        public TextUploader()
-        {
-            //Type type = this.GetType();
-            //if (!Types.Contains(type)) Types.Add(type);
-        }
+        public TextUploader() { }
 
         public List<string> Errors { get; set; }
 
