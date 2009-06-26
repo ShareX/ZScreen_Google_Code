@@ -35,7 +35,7 @@ using System.ComponentModel;
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    public sealed class TinyURL : TextUploader
+    public sealed class TinyURLUploader : TextUploader
     {
         public const string Hostname = "tinyurl.com";
 
@@ -53,7 +53,7 @@ namespace ZSS.TextUploaders
 
         public TinyURLSettings HostSettings = new TinyURLSettings();
 
-        public TinyURL()
+        public TinyURLUploader()
         {
             HostSettings.URL = "http://tinyurl.com/api-create.php";
         }
