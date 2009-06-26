@@ -257,11 +257,11 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
-        public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
+        public List<TextUploader> TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
 
-        public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURLUploader() };
+        public List<TextUploader> UrlShortenersList = new List<TextUploader> { new TinyURLUploader() };
         public int SelectedUrlShortener = 0;
         public TextUploader UrlShortenerActive = new TinyURLUploader();
 

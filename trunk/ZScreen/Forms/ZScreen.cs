@@ -168,7 +168,7 @@ namespace ZSS
             {
                 int index = ucUrlShorteners.MyCollection.SelectedIndex;
                 ucUrlShorteners.MyCollection.Items.RemoveAt(index);
-                Program.conf.UrlShortenerSettings.RemoveAt(index);
+                Program.conf.UrlShortenersList.RemoveAt(index);
                 ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
             }
         }
@@ -189,7 +189,7 @@ namespace ZSS
                     if (textUploader != null)
                     {
                         ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                        Program.conf.UrlShortenerSettings.Add(textUploader);
+                        Program.conf.UrlShortenersList.Add(textUploader);
                     }
                     ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
                 }
@@ -369,19 +369,20 @@ namespace ZSS
             ///////////////////////////////////
 
             ucTextUploaders.MyCollection.Items.Clear();
-            foreach (TextUploader textUploader in Program.conf.TextUploadersSettings)
+            cboTextDest.Items.Clear();
+            foreach (TextUploader textUploader in Program.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
                     ucTextUploaders.MyCollection.Items.Add(textUploader);
+                    cboTextDest.Items.Add(textUploader);
                 }
             }
             if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < ucTextUploaders.MyCollection.Items.Count)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Program.conf.SelectedTextUploader;
+                cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
             }
-
-            UpdateTextDest();
 
             ucTextUploaders.Templates.Items.Clear();
             ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
@@ -392,7 +393,7 @@ namespace ZSS
             ///////////////////////////////////
 
             ucUrlShorteners.MyCollection.Items.Clear();
-            foreach (TextUploader textUploader in Program.conf.UrlShortenerSettings)
+            foreach (TextUploader textUploader in Program.conf.UrlShortenersList)
             {
                 if (textUploader != null)
                 {
@@ -549,24 +550,6 @@ namespace ZSS
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
             LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
-        }
-
-        private void UpdateTextDest()
-        {
-            cboTextDest.Items.Clear();
-            foreach (TextUploader textUploader in ucTextUploaders.MyCollection.Items)
-            {
-                cboTextDest.Items.Add(textUploader);
-            }
-            if (Program.conf.SelectedTextUploader > cboTextDest.Items.Count - 1)
-            {
-                Program.conf.SelectedTextUploader = cboTextDest.Items.Count - 1;
-            }
-            else if (Program.conf.SelectedTextUploader < 0)
-            {
-                Program.conf.SelectedTextUploader = 0;
-            }
-            cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
         }
 
         private void UpdateGuiControlsPaths()
@@ -5009,12 +4992,12 @@ namespace ZSS
                     TextUploader textUploader = FindTextUploader(name);
                     if (textUploader != null)
                     {
+                        Program.conf.TextUploadersList.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
-                        Program.conf.TextUploadersSettings.Add(textUploader);
+                        cboTextDest.Items.Add(textUploader);                        
                     }
                     ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
-                UpdateTextDest();
             }
         }
 
@@ -5023,9 +5006,9 @@ namespace ZSS
             if (ucTextUploaders.MyCollection.SelectedIndex > 0)
             {
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
+                Program.conf.TextUploadersList.RemoveAt(index);
                 ucTextUploaders.MyCollection.Items.RemoveAt(index);
                 cboTextDest.Items.RemoveAt(index);
-                UpdateTextDest();
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
             }
         }
