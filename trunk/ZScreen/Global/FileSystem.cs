@@ -422,16 +422,10 @@ namespace ZSS
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static bool ValidLink(string url)
+        public static bool IsValidLink(string url)
         {
-            System.Globalization.CompareInfo cmpUrl = System.Globalization.CultureInfo.InvariantCulture.CompareInfo;
-            if (cmpUrl.IsPrefix(url, "http://") == false)
-            {
-                url = "http://" + url;
-            }
-            Regex RgxUrl = new Regex("(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?");
-
-            return RgxUrl.IsMatch(url);
+            return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
+            //return !url.Contains(" ") && Regex.IsMatch(url, @"^(?:http://|www\.).+\..+$");
         }
     }
 }
