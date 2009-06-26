@@ -35,7 +35,7 @@ using System.ComponentModel;
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    public sealed class Slexy : TextUploader
+    public sealed class SlexyUploader : TextUploader
     {
         public const string Hostname = "slexy.org";
 
@@ -53,7 +53,7 @@ namespace ZSS.TextUploaders
 
         public SlexySettings HostSettings = new SlexySettings();
 
-        public Slexy()
+        public SlexyUploader()
         {
             HostSettings.URL = "http://slexy.org/index.php/submit";
         }

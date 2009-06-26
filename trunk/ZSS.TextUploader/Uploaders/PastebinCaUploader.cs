@@ -34,7 +34,7 @@ using System.Xml.Serialization;
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    public sealed class PastebinCa : TextUploader
+    public sealed class PastebinCaUploader : TextUploader
     {
         public const string Hostname = "pastebin.ca";
         public const string APIKey = "qrsjom2g8qDYcy8P+GeNnxSZowY89gKr";
@@ -53,7 +53,7 @@ namespace ZSS.TextUploaders
 
         public PastebinCaSettings HostSettings = new PastebinCaSettings();
 
-        public PastebinCa()
+        public PastebinCaUploader()
         {
             HostSettings.URL = "http://pastebin.ca/quiet-paste.php";
         }

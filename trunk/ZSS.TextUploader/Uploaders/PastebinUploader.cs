@@ -36,7 +36,7 @@ using System.Text.RegularExpressions;
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    public sealed class Pastebin : TextUploader
+    public sealed class PastebinUploader : TextUploader
     {
         public const string Hostname = "pastebin.com";
 
@@ -54,12 +54,12 @@ namespace ZSS.TextUploaders
 
         public PastebinSettings HostSettings = new PastebinSettings();
 
-        public Pastebin()
+        public PastebinUploader()
         {
             HostSettings.URL = "http://pastebin.com/pastebin.php";
         }
 
-        public Pastebin(string url)
+        public PastebinUploader(string url)
         {
             HostSettings.URL = url;
         }
