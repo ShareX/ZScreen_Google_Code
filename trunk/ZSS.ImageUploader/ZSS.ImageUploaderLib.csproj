@@ -8,8 +8,8 @@
     <ProjectGuid>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZSS.ImageUploaders</RootNamespace>
-    <AssemblyName>ZSS.ImageUploader</AssemblyName>
+    <RootNamespace>ZSS.ImageUploadersLib</RootNamespace>
+    <AssemblyName>ZSS.ImageUploadersLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

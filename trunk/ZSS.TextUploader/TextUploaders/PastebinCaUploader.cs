@@ -28,10 +28,10 @@ using System.Net;
 using System.Web;
 using System.Text;
 using System.IO;
-using ZSS.TextUploaders.Helpers;
+using ZSS.TextUploadersLib.Helpers;
 using System.Xml.Serialization;
 
-namespace ZSS.TextUploaders
+namespace ZSS.TextUploadersLib
 {
     [Serializable]
     public sealed class PastebinCaUploader : TextUploader
