@@ -6,13 +6,14 @@ using ZSS.TextUploaders.Helpers;
 using System.Net;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ZSS.TextUploaders
 {
     [Serializable]
     public abstract class TextUploader : ITextUploader
     {
-        public List<string> Errors { get; protected set; }
+        public List<string> Errors { get; set; }
 
         public abstract string Name { get; }
 

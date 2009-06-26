@@ -44,7 +44,7 @@ namespace ZSS.TextUploaders
         {
             get
             {
-                return (object)HostSettings;
+                return (PastebinSettings)HostSettings;
             }
             set
             {
