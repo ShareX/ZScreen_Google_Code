@@ -116,10 +116,10 @@
     <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
-    <Compile Include="Global\NumericUpDownTimer.cs">
+    <Compile Include="UserControls\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Global\NumericUpDownTimer.Designer.cs">
+    <Compile Include="UserControls\NumericUpDownTimer.Designer.cs">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Debug.cs" />
@@ -211,6 +211,12 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TextUploadersControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TextUploadersControl.Designer.cs">
+      <DependentUpon>TextUploadersControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Forms\Crop.resx">
       <SubType>Designer</SubType>
@@ -346,10 +352,13 @@
       <DependentUpon>ToolbarWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Global\NumericUpDownTimer.resx">
+    <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
+    <EmbeddedResource Include="UserControls\TextUploadersControl.resx">
+      <DependentUpon>TextUploadersControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Resources\main.png" />
     <None Include="Resources\application_lightning.png" />
     <None Include="Resources\application_form.png" />
