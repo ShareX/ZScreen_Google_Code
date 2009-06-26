@@ -30,14 +30,13 @@ using System.Text;
 using System.IO;
 using ZSS.TextUploaders.Helpers;
 using System.Xml.Serialization;
-using System.ComponentModel;
 
 namespace ZSS.TextUploaders
 {
     [Serializable]
-    public sealed class Snipt : TextUploader
+    public sealed class Paste2Uploader : TextUploader
     {
-        public const string Hostname = "snipt.org";
+        public const string Hostname = "paste2.org";
 
         public override object Settings
         {
@@ -47,15 +46,15 @@ namespace ZSS.TextUploaders
             }
             set
             {
-                HostSettings = (SniptSettings)value;
+                HostSettings = (Paste2Settings)value;
             }
         }
 
-        public SniptSettings HostSettings = new SniptSettings();
+        public Paste2Settings HostSettings = new Paste2Settings();
 
-        public Snipt()
+        public Paste2Uploader()
         {
-            HostSettings.URL = "http://snipt.org/snip";
+            HostSettings.URL = "http://paste2.org/new-paste";
         }
 
         public override string Name
@@ -73,13 +72,10 @@ namespace ZSS.TextUploaders
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("codeSnippet", HttpUtility.UrlEncode(text.LocalString));
-                arguments.Add("codeSnippetTitle", HostSettings.SnippetTitle);
-                arguments.Add("lang", HostSettings.Language);
-                arguments.Add("private", HostSettings.Visibility == SniptSettings.Privacy.Private ? "1" : "0");
-                arguments.Add("shownums", HostSettings.LineNumbers ? "1" : "0");
-                arguments.Add("snipAction", "");
-                arguments.Add("theme", HostSettings.Theme);
+                arguments.Add("code", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("description", HostSettings.Description);
+                arguments.Add("lang", HostSettings.TextFormat);
+                arguments.Add("parent", "0");
 
                 return GetResponse(HostSettings.URL, arguments);
             }
@@ -88,24 +84,16 @@ namespace ZSS.TextUploaders
         }
 
         [Serializable]
-        public class SniptSettings
+        public class Paste2Settings
         {
             public string URL { get; set; }
-            public string SnippetTitle { get; set; }
-            public string Language { get; set; }
-            public Privacy Visibility { get; set; }
-            public bool LineNumbers { get; set; }
-            public string Theme { get; set; }
+            public string Description { get; set; }
+            public string TextFormat { get; set; }
 
-            public SniptSettings()
+            public Paste2Settings()
             {
-                Language = "text";
-                Visibility = Privacy.Private;
-                LineNumbers = true;
-                Theme = "1";
+                TextFormat = "text";
             }
-
-            public enum Privacy { Public, Private }
         }
     }
 }

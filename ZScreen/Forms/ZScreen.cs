@@ -4938,16 +4938,16 @@ namespace ZSS
         {
             switch (name)
             {
-                case Pastebin.Hostname:
-                    return new Pastebin();
-                case PastebinCa.Hostname:
-                    return new PastebinCa();
-                case Paste2.Hostname:
-                    return new Paste2();
-                case Slexy.Hostname:
-                    return new Slexy();
-                case Snipt.Hostname:
-                    return new Snipt();
+                case PastebinUploader.Hostname:
+                    return new PastebinUploader();
+                case PastebinCaUploader.Hostname:
+                    return new PastebinCaUploader();
+                case Paste2Uploader.Hostname:
+                    return new Paste2Uploader();
+                case SlexyUploader.Hostname:
+                    return new SlexyUploader();
+                case SniptUploader.Hostname:
+                    return new SniptUploader();
                 case TinyURL.Hostname:
                     return new TinyURL();
                 default:

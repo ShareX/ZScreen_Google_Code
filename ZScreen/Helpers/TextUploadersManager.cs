@@ -12,7 +12,7 @@ namespace ZSS.Helpers
     [Serializable]
     public class TextUploadersManager
     {
-        public List<object> TextUploadersSettings = new List<object> { new Pastebin(), new Paste2(), new Slexy() };
+        public List<object> TextUploadersSettings = new List<object> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
         public object TextUploaderActive;
 
         public void Write()

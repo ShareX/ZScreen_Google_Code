@@ -58,16 +58,16 @@
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
     <Compile Include="Uploaders\FTPUploader.cs" />
-    <Compile Include="Uploaders\Paste2.cs" />
-    <Compile Include="Uploaders\PastebinCa.cs" />
-    <Compile Include="Uploaders\Slexy.cs" />
-    <Compile Include="Uploaders\Snipt.cs" />
+    <Compile Include="Uploaders\Paste2Uploader.cs" />
+    <Compile Include="Uploaders\PastebinCaUploader.cs" />
+    <Compile Include="Uploaders\SlexyUploader.cs" />
+    <Compile Include="Uploaders\SniptUploader.cs" />
     <Compile Include="TextUploader.cs" />
     <Compile Include="Helpers\TextFile.cs" />
     <Compile Include="Uploaders\GoogleTranslate.cs" />
-    <Compile Include="Uploaders\Pastebin.cs" />
+    <Compile Include="Uploaders\PastebinUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Uploaders\TinyURL.cs" />
+    <Compile Include="Uploaders\TinyURLUploader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="VersionHistory.txt" />
