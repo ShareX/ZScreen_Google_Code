@@ -301,7 +301,7 @@ namespace ZSS
             }
             if (Program.conf.UrlShortenersList.Count == 0)
             {
-                Program.conf.UrlShortenersList = new List<TextUploader> { new TinyURLUploader() };
+                Program.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new TinyURLUploader() };
             }
 
             ucTextUploaders.MyCollection.Items.Clear();
