@@ -74,10 +74,8 @@ namespace ZSS.TextUploadersLib
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("url", HttpUtility.UrlEncode(text.LocalString));
-
                 return GetResponse2(HostSettings.URL, arguments);
             }
-
             return "";
         }
 
@@ -85,11 +83,6 @@ namespace ZSS.TextUploadersLib
         public class TinyURLSettings
         {
             public string URL { get; set; }
-
-            public TinyURLSettings()
-            {
-
-            }
         }
     }
 }

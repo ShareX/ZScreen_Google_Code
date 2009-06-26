@@ -29,7 +29,7 @@ namespace ZSS.TextUploaderLib.URLShorteners
 
         public ThreelyUploader()
         {
-            HostSettings.URL = "http://3.ly/?api=em5893833&u=";
+            HostSettings.URL = "http://3.ly";
         }
 
         public override string Name
@@ -47,10 +47,10 @@ namespace ZSS.TextUploaderLib.URLShorteners
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                string url = HostSettings.URL + text.LocalString;
-                return GetResponse2(url, arguments);
+                arguments.Add("api", "em5893833");
+                arguments.Add("u", text.LocalString);
+                return GetResponse2(HostSettings.URL, arguments);
             }
-
             return "";
         }
 
@@ -58,11 +58,6 @@ namespace ZSS.TextUploaderLib.URLShorteners
         public class ThreelyUploaderSettings
         {
             public string URL { get; set; }
-
-            public ThreelyUploaderSettings()
-            {
-
-            }
         }
     }
 }
