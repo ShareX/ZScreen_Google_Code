@@ -4769,7 +4769,7 @@ namespace ZSS
 
         private void TextUploadersRemoveButton_Click(object sender, EventArgs e)
         {
-            if (ucTextUploaders.MyCollection.SelectedIndex > 0)
+            if (ucTextUploaders.MyCollection.Items.Count > 0)
             {
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
                 Program.conf.TextUploadersList.RemoveAt(index);

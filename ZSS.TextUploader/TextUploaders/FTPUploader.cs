@@ -21,13 +21,14 @@ namespace ZSS.TextUploaders
 
         public FTPUploader()
         {
-
+            this.Errors = new List<string>();
+            this.FTPAccount = new FTPAccount();
         }
 
         public FTPUploader(FTPAccount acc)
+            : this()
         {
             this.FTPAccount = acc;
-            this.Errors = new List<string>();
         }
 
         public override string TesterString
