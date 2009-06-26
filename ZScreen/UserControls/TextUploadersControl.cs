@@ -15,5 +15,10 @@ namespace ZSS.UserControls
         {
             InitializeComponent();
         }
+
+        internal virtual void MyCollection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnItemRemove.Enabled = this.MyCollection.SelectedIndex > 0;
+        }
     }
 }

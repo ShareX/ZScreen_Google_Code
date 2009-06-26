@@ -81,10 +81,15 @@ namespace ZSS
         private void ZScreen_Load(object sender, EventArgs e)
         {
 
-            ucUrlShorteners.btnTextUploaderAdd.Click += new EventHandler(btnUrlShortenersAdd_Click);
-            ucUrlShorteners.btnTextUploaderRemove.Click += new EventHandler(btnUrlShortenersRemove_Click);
-            ucUrlShorteners.TextUploaders.SelectedIndexChanged += new EventHandler(lbUrlShorteners_SelectedIndexChanged);
-            ucUrlShorteners.btnTextUploaderTest.Click += new EventHandler(btnUrlShortenerTest_Click);
+            ucUrlShorteners.btnItemAdd.Click += new EventHandler(btnUrlShortenersAdd_Click);
+            ucUrlShorteners.btnItemRemove.Click += new EventHandler(btnUrlShortenersRemove_Click);
+            ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(lbUrlShorteners_SelectedIndexChanged);
+            ucUrlShorteners.btnItemTest.Click += new EventHandler(btnUrlShortenerTest_Click);
+
+            ucTextUploaders.btnItemAdd.Click += new EventHandler(btnTextUploaderAdd_Click);
+            ucTextUploaders.btnItemRemove.Click += new EventHandler(btnTextUploaderRemove_Click);
+            ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(lbTextUploaders_SelectedIndexChanged);
+            ucTextUploaders.btnItemTest.Click += new EventHandler(btnTextUploaderTest_Click);
 
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
@@ -129,27 +134,25 @@ namespace ZSS
 
         void btnUrlShortenerTest_Click(object sender, EventArgs e)
         {
-            this.TestUploaderText((TextUploader)ucUrlShorteners.TextUploaders.SelectedItem);
+            this.TestUploaderText((TextUploader)ucUrlShorteners.MyCollection.SelectedItem);
         }
 
         void lbUrlShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ucUrlShorteners.TextUploaders.SelectedItems.Count > 0)
+            if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
             {
 
-                Program.mgrTextUploaders.UrlShortenerActive = (TextUploader)ucUrlShorteners.TextUploaders.SelectedItem;
-                Program.conf.SelectedUrlShortener = ucUrlShorteners.TextUploaders.SelectedIndex;
+                Program.mgrTextUploaders.UrlShortenerActive = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
+                Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
 
-                TextUploader textUploader = (TextUploader)ucUrlShorteners.TextUploaders.SelectedItem;
+                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
                 bool hasOptions = textUploader != null;
                 ucUrlShorteners.SettingsGrid.Visible = hasOptions;
 
                 if (hasOptions)
                 {
                     ucUrlShorteners.SettingsGrid.SelectedObject = ((TextUploader)textUploader).Settings;
-                }
-
-                ucUrlShorteners.btnTextUploaderRemove.Enabled = ucUrlShorteners.TextUploaders.SelectedIndex > 0;
+                }             
 
             }
         }
@@ -161,12 +164,12 @@ namespace ZSS
         /// <param name="e"></param>
         void btnUrlShortenersRemove_Click(object sender, EventArgs e)
         {
-            if (ucUrlShorteners.TextUploaders.SelectedIndex > 0)
+            if (ucUrlShorteners.MyCollection.SelectedIndex > 0)
             {
-                int index = ucUrlShorteners.TextUploaders.SelectedIndex;
-                ucUrlShorteners.TextUploaders.Items.RemoveAt(index);
+                int index = ucUrlShorteners.MyCollection.SelectedIndex;
+                ucUrlShorteners.MyCollection.Items.RemoveAt(index);
                 Program.mgrTextUploaders.UrlShortenerSettings.RemoveAt(index);
-                ucUrlShorteners.TextUploaders.SelectedIndex = ucUrlShorteners.TextUploaders.Items.Count - 1;
+                ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
             }
         }
 
@@ -185,10 +188,10 @@ namespace ZSS
                     TextUploader textUploader = FindUrlShortener(name);
                     if (textUploader != null)
                     {
-                        ucUrlShorteners.TextUploaders.Items.Add(textUploader);
+                        ucUrlShorteners.MyCollection.Items.Add(textUploader);
                         Program.mgrTextUploaders.UrlShortenerSettings.Add(textUploader);
                     }
-                    ucUrlShorteners.TextUploaders.SelectedIndex = ucUrlShorteners.TextUploaders.Items.Count - 1;
+                    ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
                 }
             }
 
@@ -365,40 +368,40 @@ namespace ZSS
             // Text Uploader Settings
             ///////////////////////////////////
 
-            lbTextUploaders.Items.Clear();
+            ucTextUploaders.MyCollection.Items.Clear();
             foreach (TextUploader textUploader in Program.mgrTextUploaders.TextUploadersSettings)
             {
                 if (textUploader != null)
                 {
-                    lbTextUploaders.Items.Add(textUploader);
+                    ucTextUploaders.MyCollection.Items.Add(textUploader);
                 }
             }
-            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < lbTextUploaders.Items.Count)
+            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < ucTextUploaders.MyCollection.Items.Count)
             {
-                lbTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
+                ucTextUploaders.MyCollection.SelectedIndex = Program.conf.SelectedTextUploader;
             }
 
             UpdateTextDest();
 
-            cboTextUploaders.Items.Clear();
-            cboTextUploaders.Items.AddRange(typeof(TextDestType).GetDescriptions());
-            cboTextUploaders.SelectedIndex = 1;
+            ucTextUploaders.Templates.Items.Clear();
+            ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
+            ucTextUploaders.Templates.SelectedIndex = 1;
 
             ///////////////////////////////////
             // URL Shorteners Settings
             ///////////////////////////////////
 
-            ucUrlShorteners.TextUploaders.Items.Clear();
+            ucUrlShorteners.MyCollection.Items.Clear();
             foreach (TextUploader textUploader in Program.mgrTextUploaders.UrlShortenerSettings)
             {
                 if (textUploader != null)
                 {
-                    ucUrlShorteners.TextUploaders.Items.Add(textUploader);
+                    ucUrlShorteners.MyCollection.Items.Add(textUploader);
                 }
             }
-            if (Program.conf.SelectedUrlShortener > -1 && Program.conf.SelectedUrlShortener < ucUrlShorteners.TextUploaders.Items.Count)
+            if (Program.conf.SelectedUrlShortener > -1 && Program.conf.SelectedUrlShortener < ucUrlShorteners.MyCollection.Items.Count)
             {
-                ucUrlShorteners.TextUploaders.SelectedIndex = Program.conf.SelectedUrlShortener;
+                ucUrlShorteners.MyCollection.SelectedIndex = Program.conf.SelectedUrlShortener;
             }
             ucUrlShorteners.Templates.Items.Clear();
             ucUrlShorteners.Templates.Items.AddRange((typeof(UrlShortenerType).GetDescriptions()));
@@ -505,7 +508,7 @@ namespace ZSS
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
             ///////////////////////////////////
-            // Image Uploaders
+            // Image MyCollection
             ///////////////////////////////////
 
             lbUploader.Items.Clear();
@@ -551,7 +554,7 @@ namespace ZSS
         private void UpdateTextDest()
         {
             cboTextDest.Items.Clear();
-            foreach (TextUploader textUploader in lbTextUploaders.Items)
+            foreach (TextUploader textUploader in ucTextUploaders.MyCollection.Items)
             {
                 cboTextDest.Items.Add(textUploader);
             }
@@ -2665,7 +2668,7 @@ namespace ZSS
             }
         }
 
-        #region Image Uploaders
+        #region Image MyCollection
 
         private void btnUploaderAdd_Click(object sender, EventArgs e)
         {
@@ -3308,7 +3311,7 @@ namespace ZSS
             cbDeleteLocal.Tag = "When checked files that you upload will be deleted locally to save hard disk space.";
 
             //////////////////////////////////
-            // Custom Uploaders Tab
+            // Custom MyCollection Tab
             //////////////////////////////////
 
             //////////////////////////////////
@@ -4997,34 +5000,34 @@ namespace ZSS
             return null;
         }
 
-        private void btnAddTextUploader_Click(object sender, EventArgs e)
+        private void btnTextUploaderAdd_Click(object sender, EventArgs e)
         {
-            if (cboTextUploaders.SelectedIndex > -1)
+            if (ucTextUploaders.MyCollection.SelectedIndex > -1)
             {
-                string name = (string)cboTextUploaders.SelectedItem;
+                string name = (string)ucTextUploaders.MyCollection.SelectedItem;
                 if (!string.IsNullOrEmpty(name))
                 {
                     TextUploader textUploader = FindTextUploader(name);
                     if (textUploader != null)
                     {
-                        lbTextUploaders.Items.Add(textUploader);
+                        ucTextUploaders.MyCollection.Items.Add(textUploader);
                         Program.mgrTextUploaders.TextUploadersSettings.Add(textUploader);
                     }
-                    lbTextUploaders.SelectedIndex = lbTextUploaders.Items.Count - 1;
+                    ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
                 UpdateTextDest();
             }
         }
 
-        private void btnRemoveTextUploader_Click(object sender, EventArgs e)
+        private void btnTextUploaderRemove_Click(object sender, EventArgs e)
         {
-            if (lbTextUploaders.SelectedIndex > 0)
+            if (ucTextUploaders.MyCollection.SelectedIndex > 0)
             {
-                int index = lbTextUploaders.SelectedIndex;
-                lbTextUploaders.Items.RemoveAt(index);
+                int index = ucTextUploaders.MyCollection.SelectedIndex;
+                ucTextUploaders.MyCollection.Items.RemoveAt(index);
                 cboTextDest.Items.RemoveAt(index);
                 UpdateTextDest();
-                lbTextUploaders.SelectedIndex = lbTextUploaders.Items.Count - 1;
+                ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
             }
         }
 
@@ -5050,9 +5053,9 @@ namespace ZSS
             }
         }
 
-        private void btnTestTextUploader_Click(object sender, EventArgs e)
+        private void btnTextUploaderTest_Click(object sender, EventArgs e)
         {
-            TextUploader uploader = (TextUploader)lbTextUploaders.SelectedItem;
+            TextUploader uploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
             TestUploaderText(uploader);
         }
 
@@ -5073,15 +5076,15 @@ namespace ZSS
 
         private void ShowTextUploaderSettings()
         {
-            if (lbTextUploaders.SelectedItems.Count > 0)
+            if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
             {
-                object textUploader = lbTextUploaders.SelectedItem;
+                object textUploader = ucTextUploaders.MyCollection.SelectedItem;
                 bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
-                pgTextUploaderSettings.Visible = hasOptions;
+                ucTextUploaders.SettingsGrid.Visible = hasOptions;
 
                 if (hasOptions)
                 {
-                    pgTextUploaderSettings.SelectedObject = ((TextUploader)textUploader).Settings;
+                    ucTextUploaders.SettingsGrid.SelectedObject = ((TextUploader)textUploader).Settings;
                 }
             }
         }
@@ -5089,7 +5092,6 @@ namespace ZSS
         private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowTextUploaderSettings();
-            btnRemoveTextUploader.Enabled = lbTextUploaders.SelectedIndex > 0;
         }
 
         private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)

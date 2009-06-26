@@ -254,7 +254,7 @@ namespace ZSS
         public decimal WatermarkImageScale = 100;
 
         //~~~~~~~~~~~~~~~~~~~~~
-        //  Text Uploaders
+        //  Text MyCollection
         //~~~~~~~~~~~~~~~~~~~~~
 
         public int SelectedTextUploader = 0;
@@ -286,7 +286,7 @@ namespace ZSS
         //  HTTP
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // Image Uploaders
+        // Image MyCollection
 
         public UploadMode UploadMode = UploadMode.API;
         public decimal ErrorRetryCount = 3;
@@ -303,7 +303,7 @@ namespace ZSS
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = false;
 
-        // Custom Image Uploaders
+        // Custom Image MyCollection
 
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
