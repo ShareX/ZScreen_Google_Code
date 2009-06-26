@@ -120,7 +120,6 @@ namespace ZSS
             AddToClipboardByDoubleClick(tpHistory);
 
             ActiveHelpTagsConfig();
-            AddMouseHoverEventHandlerHelp(Controls);
 
             FillClipboardCopyMenu();
             FillClipboardMenu();
@@ -130,71 +129,6 @@ namespace ZSS
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
 
             niTray.Visible = true;
-        }
-
-        void btnUrlShortenerTest_Click(object sender, EventArgs e)
-        {
-            this.TestUploaderText((TextUploader)ucUrlShorteners.MyCollection.SelectedItem);
-        }
-
-        void lbUrlShorteners_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
-            {
-
-                Program.conf.UrlShortenerActive = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
-                Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
-
-                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
-                bool hasOptions = textUploader != null;
-                ucUrlShorteners.SettingsGrid.Visible = hasOptions;
-
-                if (hasOptions)
-                {
-                    ucUrlShorteners.SettingsGrid.SelectedObject = ((TextUploader)textUploader).Settings;
-                }             
-
-            }
-        }
-
-        /// <summary>
-        /// Method to remove a Link Shorteners from the List of Link Shorteners
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void btnUrlShortenersRemove_Click(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.MyCollection.SelectedIndex > 0)
-            {
-                int index = ucUrlShorteners.MyCollection.SelectedIndex;
-                ucUrlShorteners.MyCollection.Items.RemoveAt(index);
-                Program.conf.UrlShortenersList.RemoveAt(index);
-                ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
-            }
-        }
-
-        /// <summary>
-        /// Method to add a Link Shorteners to the List of Link Shorteners
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void btnUrlShortenersAdd_Click(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.Templates.SelectedIndex > -1)
-            {
-                string name = (string)ucUrlShorteners.Templates.SelectedItem;
-                if (!string.IsNullOrEmpty(name))
-                {
-                    TextUploader textUploader = FindUrlShortener(name);
-                    if (textUploader != null)
-                    {
-                        ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                        Program.conf.UrlShortenersList.Add(textUploader);
-                    }
-                    ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
-                }
-            }
-
         }
 
         private void SetupScreen()
@@ -208,8 +142,6 @@ namespace ZSS
             confApp.SelectedObject = Program.conf;
             txtRootFolder.Text = Program.RootAppFolder;
             UpdateGuiControlsPaths();
-            txtActiveHelp.Text = String.Format("Welcome to {0}. To begin using Active Help all you need to do is hover over" +
-                " any control and this textbox will be updated with information about the control.", ProductName);
 
             #endregion
 
@@ -237,8 +169,6 @@ namespace ZSS
             cboCropGridMode.Checked = Program.conf.CropGridToggle;
             nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
-            cbShowActiveHelp.Checked = Program.conf.ShowActiveHelp;
-            chkGTActiveHelp.Checked = Program.conf.GTActiveHelp;
 
             #endregion
 
@@ -2986,36 +2916,36 @@ namespace ZSS
         {
             if (e.RowIndex >= 0)
             {
-                txtActiveHelp.Text = dgvHotkeys.Rows[e.RowIndex].Cells[0].Value + ": allows you to ";
+                //txtActiveHelp.Text = dgvHotkeys.Rows[e.RowIndex].Cells[0].Value + ": allows you to ";
 
                 switch (e.RowIndex)
                 {
                     case 0: //active window
-                        txtActiveHelp.Text += "capture a window that is currently highlighted and send it your selected destination.";
+                        //txtActiveHelp.Text += "capture a window that is currently highlighted and send it your selected destination.";
                         break;
                     case 1: //selected window
-                        txtActiveHelp.Text += "capture a window by selecting a window from the mouse and send it your selected destination.";
+                        //txtActiveHelp.Text += "capture a window by selecting a window from the mouse and send it your selected destination.";
                         break;
                     case 2: //entire screen
-                        txtActiveHelp.Text += "capture everything present on your screen including taskbar, start menu, etc and send it your selected destination";
+                        //txtActiveHelp.Text += "capture everything present on your screen including taskbar, start menu, etc and send it your selected destination";
                         break;
                     case 3: //crop shot
-                        txtActiveHelp.Text += "capture a specified region of your screen and send it to your selected destination";
+                        //txtActiveHelp.Text += "capture a specified region of your screen and send it to your selected destination";
                         break;
                     case 4: //last crop shot
-                        txtActiveHelp.Text += "capture the specified region from crop shot another time";
+                        //txtActiveHelp.Text += "capture the specified region from crop shot another time";
                         break;
                     case 5: //clipboard upload
-                        txtActiveHelp.Text += "send files from your file system to your selected destination.";
+                        //txtActiveHelp.Text += "send files from your file system to your selected destination.";
                         break;
                     case 7: // quick options
-                        txtActiveHelp.Text += "quickly select the destination you would like to send images via a small pop up form.";
+                        //txtActiveHelp.Text += "quickly select the destination you would like to send images via a small pop up form.";
                         break;
                     case 8: // drop window
-                        txtActiveHelp.Text += "display a Drop Window so can drag and drop image files from Windows Explorer to upload.";
+                        //txtActiveHelp.Text += "display a Drop Window so can drag and drop image files from Windows Explorer to upload.";
                         break;
                     case 9: // language translator
-                        txtActiveHelp.Text += "translate the text that is in your clipboard from one language to another. See HTTP -> Language Translator for settings.";
+                        //txtActiveHelp.Text += "translate the text that is in your clipboard from one language to another. See HTTP -> Language Translator for settings.";
                         break;
                 }
             }
@@ -3058,78 +2988,6 @@ namespace ZSS
             QuitSettingHotkeys();
         }
 
-        //private void cbActiveHelp_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    Program.conf.ActiveHelp = cbActiveHelp.Checked;
-        //    CheckActiveHelp();
-        //}
-
-        //private void CheckActiveHelp()
-        //{
-        //    splitContainerApp.Panel2Collapsed = !Program.conf.ActiveHelp;
-        //    this.Height = (Program.conf.ActiveHelp ? Program.conf.WindowSize.Height : Program.conf.WindowSize.Height - txtActiveHelp.Height);
-        //    this.Refresh();
-        //}
-
-        private void AddMouseHoverEventHandlerHelp(Control.ControlCollection col)
-        {
-            foreach (Control c in col)
-            {
-                if (c.Tag != null && c.Tag.ToString() != "")
-                {
-                    c.MouseHover += new EventHandler(HelpMouseHoverEvent);
-                }
-
-                AddMouseHoverEventHandlerHelp(c.Controls);
-            }
-        }
-
-        private void HelpMouseHoverEvent(object sender, EventArgs e)
-        {
-            //if (Program.conf.ActiveHelp)
-            //{
-            string help = ((Control)sender).Tag.ToString();
-            if (mGTranslator != null && Program.conf.GTActiveHelp && cbHelpToLanguage.Items.Count > 0)
-            {
-                StartGTActiveHelp(help);
-            }
-            else
-            {
-                txtActiveHelp.Text = help;
-            }
-            // }
-        }
-
-        private void StartGTActiveHelp(string help)
-        {
-            BackgroundWorker bwActiveHelp = new BackgroundWorker();
-            bwActiveHelp.DoWork += new DoWorkEventHandler(bwActiveHelp_DoWork);
-            GoogleTranslate.TranslationInfo ti =
-                new GoogleTranslate.TranslationInfo(help, new GoogleTranslate.GTLanguage("en", "English"),
-                    mGTranslator.LanguageOptions.TargetLangList[cbHelpToLanguage.SelectedIndex]);
-            bwActiveHelp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwActiveHelp_RunWorkerCompleted);
-            if (!bwActiveHelp.IsBusy)
-            {
-                bwActiveHelp.RunWorkerAsync(ti);
-            }
-        }
-
-        private void bwActiveHelp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Result != null)
-            {
-                GoogleTranslate.ResultPacket grp = (GoogleTranslate.ResultPacket)e.Result;
-                txtActiveHelp.Text = grp.TranslatedText;
-            }
-        }
-
-        private void bwActiveHelp_DoWork(object sender, DoWorkEventArgs e)
-        {
-            GoogleTranslate.TranslationInfo ti = (GoogleTranslate.TranslationInfo)e.Argument;
-            GoogleTranslate.ResultPacket grp = mGTranslator.TranslateText(ti);
-            e.Result = grp;
-        }
-
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
         {
             UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password",
@@ -3154,63 +3012,63 @@ namespace ZSS
             Program.conf.TinyPicShuk = txtTinyPicShuk.Text;
         }
 
-        private void tabControl_Selected(object sender, TabControlEventArgs e)
-        {
-            // What the tab control will display when you change from one section to another
+        /*private void tabControl_Selected(object sender, TabControlEventArgs e)
+         {
+             // What the tab control will display when you change from one section to another
 
-            string tabDesc = "In this section you can ";
+             string tabDesc = "In this section you can ";
 
-            if (e.TabPage == tpMain)
-            {
-                txtActiveHelp.Text = tabDesc + "select the destination that images are uploaded to," +
-                    " enable/disable crop settings, and turn Active Help on and off.";
-            }
-            else if (e.TabPage == tpHotkeys)
-            {
-                txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use." +
-                " To set a Hotkey click on a button and follow the directions provided above.";
-            }
-            else if (e.TabPage == tpWatermark)
-            {
-                txtActiveHelp.Text = tabDesc + string.Format("configure Watermark properties." +
-                    " You can choose a text string or an image as the Watermark." +
-                    " If you are using a large Logo then consider setting the Image Scale.");
-            }
-            else if (e.TabPage == tpFTP)
-            {
-                txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots." +
-                    " You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
-            }
-            else if (e.TabPage == tpImages)
-            {
-                txtActiveHelp.Text = tabDesc + "configure the Image Hosting Service you prefer to upload the screenshot.";
-            }
-            else if (e.TabPage == tpEditors)
-            {
-                txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot." +
-                    " {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
-            }
-            else if (e.TabPage == tpScreenshots)
-            {
-                txtActiveHelp.Text = tabDesc + string.Format("customize file naming patterns for the screenshot you are taking.");
-            }
-            else if (e.TabPage == tpHistory)
-            {
-                txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots." +
-                    " To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
-            }
-            else if (e.TabPage == tpOptions)
-            {
-                txtActiveHelp.Text = tabDesc + "access the folder where settings are saved and import/export/revert settings";
-            }
-            else if (e.TabPage == tpCustomUploaders)
-            {
-                txtActiveHelp.Text = "Wiki: http://code.google.com/p/zscreen/wiki/CustomUploadersHelp";
-            }
+             if (e.TabPage == tpMain)
+             {
+                 txtActiveHelp.Text = tabDesc + "select the destination that images are uploaded to," +
+                     " enable/disable crop settings, and turn Active Help on and off.";
+             }
+             else if (e.TabPage == tpHotkeys)
+             {
+                 txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use." +
+                 " To set a Hotkey click on a button and follow the directions provided above.";
+             }
+             else if (e.TabPage == tpWatermark)
+             {
+                 txtActiveHelp.Text = tabDesc + string.Format("configure Watermark properties." +
+                     " You can choose a text string or an image as the Watermark." +
+                     " If you are using a large Logo then consider setting the Image Scale.");
+             }
+             else if (e.TabPage == tpFTP)
+             {
+                 txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots." +
+                     " You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
+             }
+             else if (e.TabPage == tpImages)
+             {
+                 txtActiveHelp.Text = tabDesc + "configure the Image Hosting Service you prefer to upload the screenshot.";
+             }
+             else if (e.TabPage == tpEditors)
+             {
+                 txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot." +
+                     " {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
+             }
+             else if (e.TabPage == tpScreenshots)
+             {
+                 txtActiveHelp.Text = tabDesc + string.Format("customize file naming patterns for the screenshot you are taking.");
+             }
+             else if (e.TabPage == tpHistory)
+             {
+                 txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots." +
+                     " To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
+             }
+             else if (e.TabPage == tpOptions)
+             {
+                 txtActiveHelp.Text = tabDesc + "access the folder where settings are saved and import/export/revert settings";
+             }
+             else if (e.TabPage == tpCustomUploaders)
+             {
+                 txtActiveHelp.Text = "Wiki: http://code.google.com/p/zscreen/wiki/CustomUploadersHelp";
+             }
 
-            CheckFormSettings();
-            if (Program.conf.AutoSaveSettings) WriteSettings();
-        }
+             CheckFormSettings();
+             if (Program.conf.AutoSaveSettings) WriteSettings();
+         }*/
 
         private void CheckFormSettings()
         {
@@ -3230,78 +3088,6 @@ namespace ZSS
                     this.Size = this.MinimumSize;
                 }
             }
-            if (Program.conf.ShowActiveHelp)
-            {
-                this.ZScreenPanels.RowStyles[0].Height = 92F;
-                this.ZScreenPanels.RowStyles[1].Height = 08F;
-            }
-            else
-            {
-                this.ZScreenPanels.RowStyles[0].Height = 100F;
-                this.ZScreenPanels.RowStyles[1].Height = 0F;
-            }
-        }
-
-        private void ActiveHelpTagsConfig()
-        {
-            //////////////////////////////////
-            // Main Tab
-            //////////////////////////////////
-            cboImagesDest.Tag = "Select destination for the Screenshot. Destination can also be changed using the Tray menu. You can setup your own Custom Images Uploader from Images tab.";
-
-            cboClipboardTextMode.Tag = "Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard." +
-                "\n\"Full Image\" returns a normal full-size image URL.\n\"Full Image for Forums\" returns BBcode for embedding images into forum posts." +
-                "\n\"Thumbnail\" returns the thumbnail (a small image) of your uploaded image.\n\"Linked Thumbnail\" is the same as \"Thumbnail\" except " +
-                "that it links the thumbnail to the full-size image.";
-
-            //active help inconsistency (uses label because numeric up/down doesn'task support mousehover event
-            nudtScreenshotDelay.Tag = "The amount of time that the program will pause before taking a Full Screen or Active Window Screenshot.";
-
-            cbCompleteSound.Tag = "When checked a sound will be played after an image successfully reaches the destination you have set (Clipboard, FTP, etc).";
-
-            cbShowCursor.Tag = "When checked your mouse cursor will be captured in screenshots. This is useful for quickly pointing to things.";
-
-            llblBugReports.Tag = String.Format("Send the developers of {0} a bug report or a suggestion so that we can improve the program.", Application.ProductName);
-
-            //////////////////////////////////
-            // Capture Tab
-            //////////////////////////////////
-            chkManualNaming.Tag = "When checked automatic naming conventions will be ignored and instead you can specify your own name for a screenshot manually.";
-
-            txtEntireScreen.Tag = "The automatic naming convention used for all types of screenshots besides Active Window.";
-
-            txtActiveWindow.Tag = "The automatic naming convention used for active window screenshots.";
-
-            nudSwitchAfter.Tag = string.Format("After {0} KiB, {1} will switch format from {2} to JPG", nudSwitchAfter.Text, Application.ProductName, cbFileFormat.Text.ToUpper());
-
-            nudWatermarkOffset.Tag = string.Format("Move Watermark {0} pixels leftwards and {0} pixels upwards from the Bottom Right corner of the Screenshot.", nudWatermarkOffset.Value);
-
-            txtWatermarkText.Tag = "The naming pattern that watermarks follow. To close this context menu just click in another textbox.";
-
-            //Paths
-            txtImagesDir.Tag = "The directory where all screenshots will be placed (unless deleted with the option below).";
-
-            cbFileFormat.Tag = "The format that screenshots will be saved as.";
-
-            //active help inconsistency (uses label because numeric up/down doesn'task support mousehover event
-            lblQuality.Tag = "The quality (1-100%) of JPEG screenshots. This quality setting does not effect any other type of Image Format.";
-
-            cbSwitchFormat.Tag = "The secondary format that the program will switch to after a user-specified limit has been reached.";
-
-            nudSwitchAfter.Tag = "At this limit File Format will switch from the original format to the secondary format.";
-
-            cbDeleteLocal.Tag = "When checked files that you upload will be deleted locally to save hard disk space.";
-
-            //////////////////////////////////
-            // Custom MyCollection Tab
-            //////////////////////////////////
-
-            //////////////////////////////////
-            // Screenshots
-            //////////////////////////////////
-            lbHistory.Tag = "Right click to access Copy to Clipboard options.";
-            txtHistoryLocalPath.Tag = "Double click to copy File Path to Clipboard.";
-            txtHistoryRemotePath.Tag = "Double click to copy URL to Clipboard.";
         }
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
@@ -3901,7 +3687,6 @@ namespace ZSS
             {
                 cbFromLanguage.Items.Clear();
                 cbToLanguage.Items.Clear();
-                cbHelpToLanguage.Items.Clear();
                 foreach (GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.SourceLangList)
                 {
                     cbFromLanguage.Items.Add(gtLang.Name);
@@ -3909,7 +3694,6 @@ namespace ZSS
                 foreach (GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.TargetLangList)
                 {
                     cbToLanguage.Items.Add(gtLang.Name);
-                    cbHelpToLanguage.Items.Add(gtLang.Name);
                 }
                 SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
                 GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Program.conf.ToLanguage2,
@@ -3920,7 +3704,6 @@ namespace ZSS
                 }
                 if (cbFromLanguage.Items.Count > 0) cbFromLanguage.Enabled = true;
                 if (cbToLanguage.Items.Count > 0) cbToLanguage.Enabled = true;
-                if (cbHelpToLanguage.Items.Count > 0) cbHelpToLanguage.Enabled = true;
             }
             if (!string.IsNullOrEmpty(Program.conf.TinyPicShuk) && Program.conf.TinyPicShuk != txtTinyPicShuk.Text)
             {
@@ -3943,10 +3726,6 @@ namespace ZSS
                 if (mGTranslator.LanguageOptions.TargetLangList[i].Value == targetLangValue)
                 {
                     if (cbToLanguage.Items.Count > i) cbToLanguage.SelectedIndex = i;
-                }
-                if (mGTranslator.LanguageOptions.TargetLangList[i].Value == helpTargetLangValue)
-                {
-                    if (cbHelpToLanguage.Items.Count > i) cbHelpToLanguage.SelectedIndex = i;
                 }
             }
         }
@@ -4046,16 +3825,6 @@ namespace ZSS
                     Process.Start(hi.LocalPath);
                 }
             }
-        }
-
-        private void chkGTActiveHelp_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.GTActiveHelp = chkGTActiveHelp.Checked;
-        }
-
-        private void cbHelpToLanguage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.conf.HelpToLanguage = mGTranslator.LanguageOptions.TargetLangList[cbHelpToLanguage.SelectedIndex].Value;
         }
 
         private void btnCopyStats_Click(object sender, EventArgs e)
@@ -4994,7 +4763,7 @@ namespace ZSS
                     {
                         Program.conf.TextUploadersList.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
-                        cboTextDest.Items.Add(textUploader);                        
+                        cboTextDest.Items.Add(textUploader);
                     }
                     ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
@@ -5083,18 +4852,12 @@ namespace ZSS
         }
 
         private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
-        {         
+        {
             if (mGuiIsReady)
-            {                
+            {
                 ucTextUploaders.MyCollection.SelectedIndex = cboTextDest.SelectedIndex;
                 Program.conf.SelectedTextUploader = cboTextDest.SelectedIndex;
             }
-        }
-
-        private void cbShowActiveHelp_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.ShowActiveHelp = cbShowActiveHelp.Checked;
-            CheckFormSettings();
         }
 
         private void cbAutoTranslate_CheckedChanged(object sender, EventArgs e)
@@ -5108,6 +4871,70 @@ namespace ZSS
             if (int.TryParse(txtAutoTranslate.Text, out number))
             {
                 Program.conf.AutoTranslateLength = number;
+            }
+        }
+
+        private void btnUrlShortenerTest_Click(object sender, EventArgs e)
+        {
+            this.TestUploaderText((TextUploader)ucUrlShorteners.MyCollection.SelectedItem);
+        }
+
+        private void lbUrlShorteners_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
+            {
+
+                Program.conf.UrlShortenerActive = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
+                Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
+
+                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
+                bool hasOptions = textUploader != null;
+                ucUrlShorteners.SettingsGrid.Visible = hasOptions;
+
+                if (hasOptions)
+                {
+                    ucUrlShorteners.SettingsGrid.SelectedObject = ((TextUploader)textUploader).Settings;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Method to remove a Link Shorteners from the List of Link Shorteners
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnUrlShortenersRemove_Click(object sender, EventArgs e)
+        {
+            if (ucUrlShorteners.MyCollection.SelectedIndex > 0)
+            {
+                int index = ucUrlShorteners.MyCollection.SelectedIndex;
+                ucUrlShorteners.MyCollection.Items.RemoveAt(index);
+                Program.conf.UrlShortenersList.RemoveAt(index);
+                ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
+            }
+        }
+
+        /// <summary>
+        /// Method to add a Link Shorteners to the List of Link Shorteners
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnUrlShortenersAdd_Click(object sender, EventArgs e)
+        {
+            if (ucUrlShorteners.Templates.SelectedIndex > -1)
+            {
+                string name = (string)ucUrlShorteners.Templates.SelectedItem;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    TextUploader textUploader = FindUrlShortener(name);
+                    if (textUploader != null)
+                    {
+                        ucUrlShorteners.MyCollection.Items.Add(textUploader);
+                        Program.conf.UrlShortenersList.Add(textUploader);
+                    }
+                    ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
+                }
             }
         }
     }
