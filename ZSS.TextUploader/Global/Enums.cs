@@ -17,4 +17,12 @@ namespace ZSS.TextUploaders.Global
         [Description("tinyurl.com")]
         TINYURL
     }
+
+    public enum UrlShortenerType
+    {
+        [Description("tinyurl.com")]
+        TINYURL,
+        [Description("3.ly")]
+        THREELY
+    }
 }
