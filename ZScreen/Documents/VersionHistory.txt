@@ -1,6 +1,6 @@
 Version 2.12 - 20090701
 
-2.12.00.0 Added support for URL Shorteners starting with TinyURL
+2.12.00.0 Added support for URL Shorteners starting with TinyURL and 3.ly
 2.11.01.1 Prevent automatically loading Default Settings when an error is occured
 2.11.01.0 Rearranged Main Tabs to follow a more logical sense
 2.11.00.1 Fixed Magnifier off the top [Issue 71]

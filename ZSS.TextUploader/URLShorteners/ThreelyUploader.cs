@@ -9,9 +9,9 @@ using ZSS.TextUploadersLib.Helpers;
 namespace ZSS.TextUploaderLib.URLShorteners
 {
     [Serializable]
-    public sealed class ThreelyUploader : ZSS.TextUploadersLib.TextUploader
+    public sealed class ThreelyUploader : TextUploader
     {
-        public const string Hostname = "tinyurl.com";
+        public const string Hostname = "3.ly";
 
         public override object Settings
         {
@@ -29,7 +29,7 @@ namespace ZSS.TextUploaderLib.URLShorteners
 
         public ThreelyUploader()
         {
-            HostSettings.URL = "http://tinyurl.com/api-create.php";
+            HostSettings.URL = "http://3.ly/?api=em5893833&u=";
         }
 
         public override string Name
@@ -47,9 +47,8 @@ namespace ZSS.TextUploaderLib.URLShorteners
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("url", HttpUtility.UrlEncode(text.LocalString));
-
-                return GetResponse2(HostSettings.URL, arguments);
+                string url = HostSettings.URL + text.LocalString;
+                return GetResponse2(url, arguments);
             }
 
             return "";

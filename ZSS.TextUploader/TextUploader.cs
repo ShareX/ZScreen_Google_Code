@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using ZSS.TextUploaderLib.URLShorteners;
 
 namespace ZSS.TextUploadersLib
 {
@@ -15,7 +16,9 @@ namespace ZSS.TextUploadersLib
     {
         // ** THIS HAS TO BE UPTODATE OTHERWISE XML SERIALZING IS GOING TO FUCK UP ** 
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
-                                                          typeof(SlexyUploader), typeof(SniptUploader), typeof (TinyURLUploader), typeof(TextUploader)};
+                                                          typeof(SlexyUploader), typeof(SniptUploader), 
+                                                          typeof(TinyURLUploader), typeof(ThreelyUploader), 
+                                                          typeof(TextUploader)};
 
         public TextUploader() { }
 
