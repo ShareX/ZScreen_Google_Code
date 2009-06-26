@@ -261,6 +261,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
+
         public List<TextUploader> TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
@@ -511,7 +512,7 @@ namespace ZSS
             {
                 try
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
+                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
                     using (FileStream fs = new FileStream(filePath, FileMode.Open))
                     {
                         temp = (XMLSettings)xs.Deserialize(fs);
