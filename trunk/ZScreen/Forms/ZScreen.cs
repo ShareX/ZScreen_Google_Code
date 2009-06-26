@@ -4957,8 +4957,8 @@ namespace ZSS
         {
             switch (name)
             {
-                case TinyURL.Hostname:
-                    return new TinyURL();
+                case TinyURLUploader.Hostname:
+                    return new TinyURLUploader();
             }
             return null;
         }
@@ -4977,8 +4977,8 @@ namespace ZSS
                     return new SlexyUploader();
                 case SniptUploader.Hostname:
                     return new SniptUploader();
-                case TinyURL.Hostname:
-                    return new TinyURL();
+                case TinyURLUploader.Hostname:
+                    return new TinyURLUploader();
                 default:
                     if (name == ZSS.TextUploaders.FTPUploader.Hostname)
                     {

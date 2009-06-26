@@ -14,10 +14,10 @@ namespace ZSS.Helpers
     {
 
         public List<TextUploader> TextUploadersSettings = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-        public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURL() };
+        public List<TextUploader> UrlShortenerSettings = new List<TextUploader> { new TinyURLUploader() };
 
-        public TextUploader TextUploaderActive;
-        public TextUploader UrlShortenerActive;
+        public TextUploader TextUploaderActive = new Paste2Uploader();
+        public TextUploader UrlShortenerActive = new TinyURLUploader();
 
         public static TextUploadersManager Read()
         {
