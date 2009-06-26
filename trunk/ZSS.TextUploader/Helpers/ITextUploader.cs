@@ -1,4 +1,7 @@
-﻿namespace ZSS.TextUploaders.Helpers
+﻿using System.Xml.Serialization;
+using System;
+
+namespace ZSS.TextUploaders.Helpers
 {
     interface ITextUploader
     {

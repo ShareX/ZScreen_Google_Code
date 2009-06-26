@@ -11,6 +11,9 @@ using System.Xml.Serialization;
 namespace ZSS.TextUploaders
 {
     [Serializable]
+    [XmlInclude(typeof(PastebinUploader)), XmlInclude(typeof(Paste2Uploader)), XmlInclude(typeof(SlexyUploader)),
+    XmlInclude(typeof(FTPUploader)), XmlInclude(typeof(PastebinCaUploader)), XmlInclude(typeof(SniptUploader)),
+    XmlInclude(typeof(TinyURLUploader))]
     public abstract class TextUploader : ITextUploader
     {
         public List<string> Errors { get; set; }
@@ -54,8 +57,8 @@ namespace ZSS.TextUploaders
             string link = "";
             if (File.Exists(filePath))
             {
-                TextFile tf = new TextFile(File.ReadAllText(filePath));               
-                tf.LocalFilePath = filePath;                
+                TextFile tf = new TextFile(File.ReadAllText(filePath));
+                tf.LocalFilePath = filePath;
                 link = UploadText(tf);
             }
             return link;
