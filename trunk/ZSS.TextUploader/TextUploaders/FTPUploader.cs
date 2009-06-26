@@ -19,6 +19,11 @@ namespace ZSS.TextUploaders
 
         public const string Hostname = "FTP";
 
+        public FTPUploader()
+        {
+
+        }
+
         public FTPUploader(FTPAccount acc)
         {
             this.FTPAccount = acc;

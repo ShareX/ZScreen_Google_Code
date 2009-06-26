@@ -86,10 +86,10 @@ namespace ZSS
             ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(lbUrlShorteners_SelectedIndexChanged);
             ucUrlShorteners.btnItemTest.Click += new EventHandler(btnUrlShortenerTest_Click);
 
-            ucTextUploaders.btnItemAdd.Click += new EventHandler(btnTextUploaderAdd_Click);
-            ucTextUploaders.btnItemRemove.Click += new EventHandler(btnTextUploaderRemove_Click);
-            ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(lbTextUploaders_SelectedIndexChanged);
-            ucTextUploaders.btnItemTest.Click += new EventHandler(btnTextUploaderTest_Click);
+            ucTextUploaders.btnItemAdd.Click += new EventHandler(TextUploadersAddButton_Click);
+            ucTextUploaders.btnItemRemove.Click += new EventHandler(TextUploadersRemoveButton_Click);
+            ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(TextUploaders_SelectedIndexChanged);
+            ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
 
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
@@ -4748,9 +4748,9 @@ namespace ZSS
             return null;
         }
 
-        private void btnTextUploaderAdd_Click(object sender, EventArgs e)
+        private void TextUploadersAddButton_Click(object sender, EventArgs e)
         {
-            if (ucTextUploaders.MyCollection.SelectedIndex > -1)
+            if (ucTextUploaders.Templates.SelectedIndex > -1)
             {
                 string name = ucTextUploaders.Templates.SelectedItem.ToString();
                 if (!string.IsNullOrEmpty(name))
@@ -4767,7 +4767,7 @@ namespace ZSS
             }
         }
 
-        private void btnTextUploaderRemove_Click(object sender, EventArgs e)
+        private void TextUploadersRemoveButton_Click(object sender, EventArgs e)
         {
             if (ucTextUploaders.MyCollection.SelectedIndex > 0)
             {
@@ -4801,7 +4801,7 @@ namespace ZSS
             }
         }
 
-        private void btnTextUploaderTest_Click(object sender, EventArgs e)
+        private void TextUploaderTestButton_Click(object sender, EventArgs e)
         {
             TextUploader uploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
             TestUploaderText(uploader);
@@ -4822,7 +4822,7 @@ namespace ZSS
             RewriteImageEditorsRightClickMenu();
         }
 
-        private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        private void TextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
 
             if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)

@@ -262,7 +262,7 @@ namespace ZSS
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public List<TextUploader> TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
+        public List<TextUploader> TextUploadersList = new List<TextUploader>();
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
 
