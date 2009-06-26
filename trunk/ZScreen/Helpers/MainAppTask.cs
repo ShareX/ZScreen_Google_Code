@@ -166,9 +166,9 @@ namespace ZSS.Tasks
         public string MyText { get; set; }
         public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }        
         /// <summary>
-        /// TextUploader Object
+        /// MyTextUploader Object
         /// </summary>
-        public object TextUploader { get; set; }
+        public TextUploader MyTextUploader { get; set; }
         #endregion
 
         /// <summary>

@@ -953,7 +953,7 @@ namespace ZSS
                 switch (t.JobCategory)
                 {
                     case JobCategoryType.TEXT:
-                        sbMsg.AppendLine(string.Format("Destination: {0}", ((TextUploader)t.TextUploader).ToString()));
+                        sbMsg.AppendLine(string.Format("Destination: {0}", t.MyTextUploader));
                         break;
                     case JobCategoryType.SCREENSHOTS:
                     case JobCategoryType.PICTURES:
@@ -1165,7 +1165,7 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
-            t.TextUploader = Program.mgrTextUploaders.TextUploaderActive;
+            t.MyTextUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
             t.SetLocalFilePath(localFilePath);
 
             switch (job)
@@ -2491,7 +2491,7 @@ namespace ZSS
                     {
                         if (Program.mgrTextUploaders.UrlShortenerActive != null)
                         {
-                            temp.TextUploader = Program.mgrTextUploaders.UrlShortenerActive;
+                            temp.MyTextUploader = Program.mgrTextUploaders.UrlShortenerActive;
                             temp.RunWorker();
                         }
                     }
@@ -5004,7 +5004,7 @@ namespace ZSS
         {
             if (ucTextUploaders.MyCollection.SelectedIndex > -1)
             {
-                string name = (string)ucTextUploaders.MyCollection.SelectedItem;
+                string name = ucTextUploaders.Templates.SelectedItem.ToString();
                 if (!string.IsNullOrEmpty(name))
                 {
                     TextUploader textUploader = FindTextUploader(name);
@@ -5043,7 +5043,7 @@ namespace ZSS
                     string filePath = Path.Combine(Program.TempDir, "TextUploaderTest.txt");
                     File.WriteAllText(filePath, testString);
                     MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                    task.TextUploader = uploader;
+                    task.MyTextUploader = uploader;
                     task.RunWorker();
                 }
             }
@@ -5074,32 +5074,37 @@ namespace ZSS
             RewriteImageEditorsRightClickMenu();
         }
 
-        private void ShowTextUploaderSettings()
+        private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
             {
-                object textUploader = ucTextUploaders.MyCollection.SelectedItem;
-                bool hasOptions = textUploader != null && textUploader.GetType() != typeof(System.String);
+                TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
+
+                Program.mgrTextUploaders.TextUploaderActive = textUploader;
+
+                if (mGuiIsReady)
+                {
+                    Program.conf.SelectedTextUploader = ucTextUploaders.MyCollection.SelectedIndex;
+                    cboTextDest.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
+                }
+
+                bool hasOptions = textUploader != null;
                 ucTextUploaders.SettingsGrid.Visible = hasOptions;
 
                 if (hasOptions)
                 {
-                    ucTextUploaders.SettingsGrid.SelectedObject = ((TextUploader)textUploader).Settings;
+                    ucTextUploaders.SettingsGrid.SelectedObject = textUploader.Settings;
                 }
             }
-        }
 
-        private void lbTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ShowTextUploaderSettings();
         }
 
         private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.mgrTextUploaders.TextUploaderActive = (TextUploader)cboTextDest.SelectedItem;
-
+        {         
             if (mGuiIsReady)
-            {
+            {                
+                ucTextUploaders.MyCollection.SelectedIndex = cboTextDest.SelectedIndex;
                 Program.conf.SelectedTextUploader = cboTextDest.SelectedIndex;
             }
         }

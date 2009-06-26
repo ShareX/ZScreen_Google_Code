@@ -254,7 +254,7 @@ namespace ZSS
         public decimal WatermarkImageScale = 100;
 
         //~~~~~~~~~~~~~~~~~~~~~
-        //  Text MyCollection
+        //  Text Collection
         //~~~~~~~~~~~~~~~~~~~~~
 
         public int SelectedTextUploader = 0;
