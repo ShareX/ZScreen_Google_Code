@@ -43,7 +43,7 @@ namespace ZSS.TextUploaders
         {
             get
             {
-                return (object)HostSettings;
+                return HostSettings;
             }
             set
             {
