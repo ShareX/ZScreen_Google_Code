@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System;
 
-namespace ZSS.TextUploaders.Global
+namespace ZSS.TextUploaders
 {
     [Serializable]
     public enum TextDestType
@@ -26,4 +26,12 @@ namespace ZSS.TextUploaders.Global
         [Description("3.ly")]
         THREELY
     }
+
+    [Serializable]
+    public enum Privacy
+    {
+        Public,
+        Private
+    }
+
 }

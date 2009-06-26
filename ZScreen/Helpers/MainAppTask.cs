@@ -23,12 +23,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Drawing;
-using ZSS.ImageUploaders.Helpers;
 using System.IO;
-using ZSS.TextUploaders.Global;
+using System.Text;
+using ZSS.ImageUploaders.Helpers;
 using ZSS.TextUploaders;
 
 namespace ZSS.Tasks

@@ -80,7 +80,7 @@ namespace ZSS.TextUploaders
                 arguments.Add("expire", HostSettings.Expiration);
                 arguments.Add("language", HostSettings.TextFormat);
                 arguments.Add("linenumbers", HostSettings.LineNumbers ? "1" : "0");
-                arguments.Add("permissions", HostSettings.Visibility == SlexySettings.Privacy.Private ? "1" : "0");
+                arguments.Add("permissions", HostSettings.Visibility == Privacy.Private ? "1" : "0");
                 arguments.Add("submit", "Submit Paste");
                 arguments.Add("tabbing", "true");
                 arguments.Add("tabtype", "real");
@@ -110,8 +110,6 @@ namespace ZSS.TextUploaders
                 LineNumbers = true;
                 Expiration = "2592000";
             }
-
-            public enum Privacy { Public, Private }
         }
     }
 }
