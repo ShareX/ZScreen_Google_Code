@@ -1,5 +1,6 @@
 Version 2.14 - 20090701
 
+2.14.01.0 XML Option to automatically shorten the URL after the task complete
 2.14.00.0 Added support for URL Shortener: 3.ly
 2.13.00.0 Added support for URL Shorteners starting with TinyURL
 2.13.01.1 Prevent automatically loading Default Settings when an error is occured

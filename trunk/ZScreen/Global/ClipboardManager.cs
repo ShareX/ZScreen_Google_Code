@@ -26,6 +26,9 @@ using System.Collections.Generic;
 using System.Text;
 using ZSS.ImageUploaders.Helpers;
 using System.Windows.Forms;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.Helpers;
+using ZSS.Global;
 
 namespace ZSS
 {
@@ -105,14 +108,21 @@ namespace ZSS
 
             if (ifm != null)
             {
-                lCbLines.Add(ifm.GetUrlByType(Program.conf.ClipboardUriMode));
+                string url = ifm.GetUrlByType(Program.conf.ClipboardUriMode);                
+                url = OnlineTasks.TryShortenURL(url);
+                ifm.URL = url;
+                lCbLines.Add(url);
             }
 
             return lCbLines;
 
         }
 
-        public static void SetClipboardText()
+        /// <summary>
+        /// Sets Clipboard text and returns the content
+        /// </summary>
+        /// <returns></returns>
+        public static string SetClipboardText()
         {
             try
             {
@@ -139,18 +149,22 @@ namespace ZSS
                     }
                 }
 
-                string temp = sbLines.ToString();
+                string temp = sbLines.ToString().Trim();
                 if (!string.IsNullOrEmpty(temp))
                 {
                     Clipboard.Clear();
-                    Clipboard.SetText(temp.Trim());
+                    Clipboard.SetText(temp);
                 }
+
+                return temp;
 
             }
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
             }
+
+            return "";
         }
     }
 }
