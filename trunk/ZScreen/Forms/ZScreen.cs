@@ -34,16 +34,15 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using ZSS.Colors;
 using ZSS.Forms;
 using ZSS.Helpers;
 using ZSS.ImageUploaders;
 using ZSS.ImageUploaders.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.Colors;
-using ZSS.UpdateCheckerLib;
 using ZSS.TextUploaders;
-using ZSS.TextUploaders.Global;
+using ZSS.UpdateCheckerLib;
 
 namespace ZSS
 {
@@ -4733,10 +4732,14 @@ namespace ZSS
                 default:
                     if (name == ZSS.TextUploaders.FTPUploader.Hostname)
                     {
-                        if (Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > 0)
+                        if (Program.conf.FTPAccountList.Count > 0)
                         {
-                            FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                            if (acc == null)
+                            FTPAccount acc = new FTPAccount();
+                            if (Program.conf.FTPSelected >= 0)
+                            {
+                                acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                            }
+                            else
                             {
                                 acc = Program.conf.FTPAccountList[0];
                             }

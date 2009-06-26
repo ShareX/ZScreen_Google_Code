@@ -2,7 +2,6 @@
 using ZSS.Tasks;
 using System.IO;
 using System.Diagnostics;
-using ZSS.TextUploaders.Global;
 using ZSS.ImageUploaders;
 using ZSS.Properties;
 using System.Threading;

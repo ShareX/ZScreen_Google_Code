@@ -76,7 +76,7 @@ namespace ZSS.TextUploaders
                 arguments.Add("codeSnippet", HttpUtility.UrlEncode(text.LocalString));
                 arguments.Add("codeSnippetTitle", HostSettings.SnippetTitle);
                 arguments.Add("lang", HostSettings.Language);
-                arguments.Add("private", HostSettings.Visibility == SniptSettings.Privacy.Private ? "1" : "0");
+                arguments.Add("private", HostSettings.Visibility == Privacy.Private ? "1" : "0");
                 arguments.Add("shownums", HostSettings.LineNumbers ? "1" : "0");
                 arguments.Add("snipAction", "");
                 arguments.Add("theme", HostSettings.Theme);
@@ -104,8 +104,6 @@ namespace ZSS.TextUploaders
                 LineNumbers = true;
                 Theme = "1";
             }
-
-            public enum Privacy { Public, Private }
         }
     }
 }

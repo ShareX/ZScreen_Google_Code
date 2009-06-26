@@ -23,16 +23,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.Drawing;
-using ZSS.TextUploaders.Global;
-using System.ComponentModel;
-using System.Net;
-using ZSS.Helpers;
-using ZSS.TextUploaders;
 using ZSS.Properties;
+using ZSS.TextUploaders;
 
 namespace ZSS
 {
@@ -262,7 +259,8 @@ namespace ZSS
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public List<TextUploader> TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
+        // public List<TextUploader> TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
+        public List<TextUploader> TextUploadersList = new List<TextUploader>();
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
 
@@ -524,6 +522,7 @@ namespace ZSS
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
                     FileSystem.AppendDebug(ex.ToString());
+                    Console.WriteLine(ex.ToString());
                     OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
                     dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
                     dlg.InitialDirectory = Settings.Default.RootDir;
