@@ -32,6 +32,7 @@ using System.ComponentModel;
 using System.Net;
 using ZSS.Helpers;
 using ZSS.TextUploaders;
+using ZSS.Properties;
 
 namespace ZSS
 {
@@ -205,11 +206,16 @@ namespace ZSS
         public bool CaptureEntireScreenOnError = false;
         public bool ShowBalloonTip = true;
         public bool BalloonTipOpenLink = false;
+        [Category("Options / Interaction"), Description("Show Upload Duration")]
         public bool ShowUploadDuration = false;
+        [Category("Options / Interaction"), Description("Play sound after task is completed")]
         public bool CompleteSound = false;
+        [Category("Options / Interaction"), Description("Close the Drop Window on mouse click")]
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
         public bool CloseQuickActions = false;
+        [Category("Options / Interaction"), Description("Optionally shorten the URL after completing a task")]
+        public bool MakeTinyURL { get; set; }
 
         // Naming Conventions
 
@@ -497,6 +503,7 @@ namespace ZSS
 
         public static XMLSettings Read(string filePath)
         {
+            XMLSettings temp = new XMLSettings();
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
@@ -507,7 +514,7 @@ namespace ZSS
                     XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
                     using (FileStream fs = new FileStream(filePath, FileMode.Open))
                     {
-                        return (XMLSettings)xs.Deserialize(fs);
+                        temp = (XMLSettings)xs.Deserialize(fs);
                     }
                 }
                 catch (Exception ex)
@@ -515,10 +522,17 @@ namespace ZSS
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
                     FileSystem.AppendDebug(ex.ToString());
+                    OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
+                    dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
+                    dlg.InitialDirectory = Settings.Default.RootDir;
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        temp = XMLSettings.Read(dlg.FileName);
+                    }
                 }
             }
 
-            return new XMLSettings();
+            return temp;
         }
 
         #endregion
