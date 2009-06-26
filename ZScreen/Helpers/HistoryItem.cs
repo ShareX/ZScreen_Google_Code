@@ -125,7 +125,7 @@ namespace ZSS.Helpers
                             return string.Format("{0}", t.ImageDestCategory.GetDescription());
                     }
                 case JobCategoryType.TEXT:
-                    return string.Format("{0}", t.TextUploader.ToString());
+                    return string.Format("{0}", t.MyTextUploader.ToString());
             }
             return "";
         }

@@ -169,7 +169,7 @@ namespace ZSS.Helpers
             //        break;
             //}
 
-            TextUploader textUploader = (TextUploader)task.TextUploader;
+            TextUploader textUploader = (TextUploader)task.MyTextUploader;
             task.RemoteFilePath = textUploader.UploadTextFromFile(task.LocalFilePath);
 
             task.EndTime = DateTime.Now;

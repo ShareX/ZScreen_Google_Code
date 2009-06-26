@@ -50,8 +50,8 @@ namespace ZSS.Helpers
 
         private void WriteXML(string filePath)
         {
-            try
-            {
+            //try
+            //{
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
@@ -60,11 +60,11 @@ namespace ZSS.Helpers
                 {
                     xs.Serialize(fs, this);
                 }
-            }
-            catch (Exception e)
-            {
-                System.Windows.Forms.MessageBox.Show(e.Message);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    System.Windows.Forms.MessageBox.Show(e.Message);
+            //}
         }
 
         private static TextUploadersManager ReadBF(string filePath)

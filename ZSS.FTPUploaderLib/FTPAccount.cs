@@ -27,7 +27,7 @@ using System.ComponentModel;
 
 namespace ZSS
 {
-    [Serializable()]
+    [Serializable]
     public class FTPAccount
     {
         public string Name { get; set; }

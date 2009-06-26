@@ -42,7 +42,7 @@ namespace ZSS.TextUploaders
         {
             get
             {
-                return (object)HostSettings;
+                return (Paste2Settings)HostSettings;
             }
             set
             {
