@@ -83,7 +83,12 @@ namespace ZSS.Helpers
                     }
 
                     //Set remote path for Screenshots history
-                    if (task.ImageManager != null) task.RemoteFilePath = task.ImageManager.GetFullImageUrl();
+                    string url = task.ImageManager.GetFullImageUrl();
+                    url = OnlineTasks.TryShortenURL(url);
+                    if (task.ImageManager != null)
+                    {
+                        task.RemoteFilePath = url;
+                    }
                 }
             }
 

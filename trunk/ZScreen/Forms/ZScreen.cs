@@ -1320,11 +1320,7 @@ namespace ZSS
                     if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                     {
                         ClipboardManager.AddScreenshotList(task.ImageManager);
-                        string url = ClipboardManager.SetClipboardText();
-                        if (Program.conf.ClipboardUriMode == ClipboardUriType.FULL)
-                        {
-                            task.RemoteFilePath = url;
-                        }
+                        ClipboardManager.SetClipboardText();
                     }
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
@@ -4810,7 +4806,7 @@ namespace ZSS
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    string filePath = Path.Combine(Program.TempDir, "TextUploaderTest.txt");
+                    string filePath = Path.Combine(Program.TempDir, DateTime.Now.Ticks + ".txt");
                     File.WriteAllText(filePath, testString);
                     MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     task.MyTextUploader = uploader;
