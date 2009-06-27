@@ -211,7 +211,7 @@ namespace ZSS
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
         public bool CloseQuickActions = false;
-        [Category("Options / Interaction"), Description("Optionally shorten the URL after completing a task")]
+        [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task")]
         public bool MakeTinyURL { get; set; }
 
         // Naming Conventions
