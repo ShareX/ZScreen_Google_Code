@@ -14,10 +14,10 @@ namespace ZSS.TextUploadersLib
     [Serializable]
     public abstract class TextUploader : ITextUploader
     {
-        // ** THIS HAS TO BE UPTODATE OTHERWISE XML SERIALZING IS GOING TO FUCK UP ** 
+        // ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP ** 
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
                                                           typeof(SlexyUploader), typeof(SniptUploader), 
-                                                          typeof(TinyURLUploader), typeof(ThreelyUploader), 
+                                                          typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(KlamUploader),
                                                           typeof(TextUploader)};
 
         public TextUploader() { }

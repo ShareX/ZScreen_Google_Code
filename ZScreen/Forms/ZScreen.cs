@@ -4735,6 +4735,8 @@ namespace ZSS
                     return new TinyURLUploader();
                 case ThreelyUploader.Hostname:
                     return new ThreelyUploader();
+                case KlamUploader.Hostname:
+                    return new KlamUploader();
             }
             return null;
         }
