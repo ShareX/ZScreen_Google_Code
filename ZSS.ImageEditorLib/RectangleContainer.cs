@@ -12,7 +12,6 @@ namespace Greenshot.Drawing
     [Serializable()]
     public class RectangleContainer : DrawableContainer
     {
-
         public RectangleContainer(Control parent)
             : base(parent)
         {
@@ -22,16 +21,19 @@ namespace Greenshot.Drawing
         }
 
         #region serialization
+
         public RectangleContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)
         {
+
         }
+
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             base.GetObjectData(info, ctxt);
         }
-        #endregion
 
+        #endregion
 
         public override void Draw(Graphics g, RenderMode rm)
         {

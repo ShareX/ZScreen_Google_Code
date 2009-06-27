@@ -30,20 +30,24 @@ namespace Greenshot.Configuration
         // the configuration part - all public vars are stored in the config file
         // don't use "null" and "0" as default value!
 
-        #region general application config
+        #region General application config
+
         public bool? General_RegisterHotkeys = true;
         public bool? General_IsFirstLaunch = true;
+
         #endregion
 
-        #region user interface config
+        #region User interface config
+
         public string Ui_Language = "";
         public bool? Ui_Effects_Flashlight = false;
         public bool? Ui_Effects_CameraSound = true;
+
         #endregion
 
-        #region output config
-        public ScreenshotDestinations Output_Destinations = ScreenshotDestinations.Editor;
+        #region Output config
 
+        public ScreenshotDestinations Output_Destinations = ScreenshotDestinations.Editor;
 
         public string Output_File_Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         public string Output_File_FilenamePattern = "greenshot_%YYYY%-%MM%-%DD%_%hh%-%mm%-%ss%";
@@ -60,15 +64,18 @@ namespace Greenshot.Configuration
         public bool? Output_Print_AllowEnlarge = true;
         public bool? Output_Print_AllowShrink = true;
         public bool? Output_Print_Center = true;
+
         #endregion
 
-        #region editor config
+        #region Editor config
+
         public Size? Editor_WindowSize = new Size(640, 480);
         public Color Editor_ForeColor = Color.FromArgb(255, 255, 0, 0);
         public Color Editor_BackColor = Color.Transparent;
         public int Editor_Thickness = 1;
         public Color[] Editor_RecentColors = new Color[12];
         public Font Editor_Font = null;
+
         #endregion
 
         /// <summary>
@@ -120,7 +127,6 @@ namespace Greenshot.Configuration
                 config.Store();
                 return config;
             }
-
         }
 
         /// <summary>

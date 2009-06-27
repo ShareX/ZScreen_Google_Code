@@ -14,7 +14,6 @@ namespace Greenshot.Drawing
     [Serializable()]
     public class LineContainer : DrawableContainer
     {
-
         public bool HasStartPointArrowHead = false;
         public bool HasEndPointArrowHead = false;
 
@@ -33,6 +32,7 @@ namespace Greenshot.Drawing
         }
 
         #region serialization
+
         public LineContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)
         {
@@ -40,12 +40,14 @@ namespace Greenshot.Drawing
             HasEndPointArrowHead = info.GetBoolean("hasEndPointArrowHead");
 
         }
+
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             base.GetObjectData(info, ctxt);
             info.AddValue("hasStartPointArrowHead", HasStartPointArrowHead);
             info.AddValue("hasEndPointArrowHead", HasEndPointArrowHead);
         }
+
         #endregion
 
         public override void Draw(Graphics g, RenderMode rm)
@@ -70,6 +72,5 @@ namespace Greenshot.Drawing
             double distance = DrawingHelper.CalculateLinePointDistance(this.Left, this.Top, this.Left + this.Width, this.Top + this.Height, x, y);
             return distance < 5;
         }
-
     }
 }

@@ -14,12 +14,8 @@ namespace Greenshot.Helpers
     /// <summary>
     /// Description of DrawingHelper.
     /// </summary>
-    public class DrawingHelper
+    public static class DrawingHelper
     {
-        private DrawingHelper()
-        {
-        }
-
         /// <summary>
         /// borrowed from Sun JDK ;-)
         /// </summary>

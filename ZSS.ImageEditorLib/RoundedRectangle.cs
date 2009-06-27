@@ -38,8 +38,7 @@ namespace Greenshot.Drawing
             return gp;
         }
 
-        public static GraphicsPath Create(int x, int y, int width,
-                 int height, int radius, RectangleCorners corners)
+        public static GraphicsPath Create(int x, int y, int width, int height, int radius, RectangleCorners corners)
         {
             int xw = x + width;
             int yh = y + height;
@@ -55,8 +54,7 @@ namespace Greenshot.Drawing
             p.StartFigure();
 
             //Top Left Corner
-            if ((RectangleCorners.TopLeft & corners)
-                == RectangleCorners.TopLeft)
+            if ((RectangleCorners.TopLeft & corners) == RectangleCorners.TopLeft)
             {
                 p.AddArc(x, y, r2, r2, 180, 90);
             }
@@ -70,8 +68,7 @@ namespace Greenshot.Drawing
             p.AddLine(xr, y, xwr, y);
 
             //Top Right Corner
-            if ((RectangleCorners.TopRight & corners)
-                == RectangleCorners.TopRight)
+            if ((RectangleCorners.TopRight & corners) == RectangleCorners.TopRight)
             {
                 p.AddArc(xwr2, y, r2, r2, 270, 90);
             }
@@ -85,8 +82,7 @@ namespace Greenshot.Drawing
             p.AddLine(xw, yr, xw, yhr);
 
             //Bottom Right Corner
-            if ((RectangleCorners.BottomRight & corners)
-                == RectangleCorners.BottomRight)
+            if ((RectangleCorners.BottomRight & corners) == RectangleCorners.BottomRight)
             {
                 p.AddArc(xwr2, yhr2, r2, r2, 0, 90);
             }
@@ -100,8 +96,7 @@ namespace Greenshot.Drawing
             p.AddLine(xwr, yh, xr, yh);
 
             //Bottom Left Corner
-            if ((RectangleCorners.BottomLeft & corners)
-                == RectangleCorners.BottomLeft)
+            if ((RectangleCorners.BottomLeft & corners) == RectangleCorners.BottomLeft)
             {
                 p.AddArc(x, yhr2, r2, r2, 90, 90);
             }
@@ -118,31 +113,29 @@ namespace Greenshot.Drawing
             return p;
         }
 
-        public static GraphicsPath Create(Rectangle rect,
-                 int radius, RectangleCorners corners)
+        public static GraphicsPath Create(Rectangle rect, int radius, RectangleCorners corners)
         {
-            return Create(rect.X, rect.Y, rect.Width,
-                         rect.Height, radius, corners);
+            return Create(rect.X, rect.Y, rect.Width, rect.Height, radius, corners);
         }
 
-        public static GraphicsPath Create(int x, int y, int width,
-                 int height, int radius)
+        public static GraphicsPath Create(int x, int y, int width, int height, int radius)
         {
-            return Create(x, y, width, height, radius,
-                         RectangleCorners.All);
+            return Create(x, y, width, height, radius, RectangleCorners.All);
         }
 
         public static GraphicsPath Create(Rectangle rect, int radius)
         {
-            return Create(rect.X, rect.Y, rect.Width,
-                          rect.Height, radius);
+            return Create(rect.X, rect.Y, rect.Width, rect.Height, radius);
         }
 
-        public static GraphicsPath Create(int x, int y,
-                 int width, int height)
-        { return Create(x, y, width, height, 5); }
+        public static GraphicsPath Create(int x, int y, int width, int height)
+        {
+            return Create(x, y, width, height, 5);
+        }
 
         public static GraphicsPath Create(Rectangle rect)
-        { return Create(rect.X, rect.Y, rect.Width, rect.Height); }
+        {
+            return Create(rect.X, rect.Y, rect.Width, rect.Height);
+        }
     }
 }

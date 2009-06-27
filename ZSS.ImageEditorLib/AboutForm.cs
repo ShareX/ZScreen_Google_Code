@@ -18,7 +18,6 @@ namespace Greenshot
 	/// Description of AboutForm.
 	/// </summary>
 	public partial class AboutForm : Form
-		
 	{	
 		public AboutForm()
 		{
@@ -30,6 +29,5 @@ namespace Greenshot
 			Version v = Assembly.GetExecutingAssembly().GetName().Version;
 			lblTitle.Text = "Greenshot " + v.Major + "." + v.Minor + "." + v.Build.ToString("000");	
 		}
-		
 	}
 }

@@ -8,19 +8,15 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace Greenshot.Helpers
 {
     /// <summary>
     /// Description of ImageOutput.
     /// </summary>
-    public class ImageOutput
+    public static class ImageOutput
     {
-        private ImageOutput()
-        {
-        }
-
         private static IDataObject ido = new DataObject();
+
         /// <summary>
         /// prepares an IDataObject which might be used by CopyToClipboard() and/or SaveToFile()
         /// should be called whenever there might be need to place one or more dataformats in the clipboard
@@ -32,7 +28,8 @@ namespace Greenshot.Helpers
             ido = new DataObject();
         }
 
-        #region save
+        #region Save
+
         /// <summary>
         /// Saves image to specific path with specified quality
         /// </summary>
@@ -103,10 +100,13 @@ namespace Greenshot.Helpers
             }
             Save(img, fullPath, q);
         }
+
         #endregion
 
-        #region save-as
+        #region Save As
+
         //private static string eagerlyCreatedDir = null;
+
         public static string SaveWithDialog(Image img)
         {
             string ret = null;
@@ -131,6 +131,7 @@ namespace Greenshot.Helpers
 
             return ret;
         }
+
         private static SaveFileDialog CreateSaveFileDialog()
         {
             AppConfig conf = AppConfig.GetInstance();
@@ -175,6 +176,7 @@ namespace Greenshot.Helpers
             // otherwise we just add the selected filter item's extension
             else return fn + selectedExt;
         }
+
         /*
         /// <summary>
         /// sets InitialDirectory and FileName property of a SaveFileDialog smartly, considering default pattern and last used path
@@ -218,9 +220,11 @@ namespace Greenshot.Helpers
             }
         }
         */
+
         #endregion
 
-        #region clipboard
+        #region Clipboard
+
         /// <summary>
         /// copies the specified image bitmap data to the clipboard
         /// </summary>
@@ -240,7 +244,7 @@ namespace Greenshot.Helpers
             dest.Close();
             source.Close();
         }
-        #endregion
 
+        #endregion
     }
 }

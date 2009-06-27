@@ -24,12 +24,14 @@ namespace Greenshot.Drawing
             get { return foreColor; }
             set { foreColor = value; if (parent != null) parent.Invalidate(); }
         }
+
         protected Color backColor = Color.Transparent;
         public Color BackColor
         {
             get { return backColor; }
             set { backColor = value; if (parent != null) parent.Invalidate(); }
         }
+
         protected int thickness = 1;
         public int Thickness
         {
@@ -51,9 +53,11 @@ namespace Greenshot.Drawing
             get { return parent; }
             set { SwitchParent(value); }
         }
+
         [NonSerialized]
         protected Label[] grippers;
         private bool layoutSuspended = false;
+
         [NonSerialized]
         protected Label childLabel = new Label();
 
@@ -99,6 +103,7 @@ namespace Greenshot.Drawing
             info.AddValue("width", width);
             info.AddValue("height", height);
         }
+
         public DrawableContainer(SerializationInfo info, StreamingContext ctxt)
         {
             childLabel.ForeColor = foreColor = (Color)info.GetValue("foreColor", typeof(Color));

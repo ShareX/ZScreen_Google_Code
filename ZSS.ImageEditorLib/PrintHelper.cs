@@ -49,7 +49,7 @@ namespace Greenshot.Helpers
             }
         }
 
-        void GetImageForPrint(object sender, PrintPageEventArgs e)
+        private void GetImageForPrint(object sender, PrintPageEventArgs e)
         {
             PrintOptionsDialog pod = new PrintOptionsDialog();
             pod.ShowDialog();

@@ -11,11 +11,6 @@ namespace Greenshot.Drawing
     [Serializable()]
     public class DrawableContainerList : List<DrawableContainer>
     {
-
-        public DrawableContainerList()
-        {
-        }
-
         /// <summary>
         /// Gets or sets the fore color of the elements in the list.
         /// If there are several elements, the fore color of the last added is returned.
