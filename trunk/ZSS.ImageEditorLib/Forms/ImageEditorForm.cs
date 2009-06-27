@@ -482,7 +482,7 @@ namespace Greenshot
             return img;
         }
 
-        private void ThicknessComboBoxChanged(object sender, System.EventArgs e)
+        private void cbThickness_SelectedIndexChanged(object sender, EventArgs e)
         {
             ToolStripComboBox cb = (ToolStripComboBox)sender;
             try
