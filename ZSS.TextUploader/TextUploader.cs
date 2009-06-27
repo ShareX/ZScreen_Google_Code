@@ -84,6 +84,12 @@ namespace ZSS.TextUploadersLib
             return this.Name;
         }
 
+        /// <summary>
+        /// Method to retrieve Link from Header
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
         protected string GetResponse(string url, Dictionary<string, string> arguments)
         {
             try
@@ -114,6 +120,12 @@ namespace ZSS.TextUploadersLib
             return "";
         }
 
+        /// <summary>
+        /// Method to return Source of the Response
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
         protected string GetResponse2(string url, Dictionary<string, string> arguments)
         {
             try

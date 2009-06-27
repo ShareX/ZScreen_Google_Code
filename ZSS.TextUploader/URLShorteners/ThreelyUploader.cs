@@ -12,6 +12,7 @@ namespace ZSS.TextUploaderLib.URLShorteners
     public sealed class ThreelyUploader : TextUploader
     {
         public const string Hostname = "3.ly";
+        public const string APIKey = "em5893833";
 
         public override object Settings
         {
@@ -47,7 +48,7 @@ namespace ZSS.TextUploaderLib.URLShorteners
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("api", "em5893833");
+                arguments.Add("api", APIKey);
                 arguments.Add("u", text.LocalString);
                 return GetResponse2(HostSettings.URL, arguments);
             }
