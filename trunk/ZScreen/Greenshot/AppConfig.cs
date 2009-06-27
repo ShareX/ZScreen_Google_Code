@@ -121,7 +121,6 @@ namespace Greenshot.Configuration
                 config.Store();
                 return config;
             }
-
         }
 
         /// <summary>
@@ -176,6 +175,5 @@ namespace Greenshot.Configuration
                 }
             }
         }
-
     }
 }
