@@ -6,11 +6,10 @@ using ZSS.TextUploadersLib.Helpers;
 namespace ZSS.TextUploaderLib.URLShorteners
 {
     [Serializable]
-    public sealed class KlamUploader : TextUploader
+    public sealed class IsgdUploader : TextUploader
     {
-        public const string Hostname = "kl.am";
-        public const string APIKey = "a4e5a8de710d80db774a8264f4588ffb";
-
+        public const string Hostname = "is.gd";
+      
         public override object Settings
         {
             get
@@ -19,15 +18,15 @@ namespace ZSS.TextUploaderLib.URLShorteners
             }
             set
             {
-                HostSettings = (KlamUploaderSettings)value;
+                HostSettings = (IsgdUploaderSettings)value;
             }
         }
 
-        public KlamUploaderSettings HostSettings = new KlamUploaderSettings();
+        public IsgdUploaderSettings HostSettings = new IsgdUploaderSettings();
 
-        public KlamUploader()
+        public IsgdUploader()
         {
-            HostSettings.URL = "http://kl.am/api/shorten/";
+            HostSettings.URL = "http://is.gd/api.php";
         }
 
         public override string Name
@@ -45,17 +44,15 @@ namespace ZSS.TextUploaderLib.URLShorteners
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("url", text.LocalString);
-                arguments.Add("format", "text");
-                arguments.Add("api_key", APIKey);
-                
+                arguments.Add("longurl", text.LocalString);            
+
                 return GetResponse2(HostSettings.URL, arguments);
             }
             return "";
         }
 
         [Serializable]
-        public class KlamUploaderSettings
+        public class IsgdUploaderSettings
         {
             public string URL { get; set; }
         }
