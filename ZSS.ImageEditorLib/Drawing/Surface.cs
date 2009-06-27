@@ -157,7 +157,7 @@ namespace Greenshot.Drawing
             this.Paint += new PaintEventHandler(SurfacePaint);
         }
 
-        void SurfaceMouseDown(object sender, MouseEventArgs e)
+        private void SurfaceMouseDown(object sender, MouseEventArgs e)
         {
             mX = e.X; mY = e.Y;
             mouseDown = true;
@@ -207,7 +207,7 @@ namespace Greenshot.Drawing
             }
         }
 
-        void SurfaceMouseUp(object sender, MouseEventArgs e)
+        private void SurfaceMouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
             mouseDownElement = null;
@@ -265,7 +265,7 @@ namespace Greenshot.Drawing
             Invalidate();
         }
 
-        void SurfaceMouseMove(object sender, MouseEventArgs e)
+        private void SurfaceMouseMove(object sender, MouseEventArgs e)
         {
             if (DrawingMode != DrawingModes.None)
             {
@@ -300,16 +300,17 @@ namespace Greenshot.Drawing
             }
         }
 
-        void SurfaceDoubleClick(object sender, MouseEventArgs e)
+        private void SurfaceDoubleClick(object sender, MouseEventArgs e)
         {
             selectedElements.OnDoubleClick();
             Invalidate();
         }
 
-        void SurfacePaint(object sender, PaintEventArgs e)
+        private void SurfacePaint(object sender, PaintEventArgs e)
         {
             currentImage = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(currentImage);
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.DrawImageUnscaled(originalImage, new Point(0, 0));
             elements.Draw(g, DrawableContainer.RenderMode.EDIT);
             e.Graphics.DrawImage(currentImage, 0, 0);
@@ -331,6 +332,7 @@ namespace Greenshot.Drawing
         {
             Bitmap ret = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(ret);
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.DrawImageUnscaled(originalImage, new Point(0, 0));
             elements.Draw(g, DrawableContainer.RenderMode.EXPORT);
             g.DrawImage(ret, 0, 0);

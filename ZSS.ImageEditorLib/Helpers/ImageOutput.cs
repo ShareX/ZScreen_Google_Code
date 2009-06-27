@@ -144,8 +144,7 @@ namespace Greenshot.Helpers
             string ret = null;
             AppConfig conf = AppConfig.GetInstance();
             SaveFileDialog sfd = CreateSaveFileDialog();
-            DialogResult dr = sfd.ShowDialog();
-            if (dr.Equals(DialogResult.OK))
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
