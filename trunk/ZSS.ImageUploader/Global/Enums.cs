@@ -48,7 +48,7 @@ namespace ZSS
         [Description("Linked Thumbnail for Forums")]
         LINKED_THUMBNAIL,
         [Description("Linked Thumbnail for Wiki")]
-        LINKED_THUMBNAIL_WIKI        
+        LINKED_THUMBNAIL_WIKI
     }
 
     public enum ImageDestType

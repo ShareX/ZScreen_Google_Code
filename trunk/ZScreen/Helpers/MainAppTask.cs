@@ -167,7 +167,7 @@ namespace ZSS.Tasks
         /// String object: Text captured from Clipboard
         /// </summary>
         public string MyText { get; set; }
-        public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }        
+        public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
         /// <summary>
         /// MyTextUploader Object
         /// </summary>

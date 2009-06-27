@@ -175,7 +175,7 @@ namespace ZSS
         }
 
         public static XMLSettings conf;
-        
+
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
@@ -227,7 +227,7 @@ namespace ZSS
 
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
-            
+
             // Use Configuration Wizard Settings if applied
             if (cw != null)
             {
@@ -277,12 +277,12 @@ namespace ZSS
             {
                 task.Errors.Add("An FTP account does not exist or not selected properly.");
                 return false;
-            }            
+            }
         }
 
         public static bool MakeTinyURL()
         {
-            return (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL; 
+            return (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL;
         }
 
     }

@@ -7,37 +7,39 @@
  * Sie können diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader ändern.
  */
 
- 
+
 namespace Greenshot
 {
-	partial class ImageEditorForm
-	{
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-		
-		/// <summary>
-		/// Disposes resources used by the form.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing) {
-				if (components != null) {
-					components.Dispose();
-				}
-			}
-			base.Dispose(disposing);
-		}
-		
-		/// <summary>
-		/// This method is required for Windows Forms designer support.
-		/// Do not change the method contents inside the source code editor. The Forms designer might
-		/// not be able to load this method if it was changed manually.
-		/// </summary>
-		private void InitializeComponent()
-		{
+    partial class ImageEditorForm
+    {
+        /// <summary>
+        /// Designer variable used to keep track of non-visual components.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Disposes resources used by the form.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// This method is required for Windows Forms designer support.
+        /// Do not change the method contents inside the source code editor. The Forms designer might
+        /// not be able to load this method if it was changed manually.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageEditorForm));
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -982,7 +984,7 @@ namespace Greenshot
             this.Controls.Add(this.toolStripContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "ImageEditorForm";            
+            this.Name = "ImageEditorForm";
             this.Activated += new System.EventHandler(this.ImageEditorFormActivated);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ImageEditorFormKeyUp);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ImageEditorFormFormClosing);
@@ -1007,94 +1009,94 @@ namespace Greenshot
             this.fileSavedStatusContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
-		private System.Windows.Forms.ToolStripMenuItem openDirectoryMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyPathMenuItem;
-		private System.Windows.Forms.ContextMenuStrip fileSavedStatusContextMenu;
-		private System.Windows.Forms.ToolStripMenuItem downToBottomToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem upToTopToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem downOneLevelToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem upOneLevelToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem arrangeToolStripMenuItem;
-		private System.Windows.Forms.ToolStripButton btnCursor;
-		private System.Windows.Forms.ToolStrip toolStrip2;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsNoneToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsNoneToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsBothToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsBothToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsStartPointToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsEndPointToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsStartPointToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsEndPointToolStripMenuItem;
-		private System.Windows.Forms.ToolStripButton btnArrow;
-		private System.Windows.Forms.ToolStripMenuItem drawArrowToolStripMenuItem;
-		private System.Windows.Forms.ToolStripDropDownButton btnArrowHeads;
-		private System.Windows.Forms.ToolStripMenuItem arrowHeadsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripButton btnText;
-		private System.Windows.Forms.ToolStripMenuItem drawLineToolStripMenuItem;
-		private System.Windows.Forms.ToolStripButton btnLine;
-		private System.Windows.Forms.ToolStripButton btnSettings;
-		private System.Windows.Forms.ToolStripButton btnHelp;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-		private System.Windows.Forms.ToolStripComboBox comboBoxThickness;
-		private System.Windows.Forms.ToolStripMenuItem borderColorToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
-		private System.Windows.Forms.ToolStripLabel labelLineThickness;
-		private System.Windows.Forms.ToolStripMenuItem lineThicknessToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem lineThickness2ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem lineThickness3ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem lineThickness4ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem lineThickness5ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem lineThickness1ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-		private System.Windows.Forms.ToolStripButton btnBackColor;
-		private System.Windows.Forms.ToolStripButton btnBorderColor;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-		private System.Windows.Forms.ToolStripButton btnPrint;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-		private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
-		private System.Windows.Forms.PrintDialog printDialog1;
-		private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-		private System.Windows.Forms.ToolStripMenuItem fileStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem removeObjectToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addTextBoxToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addEllipseToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addRectangleToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem objectToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyImageToClipboardToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripButton btnCut;
-		private System.Windows.Forms.ToolStripButton btnPaste;
-		private System.Windows.Forms.ToolStripButton btnCopy;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.ToolStripButton btnClipboard;
-		private System.Windows.Forms.ToolStripButton btnDelete;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripButton btnEllipse;
-		private System.Windows.Forms.ToolStripButton btnSave;
-		private System.Windows.Forms.ToolStripButton btnRect;
-		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.Panel panel1;
-	}
+        }
+        private System.Windows.Forms.ToolStripMenuItem openDirectoryMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyPathMenuItem;
+        private System.Windows.Forms.ContextMenuStrip fileSavedStatusContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem downToBottomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem upToTopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downOneLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem upOneLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem arrangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnCursor;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsNoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsNoneToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsBothToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsBothToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsStartPointToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsEndPointToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsStartPointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsEndPointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnArrow;
+        private System.Windows.Forms.ToolStripMenuItem drawArrowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton btnArrowHeads;
+        private System.Windows.Forms.ToolStripMenuItem arrowHeadsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnText;
+        private System.Windows.Forms.ToolStripMenuItem drawLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnLine;
+        private System.Windows.Forms.ToolStripButton btnSettings;
+        private System.Windows.Forms.ToolStripButton btnHelp;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripComboBox comboBoxThickness;
+        private System.Windows.Forms.ToolStripMenuItem borderColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripLabel labelLineThickness;
+        private System.Windows.Forms.ToolStripMenuItem lineThicknessToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lineThickness2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lineThickness3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lineThickness4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lineThickness5ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lineThickness1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripButton btnBackColor;
+        private System.Windows.Forms.ToolStripButton btnBorderColor;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton btnPrint;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
+        private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem fileStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addTextBoxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addEllipseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addRectangleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem objectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyImageToClipboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripButton btnCut;
+        private System.Windows.Forms.ToolStripButton btnPaste;
+        private System.Windows.Forms.ToolStripButton btnCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton btnClipboard;
+        private System.Windows.Forms.ToolStripButton btnDelete;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton btnEllipse;
+        private System.Windows.Forms.ToolStripButton btnSave;
+        private System.Windows.Forms.ToolStripButton btnRect;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.Panel panel1;
+    }
 }

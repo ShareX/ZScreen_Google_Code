@@ -3,7 +3,7 @@
     public class TextFile
     {
         public TextFile(string localText)
-        {            
+        {
             this.LocalString = localText;
         }
 

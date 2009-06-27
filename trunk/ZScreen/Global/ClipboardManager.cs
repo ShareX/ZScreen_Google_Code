@@ -92,7 +92,7 @@ namespace ZSS
                 {
                     url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
                 }
-                
+
                 if (!string.IsNullOrEmpty(url))
                 {
                     Clipboard.Clear();
