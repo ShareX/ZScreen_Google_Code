@@ -1,4 +1,4 @@
-﻿namespace ZSS.Colors
+﻿namespace ZSS.ColorsLib
 {
     partial class DialogColor
     {
@@ -71,7 +71,7 @@
             this.txtY = new System.Windows.Forms.TextBox();
             this.lblX = new System.Windows.Forms.Label();
             this.lblY = new System.Windows.Forms.Label();
-            this.colorPicker = new ZSS.Colors.ColorPicker();
+            this.colorPicker = new ZSS.ColorsLib.ColorPicker();
             ((System.ComponentModel.ISupportInitialize)(this.nudKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYellow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMagenta)).BeginInit();
@@ -556,12 +556,12 @@
             // colorPicker
             // 
             this.colorPicker.AutoSize = true;
-            this.colorPicker.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorPicker.DrawStyle = ZSS.ColorsLib.DrawStyle.Hue;
             this.colorPicker.Location = new System.Drawing.Point(8, 8);
             this.colorPicker.Name = "colorPicker";
             this.colorPicker.Size = new System.Drawing.Size(293, 263);
             this.colorPicker.TabIndex = 66;
-            this.colorPicker.ColorChanged += new ZSS.Colors.ColorEventHandler(this.colorPicker_ColorChanged);
+            this.colorPicker.ColorChanged += new ZSS.ColorsLib.ColorEventHandler(this.colorPicker_ColorChanged);
             // 
             // DialogColor
             // 

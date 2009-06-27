@@ -30,7 +30,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using ZSS.Colors;
+using ZSS.ColorsLib;
 using System.Drawing.Imaging;
 
 namespace ZSS
