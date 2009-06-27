@@ -8,8 +8,8 @@
     <ProjectGuid>{9F44B572-4A09-42D9-9DB7-2587F621B462}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZSS.Colors</RootNamespace>
-    <AssemblyName>ZSS.Colors</AssemblyName>
+    <RootNamespace>ZSS.ColorsLib</RootNamespace>
+    <AssemblyName>ZSS.ColorsLib</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
