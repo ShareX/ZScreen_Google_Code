@@ -107,11 +107,8 @@ namespace ZSS
             List<string> lCbLines = new List<string>();
 
             if (ifm != null)
-            {
-                string url = ifm.GetUrlByType(Program.conf.ClipboardUriMode);                
-                url = OnlineTasks.TryShortenURL(url);
-                ifm.URL = url;
-                lCbLines.Add(url);
+            {                ;
+                lCbLines.Add(ifm.GetUrlByType(Program.conf.ClipboardUriMode));
             }
 
             return lCbLines;
