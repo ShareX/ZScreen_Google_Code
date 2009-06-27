@@ -84,7 +84,10 @@ namespace ZSS.Helpers
 
                     //Set remote path for Screenshots history
                     string url = task.ImageManager.GetFullImageUrl();
-                    url = OnlineTasks.TryShortenURL(url);
+                    if (task.MakeTinyURL)
+                    {
+                        url = OnlineTasks.ShortenURL(url);
+                    }
                     if (task.ImageManager != null)
                     {
                         task.RemoteFilePath = url;
@@ -166,7 +169,11 @@ namespace ZSS.Helpers
 
             TextUploader textUploader = (TextUploader)task.MyTextUploader;
             string url = textUploader.UploadTextFromFile(task.LocalFilePath);
-            task.RemoteFilePath = OnlineTasks.TryShortenURL(url);
+            if (task.MakeTinyURL)
+            {
+                url = OnlineTasks.ShortenURL(url);
+            }
+            task.RemoteFilePath = url;
 
             task.EndTime = DateTime.Now;
         }

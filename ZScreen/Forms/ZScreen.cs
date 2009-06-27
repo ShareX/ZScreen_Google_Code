@@ -83,10 +83,10 @@ namespace ZSS
         private void ZScreen_Load(object sender, EventArgs e)
         {
 
-            ucUrlShorteners.btnItemAdd.Click += new EventHandler(btnUrlShortenersAdd_Click);
-            ucUrlShorteners.btnItemRemove.Click += new EventHandler(btnUrlShortenersRemove_Click);
-            ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(lbUrlShorteners_SelectedIndexChanged);
-            ucUrlShorteners.btnItemTest.Click += new EventHandler(btnUrlShortenerTest_Click);
+            ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
+            ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
+            ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
+            ucUrlShorteners.btnItemTest.Click += new EventHandler(UrlShortenerTestButton_Click);
 
             ucTextUploaders.btnItemAdd.Click += new EventHandler(TextUploadersAddButton_Click);
             ucTextUploaders.btnItemRemove.Click += new EventHandler(TextUploadersRemoveButton_Click);
@@ -1051,6 +1051,7 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.SCREENSHOTS;
+            t.MakeTinyURL = Program.MakeTinyURL();
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -1063,6 +1064,7 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
+            t.MakeTinyURL = Program.MakeTinyURL();
             t.SetImage(localFilePath);
             t.SetLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
@@ -1087,6 +1089,7 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
+            t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
             t.SetLocalFilePath(localFilePath);
 
@@ -1319,7 +1322,7 @@ namespace ZSS
 
                     if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                     {
-                        ClipboardManager.AddScreenshotList(task.ImageManager);
+                        ClipboardManager.AddTask(task);
                         ClipboardManager.SetClipboardText();
                     }
 
@@ -4809,6 +4812,7 @@ namespace ZSS
                     string filePath = Path.Combine(Program.TempDir, DateTime.Now.Ticks + ".txt");
                     File.WriteAllText(filePath, testString);
                     MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;
                     task.RunWorker();
                 }
@@ -4889,12 +4893,12 @@ namespace ZSS
             }
         }
 
-        private void btnUrlShortenerTest_Click(object sender, EventArgs e)
+        private void UrlShortenerTestButton_Click(object sender, EventArgs e)
         {
             this.TestUploaderText((TextUploader)ucUrlShorteners.MyCollection.SelectedItem);
         }
 
-        private void lbUrlShorteners_SelectedIndexChanged(object sender, EventArgs e)
+        private void UrlShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
             {
@@ -4919,7 +4923,7 @@ namespace ZSS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnUrlShortenersRemove_Click(object sender, EventArgs e)
+        private void UrlShortenersRemoveButton_Click(object sender, EventArgs e)
         {
             if (ucUrlShorteners.MyCollection.SelectedIndex > 0)
             {
@@ -4935,7 +4939,7 @@ namespace ZSS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnUrlShortenersAdd_Click(object sender, EventArgs e)
+        private void UrlShortenersAddButton_Click(object sender, EventArgs e)
         {
             if (ucUrlShorteners.Templates.SelectedIndex > -1)
             {

@@ -277,5 +277,11 @@ namespace ZSS
                 return false;
             }            
         }
+
+        public static bool MakeTinyURL()
+        {
+            return (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL; 
+        }
+
     }
 }

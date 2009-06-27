@@ -29,6 +29,10 @@ using System.Windows.Forms;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.Global;
+using ZSS.Tasks;
+
+// Last working class that supports multiple screenshots histories:
+// http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
 
 namespace ZSS
 {
@@ -38,11 +42,13 @@ namespace ZSS
     public static class ClipboardManager
     {
         public static int Workers { get; private set; }
-        private static List<ImageFileManager> ScreenshotsHistory = new List<ImageFileManager>();
+        private static ImageFileManager ScreenshotsHistory = new ImageFileManager();
+        private static MainAppTask MyTask;
 
-        public static void AddScreenshotList(ImageFileManager screeshotsList)
+        public static void AddTask(MainAppTask task)
         {
-            ScreenshotsHistory.Add(screeshotsList);
+            MyTask = task;
+            ScreenshotsHistory = task.ImageManager;
         }
 
         /// <summary>
@@ -56,7 +62,6 @@ namespace ZSS
 
         public static void Clear()
         {
-            ScreenshotsHistory.Clear();
             Workers = 0;
         }
 
@@ -66,54 +71,13 @@ namespace ZSS
         public static void Commit()
         {
             Workers--;
-            //if (ScreenshotsHistory.Count > 1)
-            //{
-            //    ScreenshotsHistory.Remove(GetLastImageUpload());
-            //}
-            //FileSystem.AppendDebug("Clipboard Commited. Total: " + Workers);
-            ScreenshotsHistory.Clear();
         }
 
         public static ImageFileManager GetLastImageUpload()
         {
-            if (ScreenshotsHistory.Count > 0)
-            {
-                return ScreenshotsHistory[ScreenshotsHistory.Count - 1];
-            }
-
-            return null;
+            return ScreenshotsHistory;
         }
 
-        private static string GetLastURL()
-        {
-            string url = "";
-            if (ScreenshotsHistory.Count > 0)
-            {
-                ImageFileManager lastScreenshotList = GetLastImageUpload();
-                if (lastScreenshotList != null)
-                {
-                    url = lastScreenshotList.URL;
-                }
-            }
-            return url;
-        }
-
-        /// <summary>
-        /// Returns a string representation of URLs per Screenshot List
-        /// </summary>
-        /// <returns></returns>
-        private static List<string> GetClipboardText(ImageFileManager ifm)
-        {
-            List<string> lCbLines = new List<string>();
-
-            if (ifm != null)
-            {                ;
-                lCbLines.Add(ifm.GetUrlByType(Program.conf.ClipboardUriMode));
-            }
-
-            return lCbLines;
-
-        }
 
         /// <summary>
         /// Sets Clipboard text and returns the content
@@ -123,37 +87,19 @@ namespace ZSS
         {
             try
             {
-                List<List<string>> lCbLines = new List<List<string>>();
-
-                if (Workers > 1)
+                string url = MyTask.RemoteFilePath;
+                if (!MyTask.MakeTinyURL)
                 {
-                    foreach (ImageFileManager list in ScreenshotsHistory)
-                    {
-                        lCbLines.Add(GetClipboardText(list));
-                    }
+                    url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
                 }
-                else if (Workers == 1)
-                {
-                    lCbLines.Add(GetClipboardText(GetLastImageUpload()));
-                }
-
-                StringBuilder sbLines = new StringBuilder();
-                foreach (List<string> list in lCbLines)
-                {
-                    foreach (string line in list)
-                    {
-                        sbLines.AppendLine(line);
-                    }
-                }
-
-                string temp = sbLines.ToString().Trim();
-                if (!string.IsNullOrEmpty(temp))
+                
+                if (!string.IsNullOrEmpty(url))
                 {
                     Clipboard.Clear();
-                    Clipboard.SetText(temp);
+                    Clipboard.SetText(url);
                 }
 
-                return temp;
+                return url;
 
             }
             catch (Exception ex)

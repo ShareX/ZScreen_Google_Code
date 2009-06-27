@@ -140,6 +140,10 @@ namespace ZSS.Tasks
             }
         }
         /// <summary>
+        /// Option to convert Remote File Path to a tiny URL
+        /// </summary>
+        public bool MakeTinyURL { get; set; }
+        /// <summary>
         /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
         public string RemoteFilePath { get; set; }
