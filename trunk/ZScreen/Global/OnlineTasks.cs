@@ -33,7 +33,7 @@ namespace ZSS.Global
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static string TryShortenURL(string url)
+        private static string TryShortenURL(string url)
         {
             if (Program.conf.ClipboardUriMode == ClipboardUriType.FULL && Program.conf.MakeTinyURL)
             {
