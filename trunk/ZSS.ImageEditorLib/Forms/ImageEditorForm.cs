@@ -70,12 +70,9 @@ namespace Greenshot
 
         public ImageEditorForm()
         {
-            //
             // The InitializeComponent() call is required for Windows Forms designer support.
-            //
             InitializeComponent();
 
-            // init surface
             surface = new Surface();
             surface.SizeMode = PictureBoxSizeMode.AutoSize;
             surface.TabStop = false;
@@ -86,6 +83,9 @@ namespace Greenshot
             {
                 Size = (Size)conf.Editor_WindowSize;
             }
+
+            btnBorderColor.Image = DrawBorderButton(surface.ForeColor, btnBorderColor.ContentRectangle);
+            btnBackColor.Image = DrawBackgroundButton(surface.BackColor, btnBackColor.ContentRectangle);
 
             this.colorDialog.RecentColors = conf.Editor_RecentColors;
             this.comboBoxThickness.Text = conf.Editor_Thickness.ToString();
@@ -115,10 +115,10 @@ namespace Greenshot
             this.cutToolStripMenuItem.Enabled = elementSelected;
             this.duplicateToolStripMenuItem.Enabled = elementSelected;
             this.removeObjectToolStripMenuItem.Enabled = elementSelected;
-            this.borderColorToolStripMenuItem.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
-            this.btnBorderColor.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
-            this.backgroundColorToolStripMenuItem.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
-            this.btnBackColor.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
+            this.borderColorToolStripMenuItem.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
+            this.btnBorderColor.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
+            this.backgroundColorToolStripMenuItem.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
+            this.btnBackColor.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
             this.lineThickness1ToolStripMenuItem.Enabled = this.lineThicknessToolStripMenuItem.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.THICKNESS));
             this.comboBoxThickness.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.THICKNESS));
             this.btnArrowHeads.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.ARROWHEADS));
@@ -388,38 +388,89 @@ namespace Greenshot
 
         private void BtnBorderColorClick(object sender, System.EventArgs e)
         {
-            SelectBorderColorToolStripMenuItemClick(sender, e);
+            SelectBorderColor();
         }
 
         private void BtnBackColorClick(object sender, System.EventArgs e)
         {
-            SelectBackgroundColorToolStripMenuItemClick(sender, e);
+            SelectBackgroundColor();
         }
 
         private void SelectBorderColorToolStripMenuItemClick(object sender, System.EventArgs e)
         {
+            SelectBorderColor();
+        }
+
+        private void SelectBorderColor()
+        {
             colorDialog.Color = surface.ForeColor;
-            colorDialog.ShowDialog();
-            if (colorDialog.DialogResult != DialogResult.Cancel)
+            if (colorDialog.ShowDialog() != DialogResult.Cancel)
             {
                 conf.Editor_ForeColor = colorDialog.Color;
                 conf.Editor_RecentColors = colorDialog.RecentColors;
                 conf.Store();
                 surface.ForeColor = colorDialog.Color;
+                btnBorderColor.Image = DrawBorderButton(colorDialog.Color, btnBorderColor.ContentRectangle);
             }
+        }
+
+        private Bitmap DrawBorderButton(Color color, Rectangle rect)
+        {
+            Bitmap img = new Bitmap(rect.Width, rect.Height);
+            img = DrawCheckersPattern(rect, 5);
+            Graphics g = Graphics.FromImage(img);
+            g.DrawRectangle(new Pen(color), new Rectangle(0, 0, rect.Width - 1, rect.Height - 1));
+            return img;
         }
 
         private void SelectBackgroundColorToolStripMenuItemClick(object sender, System.EventArgs e)
         {
+            SelectBackgroundColor();
+        }
+
+        private void SelectBackgroundColor()
+        {
             colorDialog.Color = surface.BackColor;
-            colorDialog.ShowDialog();
-            if (colorDialog.DialogResult != DialogResult.Cancel)
+            if (colorDialog.ShowDialog() != DialogResult.Cancel)
             {
                 conf.Editor_BackColor = colorDialog.Color;
                 conf.Editor_RecentColors = colorDialog.RecentColors;
                 conf.Store();
                 surface.BackColor = colorDialog.Color;
+                btnBackColor.Image = DrawBackgroundButton(colorDialog.Color, btnBackColor.ContentRectangle);
             }
+        }
+
+        private Bitmap DrawBackgroundButton(Color color, Rectangle rect)
+        {
+            Bitmap img = new Bitmap(rect.Width, rect.Height);
+            img = DrawCheckersPattern(rect, 5);
+            Graphics g = Graphics.FromImage(img);
+            g.FillRectangle(new SolidBrush(color), new Rectangle(0, 0, rect.Width, rect.Height));
+            return img;
+        }
+
+        private Bitmap DrawCheckersPattern(Rectangle rect, int size)
+        {
+            Bitmap img = new Bitmap(rect.Width, rect.Height);
+            Graphics g = Graphics.FromImage(img);
+            Color color;
+            for (int x = 0; x < rect.Width; x += size)
+            {
+                for (int y = 0; y < rect.Height; y += size)
+                {
+                    if ((x + y) % 2 == 0)
+                    {
+                        color = Color.WhiteSmoke;
+                    }
+                    else
+                    {
+                        color = Color.LightGray;
+                    }
+                    g.FillRectangle(new SolidBrush(color), new Rectangle(x, y, size, size));
+                }
+            }
+            return img;
         }
 
         private void ThicknessComboBoxChanged(object sender, System.EventArgs e)

@@ -737,7 +737,7 @@ namespace Greenshot
             this.btnHelp});
             this.toolStrip1.Location = new System.Drawing.Point(3, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(443, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(474, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSave
@@ -837,9 +837,8 @@ namespace Greenshot
             // btnBorderColor
             // 
             this.btnBorderColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBorderColor.Enabled = false;
             this.btnBorderColor.Image = ((System.Drawing.Image)(resources.GetObject("btnBorderColor.Image")));
-            this.btnBorderColor.ImageTransparentColor = System.Drawing.Color.Lime;
+            this.btnBorderColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBorderColor.Name = "btnBorderColor";
             this.btnBorderColor.Size = new System.Drawing.Size(23, 22);
             this.btnBorderColor.Text = "Border color";
@@ -848,9 +847,8 @@ namespace Greenshot
             // btnBackColor
             // 
             this.btnBackColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBackColor.Enabled = false;
             this.btnBackColor.Image = ((System.Drawing.Image)(resources.GetObject("btnBackColor.Image")));
-            this.btnBackColor.ImageTransparentColor = System.Drawing.Color.Lime;
+            this.btnBackColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBackColor.Name = "btnBackColor";
             this.btnBackColor.Size = new System.Drawing.Size(23, 22);
             this.btnBackColor.Text = "Background color";
