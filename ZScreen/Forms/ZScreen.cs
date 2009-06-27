@@ -400,22 +400,33 @@ namespace ZSS
                     Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe")
                 };
             }
+
+            Software editor = new Software(Program.ZSCREEN_EDITOR, Application.ExecutablePath);
+
             if (Program.conf.ImageSoftwareList.Count == 0)
             {
+                Program.conf.ImageSoftwareList.Add(editor);
                 Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
             }
             FindImageEditors();
+            if (!SoftwareExist(Program.ZSCREEN_EDITOR))
+            {
+                Program.conf.ImageSoftwareList.Add(editor);
+            }
+
             if (Program.conf.TextEditors.Count == 0)
             {
                 Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe")));
             }
             lbImageSoftware.Items.Clear();
             lbImageSoftware.Items.Add("Disabled");
+
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                     lbImageSoftware.Items.Add(app.Name);
             }
+ 
             if (Program.conf.ImageSoftwareEnabled)
             {
                 int i;
@@ -1849,7 +1860,6 @@ namespace ZSS
                     }
                 }
             }
-            //SoftwareRemove(sName); this was causing Paint.NET to remove itself at some cases
             return false;
         }
 

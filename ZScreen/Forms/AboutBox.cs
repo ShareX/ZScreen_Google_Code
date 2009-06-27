@@ -55,6 +55,7 @@ namespace ZSS.Forms
             sbDesc.AppendLine();
             sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
             sbDesc.AppendLine();
+            sbDesc.AppendLine("Modified version of Greenshot Image Editor 0.7.009 and");
             sbDesc.AppendLine("Portions of Selected Window code from Greenshot: https://sourceforge.net/projects/greenshot");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");

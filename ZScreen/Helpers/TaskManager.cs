@@ -202,14 +202,28 @@ namespace ZSS.Helpers
             if (File.Exists(task.LocalFilePath))
             {
                 Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.ImageSoftwareActive.Path)
+                Software app = Program.conf.ImageSoftwareActive;
+                if (app != null)
                 {
-                    Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
-                };
-                p.StartInfo = psi;
-                p.Start();
-                // Wait till user quits the ScreenshotEditApp
-                p.WaitForExit();
+                    if (app.Name == Program.ZSCREEN_EDITOR)
+                    {
+                        Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm();
+                        editor.SetImage(task.MyImage);
+                        editor.SetImagePath(task.LocalFilePath);
+                        editor.ShowDialog();
+                    }
+                    else
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo(Program.conf.ImageSoftwareActive.Path)
+                        {
+                            Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
+                        };
+                        p.StartInfo = psi;
+                        p.Start();
+                        // Wait till user quits the ScreenshotEditApp
+                        p.WaitForExit();
+                    }
+                }
             }
         }
     }
