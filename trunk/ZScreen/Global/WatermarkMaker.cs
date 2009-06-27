@@ -62,7 +62,7 @@ namespace ZSS
                 GraphicsPath gPath;
                 if (cornerRadius > 0)
                 {
-                    gPath = MyGraphics.RoundedRectangle(labelRectangle, cornerRadius);
+                    gPath = GraphicsMgr.RoundedRectangle(labelRectangle, cornerRadius);
                 }
                 else
                 {

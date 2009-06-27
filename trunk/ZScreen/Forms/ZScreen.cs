@@ -41,10 +41,9 @@ using ZSS.ImageUploaders;
 using ZSS.ImageUploaders.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
+using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
-using ZSS.TextUploaderLib.URLShorteners;
-using ZSS.TextUploadersLib.Helpers;
 using ZSS.Global;
 
 namespace ZSS
@@ -93,6 +92,9 @@ namespace ZSS
             ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(TextUploaders_SelectedIndexChanged);
             ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
 
+            niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
+            AddToClipboardByDoubleClick(tpHistory);
+
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
@@ -117,9 +119,6 @@ namespace ZSS
 
             CleanCache();
             StartDebug();
-
-            niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
-            AddToClipboardByDoubleClick(tpHistory);
 
             FillClipboardCopyMenu();
             FillClipboardMenu();
@@ -399,8 +398,8 @@ namespace ZSS
                 Program.conf.ImageSoftwareList.Add(editor);
                 Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
             }
-            FindImageEditors();
-            if (!SoftwareExist(Program.ZSCREEN_EDITOR))
+            RegistryMgr.FindImageEditors();
+            if (!Program.conf.SoftwareExist(Program.ZSCREEN_EDITOR))
             {
                 Program.conf.ImageSoftwareList.Add(editor);
             }
@@ -433,7 +432,7 @@ namespace ZSS
             // Advanced Settings
             ///////////////////////////////////
 
-            cbStartWin.Checked = CheckStartWithWindows();
+            cbStartWin.Checked = RegistryMgr.CheckStartWithWindows();
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
             cbLockFormSize.Checked = Program.conf.LockFormSize;
@@ -506,54 +505,6 @@ namespace ZSS
             tpHistoryList.Text = string.Format("History List ({0}/{1})", lbHistory.Items.Count, Program.conf.HistoryMaxNumber);
         }
 
-        private bool CheckKeys(HKcombo hkc, IntPtr lParam)
-        {
-            if (hkc.Mods == null) //0 mods
-            {
-                if (ModifierKeys == Keys.None && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
-                    return true;
-            }
-            else // if(hkc.Mods.Length > 0)
-            {
-                if (hkc.Mods.Length == 1)
-                {
-                    if (ModifierKeys == hkc.Mods[0] && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
-                        return true;
-                }
-                else //if (hkc.Mods.Length == 2)
-                {
-                    if (ModifierKeys == (hkc.Mods[0] | hkc.Mods[1]) && (Keys)Marshal.ReadInt32(lParam) == hkc.Key)
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        private HKcombo GetHKcombo(IntPtr lParam)
-        {
-            try
-            {
-                string[] mods = ModifierKeys.ToString().Split(',');
-
-                if (ModifierKeys == Keys.None)
-                {
-                    return new HKcombo((Keys)Marshal.ReadInt32(lParam));
-                }
-                if (mods.Length == 1)
-                {
-                    return new HKcombo((Keys)Enum.Parse(typeof(Keys), mods[0], true), (Keys)Marshal.ReadInt32(lParam));
-                }
-                if (mods.Length == 2)
-                {
-                    return new HKcombo((Keys)Enum.Parse(typeof(Keys), mods[0], true), (Keys)Enum.Parse(typeof(Keys), mods[1], true), (Keys)Marshal.ReadInt32(lParam));
-                }
-            }
-            catch { }
-
-            return null;
-        }
-
         public IntPtr ScreenshotUsingHotkeys(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && (wParam == (IntPtr)mWM_KEYDOWN || wParam == (IntPtr)mWM_SYSKEYDOWN))
@@ -573,69 +524,69 @@ namespace ZSS
                     }
                     else
                     {
-                        mHKSetcombo = GetHKcombo(lParam);
+                        mHKSetcombo = KeyboardMgr.GetHKcombo(lParam);
                         dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = mHKSetcombo;
                         SetHotkey(mHKSelectedRow, mHKSetcombo);
                     }
                 }
                 else
                 {
-                    if (CheckKeys(Program.conf.HKEntireScreen, lParam)) //Entire Screen
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKEntireScreen, lParam)) //Entire Screen
                     {
                         StartBW_EntireScreen();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKActiveWindow, lParam)) //Active Window
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKActiveWindow, lParam)) //Active Window
                     {
                         StartBW_ActiveWindow();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKSelectedWindow, lParam)) //Selected Window
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKSelectedWindow, lParam)) //Selected Window
                     {
                         StartBW_SelectedWindow();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKCropShot, lParam)) //Crop Shot
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKCropShot, lParam)) //Crop Shot
                     {
                         StartBW_CropShot();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKLastCropShot, lParam)) //Last Crop Shot
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKLastCropShot, lParam)) //Last Crop Shot
                     {
                         StartBW_LastCropShot();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKAutoCapture, lParam)) //Auto Capture
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKAutoCapture, lParam)) //Auto Capture
                     {
                         ShowAutoCapture();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKClipboardUpload, lParam)) //Clipboard Upload
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKClipboardUpload, lParam)) //Clipboard Upload
                     {
                         UploadUsingClipboard();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKDropWindow, lParam)) //Drag & Drop Window
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKDropWindow, lParam)) //Drag & Drop Window
                     {
                         ShowDropWindow();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKActionsToolbar, lParam)) //Actions Toolbar
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKActionsToolbar, lParam)) //Actions Toolbar
                     {
                         ShowActionsToolbar(true);
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKQuickOptions, lParam)) //Quick Options
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKQuickOptions, lParam)) //Quick Options
                     {
                         ShowQuickOptions();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKLanguageTranslator, lParam)) //Language Translator
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKLanguageTranslator, lParam)) //Language Translator
                     {
                         StartBW_LanguageTranslator();
                         return KeyboardHookHandle;
                     }
-                    if (CheckKeys(Program.conf.HKScreenColorPicker, lParam)) //Screen Color Picker
+                    if (KeyboardMgr.CheckKeys(Program.conf.HKScreenColorPicker, lParam)) //Screen Color Picker
                     {
                         ScreenColorPicker();
                         return KeyboardHookHandle;
@@ -856,104 +807,6 @@ namespace ZSS
         #endregion
 
         #region "GUI Methods"
-
-        private string ShowBalloonTip(MainAppTask t)
-        {
-            StringBuilder sbMsg = new StringBuilder();
-            ToolTipIcon tti = ToolTipIcon.Info;
-
-            niTray.Tag = t;
-
-            if (t.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR)
-            {
-                //sbMsg.AppendLine("Languages: " + task.TranslationInfo.Result.TranslationType);
-                sbMsg.AppendLine(t.TranslationInfo.Result.TranslationType);
-                sbMsg.AppendLine("Source: " + t.TranslationInfo.SourceText);
-                sbMsg.AppendLine("Result: " + t.TranslationInfo.Result.TranslatedText);
-                //sbMsg.AppendLine(string.Format("{0} >> {1}", task.TranslationInfo.Result.SourceText, task.TranslationInfo.Result.TranslatedText));
-            }
-            else
-            {
-                switch (t.JobCategory)
-                {
-                    case JobCategoryType.TEXT:
-                        sbMsg.AppendLine(string.Format("Destination: {0}", t.MyTextUploader));
-                        break;
-                    case JobCategoryType.SCREENSHOTS:
-                    case JobCategoryType.PICTURES:
-                        switch (t.ImageDestCategory)
-                        {
-                            case ImageDestType.FTP:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
-                                break;
-                            case ImageDestType.CUSTOM_UPLOADER:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", t.ImageDestCategory.GetDescription(), t.DestinationName));
-                                break;
-                            default:
-                                sbMsg.AppendLine(string.Format("Destination: {0}", t.ImageDestCategory.GetDescription()));
-                                break;
-                        }
-                        break;
-                }
-
-
-                string fileOrUrl = "";
-
-                if (t.ImageDestCategory == ImageDestType.CLIPBOARD || t.ImageDestCategory == ImageDestType.FILE)
-                {
-                    // just local file 
-                    if (!string.IsNullOrEmpty(t.FileName.ToString()))
-                    {
-                        sbMsg.AppendLine("Name: " + t.FileName);
-                    }
-                    fileOrUrl = string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.LocalFilePath);
-                }
-                else
-                {
-                    // remote file
-                    if (!string.IsNullOrEmpty(t.RemoteFilePath))
-                    {
-                        if (!string.IsNullOrEmpty(t.FileName.ToString()))
-                        {
-                            sbMsg.AppendLine("Name: " + t.FileName);
-                        }
-                        fileOrUrl = string.Format("URL: {0}", t.RemoteFilePath);
-
-                        if (string.IsNullOrEmpty(t.RemoteFilePath) && t.Errors.Count > 0)
-                        {
-                            tti = ToolTipIcon.Warning;
-                            sbMsg.AppendLine("Warnings: ");
-                            foreach (string err in t.Errors)
-                            {
-                                sbMsg.AppendLine(err);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (t.Errors.Count > 0)
-                        {
-                            tti = ToolTipIcon.Error;
-                            fileOrUrl = "Warning: " + t.Errors[t.Errors.Count - 1];
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(fileOrUrl))
-                {
-                    sbMsg.AppendLine(fileOrUrl);
-                }
-
-                if (Program.conf.ShowUploadDuration && t.UploadDuration > 0)
-                {
-                    sbMsg.AppendLine("Upload duration: " + t.UploadDuration + " ms");
-                }
-            }
-
-            niTray.ShowBalloonTip(1000, Application.ProductName, sbMsg.ToString(), tti);
-
-            return sbMsg.ToString();
-        }
 
         private void WriteImage(MainAppTask t)
         {
@@ -1237,9 +1090,6 @@ namespace ZSS
                         }
                     }
                     break;
-                case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_URL:
-
-                    break;
                 case MainAppTask.ProgressType.FLASH_ICON:
                     niTray.Icon = (Icon)e.UserState;
                     break;
@@ -1353,7 +1203,7 @@ namespace ZSS
                         }
                         if (Program.conf.ShowBalloonTip)
                         {
-                            ShowBalloonTip(task);
+                            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
                         }
                     }
 
@@ -1782,105 +1632,6 @@ namespace ZSS
             }
         }
 
-        private bool CheckStartWithWindows()
-        {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
-            if (regkey != null && (string)regkey.GetValue(Application.ProductName,
-                "null", RegistryValueOptions.None) != "null")
-            {
-                Registry.CurrentUser.Flush();
-                return true;
-            }
-            Registry.CurrentUser.Flush();
-            return false;
-        }
-
-        private void ShowLicense()
-        {
-            string lic = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, "License.txt"));
-            lic = lic != string.Empty ? lic : FileSystem.GetText("License.txt");
-            if (lic != string.Empty)
-            {
-                frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "License"), lic) { Icon = this.Icon };
-                v.ShowDialog();
-            }
-        }
-
-        private void ShowVersionHistory()
-        {
-            string h = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, "VersionHistory.txt"));
-            if (h == string.Empty)
-            {
-                h = FileSystem.GetText("VersionHistory.txt");
-            }
-            if (h != string.Empty)
-            {
-                frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "Version History"), h) { Icon = this.Icon };
-                v.ShowDialog();
-            }
-        }
-
-        private void FindImageEditors()
-        {
-            //Adobe Photoshop - HKEY_CLASSES_ROOT\Applications\Photoshop.exe\shell\open\command
-            SoftwareCheck(@"Applications\Photoshop.exe\shell\open\command", "Adobe Photoshop");
-            //Irfan View - HKEY_CLASSES_ROOT\Applications\i_view32.exe\shell\open\command - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\IrfanView\shell\open\command
-            SoftwareCheck(@"Applications\i_view32.exe\shell\open\command", "Irfan View");
-            //Paint.NET - HKEY_CLASSES_ROOT\Paint.NET.1\shell\open\command
-            SoftwareCheck(@"Paint.NET.1\shell\open\command", "Paint.NET");
-        }
-
-        private bool SoftwareCheck(string regPath, string sName)
-        {
-            RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(regPath, false);
-            if (regKey != null) //If registry notFound
-            {
-                string stringReg = regKey.GetValue("").ToString();
-                if (!string.IsNullOrEmpty(stringReg)) //If registry value not empty
-                {
-                    string filePath = stringReg.Substring(1, stringReg.LastIndexOf("%") - 4);
-                    if (File.Exists(filePath)) //If notFound path exist
-                    {
-                        if (!SoftwareExist(sName)) //If not added to Software list before
-                        {
-                            Program.conf.ImageSoftwareList.Add(new Software(sName, filePath, false));
-                        }
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        private bool SoftwareExist(string sName)
-        {
-            foreach (Software iS in Program.conf.ImageSoftwareList)
-            {
-                if (iS.Name == sName) return true;
-            }
-            return false;
-        }
-
-        private bool SoftwareRemove(string sName)
-        {
-            if (SoftwareExist(sName))
-            {
-                foreach (Software iS in Program.conf.ImageSoftwareList)
-                {
-                    if (iS.Name == sName)
-                    {
-                        Program.conf.ImageSoftwareList.Remove(iS);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-
-
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
         {
             BrowseImageSoftware();
@@ -2005,12 +1756,6 @@ namespace ZSS
             tcApp.Focus();
         }
 
-        private void sShowAbout()
-        {
-            AboutBox ab = new AboutBox();
-            ab.ShowDialog();
-        }
-
         private void btnBrowseConfig_Click(object sender, EventArgs e)
         {
             ShowDirectory(Program.SettingsDir);
@@ -2018,7 +1763,7 @@ namespace ZSS
 
         private void tsmLic_Click(object sender, EventArgs e)
         {
-            ShowLicense();
+            FormsMgr.ShowLicense();
         }
 
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
@@ -2076,36 +1821,14 @@ namespace ZSS
             }
         }
 
-        //private void ShowDebug()
-        //{
-        //    if (File.Exists(FileSystem.DebugFilePath))
-        //    {
-        //        Process.Start(FileSystem.DebugFilePath);
-        //    }
-        //}
-
         private void tsmAboutMain_Click(object sender, EventArgs e)
         {
-            sShowAbout();
+            FormsMgr.ShowAboutWindow();
         }
 
-        private void cbStartWin_CheckedChanged(object sender, EventArgs e)
+        public void cbStartWin_CheckedChanged(object sender, EventArgs e)
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            if (regkey != null)
-            {
-                if (cbStartWin.Checked)
-                {
-
-                    regkey.SetValue(Application.ProductName, Application.ExecutablePath, RegistryValueKind.String);
-                }
-                else
-                {
-                    regkey.DeleteValue(Application.ProductName, false);
-                }
-
-                Registry.CurrentUser.Flush();
-            }
+            RegistryMgr.SetStartWithWindows(cbStartWin.Checked);
         }
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
@@ -2263,8 +1986,6 @@ namespace ZSS
 
                 Program.conf.ImageSoftwareActive = Program.conf.ImageSoftwareList[sel - 1];
                 RewriteImageEditorsRightClickMenu();
-                //checkCorrectISRightClickMenu(Program.conf.ImageSoftwareActive.Name);
-                //cbRunImageSoftware.Checked = true;
             }
         }
 
@@ -2359,18 +2080,6 @@ namespace ZSS
             Program.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
         }
 
-        private void ZScreen_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.All;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
         private void ScreenshotUsingDragDrop(string fp)
         {
             StartWorkerImages(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
@@ -2386,114 +2095,46 @@ namespace ZSS
             }
         }
 
-        private void ZScreen_DragDrop(object sender, DragEventArgs e)
+        private void UploadUsingClipboard()
         {
-            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            ScreenshotUsingDragDrop(paths);
-        }
-
-        private void tpMain_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            ScreenshotUsingDragDrop(paths);
-        }
-
-        private void tpMain_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (Clipboard.ContainsText())
             {
-                e.Effect = DragDropEffects.All;
+                if (Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
+                {
+                    StartBW_LanguageTranslator();
+                }
             }
             else
             {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
-        private void UploadUsingClipboard()
-        {
-            foreach (string filePath in GetClipboardFilePaths())
-            {
-                if (FileSystem.IsValidTextFile(filePath))
+                foreach (string filePath in FileSystem.GetClipboardFilePaths())
                 {
-                    MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                    string textString = File.ReadAllText(filePath);
-
-                    if (FileSystem.IsValidLink(textString))
+                    if (FileSystem.IsValidTextFile(filePath))
                     {
-                        if (Program.conf.UrlShortenerActive != null)
+                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                        string textString = File.ReadAllText(filePath);
+
+                        if (FileSystem.IsValidLink(textString))
                         {
-                            temp.MyTextUploader = Program.conf.UrlShortenerActive;
-                            temp.RunWorker();
-                        }
-                    }
-                    else
-                    {
-                        if (Program.conf.TextUploaderActive != null)
-                        {
-                            temp.RunWorker();
-                        }
-                    }
-                }
-                else
-                {
-                    StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                }
-            }
-        }
-
-        private List<string> GetClipboardFilePaths()
-        {
-            List<string> cbListFilePath = new List<string>();
-
-            try
-            {
-                string cbFilePath;
-
-                if (Clipboard.ContainsImage())
-                {
-                    Image cImage = Clipboard.GetImage();
-                    cbFilePath = FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), false);
-                    cbFilePath = FileSystem.SaveImage(cImage, cbFilePath);
-                    cbListFilePath.Add(cbFilePath);
-                }
-                else if (Clipboard.ContainsText())
-                {
-                    if (Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
-                    {
-                        StartBW_LanguageTranslator();
-                    }
-                    else
-                    {
-                        cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
-                            NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
-                        File.WriteAllText(cbFilePath, Clipboard.GetText());
-                        cbListFilePath.Add(cbFilePath);
-                    }
-                }
-                else if (Clipboard.ContainsFileDropList())
-                {
-                    foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
-                    {
-                        if (MyGraphics.IsValidImage(fp))
-                        {
-                            cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
-                            File.Copy(fp, cbFilePath, true);
-                            cbListFilePath.Add(cbFilePath);
+                            if (Program.conf.UrlShortenerActive != null)
+                            {
+                                temp.MyTextUploader = Program.conf.UrlShortenerActive;
+                                temp.RunWorker();
+                            }
                         }
                         else
                         {
-                            cbListFilePath.Add(fp); // yes we use the orignal file path
+                            if (Program.conf.TextUploaderActive != null)
+                            {
+                                temp.RunWorker();
+                            }
                         }
+                    }
+                    else
+                    {
+                        StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-            }
-
-            return cbListFilePath;
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -3551,7 +3192,7 @@ namespace ZSS
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
                 if (!string.IsNullOrEmpty(hi.LocalPath))
                 {
-                    using (Image img = MyGraphics.GetImageSafely(hi.LocalPath))
+                    using (Image img = GraphicsMgr.GetImageSafely(hi.LocalPath))
                     {
                         if (img != null)
                         {
@@ -3678,7 +3319,7 @@ namespace ZSS
 
         private void cmVersionHistory_Click(object sender, EventArgs e)
         {
-            ShowVersionHistory();
+            FormsMgr.ShowVersionHistory();
         }
 
         #region Language Translator

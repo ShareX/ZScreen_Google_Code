@@ -13,7 +13,7 @@ namespace ZSS.Forms
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
-            this.Bounds = MyGraphics.GetScreenBounds();
+            this.Bounds = GraphicsMgr.GetScreenBounds();
         }
 
         private void ShowScreenshot_Load(object sender, EventArgs e)

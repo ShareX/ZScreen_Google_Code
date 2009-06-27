@@ -73,9 +73,6 @@
     <Compile Include="URLShorteners\TinyURLUploader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="VersionHistory.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
       <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
       <Name>ZSS.FTPUploaderLib</Name>

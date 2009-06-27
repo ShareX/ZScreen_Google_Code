@@ -208,7 +208,7 @@ namespace ZSS
 
         public static Image CaptureScreen(bool showCursor)
         {
-            Image img = CaptureRectangle(GetDesktopWindow(), MyGraphics.GetScreenBounds());
+            Image img = CaptureRectangle(GetDesktopWindow(), GraphicsMgr.GetScreenBounds());
             if (showCursor)
             {
                 MyCursor cursor = CaptureCursor();
