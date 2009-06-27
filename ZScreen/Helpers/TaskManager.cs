@@ -207,10 +207,17 @@ namespace ZSS.Helpers
                 {
                     if (app.Name == Program.ZSCREEN_EDITOR)
                     {
-                        Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm();
-                        editor.SetImage(task.MyImage);
-                        editor.SetImagePath(task.LocalFilePath);
-                        editor.ShowDialog();
+                        try
+                        {
+                            Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main }; 
+                            editor.SetImage(task.MyImage);
+                            editor.SetImagePath(task.LocalFilePath);
+                            editor.ShowDialog();
+                        }
+                        catch (Exception ex)
+                        {
+                            FileSystem.AppendDebug(ex.ToString());
+                        }
                     }
                     else
                     {
@@ -220,7 +227,6 @@ namespace ZSS.Helpers
                         };
                         p.StartInfo = psi;
                         p.Start();
-                        // Wait till user quits the ScreenshotEditApp
                         p.WaitForExit();
                     }
                 }
