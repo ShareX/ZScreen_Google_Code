@@ -2286,7 +2286,7 @@ namespace ZSS
                 if (temp != null)
                 {
                     pgEditorsImage.SelectedObject = temp;
-                    btnDeleteImageSoftware.Enabled = temp.Protected;
+                    btnDeleteImageSoftware.Enabled = !temp.Protected;
                 }
 
                 SetActiveImageSoftware();
