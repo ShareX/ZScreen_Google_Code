@@ -215,7 +215,7 @@ namespace ZSS
             this.txtViewer.Multiline = true;
             this.txtViewer.Name = "txtViewer";
             this.txtViewer.Size = new System.Drawing.Size(525, 538);
-            this.txtViewer.TabIndex = 2;            
+            this.txtViewer.TabIndex = 2;
             // 
             // ViewRemote
             // 

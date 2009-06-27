@@ -11,7 +11,6 @@ using System.Collections;
 
 namespace Greenshot.Configuration
 {
-
     public enum ScreenshotDestinations { Editor = 1, FileDefault = 2, FileWithDialog = 4, Clipboard = 8, Printer = 16 }
 
     /// <summary>
@@ -176,6 +175,5 @@ namespace Greenshot.Configuration
                 }
             }
         }
-
     }
 }

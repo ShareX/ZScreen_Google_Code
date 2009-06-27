@@ -15,7 +15,7 @@ namespace ZSS.Helpers
             this.Password = password;
             this.Domain = domain;
         }
-            
+
         public override string ToString()
         {
             return string.Format("{0} - {1}", this.UserName, this.Domain);

@@ -84,7 +84,7 @@
             this.textBoxDescription.Size = new System.Drawing.Size(304, 136);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Description";            
+            this.textBoxDescription.Text = "Description";
             // 
             // llblBugReports
             // 
@@ -149,7 +149,7 @@
             this.lblRev.Size = new System.Drawing.Size(64, 23);
             this.lblRev.TabIndex = 84;
             this.lblRev.TabStop = true;
-            this.lblRev.Text = "Rev";            
+            this.lblRev.Text = "Rev";
             this.lblRev.Click += new System.EventHandler(this.lblRev_Click);
             // 
             // AboutBox
