@@ -92,7 +92,7 @@ namespace ZSS
                 long size = (long)Program.conf.SwitchAfter * 1024;
 
                 MemoryStream ms = new MemoryStream();
-                MyGraphics.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.FileFormat]);
+                GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.FileFormat]);
 
                 long len = ms.Length;
 
@@ -102,7 +102,7 @@ namespace ZSS
                 {
                     ms = new MemoryStream();
 
-                    MyGraphics.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
+                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
 
                     filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
 
@@ -426,6 +426,53 @@ namespace ZSS
         {
             return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
             //return !url.Contains(" ") && Regex.IsMatch(url, @"^(?:http://|www\.).+\..+$");
+        }
+
+        public static List<string> GetClipboardFilePaths()
+        {
+            List<string> strListFilePath = new List<string>();
+
+            try
+            {
+                string cbFilePath;
+
+                if (Clipboard.ContainsImage())
+                {
+                    Image cImage = Clipboard.GetImage();
+                    cbFilePath = FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), false);
+                    cbFilePath = FileSystem.SaveImage(cImage, cbFilePath);
+                    strListFilePath.Add(cbFilePath);
+                }
+                else if (Clipboard.ContainsText())
+                {
+                    cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
+                       NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
+                    File.WriteAllText(cbFilePath, Clipboard.GetText());
+                    strListFilePath.Add(cbFilePath);
+                }
+                else if (Clipboard.ContainsFileDropList())
+                {
+                    foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
+                    {
+                        if (GraphicsMgr.IsValidImage(fp))
+                        {
+                            cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
+                            File.Copy(fp, cbFilePath, true);
+                            strListFilePath.Add(cbFilePath);
+                        }
+                        else
+                        {
+                            strListFilePath.Add(fp); // yes we use the orignal file path
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex.ToString());
+            }
+
+            return strListFilePath;
         }
     }
 }

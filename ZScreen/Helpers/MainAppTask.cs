@@ -209,7 +209,7 @@ namespace ZSS.Tasks
 
         public void SetImage(string fp)
         {
-            this.MyImage = MyGraphics.GetImageSafely(fp);
+            this.MyImage = GraphicsMgr.GetImageSafely(fp);
         }
 
         public void SetLocalFilePath(string fp)

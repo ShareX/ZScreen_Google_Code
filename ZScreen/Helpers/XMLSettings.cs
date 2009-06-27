@@ -538,5 +538,32 @@ namespace ZSS
         }
 
         #endregion
+
+        public bool SoftwareExist(string sName)
+        {
+            foreach (Software iS in this.ImageSoftwareList)
+            {
+                if (iS.Name == sName) return true;
+            }
+            return false;
+        }
+
+        public bool SoftwareRemove(string sName)
+        {
+            if (SoftwareExist(sName))
+            {
+                foreach (Software iS in this.ImageSoftwareList)
+                {
+                    if (iS.Name == sName)
+                    {
+                        this.ImageSoftwareList.Remove(iS);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
     }
 }

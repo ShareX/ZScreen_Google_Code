@@ -75,7 +75,7 @@ namespace ZSS
             bmpClean = new Bitmap(myImage);
             bmpBackground = new Bitmap(bmpClean);
             bmpRegion = new Bitmap(bmpClean);
-            Bounds = MyGraphics.GetScreenBounds();
+            Bounds = GraphicsMgr.GetScreenBounds();
             rectIntersect.Size = new Size(Bounds.Width - 1, Bounds.Height - 1);
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             CalculateBoundaryFromMousePosition();
@@ -178,7 +178,7 @@ namespace ZSS
                 {
                     if (mMouseDown)
                     {
-                        CropRegion = MyGraphics.GetRectangle(mousePos.X, mousePos.Y,
+                        CropRegion = GraphicsMgr.GetRectangle(mousePos.X, mousePos.Y,
                             mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
                             Program.conf.CropGridToggle, ref mousePos);
                         CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
@@ -292,7 +292,7 @@ namespace ZSS
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
             if (labelRect.Right > clientBound.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
             if (labelRect.Bottom > clientBound.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
-            GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
+            GraphicsPath gPath = GraphicsMgr.RoundedRectangle(labelRect, 7);
             g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y),
                 new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.Black, Color.FromArgb(150, Color.Black)), gPath);
             g.DrawPath(labelBorderPen, gPath);
@@ -301,7 +301,7 @@ namespace ZSS
             {
                 int posY = labelRect.Y - labelRect.Height - 100 - offset.Y;
                 if (posY < 5) posY = labelRect.Y + labelRect.Height + 10;
-                g.DrawImage(MyGraphics.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X, posY);
+                g.DrawImage(GraphicsMgr.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X, posY);
             }
         }
 
@@ -336,7 +336,7 @@ namespace ZSS
                 Point textPos = PointToClient(new Point(screenBound.Left +
                     (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
                 Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
-                GraphicsPath gPath = MyGraphics.RoundedRectangle(labelRect, 7);
+                GraphicsPath gPath = GraphicsMgr.RoundedRectangle(labelRect, 7);
                 g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X +
                     labelRect.Width, labelRect.Y), Color.White, Color.FromArgb(150, Color.White)), gPath);
                 g.DrawPath(labelBorderPen, gPath);

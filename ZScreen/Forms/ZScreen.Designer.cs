@@ -1132,9 +1132,7 @@ namespace ZSS
             this.tpMain.Size = new System.Drawing.Size(782, 431);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
-            this.tpMain.UseVisualStyleBackColor = true;
-            this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
-            this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
+            this.tpMain.UseVisualStyleBackColor = true;            
             // 
             // gbImageSettings
             // 
@@ -5399,10 +5397,8 @@ namespace ZSS
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.ZScreen_Deactivate);
             this.Load += new System.EventHandler(this.ZScreen_Load);
-            this.Shown += new System.EventHandler(this.ZScreen_Shown);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ZScreen_DragDrop);
-            this.Leave += new System.EventHandler(this.ZScreen_Leave);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ZScreen_DragEnter);
+            this.Shown += new System.EventHandler(this.ZScreen_Shown);            
+            this.Leave += new System.EventHandler(this.ZScreen_Leave);            
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.cmTray.ResumeLayout(false);

@@ -30,7 +30,7 @@ using System.IO;
 
 namespace ZSS
 {
-    public static class MyGraphics
+    public static class GraphicsMgr
     {
         /// <summary>
         /// Function to get a Rectangle of all the screens combined
