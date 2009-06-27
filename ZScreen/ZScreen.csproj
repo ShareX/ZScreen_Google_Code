@@ -117,60 +117,6 @@
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\OnlineTasks.cs" />
-    <Compile Include="Greenshot\AboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Greenshot\AboutForm.designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Greenshot\AppConfig.cs" />
-    <Compile Include="Greenshot\ColorDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Greenshot\ColorDialog.designer.cs">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Greenshot\DrawableContainer.cs" />
-    <Compile Include="Greenshot\DrawableContainerList.cs" />
-    <Compile Include="Greenshot\DrawingHelper.cs" />
-    <Compile Include="Greenshot\EllipseContainer.cs" />
-    <Compile Include="Greenshot\GuiRectangle.cs" />
-    <Compile Include="Greenshot\ImageEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Greenshot\ImageEditorForm.designer.cs">
-      <DependentUpon>ImageEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Greenshot\ImageOutput.cs" />
-    <Compile Include="Greenshot\JpegQualityDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Greenshot\JpegQualityDialog.designer.cs">
-      <DependentUpon>JpegQualityDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Greenshot\LineContainer.cs" />
-    <Compile Include="Greenshot\PrintHelper.cs" />
-    <Compile Include="Greenshot\PrintOptionsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Greenshot\PrintOptionsDialog.designer.cs">
-      <DependentUpon>PrintOptionsDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Greenshot\PropertyItemProvider.cs" />
-    <Compile Include="Greenshot\RectangleContainer.cs" />
-    <Compile Include="Greenshot\RoundedRectangle.cs" />
-    <Compile Include="Greenshot\RuntimeConfig.cs" />
-    <Compile Include="Greenshot\ScaleHelper.cs" />
-    <Compile Include="Greenshot\Surface.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Greenshot\TextContainer.cs" />
-    <Compile Include="Greenshot\TextInputForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Greenshot\TextInputForm.designer.cs">
-      <DependentUpon>TextInputForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -406,27 +352,6 @@
       <DependentUpon>ToolbarWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\ColorDialog.resx">
-      <DependentUpon>ColorDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\ImageEditorForm.resx">
-      <DependentUpon>ImageEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\JpegQualityDialog.resx">
-      <DependentUpon>JpegQualityDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\PrintOptionsDialog.resx">
-      <DependentUpon>PrintOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\PropertyItemProvider.resx">
-      <DependentUpon>PropertyItemProvider.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Greenshot\TextInputForm.resx">
-      <DependentUpon>TextInputForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </EmbeddedResource>
@@ -452,6 +377,10 @@
     <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
       <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
       <Name>ZSS.FTPUploaderLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
+      <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
+      <Name>ZSS.ImageEditorLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploaderLib.csproj">
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>

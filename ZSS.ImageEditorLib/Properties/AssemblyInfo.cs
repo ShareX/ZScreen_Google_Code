@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZSS.FTPUploaderLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ZSS.ImageEditorLib")]
+[assembly: AssemblyDescription("Image Editor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BrandonZ.net")]
-[assembly: AssemblyProduct("ZSS.FTPUploaderLib")]
+[assembly: AssemblyProduct("ZSS.ImageEditorLib")]
 [assembly: AssemblyCopyright("Copyright © GPL 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("327f7a66-bc35-407a-ab6a-e62a718fcb75")]
+[assembly: Guid("2acda84e-3108-41a6-b449-b01f9417604b")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("0.7.009.0")]
