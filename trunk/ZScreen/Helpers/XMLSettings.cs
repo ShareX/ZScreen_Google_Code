@@ -274,7 +274,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<Software> ImageSoftwareList = new List<Software>();
-        public Software ImageSoftwareActive = null;
+        public Software ImageSoftwareActive = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"));
         public bool ImageSoftwareEnabled = false;
         public Software TextEditorActive = new Software();
         public List<Software> TextEditors = new List<Software>();
