@@ -25,7 +25,7 @@ using System;
 using System.Reflection;
 using System.IO;
 
-namespace ZSS.Colors
+namespace ZSS.ColorsLib
 {
     public delegate void ColorEventHandler(object sender, ColorEventArgs e);
 

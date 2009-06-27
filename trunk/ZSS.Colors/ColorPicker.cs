@@ -24,7 +24,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace ZSS.Colors
+namespace ZSS.ColorsLib
 {
     [DefaultEvent("ColorChanged")]
     public class ColorPicker : UserControl
@@ -145,18 +145,18 @@ namespace ZSS.Colors
         {
             this.SuspendLayout();
 
-            this.colorBox = new ZSS.Colors.ColorBox();
-            this.colorSlider = new ZSS.Colors.ColorSlider();
+            this.colorBox = new ZSS.ColorsLib.ColorBox();
+            this.colorSlider = new ZSS.ColorsLib.ColorSlider();
 
             // colorBox
             this.colorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.colorBox.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorBox.DrawStyle = ZSS.ColorsLib.DrawStyle.Hue;
             this.colorBox.Location = new System.Drawing.Point(0, 0);
             this.colorBox.Name = "colorBox";
             this.colorBox.TabIndex = 0;
             // colorSlider
             this.colorSlider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.colorSlider.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorSlider.DrawStyle = ZSS.ColorsLib.DrawStyle.Hue;
             this.colorSlider.Location = new System.Drawing.Point(colorBox.Width, 0);
             this.colorSlider.Name = "colorSlider";
             this.colorSlider.TabIndex = 1;

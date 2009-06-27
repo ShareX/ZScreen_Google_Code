@@ -34,7 +34,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using ZSS.Colors;
+using ZSS.ColorsLib;
 using ZSS.Forms;
 using ZSS.Helpers;
 using ZSS.ImageUploaders;

@@ -24,7 +24,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace ZSS.Colors
+namespace ZSS.ColorsLib
 {
     public class ColorBox : ColorUserControl
     {

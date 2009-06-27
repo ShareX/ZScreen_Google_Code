@@ -23,7 +23,7 @@
 
 using System.Drawing;
 
-namespace ZSS.Colors
+namespace ZSS.ColorsLib
 {
     public class ColorSlider : ColorUserControl
     {

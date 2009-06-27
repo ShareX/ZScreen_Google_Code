@@ -24,7 +24,7 @@
 using System;
 using System.Drawing;
 
-namespace ZSS.Colors
+namespace ZSS.ColorsLib
 {
     #region Public Structs
 
