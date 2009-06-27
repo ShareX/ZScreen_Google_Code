@@ -85,6 +85,8 @@ namespace ZSS
         public const string TINYPIC_ID = "e2aabb8d555322fa";
         public const string TINYPIC_KEY = "00a68ed73ddd54da52dc2d5803fa35ee";
 
+        public const string ZSCREEN_EDITOR = "Greenshot";
+
         public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif", "emf", "wmf", "ico" };
         public static string[] zTextFileTypes = { "txt", "log" };
 
