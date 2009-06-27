@@ -46,13 +46,6 @@ namespace Greenshot
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.btnCursor = new System.Windows.Forms.ToolStripButton();
-            this.btnRect = new System.Windows.Forms.ToolStripButton();
-            this.btnEllipse = new System.Windows.Forms.ToolStripButton();
-            this.btnLine = new System.Windows.Forms.ToolStripButton();
-            this.btnArrow = new System.Windows.Forms.ToolStripButton();
-            this.btnText = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,18 +111,26 @@ namespace Greenshot
             this.arrowHeadsEndPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.btnCursor = new System.Windows.Forms.ToolStripButton();
+            this.btnRect = new System.Windows.Forms.ToolStripButton();
+            this.btnEllipse = new System.Windows.Forms.ToolStripButton();
+            this.btnLine = new System.Windows.Forms.ToolStripButton();
+            this.btnArrow = new System.Windows.Forms.ToolStripButton();
+            this.btnText = new System.Windows.Forms.ToolStripButton();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.fileSavedStatusContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyPathMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.fileSavedStatusContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -144,8 +145,12 @@ namespace Greenshot
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(628, 359);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(604, 359);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            // 
+            // toolStripContainer1.LeftToolStripPanel
+            // 
+            this.toolStripContainer1.LeftToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.Size = new System.Drawing.Size(628, 430);
@@ -156,7 +161,6 @@ namespace Greenshot
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             // 
             // statusStrip1
             // 
@@ -183,91 +187,8 @@ namespace Greenshot
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(628, 359);
+            this.panel1.Size = new System.Drawing.Size(604, 359);
             this.panel1.TabIndex = 2;
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCursor,
-            this.btnRect,
-            this.btnEllipse,
-            this.btnLine,
-            this.btnArrow,
-            this.btnText});
-            this.toolStrip2.Location = new System.Drawing.Point(352, 24);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(150, 25);
-            this.toolStrip2.TabIndex = 0;
-            // 
-            // btnCursor
-            // 
-            this.btnCursor.Checked = true;
-            this.btnCursor.CheckOnClick = true;
-            this.btnCursor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
-            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(23, 22);
-            this.btnCursor.Text = "Selection tool";
-            this.btnCursor.Click += new System.EventHandler(this.BtnCursorClick);
-            // 
-            // btnRect
-            // 
-            this.btnRect.CheckOnClick = true;
-            this.btnRect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRect.Image = ((System.Drawing.Image)(resources.GetObject("btnRect.Image")));
-            this.btnRect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRect.Name = "btnRect";
-            this.btnRect.Size = new System.Drawing.Size(23, 22);
-            this.btnRect.Text = "Draw rectangle";
-            this.btnRect.Click += new System.EventHandler(this.BtnRectClick);
-            // 
-            // btnEllipse
-            // 
-            this.btnEllipse.CheckOnClick = true;
-            this.btnEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEllipse.Image = ((System.Drawing.Image)(resources.GetObject("btnEllipse.Image")));
-            this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnEllipse.Name = "btnEllipse";
-            this.btnEllipse.Size = new System.Drawing.Size(23, 22);
-            this.btnEllipse.Text = "Draw ellipse";
-            this.btnEllipse.Click += new System.EventHandler(this.BtnEllipseClick);
-            // 
-            // btnLine
-            // 
-            this.btnLine.CheckOnClick = true;
-            this.btnLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLine.Image = ((System.Drawing.Image)(resources.GetObject("btnLine.Image")));
-            this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLine.Name = "btnLine";
-            this.btnLine.Size = new System.Drawing.Size(23, 22);
-            this.btnLine.Text = "Draw line";
-            this.btnLine.Click += new System.EventHandler(this.BtnLineClick);
-            // 
-            // btnArrow
-            // 
-            this.btnArrow.CheckOnClick = true;
-            this.btnArrow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnArrow.Image = ((System.Drawing.Image)(resources.GetObject("btnArrow.Image")));
-            this.btnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnArrow.Name = "btnArrow";
-            this.btnArrow.Size = new System.Drawing.Size(23, 22);
-            this.btnArrow.Text = "Draw arrow";
-            this.btnArrow.Click += new System.EventHandler(this.BtnArrowClick);
-            // 
-            // btnText
-            // 
-            this.btnText.CheckOnClick = true;
-            this.btnText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnText.Image = ((System.Drawing.Image)(resources.GetObject("btnText.Image")));
-            this.btnText.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(23, 22);
-            this.btnText.Text = "Add text";
-            this.btnText.Click += new System.EventHandler(this.BtnTextClick);
             // 
             // menuStrip1
             // 
@@ -672,7 +593,7 @@ namespace Greenshot
             this.btnArrowHeads});
             this.toolStrip1.Location = new System.Drawing.Point(3, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(339, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(370, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSave
@@ -813,7 +734,7 @@ namespace Greenshot
             "5"});
             this.cbThickness.Name = "cbThickness";
             this.cbThickness.Size = new System.Drawing.Size(30, 23);
-            this.cbThickness.TextChanged += new System.EventHandler(this.ThicknessComboBoxChanged);
+            this.cbThickness.SelectedIndexChanged += new System.EventHandler(this.cbThickness_SelectedIndexChanged);
             // 
             // btnArrowHeads
             // 
@@ -857,6 +778,89 @@ namespace Greenshot
             this.arrowHeadsNoneToolStripMenuItem.Text = "None";
             this.arrowHeadsNoneToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsNoneToolStripMenuItemClick);
             // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCursor,
+            this.btnRect,
+            this.btnEllipse,
+            this.btnLine,
+            this.btnArrow,
+            this.btnText});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 3);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(24, 149);
+            this.toolStrip2.TabIndex = 0;
+            // 
+            // btnCursor
+            // 
+            this.btnCursor.Checked = true;
+            this.btnCursor.CheckOnClick = true;
+            this.btnCursor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
+            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCursor.Name = "btnCursor";
+            this.btnCursor.Size = new System.Drawing.Size(22, 20);
+            this.btnCursor.Text = "Selection tool";
+            this.btnCursor.Click += new System.EventHandler(this.BtnCursorClick);
+            // 
+            // btnRect
+            // 
+            this.btnRect.CheckOnClick = true;
+            this.btnRect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRect.Image = ((System.Drawing.Image)(resources.GetObject("btnRect.Image")));
+            this.btnRect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRect.Name = "btnRect";
+            this.btnRect.Size = new System.Drawing.Size(22, 20);
+            this.btnRect.Text = "Draw rectangle";
+            this.btnRect.Click += new System.EventHandler(this.BtnRectClick);
+            // 
+            // btnEllipse
+            // 
+            this.btnEllipse.CheckOnClick = true;
+            this.btnEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEllipse.Image = ((System.Drawing.Image)(resources.GetObject("btnEllipse.Image")));
+            this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEllipse.Name = "btnEllipse";
+            this.btnEllipse.Size = new System.Drawing.Size(22, 20);
+            this.btnEllipse.Text = "Draw ellipse";
+            this.btnEllipse.Click += new System.EventHandler(this.BtnEllipseClick);
+            // 
+            // btnLine
+            // 
+            this.btnLine.CheckOnClick = true;
+            this.btnLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLine.Image = ((System.Drawing.Image)(resources.GetObject("btnLine.Image")));
+            this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(22, 20);
+            this.btnLine.Text = "Draw line";
+            this.btnLine.Click += new System.EventHandler(this.BtnLineClick);
+            // 
+            // btnArrow
+            // 
+            this.btnArrow.CheckOnClick = true;
+            this.btnArrow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnArrow.Image = ((System.Drawing.Image)(resources.GetObject("btnArrow.Image")));
+            this.btnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnArrow.Name = "btnArrow";
+            this.btnArrow.Size = new System.Drawing.Size(22, 20);
+            this.btnArrow.Text = "Draw arrow";
+            this.btnArrow.Click += new System.EventHandler(this.BtnArrowClick);
+            // 
+            // btnText
+            // 
+            this.btnText.CheckOnClick = true;
+            this.btnText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnText.Image = ((System.Drawing.Image)(resources.GetObject("btnText.Image")));
+            this.btnText.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnText.Name = "btnText";
+            this.btnText.Size = new System.Drawing.Size(22, 20);
+            this.btnText.Text = "Add text";
+            this.btnText.Click += new System.EventHandler(this.BtnTextClick);
+            // 
             // printDialog1
             // 
             this.printDialog1.UseEXDialog = true;
@@ -898,18 +902,20 @@ namespace Greenshot
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.LeftToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.LeftToolStripPanel.PerformLayout();
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.fileSavedStatusContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
