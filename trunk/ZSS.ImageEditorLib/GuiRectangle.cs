@@ -13,27 +13,21 @@ namespace Greenshot.Helpers
     /// <summary>
     /// Description of GuiRectangle.
     /// </summary>
-    public class GuiRectangle
+    public static class GuiRectangle
     {
-        private GuiRectangle()
-        {
-
-        }
-
         public static Rectangle GetGuiRectangle(int x, int y, int w, int h)
         {
             if (w < 0)
             {
-                x = x + w;
+                x += w;
                 w = -w;
             }
             if (h < 0)
             {
-                y = y + h;
+                y += h;
                 h = -h;
             }
             return new Rectangle(x, y, w, h);
         }
-
     }
 }

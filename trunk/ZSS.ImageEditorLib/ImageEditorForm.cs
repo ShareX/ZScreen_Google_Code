@@ -59,11 +59,11 @@ namespace Greenshot
             this.comboBoxThickness.Text = conf.Editor_Thickness.ToString();
         }
 
-
         public void SetImage(Image img)
         {
             surface.Image = img;
         }
+
         public void SetImagePath(string fullpath)
         {
             this.lastSaveFullPath = fullpath;
@@ -104,8 +104,9 @@ namespace Greenshot
             }
         }
 
-        #region filesystem options
-        void SaveToolStripMenuItemClick(object sender, System.EventArgs e)
+        #region Filesystem options
+
+        private void SaveToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             try
             {
@@ -117,13 +118,14 @@ namespace Greenshot
                 MessageBox.Show(ex.Message);
             }
         }
-        void BtnSaveClick(object sender, EventArgs e)
+
+        private void BtnSaveClick(object sender, EventArgs e)
         {
             if (lastSaveFullPath != null) SaveToolStripMenuItemClick(sender, e);
             else SaveAsToolStripMenuItemClick(sender, e);
         }
 
-        void SaveAsToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void SaveAsToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             lastSaveFullPath = ImageOutput.SaveWithDialog(surface.GetImageForExport());
             if (lastSaveFullPath != null)
@@ -137,7 +139,7 @@ namespace Greenshot
             }
         }
 
-        void CopyImageToClipboardToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void CopyImageToClipboardToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             try
             {
@@ -150,11 +152,13 @@ namespace Greenshot
                 updateStatusLabel(ex.Message);
             }
         }
-        void BtnClipboardClick(object sender, EventArgs e)
+
+        private void BtnClipboardClick(object sender, EventArgs e)
         {
             this.CopyImageToClipboardToolStripMenuItemClick(sender, e);
         }
-        void PrintToolStripMenuItemClick(object sender, EventArgs e)
+
+        private void PrintToolStripMenuItemClick(object sender, EventArgs e)
         {
             PrintHelper ph = new PrintHelper(surface.GetImageForExport());
             PrinterSettings ps = ph.PrintWithDialog();
@@ -163,19 +167,22 @@ namespace Greenshot
                 updateStatusLabel("Print job was sent to '%printername%'.".Replace("%printername%", ps.PrinterName));
             }
         }
-        void BtnPrintClick(object sender, EventArgs e)
+
+        private void BtnPrintClick(object sender, EventArgs e)
         {
             PrintToolStripMenuItemClick(sender, e);
         }
 
-        void CloseToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void CloseToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             this.Close();
         }
+
         #endregion
 
-        #region drawing options
-        void BtnEllipseClick(object sender, EventArgs e)
+        #region Drawing options
+
+        private void BtnEllipseClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Ellipse;
             btnCursor.Checked = false;
@@ -186,7 +193,7 @@ namespace Greenshot
             btnArrow.Checked = false;
         }
 
-        void BtnCursorClick(object sender, EventArgs e)
+        private void BtnCursorClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.None;
             btnCursor.Checked = true;
@@ -197,7 +204,7 @@ namespace Greenshot
             btnArrow.Checked = false;
         }
 
-        void BtnRectClick(object sender, EventArgs e)
+        private void BtnRectClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Rect;
             btnCursor.Checked = false;
@@ -208,7 +215,7 @@ namespace Greenshot
             btnArrow.Checked = false;
         }
 
-        void BtnTextClick(object sender, EventArgs e)
+        private void BtnTextClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Text;
             btnCursor.Checked = false;
@@ -219,7 +226,7 @@ namespace Greenshot
             btnArrow.Checked = false;
         }
 
-        void BtnLineClick(object sender, EventArgs e)
+        private void BtnLineClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Line;
             btnCursor.Checked = false;
@@ -230,7 +237,7 @@ namespace Greenshot
             btnArrow.Checked = false;
         }
 
-        void BtnArrowClick(object sender, EventArgs e)
+        private void BtnArrowClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Arrow;
             btnCursor.Checked = false;
@@ -241,44 +248,46 @@ namespace Greenshot
             btnArrow.Checked = true;
         }
 
-        void AddRectangleToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void AddRectangleToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             BtnRectClick(sender, e);
         }
 
-        void AddEllipseToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void AddEllipseToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             BtnEllipseClick(sender, e);
         }
 
-        void AddTextBoxToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void AddTextBoxToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             BtnTextClick(sender, e);
         }
 
-        void DrawLineToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void DrawLineToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             BtnLineClick(sender, e);
         }
 
-        void DrawArrowToolStripMenuItemClick(object sender, EventArgs e)
+        private void DrawArrowToolStripMenuItemClick(object sender, EventArgs e)
         {
             BtnArrowClick(sender, e);
         }
 
-
-        void RemoveObjectToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void RemoveObjectToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             surface.RemoveSelectedElements();
         }
-        void BtnDeleteClick(object sender, EventArgs e)
+
+        private void BtnDeleteClick(object sender, EventArgs e)
         {
             RemoveObjectToolStripMenuItemClick(sender, e);
         }
+
         #endregion
 
-        #region copy&paste options
-        void CutToolStripMenuItemClick(object sender, System.EventArgs e)
+        #region Copy & paste options
+
+        private void CutToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             if (surface.CutSelectedElements())
             {
@@ -286,12 +295,13 @@ namespace Greenshot
                 this.pasteToolStripMenuItem.Enabled = true;
             }
         }
-        void BtnCutClick(object sender, System.EventArgs e)
+
+        private void BtnCutClick(object sender, System.EventArgs e)
         {
             CutToolStripMenuItemClick(sender, e);
         }
 
-        void CopyToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void CopyToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             if (surface.CopySelectedElements())
             {
@@ -299,57 +309,62 @@ namespace Greenshot
                 this.pasteToolStripMenuItem.Enabled = true;
             }
         }
-        void BtnCopyClick(object sender, System.EventArgs e)
+
+        private void BtnCopyClick(object sender, System.EventArgs e)
         {
             CopyToolStripMenuItemClick(sender, e);
         }
 
-        void PasteToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void PasteToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             surface.PasteElementFromClipboard();
         }
-        void BtnPasteClick(object sender, System.EventArgs e)
+
+        private void BtnPasteClick(object sender, System.EventArgs e)
         {
             PasteToolStripMenuItemClick(sender, e);
         }
 
-        void DuplicateToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void DuplicateToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             surface.DuplicateSelectedElements();
         }
+
         #endregion
 
-        #region element properties
-        void UpOneLevelToolStripMenuItemClick(object sender, EventArgs e)
+        #region Element properties
+
+        private void UpOneLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
             surface.PullElementsUp();
         }
 
-        void DownOneLevelToolStripMenuItemClick(object sender, EventArgs e)
+        private void DownOneLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
             surface.PushElementsDown();
         }
 
-        void UpToTopToolStripMenuItemClick(object sender, EventArgs e)
+        private void UpToTopToolStripMenuItemClick(object sender, EventArgs e)
         {
             surface.PullElementsToTop();
         }
 
-        void DownToBottomToolStripMenuItemClick(object sender, EventArgs e)
+        private void DownToBottomToolStripMenuItemClick(object sender, EventArgs e)
         {
             surface.PushElementsToBottom();
         }
 
-        void BtnBorderColorClick(object sender, System.EventArgs e)
+        private void BtnBorderColorClick(object sender, System.EventArgs e)
         {
             SelectBorderColorToolStripMenuItemClick(sender, e);
         }
-        void BtnBackColorClick(object sender, System.EventArgs e)
+
+        private void BtnBackColorClick(object sender, System.EventArgs e)
         {
             SelectBackgroundColorToolStripMenuItemClick(sender, e);
         }
 
-        void SelectBorderColorToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void SelectBorderColorToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             colorDialog.Color = surface.ForeColor;
             colorDialog.ShowDialog();
@@ -362,7 +377,7 @@ namespace Greenshot
             }
         }
 
-        void SelectBackgroundColorToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void SelectBackgroundColorToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             colorDialog.Color = surface.BackColor;
             colorDialog.ShowDialog();
@@ -374,7 +389,8 @@ namespace Greenshot
                 surface.BackColor = colorDialog.Color;
             }
         }
-        void ThicknessComboBoxChanged(object sender, System.EventArgs e)
+
+        private void ThicknessComboBoxChanged(object sender, System.EventArgs e)
         {
             ToolStripComboBox cb = (ToolStripComboBox)sender;
             try
@@ -390,7 +406,7 @@ namespace Greenshot
             }
         }
 
-        void LineThicknessValueToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void LineThicknessValueToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             ToolStripMenuItem cb = (ToolStripMenuItem)sender;
             try
@@ -406,66 +422,74 @@ namespace Greenshot
             }
         }
 
-        void ArrowHeadsStartPointToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void ArrowHeadsStartPointToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             surface.ArrowHead = Surface.ArrowHeads.Start;
         }
 
-        void ArrowHeadsEndPointToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void ArrowHeadsEndPointToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             surface.ArrowHead = Surface.ArrowHeads.End;
         }
 
-        void ArrowHeadsBothToolStripMenuItemClick(object sender, EventArgs e)
+        private void ArrowHeadsBothToolStripMenuItemClick(object sender, EventArgs e)
         {
             surface.ArrowHead = Surface.ArrowHeads.Both;
         }
 
-        void ArrowHeadsNoneToolStripMenuItemClick(object sender, EventArgs e)
+        private void ArrowHeadsNoneToolStripMenuItemClick(object sender, EventArgs e)
         {
             surface.ArrowHead = Surface.ArrowHeads.None;
         }
+
         #endregion
 
-        #region help
-        void HelpToolStripMenuItem1Click(object sender, System.EventArgs e)
+        #region Help
+
+        private void HelpToolStripMenuItem1Click(object sender, System.EventArgs e)
         {
             // new HelpBrowserForm(conf.Ui_Language).Show();
         }
-        void AboutToolStripMenuItemClick(object sender, System.EventArgs e)
+
+        private void AboutToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             new AboutForm().Show();
         }
-        void PreferencesToolStripMenuItemClick(object sender, System.EventArgs e)
+
+        private void PreferencesToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             // new SettingsForm().Show();
         }
-        void BtnSettingsClick(object sender, System.EventArgs e)
+
+        private void BtnSettingsClick(object sender, System.EventArgs e)
         {
             PreferencesToolStripMenuItemClick(sender, e);
         }
-        void BtnHelpClick(object sender, System.EventArgs e)
+
+        private void BtnHelpClick(object sender, System.EventArgs e)
         {
             HelpToolStripMenuItem1Click(sender, e);
         }
+
         #endregion
 
-        #region image editor event handlers
-        void ImageEditorFormActivated(object sender, EventArgs e)
+        #region Image editor event handlers
+
+        private void ImageEditorFormActivated(object sender, EventArgs e)
         {
             bool b = false; // TODO: Greenshot
             this.btnPaste.Enabled = b;
             this.pasteToolStripMenuItem.Enabled = b;
         }
 
-        void ImageEditorFormFormClosing(object sender, FormClosingEventArgs e)
+        private void ImageEditorFormFormClosing(object sender, FormClosingEventArgs e)
         {
             conf.Editor_WindowSize = Size;
             conf.Store();
             System.GC.Collect();
         }
 
-        void ImageEditorFormKeyUp(object sender, KeyEventArgs e)
+        private void ImageEditorFormKeyUp(object sender, KeyEventArgs e)
         {
             if (Keys.Escape.Equals(e.KeyCode))
             {
@@ -492,18 +516,21 @@ namespace Greenshot
                 BtnTextClick(sender, e);
             }
         }
+
         #endregion
 
-        #region cursor key strokes
+        #region Cursor key strokes
+
         protected override bool ProcessCmdKey(ref Message msg, Keys k)
         {
             surface.ProcessCmdKey(k);
             return base.ProcessCmdKey(ref msg, k);
         }
+
         #endregion
 
+        #region Status label handling
 
-        #region status label handling
         private void updateStatusLabel(string text, ContextMenuStrip contextMenu)
         {
             statusLabel.Text = text;
@@ -514,12 +541,13 @@ namespace Greenshot
         {
             updateStatusLabel(text, null);
         }
+
         private void clearStatusLabel()
         {
             updateStatusLabel(null, null);
         }
 
-        void StatusLabelClicked(object sender, MouseEventArgs e)
+        private void StatusLabelClicked(object sender, MouseEventArgs e)
         {
             ToolStrip ss = (StatusStrip)((ToolStripStatusLabel)sender).Owner;
             if (ss.ContextMenuStrip != null)
@@ -528,12 +556,12 @@ namespace Greenshot
             }
         }
 
-        void CopyPathMenuItemClick(object sender, EventArgs e)
+        private void CopyPathMenuItemClick(object sender, EventArgs e)
         {
             Clipboard.SetText(lastSaveFullPath);
         }
 
-        void OpenDirectoryMenuItemClick(object sender, EventArgs e)
+        private void OpenDirectoryMenuItemClick(object sender, EventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo("explorer");
             psi.Arguments = Path.GetDirectoryName(lastSaveFullPath);
@@ -542,8 +570,7 @@ namespace Greenshot
             p.StartInfo = psi;
             p.Start();
         }
+
         #endregion
-
-
     }
 }

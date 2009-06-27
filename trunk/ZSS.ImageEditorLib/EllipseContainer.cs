@@ -12,7 +12,6 @@ namespace Greenshot.Drawing
     [Serializable()]
     public class EllipseContainer : DrawableContainer
     {
-
         public EllipseContainer(Control parent)
             : base(parent)
         {
@@ -22,14 +21,17 @@ namespace Greenshot.Drawing
         }
 
         #region serialization
+
         public EllipseContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)
         {
         }
+
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             base.GetObjectData(info, ctxt);
         }
+
         #endregion
 
         public override void Draw(Graphics g, RenderMode rm)

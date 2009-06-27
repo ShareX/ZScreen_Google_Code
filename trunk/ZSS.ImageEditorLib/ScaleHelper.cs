@@ -15,12 +15,8 @@ namespace Greenshot.Helpers
     /// <summary>
     /// Offers a few helper functions for scaling/aligning an element with another element
     /// </summary>
-    public class ScaleHelper
+    public static class ScaleHelper
     {
-        private ScaleHelper()
-        {
-        }
-
         /// <summary>
         /// calculates the Size an element must be resized to, in order to fit another element, keeping aspect ratio
         /// </summary>
