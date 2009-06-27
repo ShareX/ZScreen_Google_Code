@@ -14,15 +14,15 @@ using System;
 
 namespace Greenshot.Configuration
 {
-	/// <summary>
-	/// Greenshot's runtime configuration
-	/// abstract, all properties are public and static
-	/// </summary>
-	public abstract class RuntimeConfig
-	{
-		public static string[] SupportedLanguages = {"en-US","de-DE"};
-		public static string[] SupportedImageFormats = {ImageFormat.Jpeg.ToString(),ImageFormat.Gif.ToString(),ImageFormat.Png.ToString(),ImageFormat.Bmp.ToString()};
-		public static string BugTrackerUrl = "https://sourceforge.net/tracker/?func=postadd&group_id=191585&atid=937972&summary=%SUMMARY%&details=%DETAILS%";
-		public static Rectangle LastCapturedRegion;
-	}
+    /// <summary>
+    /// Greenshot's runtime configuration
+    /// abstract, all properties are public and static
+    /// </summary>
+    public abstract class RuntimeConfig
+    {
+        public static string[] SupportedLanguages = { "en-US", "de-DE" };
+        public static string[] SupportedImageFormats = { ImageFormat.Jpeg.ToString(), ImageFormat.Gif.ToString(), ImageFormat.Png.ToString(), ImageFormat.Bmp.ToString() };
+        public static string BugTrackerUrl = "https://sourceforge.net/tracker/?func=postadd&group_id=191585&atid=937972&summary=%SUMMARY%&details=%DETAILS%";
+        public static Rectangle LastCapturedRegion;
+    }
 }

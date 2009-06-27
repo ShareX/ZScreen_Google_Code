@@ -14,22 +14,20 @@ using System.Reflection;
 
 namespace Greenshot
 {
-	/// <summary>
-	/// Description of AboutForm.
-	/// </summary>
-	public partial class AboutForm : Form
-		
-	{	
-		public AboutForm()
-		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			Version v = Assembly.GetExecutingAssembly().GetName().Version;
-			lblTitle.Text = "Greenshot " + v.Major + "." + v.Minor + "." + v.Build.ToString("000");	
-		}
-		
-	}
+    /// <summary>
+    /// Description of AboutForm.
+    /// </summary>
+    public partial class AboutForm : Form
+    {
+        public AboutForm()
+        {
+            //
+            // The InitializeComponent() call is required for Windows Forms designer support.
+            //
+            InitializeComponent();
+
+            Version v = Assembly.GetExecutingAssembly().GetName().Version;
+            lblTitle.Text = "Greenshot " + v.Major + "." + v.Minor + "." + v.Build.ToString("000");
+        }
+    }
 }

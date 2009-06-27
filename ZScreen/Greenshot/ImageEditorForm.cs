@@ -544,6 +544,5 @@ namespace Greenshot
         }
         #endregion
 
-
     }
 }

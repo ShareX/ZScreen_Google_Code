@@ -14,42 +14,43 @@ using Greenshot.Configuration;
 
 namespace Greenshot
 {
-	/// <summary>
-	/// Description of JpegQualityDialog.
-	/// </summary>
-	public partial class JpegQualityDialog : Form
-	{
-		AppConfig conf;
-		public int Quality = 0;
-		public JpegQualityDialog()
-		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			conf = AppConfig.GetInstance();
+    /// <summary>
+    /// Description of JpegQualityDialog.
+    /// </summary>
+    public partial class JpegQualityDialog : Form
+    {
+        AppConfig conf;
+        public int Quality = 0;
+        public JpegQualityDialog()
+        {
+            //
+            // The InitializeComponent() call is required for Windows Forms designer support.
+            //
+            InitializeComponent();
 
-			this.trackBarJpegQuality.Value = conf.Output_File_JpegQuality;
-			this.textBoxJpegQuality.Text = conf.Output_File_JpegQuality.ToString();
+            conf = AppConfig.GetInstance();
 
-		}
-		
-		
-		void Button_okClick(object sender, System.EventArgs e)
-		{
-			Quality = this.trackBarJpegQuality.Value;
-			if(this.checkbox_dontaskagain.Checked) {
-				conf.Output_File_JpegQuality = Quality;
-				conf.Output_File_PromptJpegQuality = false;
-				conf.Store();
-			}
-			
-		}
-		
-		void TrackBarJpegQualityScroll(object sender, System.EventArgs e)
-		{
-			textBoxJpegQuality.Text = trackBarJpegQuality.Value.ToString();
-		}
-	}
+            this.trackBarJpegQuality.Value = conf.Output_File_JpegQuality;
+            this.textBoxJpegQuality.Text = conf.Output_File_JpegQuality.ToString();
+
+        }
+
+
+        void Button_okClick(object sender, System.EventArgs e)
+        {
+            Quality = this.trackBarJpegQuality.Value;
+            if (this.checkbox_dontaskagain.Checked)
+            {
+                conf.Output_File_JpegQuality = Quality;
+                conf.Output_File_PromptJpegQuality = false;
+                conf.Store();
+            }
+
+        }
+
+        void TrackBarJpegQualityScroll(object sender, System.EventArgs e)
+        {
+            textBoxJpegQuality.Text = trackBarJpegQuality.Value.ToString();
+        }
+    }
 }
