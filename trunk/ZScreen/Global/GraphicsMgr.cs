@@ -260,5 +260,16 @@ namespace ZSS
 
             return bmp;
         }
+
+        public static Image CropImage(Image img, Rectangle rect)
+        {
+            Image cropped = new Bitmap(rect.Width, rect.Height);
+            Graphics e = Graphics.FromImage(cropped);
+            e.CompositingQuality = CompositingQuality.HighQuality;
+            e.SmoothingMode = SmoothingMode.HighQuality;
+            e.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            e.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
+            return cropped;
+        }
     }
 }
