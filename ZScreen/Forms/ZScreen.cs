@@ -392,16 +392,7 @@ namespace ZSS
             // Image Software Settings
             ///////////////////////////////////
 
-            if (Program.conf.ImageSoftwareActive == null)
-            {
-                Program.conf.ImageSoftwareActive = new Software
-                {
-                    Name = "Paint",
-                    Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe")
-                };
-            }
-
-            Software editor = new Software(Program.ZSCREEN_EDITOR, Application.ExecutablePath);
+            Software editor = new Software(Program.ZSCREEN_EDITOR, Application.ExecutablePath, true);
 
             if (Program.conf.ImageSoftwareList.Count == 0)
             {
@@ -416,7 +407,7 @@ namespace ZSS
 
             if (Program.conf.TextEditors.Count == 0)
             {
-                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe")));
+                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
             }
             lbImageSoftware.Items.Clear();
             lbImageSoftware.Items.Add("Disabled");
@@ -426,7 +417,7 @@ namespace ZSS
                 if (!String.IsNullOrEmpty(app.Name))
                     lbImageSoftware.Items.Add(app.Name);
             }
- 
+
             if (Program.conf.ImageSoftwareEnabled)
             {
                 int i;
@@ -1854,7 +1845,7 @@ namespace ZSS
                     {
                         if (!SoftwareExist(sName)) //If not added to Software list before
                         {
-                            Program.conf.ImageSoftwareList.Add(new Software(sName, filePath));
+                            Program.conf.ImageSoftwareList.Add(new Software(sName, filePath, false));
                         }
                         return true;
                     }
@@ -2038,6 +2029,10 @@ namespace ZSS
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
+            if (lbHistory.Items.Count > 0)
+            {
+                lbHistory.SelectedIndex = 0;
+            }
 
             // Show settings if never ran before
             if (!Program.conf.RunOnce)
@@ -2153,7 +2148,7 @@ namespace ZSS
 
         private void AddImageSoftwareToList()
         {
-            Software temp = new Software("New", "");
+            Software temp = new Software("New", "", false);
             Program.conf.ImageSoftwareList.Add(temp);
             lbImageSoftware.Items.Add(temp);
             lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
@@ -2282,6 +2277,7 @@ namespace ZSS
             if (sel == 0)
             {
                 Program.conf.ImageSoftwareEnabled = false;
+                btnDeleteImageSoftware.Enabled = false;
                 RewriteImageEditorsRightClickMenu();
             }
             else if (b)
@@ -2290,12 +2286,12 @@ namespace ZSS
                 if (temp != null)
                 {
                     pgEditorsImage.SelectedObject = temp;
+                    btnDeleteImageSoftware.Enabled = temp.Protected;
                 }
 
                 SetActiveImageSoftware();
             }
 
-            btnDeleteImageSoftware.Enabled = b;
             btnBrowseImageSoftware.Enabled = b;
             pgEditorsImage.Visible = b;
         }
@@ -3227,7 +3223,7 @@ namespace ZSS
 
         private void lbHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lbHistory.SelectedIndex > -1)
+            if (mGuiIsReady && lbHistory.SelectedIndex > -1)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
 

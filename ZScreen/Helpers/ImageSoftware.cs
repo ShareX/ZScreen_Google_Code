@@ -29,12 +29,23 @@ namespace ZSS
 
         public Software(string sName, string sPath)
         {
-            Name = sName;
-            Path = sPath;
+            this.Name = sName;
+            this.Path = sPath;
+        }
+        public Software(string sName, string sPath, bool bProtected)
+            : this(sName, sPath)
+        {
+
+            this.Protected = bProtected;
         }
 
         public string Name { get; set; }
         public string Path { get; set; }
+
+        /// <summary>
+        /// Built-in software are protected from being deleted
+        /// </summary>
+        public bool Protected { get; set; }
 
         public override string ToString()
         {

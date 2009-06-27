@@ -61,5 +61,10 @@ namespace Greenshot
 			Version v = Assembly.GetExecutingAssembly().GetName().Version;
 			lblTitle.Text = "Greenshot " + v.Major + "." + v.Minor + "." + v.Build.ToString("000");	
 		}
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+            this.Text = "About Image Editor";
+        }
 	}
 }
