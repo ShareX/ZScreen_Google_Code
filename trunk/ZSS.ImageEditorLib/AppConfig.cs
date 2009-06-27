@@ -54,9 +54,7 @@ namespace Greenshot.Configuration
     [Serializable]
     public class AppConfig
     {
-        //private static string loc = Assembly.GetExecutingAssembly().Location;
-        //private static string oldFilename = Path.Combine(loc.Substring(0,loc.LastIndexOf(@"\")),"config.dat");
-        private static string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Greenshot\config.dat");
+        public static string ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Greenshot\config.dat");
         private static AppConfig instance = null;
 
         // the configuration part - all public vars are stored in the config file
@@ -141,7 +139,7 @@ namespace Greenshot.Configuration
             Stream s = null;
             try
             {
-                s = File.Open(filename, FileMode.Open);
+                s = File.Open(ConfigPath, FileMode.Open);
                 BinaryFormatter b = new BinaryFormatter();
                 conf = (AppConfig)b.Deserialize(s);
                 s.Close();
@@ -172,9 +170,9 @@ namespace Greenshot.Configuration
         /// </summary>
         private static void CheckConfigFile()
         {
-            if (!File.Exists(filename))
+            if (!File.Exists(ConfigPath))
             {
-                Directory.CreateDirectory(filename.Substring(0, filename.LastIndexOf(@"\")));
+                Directory.CreateDirectory(ConfigPath.Substring(0, ConfigPath.LastIndexOf(@"\")));
                 new AppConfig().Store();
             }
         }
@@ -184,7 +182,7 @@ namespace Greenshot.Configuration
         /// </summary>
         public void Store()
         {
-            Stream s = File.Open(filename, FileMode.Create);
+            Stream s = File.Open(ConfigPath, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(s, this);
             s.Close();
