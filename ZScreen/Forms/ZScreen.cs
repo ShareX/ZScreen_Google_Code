@@ -710,7 +710,7 @@ namespace ZSS
 
                 if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
                 {
-                    task.SetImage(CropImage(imgSS, Program.LastRegion));
+                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
                 }
                 else
                 {
@@ -719,11 +719,11 @@ namespace ZSS
                     {
                         if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
                         {
-                            task.SetImage(CropImage(imgSS, Program.LastRegion));
+                            task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
                         }
                         else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
                         {
-                            task.SetImage(CropImage(imgSS, Program.LastCapture));
+                            task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
                         }
                     }
                 }
@@ -2673,64 +2673,6 @@ namespace ZSS
             Program.conf.TinyPicShuk = txtTinyPicShuk.Text;
         }
 
-        /*private void tabControl_Selected(object sender, TabControlEventArgs e)
-         {
-             // What the tab control will display when you change from one section to another
-
-             string tabDesc = "In this section you can ";
-
-             if (e.TabPage == tpMain)
-             {
-                 txtActiveHelp.Text = tabDesc + "select the destination that images are uploaded to," +
-                     " enable/disable crop settings, and turn Active Help on and off.";
-             }
-             else if (e.TabPage == tpHotkeys)
-             {
-                 txtActiveHelp.Text = tabDesc + "customize hotkeys that you would like to use." +
-                 " To set a Hotkey click on a button and follow the directions provided above.";
-             }
-             else if (e.TabPage == tpWatermark)
-             {
-                 txtActiveHelp.Text = tabDesc + string.Format("configure Watermark properties." +
-                     " You can choose a text string or an image as the Watermark." +
-                     " If you are using a large Logo then consider setting the Image Scale.");
-             }
-             else if (e.TabPage == tpFTP)
-             {
-                 txtActiveHelp.Text = tabDesc + "add/remove FTP accounts that you use to upload screenshots." +
-                     " You can also drag and drop any other non-image file to the Drop Window to upload it to FTP.";
-             }
-             else if (e.TabPage == tpImages)
-             {
-                 txtActiveHelp.Text = tabDesc + "configure the Image Hosting Service you prefer to upload the screenshot.";
-             }
-             else if (e.TabPage == tpEditors)
-             {
-                 txtActiveHelp.Text = tabDesc + string.Format("configure the Image Editing application you wish to run after taking the screenshot." +
-                     " {0} will automatically load this application and enable you to edit the image before uploading.", Application.ProductName);
-             }
-             else if (e.TabPage == tpScreenshots)
-             {
-                 txtActiveHelp.Text = tabDesc + string.Format("customize file naming patterns for the screenshot you are taking.");
-             }
-             else if (e.TabPage == tpHistory)
-             {
-                 txtActiveHelp.Text = tabDesc + "copy screenshot URLs to Clipboard under diffent modes and preview the screenshots." +
-                     " To access Copy to Clipboard options, right click on one or more screenshot entries in the Screenshots list box.";
-             }
-             else if (e.TabPage == tpOptions)
-             {
-                 txtActiveHelp.Text = tabDesc + "access the folder where settings are saved and import/export/revert settings";
-             }
-             else if (e.TabPage == tpCustomUploaders)
-             {
-                 txtActiveHelp.Text = "Wiki: http://code.google.com/p/zscreen/wiki/CustomUploadersHelp";
-             }
-
-             CheckFormSettings();
-             if (Program.conf.AutoSaveSettings) WriteSettings();
-         }*/
-
         private void CheckFormSettings()
         {
             if (Program.conf.LockFormSize)
@@ -2780,17 +2722,6 @@ namespace ZSS
         {
             Program.conf.CheckUpdates = cbCheckUpdates.Checked;
             cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
-        }
-
-        private Image CropImage(Image img, Rectangle rect)
-        {
-            Image cropped = new Bitmap(rect.Width, rect.Height);
-            Graphics e = Graphics.FromImage(cropped);
-            e.CompositingQuality = CompositingQuality.HighQuality;
-            e.SmoothingMode = SmoothingMode.HighQuality;
-            e.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            e.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
-            return cropped;
         }
 
         private void txtActiveHelp_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -3514,38 +3445,6 @@ namespace ZSS
             }
         }
 
-        private void UpdateFTP()
-        {
-            string msg = "";
-            if (lbFTPAccounts.SelectedIndices.Count == 1 && lbFTPAccounts.SelectedIndex != -1)
-            {
-                msg = "Updated.";
-
-                FTPAccount acc = GetSelectedFTP();
-
-                if (Program.conf.FTPAccountList != null)
-                {
-                    Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = acc; //use selected index instead of 0
-                }
-                else
-                {
-                    Program.conf.FTPAccountList = new List<FTPAccount> { acc };
-                }
-
-                lbFTPAccounts.Items[lbFTPAccounts.SelectedIndex] = acc;
-
-                RewriteFTPRightClickMenu();
-            }
-            else
-            {
-                msg = "Not Updated.";
-            }
-            if (!string.IsNullOrEmpty(msg))
-            {
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         private void btnDeleteFTP_Click(object sender, EventArgs e)
         {
             int sel = lbFTPAccounts.SelectedIndex;
@@ -3581,19 +3480,6 @@ namespace ZSS
             Program.conf.FTPAccountList.Add(acc);
             lbFTPAccounts.Items.Add(acc);
             lbFTPAccounts.SelectedIndex = lbFTPAccounts.Items.Count - 1;
-        }
-
-        private void btnUpdateFTP_Click(object sender, EventArgs e)
-        {
-            UpdateFTP();
-        }
-
-        private void btnClearFTP_Click(object sender, EventArgs e)
-        {
-            if (lbFTPAccounts.SelectedIndex != -1)
-            {
-                Program.conf.FTPAccountList[lbFTPAccounts.SelectedIndex] = new FTPAccount();
-            }
         }
 
         private void btnExportAccounts_Click(object sender, EventArgs e)
