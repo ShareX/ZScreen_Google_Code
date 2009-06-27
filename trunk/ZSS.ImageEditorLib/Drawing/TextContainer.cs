@@ -97,12 +97,10 @@ namespace Greenshot.Drawing
                 textInput.UpdateFromLabel(childLabel);
             }
             textInput.InputText.ForeColor = childLabel.ForeColor;
-            textInput.ShowDialog(parent);
-            if (textInput.DialogResult == DialogResult.Cancel)
+            if (textInput.ShowDialog(parent) == DialogResult.Cancel)
             {
                 return false;
             }
-            string text = textInput.InputText.Text;
             childLabel.Text = textInput.InputText.Text;
             childLabel.Font = textInput.InputText.Font;
             ForeColor = textInput.InputText.ForeColor;

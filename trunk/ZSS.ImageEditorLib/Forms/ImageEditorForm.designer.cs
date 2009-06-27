@@ -45,7 +45,6 @@ namespace Greenshot
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.btnCursor = new System.Windows.Forms.ToolStripButton();
@@ -68,8 +67,6 @@ namespace Greenshot
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addRectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEllipseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,7 +95,6 @@ namespace Greenshot
             this.arrowHeadsBothToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsNoneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
@@ -114,28 +110,23 @@ namespace Greenshot
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnBorderColor = new System.Windows.Forms.ToolStripButton();
             this.btnBackgroundColor = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.labelLineThickness = new System.Windows.Forms.ToolStripLabel();
-            this.comboBoxThickness = new System.Windows.Forms.ToolStripComboBox();
+            this.cbThickness = new System.Windows.Forms.ToolStripComboBox();
             this.btnArrowHeads = new System.Windows.Forms.ToolStripDropDownButton();
             this.arrowHeadsStartPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsEndPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSettings = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.fileSavedStatusContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyPathMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
-            this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -152,13 +143,9 @@ namespace Greenshot
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.tableLayoutPanel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(604, 359);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(628, 359);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            // 
-            // toolStripContainer1.LeftToolStripPanel
-            // 
-            this.toolStripContainer1.LeftToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.Size = new System.Drawing.Size(628, 430);
@@ -169,6 +156,7 @@ namespace Greenshot
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             // 
             // statusStrip1
             // 
@@ -188,28 +176,14 @@ namespace Greenshot
             this.statusLabel.Size = new System.Drawing.Size(0, 17);
             this.statusLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StatusLabelClicked);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.03268F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(604, 359);
-            this.tableLayoutPanel1.TabIndex = 3;
-            // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(590, 353);
+            this.panel1.Size = new System.Drawing.Size(628, 359);
             this.panel1.TabIndex = 2;
             // 
             // toolStrip2
@@ -222,9 +196,9 @@ namespace Greenshot
             this.btnLine,
             this.btnArrow,
             this.btnText});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 3);
+            this.toolStrip2.Location = new System.Drawing.Point(352, 24);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(24, 149);
+            this.toolStrip2.Size = new System.Drawing.Size(150, 25);
             this.toolStrip2.TabIndex = 0;
             // 
             // btnCursor
@@ -236,7 +210,7 @@ namespace Greenshot
             this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
             this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(22, 20);
+            this.btnCursor.Size = new System.Drawing.Size(23, 22);
             this.btnCursor.Text = "Selection tool";
             this.btnCursor.Click += new System.EventHandler(this.BtnCursorClick);
             // 
@@ -247,7 +221,7 @@ namespace Greenshot
             this.btnRect.Image = ((System.Drawing.Image)(resources.GetObject("btnRect.Image")));
             this.btnRect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRect.Name = "btnRect";
-            this.btnRect.Size = new System.Drawing.Size(22, 20);
+            this.btnRect.Size = new System.Drawing.Size(23, 22);
             this.btnRect.Text = "Draw rectangle";
             this.btnRect.Click += new System.EventHandler(this.BtnRectClick);
             // 
@@ -258,7 +232,7 @@ namespace Greenshot
             this.btnEllipse.Image = ((System.Drawing.Image)(resources.GetObject("btnEllipse.Image")));
             this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnEllipse.Name = "btnEllipse";
-            this.btnEllipse.Size = new System.Drawing.Size(22, 20);
+            this.btnEllipse.Size = new System.Drawing.Size(23, 22);
             this.btnEllipse.Text = "Draw ellipse";
             this.btnEllipse.Click += new System.EventHandler(this.BtnEllipseClick);
             // 
@@ -269,7 +243,7 @@ namespace Greenshot
             this.btnLine.Image = ((System.Drawing.Image)(resources.GetObject("btnLine.Image")));
             this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLine.Name = "btnLine";
-            this.btnLine.Size = new System.Drawing.Size(22, 20);
+            this.btnLine.Size = new System.Drawing.Size(23, 22);
             this.btnLine.Text = "Draw line";
             this.btnLine.Click += new System.EventHandler(this.BtnLineClick);
             // 
@@ -280,7 +254,7 @@ namespace Greenshot
             this.btnArrow.Image = ((System.Drawing.Image)(resources.GetObject("btnArrow.Image")));
             this.btnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnArrow.Name = "btnArrow";
-            this.btnArrow.Size = new System.Drawing.Size(22, 20);
+            this.btnArrow.Size = new System.Drawing.Size(23, 22);
             this.btnArrow.Text = "Draw arrow";
             this.btnArrow.Click += new System.EventHandler(this.BtnArrowClick);
             // 
@@ -291,7 +265,7 @@ namespace Greenshot
             this.btnText.Image = ((System.Drawing.Image)(resources.GetObject("btnText.Image")));
             this.btnText.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(22, 20);
+            this.btnText.Size = new System.Drawing.Size(23, 22);
             this.btnText.Text = "Add text";
             this.btnText.Click += new System.EventHandler(this.BtnTextClick);
             // 
@@ -381,9 +355,7 @@ namespace Greenshot
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.toolStripSeparator4,
-            this.duplicateToolStripMenuItem,
-            this.toolStripSeparator12,
-            this.preferencesToolStripMenuItem});
+            this.duplicateToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -431,19 +403,6 @@ namespace Greenshot
             this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.DuplicateToolStripMenuItemClick);
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(163, 6);
-            // 
-            // preferencesToolStripMenuItem
-            // 
-            this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences...";
-            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.PreferencesToolStripMenuItemClick);
             // 
             // objectToolStripMenuItem
             // 
@@ -596,7 +555,6 @@ namespace Greenshot
             this.lineThickness3ToolStripMenuItem,
             this.lineThickness4ToolStripMenuItem,
             this.lineThickness5ToolStripMenuItem});
-            this.lineThicknessToolStripMenuItem.Enabled = false;
             this.lineThicknessToolStripMenuItem.Name = "lineThicknessToolStripMenuItem";
             this.lineThicknessToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.lineThicknessToolStripMenuItem.Text = "Line thickness";
@@ -643,7 +601,6 @@ namespace Greenshot
             this.arrowHeadsEndPointToolStripMenuItem1,
             this.arrowHeadsBothToolStripMenuItem1,
             this.arrowHeadsNoneToolStripMenuItem1});
-            this.arrowHeadsToolStripMenuItem.Enabled = false;
             this.arrowHeadsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("arrowHeadsToolStripMenuItem.Image")));
             this.arrowHeadsToolStripMenuItem.Name = "arrowHeadsToolStripMenuItem";
             this.arrowHeadsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
@@ -680,25 +637,15 @@ namespace Greenshot
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.helpToolStripMenuItem1,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // helpToolStripMenuItem1
-            // 
-            this.helpToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripMenuItem1.Image")));
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
-            this.helpToolStripMenuItem1.Text = "Help";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpToolStripMenuItem1Click);
-            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -719,16 +666,13 @@ namespace Greenshot
             this.toolStripSeparator6,
             this.btnBorderColor,
             this.btnBackgroundColor,
+            this.toolStripSeparator1,
             this.labelLineThickness,
-            this.comboBoxThickness,
-            this.btnArrowHeads,
-            this.toolStripSeparator10,
-            this.btnSettings,
-            this.toolStripSeparator11,
-            this.btnHelp});
+            this.cbThickness,
+            this.btnArrowHeads});
             this.toolStrip1.Location = new System.Drawing.Point(3, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(443, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(339, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSave
@@ -845,26 +789,31 @@ namespace Greenshot
             this.btnBackgroundColor.Text = "Background color";
             this.btnBackgroundColor.Click += new System.EventHandler(this.BtnBackColorClick);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // labelLineThickness
             // 
             this.labelLineThickness.Name = "labelLineThickness";
-            this.labelLineThickness.Size = new System.Drawing.Size(81, 22);
-            this.labelLineThickness.Text = "Line thickness";
+            this.labelLineThickness.Size = new System.Drawing.Size(29, 22);
+            this.labelLineThickness.Text = "Line";
             // 
-            // comboBoxThickness
+            // cbThickness
             // 
-            this.comboBoxThickness.AutoSize = false;
-            this.comboBoxThickness.Enabled = false;
-            this.comboBoxThickness.Items.AddRange(new object[] {
+            this.cbThickness.AutoSize = false;
+            this.cbThickness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbThickness.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.cbThickness.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
             "4",
             "5"});
-            this.comboBoxThickness.Name = "comboBoxThickness";
-            this.comboBoxThickness.Size = new System.Drawing.Size(30, 23);
-            this.comboBoxThickness.Text = "1";
-            this.comboBoxThickness.TextChanged += new System.EventHandler(this.ThicknessComboBoxChanged);
+            this.cbThickness.Name = "cbThickness";
+            this.cbThickness.Size = new System.Drawing.Size(30, 23);
+            this.cbThickness.TextChanged += new System.EventHandler(this.ThicknessComboBoxChanged);
             // 
             // btnArrowHeads
             // 
@@ -874,7 +823,6 @@ namespace Greenshot
             this.arrowHeadsEndPointToolStripMenuItem,
             this.arrowHeadsBothToolStripMenuItem,
             this.arrowHeadsNoneToolStripMenuItem});
-            this.btnArrowHeads.Enabled = false;
             this.btnArrowHeads.Image = ((System.Drawing.Image)(resources.GetObject("btnArrowHeads.Image")));
             this.btnArrowHeads.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnArrowHeads.Name = "btnArrowHeads";
@@ -884,60 +832,30 @@ namespace Greenshot
             // arrowHeadsStartPointToolStripMenuItem
             // 
             this.arrowHeadsStartPointToolStripMenuItem.Name = "arrowHeadsStartPointToolStripMenuItem";
-            this.arrowHeadsStartPointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsStartPointToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsStartPointToolStripMenuItem.Text = "Start point";
             this.arrowHeadsStartPointToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsStartPointToolStripMenuItemClick);
             // 
             // arrowHeadsEndPointToolStripMenuItem
             // 
             this.arrowHeadsEndPointToolStripMenuItem.Name = "arrowHeadsEndPointToolStripMenuItem";
-            this.arrowHeadsEndPointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsEndPointToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsEndPointToolStripMenuItem.Text = "End point";
             this.arrowHeadsEndPointToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsEndPointToolStripMenuItemClick);
             // 
             // arrowHeadsBothToolStripMenuItem
             // 
             this.arrowHeadsBothToolStripMenuItem.Name = "arrowHeadsBothToolStripMenuItem";
-            this.arrowHeadsBothToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsBothToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsBothToolStripMenuItem.Text = "Both";
             this.arrowHeadsBothToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsBothToolStripMenuItemClick);
             // 
             // arrowHeadsNoneToolStripMenuItem
             // 
             this.arrowHeadsNoneToolStripMenuItem.Name = "arrowHeadsNoneToolStripMenuItem";
-            this.arrowHeadsNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsNoneToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsNoneToolStripMenuItem.Text = "None";
             this.arrowHeadsNoneToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsNoneToolStripMenuItemClick);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
-            this.btnSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(23, 22);
-            this.btnSettings.Text = "Preferences";
-            this.btnSettings.Click += new System.EventHandler(this.BtnSettingsClick);
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
-            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(23, 22);
-            this.btnHelp.Text = "Help";
-            this.btnHelp.Click += new System.EventHandler(this.BtnHelpClick);
             // 
             // printDialog1
             // 
@@ -971,24 +889,21 @@ namespace Greenshot
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 430);
             this.Controls.Add(this.toolStripContainer1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "ImageEditorForm";
+            this.Text = "Image Editor";
             this.Activated += new System.EventHandler(this.ImageEditorFormActivated);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ImageEditorFormKeyUp);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ImageEditorFormFormClosing);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.LeftToolStripPanel.ResumeLayout(false);
-            this.toolStripContainer1.LeftToolStripPanel.PerformLayout();
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -1024,18 +939,11 @@ namespace Greenshot
         private System.Windows.Forms.ToolStripButton btnText;
         private System.Windows.Forms.ToolStripMenuItem drawLineToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnLine;
-        private System.Windows.Forms.ToolStripButton btnSettings;
-        private System.Windows.Forms.ToolStripButton btnHelp;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripComboBox comboBoxThickness;
+        private System.Windows.Forms.ToolStripComboBox cbThickness;
         private System.Windows.Forms.ToolStripMenuItem borderColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel labelLineThickness;
@@ -1078,7 +986,6 @@ namespace Greenshot
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnClipboard;
         private System.Windows.Forms.ToolStripButton btnDelete;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnEllipse;
         private System.Windows.Forms.ToolStripButton btnSave;
@@ -1086,5 +993,6 @@ namespace Greenshot
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

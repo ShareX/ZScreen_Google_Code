@@ -90,7 +90,7 @@ namespace Greenshot
             backgroundColorToolStripMenuItem.Image = imgBackground;
 
             this.colorDialog.RecentColors = conf.Editor_RecentColors;
-            this.comboBoxThickness.Text = conf.Editor_Thickness.ToString();
+            this.cbThickness.Text = conf.Editor_Thickness.ToString();
         }
 
         public void SetImage(Image img)
@@ -117,14 +117,15 @@ namespace Greenshot
             this.cutToolStripMenuItem.Enabled = elementSelected;
             this.duplicateToolStripMenuItem.Enabled = elementSelected;
             this.removeObjectToolStripMenuItem.Enabled = elementSelected;
-            this.borderColorToolStripMenuItem.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
-            this.btnBorderColor.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
-            this.backgroundColorToolStripMenuItem.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
-            this.btnBackgroundColor.Enabled = true;//(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
-            this.lineThickness1ToolStripMenuItem.Enabled = this.lineThicknessToolStripMenuItem.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.THICKNESS));
-            this.comboBoxThickness.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.THICKNESS));
-            this.btnArrowHeads.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.ARROWHEADS));
-            this.arrowHeadsToolStripMenuItem.Enabled = (elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.ARROWHEADS));
+
+            //this.btnBorderColor.Enabled = this.borderColorToolStripMenuItem.Enabled =
+            //(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.LINECOLOR));
+            //this.btnBackgroundColor.Enabled = this.backgroundColorToolStripMenuItem.Enabled =
+            //(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.FILLCOLOR));
+            //this.comboBoxThickness.Enabled = this.lineThicknessToolStripMenuItem.Enabled =
+            //(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.THICKNESS));
+            //this.btnArrowHeads.Enabled = this.arrowHeadsToolStripMenuItem.Enabled =
+            //(elementSelected && selectedElements.PropertySupported(DrawableContainer.Property.ARROWHEADS));
 
             bool push = surface.CanPushSelectionDown();
             bool pull = surface.CanPullSelectionUp();
@@ -537,29 +538,9 @@ namespace Greenshot
 
         #region Help
 
-        private void HelpToolStripMenuItem1Click(object sender, System.EventArgs e)
-        {
-            // new HelpBrowserForm(conf.Ui_Language).Show();
-        }
-
         private void AboutToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             new AboutForm().Show();
-        }
-
-        private void PreferencesToolStripMenuItemClick(object sender, System.EventArgs e)
-        {
-            // new SettingsForm().Show();
-        }
-
-        private void BtnSettingsClick(object sender, System.EventArgs e)
-        {
-            PreferencesToolStripMenuItemClick(sender, e);
-        }
-
-        private void BtnHelpClick(object sender, System.EventArgs e)
-        {
-            HelpToolStripMenuItem1Click(sender, e);
         }
 
         #endregion

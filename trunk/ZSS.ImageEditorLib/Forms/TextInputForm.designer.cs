@@ -66,11 +66,11 @@ namespace Greenshot
             this.toolStripContainer1.ContentPanel.Controls.Add(this.btnCancel);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.btnOk);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.InputText);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(418, 193);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(418, 199);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(418, 218);
+            this.toolStripContainer1.Size = new System.Drawing.Size(418, 222);
             this.toolStripContainer1.TabIndex = 4;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -102,10 +102,10 @@ namespace Greenshot
             // InputText
             // 
             this.InputText.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputText.Location = new System.Drawing.Point(0, 3);
+            this.InputText.Location = new System.Drawing.Point(0, 0);
             this.InputText.Multiline = true;
             this.InputText.Name = "InputText";
-            this.InputText.Size = new System.Drawing.Size(410, 151);
+            this.InputText.Size = new System.Drawing.Size(416, 151);
             this.InputText.TabIndex = 4;
             this.InputText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputTextKeyDown);
             // 
@@ -121,9 +121,10 @@ namespace Greenshot
             this.btnUnderline,
             this.toolStripSeparator1,
             this.btnColor});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(395, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(415, 23);
             this.toolStrip1.TabIndex = 0;
             // 
             // comboFonts
@@ -131,20 +132,20 @@ namespace Greenshot
             this.comboFonts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboFonts.MaxDropDownItems = 20;
             this.comboFonts.Name = "comboFonts";
-            this.comboFonts.Size = new System.Drawing.Size(200, 25);
+            this.comboFonts.Size = new System.Drawing.Size(200, 23);
             this.comboFonts.SelectedIndexChanged += new System.EventHandler(this.ComboFontsSelectedIndexChanged);
             // 
             // comboFontSize
             // 
             this.comboFontSize.MaxDropDownItems = 20;
             this.comboFontSize.Name = "comboFontSize";
-            this.comboFontSize.Size = new System.Drawing.Size(75, 25);
+            this.comboFontSize.Size = new System.Drawing.Size(75, 23);
             this.comboFontSize.TextChanged += new System.EventHandler(this.ComboFontSizeTextChanged);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
             // 
             // btnBold
             // 
@@ -154,7 +155,7 @@ namespace Greenshot
             this.btnBold.Image = ((System.Drawing.Image)(resources.GetObject("btnBold.Image")));
             this.btnBold.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBold.Name = "btnBold";
-            this.btnBold.Size = new System.Drawing.Size(23, 22);
+            this.btnBold.Size = new System.Drawing.Size(23, 20);
             this.btnBold.Text = "B";
             this.btnBold.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.btnBold.ToolTipText = "Bold";
@@ -167,7 +168,7 @@ namespace Greenshot
             this.btnItalic.Image = ((System.Drawing.Image)(resources.GetObject("btnItalic.Image")));
             this.btnItalic.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnItalic.Name = "btnItalic";
-            this.btnItalic.Size = new System.Drawing.Size(23, 22);
+            this.btnItalic.Size = new System.Drawing.Size(23, 20);
             this.btnItalic.Text = "toolStripButton2";
             this.btnItalic.Click += new System.EventHandler(this.BtnItalicClick);
             // 
@@ -178,14 +179,14 @@ namespace Greenshot
             this.btnUnderline.Image = ((System.Drawing.Image)(resources.GetObject("btnUnderline.Image")));
             this.btnUnderline.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUnderline.Name = "btnUnderline";
-            this.btnUnderline.Size = new System.Drawing.Size(23, 22);
+            this.btnUnderline.Size = new System.Drawing.Size(23, 20);
             this.btnUnderline.Text = "toolStripButton3";
             this.btnUnderline.Click += new System.EventHandler(this.BtnUnderlineClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
             // 
             // btnColor
             // 
@@ -193,7 +194,7 @@ namespace Greenshot
             this.btnColor.Image = ((System.Drawing.Image)(resources.GetObject("btnColor.Image")));
             this.btnColor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnColor.Name = "btnColor";
-            this.btnColor.Size = new System.Drawing.Size(23, 22);
+            this.btnColor.Size = new System.Drawing.Size(23, 20);
             this.btnColor.Text = "toolStripDropDownButton1";
             this.btnColor.Click += new System.EventHandler(this.BtnColorClick);
             // 
@@ -201,7 +202,7 @@ namespace Greenshot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 218);
+            this.ClientSize = new System.Drawing.Size(418, 222);
             this.Controls.Add(this.toolStripContainer1);
             this.Name = "TextInputForm";
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
