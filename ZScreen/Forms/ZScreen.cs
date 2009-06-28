@@ -391,25 +391,33 @@ namespace ZSS
             // Image Software Settings
             ///////////////////////////////////
 
+            Software disabled = new Software("Disabled", "", true);
             Software editor = new Software(Program.ZSCREEN_EDITOR, Application.ExecutablePath, true);
 
             if (Program.conf.ImageSoftwareList.Count == 0)
             {
+                Program.conf.ImageSoftwareList.Add(disabled);
                 Program.conf.ImageSoftwareList.Add(editor);
                 Program.conf.ImageSoftwareList.Add(Program.conf.ImageSoftwareActive);
             }
             RegistryMgr.FindImageEditors();
+
+            #region "Support for previous versions"
+            if (!Program.conf.SoftwareExist(disabled.Name))
+            {
+                Program.conf.ImageSoftwareList.Add(disabled);
+            }
             if (!Program.conf.SoftwareExist(Program.ZSCREEN_EDITOR))
             {
                 Program.conf.ImageSoftwareList.Add(editor);
             }
+            #endregion
 
             if (Program.conf.TextEditors.Count == 0)
             {
                 Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
             }
             lbImageSoftware.Items.Clear();
-            lbImageSoftware.Items.Add("Disabled");
 
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
@@ -1654,7 +1662,7 @@ namespace ZSS
             }
 
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1] = temp;
+            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex] = temp;
 
             ShowImageEditorsSettings();
 
@@ -1888,13 +1896,13 @@ namespace ZSS
 
             if (sel != -1)
             {
-                Program.conf.ImageSoftwareList.RemoveAt(sel - 1);
+                Program.conf.ImageSoftwareList.RemoveAt(sel);
 
                 lbImageSoftware.Items.RemoveAt(sel);
 
                 if (lbImageSoftware.Items.Count > 0)
                 {
-                    lbImageSoftware.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
+                    lbImageSoftware.SelectedIndex = (sel > 0) ? (sel) : 0;
                 }
             }
 
@@ -1984,7 +1992,7 @@ namespace ZSS
             {
                 Program.conf.ImageSoftwareEnabled = true;
 
-                Program.conf.ImageSoftwareActive = Program.conf.ImageSoftwareList[sel - 1];
+                Program.conf.ImageSoftwareActive = Program.conf.ImageSoftwareList[sel];
                 RewriteImageEditorsRightClickMenu();
             }
         }
@@ -4371,9 +4379,9 @@ namespace ZSS
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1];
+            Software temp = Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex];
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex - 1] = temp;
+            Program.conf.ImageSoftwareList[lbImageSoftware.SelectedIndex] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
         }
