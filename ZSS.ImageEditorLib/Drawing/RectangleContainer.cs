@@ -52,12 +52,11 @@ namespace Greenshot.Drawing
             supportedProperties.Add(DrawableContainer.Property.THICKNESS);
         }
 
-        #region serialization
+        #region Serialization
 
         public RectangleContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)
         {
-
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)

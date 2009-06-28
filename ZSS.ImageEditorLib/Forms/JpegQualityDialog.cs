@@ -74,7 +74,7 @@ namespace Greenshot
             {
                 conf.Output_File_JpegQuality = Quality;
                 conf.Output_File_PromptJpegQuality = false;
-                conf.Store();
+                conf.Save();
             }
 
         }

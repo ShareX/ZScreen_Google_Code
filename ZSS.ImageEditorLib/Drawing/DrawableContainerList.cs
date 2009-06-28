@@ -95,6 +95,23 @@ namespace Greenshot.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the thickness of the elements in the list.
+        /// If there are several elements, the thickness of the last added is returned.
+        /// </summary>
+        public ArrowHeads ArrowHeads
+        {
+            get
+            {
+                if (Count > 0) return this[Count - 1].ArrowHeads;
+                return ArrowHeads.None;
+            }
+            set
+            {
+                foreach (DrawableContainer dc in this) dc.ArrowHeads = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the selection status of the elements.
         /// If several elements are in the list, true is only returned when all elements are selected.
         /// </summary>

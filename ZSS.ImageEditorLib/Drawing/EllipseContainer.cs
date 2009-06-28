@@ -52,7 +52,7 @@ namespace Greenshot.Drawing
             supportedProperties.Add(DrawableContainer.Property.THICKNESS);
         }
 
-        #region serialization
+        #region Serialization
 
         public EllipseContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)

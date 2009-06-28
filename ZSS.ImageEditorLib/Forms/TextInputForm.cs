@@ -99,7 +99,7 @@ namespace Greenshot
         private void BtnOkClick(object sender, EventArgs e)
         {
             AppConfig.GetInstance().Editor_Font = InputText.Font;
-            AppConfig.GetInstance().Store();
+            AppConfig.GetInstance().Save();
             this.DialogResult = DialogResult.OK;
             this.Hide();
         }

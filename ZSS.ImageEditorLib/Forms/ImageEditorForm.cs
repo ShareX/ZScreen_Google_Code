@@ -217,70 +217,44 @@ namespace Greenshot
 
         #region Drawing options
 
-        private void BtnEllipseClick(object sender, EventArgs e)
+        private void CheckAllButtons(bool check)
         {
-            surface.DrawingMode = Surface.DrawingModes.Ellipse;
-            btnCursor.Checked = false;
-            btnRect.Checked = false;
-            btnEllipse.Checked = true;
-            btnText.Checked = false;
-            btnLine.Checked = false;
-            btnArrow.Checked = false;
+            btnCursor.Checked = btnRect.Checked = btnEllipse.Checked = btnLine.Checked = btnText.Checked = check;
         }
 
         private void BtnCursorClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.None;
+            CheckAllButtons(false);
             btnCursor.Checked = true;
-            btnRect.Checked = false;
-            btnEllipse.Checked = false;
-            btnText.Checked = false;
-            btnLine.Checked = false;
-            btnArrow.Checked = false;
         }
 
         private void BtnRectClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Rect;
-            btnCursor.Checked = false;
+            CheckAllButtons(false);
             btnRect.Checked = true;
-            btnEllipse.Checked = false;
-            btnText.Checked = false;
-            btnLine.Checked = false;
-            btnArrow.Checked = false;
         }
 
-        private void BtnTextClick(object sender, EventArgs e)
+        private void BtnEllipseClick(object sender, EventArgs e)
         {
-            surface.DrawingMode = Surface.DrawingModes.Text;
-            btnCursor.Checked = false;
-            btnRect.Checked = false;
-            btnEllipse.Checked = false;
-            btnText.Checked = true;
-            btnLine.Checked = false;
-            btnArrow.Checked = false;
+            surface.DrawingMode = Surface.DrawingModes.Ellipse;
+            CheckAllButtons(false);
+            btnEllipse.Checked = true;
         }
 
         private void BtnLineClick(object sender, EventArgs e)
         {
             surface.DrawingMode = Surface.DrawingModes.Line;
-            btnCursor.Checked = false;
-            btnRect.Checked = false;
-            btnEllipse.Checked = false;
-            btnText.Checked = false;
+            CheckAllButtons(false);
             btnLine.Checked = true;
-            btnArrow.Checked = false;
         }
 
-        private void BtnArrowClick(object sender, EventArgs e)
+        private void BtnTextClick(object sender, EventArgs e)
         {
-            surface.DrawingMode = Surface.DrawingModes.Arrow;
-            btnCursor.Checked = false;
-            btnRect.Checked = false;
-            btnEllipse.Checked = false;
-            btnText.Checked = false;
-            btnLine.Checked = false;
-            btnArrow.Checked = true;
+            surface.DrawingMode = Surface.DrawingModes.Text;
+            CheckAllButtons(false);
+            btnText.Checked = true;
         }
 
         private void AddRectangleToolStripMenuItemClick(object sender, System.EventArgs e)
@@ -301,11 +275,6 @@ namespace Greenshot
         private void DrawLineToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             BtnLineClick(sender, e);
-        }
-
-        private void DrawArrowToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            BtnArrowClick(sender, e);
         }
 
         private void RemoveObjectToolStripMenuItemClick(object sender, System.EventArgs e)
@@ -406,7 +375,7 @@ namespace Greenshot
             {
                 conf.Editor_ForeColor = colorDialog.Color;
                 conf.Editor_RecentColors = colorDialog.RecentColors;
-                conf.Store();
+                conf.Save();
                 surface.ForeColor = colorDialog.Color;
 
                 Bitmap img = DrawColorButton(colorDialog.Color, btnBorderColor.ContentRectangle, ColorType.Border);
@@ -430,10 +399,10 @@ namespace Greenshot
             colorDialog.Color = surface.BackColor;
             if (colorDialog.ShowDialog() != DialogResult.Cancel)
             {
+                surface.BackColor = colorDialog.Color;
                 conf.Editor_BackColor = colorDialog.Color;
                 conf.Editor_RecentColors = colorDialog.RecentColors;
-                conf.Store();
-                surface.BackColor = colorDialog.Color;
+                conf.Save();
 
                 Bitmap img = DrawColorButton(colorDialog.Color, btnBorderColor.ContentRectangle, ColorType.Background);
                 btnBackgroundColor.Image = img;
@@ -484,54 +453,50 @@ namespace Greenshot
 
         private void cbThickness_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ToolStripComboBox cb = (ToolStripComboBox)sender;
-            try
-            {
-                int t = Int32.Parse(cb.Text);
-                surface.Thickness = t;
-                conf.Editor_Thickness = t;
-                conf.Store();
-            }
-            catch (Exception)
-            {
-                cb.Text = conf.Editor_Thickness.ToString();
-            }
+            ThicknessChanged(((ToolStripComboBox)sender).Text);
         }
 
         private void LineThicknessValueToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            ToolStripMenuItem cb = (ToolStripMenuItem)sender;
-            try
+            ThicknessChanged(((ToolStripMenuItem)sender).Text);
+        }
+
+        private void ThicknessChanged(string value)
+        {
+            int number;
+            if (Int32.TryParse(value, out number))
             {
-                int t = Int32.Parse(cb.Text);
-                surface.Thickness = t;
-                conf.Editor_Thickness = t;
-                conf.Store();
-            }
-            catch (Exception)
-            {
-                cb.Text = conf.Editor_Thickness.ToString();
+                surface.Thickness = number;
+                conf.Editor_Thickness = number;
+                conf.Save();
             }
         }
 
         private void ArrowHeadsStartPointToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            surface.ArrowHead = Surface.ArrowHeads.Start;
+            ArrowHeadsChanged(ArrowHeads.Start);
         }
 
         private void ArrowHeadsEndPointToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            surface.ArrowHead = Surface.ArrowHeads.End;
+            ArrowHeadsChanged(ArrowHeads.End);
         }
 
         private void ArrowHeadsBothToolStripMenuItemClick(object sender, EventArgs e)
         {
-            surface.ArrowHead = Surface.ArrowHeads.Both;
+            ArrowHeadsChanged(ArrowHeads.Both);
         }
 
         private void ArrowHeadsNoneToolStripMenuItemClick(object sender, EventArgs e)
         {
-            surface.ArrowHead = Surface.ArrowHeads.None;
+            ArrowHeadsChanged(ArrowHeads.None);
+        }
+
+        private void ArrowHeadsChanged(ArrowHeads arrowHeads)
+        {
+            surface.ArrowHead = arrowHeads;
+            conf.Editor_ArrowHeads = arrowHeads;
+            conf.Save();
         }
 
         #endregion
@@ -557,7 +522,7 @@ namespace Greenshot
         private void ImageEditorFormFormClosing(object sender, FormClosingEventArgs e)
         {
             conf.Editor_WindowSize = Size;
-            conf.Store();
+            conf.Save();
             System.GC.Collect();
         }
 
@@ -578,10 +543,6 @@ namespace Greenshot
             else if (Keys.L.Equals(e.KeyCode))
             {
                 BtnLineClick(sender, e);
-            }
-            else if (Keys.A.Equals(e.KeyCode))
-            {
-                BtnArrowClick(sender, e);
             }
             else if (Keys.T.Equals(e.KeyCode))
             {
