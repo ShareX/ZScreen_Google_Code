@@ -90,6 +90,7 @@ namespace Greenshot
             Bitmap imgBackground = DrawColorButton(surface.BackColor, btnBackgroundColor.ContentRectangle, ColorType.Background);
             btnBackgroundColor.Image = imgBackground;
             backgroundColorToolStripMenuItem.Image = imgBackground;
+            btnArrowHeads.Image = DrawArrowHeadsButton(surface.ArrowHead, btnArrowHeads.ContentRectangle);
 
             this.colorDialog.RecentColors = conf.Editor_RecentColors;
             this.cbThickness.Text = conf.Editor_Thickness.ToString();
@@ -479,6 +480,21 @@ namespace Greenshot
             }
         }
 
+        private Bitmap DrawArrowHeadsButton(ArrowHeads arrowHeads, Rectangle rect)
+        {
+            Bitmap img = new Bitmap(rect.Width, rect.Height);
+            Graphics g = Graphics.FromImage(img);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            Pen pen = new Pen(Color.Black) { Width = 1 };
+
+            AdjustableArrowCap aac = new AdjustableArrowCap(4, 6);
+            if (arrowHeads == ArrowHeads.Start || arrowHeads == ArrowHeads.Both) pen.CustomStartCap = aac;
+            if (arrowHeads == ArrowHeads.End || arrowHeads == ArrowHeads.Both) pen.CustomEndCap = aac;
+
+            g.DrawLine(pen, 3, rect.Height / 2, rect.Width - 3, rect.Height / 2);
+            return img;
+        }
+
         private void ArrowHeadsStartPointToolStripMenuItemClick(object sender, System.EventArgs e)
         {
             ArrowHeadsChanged(ArrowHeads.Start);
@@ -504,6 +520,8 @@ namespace Greenshot
             surface.ArrowHead = arrowHeads;
             conf.Editor_ArrowHeads = arrowHeads;
             conf.Save();
+
+            btnArrowHeads.Image = DrawArrowHeadsButton(arrowHeads, btnArrowHeads.ContentRectangle);
         }
 
         #endregion

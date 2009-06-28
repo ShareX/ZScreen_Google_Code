@@ -91,6 +91,11 @@
     <Compile Include="Helpers\PropertyItemProvider.cs" />
     <Compile Include="Drawing\RectangleContainer.cs" />
     <Compile Include="Drawing\RoundedRectangle.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RuntimeConfig.cs" />
     <Compile Include="Helpers\ScaleHelper.cs" />
     <Compile Include="Drawing\Surface.cs">
@@ -126,6 +131,25 @@
     <EmbeddedResource Include="Forms\TextInputForm.resx">
       <DependentUpon>TextInputForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-shape-ellipse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-shape-line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-shape-text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cursor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
