@@ -35,12 +35,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.Serialization;
 using Greenshot.Helpers;
+using System.Drawing.Drawing2D;
 
 namespace Greenshot.Drawing
 {
-    /// <summary>
-    /// Description of EllipseContainer.
-    /// </summary>
     [Serializable()]
     public class EllipseContainer : DrawableContainer
     {
@@ -68,12 +66,10 @@ namespace Greenshot.Drawing
 
         public override void Draw(Graphics g, RenderMode rm)
         {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            Pen pen = new Pen(foreColor);
-            pen.Width = thickness;
-            Brush brush = new SolidBrush(backColor);
+            g.SmoothingMode = SmoothingMode.HighQuality;
             Rectangle rect = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
-            g.FillEllipse(brush, rect);
+            g.FillEllipse(GetBrush(rect), rect);
+            Pen pen = new Pen(foreColor) { Width = thickness };
             g.DrawEllipse(pen, rect);
         }
     }

@@ -58,16 +58,14 @@ using System.ComponentModel;
 
 namespace Greenshot
 {
-    /// <summary>
-    /// Description of ImageEditorForm.
-    /// </summary>
     public partial class ImageEditorForm : Form
     {
+        public BackgroundWorker MyWorker { get; set; }
+
         private ColorDialog colorDialog = ColorDialog.GetInstance();
         private string lastSaveFullPath;
         private AppConfig conf = AppConfig.GetInstance();
         private Surface surface;
-        public BackgroundWorker MyWorker { get; set; }
 
         public ImageEditorForm()
         {
@@ -81,9 +79,16 @@ namespace Greenshot
 
             if (conf.Editor_WindowSize != null)
             {
-                Size = (Size)conf.Editor_WindowSize;
+                this.Size = (Size)conf.Editor_WindowSize;
             }
 
+            this.colorDialog.RecentColors = conf.Editor_RecentColors;
+
+            UpdateFormControls();
+        }
+
+        private void UpdateFormControls()
+        {
             Bitmap imgBorder = DrawColorButton(ColorType.Border);
             btnBorderColor.Image = imgBorder;
             borderColorToolStripMenuItem.Image = imgBorder;
@@ -92,12 +97,17 @@ namespace Greenshot
             btnBackgroundColor.Image = imgBackground;
             backgroundColorToolStripMenuItem.Image = imgBackground;
 
-            btnGradientColor.Image = DrawColorButton(ColorType.Gradient);
+            Bitmap imgGradient = DrawColorButton(ColorType.Gradient);
+            btnGradientColor.Image = imgGradient;
+            gradientColorToolStripMenuItem.Image = imgGradient;
+
+            tscbGradientType.Items.Add("None");
+            tscbGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
+            tscbGradientType.Text = conf.Editor_GradientType;
+
+            cbThickness.Text = conf.Editor_Thickness.ToString();
 
             btnArrowHeads.Image = DrawArrowHeadsButton(surface.ArrowHead, btnArrowHeads.ContentRectangle);
-
-            this.colorDialog.RecentColors = conf.Editor_RecentColors;
-            this.cbThickness.Text = conf.Editor_Thickness.ToString();
         }
 
         public void SetImage(Image img)
@@ -427,6 +437,11 @@ namespace Greenshot
             SelectGradientColor();
         }
 
+        private void gradientColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectGradientColor();
+        }
+
         private void SelectGradientColor()
         {
             colorDialog.Color = surface.GradientColor;
@@ -439,6 +454,7 @@ namespace Greenshot
 
                 Bitmap img = DrawColorButton(ColorType.Gradient);
                 btnGradientColor.Image = img;
+                gradientColorToolStripMenuItem.Image = img;
             }
         }
 
@@ -451,7 +467,7 @@ namespace Greenshot
             Graphics g = Graphics.FromImage(img);
 
             Brush brush = Brushes.Transparent;
-            if (colorType == ColorType.Background)
+            if (colorType == ColorType.Background || surface.GradientType == "None")
             {
                 brush = new SolidBrush(surface.BackColor);
             }
@@ -461,7 +477,8 @@ namespace Greenshot
             }
             else if (colorType == ColorType.Preview)
             {
-                brush = new LinearGradientBrush(new Rectangle(0, 0, 18, 18), surface.BackColor, surface.GradientColor, LinearGradientMode.Vertical);
+                LinearGradientMode gradientMode = (LinearGradientMode)Enum.Parse(typeof(LinearGradientMode), surface.GradientType);
+                brush = new LinearGradientBrush(new Rectangle(0, 0, 18, 18), surface.BackColor, surface.GradientColor, gradientMode);
             }
             g.FillRectangle(brush, new Rectangle(0, 0, 18, 18));
 
@@ -472,10 +489,15 @@ namespace Greenshot
 
             if (colorType != ColorType.Preview)
             {
-                btnColorPreview.Image = DrawColorButton(ColorType.Preview);
+                UpdateColorPreview();
             }
 
             return img;
+        }
+
+        private void UpdateColorPreview()
+        {
+            btnColorPreview.Image = DrawColorButton(ColorType.Preview);
         }
 
         private Bitmap DrawCheckersPattern(Size size, int boxSize)
@@ -499,6 +521,15 @@ namespace Greenshot
                 }
             }
             return img;
+        }
+
+        private void tscbGradientType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            surface.GradientType = (string)tscbGradientType.SelectedItem;
+            conf.Editor_GradientType = (string)tscbGradientType.SelectedItem;
+            conf.Save();
+
+            UpdateColorPreview();
         }
 
         private void cbThickness_SelectedIndexChanged(object sender, EventArgs e)

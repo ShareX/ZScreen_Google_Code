@@ -106,7 +106,7 @@ namespace Greenshot.Drawing
             }
         }
 
-        public new Color GradientColor
+        public Color GradientColor
         {
             get
             {
@@ -116,6 +116,19 @@ namespace Greenshot.Drawing
             set
             {
                 selectedElements.GradientColor = value;
+            }
+        }
+
+        public string GradientType
+        {
+            get
+            {
+                if (selectedElements.Count > 0) return selectedElements[selectedElements.Count - 1].GradientType;
+                else return conf.Editor_GradientType;
+            }
+            set
+            {
+                selectedElements.GradientType = value;
             }
         }
 
@@ -205,6 +218,8 @@ namespace Greenshot.Drawing
                 drawingElement.Selected = true;
                 drawingElement.ForeColor = conf.Editor_ForeColor;
                 drawingElement.BackColor = conf.Editor_BackColor;
+                drawingElement.GradientColor = conf.Editor_GradientColor;
+                drawingElement.GradientType = conf.Editor_GradientType;
                 drawingElement.Thickness = conf.Editor_Thickness;
                 drawingElement.ArrowHeads = conf.Editor_ArrowHeads;
                 AddElement(drawingElement);

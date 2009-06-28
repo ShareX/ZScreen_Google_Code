@@ -39,9 +39,6 @@ using System.Runtime.Serialization;
 
 namespace Greenshot.Drawing
 {
-    /// <summary>
-    /// Description of TextContainer.
-    /// </summary>
     [Serializable()]
     public class TextContainer : DrawableContainer
     {
@@ -51,7 +48,8 @@ namespace Greenshot.Drawing
             supportedProperties.Add(DrawableContainer.Property.LINECOLOR);
         }
 
-        #region serialization
+        #region Serialization
+
         public TextContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)
         {
@@ -59,12 +57,14 @@ namespace Greenshot.Drawing
             childLabel.Text = (string)info.GetValue("Text", typeof(string));
             childLabel.Font = (Font)info.GetValue("Font", typeof(Font));
         }
+
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             base.GetObjectData(info, ctxt);
             info.AddValue("Text", childLabel.Text);
             info.AddValue("Font", childLabel.Font);
         }
+
         #endregion
 
         public override Color ForeColor

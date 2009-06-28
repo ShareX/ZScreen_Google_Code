@@ -37,6 +37,7 @@ using System.Windows.Forms;
 using Greenshot.Helpers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 
 namespace Greenshot.Drawing
 {
@@ -69,6 +70,13 @@ namespace Greenshot.Drawing
         {
             get { return gradientColor; }
             set { gradientColor = value; if (parent != null) parent.Invalidate(); }
+        }
+
+        protected string gradientType = "None";
+        public string GradientType
+        {
+            get { return gradientType; }
+            set { gradientType = value; if (parent != null) parent.Invalidate(); }
         }
 
         protected int thickness = 1;
@@ -397,6 +405,19 @@ namespace Greenshot.Drawing
             }
             parent = newParent;
             InitControls();
+        }
+
+        protected Brush GetBrush(Rectangle rect)
+        {
+            if (GradientType == "None" || (rect.Width < 1 || rect.Height < 1))
+            {
+                return new SolidBrush(backColor);
+            }
+            else
+            {
+                LinearGradientMode gradientMode = (LinearGradientMode)Enum.Parse(typeof(LinearGradientMode), gradientType);
+                return new LinearGradientBrush(rect, backColor, gradientColor, gradientMode);
+            }
         }
     }
 }

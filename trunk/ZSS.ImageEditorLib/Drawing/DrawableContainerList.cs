@@ -90,6 +90,19 @@ namespace Greenshot.Drawing
             }
         }
 
+        public string GradientType
+        {
+            get
+            {
+                if (Count > 0) return this[Count - 1].GradientType;
+                return "None";
+            }
+            set
+            {
+                foreach (DrawableContainer dc in this) dc.GradientType = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the thickness of the elements in the list.
         /// If there are several elements, the thickness of the last added is returned.
