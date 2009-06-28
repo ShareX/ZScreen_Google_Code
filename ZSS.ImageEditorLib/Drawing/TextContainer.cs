@@ -36,6 +36,7 @@ using System.Windows.Forms;
 using Greenshot.Helpers;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Drawing.Text;
 
 namespace Greenshot.Drawing
 {
@@ -110,6 +111,7 @@ namespace Greenshot.Drawing
 
         public override void Draw(Graphics g, RenderMode rm)
         {
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
             Rectangle rect = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
             if (Selected && rm.Equals(RenderMode.EDIT)) DrawSelectionBorder(g, rect);
             Brush fontBrush = new SolidBrush(foreColor);

@@ -211,6 +211,7 @@ namespace ZSS.Helpers
                         {
                             Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Program.SettingsDir, "ImageEditor.bin");
                             Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
+                            editor.OnClose = Program.conf.ImageEditorOnClose;
                             editor.MyWorker = task.MyWorker;
                             editor.SetImage(task.MyImage);
                             editor.SetImagePath(task.LocalFilePath);
@@ -218,7 +219,7 @@ namespace ZSS.Helpers
                         }
                         catch (Exception ex)
                         {
-                            FileSystem.AppendDebug(ex.ToString());     
+                            FileSystem.AppendDebug(ex.ToString());
                         }
                     }
                     else

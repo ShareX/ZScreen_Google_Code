@@ -99,7 +99,6 @@ namespace ZSS
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -349,9 +348,7 @@ namespace ZSS
             this.tpText = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -458,6 +455,12 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.cbImageEditorOnClose = new System.Windows.Forms.ComboBox();
+            this.lblImageEditorOnClose = new System.Windows.Forms.Label();
+            this.gbImageEditorSettings = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -571,6 +574,7 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            this.gbImageEditorSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1147,18 +1151,6 @@ namespace ZSS
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(296, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -3468,6 +3460,7 @@ namespace ZSS
             // 
             // tpEditorsImages
             // 
+            this.tpEditorsImages.Controls.Add(this.gbImageEditorSettings);
             this.tpEditorsImages.Controls.Add(this.pgEditorsImage);
             this.tpEditorsImages.Controls.Add(this.btnDeleteImageSoftware);
             this.tpEditorsImages.Controls.Add(this.btnBrowseImageSoftware);
@@ -3489,7 +3482,7 @@ namespace ZSS
             this.pgEditorsImage.Location = new System.Drawing.Point(296, 40);
             this.pgEditorsImage.Name = "pgEditorsImage";
             this.pgEditorsImage.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgEditorsImage.Size = new System.Drawing.Size(442, 72);
+            this.pgEditorsImage.Size = new System.Drawing.Size(456, 72);
             this.pgEditorsImage.TabIndex = 64;
             this.pgEditorsImage.ToolbarVisible = false;
             this.pgEditorsImage.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgEditorsImage_PropertyValueChanged);
@@ -4095,14 +4088,6 @@ namespace ZSS
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(762, 393);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4113,14 +4098,6 @@ namespace ZSS
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(762, 393);
-            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -5380,6 +5357,68 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
+            // cbImageEditorOnClose
+            // 
+            this.cbImageEditorOnClose.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbImageEditorOnClose.FormattingEnabled = true;
+            this.cbImageEditorOnClose.Items.AddRange(new object[] {
+            "Close normally",
+            "Auto save before close",
+            "Prompt for save if image edited before close"});
+            this.cbImageEditorOnClose.Location = new System.Drawing.Point(160, 24);
+            this.cbImageEditorOnClose.Name = "cbImageEditorOnClose";
+            this.cbImageEditorOnClose.Size = new System.Drawing.Size(280, 21);
+            this.cbImageEditorOnClose.TabIndex = 65;
+            this.cbImageEditorOnClose.SelectedIndexChanged += new System.EventHandler(this.cbImageEditorOnClose_SelectedIndexChanged);
+            // 
+            // lblImageEditorOnClose
+            // 
+            this.lblImageEditorOnClose.AutoSize = true;
+            this.lblImageEditorOnClose.Location = new System.Drawing.Point(16, 28);
+            this.lblImageEditorOnClose.Name = "lblImageEditorOnClose";
+            this.lblImageEditorOnClose.Size = new System.Drawing.Size(134, 13);
+            this.lblImageEditorOnClose.TabIndex = 66;
+            this.lblImageEditorOnClose.Text = "Image Editor close options:";
+            // 
+            // gbImageEditorSettings
+            // 
+            this.gbImageEditorSettings.Controls.Add(this.lblImageEditorOnClose);
+            this.gbImageEditorSettings.Controls.Add(this.cbImageEditorOnClose);
+            this.gbImageEditorSettings.Location = new System.Drawing.Point(296, 120);
+            this.gbImageEditorSettings.Name = "gbImageEditorSettings";
+            this.gbImageEditorSettings.Size = new System.Drawing.Size(456, 264);
+            this.gbImageEditorSettings.TabIndex = 67;
+            this.gbImageEditorSettings.TabStop = false;
+            this.gbImageEditorSettings.Text = "Settings";
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(296, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(762, 393);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
+            // ucUrlShorteners
+            // 
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(762, 393);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5552,6 +5591,8 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            this.gbImageEditorSettings.ResumeLayout(false);
+            this.gbImageEditorSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5983,6 +6024,9 @@ namespace ZSS
         private ZSS.UserControls.TextUploadersControl ucTextUploaders;
         private System.Windows.Forms.ToolTip ttZScreen;
         private System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
+        private System.Windows.Forms.ComboBox cbImageEditorOnClose;
+        private System.Windows.Forms.Label lblImageEditorOnClose;
+        private System.Windows.Forms.GroupBox gbImageEditorSettings;
 
     }
 }

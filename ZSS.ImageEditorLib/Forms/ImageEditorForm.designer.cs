@@ -420,7 +420,7 @@ namespace Greenshot
             // 
             // addRectangleToolStripMenuItem
             // 
-            this.addRectangleToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("addRectangleToolStripMenuItem.Image")));
+            this.addRectangleToolStripMenuItem.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape;
             this.addRectangleToolStripMenuItem.Name = "addRectangleToolStripMenuItem";
             this.addRectangleToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.addRectangleToolStripMenuItem.Text = "Draw rectangle";
@@ -428,7 +428,7 @@ namespace Greenshot
             // 
             // addEllipseToolStripMenuItem
             // 
-            this.addEllipseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("addEllipseToolStripMenuItem.Image")));
+            this.addEllipseToolStripMenuItem.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_ellipse;
             this.addEllipseToolStripMenuItem.Name = "addEllipseToolStripMenuItem";
             this.addEllipseToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.addEllipseToolStripMenuItem.Text = "Draw ellipse";
@@ -436,14 +436,14 @@ namespace Greenshot
             // 
             // drawLineToolStripMenuItem
             // 
-            this.drawLineToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("drawLineToolStripMenuItem.Image")));
+            this.drawLineToolStripMenuItem.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_line;
             this.drawLineToolStripMenuItem.Name = "drawLineToolStripMenuItem";
             this.drawLineToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.drawLineToolStripMenuItem.Text = "Draw line";
             // 
             // addTextBoxToolStripMenuItem
             // 
-            this.addTextBoxToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("addTextBoxToolStripMenuItem.Image")));
+            this.addTextBoxToolStripMenuItem.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_text;
             this.addTextBoxToolStripMenuItem.Name = "addTextBoxToolStripMenuItem";
             this.addTextBoxToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.addTextBoxToolStripMenuItem.Text = "Add text box";
@@ -519,7 +519,6 @@ namespace Greenshot
             // 
             // borderColorToolStripMenuItem
             // 
-            this.borderColorToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("borderColorToolStripMenuItem.Image")));
             this.borderColorToolStripMenuItem.Name = "borderColorToolStripMenuItem";
             this.borderColorToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.borderColorToolStripMenuItem.Text = "Border color";
@@ -527,7 +526,6 @@ namespace Greenshot
             // 
             // backgroundColorToolStripMenuItem
             // 
-            this.backgroundColorToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("backgroundColorToolStripMenuItem.Image")));
             this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
             this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.backgroundColorToolStripMenuItem.Text = "Background color";

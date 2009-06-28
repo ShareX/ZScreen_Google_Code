@@ -264,7 +264,7 @@ namespace ZSS
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
 
-        // ** YOU CANNOT ADD NEW ITMES TO THE LIST HERE BECAUSE THAT IS GOING TO CAUSE DUPLATES **
+        // ** YOU CANNOT ADD NEW ITMES TO THE LIST HERE BECAUSE THAT IS GOING TO CAUSE DUPLATES ** <- lol
         public List<TextUploader> UrlShortenersList = new List<TextUploader>();
         public int SelectedUrlShortener = 0;
         public TextUploader UrlShortenerActive = new TinyURLUploader();
@@ -279,6 +279,7 @@ namespace ZSS
         public Software TextEditorActive = new Software();
         public List<Software> TextEditors = new List<Software>();
         public bool TextEditorEnabled = false;
+        public int ImageEditorOnClose = 0;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  FTP
