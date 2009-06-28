@@ -121,6 +121,7 @@
     <Compile Include="Global\OnlineTasks.cs" />
     <Compile Include="Global\RegistryMgr.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
+    <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="UserControls\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>

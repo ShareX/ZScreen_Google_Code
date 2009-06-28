@@ -47,8 +47,9 @@ using System.Drawing.Printing;
 
 using Greenshot.Configuration;
 using Greenshot.Forms;
+using Greenshot.Helpers;
 
-namespace Greenshot.Helpers
+namespace ZSS.Helpers
 {
     /// <summary>
     /// Description of PrintHelper.
@@ -63,7 +64,7 @@ namespace Greenshot.Helpers
         {
             this.image = image;
             printDialog.UseEXDialog = true;
-            printDocument.DocumentName = "New";
+            printDocument.DocumentName = FilenameHelper.GetFilenameWithoutExtensionFromPattern(AppConfig.GetInstance().Output_File_FilenamePattern);
             printDocument.PrintPage += GetImageForPrint;
             printDialog.Document = printDocument;
         }
