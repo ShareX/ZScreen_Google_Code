@@ -2003,11 +2003,12 @@ namespace ZSS
             }
             else if (b)
             {
-                Software temp = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
-                if (temp != null)
+                Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                if (app != null)
                 {
-                    pgEditorsImage.SelectedObject = temp;
-                    btnDeleteImageSoftware.Enabled = !temp.Protected;
+                    pgEditorsImage.SelectedObject = app;
+                    pgEditorsImage.Enabled = !app.Protected;
+                    btnDeleteImageSoftware.Enabled = !app.Protected;
                 }
 
                 SetActiveImageSoftware();
@@ -3266,11 +3267,7 @@ namespace ZSS
         private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
         {
             mGTranslator = new GoogleTranslate();
-            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) && !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
-            {
-                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                Program.conf.TinyPicShuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
-            }
+            OnlineTasks.UpdateTinyPicShuk();
         }
 
         private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
