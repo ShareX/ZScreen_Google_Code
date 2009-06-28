@@ -203,7 +203,7 @@ namespace ZSS.Helpers
             {
                 Process p = new Process();
                 Software app = Program.conf.ImageSoftwareActive;
-                if (app != null)
+                if (app != null && File.Exists(app.Path))
                 {
                     if (app.Name == Program.ZSCREEN_EDITOR)
                     {
@@ -217,12 +217,12 @@ namespace ZSS.Helpers
                         }
                         catch (Exception ex)
                         {
-                            FileSystem.AppendDebug(ex.ToString());
+                            FileSystem.AppendDebug(ex.ToString());     
                         }
                     }
                     else
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo(Program.conf.ImageSoftwareActive.Path)
+                        ProcessStartInfo psi = new ProcessStartInfo(app.Path)
                         {
                             Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
                         };
