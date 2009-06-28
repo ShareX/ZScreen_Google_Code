@@ -74,7 +74,7 @@ namespace Greenshot.Drawing
             g.SmoothingMode = SmoothingMode.HighQuality;
             Pen pen = new Pen(foreColor) { Width = thickness };
 
-            AdjustableArrowCap aac = new AdjustableArrowCap(4, 5);
+            AdjustableArrowCap aac = new AdjustableArrowCap(4, 6);
             if (ArrowHeads == ArrowHeads.Start || ArrowHeads == ArrowHeads.Both) pen.CustomStartCap = aac;
             if (ArrowHeads == ArrowHeads.End || ArrowHeads == ArrowHeads.Both) pen.CustomEndCap = aac;
 

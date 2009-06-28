@@ -423,19 +423,25 @@ namespace ZSS
             foreach (Software app in Program.conf.ImageSoftwareList)
             {
                 if (!String.IsNullOrEmpty(app.Name))
+                {
                     lbImageSoftware.Items.Add(app.Name);
+                }
             }
 
             if (Program.conf.ImageSoftwareEnabled)
             {
-                int i;
-                if ((i = lbImageSoftware.Items.IndexOf(Program.conf.ImageSoftwareActive.Name)) != -1)
+                int i = lbImageSoftware.Items.IndexOf(Program.conf.ImageSoftwareActive.Name);
+                if (i != -1)
+                {
                     lbImageSoftware.SelectedIndex = i;
+                }
             }
             else
             {
                 lbImageSoftware.SelectedIndex = 0; //Set to disabled
             }
+
+            cbImageEditorOnClose.SelectedIndex = Program.conf.ImageEditorOnClose;
 
             ///////////////////////////////////
             // Advanced Settings
@@ -1073,7 +1079,7 @@ namespace ZSS
         {
             switch ((MainAppTask.ProgressType)e.ProgressPercentage)
             {
-                case (MainAppTask.ProgressType)101:                    
+                case (MainAppTask.ProgressType)101:
                     PrintHelper ph = new PrintHelper(e.UserState as Image);
                     PrinterSettings ps = ph.PrintWithDialog();
                     break;
@@ -4507,6 +4513,11 @@ namespace ZSS
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
+        }
+
+        private void cbImageEditorOnClose_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageEditorOnClose = cbImageEditorOnClose.SelectedIndex;
         }
     }
 }

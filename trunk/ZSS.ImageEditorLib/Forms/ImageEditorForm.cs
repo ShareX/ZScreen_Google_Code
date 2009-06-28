@@ -61,6 +61,7 @@ namespace Greenshot
     public partial class ImageEditorForm : Form
     {
         public BackgroundWorker MyWorker { get; set; }
+        public int OnClose;
 
         private ColorDialog colorDialog = ColorDialog.GetInstance();
         private string lastSaveFullPath;
@@ -160,10 +161,28 @@ namespace Greenshot
 
         private void SaveToolStripMenuItemClick(object sender, System.EventArgs e)
         {
+            Save();
+        }
+
+        private void BtnSaveClick(object sender, EventArgs e)
+        {
+
+            Save();
+        }
+
+        private void Save()
+        {
             try
             {
-                ImageOutput.Save(surface.GetImageForExport(), lastSaveFullPath);
-                updateStatusLabel("Image saved to %storagelocation%.".Replace("%storagelocation%", lastSaveFullPath), fileSavedStatusContextMenu);
+                if (lastSaveFullPath != null)
+                {
+                    ImageOutput.Save(surface.GetImageForExport(), lastSaveFullPath);
+                    updateStatusLabel("Image saved to %storagelocation%.".Replace("%storagelocation%", lastSaveFullPath), fileSavedStatusContextMenu);
+                }
+                else
+                {
+                    SaveAs();
+                }
             }
             catch (System.Runtime.InteropServices.ExternalException ex)
             {
@@ -171,13 +190,12 @@ namespace Greenshot
             }
         }
 
-        private void BtnSaveClick(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            if (lastSaveFullPath != null) SaveToolStripMenuItemClick(sender, e);
-            else SaveAsToolStripMenuItemClick(sender, e);
+            SaveAs();
         }
 
-        private void SaveAsToolStripMenuItemClick(object sender, System.EventArgs e)
+        private void SaveAs()
         {
             lastSaveFullPath = ImageOutput.SaveWithDialog(surface.GetImageForExport());
             if (lastSaveFullPath != null)
@@ -560,7 +578,7 @@ namespace Greenshot
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             Pen pen = new Pen(Color.Black) { Width = 1 };
 
-            AdjustableArrowCap aac = new AdjustableArrowCap(4, 6);
+            AdjustableArrowCap aac = new AdjustableArrowCap(4, 5);
             if (arrowHeads == ArrowHeads.Start || arrowHeads == ArrowHeads.Both) pen.CustomStartCap = aac;
             if (arrowHeads == ArrowHeads.End || arrowHeads == ArrowHeads.Both) pen.CustomEndCap = aac;
 
@@ -619,9 +637,21 @@ namespace Greenshot
 
         private void ImageEditorFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            if (OnClose == 1) //Auto save before close
+            {
+                Save();
+            }
+            else if (OnClose == 2 && surface.IsEdited()) //Prompt for save if image edited before close
+            {
+                if (MessageBox.Show("Are you want to save image?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    Save();
+                }
+            }
             conf.Editor_WindowSize = Size;
             conf.Save();
-            System.GC.Collect();
+            GC.Collect();
         }
 
         private void ImageEditorFormKeyUp(object sender, KeyEventArgs e)

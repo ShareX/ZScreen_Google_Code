@@ -329,7 +329,6 @@ namespace Greenshot.Drawing
         {
             currentImage = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(currentImage);
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.DrawImageUnscaled(originalImage, new Point(0, 0));
             elements.Draw(g, DrawableContainer.RenderMode.EDIT);
             e.Graphics.DrawImage(currentImage, 0, 0);
@@ -351,7 +350,6 @@ namespace Greenshot.Drawing
         {
             Bitmap ret = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(ret);
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.DrawImageUnscaled(originalImage, new Point(0, 0));
             elements.Draw(g, DrawableContainer.RenderMode.EXPORT);
             g.DrawImage(ret, 0, 0);
@@ -565,6 +563,11 @@ namespace Greenshot.Drawing
         public bool CanPushSelectionDown()
         {
             return elements.CanPushDown(selectedElements);
+        }
+
+        public bool IsEdited()
+        {
+            return elements.Count > 0;
         }
     }
 }
