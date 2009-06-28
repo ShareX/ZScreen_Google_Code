@@ -178,7 +178,8 @@ namespace Greenshot.Drawing
                 grippers[i] = new Label();
                 grippers[i].Name = "gripper" + i;
                 grippers[i].Width = grippers[i].Height = 5;
-                grippers[i].BackColor = Color.Black;
+                grippers[i].BackColor = Color.White;
+                grippers[i].BorderStyle = BorderStyle.FixedSingle;
                 grippers[i].MouseDown += new MouseEventHandler(gripperMouseDown);
                 grippers[i].MouseUp += new MouseEventHandler(gripperMouseUp);
                 grippers[i].MouseMove += new MouseEventHandler(gripperMouseMove);
