@@ -106,6 +106,19 @@ namespace Greenshot.Drawing
             }
         }
 
+        public new Color GradientColor
+        {
+            get
+            {
+                if (selectedElements.Count > 0) return selectedElements[selectedElements.Count - 1].GradientColor;
+                else return conf.Editor_GradientColor;
+            }
+            set
+            {
+                selectedElements.GradientColor = value;
+            }
+        }
+
         public int Thickness
         {
             get
