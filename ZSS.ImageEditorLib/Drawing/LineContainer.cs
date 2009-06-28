@@ -40,9 +40,6 @@ using Greenshot.Helpers;
 
 namespace Greenshot.Drawing
 {
-    /// <summary>
-    /// Description of LineContainer.
-    /// </summary>
     [Serializable()]
     public class LineContainer : DrawableContainer
     {
@@ -74,11 +71,10 @@ namespace Greenshot.Drawing
 
         public override void Draw(Graphics g, RenderMode rm)
         {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            Pen pen = new Pen(foreColor);
-            pen.Width = thickness;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            Pen pen = new Pen(foreColor) { Width = thickness };
 
-            AdjustableArrowCap aac = new AdjustableArrowCap(4, 6);
+            AdjustableArrowCap aac = new AdjustableArrowCap(4, 5);
             if (ArrowHeads == ArrowHeads.Start || ArrowHeads == ArrowHeads.Both) pen.CustomStartCap = aac;
             if (ArrowHeads == ArrowHeads.End || ArrowHeads == ArrowHeads.Both) pen.CustomEndCap = aac;
 

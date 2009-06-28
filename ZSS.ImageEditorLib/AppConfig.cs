@@ -85,10 +85,11 @@ namespace Greenshot.Configuration
 
         #region Editor config
 
-        public Size? Editor_WindowSize = new Size(640, 480);
+        public Size? Editor_WindowSize = new Size(800, 550);
         public Color Editor_ForeColor = Color.FromArgb(255, 255, 0, 0);
         public Color Editor_BackColor = Color.Transparent;
         public Color Editor_GradientColor = Color.Transparent;
+        public string Editor_GradientType = "None";
         public int Editor_Thickness = 1;
         public Color[] Editor_RecentColors = new Color[12];
         public Font Editor_Font = null;

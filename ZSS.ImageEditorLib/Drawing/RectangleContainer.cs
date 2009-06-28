@@ -35,12 +35,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.Serialization;
 using Greenshot.Helpers;
+using System.Drawing.Drawing2D;
 
 namespace Greenshot.Drawing
 {
-    /// <summary>
-    /// Description of RectangleContainer.
-    /// </summary>
     [Serializable()]
     public class RectangleContainer : DrawableContainer
     {
@@ -68,11 +66,9 @@ namespace Greenshot.Drawing
 
         public override void Draw(Graphics g, RenderMode rm)
         {
-            Pen pen = new Pen(foreColor);
-            pen.Width = thickness;
-            Brush brush = new SolidBrush(backColor);
             Rectangle rect = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
-            g.FillRectangle(brush, rect);
+            g.FillRectangle(GetBrush(rect), rect);
+            Pen pen = new Pen(foreColor) { Width = thickness };
             g.DrawRectangle(pen, rect);
         }
     }

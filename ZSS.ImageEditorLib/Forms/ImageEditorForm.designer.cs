@@ -122,6 +122,8 @@ namespace Greenshot
             this.copyPathMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnColorPreview = new System.Windows.Forms.ToolStripButton();
+            this.tscbGradientType = new System.Windows.Forms.ToolStripComboBox();
+            this.gradientColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
@@ -145,7 +147,7 @@ namespace Greenshot
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(755, 379);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(760, 441);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             // 
             // toolStripContainer1.LeftToolStripPanel
@@ -153,7 +155,7 @@ namespace Greenshot
             this.toolStripContainer1.LeftToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(779, 450);
+            this.toolStripContainer1.Size = new System.Drawing.Size(784, 512);
             this.toolStripContainer1.TabIndex = 2;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -169,7 +171,7 @@ namespace Greenshot
             this.statusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(779, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -187,7 +189,7 @@ namespace Greenshot
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(755, 379);
+            this.panel1.Size = new System.Drawing.Size(760, 441);
             this.panel1.TabIndex = 2;
             // 
             // toolStrip2
@@ -271,7 +273,7 @@ namespace Greenshot
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(779, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -409,6 +411,7 @@ namespace Greenshot
             this.arrangeToolStripMenuItem,
             this.borderColorToolStripMenuItem,
             this.backgroundColorToolStripMenuItem,
+            this.gradientColorToolStripMenuItem,
             this.lineThicknessToolStripMenuItem,
             this.arrowHeadsToolStripMenuItem});
             this.objectToolStripMenuItem.Name = "objectToolStripMenuItem";
@@ -650,6 +653,7 @@ namespace Greenshot
             this.btnBorderColor,
             this.btnBackgroundColor,
             this.btnGradientColor,
+            this.tscbGradientType,
             this.btnColorPreview,
             this.toolStripSeparator1,
             this.labelLineThickness,
@@ -657,7 +661,7 @@ namespace Greenshot
             this.btnArrowHeads});
             this.toolStrip1.Location = new System.Drawing.Point(3, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(579, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(671, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSave
@@ -881,11 +885,26 @@ namespace Greenshot
             this.btnColorPreview.Size = new System.Drawing.Size(52, 22);
             this.btnColorPreview.Text = "Preview";
             // 
+            // tscbGradientType
+            // 
+            this.tscbGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscbGradientType.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.tscbGradientType.Name = "tscbGradientType";
+            this.tscbGradientType.Size = new System.Drawing.Size(121, 25);
+            this.tscbGradientType.SelectedIndexChanged += new System.EventHandler(this.tscbGradientType_SelectedIndexChanged);
+            // 
+            // gradientColorToolStripMenuItem
+            // 
+            this.gradientColorToolStripMenuItem.Name = "gradientColorToolStripMenuItem";
+            this.gradientColorToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.gradientColorToolStripMenuItem.Text = "Gradient color";
+            this.gradientColorToolStripMenuItem.Click += new System.EventHandler(this.gradientColorToolStripMenuItem_Click);
+            // 
             // ImageEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 450);
+            this.ClientSize = new System.Drawing.Size(784, 512);
             this.Controls.Add(this.toolStripContainer1);
             this.KeyPreview = true;
             this.Name = "ImageEditorForm";
@@ -994,5 +1013,7 @@ namespace Greenshot
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnGradientColor;
         private System.Windows.Forms.ToolStripButton btnColorPreview;
+        private System.Windows.Forms.ToolStripComboBox tscbGradientType;
+        private System.Windows.Forms.ToolStripMenuItem gradientColorToolStripMenuItem;
     }
 }
