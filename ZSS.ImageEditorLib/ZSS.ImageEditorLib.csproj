@@ -65,6 +65,7 @@
     <Compile Include="Drawing\DrawableContainerList.cs" />
     <Compile Include="Helpers\DrawingHelper.cs" />
     <Compile Include="Drawing\EllipseContainer.cs" />
+    <Compile Include="Helpers\FilenameHelper.cs" />
     <Compile Include="Helpers\GuiRectangle.cs" />
     <Compile Include="Forms\ImageEditorForm.cs">
       <SubType>Form</SubType>
@@ -80,7 +81,6 @@
       <DependentUpon>JpegQualityDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Drawing\LineContainer.cs" />
-    <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Forms\PrintOptionsDialog.cs">
       <SubType>Form</SubType>
     </Compile>

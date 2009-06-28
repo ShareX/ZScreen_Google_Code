@@ -210,7 +210,8 @@ namespace ZSS.Helpers
                         try
                         {
                             Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Program.SettingsDir, "ImageEditor.bin");
-                            Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main }; 
+                            Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
+                            editor.MyWorker = task.MyWorker;
                             editor.SetImage(task.MyImage);
                             editor.SetImagePath(task.LocalFilePath);
                             editor.ShowDialog();

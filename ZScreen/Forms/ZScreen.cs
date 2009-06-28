@@ -45,6 +45,7 @@ using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
 using ZSS.Global;
+using System.Drawing.Printing;
 
 namespace ZSS
 {
@@ -1072,6 +1073,10 @@ namespace ZSS
         {
             switch ((MainAppTask.ProgressType)e.ProgressPercentage)
             {
+                case (MainAppTask.ProgressType)101:                    
+                    PrintHelper ph = new PrintHelper(e.UserState as Image);
+                    PrinterSettings ps = ph.PrintWithDialog();
+                    break;
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem((HistoryItem)e.UserState);
                     break;

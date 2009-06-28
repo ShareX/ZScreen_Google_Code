@@ -66,7 +66,7 @@ namespace Greenshot.Configuration
         public ScreenshotDestinations Output_Destinations = ScreenshotDestinations.Editor;
 
         public string Output_File_Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        public string Output_File_FilenamePattern = "greenshot_%YYYY%-%MM%-%DD%_%hh%-%mm%-%ss%";
+        public string Output_File_FilenamePattern = "screenshot_%YYYY%-%MM%-%DD%_%hh%-%mm%-%ss%";
         public string Output_File_Format = ImageFormat.Png.ToString();
         public bool? Output_File_CopyPathToClipboard = false;
         public int Output_File_JpegQuality = 80;

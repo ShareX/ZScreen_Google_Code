@@ -54,6 +54,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using Greenshot.Helpers;
+using System.ComponentModel;
 
 namespace Greenshot
 {
@@ -66,6 +67,7 @@ namespace Greenshot
         private string lastSaveFullPath;
         private AppConfig conf = AppConfig.GetInstance();
         private Surface surface;
+        public BackgroundWorker MyWorker { get; set; }
 
         public ImageEditorForm()
         {
@@ -195,12 +197,17 @@ namespace Greenshot
 
         private void PrintToolStripMenuItemClick(object sender, EventArgs e)
         {
-            PrintHelper ph = new PrintHelper(surface.GetImageForExport());
-            PrinterSettings ps = ph.PrintWithDialog();
-            if (ps != null)
+            if (this.MyWorker != null)
             {
-                updateStatusLabel("Print job was sent to '%printername%'.".Replace("%printername%", ps.PrinterName));
+                this.MyWorker.ReportProgress(101, surface.GetImageForExport());
             }
+
+            //PrintHelper ph = new PrintHelper(surface.GetImageForExport());
+            //PrinterSettings ps = ph.PrintWithDialog();
+            //if (ps != null)
+            //{
+            //    updateStatusLabel("Print job was sent to '%printername%'.".Replace("%printername%", ps.PrinterName));
+            //}
         }
 
         private void BtnPrintClick(object sender, EventArgs e)
