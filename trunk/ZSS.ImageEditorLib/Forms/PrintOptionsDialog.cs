@@ -88,7 +88,7 @@ namespace Greenshot.Forms
                 conf.Output_Print_AllowRotate = (bool?)this.AllowPrintRotate;
                 conf.Output_Print_AllowShrink = (bool?)this.AllowPrintShrink;
                 conf.Output_Print_PromptOptions = false;
-                conf.Store();
+                conf.Save();
             }
         }
     }

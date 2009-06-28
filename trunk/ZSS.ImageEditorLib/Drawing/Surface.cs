@@ -61,8 +61,7 @@ namespace Greenshot.Drawing
 
         public event SurfaceElementEventHandler MovingElementChanged;
 
-        public enum DrawingModes { None, Rect, Ellipse, Text, Line, Arrow }
-        public enum ArrowHeads { None, Both, Start, End }
+        public enum DrawingModes { None, Rect, Ellipse, Text, Line }
 
         private int mX;
         private int mY;
@@ -122,18 +121,14 @@ namespace Greenshot.Drawing
 
         public ArrowHeads ArrowHead
         {
+            get
+            {
+                if (selectedElements.Count > 0) return selectedElements[selectedElements.Count - 1].ArrowHeads;
+                else return conf.Editor_ArrowHeads;
+            }
             set
             {
-                foreach (DrawableContainer element in selectedElements)
-                {
-                    if (element != null && element.GetType() == typeof(LineContainer))
-                    {
-                        LineContainer lc = (LineContainer)element;
-                        lc.HasStartPointArrowHead = (value == ArrowHeads.Start || value == ArrowHeads.Both);
-                        lc.HasEndPointArrowHead = (value == ArrowHeads.End || value == ArrowHeads.Both);
-                    }
-                }
-                Invalidate();
+                selectedElements.ArrowHeads = value;
             }
         }
 
@@ -159,37 +154,32 @@ namespace Greenshot.Drawing
 
         private void SurfaceMouseDown(object sender, MouseEventArgs e)
         {
-            mX = e.X; mY = e.Y;
+            mX = e.X;
+            mY = e.Y;
             mouseDown = true;
             drawingElement = null;
-            if (DrawingMode == DrawingModes.Rect)
-            { // draw rectangle
+            if (DrawingMode == DrawingModes.Rect) // Draw rectangle
+            {
                 DeselectAllElements();
                 drawingElement = new RectangleContainer(this);
             }
-            else if (DrawingMode == DrawingModes.Ellipse)
-            { // draw ellipse
+            else if (DrawingMode == DrawingModes.Ellipse) // Draw ellipse
+            {
                 DeselectAllElements();
                 drawingElement = new EllipseContainer(this);
             }
-            else if (DrawingMode == DrawingModes.Text)
-            { // draw textbox
+            else if (DrawingMode == DrawingModes.Text) // Draw textbox
+            {
                 DeselectAllElements();
                 drawingElement = new TextContainer(this);
             }
-            else if (DrawingMode == DrawingModes.Line)
-            { // draw line
+            else if (DrawingMode == DrawingModes.Line) // Draw line
+            {
                 DeselectAllElements();
                 drawingElement = new LineContainer(this);
-            }
-            else if (DrawingMode == DrawingModes.Arrow)
-            { // draw arrow
-                DeselectAllElements();
-                drawingElement = new LineContainer(this);
-                ((LineContainer)drawingElement).HasEndPointArrowHead = true;
             }
             else
-            { // check whether an existing element was clicked
+            {   // check whether an existing element was clicked
                 // we save mouse down element separately from selectedElements (checked on mouse up), 
                 // since it could be moved around before it is actually selected
                 mouseDownElement = elements.ClickableElementAt(e.X, e.Y);
@@ -203,6 +193,7 @@ namespace Greenshot.Drawing
                 drawingElement.ForeColor = conf.Editor_ForeColor;
                 drawingElement.BackColor = conf.Editor_BackColor;
                 drawingElement.Thickness = conf.Editor_Thickness;
+                drawingElement.ArrowHeads = conf.Editor_ArrowHeads;
                 AddElement(drawingElement);
             }
         }

@@ -40,6 +40,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 using System.Collections;
+using Greenshot.Drawing;
 
 namespace Greenshot.Configuration
 {
@@ -59,21 +60,6 @@ namespace Greenshot.Configuration
 
         // the configuration part - all public vars are stored in the config file
         // don't use "null" and "0" as default value!
-
-        #region General application config
-
-        public bool? General_RegisterHotkeys = true;
-        public bool? General_IsFirstLaunch = true;
-
-        #endregion
-
-        #region User interface config
-
-        public string Ui_Language = "";
-        public bool? Ui_Effects_Flashlight = false;
-        public bool? Ui_Effects_CameraSound = true;
-
-        #endregion
 
         #region Output config
 
@@ -105,6 +91,7 @@ namespace Greenshot.Configuration
         public int Editor_Thickness = 1;
         public Color[] Editor_RecentColors = new Color[12];
         public Font Editor_Font = null;
+        public ArrowHeads Editor_ArrowHeads = ArrowHeads.End;
 
         #endregion
 
@@ -154,7 +141,7 @@ namespace Greenshot.Configuration
                     s.Close();
                 }
                 AppConfig config = new AppConfig();
-                config.Store();
+                config.Save();
                 return config;
             }
         }
@@ -173,14 +160,14 @@ namespace Greenshot.Configuration
             if (!File.Exists(ConfigPath))
             {
                 Directory.CreateDirectory(ConfigPath.Substring(0, ConfigPath.LastIndexOf(@"\")));
-                new AppConfig().Store();
+                new AppConfig().Save();
             }
         }
 
         /// <summary>
         /// saves the configuration values to the config file
         /// </summary>
-        public void Store()
+        public void Save()
         {
             Stream s = File.Open(ConfigPath, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();

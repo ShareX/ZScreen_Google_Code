@@ -152,7 +152,7 @@ namespace Greenshot.Helpers
                     ImageOutput.Save(img, fn);
                     ret = fn;
                     conf.Output_FileAs_Fullpath = fn;
-                    conf.Store();
+                    conf.Save();
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {

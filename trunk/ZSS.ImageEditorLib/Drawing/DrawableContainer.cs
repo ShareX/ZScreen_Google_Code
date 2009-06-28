@@ -71,6 +71,13 @@ namespace Greenshot.Drawing
             set { thickness = value; if (parent != null) parent.Invalidate(); }
         }
 
+        protected ArrowHeads arrowHeads = ArrowHeads.End;
+        public ArrowHeads ArrowHeads
+        {
+            get { return arrowHeads; }
+            set { arrowHeads = value; if (parent != null) parent.Invalidate(); }
+        }
+
         protected List<Property> supportedProperties = new List<Property>();
 
         public bool PropertySupported(Property prop)

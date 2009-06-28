@@ -55,29 +55,19 @@ namespace Greenshot.Drawing
             supportedProperties.Add(DrawableContainer.Property.LINECOLOR);
             supportedProperties.Add(DrawableContainer.Property.ARROWHEADS);
             supportedProperties.Add(DrawableContainer.Property.THICKNESS);
-            grippers[1].Enabled = false;
-            grippers[2].Enabled = false;
-            grippers[3].Enabled = false;
-            grippers[5].Enabled = false;
-            grippers[6].Enabled = false;
-            grippers[7].Enabled = false;
+            grippers[1].Enabled = grippers[2].Enabled = grippers[3].Enabled = grippers[5].Enabled = grippers[6].Enabled = grippers[7].Enabled = false;
         }
 
-        #region serialization
+        #region Serialization
 
         public LineContainer(SerializationInfo info, StreamingContext ctxt)
             : base(info, ctxt)
         {
-            HasStartPointArrowHead = info.GetBoolean("hasStartPointArrowHead");
-            HasEndPointArrowHead = info.GetBoolean("hasEndPointArrowHead");
-
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             base.GetObjectData(info, ctxt);
-            info.AddValue("hasStartPointArrowHead", HasStartPointArrowHead);
-            info.AddValue("hasEndPointArrowHead", HasEndPointArrowHead);
         }
 
         #endregion
@@ -89,8 +79,8 @@ namespace Greenshot.Drawing
             pen.Width = thickness;
 
             AdjustableArrowCap aac = new AdjustableArrowCap(4, 6);
-            if (HasStartPointArrowHead) pen.CustomStartCap = aac;
-            if (HasEndPointArrowHead) pen.CustomEndCap = aac;
+            if (ArrowHeads == ArrowHeads.Start || ArrowHeads == ArrowHeads.Both) pen.CustomStartCap = aac;
+            if (ArrowHeads == ArrowHeads.End || ArrowHeads == ArrowHeads.Both) pen.CustomEndCap = aac;
 
             g.DrawLine(pen, this.Left, this.Top, this.Left + this.Width, this.Top + this.Height);
         }

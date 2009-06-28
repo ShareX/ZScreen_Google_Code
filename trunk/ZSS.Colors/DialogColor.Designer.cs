@@ -506,7 +506,7 @@
             // 
             // btnColorPicker
             // 
-            this.btnColorPicker.Image = ZSS.Colors.Properties.Resources.cursor;
+            this.btnColorPicker.Image = Properties.Resources.cursor;
             this.btnColorPicker.Location = new System.Drawing.Point(432, 232);
             this.btnColorPicker.Name = "btnColorPicker";
             this.btnColorPicker.Size = new System.Drawing.Size(32, 32);
