@@ -120,6 +120,7 @@ namespace Greenshot
             this.fileSavedStatusContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyPathMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -572,13 +573,14 @@ namespace Greenshot
             this.toolStripSeparator6,
             this.btnBorderColor,
             this.btnBackgroundColor,
+            this.toolStripButton1,
             this.toolStripSeparator1,
             this.labelLineThickness,
             this.cbThickness,
             this.btnArrowHeads});
             this.toolStrip1.Location = new System.Drawing.Point(3, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(365, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(419, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSave
@@ -774,7 +776,7 @@ namespace Greenshot
             this.btnEllipse,
             this.btnLine,
             this.btnText});
-            this.toolStrip2.Location = new System.Drawing.Point(368, 24);
+            this.toolStrip2.Location = new System.Drawing.Point(422, 24);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(127, 25);
             this.toolStrip2.TabIndex = 0;
@@ -861,6 +863,15 @@ namespace Greenshot
             this.openDirectoryMenuItem.Size = new System.Drawing.Size(263, 22);
             this.openDirectoryMenuItem.Text = "Open directory in Windows Explorer";
             this.openDirectoryMenuItem.Click += new System.EventHandler(this.OpenDirectoryMenuItemClick);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "Background color 2";
             // 
             // ImageEditorForm
             // 
@@ -971,5 +982,6 @@ namespace Greenshot
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
