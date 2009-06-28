@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
+using ZSS.ImageUploaders;
 
 namespace ZSS.Global
 {
@@ -29,17 +30,23 @@ namespace ZSS.Global
         }
 
         /// <summary>
-        /// Method to shorten a URL according to Options
+        /// Method to update TinyPic Shuk; Run periodically
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        private static string TryShortenURL(string url)
+        public static void UpdateTinyPicShuk()
         {
-            if (Program.conf.ClipboardUriMode == ClipboardUriType.FULL && Program.conf.MakeTinyURL)
+            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) && !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
             {
-                url = ShortenURL(url);
+                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                string shuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
+                if (!string.IsNullOrEmpty(shuk))
+                {
+                    if (Program.conf.TinyPicShuk != shuk)
+                    {
+                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Program.conf.TinyPicShuk, shuk));
+                    }
+                    Program.conf.TinyPicShuk = shuk;
+                }
             }
-            return url;
         }
     }
 }
