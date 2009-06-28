@@ -64,6 +64,13 @@ namespace Greenshot.Drawing
             set { backColor = value; if (parent != null) parent.Invalidate(); }
         }
 
+        protected Color gradientColor = Color.Transparent;
+        public Color GradientColor
+        {
+            get { return gradientColor; }
+            set { gradientColor = value; if (parent != null) parent.Invalidate(); }
+        }
+
         protected int thickness = 1;
         public int Thickness
         {

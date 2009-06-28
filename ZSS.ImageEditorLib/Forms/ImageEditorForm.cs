@@ -84,12 +84,16 @@ namespace Greenshot
                 Size = (Size)conf.Editor_WindowSize;
             }
 
-            Bitmap imgBorder = DrawColorButton(surface.ForeColor, btnBorderColor.ContentRectangle, ColorType.Border);
+            Bitmap imgBorder = DrawColorButton(ColorType.Border);
             btnBorderColor.Image = imgBorder;
             borderColorToolStripMenuItem.Image = imgBorder;
-            Bitmap imgBackground = DrawColorButton(surface.BackColor, btnBackgroundColor.ContentRectangle, ColorType.Background);
+
+            Bitmap imgBackground = DrawColorButton(ColorType.Background);
             btnBackgroundColor.Image = imgBackground;
             backgroundColorToolStripMenuItem.Image = imgBackground;
+
+            btnGradientColor.Image = DrawColorButton(ColorType.Gradient);
+
             btnArrowHeads.Image = DrawArrowHeadsButton(surface.ArrowHead, btnArrowHeads.ContentRectangle);
 
             this.colorDialog.RecentColors = conf.Editor_RecentColors;
@@ -386,7 +390,7 @@ namespace Greenshot
                 conf.Save();
                 surface.ForeColor = colorDialog.Color;
 
-                Bitmap img = DrawColorButton(colorDialog.Color, btnBorderColor.ContentRectangle, ColorType.Border);
+                Bitmap img = DrawColorButton(ColorType.Border);
                 btnBorderColor.Image = img;
                 borderColorToolStripMenuItem.Image = img;
             }
@@ -412,38 +416,76 @@ namespace Greenshot
                 conf.Editor_RecentColors = colorDialog.RecentColors;
                 conf.Save();
 
-                Bitmap img = DrawColorButton(colorDialog.Color, btnBorderColor.ContentRectangle, ColorType.Background);
+                Bitmap img = DrawColorButton(ColorType.Background);
                 btnBackgroundColor.Image = img;
                 backgroundColorToolStripMenuItem.Image = img;
             }
         }
 
-        public enum ColorType { Border, Background }
-
-        private Bitmap DrawColorButton(Color color, Rectangle rect, ColorType colorType)
+        private void btnGradientColor_Click(object sender, EventArgs e)
         {
-            Bitmap img = new Bitmap(rect.Width, rect.Height);
-            img = DrawCheckersPattern(rect, 5);
+            SelectGradientColor();
+        }
+
+        private void SelectGradientColor()
+        {
+            colorDialog.Color = surface.GradientColor;
+            if (colorDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                surface.GradientColor = colorDialog.Color;
+                conf.Editor_GradientColor = colorDialog.Color;
+                conf.Editor_RecentColors = colorDialog.RecentColors;
+                conf.Save();
+
+                Bitmap img = DrawColorButton(ColorType.Gradient);
+                btnGradientColor.Image = img;
+            }
+        }
+
+        public enum ColorType { Border, Background, Gradient, Preview }
+
+        private Bitmap DrawColorButton(ColorType colorType)
+        {
+            Bitmap img = new Bitmap(18, 18);
+            img = DrawCheckersPattern(new Size(18, 18), 5);
             Graphics g = Graphics.FromImage(img);
-            if (colorType == ColorType.Border)
+
+            Brush brush = Brushes.Transparent;
+            if (colorType == ColorType.Background)
             {
-                g.DrawRectangle(new Pen(color), new Rectangle(0, 0, rect.Width - 1, rect.Height - 1));
+                brush = new SolidBrush(surface.BackColor);
             }
-            else if (colorType == ColorType.Background)
+            else if (colorType == ColorType.Gradient)
             {
-                g.FillRectangle(new SolidBrush(color), new Rectangle(0, 0, rect.Width, rect.Height));
+                brush = new SolidBrush(surface.GradientColor);
             }
+            else if (colorType == ColorType.Preview)
+            {
+                brush = new LinearGradientBrush(new Rectangle(0, 0, 18, 18), surface.BackColor, surface.GradientColor, LinearGradientMode.Vertical);
+            }
+            g.FillRectangle(brush, new Rectangle(0, 0, 18, 18));
+
+            if (colorType == ColorType.Border || colorType == ColorType.Preview)
+            {
+                g.DrawRectangle(new Pen(surface.ForeColor), new Rectangle(0, 0, 17, 17));
+            }
+
+            if (colorType != ColorType.Preview)
+            {
+                btnColorPreview.Image = DrawColorButton(ColorType.Preview);
+            }
+
             return img;
         }
 
-        private Bitmap DrawCheckersPattern(Rectangle rect, int size)
+        private Bitmap DrawCheckersPattern(Size size, int boxSize)
         {
-            Bitmap img = new Bitmap(rect.Width, rect.Height);
+            Bitmap img = new Bitmap(size.Width, size.Height);
             Graphics g = Graphics.FromImage(img);
             Color color;
-            for (int x = 0; x < rect.Width; x += size)
+            for (int x = 0; x < size.Width; x += boxSize)
             {
-                for (int y = 0; y < rect.Height; y += size)
+                for (int y = 0; y < size.Height; y += boxSize)
                 {
                     if ((x + y) % 2 == 0)
                     {
@@ -453,7 +495,7 @@ namespace Greenshot
                     {
                         color = Color.WhiteSmoke;
                     }
-                    g.FillRectangle(new SolidBrush(color), new Rectangle(x, y, size, size));
+                    g.FillRectangle(new SolidBrush(color), new Rectangle(x, y, boxSize, boxSize));
                 }
             }
             return img;

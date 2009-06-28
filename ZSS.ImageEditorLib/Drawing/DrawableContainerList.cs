@@ -77,6 +77,19 @@ namespace Greenshot.Drawing
             }
         }
 
+        public Color GradientColor
+        {
+            get
+            {
+                if (Count > 0) return this[Count - 1].GradientColor;
+                return Color.Empty;
+            }
+            set
+            {
+                foreach (DrawableContainer dc in this) dc.GradientColor = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the thickness of the elements in the list.
         /// If there are several elements, the thickness of the last added is returned.

@@ -46,6 +46,12 @@ namespace Greenshot
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.btnCursor = new System.Windows.Forms.ToolStripButton();
+            this.btnRect = new System.Windows.Forms.ToolStripButton();
+            this.btnEllipse = new System.Windows.Forms.ToolStripButton();
+            this.btnLine = new System.Windows.Forms.ToolStripButton();
+            this.btnText = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,6 +108,7 @@ namespace Greenshot
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnBorderColor = new System.Windows.Forms.ToolStripButton();
             this.btnBackgroundColor = new System.Windows.Forms.ToolStripButton();
+            this.btnGradientColor = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.labelLineThickness = new System.Windows.Forms.ToolStripLabel();
             this.cbThickness = new System.Windows.Forms.ToolStripComboBox();
@@ -110,25 +117,20 @@ namespace Greenshot
             this.arrowHeadsEndPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowHeadsNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.btnCursor = new System.Windows.Forms.ToolStripButton();
-            this.btnRect = new System.Windows.Forms.ToolStripButton();
-            this.btnEllipse = new System.Windows.Forms.ToolStripButton();
-            this.btnLine = new System.Windows.Forms.ToolStripButton();
-            this.btnText = new System.Windows.Forms.ToolStripButton();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.fileSavedStatusContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyPathMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btnColorPreview = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.fileSavedStatusContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,11 +145,15 @@ namespace Greenshot
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(628, 359);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(755, 379);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            // 
+            // toolStripContainer1.LeftToolStripPanel
+            // 
+            this.toolStripContainer1.LeftToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(628, 430);
+            this.toolStripContainer1.Size = new System.Drawing.Size(779, 450);
             this.toolStripContainer1.TabIndex = 2;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -155,7 +161,6 @@ namespace Greenshot
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             // 
             // statusStrip1
             // 
@@ -164,7 +169,7 @@ namespace Greenshot
             this.statusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(628, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(779, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -182,8 +187,79 @@ namespace Greenshot
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(628, 359);
+            this.panel1.Size = new System.Drawing.Size(755, 379);
             this.panel1.TabIndex = 2;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCursor,
+            this.btnRect,
+            this.btnEllipse,
+            this.btnLine,
+            this.btnText});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 3);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(24, 126);
+            this.toolStrip2.TabIndex = 0;
+            // 
+            // btnCursor
+            // 
+            this.btnCursor.Checked = true;
+            this.btnCursor.CheckOnClick = true;
+            this.btnCursor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCursor.Image = global::ZSS.ImageEditorLib.Properties.Resources.cursor;
+            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCursor.Name = "btnCursor";
+            this.btnCursor.Size = new System.Drawing.Size(22, 20);
+            this.btnCursor.Text = "Selection tool";
+            this.btnCursor.Click += new System.EventHandler(this.BtnCursorClick);
+            // 
+            // btnRect
+            // 
+            this.btnRect.CheckOnClick = true;
+            this.btnRect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRect.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape;
+            this.btnRect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRect.Name = "btnRect";
+            this.btnRect.Size = new System.Drawing.Size(22, 20);
+            this.btnRect.Text = "Draw rectangle";
+            this.btnRect.Click += new System.EventHandler(this.BtnRectClick);
+            // 
+            // btnEllipse
+            // 
+            this.btnEllipse.CheckOnClick = true;
+            this.btnEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEllipse.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_ellipse;
+            this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEllipse.Name = "btnEllipse";
+            this.btnEllipse.Size = new System.Drawing.Size(22, 20);
+            this.btnEllipse.Text = "Draw ellipse";
+            this.btnEllipse.Click += new System.EventHandler(this.BtnEllipseClick);
+            // 
+            // btnLine
+            // 
+            this.btnLine.CheckOnClick = true;
+            this.btnLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLine.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_line;
+            this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(22, 20);
+            this.btnLine.Text = "Draw line";
+            this.btnLine.Click += new System.EventHandler(this.BtnLineClick);
+            // 
+            // btnText
+            // 
+            this.btnText.CheckOnClick = true;
+            this.btnText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnText.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_text;
+            this.btnText.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnText.Name = "btnText";
+            this.btnText.Size = new System.Drawing.Size(22, 20);
+            this.btnText.Text = "Add text";
+            this.btnText.Click += new System.EventHandler(this.BtnTextClick);
             // 
             // menuStrip1
             // 
@@ -195,7 +271,7 @@ namespace Greenshot
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(628, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(779, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -469,35 +545,35 @@ namespace Greenshot
             // lineThickness1ToolStripMenuItem
             // 
             this.lineThickness1ToolStripMenuItem.Name = "lineThickness1ToolStripMenuItem";
-            this.lineThickness1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineThickness1ToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.lineThickness1ToolStripMenuItem.Text = "1";
             this.lineThickness1ToolStripMenuItem.Click += new System.EventHandler(this.LineThicknessValueToolStripMenuItemClick);
             // 
             // lineThickness2ToolStripMenuItem
             // 
             this.lineThickness2ToolStripMenuItem.Name = "lineThickness2ToolStripMenuItem";
-            this.lineThickness2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineThickness2ToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.lineThickness2ToolStripMenuItem.Text = "2";
             this.lineThickness2ToolStripMenuItem.Click += new System.EventHandler(this.LineThicknessValueToolStripMenuItemClick);
             // 
             // lineThickness3ToolStripMenuItem
             // 
             this.lineThickness3ToolStripMenuItem.Name = "lineThickness3ToolStripMenuItem";
-            this.lineThickness3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineThickness3ToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.lineThickness3ToolStripMenuItem.Text = "3";
             this.lineThickness3ToolStripMenuItem.Click += new System.EventHandler(this.LineThicknessValueToolStripMenuItemClick);
             // 
             // lineThickness4ToolStripMenuItem
             // 
             this.lineThickness4ToolStripMenuItem.Name = "lineThickness4ToolStripMenuItem";
-            this.lineThickness4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineThickness4ToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.lineThickness4ToolStripMenuItem.Text = "4";
             this.lineThickness4ToolStripMenuItem.Click += new System.EventHandler(this.LineThicknessValueToolStripMenuItemClick);
             // 
             // lineThickness5ToolStripMenuItem
             // 
             this.lineThickness5ToolStripMenuItem.Name = "lineThickness5ToolStripMenuItem";
-            this.lineThickness5ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineThickness5ToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.lineThickness5ToolStripMenuItem.Text = "5";
             this.lineThickness5ToolStripMenuItem.Click += new System.EventHandler(this.LineThicknessValueToolStripMenuItemClick);
             // 
@@ -516,28 +592,28 @@ namespace Greenshot
             // arrowHeadsStartPointToolStripMenuItem1
             // 
             this.arrowHeadsStartPointToolStripMenuItem1.Name = "arrowHeadsStartPointToolStripMenuItem1";
-            this.arrowHeadsStartPointToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsStartPointToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsStartPointToolStripMenuItem1.Text = "Start point";
             this.arrowHeadsStartPointToolStripMenuItem1.Click += new System.EventHandler(this.ArrowHeadsStartPointToolStripMenuItemClick);
             // 
             // arrowHeadsEndPointToolStripMenuItem1
             // 
             this.arrowHeadsEndPointToolStripMenuItem1.Name = "arrowHeadsEndPointToolStripMenuItem1";
-            this.arrowHeadsEndPointToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsEndPointToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsEndPointToolStripMenuItem1.Text = "End point";
             this.arrowHeadsEndPointToolStripMenuItem1.Click += new System.EventHandler(this.ArrowHeadsEndPointToolStripMenuItemClick);
             // 
             // arrowHeadsBothToolStripMenuItem1
             // 
             this.arrowHeadsBothToolStripMenuItem1.Name = "arrowHeadsBothToolStripMenuItem1";
-            this.arrowHeadsBothToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsBothToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsBothToolStripMenuItem1.Text = "Both";
             this.arrowHeadsBothToolStripMenuItem1.Click += new System.EventHandler(this.ArrowHeadsBothToolStripMenuItemClick);
             // 
             // arrowHeadsNoneToolStripMenuItem1
             // 
             this.arrowHeadsNoneToolStripMenuItem1.Name = "arrowHeadsNoneToolStripMenuItem1";
-            this.arrowHeadsNoneToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsNoneToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsNoneToolStripMenuItem1.Text = "None";
             this.arrowHeadsNoneToolStripMenuItem1.Click += new System.EventHandler(this.ArrowHeadsNoneToolStripMenuItemClick);
             // 
@@ -552,7 +628,7 @@ namespace Greenshot
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -573,14 +649,15 @@ namespace Greenshot
             this.toolStripSeparator6,
             this.btnBorderColor,
             this.btnBackgroundColor,
-            this.toolStripButton1,
+            this.btnGradientColor,
+            this.btnColorPreview,
             this.toolStripSeparator1,
             this.labelLineThickness,
             this.cbThickness,
             this.btnArrowHeads});
             this.toolStrip1.Location = new System.Drawing.Point(3, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(419, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(579, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSave
@@ -679,23 +756,27 @@ namespace Greenshot
             // 
             // btnBorderColor
             // 
-            this.btnBorderColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBorderColor.Image = ((System.Drawing.Image)(resources.GetObject("btnBorderColor.Image")));
             this.btnBorderColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBorderColor.Name = "btnBorderColor";
-            this.btnBorderColor.Size = new System.Drawing.Size(23, 22);
-            this.btnBorderColor.Text = "Border color";
+            this.btnBorderColor.Size = new System.Drawing.Size(46, 22);
+            this.btnBorderColor.Text = "Border";
             this.btnBorderColor.Click += new System.EventHandler(this.BtnBorderColorClick);
             // 
             // btnBackgroundColor
             // 
-            this.btnBackgroundColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBackgroundColor.Image = ((System.Drawing.Image)(resources.GetObject("btnBackgroundColor.Image")));
             this.btnBackgroundColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBackgroundColor.Name = "btnBackgroundColor";
-            this.btnBackgroundColor.Size = new System.Drawing.Size(23, 22);
-            this.btnBackgroundColor.Text = "Background color";
+            this.btnBackgroundColor.Size = new System.Drawing.Size(75, 22);
+            this.btnBackgroundColor.Text = "Background";
             this.btnBackgroundColor.Click += new System.EventHandler(this.BtnBackColorClick);
+            // 
+            // btnGradientColor
+            // 
+            this.btnGradientColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnGradientColor.Name = "btnGradientColor";
+            this.btnGradientColor.Size = new System.Drawing.Size(56, 22);
+            this.btnGradientColor.Text = "Gradient";
+            this.btnGradientColor.Click += new System.EventHandler(this.btnGradientColor_Click);
             // 
             // toolStripSeparator1
             // 
@@ -742,101 +823,30 @@ namespace Greenshot
             // arrowHeadsStartPointToolStripMenuItem
             // 
             this.arrowHeadsStartPointToolStripMenuItem.Name = "arrowHeadsStartPointToolStripMenuItem";
-            this.arrowHeadsStartPointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsStartPointToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsStartPointToolStripMenuItem.Text = "Start point";
             this.arrowHeadsStartPointToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsStartPointToolStripMenuItemClick);
             // 
             // arrowHeadsEndPointToolStripMenuItem
             // 
             this.arrowHeadsEndPointToolStripMenuItem.Name = "arrowHeadsEndPointToolStripMenuItem";
-            this.arrowHeadsEndPointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsEndPointToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsEndPointToolStripMenuItem.Text = "End point";
             this.arrowHeadsEndPointToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsEndPointToolStripMenuItemClick);
             // 
             // arrowHeadsBothToolStripMenuItem
             // 
             this.arrowHeadsBothToolStripMenuItem.Name = "arrowHeadsBothToolStripMenuItem";
-            this.arrowHeadsBothToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsBothToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsBothToolStripMenuItem.Text = "Both";
             this.arrowHeadsBothToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsBothToolStripMenuItemClick);
             // 
             // arrowHeadsNoneToolStripMenuItem
             // 
             this.arrowHeadsNoneToolStripMenuItem.Name = "arrowHeadsNoneToolStripMenuItem";
-            this.arrowHeadsNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowHeadsNoneToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.arrowHeadsNoneToolStripMenuItem.Text = "None";
             this.arrowHeadsNoneToolStripMenuItem.Click += new System.EventHandler(this.ArrowHeadsNoneToolStripMenuItemClick);
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCursor,
-            this.btnRect,
-            this.btnEllipse,
-            this.btnLine,
-            this.btnText});
-            this.toolStrip2.Location = new System.Drawing.Point(422, 24);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(127, 25);
-            this.toolStrip2.TabIndex = 0;
-            // 
-            // btnCursor
-            // 
-            this.btnCursor.Checked = true;
-            this.btnCursor.CheckOnClick = true;
-            this.btnCursor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCursor.Image = global::ZSS.ImageEditorLib.Properties.Resources.cursor;
-            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(23, 22);
-            this.btnCursor.Text = "Selection tool";
-            this.btnCursor.Click += new System.EventHandler(this.BtnCursorClick);
-            // 
-            // btnRect
-            // 
-            this.btnRect.CheckOnClick = true;
-            this.btnRect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRect.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape;
-            this.btnRect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRect.Name = "btnRect";
-            this.btnRect.Size = new System.Drawing.Size(23, 22);
-            this.btnRect.Text = "Draw rectangle";
-            this.btnRect.Click += new System.EventHandler(this.BtnRectClick);
-            // 
-            // btnEllipse
-            // 
-            this.btnEllipse.CheckOnClick = true;
-            this.btnEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEllipse.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_ellipse;
-            this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnEllipse.Name = "btnEllipse";
-            this.btnEllipse.Size = new System.Drawing.Size(23, 22);
-            this.btnEllipse.Text = "Draw ellipse";
-            this.btnEllipse.Click += new System.EventHandler(this.BtnEllipseClick);
-            // 
-            // btnLine
-            // 
-            this.btnLine.CheckOnClick = true;
-            this.btnLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLine.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_line;
-            this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLine.Name = "btnLine";
-            this.btnLine.Size = new System.Drawing.Size(23, 22);
-            this.btnLine.Text = "Draw line";
-            this.btnLine.Click += new System.EventHandler(this.BtnLineClick);
-            // 
-            // btnText
-            // 
-            this.btnText.CheckOnClick = true;
-            this.btnText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnText.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_text;
-            this.btnText.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(23, 22);
-            this.btnText.Text = "Add text";
-            this.btnText.Click += new System.EventHandler(this.BtnTextClick);
             // 
             // printDialog1
             // 
@@ -864,20 +874,18 @@ namespace Greenshot
             this.openDirectoryMenuItem.Text = "Open directory in Windows Explorer";
             this.openDirectoryMenuItem.Click += new System.EventHandler(this.OpenDirectoryMenuItemClick);
             // 
-            // toolStripButton1
+            // btnColorPreview
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Background color 2";
+            this.btnColorPreview.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnColorPreview.Name = "btnColorPreview";
+            this.btnColorPreview.Size = new System.Drawing.Size(52, 22);
+            this.btnColorPreview.Text = "Preview";
             // 
             // ImageEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 430);
+            this.ClientSize = new System.Drawing.Size(779, 450);
             this.Controls.Add(this.toolStripContainer1);
             this.KeyPreview = true;
             this.Name = "ImageEditorForm";
@@ -888,18 +896,20 @@ namespace Greenshot
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.LeftToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.LeftToolStripPanel.PerformLayout();
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
             this.fileSavedStatusContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -982,6 +992,7 @@ namespace Greenshot
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton btnGradientColor;
+        private System.Windows.Forms.ToolStripButton btnColorPreview;
     }
 }
