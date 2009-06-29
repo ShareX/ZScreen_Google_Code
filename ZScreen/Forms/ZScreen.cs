@@ -402,6 +402,8 @@ namespace ZSS
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
             cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
 
+            #region "Image Editors"
+
             ///////////////////////////////////
             // Image Software Settings
             ///////////////////////////////////
@@ -447,6 +449,8 @@ namespace ZSS
             }
 
             chkImageEditorAutoSave.Checked = Program.conf.ImageEditorAutoSave;
+
+            #endregion
 
             ///////////////////////////////////
             // Advanced Settings
