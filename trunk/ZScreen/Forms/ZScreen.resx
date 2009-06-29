@@ -112,16 +112,13 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="niTray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="cmTray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>102, 17</value>
+    <value>220, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="niTray.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -380,18 +377,15 @@
         rEEAAKxBAACsQQAArEEAAKxBAACsQQAArEE=
 </value>
   </data>
-  <metadata name="cmsHistory.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>193, 17</value>
-  </metadata>
   <metadata name="ilApp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>305, 17</value>
   </metadata>
   <data name="ilApp.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADW
-        SAAAAk1TRnQBSQFMAgEBDwEAAXABCAFwAQgBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        SAAAAk1TRnQBSQFMAgEBDwEAAXgBCAF4AQgBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABQAMAAQEBAAEgBgABQP8AHwADUgGpAcMBjgEAAf8BvgGIAQAB/wG7AYUBAAH/AbkBgwEAAf8BsgIA
         Af8BsQIAAf8BrgIAAf8BrQIAAf8BqwIAAf8BqQIAAf8BqQIAAf8DUgGpGAADFAEcA1QBrgMfASwsAAMQ
         ARUDEAEVdAAByAGSAQAt/wGpAgAB/xgAAwkBDAFkAlMB8QFtAlEB9wMiATIgAANSAakDVgHBA1cBwgFB
@@ -399,21 +393,21 @@
         AfoB/wL8AfcB/wL7AfYF/wGsAgAB/xwAAV4CWwHZAeIBzgG6Af8CXAFIAfgBIgIhATEoAAFNAk4BlgEA
         AbMB2QH/AQABswHrAf8BWQJcAc8DUQGiA0oBjQMQARVcAAHRAZwBAAX/Av4B/AH/Av4B/AH/Av0B+wH/
         Av0B+gH/Av0B+AH/AvsB+QH/AfsB+gH3Af8B+wH6AfYB/wH7AfgB9AX/AbACAAH/GAABNQI0AVUBZAJT
-        AfEB+QH2AfEB/wHiAc0BuQH/An8BWAH+AWECXAHcAV0CWgHTAU0CTAGRAwsBDxgAAzwBZgEDAc4B9AH/
+        AfEB+QH2AfEB/wHiAc0BuQH/An8BWAH+AWECXAHcAV0CWgHTAU0CTAGRAwsBDxgAAzwBZgECAc4B9AH/
         AaAB4QHzAf8BmQHjAfoB/wGfAdwB9QH/AQABuQHpAf8DMQFOUAADRwGCAVsCWQHEAVsCWQHEAdUBoAEA
         Bf8C/QH7Af8C/QH6Af8C/AH5Af8B+wH5AfUB/wH7AfgB9AH/AfsB9wHzAf8B+wH1AfIB/wH6AfMB7wH/
         AfgB8gHsBf8BtQIAAf8EAAMQARUBRwJGAYEDGAEhBAABSQJIAYcBzwGuAY4B/wHrAd4B0QH/Af0B/AH6
         Af8B/QH8AfoB/wH9AfsB+AH/AfQB6wHjAf8B8QHnAd0B/wHYAb4BowH/AWICSAH2A0EBchQAAzcBWgEA
-        Ac0B9gH/AZUB6gH8Af8BAAHeAfwB/wGiAesB/QH/AQkByQHvAf8BXgJhAdoDBwEJTAABWwJZAcQBWwJZ
+        Ac0B9gH/AZUB6gH8Af8BAAHeAfwB/wGiAesB/QH/AQgByQHvAf8BXgJhAdoDBwEJTAABWwJZAcQBWwJZ
         AcQBWwJZAcQB2AGiAQAF/wL8AfoB/wH8AfsB+QH/AfsB+gH2Af8B+wH3AfQB/wH7AfYB8QH/AfgB9AHu
         Af8B9wHyAesB/wH3AfAB6gH/AfYB7AHoBf8BtwGBAQAB/wQAAwcBCQNWAbMBVwJVAbcDGgElAV8CVwHo
         AfgB8QHsAf8B/QH7AfgB/wH4AfAB5wH/AfcB7wHmAf8B9wHuAeQB/wH4AfAB6AH/AfgB8QHqAf8B/QH7
         AfkB/wHyAekB4AH/AV4CWgHYFAADMgFRAQABzQH3Af8BwgHzAf0B/wGZAeoB/QH/AagB5AH5Af8BAAGm
-        AeYB/wGLAYQBFAH/AVgCVgG8AwcBCUgAAVsCWQHEAVsCWQHEAVsCWQHEAdkBowEABf8B/AH7AfgB/wH7
+        AeYB/wGLAYQBEwH/AVgCVgG8AwcBCUgAAVsCWQHEAVsCWQHEAVsCWQHEAdkBowEABf8B/AH7AfgB/wH7
         AfkB9wH/AfsB9wH0Af8B+QH1AfAB/wH3AfMB7QH/AfYB7wHqAf8B9QHrAecB/wHzAeoB5AH/AfIB5wHe
         Bf8BugGFAQAB/wgAAVICUQGhAVoCVwG9AVcCVgG4AV8CTAHzAfoB9wHyAf8B+gHzAewB/wH4AfEB6QH/
         AfgB8AHnAf8B9wHvAeYB/wH3Ae4B5AH/AfYB7AHiAf8B9wHvAecB/wH0AewB5QH/AVwCVwHfFAADMAFL
-        AQABwAH4Af8BAAHNAfcB/wGKAdwB+QH/AQABsAHtAf8BmwGqAacB/wHlAbgBngH/Ab0BHAEAAf8BWAJW
+        AQABwAH4Af8BAAHNAfcB/wGKAdwB+QH/AQABsAHtAf8BmwGqAacB/wHlAbgBngH/Ab0BGwEAAf8BWAJW
         AbwDBwEJRAABWwJZAcQBWwJZAcQBWwJZAcQB2wGkAQAt/wG9AYcBAAH/BAADKAE8A1MBqgFaAlcBvQFa
         AlcBvQFfAVcBSwH7AfoB9gHxAf8B+gH0Ae4B/wH5AfIB6gH/AfgB8QHpAf8B+AHwAegB/wH3Ae8B5gH/
         AfcB7gHkAf8B+AHxAekB/wHzAeoB4gH/AWECXgHaGAADEgEYAzkBXwFaAmQB7AHAAbEBlwH/Ae0B0QG8
@@ -427,17 +421,17 @@
         AZIB/wHoAbkBkgH/AegBuQGSAf8B6AG5AZIB/wHoAbkBkgH/AegBuQGSAf8B6AG5AZIB/wGoAYIBQAH9
         AVQCUwGsAVoCVwG9AVoCVwG9AVoCVwG9AVoCVwG9AV0CTgHwAeQB0QG+Af8B+gH2AfIB/wH6AfYB8QH/
         AfoB9gHxAf8B+gH1AfEB/wH6AfUB8QH/AfoB9QHwAf8B9gHwAekB/wHcAcQBrQH/AVUCUwGtJAADEAEV
-        AmABWwHWAecBuQGOAf8B7QHRAbwB/wHpAcQBrQH/AdcBoAEUAf8CVgFVAbFAAAFbAlkBxAFbAlkBxAFb
+        AmABWwHWAecBuQGOAf8B7QHRAbwB/wHpAcQBrQH/AdcBoAETAf8CVgFVAbFAAAFbAlkBxAFbAlkBxAFb
         AlkBxAFeAlgB3QMrAfwB3AGmAQAB/wHaAaQBAAH/AdgBogEAAf8B1AGeAQAB/wHSAZ0BAAH/Ac8BmgEA
         Af8BzgGZAQAB/wHLAZYBAAH/AckBlAEAAf8BZQJSAfQDPgFrA1YBswFaAlcBvQFaAlcBvQFaAlcBvQFa
         AlcBvQFbAlgBywFhAlQB7gFfAVkBUAH7AV8BWQFRAfsBXwFZAVAB+wFqAUcBQQH5AWICWAHvAWICWAHv
-        AWECWgHkA0gBhgMcASgIAAMUAf8DFAH/AwoB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wG/AYUBAAH/
+        AWECWgHkA0gBhgMcASgIAAMTAf8DEwH/AwkB/wMAAf8DAAH/AwAB/wMAAf8DAAH/AwAB/wG/AYUBAAH/
         AeoBuwGQAf8B5wG5AZEB/wJgAVkB6wMdASpAAAFbAlkBxAFbAlkBxAFbAlkBxAFbAlkBxAFbAlkBxAFb
         AlkBxAFbAlkBxAFbAlkBxAFbAlkBxAFbAlkBxAFbAlkBxAFbAlkBxAFbAlkBxAwAA1UBsgFaAlcBvQFa
         AlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQNRAaJAAAMQARUCYAFb
         AdYDXQHtAx0BKkQAAVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHE
         AVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHEAVsCWQHEDAADVQGyAVoCVwG9AVoCVwG9AVoCVwG9AVoCVwG9
-        AVoCVwG9AVoCVwG9AVoCVwG9AVoCVwG9AVoCVwG9A1EBohwAAxQB/wMUAf8DFAH/AxQB/wMKAf8DAAH/
+        AVoCVwG9AVoCVwG9AVoCVwG9AVoCVwG9AVoCVwG9A1EBohwAAxMB/wMTAf8DEwH/AxMB/wMJAf8DAAH/
         AwAB/wMAAf8DAAH/AwAB/wMAAf8DAAH/SAABWQJXAcIBWwJZAcQBWwJZAcQBWwJZAcQBWwJZAcQBWwJZ
         AcQBWwJZAcQBWwJZAcQBWwJZAcQBWwJZAcQBWwJZAcQBWwJZAcQBWQJXAcIMAAFNAkwBkQFaAlcBvQFa
         AlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFaAlcBvQFHAkYBgJQAAzMBUgFY
@@ -710,16 +704,6 @@
   <metadata name="tmrApp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>467, 17</value>
   </metadata>
-  <metadata name="ttZScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>560, 17</value>
-  </metadata>
-  <data name="cboClipboardTextMode.ToolTip" xml:space="preserve">
-    <value>Copy to Clipboard Mode specifies what kind of URL you would like to be added to your clipboard.
-"Full Image" returns a normal full-size image URL.
-"Full Image for Forums" returns BBcode for embedding images into forum posts.
-"Thumbnail" returns the thumbnail (a small image) of your uploaded image.
-"Linked Thumbnail" is the same as "Thumbnail" except that it links the thumbnail to the full-size image.</value>
-  </data>
   <data name="pbLogo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAUQAAAD+CAYAAABCzHxhAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
@@ -2756,6 +2740,9 @@
   </metadata>
   <metadata name="chHotkeys_Keys.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="ttZScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>560, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>52</value>
