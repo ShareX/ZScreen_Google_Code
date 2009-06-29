@@ -52,9 +52,6 @@ namespace Greenshot.Drawing
 {
     public delegate void SurfaceElementEventHandler(object source, DrawableContainerList element);
 
-    /// <summary>
-    /// Description of Surface.
-    /// </summary>
     public class Surface : PictureBox
     {
         private AppConfig conf = AppConfig.GetInstance();
@@ -184,32 +181,41 @@ namespace Greenshot.Drawing
             mY = e.Y;
             mouseDown = true;
             drawingElement = null;
+
             if (DrawingMode == DrawingModes.Rect) // Draw rectangle
             {
-                DeselectAllElements();
                 drawingElement = new RectangleContainer(this);
             }
             else if (DrawingMode == DrawingModes.Ellipse) // Draw ellipse
             {
-                DeselectAllElements();
                 drawingElement = new EllipseContainer(this);
             }
             else if (DrawingMode == DrawingModes.Text) // Draw textbox
             {
-                DeselectAllElements();
                 drawingElement = new TextContainer(this);
             }
             else if (DrawingMode == DrawingModes.Line) // Draw line
             {
-                DeselectAllElements();
                 drawingElement = new LineContainer(this);
             }
-            else
-            {   // check whether an existing element was clicked
-                // we save mouse down element separately from selectedElements (checked on mouse up), 
-                // since it could be moved around before it is actually selected
+
+            // check whether an existing element was clicked
+            // we save mouse down element separately from selectedElements (checked on mouse up), 
+            // since it could be moved around before it is actually selected
+            if (DrawingMode == DrawingModes.None)
+            {
                 mouseDownElement = elements.ClickableElementAt(e.X, e.Y);
             }
+            else
+            {
+                mouseDownElement = selectedElements.ClickableElementAt(e.X, e.Y);
+            }
+
+            if (mouseDownElement == null)
+            {
+                DeselectAllElements();
+            }
+
             // if a new element has been drawn, set location and register it
             if (drawingElement != null)
             {
@@ -226,10 +232,48 @@ namespace Greenshot.Drawing
             }
         }
 
+        private void SurfaceMouseMove(object sender, MouseEventArgs e)
+        {
+            if (DrawingMode == DrawingModes.None)
+            {
+                Cursor = Cursors.Default;
+            }
+            else if ((!mouseDown && selectedElements.ClickableAt(e.X, e.Y)) || (mouseDown && mouseDownElement != null))
+            {
+                Cursor = Cursors.SizeAll;
+            }
+            else
+            {
+                Cursor = Cursors.Cross;
+            }
+
+            if (mouseDown)
+            {
+                if (mouseDownElement != null) // an element is currently dragged
+                {
+                    selectedElements.HideGrippers();
+                    if (mouseDownElement.Selected) // dragged element has been selected before -> move all
+                    {
+                        selectedElements.MoveBy(e.X - mX, e.Y - mY);
+                    }
+                    else // dragged element is not among selected elements -> just move dragged one
+                    {
+                        mouseDownElement.MoveBy(e.X - mX, e.Y - mY);
+                    }
+                    mX = e.X; mY = e.Y;
+                    Invalidate();
+                }
+                else if (drawingElement != null) // an element is currently drawn
+                {
+                    drawingElement.Width = e.X - drawingElement.Left;
+                    drawingElement.Height = e.Y - drawingElement.Top;
+                    Invalidate();
+                }
+            }
+        }
+
         private void SurfaceMouseUp(object sender, MouseEventArgs e)
         {
-            mouseDown = false;
-            mouseDownElement = null;
             if (DrawingMode == DrawingModes.None)
             { // check whether an existing element was clicked
                 DrawableContainer element = elements.ClickableElementAt(e.X, e.Y);
@@ -262,7 +306,8 @@ namespace Greenshot.Drawing
                 selectedElements.ShowGrippers();
                 selectedElements.Selected = true;
             }
-            if (drawingElement != null)
+
+            if (drawingElement != null && mouseDownElement == null)
             {
                 if (!drawingElement.InitContent())
                 {
@@ -281,42 +326,11 @@ namespace Greenshot.Drawing
                 }
                 drawingElement = null;
             }
-            Invalidate();
-        }
 
-        private void SurfaceMouseMove(object sender, MouseEventArgs e)
-        {
-            if (DrawingMode != DrawingModes.None)
-            {
-                Cursor = Cursors.Cross;
-            }
-            else
-            {
-                Cursor = Cursors.Default;
-            }
-            if (mouseDown)
-            {
-                if (mouseDownElement != null)
-                { // an element is currently dragged
-                    selectedElements.HideGrippers();
-                    if (mouseDownElement.Selected)
-                    { // dragged element has been selected before -> move all
-                        selectedElements.MoveBy(e.X - mX, e.Y - mY);
-                    }
-                    else
-                    { // dragged element is not among selected elements -> just move dragged one
-                        mouseDownElement.MoveBy(e.X - mX, e.Y - mY);
-                    }
-                    mX = e.X; mY = e.Y;
-                    Invalidate();
-                }
-                else if (drawingElement != null)
-                { // an element is currently drawn
-                    drawingElement.Width = e.X - drawingElement.Left;
-                    drawingElement.Height = e.Y - drawingElement.Top;
-                    Invalidate();
-                }
-            }
+            mouseDown = false;
+            mouseDownElement = null;
+
+            Invalidate();
         }
 
         private void SurfaceDoubleClick(object sender, MouseEventArgs e)

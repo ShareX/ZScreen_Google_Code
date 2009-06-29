@@ -245,12 +245,11 @@ namespace Greenshot.Drawing
         /// <returns>true if one of the elements in the list is clickable at the given location, false otherwise</returns>
         public bool ClickableAt(int x, int y)
         {
-            bool ret = false;
             foreach (DrawableContainer dc in this)
             {
-                ret |= dc.ClickableAt(x, y);
+                if (dc.ClickableAt(x, y)) return true;
             }
-            return ret;
+            return false;
         }
 
         /// <summary>
