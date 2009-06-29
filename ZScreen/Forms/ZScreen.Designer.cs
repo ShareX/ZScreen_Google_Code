@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -455,10 +455,11 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.cbImageEditorOnClose = new System.Windows.Forms.ComboBox();
-            this.lblImageEditorOnClose = new System.Windows.Forms.Label();
+            this.tpMindTouch = new System.Windows.Forms.TabPage();
             this.gbImageEditorSettings = new System.Windows.Forms.GroupBox();
+            this.chkImageEditorAutoSave = new System.Windows.Forms.CheckBox();
             this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
@@ -574,6 +575,7 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            this.tpMindTouch.SuspendLayout();
             this.gbImageEditorSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1336,6 +1338,7 @@ namespace ZSS
             this.tcAccounts.Controls.Add(this.tpFTP);
             this.tcAccounts.Controls.Add(this.tpTinyPic);
             this.tcAccounts.Controls.Add(this.tpImageShack);
+            this.tcAccounts.Controls.Add(this.tpMindTouch);
             this.tcAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcAccounts.Location = new System.Drawing.Point(3, 3);
             this.tcAccounts.Name = "tcAccounts";
@@ -1659,38 +1662,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5357,39 +5360,38 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
-            // cbImageEditorOnClose
+            // tpMindTouch
             // 
-            this.cbImageEditorOnClose.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbImageEditorOnClose.FormattingEnabled = true;
-            this.cbImageEditorOnClose.Items.AddRange(new object[] {
-            "Close normally",
-            "Auto save before close",
-            "Prompt for save if image edited before close"});
-            this.cbImageEditorOnClose.Location = new System.Drawing.Point(160, 24);
-            this.cbImageEditorOnClose.Name = "cbImageEditorOnClose";
-            this.cbImageEditorOnClose.Size = new System.Drawing.Size(280, 21);
-            this.cbImageEditorOnClose.TabIndex = 65;
-            this.cbImageEditorOnClose.SelectedIndexChanged += new System.EventHandler(this.cbImageEditorOnClose_SelectedIndexChanged);
-            // 
-            // lblImageEditorOnClose
-            // 
-            this.lblImageEditorOnClose.AutoSize = true;
-            this.lblImageEditorOnClose.Location = new System.Drawing.Point(16, 28);
-            this.lblImageEditorOnClose.Name = "lblImageEditorOnClose";
-            this.lblImageEditorOnClose.Size = new System.Drawing.Size(134, 13);
-            this.lblImageEditorOnClose.TabIndex = 66;
-            this.lblImageEditorOnClose.Text = "Image Editor close options:";
+            this.tpMindTouch.Controls.Add(this.panelMindTouchAccounts);
+            this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
+            this.tpMindTouch.Name = "tpMindTouch";
+            this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMindTouch.Size = new System.Drawing.Size(768, 399);
+            this.tpMindTouch.TabIndex = 4;
+            this.tpMindTouch.Text = "MindTouch";
+            this.tpMindTouch.UseVisualStyleBackColor = true;
             // 
             // gbImageEditorSettings
             // 
-            this.gbImageEditorSettings.Controls.Add(this.lblImageEditorOnClose);
-            this.gbImageEditorSettings.Controls.Add(this.cbImageEditorOnClose);
+            this.gbImageEditorSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImageEditorSettings.Controls.Add(this.chkImageEditorAutoSave);
             this.gbImageEditorSettings.Location = new System.Drawing.Point(296, 120);
             this.gbImageEditorSettings.Name = "gbImageEditorSettings";
-            this.gbImageEditorSettings.Size = new System.Drawing.Size(456, 264);
+            this.gbImageEditorSettings.Size = new System.Drawing.Size(456, 64);
             this.gbImageEditorSettings.TabIndex = 67;
             this.gbImageEditorSettings.TabStop = false;
-            this.gbImageEditorSettings.Text = "Settings";
+            this.gbImageEditorSettings.Text = "ZScreen Image Editor Settings";
+            // 
+            // chkImageEditorAutoSave
+            // 
+            this.chkImageEditorAutoSave.AutoSize = true;
+            this.chkImageEditorAutoSave.Location = new System.Drawing.Point(16, 24);
+            this.chkImageEditorAutoSave.Name = "chkImageEditorAutoSave";
+            this.chkImageEditorAutoSave.Size = new System.Drawing.Size(193, 17);
+            this.chkImageEditorAutoSave.TabIndex = 0;
+            this.chkImageEditorAutoSave.Text = "&Automatically save changes on Exit";
+            this.chkImageEditorAutoSave.UseVisualStyleBackColor = true;
             // 
             // nudtScreenshotDelay
             // 
@@ -5402,6 +5404,14 @@ namespace ZSS
             this.nudtScreenshotDelay.Value = ((long)(0));
             this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
             this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // panelMindTouchAccounts
+            // 
+            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
+            this.panelMindTouchAccounts.Size = new System.Drawing.Size(762, 393);
+            this.panelMindTouchAccounts.TabIndex = 0;
             // 
             // ucTextUploaders
             // 
@@ -5591,6 +5601,7 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            this.tpMindTouch.ResumeLayout(false);
             this.gbImageEditorSettings.ResumeLayout(false);
             this.gbImageEditorSettings.PerformLayout();
             this.ResumeLayout(false);
@@ -6024,9 +6035,10 @@ namespace ZSS
         private ZSS.UserControls.TextUploadersControl ucTextUploaders;
         private System.Windows.Forms.ToolTip ttZScreen;
         private System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
-        private System.Windows.Forms.ComboBox cbImageEditorOnClose;
-        private System.Windows.Forms.Label lblImageEditorOnClose;
+        private System.Windows.Forms.TabPage tpMindTouch;
+        private ZSS.UserControls.AccountsControl panelMindTouchAccounts;
         private System.Windows.Forms.GroupBox gbImageEditorSettings;
+        private System.Windows.Forms.CheckBox chkImageEditorAutoSave;
 
     }
 }

@@ -61,7 +61,7 @@ namespace Greenshot
     public partial class ImageEditorForm : Form
     {
         public BackgroundWorker MyWorker { get; set; }
-        public int OnClose;
+        public bool AutoSave = true;
 
         private ColorDialog colorDialog = ColorDialog.GetInstance();
         private string lastSaveFullPath;
@@ -637,18 +637,22 @@ namespace Greenshot
 
         private void ImageEditorFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (OnClose == 1) //Auto save before close
+            if (surface.IsEdited())
             {
-                Save();
-            }
-            else if (OnClose == 2 && surface.IsEdited()) //Prompt for save if image edited before close
-            {
-                if (MessageBox.Show("Are you want to save image?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                    MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                if (AutoSave) //Auto save before close
                 {
                     Save();
                 }
+                else          //Prompt for save if image edited before close
+                {
+                    if (MessageBox.Show("Do you want to save changes to the image?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                    {
+                        Save();
+                    }
+                }
             }
+
             conf.Editor_WindowSize = Size;
             conf.Save();
             GC.Collect();
