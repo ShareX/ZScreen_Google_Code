@@ -967,7 +967,7 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
-            t.MakeTinyURL = Program.MakeTinyURL();
+           // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
             t.SetLocalFilePath(localFilePath);
 
@@ -2124,35 +2124,35 @@ namespace ZSS
                 {
                     StartBW_LanguageTranslator();
                 }
-            }
-            else
-            {
-                foreach (string filePath in FileSystem.GetClipboardFilePaths())
+                else
                 {
-                    if (FileSystem.IsValidTextFile(filePath))
+                    foreach (string filePath in FileSystem.GetClipboardFilePaths())
                     {
-                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                        string textString = File.ReadAllText(filePath);
-
-                        if (FileSystem.IsValidLink(textString))
+                        if (FileSystem.IsValidTextFile(filePath))
                         {
-                            if (Program.conf.UrlShortenerActive != null)
+                            MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                            string textString = File.ReadAllText(filePath);
+
+                            if (FileSystem.IsValidLink(textString))
                             {
-                                temp.MyTextUploader = Program.conf.UrlShortenerActive;
-                                temp.RunWorker();
+                                if (Program.conf.UrlShortenerActive != null)
+                                {
+                                    temp.MyTextUploader = Program.conf.UrlShortenerActive;
+                                    temp.RunWorker();
+                                }
+                            }
+                            else
+                            {
+                                if (Program.conf.TextUploaderActive != null)
+                                {
+                                    temp.RunWorker();
+                                }
                             }
                         }
                         else
                         {
-                            if (Program.conf.TextUploaderActive != null)
-                            {
-                                temp.RunWorker();
-                            }
+                            StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                         }
-                    }
-                    else
-                    {
-                        StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     }
                 }
             }
