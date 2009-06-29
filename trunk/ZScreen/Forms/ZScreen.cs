@@ -1103,7 +1103,7 @@ namespace ZSS
                         FileSystem.AppendDebug(ex.Message);
                     }
                     break;
-                case(MainAppTask.ProgressType)103:
+                case (MainAppTask.ProgressType)103:
                     ImageOutput.SaveWithDialog(e.UserState as Image);
                     break;
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
@@ -2020,15 +2020,9 @@ namespace ZSS
 
         private void SetActiveImageSoftware()
         {
-            int sel;
-
-            if ((sel = lbImageSoftware.SelectedIndex) > 0)
-            {
-                Program.conf.ImageSoftwareEnabled = true;
-
-                Program.conf.ImageEditorActive = Program.conf.ImageEditorsList[sel];
-                RewriteImageEditorsRightClickMenu();
-            }
+            Program.conf.ImageSoftwareEnabled = true;
+            Program.conf.ImageEditorActive = Program.conf.ImageEditorsList[lbImageSoftware.SelectedIndex];
+            RewriteImageEditorsRightClickMenu();
         }
 
         private void ShowImageEditorsSettings()
