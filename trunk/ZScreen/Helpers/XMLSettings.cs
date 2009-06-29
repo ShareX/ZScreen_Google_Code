@@ -273,10 +273,10 @@ namespace ZSS
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public List<Software> ImageEditorsList = new List<Software>();
-        public Software ImageEditorActive = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"));
+        public List<Software> ImageEditors = new List<Software>();
+        public Software ImageEditor = null;
         public bool ImageSoftwareEnabled = false;
-        public Software TextEditorActive = new Software();
+        public Software TextEditorActive;
         public List<Software> TextEditors = new List<Software>();
         public bool TextEditorEnabled = false;
         public bool ImageEditorAutoSave = true;
@@ -542,7 +542,7 @@ namespace ZSS
 
         public bool SoftwareExist(string sName)
         {
-            foreach (Software iS in this.ImageEditorsList)
+            foreach (Software iS in this.ImageEditors)
             {
                 if (iS.Name == sName) return true;
             }
@@ -553,11 +553,11 @@ namespace ZSS
         {
             if (SoftwareExist(sName))
             {
-                foreach (Software iS in this.ImageEditorsList)
+                foreach (Software iS in this.ImageEditors)
                 {
                     if (iS.Name == sName)
                     {
-                        this.ImageEditorsList.Remove(iS);
+                        this.ImageEditors.Remove(iS);
                         return true;
                     }
                 }

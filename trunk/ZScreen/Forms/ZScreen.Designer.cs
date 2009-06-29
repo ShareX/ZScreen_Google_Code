@@ -290,8 +290,8 @@ namespace ZSS
             this.gbImageEditorSettings = new System.Windows.Forms.GroupBox();
             this.chkImageEditorAutoSave = new System.Windows.Forms.CheckBox();
             this.pgEditorsImage = new System.Windows.Forms.PropertyGrid();
-            this.btnDeleteImageSoftware = new System.Windows.Forms.Button();
-            this.btnBrowseImageSoftware = new System.Windows.Forms.Button();
+            this.btnRemoveImageEditor = new System.Windows.Forms.Button();
+            this.btnBrowseImageEditor = new System.Windows.Forms.Button();
             this.lbImageSoftware = new System.Windows.Forms.ListBox();
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
             this.tpImages = new System.Windows.Forms.TabPage();
@@ -3398,8 +3398,8 @@ namespace ZSS
             // 
             this.tpEditorsImages.Controls.Add(this.gbImageEditorSettings);
             this.tpEditorsImages.Controls.Add(this.pgEditorsImage);
-            this.tpEditorsImages.Controls.Add(this.btnDeleteImageSoftware);
-            this.tpEditorsImages.Controls.Add(this.btnBrowseImageSoftware);
+            this.tpEditorsImages.Controls.Add(this.btnRemoveImageEditor);
+            this.tpEditorsImages.Controls.Add(this.btnBrowseImageEditor);
             this.tpEditorsImages.Controls.Add(this.lbImageSoftware);
             this.tpEditorsImages.Controls.Add(this.btnAddImageSoftware);
             this.tpEditorsImages.Location = new System.Drawing.Point(4, 22);
@@ -3448,26 +3448,26 @@ namespace ZSS
             // 
             // btnDeleteImageSoftware
             // 
-            this.btnDeleteImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnDeleteImageSoftware.Location = new System.Drawing.Point(392, 8);
-            this.btnDeleteImageSoftware.Name = "btnDeleteImageSoftware";
-            this.btnDeleteImageSoftware.Size = new System.Drawing.Size(88, 24);
-            this.btnDeleteImageSoftware.TabIndex = 58;
-            this.btnDeleteImageSoftware.Text = "&Remove";
-            this.btnDeleteImageSoftware.UseVisualStyleBackColor = true;
-            this.btnDeleteImageSoftware.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
+            this.btnRemoveImageEditor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnRemoveImageEditor.Location = new System.Drawing.Point(392, 8);
+            this.btnRemoveImageEditor.Name = "btnDeleteImageSoftware";
+            this.btnRemoveImageEditor.Size = new System.Drawing.Size(88, 24);
+            this.btnRemoveImageEditor.TabIndex = 58;
+            this.btnRemoveImageEditor.Text = "&Remove";
+            this.btnRemoveImageEditor.UseVisualStyleBackColor = true;
+            this.btnRemoveImageEditor.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
             // 
             // btnBrowseImageSoftware
             // 
-            this.btnBrowseImageSoftware.AutoSize = true;
-            this.btnBrowseImageSoftware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseImageSoftware.Location = new System.Drawing.Point(488, 8);
-            this.btnBrowseImageSoftware.Name = "btnBrowseImageSoftware";
-            this.btnBrowseImageSoftware.Size = new System.Drawing.Size(88, 23);
-            this.btnBrowseImageSoftware.TabIndex = 6;
-            this.btnBrowseImageSoftware.Text = "Browse...";
-            this.btnBrowseImageSoftware.UseVisualStyleBackColor = true;
-            this.btnBrowseImageSoftware.Click += new System.EventHandler(this.btnBrowseImageSoftware_Click);
+            this.btnBrowseImageEditor.AutoSize = true;
+            this.btnBrowseImageEditor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnBrowseImageEditor.Location = new System.Drawing.Point(488, 8);
+            this.btnBrowseImageEditor.Name = "btnBrowseImageSoftware";
+            this.btnBrowseImageEditor.Size = new System.Drawing.Size(88, 23);
+            this.btnBrowseImageEditor.TabIndex = 6;
+            this.btnBrowseImageEditor.Text = "Browse...";
+            this.btnBrowseImageEditor.UseVisualStyleBackColor = true;
+            this.btnBrowseImageEditor.Click += new System.EventHandler(this.btnBrowseImageSoftware_Click);
             // 
             // lbImageSoftware
             // 
@@ -5779,8 +5779,8 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpEditors;
         private System.Windows.Forms.TabControl tcEditors;
         private System.Windows.Forms.TabPage tpEditorsImages;
-        private System.Windows.Forms.Button btnDeleteImageSoftware;
-        private System.Windows.Forms.Button btnBrowseImageSoftware;
+        private System.Windows.Forms.Button btnRemoveImageEditor;
+        private System.Windows.Forms.Button btnBrowseImageEditor;
         private System.Windows.Forms.ListBox lbImageSoftware;
         private System.Windows.Forms.Button btnAddImageSoftware;
         private System.Windows.Forms.GroupBox gbFTPSettings;

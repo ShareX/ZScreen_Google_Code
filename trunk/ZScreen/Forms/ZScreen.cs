@@ -335,6 +335,11 @@ namespace ZSS
             ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
             ucTextUploaders.Templates.SelectedIndex = 1;
 
+            if (Program.conf.TextEditors.Count == 0)
+            {
+                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
+            }
+
             ///////////////////////////////////
             // URL Shorteners Settings
             ///////////////////////////////////
@@ -403,33 +408,24 @@ namespace ZSS
 
             Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, "", true);
             Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, Application.ExecutablePath, true);
+            Software paint = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"));
 
-            if (Program.conf.ImageEditorsList.Count == 0)
+            if (Program.conf.ImageEditors.Count == 0)
             {
-                Program.conf.ImageEditorsList.Add(disabled);
-                Program.conf.ImageEditorsList.Add(editor);
-                Program.conf.ImageEditorsList.Add(Program.conf.ImageEditorActive);
+                Program.conf.ImageEditors.Add(disabled);
+                Program.conf.ImageEditors.Add(editor);
+                Program.conf.ImageEditors.Add(paint);
             }
             RegistryMgr.FindImageEditors();
 
-            #region "Support for previous versions"
-            if (!Program.conf.SoftwareExist(disabled.Name))
+            if (Program.conf.ImageEditor == null)
             {
-                Program.conf.ImageEditorsList.Add(disabled);
+                Program.conf.ImageEditor = Program.conf.ImageEditors[0];
             }
-            if (!Program.conf.SoftwareExist(Program.ZSCREEN_IMAGE_EDITOR))
-            {
-                Program.conf.ImageEditorsList.Add(editor);
-            }
-            #endregion
 
-            if (Program.conf.TextEditors.Count == 0)
-            {
-                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
-            }
             lbImageSoftware.Items.Clear();
 
-            foreach (Software app in Program.conf.ImageEditorsList)
+            foreach (Software app in Program.conf.ImageEditors)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {
@@ -439,7 +435,7 @@ namespace ZSS
 
             if (Program.conf.ImageSoftwareEnabled)
             {
-                int i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditorActive.Name);
+                int i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditor.Name);
                 if (i != -1)
                 {
                     lbImageSoftware.SelectedIndex = i;
@@ -1438,13 +1434,13 @@ namespace ZSS
 
         private void RewriteImageEditorsRightClickMenu()
         {
-            if (Program.conf.ImageEditorsList != null)
+            if (Program.conf.ImageEditors != null)
             {
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 tsmEditinImageSoftware.DropDownItems.Clear();
 
-                List<Software> imgs = Program.conf.ImageEditorsList;
+                List<Software> imgs = Program.conf.ImageEditors;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1467,7 +1463,7 @@ namespace ZSS
                 //check the active ftpUpload account
 
                 if (Program.conf.ImageSoftwareEnabled)
-                    CheckCorrectIsRightClickMenu(Program.conf.ImageEditorActive.Name);
+                    CheckCorrectIsRightClickMenu(Program.conf.ImageEditor.Name);
                 else
                     CheckCorrectIsRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text);
 
@@ -1497,7 +1493,7 @@ namespace ZSS
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
-            Program.conf.ImageEditorActive = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
+            Program.conf.ImageEditor = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
 
             if (lbImageSoftware.Items.IndexOf(tsm.Text) >= 0)
                 lbImageSoftware.SelectedItem = tsm.Text;
@@ -1696,7 +1692,7 @@ namespace ZSS
             }
 
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageEditorsList[lbImageSoftware.SelectedIndex] = temp;
+            Program.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
 
             ShowImageEditorsSettings();
 
@@ -1914,7 +1910,7 @@ namespace ZSS
         private void AddImageSoftwareToList()
         {
             Software temp = new Software("New", "", false);
-            Program.conf.ImageEditorsList.Add(temp);
+            Program.conf.ImageEditors.Add(temp);
             lbImageSoftware.Items.Add(temp);
             lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
         }
@@ -1930,7 +1926,7 @@ namespace ZSS
 
             if (sel != -1)
             {
-                Program.conf.ImageEditorsList.RemoveAt(sel);
+                Program.conf.ImageEditors.RemoveAt(sel);
 
                 lbImageSoftware.Items.RemoveAt(sel);
 
@@ -2021,7 +2017,7 @@ namespace ZSS
         private void SetActiveImageSoftware()
         {
             Program.conf.ImageSoftwareEnabled = true;
-            Program.conf.ImageEditorActive = Program.conf.ImageEditorsList[lbImageSoftware.SelectedIndex];
+            Program.conf.ImageEditor = Program.conf.ImageEditors[lbImageSoftware.SelectedIndex];
             RewriteImageEditorsRightClickMenu();
         }
 
@@ -2035,10 +2031,11 @@ namespace ZSS
                 Program.conf.ImageSoftwareEnabled = app.Name == Program.DISABLED_IMAGE_EDITOR;
                 RewriteImageEditorsRightClickMenu();
 
-                btnBrowseImageSoftware.Enabled = !app.Protected;
+                btnBrowseImageEditor.Enabled = !app.Protected;
                 pgEditorsImage.SelectedObject = app;
-                pgEditorsImage.Enabled = !app.Protected;
-                btnDeleteImageSoftware.Enabled = !app.Protected;
+                
+                btnRemoveImageEditor.Enabled = !app.Protected;
+
                 gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
 
                 SetActiveImageSoftware();
@@ -3673,7 +3670,7 @@ namespace ZSS
         /// <returns></returns>
         private static Software GetImageSoftware(string name)
         {
-            foreach (Software app in Program.conf.ImageEditorsList)
+            foreach (Software app in Program.conf.ImageEditors)
             {
                 if (app != null && app.Name != null)
                 {
@@ -4407,9 +4404,9 @@ namespace ZSS
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Program.conf.ImageEditorsList[lbImageSoftware.SelectedIndex];
+            Software temp = Program.conf.ImageEditors[lbImageSoftware.SelectedIndex];
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageEditorsList[lbImageSoftware.SelectedIndex] = temp;
+            Program.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
         }
