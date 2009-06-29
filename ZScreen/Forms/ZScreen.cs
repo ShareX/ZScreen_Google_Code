@@ -46,6 +46,7 @@ using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
 using ZSS.Global;
 using System.Drawing.Printing;
+using Greenshot.Helpers;
 
 namespace ZSS
 {
@@ -967,7 +968,7 @@ namespace ZSS
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
-           // t.MakeTinyURL = Program.MakeTinyURL();
+            // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
             t.SetLocalFilePath(localFilePath);
 
@@ -1090,6 +1091,17 @@ namespace ZSS
                 case (MainAppTask.ProgressType)101:
                     PrintHelper ph = new PrintHelper(e.UserState as Image);
                     PrinterSettings ps = ph.PrintWithDialog();
+                    break;
+                case (MainAppTask.ProgressType)102:
+                    try
+                    {
+                        ImageOutput.PrepareClipboardObject();
+                        ImageOutput.CopyToClipboard(e.UserState as Image);
+                    }
+                    catch (Exception ex)
+                    {
+                        FileSystem.AppendDebug(ex.Message);
+                    }
                     break;
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem((HistoryItem)e.UserState);
@@ -4526,11 +4538,6 @@ namespace ZSS
         private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
-        }
-
-        private void tpMain_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

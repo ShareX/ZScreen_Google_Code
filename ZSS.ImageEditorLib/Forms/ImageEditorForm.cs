@@ -211,15 +211,9 @@ namespace Greenshot
 
         private void CopyImageToClipboardToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            try
+            if (this.MyWorker != null)
             {
-                ImageOutput.PrepareClipboardObject();
-                ImageOutput.CopyToClipboard(surface.GetImageForExport());
-                updateStatusLabel("Copy file path to clipboard every time an image is saved");
-            }
-            catch (Exception ex)
-            {
-                updateStatusLabel(ex.Message);
+                this.MyWorker.ReportProgress(102, surface.GetImageForExport());
             }
         }
 
@@ -234,13 +228,6 @@ namespace Greenshot
             {
                 this.MyWorker.ReportProgress(101, surface.GetImageForExport());
             }
-
-            //PrintHelper ph = new PrintHelper(surface.GetImageForExport());
-            //PrinterSettings ps = ph.PrintWithDialog();
-            //if (ps != null)
-            //{
-            //    updateStatusLabel("Print job was sent to '%printername%'.".Replace("%printername%", ps.PrinterName));
-            //}
         }
 
         private void BtnPrintClick(object sender, EventArgs e)
