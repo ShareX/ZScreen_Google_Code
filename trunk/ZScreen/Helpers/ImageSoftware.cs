@@ -45,7 +45,7 @@ namespace ZSS
         /// <summary>
         /// Built-in software are protected from being deleted
         /// </summary>
-        internal bool Protected = false;
+        public bool Protected { get; set; }
 
         public override string ToString()
         {
