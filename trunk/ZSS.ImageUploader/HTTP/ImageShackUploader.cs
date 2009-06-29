@@ -43,8 +43,10 @@ namespace ZSS.ImageUploaders
     {
         private string DeveloperKey { get; set; }
         private string RegistrationCode { get; set; }
-
-        private bool Public;
+        /// <summary>
+        /// Toggle where images will be added to the public profile
+        /// </summary>
+        public bool Public { get; set; }
 
         public ImageShackUploader(string developerKey, string registrationCode)
         {

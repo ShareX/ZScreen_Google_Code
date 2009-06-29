@@ -4533,5 +4533,20 @@ namespace ZSS
         {
             Program.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
         }
+
+        private void btnImageShackProfile_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://profile.imageshack.us/user/" + txtUserNameImageShack.Text);
+        }
+
+        private void chkPublicImageShack_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageShackShowImagesInPublic = chkPublicImageShack.Checked;
+        }
+
+        private void txtUserNameImageShack_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageShackUserName = txtUserNameImageShack.Text;
+        }
     }
 }
