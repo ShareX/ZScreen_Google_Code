@@ -15,15 +15,18 @@ namespace ZSS.Global
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static string ShortenURL(string url)
+        public static string TryShortenURL(string url)
         {
-            TextUploader tu = Program.conf.UrlShortenerActive;
-            if (tu != null)
+            if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL)
             {
-                string temp = tu.UploadText(new TextFile(url));
-                if (!string.IsNullOrEmpty(temp))
+                TextUploader tu = Program.conf.UrlShortenerActive;
+                if (tu != null)
                 {
-                    url = temp;
+                    string temp = tu.UploadText(new TextFile(url));
+                    if (!string.IsNullOrEmpty(temp))
+                    {
+                        url = temp;
+                    }
                 }
             }
             return url;
