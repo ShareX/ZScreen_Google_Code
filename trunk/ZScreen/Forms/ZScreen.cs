@@ -82,7 +82,7 @@ namespace ZSS
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-
+            tcAccounts.TabPages.Remove(tpMindTouch);
             ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
             ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
             ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
@@ -441,7 +441,7 @@ namespace ZSS
                 lbImageSoftware.SelectedIndex = 0; //Set to disabled
             }
 
-            cbImageEditorOnClose.SelectedIndex = Program.conf.ImageEditorOnClose;
+            chkImageEditorAutoSave.Checked = Program.conf.ImageEditorAutoSave;
 
             ///////////////////////////////////
             // Advanced Settings
@@ -2028,13 +2028,14 @@ namespace ZSS
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnDeleteImageSoftware.Enabled = !app.Protected;
+                    gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_EDITOR;
                 }
 
                 SetActiveImageSoftware();
             }
 
             btnBrowseImageSoftware.Enabled = b;
-            pgEditorsImage.Visible = b;
+            pgEditorsImage.Visible = b;            
         }
 
         private void lbImageSoftware_SelectedIndexChanged(object sender, EventArgs e)
@@ -4513,11 +4514,6 @@ namespace ZSS
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
-        }
-
-        private void cbImageEditorOnClose_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.conf.ImageEditorOnClose = cbImageEditorOnClose.SelectedIndex;
         }
     }
 }

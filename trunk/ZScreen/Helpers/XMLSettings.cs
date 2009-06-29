@@ -279,7 +279,7 @@ namespace ZSS
         public Software TextEditorActive = new Software();
         public List<Software> TextEditors = new List<Software>();
         public bool TextEditorEnabled = false;
-        public int ImageEditorOnClose = 0;
+        public bool ImageEditorAutoSave = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  FTP
