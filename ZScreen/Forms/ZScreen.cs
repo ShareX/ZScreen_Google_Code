@@ -4515,5 +4515,10 @@ namespace ZSS
         {
             Program.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
         }
+
+        private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
+        }
     }
 }
