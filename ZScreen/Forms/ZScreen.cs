@@ -1103,6 +1103,9 @@ namespace ZSS
                         FileSystem.AppendDebug(ex.Message);
                     }
                     break;
+                case(MainAppTask.ProgressType)103:
+                    ImageOutput.SaveWithDialog(e.UserState as Image);
+                    break;
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem((HistoryItem)e.UserState);
                     break;

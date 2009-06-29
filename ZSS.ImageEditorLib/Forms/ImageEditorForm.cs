@@ -197,15 +197,9 @@ namespace Greenshot
 
         private void SaveAs()
         {
-            lastSaveFullPath = ImageOutput.SaveWithDialog(surface.GetImageForExport());
-            if (lastSaveFullPath != null)
+            if (MyWorker != null)
             {
-                SetImagePath(lastSaveFullPath);
-                updateStatusLabel("Image saved to %storagelocation%.".Replace("%storagelocation%", lastSaveFullPath), fileSavedStatusContextMenu);
-            }
-            else
-            {
-                clearStatusLabel();
+                MyWorker.ReportProgress(103, surface.GetImageForExport());
             }
         }
 
