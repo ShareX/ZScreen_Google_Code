@@ -1,0 +1,426 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZSS</RootNamespace>
+    <AssemblyName>ZScreen</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>Resources\zss-main.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SignAssembly>false</SignAssembly>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.2.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>
+    </DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Inno|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\AutoCapture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AutoCapture.Designer.cs">
+      <DependentUpon>AutoCapture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConfigWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConfigWizard.Designer.cs">
+      <DependentUpon>ConfigWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DekiWikiPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DekiWikiPath.Designer.cs">
+      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FileName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FileName.Designer.cs">
+      <DependentUpon>FileName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ToolbarWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ToolbarWindow.Designer.cs">
+      <DependentUpon>ToolbarWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ShowScreenshot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShowScreenshot.Designer.cs">
+      <DependentUpon>ShowScreenshot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\ColorMatrices.cs" />
+    <Compile Include="Global\EventHandlers.cs" />
+    <Compile Include="Global\Extensions.cs" />
+    <Compile Include="Global\NumericUpDownTimer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Global\NumericUpDownTimer.Designer.cs">
+      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Debug.cs" />
+    <Compile Include="Global\Enums.cs" />
+    <Compile Include="Global\MyGraphics.cs" />
+    <Compile Include="Helpers\AppInfo.cs" />
+    <Compile Include="Global\ClipboardManager.cs" />
+    <Compile Include="Helpers\HistoryItem.cs" />
+    <Compile Include="Helpers\HistoryManager.cs" />
+    <Compile Include="Helpers\HKcombo.cs" />
+    <Compile Include="Helpers\ImageSoftware.cs" />
+    <Compile Include="Global\NameParser.cs" />
+    <Compile Include="Helpers\PasswordManager.cs" />
+    <Compile Include="Forms\UserPassBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserPassBox.Designer.cs">
+      <DependentUpon>UserPassBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QuickOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuickOptions.Designer.cs">
+      <DependentUpon>QuickOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DropWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DropWindow.Designer.cs">
+      <DependentUpon>DropWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\WatermarkMaker.cs" />
+    <Compile Include="Helpers\TaskManager.cs" />
+    <Compile Include="Helpers\XMLSettings.cs" />
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TextViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextViewer.Designer.cs">
+      <DependentUpon>TextViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\FTPAccountReader.cs" />
+    <Compile Include="Global\FileSystem.cs" />
+    <Compile Include="Global\GDI32.cs" />
+    <Compile Include="Global\Structures.cs" />
+    <Compile Include="Global\User32.cs" />
+    <Compile Include="Helpers\CacheCleanerTask.cs" />
+    <Compile Include="Helpers\MainAppTask.cs" />
+    <Compile Include="Helpers\RemoteViewerTask.cs" />
+    <Compile Include="Forms\Crop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Crop.designer.cs">
+      <DependentUpon>Crop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ViewRemote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ViewRemote.Designer.cs">
+      <DependentUpon>ViewRemote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ZScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreen.Designer.cs">
+      <DependentUpon>ZScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\Crop.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Crop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ZScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <BaseApplicationManifest Include="Properties\app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\ViewRemote.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ViewRemote.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowScreenshot.resx">
+      <DependentUpon>ShowScreenshot.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserPassBox.resx">
+      <DependentUpon>UserPassBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuickOptions.resx">
+      <DependentUpon>QuickOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DropWindow.resx">
+      <DependentUpon>DropWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TextViewer.resx">
+      <DependentUpon>TextViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\zss-green.ico" />
+    <None Include="Resources\picture_edit.png" />
+    <None Include="Resources\application_edit.png" />
+    <None Include="Resources\wrench.png" />
+    <None Include="Resources\cross.png" />
+    <None Include="Resources\server_edit.png" />
+    <None Include="Resources\pictures.png" />
+    <None Include="Resources\world_edit.png" />
+    <None Include="Resources\folder_edit.png" />
+    <None Include="Resources\keyboard.png" />
+    <None Include="Resources\page_copy.png" />
+    <None Include="Resources\picture_go.png" />
+    <None Include="Resources\world_add.png" />
+    <None Include="Resources\camera_edit.png" />
+    <None Include="Resources\camera.png" />
+    <None Include="Resources\shape_move_backwards.png" />
+    <None Include="Resources\drive_network.png" />
+    <None Include="Resources\folder_picture.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\information.png" />
+    <None Include="Resources\color_wheel.png" />
+    <None Include="Resources\monitor.png" />
+    <None Include="Resources\application_double.png" />
+    <None Include="Resources\shape_square.png" />
+    <None Include="Resources\shape_square_go.png" />
+    <None Include="Resources\images.png" />
+    <None Include="Resources\comments.png" />
+    <None Include="Resources\page_white_text.png" />
+    <None Include="Resources\note_error.png" />
+    <EmbeddedResource Include="Documents\TODO.txt" />
+    <EmbeddedResource Include="Documents\VersionHistory.txt" />
+    <EmbeddedResource Include="Documents\License.txt" />
+    <EmbeddedResource Include="Forms\AutoCapture.resx">
+      <DependentUpon>AutoCapture.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConfigWizard.resx">
+      <DependentUpon>ConfigWizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DekiWikiPath.resx">
+      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FileName.resx">
+      <DependentUpon>FileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ToolbarWindow.resx">
+      <DependentUpon>ToolbarWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Global\NumericUpDownTimer.resx">
+      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lightning.png" />
+    <None Include="Resources\main.png" />
+    <None Include="Resources\application_lightning.png" />
+    <None Include="Resources\application_form.png" />
+    <None Include="Resources\tag_blue_edit.png" />
+    <None Include="Resources\photos.png" />
+    <None Include="Resources\images_stack.png" />
+    <None Include="Resources\server.png" />
+    <None Include="Resources\wiki.bmp" />
+    <Content Include="Resources\nav-back.png" />
+    <Content Include="Resources\nav-home.png" />
+    <Content Include="Resources\nav-user.png" />
+    <Content Include="Resources\page.png" />
+    <Content Include="Resources\wiki.png" />
+    <Content Include="Resources\zss-main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
+      <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
+      <Name>ZSS.ColorsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
+      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
+      <Name>ZSS.FTPUploaderLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploaderLib.csproj">
+      <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
+      <Name>ZSS.ImageUploaderLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploaderLib.csproj">
+      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
+      <Name>ZSS.TextUploaderLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
+      <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
+      <Name>ZSS.UpdateCheckerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PostBuildEvent>cd  "$(ProjectDir)Setup\"
+$(inno) /cc zscreen-beta-setup.iss
+start explorer /n,"$(ProjectDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PreBuildEvent>"$(ProjectDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PostBuildEvent>mkdir "$(TargetDir)ILMerge"
+"$(ProjectDir)Tools\ILMerge.exe" /wildcards /t:winexe /out:"$(TargetDir)ILMerge\ZScreen.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
