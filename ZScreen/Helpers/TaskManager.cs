@@ -202,7 +202,7 @@ namespace ZSS.Helpers
             if (File.Exists(task.LocalFilePath))
             {
                 Process p = new Process();
-                Software app = Program.conf.ImageSoftwareActive;
+                Software app = Program.conf.ImageEditorActive;
                 if (app != null && File.Exists(app.Path))
                 {
                     if (app.Name == Program.ZSCREEN_EDITOR)
