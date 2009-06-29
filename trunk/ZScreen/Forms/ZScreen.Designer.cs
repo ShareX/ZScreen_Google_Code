@@ -332,7 +332,7 @@ namespace ZSS
             this.btnRegexpEdit = new System.Windows.Forms.Button();
             this.txtRegexp = new System.Windows.Forms.TextBox();
             this.lvRegexps = new System.Windows.Forms.ListView();
-            this.lvRegexpsColumn = new System.Windows.Forms.ColumnHeader();
+            this.lvRegexpsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRegexpRemove = new System.Windows.Forms.Button();
             this.btnRegexpAdd = new System.Windows.Forms.Button();
             this.txtFileForm = new System.Windows.Forms.TextBox();
@@ -344,8 +344,8 @@ namespace ZSS
             this.txtArg2 = new System.Windows.Forms.TextBox();
             this.btnArgRemove = new System.Windows.Forms.Button();
             this.lvArguments = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpText = new System.Windows.Forms.TabPage();
@@ -1321,8 +1321,8 @@ namespace ZSS
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbLogo.TabIndex = 72;
             this.pbLogo.TabStop = false;
-            this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
             this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
+            this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
             // 
             // tpAccounts
             // 
@@ -1523,9 +1523,9 @@ namespace ZSS
             this.chkPublicImageShack.AutoSize = true;
             this.chkPublicImageShack.Location = new System.Drawing.Point(16, 112);
             this.chkPublicImageShack.Name = "chkPublicImageShack";
-            this.chkPublicImageShack.Size = new System.Drawing.Size(277, 17);
+            this.chkPublicImageShack.Size = new System.Drawing.Size(309, 17);
             this.chkPublicImageShack.TabIndex = 1;
-            this.chkPublicImageShack.Text = "Show images uploaded to ImageShack in your Profile";
+            this.chkPublicImageShack.Text = "Show images uploaded to ImageShack in your Public Profile";
             this.chkPublicImageShack.UseVisualStyleBackColor = true;
             this.chkPublicImageShack.CheckedChanged += new System.EventHandler(this.chkPublicImageShack_CheckedChanged);
             // 
@@ -1553,9 +1553,9 @@ namespace ZSS
             this.btnImageShackProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImageShackProfile.Location = new System.Drawing.Point(432, 56);
             this.btnImageShackProfile.Name = "btnImageShackProfile";
-            this.btnImageShackProfile.Size = new System.Drawing.Size(75, 23);
+            this.btnImageShackProfile.Size = new System.Drawing.Size(160, 23);
             this.btnImageShackProfile.TabIndex = 6;
-            this.btnImageShackProfile.Text = "&Profile...";
+            this.btnImageShackProfile.Text = "&Public Profile...";
             this.btnImageShackProfile.UseVisualStyleBackColor = true;
             this.btnImageShackProfile.Click += new System.EventHandler(this.btnImageShackProfile_Click);
             // 
@@ -1581,7 +1581,7 @@ namespace ZSS
             this.btnGalleryImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGalleryImageShack.Location = new System.Drawing.Point(514, 24);
             this.btnGalleryImageShack.Name = "btnGalleryImageShack";
-            this.btnGalleryImageShack.Size = new System.Drawing.Size(75, 23);
+            this.btnGalleryImageShack.Size = new System.Drawing.Size(78, 23);
             this.btnGalleryImageShack.TabIndex = 3;
             this.btnGalleryImageShack.Text = "&MyImages...";
             this.btnGalleryImageShack.UseVisualStyleBackColor = true;
@@ -1687,10 +1687,10 @@ namespace ZSS
             this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvHotkeys.Size = new System.Drawing.Size(503, 302);
             this.dgvHotkeys.TabIndex = 67;
-            this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
-            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
-            this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
             this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
+            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
+            this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
+            this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
             // 
             // chHotkeys_Description
             // 
@@ -4454,8 +4454,8 @@ namespace ZSS
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
-            this.lbHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbHistory_MouseDown);
             this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
+            this.lbHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbHistory_MouseDown);
             // 
             // txtPreview
             // 
@@ -5422,10 +5422,10 @@ namespace ZSS
             this.Text = "ZScreen";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.ZScreen_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Load += new System.EventHandler(this.ZScreen_Load);
             this.Shown += new System.EventHandler(this.ZScreen_Shown);
             this.Leave += new System.EventHandler(this.ZScreen_Leave);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.cmTray.ResumeLayout(false);
             this.cmsHistory.ResumeLayout(false);
