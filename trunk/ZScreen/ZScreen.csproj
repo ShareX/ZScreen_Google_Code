@@ -185,7 +185,6 @@
     <Compile Include="Forms\InputBox.Designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\FTPAccountReader.cs" />
     <Compile Include="Global\FileSystem.cs" />
     <Compile Include="Global\GDI32.cs" />
     <Compile Include="Global\Structures.cs" />

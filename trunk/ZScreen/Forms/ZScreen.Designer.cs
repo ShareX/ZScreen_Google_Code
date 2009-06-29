@@ -115,17 +115,9 @@ namespace ZSS
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.tpAccounts = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
-            this.tpFTP = new System.Windows.Forms.TabPage();
-            this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
-            this.lbFTPAccounts = new System.Windows.Forms.ListBox();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
-            this.btnFTPAdd = new System.Windows.Forms.Button();
-            this.btnFTPImport = new System.Windows.Forms.Button();
-            this.btnFTPTest = new System.Windows.Forms.Button();
-            this.btnFTPExport = new System.Windows.Forms.Button();
-            this.btnFTPDelete = new System.Windows.Forms.Button();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -139,6 +131,8 @@ namespace ZSS
             this.btnRegCodeImageShack = new System.Windows.Forms.Button();
             this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
             this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
+            this.tpMindTouch = new System.Windows.Forms.TabPage();
+            this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
@@ -290,6 +284,8 @@ namespace ZSS
             this.tpEditors = new System.Windows.Forms.TabPage();
             this.tcEditors = new System.Windows.Forms.TabControl();
             this.tpEditorsImages = new System.Windows.Forms.TabPage();
+            this.gbImageEditorSettings = new System.Windows.Forms.GroupBox();
+            this.chkImageEditorAutoSave = new System.Windows.Forms.CheckBox();
             this.pgEditorsImage = new System.Windows.Forms.PropertyGrid();
             this.btnDeleteImageSoftware = new System.Windows.Forms.Button();
             this.btnBrowseImageSoftware = new System.Windows.Forms.Button();
@@ -430,6 +426,8 @@ namespace ZSS
             this.txtSettingsDir = new System.Windows.Forms.TextBox();
             this.btnSettingsDefault = new System.Windows.Forms.Button();
             this.btnSettingsExport = new System.Windows.Forms.Button();
+            this.btnFTPExport = new System.Windows.Forms.Button();
+            this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnViewSettingsDir = new System.Windows.Forms.Button();
             this.btnSettingsImport = new System.Windows.Forms.Button();
             this.gbRemoteDirCache = new System.Windows.Forms.GroupBox();
@@ -455,10 +453,8 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpMindTouch = new System.Windows.Forms.TabPage();
-            this.gbImageEditorSettings = new System.Windows.Forms.GroupBox();
-            this.chkImageEditorAutoSave = new System.Windows.Forms.CheckBox();
             this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
             this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
@@ -471,12 +467,13 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.tpAccounts.SuspendLayout();
             this.tcAccounts.SuspendLayout();
-            this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
             this.tpTinyPic.SuspendLayout();
             this.gbTinyPic.SuspendLayout();
             this.tpImageShack.SuspendLayout();
             this.gbImageShack.SuspendLayout();
+            this.tpMindTouch.SuspendLayout();
+            this.tpFTP.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpScreenshots.SuspendLayout();
@@ -534,6 +531,7 @@ namespace ZSS
             this.tpEditors.SuspendLayout();
             this.tcEditors.SuspendLayout();
             this.tpEditorsImages.SuspendLayout();
+            this.gbImageEditorSettings.SuspendLayout();
             this.tpImages.SuspendLayout();
             this.tcImages.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
@@ -575,8 +573,6 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.tpMindTouch.SuspendLayout();
-            this.gbImageEditorSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1102,7 +1098,6 @@ namespace ZSS
             // 
             // tcApp
             // 
-            this.tcApp.AllowDrop = true;
             this.tcApp.Controls.Add(this.tpMain);
             this.tcApp.Controls.Add(this.tpAccounts);
             this.tcApp.Controls.Add(this.tpHotkeys);
@@ -1139,6 +1134,7 @@ namespace ZSS
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
+            this.tpMain.Click += new System.EventHandler(this.tpMain_Click);
             // 
             // gbImageSettings
             // 
@@ -1346,58 +1342,15 @@ namespace ZSS
             this.tcAccounts.Size = new System.Drawing.Size(776, 425);
             this.tcAccounts.TabIndex = 0;
             // 
-            // tpFTP
-            // 
-            this.tpFTP.Controls.Add(this.pgFTPSettings);
-            this.tpFTP.Controls.Add(this.lbFTPAccounts);
-            this.tpFTP.Controls.Add(this.gbFTPSettings);
-            this.tpFTP.Controls.Add(this.btnFTPAdd);
-            this.tpFTP.Controls.Add(this.btnFTPImport);
-            this.tpFTP.Controls.Add(this.btnFTPTest);
-            this.tpFTP.Controls.Add(this.btnFTPExport);
-            this.tpFTP.Controls.Add(this.btnFTPDelete);
-            this.tpFTP.ImageIndex = 4;
-            this.tpFTP.Location = new System.Drawing.Point(4, 22);
-            this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(768, 399);
-            this.tpFTP.TabIndex = 3;
-            this.tpFTP.Text = "FTP";
-            this.tpFTP.UseVisualStyleBackColor = true;
-            // 
-            // pgFTPSettings
-            // 
-            this.pgFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgFTPSettings.Location = new System.Drawing.Point(304, 40);
-            this.pgFTPSettings.Name = "pgFTPSettings";
-            this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(458, 255);
-            this.pgFTPSettings.TabIndex = 116;
-            this.pgFTPSettings.ToolbarVisible = false;
-            this.pgFTPSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPSettings_PropertyValueChanged);
-            // 
-            // lbFTPAccounts
-            // 
-            this.lbFTPAccounts.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lbFTPAccounts.FormattingEnabled = true;
-            this.lbFTPAccounts.IntegralHeight = false;
-            this.lbFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.lbFTPAccounts.Name = "lbFTPAccounts";
-            this.lbFTPAccounts.Size = new System.Drawing.Size(285, 393);
-            this.lbFTPAccounts.TabIndex = 40;
-            this.lbFTPAccounts.SelectedIndexChanged += new System.EventHandler(this.lbFTPAccounts_SelectedIndexChanged);
-            // 
             // gbFTPSettings
             // 
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbFTPSettings.Controls.Add(this.cbAutoSwitchFTP);
             this.gbFTPSettings.Controls.Add(this.chkEnableThumbnail);
-            this.gbFTPSettings.Location = new System.Drawing.Point(296, 303);
+            this.gbFTPSettings.Location = new System.Drawing.Point(16, 312);
             this.gbFTPSettings.Name = "gbFTPSettings";
-            this.gbFTPSettings.Size = new System.Drawing.Size(466, 88);
+            this.gbFTPSettings.Size = new System.Drawing.Size(736, 72);
             this.gbFTPSettings.TabIndex = 115;
             this.gbFTPSettings.TabStop = false;
             this.gbFTPSettings.Text = "FTP Settings";
@@ -1425,63 +1378,6 @@ namespace ZSS
             this.chkEnableThumbnail.Text = "Create thumbnail";
             this.chkEnableThumbnail.UseVisualStyleBackColor = false;
             this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
-            // 
-            // btnFTPAdd
-            // 
-            this.btnFTPAdd.BackColor = System.Drawing.Color.Transparent;
-            this.btnFTPAdd.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPAdd.Location = new System.Drawing.Point(304, 8);
-            this.btnFTPAdd.Name = "btnFTPAdd";
-            this.btnFTPAdd.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPAdd.TabIndex = 14;
-            this.btnFTPAdd.Text = "Add";
-            this.btnFTPAdd.UseVisualStyleBackColor = false;
-            this.btnFTPAdd.Click += new System.EventHandler(this.btnAddAccount_Click);
-            // 
-            // btnFTPImport
-            // 
-            this.btnFTPImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPImport.Location = new System.Drawing.Point(520, 8);
-            this.btnFTPImport.Name = "btnFTPImport";
-            this.btnFTPImport.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPImport.TabIndex = 39;
-            this.btnFTPImport.Text = "Import...";
-            this.btnFTPImport.UseVisualStyleBackColor = true;
-            this.btnFTPImport.Click += new System.EventHandler(this.btnAccsImport_Click);
-            // 
-            // btnFTPTest
-            // 
-            this.btnFTPTest.BackColor = System.Drawing.Color.Transparent;
-            this.btnFTPTest.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPTest.Location = new System.Drawing.Point(448, 8);
-            this.btnFTPTest.Name = "btnFTPTest";
-            this.btnFTPTest.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPTest.TabIndex = 7;
-            this.btnFTPTest.Text = "Test...";
-            this.btnFTPTest.UseVisualStyleBackColor = false;
-            this.btnFTPTest.Click += new System.EventHandler(this.btnTestConnection_Click);
-            // 
-            // btnFTPExport
-            // 
-            this.btnFTPExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPExport.Location = new System.Drawing.Point(592, 8);
-            this.btnFTPExport.Name = "btnFTPExport";
-            this.btnFTPExport.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPExport.TabIndex = 38;
-            this.btnFTPExport.Text = "Export...";
-            this.btnFTPExport.UseVisualStyleBackColor = true;
-            this.btnFTPExport.Click += new System.EventHandler(this.btnExportAccounts_Click);
-            // 
-            // btnFTPDelete
-            // 
-            this.btnFTPDelete.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPDelete.Location = new System.Drawing.Point(376, 8);
-            this.btnFTPDelete.Name = "btnFTPDelete";
-            this.btnFTPDelete.Size = new System.Drawing.Size(64, 24);
-            this.btnFTPDelete.TabIndex = 12;
-            this.btnFTPDelete.Text = "Remove";
-            this.btnFTPDelete.UseVisualStyleBackColor = true;
-            this.btnFTPDelete.Click += new System.EventHandler(this.btnDeleteFTP_Click);
             // 
             // tpTinyPic
             // 
@@ -1629,6 +1525,29 @@ namespace ZSS
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(314, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
             this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
+            // 
+            // tpMindTouch
+            // 
+            this.tpMindTouch.Controls.Add(this.panelMindTouchAccounts);
+            this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
+            this.tpMindTouch.Name = "tpMindTouch";
+            this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMindTouch.Size = new System.Drawing.Size(768, 399);
+            this.tpMindTouch.TabIndex = 4;
+            this.tpMindTouch.Text = "MindTouch";
+            this.tpMindTouch.UseVisualStyleBackColor = true;
+            // 
+            // tpFTP
+            // 
+            this.tpFTP.Controls.Add(this.ucFTPAccounts);
+            this.tpFTP.Controls.Add(this.gbFTPSettings);
+            this.tpFTP.Location = new System.Drawing.Point(4, 22);
+            this.tpFTP.Name = "tpFTP";
+            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFTP.Size = new System.Drawing.Size(768, 399);
+            this.tpFTP.TabIndex = 5;
+            this.tpFTP.Text = "FTP";
+            this.tpFTP.UseVisualStyleBackColor = true;
             // 
             // tpHotkeys
             // 
@@ -3477,6 +3396,29 @@ namespace ZSS
             this.tpEditorsImages.Text = "Image Editors";
             this.tpEditorsImages.UseVisualStyleBackColor = true;
             // 
+            // gbImageEditorSettings
+            // 
+            this.gbImageEditorSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImageEditorSettings.Controls.Add(this.chkImageEditorAutoSave);
+            this.gbImageEditorSettings.Location = new System.Drawing.Point(296, 120);
+            this.gbImageEditorSettings.Name = "gbImageEditorSettings";
+            this.gbImageEditorSettings.Size = new System.Drawing.Size(456, 64);
+            this.gbImageEditorSettings.TabIndex = 67;
+            this.gbImageEditorSettings.TabStop = false;
+            this.gbImageEditorSettings.Text = "ZScreen Image Editor Settings";
+            // 
+            // chkImageEditorAutoSave
+            // 
+            this.chkImageEditorAutoSave.AutoSize = true;
+            this.chkImageEditorAutoSave.Location = new System.Drawing.Point(16, 24);
+            this.chkImageEditorAutoSave.Name = "chkImageEditorAutoSave";
+            this.chkImageEditorAutoSave.Size = new System.Drawing.Size(193, 17);
+            this.chkImageEditorAutoSave.TabIndex = 0;
+            this.chkImageEditorAutoSave.Text = "&Automatically save changes on Exit";
+            this.chkImageEditorAutoSave.UseVisualStyleBackColor = true;
+            this.chkImageEditorAutoSave.CheckedChanged += new System.EventHandler(this.chkImageEditorAutoSave_CheckedChanged);
+            // 
             // pgEditorsImage
             // 
             this.pgEditorsImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -5037,6 +4979,8 @@ namespace ZSS
             this.gbSettingsExportImport.Controls.Add(this.txtSettingsDir);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
+            this.gbSettingsExportImport.Controls.Add(this.btnFTPExport);
+            this.gbSettingsExportImport.Controls.Add(this.btnFTPImport);
             this.gbSettingsExportImport.Controls.Add(this.btnViewSettingsDir);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
             this.gbSettingsExportImport.Location = new System.Drawing.Point(8, 272);
@@ -5061,9 +5005,10 @@ namespace ZSS
             // btnSettingsDefault
             // 
             this.btnSettingsDefault.AutoSize = true;
-            this.btnSettingsDefault.Location = new System.Drawing.Point(240, 56);
+            this.btnSettingsDefault.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingsDefault.Location = new System.Drawing.Point(224, 56);
             this.btnSettingsDefault.Name = "btnSettingsDefault";
-            this.btnSettingsDefault.Size = new System.Drawing.Size(104, 23);
+            this.btnSettingsDefault.Size = new System.Drawing.Size(101, 23);
             this.btnSettingsDefault.TabIndex = 1;
             this.btnSettingsDefault.Text = "Default Settings...";
             this.btnSettingsDefault.UseVisualStyleBackColor = true;
@@ -5072,14 +5017,41 @@ namespace ZSS
             // btnSettingsExport
             // 
             this.btnSettingsExport.AutoSize = true;
+            this.btnSettingsExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSettingsExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsExport.Location = new System.Drawing.Point(128, 56);
+            this.btnSettingsExport.Location = new System.Drawing.Point(120, 56);
             this.btnSettingsExport.Name = "btnSettingsExport";
-            this.btnSettingsExport.Size = new System.Drawing.Size(104, 23);
+            this.btnSettingsExport.Size = new System.Drawing.Size(97, 23);
             this.btnSettingsExport.TabIndex = 1;
             this.btnSettingsExport.Text = "Export Settings...";
             this.btnSettingsExport.UseVisualStyleBackColor = true;
             this.btnSettingsExport.Click += new System.EventHandler(this.btnSettingsExport_Click);
+            // 
+            // btnFTPExport
+            // 
+            this.btnFTPExport.AutoSize = true;
+            this.btnFTPExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFTPExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPExport.Location = new System.Drawing.Point(496, 56);
+            this.btnFTPExport.Name = "btnFTPExport";
+            this.btnFTPExport.Size = new System.Drawing.Size(127, 23);
+            this.btnFTPExport.TabIndex = 38;
+            this.btnFTPExport.Text = "Export FTP Accounts...";
+            this.btnFTPExport.UseVisualStyleBackColor = true;
+            this.btnFTPExport.Click += new System.EventHandler(this.btnExportAccounts_Click);
+            // 
+            // btnFTPImport
+            // 
+            this.btnFTPImport.AutoSize = true;
+            this.btnFTPImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFTPImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPImport.Location = new System.Drawing.Point(368, 56);
+            this.btnFTPImport.Name = "btnFTPImport";
+            this.btnFTPImport.Size = new System.Drawing.Size(126, 23);
+            this.btnFTPImport.TabIndex = 39;
+            this.btnFTPImport.Text = "Import FTP Accounts...";
+            this.btnFTPImport.UseVisualStyleBackColor = true;
+            this.btnFTPImport.Click += new System.EventHandler(this.btnAccsImport_Click);
             // 
             // btnViewSettingsDir
             // 
@@ -5097,10 +5069,11 @@ namespace ZSS
             // btnSettingsImport
             // 
             this.btnSettingsImport.AutoSize = true;
+            this.btnSettingsImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSettingsImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnSettingsImport.Location = new System.Drawing.Point(16, 56);
             this.btnSettingsImport.Name = "btnSettingsImport";
-            this.btnSettingsImport.Size = new System.Drawing.Size(104, 23);
+            this.btnSettingsImport.Size = new System.Drawing.Size(96, 23);
             this.btnSettingsImport.TabIndex = 0;
             this.btnSettingsImport.Text = "Import Settings...";
             this.btnSettingsImport.UseVisualStyleBackColor = true;
@@ -5360,40 +5333,6 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
-            // tpMindTouch
-            // 
-            this.tpMindTouch.Controls.Add(this.panelMindTouchAccounts);
-            this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
-            this.tpMindTouch.Name = "tpMindTouch";
-            this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMindTouch.Size = new System.Drawing.Size(768, 399);
-            this.tpMindTouch.TabIndex = 4;
-            this.tpMindTouch.Text = "MindTouch";
-            this.tpMindTouch.UseVisualStyleBackColor = true;
-            // 
-            // gbImageEditorSettings
-            // 
-            this.gbImageEditorSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbImageEditorSettings.Controls.Add(this.chkImageEditorAutoSave);
-            this.gbImageEditorSettings.Location = new System.Drawing.Point(296, 120);
-            this.gbImageEditorSettings.Name = "gbImageEditorSettings";
-            this.gbImageEditorSettings.Size = new System.Drawing.Size(456, 64);
-            this.gbImageEditorSettings.TabIndex = 67;
-            this.gbImageEditorSettings.TabStop = false;
-            this.gbImageEditorSettings.Text = "ZScreen Image Editor Settings";
-            // 
-            // chkImageEditorAutoSave
-            // 
-            this.chkImageEditorAutoSave.AutoSize = true;
-            this.chkImageEditorAutoSave.Location = new System.Drawing.Point(16, 24);
-            this.chkImageEditorAutoSave.Name = "chkImageEditorAutoSave";
-            this.chkImageEditorAutoSave.Size = new System.Drawing.Size(193, 17);
-            this.chkImageEditorAutoSave.TabIndex = 0;
-            this.chkImageEditorAutoSave.Text = "&Automatically save changes on Exit";
-            this.chkImageEditorAutoSave.UseVisualStyleBackColor = true;
-            this.chkImageEditorAutoSave.CheckedChanged += new System.EventHandler(this.chkImageEditorAutoSave_CheckedChanged);
-            // 
             // nudtScreenshotDelay
             // 
             this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
@@ -5405,6 +5344,14 @@ namespace ZSS
             this.nudtScreenshotDelay.Value = ((long)(0));
             this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
             this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(762, 309);
+            this.ucFTPAccounts.TabIndex = 0;
             // 
             // panelMindTouchAccounts
             // 
@@ -5463,7 +5410,6 @@ namespace ZSS
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.tpAccounts.ResumeLayout(false);
             this.tcAccounts.ResumeLayout(false);
-            this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
             this.tpTinyPic.ResumeLayout(false);
@@ -5472,6 +5418,8 @@ namespace ZSS
             this.tpImageShack.ResumeLayout(false);
             this.gbImageShack.ResumeLayout(false);
             this.gbImageShack.PerformLayout();
+            this.tpMindTouch.ResumeLayout(false);
+            this.tpFTP.ResumeLayout(false);
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -5544,6 +5492,8 @@ namespace ZSS
             this.tcEditors.ResumeLayout(false);
             this.tpEditorsImages.ResumeLayout(false);
             this.tpEditorsImages.PerformLayout();
+            this.gbImageEditorSettings.ResumeLayout(false);
+            this.gbImageEditorSettings.PerformLayout();
             this.tpImages.ResumeLayout(false);
             this.tcImages.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
@@ -5602,9 +5552,6 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.tpMindTouch.ResumeLayout(false);
-            this.gbImageEditorSettings.ResumeLayout(false);
-            this.gbImageEditorSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5854,16 +5801,11 @@ namespace ZSS
         private System.Windows.Forms.Button btnBrowseImageSoftware;
         private System.Windows.Forms.ListBox lbImageSoftware;
         private System.Windows.Forms.Button btnAddImageSoftware;
-        private System.Windows.Forms.TabPage tpFTP;
         private System.Windows.Forms.GroupBox gbFTPSettings;
         private System.Windows.Forms.CheckBox cbAutoSwitchFTP;
         private System.Windows.Forms.CheckBox chkEnableThumbnail;
-        private System.Windows.Forms.ListBox lbFTPAccounts;
-        private System.Windows.Forms.Button btnFTPAdd;
         private System.Windows.Forms.Button btnFTPImport;
-        private System.Windows.Forms.Button btnFTPTest;
         private System.Windows.Forms.Button btnFTPExport;
-        private System.Windows.Forms.Button btnFTPDelete;
         private System.Windows.Forms.TabPage tpImages;
         private System.Windows.Forms.TabControl tcImages;
         private System.Windows.Forms.TabPage tpImageUploaders;
@@ -6014,7 +5956,6 @@ namespace ZSS
         private System.Windows.Forms.Button btnUploadText;
         private System.Windows.Forms.Button btnUploadTextClipboard;
         private System.Windows.Forms.Button btnUploadTextClipboardFile;
-        private System.Windows.Forms.PropertyGrid pgFTPSettings;
         private System.Windows.Forms.PropertyGrid pgEditorsImage;
         private System.Windows.Forms.TabPage tpAccounts;
         private System.Windows.Forms.TabControl tcAccounts;
@@ -6040,6 +5981,8 @@ namespace ZSS
         private ZSS.UserControls.AccountsControl panelMindTouchAccounts;
         private System.Windows.Forms.GroupBox gbImageEditorSettings;
         private System.Windows.Forms.CheckBox chkImageEditorAutoSave;
+        private System.Windows.Forms.TabPage tpFTP;
+        private ZSS.UserControls.AccountsControl ucFTPAccounts;
 
     }
 }

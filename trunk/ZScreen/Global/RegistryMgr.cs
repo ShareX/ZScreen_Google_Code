@@ -65,7 +65,7 @@ namespace ZSS.Global
                     {
                         if (!Program.conf.SoftwareExist(sName)) //If not added to Software list before
                         {
-                            Program.conf.ImageSoftwareList.Add(new Software(sName, filePath, false));
+                            Program.conf.ImageEditorsList.Add(new Software(sName, filePath, false));
                         }
                         return true;
                     }
