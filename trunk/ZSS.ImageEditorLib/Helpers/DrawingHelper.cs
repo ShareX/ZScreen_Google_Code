@@ -43,9 +43,6 @@ using System;
 
 namespace Greenshot.Helpers
 {
-    /// <summary>
-    /// Description of DrawingHelper.
-    /// </summary>
     public static class DrawingHelper
     {
         /// <summary>

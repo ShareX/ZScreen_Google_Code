@@ -40,6 +40,8 @@ using Greenshot.Helpers;
 
 namespace Greenshot.Drawing
 {
+    public enum ArrowHeads { None, Both, Start, End }
+
     [Serializable()]
     public class LineContainer : DrawableContainer
     {

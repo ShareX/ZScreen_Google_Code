@@ -62,21 +62,24 @@ namespace Greenshot
             for (int i = 0; i < fontFamilies.Length; i++)
             {
                 FontFamily family = fontFamilies[i];
-                int n = comboFonts.Items.Add(family.Name);
-                if (InputText.Font.FontFamily.Equals(family))
+                if (family.IsStyleAvailable(FontStyle.Regular))
                 {
-                    comboFonts.SelectedIndex = n;
+                    int n = comboFonts.Items.Add(family.Name);
+                    if (InputText.Font.FontFamily.Equals(family))
+                    {
+                        comboFonts.SelectedIndex = n;
+                    }
                 }
             }
-            int b = 0;
-            for (int i = 8; i < 20; i += 2)
+            int number;
+            for (int i = 0; i <= 15; i++)
             {
-                comboFontSize.Items.Add(i.ToString());
-                if (InputText.Font.Size == (float)i)
+                number = (i + 1) * 3 + 5;
+                comboFontSize.Items.Add(number.ToString());
+                if (InputText.Font.Size == (float)number)
                 {
-                    comboFontSize.SelectedIndex = b;
+                    comboFontSize.SelectedIndex = i;
                 }
-                b++;
             }
             btnBold.Checked = InputText.Font.Bold;
             btnItalic.Checked = InputText.Font.Italic;
@@ -110,7 +113,10 @@ namespace Greenshot
             if (btnBold.Checked) style |= FontStyle.Bold;
             if (btnItalic.Checked) style |= FontStyle.Italic;
             if (btnUnderline.Checked) style |= FontStyle.Underline;
-            InputText.Font = new Font(InputText.Font, style);
+            if (InputText.Font.FontFamily.IsStyleAvailable(style))
+            {
+                InputText.Font = new Font(InputText.Font, style);
+            }
         }
 
         public void UpdateFromLabel(Label label)

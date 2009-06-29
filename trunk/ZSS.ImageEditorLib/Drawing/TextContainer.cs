@@ -98,15 +98,15 @@ namespace Greenshot.Drawing
                 textInput.UpdateFromLabel(childLabel);
             }
             textInput.InputText.ForeColor = childLabel.ForeColor;
-            if (textInput.ShowDialog(parent) == DialogResult.Cancel)
+            if (textInput.ShowDialog(parent) == DialogResult.OK && textInput.InputText.Text.Length > 0)
             {
-                return false;
+                childLabel.Text = textInput.InputText.Text;
+                childLabel.Font = textInput.InputText.Font;
+                ForeColor = textInput.InputText.ForeColor;
+                parent.Invalidate();
+                return true;
             }
-            childLabel.Text = textInput.InputText.Text;
-            childLabel.Font = textInput.InputText.Font;
-            ForeColor = textInput.InputText.ForeColor;
-            parent.Invalidate();
-            return true;
+            return false;
         }
 
         public override void Draw(Graphics g, RenderMode rm)

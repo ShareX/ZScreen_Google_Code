@@ -42,11 +42,10 @@ using System.Windows.Forms;
 
 namespace Greenshot.Helpers
 {
-    /// <summary>
-    /// Description of ImageOutput.
-    /// </summary>
     public static class ImageOutput
     {
+        public static string[] SupportedImageFormats = { ImageFormat.Jpeg.ToString(), ImageFormat.Gif.ToString(), ImageFormat.Png.ToString(), ImageFormat.Bmp.ToString() };
+
         private static IDataObject ido = new DataObject();
 
         /// <summary>
@@ -170,9 +169,9 @@ namespace Greenshot.Helpers
             // prepare file dialog filter
             string fdf = "";
             int preselect = -1;
-            for (int i = 0; i < RuntimeConfig.SupportedImageFormats.Length; i++)
+            for (int i = 0; i < SupportedImageFormats.Length; i++)
             {
-                string ifo = RuntimeConfig.SupportedImageFormats[i];
+                string ifo = SupportedImageFormats[i];
                 if (ifo.ToLower().Equals("jpeg")) ifo = "Jpg"; // we dont want no jpeg files, so let the dialog check for jpg
                 if (conf.Output_FileAs_Fullpath.EndsWith(ifo, StringComparison.CurrentCultureIgnoreCase)) preselect = i;
                 fdf += ifo + "|*." + ifo.ToLower() + "|";
