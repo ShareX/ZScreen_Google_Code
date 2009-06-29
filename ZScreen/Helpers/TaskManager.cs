@@ -220,7 +220,7 @@ namespace ZSS.Helpers
                         }
                         catch (Exception ex)
                         {
-                            FileSystem.AppendDebug(ex.ToString());
+                            Console.WriteLine(ex.ToString());
                         }
                     }
                     else

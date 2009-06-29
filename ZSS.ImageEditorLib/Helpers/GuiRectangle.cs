@@ -42,9 +42,6 @@ using System.Drawing;
 
 namespace Greenshot.Helpers
 {
-    /// <summary>
-    /// Description of GuiRectangle.
-    /// </summary>
     public static class GuiRectangle
     {
         public static Rectangle GetGuiRectangle(int x, int y, int w, int h)

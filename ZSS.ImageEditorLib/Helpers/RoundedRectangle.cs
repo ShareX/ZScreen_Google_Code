@@ -45,7 +45,7 @@ using System.Drawing.Drawing2D;
 
 namespace Greenshot.Drawing
 {
-    public abstract class RoundedRectangle
+    public static class RoundedRectangle
     {
         public enum RectangleCorners
         {
