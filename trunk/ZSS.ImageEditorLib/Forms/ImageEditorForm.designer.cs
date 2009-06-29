@@ -81,6 +81,7 @@ namespace Greenshot
             this.downToBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gradientColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineThicknessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineThickness1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineThickness2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,6 +110,8 @@ namespace Greenshot
             this.btnBorderColor = new System.Windows.Forms.ToolStripButton();
             this.btnBackgroundColor = new System.Windows.Forms.ToolStripButton();
             this.btnGradientColor = new System.Windows.Forms.ToolStripButton();
+            this.tscbGradientType = new System.Windows.Forms.ToolStripComboBox();
+            this.btnColorPreview = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.labelLineThickness = new System.Windows.Forms.ToolStripLabel();
             this.cbThickness = new System.Windows.Forms.ToolStripComboBox();
@@ -121,9 +124,6 @@ namespace Greenshot
             this.fileSavedStatusContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyPathMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnColorPreview = new System.Windows.Forms.ToolStripButton();
-            this.tscbGradientType = new System.Windows.Forms.ToolStripComboBox();
-            this.gradientColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
@@ -531,6 +531,13 @@ namespace Greenshot
             this.backgroundColorToolStripMenuItem.Text = "Background color";
             this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.SelectBackgroundColorToolStripMenuItemClick);
             // 
+            // gradientColorToolStripMenuItem
+            // 
+            this.gradientColorToolStripMenuItem.Name = "gradientColorToolStripMenuItem";
+            this.gradientColorToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.gradientColorToolStripMenuItem.Text = "Gradient color";
+            this.gradientColorToolStripMenuItem.Click += new System.EventHandler(this.gradientColorToolStripMenuItem_Click);
+            // 
             // lineThicknessToolStripMenuItem
             // 
             this.lineThicknessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -629,7 +636,7 @@ namespace Greenshot
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -780,6 +787,21 @@ namespace Greenshot
             this.btnGradientColor.Text = "Gradient";
             this.btnGradientColor.Click += new System.EventHandler(this.btnGradientColor_Click);
             // 
+            // tscbGradientType
+            // 
+            this.tscbGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscbGradientType.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.tscbGradientType.Name = "tscbGradientType";
+            this.tscbGradientType.Size = new System.Drawing.Size(121, 25);
+            this.tscbGradientType.SelectedIndexChanged += new System.EventHandler(this.tscbGradientType_SelectedIndexChanged);
+            // 
+            // btnColorPreview
+            // 
+            this.btnColorPreview.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnColorPreview.Name = "btnColorPreview";
+            this.btnColorPreview.Size = new System.Drawing.Size(52, 22);
+            this.btnColorPreview.Text = "Preview";
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -875,28 +897,6 @@ namespace Greenshot
             this.openDirectoryMenuItem.Size = new System.Drawing.Size(263, 22);
             this.openDirectoryMenuItem.Text = "Open directory in Windows Explorer";
             this.openDirectoryMenuItem.Click += new System.EventHandler(this.OpenDirectoryMenuItemClick);
-            // 
-            // btnColorPreview
-            // 
-            this.btnColorPreview.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnColorPreview.Name = "btnColorPreview";
-            this.btnColorPreview.Size = new System.Drawing.Size(52, 22);
-            this.btnColorPreview.Text = "Preview";
-            // 
-            // tscbGradientType
-            // 
-            this.tscbGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.tscbGradientType.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.tscbGradientType.Name = "tscbGradientType";
-            this.tscbGradientType.Size = new System.Drawing.Size(121, 25);
-            this.tscbGradientType.SelectedIndexChanged += new System.EventHandler(this.tscbGradientType_SelectedIndexChanged);
-            // 
-            // gradientColorToolStripMenuItem
-            // 
-            this.gradientColorToolStripMenuItem.Name = "gradientColorToolStripMenuItem";
-            this.gradientColorToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.gradientColorToolStripMenuItem.Text = "Gradient color";
-            this.gradientColorToolStripMenuItem.Click += new System.EventHandler(this.gradientColorToolStripMenuItem_Click);
             // 
             // ImageEditorForm
             // 
