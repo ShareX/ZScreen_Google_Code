@@ -205,7 +205,7 @@ namespace ZSS.Helpers
                 Software app = Program.conf.ImageEditorActive;
                 if (app != null && File.Exists(app.Path))
                 {
-                    if (app.Name == Program.ZSCREEN_EDITOR)
+                    if (app.Name == Program.ZSCREEN_IMAGE_EDITOR)
                     {
                         try
                         {
