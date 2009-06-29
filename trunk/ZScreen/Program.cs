@@ -283,7 +283,9 @@ namespace ZSS
 
         public static bool MakeTinyURL()
         {
-            return (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL;
+            // LimitLongURL = 0 means make tinyURL always
+            bool tinyurl = (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL;
+            return tinyurl;
         }
 
     }

@@ -213,6 +213,8 @@ namespace ZSS
         public bool CloseQuickActions = false;
         [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task")]
         public bool MakeTinyURL { get; set; }
+        [Category("Options / Interaction"), DefaultValue(100), Description("URL Shortening will only be activated if the length of a URL exceeds this value")]
+        public int LimitLongURL { get; set; }
 
         // Naming Conventions
 
