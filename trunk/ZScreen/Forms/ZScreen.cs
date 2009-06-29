@@ -400,8 +400,8 @@ namespace ZSS
             // Image Software Settings
             ///////////////////////////////////
 
-            Software disabled = new Software("Disabled", "", true);
-            Software editor = new Software(Program.ZSCREEN_EDITOR, Application.ExecutablePath, true);
+            Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, "", true);
+            Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, Application.ExecutablePath, true);
 
             if (Program.conf.ImageEditorsList.Count == 0)
             {
@@ -416,7 +416,7 @@ namespace ZSS
             {
                 Program.conf.ImageEditorsList.Add(disabled);
             }
-            if (!Program.conf.SoftwareExist(Program.ZSCREEN_EDITOR))
+            if (!Program.conf.SoftwareExist(Program.ZSCREEN_IMAGE_EDITOR))
             {
                 Program.conf.ImageEditorsList.Add(editor);
             }
@@ -2018,32 +2018,24 @@ namespace ZSS
 
         private void ShowImageEditorsSettings()
         {
-            int sel = lbImageSoftware.SelectedIndex;
 
-            bool b = sel > 0;
-
-            if (sel == 0)
+            Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+            if (app != null)
             {
-                Program.conf.ImageSoftwareEnabled = false;
-                btnDeleteImageSoftware.Enabled = false;
+
+                Program.conf.ImageSoftwareEnabled = app.Name == Program.DISABLED_IMAGE_EDITOR;
                 RewriteImageEditorsRightClickMenu();
-            }
-            else if (b)
-            {
-                Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
-                if (app != null)
-                {
-                    pgEditorsImage.SelectedObject = app;
-                    pgEditorsImage.Enabled = !app.Protected;
-                    btnDeleteImageSoftware.Enabled = !app.Protected;
-                    gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_EDITOR;
-                }
+
+                btnBrowseImageSoftware.Enabled = !app.Protected;
+                pgEditorsImage.SelectedObject = app;
+                pgEditorsImage.Enabled = !app.Protected;
+                btnDeleteImageSoftware.Enabled = !app.Protected;
+                gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
 
                 SetActiveImageSoftware();
+
             }
 
-            btnBrowseImageSoftware.Enabled = b;
-            pgEditorsImage.Visible = b;
         }
 
         private void lbImageSoftware_SelectedIndexChanged(object sender, EventArgs e)
@@ -3294,8 +3286,15 @@ namespace ZSS
 
         private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
         {
-            mGTranslator = new GoogleTranslate();
-            OnlineTasks.UpdateTinyPicShuk();
+            try
+            {
+                mGTranslator = new GoogleTranslate();
+                OnlineTasks.UpdateTinyPicShuk();
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex.ToString());
+            }
         }
 
         private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
