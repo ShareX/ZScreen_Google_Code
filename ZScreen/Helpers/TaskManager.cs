@@ -50,6 +50,7 @@ namespace ZSS.Helpers
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
+                    ((ImageShackUploader)imageUploader).Public = Program.conf.ImageShackShowImagesInPublic;
                     break;
                 case ImageDestType.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);

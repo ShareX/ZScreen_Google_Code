@@ -304,7 +304,11 @@ namespace ZSS
         public bool AddFailedScreenshot = false;
         public bool AutoChangeUploadDestination = true;
         public decimal UploadDurationLimit = 10000;
+
         public string ImageShackRegistrationCode = "";
+        public string ImageShackUserName = "zscreen";
+        public bool ImageShackShowImagesInPublic { get; set; }
+
         public string TinyPicShuk = "";
         [Category("Accounts / TinyPic")]
         public string TinyPicUserName { get; set; }

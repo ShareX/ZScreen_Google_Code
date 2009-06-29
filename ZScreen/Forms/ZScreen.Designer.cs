@@ -99,7 +99,6 @@ namespace ZSS
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -117,10 +116,10 @@ namespace ZSS
             this.tpAccounts = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
+            this.tpMindTouch = new System.Windows.Forms.TabPage();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -134,8 +133,6 @@ namespace ZSS
             this.btnRegCodeImageShack = new System.Windows.Forms.Button();
             this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
             this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
-            this.tpMindTouch = new System.Windows.Forms.TabPage();
-            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
@@ -328,7 +325,7 @@ namespace ZSS
             this.btnRegexpEdit = new System.Windows.Forms.Button();
             this.txtRegexp = new System.Windows.Forms.TextBox();
             this.lvRegexps = new System.Windows.Forms.ListView();
-            this.lvRegexpsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvRegexpsColumn = new System.Windows.Forms.ColumnHeader();
             this.btnRegexpRemove = new System.Windows.Forms.Button();
             this.btnRegexpAdd = new System.Windows.Forms.Button();
             this.txtFileForm = new System.Windows.Forms.TextBox();
@@ -340,16 +337,14 @@ namespace ZSS
             this.txtArg2 = new System.Windows.Forms.TextBox();
             this.btnArgRemove = new System.Windows.Forms.Button();
             this.lvArguments = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpText = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -458,6 +453,15 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.chkPublicImageShack = new System.Windows.Forms.CheckBox();
+            this.txtUserNameImageShack = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnImageShackProfile = new System.Windows.Forms.Button();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
+            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -469,11 +473,11 @@ namespace ZSS
             this.tcAccounts.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
+            this.tpMindTouch.SuspendLayout();
             this.tpTinyPic.SuspendLayout();
             this.gbTinyPic.SuspendLayout();
             this.tpImageShack.SuspendLayout();
             this.gbImageShack.SuspendLayout();
-            this.tpMindTouch.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpScreenshots.SuspendLayout();
@@ -1133,7 +1137,7 @@ namespace ZSS
             this.tpMain.Size = new System.Drawing.Size(782, 431);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
-            this.tpMain.UseVisualStyleBackColor = true;            
+            this.tpMain.UseVisualStyleBackColor = true;
             // 
             // gbImageSettings
             // 
@@ -1148,18 +1152,6 @@ namespace ZSS
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(296, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -1317,8 +1309,8 @@ namespace ZSS
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbLogo.TabIndex = 72;
             this.pbLogo.TabStop = false;
-            this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
+            this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             // 
             // tpAccounts
             // 
@@ -1357,16 +1349,6 @@ namespace ZSS
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(762, 309);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
             // gbFTPSettings
             // 
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -1404,9 +1386,21 @@ namespace ZSS
             this.chkEnableThumbnail.UseVisualStyleBackColor = false;
             this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
             // 
+            // tpMindTouch
+            // 
+            this.tpMindTouch.Controls.Add(this.panelMindTouchAccounts);
+            this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
+            this.tpMindTouch.Name = "tpMindTouch";
+            this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMindTouch.Size = new System.Drawing.Size(768, 399);
+            this.tpMindTouch.TabIndex = 4;
+            this.tpMindTouch.Text = "MindTouch";
+            this.tpMindTouch.UseVisualStyleBackColor = true;
+            // 
             // tpTinyPic
             // 
             this.tpTinyPic.Controls.Add(this.gbTinyPic);
+            this.tpTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
             this.tpTinyPic.Location = new System.Drawing.Point(4, 22);
             this.tpTinyPic.Name = "tpTinyPic";
             this.tpTinyPic.Padding = new System.Windows.Forms.Padding(3);
@@ -1420,16 +1414,15 @@ namespace ZSS
             this.gbTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTinyPic.Controls.Add(this.btnGalleryTinyPic);
-            this.gbTinyPic.Controls.Add(this.chkRememberTinyPicUserPass);
             this.gbTinyPic.Controls.Add(this.btnRegCodeTinyPic);
             this.gbTinyPic.Controls.Add(this.lblRegistrationCode);
             this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
             this.gbTinyPic.Location = new System.Drawing.Point(8, 8);
             this.gbTinyPic.Name = "gbTinyPic";
-            this.gbTinyPic.Size = new System.Drawing.Size(740, 88);
+            this.gbTinyPic.Size = new System.Drawing.Size(740, 64);
             this.gbTinyPic.TabIndex = 4;
             this.gbTinyPic.TabStop = false;
-            this.gbTinyPic.Text = "TinyPic";
+            this.gbTinyPic.Text = "Account";
             // 
             // btnGalleryTinyPic
             // 
@@ -1445,7 +1438,7 @@ namespace ZSS
             // chkRememberTinyPicUserPass
             // 
             this.chkRememberTinyPicUserPass.AutoSize = true;
-            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(16, 56);
+            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(24, 88);
             this.chkRememberTinyPicUserPass.Name = "chkRememberTinyPicUserPass";
             this.chkRememberTinyPicUserPass.Size = new System.Drawing.Size(241, 17);
             this.chkRememberTinyPicUserPass.TabIndex = 6;
@@ -1485,6 +1478,7 @@ namespace ZSS
             // 
             // tpImageShack
             // 
+            this.tpImageShack.Controls.Add(this.chkPublicImageShack);
             this.tpImageShack.Controls.Add(this.gbImageShack);
             this.tpImageShack.Location = new System.Drawing.Point(4, 22);
             this.tpImageShack.Name = "tpImageShack";
@@ -1499,16 +1493,19 @@ namespace ZSS
             this.gbImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbImageShack.BackColor = System.Drawing.Color.Transparent;
+            this.gbImageShack.Controls.Add(this.btnImageShackProfile);
+            this.gbImageShack.Controls.Add(this.label1);
+            this.gbImageShack.Controls.Add(this.txtUserNameImageShack);
             this.gbImageShack.Controls.Add(this.btnGalleryImageShack);
             this.gbImageShack.Controls.Add(this.btnRegCodeImageShack);
             this.gbImageShack.Controls.Add(this.lblImageShackRegistrationCode);
             this.gbImageShack.Controls.Add(this.txtImageShackRegistrationCode);
             this.gbImageShack.Location = new System.Drawing.Point(8, 8);
             this.gbImageShack.Name = "gbImageShack";
-            this.gbImageShack.Size = new System.Drawing.Size(740, 64);
+            this.gbImageShack.Size = new System.Drawing.Size(740, 96);
             this.gbImageShack.TabIndex = 0;
             this.gbImageShack.TabStop = false;
-            this.gbImageShack.Text = "ImageShack";
+            this.gbImageShack.Text = "Account";
             // 
             // btnGalleryImageShack
             // 
@@ -1524,7 +1521,7 @@ namespace ZSS
             // btnRegCodeImageShack
             // 
             this.btnRegCodeImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegCodeImageShack.Location = new System.Drawing.Point(434, 24);
+            this.btnRegCodeImageShack.Location = new System.Drawing.Point(432, 24);
             this.btnRegCodeImageShack.Name = "btnRegCodeImageShack";
             this.btnRegCodeImageShack.Size = new System.Drawing.Size(75, 23);
             this.btnRegCodeImageShack.TabIndex = 2;
@@ -1550,25 +1547,6 @@ namespace ZSS
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(314, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
             this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
-            // 
-            // tpMindTouch
-            // 
-            this.tpMindTouch.Controls.Add(this.panelMindTouchAccounts);
-            this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
-            this.tpMindTouch.Name = "tpMindTouch";
-            this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMindTouch.Size = new System.Drawing.Size(768, 399);
-            this.tpMindTouch.TabIndex = 4;
-            this.tpMindTouch.Text = "MindTouch";
-            this.tpMindTouch.UseVisualStyleBackColor = true;
-            // 
-            // panelMindTouchAccounts
-            // 
-            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
-            this.panelMindTouchAccounts.Size = new System.Drawing.Size(762, 393);
-            this.panelMindTouchAccounts.TabIndex = 0;
             // 
             // tpHotkeys
             // 
@@ -1640,10 +1618,10 @@ namespace ZSS
             this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvHotkeys.Size = new System.Drawing.Size(503, 302);
             this.dgvHotkeys.TabIndex = 67;
-            this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
-            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
             this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
+            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
             this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
+            this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
             // 
             // chHotkeys_Description
             // 
@@ -3446,23 +3424,23 @@ namespace ZSS
             this.pgEditorsImage.ToolbarVisible = false;
             this.pgEditorsImage.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgEditorsImage_PropertyValueChanged);
             // 
-            // btnDeleteImageSoftware
+            // btnRemoveImageEditor
             // 
             this.btnRemoveImageEditor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnRemoveImageEditor.Location = new System.Drawing.Point(392, 8);
-            this.btnRemoveImageEditor.Name = "btnDeleteImageSoftware";
+            this.btnRemoveImageEditor.Name = "btnRemoveImageEditor";
             this.btnRemoveImageEditor.Size = new System.Drawing.Size(88, 24);
             this.btnRemoveImageEditor.TabIndex = 58;
             this.btnRemoveImageEditor.Text = "&Remove";
             this.btnRemoveImageEditor.UseVisualStyleBackColor = true;
             this.btnRemoveImageEditor.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
             // 
-            // btnBrowseImageSoftware
+            // btnBrowseImageEditor
             // 
             this.btnBrowseImageEditor.AutoSize = true;
             this.btnBrowseImageEditor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnBrowseImageEditor.Location = new System.Drawing.Point(488, 8);
-            this.btnBrowseImageEditor.Name = "btnBrowseImageSoftware";
+            this.btnBrowseImageEditor.Name = "btnBrowseImageEditor";
             this.btnBrowseImageEditor.Size = new System.Drawing.Size(88, 23);
             this.btnBrowseImageEditor.TabIndex = 6;
             this.btnBrowseImageEditor.Text = "Browse...";
@@ -4047,14 +4025,6 @@ namespace ZSS
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(762, 393);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4065,14 +4035,6 @@ namespace ZSS
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(762, 393);
-            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -4407,8 +4369,8 @@ namespace ZSS
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
-            this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
             this.lbHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbHistory_MouseDown);
+            this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
             // 
             // txtPreview
             // 
@@ -5359,6 +5321,91 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
+            // chkPublicImageShack
+            // 
+            this.chkPublicImageShack.AutoSize = true;
+            this.chkPublicImageShack.Location = new System.Drawing.Point(16, 112);
+            this.chkPublicImageShack.Name = "chkPublicImageShack";
+            this.chkPublicImageShack.Size = new System.Drawing.Size(277, 17);
+            this.chkPublicImageShack.TabIndex = 1;
+            this.chkPublicImageShack.Text = "Show images uploaded to ImageShack in your Profile";
+            this.chkPublicImageShack.UseVisualStyleBackColor = true;
+            this.chkPublicImageShack.CheckedChanged += new System.EventHandler(this.chkPublicImageShack_CheckedChanged);
+            // 
+            // txtUserNameImageShack
+            // 
+            this.txtUserNameImageShack.Location = new System.Drawing.Point(112, 56);
+            this.txtUserNameImageShack.Name = "txtUserNameImageShack";
+            this.txtUserNameImageShack.Size = new System.Drawing.Size(312, 20);
+            this.txtUserNameImageShack.TabIndex = 4;
+            this.txtUserNameImageShack.TextChanged += new System.EventHandler(this.txtUserNameImageShack_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(40, 56);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "User Name:";
+            // 
+            // btnImageShackProfile
+            // 
+            this.btnImageShackProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackProfile.Location = new System.Drawing.Point(432, 56);
+            this.btnImageShackProfile.Name = "btnImageShackProfile";
+            this.btnImageShackProfile.Size = new System.Drawing.Size(75, 23);
+            this.btnImageShackProfile.TabIndex = 6;
+            this.btnImageShackProfile.Text = "&Profile...";
+            this.btnImageShackProfile.UseVisualStyleBackColor = true;
+            this.btnImageShackProfile.Click += new System.EventHandler(this.btnImageShackProfile_Click);
+            // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(16, 24);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(296, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(762, 309);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // panelMindTouchAccounts
+            // 
+            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
+            this.panelMindTouchAccounts.Size = new System.Drawing.Size(762, 393);
+            this.panelMindTouchAccounts.TabIndex = 0;
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(762, 393);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
+            // ucUrlShorteners
+            // 
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(762, 393);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5375,10 +5422,10 @@ namespace ZSS
             this.Text = "ZScreen";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.ZScreen_Deactivate);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Load += new System.EventHandler(this.ZScreen_Load);
             this.Shown += new System.EventHandler(this.ZScreen_Shown);
             this.Leave += new System.EventHandler(this.ZScreen_Leave);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.cmTray.ResumeLayout(false);
             this.cmsHistory.ResumeLayout(false);
@@ -5395,13 +5442,15 @@ namespace ZSS
             this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
+            this.tpMindTouch.ResumeLayout(false);
             this.tpTinyPic.ResumeLayout(false);
+            this.tpTinyPic.PerformLayout();
             this.gbTinyPic.ResumeLayout(false);
             this.gbTinyPic.PerformLayout();
             this.tpImageShack.ResumeLayout(false);
+            this.tpImageShack.PerformLayout();
             this.gbImageShack.ResumeLayout(false);
             this.gbImageShack.PerformLayout();
-            this.tpMindTouch.ResumeLayout(false);
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -5965,6 +6014,10 @@ namespace ZSS
         private System.Windows.Forms.CheckBox chkImageEditorAutoSave;
         private System.Windows.Forms.TabPage tpFTP;
         private ZSS.UserControls.AccountsControl ucFTPAccounts;
+        private System.Windows.Forms.CheckBox chkPublicImageShack;
+        private System.Windows.Forms.Button btnImageShackProfile;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtUserNameImageShack;
 
     }
 }
