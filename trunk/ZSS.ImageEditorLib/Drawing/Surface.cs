@@ -234,11 +234,12 @@ namespace Greenshot.Drawing
 
         private void SurfaceMouseMove(object sender, MouseEventArgs e)
         {
-            if (DrawingMode == DrawingModes.None)
+            bool clickable = selectedElements.ClickableAt(e.X, e.Y);
+            if (DrawingMode == DrawingModes.None && !clickable)
             {
                 Cursor = Cursors.Default;
             }
-            else if ((!mouseDown && selectedElements.ClickableAt(e.X, e.Y)) || (mouseDown && mouseDownElement != null))
+            else if ((!mouseDown && clickable) || (mouseDown && mouseDownElement != null))
             {
                 Cursor = Cursors.SizeAll;
             }

@@ -466,7 +466,7 @@ namespace Greenshot
             Graphics g = Graphics.FromImage(img);
 
             Brush brush = Brushes.Transparent;
-            if (colorType == ColorType.Background || surface.GradientType == "None")
+            if (colorType == ColorType.Background || (colorType == ColorType.Preview && surface.GradientType == "None"))
             {
                 brush = new SolidBrush(surface.BackColor);
             }
@@ -624,7 +624,7 @@ namespace Greenshot
                 {
                     Save();
                 }
-                else          //Prompt for save if image edited before close
+                else //Prompt for save if image edited before close
                 {
                     if (MessageBox.Show("Do you want to save changes to the image?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                         MessageBoxDefaultButton.Button1) == DialogResult.Yes)
