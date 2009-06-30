@@ -1479,7 +1479,7 @@ namespace ZSS
             // chkRememberTinyPicUserPass
             // 
             this.chkRememberTinyPicUserPass.AutoSize = true;
-            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(24, 88);
+            this.chkRememberTinyPicUserPass.Location = new System.Drawing.Point(16, 80);
             this.chkRememberTinyPicUserPass.Name = "chkRememberTinyPicUserPass";
             this.chkRememberTinyPicUserPass.Size = new System.Drawing.Size(241, 17);
             this.chkRememberTinyPicUserPass.TabIndex = 6;
@@ -3659,7 +3659,7 @@ namespace ZSS
             // lblUploadAs
             // 
             this.lblUploadAs.AutoSize = true;
-            this.lblUploadAs.Location = new System.Drawing.Point(16, 32);
+            this.lblUploadAs.Location = new System.Drawing.Point(16, 28);
             this.lblUploadAs.Name = "lblUploadAs";
             this.lblUploadAs.Size = new System.Drawing.Size(58, 13);
             this.lblUploadAs.TabIndex = 4;
@@ -3668,7 +3668,7 @@ namespace ZSS
             // lblErrorRetry
             // 
             this.lblErrorRetry.AutoSize = true;
-            this.lblErrorRetry.Location = new System.Drawing.Point(232, 32);
+            this.lblErrorRetry.Location = new System.Drawing.Point(216, 28);
             this.lblErrorRetry.Name = "lblErrorRetry";
             this.lblErrorRetry.Size = new System.Drawing.Size(187, 13);
             this.lblErrorRetry.TabIndex = 1;
@@ -3676,7 +3676,7 @@ namespace ZSS
             // 
             // nudErrorRetry
             // 
-            this.nudErrorRetry.Location = new System.Drawing.Point(424, 24);
+            this.nudErrorRetry.Location = new System.Drawing.Point(408, 24);
             this.nudErrorRetry.Name = "nudErrorRetry";
             this.nudErrorRetry.Size = new System.Drawing.Size(40, 20);
             this.nudErrorRetry.TabIndex = 3;
@@ -4115,7 +4115,7 @@ namespace ZSS
             // 
             // txtAutoTranslate
             // 
-            this.txtAutoTranslate.Location = new System.Drawing.Point(432, 376);
+            this.txtAutoTranslate.Location = new System.Drawing.Point(432, 382);
             this.txtAutoTranslate.Name = "txtAutoTranslate";
             this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
             this.txtAutoTranslate.TabIndex = 11;
@@ -4218,7 +4218,7 @@ namespace ZSS
             // lblToLanguage
             // 
             this.lblToLanguage.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.lblToLanguage.Location = new System.Drawing.Point(192, 8);
+            this.lblToLanguage.Location = new System.Drawing.Point(192, 10);
             this.lblToLanguage.Name = "lblToLanguage";
             this.lblToLanguage.Size = new System.Drawing.Size(28, 32);
             this.lblToLanguage.TabIndex = 3;
@@ -4228,7 +4228,7 @@ namespace ZSS
             // 
             // lblFromLanguage
             // 
-            this.lblFromLanguage.Location = new System.Drawing.Point(16, 8);
+            this.lblFromLanguage.Location = new System.Drawing.Point(16, 10);
             this.lblFromLanguage.Name = "lblFromLanguage";
             this.lblFromLanguage.Size = new System.Drawing.Size(33, 32);
             this.lblFromLanguage.TabIndex = 2;
@@ -4627,7 +4627,7 @@ namespace ZSS
             // 
             this.cboUpdateCheckType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUpdateCheckType.FormattingEnabled = true;
-            this.cboUpdateCheckType.Location = new System.Drawing.Point(200, 16);
+            this.cboUpdateCheckType.Location = new System.Drawing.Point(200, 18);
             this.cboUpdateCheckType.Name = "cboUpdateCheckType";
             this.cboUpdateCheckType.Size = new System.Drawing.Size(121, 21);
             this.cboUpdateCheckType.TabIndex = 7;
@@ -4886,7 +4886,7 @@ namespace ZSS
             // 
             // nudFlashIconCount
             // 
-            this.nudFlashIconCount.Location = new System.Drawing.Point(336, 24);
+            this.nudFlashIconCount.Location = new System.Drawing.Point(336, 22);
             this.nudFlashIconCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -4927,7 +4927,7 @@ namespace ZSS
             // btnViewRootDir
             // 
             this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(630, 24);
+            this.btnViewRootDir.Location = new System.Drawing.Point(630, 22);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewRootDir.TabIndex = 116;
@@ -4940,7 +4940,7 @@ namespace ZSS
             this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseRootDir.Location = new System.Drawing.Point(542, 24);
+            this.btnBrowseRootDir.Location = new System.Drawing.Point(542, 22);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseRootDir.TabIndex = 115;
@@ -4990,7 +4990,7 @@ namespace ZSS
             // btnViewImagesDir
             // 
             this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewImagesDir.Location = new System.Drawing.Point(630, 24);
+            this.btnViewImagesDir.Location = new System.Drawing.Point(630, 22);
             this.btnViewImagesDir.Name = "btnViewImagesDir";
             this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewImagesDir.TabIndex = 113;
@@ -5085,7 +5085,7 @@ namespace ZSS
             this.btnFTPImport.AutoSize = true;
             this.btnFTPImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnFTPImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFTPImport.Location = new System.Drawing.Point(368, 56);
+            this.btnFTPImport.Location = new System.Drawing.Point(360, 56);
             this.btnFTPImport.Name = "btnFTPImport";
             this.btnFTPImport.Size = new System.Drawing.Size(126, 23);
             this.btnFTPImport.TabIndex = 39;
@@ -5098,7 +5098,7 @@ namespace ZSS
             this.btnViewSettingsDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnViewSettingsDir.AutoSize = true;
             this.btnViewSettingsDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnViewSettingsDir.Location = new System.Drawing.Point(630, 24);
+            this.btnViewSettingsDir.Location = new System.Drawing.Point(630, 23);
             this.btnViewSettingsDir.Name = "btnViewSettingsDir";
             this.btnViewSettingsDir.Size = new System.Drawing.Size(104, 23);
             this.btnViewSettingsDir.TabIndex = 0;
@@ -5139,7 +5139,7 @@ namespace ZSS
             // btnViewCacheDir
             // 
             this.btnViewCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewCacheDir.Location = new System.Drawing.Point(630, 24);
+            this.btnViewCacheDir.Location = new System.Drawing.Point(630, 22);
             this.btnViewCacheDir.Name = "btnViewCacheDir";
             this.btnViewCacheDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewCacheDir.TabIndex = 7;
@@ -5151,7 +5151,7 @@ namespace ZSS
             // 
             this.lblCacheSize.AutoSize = true;
             this.lblCacheSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblCacheSize.Location = new System.Drawing.Point(14, 56);
+            this.lblCacheSize.Location = new System.Drawing.Point(14, 60);
             this.lblCacheSize.Name = "lblCacheSize";
             this.lblCacheSize.Size = new System.Drawing.Size(62, 13);
             this.lblCacheSize.TabIndex = 5;
@@ -5161,7 +5161,7 @@ namespace ZSS
             // 
             this.lblMebibytes.AutoSize = true;
             this.lblMebibytes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblMebibytes.Location = new System.Drawing.Point(200, 59);
+            this.lblMebibytes.Location = new System.Drawing.Point(200, 60);
             this.lblMebibytes.Name = "lblMebibytes";
             this.lblMebibytes.Size = new System.Drawing.Size(25, 13);
             this.lblMebibytes.TabIndex = 4;
