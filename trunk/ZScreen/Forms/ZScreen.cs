@@ -66,6 +66,8 @@ namespace ZSS
         private GoogleTranslate mGTranslator;
         private Debug debug;
 
+        private List<int> mLogoRandomList = new List<int>(5);
+
         #endregion
 
         public ZScreen()
@@ -4165,26 +4167,26 @@ namespace ZSS
             Program.conf.CropShowMagnifyingGlass = cbCropShowMagnifyingGlass.Checked;
         }
 
-        private int mLogoRandom = 1;
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             Random rand = new Random();
 
-            List<int> numbers = new List<int>() { 1, 2, 3, 4 };
-
-            int count = numbers.Count;
-
-            int r = rand.Next(1, numbers.Count);
-            while (r == mLogoRandom)
+            if(mLogoRandomList.Count == 0)
             {
-                r = rand.Next(1, numbers.Count );
+                List<int> numbers = new List<int>() {1, 2, 3, 4};
+
+                int count = numbers.Count;
+
+                for(int x = 0; x < count; x++)
+                {
+                    int r = rand.Next(0, numbers.Count - 1);
+                    mLogoRandomList.Add(numbers[r]);
+                    numbers.RemoveAt(r);
+                }
             }
-            mLogoRandom = r;
-
-            Console.WriteLine(mLogoRandom);
-
-            switch (mLogoRandom)
+            
+            switch (mLogoRandomList[0])
             {
                 case 1:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
@@ -4200,9 +4202,10 @@ namespace ZSS
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
                     break;
-
+                
             }
 
+            mLogoRandomList.RemoveAt(0);
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
