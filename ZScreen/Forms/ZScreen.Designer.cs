@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -1630,38 +1630,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle37.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle37.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -2233,7 +2233,7 @@ namespace ZSS
             // cbSelectedWindowAddBorder
             // 
             this.cbSelectedWindowAddBorder.AutoSize = true;
-            this.cbSelectedWindowAddBorder.Location = new System.Drawing.Point(16, 216);
+            this.cbSelectedWindowAddBorder.Location = new System.Drawing.Point(16, 296);
             this.cbSelectedWindowAddBorder.Name = "cbSelectedWindowAddBorder";
             this.cbSelectedWindowAddBorder.Size = new System.Drawing.Size(201, 17);
             this.cbSelectedWindowAddBorder.TabIndex = 41;
@@ -2243,21 +2243,21 @@ namespace ZSS
             // 
             // nudSelectedWindowHueRange
             // 
-            this.nudSelectedWindowHueRange.Location = new System.Drawing.Point(216, 188);
+            this.nudSelectedWindowHueRange.Location = new System.Drawing.Point(320, 260);
             this.nudSelectedWindowHueRange.Maximum = new decimal(new int[] {
             360,
             0,
             0,
             0});
             this.nudSelectedWindowHueRange.Name = "nudSelectedWindowHueRange";
-            this.nudSelectedWindowHueRange.Size = new System.Drawing.Size(64, 20);
+            this.nudSelectedWindowHueRange.Size = new System.Drawing.Size(56, 20);
             this.nudSelectedWindowHueRange.TabIndex = 40;
             this.nudSelectedWindowHueRange.ValueChanged += new System.EventHandler(this.nudSelectedWindowHueRange_ValueChanged);
             // 
             // lblSelectedWindowHueRange
             // 
             this.lblSelectedWindowHueRange.AutoSize = true;
-            this.lblSelectedWindowHueRange.Location = new System.Drawing.Point(16, 192);
+            this.lblSelectedWindowHueRange.Location = new System.Drawing.Point(120, 264);
             this.lblSelectedWindowHueRange.Name = "lblSelectedWindowHueRange";
             this.lblSelectedWindowHueRange.Size = new System.Drawing.Size(193, 13);
             this.lblSelectedWindowHueRange.TabIndex = 39;
@@ -2265,7 +2265,7 @@ namespace ZSS
             // 
             // nudSelectedWindowRegionStep
             // 
-            this.nudSelectedWindowRegionStep.Location = new System.Drawing.Point(320, 155);
+            this.nudSelectedWindowRegionStep.Location = new System.Drawing.Point(320, 228);
             this.nudSelectedWindowRegionStep.Minimum = new decimal(new int[] {
             1,
             0,
@@ -2283,7 +2283,7 @@ namespace ZSS
             // 
             // nudSelectedWindowRegionInterval
             // 
-            this.nudSelectedWindowRegionInterval.Location = new System.Drawing.Point(224, 155);
+            this.nudSelectedWindowRegionInterval.Location = new System.Drawing.Point(224, 228);
             this.nudSelectedWindowRegionInterval.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -2297,7 +2297,7 @@ namespace ZSS
             // lblSelectedWindowRegionStep
             // 
             this.lblSelectedWindowRegionStep.AutoSize = true;
-            this.lblSelectedWindowRegionStep.Location = new System.Drawing.Point(288, 160);
+            this.lblSelectedWindowRegionStep.Location = new System.Drawing.Point(288, 232);
             this.lblSelectedWindowRegionStep.Name = "lblSelectedWindowRegionStep";
             this.lblSelectedWindowRegionStep.Size = new System.Drawing.Size(32, 13);
             this.lblSelectedWindowRegionStep.TabIndex = 36;
@@ -2306,7 +2306,7 @@ namespace ZSS
             // lblSelectedWindowRegionInterval
             // 
             this.lblSelectedWindowRegionInterval.AutoSize = true;
-            this.lblSelectedWindowRegionInterval.Location = new System.Drawing.Point(176, 160);
+            this.lblSelectedWindowRegionInterval.Location = new System.Drawing.Point(176, 232);
             this.lblSelectedWindowRegionInterval.Name = "lblSelectedWindowRegionInterval";
             this.lblSelectedWindowRegionInterval.Size = new System.Drawing.Size(45, 13);
             this.lblSelectedWindowRegionInterval.TabIndex = 35;
@@ -2315,7 +2315,7 @@ namespace ZSS
             // cbSelectedWindowDynamicBorderColor
             // 
             this.cbSelectedWindowDynamicBorderColor.AutoSize = true;
-            this.cbSelectedWindowDynamicBorderColor.Location = new System.Drawing.Point(16, 160);
+            this.cbSelectedWindowDynamicBorderColor.Location = new System.Drawing.Point(16, 200);
             this.cbSelectedWindowDynamicBorderColor.Name = "cbSelectedWindowDynamicBorderColor";
             this.cbSelectedWindowDynamicBorderColor.Size = new System.Drawing.Size(158, 17);
             this.cbSelectedWindowDynamicBorderColor.TabIndex = 34;
@@ -2326,7 +2326,7 @@ namespace ZSS
             // cbSelectedWindowRuler
             // 
             this.cbSelectedWindowRuler.AutoSize = true;
-            this.cbSelectedWindowRuler.Location = new System.Drawing.Point(16, 72);
+            this.cbSelectedWindowRuler.Location = new System.Drawing.Point(16, 100);
             this.cbSelectedWindowRuler.Name = "cbSelectedWindowRuler";
             this.cbSelectedWindowRuler.Size = new System.Drawing.Size(76, 17);
             this.cbSelectedWindowRuler.TabIndex = 12;
@@ -2337,7 +2337,7 @@ namespace ZSS
             // lblSelectedWindowRegionStyle
             // 
             this.lblSelectedWindowRegionStyle.AutoSize = true;
-            this.lblSelectedWindowRegionStyle.Location = new System.Drawing.Point(16, 16);
+            this.lblSelectedWindowRegionStyle.Location = new System.Drawing.Point(16, 20);
             this.lblSelectedWindowRegionStyle.Name = "lblSelectedWindowRegionStyle";
             this.lblSelectedWindowRegionStyle.Size = new System.Drawing.Size(147, 13);
             this.lblSelectedWindowRegionStyle.TabIndex = 11;
@@ -2347,7 +2347,7 @@ namespace ZSS
             // 
             this.cbSelectedWindowStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedWindowStyle.FormattingEnabled = true;
-            this.cbSelectedWindowStyle.Location = new System.Drawing.Point(168, 12);
+            this.cbSelectedWindowStyle.Location = new System.Drawing.Point(168, 16);
             this.cbSelectedWindowStyle.Name = "cbSelectedWindowStyle";
             this.cbSelectedWindowStyle.Size = new System.Drawing.Size(208, 21);
             this.cbSelectedWindowStyle.TabIndex = 10;
@@ -2356,7 +2356,7 @@ namespace ZSS
             // cbSelectedWindowRectangleInfo
             // 
             this.cbSelectedWindowRectangleInfo.AutoSize = true;
-            this.cbSelectedWindowRectangleInfo.Location = new System.Drawing.Point(16, 44);
+            this.cbSelectedWindowRectangleInfo.Location = new System.Drawing.Point(16, 52);
             this.cbSelectedWindowRectangleInfo.Name = "cbSelectedWindowRectangleInfo";
             this.cbSelectedWindowRectangleInfo.Size = new System.Drawing.Size(267, 17);
             this.cbSelectedWindowRectangleInfo.TabIndex = 5;
@@ -2367,7 +2367,7 @@ namespace ZSS
             // lblSelectedWindowBorderColor
             // 
             this.lblSelectedWindowBorderColor.AutoSize = true;
-            this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(16, 104);
+            this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(208, 136);
             this.lblSelectedWindowBorderColor.Name = "lblSelectedWindowBorderColor";
             this.lblSelectedWindowBorderColor.Size = new System.Drawing.Size(103, 13);
             this.lblSelectedWindowBorderColor.TabIndex = 1;
@@ -2375,16 +2375,16 @@ namespace ZSS
             // 
             // nudSelectedWindowBorderSize
             // 
-            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(200, 120);
+            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(320, 164);
             this.nudSelectedWindowBorderSize.Name = "nudSelectedWindowBorderSize";
-            this.nudSelectedWindowBorderSize.Size = new System.Drawing.Size(40, 20);
+            this.nudSelectedWindowBorderSize.Size = new System.Drawing.Size(56, 20);
             this.nudSelectedWindowBorderSize.TabIndex = 4;
             this.nudSelectedWindowBorderSize.ValueChanged += new System.EventHandler(this.nudSelectedWindowBorderSize_ValueChanged);
             // 
             // lblSelectedWindowBorderSize
             // 
             this.lblSelectedWindowBorderSize.AutoSize = true;
-            this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(16, 128);
+            this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(136, 168);
             this.lblSelectedWindowBorderSize.Name = "lblSelectedWindowBorderSize";
             this.lblSelectedWindowBorderSize.Size = new System.Drawing.Size(175, 13);
             this.lblSelectedWindowBorderSize.TabIndex = 2;
@@ -2394,7 +2394,7 @@ namespace ZSS
             // 
             this.cbSelectedWindowFront.AutoSize = true;
             this.cbSelectedWindowFront.Enabled = false;
-            this.cbSelectedWindowFront.Location = new System.Drawing.Point(552, 12);
+            this.cbSelectedWindowFront.Location = new System.Drawing.Point(16, 76);
             this.cbSelectedWindowFront.Name = "cbSelectedWindowFront";
             this.cbSelectedWindowFront.Size = new System.Drawing.Size(193, 17);
             this.cbSelectedWindowFront.TabIndex = 0;
@@ -2408,9 +2408,9 @@ namespace ZSS
             this.pbSelectedWindowBorderColor.BackColor = System.Drawing.Color.White;
             this.pbSelectedWindowBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbSelectedWindowBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(128, 96);
+            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(320, 132);
             this.pbSelectedWindowBorderColor.Name = "pbSelectedWindowBorderColor";
-            this.pbSelectedWindowBorderColor.Size = new System.Drawing.Size(24, 24);
+            this.pbSelectedWindowBorderColor.Size = new System.Drawing.Size(56, 20);
             this.pbSelectedWindowBorderColor.TabIndex = 3;
             this.pbSelectedWindowBorderColor.TabStop = false;
             this.pbSelectedWindowBorderColor.Click += new System.EventHandler(this.pbSelectedWindowBorderColor_Click);
