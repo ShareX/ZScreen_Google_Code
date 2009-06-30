@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -1630,38 +1630,38 @@ namespace ZSS
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle37.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle37.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle38;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle39;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1742,7 +1742,7 @@ namespace ZSS
             this.gpCropRegion.Controls.Add(this.cbRegionRectangleInfo);
             this.gpCropRegion.Location = new System.Drawing.Point(8, 16);
             this.gpCropRegion.Name = "gpCropRegion";
-            this.gpCropRegion.Size = new System.Drawing.Size(352, 104);
+            this.gpCropRegion.Size = new System.Drawing.Size(352, 120);
             this.gpCropRegion.TabIndex = 121;
             this.gpCropRegion.TabStop = false;
             this.gpCropRegion.Text = "Crop Region Settings";
@@ -1750,7 +1750,7 @@ namespace ZSS
             // lblCropRegionStyle
             // 
             this.lblCropRegionStyle.AutoSize = true;
-            this.lblCropRegionStyle.Location = new System.Drawing.Point(16, 24);
+            this.lblCropRegionStyle.Location = new System.Drawing.Point(16, 28);
             this.lblCropRegionStyle.Name = "lblCropRegionStyle";
             this.lblCropRegionStyle.Size = new System.Drawing.Size(88, 13);
             this.lblCropRegionStyle.TabIndex = 9;
@@ -1759,7 +1759,7 @@ namespace ZSS
             // cbRegionHotkeyInfo
             // 
             this.cbRegionHotkeyInfo.AutoSize = true;
-            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 72);
+            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 88);
             this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
             this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
             this.cbRegionHotkeyInfo.TabIndex = 6;
@@ -1771,16 +1771,16 @@ namespace ZSS
             // 
             this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCropStyle.FormattingEnabled = true;
-            this.cbCropStyle.Location = new System.Drawing.Point(112, 20);
+            this.cbCropStyle.Location = new System.Drawing.Point(120, 24);
             this.cbCropStyle.Name = "cbCropStyle";
-            this.cbCropStyle.Size = new System.Drawing.Size(208, 21);
+            this.cbCropStyle.Size = new System.Drawing.Size(216, 21);
             this.cbCropStyle.TabIndex = 8;
             this.cbCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
             // 
             // cbRegionRectangleInfo
             // 
             this.cbRegionRectangleInfo.AutoSize = true;
-            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 48);
+            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 64);
             this.cbRegionRectangleInfo.Name = "cbRegionRectangleInfo";
             this.cbRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
             this.cbRegionRectangleInfo.TabIndex = 5;
@@ -1803,30 +1803,30 @@ namespace ZSS
             this.gbCropRegionSettings.Controls.Add(this.lblCropBorderColor);
             this.gbCropRegionSettings.Controls.Add(this.pbCropBorderColor);
             this.gbCropRegionSettings.Controls.Add(this.nudCropBorderSize);
-            this.gbCropRegionSettings.Location = new System.Drawing.Point(368, 128);
+            this.gbCropRegionSettings.Location = new System.Drawing.Point(368, 144);
             this.gbCropRegionSettings.Name = "gbCropRegionSettings";
-            this.gbCropRegionSettings.Size = new System.Drawing.Size(392, 192);
+            this.gbCropRegionSettings.Size = new System.Drawing.Size(392, 232);
             this.gbCropRegionSettings.TabIndex = 27;
             this.gbCropRegionSettings.TabStop = false;
             this.gbCropRegionSettings.Text = "Region Settings";
             // 
             // nudCropHueRange
             // 
-            this.nudCropHueRange.Location = new System.Drawing.Point(216, 128);
+            this.nudCropHueRange.Location = new System.Drawing.Point(320, 200);
             this.nudCropHueRange.Maximum = new decimal(new int[] {
             360,
             0,
             0,
             0});
             this.nudCropHueRange.Name = "nudCropHueRange";
-            this.nudCropHueRange.Size = new System.Drawing.Size(64, 20);
+            this.nudCropHueRange.Size = new System.Drawing.Size(56, 20);
             this.nudCropHueRange.TabIndex = 33;
             this.nudCropHueRange.ValueChanged += new System.EventHandler(this.nudCropHueRange_ValueChanged);
             // 
             // lblCropHueRange
             // 
             this.lblCropHueRange.AutoSize = true;
-            this.lblCropHueRange.Location = new System.Drawing.Point(16, 132);
+            this.lblCropHueRange.Location = new System.Drawing.Point(120, 204);
             this.lblCropHueRange.Name = "lblCropHueRange";
             this.lblCropHueRange.Size = new System.Drawing.Size(193, 13);
             this.lblCropHueRange.TabIndex = 32;
@@ -1834,7 +1834,7 @@ namespace ZSS
             // 
             // nudCropRegionStep
             // 
-            this.nudCropRegionStep.Location = new System.Drawing.Point(322, 95);
+            this.nudCropRegionStep.Location = new System.Drawing.Point(320, 168);
             this.nudCropRegionStep.Minimum = new decimal(new int[] {
             1,
             0,
@@ -1852,7 +1852,7 @@ namespace ZSS
             // 
             // nudCropRegionInterval
             // 
-            this.nudCropRegionInterval.Location = new System.Drawing.Point(224, 95);
+            this.nudCropRegionInterval.Location = new System.Drawing.Point(224, 168);
             this.nudCropRegionInterval.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -1866,7 +1866,7 @@ namespace ZSS
             // lblCropRegionStep
             // 
             this.lblCropRegionStep.AutoSize = true;
-            this.lblCropRegionStep.Location = new System.Drawing.Point(288, 98);
+            this.lblCropRegionStep.Location = new System.Drawing.Point(286, 172);
             this.lblCropRegionStep.Name = "lblCropRegionStep";
             this.lblCropRegionStep.Size = new System.Drawing.Size(32, 13);
             this.lblCropRegionStep.TabIndex = 29;
@@ -1875,7 +1875,7 @@ namespace ZSS
             // lblCropRegionInterval
             // 
             this.lblCropRegionInterval.AutoSize = true;
-            this.lblCropRegionInterval.Location = new System.Drawing.Point(176, 98);
+            this.lblCropRegionInterval.Location = new System.Drawing.Point(176, 172);
             this.lblCropRegionInterval.Name = "lblCropRegionInterval";
             this.lblCropRegionInterval.Size = new System.Drawing.Size(45, 13);
             this.lblCropRegionInterval.TabIndex = 28;
@@ -1884,7 +1884,7 @@ namespace ZSS
             // cbCropDynamicBorderColor
             // 
             this.cbCropDynamicBorderColor.AutoSize = true;
-            this.cbCropDynamicBorderColor.Location = new System.Drawing.Point(16, 96);
+            this.cbCropDynamicBorderColor.Location = new System.Drawing.Point(16, 140);
             this.cbCropDynamicBorderColor.Name = "cbCropDynamicBorderColor";
             this.cbCropDynamicBorderColor.Size = new System.Drawing.Size(158, 17);
             this.cbCropDynamicBorderColor.TabIndex = 27;
@@ -1895,11 +1895,11 @@ namespace ZSS
             // lblCropBorderSize
             // 
             this.lblCropBorderSize.AutoSize = true;
-            this.lblCropBorderSize.Location = new System.Drawing.Point(16, 72);
+            this.lblCropBorderSize.Location = new System.Drawing.Point(208, 84);
             this.lblCropBorderSize.Name = "lblCropBorderSize";
-            this.lblCropBorderSize.Size = new System.Drawing.Size(175, 13);
+            this.lblCropBorderSize.Size = new System.Drawing.Size(98, 13);
             this.lblCropBorderSize.TabIndex = 11;
-            this.lblCropBorderSize.Text = "Region border size ( 0 = No border )";
+            this.lblCropBorderSize.Text = "Region border size:";
             // 
             // cbShowCropRuler
             // 
@@ -1915,7 +1915,7 @@ namespace ZSS
             // cbCropShowGrids
             // 
             this.cbCropShowGrids.AutoSize = true;
-            this.cbCropShowGrids.Location = new System.Drawing.Point(16, 160);
+            this.cbCropShowGrids.Location = new System.Drawing.Point(16, 48);
             this.cbCropShowGrids.Name = "cbCropShowGrids";
             this.cbCropShowGrids.Size = new System.Drawing.Size(206, 17);
             this.cbCropShowGrids.TabIndex = 13;
@@ -1926,7 +1926,7 @@ namespace ZSS
             // lblCropBorderColor
             // 
             this.lblCropBorderColor.AutoSize = true;
-            this.lblCropBorderColor.Location = new System.Drawing.Point(16, 48);
+            this.lblCropBorderColor.Location = new System.Drawing.Point(208, 112);
             this.lblCropBorderColor.Name = "lblCropBorderColor";
             this.lblCropBorderColor.Size = new System.Drawing.Size(103, 13);
             this.lblCropBorderColor.TabIndex = 10;
@@ -1937,18 +1937,18 @@ namespace ZSS
             this.pbCropBorderColor.BackColor = System.Drawing.Color.White;
             this.pbCropBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbCropBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbCropBorderColor.Location = new System.Drawing.Point(128, 40);
+            this.pbCropBorderColor.Location = new System.Drawing.Point(320, 108);
             this.pbCropBorderColor.Name = "pbCropBorderColor";
-            this.pbCropBorderColor.Size = new System.Drawing.Size(24, 24);
+            this.pbCropBorderColor.Size = new System.Drawing.Size(56, 20);
             this.pbCropBorderColor.TabIndex = 9;
             this.pbCropBorderColor.TabStop = false;
             this.pbCropBorderColor.Click += new System.EventHandler(this.pbCropBorderColor_Click);
             // 
             // nudCropBorderSize
             // 
-            this.nudCropBorderSize.Location = new System.Drawing.Point(200, 64);
+            this.nudCropBorderSize.Location = new System.Drawing.Point(320, 80);
             this.nudCropBorderSize.Name = "nudCropBorderSize";
-            this.nudCropBorderSize.Size = new System.Drawing.Size(40, 20);
+            this.nudCropBorderSize.Size = new System.Drawing.Size(56, 20);
             this.nudCropBorderSize.TabIndex = 12;
             this.nudCropBorderSize.ValueChanged += new System.EventHandler(this.nudCropBorderSize_ValueChanged);
             // 
@@ -1967,9 +1967,9 @@ namespace ZSS
             this.gbCrosshairSettings.Controls.Add(this.nudCrosshairLineSize);
             this.gbCrosshairSettings.Controls.Add(this.lblCrosshairLineSize);
             this.gbCrosshairSettings.Controls.Add(this.lblCrosshairLineCount);
-            this.gbCrosshairSettings.Location = new System.Drawing.Point(8, 128);
+            this.gbCrosshairSettings.Location = new System.Drawing.Point(8, 144);
             this.gbCrosshairSettings.Name = "gbCrosshairSettings";
-            this.gbCrosshairSettings.Size = new System.Drawing.Size(352, 192);
+            this.gbCrosshairSettings.Size = new System.Drawing.Size(352, 232);
             this.gbCrosshairSettings.TabIndex = 25;
             this.gbCrosshairSettings.TabStop = false;
             this.gbCrosshairSettings.Text = "Crosshair Settings";
@@ -1977,7 +1977,7 @@ namespace ZSS
             // cbCropShowMagnifyingGlass
             // 
             this.cbCropShowMagnifyingGlass.AutoSize = true;
-            this.cbCropShowMagnifyingGlass.Location = new System.Drawing.Point(16, 160);
+            this.cbCropShowMagnifyingGlass.Location = new System.Drawing.Point(16, 202);
             this.cbCropShowMagnifyingGlass.Name = "cbCropShowMagnifyingGlass";
             this.cbCropShowMagnifyingGlass.Size = new System.Drawing.Size(133, 17);
             this.cbCropShowMagnifyingGlass.TabIndex = 26;
@@ -1988,7 +1988,7 @@ namespace ZSS
             // cbCropShowBigCross
             // 
             this.cbCropShowBigCross.AutoSize = true;
-            this.cbCropShowBigCross.Location = new System.Drawing.Point(16, 136);
+            this.cbCropShowBigCross.Location = new System.Drawing.Point(16, 178);
             this.cbCropShowBigCross.Name = "cbCropShowBigCross";
             this.cbCropShowBigCross.Size = new System.Drawing.Size(194, 17);
             this.cbCropShowBigCross.TabIndex = 25;
@@ -2009,7 +2009,7 @@ namespace ZSS
             // 
             // nudCropCrosshairStep
             // 
-            this.nudCropCrosshairStep.Location = new System.Drawing.Point(280, 21);
+            this.nudCropCrosshairStep.Location = new System.Drawing.Point(280, 48);
             this.nudCropCrosshairStep.Minimum = new decimal(new int[] {
             1,
             0,
@@ -2030,16 +2030,16 @@ namespace ZSS
             this.pbCropCrosshairColor.BackColor = System.Drawing.Color.White;
             this.pbCropCrosshairColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbCropCrosshairColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbCropCrosshairColor.Location = new System.Drawing.Point(104, 104);
+            this.pbCropCrosshairColor.Location = new System.Drawing.Point(280, 146);
             this.pbCropCrosshairColor.Name = "pbCropCrosshairColor";
-            this.pbCropCrosshairColor.Size = new System.Drawing.Size(24, 24);
+            this.pbCropCrosshairColor.Size = new System.Drawing.Size(56, 20);
             this.pbCropCrosshairColor.TabIndex = 14;
             this.pbCropCrosshairColor.TabStop = false;
             this.pbCropCrosshairColor.Click += new System.EventHandler(this.pbCropCrosshairColor_Click);
             // 
             // nudCropCrosshairInterval
             // 
-            this.nudCropCrosshairInterval.Location = new System.Drawing.Point(184, 21);
+            this.nudCropCrosshairInterval.Location = new System.Drawing.Point(184, 48);
             this.nudCropCrosshairInterval.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -2053,7 +2053,7 @@ namespace ZSS
             // lblCropCrosshairColor
             // 
             this.lblCropCrosshairColor.AutoSize = true;
-            this.lblCropCrosshairColor.Location = new System.Drawing.Point(16, 112);
+            this.lblCropCrosshairColor.Location = new System.Drawing.Point(192, 150);
             this.lblCropCrosshairColor.Name = "lblCropCrosshairColor";
             this.lblCropCrosshairColor.Size = new System.Drawing.Size(79, 13);
             this.lblCropCrosshairColor.TabIndex = 15;
@@ -2062,7 +2062,7 @@ namespace ZSS
             // lblCropCrosshairStep
             // 
             this.lblCropCrosshairStep.AutoSize = true;
-            this.lblCropCrosshairStep.Location = new System.Drawing.Point(248, 24);
+            this.lblCropCrosshairStep.Location = new System.Drawing.Point(248, 52);
             this.lblCropCrosshairStep.Name = "lblCropCrosshairStep";
             this.lblCropCrosshairStep.Size = new System.Drawing.Size(32, 13);
             this.lblCropCrosshairStep.TabIndex = 22;
@@ -2070,7 +2070,7 @@ namespace ZSS
             // 
             // nudCrosshairLineCount
             // 
-            this.nudCrosshairLineCount.Location = new System.Drawing.Point(128, 53);
+            this.nudCrosshairLineCount.Location = new System.Drawing.Point(280, 82);
             this.nudCrosshairLineCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -2084,7 +2084,7 @@ namespace ZSS
             // lblCropCrosshairInterval
             // 
             this.lblCropCrosshairInterval.AutoSize = true;
-            this.lblCropCrosshairInterval.Location = new System.Drawing.Point(136, 24);
+            this.lblCropCrosshairInterval.Location = new System.Drawing.Point(136, 52);
             this.lblCropCrosshairInterval.Name = "lblCropCrosshairInterval";
             this.lblCropCrosshairInterval.Size = new System.Drawing.Size(45, 13);
             this.lblCropCrosshairInterval.TabIndex = 21;
@@ -2092,7 +2092,7 @@ namespace ZSS
             // 
             // nudCrosshairLineSize
             // 
-            this.nudCrosshairLineSize.Location = new System.Drawing.Point(128, 77);
+            this.nudCrosshairLineSize.Location = new System.Drawing.Point(280, 114);
             this.nudCrosshairLineSize.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -2106,20 +2106,22 @@ namespace ZSS
             // lblCrosshairLineSize
             // 
             this.lblCrosshairLineSize.AutoSize = true;
-            this.lblCrosshairLineSize.Location = new System.Drawing.Point(16, 80);
+            this.lblCrosshairLineSize.Location = new System.Drawing.Point(178, 118);
             this.lblCrosshairLineSize.Name = "lblCrosshairLineSize";
             this.lblCrosshairLineSize.Size = new System.Drawing.Size(93, 13);
             this.lblCrosshairLineSize.TabIndex = 20;
             this.lblCrosshairLineSize.Text = "Crosshair line size:";
+            this.lblCrosshairLineSize.Click += new System.EventHandler(this.lblCrosshairLineSize_Click);
             // 
             // lblCrosshairLineCount
             // 
             this.lblCrosshairLineCount.AutoSize = true;
-            this.lblCrosshairLineCount.Location = new System.Drawing.Point(16, 56);
+            this.lblCrosshairLineCount.Location = new System.Drawing.Point(169, 86);
             this.lblCrosshairLineCount.Name = "lblCrosshairLineCount";
             this.lblCrosshairLineCount.Size = new System.Drawing.Size(102, 13);
             this.lblCrosshairLineCount.TabIndex = 19;
             this.lblCrosshairLineCount.Text = "Crosshair line count:";
+            this.lblCrosshairLineCount.Click += new System.EventHandler(this.lblCrosshairLineCount_Click);
             // 
             // gbGridMode
             // 
@@ -2131,7 +2133,7 @@ namespace ZSS
             this.gbGridMode.Controls.Add(this.nudCropGridWidth);
             this.gbGridMode.Location = new System.Drawing.Point(368, 16);
             this.gbGridMode.Name = "gbGridMode";
-            this.gbGridMode.Size = new System.Drawing.Size(392, 104);
+            this.gbGridMode.Size = new System.Drawing.Size(392, 120);
             this.gbGridMode.TabIndex = 120;
             this.gbGridMode.TabStop = false;
             this.gbGridMode.Tag = "With Grid Mode you can take screenshots of preset portions of the Screen";
@@ -2140,7 +2142,7 @@ namespace ZSS
             // cboCropGridMode
             // 
             this.cboCropGridMode.AutoSize = true;
-            this.cboCropGridMode.Location = new System.Drawing.Point(24, 24);
+            this.cboCropGridMode.Location = new System.Drawing.Point(16, 24);
             this.cboCropGridMode.Name = "cboCropGridMode";
             this.cboCropGridMode.Size = new System.Drawing.Size(178, 17);
             this.cboCropGridMode.TabIndex = 119;
@@ -2150,21 +2152,21 @@ namespace ZSS
             // 
             // nudCropGridHeight
             // 
-            this.nudCropGridHeight.Location = new System.Drawing.Point(280, 48);
+            this.nudCropGridHeight.Location = new System.Drawing.Point(320, 64);
             this.nudCropGridHeight.Maximum = new decimal(new int[] {
             5000,
             0,
             0,
             0});
             this.nudCropGridHeight.Name = "nudCropGridHeight";
-            this.nudCropGridHeight.Size = new System.Drawing.Size(48, 20);
+            this.nudCropGridHeight.Size = new System.Drawing.Size(56, 20);
             this.nudCropGridHeight.TabIndex = 15;
             this.nudCropGridHeight.ValueChanged += new System.EventHandler(this.nudCropGridHeight_ValueChanged);
             // 
             // lblGridSizeWidth
             // 
             this.lblGridSizeWidth.AutoSize = true;
-            this.lblGridSizeWidth.Location = new System.Drawing.Point(144, 51);
+            this.lblGridSizeWidth.Location = new System.Drawing.Point(176, 68);
             this.lblGridSizeWidth.Name = "lblGridSizeWidth";
             this.lblGridSizeWidth.Size = new System.Drawing.Size(35, 13);
             this.lblGridSizeWidth.TabIndex = 14;
@@ -2173,7 +2175,7 @@ namespace ZSS
             // lblGridSize
             // 
             this.lblGridSize.AutoSize = true;
-            this.lblGridSize.Location = new System.Drawing.Point(24, 51);
+            this.lblGridSize.Location = new System.Drawing.Point(48, 68);
             this.lblGridSize.Name = "lblGridSize";
             this.lblGridSize.Size = new System.Drawing.Size(117, 13);
             this.lblGridSize.TabIndex = 118;
@@ -2182,7 +2184,7 @@ namespace ZSS
             // lblGridSizeHeight
             // 
             this.lblGridSizeHeight.AutoSize = true;
-            this.lblGridSizeHeight.Location = new System.Drawing.Point(240, 51);
+            this.lblGridSizeHeight.Location = new System.Drawing.Point(280, 68);
             this.lblGridSizeHeight.Name = "lblGridSizeHeight";
             this.lblGridSizeHeight.Size = new System.Drawing.Size(38, 13);
             this.lblGridSizeHeight.TabIndex = 16;
@@ -2190,14 +2192,14 @@ namespace ZSS
             // 
             // nudCropGridWidth
             // 
-            this.nudCropGridWidth.Location = new System.Drawing.Point(184, 48);
+            this.nudCropGridWidth.Location = new System.Drawing.Point(216, 64);
             this.nudCropGridWidth.Maximum = new decimal(new int[] {
             5000,
             0,
             0,
             0});
             this.nudCropGridWidth.Name = "nudCropGridWidth";
-            this.nudCropGridWidth.Size = new System.Drawing.Size(48, 20);
+            this.nudCropGridWidth.Size = new System.Drawing.Size(56, 20);
             this.nudCropGridWidth.TabIndex = 13;
             this.nudCropGridWidth.ValueChanged += new System.EventHandler(this.nudCropGridSize_ValueChanged);
             // 

@@ -4573,5 +4573,15 @@ namespace ZSS
         {
             Program.conf.ImageShackUserName = txtUserNameImageShack.Text;
         }
+
+        private void lblCrosshairLineCount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCrosshairLineSize_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
