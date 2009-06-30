@@ -2233,7 +2233,7 @@ namespace ZSS
             // cbSelectedWindowAddBorder
             // 
             this.cbSelectedWindowAddBorder.AutoSize = true;
-            this.cbSelectedWindowAddBorder.Location = new System.Drawing.Point(16, 296);
+            this.cbSelectedWindowAddBorder.Location = new System.Drawing.Point(16, 276);
             this.cbSelectedWindowAddBorder.Name = "cbSelectedWindowAddBorder";
             this.cbSelectedWindowAddBorder.Size = new System.Drawing.Size(201, 17);
             this.cbSelectedWindowAddBorder.TabIndex = 41;
@@ -2243,7 +2243,7 @@ namespace ZSS
             // 
             // nudSelectedWindowHueRange
             // 
-            this.nudSelectedWindowHueRange.Location = new System.Drawing.Point(320, 260);
+            this.nudSelectedWindowHueRange.Location = new System.Drawing.Point(320, 240);
             this.nudSelectedWindowHueRange.Maximum = new decimal(new int[] {
             360,
             0,
@@ -2257,7 +2257,7 @@ namespace ZSS
             // lblSelectedWindowHueRange
             // 
             this.lblSelectedWindowHueRange.AutoSize = true;
-            this.lblSelectedWindowHueRange.Location = new System.Drawing.Point(120, 264);
+            this.lblSelectedWindowHueRange.Location = new System.Drawing.Point(120, 244);
             this.lblSelectedWindowHueRange.Name = "lblSelectedWindowHueRange";
             this.lblSelectedWindowHueRange.Size = new System.Drawing.Size(193, 13);
             this.lblSelectedWindowHueRange.TabIndex = 39;
@@ -2265,7 +2265,7 @@ namespace ZSS
             // 
             // nudSelectedWindowRegionStep
             // 
-            this.nudSelectedWindowRegionStep.Location = new System.Drawing.Point(320, 228);
+            this.nudSelectedWindowRegionStep.Location = new System.Drawing.Point(320, 208);
             this.nudSelectedWindowRegionStep.Minimum = new decimal(new int[] {
             1,
             0,
@@ -2283,7 +2283,7 @@ namespace ZSS
             // 
             // nudSelectedWindowRegionInterval
             // 
-            this.nudSelectedWindowRegionInterval.Location = new System.Drawing.Point(224, 228);
+            this.nudSelectedWindowRegionInterval.Location = new System.Drawing.Point(224, 208);
             this.nudSelectedWindowRegionInterval.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -2297,7 +2297,7 @@ namespace ZSS
             // lblSelectedWindowRegionStep
             // 
             this.lblSelectedWindowRegionStep.AutoSize = true;
-            this.lblSelectedWindowRegionStep.Location = new System.Drawing.Point(288, 232);
+            this.lblSelectedWindowRegionStep.Location = new System.Drawing.Point(288, 212);
             this.lblSelectedWindowRegionStep.Name = "lblSelectedWindowRegionStep";
             this.lblSelectedWindowRegionStep.Size = new System.Drawing.Size(32, 13);
             this.lblSelectedWindowRegionStep.TabIndex = 36;
@@ -2306,7 +2306,7 @@ namespace ZSS
             // lblSelectedWindowRegionInterval
             // 
             this.lblSelectedWindowRegionInterval.AutoSize = true;
-            this.lblSelectedWindowRegionInterval.Location = new System.Drawing.Point(176, 232);
+            this.lblSelectedWindowRegionInterval.Location = new System.Drawing.Point(176, 212);
             this.lblSelectedWindowRegionInterval.Name = "lblSelectedWindowRegionInterval";
             this.lblSelectedWindowRegionInterval.Size = new System.Drawing.Size(45, 13);
             this.lblSelectedWindowRegionInterval.TabIndex = 35;
@@ -2315,7 +2315,7 @@ namespace ZSS
             // cbSelectedWindowDynamicBorderColor
             // 
             this.cbSelectedWindowDynamicBorderColor.AutoSize = true;
-            this.cbSelectedWindowDynamicBorderColor.Location = new System.Drawing.Point(16, 200);
+            this.cbSelectedWindowDynamicBorderColor.Location = new System.Drawing.Point(16, 180);
             this.cbSelectedWindowDynamicBorderColor.Name = "cbSelectedWindowDynamicBorderColor";
             this.cbSelectedWindowDynamicBorderColor.Size = new System.Drawing.Size(158, 17);
             this.cbSelectedWindowDynamicBorderColor.TabIndex = 34;
@@ -2326,7 +2326,7 @@ namespace ZSS
             // cbSelectedWindowRuler
             // 
             this.cbSelectedWindowRuler.AutoSize = true;
-            this.cbSelectedWindowRuler.Location = new System.Drawing.Point(16, 100);
+            this.cbSelectedWindowRuler.Location = new System.Drawing.Point(16, 80);
             this.cbSelectedWindowRuler.Name = "cbSelectedWindowRuler";
             this.cbSelectedWindowRuler.Size = new System.Drawing.Size(76, 17);
             this.cbSelectedWindowRuler.TabIndex = 12;
@@ -2367,7 +2367,7 @@ namespace ZSS
             // lblSelectedWindowBorderColor
             // 
             this.lblSelectedWindowBorderColor.AutoSize = true;
-            this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(208, 136);
+            this.lblSelectedWindowBorderColor.Location = new System.Drawing.Point(208, 116);
             this.lblSelectedWindowBorderColor.Name = "lblSelectedWindowBorderColor";
             this.lblSelectedWindowBorderColor.Size = new System.Drawing.Size(103, 13);
             this.lblSelectedWindowBorderColor.TabIndex = 1;
@@ -2375,7 +2375,7 @@ namespace ZSS
             // 
             // nudSelectedWindowBorderSize
             // 
-            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(320, 164);
+            this.nudSelectedWindowBorderSize.Location = new System.Drawing.Point(320, 144);
             this.nudSelectedWindowBorderSize.Name = "nudSelectedWindowBorderSize";
             this.nudSelectedWindowBorderSize.Size = new System.Drawing.Size(56, 20);
             this.nudSelectedWindowBorderSize.TabIndex = 4;
@@ -2384,7 +2384,7 @@ namespace ZSS
             // lblSelectedWindowBorderSize
             // 
             this.lblSelectedWindowBorderSize.AutoSize = true;
-            this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(136, 168);
+            this.lblSelectedWindowBorderSize.Location = new System.Drawing.Point(136, 148);
             this.lblSelectedWindowBorderSize.Name = "lblSelectedWindowBorderSize";
             this.lblSelectedWindowBorderSize.Size = new System.Drawing.Size(175, 13);
             this.lblSelectedWindowBorderSize.TabIndex = 2;
@@ -2394,7 +2394,7 @@ namespace ZSS
             // 
             this.cbSelectedWindowFront.AutoSize = true;
             this.cbSelectedWindowFront.Enabled = false;
-            this.cbSelectedWindowFront.Location = new System.Drawing.Point(16, 76);
+            this.cbSelectedWindowFront.Location = new System.Drawing.Point(576, 16);
             this.cbSelectedWindowFront.Name = "cbSelectedWindowFront";
             this.cbSelectedWindowFront.Size = new System.Drawing.Size(193, 17);
             this.cbSelectedWindowFront.TabIndex = 0;
@@ -2408,7 +2408,7 @@ namespace ZSS
             this.pbSelectedWindowBorderColor.BackColor = System.Drawing.Color.White;
             this.pbSelectedWindowBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbSelectedWindowBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(320, 132);
+            this.pbSelectedWindowBorderColor.Location = new System.Drawing.Point(320, 112);
             this.pbSelectedWindowBorderColor.Name = "pbSelectedWindowBorderColor";
             this.pbSelectedWindowBorderColor.Size = new System.Drawing.Size(56, 20);
             this.pbSelectedWindowBorderColor.TabIndex = 3;
@@ -2460,7 +2460,7 @@ namespace ZSS
             // 
             this.cboWatermarkType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboWatermarkType.FormattingEnabled = true;
-            this.cboWatermarkType.Location = new System.Drawing.Point(72, 19);
+            this.cboWatermarkType.Location = new System.Drawing.Point(72, 20);
             this.cboWatermarkType.Name = "cboWatermarkType";
             this.cboWatermarkType.Size = new System.Drawing.Size(120, 21);
             this.cboWatermarkType.TabIndex = 33;
@@ -2501,7 +2501,7 @@ namespace ZSS
             // 
             this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(72, 48);
+            this.cbWatermarkPosition.Location = new System.Drawing.Point(72, 52);
             this.cbWatermarkPosition.Name = "cbWatermarkPosition";
             this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
             this.cbWatermarkPosition.TabIndex = 18;
@@ -2525,7 +2525,7 @@ namespace ZSS
             0,
             0});
             this.nudWatermarkOffset.Name = "nudWatermarkOffset";
-            this.nudWatermarkOffset.Size = new System.Drawing.Size(64, 20);
+            this.nudWatermarkOffset.Size = new System.Drawing.Size(56, 20);
             this.nudWatermarkOffset.TabIndex = 6;
             this.nudWatermarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudWatermarkOffset.ValueChanged += new System.EventHandler(this.nudWatermarkOffset_ValueChanged);
@@ -2944,7 +2944,7 @@ namespace ZSS
             // 
             // btnResetIncrement
             // 
-            this.btnResetIncrement.Location = new System.Drawing.Point(240, 208);
+            this.btnResetIncrement.Location = new System.Drawing.Point(240, 184);
             this.btnResetIncrement.Name = "btnResetIncrement";
             this.btnResetIncrement.Size = new System.Drawing.Size(184, 23);
             this.btnResetIncrement.TabIndex = 116;
@@ -3306,14 +3306,14 @@ namespace ZSS
             // 
             // nudImageQuality
             // 
-            this.nudImageQuality.Location = new System.Drawing.Point(136, 40);
+            this.nudImageQuality.Location = new System.Drawing.Point(128, 40);
             this.nudImageQuality.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudImageQuality.Name = "nudImageQuality";
-            this.nudImageQuality.Size = new System.Drawing.Size(48, 20);
+            this.nudImageQuality.Size = new System.Drawing.Size(72, 20);
             this.nudImageQuality.TabIndex = 111;
             this.nudImageQuality.Value = new decimal(new int[] {
             90,
@@ -3326,7 +3326,7 @@ namespace ZSS
             // 
             this.lblJPEGQualityPercentage.AutoSize = true;
             this.lblJPEGQualityPercentage.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblJPEGQualityPercentage.Location = new System.Drawing.Point(192, 40);
+            this.lblJPEGQualityPercentage.Location = new System.Drawing.Point(208, 44);
             this.lblJPEGQualityPercentage.Name = "lblJPEGQualityPercentage";
             this.lblJPEGQualityPercentage.Size = new System.Drawing.Size(15, 13);
             this.lblJPEGQualityPercentage.TabIndex = 110;
@@ -3336,7 +3336,7 @@ namespace ZSS
             // 
             this.lblQuality.AutoSize = true;
             this.lblQuality.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblQuality.Location = new System.Drawing.Point(136, 24);
+            this.lblQuality.Location = new System.Drawing.Point(128, 24);
             this.lblQuality.Name = "lblQuality";
             this.lblQuality.Size = new System.Drawing.Size(69, 13);
             this.lblQuality.TabIndex = 108;
@@ -3346,7 +3346,7 @@ namespace ZSS
             // 
             this.cbSwitchFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSwitchFormat.FormattingEnabled = true;
-            this.cbSwitchFormat.Location = new System.Drawing.Point(203, 96);
+            this.cbSwitchFormat.Location = new System.Drawing.Point(128, 96);
             this.cbSwitchFormat.Name = "cbSwitchFormat";
             this.cbSwitchFormat.Size = new System.Drawing.Size(98, 21);
             this.cbSwitchFormat.TabIndex = 9;
@@ -3376,11 +3376,11 @@ namespace ZSS
             // 
             this.lblKB.AutoSize = true;
             this.lblKB.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblKB.Location = new System.Drawing.Point(96, 96);
+            this.lblKB.Location = new System.Drawing.Point(88, 100);
             this.lblKB.Name = "lblKB";
-            this.lblKB.Size = new System.Drawing.Size(79, 13);
+            this.lblKB.Size = new System.Drawing.Size(23, 13);
             this.lblKB.TabIndex = 95;
-            this.lblKB.Text = "KiB (0 disables)";
+            this.lblKB.Text = "KiB";
             // 
             // lblAfter
             // 
@@ -3388,15 +3388,15 @@ namespace ZSS
             this.lblAfter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lblAfter.Location = new System.Drawing.Point(16, 80);
             this.lblAfter.Name = "lblAfter";
-            this.lblAfter.Size = new System.Drawing.Size(32, 13);
+            this.lblAfter.Size = new System.Drawing.Size(88, 13);
             this.lblAfter.TabIndex = 93;
-            this.lblAfter.Text = "After:";
+            this.lblAfter.Text = "After: (0 disables)";
             // 
             // lblSwitchTo
             // 
             this.lblSwitchTo.AutoSize = true;
             this.lblSwitchTo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblSwitchTo.Location = new System.Drawing.Point(200, 80);
+            this.lblSwitchTo.Location = new System.Drawing.Point(128, 80);
             this.lblSwitchTo.Name = "lblSwitchTo";
             this.lblSwitchTo.Size = new System.Drawing.Size(54, 13);
             this.lblSwitchTo.TabIndex = 92;
