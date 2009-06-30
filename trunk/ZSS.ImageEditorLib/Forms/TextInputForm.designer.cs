@@ -209,6 +209,7 @@ namespace Greenshot
             this.ClientSize = new System.Drawing.Size(579, 344);
             this.Controls.Add(this.toolStripContainer1);
             this.Name = "TextInputForm";
+            this.Text = "Text Editor";
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.ContentPanel.PerformLayout();
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
