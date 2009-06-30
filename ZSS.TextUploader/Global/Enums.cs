@@ -24,7 +24,7 @@ namespace ZSS.TextUploadersLib
         [Description("tinyurl.com")]
         TINYURL,
         [Description("3.ly")]
-        THREELY
+        THREELY,
     }
 
     [Serializable]

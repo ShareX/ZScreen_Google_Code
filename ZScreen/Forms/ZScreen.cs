@@ -4311,6 +4311,8 @@ namespace ZSS
         {
             switch (name)
             {
+                case BitlyUploader.Hostname:
+                    return new BitlyUploader();
                 case IsgdUploader.Hostname:
                     return new IsgdUploader();
                 case TinyURLUploader.Hostname:

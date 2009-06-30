@@ -18,6 +18,7 @@ namespace ZSS.TextUploadersLib
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
                                                           typeof(SlexyUploader), typeof(SniptUploader), 
                                                           typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(KlamUploader), typeof(IsgdUploader),
+                                                          typeof (BitlyUploader),
                                                           typeof(TextUploader)};
 
         public TextUploader() { }
