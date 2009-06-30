@@ -4174,7 +4174,7 @@ namespace ZSS
 
             if(mLogoRandomList.Count == 0)
             {
-                List<int> numbers = new List<int>() {1, 2, 3, 4, 5};
+                List<int> numbers = new List<int>() {1, 2, 3, 4};
 
                 int count = numbers.Count;
 
