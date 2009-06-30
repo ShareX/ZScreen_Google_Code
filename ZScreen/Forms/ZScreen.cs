@@ -47,6 +47,7 @@ using ZSS.UpdateCheckerLib;
 using ZSS.Global;
 using System.Drawing.Printing;
 using Greenshot.Helpers;
+using System.Collections;
 
 namespace ZSS
 {
@@ -64,6 +65,8 @@ namespace ZSS
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private GoogleTranslate mGTranslator;
         private Debug debug;
+
+        private List<int> mLogoRandomList = new List<int>(5);
 
         #endregion
 
@@ -4168,7 +4171,26 @@ namespace ZSS
         {
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             Random rand = new Random();
-            switch (rand.Next(1, 7))
+
+            
+
+            if(mLogoRandomList.Count == 0)
+            {
+                List<int> numbers = new List<int>();
+                for (int x = 1; x < 6; x++)
+                {
+                    numbers.Add(x);
+                }
+
+                for(int x = 0; x < 5; x++)
+                {
+                    int r = rand.Next(0, numbers.Count - 1);
+                    mLogoRandomList.Add(numbers[r]);
+                    numbers.RemoveAt(r);
+                }
+            }
+            
+            switch (mLogoRandomList[0])
             {
                 case 1:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.BrightnessFilter(rand.Next(0, 101) - 50));
@@ -4186,10 +4208,9 @@ namespace ZSS
                 case 5:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
                     break;
-                case 6:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.ContrastFilter(rand.Next(0, 501) - 50));
-                    break;
             }
+
+            mLogoRandomList.RemoveAt(0);
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
