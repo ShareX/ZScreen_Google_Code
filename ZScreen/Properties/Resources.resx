@@ -256,4 +256,13 @@
   <data name="text_signature" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\text_signature.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dekiwiki_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dekiwiki_logo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nav_home" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nav-home.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nav_user" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nav-user.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -101,6 +101,12 @@
     <Compile Include="Forms\ConfigWizard.Designer.cs">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DekiWikiPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DekiWikiPath.designer.cs">
+      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ToolbarWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -358,6 +364,9 @@
     <EmbeddedResource Include="Forms\ConfigWizard.resx">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DekiWikiPath.resx">
+      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ToolbarWindow.resx">
       <DependentUpon>ToolbarWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -380,6 +389,9 @@
     <None Include="Resources\images_stack.png" />
     <None Include="Resources\server.png" />
     <None Include="Resources\text_signature.png" />
+    <None Include="Resources\dekiwiki_logo.png" />
+    <None Include="Resources\nav-home.png" />
+    <None Include="Resources\nav-user.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

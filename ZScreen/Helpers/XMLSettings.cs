@@ -294,6 +294,14 @@ namespace ZSS
         public bool BackupFTPSettings { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
+        //  DekiWiki
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        public List<DekiWikiAccount> DekiWikiAccountList = new List<DekiWikiAccount>();
+        public int DekiWikiSelected = -1;
+        public bool DekiWikiForcePath = false;
+
+        //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
         //~~~~~~~~~~~~~~~~~~~~~
 

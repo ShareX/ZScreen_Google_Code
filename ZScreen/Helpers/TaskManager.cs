@@ -1,13 +1,14 @@
 ﻿using System;
-using ZSS.Tasks;
-using System.IO;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Threading;
+using System.Windows.Forms;
+using ZSS.Global;
 using ZSS.ImageUploaders;
 using ZSS.Properties;
-using System.Threading;
-using System.Drawing;
+using ZSS.Tasks;
 using ZSS.TextUploadersLib;
-using ZSS.Global;
 
 namespace ZSS.Helpers
 {
@@ -159,6 +160,52 @@ namespace ZSS.Helpers
             catch (Exception ex)
             {
                 task.Errors.Add("FTP upload failed.\r\n" + ex.Message);
+            }
+
+            return false;
+        }
+
+        public bool UploadDekiWiki()
+        {
+            try
+            {
+                string fullFilePath = task.LocalFilePath;
+
+                if (Program.CheckDekiWikiAccounts(ref task) && File.Exists(fullFilePath))
+                {
+                    DekiWikiAccount acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
+
+                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Program.conf.DekiWikiForcePath == true)
+                    {
+                        ZSS.Forms.DekiWikiPath diag = new ZSS.Forms.DekiWikiPath(ref acc);
+                        diag.history = acc.History;
+                        diag.ShowDialog();
+
+                        if (diag.DialogResult != DialogResult.OK)
+                        {
+                            throw new Exception("User canceled the operation.");
+                        }
+
+                        DekiWiki.savePath = diag.path;
+
+                    }
+                    task.DestinationName = acc.Name;
+
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", task.FileName, acc.Url));
+
+                    DekiWikiUploader uploader = new DekiWikiUploader(acc);
+                    task.ImageManager = uploader.UploadImage(task.LocalFilePath);
+                    task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
+
+                    DekiWiki connector = new DekiWiki(ref acc);
+                    connector.UpdateHistory();
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                task.Errors.Add("Mindtouch upload failed.\r\n" + ex.Message);
             }
 
             return false;
