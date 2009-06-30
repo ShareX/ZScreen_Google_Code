@@ -71,18 +71,17 @@ namespace ZSS
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
-            //~~~~~~~~~~~~~~~~~~~~~
-            AutoTranslate = false;
+            //~~~~~~~~~~~~~~~~~~~~~            
             AutoTranslateLength = 20;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options
             //~~~~~~~~~~~~~~~~~~~~~
-
-            AutoSaveSettings = false;
+            
             WriteDebugFile = true;
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
+            LimitLongURL = 100;
         }
 
         #region Settings
