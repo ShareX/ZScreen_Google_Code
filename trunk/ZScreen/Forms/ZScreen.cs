@@ -2128,43 +2128,42 @@ namespace ZSS
 
         private void UploadUsingClipboard()
         {
-            if (Clipboard.ContainsText())
-            {
-                if (Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
-                {
-                    StartBW_LanguageTranslator();
-                }
-                else
-                {
-                    foreach (string filePath in FileSystem.GetClipboardFilePaths())
-                    {
-                        if (FileSystem.IsValidTextFile(filePath))
-                        {
-                            MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                            string textString = File.ReadAllText(filePath);
 
-                            if (FileSystem.IsValidLink(textString))
+            if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
+            {
+                StartBW_LanguageTranslator();
+            }
+            else
+            {
+                foreach (string filePath in FileSystem.GetClipboardFilePaths())
+                {
+                    if (FileSystem.IsValidTextFile(filePath))
+                    {
+                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                        string textString = File.ReadAllText(filePath);
+
+                        if (FileSystem.IsValidLink(textString))
+                        {
+                            if (Program.conf.UrlShortenerActive != null)
                             {
-                                if (Program.conf.UrlShortenerActive != null)
-                                {
-                                    temp.MyTextUploader = Program.conf.UrlShortenerActive;
-                                    temp.RunWorker();
-                                }
-                            }
-                            else
-                            {
-                                if (Program.conf.TextUploaderActive != null)
-                                {
-                                    temp.RunWorker();
-                                }
+                                temp.MyTextUploader = Program.conf.UrlShortenerActive;
+                                temp.RunWorker();
                             }
                         }
                         else
                         {
-                            StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                            if (Program.conf.TextUploaderActive != null)
+                            {
+                                temp.RunWorker();
+                            }
                         }
                     }
+                    else
+                    {
+                        StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    }
                 }
+
             }
         }
 
@@ -4173,20 +4172,20 @@ namespace ZSS
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             Random rand = new Random();
 
-            if(mLogoRandomList.Count == 0)
+            if (mLogoRandomList.Count == 0)
             {
-                List<int> numbers = new List<int>() {1, 2, 3, 4};
+                List<int> numbers = new List<int>() { 1, 2, 3, 4 };
 
                 int count = numbers.Count;
 
-                for(int x = 0; x < count; x++)
+                for (int x = 0; x < count; x++)
                 {
                     int r = rand.Next(0, numbers.Count - 1);
                     mLogoRandomList.Add(numbers[r]);
                     numbers.RemoveAt(r);
                 }
             }
-            
+
             switch (mLogoRandomList[0])
             {
                 case 1:
@@ -4203,7 +4202,7 @@ namespace ZSS
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
                     break;
-                
+
             }
 
             mLogoRandomList.RemoveAt(0);
