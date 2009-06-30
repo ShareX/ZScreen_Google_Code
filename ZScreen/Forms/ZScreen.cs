@@ -1447,21 +1447,17 @@ namespace ZSS
                 List<Software> imgs = Program.conf.ImageEditors;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-
-                ToolStripMenuItem tsm = new ToolStripMenuItem { Text = "Disabled", CheckOnClick = true };
-                tsm.Click += DisableImageSoftwareClick;
-
-                tsmEditinImageSoftware.DropDownItems.Add(tsm);
-
-                tsmEditinImageSoftware.DropDownItems.Add(new ToolStripSeparator());
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;              
 
                 for (int x = 0; x < imgs.Count; x++)
                 {
-                    tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
-                    //tsm.Tag = x;
+                    ToolStripMenuItem tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
                     tsm.Click += new EventHandler(RightClickIsItemClick);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
+                    if (imgs[x].Name == Program.DISABLED_IMAGE_EDITOR)
+                    {
+                        tsmEditinImageSoftware.DropDownItems.Add(new ToolStripSeparator());
+                    }
                 }
 
                 //check the active ftpUpload account
@@ -2037,7 +2033,7 @@ namespace ZSS
 
                 btnBrowseImageEditor.Enabled = !app.Protected;
                 pgEditorsImage.SelectedObject = app;
-                
+
                 btnRemoveImageEditor.Enabled = !app.Protected;
 
                 gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
