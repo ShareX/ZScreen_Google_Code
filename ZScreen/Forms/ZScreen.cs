@@ -2872,8 +2872,8 @@ namespace ZSS
 
                 if (Program.conf.HistoryShowTooltips && hi != null)
                 {
-                    ttApp.SetToolTip(lbHistory, hi.GetStatistics());
-                    ttApp.SetToolTip(pbPreview, hi.GetStatistics());
+                    ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
+                    ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
                 }
             }
         }
