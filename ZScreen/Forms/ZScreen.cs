@@ -86,6 +86,10 @@ namespace ZSS
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
+
+            FileSystem.AppendDebug("Started ZScreen");
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
+
             tcAccounts.TabPages.Remove(tpMindTouch);
 
             // Accounts
@@ -108,9 +112,11 @@ namespace ZSS
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
             AddToClipboardByDoubleClick(tpHistory);
 
-            FileSystem.AppendDebug("Started ZScreen");
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
+            // Context Menu
+            tsmImages.Text = tpImageHosting.Text;
+            tsmText.Text = tpTextServices.Text;
 
+            // Window Behaviour
             if (Program.conf.ActionsToolbarMode)
             {
                 this.Hide();
@@ -1782,9 +1788,9 @@ namespace ZSS
             else if (tsm == tsmFTP)
                 sel = tpAccounts;
             else if (tsm == tsmImages)
-                sel = tpImages;
+                sel = tpImageHosting;
             else if (tsm == tsmText)
-                sel = tpText;
+                sel = tpTextServices;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
             else if (tsm == tsmTranslator)
