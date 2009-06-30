@@ -2043,7 +2043,7 @@ namespace ZSS
 
                 btnBrowseImageEditor.Enabled = !app.Protected;
                 pgEditorsImage.SelectedObject = app;
-
+                pgEditorsImage.Enabled = app.Name != Program.DISABLED_IMAGE_EDITOR;
                 btnRemoveImageEditor.Enabled = !app.Protected;
 
                 gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
