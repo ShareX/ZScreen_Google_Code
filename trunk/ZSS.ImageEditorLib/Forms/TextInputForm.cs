@@ -46,9 +46,6 @@ using Greenshot.Configuration;
 
 namespace Greenshot
 {
-    /// <summary>
-    /// Description of TextInputForm.
-    /// </summary>
     public partial class TextInputForm : Form
     {
         public TextInputForm()

@@ -1447,7 +1447,7 @@ namespace ZSS
                 List<Software> imgs = Program.conf.ImageEditors;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;              
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 for (int x = 0; x < imgs.Count; x++)
                 {
@@ -2978,20 +2978,27 @@ namespace ZSS
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
         {
-            FontDialog fDialog = new FontDialog
+            try
             {
-                ShowColor = true,
-                Font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
-                Color = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor)
-            };
-            if (fDialog.ShowDialog() == DialogResult.OK)
-            {
-                Program.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
-                Program.conf.WatermarkFontColor = XMLSettings.SerializeColor(fDialog.Color);
-                pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
-                lblWatermarkFont.Text = FontToString();
+                FontDialog fDialog = new FontDialog
+                {
+                    ShowColor = true,
+                    Font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
+                    Color = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor)
+                };
+                if (fDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Program.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
+                    Program.conf.WatermarkFontColor = XMLSettings.SerializeColor(fDialog.Color);
+                    pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
+                    lblWatermarkFont.Text = FontToString();
+                }
+                TestWatermark();
             }
-            TestWatermark();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private string FontToString()
