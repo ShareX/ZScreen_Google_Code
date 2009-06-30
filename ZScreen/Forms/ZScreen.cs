@@ -445,7 +445,7 @@ namespace ZSS
                 }
             }
 
-            if (Program.conf.ImageSoftwareEnabled)
+            if (Program.conf.ImageSoftwareEnabled())
             {
                 int i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditor.Name);
                 if (i != -1)
@@ -455,7 +455,11 @@ namespace ZSS
             }
             else
             {
-                lbImageSoftware.SelectedIndex = 0; //Set to disabled
+                int i = lbImageSoftware.Items.IndexOf(Program.DISABLED_IMAGE_EDITOR);
+                if (i != -1)
+                {
+                    lbImageSoftware.SelectedIndex = i;
+                }
             }
 
             chkImageEditorAutoSave.Checked = Program.conf.ImageEditorAutoSave;
@@ -816,7 +820,7 @@ namespace ZSS
         private void PublishImage(ref MainAppTask task)
         {
             TaskManager tm = new TaskManager(ref task);
-            if (task.MyImage != null && Program.conf.ImageSoftwareEnabled)
+            if (task.MyImage != null && Program.conf.ImageSoftwareEnabled())
             {
                 tm.ImageEdit();
             }
@@ -1472,11 +1476,14 @@ namespace ZSS
 
                 //check the active ftpUpload account
 
-                if (Program.conf.ImageSoftwareEnabled)
+                if (Program.conf.ImageSoftwareEnabled())
+                {
                     CheckCorrectIsRightClickMenu(Program.conf.ImageEditor.Name);
+                }
                 else
-                    CheckCorrectIsRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text);
-
+                {
+                    CheckCorrectIsRightClickMenu(Program.DISABLED_IMAGE_EDITOR);
+                }
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
@@ -2026,7 +2033,6 @@ namespace ZSS
 
         private void SetActiveImageSoftware()
         {
-            Program.conf.ImageSoftwareEnabled = true;
             Program.conf.ImageEditor = Program.conf.ImageEditors[lbImageSoftware.SelectedIndex];
             RewriteImageEditorsRightClickMenu();
         }
@@ -2037,10 +2043,6 @@ namespace ZSS
             Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
             if (app != null)
             {
-
-                Program.conf.ImageSoftwareEnabled = app.Name == Program.DISABLED_IMAGE_EDITOR;
-                RewriteImageEditorsRightClickMenu();
-
                 btnBrowseImageEditor.Enabled = !app.Protected;
                 pgEditorsImage.SelectedObject = app;
                 pgEditorsImage.Enabled = app.Name != Program.DISABLED_IMAGE_EDITOR;
@@ -2048,8 +2050,7 @@ namespace ZSS
 
                 gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
 
-                SetActiveImageSoftware();
-
+                RewriteImageEditorsRightClickMenu();
             }
 
         }
