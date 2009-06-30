@@ -275,8 +275,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<Software> ImageEditors = new List<Software>();
-        public Software ImageEditor = null;
-        public bool ImageSoftwareEnabled = false;
+        public Software ImageEditor = null;        
         public Software TextEditorActive;
         public List<Software> TextEditors = new List<Software>();
         public bool TextEditorEnabled = false;
@@ -578,6 +577,10 @@ namespace ZSS
             return false;
         }
 
+        public bool ImageSoftwareEnabled()
+        {
+            return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
+        }
 
     }
 }
