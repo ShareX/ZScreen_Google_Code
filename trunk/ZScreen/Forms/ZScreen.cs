@@ -4172,17 +4172,13 @@ namespace ZSS
             Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             Random rand = new Random();
 
-            
-
             if(mLogoRandomList.Count == 0)
             {
-                List<int> numbers = new List<int>();
-                for (int x = 1; x < 6; x++)
-                {
-                    numbers.Add(x);
-                }
+                List<int> numbers = new List<int>() {1, 2, 3, 4, 5};
 
-                for(int x = 0; x < 5; x++)
+                int count = numbers.Count;
+
+                for(int x = 0; x < count; x++)
                 {
                     int r = rand.Next(0, numbers.Count - 1);
                     mLogoRandomList.Add(numbers[r]);
@@ -4193,21 +4189,20 @@ namespace ZSS
             switch (mLogoRandomList[0])
             {
                 case 1:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.BrightnessFilter(rand.Next(0, 101) - 50));
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     break;
                 case 2:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
                     break;
                 case 3:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     break;
                 case 4:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.ColorFilter(
-                        Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256))));
-                    break;
-                case 5:
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
                     break;
+                
             }
 
             mLogoRandomList.RemoveAt(0);
