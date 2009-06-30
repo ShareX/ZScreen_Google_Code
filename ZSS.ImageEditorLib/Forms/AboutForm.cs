@@ -58,8 +58,7 @@ namespace Greenshot
 			//
 			InitializeComponent();
 			
-			Version v = Assembly.GetExecutingAssembly().GetName().Version;
-			lblTitle.Text = "Greenshot " + v.Major + "." + v.Minor + "." + v.Build.ToString("000");	
+			lblTitle.Text = "ZScreen";	
 		}
 
         private void AboutForm_Load(object sender, EventArgs e)

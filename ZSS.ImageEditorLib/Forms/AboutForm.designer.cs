@@ -56,26 +56,24 @@ namespace Greenshot
             this.linkLblIcons = new System.Windows.Forms.LinkLabel();
             this.lblIcons = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(20, 20);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(90, 85);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(90, 90);
+            this.panel1.Size = new System.Drawing.Size(90, 85);
             this.panel1.TabIndex = 1;
             // 
             // lblTitle
@@ -85,7 +83,7 @@ namespace Greenshot
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(227, 19);
             this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "Greenshot x.x.xxx";
+            this.lblTitle.Text = "ZScreen x.x.xxx";
             // 
             // lblLicense
             // 
@@ -93,7 +91,7 @@ namespace Greenshot
             this.lblLicense.Name = "lblLicense";
             this.lblLicense.Size = new System.Drawing.Size(369, 68);
             this.lblLicense.TabIndex = 3;
-            this.lblLicense.Text = "Copyright (C) 2007 Thomas Braun, Jens Klingen";
+            this.lblLicense.Text = "GNU General Public License v2";
             // 
             // lblHost
             // 
@@ -101,7 +99,7 @@ namespace Greenshot
             this.lblHost.Name = "lblHost";
             this.lblHost.Size = new System.Drawing.Size(466, 23);
             this.lblHost.TabIndex = 4;
-            this.lblHost.Text = "Greenshot is hosted by sourceforge.net at";
+            this.lblHost.Text = "ZScreen is hosted on Google Code at";
             // 
             // linkLblLicense
             // 
@@ -120,7 +118,7 @@ namespace Greenshot
             this.linkLblHost.Size = new System.Drawing.Size(465, 23);
             this.linkLblHost.TabIndex = 6;
             this.linkLblHost.TabStop = true;
-            this.linkLblHost.Text = "http://sourceforge.net/projects/greenshot/";
+            this.linkLblHost.Text = "http://code.google.com/p/zscreen";
             this.linkLblHost.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelClicked);
             // 
             // linkLblBugs
@@ -130,7 +128,7 @@ namespace Greenshot
             this.linkLblBugs.Size = new System.Drawing.Size(465, 23);
             this.linkLblBugs.TabIndex = 8;
             this.linkLblBugs.TabStop = true;
-            this.linkLblBugs.Text = "http://sourceforge.net/tracker/?group_id=191585&atid=937972";
+            this.linkLblBugs.Text = "http://code.google.com/p/zscreen/issues/list";
             this.linkLblBugs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelClicked);
             // 
             // lblBugs
@@ -139,7 +137,7 @@ namespace Greenshot
             this.lblBugs.Name = "lblBugs";
             this.lblBugs.Size = new System.Drawing.Size(466, 23);
             this.lblBugs.TabIndex = 7;
-            this.lblBugs.Text = "Please report bugs to";
+            this.lblBugs.Text = "Please report issues to";
             // 
             // linkLblDonations
             // 
@@ -148,7 +146,7 @@ namespace Greenshot
             this.linkLblDonations.Size = new System.Drawing.Size(465, 23);
             this.linkLblDonations.TabIndex = 10;
             this.linkLblDonations.TabStop = true;
-            this.linkLblDonations.Text = "http://sourceforge.net/donate/index.php?group_id=191585";
+            this.linkLblDonations.Text = "http://sourceforge.net/projects/greenshot/";
             this.linkLblDonations.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelClicked);
             // 
             // lblDonations
@@ -157,7 +155,7 @@ namespace Greenshot
             this.lblDonations.Name = "lblDonations";
             this.lblDonations.Size = new System.Drawing.Size(466, 23);
             this.lblDonations.TabIndex = 9;
-            this.lblDonations.Text = "If you like Greenshot, you might consider donating a dime or two at";
+            this.lblDonations.Text = "ZScreen Image Editor is based on Greenshot";
             // 
             // linkLblIcons
             // 
@@ -175,13 +173,15 @@ namespace Greenshot
             this.lblIcons.Name = "lblIcons";
             this.lblIcons.Size = new System.Drawing.Size(466, 23);
             this.lblIcons.TabIndex = 11;
-            this.lblIcons.Text = "Greenshot uses icons from / derived from Mark James\' splendid Silk Icon Set on";
+            this.lblIcons.Text = "ZScreen Image Editor uses icons from / derived from Mark James\' splendid Silk Ico" +
+                "n Set on";
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(519, 271);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.linkLblIcons);
             this.Controls.Add(this.lblIcons);
             this.Controls.Add(this.linkLblDonations);
@@ -203,8 +203,6 @@ namespace Greenshot
             this.Text = "AboutForm";
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
