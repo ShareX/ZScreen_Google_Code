@@ -43,8 +43,8 @@ namespace ZSS
             this.tsmEditors = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmImages = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmText = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmTranslator = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmSendImageTo = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +100,6 @@ namespace ZSS
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -118,12 +117,10 @@ namespace ZSS
             this.tpAccounts = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
-            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -299,7 +296,7 @@ namespace ZSS
             this.btnBrowseImageEditor = new System.Windows.Forms.Button();
             this.lbImageSoftware = new System.Windows.Forms.ListBox();
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
-            this.tpImages = new System.Windows.Forms.TabPage();
+            this.tpImageHosting = new System.Windows.Forms.TabPage();
             this.tcImages = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
@@ -349,12 +346,10 @@ namespace ZSS
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
-            this.tpText = new System.Windows.Forms.TabPage();
+            this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -463,6 +458,11 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
+            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -537,7 +537,7 @@ namespace ZSS
             this.tcEditors.SuspendLayout();
             this.tpEditorsImages.SuspendLayout();
             this.gbImageEditorSettings.SuspendLayout();
-            this.tpImages.SuspendLayout();
+            this.tpImageHosting.SuspendLayout();
             this.tcImages.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.gbImageUploaderOptions.SuspendLayout();
@@ -547,7 +547,7 @@ namespace ZSS
             this.gbImageUploaders.SuspendLayout();
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
-            this.tpText.SuspendLayout();
+            this.tpTextServices.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
@@ -669,7 +669,7 @@ namespace ZSS
             // 
             // tsmImages
             // 
-            this.tsmImages.Image = global::ZSS.Properties.Resources.world_edit;
+            this.tsmImages.Image = ((System.Drawing.Image)(resources.GetObject("tsmImages.Image")));
             this.tsmImages.Name = "tsmImages";
             this.tsmImages.Size = new System.Drawing.Size(152, 22);
             this.tsmImages.Text = "Images...";
@@ -683,14 +683,6 @@ namespace ZSS
             this.tsmText.Text = "&Text...";
             this.tsmText.Click += new System.EventHandler(this.tsm_Click);
             // 
-            // tsmHistory
-            // 
-            this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
-            this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(152, 22);
-            this.tsmHistory.Text = "History...";
-            this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
-            // 
             // tsmTranslator
             // 
             this.tsmTranslator.Image = global::ZSS.Properties.Resources.comments;
@@ -698,6 +690,14 @@ namespace ZSS
             this.tsmTranslator.Size = new System.Drawing.Size(152, 22);
             this.tsmTranslator.Text = "Translator...";
             this.tsmTranslator.Click += new System.EventHandler(this.tsm_Click);
+            // 
+            // tsmHistory
+            // 
+            this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
+            this.tsmHistory.Name = "tsmHistory";
+            this.tsmHistory.Size = new System.Drawing.Size(152, 22);
+            this.tsmHistory.Text = "History...";
+            this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmOptions
             // 
@@ -1083,6 +1083,7 @@ namespace ZSS
             this.ilApp.Images.SetKeyName(12, "application_double.png");
             this.ilApp.Images.SetKeyName(13, "comments.png");
             this.ilApp.Images.SetKeyName(14, "text_signature.png");
+            this.ilApp.Images.SetKeyName(15, "pictures--arrow.png");
             // 
             // toolStripSeparator5
             // 
@@ -1108,8 +1109,8 @@ namespace ZSS
             this.tcApp.Controls.Add(this.tpHotkeys);
             this.tcApp.Controls.Add(this.tpScreenshots);
             this.tcApp.Controls.Add(this.tpEditors);
-            this.tcApp.Controls.Add(this.tpImages);
-            this.tcApp.Controls.Add(this.tpText);
+            this.tcApp.Controls.Add(this.tpImageHosting);
+            this.tcApp.Controls.Add(this.tpTextServices);
             this.tcApp.Controls.Add(this.tpTranslator);
             this.tcApp.Controls.Add(this.tpHistory);
             this.tcApp.Controls.Add(this.tpOptions);
@@ -1163,18 +1164,6 @@ namespace ZSS
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -1372,16 +1361,6 @@ namespace ZSS
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(770, 320);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
             // gbFTPSettings
             // 
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -1429,14 +1408,6 @@ namespace ZSS
             this.tpMindTouch.TabIndex = 4;
             this.tpMindTouch.Text = "MindTouch";
             this.tpMindTouch.UseVisualStyleBackColor = true;
-            // 
-            // panelMindTouchAccounts
-            // 
-            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
-            this.panelMindTouchAccounts.Size = new System.Drawing.Size(770, 404);
-            this.panelMindTouchAccounts.TabIndex = 0;
             // 
             // tpTinyPic
             // 
@@ -3555,15 +3526,15 @@ namespace ZSS
             // 
             // tpImages
             // 
-            this.tpImages.Controls.Add(this.tcImages);
-            this.tpImages.ImageIndex = 5;
-            this.tpImages.Location = new System.Drawing.Point(4, 23);
-            this.tpImages.Name = "tpImages";
-            this.tpImages.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImages.Size = new System.Drawing.Size(790, 442);
-            this.tpImages.TabIndex = 10;
-            this.tpImages.Text = "Images";
-            this.tpImages.UseVisualStyleBackColor = true;
+            this.tpImageHosting.Controls.Add(this.tcImages);
+            this.tpImageHosting.ImageIndex = 15;
+            this.tpImageHosting.Location = new System.Drawing.Point(4, 23);
+            this.tpImageHosting.Name = "tpImages";
+            this.tpImageHosting.Padding = new System.Windows.Forms.Padding(3);
+            this.tpImageHosting.Size = new System.Drawing.Size(790, 442);
+            this.tpImageHosting.TabIndex = 10;
+            this.tpImageHosting.Text = "Image Hosting";
+            this.tpImageHosting.UseVisualStyleBackColor = true;
             // 
             // tcImages
             // 
@@ -3602,9 +3573,9 @@ namespace ZSS
             this.gbImageUploaderOptions.Controls.Add(this.lblUploadAs);
             this.gbImageUploaderOptions.Controls.Add(this.lblErrorRetry);
             this.gbImageUploaderOptions.Controls.Add(this.nudErrorRetry);
-            this.gbImageUploaderOptions.Location = new System.Drawing.Point(8, 8);
+            this.gbImageUploaderOptions.Location = new System.Drawing.Point(16, 16);
             this.gbImageUploaderOptions.Name = "gbImageUploaderOptions";
-            this.gbImageUploaderOptions.Size = new System.Drawing.Size(748, 168);
+            this.gbImageUploaderOptions.Size = new System.Drawing.Size(744, 168);
             this.gbImageUploaderOptions.TabIndex = 7;
             this.gbImageUploaderOptions.TabStop = false;
             this.gbImageUploaderOptions.Text = "Options";
@@ -4075,15 +4046,15 @@ namespace ZSS
             // 
             // tpText
             // 
-            this.tpText.Controls.Add(this.tcTextUploaders);
-            this.tpText.ImageKey = "text_signature.png";
-            this.tpText.Location = new System.Drawing.Point(4, 23);
-            this.tpText.Name = "tpText";
-            this.tpText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpText.Size = new System.Drawing.Size(790, 442);
-            this.tpText.TabIndex = 13;
-            this.tpText.Text = "Text";
-            this.tpText.UseVisualStyleBackColor = true;
+            this.tpTextServices.Controls.Add(this.tcTextUploaders);
+            this.tpTextServices.ImageKey = "text_signature.png";
+            this.tpTextServices.Location = new System.Drawing.Point(4, 23);
+            this.tpTextServices.Name = "tpText";
+            this.tpTextServices.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTextServices.Size = new System.Drawing.Size(790, 442);
+            this.tpTextServices.TabIndex = 13;
+            this.tpTextServices.Text = "Text Services";
+            this.tpTextServices.UseVisualStyleBackColor = true;
             // 
             // tcTextUploaders
             // 
@@ -4107,14 +4078,6 @@ namespace ZSS
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(770, 404);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4125,14 +4088,6 @@ namespace ZSS
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(770, 404);
-            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -5419,6 +5374,52 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(770, 320);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // panelMindTouchAccounts
+            // 
+            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
+            this.panelMindTouchAccounts.Size = new System.Drawing.Size(770, 404);
+            this.panelMindTouchAccounts.TabIndex = 0;
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(770, 404);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
+            // ucUrlShorteners
+            // 
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(770, 404);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5538,7 +5539,7 @@ namespace ZSS
             this.tpEditorsImages.PerformLayout();
             this.gbImageEditorSettings.ResumeLayout(false);
             this.gbImageEditorSettings.PerformLayout();
-            this.tpImages.ResumeLayout(false);
+            this.tpImageHosting.ResumeLayout(false);
             this.tcImages.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
             this.gbImageUploaderOptions.ResumeLayout(false);
@@ -5553,7 +5554,7 @@ namespace ZSS
             this.gbRegexp.PerformLayout();
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
-            this.tpText.ResumeLayout(false);
+            this.tpTextServices.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
@@ -5850,7 +5851,7 @@ namespace ZSS
         private System.Windows.Forms.CheckBox chkEnableThumbnail;
         private System.Windows.Forms.Button btnFTPImport;
         private System.Windows.Forms.Button btnFTPExport;
-        private System.Windows.Forms.TabPage tpImages;
+        private System.Windows.Forms.TabPage tpImageHosting;
         private System.Windows.Forms.TabControl tcImages;
         private System.Windows.Forms.TabPage tpImageUploaders;
         private System.Windows.Forms.GroupBox gbImageUploaderOptions;
@@ -6005,7 +6006,7 @@ namespace ZSS
         private System.Windows.Forms.TabControl tcAccounts;
         private System.Windows.Forms.TabPage tpTinyPic;
         private System.Windows.Forms.TabPage tpImageShack;
-        private System.Windows.Forms.TabPage tpText;
+        private System.Windows.Forms.TabPage tpTextServices;
         private System.Windows.Forms.TabControl tcTextUploaders;
         private System.Windows.Forms.ComboBox cboTextDest;
         private System.Windows.Forms.Label lblTextDest;
