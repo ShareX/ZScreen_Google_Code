@@ -387,6 +387,7 @@ namespace ZSS
             ///////////////////////////////////
 
             chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
+            txtUserNameImageShack.Text = Program.conf.ImageShackUserName;
             txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             nudErrorRetry.Value = Program.conf.ErrorRetryCount;
