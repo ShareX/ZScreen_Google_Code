@@ -1,5 +1,6 @@
 Version 2.15 - 20090702
 
+2.15.01.1 Hotkeys tab was not displayed propery for DPI set at 120% [Issue 82]
 2.15.01.0 Option to publish ImageShack images to the user's public profile
 2.15.00.0 Integrated Image Editor based on Greenshot Image Editor 0.7.009 [Issue 81]
 2.14.01.0 XML Option to automatically shorten the URL after image upload is completed
