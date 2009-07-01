@@ -1,4 +1,9 @@
-Version 2.15 - 20090702
+Version 2.20 - 20090801
+
+2.17.00.0 Added support for URL Shortener: is.gd
+2.16.00.0 Added support for URL Shortener: kl.am
+
+Version 2.15 - 20090701
 
 2.15.01.1 Hotkeys tab was not displayed propery for DPI set at 120% [Issue 82]
 2.15.01.0 Option to publish ImageShack images to the user's public profile
