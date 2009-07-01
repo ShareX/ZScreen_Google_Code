@@ -52,7 +52,6 @@
 #define ExeName "ZScreen"		
 #define ExePath "..\bin\Release\ZScreen.exe"
 #define MyAppVersion GetFileVersion(ExePath)
-#define MySimpleAppVersion SimpleVersion(MyAppVersion)
 
 [CustomMessages]
 win2000sp3_title=Windows 2000 Service Pack 3

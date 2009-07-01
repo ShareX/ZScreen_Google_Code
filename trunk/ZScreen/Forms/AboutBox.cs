@@ -152,10 +152,6 @@ namespace ZSS.Forms
 
         #endregion
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void AboutBox_Paint(object sender, PaintEventArgs e)
         {
@@ -174,6 +170,11 @@ namespace ZSS.Forms
         private void lblRev_Click_1(object sender, EventArgs e)
         {
             Process.Start("http://code.google.com/p/zscreen/source/detail?r=" + this.Revision);
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
