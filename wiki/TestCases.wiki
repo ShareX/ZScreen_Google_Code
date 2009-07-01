@@ -2,6 +2,7 @@
 #labels Phase-Design
  
 = Clipboard Upload = 
+Try these from Windows Explorer using Clipboard Upload shortcut
  # Images 
  # Text 
  # URL
