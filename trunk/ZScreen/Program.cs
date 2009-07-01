@@ -78,8 +78,9 @@ namespace ZSS
         private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
-        public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen/";
-        public const string URL_WEBSITE = "http://brandonz.net/projects/zscreen/";
+        public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen";
+        public const string URL_HELP = "http://code.google.com/p/zscreen/w/list";
+        public const string URL_WEBSITE = "http://brandonz.net/projects/zscreen";
 
         public const string IMAGESHACK_KEY = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
         public const string TINYPIC_ID = "e2aabb8d555322fa";
