@@ -95,7 +95,6 @@ Compression=lzma
 ;required by products
 MinVersion=4.1,5.0
 PrivilegesRequired=admin
-;ArchitecturesAllowed=x86
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
@@ -125,6 +124,7 @@ Type: filesandordirs; Name: "{app}\ru"
 Type: filesandordirs; Name: "{app}\en"
 Type: filesandordirs; Name: "{app}\nl"
 Type: files; Name: "{app}\ImageUploader.dll"
+Type: files; Name: "{app}\ZSS.Colors.dll"
 
 [Code]
 function InitializeSetup(): Boolean;

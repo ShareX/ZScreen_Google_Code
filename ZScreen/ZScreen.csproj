@@ -396,6 +396,7 @@
     <None Include="Resources\au.png" />
     <None Include="Resources\us.png" />
     <Content Include="Resources\zss-main.ico" />
+    <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
