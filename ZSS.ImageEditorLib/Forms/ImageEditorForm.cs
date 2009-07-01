@@ -609,11 +609,15 @@ namespace Greenshot
 
         #region Image editor event handlers
 
+        private void ImageEditorForm_Shown(object sender, EventArgs e)
+        {
+            this.BringToFront();
+        }
+
         private void ImageEditorFormActivated(object sender, EventArgs e)
         {
-            bool b = false; // TODO: Greenshot
-            this.btnPaste.Enabled = b;
-            this.pasteToolStripMenuItem.Enabled = b;
+            this.btnPaste.Enabled = false;
+            this.pasteToolStripMenuItem.Enabled = false;
         }
 
         private void ImageEditorFormFormClosing(object sender, FormClosingEventArgs e)
@@ -718,5 +722,6 @@ namespace Greenshot
         }
 
         #endregion
+
     }
 }
