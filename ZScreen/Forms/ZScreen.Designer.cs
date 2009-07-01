@@ -37,12 +37,12 @@ namespace ZSS
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmFTP = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmDestinations = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHotkeys = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditors = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmImages = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmText = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmImageHosting = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmTextServices = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmTranslator = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,7 +113,7 @@ namespace ZSS
             this.cboTextDest = new System.Windows.Forms.ComboBox();
             this.lblLogo = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
-            this.tpAccounts = new System.Windows.Forms.TabPage();
+            this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
@@ -471,7 +471,7 @@ namespace ZSS
             this.gbImageSettings.SuspendLayout();
             this.gbMainOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
-            this.tpAccounts.SuspendLayout();
+            this.tpDestinations.SuspendLayout();
             this.tcAccounts.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
@@ -615,12 +615,12 @@ namespace ZSS
             this.tsmViewSettingsMenu.DoubleClickEnabled = true;
             this.tsmViewSettingsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmMain,
-            this.tsmFTP,
+            this.tsmDestinations,
             this.tsmHotkeys,
             this.tsmCapture,
             this.tsmEditors,
-            this.tsmImages,
-            this.tsmText,
+            this.tsmImageHosting,
+            this.tsmTextServices,
             this.tsmTranslator,
             this.tsmHistory,
             this.tsmOptions});
@@ -640,11 +640,11 @@ namespace ZSS
             // 
             // tsmFTP
             // 
-            this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
-            this.tsmFTP.Name = "tsmFTP";
-            this.tsmFTP.Size = new System.Drawing.Size(146, 22);
-            this.tsmFTP.Text = "Accounts...";
-            this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmDestinations.Image = global::ZSS.Properties.Resources.server_edit;
+            this.tsmDestinations.Name = "tsmFTP";
+            this.tsmDestinations.Size = new System.Drawing.Size(146, 22);
+            this.tsmDestinations.Text = "Accounts...";
+            this.tsmDestinations.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmHotkeys
             // 
@@ -672,19 +672,19 @@ namespace ZSS
             // 
             // tsmImages
             // 
-            this.tsmImages.Image = ((System.Drawing.Image)(resources.GetObject("tsmImages.Image")));
-            this.tsmImages.Name = "tsmImages";
-            this.tsmImages.Size = new System.Drawing.Size(146, 22);
-            this.tsmImages.Text = "Images...";
-            this.tsmImages.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmImageHosting.Image = ((System.Drawing.Image)(resources.GetObject("tsmImages.Image")));
+            this.tsmImageHosting.Name = "tsmImages";
+            this.tsmImageHosting.Size = new System.Drawing.Size(146, 22);
+            this.tsmImageHosting.Text = "Images...";
+            this.tsmImageHosting.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmText
             // 
-            this.tsmText.Image = global::ZSS.Properties.Resources.text_signature;
-            this.tsmText.Name = "tsmText";
-            this.tsmText.Size = new System.Drawing.Size(146, 22);
-            this.tsmText.Text = "&Text...";
-            this.tsmText.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmTextServices.Image = global::ZSS.Properties.Resources.text_signature;
+            this.tsmTextServices.Name = "tsmText";
+            this.tsmTextServices.Size = new System.Drawing.Size(146, 22);
+            this.tsmTextServices.Text = "&Text...";
+            this.tsmTextServices.Click += new System.EventHandler(this.tsm_Click);
             // 
             // tsmTranslator
             // 
@@ -1102,7 +1102,7 @@ namespace ZSS
             // tcApp
             // 
             this.tcApp.Controls.Add(this.tpMain);
-            this.tcApp.Controls.Add(this.tpAccounts);
+            this.tcApp.Controls.Add(this.tpDestinations);
             this.tcApp.Controls.Add(this.tpHotkeys);
             this.tcApp.Controls.Add(this.tpScreenshots);
             this.tcApp.Controls.Add(this.tpEditors);
@@ -1326,15 +1326,15 @@ namespace ZSS
             // 
             // tpAccounts
             // 
-            this.tpAccounts.Controls.Add(this.tcAccounts);
-            this.tpAccounts.ImageKey = "server_edit.png";
-            this.tpAccounts.Location = new System.Drawing.Point(4, 23);
-            this.tpAccounts.Name = "tpAccounts";
-            this.tpAccounts.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAccounts.Size = new System.Drawing.Size(797, 431);
-            this.tpAccounts.TabIndex = 12;
-            this.tpAccounts.Text = "Destinations";
-            this.tpAccounts.UseVisualStyleBackColor = true;
+            this.tpDestinations.Controls.Add(this.tcAccounts);
+            this.tpDestinations.ImageKey = "server_edit.png";
+            this.tpDestinations.Location = new System.Drawing.Point(4, 23);
+            this.tpDestinations.Name = "tpAccounts";
+            this.tpDestinations.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDestinations.Size = new System.Drawing.Size(797, 431);
+            this.tpDestinations.TabIndex = 12;
+            this.tpDestinations.Text = "Destinations";
+            this.tpDestinations.UseVisualStyleBackColor = true;
             // 
             // tcAccounts
             // 
@@ -5475,7 +5475,7 @@ namespace ZSS
             this.gbMainOptions.ResumeLayout(false);
             this.gbMainOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
-            this.tpAccounts.ResumeLayout(false);
+            this.tpDestinations.ResumeLayout(false);
             this.tcAccounts.ResumeLayout(false);
             this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
@@ -5642,7 +5642,7 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
         private System.Windows.Forms.ToolStripMenuItem tsmViewRemoteDirectory;
         private System.Windows.Forms.ToolStripMenuItem tsmHotkeys;
-        private System.Windows.Forms.ToolStripMenuItem tsmFTP;
+        private System.Windows.Forms.ToolStripMenuItem tsmDestinations;
         private System.Windows.Forms.ToolStripMenuItem tsmEditors;
         private System.Windows.Forms.ToolStripMenuItem tsmCapture;
         private System.Windows.Forms.ToolStripMenuItem tsmHistory;
@@ -5653,7 +5653,7 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmDestFTP;
         private System.Windows.Forms.ToolStripMenuItem tsmDestImageShack;
         private System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
-        private System.Windows.Forms.ToolStripMenuItem tsmImages;
+        private System.Windows.Forms.ToolStripMenuItem tsmImageHosting;
         private System.Windows.Forms.ToolStripMenuItem tsmDestTinyPic;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem tsmQuickOptions;
@@ -6027,7 +6027,7 @@ namespace ZSS
         private System.Windows.Forms.Button btnUploadTextClipboard;
         private System.Windows.Forms.Button btnUploadTextClipboardFile;
         private System.Windows.Forms.PropertyGrid pgEditorsImage;
-        private System.Windows.Forms.TabPage tpAccounts;
+        private System.Windows.Forms.TabPage tpDestinations;
         private System.Windows.Forms.TabControl tcAccounts;
         private System.Windows.Forms.TabPage tpTinyPic;
         private System.Windows.Forms.TabPage tpImageShack;
@@ -6036,7 +6036,7 @@ namespace ZSS
         private System.Windows.Forms.ComboBox cboTextDest;
         private System.Windows.Forms.Label lblTextDest;
         private System.Windows.Forms.GroupBox gbImageSettings;
-        private System.Windows.Forms.ToolStripMenuItem tsmText;
+        private System.Windows.Forms.ToolStripMenuItem tsmTextServices;
         private System.Windows.Forms.ToolStripMenuItem tsmTranslator;
         private System.Windows.Forms.GroupBox gpCropRegion;
         private System.Windows.Forms.TextBox txtAutoTranslate;
