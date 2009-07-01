@@ -1,0 +1,11 @@
+#summary Test-cases carried prior to releasing a new build
+#labels Phase-Design
+ 
+= Clipboard Upload = 
+ # Images 
+ # Text 
+ # URL
+
+= Editors =
+ # Add an Image Editor
+ # Remove an Image Editor
