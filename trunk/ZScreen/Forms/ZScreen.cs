@@ -4177,7 +4177,8 @@ namespace ZSS
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
-            Bitmap bmp = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+
+            Bitmap bmp = new Bitmap(Properties.Resources.main);
             Random rand = new Random();
 
             if (mLogoRandomList.Count == 0)
@@ -4210,7 +4211,6 @@ namespace ZSS
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
                     break;
-
             }
 
             mLogoRandomList.RemoveAt(0);
