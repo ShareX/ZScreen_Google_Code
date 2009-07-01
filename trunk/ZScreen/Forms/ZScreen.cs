@@ -2116,7 +2116,10 @@ namespace ZSS
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
+            if (mGuiIsReady)
+            {
+                Program.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
+            }
         }
 
         private void ScreenshotUsingDragDrop(string fp)
