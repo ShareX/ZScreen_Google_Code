@@ -2050,7 +2050,7 @@ namespace ZSS
 
                 gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
 
-                RewriteImageEditorsRightClickMenu();
+                SetActiveImageSoftware();
             }
 
         }
