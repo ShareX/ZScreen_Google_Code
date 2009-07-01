@@ -1690,29 +1690,37 @@ namespace ZSS
 
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
         {
-            BrowseImageSoftware();
+            if (lbImageSoftware.SelectedIndex > -1)
+            {
+                Software temp = BrowseImageSoftware();
+                if (temp != null)
+                {
+                    lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
+                    Program.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
+                    ShowImageEditorsSettings();
+                }
+            }
         }
 
-        private void BrowseImageSoftware()
+        /// <summary>
+        /// Browse for an Image Editor
+        /// </summary>
+        /// <returns>Image Editor</returns>
+        private Software BrowseImageSoftware()
         {
-
-            //choose path / create path popup
-            //remember old path and display it
+            Software temp = null;
 
             OpenFileDialog dlg = new OpenFileDialog();
-            Software temp = new Software();
             dlg.Filter = "Executable files (*.exe)|*.exe";
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                temp = new Software();
                 temp.Name = Path.GetFileNameWithoutExtension(dlg.FileName);
                 temp.Path = dlg.FileName;
             }
 
-            lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
-
-            ShowImageEditorsSettings();
+            return temp;
 
         }
 
@@ -1925,17 +1933,23 @@ namespace ZSS
             }
         }
 
-        private void AddImageSoftwareToList()
+        private void AddImageSoftwareToList(Software temp)
         {
-            Software temp = new Software("New", "", false);
-            Program.conf.ImageEditors.Add(temp);
-            lbImageSoftware.Items.Add(temp);
-            lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
+            if (temp != null)
+            {
+                Program.conf.ImageEditors.Add(temp);
+                lbImageSoftware.Items.Add(temp);
+                lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
+            }
         }
 
         private void btnAddImageSoftware_Click(object sender, EventArgs e)
         {
-            AddImageSoftwareToList();
+            Software temp = BrowseImageSoftware();
+            if (temp != null)
+            {
+                AddImageSoftwareToList(temp);
+            }
         }
 
         private void btnDeleteImageSoftware_Click(object sender, EventArgs e)
@@ -1950,7 +1964,7 @@ namespace ZSS
 
                 if (lbImageSoftware.Items.Count > 0)
                 {
-                    lbImageSoftware.SelectedIndex = (sel > 0) ? (sel) : 0;
+                    lbImageSoftware.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
                 }
             }
 
@@ -2040,18 +2054,20 @@ namespace ZSS
 
         private void ShowImageEditorsSettings()
         {
-
-            Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
-            if (app != null)
+            if (lbImageSoftware.SelectedItem != null)
             {
-                btnBrowseImageEditor.Enabled = !app.Protected;
-                pgEditorsImage.SelectedObject = app;
-                pgEditorsImage.Enabled = app.Name != Program.DISABLED_IMAGE_EDITOR;
-                btnRemoveImageEditor.Enabled = !app.Protected;
+                Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                if (app != null)
+                {
+                    btnBrowseImageEditor.Enabled = !app.Protected;
+                    pgEditorsImage.SelectedObject = app;
+                    pgEditorsImage.Enabled = app.Name != Program.DISABLED_IMAGE_EDITOR;
+                    btnRemoveImageEditor.Enabled = !app.Protected;
 
-                gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
+                    gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
 
-                SetActiveImageSoftware();
+                    SetActiveImageSoftware();
+                }
             }
 
         }
