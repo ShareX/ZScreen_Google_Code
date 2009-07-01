@@ -25,6 +25,10 @@ namespace ZSS.TextUploadersLib
         TINYURL,
         [Description("3.ly")]
         THREELY,
+        [Description("kl.am")]
+        KLAM,
+        [Description("is.gd")]
+        ISGD,
     }
 
     [Serializable]
