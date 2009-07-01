@@ -113,8 +113,9 @@ namespace ZSS
             AddToClipboardByDoubleClick(tpHistory);
 
             // Context Menu
-            tsmImages.Text = tpImageHosting.Text;
-            tsmText.Text = tpTextServices.Text;
+            tsmDestinations.Text = tpDestinations.Text;
+            tsmImageHosting.Text = tpImageHosting.Text;
+            tsmTextServices.Text = tpTextServices.Text;
 
             // Window Behaviour
             if (Program.conf.ActionsToolbarMode)
@@ -1792,11 +1793,11 @@ namespace ZSS
                 sel = tpScreenshots;
             else if (tsm == tsmEditors)
                 sel = tpEditors;
-            else if (tsm == tsmFTP)
-                sel = tpAccounts;
-            else if (tsm == tsmImages)
+            else if (tsm == tsmDestinations)
+                sel = tpDestinations;
+            else if (tsm == tsmImageHosting)
                 sel = tpImageHosting;
-            else if (tsm == tsmText)
+            else if (tsm == tsmTextServices)
                 sel = tpTextServices;
             else if (tsm == tsmHistory)
                 sel = tpHistory;
