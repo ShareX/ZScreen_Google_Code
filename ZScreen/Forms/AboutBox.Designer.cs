@@ -30,19 +30,18 @@
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.okButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.labelVersion = new System.Windows.Forms.Label();
             this.pbFlagTR = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblBerk = new System.Windows.Forms.Label();
             this.pbFlagAU = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblMike = new System.Windows.Forms.Label();
             this.pbFlagUS = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblBrandon = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblDevelopers = new System.Windows.Forms.Label();
             this.lblCompanyName = new System.Windows.Forms.Label();
             this.lblRev = new System.Windows.Forms.Label();
+            this.btnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagTR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagAU)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagUS)).BeginInit();
@@ -88,27 +87,6 @@
             this.textBoxDescription.TabStop = false;
             this.textBoxDescription.Text = "Description";
             // 
-            // okButton
-            // 
-            this.okButton.AutoSize = true;
-            this.okButton.Location = new System.Drawing.Point(408, 282);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(89, 24);
-            this.okButton.TabIndex = 0;
-            this.okButton.Text = "&OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.Location = new System.Drawing.Point(68, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "&OK";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
@@ -133,16 +111,16 @@
             this.pbFlagTR.TabIndex = 85;
             this.pbFlagTR.TabStop = false;
             // 
-            // label1
+            // lblBerk
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(53, 248);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 13);
-            this.label1.TabIndex = 86;
-            this.label1.Text = "Jaex ( Berk )";
+            this.lblBerk.AutoSize = true;
+            this.lblBerk.BackColor = System.Drawing.Color.Transparent;
+            this.lblBerk.ForeColor = System.Drawing.Color.White;
+            this.lblBerk.Location = new System.Drawing.Point(53, 248);
+            this.lblBerk.Name = "lblBerk";
+            this.lblBerk.Size = new System.Drawing.Size(66, 13);
+            this.lblBerk.TabIndex = 86;
+            this.lblBerk.Text = "Jaex ( Berk )";
             // 
             // pbFlagAU
             // 
@@ -155,16 +133,16 @@
             this.pbFlagAU.TabIndex = 87;
             this.pbFlagAU.TabStop = false;
             // 
-            // label2
+            // lblMike
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(53, 224);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 13);
-            this.label2.TabIndex = 88;
-            this.label2.Text = "McoreD ( Mike Delpach )";
+            this.lblMike.AutoSize = true;
+            this.lblMike.BackColor = System.Drawing.Color.Transparent;
+            this.lblMike.ForeColor = System.Drawing.Color.White;
+            this.lblMike.Location = new System.Drawing.Point(53, 224);
+            this.lblMike.Name = "lblMike";
+            this.lblMike.Size = new System.Drawing.Size(126, 13);
+            this.lblMike.TabIndex = 88;
+            this.lblMike.Text = "McoreD ( Mike Delpach )";
             // 
             // pbFlagUS
             // 
@@ -177,16 +155,16 @@
             this.pbFlagUS.TabIndex = 89;
             this.pbFlagUS.TabStop = false;
             // 
-            // label3
+            // lblBrandon
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(53, 200);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(144, 13);
-            this.label3.TabIndex = 90;
-            this.label3.Text = "inf1ni ( Brandon Zimmerman )";
+            this.lblBrandon.AutoSize = true;
+            this.lblBrandon.BackColor = System.Drawing.Color.Transparent;
+            this.lblBrandon.ForeColor = System.Drawing.Color.White;
+            this.lblBrandon.Location = new System.Drawing.Point(53, 200);
+            this.lblBrandon.Name = "lblBrandon";
+            this.lblBrandon.Size = new System.Drawing.Size(144, 13);
+            this.lblBrandon.TabIndex = 90;
+            this.lblBrandon.Text = "inf1ni ( Brandon Zimmerman )";
             // 
             // pbLogo
             // 
@@ -238,26 +216,37 @@
             this.lblRev.Text = "Rev.";
             this.lblRev.Click += new System.EventHandler(this.lblRev_Click_1);
             // 
+            // btnOK
+            // 
+            this.btnOK.BackColor = System.Drawing.SystemColors.Control;
+            this.btnOK.Location = new System.Drawing.Point(424, 280);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 95;
+            this.btnOK.Text = "&OK";
+            this.btnOK.UseVisualStyleBackColor = false;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(512, 320);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblRev);
             this.Controls.Add(this.lblCompanyName);
             this.Controls.Add(this.lblDevelopers);
             this.Controls.Add(this.pbLogo);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblBrandon);
             this.Controls.Add(this.pbFlagUS);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblMike);
             this.Controls.Add(this.pbFlagAU);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblBerk);
             this.Controls.Add(this.pbFlagTR);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.labelProductName);
             this.Controls.Add(this.labelCopyright);
-            this.Controls.Add(this.okButton);
             this.Controls.Add(this.textBoxDescription);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -280,19 +269,18 @@
 
         private System.Windows.Forms.Label labelProductName;
         private System.Windows.Forms.Label labelCopyright;
-        private System.Windows.Forms.TextBox textBoxDescription;
-        private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBoxDescription;                
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.PictureBox pbFlagTR;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblBerk;
         private System.Windows.Forms.PictureBox pbFlagAU;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblMike;
         private System.Windows.Forms.PictureBox pbFlagUS;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblBrandon;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Label lblDevelopers;
         private System.Windows.Forms.Label lblCompanyName;
         private System.Windows.Forms.Label lblRev;
+        private System.Windows.Forms.Button btnOK;
     }
 }
