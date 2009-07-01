@@ -30,9 +30,9 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +99,6 @@ namespace ZSS
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -117,12 +116,10 @@ namespace ZSS
             this.tpAccounts = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
-            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -143,24 +140,29 @@ namespace ZSS
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
-            this.chHotkeys_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chHotkeys_Keys = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tpScreenshots = new System.Windows.Forms.TabPage();
             this.tcScreenshots = new System.Windows.Forms.TabControl();
             this.tpCropShot = new System.Windows.Forms.TabPage();
+            this.gbDynamicRegionBorderColorSettings = new System.Windows.Forms.GroupBox();
+            this.nudCropRegionStep = new System.Windows.Forms.NumericUpDown();
+            this.nudCropHueRange = new System.Windows.Forms.NumericUpDown();
+            this.cbCropDynamicBorderColor = new System.Windows.Forms.CheckBox();
+            this.lblCropRegionInterval = new System.Windows.Forms.Label();
+            this.lblCropHueRange = new System.Windows.Forms.Label();
+            this.lblCropRegionStep = new System.Windows.Forms.Label();
+            this.nudCropRegionInterval = new System.Windows.Forms.NumericUpDown();
+            this.gbDynamicCrosshair = new System.Windows.Forms.GroupBox();
+            this.cbCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
+            this.lblCropCrosshairStep = new System.Windows.Forms.Label();
+            this.lblCropCrosshairInterval = new System.Windows.Forms.Label();
+            this.nudCropCrosshairInterval = new System.Windows.Forms.NumericUpDown();
+            this.nudCropCrosshairStep = new System.Windows.Forms.NumericUpDown();
             this.gpCropRegion = new System.Windows.Forms.GroupBox();
             this.lblCropRegionStyle = new System.Windows.Forms.Label();
             this.cbRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
             this.cbCropStyle = new System.Windows.Forms.ComboBox();
             this.cbRegionRectangleInfo = new System.Windows.Forms.CheckBox();
             this.gbCropRegionSettings = new System.Windows.Forms.GroupBox();
-            this.nudCropHueRange = new System.Windows.Forms.NumericUpDown();
-            this.lblCropHueRange = new System.Windows.Forms.Label();
-            this.nudCropRegionStep = new System.Windows.Forms.NumericUpDown();
-            this.nudCropRegionInterval = new System.Windows.Forms.NumericUpDown();
-            this.lblCropRegionStep = new System.Windows.Forms.Label();
-            this.lblCropRegionInterval = new System.Windows.Forms.Label();
-            this.cbCropDynamicBorderColor = new System.Windows.Forms.CheckBox();
             this.lblCropBorderSize = new System.Windows.Forms.Label();
             this.cbShowCropRuler = new System.Windows.Forms.CheckBox();
             this.cbCropShowGrids = new System.Windows.Forms.CheckBox();
@@ -170,14 +172,9 @@ namespace ZSS
             this.gbCrosshairSettings = new System.Windows.Forms.GroupBox();
             this.cbCropShowMagnifyingGlass = new System.Windows.Forms.CheckBox();
             this.cbCropShowBigCross = new System.Windows.Forms.CheckBox();
-            this.cbCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
-            this.nudCropCrosshairStep = new System.Windows.Forms.NumericUpDown();
             this.pbCropCrosshairColor = new System.Windows.Forms.PictureBox();
-            this.nudCropCrosshairInterval = new System.Windows.Forms.NumericUpDown();
             this.lblCropCrosshairColor = new System.Windows.Forms.Label();
-            this.lblCropCrosshairStep = new System.Windows.Forms.Label();
             this.nudCrosshairLineCount = new System.Windows.Forms.NumericUpDown();
-            this.lblCropCrosshairInterval = new System.Windows.Forms.Label();
             this.nudCrosshairLineSize = new System.Windows.Forms.NumericUpDown();
             this.lblCrosshairLineSize = new System.Windows.Forms.Label();
             this.lblCrosshairLineCount = new System.Windows.Forms.Label();
@@ -351,9 +348,7 @@ namespace ZSS
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -462,8 +457,13 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.gbDynamicCrosshair = new System.Windows.Forms.GroupBox();
-            this.gbDynamicRegionBorderColorSettings = new System.Windows.Forms.GroupBox();
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
+            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
+            this.chHotkeys_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chHotkeys_Keys = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -485,17 +485,19 @@ namespace ZSS
             this.tpScreenshots.SuspendLayout();
             this.tcScreenshots.SuspendLayout();
             this.tpCropShot.SuspendLayout();
+            this.gbDynamicRegionBorderColorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).BeginInit();
+            this.gbDynamicCrosshair.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).BeginInit();
             this.gpCropRegion.SuspendLayout();
             this.gbCropRegionSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropBorderColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).BeginInit();
             this.gbCrosshairSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).BeginInit();
             this.gbGridMode.SuspendLayout();
@@ -579,8 +581,6 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.gbDynamicCrosshair.SuspendLayout();
-            this.gbDynamicRegionBorderColorSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -608,7 +608,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(190, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
             // tsmViewSettingsMenu
             // 
@@ -626,7 +626,7 @@ namespace ZSS
             this.tsmOptions});
             this.tsmViewSettingsMenu.Image = global::ZSS.Properties.Resources.wrench;
             this.tsmViewSettingsMenu.Name = "tsmViewSettingsMenu";
-            this.tsmViewSettingsMenu.Size = new System.Drawing.Size(189, 22);
+            this.tsmViewSettingsMenu.Size = new System.Drawing.Size(205, 22);
             this.tsmViewSettingsMenu.Text = "View Settings Menu";
             this.tsmViewSettingsMenu.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
@@ -634,7 +634,7 @@ namespace ZSS
             // 
             this.tsmMain.Image = global::ZSS.Properties.Resources.application_form;
             this.tsmMain.Name = "tsmMain";
-            this.tsmMain.Size = new System.Drawing.Size(145, 22);
+            this.tsmMain.Size = new System.Drawing.Size(146, 22);
             this.tsmMain.Text = "Main...";
             this.tsmMain.Click += new System.EventHandler(this.tsmMain_Click);
             // 
@@ -642,7 +642,7 @@ namespace ZSS
             // 
             this.tsmFTP.Image = global::ZSS.Properties.Resources.server_edit;
             this.tsmFTP.Name = "tsmFTP";
-            this.tsmFTP.Size = new System.Drawing.Size(145, 22);
+            this.tsmFTP.Size = new System.Drawing.Size(146, 22);
             this.tsmFTP.Text = "Accounts...";
             this.tsmFTP.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -650,7 +650,7 @@ namespace ZSS
             // 
             this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
             this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(145, 22);
+            this.tsmHotkeys.Size = new System.Drawing.Size(146, 22);
             this.tsmHotkeys.Text = "Hotkeys...";
             this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -658,7 +658,7 @@ namespace ZSS
             // 
             this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
             this.tsmCapture.Name = "tsmCapture";
-            this.tsmCapture.Size = new System.Drawing.Size(145, 22);
+            this.tsmCapture.Size = new System.Drawing.Size(146, 22);
             this.tsmCapture.Text = "Screenshots...";
             this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -666,7 +666,7 @@ namespace ZSS
             // 
             this.tsmEditors.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmEditors.Name = "tsmEditors";
-            this.tsmEditors.Size = new System.Drawing.Size(145, 22);
+            this.tsmEditors.Size = new System.Drawing.Size(146, 22);
             this.tsmEditors.Text = "Editors...";
             this.tsmEditors.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -674,7 +674,7 @@ namespace ZSS
             // 
             this.tsmImages.Image = ((System.Drawing.Image)(resources.GetObject("tsmImages.Image")));
             this.tsmImages.Name = "tsmImages";
-            this.tsmImages.Size = new System.Drawing.Size(145, 22);
+            this.tsmImages.Size = new System.Drawing.Size(146, 22);
             this.tsmImages.Text = "Images...";
             this.tsmImages.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -682,7 +682,7 @@ namespace ZSS
             // 
             this.tsmText.Image = global::ZSS.Properties.Resources.text_signature;
             this.tsmText.Name = "tsmText";
-            this.tsmText.Size = new System.Drawing.Size(145, 22);
+            this.tsmText.Size = new System.Drawing.Size(146, 22);
             this.tsmText.Text = "&Text...";
             this.tsmText.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -690,7 +690,7 @@ namespace ZSS
             // 
             this.tsmTranslator.Image = global::ZSS.Properties.Resources.comments;
             this.tsmTranslator.Name = "tsmTranslator";
-            this.tsmTranslator.Size = new System.Drawing.Size(145, 22);
+            this.tsmTranslator.Size = new System.Drawing.Size(146, 22);
             this.tsmTranslator.Text = "Translator...";
             this.tsmTranslator.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -698,7 +698,7 @@ namespace ZSS
             // 
             this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
             this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(145, 22);
+            this.tsmHistory.Size = new System.Drawing.Size(146, 22);
             this.tsmHistory.Text = "History...";
             this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
             // 
@@ -706,14 +706,14 @@ namespace ZSS
             // 
             this.tsmOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(145, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(146, 22);
             this.tsmOptions.Text = "Options...";
             this.tsmOptions.Click += new System.EventHandler(this.tsm_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmSendImageTo
             // 
@@ -726,48 +726,48 @@ namespace ZSS
             this.tsmDestCustomHTTP});
             this.tsmSendImageTo.Image = global::ZSS.Properties.Resources.picture_go;
             this.tsmSendImageTo.Name = "tsmSendImageTo";
-            this.tsmSendImageTo.Size = new System.Drawing.Size(189, 22);
+            this.tsmSendImageTo.Size = new System.Drawing.Size(205, 22);
             this.tsmSendImageTo.Text = "Send Image To";
             // 
             // tsmDestClipboard
             // 
             this.tsmDestClipboard.Name = "tsmDestClipboard";
-            this.tsmDestClipboard.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestClipboard.Size = new System.Drawing.Size(167, 22);
             this.tsmDestClipboard.Text = "Clipboard";
             this.tsmDestClipboard.Click += new System.EventHandler(this.tsmDestClipboard_Click);
             // 
             // tsmDestFile
             // 
             this.tsmDestFile.Name = "tsmDestFile";
-            this.tsmDestFile.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestFile.Size = new System.Drawing.Size(167, 22);
             this.tsmDestFile.Text = "File";
             this.tsmDestFile.Click += new System.EventHandler(this.tsmDestFile_Click);
             // 
             // tsmDestFTP
             // 
             this.tsmDestFTP.Name = "tsmDestFTP";
-            this.tsmDestFTP.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestFTP.Size = new System.Drawing.Size(167, 22);
             this.tsmDestFTP.Text = "FTP";
             this.tsmDestFTP.Click += new System.EventHandler(this.tsmDestFTP_Click);
             // 
             // tsmDestImageShack
             // 
             this.tsmDestImageShack.Name = "tsmDestImageShack";
-            this.tsmDestImageShack.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestImageShack.Size = new System.Drawing.Size(167, 22);
             this.tsmDestImageShack.Text = "ImageShack";
             this.tsmDestImageShack.Click += new System.EventHandler(this.tsmDestImageShack_Click);
             // 
             // tsmDestTinyPic
             // 
             this.tsmDestTinyPic.Name = "tsmDestTinyPic";
-            this.tsmDestTinyPic.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestTinyPic.Size = new System.Drawing.Size(167, 22);
             this.tsmDestTinyPic.Text = "TinyPic";
             this.tsmDestTinyPic.Click += new System.EventHandler(this.tsmDestTinyPic_Click);
             // 
             // tsmDestCustomHTTP
             // 
             this.tsmDestCustomHTTP.Name = "tsmDestCustomHTTP";
-            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(156, 22);
+            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(167, 22);
             this.tsmDestCustomHTTP.Text = "&Custom Uploader";
             this.tsmDestCustomHTTP.Click += new System.EventHandler(this.tsmDestCustomHTTP_Click);
             // 
@@ -775,26 +775,26 @@ namespace ZSS
             // 
             this.tsmEditinImageSoftware.Image = global::ZSS.Properties.Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(189, 22);
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
             this.tsmEditinImageSoftware.Text = "Edit in Image Software";
             // 
             // tsmCopytoClipboardMode
             // 
             this.tsmCopytoClipboardMode.Image = global::ZSS.Properties.Resources.page_copy;
             this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
-            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(189, 22);
+            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(205, 22);
             this.tsmCopytoClipboardMode.Text = "Copy to Clipboard Mode";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmViewRemoteDirectory
             // 
             this.tsmViewRemoteDirectory.Image = global::ZSS.Properties.Resources.server;
             this.tsmViewRemoteDirectory.Name = "tsmViewRemoteDirectory";
-            this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(189, 22);
+            this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewRemoteDirectory.Text = "&FTP Viewer...";
             this.tsmViewRemoteDirectory.Click += new System.EventHandler(this.tsmViewRemote_Click);
             // 
@@ -802,14 +802,14 @@ namespace ZSS
             // 
             this.tsmViewLocalDirectory.Image = global::ZSS.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
-            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(189, 22);
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmActions
             // 
@@ -826,14 +826,14 @@ namespace ZSS
             this.tsmScreenColorPicker});
             this.tsmActions.Image = global::ZSS.Properties.Resources.lightning;
             this.tsmActions.Name = "tsmActions";
-            this.tsmActions.Size = new System.Drawing.Size(189, 22);
+            this.tsmActions.Size = new System.Drawing.Size(205, 22);
             this.tsmActions.Text = "Quick &Actions";
             // 
             // tsmEntireScreen
             // 
             this.tsmEntireScreen.Image = global::ZSS.Properties.Resources.monitor;
             this.tsmEntireScreen.Name = "tsmEntireScreen";
-            this.tsmEntireScreen.Size = new System.Drawing.Size(186, 22);
+            this.tsmEntireScreen.Size = new System.Drawing.Size(197, 22);
             this.tsmEntireScreen.Text = "Entire Screen";
             this.tsmEntireScreen.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
             // 
@@ -841,7 +841,7 @@ namespace ZSS
             // 
             this.tsmSelectedWindow.Image = global::ZSS.Properties.Resources.application_double;
             this.tsmSelectedWindow.Name = "tsmSelectedWindow";
-            this.tsmSelectedWindow.Size = new System.Drawing.Size(186, 22);
+            this.tsmSelectedWindow.Size = new System.Drawing.Size(197, 22);
             this.tsmSelectedWindow.Text = "Selected Window...";
             this.tsmSelectedWindow.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
             // 
@@ -849,7 +849,7 @@ namespace ZSS
             // 
             this.tsmCropShot.Image = global::ZSS.Properties.Resources.shape_square;
             this.tsmCropShot.Name = "tsmCropShot";
-            this.tsmCropShot.Size = new System.Drawing.Size(186, 22);
+            this.tsmCropShot.Size = new System.Drawing.Size(197, 22);
             this.tsmCropShot.Text = "Crop Shot...";
             this.tsmCropShot.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
             // 
@@ -857,7 +857,7 @@ namespace ZSS
             // 
             this.tsmLastCropShot.Image = global::ZSS.Properties.Resources.shape_square_go;
             this.tsmLastCropShot.Name = "tsmLastCropShot";
-            this.tsmLastCropShot.Size = new System.Drawing.Size(186, 22);
+            this.tsmLastCropShot.Size = new System.Drawing.Size(197, 22);
             this.tsmLastCropShot.Text = "Last Crop Shot";
             this.tsmLastCropShot.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
             // 
@@ -865,20 +865,20 @@ namespace ZSS
             // 
             this.autoScreenshotsToolStripMenuItem.Image = global::ZSS.Properties.Resources.images_stack;
             this.autoScreenshotsToolStripMenuItem.Name = "autoScreenshotsToolStripMenuItem";
-            this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.autoScreenshotsToolStripMenuItem.Text = "Auto Capture...";
             this.autoScreenshotsToolStripMenuItem.Click += new System.EventHandler(this.autoScreenshotsToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(194, 6);
             // 
             // tsmClipboardUpload
             // 
             this.tsmClipboardUpload.Image = global::ZSS.Properties.Resources.images;
             this.tsmClipboardUpload.Name = "tsmClipboardUpload";
-            this.tsmClipboardUpload.Size = new System.Drawing.Size(186, 22);
+            this.tsmClipboardUpload.Size = new System.Drawing.Size(197, 22);
             this.tsmClipboardUpload.Text = "Clipboard Upload";
             this.tsmClipboardUpload.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
             // 
@@ -886,7 +886,7 @@ namespace ZSS
             // 
             this.tsmDragDropWindow.Image = global::ZSS.Properties.Resources.shape_move_backwards;
             this.tsmDragDropWindow.Name = "tsmDragDropWindow";
-            this.tsmDragDropWindow.Size = new System.Drawing.Size(186, 22);
+            this.tsmDragDropWindow.Size = new System.Drawing.Size(197, 22);
             this.tsmDragDropWindow.Text = "Drag && Drop Window...";
             this.tsmDragDropWindow.Click += new System.EventHandler(this.tsmDropWindow_Click);
             // 
@@ -894,7 +894,7 @@ namespace ZSS
             // 
             this.tsmLanguageTranslator.Image = global::ZSS.Properties.Resources.comments;
             this.tsmLanguageTranslator.Name = "tsmLanguageTranslator";
-            this.tsmLanguageTranslator.Size = new System.Drawing.Size(186, 22);
+            this.tsmLanguageTranslator.Size = new System.Drawing.Size(197, 22);
             this.tsmLanguageTranslator.Text = "Language Translator";
             this.tsmLanguageTranslator.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
             // 
@@ -902,7 +902,7 @@ namespace ZSS
             // 
             this.tsmScreenColorPicker.Image = global::ZSS.Properties.Resources.color_wheel;
             this.tsmScreenColorPicker.Name = "tsmScreenColorPicker";
-            this.tsmScreenColorPicker.Size = new System.Drawing.Size(186, 22);
+            this.tsmScreenColorPicker.Size = new System.Drawing.Size(197, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker...";
             this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
@@ -910,7 +910,7 @@ namespace ZSS
             // 
             this.tsmQuickActions.Image = global::ZSS.Properties.Resources.application_lightning;
             this.tsmQuickActions.Name = "tsmQuickActions";
-            this.tsmQuickActions.Size = new System.Drawing.Size(189, 22);
+            this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickActions.Text = "Actions Toolbar...";
             this.tsmQuickActions.Click += new System.EventHandler(this.tsmQuickActions_Click);
             // 
@@ -918,14 +918,14 @@ namespace ZSS
             // 
             this.tsmQuickOptions.Image = global::ZSS.Properties.Resources.application_edit;
             this.tsmQuickOptions.Name = "tsmQuickOptions";
-            this.tsmQuickOptions.Size = new System.Drawing.Size(189, 22);
+            this.tsmQuickOptions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickOptions.Text = "&Quick Options...";
             this.tsmQuickOptions.Click += new System.EventHandler(this.tsmQuickOptions_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmHelp
             // 
@@ -935,14 +935,14 @@ namespace ZSS
             this.tsmAbout});
             this.tsmHelp.Image = global::ZSS.Properties.Resources.help;
             this.tsmHelp.Name = "tsmHelp";
-            this.tsmHelp.Size = new System.Drawing.Size(189, 22);
+            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
             // 
             this.tsmLicense.Image = global::ZSS.Properties.Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
-            this.tsmLicense.Size = new System.Drawing.Size(158, 22);
+            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
             this.tsmLicense.Text = "License...";
             this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -950,7 +950,7 @@ namespace ZSS
             // 
             this.tsmVersionHistory.Image = global::ZSS.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(158, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -958,7 +958,7 @@ namespace ZSS
             // 
             this.tsmAbout.Image = global::ZSS.Properties.Resources.information;
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(158, 22);
+            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
@@ -966,7 +966,7 @@ namespace ZSS
             // 
             this.tsmExitZScreen.Image = global::ZSS.Properties.Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
-            this.tsmExitZScreen.Size = new System.Drawing.Size(189, 22);
+            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
@@ -983,37 +983,37 @@ namespace ZSS
             this.cmsRetryUpload,
             this.deleteToolStripMenuItem});
             this.cmsHistory.Name = "cmsHistory";
-            this.cmsHistory.Size = new System.Drawing.Size(157, 170);
+            this.cmsHistory.Size = new System.Drawing.Size(165, 170);
             // 
             // tsmCopyCbHistory
             // 
             this.tsmCopyCbHistory.Name = "tsmCopyCbHistory";
-            this.tsmCopyCbHistory.Size = new System.Drawing.Size(156, 22);
+            this.tsmCopyCbHistory.Size = new System.Drawing.Size(164, 22);
             this.tsmCopyCbHistory.Text = "&Copy Link";
             // 
             // copyImageToolStripMenuItem
             // 
             this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.copyImageToolStripMenuItem.Text = "Copy &Image";
             this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.copyImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
             // 
             // openLocalFileToolStripMenuItem
             // 
             this.openLocalFileToolStripMenuItem.Name = "openLocalFileToolStripMenuItem";
-            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.openLocalFileToolStripMenuItem.Text = "Open Local File";
             this.openLocalFileToolStripMenuItem.Click += new System.EventHandler(this.openLocalFileToolStripMenuItem_Click);
             // 
             // browseURLToolStripMenuItem
             // 
             this.browseURLToolStripMenuItem.Name = "browseURLToolStripMenuItem";
-            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.browseURLToolStripMenuItem.Text = "Browse URL";
             this.browseURLToolStripMenuItem.Click += new System.EventHandler(this.browseURLToolStripMenuItem_Click);
             // 
@@ -1024,46 +1024,46 @@ namespace ZSS
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem,
             this.copySourceToClipboardStringToolStripMenuItem});
             this.openSourceToolStripMenuItem.Name = "openSourceToolStripMenuItem";
-            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.openSourceToolStripMenuItem.Text = "Open Source";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.openToolStripMenuItem.Text = "Open Source in Text Editor";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openSourceInDefaultWebBrowserHTMLToolStripMenuItem
             // 
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Name = "openSourceInDefaultWebBrowserHTMLToolStripMenuItem";
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Text = "Open Source in Browser";
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Click += new System.EventHandler(this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem_Click);
             // 
             // copySourceToClipboardStringToolStripMenuItem
             // 
             this.copySourceToClipboardStringToolStripMenuItem.Name = "copySourceToClipboardStringToolStripMenuItem";
-            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.copySourceToClipboardStringToolStripMenuItem.Text = "Copy Source to Clipboard";
             this.copySourceToClipboardStringToolStripMenuItem.Click += new System.EventHandler(this.copySourceToClipboardStringToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(161, 6);
             // 
             // cmsRetryUpload
             // 
             this.cmsRetryUpload.Name = "cmsRetryUpload";
-            this.cmsRetryUpload.Size = new System.Drawing.Size(156, 22);
+            this.cmsRetryUpload.Size = new System.Drawing.Size(164, 22);
             this.cmsRetryUpload.Text = "Retry Upload";
             this.cmsRetryUpload.Click += new System.EventHandler(this.cmsRetryUpload_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.deleteToolStripMenuItem.Text = "&Delete Local Files";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -1116,7 +1116,7 @@ namespace ZSS
             this.tcApp.Location = new System.Drawing.Point(2, 2);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(798, 469);
+            this.tcApp.Size = new System.Drawing.Size(805, 458);
             this.tcApp.TabIndex = 74;
             // 
             // tpMain
@@ -1133,7 +1133,7 @@ namespace ZSS
             this.tpMain.Location = new System.Drawing.Point(4, 23);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(790, 442);
+            this.tpMain.Size = new System.Drawing.Size(797, 431);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
@@ -1161,19 +1161,6 @@ namespace ZSS
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Delay before a screenshot is captured");
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -1344,9 +1331,9 @@ namespace ZSS
             this.tpAccounts.Location = new System.Drawing.Point(4, 23);
             this.tpAccounts.Name = "tpAccounts";
             this.tpAccounts.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAccounts.Size = new System.Drawing.Size(790, 442);
+            this.tpAccounts.Size = new System.Drawing.Size(797, 431);
             this.tpAccounts.TabIndex = 12;
-            this.tpAccounts.Text = "Accounts";
+            this.tpAccounts.Text = "Destinations";
             this.tpAccounts.UseVisualStyleBackColor = true;
             // 
             // tcAccounts
@@ -1359,7 +1346,7 @@ namespace ZSS
             this.tcAccounts.Location = new System.Drawing.Point(3, 3);
             this.tcAccounts.Name = "tcAccounts";
             this.tcAccounts.SelectedIndex = 0;
-            this.tcAccounts.Size = new System.Drawing.Size(784, 436);
+            this.tcAccounts.Size = new System.Drawing.Size(791, 425);
             this.tcAccounts.TabIndex = 0;
             // 
             // tpFTP
@@ -1369,20 +1356,10 @@ namespace ZSS
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(776, 410);
+            this.tpFTP.Size = new System.Drawing.Size(783, 399);
             this.tpFTP.TabIndex = 5;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
-            // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(770, 320);
-            this.ucFTPAccounts.TabIndex = 0;
             // 
             // gbFTPSettings
             // 
@@ -1390,9 +1367,9 @@ namespace ZSS
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbFTPSettings.Controls.Add(this.cbAutoSwitchFTP);
             this.gbFTPSettings.Controls.Add(this.chkEnableThumbnail);
-            this.gbFTPSettings.Location = new System.Drawing.Point(16, 323);
+            this.gbFTPSettings.Location = new System.Drawing.Point(16, 312);
             this.gbFTPSettings.Name = "gbFTPSettings";
-            this.gbFTPSettings.Size = new System.Drawing.Size(744, 72);
+            this.gbFTPSettings.Size = new System.Drawing.Size(751, 72);
             this.gbFTPSettings.TabIndex = 115;
             this.gbFTPSettings.TabStop = false;
             this.gbFTPSettings.Text = "FTP Settings";
@@ -1427,18 +1404,10 @@ namespace ZSS
             this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
             this.tpMindTouch.Name = "tpMindTouch";
             this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMindTouch.Size = new System.Drawing.Size(776, 410);
+            this.tpMindTouch.Size = new System.Drawing.Size(783, 399);
             this.tpMindTouch.TabIndex = 4;
             this.tpMindTouch.Text = "MindTouch";
             this.tpMindTouch.UseVisualStyleBackColor = true;
-            // 
-            // panelMindTouchAccounts
-            // 
-            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
-            this.panelMindTouchAccounts.Size = new System.Drawing.Size(770, 404);
-            this.panelMindTouchAccounts.TabIndex = 0;
             // 
             // tpTinyPic
             // 
@@ -1447,7 +1416,7 @@ namespace ZSS
             this.tpTinyPic.Location = new System.Drawing.Point(4, 22);
             this.tpTinyPic.Name = "tpTinyPic";
             this.tpTinyPic.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTinyPic.Size = new System.Drawing.Size(776, 410);
+            this.tpTinyPic.Size = new System.Drawing.Size(783, 399);
             this.tpTinyPic.TabIndex = 0;
             this.tpTinyPic.Text = "TinyPic";
             this.tpTinyPic.UseVisualStyleBackColor = true;
@@ -1462,7 +1431,7 @@ namespace ZSS
             this.gbTinyPic.Controls.Add(this.txtTinyPicShuk);
             this.gbTinyPic.Location = new System.Drawing.Point(8, 8);
             this.gbTinyPic.Name = "gbTinyPic";
-            this.gbTinyPic.Size = new System.Drawing.Size(740, 64);
+            this.gbTinyPic.Size = new System.Drawing.Size(747, 64);
             this.gbTinyPic.TabIndex = 4;
             this.gbTinyPic.TabStop = false;
             this.gbTinyPic.Text = "Account";
@@ -1470,7 +1439,7 @@ namespace ZSS
             // btnGalleryTinyPic
             // 
             this.btnGalleryTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGalleryTinyPic.Location = new System.Drawing.Point(514, 24);
+            this.btnGalleryTinyPic.Location = new System.Drawing.Point(521, 24);
             this.btnGalleryTinyPic.Name = "btnGalleryTinyPic";
             this.btnGalleryTinyPic.Size = new System.Drawing.Size(75, 23);
             this.btnGalleryTinyPic.TabIndex = 8;
@@ -1481,7 +1450,7 @@ namespace ZSS
             // btnRegCodeTinyPic
             // 
             this.btnRegCodeTinyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegCodeTinyPic.Location = new System.Drawing.Point(434, 24);
+            this.btnRegCodeTinyPic.Location = new System.Drawing.Point(441, 24);
             this.btnRegCodeTinyPic.Name = "btnRegCodeTinyPic";
             this.btnRegCodeTinyPic.Size = new System.Drawing.Size(75, 23);
             this.btnRegCodeTinyPic.TabIndex = 5;
@@ -1504,7 +1473,7 @@ namespace ZSS
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicShuk.Location = new System.Drawing.Point(112, 24);
             this.txtTinyPicShuk.Name = "txtTinyPicShuk";
-            this.txtTinyPicShuk.Size = new System.Drawing.Size(314, 20);
+            this.txtTinyPicShuk.Size = new System.Drawing.Size(321, 20);
             this.txtTinyPicShuk.TabIndex = 3;
             this.txtTinyPicShuk.TextChanged += new System.EventHandler(this.txtTinyPicShuk_TextChanged);
             // 
@@ -1528,7 +1497,7 @@ namespace ZSS
             this.tpImageShack.Location = new System.Drawing.Point(4, 22);
             this.tpImageShack.Name = "tpImageShack";
             this.tpImageShack.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageShack.Size = new System.Drawing.Size(776, 410);
+            this.tpImageShack.Size = new System.Drawing.Size(783, 399);
             this.tpImageShack.TabIndex = 1;
             this.tpImageShack.Text = "ImageShack";
             this.tpImageShack.UseVisualStyleBackColor = true;
@@ -1558,7 +1527,7 @@ namespace ZSS
             this.gbImageShack.Controls.Add(this.txtImageShackRegistrationCode);
             this.gbImageShack.Location = new System.Drawing.Point(8, 8);
             this.gbImageShack.Name = "gbImageShack";
-            this.gbImageShack.Size = new System.Drawing.Size(740, 96);
+            this.gbImageShack.Size = new System.Drawing.Size(747, 96);
             this.gbImageShack.TabIndex = 0;
             this.gbImageShack.TabStop = false;
             this.gbImageShack.Text = "Account";
@@ -1566,7 +1535,7 @@ namespace ZSS
             // btnImageShackProfile
             // 
             this.btnImageShackProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackProfile.Location = new System.Drawing.Point(432, 56);
+            this.btnImageShackProfile.Location = new System.Drawing.Point(439, 56);
             this.btnImageShackProfile.Name = "btnImageShackProfile";
             this.btnImageShackProfile.Size = new System.Drawing.Size(160, 23);
             this.btnImageShackProfile.TabIndex = 6;
@@ -1594,7 +1563,7 @@ namespace ZSS
             // btnGalleryImageShack
             // 
             this.btnGalleryImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGalleryImageShack.Location = new System.Drawing.Point(514, 24);
+            this.btnGalleryImageShack.Location = new System.Drawing.Point(521, 24);
             this.btnGalleryImageShack.Name = "btnGalleryImageShack";
             this.btnGalleryImageShack.Size = new System.Drawing.Size(78, 23);
             this.btnGalleryImageShack.TabIndex = 3;
@@ -1605,7 +1574,7 @@ namespace ZSS
             // btnRegCodeImageShack
             // 
             this.btnRegCodeImageShack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegCodeImageShack.Location = new System.Drawing.Point(432, 24);
+            this.btnRegCodeImageShack.Location = new System.Drawing.Point(439, 24);
             this.btnRegCodeImageShack.Name = "btnRegCodeImageShack";
             this.btnRegCodeImageShack.Size = new System.Drawing.Size(75, 23);
             this.btnRegCodeImageShack.TabIndex = 2;
@@ -1628,7 +1597,7 @@ namespace ZSS
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(112, 24);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
-            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(314, 20);
+            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(321, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
             this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
             // 
@@ -1640,7 +1609,7 @@ namespace ZSS
             this.tpHotkeys.Location = new System.Drawing.Point(4, 23);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHotkeys.Size = new System.Drawing.Size(790, 442);
+            this.tpHotkeys.Size = new System.Drawing.Size(797, 431);
             this.tpHotkeys.TabIndex = 1;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
@@ -1661,70 +1630,54 @@ namespace ZSS
             this.dgvHotkeys.AllowUserToDeleteRows = false;
             this.dgvHotkeys.AllowUserToResizeColumns = false;
             this.dgvHotkeys.AllowUserToResizeRows = false;
+            this.dgvHotkeys.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvHotkeys.Size = new System.Drawing.Size(503, 302);
+            this.dgvHotkeys.Size = new System.Drawing.Size(750, 366);
             this.dgvHotkeys.TabIndex = 67;
             this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
             this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
             this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
             this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
-            // 
-            // chHotkeys_Description
-            // 
-            this.chHotkeys_Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.chHotkeys_Description.HeaderText = "Description";
-            this.chHotkeys_Description.Name = "chHotkeys_Description";
-            this.chHotkeys_Description.ReadOnly = true;
-            this.chHotkeys_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.chHotkeys_Description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.chHotkeys_Description.Width = 250;
-            // 
-            // chHotkeys_Keys
-            // 
-            this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.chHotkeys_Keys.HeaderText = "Keys";
-            this.chHotkeys_Keys.Name = "chHotkeys_Keys";
-            this.chHotkeys_Keys.ReadOnly = true;
-            this.chHotkeys_Keys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.chHotkeys_Keys.Width = 250;
             // 
             // tpScreenshots
             // 
@@ -1733,7 +1686,7 @@ namespace ZSS
             this.tpScreenshots.Location = new System.Drawing.Point(4, 23);
             this.tpScreenshots.Name = "tpScreenshots";
             this.tpScreenshots.Padding = new System.Windows.Forms.Padding(3);
-            this.tpScreenshots.Size = new System.Drawing.Size(790, 442);
+            this.tpScreenshots.Size = new System.Drawing.Size(797, 431);
             this.tpScreenshots.TabIndex = 4;
             this.tpScreenshots.Text = "Screenshots";
             this.tpScreenshots.UseVisualStyleBackColor = true;
@@ -1750,7 +1703,7 @@ namespace ZSS
             this.tcScreenshots.Location = new System.Drawing.Point(3, 3);
             this.tcScreenshots.Name = "tcScreenshots";
             this.tcScreenshots.SelectedIndex = 0;
-            this.tcScreenshots.Size = new System.Drawing.Size(784, 436);
+            this.tcScreenshots.Size = new System.Drawing.Size(791, 425);
             this.tcScreenshots.TabIndex = 77;
             // 
             // tpCropShot
@@ -1765,10 +1718,182 @@ namespace ZSS
             this.tpCropShot.Location = new System.Drawing.Point(4, 23);
             this.tpCropShot.Name = "tpCropShot";
             this.tpCropShot.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCropShot.Size = new System.Drawing.Size(776, 409);
+            this.tpCropShot.Size = new System.Drawing.Size(783, 398);
             this.tpCropShot.TabIndex = 7;
             this.tpCropShot.Text = "Crop Shot";
             this.tpCropShot.UseVisualStyleBackColor = true;
+            // 
+            // gbDynamicRegionBorderColorSettings
+            // 
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionStep);
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropHueRange);
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.cbCropDynamicBorderColor);
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionInterval);
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropHueRange);
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionStep);
+            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionInterval);
+            this.gbDynamicRegionBorderColorSettings.Location = new System.Drawing.Point(368, 264);
+            this.gbDynamicRegionBorderColorSettings.Name = "gbDynamicRegionBorderColorSettings";
+            this.gbDynamicRegionBorderColorSettings.Size = new System.Drawing.Size(392, 112);
+            this.gbDynamicRegionBorderColorSettings.TabIndex = 123;
+            this.gbDynamicRegionBorderColorSettings.TabStop = false;
+            this.gbDynamicRegionBorderColorSettings.Text = "Dynamic Region Border Color Settings";
+            // 
+            // nudCropRegionStep
+            // 
+            this.nudCropRegionStep.Location = new System.Drawing.Point(320, 44);
+            this.nudCropRegionStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropRegionStep.Name = "nudCropRegionStep";
+            this.nudCropRegionStep.Size = new System.Drawing.Size(56, 20);
+            this.nudCropRegionStep.TabIndex = 31;
+            this.nudCropRegionStep.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropRegionStep.ValueChanged += new System.EventHandler(this.nudCropRegionStep_ValueChanged);
+            // 
+            // nudCropHueRange
+            // 
+            this.nudCropHueRange.Location = new System.Drawing.Point(320, 76);
+            this.nudCropHueRange.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.nudCropHueRange.Name = "nudCropHueRange";
+            this.nudCropHueRange.Size = new System.Drawing.Size(56, 20);
+            this.nudCropHueRange.TabIndex = 33;
+            this.nudCropHueRange.ValueChanged += new System.EventHandler(this.nudCropHueRange_ValueChanged);
+            // 
+            // cbCropDynamicBorderColor
+            // 
+            this.cbCropDynamicBorderColor.AutoSize = true;
+            this.cbCropDynamicBorderColor.Location = new System.Drawing.Point(16, 24);
+            this.cbCropDynamicBorderColor.Name = "cbCropDynamicBorderColor";
+            this.cbCropDynamicBorderColor.Size = new System.Drawing.Size(65, 17);
+            this.cbCropDynamicBorderColor.TabIndex = 27;
+            this.cbCropDynamicBorderColor.Text = "Enabled";
+            this.cbCropDynamicBorderColor.UseVisualStyleBackColor = true;
+            this.cbCropDynamicBorderColor.CheckedChanged += new System.EventHandler(this.cbCropDynamicBorderColor_CheckedChanged);
+            // 
+            // lblCropRegionInterval
+            // 
+            this.lblCropRegionInterval.AutoSize = true;
+            this.lblCropRegionInterval.Location = new System.Drawing.Point(176, 48);
+            this.lblCropRegionInterval.Name = "lblCropRegionInterval";
+            this.lblCropRegionInterval.Size = new System.Drawing.Size(45, 13);
+            this.lblCropRegionInterval.TabIndex = 28;
+            this.lblCropRegionInterval.Text = "Interval:";
+            // 
+            // lblCropHueRange
+            // 
+            this.lblCropHueRange.AutoSize = true;
+            this.lblCropHueRange.Location = new System.Drawing.Point(256, 80);
+            this.lblCropHueRange.Name = "lblCropHueRange";
+            this.lblCropHueRange.Size = new System.Drawing.Size(60, 13);
+            this.lblCropHueRange.TabIndex = 32;
+            this.lblCropHueRange.Text = "Hue range:";
+            // 
+            // lblCropRegionStep
+            // 
+            this.lblCropRegionStep.AutoSize = true;
+            this.lblCropRegionStep.Location = new System.Drawing.Point(286, 48);
+            this.lblCropRegionStep.Name = "lblCropRegionStep";
+            this.lblCropRegionStep.Size = new System.Drawing.Size(32, 13);
+            this.lblCropRegionStep.TabIndex = 29;
+            this.lblCropRegionStep.Text = "Step:";
+            // 
+            // nudCropRegionInterval
+            // 
+            this.nudCropRegionInterval.Location = new System.Drawing.Point(224, 44);
+            this.nudCropRegionInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudCropRegionInterval.Name = "nudCropRegionInterval";
+            this.nudCropRegionInterval.Size = new System.Drawing.Size(56, 20);
+            this.nudCropRegionInterval.TabIndex = 30;
+            this.nudCropRegionInterval.ValueChanged += new System.EventHandler(this.nudCropRegionInterval_ValueChanged);
+            // 
+            // gbDynamicCrosshair
+            // 
+            this.gbDynamicCrosshair.Controls.Add(this.cbCropDynamicCrosshair);
+            this.gbDynamicCrosshair.Controls.Add(this.lblCropCrosshairStep);
+            this.gbDynamicCrosshair.Controls.Add(this.lblCropCrosshairInterval);
+            this.gbDynamicCrosshair.Controls.Add(this.nudCropCrosshairInterval);
+            this.gbDynamicCrosshair.Controls.Add(this.nudCropCrosshairStep);
+            this.gbDynamicCrosshair.Location = new System.Drawing.Point(8, 264);
+            this.gbDynamicCrosshair.Name = "gbDynamicCrosshair";
+            this.gbDynamicCrosshair.Size = new System.Drawing.Size(352, 112);
+            this.gbDynamicCrosshair.TabIndex = 122;
+            this.gbDynamicCrosshair.TabStop = false;
+            this.gbDynamicCrosshair.Text = "Dynamic Crosshair Settings";
+            // 
+            // cbCropDynamicCrosshair
+            // 
+            this.cbCropDynamicCrosshair.AutoSize = true;
+            this.cbCropDynamicCrosshair.Location = new System.Drawing.Point(16, 24);
+            this.cbCropDynamicCrosshair.Name = "cbCropDynamicCrosshair";
+            this.cbCropDynamicCrosshair.Size = new System.Drawing.Size(65, 17);
+            this.cbCropDynamicCrosshair.TabIndex = 16;
+            this.cbCropDynamicCrosshair.Text = "Enabled";
+            this.cbCropDynamicCrosshair.UseVisualStyleBackColor = true;
+            this.cbCropDynamicCrosshair.CheckedChanged += new System.EventHandler(this.cbCropDynamicCrosshair_CheckedChanged);
+            // 
+            // lblCropCrosshairStep
+            // 
+            this.lblCropCrosshairStep.AutoSize = true;
+            this.lblCropCrosshairStep.Location = new System.Drawing.Point(248, 52);
+            this.lblCropCrosshairStep.Name = "lblCropCrosshairStep";
+            this.lblCropCrosshairStep.Size = new System.Drawing.Size(32, 13);
+            this.lblCropCrosshairStep.TabIndex = 22;
+            this.lblCropCrosshairStep.Text = "Step:";
+            // 
+            // lblCropCrosshairInterval
+            // 
+            this.lblCropCrosshairInterval.AutoSize = true;
+            this.lblCropCrosshairInterval.Location = new System.Drawing.Point(136, 52);
+            this.lblCropCrosshairInterval.Name = "lblCropCrosshairInterval";
+            this.lblCropCrosshairInterval.Size = new System.Drawing.Size(45, 13);
+            this.lblCropCrosshairInterval.TabIndex = 21;
+            this.lblCropCrosshairInterval.Text = "Interval:";
+            // 
+            // nudCropCrosshairInterval
+            // 
+            this.nudCropCrosshairInterval.Location = new System.Drawing.Point(184, 48);
+            this.nudCropCrosshairInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudCropCrosshairInterval.Name = "nudCropCrosshairInterval";
+            this.nudCropCrosshairInterval.Size = new System.Drawing.Size(56, 20);
+            this.nudCropCrosshairInterval.TabIndex = 23;
+            this.nudCropCrosshairInterval.ValueChanged += new System.EventHandler(this.nudCropInterval_ValueChanged);
+            // 
+            // nudCropCrosshairStep
+            // 
+            this.nudCropCrosshairStep.Location = new System.Drawing.Point(280, 48);
+            this.nudCropCrosshairStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropCrosshairStep.Name = "nudCropCrosshairStep";
+            this.nudCropCrosshairStep.Size = new System.Drawing.Size(56, 20);
+            this.nudCropCrosshairStep.TabIndex = 24;
+            this.nudCropCrosshairStep.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCropCrosshairStep.ValueChanged += new System.EventHandler(this.nudCropStep_ValueChanged);
             // 
             // gpCropRegion
             // 
@@ -1838,88 +1963,6 @@ namespace ZSS
             this.gbCropRegionSettings.TabIndex = 27;
             this.gbCropRegionSettings.TabStop = false;
             this.gbCropRegionSettings.Text = "Region Settings";
-            // 
-            // nudCropHueRange
-            // 
-            this.nudCropHueRange.Location = new System.Drawing.Point(320, 76);
-            this.nudCropHueRange.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.nudCropHueRange.Name = "nudCropHueRange";
-            this.nudCropHueRange.Size = new System.Drawing.Size(56, 20);
-            this.nudCropHueRange.TabIndex = 33;
-            this.nudCropHueRange.ValueChanged += new System.EventHandler(this.nudCropHueRange_ValueChanged);
-            // 
-            // lblCropHueRange
-            // 
-            this.lblCropHueRange.AutoSize = true;
-            this.lblCropHueRange.Location = new System.Drawing.Point(256, 80);
-            this.lblCropHueRange.Name = "lblCropHueRange";
-            this.lblCropHueRange.Size = new System.Drawing.Size(60, 13);
-            this.lblCropHueRange.TabIndex = 32;
-            this.lblCropHueRange.Text = "Hue range:";
-            // 
-            // nudCropRegionStep
-            // 
-            this.nudCropRegionStep.Location = new System.Drawing.Point(320, 44);
-            this.nudCropRegionStep.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudCropRegionStep.Name = "nudCropRegionStep";
-            this.nudCropRegionStep.Size = new System.Drawing.Size(56, 20);
-            this.nudCropRegionStep.TabIndex = 31;
-            this.nudCropRegionStep.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudCropRegionStep.ValueChanged += new System.EventHandler(this.nudCropRegionStep_ValueChanged);
-            // 
-            // nudCropRegionInterval
-            // 
-            this.nudCropRegionInterval.Location = new System.Drawing.Point(224, 44);
-            this.nudCropRegionInterval.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudCropRegionInterval.Name = "nudCropRegionInterval";
-            this.nudCropRegionInterval.Size = new System.Drawing.Size(56, 20);
-            this.nudCropRegionInterval.TabIndex = 30;
-            this.nudCropRegionInterval.ValueChanged += new System.EventHandler(this.nudCropRegionInterval_ValueChanged);
-            // 
-            // lblCropRegionStep
-            // 
-            this.lblCropRegionStep.AutoSize = true;
-            this.lblCropRegionStep.Location = new System.Drawing.Point(286, 48);
-            this.lblCropRegionStep.Name = "lblCropRegionStep";
-            this.lblCropRegionStep.Size = new System.Drawing.Size(32, 13);
-            this.lblCropRegionStep.TabIndex = 29;
-            this.lblCropRegionStep.Text = "Step:";
-            // 
-            // lblCropRegionInterval
-            // 
-            this.lblCropRegionInterval.AutoSize = true;
-            this.lblCropRegionInterval.Location = new System.Drawing.Point(176, 48);
-            this.lblCropRegionInterval.Name = "lblCropRegionInterval";
-            this.lblCropRegionInterval.Size = new System.Drawing.Size(45, 13);
-            this.lblCropRegionInterval.TabIndex = 28;
-            this.lblCropRegionInterval.Text = "Interval:";
-            // 
-            // cbCropDynamicBorderColor
-            // 
-            this.cbCropDynamicBorderColor.AutoSize = true;
-            this.cbCropDynamicBorderColor.Location = new System.Drawing.Point(16, 24);
-            this.cbCropDynamicBorderColor.Name = "cbCropDynamicBorderColor";
-            this.cbCropDynamicBorderColor.Size = new System.Drawing.Size(65, 17);
-            this.cbCropDynamicBorderColor.TabIndex = 27;
-            this.cbCropDynamicBorderColor.Text = "Enabled";
-            this.cbCropDynamicBorderColor.UseVisualStyleBackColor = true;
-            this.cbCropDynamicBorderColor.CheckedChanged += new System.EventHandler(this.cbCropDynamicBorderColor_CheckedChanged);
             // 
             // lblCropBorderSize
             // 
@@ -2020,35 +2063,6 @@ namespace ZSS
             this.cbCropShowBigCross.UseVisualStyleBackColor = true;
             this.cbCropShowBigCross.CheckedChanged += new System.EventHandler(this.cbCropShowBigCross_CheckedChanged);
             // 
-            // cbCropDynamicCrosshair
-            // 
-            this.cbCropDynamicCrosshair.AutoSize = true;
-            this.cbCropDynamicCrosshair.Location = new System.Drawing.Point(16, 24);
-            this.cbCropDynamicCrosshair.Name = "cbCropDynamicCrosshair";
-            this.cbCropDynamicCrosshair.Size = new System.Drawing.Size(65, 17);
-            this.cbCropDynamicCrosshair.TabIndex = 16;
-            this.cbCropDynamicCrosshair.Text = "Enabled";
-            this.cbCropDynamicCrosshair.UseVisualStyleBackColor = true;
-            this.cbCropDynamicCrosshair.CheckedChanged += new System.EventHandler(this.cbCropDynamicCrosshair_CheckedChanged);
-            // 
-            // nudCropCrosshairStep
-            // 
-            this.nudCropCrosshairStep.Location = new System.Drawing.Point(280, 48);
-            this.nudCropCrosshairStep.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudCropCrosshairStep.Name = "nudCropCrosshairStep";
-            this.nudCropCrosshairStep.Size = new System.Drawing.Size(56, 20);
-            this.nudCropCrosshairStep.TabIndex = 24;
-            this.nudCropCrosshairStep.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudCropCrosshairStep.ValueChanged += new System.EventHandler(this.nudCropStep_ValueChanged);
-            // 
             // pbCropCrosshairColor
             // 
             this.pbCropCrosshairColor.BackColor = System.Drawing.Color.White;
@@ -2061,19 +2075,6 @@ namespace ZSS
             this.pbCropCrosshairColor.TabStop = false;
             this.pbCropCrosshairColor.Click += new System.EventHandler(this.pbCropCrosshairColor_Click);
             // 
-            // nudCropCrosshairInterval
-            // 
-            this.nudCropCrosshairInterval.Location = new System.Drawing.Point(184, 48);
-            this.nudCropCrosshairInterval.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudCropCrosshairInterval.Name = "nudCropCrosshairInterval";
-            this.nudCropCrosshairInterval.Size = new System.Drawing.Size(56, 20);
-            this.nudCropCrosshairInterval.TabIndex = 23;
-            this.nudCropCrosshairInterval.ValueChanged += new System.EventHandler(this.nudCropInterval_ValueChanged);
-            // 
             // lblCropCrosshairColor
             // 
             this.lblCropCrosshairColor.AutoSize = true;
@@ -2082,15 +2083,6 @@ namespace ZSS
             this.lblCropCrosshairColor.Size = new System.Drawing.Size(34, 13);
             this.lblCropCrosshairColor.TabIndex = 15;
             this.lblCropCrosshairColor.Text = "Color:";
-            // 
-            // lblCropCrosshairStep
-            // 
-            this.lblCropCrosshairStep.AutoSize = true;
-            this.lblCropCrosshairStep.Location = new System.Drawing.Point(248, 52);
-            this.lblCropCrosshairStep.Name = "lblCropCrosshairStep";
-            this.lblCropCrosshairStep.Size = new System.Drawing.Size(32, 13);
-            this.lblCropCrosshairStep.TabIndex = 22;
-            this.lblCropCrosshairStep.Text = "Step:";
             // 
             // nudCrosshairLineCount
             // 
@@ -2104,15 +2096,6 @@ namespace ZSS
             this.nudCrosshairLineCount.Size = new System.Drawing.Size(56, 20);
             this.nudCrosshairLineCount.TabIndex = 17;
             this.nudCrosshairLineCount.ValueChanged += new System.EventHandler(this.nudCrosshairLineCount_ValueChanged);
-            // 
-            // lblCropCrosshairInterval
-            // 
-            this.lblCropCrosshairInterval.AutoSize = true;
-            this.lblCropCrosshairInterval.Location = new System.Drawing.Point(136, 52);
-            this.lblCropCrosshairInterval.Name = "lblCropCrosshairInterval";
-            this.lblCropCrosshairInterval.Size = new System.Drawing.Size(45, 13);
-            this.lblCropCrosshairInterval.TabIndex = 21;
-            this.lblCropCrosshairInterval.Text = "Interval:";
             // 
             // nudCrosshairLineSize
             // 
@@ -2249,7 +2232,7 @@ namespace ZSS
             this.tpSelectedWindow.ImageKey = "application_double.png";
             this.tpSelectedWindow.Location = new System.Drawing.Point(4, 23);
             this.tpSelectedWindow.Name = "tpSelectedWindow";
-            this.tpSelectedWindow.Size = new System.Drawing.Size(776, 409);
+            this.tpSelectedWindow.Size = new System.Drawing.Size(783, 398);
             this.tpSelectedWindow.TabIndex = 6;
             this.tpSelectedWindow.Text = "Selected Window";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
@@ -2448,7 +2431,7 @@ namespace ZSS
             this.tpWatermark.Location = new System.Drawing.Point(4, 23);
             this.tpWatermark.Name = "tpWatermark";
             this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermark.Size = new System.Drawing.Size(776, 409);
+            this.tpWatermark.Size = new System.Drawing.Size(783, 398);
             this.tpWatermark.TabIndex = 11;
             this.tpWatermark.Text = "Watermark";
             this.tpWatermark.UseVisualStyleBackColor = true;
@@ -2574,7 +2557,7 @@ namespace ZSS
             this.tcWatermark.Location = new System.Drawing.Point(288, 4);
             this.tcWatermark.Name = "tcWatermark";
             this.tcWatermark.SelectedIndex = 0;
-            this.tcWatermark.Size = new System.Drawing.Size(470, 378);
+            this.tcWatermark.Size = new System.Drawing.Size(477, 372);
             this.tcWatermark.TabIndex = 29;
             // 
             // tpWatermarkText
@@ -2585,7 +2568,7 @@ namespace ZSS
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkText.Name = "tpWatermarkText";
             this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(462, 351);
+            this.tpWatermarkText.Size = new System.Drawing.Size(469, 345);
             this.tpWatermarkText.TabIndex = 0;
             this.tpWatermarkText.Text = "Text";
             this.tpWatermarkText.UseVisualStyleBackColor = true;
@@ -2609,7 +2592,7 @@ namespace ZSS
             this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
             this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 136);
             this.gbWatermarkBackground.Name = "gbWatermarkBackground";
-            this.gbWatermarkBackground.Size = new System.Drawing.Size(441, 160);
+            this.gbWatermarkBackground.Size = new System.Drawing.Size(448, 160);
             this.gbWatermarkBackground.TabIndex = 25;
             this.gbWatermarkBackground.TabStop = false;
             this.gbWatermarkBackground.Text = "Text Background Settings";
@@ -2773,7 +2756,7 @@ namespace ZSS
             this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
             this.gbWatermarkText.Location = new System.Drawing.Point(8, 8);
             this.gbWatermarkText.Name = "gbWatermarkText";
-            this.gbWatermarkText.Size = new System.Drawing.Size(441, 120);
+            this.gbWatermarkText.Size = new System.Drawing.Size(448, 120);
             this.gbWatermarkText.TabIndex = 24;
             this.gbWatermarkText.TabStop = false;
             this.gbWatermarkText.Text = "Text Settings";
@@ -2961,7 +2944,7 @@ namespace ZSS
             this.tpFileNaming.Controls.Add(this.gbActiveWindowNaming);
             this.tpFileNaming.Location = new System.Drawing.Point(4, 23);
             this.tpFileNaming.Name = "tpFileNaming";
-            this.tpFileNaming.Size = new System.Drawing.Size(776, 409);
+            this.tpFileNaming.Size = new System.Drawing.Size(783, 398);
             this.tpFileNaming.TabIndex = 3;
             this.tpFileNaming.Text = "Naming Conventions";
             this.tpFileNaming.UseVisualStyleBackColor = true;
@@ -3285,7 +3268,7 @@ namespace ZSS
             this.tpCaptureQuality.Location = new System.Drawing.Point(4, 23);
             this.tpCaptureQuality.Name = "tpCaptureQuality";
             this.tpCaptureQuality.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureQuality.Size = new System.Drawing.Size(776, 409);
+            this.tpCaptureQuality.Size = new System.Drawing.Size(783, 398);
             this.tpCaptureQuality.TabIndex = 0;
             this.tpCaptureQuality.Text = "Quality";
             this.tpCaptureQuality.UseVisualStyleBackColor = true;
@@ -3433,7 +3416,7 @@ namespace ZSS
             this.tpEditors.Location = new System.Drawing.Point(4, 23);
             this.tpEditors.Name = "tpEditors";
             this.tpEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditors.Size = new System.Drawing.Size(790, 442);
+            this.tpEditors.Size = new System.Drawing.Size(797, 431);
             this.tpEditors.TabIndex = 2;
             this.tpEditors.Text = "Editors";
             this.tpEditors.UseVisualStyleBackColor = true;
@@ -3445,7 +3428,7 @@ namespace ZSS
             this.tcEditors.Location = new System.Drawing.Point(3, 3);
             this.tcEditors.Name = "tcEditors";
             this.tcEditors.SelectedIndex = 0;
-            this.tcEditors.Size = new System.Drawing.Size(784, 436);
+            this.tcEditors.Size = new System.Drawing.Size(791, 425);
             this.tcEditors.TabIndex = 64;
             // 
             // tpEditorsImages
@@ -3459,7 +3442,7 @@ namespace ZSS
             this.tpEditorsImages.Location = new System.Drawing.Point(4, 22);
             this.tpEditorsImages.Name = "tpEditorsImages";
             this.tpEditorsImages.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditorsImages.Size = new System.Drawing.Size(776, 410);
+            this.tpEditorsImages.Size = new System.Drawing.Size(783, 399);
             this.tpEditorsImages.TabIndex = 0;
             this.tpEditorsImages.Text = "Image Editors";
             this.tpEditorsImages.UseVisualStyleBackColor = true;
@@ -3471,7 +3454,7 @@ namespace ZSS
             this.gbImageEditorSettings.Controls.Add(this.chkImageEditorAutoSave);
             this.gbImageEditorSettings.Location = new System.Drawing.Point(296, 120);
             this.gbImageEditorSettings.Name = "gbImageEditorSettings";
-            this.gbImageEditorSettings.Size = new System.Drawing.Size(464, 56);
+            this.gbImageEditorSettings.Size = new System.Drawing.Size(471, 56);
             this.gbImageEditorSettings.TabIndex = 67;
             this.gbImageEditorSettings.TabStop = false;
             this.gbImageEditorSettings.Text = "ZScreen Image Editor Settings";
@@ -3495,7 +3478,7 @@ namespace ZSS
             this.pgEditorsImage.Location = new System.Drawing.Point(296, 40);
             this.pgEditorsImage.Name = "pgEditorsImage";
             this.pgEditorsImage.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgEditorsImage.Size = new System.Drawing.Size(464, 72);
+            this.pgEditorsImage.Size = new System.Drawing.Size(471, 72);
             this.pgEditorsImage.TabIndex = 64;
             this.pgEditorsImage.ToolbarVisible = false;
             this.pgEditorsImage.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgEditorsImage_PropertyValueChanged);
@@ -3530,7 +3513,7 @@ namespace ZSS
             this.lbImageSoftware.IntegralHeight = false;
             this.lbImageSoftware.Location = new System.Drawing.Point(3, 3);
             this.lbImageSoftware.Name = "lbImageSoftware";
-            this.lbImageSoftware.Size = new System.Drawing.Size(280, 404);
+            this.lbImageSoftware.Size = new System.Drawing.Size(280, 393);
             this.lbImageSoftware.TabIndex = 59;
             this.lbImageSoftware.SelectedIndexChanged += new System.EventHandler(this.lbImageSoftware_SelectedIndexChanged);
             // 
@@ -3554,7 +3537,7 @@ namespace ZSS
             this.tpImageHosting.Location = new System.Drawing.Point(4, 23);
             this.tpImageHosting.Name = "tpImageHosting";
             this.tpImageHosting.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageHosting.Size = new System.Drawing.Size(790, 442);
+            this.tpImageHosting.Size = new System.Drawing.Size(797, 431);
             this.tpImageHosting.TabIndex = 10;
             this.tpImageHosting.Text = "Image Hosting";
             this.tpImageHosting.UseVisualStyleBackColor = true;
@@ -3568,7 +3551,7 @@ namespace ZSS
             this.tcImages.Location = new System.Drawing.Point(3, 3);
             this.tcImages.Name = "tcImages";
             this.tcImages.SelectedIndex = 0;
-            this.tcImages.Size = new System.Drawing.Size(784, 436);
+            this.tcImages.Size = new System.Drawing.Size(791, 425);
             this.tcImages.TabIndex = 5;
             // 
             // tpImageUploaders
@@ -3577,7 +3560,7 @@ namespace ZSS
             this.tpImageUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpImageUploaders.Name = "tpImageUploaders";
             this.tpImageUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageUploaders.Size = new System.Drawing.Size(776, 409);
+            this.tpImageUploaders.Size = new System.Drawing.Size(783, 398);
             this.tpImageUploaders.TabIndex = 0;
             this.tpImageUploaders.Text = "Image Uploaders";
             this.tpImageUploaders.UseVisualStyleBackColor = true;
@@ -3598,7 +3581,7 @@ namespace ZSS
             this.gbImageUploaderOptions.Controls.Add(this.nudErrorRetry);
             this.gbImageUploaderOptions.Location = new System.Drawing.Point(16, 16);
             this.gbImageUploaderOptions.Name = "gbImageUploaderOptions";
-            this.gbImageUploaderOptions.Size = new System.Drawing.Size(744, 168);
+            this.gbImageUploaderOptions.Size = new System.Drawing.Size(751, 168);
             this.gbImageUploaderOptions.TabIndex = 7;
             this.gbImageUploaderOptions.TabStop = false;
             this.gbImageUploaderOptions.Text = "Options";
@@ -3730,7 +3713,7 @@ namespace ZSS
             this.tpCustomUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpCustomUploaders.Name = "tpCustomUploaders";
             this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploaders.Size = new System.Drawing.Size(776, 409);
+            this.tpCustomUploaders.Size = new System.Drawing.Size(783, 398);
             this.tpCustomUploaders.TabIndex = 11;
             this.tpCustomUploaders.Text = "Custom Image Uploaders";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
@@ -4074,7 +4057,7 @@ namespace ZSS
             this.tpTextServices.Location = new System.Drawing.Point(4, 23);
             this.tpTextServices.Name = "tpTextServices";
             this.tpTextServices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextServices.Size = new System.Drawing.Size(790, 442);
+            this.tpTextServices.Size = new System.Drawing.Size(797, 431);
             this.tpTextServices.TabIndex = 13;
             this.tpTextServices.Text = "Text Services";
             this.tpTextServices.UseVisualStyleBackColor = true;
@@ -4087,7 +4070,7 @@ namespace ZSS
             this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcTextUploaders.Name = "tcTextUploaders";
             this.tcTextUploaders.SelectedIndex = 0;
-            this.tcTextUploaders.Size = new System.Drawing.Size(784, 436);
+            this.tcTextUploaders.Size = new System.Drawing.Size(791, 425);
             this.tcTextUploaders.TabIndex = 0;
             // 
             // tpTextUploaders
@@ -4096,18 +4079,10 @@ namespace ZSS
             this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpTextUploaders.Name = "tpTextUploaders";
             this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(776, 410);
+            this.tpTextUploaders.Size = new System.Drawing.Size(783, 399);
             this.tpTextUploaders.TabIndex = 14;
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
-            // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(770, 404);
-            this.ucTextUploaders.TabIndex = 0;
             // 
             // tpURLShorteners
             // 
@@ -4115,18 +4090,10 @@ namespace ZSS
             this.tpURLShorteners.Location = new System.Drawing.Point(4, 22);
             this.tpURLShorteners.Name = "tpURLShorteners";
             this.tpURLShorteners.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShorteners.Size = new System.Drawing.Size(776, 410);
+            this.tpURLShorteners.Size = new System.Drawing.Size(783, 399);
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(770, 404);
-            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -4148,14 +4115,14 @@ namespace ZSS
             this.tpTranslator.Location = new System.Drawing.Point(4, 23);
             this.tpTranslator.Name = "tpTranslator";
             this.tpTranslator.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTranslator.Size = new System.Drawing.Size(790, 442);
+            this.tpTranslator.Size = new System.Drawing.Size(797, 431);
             this.tpTranslator.TabIndex = 1;
             this.tpTranslator.Text = "Translator";
             this.tpTranslator.UseVisualStyleBackColor = true;
             // 
             // txtAutoTranslate
             // 
-            this.txtAutoTranslate.Location = new System.Drawing.Point(432, 382);
+            this.txtAutoTranslate.Location = new System.Drawing.Point(440, 382);
             this.txtAutoTranslate.Name = "txtAutoTranslate";
             this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
             this.txtAutoTranslate.TabIndex = 11;
@@ -4166,10 +4133,10 @@ namespace ZSS
             this.cbAutoTranslate.AutoSize = true;
             this.cbAutoTranslate.Location = new System.Drawing.Point(16, 384);
             this.cbAutoTranslate.Name = "cbAutoTranslate";
-            this.cbAutoTranslate.Size = new System.Drawing.Size(408, 17);
+            this.cbAutoTranslate.Size = new System.Drawing.Size(418, 17);
             this.cbAutoTranslate.TabIndex = 10;
-            this.cbAutoTranslate.Text = "If clipboard text length smaller than this number then instead text upload, trans" +
-                "late";
+            this.cbAutoTranslate.Text = "If clipboard text length is smaller than this number then instead text upload, tr" +
+                "anslate";
             this.cbAutoTranslate.UseVisualStyleBackColor = true;
             this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
             // 
@@ -4306,7 +4273,7 @@ namespace ZSS
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(790, 442);
+            this.tpHistory.Size = new System.Drawing.Size(797, 431);
             this.tpHistory.TabIndex = 8;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -4319,7 +4286,7 @@ namespace ZSS
             this.tcHistory.Location = new System.Drawing.Point(3, 3);
             this.tcHistory.Name = "tcHistory";
             this.tcHistory.SelectedIndex = 0;
-            this.tcHistory.Size = new System.Drawing.Size(784, 436);
+            this.tcHistory.Size = new System.Drawing.Size(791, 425);
             this.tcHistory.TabIndex = 3;
             // 
             // tpHistoryList
@@ -4339,7 +4306,7 @@ namespace ZSS
             this.tpHistoryList.Location = new System.Drawing.Point(4, 22);
             this.tpHistoryList.Name = "tpHistoryList";
             this.tpHistoryList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistoryList.Size = new System.Drawing.Size(776, 410);
+            this.tpHistoryList.Size = new System.Drawing.Size(783, 399);
             this.tpHistoryList.TabIndex = 0;
             this.tpHistoryList.Text = "History List";
             this.tpHistoryList.UseVisualStyleBackColor = true;
@@ -4348,7 +4315,7 @@ namespace ZSS
             // 
             this.lblHistoryScreenshot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHistoryScreenshot.AutoSize = true;
-            this.lblHistoryScreenshot.Location = new System.Drawing.Point(404, 7);
+            this.lblHistoryScreenshot.Location = new System.Drawing.Point(411, 7);
             this.lblHistoryScreenshot.Name = "lblHistoryScreenshot";
             this.lblHistoryScreenshot.Size = new System.Drawing.Size(61, 13);
             this.lblHistoryScreenshot.TabIndex = 13;
@@ -4358,7 +4325,7 @@ namespace ZSS
             // 
             this.btnHistoryCopyLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHistoryCopyLink.Enabled = false;
-            this.btnHistoryCopyLink.Location = new System.Drawing.Point(404, 280);
+            this.btnHistoryCopyLink.Location = new System.Drawing.Point(411, 280);
             this.btnHistoryCopyLink.Name = "btnHistoryCopyLink";
             this.btnHistoryCopyLink.Size = new System.Drawing.Size(80, 24);
             this.btnHistoryCopyLink.TabIndex = 12;
@@ -4370,7 +4337,7 @@ namespace ZSS
             // 
             this.btnHistoryCopyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHistoryCopyImage.Enabled = false;
-            this.btnHistoryCopyImage.Location = new System.Drawing.Point(492, 280);
+            this.btnHistoryCopyImage.Location = new System.Drawing.Point(499, 280);
             this.btnHistoryCopyImage.Name = "btnHistoryCopyImage";
             this.btnHistoryCopyImage.Size = new System.Drawing.Size(80, 24);
             this.btnHistoryCopyImage.TabIndex = 11;
@@ -4383,7 +4350,7 @@ namespace ZSS
             this.btnHistoryBrowseURL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHistoryBrowseURL.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnHistoryBrowseURL.Enabled = false;
-            this.btnHistoryBrowseURL.Location = new System.Drawing.Point(580, 280);
+            this.btnHistoryBrowseURL.Location = new System.Drawing.Point(587, 280);
             this.btnHistoryBrowseURL.Name = "btnHistoryBrowseURL";
             this.btnHistoryBrowseURL.Size = new System.Drawing.Size(80, 24);
             this.btnHistoryBrowseURL.TabIndex = 10;
@@ -4396,7 +4363,7 @@ namespace ZSS
             this.btnHistoryOpenLocalFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHistoryOpenLocalFile.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnHistoryOpenLocalFile.Enabled = false;
-            this.btnHistoryOpenLocalFile.Location = new System.Drawing.Point(668, 280);
+            this.btnHistoryOpenLocalFile.Location = new System.Drawing.Point(675, 280);
             this.btnHistoryOpenLocalFile.Name = "btnHistoryOpenLocalFile";
             this.btnHistoryOpenLocalFile.Size = new System.Drawing.Size(96, 24);
             this.btnHistoryOpenLocalFile.TabIndex = 9;
@@ -4408,7 +4375,7 @@ namespace ZSS
             // 
             this.lblHistoryLocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHistoryLocalPath.AutoSize = true;
-            this.lblHistoryLocalPath.Location = new System.Drawing.Point(404, 311);
+            this.lblHistoryLocalPath.Location = new System.Drawing.Point(411, 311);
             this.lblHistoryLocalPath.Name = "lblHistoryLocalPath";
             this.lblHistoryLocalPath.Size = new System.Drawing.Size(58, 13);
             this.lblHistoryLocalPath.TabIndex = 5;
@@ -4418,7 +4385,7 @@ namespace ZSS
             // 
             this.txtHistoryRemotePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHistoryRemotePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHistoryRemotePath.Location = new System.Drawing.Point(404, 368);
+            this.txtHistoryRemotePath.Location = new System.Drawing.Point(411, 368);
             this.txtHistoryRemotePath.Name = "txtHistoryRemotePath";
             this.txtHistoryRemotePath.ReadOnly = true;
             this.txtHistoryRemotePath.Size = new System.Drawing.Size(360, 20);
@@ -4428,7 +4395,7 @@ namespace ZSS
             // 
             this.lblHistoryRemotePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHistoryRemotePath.AutoSize = true;
-            this.lblHistoryRemotePath.Location = new System.Drawing.Point(404, 351);
+            this.lblHistoryRemotePath.Location = new System.Drawing.Point(411, 351);
             this.lblHistoryRemotePath.Name = "lblHistoryRemotePath";
             this.lblHistoryRemotePath.Size = new System.Drawing.Size(69, 13);
             this.lblHistoryRemotePath.TabIndex = 6;
@@ -4438,7 +4405,7 @@ namespace ZSS
             // 
             this.txtHistoryLocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHistoryLocalPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHistoryLocalPath.Location = new System.Drawing.Point(404, 328);
+            this.txtHistoryLocalPath.Location = new System.Drawing.Point(411, 328);
             this.txtHistoryLocalPath.Name = "txtHistoryLocalPath";
             this.txtHistoryLocalPath.ReadOnly = true;
             this.txtHistoryLocalPath.Size = new System.Drawing.Size(360, 20);
@@ -4457,7 +4424,7 @@ namespace ZSS
             this.lbHistory.Name = "lbHistory";
             this.lbHistory.ScrollAlwaysVisible = true;
             this.lbHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbHistory.Size = new System.Drawing.Size(393, 398);
+            this.lbHistory.Size = new System.Drawing.Size(400, 387);
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
@@ -4468,7 +4435,7 @@ namespace ZSS
             // 
             this.txtPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPreview.BackColor = System.Drawing.SystemColors.Info;
-            this.txtPreview.Location = new System.Drawing.Point(404, 24);
+            this.txtPreview.Location = new System.Drawing.Point(411, 24);
             this.txtPreview.Multiline = true;
             this.txtPreview.Name = "txtPreview";
             this.txtPreview.ReadOnly = true;
@@ -4481,7 +4448,7 @@ namespace ZSS
             this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPreview.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbPreview.Location = new System.Drawing.Point(404, 24);
+            this.pbPreview.Location = new System.Drawing.Point(411, 24);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(360, 248);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -4503,7 +4470,7 @@ namespace ZSS
             this.tpHistorySettings.Location = new System.Drawing.Point(4, 22);
             this.tpHistorySettings.Name = "tpHistorySettings";
             this.tpHistorySettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistorySettings.Size = new System.Drawing.Size(776, 410);
+            this.tpHistorySettings.Size = new System.Drawing.Size(783, 399);
             this.tpHistorySettings.TabIndex = 1;
             this.tpHistorySettings.Text = "History Settings";
             this.tpHistorySettings.UseVisualStyleBackColor = true;
@@ -4618,7 +4585,7 @@ namespace ZSS
             this.tpOptions.Location = new System.Drawing.Point(4, 23);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(790, 442);
+            this.tpOptions.Size = new System.Drawing.Size(797, 431);
             this.tpOptions.TabIndex = 9;
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
@@ -4634,7 +4601,7 @@ namespace ZSS
             this.tcOptions.Location = new System.Drawing.Point(3, 3);
             this.tcOptions.Name = "tcOptions";
             this.tcOptions.SelectedIndex = 0;
-            this.tcOptions.Size = new System.Drawing.Size(784, 436);
+            this.tcOptions.Size = new System.Drawing.Size(791, 425);
             this.tcOptions.TabIndex = 8;
             // 
             // tpGeneral
@@ -4644,7 +4611,7 @@ namespace ZSS
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
             this.tpGeneral.Name = "tpGeneral";
             this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGeneral.Size = new System.Drawing.Size(776, 410);
+            this.tpGeneral.Size = new System.Drawing.Size(783, 399);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
@@ -5413,45 +5380,79 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
-            // gbDynamicCrosshair
+            // nudtScreenshotDelay
             // 
-            this.gbDynamicCrosshair.Controls.Add(this.cbCropDynamicCrosshair);
-            this.gbDynamicCrosshair.Controls.Add(this.lblCropCrosshairStep);
-            this.gbDynamicCrosshair.Controls.Add(this.lblCropCrosshairInterval);
-            this.gbDynamicCrosshair.Controls.Add(this.nudCropCrosshairInterval);
-            this.gbDynamicCrosshair.Controls.Add(this.nudCropCrosshairStep);
-            this.gbDynamicCrosshair.Location = new System.Drawing.Point(8, 264);
-            this.gbDynamicCrosshair.Name = "gbDynamicCrosshair";
-            this.gbDynamicCrosshair.Size = new System.Drawing.Size(352, 112);
-            this.gbDynamicCrosshair.TabIndex = 122;
-            this.gbDynamicCrosshair.TabStop = false;
-            this.gbDynamicCrosshair.Text = "Dynamic Crosshair Settings";
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Delay before a screenshot is captured");
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
-            // gbDynamicRegionBorderColorSettings
+            // ucFTPAccounts
             // 
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionStep);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropHueRange);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.cbCropDynamicBorderColor);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionInterval);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropHueRange);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionStep);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionInterval);
-            this.gbDynamicRegionBorderColorSettings.Location = new System.Drawing.Point(368, 264);
-            this.gbDynamicRegionBorderColorSettings.Name = "gbDynamicRegionBorderColorSettings";
-            this.gbDynamicRegionBorderColorSettings.Size = new System.Drawing.Size(392, 112);
-            this.gbDynamicRegionBorderColorSettings.TabIndex = 123;
-            this.gbDynamicRegionBorderColorSettings.TabStop = false;
-            this.gbDynamicRegionBorderColorSettings.Text = "Dynamic Region Border Color Settings";
+            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(777, 309);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // panelMindTouchAccounts
+            // 
+            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
+            this.panelMindTouchAccounts.Size = new System.Drawing.Size(777, 393);
+            this.panelMindTouchAccounts.TabIndex = 0;
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(777, 393);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
+            // ucUrlShorteners
+            // 
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(777, 393);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
+            // chHotkeys_Description
+            // 
+            this.chHotkeys_Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.chHotkeys_Description.HeaderText = "Description";
+            this.chHotkeys_Description.Name = "chHotkeys_Description";
+            this.chHotkeys_Description.ReadOnly = true;
+            this.chHotkeys_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.chHotkeys_Description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // chHotkeys_Keys
+            // 
+            this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.chHotkeys_Keys.HeaderText = "Keys";
+            this.chHotkeys_Keys.Name = "chHotkeys_Keys";
+            this.chHotkeys_Keys.ReadOnly = true;
+            this.chHotkeys_Keys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // ZScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(802, 473);
+            this.ClientSize = new System.Drawing.Size(809, 462);
             this.Controls.Add(this.tcApp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(810, 500);
+            this.MinimumSize = new System.Drawing.Size(825, 500);
             this.Name = "ZScreen";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.ShowInTaskbar = false;
@@ -5494,20 +5495,24 @@ namespace ZSS
             this.tpScreenshots.ResumeLayout(false);
             this.tcScreenshots.ResumeLayout(false);
             this.tpCropShot.ResumeLayout(false);
+            this.gbDynamicRegionBorderColorSettings.ResumeLayout(false);
+            this.gbDynamicRegionBorderColorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).EndInit();
+            this.gbDynamicCrosshair.ResumeLayout(false);
+            this.gbDynamicCrosshair.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).EndInit();
             this.gpCropRegion.ResumeLayout(false);
             this.gpCropRegion.PerformLayout();
             this.gbCropRegionSettings.ResumeLayout(false);
             this.gbCropRegionSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropBorderColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).EndInit();
             this.gbCrosshairSettings.ResumeLayout(false);
             this.gbCrosshairSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).EndInit();
             this.gbGridMode.ResumeLayout(false);
@@ -5620,10 +5625,6 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.gbDynamicCrosshair.ResumeLayout(false);
-            this.gbDynamicCrosshair.PerformLayout();
-            this.gbDynamicRegionBorderColorSettings.ResumeLayout(false);
-            this.gbDynamicRegionBorderColorSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5715,8 +5716,6 @@ namespace ZSS
         private System.Windows.Forms.TabPage tpHotkeys;
         private System.Windows.Forms.Label lblHotkeyStatus;
         private System.Windows.Forms.DataGridView dgvHotkeys;
-        private System.Windows.Forms.DataGridViewTextBoxColumn chHotkeys_Description;
-        private System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
         private System.Windows.Forms.TabPage tpScreenshots;
         private System.Windows.Forms.TabControl tcScreenshots;
         private System.Windows.Forms.TabPage tpCropShot;
@@ -6061,6 +6060,8 @@ namespace ZSS
         private System.Windows.Forms.Label lblScreenshotDelay;
         private System.Windows.Forms.GroupBox gbDynamicCrosshair;
         private System.Windows.Forms.GroupBox gbDynamicRegionBorderColorSettings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chHotkeys_Description;
+        private System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
 
     }
 }
