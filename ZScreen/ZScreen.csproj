@@ -392,6 +392,9 @@
     <None Include="Resources\dekiwiki_logo.png" />
     <None Include="Resources\nav-home.png" />
     <None Include="Resources\nav-user.png" />
+    <None Include="Resources\tr.png" />
+    <None Include="Resources\au.png" />
+    <None Include="Resources\us.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

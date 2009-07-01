@@ -88,6 +88,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap au {
+            get {
+                object obj = ResourceManager.GetObject("au", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap camera {
             get {
                 object obj = ResourceManager.GetObject("camera", resourceCulture);
@@ -369,16 +376,30 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tr {
+            get {
+                object obj = ResourceManager.GetObject("tr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap us {
+            get {
+                object obj = ResourceManager.GetObject("us", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Version 2.15 - 20090702
         ///
+        ///2.15.01.1 Hotkeys tab was not displayed propery for DPI set at 120% [Issue 82]
         ///2.15.01.0 Option to publish ImageShack images to the user&apos;s public profile
         ///2.15.00.0 Integrated Image Editor based on Greenshot Image Editor 0.7.009 [Issue 81]
         ///2.14.01.0 XML Option to automatically shorten the URL after image upload is completed
         ///2.14.00.0 Added support for URL Shortener: 3.ly
         ///2.13.00.0 Added support for URL Shorteners starting with TinyURL
-        ///2.13.01.1 Prevent automatically loading Default Settings when an error is occured
-        ///2.13.01.0 Rearranged Main Tabs to foll [rest of string was truncated]&quot;;.
+        ///2.13.02.0 Removed Active Help and introdu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

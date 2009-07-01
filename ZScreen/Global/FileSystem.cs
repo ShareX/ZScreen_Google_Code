@@ -321,14 +321,13 @@ namespace ZSS
         /// <returns></returns>
         public static string GetUniqueFilePath(string fileName)
         {
-            string filePath, fileExt, pattern = @"(\b.+\()(\d+)(\)\.\w+\b)";
-            int num;
+            string filePath, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
+            int num = 1;
             GroupCollection groups = Regex.Match(fileName, pattern).Groups;
             if (string.IsNullOrEmpty(groups[2].Value))
             {
                 filePath = fileName.Substring(0, fileName.LastIndexOf('.')) + "(";
                 fileExt = ")" + fileName.Remove(0, fileName.LastIndexOf('.'));
-                num = 1;
             }
             else
             {
