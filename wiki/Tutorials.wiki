@@ -6,7 +6,9 @@
 == Main == 
 == Destinations == 
 == Hotkeys == 
-=== ClipboardUpload ===
+=== Clipboard Upload ===
+Main Article: [ClipboardUpload]
+
 == Screenshots == 
 == Image Hosting == 
 == Text Services == 
