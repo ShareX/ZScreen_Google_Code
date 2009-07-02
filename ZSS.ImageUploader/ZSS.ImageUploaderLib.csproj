@@ -69,7 +69,7 @@
     <Compile Include="Helpers\DekiWikiHistory.cs" />
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImageUploaders\ImageUploader.cs" />
+    <Compile Include="ImageUploader.cs" />
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
     <Compile Include="Forms\TwitterMsg.cs">
       <SubType>Form</SubType>
