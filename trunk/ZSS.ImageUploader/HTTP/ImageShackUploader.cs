@@ -76,14 +76,14 @@ namespace ZSS.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
+        public override ImageFileManager UploadImage(Image image)
         {
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImage1(image, format);
+                    return UploadImage1(image);
                 case UploadMode.ANONYMOUS:
-                    return UploadImage2(image, format);
+                    return UploadImage2(image);
             }
 
             return null;
@@ -95,10 +95,11 @@ namespace ZSS.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImage1(Image image, ImageFormat format)
+        private ImageFileManager UploadImage1(Image image)
         {
+            ImageFormat imageFormat = image.RawFormat;
             MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, format);
+            image.Save(imgStream, imageFormat);
             image.Dispose();
             imgStream.Position = 0;
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -125,7 +126,7 @@ namespace ZSS.ImageUploaders
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
-                imgSource = PostImage(imgStream, URLUnifiedAPI, "fileupload", GetMimeType(format), arguments, cookies, "http://www.imageshack.us");
+                imgSource = PostImage(imgStream, URLUnifiedAPI, "fileupload", GetMimeType(imageFormat), arguments, cookies, "http://www.imageshack.us");
                 string fullimage = GetXMLVal(imgSource, "image_link");
                 string thumbnail = GetXMLVal(imgSource, "thumb_link");
 
@@ -150,10 +151,11 @@ namespace ZSS.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImage2(Image image, ImageFormat format)
+        private ImageFileManager UploadImage2(Image image)
         {
+            ImageFormat imageFormat = image.RawFormat;
             MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, format);
+            image.Save(imgStream, imageFormat);
             image.Dispose();
             imgStream.Position = 0;
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -179,7 +181,7 @@ namespace ZSS.ImageUploaders
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!Public) arguments.Add("public", "no");
 
-                imgSource = PostImage(imgStream, URLStandard, "fileupload", GetMimeType(format), arguments, cookies, "http://www.imageshack.us");
+                imgSource = PostImage(imgStream, URLStandard, "fileupload", GetMimeType(imageFormat), arguments, cookies, "http://www.imageshack.us");
                 string fullimage = GetXMLVal(imgSource, "image_link");
                 string thumbnail = GetXMLVal(imgSource, "thumb_link");
 

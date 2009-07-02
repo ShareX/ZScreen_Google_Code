@@ -46,10 +46,11 @@ namespace ZSS.ImageUploaders
             get { return iHosting.Name; }
         }
 
-        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
+        public override ImageFileManager UploadImage(Image image)
         {
+            ImageFormat imageFormat = image.RawFormat;
             MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, format);
+            image.Save(imgStream, imageFormat);
             image.Dispose();
             imgStream.Position = 0;
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -65,7 +66,7 @@ namespace ZSS.ImageUploaders
                 {
                     arguments.Add(args[0], args[1]);
                 }
-                imgSource = PostImage(imgStream, iHosting.UploadURL, iHosting.FileForm, GetMimeType(format), arguments, cookies, "");
+                imgSource = PostImage(imgStream, iHosting.UploadURL, iHosting.FileForm, GetMimeType(imageFormat), arguments, cookies, "");
                 if (imgSource != "")
                 {
                     List<String> regexps = new List<string>();

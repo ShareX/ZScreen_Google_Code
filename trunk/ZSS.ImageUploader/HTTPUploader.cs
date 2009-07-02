@@ -46,6 +46,7 @@ namespace ZSS.ImageUploaders
         /// List of Errors logged by ImageUploaders
         /// </summary>
         public List<string> Errors { get; private set; }
+
         /// <summary>
         /// API or Anonymous. Default: Anonymous
         /// </summary>
@@ -73,13 +74,7 @@ namespace ZSS.ImageUploaders
             return "image/unknown";
         }
 
-        protected abstract ImageFileManager UploadImage(Image image, ImageFormat format);
-
-        public ImageFileManager UploadImage(Image image)
-        {
-            ImageFileManager imageFiles = UploadImage(image, image.RawFormat);
-            return imageFiles;
-        }
+        public abstract ImageFileManager UploadImage(Image image);
 
         public ImageFileManager UploadImage(string filePath)
         {
@@ -286,6 +281,7 @@ namespace ZSS.ImageUploaders
         }
 
         #region "Microsoft .NET Framework v2.0 Compatible methods"
+
         protected bool Upload(MemoryStream memoryStream, Stream requestStream)
         {
             try
@@ -339,6 +335,7 @@ namespace ZSS.ImageUploaders
             streamWriter.Write("--{0}--{1}", boundary, mEndStr);
             streamWriter.Flush();
         }
+
         #endregion
     }
 }

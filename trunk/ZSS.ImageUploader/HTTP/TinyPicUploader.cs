@@ -67,14 +67,14 @@ namespace ZSS.ImageUploaders
             get { return "TinyPic"; }
         }
 
-        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
+        public override ImageFileManager UploadImage(Image image)
         {
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImageAPI(image, format);
+                    return UploadImageAPI(image);
                 case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(image, format);
+                    return UploadImageAnonymous(image);
             }
             return null;
         }
@@ -85,19 +85,18 @@ namespace ZSS.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Image image, ImageFormat format)
+        private ImageFileManager UploadImageAPI(Image image)
         {
             ImageFileManager ifm = new ImageFileManager();
 
             MemoryStream imgStream = new MemoryStream();
             bool oldValue = ServicePointManager.Expect100Continue;
             List<ImageFile> imageFiles = new List<ImageFile>();
-            string imgSource = "";
 
             try
             {
-
-                image.Save(imgStream, format);
+                ImageFormat imageFormat = image.RawFormat;
+                image.Save(imgStream, imageFormat);
                 image.Dispose();
                 imgStream.Position = 0;
 
@@ -139,7 +138,7 @@ namespace ZSS.ImageUploaders
                 if (!string.IsNullOrEmpty(Shuk))
                     arguments.Add("shuk", Shuk);
 
-                ifm.Source = PostImage(imgStream, URLAPI, "uploadfile", GetMimeType(format), arguments, cookies, "http://tinypic.com/");
+                ifm.Source = PostImage(imgStream, URLAPI, "uploadfile", GetMimeType(imageFormat), arguments, cookies, "http://tinypic.com/");
                 string fullSize = GetXMLVal(ifm.Source, "fullsize"); // Regex.Match(imgSource, "(?<=fullsize>).+(?=</fullsize)").Value;
                 string thumbNail = GetXMLVal(ifm.Source, "thumbnail"); // Regex.Match(imgSource, "(?<=thumbnail>).+(?=</thumbnail)").Value;
 
@@ -167,10 +166,11 @@ namespace ZSS.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Image image, ImageFormat format)
+        private ImageFileManager UploadImageAnonymous(Image image)
         {
+            ImageFormat imageFormat = image.RawFormat;
             MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, format);
+            image.Save(imgStream, imageFormat);
             image.Dispose();
             imgStream.Position = 0;
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -189,7 +189,7 @@ namespace ZSS.ImageUploaders
                     { "file_type", "image" },
                     { "dimension", "1600" }
                 };
-                imgSource = PostImage(imgStream, "http://s5.tinypic.com/plugin/upload.php", "the_file", GetMimeType(format), arguments, cookies, "");
+                imgSource = PostImage(imgStream, "http://s5.tinypic.com/plugin/upload.php", "the_file", GetMimeType(imageFormat), arguments, cookies, "");
                 string imgIval = Regex.Match(imgSource, "(?<=ival\" value=\").+(?=\" />)").Value;
                 string imgPic = Regex.Match(imgSource, "(?<=pic\" value=\").+(?=\" />)").Value;
                 string imgType = Regex.Match(imgSource, "(?<=ext\" value=\").*(?=\" />)").Value;
