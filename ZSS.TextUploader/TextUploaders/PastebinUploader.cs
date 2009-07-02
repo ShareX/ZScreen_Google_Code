@@ -74,12 +74,12 @@ namespace ZSS.TextUploadersLib
             get { return "Testing " + Hostname; }
         }
 
-        public override string UploadText(TextFile text)
+        public override string UploadText(string text)
         {
-            if (!string.IsNullOrEmpty(text.LocalString))
+            if (!string.IsNullOrEmpty(text))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("code2", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("code2", HttpUtility.UrlEncode(text));
                 arguments.Add("expiry", ((char)HostSettings.ExpireTime).ToString());
                 arguments.Add("format", HostSettings.TextFormat);
                 arguments.Add("poster", HostSettings.Name);

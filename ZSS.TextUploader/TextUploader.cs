@@ -16,10 +16,8 @@ namespace ZSS.TextUploadersLib
     {
         // ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP ** 
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
-                                                          typeof(SlexyUploader), typeof(SniptUploader), 
-                                                          typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(KlamUploader), typeof(IsgdUploader),
-                                                          typeof (BitlyUploader),
-                                                          typeof(TextUploader)};
+                                                          typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader),
+                                                          typeof(KlamUploader), typeof(IsgdUploader), typeof(BitlyUploader), typeof(TextUploader)};
 
         public TextUploader() { }
 
@@ -32,7 +30,7 @@ namespace ZSS.TextUploadersLib
         /// </summary>
         /// <param name="txt"></param>
         /// <returns></returns>
-        public abstract string UploadText(TextFile txt);
+        public abstract string UploadText(string text);
 
         /// <summary>
         /// String used to test the functionality
@@ -43,32 +41,32 @@ namespace ZSS.TextUploadersLib
 
         public string UploadTextFromClipboard()
         {
-            string link = "";
             if (Clipboard.ContainsText())
             {
-                link = UploadText(new TextFile(Clipboard.GetText()));
+                return UploadText(Clipboard.GetText());
             }
             else if (Clipboard.ContainsFileDropList())
             {
                 string filePath = Clipboard.GetFileDropList()[0];
                 if (filePath.EndsWith(".txt"))
                 {
-                    link = UploadTextFromFile(filePath);
+                    return UploadTextFromFile(filePath);
                 }
             }
-            return link;
+            return "";
         }
 
         public string UploadTextFromFile(string filePath)
         {
-            string link = "";
             if (File.Exists(filePath))
             {
-                TextFile tf = new TextFile(File.ReadAllText(filePath));
-                tf.LocalFilePath = filePath;
-                link = UploadText(tf);
+                if (this.GetType() != typeof(FTPUploader))
+                {
+                    filePath = File.ReadAllText(filePath);
+                }
+                return UploadText(filePath);
             }
-            return link;
+            return "";
         }
 
         public string ToErrorString()

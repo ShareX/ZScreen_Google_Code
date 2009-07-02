@@ -5,7 +5,7 @@ namespace ZSS.TextUploadersLib.Helpers
 {
     interface ITextUploader
     {
-        string UploadText(TextFile text);
+        string UploadText(string text);
         string UploadTextFromClipboard();
         string UploadTextFromFile(string filePath);
         string ToErrorString();

@@ -43,13 +43,13 @@ namespace ZSS.TextUploaderLib.URLShorteners
             get { return "http://code.google.com/p/zscreen"; }
         }
 
-        public override string UploadText(TextFile text)
+        public override string UploadText(string text)
         {
-            if (!string.IsNullOrEmpty(text.LocalString))
+            if (!string.IsNullOrEmpty(text))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("api", APIKey);
-                arguments.Add("u", text.LocalString);
+                arguments.Add("u", text);
                 return GetResponse2(HostSettings.URL, arguments);
             }
             return "";

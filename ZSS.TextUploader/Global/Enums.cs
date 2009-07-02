@@ -10,8 +10,6 @@ namespace ZSS.TextUploadersLib
         FTP,
         [Description("pastebin.com")]
         PASTEBIN,
-        [Description("pastebin.ca")]
-        PASTEBIN_CA,
         [Description("paste2.org")]
         PASTE2,
         [Description("slexy.org")]
@@ -37,5 +35,4 @@ namespace ZSS.TextUploadersLib
         Public,
         Private
     }
-
 }
