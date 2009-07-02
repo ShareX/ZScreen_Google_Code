@@ -75,22 +75,16 @@ namespace ZSS.ImageUploaderLib
             return null;
         }
 
-        private Dictionary<string, string> GetUserPassArgs()
-        {
-            Dictionary<string, string> arguments = new Dictionary<string, string>();
-            arguments.Add("username", Username);
-            arguments.Add("password", Password);
-            return arguments;
-        }
-
         private ImageFileManager Upload(Image image, string msg)
         {
-            Dictionary<string, string> arguments = GetUserPassArgs();
-            string url = (string.IsNullOrEmpty(msg) ? UploadLink : UploadAndPostLink);
+            Dictionary<string, string> arguments = new Dictionary<string, string>();            
+            arguments.Add("username", Username);
+            arguments.Add("password", Password);
             if (!string.IsNullOrEmpty(this.Message))
             {
                 arguments.Add("message", msg);
             }
+            string url = (string.IsNullOrEmpty(msg) ? UploadLink : UploadAndPostLink);
             string source = PostImage2(image, url, "media", arguments);
             return ParseResult(source);
         }
