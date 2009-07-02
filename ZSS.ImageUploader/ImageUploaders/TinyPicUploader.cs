@@ -93,7 +93,7 @@ namespace ZSS.ImageUploaderLib
                 string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
 
                 Dictionary<string, string> args = new Dictionary<string, string>()
-                {                 
+                {
                     { "action", action },
                     { "tpid", tpid },
                     { "tpk", tpk },
