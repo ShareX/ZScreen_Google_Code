@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace ZSS
 {
@@ -57,6 +58,12 @@ namespace ZSS
                 point.Y = rect.Bottom;
             }
             return point;
+        }
+
+        public static string ToSpecialString(this Keys key)
+        {
+            string[] split = key.ToString().Split(new[] { ", " }, StringSplitOptions.None).Reverse().ToArray();
+            return string.Join(" + ", split);
         }
     }
 }

@@ -157,6 +157,7 @@ namespace ZSS
                     }
                     return XMLPortableFile;                               // Portable
                 }
+
                 if (File.Exists(OldXMLFilePath))
                 {
                     if (!File.Exists(DefaultXMLFilePath))
@@ -165,6 +166,7 @@ namespace ZSS
                     }
                     return DefaultXMLFilePath;                            // v1.x
                 }
+
                 return DefaultXMLFilePath;                                // v2.x
             }
         }
@@ -188,15 +190,13 @@ namespace ZSS
         public static Rectangle LastRegion = Rectangle.Empty;
         public static Rectangle LastCapture = Rectangle.Empty;
 
-        private static ZScreen ZScreenWindow;
         public static WorkerPrimary Worker;
         public static WorkerSecondary Worker2;
 
         public static Mutex mAppMutex;
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        public static KeyboardHook ZScreenKeyboardHook = new KeyboardHook();
+
         [STAThread]
         static void Main()
         {
@@ -257,20 +257,8 @@ namespace ZSS
                 mAppInfo.AppName = mProductName;
             }
 
-            ZScreenWindow = new ZScreen();
-
-            if (conf.WindowSize.Height == 0 || conf.WindowSize.Width == 0)
-            {
-                conf.WindowSize = ZScreenWindow.Size;
-            }
-
-            User32.m_Proc = Worker.ScreenshotUsingHotkeys;
-
-            Worker.KeyboardHookHandle = User32.setHook();
-
-            Application.Run(ZScreenWindow);
-
-            User32.UnhookWindowsHookEx(Worker.KeyboardHookHandle);
+            Application.Run(new ZScreen());
+            ZScreenKeyboardHook.Dispose();
         }
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
@@ -302,6 +290,5 @@ namespace ZSS
             bool tinyurl = (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL;
             return tinyurl;
         }
-
     }
 }

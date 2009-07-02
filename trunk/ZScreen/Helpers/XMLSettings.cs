@@ -77,7 +77,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options
             //~~~~~~~~~~~~~~~~~~~~~
-            
+
             WriteDebugFile = true;
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
@@ -120,18 +120,18 @@ namespace ZSS
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public HKcombo HKActiveWindow = new HKcombo(Keys.Alt, Keys.PrintScreen);
-        public HKcombo HKSelectedWindow = new HKcombo(Keys.Shift, Keys.PrintScreen);
-        public HKcombo HKCropShot = new HKcombo(Keys.Control, Keys.PrintScreen);
-        public HKcombo HKLastCropShot = new HKcombo(Keys.None);
-        public HKcombo HKAutoCapture = new HKcombo(Keys.None);
-        public HKcombo HKEntireScreen = new HKcombo(Keys.PrintScreen);
-        public HKcombo HKClipboardUpload = new HKcombo(Keys.None);
-        public HKcombo HKDropWindow = new HKcombo(Keys.None);
-        public HKcombo HKActionsToolbar = new HKcombo(Keys.None);
-        public HKcombo HKQuickOptions = new HKcombo(Keys.None);
-        public HKcombo HKLanguageTranslator = new HKcombo(Keys.None);
-        public HKcombo HKScreenColorPicker = new HKcombo(Keys.None);
+        public Keys HotkeyEntireScreen = Keys.PrintScreen;
+        public Keys HotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
+        public Keys HotkeyCropShot = Keys.Control | Keys.PrintScreen;
+        public Keys HotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
+        public Keys HotkeyClipboardUpload = Keys.None;
+        public Keys HotkeyLastCropShot = Keys.None;
+        public Keys HotkeyAutoCapture = Keys.None;
+        public Keys HotkeyDropWindow = Keys.None;
+        public Keys HotkeyActionsToolbar = Keys.None;
+        public Keys HotkeyQuickOptions = Keys.None;
+        public Keys HotkeyLanguageTranslator = Keys.None;
+        public Keys HotkeyScreenColorPicker = Keys.None;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Capture
@@ -280,7 +280,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<Software> ImageEditors = new List<Software>();
-        public Software ImageEditor = null;        
+        public Software ImageEditor = null;
         public Software TextEditorActive;
         public List<Software> TextEditors = new List<Software>();
         public bool TextEditorEnabled = false;

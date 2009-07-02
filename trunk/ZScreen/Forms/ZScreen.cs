@@ -74,18 +74,24 @@ namespace ZSS
             this.niTray.Text = this.Text;
             lblLogo.Text = this.Text;
 
+            if (Program.conf.WindowSize.Height == 0 || Program.conf.WindowSize.Width == 0)
+            {
+                Program.conf.WindowSize = this.Size;
+            }
+
             UpdateGuiControls();
 
             Program.Worker = new WorkerPrimary(this);
             Program.Worker2 = new WorkerSecondary(this);
             Program.Worker2.PerformOnlineTasks();
 
+            Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
+
             if (Program.conf.CheckUpdates) CheckUpdates();
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
@@ -1760,23 +1766,21 @@ namespace ZSS
         {
             dgvHotkeys.Rows.Clear();
 
-            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HKEntireScreen });
-            dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HKActiveWindow });
-            dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HKSelectedWindow });
-            dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HKCropShot });
-            dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HKLastCropShot });
-            dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HKAutoCapture });
-            dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HKClipboardUpload });
-            dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HKActionsToolbar });
-            dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HKQuickOptions });
-            dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HKDropWindow });
-            dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HKLanguageTranslator });
-            dgvHotkeys.Rows.Add(new object[] { "Screen Color Picker", Program.conf.HKScreenColorPicker });
+            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HotkeyEntireScreen.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HotkeyActiveWindow.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HotkeySelectedWindow.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HotkeyCropShot.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HotkeyLastCropShot.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HotkeyAutoCapture.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HotkeyClipboardUpload.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HotkeyActionsToolbar.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HotkeyQuickOptions.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HotkeyDropWindow.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HotkeyLanguageTranslator.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Screen Color Picker", Program.conf.HotkeyScreenColorPicker.ToSpecialString()  });
 
             dgvHotkeys.Refresh();
         }
-
-
 
         private void dgvHotkeys_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
