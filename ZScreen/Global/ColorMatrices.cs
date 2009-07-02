@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing.Imaging;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ZSS
 {
-    public class ColorMatrices
+    public static class ColorMatrices
     {
         //NTSC weights: 0.299, 0.587, 0.114
         public const float rw = 0.3086f;

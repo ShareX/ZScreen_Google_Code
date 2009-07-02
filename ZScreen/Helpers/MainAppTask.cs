@@ -95,17 +95,17 @@ namespace ZSS.Tasks
         public List<string> Errors { get; set; }
         public bool Retry { get; set; }
         public DateTime StartTime { get; set; }
-        private DateTime endTime;
+        private DateTime mEndTime;
         public DateTime EndTime
         {
             get
             {
-                return endTime;
+                return mEndTime;
             }
             set
             {
-                endTime = value;
-                UploadDuration = (int)Math.Round((endTime - StartTime).TotalMilliseconds);
+                mEndTime = value;
+                UploadDuration = (int)Math.Round((mEndTime - StartTime).TotalMilliseconds);
             }
         }
         public int UploadDuration { get; set; }
