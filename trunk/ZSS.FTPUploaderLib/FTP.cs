@@ -1,36 +1,18 @@
-#region License Information (GPL v2)
-/*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
-    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
-*/
-#endregion
-
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
 
 namespace ZSS
 {
     public class FTP
     {
-        private FTPAccount mAccount;
+        /// <summary>
+        /// Transfer buffer size
+        /// </summary>
+        private const int BufferSize = 2048;
+
+        private readonly FTPAccount mAccount;
 
         public FTP()
         {
@@ -44,8 +26,7 @@ namespace ZSS
 
         public void UploadFile(string fileName, string remoteName)
         {
-            int bufferSize = 2 * 1024;
-            byte[] buffer = new byte[bufferSize];
+            byte[] buffer = new byte[BufferSize];
 
             FileInfo fi = new FileInfo(fileName);
 
@@ -60,53 +41,55 @@ namespace ZSS
             request.UsePassive = !mAccount.IsActive;
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
-            FileStream fs = fi.OpenRead();
-
-            Stream stream = request.GetRequestStream();
-
-            int contentLength = fs.Read(buffer, 0, bufferSize);
-
-            while (contentLength != 0)
+            using (FileStream fs = fi.OpenRead())
+            using (Stream stream = request.GetRequestStream())
             {
-                stream.Write(buffer, 0, contentLength);
-                contentLength = fs.Read(buffer, 0, bufferSize);
-            }
+                int contentLength = fs.Read(buffer, 0, BufferSize);
 
-            stream.Close();
-            fs.Close();
+                while (contentLength != 0)
+                {
+                    stream.Write(buffer, 0, contentLength);
+                    contentLength = fs.Read(buffer, 0, BufferSize);
+                }
+
+                stream.Close();
+                fs.Close();
+            }
         }
 
         public void DownloadFile(string fileName, string filePath)
         {
-            int bufferSize = 1024 * 2;
-            byte[] buffer = new byte[bufferSize];
+            byte[] buffer = new byte[BufferSize];
 
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/" + fileName);
 
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-
-            FileStream fStream = new FileStream(filePath, FileMode.Create);
-
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            request.UseBinary = true;
-            request.UsePassive = !mAccount.IsActive;
-            request.KeepAlive = false;
-            request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
-
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            Stream stream = response.GetResponseStream();
-
-            int bytes = stream.Read(buffer, 0, bufferSize);
-
-            while (bytes > 0)
+            using (FileStream fStream = new FileStream(filePath, FileMode.Create))
             {
-                fStream.Write(buffer, 0, bytes);
-                bytes = stream.Read(buffer, 0, bufferSize);
-            }
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
-            stream.Close();
-            fStream.Close();
-            response.Close();
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                request.UseBinary = true;
+                request.UsePassive = !mAccount.IsActive;
+                request.KeepAlive = false;
+                request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
+
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                using (Stream stream = response.GetResponseStream())
+                {
+                    int bytes = stream.Read(buffer, 0, BufferSize);
+
+                    while (bytes > 0)
+                    {
+                        fStream.Write(buffer, 0, bytes);
+                        bytes = stream.Read(buffer, 0, BufferSize);
+                    }
+
+                    stream.Close();
+                    fStream.Close();
+                    response.Close();
+                }
+            }
         }
 
         public void DeleteFile(string fileName)
@@ -121,12 +104,13 @@ namespace ZSS
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
-            Stream stream = response.GetResponseStream();
-            StreamReader streamReader = new StreamReader(stream);
-
-            streamReader.Close();
-            stream.Close();
-            response.Close();
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader streamReader = new StreamReader(stream))
+            {
+                streamReader.Close();
+                stream.Close();
+                response.Close();
+            }
         }
 
         public void Rename(string fileName, string newFileName)
@@ -141,9 +125,10 @@ namespace ZSS
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            Stream stream = response.GetResponseStream();
-
-            stream.Close();
+            using (Stream stream = response.GetResponseStream())
+            {
+                stream.Close();
+            }
             response.Close();
         }
 
@@ -158,22 +143,21 @@ namespace ZSS
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            Stream stream = response.GetResponseStream();
+            using (Stream stream = response.GetResponseStream())
+            {
+                long fileSize = response.ContentLength;
 
-            long fileSize = response.ContentLength;
+                stream.Close();
+                response.Close();
 
-            stream.Close();
-            response.Close();
-
-            return fileSize;
+                return fileSize;
+            }
         }
 
         public string[] ListDirectory()
         {
-            StringBuilder result = new StringBuilder();
-
+            List<string> directories = new List<string>();
             Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/");
-
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -182,23 +166,18 @@ namespace ZSS
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
             WebResponse response = request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            string readLine = reader.ReadLine();
-
-            while (readLine != null)
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
-                result.Append(readLine);
-                result.Append("\n");
-                readLine = reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    directories.Add(reader.ReadLine());
+                }
+
+                reader.Close();
+                response.Close();
+
+                return directories.ToArray();
             }
-
-            result.Remove(result.ToString().LastIndexOf('\n'), 1);
-
-            reader.Close();
-            response.Close();
-
-            return result.ToString().Split('\n');
         }
 
         private void MakeDirectory(string dirName)
@@ -212,9 +191,10 @@ namespace ZSS
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            Stream stream = response.GetResponseStream();
-
-            stream.Close();
+            using (Stream stream = response.GetResponseStream())
+            {
+                stream.Close();
+            }
             response.Close();
         }
     }
