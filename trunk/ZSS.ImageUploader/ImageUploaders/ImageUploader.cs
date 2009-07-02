@@ -244,18 +244,17 @@ namespace ZSS.ImageUploaderLib
                 string postHeader = string.Format("--{0}\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\nContent-Type: {3}\n\n",
                     boundary, fileFormName ?? "file", this.mFileName, GetMimeType(imageFormat) ?? "application/octet-stream");
 
-                MemoryStream imageStream = new MemoryStream();
-                image.Save(imageStream, imageFormat);
-                image.Dispose();
-
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + postData);
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
                 request.Method = "POST";
-                //request.UserAgent = "Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; WOW64; SV1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; InfoPath.1; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
-                //request.Referer = referer;
 
                 byte[] postHeaderBytes = Encoding.UTF8.GetBytes(postHeader);
                 byte[] boundaryBytes = Encoding.ASCII.GetBytes("\n--" + boundary + "\n");
+
+                MemoryStream imageStream = new MemoryStream();
+                image.Save(imageStream, imageFormat);
+                image.Dispose();
+                imageStream.Position = 0;
 
                 request.ContentLength = postHeaderBytes.Length + imageStream.Length + boundaryBytes.Length;
                 Stream requestStream = request.GetRequestStream();
