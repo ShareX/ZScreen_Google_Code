@@ -192,9 +192,9 @@
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Global\GDI32.cs" />
+    <Compile Include="Global\GDI32Mgr.cs" />
     <Compile Include="Global\Structures.cs" />
-    <Compile Include="Global\User32.cs" />
+    <Compile Include="Global\User32Mgr.cs" />
     <Compile Include="Helpers\CacheCleanerTask.cs" />
     <Compile Include="Helpers\MainAppTask.cs" />
     <Compile Include="Helpers\RemoteViewerTask.cs" />
