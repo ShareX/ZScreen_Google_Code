@@ -36,11 +36,11 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
-    public sealed class TinyPicUploader : HTTPUploader
+    public sealed class TinyPicUploader : ImageUploader
     {
         public string TinyPicID { get; set; }
         public string TinyPicKey { get; set; }

@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using ZSS.Global;
-using ZSS.ImageUploaders;
+using ZSS.ImageUploaderLib;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
@@ -24,7 +24,7 @@ namespace ZSS.Helpers
         public void UploadImage()
         {
             task.StartTime = DateTime.Now;
-            HTTPUploader imageUploader = null;
+            ImageUploader imageUploader = null;
 
             if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(task.LocalFilePath))
             {
@@ -58,7 +58,7 @@ namespace ZSS.Helpers
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
-                    imageUploader = new TwitPic(Program.conf.TwitPicUserName, Program.conf.TwitPicPassword, TwitPic.UploadType.Upload);
+                    imageUploader = new TwitPicUploader(Program.conf.TwitPicUserName, Program.conf.TwitPicPassword, TwitPicUploader.UploadType.Upload);
                     break;
             }
 
@@ -149,7 +149,7 @@ namespace ZSS.Helpers
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
 
-                    ZSS.ImageUploaders.FTPUploader fu = new ZSS.ImageUploaders.FTPUploader(acc)
+                    ZSS.ImageUploaderLib.FTPUploader fu = new ZSS.ImageUploaderLib.FTPUploader(acc)
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) ||
                         Program.conf.FTPCreateThumbnail,

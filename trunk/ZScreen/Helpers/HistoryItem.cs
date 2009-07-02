@@ -22,7 +22,7 @@
 #endregion
 
 using System;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 using ZSS.Tasks;
 using System.Text;
 using System.IO;

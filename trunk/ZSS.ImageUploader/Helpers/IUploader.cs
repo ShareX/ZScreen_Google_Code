@@ -21,9 +21,9 @@
 */
 #endregion
 
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
     public interface IUploader
     {

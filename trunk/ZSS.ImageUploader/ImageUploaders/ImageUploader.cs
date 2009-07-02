@@ -36,11 +36,11 @@ using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
-    public abstract class HTTPUploader : IUploader
+    public abstract class ImageUploader : IUploader
     {
         /// <summary>
         /// List of Errors logged by ImageUploaders
@@ -61,7 +61,7 @@ namespace ZSS.ImageUploaders
         private string mFileName = "image";
         private bool RandomizeFileName { get; set; }
 
-        protected HTTPUploader()
+        protected ImageUploader()
         {
             this.Errors = new List<string>();
             this.UploadMode = UploadMode.ANONYMOUS;

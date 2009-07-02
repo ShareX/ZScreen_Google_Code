@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.ImageUploaders;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib;
+using ZSS.ImageUploaderLib.Helpers;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Xml.Linq;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
-    public sealed class TwitPic : HTTPUploader
+    public sealed class TwitPicUploader : ImageUploader
     {
         public enum UploadType { Upload, UploadAndPost }
         public enum ThumbnailType { Mini, Thumb }
@@ -28,7 +28,7 @@ namespace ZSS.ImageUploaders
 
         public override string Name { get { return "TwitPic"; } }
 
-        public TwitPic(string username, string password, UploadType uploadType)
+        public TwitPicUploader(string username, string password, UploadType uploadType)
         {
             Username = username;
             Password = password;

@@ -28,11 +28,11 @@ using System.Drawing.Imaging;
 using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
-    public sealed class CustomUploader : HTTPUploader
+    public sealed class CustomUploader : ImageUploader
     {
         private ImageHostingService iHosting;
 

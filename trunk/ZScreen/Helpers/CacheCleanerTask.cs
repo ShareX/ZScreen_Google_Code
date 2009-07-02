@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using ZSS.ImageUploaders;
+using ZSS.ImageUploaderLib;
 
 namespace ZSS.Tasks
 {

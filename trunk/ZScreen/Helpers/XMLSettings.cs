@@ -111,6 +111,11 @@ namespace ZSS
         public Size CropGridSize = new Size(100, 100);
         public string HelpToLanguage = "en";
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //  Destinations / Accounts
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
