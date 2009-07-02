@@ -63,29 +63,35 @@ namespace ZSS.ImageUploaderLib
             switch (TwitPicUploadType)
             {
                 case UploadType.Upload:
-                    return Upload(image);
+                    return Upload(image, "");
                 case UploadType.UploadAndPost:
-                    return UploadAndPost(image);
+                    TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
+                    if (msgBox.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        this.Message = msgBox.Message;
+                    }
+                    return Upload(image, msgBox.Message);
             }
             return null;
         }
 
-        private ImageFileManager Upload(Image image)
+        private Dictionary<string, string> GetUserPassArgs()
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("username", Username);
             arguments.Add("password", Password);
-            string source = PostImage2(image, UploadLink, "media", arguments);
-            return ParseResult(source);
+            return arguments;
         }
 
-        private ImageFileManager UploadAndPost(Image image)
+        private ImageFileManager Upload(Image image, string msg)
         {
-            Dictionary<string, string> arguments = new Dictionary<string, string>();
-            arguments.Add("username", Username);
-            arguments.Add("password", Password);
-            arguments.Add("message", Message);
-            string source = PostImage2(image, UploadAndPostLink, "media", arguments);
+            Dictionary<string, string> arguments = GetUserPassArgs();
+            string url = (string.IsNullOrEmpty(msg) ? UploadLink : UploadAndPostLink);
+            if (!string.IsNullOrEmpty(this.Message))
+            {
+                arguments.Add("message", msg);
+            }
+            string source = PostImage2(image, url, "media", arguments);
             return ParseResult(source);
         }
 
@@ -118,6 +124,7 @@ namespace ZSS.ImageUploaderLib
                         break;
                 }
             }
+            
 
             return ifm;
         }

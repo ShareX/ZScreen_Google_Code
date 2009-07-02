@@ -114,7 +114,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~~~~~~
         //  Destinations / Accounts
         //~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
+        public TwitPicUploadType TwiPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys

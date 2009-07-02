@@ -76,8 +76,7 @@
             this.Name = "TwitterMsg";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Description";
-            this.TopMost = true;
-            this.Load += new System.EventHandler(this.InputBox_Load);
+            this.TopMost = true;            
             this.Shown += new System.EventHandler(this.InputBox_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
