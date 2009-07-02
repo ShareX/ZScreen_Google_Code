@@ -659,6 +659,7 @@ namespace ZSS
                     if (!Program.conf.ShowInTaskbar)
                     {
                         this.Hide();
+                        if (Program.conf.AutoSaveSettings) WriteSettings();    
                     }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
@@ -666,8 +667,7 @@ namespace ZSS
                     Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                     this.Refresh();
-                }
-                if (Program.conf.AutoSaveSettings) WriteSettings();
+                }                       
             }
         }
 
@@ -699,6 +699,7 @@ namespace ZSS
             Program.conf.Save();
             Program.Worker.SaveHistoryItems();
             Settings.Default.Save();
+            Console.WriteLine("Settings written to file.");
         }
 
         private void RewriteImageEditorsRightClickMenu()
@@ -3498,6 +3499,11 @@ namespace ZSS
         private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.TwiPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
+        }
+
+        private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Program.conf.AutoSaveSettings) WriteSettings();
         }
     }
 }
