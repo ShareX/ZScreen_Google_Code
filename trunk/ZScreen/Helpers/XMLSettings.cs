@@ -313,8 +313,10 @@ namespace ZSS
         public bool AutoChangeUploadDestination = true;
         public decimal UploadDurationLimit = 10000;
 
-        public string ImageShackRegistrationCode = "";
+        [Category("Accounts / ImageShack")]
+        public string ImageShackRegistrationCode { get; set; }
         public string ImageShackUserName = "zscreen";
+        [Category("Accounts / ImageShack")]
         public bool ImageShackShowImagesInPublic { get; set; }
 
         public string TinyPicShuk = "";
@@ -322,8 +324,15 @@ namespace ZSS
         public string TinyPicUserName { get; set; }
         [Category("Accounts / TinyPic"), PasswordPropertyText(true)]
         public string TinyPicPassword { get; set; }
-        public bool RememberTinyPicUserPass = false;
-        public bool TinyPicSizeCheck = false;
+        [Category("Accounts / TinyPic")]
+        public bool RememberTinyPicUserPass { get; set; }
+        [Category("Accounts / TinyPic")]
+        public bool TinyPicSizeCheck { get; set; }
+
+        [Category("Accounts / TwitPic")]
+        public string TwitPicUserName { get; set; }
+        [Category("Accounts / TwitPic"), PasswordPropertyText(true)]
+        public string TwitPicPassword { get; set; }
 
         // Custom Image MyCollection
 

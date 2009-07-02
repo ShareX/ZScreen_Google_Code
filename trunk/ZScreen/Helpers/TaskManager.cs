@@ -57,6 +57,9 @@ namespace ZSS.Helpers
                     imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
                     break;
+                case ImageDestType.TWITPIC:
+                    imageUploader = new TwitPic(Program.conf.TwitPicUserName, Program.conf.TwitPicPassword);
+                    break;
             }
 
             if (imageUploader != null)
