@@ -575,7 +575,8 @@ namespace ZSS.Helpers
         private void PublishImage(ref MainAppTask task)
         {
             TaskManager tm = new TaskManager(ref task);
-            if (task.MyImage != null && Adapter.ImageSoftwareEnabled())
+
+            if (task.MyImage != null && Adapter.ImageSoftwareEnabled() && task.Job != MainAppTask.Jobs.UPLOAD_IMAGE)
             {
                 tm.ImageEdit();
             }
