@@ -98,7 +98,7 @@ namespace ZSS.ImageUploaderLib
 
             if (xele != null)
             {
-                switch (xele.Attribute("stat").Value)
+                switch (xele.AttributeFirstValue("status", "stat"))
                 {
                     case "ok":
                         string statusid, userid, mediaid, mediaurl;
