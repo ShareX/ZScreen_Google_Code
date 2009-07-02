@@ -30,6 +30,7 @@ using ZSS.Properties;
 using ZSS.Forms;
 using ZSS.Helpers;
 using ZSS.TextUploadersLib;
+using ZSS.TextUploaderLib.URLShorteners;
 
 namespace ZSS
 {
@@ -284,11 +285,6 @@ namespace ZSS
             return false;
         }
 
-        public static bool MakeTinyURL()
-        {
-            // LimitLongURL = 0 means make tinyURL always
-            bool tinyurl = (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL;
-            return tinyurl;
-        }
+
     }
 }

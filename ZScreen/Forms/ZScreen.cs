@@ -458,7 +458,7 @@ namespace ZSS
                 }
             }
 
-            if (Program.conf.ImageSoftwareEnabled())
+            if (Adapter.ImageSoftwareEnabled())
             {
                 int i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditor.Name);
                 if (i != -1)
@@ -727,7 +727,7 @@ namespace ZSS
 
                 //check the active ftpUpload account
 
-                if (Program.conf.ImageSoftwareEnabled())
+                if (Adapter.ImageSoftwareEnabled())
                 {
                     CheckCorrectIsRightClickMenu(Program.conf.ImageEditor.Name);
                 }
@@ -3250,61 +3250,7 @@ namespace ZSS
         {
             this.UpdateGuiControls();
         }
-
-        private TextUploader FindUrlShortener(string name)
-        {
-            switch (name)
-            {
-                case BitlyUploader.Hostname:
-                    return new BitlyUploader();
-                case IsgdUploader.Hostname:
-                    return new IsgdUploader();
-                case TinyURLUploader.Hostname:
-                    return new TinyURLUploader();
-                case ThreelyUploader.Hostname:
-                    return new ThreelyUploader();
-                case KlamUploader.Hostname:
-                    return new KlamUploader();
-            }
-            return null;
-        }
-
-        private TextUploader FindTextUploader(string name)
-        {
-            switch (name)
-            {
-                case PastebinUploader.Hostname:
-                    return new PastebinUploader();
-                case PastebinCaUploader.Hostname:
-                    return new PastebinCaUploader();
-                case Paste2Uploader.Hostname:
-                    return new Paste2Uploader();
-                case SlexyUploader.Hostname:
-                    return new SlexyUploader();
-                case SniptUploader.Hostname:
-                    return new SniptUploader();
-                default:
-                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
-                    {
-                        if (Program.conf.FTPAccountList.Count > 0)
-                        {
-                            FTPAccount acc = new FTPAccount();
-                            if (Program.conf.FTPSelected >= 0)
-                            {
-                                acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                            }
-                            else
-                            {
-                                acc = Program.conf.FTPAccountList[0];
-                            }
-                            return new ZSS.TextUploadersLib.FTPUploader(acc);
-                        }
-                    }
-                    break;
-            }
-            return null;
-        }
-
+    
         private void TextUploadersAddButton_Click(object sender, EventArgs e)
         {
             if (ucTextUploaders.Templates.SelectedIndex > -1)
@@ -3312,7 +3258,7 @@ namespace ZSS
                 string name = ucTextUploaders.Templates.SelectedItem.ToString();
                 if (!string.IsNullOrEmpty(name))
                 {
-                    TextUploader textUploader = FindTextUploader(name);
+                    TextUploader textUploader = Adapter.FindTextUploader(name);
                     if (textUploader != null)
                     {
                         Program.conf.TextUploadersList.Add(textUploader);
@@ -3482,7 +3428,7 @@ namespace ZSS
                 string name = (string)ucUrlShorteners.Templates.SelectedItem;
                 if (!string.IsNullOrEmpty(name))
                 {
-                    TextUploader textUploader = FindUrlShortener(name);
+                    TextUploader textUploader = Adapter.FindUrlShortener(name);
                     if (textUploader != null)
                     {
                         ucUrlShorteners.MyCollection.Items.Add(textUploader);

@@ -95,7 +95,7 @@ namespace ZSS.Helpers
                     string url = task.ImageManager.GetFullImageUrl();
                     if (task.MakeTinyURL)
                     {
-                        url = OnlineTasks.TryShortenURL(url);
+                        url = Adapter.TryShortenURL(url);
                     }
                     if (task.ImageManager != null)
                     {
@@ -226,7 +226,7 @@ namespace ZSS.Helpers
             string url = textUploader.UploadTextFromFile(task.LocalFilePath);
             if (task.MakeTinyURL)
             {
-                url = OnlineTasks.TryShortenURL(url);
+                url = Adapter.TryShortenURL(url);
             }
             task.RemoteFilePath = url;
 
