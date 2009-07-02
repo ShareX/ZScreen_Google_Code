@@ -550,7 +550,7 @@ namespace ZSS.Helpers
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
-            t.MakeTinyURL = Program.MakeTinyURL();
+            t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(localFilePath);
             t.SetLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
@@ -564,7 +564,7 @@ namespace ZSS.Helpers
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.SCREENSHOTS;
-            t.MakeTinyURL = Program.MakeTinyURL();
+            t.MakeTinyURL = Adapter.MakeTinyURL();
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -575,7 +575,7 @@ namespace ZSS.Helpers
         private void PublishImage(ref MainAppTask task)
         {
             TaskManager tm = new TaskManager(ref task);
-            if (task.MyImage != null && Program.conf.ImageSoftwareEnabled())
+            if (task.MyImage != null && Adapter.ImageSoftwareEnabled())
             {
                 tm.ImageEdit();
             }

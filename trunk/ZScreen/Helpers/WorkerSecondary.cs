@@ -32,7 +32,7 @@ namespace ZSS.Helpers
             try
             {
                 Program.mGTranslator = new GoogleTranslate();
-                OnlineTasks.UpdateTinyPicShuk();
+                Adapter.UpdateTinyPicShuk();
             }
             catch (Exception ex)
             {

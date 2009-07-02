@@ -591,10 +591,6 @@ namespace ZSS
             return false;
         }
 
-        public bool ImageSoftwareEnabled()
-        {
-            return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
-        }
-
+   
     }
 }
