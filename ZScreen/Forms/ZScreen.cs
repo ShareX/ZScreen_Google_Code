@@ -3505,5 +3505,6 @@ namespace ZSS
         {
             if (Program.conf.AutoSaveSettings) WriteSettings();
         }
+
     }
 }
