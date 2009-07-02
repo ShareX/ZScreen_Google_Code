@@ -28,14 +28,16 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.Win32;
+using Greenshot.Helpers;
 using ZSS.ColorsLib;
 using ZSS.Forms;
+using ZSS.Global;
 using ZSS.Helpers;
 using ZSS.ImageUploaderLib;
 using ZSS.ImageUploaderLib.Helpers;
@@ -44,10 +46,6 @@ using ZSS.Tasks;
 using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
-using ZSS.Global;
-using System.Drawing.Printing;
-using Greenshot.Helpers;
-using System.Collections;
 
 namespace ZSS
 {
@@ -890,8 +888,6 @@ namespace ZSS
 
                 img.Dispose();
 
-                if (Program.conf.DeleteLocal)
-                    File.Delete(fullFile);
             }
         }
 
@@ -1227,11 +1223,14 @@ namespace ZSS
                                     btnUploadersTest.Enabled = true;
                                     break;
                             }
-                            if (Program.conf.DeleteLocal)
+                            if (task.ImageDestCategory != ImageDestType.FILE)
                             {
-                                if (File.Exists(task.LocalFilePath))
+                                if (Program.conf.DeleteLocal)
                                 {
-                                    File.Delete(task.LocalFilePath);
+                                    if (File.Exists(task.LocalFilePath))
+                                    {
+                                        File.Delete(task.LocalFilePath);
+                                    }
                                 }
                             }
                             break;
