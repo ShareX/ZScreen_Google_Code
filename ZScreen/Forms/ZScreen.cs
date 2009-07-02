@@ -400,6 +400,10 @@ namespace ZSS
             nudErrorRetry.Value = Program.conf.ErrorRetryCount;
             cboAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
             nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
+
+            txtTwitPicUserName.Text = Program.conf.TwitPicUserName;
+            txtTwitPicPassword.Text = Program.conf.TwitPicPassword;
+
             if (cboUploadMode.Items.Count == 0)
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
@@ -4604,6 +4608,32 @@ namespace ZSS
         private void llblHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(Program.URL_HELP);
+        }
+
+        private void ucTextUploaders_Load(object sender, EventArgs e)
+        {
+            TextUploaders_SelectedIndexChanged(sender, e);
+        }
+
+        private void ucUrlShorteners_Load(object sender, EventArgs e)
+        {
+            UrlShorteners_SelectedIndexChanged(sender, e);
+        }
+
+        private void txtTwitPicUserName_TextChanged(object sender, EventArgs e)
+        {
+            if (mGuiIsReady)
+            {
+                Program.conf.TwitPicUserName = txtTwitPicUserName.Text;
+            }
+        }
+
+        private void txtTwitPicPassword_TextChanged(object sender, EventArgs e)
+        {
+            if (mGuiIsReady)
+            {
+                Program.conf.TwitPicPassword = txtTwitPicPassword.Text;
+            }
         }
     }
 }

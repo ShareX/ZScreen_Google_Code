@@ -64,6 +64,8 @@ namespace ZSS
         [Description("ImageShack")]
         IMAGESHACK,
         [Description("TinyPic")]
-        TINYPIC
+        TINYPIC,
+        [Description("TwitPic")]
+        TWITPIC
     }
 }
