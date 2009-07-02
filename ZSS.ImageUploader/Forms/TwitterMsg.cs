@@ -28,7 +28,6 @@ namespace ZSS.ImageUploaderLib
 {
     public partial class TwitterMsg : Form
     {
-        public string Question { get; set; }
         public string Message { get; set; }
 
         public TwitterMsg(string title)
@@ -66,12 +65,6 @@ namespace ZSS.ImageUploaderLib
         {
             txtMsg.Focus();
             txtMsg.SelectionLength = txtMsg.Text.Length;
-        }
-
-        private void InputBox_Load(object sender, EventArgs e)
-        {
-            this.Text = this.Question;
-            this.txtMsg.Text = this.Message;
         }
     }
 }
