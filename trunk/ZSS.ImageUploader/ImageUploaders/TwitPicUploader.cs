@@ -37,13 +37,12 @@ namespace ZSS.ImageUploaderLib
 {
     public sealed class TwitPicUploader : ImageUploader
     {
-        public enum UploadType { Upload, UploadAndPost }
         public enum ThumbnailType { Mini, Thumb }
 
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public UploadType TwitPicUploadType { get; set; }
+        public TwitPicUploadType TwitPicUploadType { get; set; }
         public ThumbnailType TwitPicThumbnailType { get; set; }
 
         private const string UploadLink = "http://twitpic.com/api/upload";
@@ -51,7 +50,7 @@ namespace ZSS.ImageUploaderLib
 
         public override string Name { get { return "TwitPic"; } }
 
-        public TwitPicUploader(string username, string password, UploadType uploadType)
+        public TwitPicUploader(string username, string password, TwitPicUploadType uploadType)
         {
             Username = username;
             Password = password;
@@ -62,9 +61,9 @@ namespace ZSS.ImageUploaderLib
         {
             switch (TwitPicUploadType)
             {
-                case UploadType.Upload:
+                case TwitPicUploadType.UPLOAD_IMAGE_ONLY:
                     return Upload(image, "");
-                case UploadType.UploadAndPost:
+                case TwitPicUploadType.UPLOAD_IMAGE_AND_TWITTER:
                     TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
                     msgBox.ShowDialog();
                     return Upload(image, msgBox.Message);
