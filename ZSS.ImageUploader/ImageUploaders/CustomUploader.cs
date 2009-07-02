@@ -48,57 +48,48 @@ namespace ZSS.ImageUploaderLib
 
         public override ImageFileManager UploadImage(Image image)
         {
-            ImageFormat imageFormat = image.RawFormat;
-            MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, imageFormat);
-            image.Dispose();
-            imgStream.Position = 0;
+            ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
-            List<ImageFile> imageFiles = new List<ImageFile>();
-            string imgSource = "";
 
             try
             {
                 ServicePointManager.Expect100Continue = false;
-                CookieContainer cookies = new CookieContainer();
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 foreach (string[] args in iHosting.Arguments)
                 {
                     arguments.Add(args[0], args[1]);
                 }
-                imgSource = PostImage(imgStream, iHosting.UploadURL, iHosting.FileForm, GetMimeType(imageFormat), arguments, cookies, "");
-                if (imgSource != "")
+                ifm.Source = PostImage(image, iHosting.UploadURL, iHosting.FileForm, arguments);
+                if (!string.IsNullOrEmpty(ifm.Source))
                 {
                     List<String> regexps = new List<string>();
                     foreach (string regexp in iHosting.RegexpList)
                     {
-                        regexps.Add(Regex.Match(imgSource, regexp).Value);
+                        regexps.Add(Regex.Match(ifm.Source, regexp).Value);
                     }
                     iHosting.Regexps = regexps;
                     string fullimage = iHosting.ReturnLink(iHosting.Fullimage);
                     string thumbnail = iHosting.ReturnLink(iHosting.Thumbnail);
                     if (!string.IsNullOrEmpty(fullimage))
                     {
-                        imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                        //throw new Exception(StripHTML(imgSource));
+                        ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
                     }
                     if (!string.IsNullOrEmpty(thumbnail))
                     {
-                        imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                        ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
                     }
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 this.Errors.Add(ex.Message);
             }
             finally
             {
                 ServicePointManager.Expect100Continue = oldValue;
-                imgStream.Dispose();
             }
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
     }

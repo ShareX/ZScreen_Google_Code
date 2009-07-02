@@ -57,11 +57,8 @@ namespace ZSS.ImageUploaderLib
         /// <returns>Returns a list of images.</returns>
         public ImageFileManager UploadImage(string localFilePath)
         {
-            // Create a new ImageFile List
             List<ImageFile> ifl = new List<ImageFile>();
 
-            //try
-            //{
             FTP ftpClient = new FTP(ref this.FTPAccount);
             //removed binary mode code line
 

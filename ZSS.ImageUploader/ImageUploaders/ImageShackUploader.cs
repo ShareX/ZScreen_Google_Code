@@ -43,6 +43,7 @@ namespace ZSS.ImageUploaderLib
     {
         private string DeveloperKey { get; set; }
         private string RegistrationCode { get; set; }
+
         /// <summary>
         /// Toggle where images will be added to the public profile
         /// </summary>
@@ -67,8 +68,8 @@ namespace ZSS.ImageUploaderLib
 
         private string Email { get; set; }
 
-        private readonly string URLStandard = "http://imageshack.us/index.php";
-        private readonly string URLUnifiedAPI = "http://imageshack.us/upload_api.php";
+        private const string URLStandard = "http://imageshack.us/index.php";
+        private const string URLUnifiedAPI = "http://imageshack.us/upload_api.php";
 
         /// <summary>
         /// Uploads Image according to Upload Mode
@@ -81,9 +82,9 @@ namespace ZSS.ImageUploaderLib
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImage1(image);
+                    return UploadImageAPI(image);
                 case UploadMode.ANONYMOUS:
-                    return UploadImage2(image);
+                    return UploadImageAnonymous(image);
             }
 
             return null;
@@ -95,15 +96,9 @@ namespace ZSS.ImageUploaderLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImage1(Image image)
+        private ImageFileManager UploadImageAPI(Image image)
         {
             ImageFileManager ifm = new ImageFileManager();
-
-            ImageFormat imageFormat = image.RawFormat;
-            MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, imageFormat);
-            image.Dispose();
-            imgStream.Position = 0;
             bool oldValue = ServicePointManager.Expect100Continue;
 
             try
@@ -112,21 +107,21 @@ namespace ZSS.ImageUploaderLib
                 CookieContainer cookies = new CookieContainer();
                 Dictionary<string, string> arguments = new Dictionary<string, string>
                 {
-                                                           {"MAX_FILE_SIZE", "13145728"},
-                                                           {"refer", ""},
-                                                           {"brand", ""},
-                                                           {"optimage", "1"},
-                                                           {"rembar", "1"},
-                                                           {"submit", "host it!"},
-                                                           {"optsize", "resample"},
-                                                           {"xml", "yes"},
-                                                           {"public", Public ? "yes" : "no"}
-                                                       };
+                    {"MAX_FILE_SIZE", "13145728"},
+                    {"refer", ""},
+                    {"brand", ""},
+                    {"optimage", "1"},
+                    {"rembar", "1"},
+                    {"submit", "host it!"},
+                    {"optsize", "resample"},
+                    {"xml", "yes"},
+                    {"public", Public ? "yes" : "no"}
+                };
 
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
-                ifm.Source = PostImage(imgStream, URLUnifiedAPI, "fileupload", GetMimeType(imageFormat), arguments, cookies, "http://www.imageshack.us");
+                ifm.Source = PostImage(image, URLUnifiedAPI, "fileupload", arguments);
                 string fullimage = GetXMLVal(ifm.Source, "image_link");
                 string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
 
@@ -135,11 +130,13 @@ namespace ZSS.ImageUploaderLib
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 this.Errors.Add(ex.Message);
             }
             finally
-            { ServicePointManager.Expect100Continue = oldValue; }
-            imgStream.Dispose();
+            {
+                ServicePointManager.Expect100Continue = oldValue;
+            }
 
             return ifm;
         }
@@ -150,21 +147,14 @@ namespace ZSS.ImageUploaderLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImage2(Image image)
+        private ImageFileManager UploadImageAnonymous(Image image)
         {
-            ImageFormat imageFormat = image.RawFormat;
-            MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, imageFormat);
-            image.Dispose();
-            imgStream.Position = 0;
+            ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
-            List<ImageFile> imageFiles = new List<ImageFile>();
-            string imgSource = "";
 
             try
             {
                 ServicePointManager.Expect100Continue = false;
-                CookieContainer cookies = new CookieContainer();
                 Dictionary<string, string> arguments = new Dictionary<string, string>() 
                 { 
                     { "MAX_FILE_SIZE", "13145728" },
@@ -180,24 +170,27 @@ namespace ZSS.ImageUploaderLib
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!Public) arguments.Add("public", "no");
 
-                imgSource = PostImage(imgStream, URLStandard, "fileupload", GetMimeType(imageFormat), arguments, cookies, "http://www.imageshack.us");
-                string fullimage = GetXMLVal(imgSource, "image_link");
-                string thumbnail = GetXMLVal(imgSource, "thumb_link");
+                ifm.Source = PostImage(image, URLStandard, "fileupload", arguments);
+                string fullimage = GetXMLVal(ifm.Source, "image_link");
+                string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
 
-                if (!string.IsNullOrEmpty(fullimage)) imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbnail)) imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 this.Errors.Add(ex.Message);
             }
             finally
-            { ServicePointManager.Expect100Continue = oldValue; }
-            imgStream.Dispose();
+            {
+                ServicePointManager.Expect100Continue = oldValue;
+            }
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
+
+        #region Old methods
 
         /// <summary>
         /// Old method of uploading to ImageShack
@@ -335,5 +328,7 @@ namespace ZSS.ImageUploaderLib
             ifm = new ImageFileManager(imageFiles);
             return ifm;
         }
+
+        #endregion
     }
 }

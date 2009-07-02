@@ -46,9 +46,7 @@ namespace ZSS.ImageUploaderLib
         public string TinyPicKey { get; set; }
         public string Shuk { get; set; }
 
-        private string URLAPI = "http://api.tinypic.com/api.php";
-
-        // public TinyPicUploader() { }
+        private const string URLAPI = "http://api.tinypic.com/api.php";
 
         public TinyPicUploader(string id, string key)
         {
@@ -88,17 +86,10 @@ namespace ZSS.ImageUploaderLib
         private ImageFileManager UploadImageAPI(Image image)
         {
             ImageFileManager ifm = new ImageFileManager();
-
-            MemoryStream imgStream = new MemoryStream();
             bool oldValue = ServicePointManager.Expect100Continue;
 
             try
             {
-                ImageFormat imageFormat = image.RawFormat;
-                image.Save(imgStream, imageFormat);
-                image.Dispose();
-                imgStream.Position = 0;
-
                 string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
 
                 Dictionary<string, string> args = new Dictionary<string, string>()
@@ -137,23 +128,21 @@ namespace ZSS.ImageUploaderLib
                 if (!string.IsNullOrEmpty(Shuk))
                     arguments.Add("shuk", Shuk);
 
-                ifm.Source = PostImage(imgStream, URLAPI, "uploadfile", GetMimeType(imageFormat), arguments, cookies, "http://tinypic.com/");
-                string fullSize = GetXMLVal(ifm.Source, "fullsize"); // Regex.Match(imgSource, "(?<=fullsize>).+(?=</fullsize)").Value;
-                string thumbNail = GetXMLVal(ifm.Source, "thumbnail"); // Regex.Match(imgSource, "(?<=thumbnail>).+(?=</thumbnail)").Value;
+                ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments); //imgStream, URLAPI, "uploadfile", GetMimeType(imageFormat), arguments, cookies, "http://tinypic.com/");
+                string fullimage = GetXMLVal(ifm.Source, "fullsize"); // Regex.Match(imgSource, "(?<=fullsize>).+(?=</fullsize)").Value;
+                string thumbnail = GetXMLVal(ifm.Source, "thumbnail"); // Regex.Match(imgSource, "(?<=thumbnail>).+(?=</thumbnail)").Value;
 
-                if (!string.IsNullOrEmpty(fullSize))
-                    ifm.ImageFileList.Add(new ImageFile(fullSize, ImageFile.ImageType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbNail))
-                    ifm.ImageFileList.Add(new ImageFile(thumbNail, ImageFile.ImageType.THUMBNAIL));
+                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 this.Errors.Add(ex.Message);
             }
             finally
             {
                 ServicePointManager.Expect100Continue = oldValue;
-                imgStream.Dispose();
             }
 
             return ifm;
@@ -167,19 +156,12 @@ namespace ZSS.ImageUploaderLib
         /// <returns></returns>
         private ImageFileManager UploadImageAnonymous(Image image)
         {
-            ImageFormat imageFormat = image.RawFormat;
-            MemoryStream imgStream = new MemoryStream();
-            image.Save(imgStream, imageFormat);
-            image.Dispose();
-            imgStream.Position = 0;
+            ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
-            List<ImageFile> imageFiles = new List<ImageFile>();
-            string imgSource = "";
 
             try
             {
                 ServicePointManager.Expect100Continue = false;
-                CookieContainer cookies = new CookieContainer();
                 Dictionary<string, string> arguments = new Dictionary<string, string>()
                 {
                     { "domain_lang", "en" },
@@ -188,27 +170,29 @@ namespace ZSS.ImageUploaderLib
                     { "file_type", "image" },
                     { "dimension", "1600" }
                 };
-                imgSource = PostImage(imgStream, "http://s5.tinypic.com/plugin/upload.php", "the_file", GetMimeType(imageFormat), arguments, cookies, "");
-                string imgIval = Regex.Match(imgSource, "(?<=ival\" value=\").+(?=\" />)").Value;
-                string imgPic = Regex.Match(imgSource, "(?<=pic\" value=\").+(?=\" />)").Value;
-                string imgType = Regex.Match(imgSource, "(?<=ext\" value=\").*(?=\" />)").Value;
+                ifm.Source = PostImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
+                string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
+                string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;
+                string imgType = Regex.Match(ifm.Source, "(?<=ext\" value=\").*(?=\" />)").Value;
                 if ((imgIval != "") && (imgPic != ""))
                 {
                     if (imgType == "") imgType = ".jpg";
                     string fullimage = "http://i" + imgIval + ".tinypic.com/" + imgPic + imgType;
                     string thumbnail = "http://i" + imgIval + ".tinypic.com/" + imgPic + "_th" + imgType;
-                    imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                    imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                    ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                    ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 this.Errors.Add(ex.Message);
             }
-            finally { ServicePointManager.Expect100Continue = oldValue; }
-            imgStream.Dispose();
+            finally
+            {
+                ServicePointManager.Expect100Continue = oldValue;
+            }
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 
