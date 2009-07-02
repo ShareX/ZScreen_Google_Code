@@ -14,39 +14,76 @@ namespace ZSS.ImageUploaders
 {
     public sealed class TwitPic : HTTPUploader
     {
+        public enum UploadType { Upload, UploadAndPost }
+        public enum ThumbnailType { Mini, Thumb }
+
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Message { get; set; }
+        public UploadType TwitPicUploadType { get; set; }
+        public ThumbnailType TwitPicThumbnailType { get; set; }
 
         private const string UploadLink = "http://twitpic.com/api/upload";
         private const string UploadAndPostLink = "http://twitpic.com/api/uploadAndPost";
 
         public override string Name { get { return "TwitPic"; } }
 
-        public TwitPic(string username, string password)
+        public TwitPic(string username, string password, UploadType uploadType)
         {
             Username = username;
             Password = password;
+            TwitPicUploadType = uploadType;
         }
 
-        protected override ImageFileManager UploadImage(Image image, ImageFormat format)
+        public override ImageFileManager UploadImage(Image image)
         {
-            ImageFileManager ifm = new ImageFileManager();
+            switch (TwitPicUploadType)
+            {
+                case UploadType.Upload:
+                    return Upload(image);
+                case UploadType.UploadAndPost:
+                    return UploadAndPost(image);
+            }
+            return null;
+        }
 
+        private ImageFileManager Upload(Image image)
+        {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("username", Username);
             arguments.Add("password", Password);
-            ifm.Source = PostImage(image, UploadLink, "media", arguments);
+            string source = PostImage(image, UploadLink, "media", arguments);
+            return ParseResult(source);
+        }
 
-            XDocument xdoc = XDocument.Parse(ifm.Source);
+        private ImageFileManager UploadAndPost(Image image)
+        {
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
+            arguments.Add("username", Username);
+            arguments.Add("password", Password);
+            arguments.Add("message", Message);
+            string source = PostImage(image, UploadAndPostLink, "media", arguments);
+            return ParseResult(source);
+        }
+
+        private ImageFileManager ParseResult(string source)
+        {
+            ImageFileManager ifm = new ImageFileManager();
+
+            XDocument xdoc = XDocument.Parse(source);
             XElement xele = xdoc.Element("rsp");
 
-            switch(xele.Attribute("stat").Value)
+            switch (xele.Attribute("stat").Value)
             {
                 case "ok":
-                    string mediaid, mediaurl;
+                    string statusid, userid, mediaid, mediaurl;
+                    statusid = xele.Element("statusid").Value;
+                    userid = xele.Element("userid").Value;
                     mediaid = xele.Element("mediaid").Value;
                     mediaurl = xele.Element("mediaurl").Value;
                     ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
+                    ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
+                        TwitPicThumbnailType.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
                     break;
                 case "fail":
                     string code, msg;

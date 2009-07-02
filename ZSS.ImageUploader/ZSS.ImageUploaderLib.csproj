@@ -58,7 +58,6 @@
     <Compile Include="Helpers\ImageFileManager.cs" />
     <Compile Include="Helpers\ImageHostingServiceManager.cs" />
     <Compile Include="HTTP\CustomUploader.cs" />
-    <Compile Include="HTTP\FlickrUploader.cs" />
     <Compile Include="Helpers\ImageFile.cs" />
     <Compile Include="HTTP\ImageShackUploader.cs" />
     <Compile Include="Helpers\ImageHostingService.cs" />
