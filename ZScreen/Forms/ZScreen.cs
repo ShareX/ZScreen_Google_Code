@@ -69,16 +69,7 @@ namespace ZSS
         {
             InitializeComponent();
 
-            this.Icon = Resources.zss_main;
-            this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
-            this.niTray.Text = this.Text;
-            lblLogo.Text = this.Text;
-
-            if (Program.conf.WindowSize.Height == 0 || Program.conf.WindowSize.Width == 0)
-            {
-                Program.conf.WindowSize = this.Size;
-            }
-
+            SetFormSettings();
             UpdateGuiControls();
 
             Program.Worker = new WorkerPrimary(this);
@@ -90,12 +81,17 @@ namespace ZSS
             if (Program.conf.CheckUpdates) CheckUpdates();
         }
 
-        private void ZScreen_Load(object sender, EventArgs e)
+        private void SetFormSettings()
         {
-            FileSystem.AppendDebug("Started ZScreen");
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
+            this.Icon = Resources.zss_main;
+            this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
+            this.niTray.Text = this.Text;
+            this.lblLogo.Text = this.Text;
 
-            tcAccounts.TabPages.Remove(tpMindTouch);
+            if (Program.conf.WindowSize.Height == 0 || Program.conf.WindowSize.Width == 0)
+            {
+                Program.conf.WindowSize = this.Size;
+            }
 
             // Accounts
             ucFTPAccounts.btnAdd.Click += new EventHandler(FTPAccountAddButton_Click);
@@ -115,6 +111,15 @@ namespace ZSS
             ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
+        }
+
+        private void ZScreen_Load(object sender, EventArgs e)
+        {
+            FileSystem.AppendDebug("Started ZScreen");
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
+
+            tcAccounts.TabPages.Remove(tpMindTouch);
+
             AddToClipboardByDoubleClick(tpHistory);
 
             // Context Menu
@@ -1388,9 +1393,6 @@ namespace ZSS
                 Program.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
             }
         }
-
-
-
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
@@ -3503,8 +3505,7 @@ namespace ZSS
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.conf.AutoSaveSettings) WriteSettings();
+            if (Program.conf.AutoSaveSettings) new Thread(WriteSettings).Start();
         }
-
     }
 }

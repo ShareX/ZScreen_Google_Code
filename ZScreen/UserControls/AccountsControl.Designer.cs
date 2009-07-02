@@ -61,7 +61,7 @@
             // 
             this.btnAdd.BackColor = System.Drawing.Color.Transparent;
             this.btnAdd.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnAdd.Location = new System.Drawing.Point(16, 8);
+            this.btnAdd.Location = new System.Drawing.Point(8, 8);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(64, 24);
             this.btnAdd.TabIndex = 119;
@@ -72,7 +72,7 @@
             // 
             this.btnTest.BackColor = System.Drawing.Color.Transparent;
             this.btnTest.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnTest.Location = new System.Drawing.Point(160, 8);
+            this.btnTest.Location = new System.Drawing.Point(152, 8);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(64, 24);
             this.btnTest.TabIndex = 117;
@@ -82,7 +82,7 @@
             // btnRemove
             // 
             this.btnRemove.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnRemove.Location = new System.Drawing.Point(88, 8);
+            this.btnRemove.Location = new System.Drawing.Point(80, 8);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(64, 24);
             this.btnRemove.TabIndex = 118;
@@ -98,7 +98,7 @@
             this.AccountsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.AccountsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.AccountsLayout.Controls.Add(this.SettingsGrid, 1, 0);
-            this.AccountsLayout.Controls.Add(this.AccountsList, 0, 0);
+            this.AccountsLayout.Controls.Add(this.AccountsList, -1, 0);
             this.AccountsLayout.Location = new System.Drawing.Point(8, 40);
             this.AccountsLayout.Name = "AccountsLayout";
             this.AccountsLayout.RowCount = 1;
