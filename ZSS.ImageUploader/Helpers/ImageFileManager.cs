@@ -8,7 +8,6 @@ namespace ZSS.ImageUploaders.Helpers
     {
         public List<ImageFile> ImageFileList = new List<ImageFile>();
         public string URL { get; set; }
-        public int FileCount { get; set; }
         public string Source { get; set; }
         /// <summary>
         /// Local File Path of the Image if exists
@@ -22,7 +21,6 @@ namespace ZSS.ImageUploaders.Helpers
             if (list != null && list.Count > 0)
             {
                 this.ImageFileList = list;
-                this.FileCount = list.Count;
                 this.Source = list[0].Source;
                 this.URL = this.GetFullImageUrl();
             }

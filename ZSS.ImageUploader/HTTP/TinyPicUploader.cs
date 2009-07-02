@@ -91,7 +91,6 @@ namespace ZSS.ImageUploaders
 
             MemoryStream imgStream = new MemoryStream();
             bool oldValue = ServicePointManager.Expect100Continue;
-            List<ImageFile> imageFiles = new List<ImageFile>();
 
             try
             {

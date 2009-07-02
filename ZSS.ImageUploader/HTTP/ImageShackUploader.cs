@@ -97,14 +97,14 @@ namespace ZSS.ImageUploaders
         /// <returns></returns>
         private ImageFileManager UploadImage1(Image image)
         {
+            ImageFileManager ifm = new ImageFileManager();
+
             ImageFormat imageFormat = image.RawFormat;
             MemoryStream imgStream = new MemoryStream();
             image.Save(imgStream, imageFormat);
             image.Dispose();
             imgStream.Position = 0;
             bool oldValue = ServicePointManager.Expect100Continue;
-            List<ImageFile> imageFiles = new List<ImageFile>();
-            string imgSource = "";
 
             try
             {
@@ -126,12 +126,12 @@ namespace ZSS.ImageUploaders
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
-                imgSource = PostImage(imgStream, URLUnifiedAPI, "fileupload", GetMimeType(imageFormat), arguments, cookies, "http://www.imageshack.us");
-                string fullimage = GetXMLVal(imgSource, "image_link");
-                string thumbnail = GetXMLVal(imgSource, "thumb_link");
+                ifm.Source = PostImage(imgStream, URLUnifiedAPI, "fileupload", GetMimeType(imageFormat), arguments, cookies, "http://www.imageshack.us");
+                string fullimage = GetXMLVal(ifm.Source, "image_link");
+                string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
 
-                if (!string.IsNullOrEmpty(fullimage)) imageFiles.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbnail)) imageFiles.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
             }
             catch (Exception ex)
             {
@@ -141,7 +141,6 @@ namespace ZSS.ImageUploaders
             { ServicePointManager.Expect100Continue = oldValue; }
             imgStream.Dispose();
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 
