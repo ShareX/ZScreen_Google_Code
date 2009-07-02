@@ -42,7 +42,7 @@ namespace ZSS.ImageUploaderLib
 
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Message { get; set; }
+
         public UploadType TwitPicUploadType { get; set; }
         public ThumbnailType TwitPicThumbnailType { get; set; }
 
@@ -66,10 +66,7 @@ namespace ZSS.ImageUploaderLib
                     return Upload(image, "");
                 case UploadType.UploadAndPost:
                     TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
-                    if (msgBox.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        this.Message = msgBox.Message;
-                    }
+                    msgBox.ShowDialog();
                     return Upload(image, msgBox.Message);
             }
             return null;
@@ -77,10 +74,10 @@ namespace ZSS.ImageUploaderLib
 
         private ImageFileManager Upload(Image image, string msg)
         {
-            Dictionary<string, string> arguments = new Dictionary<string, string>();            
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("username", Username);
             arguments.Add("password", Password);
-            if (!string.IsNullOrEmpty(this.Message))
+            if (!string.IsNullOrEmpty(msg))
             {
                 arguments.Add("message", msg);
             }
@@ -118,7 +115,7 @@ namespace ZSS.ImageUploaderLib
                         break;
                 }
             }
-            
+
 
             return ifm;
         }
