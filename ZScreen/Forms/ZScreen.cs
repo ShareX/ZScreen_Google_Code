@@ -53,17 +53,14 @@ namespace ZSS
     {
         #region Variables
 
-        public IntPtr KeyboardHookHandle = (IntPtr)1; //Used for the keyboard hook
-        private bool mGuiIsReady, mClose, mTakingScreenShot, mSetHotkeys, bQuickOptionsOpened, bDropWindowOpened,
-            bQuickActionsOpened, bAutoScreenshotsOpened;
-        private int mHKSelectedRow = -1, mHadFocusAt;
-        private HKcombo mHKSetcombo;
-        private TextBox mHadFocus;
-        private const int mWM_KEYDOWN = 0x0100, mWM_SYSKEYDOWN = 0x0104;
-        private ContextMenuStrip codesMenu = new ContextMenuStrip();
-        private GoogleTranslate mGTranslator;
-        private Debug debug;
+        private bool mGuiIsReady, mClose;
 
+        private int mHadFocusAt;
+        private TextBox mHadFocus;
+
+        private ContextMenuStrip codesMenu = new ContextMenuStrip();
+
+        private Debug debug;
         private List<int> mLogoRandomList = new List<int>(5);
 
         #endregion
@@ -78,6 +75,10 @@ namespace ZSS
             lblLogo.Text = this.Text;
 
             UpdateGuiControls();
+
+            Program.Worker = new WorkerPrimary(this);
+            Program.Worker2 = new WorkerSecondary(this);
+            Program.Worker2.PerformOnlineTasks();
 
             if (Program.conf.CheckUpdates) CheckUpdates();
         }
@@ -119,7 +120,7 @@ namespace ZSS
             if (Program.conf.ActionsToolbarMode)
             {
                 this.Hide();
-                this.ShowActionsToolbar(false);
+                Program.Worker.ShowActionsToolbar(false);
             }
             else
             {
@@ -412,7 +413,6 @@ namespace ZSS
             }
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
             chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
-            PerformOnlineTasks();
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
             cbAutoTranslate.Checked = Program.conf.AutoTranslate;
             txtAutoTranslate.Text = Program.conf.AutoTranslateLength.ToString();
@@ -545,162 +545,6 @@ namespace ZSS
             txtSettingsDir.Text = Program.SettingsDir;
         }
 
-        private void UpdateGuiControlsHistory()
-        {
-            tpHistoryList.Text = string.Format("History List ({0}/{1})", lbHistory.Items.Count, Program.conf.HistoryMaxNumber);
-        }
-
-        public IntPtr ScreenshotUsingHotkeys(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && (wParam == (IntPtr)mWM_KEYDOWN || wParam == (IntPtr)mWM_SYSKEYDOWN))
-            {
-                if (mSetHotkeys)
-                {
-                    if ((Keys)Marshal.ReadInt32(lParam) == Keys.Enter)
-                    {
-                        QuitSettingHotkeys();
-                    }
-                    else if ((Keys)Marshal.ReadInt32(lParam) == Keys.Escape)
-                    {
-                        HKcombo hkc = new HKcombo(Keys.None);
-                        mHKSetcombo = hkc;
-                        dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = hkc;
-                        SetHotkey(mHKSelectedRow, hkc);
-                    }
-                    else
-                    {
-                        mHKSetcombo = KeyboardMgr.GetHKcombo(lParam);
-                        dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = mHKSetcombo;
-                        SetHotkey(mHKSelectedRow, mHKSetcombo);
-                    }
-                }
-                else
-                {
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKEntireScreen, lParam)) //Entire Screen
-                    {
-                        StartBW_EntireScreen();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKActiveWindow, lParam)) //Active Window
-                    {
-                        StartBW_ActiveWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKSelectedWindow, lParam)) //Selected Window
-                    {
-                        StartBW_SelectedWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKCropShot, lParam)) //Crop Shot
-                    {
-                        StartBW_CropShot();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKLastCropShot, lParam)) //Last Crop Shot
-                    {
-                        StartBW_LastCropShot();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKAutoCapture, lParam)) //Auto Capture
-                    {
-                        ShowAutoCapture();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKClipboardUpload, lParam)) //Clipboard Upload
-                    {
-                        UploadUsingClipboard();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKDropWindow, lParam)) //Drag & Drop Window
-                    {
-                        ShowDropWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKActionsToolbar, lParam)) //Actions Toolbar
-                    {
-                        ShowActionsToolbar(true);
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKQuickOptions, lParam)) //Quick Options
-                    {
-                        ShowQuickOptions();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKLanguageTranslator, lParam)) //Language Translator
-                    {
-                        StartBW_LanguageTranslator();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKScreenColorPicker, lParam)) //Screen Color Picker
-                    {
-                        ScreenColorPicker();
-                        return KeyboardHookHandle;
-                    }
-                }
-            }
-            return User32.CallNextHookEx(KeyboardHookHandle, nCode, wParam, lParam);
-        }
-
-        private void StartBW_EntireScreen()
-        {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN);
-        }
-
-        private void StartBW_ActiveWindow()
-        {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
-        }
-
-        private void StartBW_SelectedWindow()
-        {
-            if (!mTakingScreenShot)
-            {
-                StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
-            }
-        }
-
-        private void StartBW_CropShot()
-        {
-            if (!mTakingScreenShot)
-            {
-                StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
-            }
-        }
-
-        private void StartBW_LastCropShot()
-        {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
-        }
-
-        private void StartBW_LanguageTranslator()
-        {
-            if (Clipboard.ContainsText())
-            {
-                StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(Clipboard.GetText(),
-                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
-                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage, mGTranslator.LanguageOptions.TargetLangList)));
-            }
-        }
-
-        private void StartBW_LanguageTranslator(GoogleTranslate.TranslationInfo translationInfo)
-        {
-            if (cbFromLanguage.Items.Count > 0 && cbToLanguage.Items.Count > 0 && !translationInfo.IsEmpty())
-            {
-                MainAppTask t = CreateTask(MainAppTask.Jobs.LANGUAGE_TRANSLATOR);
-                t.JobCategory = JobCategoryType.TEXT;
-                btnTranslate.Enabled = false;
-                btnTranslateTo1.Enabled = false;
-                t.TranslationInfo = translationInfo;
-                t.MyWorker.RunWorkerAsync(t);
-            }
-        }
-
-        private void ScreenColorPicker()
-        {
-            DialogColor dialogColor = new DialogColor { ScreenPicker = true };
-            dialogColor.Show();
-        }
-
         #region "Cache Cleaner Methods"
 
         private void CleanCache()
@@ -720,598 +564,26 @@ namespace ZSS
 
         #region "Background Worker Safe Methods"
 
-        private void CaptureActiveWindow(ref MainAppTask task)
-        {
-            try
-            {
-                task.CaptureActiveWindow();
-                WriteImage(task);
-                PublishImage(ref task);
-            }
-            catch (ArgumentOutOfRangeException aor)
-            {
-                task.Errors.Add("Invalid FTP Account Selection");
-                FileSystem.AppendDebug(aor.ToString());
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-                if (Program.conf.CaptureEntireScreenOnError)
-                {
-                    CaptureRegionOrWindow(ref task);
-                }
-            }
-        }
 
-        private string CaptureRegionOrWindow(ref MainAppTask task)
-        {
-            string filePath = "";
-            Image imgSS = null;
-
-            try
-            {
-                mTakingScreenShot = true;
-                imgSS = User32.CaptureScreen(Program.conf.ShowCursor);
-
-                if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
-                {
-                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
-                }
-                else
-                {
-                    Crop c = new Crop((Bitmap)imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
-                    if (c.ShowDialog() == DialogResult.OK)
-                    {
-                        if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
-                        {
-                            task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
-                        }
-                        else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
-                        {
-                            task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
-                        }
-                    }
-                }
-
-                mTakingScreenShot = false;
-                if (task.MyImage != null)
-                {
-                    WriteImage(task);
-                    PublishImage(ref task);
-                }
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-                task.Errors.Add(ex.Message);
-                if (Program.conf.CaptureEntireScreenOnError)
-                {
-                    CaptureScreen(ref task);
-                }
-            }
-            finally
-            {
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_CROP_MODE);
-                mTakingScreenShot = false;
-                if (imgSS != null) imgSS.Dispose();
-            }
-
-            return filePath;
-        }
-
-        private void CaptureScreen(ref MainAppTask task)
-        {
-            task.CaptureScreen();
-            WriteImage(task);
-            PublishImage(ref task);
-        }
-
-        private string GetFilePath(MainAppTask.Jobs job)
-        {
-            switch (job)
-            {
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                    return FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), Program.conf.ManualNaming);
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    return FileSystem.GetFilePath(NameParser.Convert(Program.conf.NamingActiveWindow, NameParser.NameType.ActiveWindow), Program.conf.ManualNaming);
-            }
-            throw new Exception("Unsupported Job for getting File Path.");
-        }
-
-        /// <summary>
-        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        private void PublishImage(ref MainAppTask task)
-        {
-            TaskManager tm = new TaskManager(ref task);
-            if (task.MyImage != null && Program.conf.ImageSoftwareEnabled())
-            {
-                tm.ImageEdit();
-            }
-
-            if (task.SafeToUpload())
-            {
-                FileSystem.AppendDebug("File for HDD: " + task.LocalFilePath);
-                tm.UploadImage();
-            }
-        }
-
-        /// <summary>
-        /// Function to edit Text in a Text Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        private void PublishText(ref MainAppTask task)
-        {
-            TaskManager tm = new TaskManager(ref task);
-            tm.UploadText();
-        }
 
         #endregion
 
         #region "GUI Methods"
 
-        private void WriteImage(MainAppTask t)
+        private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
         {
-            if (t.MyImage != null)
-            {
-                switch (t.Job)
-                {
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED));
-                        break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED));
-                        break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN));
-                        break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                    case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE));
-                        break;
-                }
-                // Update LocalFilePath again, due to possible PNG to JPG changes
-                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, t.LocalFilePath));
-            }
+            Program.conf.CloseQuickActions = cbCloseQuickActions.Checked;
         }
 
-        private void SaveImageToClipboard(string fullFile)
-        {
-            if (File.Exists(fullFile))
-            {
-                Image img = Image.FromFile(fullFile);
-                Clipboard.SetImage(img);
 
-                img.Dispose();
 
-            }
-        }
-
-        private void ShowQuickOptions()
-        {
-            if (!bQuickOptionsOpened)
-            {
-                bQuickOptionsOpened = true;
-                QuickOptions quickOptions = new QuickOptions { Icon = Resources.zss_main };
-                quickOptions.FormClosed += new FormClosedEventHandler(QuickOptionsFormClosed);
-                quickOptions.ApplySettings += new EventHandler(QuickOptionsApplySettings);
-                quickOptions.Show();
-                Rectangle taskbar = User32.GetTaskbarRectangle();
-                quickOptions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickOptions.Width - 100,
-                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - quickOptions.Height - 10);
-            }
-        }
-
-        private void QuickOptionsApplySettings(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
-        }
-
-        private void QuickOptionsFormClosed(object sender, FormClosedEventArgs e)
-        {
-            bQuickOptionsOpened = false;
-        }
-
-        private BackgroundWorker CreateWorker()
-        {
-            BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
-            bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(BwApp_DoWork);
-            bwApp.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(BwApp_ProgressChanged);
-            bwApp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BwApp_RunWorkerCompleted);
-            return bwApp;
-        }
-
-        private MainAppTask CreateTask(MainAppTask.Jobs job)
-        {
-            BackgroundWorker bwApp = CreateWorker();
-            MainAppTask task = new MainAppTask(bwApp, job);
-            if (task.Job != MainAppTask.Jobs.CUSTOM_UPLOADER_TEST)
-            {
-                task.ImageDestCategory = Program.conf.ScreenshotDestMode;
-            }
-            else
-            {
-                task.ImageDestCategory = ImageDestType.CUSTOM_UPLOADER;
-            }
-            return task;
-        }
-
-        /// <summary>
-        /// Worker for Screenshots: Active Window, Crop, Entire Screen
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        private void StartWorkerScreenshots(MainAppTask.Jobs job)
-        {
-            MainAppTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.SCREENSHOTS;
-            t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        /// <summary>
-        /// Worker for Images: Drag n Drop, Image from Clipboard, Custom Uploader
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the image</param>
-        private void StartWorkerImages(MainAppTask.Jobs job, string localFilePath)
-        {
-            MainAppTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.PICTURES;
-            t.MakeTinyURL = Program.MakeTinyURL();
-            t.SetImage(localFilePath);
-            t.SetLocalFilePath(localFilePath);
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        /// <summary>
-        /// Method to run the Main App Task
-        /// </summary>
-        /// <param name="task"></param>
-        /// <returns></returns>
-        private bool RunWorker(MainAppTask task)
-        {
-            task.MyWorker.RunWorkerAsync(task);
-            return true;
-        }
-
-        /// <summary>
-        /// Worker for Text: Paste2, Pastebin
-        /// </summary>
-        /// <returns></returns>
-        private MainAppTask GetWorkerText(MainAppTask.Jobs job, string localFilePath)
-        {
-            MainAppTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.TEXT;
-            // t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyTextUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
-            t.SetLocalFilePath(localFilePath);
-
-            switch (job)
-            {
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    btnTranslate.Enabled = false;
-                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(txtTranslateText.Text, mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex],
-                        mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex]);
-                    if (t.TranslationInfo.IsEmpty())
-                    {
-                        btnTranslate.Enabled = true;
-                    }
-                    break;
-            }
-            return t;
-        }
 
         #endregion
 
         #region "Event Handlers"
 
-        private void BwApp_DoWork(object sender, DoWorkEventArgs e)
-        {
-            MainAppTask task = (MainAppTask)e.Argument;
-            task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
-            ClipboardManager.Queue();
 
-            if (Program.conf.PromptForUpload && task.ImageDestCategory != ImageDestType.CLIPBOARD &
-                task.ImageDestCategory != ImageDestType.FILE &&
-                (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
-                task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
-                MessageBox.Show("Are you really want upload to " + task.ImageDestCategory.GetDescription() + " ?",
-                "ZScreen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-            {
-                e.Result = task;
-                return;
-            }
 
-            if ((task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD) &&
-                task.ImageDestCategory != ImageDestType.FTP && !task.IsValidImage())
-            {
-                if (Program.conf.AutoSwitchFTP)
-                {
-                    task.ImageDestCategory = ImageDestType.FTP;
-                }
-                else
-                {
-                    e.Result = task;
-                    return;
-                }
-            }
-
-            if (task.JobCategory == JobCategoryType.SCREENSHOTS)
-            {
-                if (Program.conf.ScreenshotDelayTime != 0)
-                {
-                    Thread.Sleep((int)(Program.conf.ScreenshotDelayTime));
-                }
-            }
-
-            FileSystem.AppendDebug(".");
-            FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
-
-            switch (task.JobCategory)
-            {
-                case JobCategoryType.PICTURES:
-                    PublishImage(ref task);
-                    break;
-                case JobCategoryType.SCREENSHOTS:
-                    switch (task.Job)
-                    {
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                            CaptureScreen(ref task);
-                            break;
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                            CaptureRegionOrWindow(ref task);
-                            break;
-                        case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                            CaptureActiveWindow(ref task);
-                            break;
-                        case MainAppTask.Jobs.UPLOAD_IMAGE:
-                            PublishImage(ref task);
-                            break;
-                    }
-                    break;
-                case JobCategoryType.TEXT:
-                    switch (task.Job)
-                    {
-                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                            PublishText(ref task);
-                            break;
-                        case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                            LanguageTranslator(ref task);
-                            break;
-                    }
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
-            {
-                if (Program.conf.AddFailedScreenshot ||
-                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 ||
-                    task.JobCategory == JobCategoryType.TEXT))
-                {
-                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
-                }
-            }
-
-            e.Result = task;
-        }
-
-        private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            switch ((MainAppTask.ProgressType)e.ProgressPercentage)
-            {
-                case (MainAppTask.ProgressType)101:
-                    PrintHelper ph = new PrintHelper(e.UserState as Image);
-                    PrinterSettings ps = ph.PrintWithDialog();
-                    break;
-                case (MainAppTask.ProgressType)102:
-                    try
-                    {
-                        ImageOutput.PrepareClipboardObject();
-                        ImageOutput.CopyToClipboard(e.UserState as Image);
-                    }
-                    catch (Exception ex)
-                    {
-                        FileSystem.AppendDebug(ex.Message);
-                    }
-                    break;
-                case (MainAppTask.ProgressType)103:
-                    ImageOutput.SaveWithDialog(e.UserState as Image);
-                    break;
-                case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
-                    AddHistoryItem((HistoryItem)e.UserState);
-                    break;
-                case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
-                    if (e.UserState.GetType() == typeof(string))
-                    {
-                        string f = e.UserState.ToString();
-                        if (File.Exists(f))
-                        {
-                            SaveImageToClipboard(f);
-                            FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
-                        }
-                    }
-                    else if (e.UserState.GetType() == typeof(Bitmap))
-                    {
-                        try
-                        {
-                            Clipboard.SetImage((Image)e.UserState);
-                        }
-                        catch (Exception ex)
-                        {
-                            // Sometimes there are 'Clipboard Set did not succeed' errors
-                            FileSystem.AppendDebug(ex.Message);
-                        }
-                    }
-                    break;
-                case MainAppTask.ProgressType.FLASH_ICON:
-                    niTray.Icon = (Icon)e.UserState;
-                    break;
-                case MainAppTask.ProgressType.SET_ICON_BUSY:
-                    MainAppTask task = (MainAppTask)e.UserState;
-                    niTray.Text = this.Text + " - " + task.Job.GetDescription();
-                    niTray.Icon = Resources.zss_busy;
-                    break;
-                case MainAppTask.ProgressType.UPDATE_CROP_MODE:
-                    cboCropGridMode.Checked = Program.conf.CropGridToggle;
-                    break;
-                case MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION:
-                    cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-                    break;
-            }
-        }
-
-        private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            try
-            {
-                MainAppTask task = (MainAppTask)e.Result;
-
-                FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
-
-                if (!RetryUpload(task))
-                {
-                    switch (task.JobCategory)
-                    {
-                        case JobCategoryType.TEXT:
-                            switch (task.Job)
-                            {
-                                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                                    txtTranslateText.Text = task.TranslationInfo.SourceText;
-                                    txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
-                                    txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
-                                    txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
-                                    if (Program.conf.ClipboardTranslate)
-                                    {
-                                        Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
-                                    }
-                                    btnTranslate.Enabled = true;
-                                    btnTranslateTo1.Enabled = true;
-                                    break;
-                                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                    {
-                                        Clipboard.SetText(task.RemoteFilePath);
-                                    }
-                                    break;
-                            }
-                            break;
-                        case JobCategoryType.SCREENSHOTS:
-                            switch (task.Job)
-                            {
-                                case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                                    if (task.ImageManager != null && task.ImageManager.ImageFileList.Count > 0)
-                                    {
-                                        if (task.ImageManager.GetFullImageUrl() != "")
-                                        {
-                                            txtUploadersLog.AppendText(task.DestinationName + " full image: " +
-                                                task.ImageManager.GetFullImageUrl() + "\r\n");
-                                        }
-                                        if (task.ImageManager.GetThumbnailUrl() != "")
-                                        {
-                                            txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
-                                                task.ImageManager.GetThumbnailUrl() + "\r\n");
-                                        }
-                                    }
-                                    btnUploadersTest.Enabled = true;
-                                    break;
-                            }
-                            if (task.ImageDestCategory != ImageDestType.FILE)
-                            {
-                                if (Program.conf.DeleteLocal)
-                                {
-                                    if (File.Exists(task.LocalFilePath))
-                                    {
-                                        File.Delete(task.LocalFilePath);
-                                    }
-                                }
-                            }
-                            break;
-                    }
-
-                    if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
-                    {
-                        ClipboardManager.AddTask(task);
-                        ClipboardManager.SetClipboardText();
-                    }
-
-                    if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
-                    {
-                        btnOpenSourceText.Enabled = true;
-                        btnOpenSourceBrowser.Enabled = true;
-                        btnOpenSourceString.Enabled = true;
-                    }
-
-                    niTray.Text = this.Text;
-                    if (ClipboardManager.Workers > 1)
-                    {
-                        niTray.Icon = Resources.zss_busy;
-                    }
-                    else
-                    {
-                        niTray.Icon = Resources.zss_tray;
-                    }
-
-                    if (task.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath))
-                    {
-                        if (Program.conf.CompleteSound)
-                        {
-                            System.Media.SystemSounds.Exclamation.Play();
-                        }
-                        if (Program.conf.ShowBalloonTip)
-                        {
-                            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
-                        }
-                    }
-
-                    if (task.Errors.Count > 0)
-                    {
-                        FileSystem.AppendDebug(task.Errors[task.Errors.Count - 1]);
-                    }
-                }
-
-                if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-            }
-            finally
-            {
-                ClipboardManager.Commit();
-            }
-        }
-
-        private bool RetryUpload(MainAppTask t)
-        {
-            if (Program.conf.ImageUploadRetry && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
-                (t.ImageDestCategory == ImageDestType.IMAGESHACK || t.ImageDestCategory == ImageDestType.TINYPIC))
-            {
-                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
-                task.JobCategory = t.JobCategory;
-                task.SetImage(t.LocalFilePath);
-                task.SetLocalFilePath(t.LocalFilePath);
-                if (t.ImageDestCategory == ImageDestType.IMAGESHACK)
-                {
-                    task.ImageDestCategory = ImageDestType.TINYPIC;
-                }
-                else
-                {
-                    task.ImageDestCategory = ImageDestType.IMAGESHACK;
-                }
-                task.Retry = true;
-                task.MyWorker.RunWorkerAsync(task);
-                return true;
-            }
-            return false;
-        }
 
         private void LoadHistoryItems()
         {
@@ -1325,44 +597,9 @@ namespace ZSS
             {
                 lbHistory.SelectedIndex = 0;
             }
-            UpdateGuiControlsHistory();
-        }
-
-        private void AddHistoryItem(HistoryItem hi)
-        {
-            lbHistory.Items.Insert(0, hi);
-            CheckHistoryItems();
-            SaveHistoryItems();
-            if (lbHistory.Items.Count > 0)
+            if (mGuiIsReady)
             {
-                lbHistory.ClearSelected();
-                lbHistory.SelectedIndex = 0;
-            }
-        }
-
-        private void CheckHistoryItems()
-        {
-            if (lbHistory.Items.Count > Program.conf.HistoryMaxNumber)
-            {
-                for (int i = lbHistory.Items.Count - 1; i >= Program.conf.HistoryMaxNumber; i--)
-                {
-                    lbHistory.Items.RemoveAt(i);
-                }
-            }
-            UpdateGuiControlsHistory();
-        }
-
-        private void SaveHistoryItems()
-        {
-            if (Program.conf.HistorySave)
-            {
-                List<HistoryItem> historyItems = new List<HistoryItem>();
-                foreach (HistoryItem item in lbHistory.Items)
-                {
-                    historyItems.Add(item);
-                }
-                HistoryManager hm = new HistoryManager(historyItems);
-                hm.Save();
+                Program.Worker.UpdateGuiControlsHistory();
             }
         }
 
@@ -1389,7 +626,7 @@ namespace ZSS
 
         private void tsmQuickOptions_Click(object sender, EventArgs e)
         {
-            ShowQuickOptions();
+            Program.Worker.ShowQuickOptions();
         }
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
@@ -1454,7 +691,7 @@ namespace ZSS
         private void WriteSettings()
         {
             Program.conf.Save();
-            SaveHistoryItems();
+            Program.Worker.SaveHistoryItems();
             Settings.Default.Save();
         }
 
@@ -2145,61 +1382,8 @@ namespace ZSS
             }
         }
 
-        private void ScreenshotUsingDragDrop(string fp)
-        {
-            StartWorkerImages(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
-        }
 
-        private void ScreenshotUsingDragDrop(string[] paths)
-        {
-            foreach (string filePath in FileSystem.GetExplorerFileList(paths))
-            {
-                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(
-                    Program.ImagesDir, Path.GetFileName(filePath))), true);
-                ScreenshotUsingDragDrop(filePath);
-            }
-        }
 
-        private void UploadUsingClipboard()
-        {
-
-            if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
-            {
-                StartBW_LanguageTranslator();
-            }
-            else
-            {
-                foreach (string filePath in FileSystem.GetClipboardFilePaths())
-                {
-                    if (FileSystem.IsValidTextFile(filePath))
-                    {
-                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                        string textString = File.ReadAllText(filePath);
-
-                        if (FileSystem.IsValidLink(textString))
-                        {
-                            if (Program.conf.UrlShortenerActive != null)
-                            {
-                                temp.MyTextUploader = Program.conf.UrlShortenerActive;
-                                temp.RunWorker();
-                            }
-                        }
-                        else
-                        {
-                            if (Program.conf.TextUploaderActive != null)
-                            {
-                                temp.RunWorker();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                    }
-                }
-
-            }
-        }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
@@ -2212,20 +1396,20 @@ namespace ZSS
         /// </summary>
         private void UpdateGuiControls()
         {
-            try
-            {
-                SetupScreen();
-                CheckFormSettings();
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-                if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.ToString(),
-                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                {
-                    LoadSettingsDefault();
-                }
-            }
+            //try
+            //{
+            SetupScreen();
+            CheckFormSettings();
+            //}
+            //catch (Exception ex)
+            //{
+            //    FileSystem.AppendDebug(ex.ToString());
+            //    if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.ToString(),
+            //        Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            //    {
+            //        LoadSettingsDefault();
+            //    }
+            //}
         }
 
         private void LoadSettingsDefault()
@@ -2461,7 +1645,7 @@ namespace ZSS
             if (lbUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
-                StartWorkerScreenshots(MainAppTask.Jobs.CUSTOM_UPLOADER_TEST);
+                Program.Worker.StartWorkerScreenshots(MainAppTask.Jobs.CUSTOM_UPLOADER_TEST);
             }
         }
 
@@ -2566,8 +1750,8 @@ namespace ZSS
                 return;
             }
 
-            mSetHotkeys = true;
-            mHKSelectedRow = e.RowIndex;
+            Program.Worker.mSetHotkeys = true;
+            Program.Worker.mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
         }
@@ -2592,50 +1776,7 @@ namespace ZSS
             dgvHotkeys.Refresh();
         }
 
-        private void SetHotkey(int row, HKcombo hkc)
-        {
-            switch (row)
-            {
-                case 0: //Entire Screen
-                    Program.conf.HKEntireScreen = hkc;
-                    break;
-                case 1: //Active Window
-                    Program.conf.HKActiveWindow = hkc;
-                    break;
-                case 2: //Selected Window
-                    Program.conf.HKSelectedWindow = hkc;
-                    break;
-                case 3: //Crop Shot
-                    Program.conf.HKCropShot = hkc;
-                    break;
-                case 4: //Last Crop Shot
-                    Program.conf.HKLastCropShot = hkc;
-                    break;
-                case 5: //Auto Capture
-                    Program.conf.HKAutoCapture = hkc;
-                    break;
-                case 6: //Clipboard Upload
-                    Program.conf.HKClipboardUpload = hkc;
-                    break;
-                case 7: //Actions Toolbar
-                    Program.conf.HKActionsToolbar = hkc;
-                    break;
-                case 8: //Quick Options
-                    Program.conf.HKQuickOptions = hkc;
-                    break;
-                case 9: //Drag & Drop Window
-                    Program.conf.HKDropWindow = hkc;
-                    break;
-                case 10: //Language Translator
-                    Program.conf.HKLanguageTranslator = hkc;
-                    break;
-                case 11: //Screen Color Picker
-                    Program.conf.HKScreenColorPicker = hkc;
-                    break;
-            }
 
-            lblHotkeyStatus.Text = dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey set to: " + mHKSetcombo + ". Press enter when done setting all desired Hotkeys.";
-        }
 
         private void dgvHotkeys_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -2678,39 +1819,17 @@ namespace ZSS
 
         private void dgvHotkeys_Leave(object sender, EventArgs e)
         {
-            QuitSettingHotkeys();
-        }
-
-        private void QuitSettingHotkeys()
-        {
-            if (mSetHotkeys)
-            {
-                mSetHotkeys = false;
-
-
-                if (mHKSetcombo != null)
-                {
-
-                    lblHotkeyStatus.Text = dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey Updated.";
-                }
-                else
-                {
-                    lblHotkeyStatus.Text = "Aborted Hotkey selection. Click on a Hotkey to set.";
-                }
-
-                mHKSetcombo = null;
-                mHKSelectedRow = -1;
-            }
+            Program.Worker.QuitSettingHotkeys();
         }
 
         private void ZScreen_Leave(object sender, EventArgs e)
         {
-            QuitSettingHotkeys();
+            Program.Worker.QuitSettingHotkeys();
         }
 
         private void dgvHotkeys_MouseLeave(object sender, EventArgs e)
         {
-            QuitSettingHotkeys();
+            Program.Worker.QuitSettingHotkeys();
         }
 
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
@@ -2906,19 +2025,6 @@ namespace ZSS
             }
         }
 
-        private void HistoryRetryUpload(HistoryItem hi)
-        {
-            if (hi != null && File.Exists(hi.LocalPath))
-            {
-                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
-                task.JobCategory = hi.JobCategory;
-                task.SetImage(hi.LocalPath);
-                task.SetLocalFilePath(hi.LocalPath);
-                task.ImageDestCategory = hi.ImageDestCategory;
-                task.MyWorker.RunWorkerAsync(task);
-            }
-        }
-
         private void btnScreenshotOpen_Click(object sender, EventArgs e)
         {
             OpenLocalFile();
@@ -3065,45 +2171,45 @@ namespace ZSS
         private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            StartBW_EntireScreen();
+            Program.Worker.StartBW_EntireScreen();
         }
 
         private void selectedWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            StartBW_SelectedWindow();
+            Program.Worker.StartBW_SelectedWindow();
         }
 
         private void rectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            StartBW_CropShot();
+            Program.Worker.StartBW_CropShot();
         }
 
         private void lastRectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            StartBW_LastCropShot();
+            Program.Worker.StartBW_LastCropShot();
         }
 
         private void tsmDropWindow_Click(object sender, EventArgs e)
         {
-            ShowDropWindow();
+            Program.Worker.ShowDropWindow();
         }
 
         private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
         {
-            UploadUsingClipboard();
+            Program.Worker.UploadUsingClipboard();
         }
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StartBW_LanguageTranslator();
+            Program.Worker.StartBW_LanguageTranslator();
         }
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScreenColorPicker();
+            Program.Worker.ScreenColorPicker();
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
@@ -3326,75 +2432,7 @@ namespace ZSS
 
         #region Language Translator
 
-        private void PerformOnlineTasks()
-        {
-            BackgroundWorker bwOnlineWorker = new BackgroundWorker();
-            bwOnlineWorker.DoWork += new DoWorkEventHandler(bwOnlineTasks_DoWork);
-            bwOnlineWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwOnlineTasks_RunWorkerCompleted);
-            bwOnlineWorker.RunWorkerAsync();
-        }
 
-        private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
-        {
-            try
-            {
-                mGTranslator = new GoogleTranslate();
-                OnlineTasks.UpdateTinyPicShuk();
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-            }
-        }
-
-        private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (mGTranslator != null)
-            {
-                cbFromLanguage.Items.Clear();
-                cbToLanguage.Items.Clear();
-                foreach (GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.SourceLangList)
-                {
-                    cbFromLanguage.Items.Add(gtLang.Name);
-                }
-                foreach (GoogleTranslate.GTLanguage gtLang in mGTranslator.LanguageOptions.TargetLangList)
-                {
-                    cbToLanguage.Items.Add(gtLang.Name);
-                }
-                SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
-                GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Program.conf.ToLanguage2,
-                    mGTranslator.LanguageOptions.TargetLangList);
-                if (secondLang != null)
-                {
-                    btnTranslateTo1.Text = "To " + secondLang.Name;
-                }
-                if (cbFromLanguage.Items.Count > 0) cbFromLanguage.Enabled = true;
-                if (cbToLanguage.Items.Count > 0) cbToLanguage.Enabled = true;
-            }
-            if (!string.IsNullOrEmpty(Program.conf.TinyPicShuk) && Program.conf.TinyPicShuk != txtTinyPicShuk.Text)
-            {
-                txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
-            }
-        }
-
-        private void SelectLanguage(string srcLangValue, string targetLangValue, string helpTargetLangValue)
-        {
-            for (int i = 0; i < mGTranslator.LanguageOptions.SourceLangList.Count; i++)
-            {
-                if (mGTranslator.LanguageOptions.SourceLangList[i].Value == srcLangValue)
-                {
-                    if (cbFromLanguage.Items.Count > i) cbFromLanguage.SelectedIndex = i;
-                    break;
-                }
-            }
-            for (int i = 0; i < mGTranslator.LanguageOptions.TargetLangList.Count; i++)
-            {
-                if (mGTranslator.LanguageOptions.TargetLangList[i].Value == targetLangValue)
-                {
-                    if (cbToLanguage.Items.Count > i) cbToLanguage.SelectedIndex = i;
-                }
-            }
-        }
 
         private void btnTranslate_Click(object sender, EventArgs e)
         {
@@ -3403,24 +2441,20 @@ namespace ZSS
 
         private void btnTranslateMethod()
         {
-            StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
-                GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
-                GoogleTranslate.FindLanguage(Program.conf.ToLanguage, mGTranslator.LanguageOptions.TargetLangList)));
+            Program.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
+                GoogleTranslate.FindLanguage(Program.conf.FromLanguage, Program.mGTranslator.LanguageOptions.SourceLangList),
+                GoogleTranslate.FindLanguage(Program.conf.ToLanguage, Program.mGTranslator.LanguageOptions.TargetLangList)));
         }
 
-        private void LanguageTranslator(ref MainAppTask t)
-        {
-            t.TranslationInfo.Result = mGTranslator.TranslateText(t.TranslationInfo);
-        }
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FromLanguage = mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
+            Program.conf.FromLanguage = Program.mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
         }
 
         private void cbToLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.ToLanguage = mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
+            Program.conf.ToLanguage = Program.mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
         }
 
         private void cbClipboardTranslate_CheckedChanged(object sender, EventArgs e)
@@ -3466,7 +2500,7 @@ namespace ZSS
 
         private void cmsRetryUpload_Click(object sender, EventArgs e)
         {
-            HistoryRetryUpload((HistoryItem)lbHistory.SelectedItem);
+            Program.Worker.HistoryRetryUpload((HistoryItem)lbHistory.SelectedItem);
         }
 
         private void pbHistoryThumb_Click(object sender, EventArgs e)
@@ -3670,37 +2704,7 @@ namespace ZSS
             Program.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
         }
 
-        private void ShowDropWindow()
-        {
-            if (!bDropWindowOpened)
-            {
-                bDropWindowOpened = true;
-                DropWindow dw = new DropWindow();
-                dw.Result += new StringsEventHandler(dw_Result);
-                dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
-                dw.Show();
-                Rectangle taskbar = User32.GetTaskbarRectangle();
-                if (Program.conf.LastDropBoxPosition == Point.Empty)
-                {
-                    dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,
-                        SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - dw.Height - 10);
-                }
-                else
-                {
-                    dw.Location = Program.conf.LastDropBoxPosition;
-                }
-            }
-        }
 
-        private void dw_Result(object sender, string[] strings)
-        {
-            if (strings != null) ScreenshotUsingDragDrop(strings);
-        }
-
-        private void dw_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            bDropWindowOpened = false;
-        }
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
@@ -3807,8 +2811,11 @@ namespace ZSS
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
         {
             Program.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
-            CheckHistoryItems();
-            SaveHistoryItems();
+            if (mGuiIsReady)
+            {
+                Program.Worker.CheckHistoryItems();
+                Program.Worker.SaveHistoryItems();
+            }
         }
 
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
@@ -3822,90 +2829,17 @@ namespace ZSS
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbHistory.Items.Clear();
-                CheckHistoryItems();
-                SaveHistoryItems();
+                Program.Worker.CheckHistoryItems();
+                Program.Worker.SaveHistoryItems();
             }
         }
 
         private void tsmQuickActions_Click(object sender, EventArgs e)
         {
-            ShowActionsToolbar(true);
+            Program.Worker.ShowActionsToolbar(true);
         }
 
-        #region Quick Actions
 
-        /// <summary>
-        /// Show Actions Toolbar
-        /// </summary>
-        /// <param name="manual">If user clicks from Tray Menu then Manual is set to true.</param>
-        private void ShowActionsToolbar(bool manual)
-        {
-            if (!bQuickActionsOpened)
-            {
-                bQuickActionsOpened = true;
-                ToolbarWindow actionsToolbar = new ToolbarWindow { Icon = Resources.zss_main };
-                actionsToolbar.Location = Program.conf.ActionToolbarLocation;
-                actionsToolbar.EventJob += new JobsEventHandler(EventJobs);
-                actionsToolbar.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
-                actionsToolbar.Show();
-                if (manual)
-                {
-                    actionsToolbar.Show();
-                    Rectangle taskbar = User32.GetTaskbarRectangle();
-                    actionsToolbar.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - actionsToolbar.Width - 100,
-                        SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - actionsToolbar.Height - 10);
-                }
-            }
-        }
-
-        private void quickActions_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            bQuickActionsOpened = false;
-        }
-
-        private void EventJobs(object sender, MainAppTask.Jobs jobs)
-        {
-            switch (jobs)
-            {
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                    StartBW_EntireScreen();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    StartBW_ActiveWindow();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                    StartBW_SelectedWindow();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                    StartBW_CropShot();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                    StartBW_LastCropShot();
-                    break;
-                case MainAppTask.Jobs.AUTO_CAPTURE:
-                    ShowAutoCapture();
-                    break;
-                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                    UploadUsingClipboard();
-                    break;
-                case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
-                    ShowDropWindow();
-                    break;
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    StartBW_LanguageTranslator();
-                    break;
-                case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
-                    ScreenColorPicker();
-                    break;
-            }
-        }
-
-        private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.CloseQuickActions = cbCloseQuickActions.Checked;
-        }
-
-        #endregion
 
         private void chkRememberTinyPicUserPass_CheckedChanged(object sender, EventArgs e)
         {
@@ -4249,24 +3183,7 @@ namespace ZSS
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowAutoCapture();
-        }
-
-        private void ShowAutoCapture()
-        {
-            if (!bAutoScreenshotsOpened)
-            {
-                bAutoScreenshotsOpened = true;
-                AutoCapture autoScreenshots = new AutoCapture { Icon = Resources.zss_main };
-                autoScreenshots.EventJob += new JobsEventHandler(EventJobs);
-                autoScreenshots.FormClosed += new FormClosedEventHandler(autoScreenshots_FormClosed);
-                autoScreenshots.Show();
-            }
-        }
-
-        private void autoScreenshots_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            bAutoScreenshotsOpened = false;
+            Program.Worker.ShowAutoCapture();
         }
 
         private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
@@ -4298,26 +3215,15 @@ namespace ZSS
         private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
         {
             GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
-                mGTranslator.LanguageOptions.TargetLangList);
+               Program.mGTranslator.LanguageOptions.TargetLangList);
             Program.conf.ToLanguage2 = lang.Value;
             btnTranslateTo1.Text = "To " + lang.Name;
         }
 
         private void btnTranslateTo1_Click(object sender, EventArgs e)
         {
-            if (Program.conf.ToLanguage2 == "?")
-            {
-                lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
-                MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", this.Text,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lblToLanguage.BorderStyle = BorderStyle.None;
-            }
-            else
-            {
-                StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
-                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, mGTranslator.LanguageOptions.SourceLangList),
-                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage2, mGTranslator.LanguageOptions.TargetLangList)));
-            }
+            Program.Worker.TranslateTo1();
+
         }
 
         private void cbLockFormSize_CheckedChanged(object sender, EventArgs e)
@@ -4333,7 +3239,7 @@ namespace ZSS
         /// <param name="e"></param>
         private void tmrApp_Tick(object sender, EventArgs e)
         {
-            PerformOnlineTasks();
+            Program.Worker2.PerformOnlineTasks();
         }
 
         private void confApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -4437,7 +3343,7 @@ namespace ZSS
                 {
                     string filePath = Path.Combine(Program.TempDir, DateTime.Now.Ticks + ".txt");
                     File.WriteAllText(filePath, testString);
-                    MainAppTask task = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;
                     task.RunWorker();

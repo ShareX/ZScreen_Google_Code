@@ -127,7 +127,9 @@
     <Compile Include="Global\OnlineTasks.cs" />
     <Compile Include="Global\RegistryMgr.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
+    <Compile Include="Helpers\WorkerPrimary.cs" />
     <Compile Include="Helpers\PrintHelper.cs" />
+    <Compile Include="Helpers\WorkerSecondary.cs" />
     <Compile Include="UserControls\AccountsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -196,7 +198,7 @@
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\User32Mgr.cs" />
     <Compile Include="Helpers\CacheCleanerTask.cs" />
-    <Compile Include="Helpers\MainAppTask.cs" />
+    <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\RemoteViewerTask.cs" />
     <Compile Include="Forms\Crop.cs">
       <SubType>Form</SubType>
