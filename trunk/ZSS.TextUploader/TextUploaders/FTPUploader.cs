@@ -54,16 +54,14 @@ namespace ZSS.TextUploadersLib
         /// </summary>
         /// <param name="localFilePath"></param>
         /// <returns>Returns a list of images.</returns>
-        public override string UploadText(TextFile text)
+        public override string UploadText(string filepath)
         {
-
             FTP ftpClient = new FTP(ref this.FTPAccount);
             //removed binary mode code line
 
-            string fName = Path.GetFileName(text.LocalFilePath);
-            ftpClient.UploadFile(text.LocalFilePath, fName);
+            string fName = Path.GetFileName(filepath);
+            ftpClient.UploadFile(filepath, fName);
             return this.FTPAccount.getUriPath(fName);
-
         }
 
         /// <summary>

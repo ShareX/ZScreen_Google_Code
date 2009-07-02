@@ -63,6 +63,7 @@
     <Compile Include="HTTP\ImageShackUploader.cs" />
     <Compile Include="Helpers\ImageHostingService.cs" />
     <Compile Include="Helpers\IUploader.cs" />
+    <Compile Include="HTTP\TwitPic.cs" />
     <Compile Include="MindTouch\DekiWiki.cs" />
     <Compile Include="MindTouch\DekiWikiAccount.cs" />
     <Compile Include="MindTouch\DekiWikiHistory.cs" />

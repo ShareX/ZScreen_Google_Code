@@ -87,6 +87,8 @@ namespace ZSS.ImageUploaders
         /// <returns></returns>
         private ImageFileManager UploadImageAPI(Image image, ImageFormat format)
         {
+            ImageFileManager ifm = new ImageFileManager();
+
             MemoryStream imgStream = new MemoryStream();
             bool oldValue = ServicePointManager.Expect100Continue;
             List<ImageFile> imageFiles = new List<ImageFile>();
@@ -137,14 +139,14 @@ namespace ZSS.ImageUploaders
                 if (!string.IsNullOrEmpty(Shuk))
                     arguments.Add("shuk", Shuk);
 
-                imgSource = PostImage(imgStream, URLAPI, "uploadfile", GetMimeType(format), arguments, cookies, "http://tinypic.com/");
-                string fullSize = GetXMLVal(imgSource, "fullsize"); // Regex.Match(imgSource, "(?<=fullsize>).+(?=</fullsize)").Value;
-                string thumbNail = GetXMLVal(imgSource, "thumbnail"); // Regex.Match(imgSource, "(?<=thumbnail>).+(?=</thumbnail)").Value;
+                ifm.Source = PostImage(imgStream, URLAPI, "uploadfile", GetMimeType(format), arguments, cookies, "http://tinypic.com/");
+                string fullSize = GetXMLVal(ifm.Source, "fullsize"); // Regex.Match(imgSource, "(?<=fullsize>).+(?=</fullsize)").Value;
+                string thumbNail = GetXMLVal(ifm.Source, "thumbnail"); // Regex.Match(imgSource, "(?<=thumbnail>).+(?=</thumbnail)").Value;
 
                 if (!string.IsNullOrEmpty(fullSize))
-                    imageFiles.Add(new ImageFile(fullSize, ImageFile.ImageType.FULLIMAGE));
+                    ifm.ImageFileList.Add(new ImageFile(fullSize, ImageFile.ImageType.FULLIMAGE));
                 if (!string.IsNullOrEmpty(thumbNail))
-                    imageFiles.Add(new ImageFile(thumbNail, ImageFile.ImageType.THUMBNAIL));
+                    ifm.ImageFileList.Add(new ImageFile(thumbNail, ImageFile.ImageType.THUMBNAIL));
             }
             catch (Exception ex)
             {
@@ -156,7 +158,6 @@ namespace ZSS.ImageUploaders
                 imgStream.Dispose();
             }
 
-            ImageFileManager ifm = new ImageFileManager(imageFiles) { Source = imgSource };
             return ifm;
         }
 

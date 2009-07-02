@@ -22,7 +22,7 @@ namespace ZSS.Global
                 TextUploader tu = Program.conf.UrlShortenerActive;
                 if (tu != null)
                 {
-                    string temp = tu.UploadText(new TextFile(url));
+                    string temp = tu.UploadText(url);
                     if (!string.IsNullOrEmpty(temp))
                     {
                         url = temp;

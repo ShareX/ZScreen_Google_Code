@@ -173,6 +173,61 @@ namespace ZSS.ImageUploaders
             return sb.ToString().ToLower();
         }
 
+        protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
+        {
+            ImageFormat imageFormat = image.RawFormat;
+            MemoryStream stream = new MemoryStream();
+            image.Save(stream, imageFormat);
+            image.Dispose();
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            string boundary = Guid.NewGuid().ToString();
+
+            request.PreAuthenticate = true;
+            request.AllowWriteStreamBuffering = true;
+            request.ContentType = string.Format("multipart/form-data; boundary={0}", boundary);
+            request.Method = "POST";
+
+            string header = string.Format("--{0}", boundary);
+            string footer = string.Format("--{0}--", boundary);
+
+            StringBuilder contents = new StringBuilder();
+            contents.AppendLine(header);
+
+            string postHeader = string.Format("Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"", fileFormName, this.mFileName);
+            contents.AppendLine(postHeader);
+
+            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
+
+            string fileContentType = GetMimeType(imageFormat);
+            contents.AppendLine(string.Format("Content-Type: {0}\n", fileContentType));
+            contents.AppendLine(encoding.GetString(stream.ToArray()));
+
+            foreach (KeyValuePair<string, string> argument in arguments)
+            {
+                contents.AppendLine(header);
+                contents.AppendLine(string.Format("Content-Disposition: form-data; name=\"{0}\"\n\n{1}\n", argument.Key, argument.Value));
+            }
+
+            contents.AppendLine(footer);
+
+            byte[] bytes = encoding.GetBytes(contents.ToString());
+            request.ContentLength = bytes.Length;
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(bytes, 0, bytes.Length);
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+            }
+        }
+
         protected string PostImage(Stream imageStream, string uploadUrl, string fileFormName, string contentType,
             IDictionary<string, string> arguments, CookieContainer cookies, string referer)
         {
