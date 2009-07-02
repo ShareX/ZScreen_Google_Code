@@ -168,6 +168,56 @@ namespace ZSS.ImageUploaderLib
             return sb.ToString().ToLower();
         }
 
+        protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
+        {
+            string returnValue = "";
+            try
+            {
+                ImageFormat imageFormat = image.RawFormat;
+
+                string postData = "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                string boundary = "----------" + DateTime.Now.Ticks.ToString("x");
+                string postHeader = string.Format("--{0}\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\nContent-Type: {3}\n\n",
+                    boundary, fileFormName ?? "file", this.mFileName, GetMimeType(imageFormat) ?? "application/octet-stream");
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + postData);
+                request.ContentType = "multipart/form-data; boundary=" + boundary;
+                request.Method = "POST";
+
+                byte[] postHeaderBytes = Encoding.UTF8.GetBytes(postHeader);
+                byte[] boundaryBytes = Encoding.ASCII.GetBytes("\n--" + boundary + "\n");
+
+                MemoryStream imageStream = new MemoryStream();
+                image.Save(imageStream, imageFormat);
+                image.Dispose();
+                imageStream.Position = 0;
+
+                request.ContentLength = postHeaderBytes.Length + imageStream.Length + boundaryBytes.Length;
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
+                byte[] buffer = new byte[((int)Math.Min(4096, imageStream.Length)) - 1];
+                int bytesRead;
+                while (true)
+                {
+                    bytesRead = imageStream.Read(buffer, 0, buffer.Length);
+                    if (bytesRead == 0) break;
+                    requestStream.Write(buffer, 0, bytesRead);
+                }
+                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                WebResponse response = request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                StreamReader responseReader = new StreamReader(responseStream);
+                returnValue = responseReader.ReadToEnd();
+                responseStream.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                this.Errors.Add(ex.Message);
+            }
+            return returnValue;
+        }
+
         protected string PostImage2(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
         {
             try
@@ -230,56 +280,6 @@ namespace ZSS.ImageUploaderLib
                 Errors.Add(ex.Message);
             }
             return "";
-        }
-
-        protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
-        {
-            string returnValue = "";
-            try
-            {
-                ImageFormat imageFormat = image.RawFormat;
-
-                string postData = "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
-                string boundary = "----------" + DateTime.Now.Ticks.ToString("x");
-                string postHeader = string.Format("--{0}\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\nContent-Type: {3}\n\n",
-                    boundary, fileFormName ?? "file", this.mFileName, GetMimeType(imageFormat) ?? "application/octet-stream");
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + postData);
-                request.ContentType = "multipart/form-data; boundary=" + boundary;
-                request.Method = "POST";
-
-                byte[] postHeaderBytes = Encoding.UTF8.GetBytes(postHeader);
-                byte[] boundaryBytes = Encoding.ASCII.GetBytes("\n--" + boundary + "\n");
-
-                MemoryStream imageStream = new MemoryStream();
-                image.Save(imageStream, imageFormat);
-                image.Dispose();
-                imageStream.Position = 0;
-
-                request.ContentLength = postHeaderBytes.Length + imageStream.Length + boundaryBytes.Length;
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
-                byte[] buffer = new byte[((int)Math.Min(4096, imageStream.Length)) - 1];
-                int bytesRead;
-                while (true)
-                {
-                    bytesRead = imageStream.Read(buffer, 0, buffer.Length);
-                    if (bytesRead == 0) break;
-                    requestStream.Write(buffer, 0, bytesRead);
-                }
-                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
-                WebResponse response = request.GetResponse();
-                Stream responseStream = response.GetResponseStream();
-                StreamReader responseReader = new StreamReader(responseStream);
-                returnValue = responseReader.ReadToEnd();
-                responseStream.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.Errors.Add(ex.Message);
-            }
-            return returnValue;
         }
 
         public string ToErrorString()

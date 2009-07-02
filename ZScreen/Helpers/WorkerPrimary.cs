@@ -613,95 +613,94 @@ namespace ZSS.Helpers
             }
         }
 
-        public IntPtr ScreenshotUsingHotkeys(int nCode, IntPtr wParam, IntPtr lParam)
+        public void ScreenshotUsingHotkeys(object sender, KeyEventArgs e)
         {
-            if (nCode >= 0 && (wParam == (IntPtr)mWM_KEYDOWN || wParam == (IntPtr)mWM_SYSKEYDOWN))
+            if (mSetHotkeys)
             {
-                if (mSetHotkeys)
+                if (e.KeyData == Keys.Enter)
                 {
-                    if ((Keys)Marshal.ReadInt32(lParam) == Keys.Enter)
-                    {
-                        QuitSettingHotkeys();
-                    }
-                    else if ((Keys)Marshal.ReadInt32(lParam) == Keys.Escape)
-                    {
-                        HKcombo hkc = new HKcombo(Keys.None);
-                        mHKSetcombo = hkc;
-                        mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = hkc;
-                        SetHotkey(mHKSelectedRow, hkc);
-                    }
-                    else
-                    {
-                        mHKSetcombo = KeyboardMgr.GetHKcombo(lParam);
-                        mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = mHKSetcombo;
-                        SetHotkey(mHKSelectedRow, mHKSetcombo);
-                    }
+                    QuitSettingHotkeys();
+                }
+                else if (e.KeyData == Keys.Escape)
+                {
+                    mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = Keys.None;
+                    SetHotkey(mHKSelectedRow, Keys.None);
                 }
                 else
                 {
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKEntireScreen, lParam)) //Entire Screen
-                    {
-                        StartBW_EntireScreen();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKActiveWindow, lParam)) //Active Window
-                    {
-                        StartBW_ActiveWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKSelectedWindow, lParam)) //Selected Window
-                    {
-                        StartBW_SelectedWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKCropShot, lParam)) //Crop Shot
-                    {
-                        StartBW_CropShot();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKLastCropShot, lParam)) //Last Crop Shot
-                    {
-                        StartBW_LastCropShot();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKAutoCapture, lParam)) //Auto Capture
-                    {
-                        ShowAutoCapture();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKClipboardUpload, lParam)) //Clipboard Upload
-                    {
-                        UploadUsingClipboard();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKDropWindow, lParam)) //Drag & Drop Window
-                    {
-                        ShowDropWindow();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKActionsToolbar, lParam)) //Actions Toolbar
-                    {
-                        ShowActionsToolbar(true);
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKQuickOptions, lParam)) //Quick Options
-                    {
-                        ShowQuickOptions();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKLanguageTranslator, lParam)) //Language Translator
-                    {
-                        Program.Worker.StartBW_LanguageTranslator();
-                        return KeyboardHookHandle;
-                    }
-                    if (KeyboardMgr.CheckKeys(Program.conf.HKScreenColorPicker, lParam)) //Screen Color Picker
-                    {
-                        ScreenColorPicker();
-                        return KeyboardHookHandle;
-                    }
+                    mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = e.KeyData.ToSpecialString();
+                    SetHotkey(mHKSelectedRow, e.KeyData);
                 }
             }
-            return User32.CallNextHookEx(KeyboardHookHandle, nCode, wParam, lParam);
+            else
+            {
+                e.Handled = CheckHotkeys(e.KeyData);
+            }
+        }
+
+        private bool CheckHotkeys(Keys key)
+        {
+            if (Program.conf.HotkeyEntireScreen == key) //Entire Screen
+            {
+                StartBW_EntireScreen();
+                return true;
+            }
+            if (Program.conf.HotkeyActiveWindow == key) //Active Window
+            {
+                StartBW_ActiveWindow();
+                return true;
+            }
+            if (Program.conf.HotkeySelectedWindow == key) //Selected Window
+            {
+                StartBW_SelectedWindow();
+                return true;
+            }
+            if (Program.conf.HotkeyCropShot == key) //Crop Shot
+            {
+                StartBW_CropShot();
+                return true;
+            }
+            if (Program.conf.HotkeyLastCropShot == key) //Last Crop Shot
+            {
+                StartBW_LastCropShot();
+                return true;
+            }
+            if (Program.conf.HotkeyAutoCapture == key) //Auto Capture
+            {
+                ShowAutoCapture();
+                return true;
+            }
+            if (Program.conf.HotkeyClipboardUpload == key) //Clipboard Upload
+            {
+                UploadUsingClipboard();
+                return true;
+            }
+            if (Program.conf.HotkeyDropWindow == key) //Drag & Drop Window
+            {
+                ShowDropWindow();
+                return true;
+            }
+            if (Program.conf.HotkeyActionsToolbar == key) //Actions Toolbar
+            {
+                ShowActionsToolbar(true);
+                return true;
+            }
+            if (Program.conf.HotkeyQuickOptions == key) //Quick Options
+            {
+                ShowQuickOptions();
+                return true;
+            }
+            if (Program.conf.HotkeyLanguageTranslator == key) //Language Translator
+            {
+                Program.Worker.StartBW_LanguageTranslator();
+                return true;
+            }
+            if (Program.conf.HotkeyScreenColorPicker == key) //Screen Color Picker
+            {
+                ScreenColorPicker();
+                return true;
+            }
+            return false;
         }
 
         public void QuitSettingHotkeys()
@@ -726,45 +725,45 @@ namespace ZSS.Helpers
             }
         }
 
-        private void SetHotkey(int row, HKcombo hkc)
+        private void SetHotkey(int row, Keys key)
         {
             switch (row)
             {
                 case 0: //Entire Screen
-                    Program.conf.HKEntireScreen = hkc;
+                    Program.conf.HotkeyEntireScreen = key;
                     break;
                 case 1: //Active Window
-                    Program.conf.HKActiveWindow = hkc;
+                    Program.conf.HotkeyActiveWindow = key;
                     break;
                 case 2: //Selected Window
-                    Program.conf.HKSelectedWindow = hkc;
+                    Program.conf.HotkeySelectedWindow = key;
                     break;
                 case 3: //Crop Shot
-                    Program.conf.HKCropShot = hkc;
+                    Program.conf.HotkeyCropShot = key;
                     break;
                 case 4: //Last Crop Shot
-                    Program.conf.HKLastCropShot = hkc;
+                    Program.conf.HotkeyLastCropShot = key;
                     break;
                 case 5: //Auto Capture
-                    Program.conf.HKAutoCapture = hkc;
+                    Program.conf.HotkeyAutoCapture = key;
                     break;
                 case 6: //Clipboard Upload
-                    Program.conf.HKClipboardUpload = hkc;
+                    Program.conf.HotkeyClipboardUpload = key;
                     break;
                 case 7: //Actions Toolbar
-                    Program.conf.HKActionsToolbar = hkc;
+                    Program.conf.HotkeyActionsToolbar = key;
                     break;
                 case 8: //Quick Options
-                    Program.conf.HKQuickOptions = hkc;
+                    Program.conf.HotkeyQuickOptions = key;
                     break;
                 case 9: //Drag & Drop Window
-                    Program.conf.HKDropWindow = hkc;
+                    Program.conf.HotkeyDropWindow = key;
                     break;
                 case 10: //Language Translator
-                    Program.conf.HKLanguageTranslator = hkc;
+                    Program.conf.HotkeyLanguageTranslator = key;
                     break;
                 case 11: //Screen Color Picker
-                    Program.conf.HKScreenColorPicker = hkc;
+                    Program.conf.HotkeyScreenColorPicker = key;
                     break;
             }
 
