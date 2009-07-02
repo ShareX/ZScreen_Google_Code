@@ -403,7 +403,11 @@ namespace ZSS
 
             txtTwitPicUserName.Text = Program.conf.TwitPicUserName;
             txtTwitPicPassword.Text = Program.conf.TwitPicPassword;
-
+            if (cboTwitPicUploadMode.Items.Count == 0)
+            {
+                cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
+            }
+            cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwiPicUploadMode;
             if (cboUploadMode.Items.Count == 0)
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
@@ -4634,6 +4638,11 @@ namespace ZSS
             {
                 Program.conf.TwitPicPassword = txtTwitPicPassword.Text;
             }
+        }
+
+        private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.TwiPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
         }
     }
 }
