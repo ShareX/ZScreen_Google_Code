@@ -9,6 +9,7 @@ using ZSS.ImageUploaderLib;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
+using System.ComponentModel;
 
 namespace ZSS.Helpers
 {
@@ -20,6 +21,9 @@ namespace ZSS.Helpers
         {
             this.task = task;
         }
+
+
+
 
         public void UploadImage()
         {

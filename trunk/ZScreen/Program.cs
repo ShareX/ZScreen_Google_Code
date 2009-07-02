@@ -29,6 +29,7 @@ using System.Threading;
 using ZSS.Properties;
 using ZSS.Forms;
 using ZSS.Helpers;
+using ZSS.TextUploadersLib;
 
 namespace ZSS
 {
@@ -177,6 +178,7 @@ namespace ZSS
         }
 
         public static XMLSettings conf;
+        internal static GoogleTranslate mGTranslator;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
@@ -187,6 +189,8 @@ namespace ZSS
         public static Rectangle LastCapture = Rectangle.Empty;
 
         private static ZScreen ZScreenWindow;
+        public static WorkerPrimary Worker;
+        public static WorkerSecondary Worker2;
 
         public static Mutex mAppMutex;
 
@@ -260,13 +264,13 @@ namespace ZSS
                 conf.WindowSize = ZScreenWindow.Size;
             }
 
-            User32.m_Proc = ZScreenWindow.ScreenshotUsingHotkeys;
+            User32.m_Proc = Worker.ScreenshotUsingHotkeys;
 
-            ZScreenWindow.KeyboardHookHandle = User32.setHook();
+            Worker.KeyboardHookHandle = User32.setHook();
 
             Application.Run(ZScreenWindow);
 
-            User32.UnhookWindowsHookEx(ZScreenWindow.KeyboardHookHandle);
+            User32.UnhookWindowsHookEx(Worker.KeyboardHookHandle);
         }
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
