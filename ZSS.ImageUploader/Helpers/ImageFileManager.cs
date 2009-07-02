@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 
-namespace ZSS.ImageUploaders.Helpers
+namespace ZSS.ImageUploaderLib.Helpers
 {
     public class ImageFileManager
     {

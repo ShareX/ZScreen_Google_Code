@@ -55,17 +55,17 @@ namespace ZSS
     {
         [Description("Clipboard")]
         CLIPBOARD,
-        [Description("Custom Uploader")]
-        CUSTOM_UPLOADER,
         [Description("File")]
         FILE,
         [Description("FTP")]
         FTP,
-        [Description("ImageShack")]
-        IMAGESHACK,
         [Description("TinyPic")]
         TINYPIC,
+        [Description("ImageShack")]
+        IMAGESHACK,
         [Description("TwitPic")]
-        TWITPIC
+        TWITPIC,
+        [Description("Custom Uploader")]
+        CUSTOM_UPLOADER,
     }
 }

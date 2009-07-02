@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
-using ZSS.ImageUploaders;
+using ZSS.ImageUploaderLib;
 
 namespace ZSS.Global
 {

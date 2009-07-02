@@ -35,11 +35,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Xml;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
-    public sealed class ImageShackUploader : HTTPUploader
+    public sealed class ImageShackUploader : ImageUploader
     {
         private string DeveloperKey { get; set; }
         private string RegistrationCode { get; set; }

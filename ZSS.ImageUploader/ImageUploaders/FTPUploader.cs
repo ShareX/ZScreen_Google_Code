@@ -26,9 +26,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using ZSS.ImageUploaders.Helpers;
+using ZSS.ImageUploaderLib.Helpers;
 
-namespace ZSS.ImageUploaders
+namespace ZSS.ImageUploaderLib
 {
     [Serializable]
     public sealed class FTPUploader : IUploader
