@@ -58,7 +58,7 @@ namespace ZSS.Helpers
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
-                    imageUploader = new TwitPic(Program.conf.TwitPicUserName, Program.conf.TwitPicPassword);
+                    imageUploader = new TwitPic(Program.conf.TwitPicUserName, Program.conf.TwitPicPassword, TwitPic.UploadType.Upload);
                     break;
             }
 
@@ -69,7 +69,7 @@ namespace ZSS.Helpers
                 if (File.Exists(fullFilePath) || task.MyImage != null)
                 {
                     for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
-                        (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.FileCount < 1)); i++)
+                        (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {

@@ -68,7 +68,7 @@ namespace ZSS.ImageUploaders
 
         private ImageFileManager ParseResult(string source)
         {
-            ImageFileManager ifm = new ImageFileManager();
+            ImageFileManager ifm = new ImageFileManager { Source = source };
 
             XDocument xdoc = XDocument.Parse(source);
             XElement xele = xdoc.Element("rsp");
@@ -77,10 +77,10 @@ namespace ZSS.ImageUploaders
             {
                 case "ok":
                     string statusid, userid, mediaid, mediaurl;
-                    statusid = xele.Element("statusid").Value;
-                    userid = xele.Element("userid").Value;
-                    mediaid = xele.Element("mediaid").Value;
-                    mediaurl = xele.Element("mediaurl").Value;
+                    statusid = xele.ElementValue("statusid");
+                    userid = xele.ElementValue("userid");
+                    mediaid = xele.ElementValue("mediaid");
+                    mediaurl = xele.ElementValue("mediaurl");
                     ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
                     ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
                         TwitPicThumbnailType.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));

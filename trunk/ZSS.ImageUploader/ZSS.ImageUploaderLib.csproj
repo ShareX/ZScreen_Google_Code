@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="FTPUploader.cs" />
     <Compile Include="Global\Enums.cs" />
+    <Compile Include="Global\Extensions.cs" />
     <Compile Include="Helpers\ImageFileManager.cs" />
     <Compile Include="Helpers\ImageHostingServiceManager.cs" />
     <Compile Include="HTTP\CustomUploader.cs" />

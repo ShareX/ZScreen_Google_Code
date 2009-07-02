@@ -1207,7 +1207,7 @@ namespace ZSS
                             switch (task.Job)
                             {
                                 case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                                    if (task.ImageManager != null && task.ImageManager.FileCount > 0)
+                                    if (task.ImageManager != null && task.ImageManager.ImageFileList.Count > 0)
                                     {
                                         if (task.ImageManager.GetFullImageUrl() != "")
                                         {
