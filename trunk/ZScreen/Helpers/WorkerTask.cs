@@ -148,8 +148,12 @@ namespace ZSS.Tasks
         /// </summary>
         public string RemoteFilePath { get; set; }
         /// <summary>
-        /// FTP Account Name, TinyPic, ImageShack
+        /// Tiny URL of RemoteFilePath
         /// </summary>
+        //public string TinyURL { get; set; }
+        ///// <summary>
+        ///// FTP Account Name, TinyPic, ImageShack
+        ///// </summary>
         public string DestinationName { get; set; }
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic

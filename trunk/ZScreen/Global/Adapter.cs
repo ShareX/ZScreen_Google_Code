@@ -97,7 +97,7 @@ namespace ZSS.Global
         /// <returns></returns>
         public static string TryShortenURL(string url)
         {
-            if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL)
+            if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL)
             {
                 TextUploader tu = Program.conf.UrlShortenerActive;
                 if (tu != null)
@@ -135,7 +135,7 @@ namespace ZSS.Global
         public static bool MakeTinyURL()
         {
             // LimitLongURL = 0 means make tinyURL always
-            bool tinyurl = (Program.conf.ClipboardUriMode == ClipboardUriType.FULL || Program.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) && Program.conf.MakeTinyURL;
+            bool tinyurl = Program.conf.MakeTinyURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
             return tinyurl;
         }
 

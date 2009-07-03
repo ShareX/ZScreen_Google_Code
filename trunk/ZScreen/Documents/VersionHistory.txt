@@ -1,5 +1,7 @@
 Version 2.20 - 20090801
 
+2.20.01.1 MakeTinyURL PropertyGrid Setting will not override Clipboard Copy mode anymore
+2.20.01.0 Added new Clipboard URL Type: Full Image (TinyURL)
 2.20.00.0 Support for uploading images to MindTouch Deki Wiki [http://techsurance.com/Screen_Capture]
 2.19.01.0 Changes in Keyboard Hook mechanism require reassigning the Hotkeys
 2.19.00.0 Added bit.ly URL Shortener support
@@ -15,7 +17,7 @@ Version 2.15 - 20090701
 2.15.01.1 Hotkeys tab was not displayed propery for DPI set at 120% [Issue 82]
 2.15.01.0 Option to publish ImageShack images to the user's public profile
 2.15.00.0 Integrated Image Editor based on Greenshot Image Editor 0.7.009 [Issue 81]
-2.14.01.0 XML Option to automatically shorten the URL after image upload is completed
+2.14.01.0 PropertyGrid Setting to automatically shorten the URL after image upload is completed
 2.14.00.0 Added support for URL Shortener: 3.ly
 2.13.00.0 Added support for URL Shorteners starting with TinyURL
 2.13.02.0 Removed Active Help and introduced Tooltips
@@ -29,21 +31,21 @@ Version 2.15 - 20090701
 2.10.10.0 Actions Toolbar Mode to automatically open Toolbar on ZScreen startup
 2.10.09.0 Online Tasks such as updating TinyPic Registration Code will automatically happen every 6 hours
 2.10.08.1 Preview in History did not update if the file extensions were in CAPS
-2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via XML Options
-2.10.07.0 XML Option to hide Active Help from the GUI
+2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via PropertyGrid Settings
+2.10.07.0 PropertyGrid Setting to hide Active Help from the GUI
 2.10.06.1 Clearing the screen history did not reset history list count [Issue 63]
 2.10.06.0 Added new Clipboard URL Type: Linked Thumbnail for Wiki
 2.10.05.1 Fixed possibile uploading errors if Copy Image to Clipboard is turned on
 2.10.05.0 FTP Viewer can now preview text files
 2.10.04.0 Upload File to FTP will use the original file path instead of copying to Files folder
 2.10.03.1 Upload File to FTP could have failed if Enable Thumbnail was turned on for FTP
-2.10.03.0 Imaged directory location is now confirgurable via XML Options [Issue 62]
+2.10.03.0 Imaged directory location is now confirgurable via PropertyGrid Settings [Issue 62]
 
 Version 2.10 - 20090424
 
 2.10.02.1 Setting HTTP Upload mode to Anonymous made it impossible to auto switch destination
 2.10.02.0 Added new Clipboard URL Type: Full Image as HTML [Issue 57]
-2.10.01.0 XML Option to periodically backup Application Settings
+2.10.01.0 PropertyGrid Setting to periodically backup Application Settings
 2.10.00.2 Application will load default settings without crashing if Settings.xml was invalid [ravensorb]
 2.10.00.1 Closing Config Wizard without pressing OK, crashed ZScreen
 2.10.00.0 Added Auto Capture to Quick Actions in the Tray Menu [Issue 18]
@@ -53,7 +55,7 @@ Version 2.10 - 20090424
 2.08.00.0 Configuration Wizard to initialize settings on First Run
 2.07.02.1 Fixed possible crash when Images folder was moved and ZScreen tries to load History.xml
 2.07.02.0 The Root folder is now relocatable to a different folder
-2.07.01.0 XML Option to periodically backup FTP Settings
+2.07.01.0 PropertyGrid Setting to periodically backup FTP Settings
 2.07.00.1 More accurate error reporting via BalloonTip
 2.07.00.0 PropertyGrid in Options : Advanced tab exposes XML Settings that are not visible in GUI
 2.06.16.0 Option to set Timeout in milliseconds to retry other Image Uploaders
