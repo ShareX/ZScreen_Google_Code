@@ -35,17 +35,7 @@ namespace ZSS
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmViewSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestinations = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmHotkeys = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmEditors = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmImageHosting = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmTextServices = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmTranslator = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmImageDest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,7 +84,6 @@ namespace ZSS
             this.llblHelp = new System.Windows.Forms.LinkLabel();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -112,12 +101,10 @@ namespace ZSS
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
-            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -356,9 +343,7 @@ namespace ZSS
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
@@ -467,6 +452,11 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
+            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -597,7 +587,7 @@ namespace ZSS
             // cmTray
             // 
             this.cmTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmViewSettingsMenu,
+            this.tsmiTabs,
             this.toolStripSeparator4,
             this.tsmImageDest,
             this.tsmEditinImageSoftware,
@@ -613,107 +603,16 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 270);
             // 
-            // tsmViewSettingsMenu
+            // tsmiTabs
             // 
-            this.tsmViewSettingsMenu.DoubleClickEnabled = true;
-            this.tsmViewSettingsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmMain,
-            this.tsmDestinations,
-            this.tsmHotkeys,
-            this.tsmCapture,
-            this.tsmEditors,
-            this.tsmImageHosting,
-            this.tsmTextServices,
-            this.tsmTranslator,
-            this.tsmHistory,
-            this.tsmOptions});
-            this.tsmViewSettingsMenu.Image = global::ZSS.Properties.Resources.wrench;
-            this.tsmViewSettingsMenu.Name = "tsmViewSettingsMenu";
-            this.tsmViewSettingsMenu.Size = new System.Drawing.Size(205, 22);
-            this.tsmViewSettingsMenu.Text = "View Settings Menu";
-            this.tsmViewSettingsMenu.Click += new System.EventHandler(this.tsmSettings_Click);
-            // 
-            // tsmMain
-            // 
-            this.tsmMain.Image = global::ZSS.Properties.Resources.application_form;
-            this.tsmMain.Name = "tsmMain";
-            this.tsmMain.Size = new System.Drawing.Size(146, 22);
-            this.tsmMain.Text = "Main...";
-            this.tsmMain.Click += new System.EventHandler(this.tsmMain_Click);
-            // 
-            // tsmDestinations
-            // 
-            this.tsmDestinations.Image = global::ZSS.Properties.Resources.server_edit;
-            this.tsmDestinations.Name = "tsmDestinations";
-            this.tsmDestinations.Size = new System.Drawing.Size(146, 22);
-            this.tsmDestinations.Text = "Accounts...";
-            this.tsmDestinations.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmHotkeys
-            // 
-            this.tsmHotkeys.Image = global::ZSS.Properties.Resources.keyboard;
-            this.tsmHotkeys.Name = "tsmHotkeys";
-            this.tsmHotkeys.Size = new System.Drawing.Size(146, 22);
-            this.tsmHotkeys.Text = "Hotkeys...";
-            this.tsmHotkeys.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmCapture
-            // 
-            this.tsmCapture.Image = global::ZSS.Properties.Resources.camera_edit;
-            this.tsmCapture.Name = "tsmCapture";
-            this.tsmCapture.Size = new System.Drawing.Size(146, 22);
-            this.tsmCapture.Text = "Screenshots...";
-            this.tsmCapture.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmEditors
-            // 
-            this.tsmEditors.Image = global::ZSS.Properties.Resources.picture_edit;
-            this.tsmEditors.Name = "tsmEditors";
-            this.tsmEditors.Size = new System.Drawing.Size(146, 22);
-            this.tsmEditors.Text = "Editors...";
-            this.tsmEditors.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmImageHosting
-            // 
-            this.tsmImageHosting.Image = ((System.Drawing.Image)(resources.GetObject("tsmImageHosting.Image")));
-            this.tsmImageHosting.Name = "tsmImageHosting";
-            this.tsmImageHosting.Size = new System.Drawing.Size(146, 22);
-            this.tsmImageHosting.Text = "Images...";
-            this.tsmImageHosting.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmTextServices
-            // 
-            this.tsmTextServices.Image = global::ZSS.Properties.Resources.text_signature;
-            this.tsmTextServices.Name = "tsmTextServices";
-            this.tsmTextServices.Size = new System.Drawing.Size(146, 22);
-            this.tsmTextServices.Text = "&Text...";
-            this.tsmTextServices.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmTranslator
-            // 
-            this.tsmTranslator.Image = global::ZSS.Properties.Resources.comments;
-            this.tsmTranslator.Name = "tsmTranslator";
-            this.tsmTranslator.Size = new System.Drawing.Size(146, 22);
-            this.tsmTranslator.Text = "Translator...";
-            this.tsmTranslator.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmHistory
-            // 
-            this.tsmHistory.Image = global::ZSS.Properties.Resources.pictures;
-            this.tsmHistory.Name = "tsmHistory";
-            this.tsmHistory.Size = new System.Drawing.Size(146, 22);
-            this.tsmHistory.Text = "History...";
-            this.tsmHistory.Click += new System.EventHandler(this.tsm_Click);
-            // 
-            // tsmOptions
-            // 
-            this.tsmOptions.Image = global::ZSS.Properties.Resources.application_edit;
-            this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(146, 22);
-            this.tsmOptions.Text = "Options...";
-            this.tsmOptions.Click += new System.EventHandler(this.tsm_Click);
+            this.tsmiTabs.DoubleClickEnabled = true;
+            this.tsmiTabs.Image = global::ZSS.Properties.Resources.wrench;
+            this.tsmiTabs.Name = "tsmiTabs";
+            this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
+            this.tsmiTabs.Text = "View Settings Menu";
+            this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1087,7 +986,7 @@ namespace ZSS
             this.tpMain.Controls.Add(this.gbMainOptions);
             this.tpMain.Controls.Add(this.lblLogo);
             this.tpMain.Controls.Add(this.pbLogo);
-            this.tpMain.ImageIndex = 0;
+            this.tpMain.ImageKey = "application_form.png";
             this.tpMain.Location = new System.Drawing.Point(4, 23);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
@@ -1131,19 +1030,6 @@ namespace ZSS
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
-            // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Delay before a screenshot is captured");
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -1345,16 +1231,6 @@ namespace ZSS
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(777, 309);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
             // gbFTPSettings
             // 
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -1402,14 +1278,6 @@ namespace ZSS
             this.tpMindTouch.TabIndex = 4;
             this.tpMindTouch.Text = "MindTouch";
             this.tpMindTouch.UseVisualStyleBackColor = true;
-            // 
-            // panelMindTouchAccounts
-            // 
-            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
-            this.panelMindTouchAccounts.Size = new System.Drawing.Size(777, 393);
-            this.panelMindTouchAccounts.TabIndex = 0;
             // 
             // tpTinyPic
             // 
@@ -1687,7 +1555,7 @@ namespace ZSS
             // 
             this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
             this.tpHotkeys.Controls.Add(this.dgvHotkeys);
-            this.tpHotkeys.ImageIndex = 1;
+            this.tpHotkeys.ImageKey = "keyboard.png";
             this.tpHotkeys.Location = new System.Drawing.Point(4, 23);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
@@ -1781,7 +1649,7 @@ namespace ZSS
             // tpScreenshots
             // 
             this.tpScreenshots.Controls.Add(this.tcScreenshots);
-            this.tpScreenshots.ImageIndex = 2;
+            this.tpScreenshots.ImageKey = "camera_edit.png";
             this.tpScreenshots.Location = new System.Drawing.Point(4, 23);
             this.tpScreenshots.Name = "tpScreenshots";
             this.tpScreenshots.Padding = new System.Windows.Forms.Padding(3);
@@ -3509,7 +3377,7 @@ namespace ZSS
             // tpEditors
             // 
             this.tpEditors.Controls.Add(this.tcEditors);
-            this.tpEditors.ImageIndex = 3;
+            this.tpEditors.ImageKey = "picture_edit.png";
             this.tpEditors.Location = new System.Drawing.Point(4, 23);
             this.tpEditors.Name = "tpEditors";
             this.tpEditors.Padding = new System.Windows.Forms.Padding(3);
@@ -3633,7 +3501,7 @@ namespace ZSS
             // tpImageHosting
             // 
             this.tpImageHosting.Controls.Add(this.tcImages);
-            this.tpImageHosting.ImageIndex = 15;
+            this.tpImageHosting.ImageKey = "pictures--arrow.png";
             this.tpImageHosting.Location = new System.Drawing.Point(4, 23);
             this.tpImageHosting.Name = "tpImageHosting";
             this.tpImageHosting.Padding = new System.Windows.Forms.Padding(3);
@@ -4184,14 +4052,6 @@ namespace ZSS
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(777, 393);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4202,14 +4062,6 @@ namespace ZSS
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(777, 393);
-            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -4385,7 +4237,7 @@ namespace ZSS
             // tpHistory
             // 
             this.tpHistory.Controls.Add(this.tcHistory);
-            this.tpHistory.ImageIndex = 6;
+            this.tpHistory.ImageKey = "pictures.png";
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
@@ -4697,7 +4549,7 @@ namespace ZSS
             // tpOptions
             // 
             this.tpOptions.Controls.Add(this.tcOptions);
-            this.tpOptions.ImageIndex = 7;
+            this.tpOptions.ImageKey = "application_edit.png";
             this.tpOptions.Location = new System.Drawing.Point(4, 23);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
@@ -5496,6 +5348,53 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Delay before a screenshot is captured");
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(777, 309);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // panelMindTouchAccounts
+            // 
+            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
+            this.panelMindTouchAccounts.Size = new System.Drawing.Size(777, 393);
+            this.panelMindTouchAccounts.TabIndex = 0;
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(777, 393);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
+            // ucUrlShorteners
+            // 
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(777, 393);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5692,20 +5591,13 @@ namespace ZSS
         internal System.Windows.Forms.ToolStripMenuItem tsmExitZScreen;
         internal System.Windows.Forms.ToolStripMenuItem tsmEditinImageSoftware;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        internal System.Windows.Forms.ToolStripMenuItem tsmViewSettingsMenu;
+        internal System.Windows.Forms.ToolStripMenuItem tsmiTabs;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         internal System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
         internal System.Windows.Forms.ToolStripMenuItem tsmViewRemoteDirectory;
-        internal System.Windows.Forms.ToolStripMenuItem tsmHotkeys;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestinations;
-        internal System.Windows.Forms.ToolStripMenuItem tsmEditors;
-        internal System.Windows.Forms.ToolStripMenuItem tsmCapture;
-        internal System.Windows.Forms.ToolStripMenuItem tsmHistory;
-        internal System.Windows.Forms.ToolStripMenuItem tsmOptions;
         internal System.Windows.Forms.ToolStripMenuItem tsmImageDest;
         internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
-        internal System.Windows.Forms.ToolStripMenuItem tsmImageHosting;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         internal System.Windows.Forms.ToolStripMenuItem tsmQuickOptions;
         internal System.Windows.Forms.ContextMenuStrip cmsHistory;
@@ -5738,7 +5630,6 @@ namespace ZSS
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         internal System.Windows.Forms.ToolStripMenuItem tsmDragDropWindow;
         internal System.Windows.Forms.ToolStripMenuItem tsmQuickActions;
-        internal System.Windows.Forms.ToolStripMenuItem tsmMain;
         internal System.Windows.Forms.ToolStripMenuItem autoScreenshotsToolStripMenuItem;
         internal System.Windows.Forms.Timer tmrApp;
         internal System.Windows.Forms.TabControl tcApp;
@@ -6086,8 +5977,6 @@ namespace ZSS
         internal System.Windows.Forms.ComboBox cboTextDest;
         internal System.Windows.Forms.Label lblTextDest;
         internal System.Windows.Forms.GroupBox gbImageSettings;
-        internal System.Windows.Forms.ToolStripMenuItem tsmTextServices;
-        internal System.Windows.Forms.ToolStripMenuItem tsmTranslator;
         internal System.Windows.Forms.GroupBox gpCropRegion;
         internal System.Windows.Forms.TextBox txtAutoTranslate;
         internal System.Windows.Forms.CheckBox cbAutoTranslate;

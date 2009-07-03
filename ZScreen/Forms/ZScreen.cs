@@ -28,13 +28,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Drawing.Printing;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Greenshot.Helpers;
 using ZSS.ColorsLib;
 using ZSS.Forms;
 using ZSS.Global;
@@ -122,11 +119,6 @@ namespace ZSS
 
             AddToClipboardByDoubleClick(tpHistory);
 
-            // Context Menu
-            tsmDestinations.Text = tpDestinations.Text;
-            tsmImageHosting.Text = tpImageHosting.Text;
-            tsmTextServices.Text = tpTextServices.Text;
-
             // Window Behaviour
             if (Program.conf.ActionsToolbarMode)
             {
@@ -160,7 +152,7 @@ namespace ZSS
             niTray.Visible = true;
         }
 
-        private void SetupScreen()
+        private void ZScreen_ConfigGUI()
         {
             #region Global
 
@@ -179,6 +171,15 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
             //  Main
             //~~~~~~~~~~~~~~~~~~~~~
+
+            foreach (TabPage tp in tcApp.TabPages)
+            {
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text);
+                tsmi.Click += new EventHandler(tsmiTab_Click);
+                tsmi.Image = ilApp.Images[tp.ImageKey];
+                tsmi.Tag = tp.Name;
+                tsmiTabs.DropDownItems.Add(tsmi);
+            }
 
             if (cboImagesDest.Items.Count == 0)
             {
@@ -560,9 +561,18 @@ namespace ZSS
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
-        void tsmiDestImages_Click(object sender, EventArgs e)
+        void tsmiTab_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;            
+            tcApp.SelectedTab = tcApp.TabPages[(string)tsmi.Tag];
+
+            BringUpMenu();
+            tcApp.Focus();
+        }
+
+        void tsmiDestImages_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             cboImagesDest.SelectedIndex = (int)tsmi.Tag;
         }
 
@@ -574,7 +584,7 @@ namespace ZSS
             txtSettingsDir.Text = Program.SettingsDir;
         }
 
-    
+
         #region "GUI Methods"
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
@@ -714,7 +724,7 @@ namespace ZSS
                 for (int x = 0; x < imgs.Count; x++)
                 {
                     ToolStripMenuItem tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
-                    tsm.Click += new EventHandler(RightClickIsItemClick);
+                    tsm.Click += new EventHandler(TrayImageEditorClick);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
                     if (imgs[x].Name == Program.DISABLED_IMAGE_EDITOR)
                     {
@@ -754,7 +764,7 @@ namespace ZSS
             //rewriteISRightClickMenu();
         }
 
-        private void RightClickIsItemClick(object sender, EventArgs e)
+        private void TrayImageEditorClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
@@ -763,10 +773,6 @@ namespace ZSS
             if (lbImageSoftware.Items.IndexOf(tsm.Text) >= 0)
                 lbImageSoftware.SelectedItem = tsm.Text;
 
-            //Turn on Image Software
-            //cbRunImageSoftware.Checked = true;
-
-            //rewriteISRightClickMenu();
         }
 
         private void CheckCorrectIsRightClickMenu(string txt)
@@ -797,11 +803,12 @@ namespace ZSS
             if (Program.conf.ImageUploadersList != null)
             {
                 List<ImageHostingService> lUploaders = Program.conf.ImageUploadersList;
-                ToolStripMenuItem tsm;
+
                 ToolStripMenuItem tsmDestCustomHTTP = GetImageDestMenuItem(ImageDestType.CUSTOM_UPLOADER);
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmDestCustomHTTP.DropDownItems.Clear();
 
+                ToolStripMenuItem tsm;
                 for (int i = 0; i < lUploaders.Count; i++)
                 {
                     tsm = new ToolStripMenuItem { CheckOnClick = true, Tag = i, Text = lUploaders[i].Name };
@@ -910,12 +917,7 @@ namespace ZSS
         private void rightClickFTPItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-
-            //Program.conf.FTPselected = (int)tsm.Tag;
-
             ucFTPAccounts.AccountsList.SelectedIndex = (int)tsm.Tag;
-
-            //rewriteFTPRightClickMenu();
         }
 
         private void CheckCorrectMenuItemClicked(ref ToolStripMenuItem mi, int index)
@@ -1038,37 +1040,6 @@ namespace ZSS
             this.BringToFront();
         }
 
-        private void tsm_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-
-            TabPage sel = tpMain;
-
-            if (tsm == tsmHotkeys)
-                sel = tpHotkeys;
-            else if (tsm == tsmCapture)
-                sel = tpScreenshots;
-            else if (tsm == tsmEditors)
-                sel = tpEditors;
-            else if (tsm == tsmDestinations)
-                sel = tpDestinations;
-            else if (tsm == tsmImageHosting)
-                sel = tpImageHosting;
-            else if (tsm == tsmTextServices)
-                sel = tpTextServices;
-            else if (tsm == tsmHistory)
-                sel = tpHistory;
-            else if (tsm == tsmTranslator)
-                sel = tpTranslator;
-            else if (tsm == tsmOptions)
-                sel = tpOptions;
-
-            tcApp.SelectedTab = sel;
-
-            BringUpMenu();
-            tcApp.Focus();
-        }
-
         private void btnBrowseConfig_Click(object sender, EventArgs e)
         {
             ShowDirectory(Program.SettingsDir);
@@ -1177,7 +1148,7 @@ namespace ZSS
                 if (temp.RunOnce)
                 {
                     Program.conf = temp;
-                    SetupScreen();
+                    ZScreen_ConfigGUI();
                 }
             }
         }
@@ -1362,7 +1333,7 @@ namespace ZSS
         {
             //try
             //{
-            SetupScreen();
+            ZScreen_ConfigGUI();
             CheckFormSettings();
             //}
             //catch (Exception ex)
@@ -1379,7 +1350,7 @@ namespace ZSS
         private void LoadSettingsDefault()
         {
             Program.conf = new XMLSettings();
-            SetupScreen();
+            ZScreen_ConfigGUI();
             Program.conf.RunOnce = true;
             Program.conf.Save();
         }
@@ -3013,7 +2984,7 @@ namespace ZSS
             FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
             UpdateGuiControlsPaths();
             Program.conf = XMLSettings.Read();
-            SetupScreen();
+            ZScreen_ConfigGUI();
         }
 
         private void btnViewRootDir_Click(object sender, EventArgs e)
