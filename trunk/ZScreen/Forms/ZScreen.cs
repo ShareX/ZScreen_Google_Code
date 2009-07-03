@@ -1994,6 +1994,7 @@ namespace ZSS
                     bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
                     bool checkImage = checkLocal && FileSystem.IsValidImageFile(hi.LocalPath);
+                    bool checkText = checkLocal && FileSystem.IsValidText(hi.LocalPath);
 
                     tsmCopyCbHistory.Enabled = checkRemote;
                     browseURLToolStripMenuItem.Enabled = checkRemote;
@@ -2002,7 +2003,7 @@ namespace ZSS
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
                     btnHistoryCopyImage.Enabled = checkImage;
                     pbPreview.Visible = checkImage;
-                    txtPreview.Visible = !pbPreview.Visible;
+                    txtPreview.Visible = checkText;
 
                     if (FileSystem.IsValidImageFile(hi.LocalPath))
                     {

@@ -22,9 +22,6 @@ namespace ZSS.Helpers
             this.task = task;
         }
 
-
-
-
         public void UploadImage()
         {
             task.StartTime = DateTime.Now;
