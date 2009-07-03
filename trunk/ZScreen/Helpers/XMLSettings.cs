@@ -218,7 +218,7 @@ namespace ZSS
         public bool CloseQuickActions = false;
         [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task")]
         public bool MakeTinyURL { get; set; }
-        [Category("Options / Interaction"), DefaultValue(100), Description("URL Shortening will only be activated if the length of a URL exceeds this value")]
+        [Category("Options / Interaction"), DefaultValue(100), Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int LimitLongURL { get; set; }
 
         // Naming Conventions
@@ -303,7 +303,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<DekiWikiAccount> DekiWikiAccountList = new List<DekiWikiAccount>();
-        public int DekiWikiSelected = -1;
+        public int DekiWikiSelected = 0;
         public bool DekiWikiForcePath = false;
 
         //~~~~~~~~~~~~~~~~~~~~~

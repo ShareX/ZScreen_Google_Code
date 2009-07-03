@@ -7,6 +7,7 @@ using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.ImageUploaderLib;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace ZSS.Global
 {
@@ -15,6 +16,32 @@ namespace ZSS.Global
     /// </summary>
     public static class Adapter
     {
+
+        public static void TestFTPAccount(FTPAccount acc)
+        {
+            string msg = "";
+            try
+            {
+                FTP ftp = new FTP(ref acc);
+                if (ftp.ListDirectory() != null)
+                {
+                    msg = "Success"; //Success
+                }
+                else
+                {
+                    msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
+                }
+            }
+            catch (Exception t)
+            {
+                msg = t.Message;
+            }
+
+            if (!string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
         {
@@ -37,6 +64,30 @@ namespace ZSS.Global
             }
             task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
             return false;
+        }
+
+        public static void TestDekiWikiAccount(DekiWikiAccount acc)
+        {
+            string msg = string.Empty;
+            try
+            {
+                // Create the connector
+                DekiWiki connector = new DekiWiki(ref acc);
+
+                // Attempt to login
+                connector.Login();
+
+                // Set the success text
+                msg = "Success!"; //Success
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            if (!string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>
