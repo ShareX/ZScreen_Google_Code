@@ -107,7 +107,7 @@ namespace ZSS
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
-            this.panelMindTouchAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -327,7 +327,7 @@ namespace ZSS
             this.btnRegexpEdit = new System.Windows.Forms.Button();
             this.txtRegexp = new System.Windows.Forms.TextBox();
             this.lvRegexps = new System.Windows.Forms.ListView();
-            this.lvRegexpsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvRegexpsColumn = new System.Windows.Forms.ColumnHeader();
             this.btnRegexpRemove = new System.Windows.Forms.Button();
             this.btnRegexpAdd = new System.Windows.Forms.Button();
             this.txtFileForm = new System.Windows.Forms.TextBox();
@@ -339,8 +339,8 @@ namespace ZSS
             this.txtArg2 = new System.Windows.Forms.TextBox();
             this.btnArgRemove = new System.Windows.Forms.Button();
             this.lvArguments = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpTextServices = new System.Windows.Forms.TabPage();
@@ -1196,8 +1196,8 @@ namespace ZSS
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbLogo.TabIndex = 72;
             this.pbLogo.TabStop = false;
-            this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
+            this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             // 
             // tpDestinations
             // 
@@ -1269,7 +1269,7 @@ namespace ZSS
             this.cbAutoSwitchFTP.TabIndex = 114;
             this.cbAutoSwitchFTP.Text = "Automatically switch to FTP if a user drags or copies a non-Image";
             this.cbAutoSwitchFTP.UseVisualStyleBackColor = true;
-            this.cbAutoSwitchFTP.CheckedChanged += new System.EventHandler(this.cbAutoSwitchFTP_CheckedChanged);
+            this.cbAutoSwitchFTP.CheckedChanged += new System.EventHandler(this.chkAutoSwitchFTP_CheckedChanged);
             // 
             // chkEnableThumbnail
             // 
@@ -1286,7 +1286,7 @@ namespace ZSS
             // 
             // tpMindTouch
             // 
-            this.tpMindTouch.Controls.Add(this.panelMindTouchAccounts);
+            this.tpMindTouch.Controls.Add(this.ucMindTouchAccounts);
             this.tpMindTouch.Location = new System.Drawing.Point(4, 22);
             this.tpMindTouch.Name = "tpMindTouch";
             this.tpMindTouch.Padding = new System.Windows.Forms.Padding(3);
@@ -1295,13 +1295,13 @@ namespace ZSS
             this.tpMindTouch.Text = "MindTouch";
             this.tpMindTouch.UseVisualStyleBackColor = true;
             // 
-            // panelMindTouchAccounts
+            // ucMindTouchAccounts
             // 
-            this.panelMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.panelMindTouchAccounts.Name = "panelMindTouchAccounts";
-            this.panelMindTouchAccounts.Size = new System.Drawing.Size(777, 393);
-            this.panelMindTouchAccounts.TabIndex = 0;
+            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(777, 393);
+            this.ucMindTouchAccounts.TabIndex = 0;
             // 
             // tpTinyPic
             // 
@@ -1646,10 +1646,10 @@ namespace ZSS
             this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvHotkeys.Size = new System.Drawing.Size(454, 366);
             this.dgvHotkeys.TabIndex = 67;
-            this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
-            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
             this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
+            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
             this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
+            this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
             // 
             // chHotkeys_Description
             // 
@@ -4431,8 +4431,8 @@ namespace ZSS
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
-            this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
             this.lbHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbHistory_MouseDown);
+            this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
             // 
             // txtPreview
             // 
@@ -5399,10 +5399,10 @@ namespace ZSS
             this.Text = "ZScreen";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.ZScreen_Deactivate);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Load += new System.EventHandler(this.ZScreen_Load);
             this.Shown += new System.EventHandler(this.ZScreen_Shown);
             this.Leave += new System.EventHandler(this.ZScreen_Leave);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.cmTray.ResumeLayout(false);
             this.cmsHistory.ResumeLayout(false);
@@ -5975,7 +5975,7 @@ namespace ZSS
         internal System.Windows.Forms.ToolTip ttZScreen;
         internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.TabPage tpMindTouch;
-        internal ZSS.UserControls.AccountsControl panelMindTouchAccounts;
+        internal ZSS.UserControls.AccountsControl ucMindTouchAccounts;
         internal System.Windows.Forms.GroupBox gbImageEditorSettings;
         internal System.Windows.Forms.CheckBox chkImageEditorAutoSave;
         internal System.Windows.Forms.TabPage tpFTP;

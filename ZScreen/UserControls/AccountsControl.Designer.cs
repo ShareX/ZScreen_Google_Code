@@ -46,6 +46,7 @@
             this.SettingsGrid.Size = new System.Drawing.Size(441, 338);
             this.SettingsGrid.TabIndex = 121;
             this.SettingsGrid.ToolbarVisible = false;
+            this.SettingsGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.SettingsGrid_PropertyValueChanged);
             // 
             // AccountsList
             // 

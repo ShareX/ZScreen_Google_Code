@@ -49,106 +49,6 @@ namespace ZSS.Helpers
             return bwApp;
         }
 
-        internal MainAppTask CreateTask(MainAppTask.Jobs job)
-        {
-            BackgroundWorker bwApp = CreateWorker();
-            MainAppTask task = new MainAppTask(bwApp, job);
-            if (task.Job != MainAppTask.Jobs.CUSTOM_UPLOADER_TEST)
-            {
-                task.ImageDestCategory = Program.conf.ScreenshotDestMode;
-            }
-            else
-            {
-                task.ImageDestCategory = ImageDestType.CUSTOM_UPLOADER;
-            }
-            return task;
-        }
-
-        public MainAppTask GetWorkerText(MainAppTask.Jobs job)
-        {
-            return GetWorkerText(job, "");
-        }
-
-        /// <summary>
-        /// Worker for Text: Paste2, Pastebin
-        /// </summary>
-        /// <returns></returns>
-        public MainAppTask GetWorkerText(MainAppTask.Jobs job, string localFilePath)
-        {
-            MainAppTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.TEXT;
-            // t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyTextUploader = (TextUploader)mZScreen.ucTextUploaders.MyCollection.SelectedItem;
-            if (!string.IsNullOrEmpty(localFilePath))
-            {
-                t.SetLocalFilePath(localFilePath);
-            }
-
-            switch (job)
-            {
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    mZScreen.btnTranslate.Enabled = false;
-                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text, Program.mGTranslator.LanguageOptions.SourceLangList[mZScreen.cbFromLanguage.SelectedIndex],
-                        Program.mGTranslator.LanguageOptions.TargetLangList[mZScreen.cbToLanguage.SelectedIndex]);
-                    if (t.TranslationInfo.IsEmpty())
-                    {
-                        mZScreen.btnTranslate.Enabled = true;
-                    }
-                    break;
-            }
-            return t;
-        }
-
-        public void HistoryRetryUpload(HistoryItem hi)
-        {
-            if (hi != null && File.Exists(hi.LocalPath))
-            {
-                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
-                task.JobCategory = hi.JobCategory;
-                task.SetImage(hi.LocalPath);
-                task.SetLocalFilePath(hi.LocalPath);
-                task.ImageDestCategory = hi.ImageDestCategory;
-                task.MyWorker.RunWorkerAsync(task);
-            }
-        }
-
-        internal void EventJobs(object sender, MainAppTask.Jobs jobs)
-        {
-            switch (jobs)
-            {
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                    StartBW_EntireScreen();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    StartBW_ActiveWindow();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                    StartBW_SelectedWindow();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                    StartBW_CropShot();
-                    break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                    StartBW_LastCropShot();
-                    break;
-                case MainAppTask.Jobs.AUTO_CAPTURE:
-                    ShowAutoCapture();
-                    break;
-                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
-                    UploadUsingClipboard();
-                    break;
-                case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
-                    ShowDropWindow();
-                    break;
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    StartWorkerTranslator();
-                    break;
-                case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
-                    ScreenColorPicker();
-                    break;
-            }
-        }
-
         #region "Background Worker"
 
         private void BwApp_DoWork(object sender, DoWorkEventArgs e)
@@ -161,7 +61,7 @@ namespace ZSS.Helpers
                 task.ImageDestCategory != ImageDestType.FILE &&
                 (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
                 task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
-                MessageBox.Show("Do you really want upload to " + task.ImageDestCategory.GetDescription() + " ?",
+                MessageBox.Show("Do you really want to upload to " + task.ImageDestCategory.GetDescription() + "?",
                 Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 e.Result = task;
@@ -440,6 +340,107 @@ namespace ZSS.Helpers
         }
 
         #endregion
+
+        internal MainAppTask CreateTask(MainAppTask.Jobs job)
+        {
+            BackgroundWorker bwApp = CreateWorker();
+            MainAppTask task = new MainAppTask(bwApp, job);
+            if (task.Job != MainAppTask.Jobs.CUSTOM_UPLOADER_TEST)
+            {
+                task.ImageDestCategory = Program.conf.ScreenshotDestMode;
+            }
+            else
+            {
+                task.ImageDestCategory = ImageDestType.CUSTOM_UPLOADER;
+            }
+            return task;
+        }
+
+        public MainAppTask GetWorkerText(MainAppTask.Jobs job)
+        {
+            return GetWorkerText(job, "");
+        }
+
+        /// <summary>
+        /// Worker for Text: Paste2, Pastebin
+        /// </summary>
+        /// <returns></returns>
+        public MainAppTask GetWorkerText(MainAppTask.Jobs job, string localFilePath)
+        {
+            MainAppTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.TEXT;
+            // t.MakeTinyURL = Program.MakeTinyURL();
+            t.MyTextUploader = (TextUploader)mZScreen.ucTextUploaders.MyCollection.SelectedItem;
+            if (!string.IsNullOrEmpty(localFilePath))
+            {
+                t.SetLocalFilePath(localFilePath);
+            }
+
+            switch (job)
+            {
+                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                    mZScreen.btnTranslate.Enabled = false;
+                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text, Program.mGTranslator.LanguageOptions.SourceLangList[mZScreen.cbFromLanguage.SelectedIndex],
+                        Program.mGTranslator.LanguageOptions.TargetLangList[mZScreen.cbToLanguage.SelectedIndex]);
+                    if (t.TranslationInfo.IsEmpty())
+                    {
+                        mZScreen.btnTranslate.Enabled = true;
+                    }
+                    break;
+            }
+            return t;
+        }
+
+        public void HistoryRetryUpload(HistoryItem hi)
+        {
+            if (hi != null && File.Exists(hi.LocalPath))
+            {
+                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
+                task.JobCategory = hi.JobCategory;
+                task.SetImage(hi.LocalPath);
+                task.SetLocalFilePath(hi.LocalPath);
+                task.ImageDestCategory = hi.ImageDestCategory;
+                task.MyWorker.RunWorkerAsync(task);
+            }
+        }
+
+        internal void EventJobs(object sender, MainAppTask.Jobs jobs)
+        {
+            switch (jobs)
+            {
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                    StartBW_EntireScreen();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                    StartBW_ActiveWindow();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                    StartBW_SelectedWindow();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                    StartBW_CropShot();
+                    break;
+                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                    StartBW_LastCropShot();
+                    break;
+                case MainAppTask.Jobs.AUTO_CAPTURE:
+                    ShowAutoCapture();
+                    break;
+                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                    UploadUsingClipboard();
+                    break;
+                case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
+                    ShowDropWindow();
+                    break;
+                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                    StartWorkerTranslator();
+                    break;
+                case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
+                    ScreenColorPicker();
+                    break;
+            }
+        }
+
 
         #region "Capture Method"
 

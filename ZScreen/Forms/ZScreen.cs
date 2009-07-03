@@ -66,7 +66,7 @@ namespace ZSS
         {
             InitializeComponent();
 
-            SetFormSettings();
+            ZScreen_SetFormSettings();
             UpdateGuiControls();
 
             Program.Worker = new WorkerPrimary(this);
@@ -78,7 +78,7 @@ namespace ZSS
             if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
         }
 
-        private void SetFormSettings()
+        private void ZScreen_SetFormSettings()
         {
             this.Icon = Resources.zss_main;
             this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
@@ -90,18 +90,25 @@ namespace ZSS
                 Program.conf.WindowSize = this.Size;
             }
 
-            // Accounts
+            // Accounts - FTP
             ucFTPAccounts.btnAdd.Click += new EventHandler(FTPAccountAddButton_Click);
-            ucFTPAccounts.btnRemove.Click += new EventHandler(FTPAccountsRemoveButton_Click);
-            ucFTPAccounts.btnTest.Click += new EventHandler(FTPAccountsTestButton_Click);
+            ucFTPAccounts.btnRemove.Click += new EventHandler(FTPAccountRemoveButton_Click);
+            ucFTPAccounts.btnTest.Click += new EventHandler(FTPAccountTestButton_Click);
             ucFTPAccounts.AccountsList.SelectedIndexChanged += new EventHandler(FTPAccountsList_SelectedIndexChanged);
 
-            // Textloaders
+            // Accounts - MindTouch
+            ucMindTouchAccounts.btnAdd.Click += new EventHandler(MindTouchAccountAddButton_Click);
+            ucMindTouchAccounts.btnRemove.Click += new EventHandler(MindTouchAccountRemoveButton_Click);
+            ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
+            ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
+
+            // Text Services - URL Shorteners
             ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
             ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
             ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
             ucUrlShorteners.btnItemTest.Click += new EventHandler(UrlShortenerTestButton_Click);
 
+            // Text Services - Text Uploaders
             ucTextUploaders.btnItemAdd.Click += new EventHandler(TextUploadersAddButton_Click);
             ucTextUploaders.btnItemRemove.Click += new EventHandler(TextUploadersRemoveButton_Click);
             ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(TextUploaders_SelectedIndexChanged);
@@ -115,7 +122,7 @@ namespace ZSS
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
-            tcAccounts.TabPages.Remove(tpMindTouch);
+            // tpMindTouch.Enabled = false;
 
             AddToClipboardByDoubleClick(tpHistory);
 
@@ -174,7 +181,7 @@ namespace ZSS
 
             foreach (TabPage tp in tcApp.TabPages)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text+"...");
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text + "...");
                 tsmi.Click += new EventHandler(tsmiTab_Click);
                 tsmi.Image = ilApp.Images[tp.ImageKey];
                 tsmi.Tag = tp.Name;
@@ -518,7 +525,7 @@ namespace ZSS
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
             ///////////////////////////////////
-            // Image MyCollection
+            // Image Editors
             ///////////////////////////////////
 
             lbUploader.Items.Clear();
@@ -563,7 +570,7 @@ namespace ZSS
 
         void tsmiTab_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;            
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             tcApp.SelectedTab = tcApp.TabPages[(string)tsmi.Tag];
 
             BringUpMenu();
@@ -2481,7 +2488,7 @@ namespace ZSS
             Program.conf.ImageUploadRetry = chkImageUploadRetry.Checked;
         }
 
-        #region FTP
+        #region FTP Accounts
 
         private void FTPSetup(IEnumerable<FTPAccount> accs)
         {
@@ -2497,20 +2504,21 @@ namespace ZSS
             }
         }
 
-        private void FTPAccountsRemoveButton_Click(object sender, EventArgs e)
+        private void FTPAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
-
-            if (sel != -1)
+            if (ucFTPAccounts.RemoveItem(sel) == true)
             {
                 Program.conf.FTPAccountList.RemoveAt(sel);
+            }
+        }
 
-                ucFTPAccounts.AccountsList.Items.RemoveAt(sel);
-
-                if (ucFTPAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucFTPAccounts.AccountsList.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
-                }
+        private void MindTouchAccountRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
+            if (ucMindTouchAccounts.RemoveItem(sel) == true)
+            {
+                Program.conf.DekiWikiAccountList.RemoveAt(sel);
             }
         }
 
@@ -2526,12 +2534,32 @@ namespace ZSS
             }
         }
 
+        private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
+            Program.conf.DekiWikiSelected = sel;
+            if (Program.conf.DekiWikiAccountList != null && sel != -1 && sel < Program.conf.DekiWikiAccountList.Count && Program.conf.DekiWikiAccountList[sel] != null)
+            {
+                DekiWikiAccount acc = Program.conf.DekiWikiAccountList[sel];
+                ucMindTouchAccounts.SettingsGrid.SelectedObject = acc;
+                // RewriteFTPRightClickMenu();
+            }
+        }
+
         private void FTPAccountAddButton_Click(object sender, EventArgs e)
         {
             FTPAccount acc = new FTPAccount("New Account");
             Program.conf.FTPAccountList.Add(acc);
             ucFTPAccounts.AccountsList.Items.Add(acc);
             ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
+        }
+
+        private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
+        {
+            DekiWikiAccount acc = new DekiWikiAccount("New Account");
+            Program.conf.DekiWikiAccountList.Add(acc);
+            ucMindTouchAccounts.AccountsList.Items.Add(acc);
+            ucMindTouchAccounts.AccountsList.SelectedIndex = ucMindTouchAccounts.AccountsList.Items.Count - 1;
         }
 
         private void btnExportAccounts_Click(object sender, EventArgs e)
@@ -2563,7 +2591,7 @@ namespace ZSS
 
         private FTPAccount GetSelectedFTP()
         {
-            FTPAccount acc = new FTPAccount("New Account");
+            FTPAccount acc = null;
             if (ucFTPAccounts.AccountsList.SelectedIndex != -1 && Program.conf.FTPAccountList.Count >= ucFTPAccounts.AccountsList.Items.Count)
             {
                 acc = Program.conf.FTPAccountList[ucFTPAccounts.AccountsList.SelectedIndex];
@@ -2571,34 +2599,24 @@ namespace ZSS
             return acc;
         }
 
-        private void FTPAccountsTestButton_Click(object sender, EventArgs e)
+        private DekiWikiAccount GetSelectedDekiWiki()
         {
-            string msg = "";
-
-            FTPAccount acc = GetSelectedFTP();
-
-            try
+            DekiWikiAccount acc = null;
+            if (ucMindTouchAccounts.AccountsList.SelectedIndex != -1 && Program.conf.DekiWikiAccountList.Count >= ucMindTouchAccounts.AccountsList.Items.Count)
             {
-                FTP ftp = new FTP(ref acc);
-                if (ftp.ListDirectory() != null)
-                {
-                    msg = "Success"; //Success
-                }
-                else
-                {
-                    msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
-                }
+                acc = Program.conf.DekiWikiAccountList[ucMindTouchAccounts.AccountsList.SelectedIndex];
             }
-            catch (Exception t)
-            {
-                msg = t.Message;
-            }
+            return acc;
+        }
 
-            if (!string.IsNullOrEmpty(msg))
-            {
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+        private void FTPAccountTestButton_Click(object sender, EventArgs e)
+        {
+            Adapter.TestFTPAccount(GetSelectedFTP());
+        }
 
+        private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
+        {
+            Adapter.TestDekiWikiAccount(GetSelectedDekiWiki());
         }
 
         private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
@@ -2606,7 +2624,7 @@ namespace ZSS
             Program.conf.FTPCreateThumbnail = chkEnableThumbnail.Checked;
         }
 
-        private void cbAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
+        private void chkAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.AutoSwitchFTP = cbAutoSwitchFTP.Checked;
         }
