@@ -420,6 +420,23 @@ namespace ZSS
             cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
 
             ///////////////////////////////////
+            // MindTouch Deki Wiki Settings
+            ///////////////////////////////////
+            if (Program.conf.DekiWikiAccountList == null || Program.conf.DekiWikiAccountList.Count == 0)
+            {
+                DekiWikiSetup(new List<DekiWikiAccount>());
+            }
+            else
+            {
+                DekiWikiSetup(Program.conf.DekiWikiAccountList);
+                if (ucMindTouchAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucMindTouchAccounts.AccountsList.SelectedIndex = Program.conf.DekiWikiSelected;
+                }
+            }
+            chkDekiWikiForcePath.Checked = Program.conf.DekiWikiForcePath;
+
+            ///////////////////////////////////
             // HTTP Settings
             ///////////////////////////////////
 
@@ -2488,6 +2505,20 @@ namespace ZSS
             Program.conf.ImageUploadRetry = chkImageUploadRetry.Checked;
         }
 
+        private void DekiWikiSetup(IEnumerable<DekiWikiAccount> accs)
+        {
+            if (accs != null)
+            {
+                ucMindTouchAccounts.AccountsList.Items.Clear();
+                Program.conf.DekiWikiAccountList = new List<DekiWikiAccount>();
+                Program.conf.DekiWikiAccountList.AddRange(accs);
+                foreach (DekiWikiAccount acc in Program.conf.DekiWikiAccountList)
+                {
+                    ucMindTouchAccounts.AccountsList.Items.Add(acc);
+                }
+            }
+        }
+
         #region FTP Accounts
 
         private void FTPSetup(IEnumerable<FTPAccount> accs)
@@ -3415,6 +3446,11 @@ namespace ZSS
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Program.conf.AutoSaveSettings) new Thread(WriteSettings).Start();
+        }
+
+        private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
         }
     }
 }
