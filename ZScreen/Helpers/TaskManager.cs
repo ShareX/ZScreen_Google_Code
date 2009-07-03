@@ -15,31 +15,31 @@ namespace ZSS.Helpers
 {
     public class TaskManager
     {
-        private MainAppTask task;
+        private MainAppTask mTask;
 
         public TaskManager(ref MainAppTask task)
         {
-            this.task = task;
+            this.mTask = task;
         }
 
         public void UploadImage()
         {
-            task.StartTime = DateTime.Now;
+            mTask.StartTime = DateTime.Now;
             ImageUploader imageUploader = null;
 
-            if (Program.conf.TinyPicSizeCheck && task.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(task.LocalFilePath))
+            if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
-                SizeF size = Image.FromFile(task.LocalFilePath).PhysicalDimension;
+                SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
-                    task.ImageDestCategory = ImageDestType.IMAGESHACK;
+                    mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
                 }
             }
 
-            switch (task.ImageDestCategory)
+            switch (mTask.ImageDestCategory)
             {
                 case ImageDestType.CLIPBOARD:
-                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, task.LocalFilePath);
+                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:
                     if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
@@ -49,6 +49,9 @@ namespace ZSS.Helpers
                     break;
                 case ImageDestType.FTP:
                     UploadFtp();
+                    break;
+                case ImageDestType.DEKIWIKI:
+                    UploadDekiWiki();
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
@@ -65,60 +68,60 @@ namespace ZSS.Helpers
 
             if (imageUploader != null)
             {
-                task.DestinationName = imageUploader.Name;
-                string fullFilePath = task.LocalFilePath;
-                if (File.Exists(fullFilePath) || task.MyImage != null)
+                mTask.DestinationName = imageUploader.Name;
+                string fullFilePath = mTask.LocalFilePath;
+                if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
                     for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
-                        (task.ImageManager == null || (task.ImageManager != null && task.ImageManager.ImageFileList.Count < 1)); i++)
+                        (mTask.ImageManager == null || (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
-                            task.ImageManager = imageUploader.UploadImage(fullFilePath);
+                            mTask.ImageManager = imageUploader.UploadImage(fullFilePath);
                         }
-                        else if (task.MyImage != null)
+                        else if (mTask.MyImage != null)
                         {
-                            task.ImageManager = imageUploader.UploadImage(task.MyImage);
+                            mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage);
                         }
-                        task.Errors = imageUploader.Errors;
-                        if (Program.conf.ImageUploadRetry && (task.ImageDestCategory ==
-                            ImageDestType.IMAGESHACK || task.ImageDestCategory == ImageDestType.TINYPIC))
+                        mTask.Errors = imageUploader.Errors;
+                        if (Program.conf.ImageUploadRetry && (mTask.ImageDestCategory ==
+                            ImageDestType.IMAGESHACK || mTask.ImageDestCategory == ImageDestType.TINYPIC))
                         {
                             break;
                         }
                     }
 
                     //Set remote path for Screenshots history
-                    string url = task.ImageManager.GetFullImageUrl();
-                    if (task.MakeTinyURL)
+                    string url = mTask.ImageManager.GetFullImageUrl();
+                    if (mTask.MakeTinyURL)
                     {
                         url = Adapter.TryShortenURL(url);
                     }
-                    if (task.ImageManager != null)
+                    if (mTask.ImageManager != null)
                     {
-                        task.RemoteFilePath = url;
+                        mTask.RemoteFilePath = url;
                     }
                 }
             }
 
-            task.EndTime = DateTime.Now;
+            mTask.EndTime = DateTime.Now;
 
-            if (Program.conf.AutoChangeUploadDestination && task.UploadDuration > (int)Program.conf.UploadDurationLimit)
+            if (Program.conf.AutoChangeUploadDestination && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
             {
-                if (task.ImageDestCategory == ImageDestType.IMAGESHACK)
+                if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
                 {
                     Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
-                else if (task.ImageDestCategory == ImageDestType.TINYPIC)
+                else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
                 {
                     Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
             }
 
-            if (task.ImageManager != null)
+            if (mTask.ImageManager != null)
             {
-                FlashIcon(task);
+                FlashIcon(mTask);
             }
         }
 
@@ -141,14 +144,14 @@ namespace ZSS.Helpers
         {
             try
             {
-                string fullFilePath = task.LocalFilePath;
+                string fullFilePath = mTask.LocalFilePath;
 
-                if (Adapter.CheckFTPAccounts(ref task) && File.Exists(fullFilePath))
+                if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
                     FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                    task.DestinationName = acc.Name;
+                    mTask.DestinationName = acc.Name;
 
-                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", task.FileName, acc.Server));
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
                     ZSS.ImageUploaderLib.FTPUploader fu = new ZSS.ImageUploaderLib.FTPUploader(acc)
                     {
@@ -156,14 +159,14 @@ namespace ZSS.Helpers
                         Program.conf.FTPCreateThumbnail,
                         WorkingDir = Program.CacheDir
                     };
-                    task.ImageManager = fu.UploadImage(fullFilePath);
-                    task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
+                    mTask.ImageManager = fu.UploadImage(fullFilePath);
+                    mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                task.Errors.Add("FTP upload failed.\r\n" + ex.Message);
+                mTask.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
             return false;
@@ -173,9 +176,9 @@ namespace ZSS.Helpers
         {
             try
             {
-                string fullFilePath = task.LocalFilePath;
+                string fullFilePath = mTask.LocalFilePath;
 
-                if (Adapter.CheckDekiWikiAccounts(ref task) && File.Exists(fullFilePath))
+                if (Adapter.CheckDekiWikiAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
                     DekiWikiAccount acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
 
@@ -193,13 +196,13 @@ namespace ZSS.Helpers
                         DekiWiki.savePath = diag.path;
 
                     }
-                    task.DestinationName = acc.Name;
+                    mTask.DestinationName = acc.Name;
 
-                    FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", task.FileName, acc.Url));
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
 
                     DekiWikiUploader uploader = new DekiWikiUploader(acc);
-                    task.ImageManager = uploader.UploadImage(task.LocalFilePath);
-                    task.RemoteFilePath = acc.getUriPath(Path.GetFileName(task.LocalFilePath));
+                    mTask.ImageManager = uploader.UploadImage(mTask.LocalFilePath);
+                    mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
 
                     DekiWiki connector = new DekiWiki(ref acc);
                     connector.UpdateHistory();
@@ -209,7 +212,7 @@ namespace ZSS.Helpers
             }
             catch (Exception ex)
             {
-                task.Errors.Add("Mindtouch upload failed.\r\n" + ex.Message);
+                mTask.Errors.Add("Mindtouch upload failed.\r\n" + ex.Message);
             }
 
             return false;
@@ -217,35 +220,35 @@ namespace ZSS.Helpers
 
         public void UploadText()
         {
-            task.StartTime = DateTime.Now;
+            mTask.StartTime = DateTime.Now;
 
-            TextUploader textUploader = (TextUploader)task.MyTextUploader;
+            TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
             string url = "";
-            if (!string.IsNullOrEmpty(task.MyText))
+            if (!string.IsNullOrEmpty(mTask.MyText))
             {
-                url = textUploader.UploadText(task.MyText);
+                url = textUploader.UploadText(mTask.MyText);
             }
             else
             {
-                url = textUploader.UploadTextFromFile(task.LocalFilePath);
+                url = textUploader.UploadTextFromFile(mTask.LocalFilePath);
             }
-            if (task.MakeTinyURL)
+            if (mTask.MakeTinyURL)
             {
                 url = Adapter.TryShortenURL(url);
             }
-            task.RemoteFilePath = url;
+            mTask.RemoteFilePath = url;
 
-            task.EndTime = DateTime.Now;
+            mTask.EndTime = DateTime.Now;
         }
 
         public void TextEdit()
         {
-            if (File.Exists(task.LocalFilePath))
+            if (File.Exists(mTask.LocalFilePath))
             {
                 Process p = new Process();
                 ProcessStartInfo psi = new ProcessStartInfo(Program.conf.TextEditorActive.Path)
                 {
-                    Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
+                    Arguments = string.Format("{0}{1}{0}", "\"", mTask.LocalFilePath)
                 };
                 p.StartInfo = psi;
                 p.Start();
@@ -259,7 +262,7 @@ namespace ZSS.Helpers
         /// </summary>
         public void ImageEdit()
         {
-            if (File.Exists(task.LocalFilePath))
+            if (File.Exists(mTask.LocalFilePath))
             {
                 Process p = new Process();
                 Software app = Program.conf.ImageEditor;
@@ -272,9 +275,9 @@ namespace ZSS.Helpers
                             Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Program.SettingsDir, "ImageEditor.bin");
                             Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
                             editor.AutoSave = Program.conf.ImageEditorAutoSave;
-                            editor.MyWorker = task.MyWorker;
-                            editor.SetImage(task.MyImage);
-                            editor.SetImagePath(task.LocalFilePath);
+                            editor.MyWorker = mTask.MyWorker;
+                            editor.SetImage(mTask.MyImage);
+                            editor.SetImagePath(mTask.LocalFilePath);
                             editor.ShowDialog();
                         }
                         catch (Exception ex)
@@ -286,7 +289,7 @@ namespace ZSS.Helpers
                     {
                         ProcessStartInfo psi = new ProcessStartInfo(app.Path)
                         {
-                            Arguments = string.Format("{0}{1}{0}", "\"", task.LocalFilePath)
+                            Arguments = string.Format("{0}{1}{0}", "\"", mTask.LocalFilePath)
                         };
                         p.StartInfo = psi;
                         p.Start();

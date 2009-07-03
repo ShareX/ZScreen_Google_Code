@@ -1,5 +1,6 @@
 Version 2.20 - 20090801
 
+2.20.00.0 Support for uploading images to MindTouch Deki Wiki [http://techsurance.com/Screen_Capture]
 2.19.01.0 Changes in Keyboard Hook mechanism require reassigning the Hotkeys
 2.19.00.0 Added bit.ly URL Shortener support
 2.18.00.2 Prevented Image Editor from opening again when the first retry for image upload fails

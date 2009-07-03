@@ -75,5 +75,7 @@ namespace ZSS
         TWITPIC,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,
+        [Description("MindTouch Deki Wiki")]
+        DEKIWIKI,
     }
 }
