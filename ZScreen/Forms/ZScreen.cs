@@ -174,7 +174,7 @@ namespace ZSS
 
             foreach (TabPage tp in tcApp.TabPages)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text);
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text+"...");
                 tsmi.Click += new EventHandler(tsmiTab_Click);
                 tsmi.Image = ilApp.Images[tp.ImageKey];
                 tsmi.Tag = tp.Name;
