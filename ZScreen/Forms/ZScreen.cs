@@ -3411,7 +3411,7 @@ namespace ZSS
         /// <param name="e"></param>
         private void UrlShortenersRemoveButton_Click(object sender, EventArgs e)
         {
-            if (ucUrlShorteners.MyCollection.SelectedIndex > 0)
+            if (ucUrlShorteners.MyCollection.Items.Count > 0)
             {
                 int index = ucUrlShorteners.MyCollection.SelectedIndex;
                 ucUrlShorteners.MyCollection.Items.RemoveAt(index);
