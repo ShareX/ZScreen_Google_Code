@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System;
 
 namespace ZSS.ImageUploaderLib.Helpers
 {
@@ -49,6 +50,8 @@ namespace ZSS.ImageUploaderLib.Helpers
             {
                 case ClipboardUriType.FULL:
                     return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE);
+                case ClipboardUriType.FULL_TINYURL:
+                    return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE_TINYURL);
                 case ClipboardUriType.FULL_IMAGE_FORUMS:
                     return GetFullImageForumsUrl();
                 case ClipboardUriType.FULL_IMAGE_HTML:
@@ -60,10 +63,10 @@ namespace ZSS.ImageUploaderLib.Helpers
                 case ClipboardUriType.LINKED_THUMBNAIL_WIKI:
                     return GetLinkedThumbnailWikiUrl();
                 case ClipboardUriType.THUMBNAIL:
-                    return GetThumbnailUrl();
+                    return GetUrlByImageType(ImageFile.ImageType.THUMBNAIL);
             }
 
-            return "";
+            return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE);
         }
 
         private string GetUrlByImageType(ImageFile.ImageType type)
@@ -75,7 +78,7 @@ namespace ZSS.ImageUploaderLib.Helpers
                     return imf.URI;
                 }
             }
-            return "";
+            throw new Exception("ImageType was not found");
         }
 
         public string GetThumbnailUrl()
@@ -87,7 +90,7 @@ namespace ZSS.ImageUploaderLib.Helpers
                     return imf.URI;
                 }
             }
-            return "";
+            throw new Exception("ImageType was not found");
         }
 
         public string GetFullImageUrl()
@@ -99,7 +102,7 @@ namespace ZSS.ImageUploaderLib.Helpers
                     return imf.URI;
                 }
             }
-            return "";
+            throw new Exception("ImageType was not found");
         }
 
         public string GetFullImageForumsUrl()

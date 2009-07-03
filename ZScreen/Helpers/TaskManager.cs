@@ -100,6 +100,7 @@ namespace ZSS.Helpers
                     if (mTask.ImageManager != null)
                     {
                         mTask.RemoteFilePath = url;
+                        mTask.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
                     }
                 }
             }

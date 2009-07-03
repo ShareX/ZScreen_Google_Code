@@ -87,11 +87,7 @@ namespace ZSS
         {
             try
             {
-                string url = MyTask.RemoteFilePath;
-                if (!MyTask.MakeTinyURL)
-                {
-                    url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
-                }
+                string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
 
                 if (!string.IsNullOrEmpty(url))
                 {

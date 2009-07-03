@@ -47,7 +47,8 @@ namespace ZSS.ImageUploaderLib
         public enum ImageType
         {
             THUMBNAIL,
-            FULLIMAGE
+            FULLIMAGE,
+            FULLIMAGE_TINYURL
         }
 
         public ImageFile() { }
