@@ -19,14 +19,16 @@ namespace ZSS.TextUploadersLib
     [Serializable]
     public enum UrlShortenerType
     {
-        [Description("tinyurl.com")]
-        TINYURL,
         [Description("3.ly")]
         THREELY,
-        [Description("kl.am")]
-        KLAM,
+        [Description("bit.ly")]
+        BITLY,
         [Description("is.gd")]
         ISGD,
+        [Description("kl.am")]
+        KLAM,
+        [Description("tinyurl.com")]
+        TINYURL,
     }
 
     [Serializable]
