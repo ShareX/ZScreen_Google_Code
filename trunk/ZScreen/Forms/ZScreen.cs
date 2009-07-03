@@ -664,7 +664,7 @@ namespace ZSS
                     if (!Program.conf.ShowInTaskbar)
                     {
                         this.Hide();
-                        if (Program.conf.AutoSaveSettings) WriteSettings();    
+                        if (Program.conf.AutoSaveSettings) WriteSettings();
                     }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
@@ -672,7 +672,7 @@ namespace ZSS
                     Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                     this.Refresh();
-                }                       
+                }
             }
         }
 
@@ -1769,18 +1769,18 @@ namespace ZSS
         {
             dgvHotkeys.Rows.Clear();
 
-            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HotkeyEntireScreen.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HotkeyActiveWindow.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HotkeySelectedWindow.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HotkeyCropShot.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HotkeyLastCropShot.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HotkeyAutoCapture.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HotkeyClipboardUpload.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HotkeyActionsToolbar.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HotkeyQuickOptions.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HotkeyDropWindow.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HotkeyLanguageTranslator.ToSpecialString()  });
-            dgvHotkeys.Rows.Add(new object[] { "Screen Color Picker", Program.conf.HotkeyScreenColorPicker.ToSpecialString()  });
+            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HotkeyEntireScreen.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HotkeyActiveWindow.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HotkeySelectedWindow.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HotkeyCropShot.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HotkeyLastCropShot.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HotkeyAutoCapture.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HotkeyClipboardUpload.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HotkeyActionsToolbar.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HotkeyQuickOptions.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HotkeyDropWindow.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HotkeyLanguageTranslator.ToSpecialString() });
+            dgvHotkeys.Rows.Add(new object[] { "Screen Color Picker", Program.conf.HotkeyScreenColorPicker.ToSpecialString() });
 
             dgvHotkeys.Refresh();
         }
@@ -1985,7 +1985,7 @@ namespace ZSS
 
         private void lbHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (mGuiIsReady && lbHistory.SelectedIndex > -1)
+            if (lbHistory.SelectedIndex > -1)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
 
@@ -2029,6 +2029,7 @@ namespace ZSS
                     ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
                     ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
                 }
+
             }
         }
 
@@ -3253,7 +3254,7 @@ namespace ZSS
         {
             this.UpdateGuiControls();
         }
-    
+
         private void TextUploadersAddButton_Click(object sender, EventArgs e)
         {
             if (ucTextUploaders.Templates.SelectedIndex > -1)

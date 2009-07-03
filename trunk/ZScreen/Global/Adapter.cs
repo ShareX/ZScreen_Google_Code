@@ -13,6 +13,30 @@ namespace ZSS.Global
     /// </summary>
     public static class Adapter
     {
+
+        public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
+        {
+            if (Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected)
+            {
+                return true;
+            }
+            else
+            {
+                task.Errors.Add("An FTP account does not exist or not selected properly.");
+                return false;
+            }
+        }
+
+        public static bool CheckDekiWikiAccounts(ref Tasks.MainAppTask task)
+        {
+            if (Program.conf.DekiWikiAccountList.Count > 0 && Program.conf.DekiWikiSelected != -1 && Program.conf.DekiWikiAccountList.Count > Program.conf.DekiWikiSelected)
+            {
+                return true;
+            }
+            task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
+            return false;
+        }
+
         /// <summary>
         /// Quick Method to shorten a URL
         /// </summary>
