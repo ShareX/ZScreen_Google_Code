@@ -47,13 +47,7 @@ namespace ZSS
             this.tsmHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmSendImageTo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestClipboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestFTP = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestImageShack = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestTinyPic = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDestCustomHTTP = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmImageDest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -605,7 +599,7 @@ namespace ZSS
             this.cmTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmViewSettingsMenu,
             this.toolStripSeparator4,
-            this.tsmSendImageTo,
+            this.tsmImageDest,
             this.tsmEditinImageSoftware,
             this.tsmCopytoClipboardMode,
             this.toolStripSeparator3,
@@ -619,7 +613,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmViewSettingsMenu
             // 
@@ -726,61 +720,12 @@ namespace ZSS
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
-            // tsmSendImageTo
+            // tsmImageDest
             // 
-            this.tsmSendImageTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmDestClipboard,
-            this.tsmDestFile,
-            this.tsmDestFTP,
-            this.tsmDestImageShack,
-            this.tsmDestTinyPic,
-            this.tsmDestCustomHTTP});
-            this.tsmSendImageTo.Image = global::ZSS.Properties.Resources.picture_go;
-            this.tsmSendImageTo.Name = "tsmSendImageTo";
-            this.tsmSendImageTo.Size = new System.Drawing.Size(205, 22);
-            this.tsmSendImageTo.Text = "Send Image To";
-            // 
-            // tsmDestClipboard
-            // 
-            this.tsmDestClipboard.Name = "tsmDestClipboard";
-            this.tsmDestClipboard.Size = new System.Drawing.Size(167, 22);
-            this.tsmDestClipboard.Text = "Clipboard";
-            this.tsmDestClipboard.Click += new System.EventHandler(this.tsmDestClipboard_Click);
-            // 
-            // tsmDestFile
-            // 
-            this.tsmDestFile.Name = "tsmDestFile";
-            this.tsmDestFile.Size = new System.Drawing.Size(167, 22);
-            this.tsmDestFile.Text = "File";
-            this.tsmDestFile.Click += new System.EventHandler(this.tsmDestFile_Click);
-            // 
-            // tsmDestFTP
-            // 
-            this.tsmDestFTP.Name = "tsmDestFTP";
-            this.tsmDestFTP.Size = new System.Drawing.Size(167, 22);
-            this.tsmDestFTP.Text = "FTP";
-            this.tsmDestFTP.Click += new System.EventHandler(this.tsmDestFTP_Click);
-            // 
-            // tsmDestImageShack
-            // 
-            this.tsmDestImageShack.Name = "tsmDestImageShack";
-            this.tsmDestImageShack.Size = new System.Drawing.Size(167, 22);
-            this.tsmDestImageShack.Text = "ImageShack";
-            this.tsmDestImageShack.Click += new System.EventHandler(this.tsmDestImageShack_Click);
-            // 
-            // tsmDestTinyPic
-            // 
-            this.tsmDestTinyPic.Name = "tsmDestTinyPic";
-            this.tsmDestTinyPic.Size = new System.Drawing.Size(167, 22);
-            this.tsmDestTinyPic.Text = "TinyPic";
-            this.tsmDestTinyPic.Click += new System.EventHandler(this.tsmDestTinyPic_Click);
-            // 
-            // tsmDestCustomHTTP
-            // 
-            this.tsmDestCustomHTTP.Name = "tsmDestCustomHTTP";
-            this.tsmDestCustomHTTP.Size = new System.Drawing.Size(167, 22);
-            this.tsmDestCustomHTTP.Text = "&Custom Uploader";
-            this.tsmDestCustomHTTP.Click += new System.EventHandler(this.tsmDestCustomHTTP_Click);
+            this.tsmImageDest.Image = global::ZSS.Properties.Resources.picture_go;
+            this.tsmImageDest.Name = "tsmImageDest";
+            this.tsmImageDest.Size = new System.Drawing.Size(205, 22);
+            this.tsmImageDest.Text = "Send Image To";
             // 
             // tsmEditinImageSoftware
             // 
@@ -5758,17 +5703,11 @@ namespace ZSS
         internal System.Windows.Forms.ToolStripMenuItem tsmCapture;
         internal System.Windows.Forms.ToolStripMenuItem tsmHistory;
         internal System.Windows.Forms.ToolStripMenuItem tsmOptions;
-        internal System.Windows.Forms.ToolStripMenuItem tsmSendImageTo;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestClipboard;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestFile;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestFTP;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestImageShack;
+        internal System.Windows.Forms.ToolStripMenuItem tsmImageDest;
         internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
         internal System.Windows.Forms.ToolStripMenuItem tsmImageHosting;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestTinyPic;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         internal System.Windows.Forms.ToolStripMenuItem tsmQuickOptions;
-        internal System.Windows.Forms.ToolStripMenuItem tsmDestCustomHTTP;
         internal System.Windows.Forms.ContextMenuStrip cmsHistory;
         internal System.Windows.Forms.ToolStripMenuItem tsmCopyCbHistory;
         internal System.Windows.Forms.ImageList ilApp;

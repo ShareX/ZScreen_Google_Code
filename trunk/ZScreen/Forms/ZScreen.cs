@@ -184,6 +184,14 @@ namespace ZSS
             {
                 cboImagesDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
+            foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
+            {
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(idt.GetDescription());
+                tsmi.Click += new EventHandler(tsmiDestImages_Click);
+                tsmi.Tag = idt;
+                tsmImageDest.DropDownItems.Add(tsmi);
+            }
+
             cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             if (cboClipboardTextMode.Items.Count == 0)
             {
@@ -322,6 +330,8 @@ namespace ZSS
 
             #endregion
 
+            #region "Text Uploaders"
+
             ///////////////////////////////////
             // Text Uploader Settings
             ///////////////////////////////////
@@ -379,6 +389,8 @@ namespace ZSS
             ucUrlShorteners.Templates.Items.Clear();
             ucUrlShorteners.Templates.Items.AddRange((typeof(UrlShortenerType).GetDescriptions()));
             ucUrlShorteners.Templates.SelectedIndex = 0;
+
+            #endregion
 
             ///////////////////////////////////
             // FTP Settings
@@ -546,6 +558,12 @@ namespace ZSS
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
             LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
+        }
+
+        void tsmiDestImages_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;            
+            cboImagesDest.SelectedIndex = (int)tsmi.Tag;
         }
 
         private void UpdateGuiControlsPaths()
@@ -780,6 +798,7 @@ namespace ZSS
             {
                 List<ImageHostingService> lUploaders = Program.conf.ImageUploadersList;
                 ToolStripMenuItem tsm;
+                ToolStripMenuItem tsmDestCustomHTTP = GetImageDestMenuItem(ImageDestType.CUSTOM_UPLOADER);
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmDestCustomHTTP.DropDownItems.Clear();
 
@@ -860,6 +879,7 @@ namespace ZSS
         {
             if (Program.conf.FTPAccountList != null)
             {
+                ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmDestFTP.DropDownItems.Clear();
                 List<FTPAccount> accs = Program.conf.FTPAccountList;
@@ -1200,38 +1220,30 @@ namespace ZSS
             RewriteImageEditorsRightClickMenu();
         }
 
+        private ToolStripMenuItem GetImageDestMenuItem(ImageDestType idt)
+        {
+            foreach (ToolStripMenuItem tsmi in tsmImageDest.DropDownItems)
+            {
+                if ((ImageDestType)tsmi.Tag == idt)
+                {
+                    return tsmi;
+                }
+            }
+            return null;
+        }
+
         private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
         {
             ImageDestType sdt = (ImageDestType)cboImagesDest.SelectedIndex;
             Program.conf.ScreenshotDestMode = sdt;
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
-            switch (sdt)
-            {
-                case ImageDestType.CLIPBOARD:
-                    CheckSendToMenu(tsmDestClipboard);
-                    break;
-                case ImageDestType.FILE:
-                    CheckSendToMenu(tsmDestFile);
-                    break;
-                case ImageDestType.FTP:
-                    CheckSendToMenu(tsmDestFTP);
-                    break;
-                case ImageDestType.IMAGESHACK:
-                    CheckSendToMenu(tsmDestImageShack);
-                    break;
-                case ImageDestType.TINYPIC:
-                    CheckSendToMenu(tsmDestTinyPic);
-                    break;
-                case ImageDestType.CUSTOM_UPLOADER:
-                    CheckSendToMenu(tsmDestCustomHTTP);
-                    break;
-            }
+            CheckSendToMenu(GetImageDestMenuItem(sdt));
         }
 
         private void CheckSendToMenu(ToolStripMenuItem item)
         {
-            CheckToolStripMenuItem(tsmSendImageTo, item);
+            CheckToolStripMenuItem(tsmImageDest, item);
         }
 
         private void CheckToolStripMenuItem(ToolStripDropDownItem parent, ToolStripMenuItem item)
@@ -1243,36 +1255,6 @@ namespace ZSS
 
             tsmCopytoClipboardMode.Enabled = cboImagesDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
                 cboImagesDest.SelectedIndex != (int)ImageDestType.FILE;
-        }
-
-        private void tsmDestClipboard_Click(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
-        }
-
-        private void tsmDestFile_Click(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)ImageDestType.FILE;
-        }
-
-        private void tsmDestFTP_Click(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)ImageDestType.FTP;
-        }
-
-        private void tsmDestImageShack_Click(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)ImageDestType.IMAGESHACK;
-        }
-
-        private void tsmDestTinyPic_Click(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)ImageDestType.TINYPIC;
-        }
-
-        private void tsmDestCustomHTTP_Click(object sender, EventArgs e)
-        {
-            cboImagesDest.SelectedIndex = (int)ImageDestType.CUSTOM_UPLOADER;
         }
 
         private void SetActiveImageSoftware()
