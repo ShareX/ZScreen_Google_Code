@@ -32,6 +32,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
+using ZSS.Global;
 
 namespace ZSS
 {
@@ -285,7 +286,7 @@ namespace ZSS
         public static bool IsValidImageFile(string fp)
         {
             bool b = false;
-            if (!string.IsNullOrEmpty(fp))
+            if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
             {
                 foreach (string s in Program.zImageFileTypes)
                 {
@@ -296,20 +297,32 @@ namespace ZSS
             return b;
         }
 
+        public static bool IsValidTextFile(string fp)
+        {
+            return IsValidText(fp) && File.Exists(fp);
+        }
+
         /// <summary>
         /// Function to check if file is a valid Text file by checking its extension
         /// </summary>
         /// <param name="fp"></param>
         /// <returns></returns>
-        public static bool IsValidTextFile(string fp)
+        public static bool IsValidText(string fp)
         {
             bool b = false;
-            if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
+            if (!string.IsNullOrEmpty(fp))
             {
-                foreach (string s in Program.zTextFileTypes)
+                if (File.Exists(fp))
                 {
-                    if (fp.EndsWith(s))
-                        b = true;
+                    foreach (string s in Program.zTextFileTypes)
+                    {
+                        if (fp.EndsWith(s))
+                            b = true;
+                    }
+                }
+                else
+                {
+                    b = true;
                 }
             }
             return b;
@@ -427,7 +440,7 @@ namespace ZSS
             //return !url.Contains(" ") && Regex.IsMatch(url, @"^(?:http://|www\.).+\..+$");
         }
 
-        public static List<string> GetClipboardFilePaths()
+        public static List<string> WriteClipboardToFiles()
         {
             List<string> strListFilePath = new List<string>();
 
@@ -445,9 +458,9 @@ namespace ZSS
                 else if (Clipboard.ContainsText())
                 {
                     cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
-                       NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
-                    File.WriteAllText(cbFilePath, Clipboard.GetText());
-                    strListFilePath.Add(cbFilePath);
+                       NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));                    
+                    Adapter.WriteTextToFile(Clipboard.GetText(), cbFilePath);
+                    strListFilePath.Add(Clipboard.GetText());
                 }
                 else if (Clipboard.ContainsFileDropList())
                 {

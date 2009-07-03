@@ -64,6 +64,11 @@ namespace ZSS.Helpers
             return task;
         }
 
+        public MainAppTask GetWorkerText(MainAppTask.Jobs job)
+        {
+            return GetWorkerText(job, "");
+        }
+
         /// <summary>
         /// Worker for Text: Paste2, Pastebin
         /// </summary>
@@ -74,7 +79,10 @@ namespace ZSS.Helpers
             t.JobCategory = JobCategoryType.TEXT;
             // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = (TextUploader)mZScreen.ucTextUploaders.MyCollection.SelectedItem;
-            t.SetLocalFilePath(localFilePath);
+            if (!string.IsNullOrEmpty(localFilePath))
+            {
+                t.SetLocalFilePath(localFilePath);
+            }
 
             switch (job)
             {
@@ -133,7 +141,7 @@ namespace ZSS.Helpers
                     ShowDropWindow();
                     break;
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                    StartBW_LanguageTranslator();
+                    StartWorkerTranslator();
                     break;
                 case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
                     ScreenColorPicker();
@@ -153,25 +161,11 @@ namespace ZSS.Helpers
                 task.ImageDestCategory != ImageDestType.FILE &&
                 (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
                 task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
-                MessageBox.Show("Are you really want upload to " + task.ImageDestCategory.GetDescription() + " ?",
-                "ZScreen", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                MessageBox.Show("Do you really want upload to " + task.ImageDestCategory.GetDescription() + " ?",
+                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 e.Result = task;
                 return;
-            }
-
-            if ((task.Job == MainAppTask.Jobs.PROCESS_DRAG_N_DROP || task.Job == MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD) &&
-                task.ImageDestCategory != ImageDestType.FTP && !task.IsValidImage())
-            {
-                if (Program.conf.AutoSwitchFTP)
-                {
-                    task.ImageDestCategory = ImageDestType.FTP;
-                }
-                else
-                {
-                    e.Result = task;
-                    return;
-                }
             }
 
             if (task.JobCategory == JobCategoryType.SCREENSHOTS)
@@ -218,6 +212,18 @@ namespace ZSS.Helpers
                             break;
                         case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
                             LanguageTranslator(ref task);
+                            break;
+                    }
+                    break;
+                case JobCategoryType.BINARY:
+                    switch (task.Job)
+                    {
+                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                            if (Program.conf.AutoSwitchFTP)
+                            {
+                                task.ImageDestCategory = ImageDestType.FTP;
+                                PublishBinary(ref task);
+                            }
                             break;
                     }
                     break;
@@ -313,6 +319,17 @@ namespace ZSS.Helpers
                 {
                     switch (task.JobCategory)
                     {
+                        case JobCategoryType.BINARY:
+                            switch (task.Job)
+                            {
+                                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                                    {
+                                        Clipboard.SetText(task.RemoteFilePath);
+                                    }
+                                    break;
+                            }
+                            break;
                         case JobCategoryType.TEXT:
                             switch (task.Job)
                             {
@@ -531,7 +548,7 @@ namespace ZSS.Helpers
             t.TranslationInfo.Result = Program.mGTranslator.TranslateText(t.TranslationInfo);
         }
 
-        public void StartBW_LanguageTranslator()
+        public void StartWorkerTranslator()
         {
             if (Clipboard.ContainsText())
             {
@@ -546,7 +563,7 @@ namespace ZSS.Helpers
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the image</param>
-        private void StartWorkerImages(MainAppTask.Jobs job, string localFilePath)
+        private void StartWorkerPictures(MainAppTask.Jobs job, string localFilePath)
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
@@ -566,6 +583,26 @@ namespace ZSS.Helpers
             t.JobCategory = JobCategoryType.SCREENSHOTS;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.MyWorker.RunWorkerAsync(t);
+        }
+
+        /// <summary>
+        /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
+        /// </summary>
+        /// <param name="job">Job Type</param>
+        /// <param name="localFilePath">Local file path of the file</param>
+        private void StartWorkerBinary(MainAppTask.Jobs job, string localFilePath)
+        {
+            MainAppTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.BINARY;
+            t.MakeTinyURL = Adapter.MakeTinyURL();
+            t.SetLocalFilePath(localFilePath);
+            t.MyWorker.RunWorkerAsync(t);
+        }
+
+        private void PublishBinary(ref MainAppTask task)
+        {
+            TaskManager tm = new TaskManager(ref task);
+            tm.UploadFtp();
         }
 
         /// <summary>
@@ -600,7 +637,7 @@ namespace ZSS.Helpers
 
         private void ScreenshotUsingDragDrop(string fp)
         {
-            StartWorkerImages(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
+            StartWorkerPictures(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
         }
 
 
@@ -693,7 +730,7 @@ namespace ZSS.Helpers
             }
             if (Program.conf.HotkeyLanguageTranslator == key) //Language Translator
             {
-                Program.Worker.StartBW_LanguageTranslator();
+                Program.Worker.StartWorkerTranslator();
                 return true;
             }
             if (Program.conf.HotkeyScreenColorPicker == key) //Screen Color Picker
@@ -776,18 +813,35 @@ namespace ZSS.Helpers
 
             if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
             {
-                StartBW_LanguageTranslator();
+                StartWorkerTranslator();
             }
             else
             {
-                foreach (string filePath in FileSystem.GetClipboardFilePaths())
+                foreach (string filePath in FileSystem.WriteClipboardToFiles())
                 {
-                    if (FileSystem.IsValidTextFile(filePath))
+                    if (FileSystem.IsValidImageFile(filePath))
                     {
-                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                        string textString = File.ReadAllText(filePath);
-
-                        if (FileSystem.IsValidLink(textString))
+                        StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    }
+                    else if (!FileSystem.IsValidText(filePath))
+                    {
+                        StartWorkerBinary(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    }
+                    else
+                    {
+                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                        if (FileSystem.IsValidTextFile(filePath))
+                        {
+                            using (StreamReader sr = new StreamReader(filePath))
+                            {
+                                temp.MyText = sr.ReadToEnd();
+                            }
+                        }
+                        else
+                        {
+                            temp.MyText = filePath;
+                        }
+                        if (FileSystem.IsValidLink(temp.MyText))
                         {
                             if (Program.conf.UrlShortenerActive != null)
                             {
@@ -803,12 +857,7 @@ namespace ZSS.Helpers
                             }
                         }
                     }
-                    else
-                    {
-                        StartWorkerImages(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
-                    }
                 }
-
             }
         }
 

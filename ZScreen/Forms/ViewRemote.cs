@@ -429,7 +429,7 @@ namespace ZSS
                         txtViewer.Visible = false;
                         pbViewer.ImageLocation = fp;
                     }
-                    else if (FileSystem.IsValidTextFile(fp))
+                    else if (FileSystem.IsValidText(fp))
                     {
                         pbViewer.Visible = false ;
                         txtViewer.Visible = true;
