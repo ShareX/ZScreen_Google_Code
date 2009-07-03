@@ -767,47 +767,15 @@ namespace ZSS.Helpers
 
         private void SetHotkey(int row, Keys key)
         {
-            switch (row)
-            {
-                case 0: //Entire Screen
-                    Program.conf.HotkeyEntireScreen = key;
-                    break;
-                case 1: //Active Window
-                    Program.conf.HotkeyActiveWindow = key;
-                    break;
-                case 2: //Selected Window
-                    Program.conf.HotkeySelectedWindow = key;
-                    break;
-                case 3: //Crop Shot
-                    Program.conf.HotkeyCropShot = key;
-                    break;
-                case 4: //Last Crop Shot
-                    Program.conf.HotkeyLastCropShot = key;
-                    break;
-                case 5: //Auto Capture
-                    Program.conf.HotkeyAutoCapture = key;
-                    break;
-                case 6: //Clipboard Upload
-                    Program.conf.HotkeyClipboardUpload = key;
-                    break;
-                case 7: //Actions Toolbar
-                    Program.conf.HotkeyActionsToolbar = key;
-                    break;
-                case 8: //Quick Options
-                    Program.conf.HotkeyQuickOptions = key;
-                    break;
-                case 9: //Drag & Drop Window
-                    Program.conf.HotkeyDropWindow = key;
-                    break;
-                case 10: //Language Translator
-                    Program.conf.HotkeyLanguageTranslator = key;
-                    break;
-                case 11: //Screen Color Picker
-                    Program.conf.HotkeyScreenColorPicker = key;
-                    break;
-            }
+            SetHotkey(mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value.ToString(), key);
 
-            mZScreen.lblHotkeyStatus.Text = mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey set to: " + mHKSetcombo + ". Press enter when done setting all desired Hotkeys.";
+            mZScreen.lblHotkeyStatus.Text = mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey set to: " + key.ToSpecialString() +
+                ". Press enter when done setting all desired Hotkeys.";
+        }
+
+        private bool SetHotkey(string name, Keys key)
+        {
+            return Program.conf.SetFieldValue("Hotkey" + name.Replace(" ", ""), key);
         }
 
         public void UploadUsingClipboard()

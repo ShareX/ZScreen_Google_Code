@@ -35,7 +35,10 @@ namespace ZSS.TextUploadersLib
         /// <summary>
         /// String used to test the functionality
         /// </summary>
-        public abstract string TesterString { get; }
+        public virtual string TesterString
+        {
+            get { return "http://code.google.com/p/zscreen"; }
+        }
 
         public virtual object Settings { get; set; }
 
@@ -65,7 +68,7 @@ namespace ZSS.TextUploadersLib
                     filePath = File.ReadAllText(filePath);
                 }
                 return UploadText(filePath);
-            }            
+            }
             return "";
         }
 

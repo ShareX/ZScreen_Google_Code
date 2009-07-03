@@ -1769,20 +1769,29 @@ namespace ZSS
         {
             dgvHotkeys.Rows.Clear();
 
-            dgvHotkeys.Rows.Add(new object[] { "Entire Screen", Program.conf.HotkeyEntireScreen.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Active Window", Program.conf.HotkeyActiveWindow.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Selected Window", Program.conf.HotkeySelectedWindow.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Crop Shot", Program.conf.HotkeyCropShot.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Last Crop Shot", Program.conf.HotkeyLastCropShot.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Auto Capture", Program.conf.HotkeyAutoCapture.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Clipboard Upload", Program.conf.HotkeyClipboardUpload.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Actions Toolbar", Program.conf.HotkeyActionsToolbar.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Quick Options", Program.conf.HotkeyQuickOptions.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Drop Window", Program.conf.HotkeyDropWindow.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Language Translator", Program.conf.HotkeyLanguageTranslator.ToSpecialString() });
-            dgvHotkeys.Rows.Add(new object[] { "Screen Color Picker", Program.conf.HotkeyScreenColorPicker.ToSpecialString() });
+            AddHotkey("Entire Screen");
+            AddHotkey("Active Window");
+            AddHotkey("Selected Window");
+            AddHotkey("Crop Shot");
+            AddHotkey("Last Crop Shot");
+            AddHotkey("Auto Capture");
+            AddHotkey("Clipboard Upload");
+            AddHotkey("Actions Toolbar");
+            AddHotkey("Quick Options");
+            AddHotkey("Drop Window");
+            AddHotkey("Language Translator");
+            AddHotkey("Screen Color Picker");
 
             dgvHotkeys.Refresh();
+        }
+
+        private void AddHotkey(string name)
+        {
+            object obj = Program.conf.GetFieldValue("Hotkey" + name.Replace(" ", ""));
+            if(obj != null && obj.GetType() == typeof(Keys))
+            {
+                dgvHotkeys.Rows.Add(name, ((Keys)obj).ToSpecialString());
+            }
         }
 
         private void dgvHotkeys_CellMouseEnter(object sender, DataGridViewCellEventArgs e)

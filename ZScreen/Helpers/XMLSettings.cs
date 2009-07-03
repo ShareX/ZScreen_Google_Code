@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using ZSS.Properties;
 using ZSS.TextUploadersLib;
+using System.Reflection;
 
 namespace ZSS
 {
@@ -566,6 +567,26 @@ namespace ZSS
 
         #endregion
 
+        #region Other methods
+
+        public object GetFieldValue(string name)
+        {
+            FieldInfo fieldInfo = this.GetType().GetField(name);
+            if (fieldInfo != null) return fieldInfo.GetValue(this);
+            return null;
+        }
+
+        public bool SetFieldValue(string name, object value)
+        {
+            FieldInfo fieldInfo = this.GetType().GetField(name);
+            if (fieldInfo != null)
+            {
+                fieldInfo.SetValue(this, value);
+                return true;
+            }
+            return false;
+        }
+
         public bool SoftwareExist(string sName)
         {
             foreach (Software iS in this.ImageEditors)
@@ -591,6 +612,6 @@ namespace ZSS
             return false;
         }
 
-   
+        #endregion
     }
 }

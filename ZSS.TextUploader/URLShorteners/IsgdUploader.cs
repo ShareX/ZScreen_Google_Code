@@ -34,11 +34,6 @@ namespace ZSS.TextUploaderLib.URLShorteners
             get { return Hostname; }
         }
 
-        public override string TesterString
-        {
-            get { return "http://code.google.com/p/zscreen"; }
-        }
-
         public override string UploadText(string text)
         {
             if (!string.IsNullOrEmpty(text))

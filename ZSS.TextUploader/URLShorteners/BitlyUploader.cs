@@ -41,11 +41,6 @@ namespace ZSS.TextUploaderLib.URLShorteners
             get { return Hostname; }
         }
 
-        public override string TesterString
-        {
-            get { return "http://code.google.com/p/zscreen"; }
-        }
-
         // http://api.bit.ly/shorten?version=2.0.1&longUrl=http://code.google.com/p/zscreen&login=mcored&apiKey=R_55cef8c7f08a07d2ecd4323084610161"
 
         public override string UploadText(string text)
