@@ -1,7 +1,7 @@
 Version 2.20 - 20090801
 
 2.19.00.0 Added bit.ly URL Shortener support
-2.18.00.2 Prevented Image Editor from opening again when the first retry to image upload fails
+2.18.00.2 Prevented Image Editor from opening again when the first retry for image upload fails
 2.18.00.1 Selecting "File" as destination did not overrride "Delete file after capture" option [Issue 88]
 2.18.00.0 Added TwitPic Image Uploader support
 2.17.00.0 Added is.gd URL Shortener support
