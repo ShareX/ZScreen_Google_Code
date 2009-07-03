@@ -262,29 +262,5 @@ namespace ZSS
             ZScreenKeyboardHook.Dispose();
         }
 
-        public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
-        {
-            if (conf.FTPAccountList.Count > 0 && conf.FTPSelected >= 0 && conf.FTPAccountList.Count > conf.FTPSelected)
-            {
-                return true;
-            }
-            else
-            {
-                task.Errors.Add("An FTP account does not exist or not selected properly.");
-                return false;
-            }
-        }
-
-        public static bool CheckDekiWikiAccounts(ref Tasks.MainAppTask task)
-        {
-            if (conf.DekiWikiAccountList.Count > 0 && conf.DekiWikiSelected != -1 && conf.DekiWikiAccountList.Count > conf.DekiWikiSelected)
-            {
-                return true;
-            }
-            task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
-            return false;
-        }
-
-
     }
 }

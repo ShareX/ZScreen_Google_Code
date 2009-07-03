@@ -146,7 +146,7 @@ namespace ZSS.Helpers
             {
                 string fullFilePath = task.LocalFilePath;
 
-                if (Program.CheckFTPAccounts(ref task) && File.Exists(fullFilePath))
+                if (Adapter.CheckFTPAccounts(ref task) && File.Exists(fullFilePath))
                 {
                     FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                     task.DestinationName = acc.Name;
@@ -178,7 +178,7 @@ namespace ZSS.Helpers
             {
                 string fullFilePath = task.LocalFilePath;
 
-                if (Program.CheckDekiWikiAccounts(ref task) && File.Exists(fullFilePath))
+                if (Adapter.CheckDekiWikiAccounts(ref task) && File.Exists(fullFilePath))
                 {
                     DekiWikiAccount acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
 
