@@ -126,6 +126,14 @@ namespace ZSS.Helpers
                     }
                 case JobCategoryType.TEXT:
                     return string.Format("{0}", t.MyTextUploader.ToString());
+                case JobCategoryType.BINARY:
+                    switch (t.ImageDestCategory)
+                    {
+                        case ImageDestType.FTP:
+                            return string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.DestinationName);
+                        default:
+                            return string.Format("{0}", t.ImageDestCategory.GetDescription());
+                    }
             }
             return "";
         }

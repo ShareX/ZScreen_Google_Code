@@ -601,8 +601,10 @@ namespace ZSS.Helpers
 
         private void PublishBinary(ref MainAppTask task)
         {
+            task.StartTime = DateTime.Now;
             TaskManager tm = new TaskManager(ref task);
             tm.UploadFtp();
+            task.EndTime = DateTime.Now;
         }
 
         /// <summary>
