@@ -34,7 +34,8 @@ namespace ZSS
     {
         PICTURES,
         SCREENSHOTS,
-        TEXT
+        TEXT,
+        BINARY
     }
 
     public enum CaptureType

@@ -72,9 +72,9 @@ namespace ZSS.Helpers
                 else
                 {
                     // remote file
-                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                   if (!string.IsNullOrEmpty(task.RemoteFilePath))
                     {
-                        if (!string.IsNullOrEmpty(task.FileName.ToString()))
+                        if (task.FileName != null && !string.IsNullOrEmpty(task.FileName.ToString()))
                         {
                             sbMsg.AppendLine("Name: " + task.FileName);
                         }

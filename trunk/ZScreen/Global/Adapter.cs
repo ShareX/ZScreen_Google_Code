@@ -5,6 +5,8 @@ using System.Text;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.ImageUploaderLib;
+using System.IO;
+using System.Threading;
 
 namespace ZSS.Global
 {
@@ -143,6 +145,19 @@ namespace ZSS.Global
         public static bool ImageSoftwareEnabled()
         {
             return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
+        }
+
+        public static void WriteTextToFile(string txt, string path)
+        {
+            new Thread(delegate() { WriteToFile(txt, path); }).Start();
+        }
+
+        private static void WriteToFile(string txt, string path)
+        {
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(txt);
+            }
         }
     }
 }

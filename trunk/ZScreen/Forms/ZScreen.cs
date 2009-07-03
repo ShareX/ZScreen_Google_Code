@@ -2015,7 +2015,7 @@ namespace ZSS
                             pbPreview.ImageLocation = hi.RemotePath;
                         }
                     }
-                    else if (FileSystem.IsValidTextFile(hi.LocalPath))
+                    else if (FileSystem.IsValidText(hi.LocalPath))
                     {
                         txtPreview.Text = File.ReadAllText(hi.LocalPath);
                     }
@@ -2212,7 +2212,7 @@ namespace ZSS
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.Worker.StartBW_LanguageTranslator();
+            Program.Worker.StartWorkerTranslator();
         }
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3294,9 +3294,8 @@ namespace ZSS
                 string testString = uploader.TesterString;
 
                 if (!string.IsNullOrEmpty(name))
-                {
-                    string filePath = Path.Combine(Program.TempDir, DateTime.Now.Ticks + ".txt");                    
-                    MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                {                  
+                    MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     task.MyText = testString;
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;

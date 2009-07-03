@@ -51,7 +51,7 @@ namespace ZSS.Helpers
                     }
                     break;
                 case ImageDestType.FTP:
-                    UploadFtpImages();
+                    UploadFtp();
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
@@ -140,7 +140,7 @@ namespace ZSS.Helpers
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public bool UploadFtpImages()
+        public bool UploadFtp()
         {
             try
             {
