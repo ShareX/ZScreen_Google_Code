@@ -1771,11 +1771,11 @@ namespace ZSS
 
             AddHotkey("Entire Screen");
             AddHotkey("Active Window");
-            AddHotkey("Selected Window");
             AddHotkey("Crop Shot");
+            AddHotkey("Selected Window");
+            AddHotkey("Clipboard Upload");
             AddHotkey("Last Crop Shot");
             AddHotkey("Auto Capture");
-            AddHotkey("Clipboard Upload");
             AddHotkey("Actions Toolbar");
             AddHotkey("Quick Options");
             AddHotkey("Drop Window");
@@ -1788,7 +1788,7 @@ namespace ZSS
         private void AddHotkey(string name)
         {
             object obj = Program.conf.GetFieldValue("Hotkey" + name.Replace(" ", ""));
-            if(obj != null && obj.GetType() == typeof(Keys))
+            if (obj != null && obj.GetType() == typeof(Keys))
             {
                 dgvHotkeys.Rows.Add(name, ((Keys)obj).ToSpecialString());
             }
@@ -3304,7 +3304,7 @@ namespace ZSS
                 string testString = uploader.TesterString;
 
                 if (!string.IsNullOrEmpty(name))
-                {                  
+                {
                     MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     task.MyText = testString;
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.

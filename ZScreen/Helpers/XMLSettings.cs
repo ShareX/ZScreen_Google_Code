@@ -125,7 +125,7 @@ namespace ZSS
         public Keys HotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
         public Keys HotkeyCropShot = Keys.Control | Keys.PrintScreen;
         public Keys HotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
-        public Keys HotkeyClipboardUpload = Keys.None;
+        public Keys HotkeyClipboardUpload = Keys.Control | Keys.PageUp;
         public Keys HotkeyLastCropShot = Keys.None;
         public Keys HotkeyAutoCapture = Keys.None;
         public Keys HotkeyDropWindow = Keys.None;
