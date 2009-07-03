@@ -6,6 +6,9 @@ using System.ComponentModel;
 using ZSS.Global;
 using ZSS.TextUploadersLib;
 using System.Windows.Forms;
+using ZSS.UpdateCheckerLib;
+using ZSS.Properties;
+using ZSS.Tasks;
 
 namespace ZSS.Helpers
 {
@@ -18,6 +21,71 @@ namespace ZSS.Helpers
         {
             this.mZScreen = myZScreen;
         }
+
+        #region "Check Updates"
+
+        public void CheckUpdates()
+        {
+            mZScreen.btnCheckUpdate.Enabled = false;
+            mZScreen.lblUpdateInfo.Text = "Checking for Updates...";
+            BackgroundWorker updateThread = new BackgroundWorker { WorkerReportsProgress = true };
+            updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
+            updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
+            updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
+            updateThread.RunWorkerAsync(Application.ProductName);
+        }
+
+        private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch (e.ProgressPercentage)
+            {
+                case 1:
+                    mZScreen.lblUpdateInfo.Text = (string)e.UserState;
+                    break;
+            }
+        }
+
+        private void updateThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = (BackgroundWorker)sender;
+            NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = Resources.zss_main, MyImage = Resources.main };
+
+            UpdateCheckerOptions uco = new UpdateCheckerOptions
+            {
+                CheckExperimental = Program.conf.CheckExperimental,
+                UpdateCheckType = Program.conf.UpdateCheckType,
+                MyNewVersionWindowOptions = nvwo
+            };
+
+            UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
+            worker.ReportProgress(1, updateChecker.StartCheckUpdate());
+            updateChecker.ShowPrompt();
+        }
+
+        private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            mZScreen.btnCheckUpdate.Enabled = true;
+        }
+
+        #endregion
+
+        #region "Cache Cleaner Methods"
+
+        public void CleanCache()
+        {
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new System.ComponentModel.DoWorkEventHandler(BwCache_DoWork);
+            bw.RunWorkerAsync();
+        }
+
+        private void BwCache_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CacheCleanerTask t = new CacheCleanerTask(Program.CacheDir, Program.conf.ScreenshotCacheSize);
+            t.CleanCache();
+        }
+
+        #endregion
+
 
         public void PerformOnlineTasks()
         {

@@ -78,7 +78,7 @@ namespace ZSS
 
             Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
 
-            if (Program.conf.CheckUpdates) CheckUpdates();
+            if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
         }
 
         private void SetFormSettings()
@@ -147,7 +147,7 @@ namespace ZSS
                 }
             }
 
-            CleanCache();
+            Program.Worker2.CleanCache();
             StartDebug();
 
             FillClipboardCopyMenu();
@@ -556,29 +556,7 @@ namespace ZSS
             txtSettingsDir.Text = Program.SettingsDir;
         }
 
-        #region "Cache Cleaner Methods"
-
-        private void CleanCache()
-        {
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new System.ComponentModel.DoWorkEventHandler(BwCache_DoWork);
-            bw.RunWorkerAsync();
-        }
-
-        private void BwCache_DoWork(object sender, DoWorkEventArgs e)
-        {
-            CacheCleanerTask t = new CacheCleanerTask(Program.CacheDir, Program.conf.ScreenshotCacheSize);
-            t.CleanCache();
-        }
-
-        #endregion
-
-        #region "Background Worker Safe Methods"
-
-
-
-        #endregion
-
+    
         #region "GUI Methods"
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
@@ -587,14 +565,9 @@ namespace ZSS
         }
 
 
-
-
         #endregion
 
         #region "Event Handlers"
-
-
-
 
         private void LoadHistoryItems()
         {
@@ -2714,15 +2687,13 @@ namespace ZSS
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
-            CheckUpdates();
+            Program.Worker2.CheckUpdates();
         }
 
         private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
         }
-
-
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
@@ -2746,49 +2717,6 @@ namespace ZSS
 
             }
             return null;
-        }
-
-        private void CheckUpdates()
-        {
-            btnCheckUpdate.Enabled = false;
-            lblUpdateInfo.Text = "Checking for Updates...";
-            BackgroundWorker updateThread = new BackgroundWorker { WorkerReportsProgress = true };
-            updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
-            updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
-            updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
-            updateThread.RunWorkerAsync(Application.ProductName);
-        }
-
-        private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            switch (e.ProgressPercentage)
-            {
-                case 1:
-                    lblUpdateInfo.Text = (string)e.UserState;
-                    break;
-            }
-        }
-
-        private void updateThread_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = (BackgroundWorker)sender;
-            NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = this.Icon, MyImage = Resources.main };
-
-            UpdateCheckerOptions uco = new UpdateCheckerOptions
-            {
-                CheckExperimental = Program.conf.CheckExperimental,
-                UpdateCheckType = Program.conf.UpdateCheckType,
-                MyNewVersionWindowOptions = nvwo
-            };
-
-            UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
-            worker.ReportProgress(1, updateChecker.StartCheckUpdate());
-            updateChecker.ShowPrompt();
-        }
-
-        private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            btnCheckUpdate.Enabled = true;
         }
 
         private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
