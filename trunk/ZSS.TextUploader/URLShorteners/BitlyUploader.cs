@@ -5,6 +5,8 @@ using System.Text;
 using System.Web;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace ZSS.TextUploaderLib.URLShorteners
 {
@@ -12,11 +14,8 @@ namespace ZSS.TextUploaderLib.URLShorteners
     public sealed class BitlyUploader : TextUploader
     {
         public const string Hostname = "bit.ly";
-        public const string APILogin = "McoreD";
+        public const string APILogin = "mcored";
         public const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";
-
-        // http://api.bit.ly/shorten?version=2.0.1&longUrl=http://cnn.com&login=bitlyapidemo&apiKey=R_0da49e0a9118ff35f52f629d2d71bf07 
-        // http://api.bit.ly/shorten?version=2.0.1?longUrl=http://code.google.com/p/zscreen&login=mcored&apiKey=R_55cef8c7f08a07d2ecd4323084610161"
 
         public override object Settings
         {
@@ -34,7 +33,7 @@ namespace ZSS.TextUploaderLib.URLShorteners
 
         public BitlyUploader()
         {
-            HostSettings.URL = "http://api.bit.ly/shorten?version=2.0.1";
+            HostSettings.URL = "http://api.bit.ly/shorten";
         }
 
         public override string Name
@@ -44,18 +43,26 @@ namespace ZSS.TextUploaderLib.URLShorteners
 
         public override string TesterString
         {
-            get { return "http://code.google.com/p/zscreen/wiki/TipsTricks"; }
+            get { return "http://code.google.com/p/zscreen"; }
         }
+
+        // http://api.bit.ly/shorten?version=2.0.1&longUrl=http://code.google.com/p/zscreen&login=mcored&apiKey=R_55cef8c7f08a07d2ecd4323084610161"
 
         public override string UploadText(string text)
         {
             if (!string.IsNullOrEmpty(text))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
+                arguments.Add("version", "2.0.1");
                 arguments.Add("longUrl", HttpUtility.UrlEncode(text));
                 arguments.Add("login", APILogin);
-                arguments.Add("apiKey", APIKey);                
-                return GetResponse2(HostSettings.URL, arguments);
+                arguments.Add("apiKey", APIKey);
+                arguments.Add("format", "xml");
+                string result = GetResponse2(HostSettings.URL, arguments);
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.LoadXml(result);
+                XmlNode xnode = xdoc.SelectSingleNode("bitly/results/nodeKeyVal/shortUrl");
+                if (xnode != null) return xnode.InnerText;
             }
             return "";
         }
