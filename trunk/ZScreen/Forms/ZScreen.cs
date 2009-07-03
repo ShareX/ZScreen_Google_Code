@@ -3295,9 +3295,9 @@ namespace ZSS
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    string filePath = Path.Combine(Program.TempDir, DateTime.Now.Ticks + ".txt");
-                    File.WriteAllText(filePath, testString);
+                    string filePath = Path.Combine(Program.TempDir, DateTime.Now.Ticks + ".txt");                    
                     MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                    task.MyText = testString;
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;
                     task.RunWorker();

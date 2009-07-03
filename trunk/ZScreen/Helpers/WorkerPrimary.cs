@@ -392,7 +392,7 @@ namespace ZSS.Helpers
                         this.mZScreen.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath))
+                    if (task.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
                     {
                         if (Program.conf.CompleteSound)
                         {

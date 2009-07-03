@@ -65,7 +65,7 @@ namespace ZSS.TextUploadersLib
                     filePath = File.ReadAllText(filePath);
                 }
                 return UploadText(filePath);
-            }
+            }            
             return "";
         }
 

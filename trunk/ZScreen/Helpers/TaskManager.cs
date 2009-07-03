@@ -223,7 +223,15 @@ namespace ZSS.Helpers
             task.StartTime = DateTime.Now;
 
             TextUploader textUploader = (TextUploader)task.MyTextUploader;
-            string url = textUploader.UploadTextFromFile(task.LocalFilePath);
+            string url = "";
+            if (!string.IsNullOrEmpty(task.MyText))
+            {
+                url = textUploader.UploadText(task.MyText);
+            }
+            else
+            {
+                url = textUploader.UploadTextFromFile(task.LocalFilePath);
+            }
             if (task.MakeTinyURL)
             {
                 url = Adapter.TryShortenURL(url);
