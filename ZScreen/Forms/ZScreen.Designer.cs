@@ -936,6 +936,9 @@ namespace ZSS
             this.ilApp.Images.SetKeyName(7, "comments.png");
             this.ilApp.Images.SetKeyName(8, "pictures.png");
             this.ilApp.Images.SetKeyName(9, "application_edit.png");
+            this.ilApp.Images.SetKeyName(10, "shape_square.png");
+            this.ilApp.Images.SetKeyName(11, "application_double.png");
+            this.ilApp.Images.SetKeyName(12, "tag_blue_edit.png");
             // 
             // toolStripSeparator5
             // 
@@ -2411,7 +2414,7 @@ namespace ZSS
             this.tpWatermark.Controls.Add(this.pbWatermarkShow);
             this.tpWatermark.Controls.Add(this.gbWatermarkGeneral);
             this.tpWatermark.Controls.Add(this.tcWatermark);
-            this.tpWatermark.ImageIndex = 8;
+            this.tpWatermark.ImageKey = "tag_blue_edit.png";
             this.tpWatermark.Location = new System.Drawing.Point(4, 23);
             this.tpWatermark.Name = "tpWatermark";
             this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
