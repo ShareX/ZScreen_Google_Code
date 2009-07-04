@@ -28,8 +28,11 @@ namespace ZSS.UserControls
             {
                 TextUploader textUploader = this.MyCollection.Items[this.MyCollection.SelectedIndex] as TextUploader;
                 TextUploaderSettings settings = SettingsGrid.SelectedObject as TextUploaderSettings;
-                textUploader.Name = settings.Name;
-                this.MyCollection.Items[this.MyCollection.SelectedIndex] = textUploader;
+                if (!string.IsNullOrEmpty(settings.Name))
+                {
+                    textUploader.Name = settings.Name;
+                    this.MyCollection.Items[this.MyCollection.SelectedIndex] = textUploader;
+                }
             }
         }
     }
