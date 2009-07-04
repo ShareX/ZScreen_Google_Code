@@ -55,12 +55,8 @@ namespace ZSS.TextUploadersLib
 
         public PastebinCaUploader()
         {
+            this.Name = Hostname;
             HostSettings.URL = "http://pastebin.ca/quiet-paste.php";
-        }
-
-        public override string Name
-        {
-            get { return Hostname; }
         }
 
         public override string TesterString

@@ -3256,8 +3256,7 @@ namespace ZSS
 
         private void pgFTPSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.SelectedIndex] = Program.conf.FTPAccountList[ucFTPAccounts.AccountsList.SelectedIndex];
-            RewriteFTPRightClickMenu();
+           RewriteFTPRightClickMenu();
         }
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
