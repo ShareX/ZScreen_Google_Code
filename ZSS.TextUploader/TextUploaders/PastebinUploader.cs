@@ -149,6 +149,7 @@ namespace ZSS.TextUploadersLib
             {
                 ExpireTime = TimeTypes.Month;
                 TextFormat = "text";
+                this.Name = Hostname;
             }
 
             public enum TimeTypes
