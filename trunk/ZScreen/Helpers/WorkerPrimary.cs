@@ -788,44 +788,87 @@ namespace ZSS.Helpers
             }
             else
             {
-                foreach (string filePath in FileSystem.WriteClipboardToFiles())
+                List<MainAppTask> textWorkers = new List<MainAppTask>();
+
+                if (Clipboard.ContainsImage())
                 {
-                    if (FileSystem.IsValidImageFile(filePath))
+                    Image cImage = Clipboard.GetImage();
+                    string fp = FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), false);
+                    fp = FileSystem.SaveImage(cImage, fp);
+                    StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                }               
+                else if (Clipboard.ContainsText())
+                {
+                    MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir, NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
+                    Adapter.WriteTextToFile(Clipboard.GetText(), fp);
+                    temp.SetLocalFilePath(fp);
+                    temp.MyText = Clipboard.GetText();
+                    textWorkers.Add(temp);
+                }                
+                else if (Clipboard.ContainsFileDropList())
+                {
+                    List<string> strListFilePath = new List<string>();
+
+                    foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
                     {
-                        StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                        try
+                        {
+                            if (GraphicsMgr.IsValidImage(fp))
+                            {
+                                string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
+                                File.Copy(fp, cbFilePath, true);
+                                strListFilePath.Add(cbFilePath);
+                            }
+                            else
+                            {
+                                strListFilePath.Add(fp); // yes we use the orignal file path
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            FileSystem.AppendDebug(ex.ToString());
+                        }
                     }
-                    else if (!FileSystem.IsValidText(filePath))
+
+                    foreach (string fp in strListFilePath)
                     {
-                        StartWorkerBinary(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, filePath);
+                        if (FileSystem.IsValidImageFile(fp))
+                        {
+                            StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                        }
+                        else if (FileSystem.IsValidTextFile(fp))
+                        {
+                            MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                            temp.SetLocalFilePath(fp);
+                            using (StreamReader sr = new StreamReader(fp))
+                            {
+                                temp.MyText = sr.ReadToEnd();
+                            }                            
+                            textWorkers.Add(temp);
+                        }
+                        else
+                        {
+                            StartWorkerBinary(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                        }
+                    }
+                }
+
+                foreach (MainAppTask temp in textWorkers)
+                {
+                    if (FileSystem.IsValidLink(temp.MyText))
+                    {
+                        if (Program.conf.UrlShortenerActive != null)
+                        {
+                            temp.MyTextUploader = Program.conf.UrlShortenerActive;
+                            temp.RunWorker();
+                        }
                     }
                     else
                     {
-                        MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
-                        if (FileSystem.IsValidTextFile(filePath))
+                        if (Program.conf.TextUploaderActive != null)
                         {
-                            using (StreamReader sr = new StreamReader(filePath))
-                            {
-                                temp.MyText = sr.ReadToEnd();
-                            }
-                        }
-                        else
-                        {
-                            temp.MyText = filePath;
-                        }
-                        if (FileSystem.IsValidLink(temp.MyText))
-                        {
-                            if (Program.conf.UrlShortenerActive != null)
-                            {
-                                temp.MyTextUploader = Program.conf.UrlShortenerActive;
-                                temp.RunWorker();
-                            }
-                        }
-                        else
-                        {
-                            if (Program.conf.TextUploaderActive != null)
-                            {
-                                temp.RunWorker();
-                            }
+                            temp.RunWorker();
                         }
                     }
                 }
