@@ -23,7 +23,7 @@ namespace ZSS.TextUploadersLib
 
         public List<string> Errors { get; set; }
 
-        public abstract string Name { get; }
+        public virtual string Name { get; set; }
 
         /// <summary>
         /// String that is uploaded
@@ -162,4 +162,13 @@ namespace ZSS.TextUploadersLib
             return url1 + "/" + url2;
         }
     }
+
+    public abstract class TextUploaderSettings{
+
+        public string URL { get; set; }
+        public string TextFormat { get; set; }
+        public string Name { get; set; }
+
+    }
+
 }

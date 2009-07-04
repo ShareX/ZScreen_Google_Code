@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ZSS.TextUploadersLib;
 
 namespace ZSS.UserControls
 {
@@ -19,6 +20,17 @@ namespace ZSS.UserControls
         internal virtual void MyCollection_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnItemRemove.Enabled = this.MyCollection.Items.Count > 1;
+        }
+
+        private void SettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (this.MyCollection.SelectedIndex > -1)
+            {
+                TextUploader textUploader = this.MyCollection.Items[this.MyCollection.SelectedIndex] as TextUploader;
+                TextUploaderSettings settings = SettingsGrid.SelectedObject as TextUploaderSettings;
+                textUploader.Name = settings.Name;
+                this.MyCollection.Items[this.MyCollection.SelectedIndex] = textUploader;
+            }
         }
     }
 }

@@ -86,6 +86,7 @@
             this.SettingsGrid.Size = new System.Drawing.Size(515, 333);
             this.SettingsGrid.TabIndex = 9;
             this.SettingsGrid.ToolbarVisible = false;
+            this.SettingsGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.SettingsGrid_PropertyValueChanged);
             // 
             // Templates
             // 

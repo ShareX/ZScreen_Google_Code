@@ -1,5 +1,6 @@
 Version 2.20 - 20090801
 
+2.20.02.0 Text Uploaders that are based on pastebin.com can be renamed to uniquely identify them e.g. kopyala.org
 2.20.01.1 MakeTinyURL PropertyGrid Setting will not override Clipboard Copy mode anymore
 2.20.01.0 Added new Clipboard URL Type: Full Image (TinyURL)
 2.20.00.0 Support for uploading images to MindTouch Deki Wiki [http://techsurance.com/Screen_Capture]
