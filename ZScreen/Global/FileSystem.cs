@@ -436,55 +436,7 @@ namespace ZSS
         /// <returns></returns>
         public static bool IsValidLink(string url)
         {
-            return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
-            //return !url.Contains(" ") && Regex.IsMatch(url, @"^(?:http://|www\.).+\..+$");
-        }
-
-        public static List<string> WriteClipboardToFiles()
-        {
-            List<string> strListFilePath = new List<string>();
-
-            try
-            {
-                string cbFilePath;
-
-                if (Clipboard.ContainsImage())
-                {
-                    Image cImage = Clipboard.GetImage();
-                    cbFilePath = FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), false);
-                    cbFilePath = FileSystem.SaveImage(cImage, cbFilePath);
-                    strListFilePath.Add(cbFilePath);
-                }
-                else if (Clipboard.ContainsText())
-                {
-                    cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
-                       NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));                    
-                    Adapter.WriteTextToFile(Clipboard.GetText(), cbFilePath);
-                    strListFilePath.Add(Clipboard.GetText());
-                }
-                else if (Clipboard.ContainsFileDropList())
-                {
-                    foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
-                    {
-                        if (GraphicsMgr.IsValidImage(fp))
-                        {
-                            cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
-                            File.Copy(fp, cbFilePath, true);
-                            strListFilePath.Add(cbFilePath);
-                        }
-                        else
-                        {
-                            strListFilePath.Add(fp); // yes we use the orignal file path
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-            }
-
-            return strListFilePath;
+            return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);            
         }
     }
 }
