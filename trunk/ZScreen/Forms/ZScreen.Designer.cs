@@ -107,6 +107,8 @@ namespace ZSS
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
+            this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
+            this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
             this.ucMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
@@ -457,8 +459,6 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
-            this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -471,6 +471,7 @@ namespace ZSS
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
             this.tpMindTouch.SuspendLayout();
+            this.gbMindTouchOptions.SuspendLayout();
             this.tpTinyPic.SuspendLayout();
             this.gbTinyPic.SuspendLayout();
             this.tpImageShack.SuspendLayout();
@@ -578,7 +579,6 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.gbMindTouchOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1299,9 +1299,36 @@ namespace ZSS
             this.tpMindTouch.Text = "MindTouch";
             this.tpMindTouch.UseVisualStyleBackColor = true;
             // 
+            // gbMindTouchOptions
+            // 
+            this.gbMindTouchOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbMindTouchOptions.Controls.Add(this.chkDekiWikiForcePath);
+            this.gbMindTouchOptions.Location = new System.Drawing.Point(16, 312);
+            this.gbMindTouchOptions.Name = "gbMindTouchOptions";
+            this.gbMindTouchOptions.Size = new System.Drawing.Size(751, 72);
+            this.gbMindTouchOptions.TabIndex = 116;
+            this.gbMindTouchOptions.TabStop = false;
+            this.gbMindTouchOptions.Text = "MindTouch Deki Wiki Settings";
+            // 
+            // chkDekiWikiForcePath
+            // 
+            this.chkDekiWikiForcePath.AutoSize = true;
+            this.chkDekiWikiForcePath.BackColor = System.Drawing.Color.Transparent;
+            this.chkDekiWikiForcePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkDekiWikiForcePath.Location = new System.Drawing.Point(16, 24);
+            this.chkDekiWikiForcePath.Name = "chkDekiWikiForcePath";
+            this.chkDekiWikiForcePath.Size = new System.Drawing.Size(295, 17);
+            this.chkDekiWikiForcePath.TabIndex = 113;
+            this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
+            this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
+            this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
+            // 
             // ucMindTouchAccounts
             // 
-            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
             this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
             this.ucMindTouchAccounts.Size = new System.Drawing.Size(777, 309);
@@ -5387,31 +5414,6 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
-            // gbMindTouchOptions
-            // 
-            this.gbMindTouchOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbMindTouchOptions.Controls.Add(this.chkDekiWikiForcePath);
-            this.gbMindTouchOptions.Location = new System.Drawing.Point(16, 312);
-            this.gbMindTouchOptions.Name = "gbMindTouchOptions";
-            this.gbMindTouchOptions.Size = new System.Drawing.Size(751, 72);
-            this.gbMindTouchOptions.TabIndex = 116;
-            this.gbMindTouchOptions.TabStop = false;
-            this.gbMindTouchOptions.Text = "MindTouch Deki Wiki Settings";
-            // 
-            // chkDekiWikiForcePath
-            // 
-            this.chkDekiWikiForcePath.AutoSize = true;
-            this.chkDekiWikiForcePath.BackColor = System.Drawing.Color.Transparent;
-            this.chkDekiWikiForcePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkDekiWikiForcePath.Location = new System.Drawing.Point(16, 24);
-            this.chkDekiWikiForcePath.Name = "chkDekiWikiForcePath";
-            this.chkDekiWikiForcePath.Size = new System.Drawing.Size(295, 17);
-            this.chkDekiWikiForcePath.TabIndex = 113;
-            this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
-            this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
-            this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5449,6 +5451,8 @@ namespace ZSS
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
             this.tpMindTouch.ResumeLayout(false);
+            this.gbMindTouchOptions.ResumeLayout(false);
+            this.gbMindTouchOptions.PerformLayout();
             this.tpTinyPic.ResumeLayout(false);
             this.tpTinyPic.PerformLayout();
             this.gbTinyPic.ResumeLayout(false);
@@ -5597,8 +5601,6 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.gbMindTouchOptions.ResumeLayout(false);
-            this.gbMindTouchOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
