@@ -11,7 +11,7 @@ using System.IO;
 using ZSS.Properties;
 using System.Drawing.Printing;
 using Greenshot.Helpers;
-using ZSS.TextUploadersLib;
+using ZSS.TextUploaderLib;
 using ZSS.Forms;
 using ZSS.ColorsLib;
 using ZSS.Global;

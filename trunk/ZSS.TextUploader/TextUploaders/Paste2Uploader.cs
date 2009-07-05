@@ -28,10 +28,10 @@ using System.Net;
 using System.Web;
 using System.Text;
 using System.IO;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib.Helpers;
 using System.Xml.Serialization;
 
-namespace ZSS.TextUploadersLib
+namespace ZSS.TextUploaderLib
 {
     [Serializable]
     public sealed class Paste2Uploader : TextUploader

@@ -8,7 +8,7 @@ using ZSS.Global;
 using ZSS.ImageUploaderLib;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.TextUploadersLib;
+using ZSS.TextUploaderLib;
 using System.ComponentModel;
 
 namespace ZSS.Helpers

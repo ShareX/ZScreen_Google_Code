@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib.Helpers;
 using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ZSS.TextUploaderLib.URLShorteners;
 
-namespace ZSS.TextUploadersLib
+namespace ZSS.TextUploaderLib
 {
     [Serializable]
     public abstract class TextUploader : ITextUploader

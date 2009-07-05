@@ -41,7 +41,7 @@ using ZSS.ImageUploaderLib.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploaderLib.URLShorteners;
-using ZSS.TextUploadersLib;
+using ZSS.TextUploaderLib;
 using ZSS.UpdateCheckerLib;
 
 namespace ZSS

@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ZSS.TextUploadersLib;
+using ZSS.TextUploaderLib;
 
 namespace ZSS.UserControls
 {
