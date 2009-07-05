@@ -3485,5 +3485,10 @@ namespace ZSS
         {
             DrawZScreenLabel(false);
         }
+
+        private void tpMain_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
