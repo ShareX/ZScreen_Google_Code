@@ -23,116 +23,162 @@
 
 using System;
 using System.Text;
+using System.Drawing;
+using System.ComponentModel;
 
 namespace ZSS
 {
-    public static class NameParser
+    public enum ReplacementVariables
     {
-        public static string[] replacementVars = { "%t", "%y", "%mo", "%d", "%h", "%mi", "%s", "%i", "%pm" };
-        public static string[] replacementDescriptions = { "Title of active window", "Gets the current year", "Gets the current month",
-                                                             "Gets the current day", "Gets the current hour", "Gets the current minute",
-                                                             "Gets the current second", "Auto increment", "Gets AM/PM" };
-        public static string prefix = "%";
+        [Description("Title of active window")]
+        t,
+        [Description("Gets the current year")]
+        y,
+        [Description("Gets the current month")]
+        mo,
+        [Description("Gets the current day")]
+        d,
+        [Description("Gets the current hour")]
+        h,
+        [Description("Gets the current minute")]
+        mi,
+        [Description("Gets the current second")]
+        s,
+        [Description("Auto increment")]
+        i,
+        [Description("Gets AM/PM")]
+        pm,
+        [Description("Gets image width")]
+        width,
+        [Description("Gets image height")]
+        height
+    }
 
-        public enum NameType
-        {
-            EntireScreen,
-            ActiveWindow,
-            Watermark
-        }
+    public enum NameParserType
+    {
+        EntireScreen,
+        ActiveWindow,
+        Watermark
+    }
 
-        public static string Convert(NameType nameType)
-        {
-            return Convert(nameType, false);
-        }
+    public class NameParserInfo
+    {
+        public string Pattern;
 
-        public static string Convert(NameType nameType, bool preview)
+        private NameParserType type;
+        public NameParserType Type
         {
-            switch (nameType)
+            get { return type; }
+            set
             {
-                case NameType.ActiveWindow:
-                    return Convert(Program.conf.NamingActiveWindow, nameType, preview);
-                case NameType.EntireScreen:
-                    return Convert(Program.conf.NamingEntireScreen, nameType, preview);
-                case NameType.Watermark:
-                    return Convert(Program.conf.WatermarkText, nameType, preview);
-                default:
-                    return "";
+                type = value;
+                switch (type)
+                {
+                    case NameParserType.ActiveWindow:
+                        Pattern = Program.conf.NamingActiveWindow;
+                        break;
+                    case NameParserType.EntireScreen:
+                        Pattern = Program.conf.NamingEntireScreen;
+                        break;
+                    case NameParserType.Watermark:
+                        Pattern = Program.conf.WatermarkText;
+                        break;
+                }
             }
         }
 
-        public static string Convert(string pattern)
+        public bool IsPreview;
+        public Image Picture;
+
+        public NameParserInfo(string pattern)
         {
-            return Convert(pattern, NameType.EntireScreen, false);
+            Pattern = pattern;
         }
 
-        public static string Convert(string pattern, NameType nameType)
+        public NameParserInfo(NameParserType nameType)
         {
-            return Convert(pattern, nameType, false);
+            Type = nameType;
         }
+    }
 
-        public static string Convert(string pattern, NameType nameType, bool preview)
+    public static class NameParser
+    {
+        public const string prefix = "%";
+
+        public static string Convert(NameParserInfo nameParser)
         {
-            StringBuilder sb = new StringBuilder(pattern);
+            if (string.IsNullOrEmpty(nameParser.Pattern)) return "";
 
-            if (!preview && sb.ToString().Contains("%i"))
+            StringBuilder sb = new StringBuilder(nameParser.Pattern);
+
+            if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
             {
                 Program.conf.AutoIncrement++;
             }
 
+            string width = "", height = "";
+
+            if (nameParser.Picture != null)
+            {
+                width = nameParser.Picture.Width.ToString();
+                height = nameParser.Picture.Height.ToString();
+            }
+
+            sb = sb.Replace(ToString(ReplacementVariables.width), width);
+            sb = sb.Replace(ToString(ReplacementVariables.height), height);
+
             DateTime dt = DateTime.Now;
 
-            if (sb.ToString().Contains(replacementVars[8]))
+            if (sb.ToString().Contains(ToString(ReplacementVariables.pm)))
             {
-                sb = sb.Replace(replacementVars[4], dt.Hour == 0 ? "12" :
+                sb = sb.Replace(ToString(ReplacementVariables.h), dt.Hour == 0 ? "12" :
                     ((dt.Hour > 12 ? AddZeroes(dt.Hour - 12) : AddZeroes(dt.Hour))));
-                //!Properties.Resources.PMvisible ? dt.Hour.ToString()
             }
             else
             {
-                sb = sb.Replace(replacementVars[4], AddZeroes(dt.Hour));
+                sb = sb.Replace(ToString(ReplacementVariables.h), AddZeroes(dt.Hour));
             }
 
-            if (nameType == NameType.ActiveWindow || nameType == NameType.Watermark)
+            if (nameParser.Type == NameParserType.ActiveWindow || nameParser.Type == NameParserType.Watermark)
             {
                 string activeWindow = User32.GetWindowLabel();
                 if (string.IsNullOrEmpty(activeWindow))
                 {
                     activeWindow = "ZScreen";
                 }
-                sb = sb.Replace(replacementVars[0], activeWindow);
+                sb = sb.Replace(ToString(ReplacementVariables.t), activeWindow);
             }
             else
             {
-                sb = sb.Replace(replacementVars[0], "");
+                sb = sb.Replace(ToString(ReplacementVariables.t), "");
             }
 
-            sb = sb.Replace(replacementVars[1], dt.Year.ToString())
-                .Replace(replacementVars[2], AddZeroes(dt.Month))
-                .Replace(replacementVars[3], AddZeroes(dt.Day))
-                .Replace(replacementVars[5], AddZeroes(dt.Minute))
-                .Replace(replacementVars[6], AddZeroes(dt.Second))
-                .Replace(replacementVars[7], AddZeroes(Program.conf.AutoIncrement, 4))
-                .Replace(replacementVars[8], (dt.Hour >= 12 ? "PM" : "AM"));
+            sb = sb.Replace(ToString(ReplacementVariables.y), dt.Year.ToString())
+                .Replace(ToString(ReplacementVariables.mo), AddZeroes(dt.Month))
+                .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day))
+                .Replace(ToString(ReplacementVariables.mi), AddZeroes(dt.Minute))
+                .Replace(ToString(ReplacementVariables.s), AddZeroes(dt.Second))
+                .Replace(ToString(ReplacementVariables.i), AddZeroes(Program.conf.AutoIncrement, 4))
+                .Replace(ToString(ReplacementVariables.pm), (dt.Hour >= 12 ? "PM" : "AM"));
 
-            if (nameType == NameType.Watermark)
+            if (nameParser.Type == NameParserType.Watermark)
             {
                 sb = sb.Replace("\\n", "\n");
             }
 
             //normalize the entire thing, allow only characters and digits
             //spaces become underscores, prevents possible problems
-            if (nameType != NameType.Watermark) sb = Normalize(sb);
+            if (nameParser.Type != NameParserType.Watermark) sb = Normalize(sb);
 
             return sb.ToString();
         }
 
-        public static string AddZeroes(int number)
+        private static string AddZeroes(int number)
         {
             return AddZeroes(number, 2);
         }
 
-        public static string AddZeroes(int number, int digits)
+        private static string AddZeroes(int number, int digits)
         {
             return number.ToString("d" + digits);
         }
@@ -150,6 +196,11 @@ namespace ZSS
             }
 
             return temp;
+        }
+
+        private static string ToString(ReplacementVariables replacement)
+        {
+            return prefix + replacement.ToString();
         }
     }
 }

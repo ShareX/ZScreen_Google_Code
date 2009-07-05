@@ -1304,13 +1304,13 @@ namespace ZSS
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
             Program.conf.NamingActiveWindow = txtActiveWindow.Text;
-            lblActiveWindowPreview.Text = NameParser.Convert(NameParser.NameType.ActiveWindow, true);
+            lblActiveWindowPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.ActiveWindow) { IsPreview = true });
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
             Program.conf.NamingEntireScreen = txtEntireScreen.Text;
-            lblEntireScreenPreview.Text = NameParser.Convert(NameParser.NameType.EntireScreen, true);
+            lblEntireScreenPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true });
         }
 
         private void cmbFileFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -2040,16 +2040,17 @@ namespace ZSS
             codesMenu.Font = new Font("Lucida Console", 8);
             codesMenu.Opacity = 0.8;
             codesMenu.ShowImageMargin = false;
-            for (int i = 0; i < NameParser.replacementVars.Length; i++)
+
+            var variables = Enum.GetValues(typeof(ReplacementVariables)).Cast<ReplacementVariables>().
+                Select(x => new { Name = NameParser.prefix + Enum.GetName(typeof(ReplacementVariables), x), Description = x.GetDescription() });
+
+            foreach (var variable in variables)
             {
-                ToolStripMenuItem tsi = new ToolStripMenuItem
-                {
-                    Text = NameParser.replacementVars[i].PadRight(3, ' ') + " - " + NameParser.replacementDescriptions[i],
-                    Tag = NameParser.replacementVars[i]
-                };
+                ToolStripMenuItem tsi = new ToolStripMenuItem { Text = string.Format("{0} - {1}", variable.Name, variable.Description), Tag = variable.Name };
                 tsi.Click += watermarkCodeMenu_Click;
                 codesMenu.Items.Add(tsi);
             }
+
             CodesMenuCloseEvents();
         }
 
