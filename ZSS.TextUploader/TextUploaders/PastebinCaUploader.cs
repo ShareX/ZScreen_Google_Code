@@ -73,7 +73,7 @@ namespace ZSS.TextUploaderLib
                 arguments.Add("content", HttpUtility.UrlEncode(text));
                 arguments.Add("description", HostSettings.Description);
                 arguments.Add("expiry", HostSettings.ExpireTime);
-                arguments.Add("name", HostSettings.Name);
+                arguments.Add("name", HostSettings.Author);
                 arguments.Add("s", "Submit Post");
                 arguments.Add("type", HostSettings.TextFormat);
 
@@ -86,11 +86,9 @@ namespace ZSS.TextUploaderLib
         [Serializable]
         public class PastebinCaSettings : TextUploaderSettings
         {
-            public string URL { get; set; }
-            public string Description { get; set; }
             public string ExpireTime { get; set; }
-            public string TextFormat { get; set; }
-            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Author { get; set; }
 
             public PastebinCaSettings()
             {
