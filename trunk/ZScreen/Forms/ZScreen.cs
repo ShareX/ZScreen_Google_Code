@@ -67,8 +67,6 @@ namespace ZSS
         {
             InitializeComponent();
 
-            this.Controls.OfType<TextBox>().Select(x => x.Text = "test");
-
             ZScreen_SetFormSettings();
             UpdateGuiControls();
 
@@ -118,6 +116,8 @@ namespace ZSS
             ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
+
+            DrawZScreenLabel(false);
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -522,6 +522,7 @@ namespace ZSS
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
             cbLockFormSize.Checked = Program.conf.LockFormSize;
             cbShowHelpBalloonTips.Checked = Program.conf.ShowHelpBalloonTips;
+            ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
             if (cboUpdateCheckType.Items.Count == 0)
             {
                 cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
@@ -3388,6 +3389,7 @@ namespace ZSS
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
+            ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
         }
 
         private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
@@ -3454,6 +3456,34 @@ namespace ZSS
         private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
+        }
+
+        private void lblLogo_Click(object sender, EventArgs e)
+        {
+            FormsMgr.ShowAboutWindow();
+        }
+
+        private void DrawZScreenLabel(bool hover)
+        {
+            Color color = hover ? Color.LightGray : Color.WhiteSmoke;
+            Bitmap bmpVersion = new Bitmap(lblLogo.Width, lblLogo.Height);
+            Graphics g = Graphics.FromImage(bmpVersion);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, lblLogo.Width, lblLogo.Height), color,
+               lblLogo.BackColor, LinearGradientMode.Horizontal);
+            brush.SetSigmaBellShape(0.50f);
+            g.FillRectangle(brush, new Rectangle(0, 0, lblLogo.Width, lblLogo.Height));
+            lblLogo.Image = bmpVersion;
+        }
+
+        private void lblLogo_MouseEnter(object sender, EventArgs e)
+        {
+            DrawZScreenLabel(true);
+        }
+
+        private void lblLogo_MouseLeave(object sender, EventArgs e)
+        {
+            DrawZScreenLabel(false);
         }
     }
 }
