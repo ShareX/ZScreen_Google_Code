@@ -78,7 +78,7 @@ namespace ZSS.ImageUploaderLib.Helpers
                     return imf.URI;
                 }
             }
-            throw new Exception("ImageType was not found");
+            return string.Empty;
         }
 
         public string GetThumbnailUrl()
@@ -90,7 +90,7 @@ namespace ZSS.ImageUploaderLib.Helpers
                     return imf.URI;
                 }
             }
-            throw new Exception("ImageType was not found");
+            return string.Empty;
         }
 
         public string GetFullImageUrl()
@@ -102,7 +102,7 @@ namespace ZSS.ImageUploaderLib.Helpers
                     return imf.URI;
                 }
             }
-            throw new Exception("ImageType was not found");
+            return string.Empty;
         }
 
         public string GetFullImageForumsUrl()
