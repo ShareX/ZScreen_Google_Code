@@ -2635,24 +2635,9 @@ namespace ZSS
 
         private void FTPAccountTestButton_Click(object sender, EventArgs e)
         {
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(bw_DoWorkTestFTPAccount);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompletedTestFTPAccount);
-            ucFTPAccounts.btnTest.Enabled = false;
-            FTPAccount ftp = GetSelectedFTP();
-            bw.RunWorkerAsync(ftp);
+            Program.Worker2.TestFTPAccountAsync(GetSelectedFTP());
         }
-
-        private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
-        {
-            Adapter.TestFTPAccount(e.Argument as FTPAccount);
-        }
-
-        private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)
-        {
-            ucFTPAccounts.btnTest.Enabled = true;
-        }
-
+   
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
         {
             Adapter.TestDekiWikiAccount(GetSelectedDekiWiki());

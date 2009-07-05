@@ -158,6 +158,31 @@ namespace ZSS.Helpers
             }
         }
 
+        #region "Test FTP Account asynchronously"
+
+        public void TestFTPAccountAsync(FTPAccount acc)
+        {
+            if (acc != null)
+            {
+                BackgroundWorker bw = new BackgroundWorker();
+                bw.DoWork += new DoWorkEventHandler(bw_DoWorkTestFTPAccount);
+                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompletedTestFTPAccount);
+                mZScreen.ucFTPAccounts.btnTest.Enabled = false;
+                bw.RunWorkerAsync(acc);
+            }
+        }
+
+        private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
+        {
+            Adapter.TestFTPAccount(e.Argument as FTPAccount);
+        }
+
+        private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)
+        {
+            mZScreen.ucFTPAccounts.btnTest.Enabled = true;
+        }
+
+        #endregion
 
     }
 }
