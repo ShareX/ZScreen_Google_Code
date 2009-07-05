@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib;
+using ZSS.TextUploaderLib.Helpers;
 
 namespace ZSS.TextUploaderLib.URLShorteners
 {

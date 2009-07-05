@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib;
+using ZSS.TextUploaderLib.Helpers;
 using System.Xml.Linq;
 using System.Xml;
 

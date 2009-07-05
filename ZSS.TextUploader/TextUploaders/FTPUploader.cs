@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib.Helpers;
 using System.IO;
 
-namespace ZSS.TextUploadersLib
+namespace ZSS.TextUploaderLib
 {
     [Serializable]
     public sealed class FTPUploader : TextUploader

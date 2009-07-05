@@ -28,11 +28,11 @@ using System.Net;
 using System.Web;
 using System.Text;
 using System.IO;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib.Helpers;
 using System.Xml.Serialization;
 using System.ComponentModel;
 
-namespace ZSS.TextUploadersLib
+namespace ZSS.TextUploaderLib
 {
     [Serializable]
     public sealed class SlexyUploader : TextUploader

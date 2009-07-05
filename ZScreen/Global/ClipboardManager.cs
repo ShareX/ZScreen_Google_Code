@@ -26,8 +26,8 @@ using System.Collections.Generic;
 using System.Text;
 using ZSS.ImageUploaderLib.Helpers;
 using System.Windows.Forms;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploaderLib;
+using ZSS.TextUploaderLib.Helpers;
 using ZSS.Global;
 using ZSS.Tasks;
 

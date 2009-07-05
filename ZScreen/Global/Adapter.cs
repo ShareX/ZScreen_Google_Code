@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploadersLib;
+using ZSS.TextUploaderLib;
 using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.ImageUploaderLib;
 using System.IO;
@@ -154,7 +154,7 @@ namespace ZSS.Global
                 case SniptUploader.Hostname:
                     return new SniptUploader();
                 default:
-                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
+                    if (name == ZSS.TextUploaderLib.FTPUploader.Hostname)
                     {
                         if (Program.conf.FTPAccountList.Count > 0)
                         {
@@ -167,7 +167,7 @@ namespace ZSS.Global
                             {
                                 acc = Program.conf.FTPAccountList[0];
                             }
-                            return new ZSS.TextUploadersLib.FTPUploader(acc);
+                            return new ZSS.TextUploaderLib.FTPUploader(acc);
                         }
                     }
                     break;
