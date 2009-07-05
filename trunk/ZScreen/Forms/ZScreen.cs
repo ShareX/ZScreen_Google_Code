@@ -29,6 +29,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -65,6 +66,8 @@ namespace ZSS
         public ZScreen()
         {
             InitializeComponent();
+
+            this.Controls.OfType<TextBox>().Select(x => x.Text = "test");
 
             ZScreen_SetFormSettings();
             UpdateGuiControls();
@@ -467,28 +470,24 @@ namespace ZSS
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
             cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
 
-            #region "Image Editors"
+            #region Image Editors
 
             ///////////////////////////////////
             // Image Software Settings
             ///////////////////////////////////
 
             Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, "", true);
-            Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, Application.ExecutablePath, true);
-            Software paint = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"));
+            Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, "", true);
+            Software paint = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
 
-            if (Program.conf.ImageEditors.Count == 0)
-            {
-                Program.conf.ImageEditors.Add(disabled);
-                Program.conf.ImageEditors.Add(editor);
-                Program.conf.ImageEditors.Add(paint);
-            }
+            Program.conf.ImageEditors.RemoveAll(x => x.Path == "" || x.Name == Program.DISABLED_IMAGE_EDITOR ||
+                x.Name == Program.ZSCREEN_IMAGE_EDITOR || x.Name == "Paint" || !File.Exists(x.Path));
+
+            Program.conf.ImageEditors.Insert(0, disabled);
+            Program.conf.ImageEditors.Insert(1, editor);
+            if (File.Exists(paint.Path)) Program.conf.ImageEditors.Insert(2, paint);
+
             RegistryMgr.FindImageEditors();
-
-            if (Program.conf.ImageEditor == null)
-            {
-                Program.conf.ImageEditor = Program.conf.ImageEditors[0];
-            }
 
             lbImageSoftware.Items.Clear();
 
@@ -500,21 +499,14 @@ namespace ZSS
                 }
             }
 
-            if (Adapter.ImageSoftwareEnabled())
+            int i;
+            if (Program.conf.ImageEditor != null && (i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditor.Name)) != -1)
             {
-                int i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditor.Name);
-                if (i != -1)
-                {
-                    lbImageSoftware.SelectedIndex = i;
-                }
+                lbImageSoftware.SelectedIndex = i;
             }
-            else
+            else if (lbImageSoftware.Items.Count > 0)
             {
-                int i = lbImageSoftware.Items.IndexOf(Program.DISABLED_IMAGE_EDITOR);
-                if (i != -1)
-                {
-                    lbImageSoftware.SelectedIndex = i;
-                }
+                lbImageSoftware.SelectedIndex = 0;
             }
 
             chkImageEditorAutoSave.Checked = Program.conf.ImageEditorAutoSave;
@@ -542,7 +534,7 @@ namespace ZSS
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
             ///////////////////////////////////
-            // Image Editors
+            // Image Uploaders
             ///////////////////////////////////
 
             lbUploader.Items.Clear();
@@ -1267,7 +1259,7 @@ namespace ZSS
                 {
                     btnBrowseImageEditor.Enabled = !app.Protected;
                     pgEditorsImage.SelectedObject = app;
-                    pgEditorsImage.Enabled = app.Name != Program.DISABLED_IMAGE_EDITOR;
+                    pgEditorsImage.Enabled = !app.Protected;
                     btnRemoveImageEditor.Enabled = !app.Protected;
 
                     gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
@@ -1275,7 +1267,6 @@ namespace ZSS
                     SetActiveImageSoftware();
                 }
             }
-
         }
 
         private void lbImageSoftware_SelectedIndexChanged(object sender, EventArgs e)
@@ -2642,7 +2633,22 @@ namespace ZSS
 
         private void FTPAccountTestButton_Click(object sender, EventArgs e)
         {
-            Adapter.TestFTPAccount(GetSelectedFTP());
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(bw_DoWorkTestFTPAccount);
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompletedTestFTPAccount);
+            ucFTPAccounts.btnTest.Enabled = false;
+            FTPAccount ftp = GetSelectedFTP();
+            bw.RunWorkerAsync(ftp);
+        }
+
+        private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
+        {
+            Adapter.TestFTPAccount(e.Argument as FTPAccount);
+        }
+
+        private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ucFTPAccounts.btnTest.Enabled = true;
         }
 
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
@@ -3256,7 +3262,7 @@ namespace ZSS
 
         private void pgFTPSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-           RewriteFTPRightClickMenu();
+            RewriteFTPRightClickMenu();
         }
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -3270,7 +3276,6 @@ namespace ZSS
 
         private void TextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
             {
                 TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
@@ -3291,7 +3296,6 @@ namespace ZSS
                     ucTextUploaders.SettingsGrid.SelectedObject = textUploader.Settings;
                 }
             }
-
         }
 
         private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)

@@ -16,7 +16,6 @@ namespace ZSS.Global
     /// </summary>
     public static class Adapter
     {
-
         public static void TestFTPAccount(FTPAccount acc)
         {
             string msg = "";

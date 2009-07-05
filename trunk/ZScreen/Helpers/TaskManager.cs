@@ -267,7 +267,7 @@ namespace ZSS.Helpers
             {
                 Process p = new Process();
                 Software app = Program.conf.ImageEditor;
-                if (app != null && File.Exists(app.Path))
+                if (app != null)
                 {
                     if (app.Name == Program.ZSCREEN_IMAGE_EDITOR)
                     {
@@ -286,7 +286,7 @@ namespace ZSS.Helpers
                             Console.WriteLine(ex.ToString());
                         }
                     }
-                    else
+                    else if (File.Exists(app.Path))
                     {
                         ProcessStartInfo psi = new ProcessStartInfo(app.Path)
                         {
