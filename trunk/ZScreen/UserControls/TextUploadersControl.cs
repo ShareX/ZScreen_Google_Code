@@ -27,12 +27,23 @@ namespace ZSS.UserControls
             if (this.MyCollection.SelectedIndex > -1)
             {
                 TextUploader textUploader = (TextUploader)this.MyCollection.Items[this.MyCollection.SelectedIndex];
-                TextUploaderSettings settings = (TextUploaderSettings)SettingsGrid.SelectedObject;
-                if (!string.IsNullOrEmpty(settings.Name))
+                if (SettingsGrid.SelectedObject.GetType() != typeof(FTPAccount))
                 {
-                    textUploader.Name = settings.Name;
-                    this.MyCollection.Items[this.MyCollection.SelectedIndex] = textUploader;
+                    TextUploaderSettings settings = (TextUploaderSettings)SettingsGrid.SelectedObject;
+                    if (!string.IsNullOrEmpty(settings.ServiceName))
+                    {
+                        textUploader.Name = settings.ServiceName;                     
+                    }
                 }
+                else
+                {
+                    FTPAccount acc = SettingsGrid.SelectedObject as FTPAccount;
+                    if (!string.IsNullOrEmpty(acc.ToString()))
+                    {
+                        textUploader.Name = acc.ToString();
+                    }
+                }
+                this.MyCollection.Items[this.MyCollection.SelectedIndex] = textUploader;
             }
         }
     }

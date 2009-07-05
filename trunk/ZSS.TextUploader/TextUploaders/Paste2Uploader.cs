@@ -84,7 +84,7 @@ namespace ZSS.TextUploaderLib
         }
 
         [Serializable]
-        public class Paste2Settings
+        public class Paste2Settings : TextUploaderSettings
         {
             public string URL { get; set; }
             public string Description { get; set; }
