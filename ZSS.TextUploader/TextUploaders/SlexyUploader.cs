@@ -92,7 +92,7 @@ namespace ZSS.TextUploaderLib
         }
 
         [Serializable]
-        public class SlexySettings
+        public class SlexySettings : TextUploaderSettings 
         {
             public string URL { get; set; }
             public string Author { get; set; }

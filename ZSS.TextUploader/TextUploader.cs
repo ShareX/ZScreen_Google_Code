@@ -167,6 +167,6 @@ namespace ZSS.TextUploaderLib
     {
         public string URL { get; set; }
         public string TextFormat { get; set; }
-        public string Name { get; set; }
+        public string ServiceName { get; set; }
     }
 }

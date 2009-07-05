@@ -84,7 +84,7 @@ namespace ZSS.TextUploaderLib
         }
 
         [Serializable]
-        public class PastebinCaSettings
+        public class PastebinCaSettings : TextUploaderSettings
         {
             public string URL { get; set; }
             public string Description { get; set; }

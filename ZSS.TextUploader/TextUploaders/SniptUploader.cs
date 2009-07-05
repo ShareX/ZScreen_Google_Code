@@ -88,7 +88,7 @@ namespace ZSS.TextUploaderLib
         }
 
         [Serializable]
-        public class SniptSettings
+        public class SniptSettings : TextUploaderSettings
         {
             public string URL { get; set; }
             public string SnippetTitle { get; set; }

@@ -78,7 +78,7 @@ namespace ZSS.TextUploaderLib
                 arguments.Add("code2", HttpUtility.UrlEncode(text));
                 arguments.Add("expiry", ((char)HostSettings.ExpireTime).ToString());
                 arguments.Add("format", HostSettings.TextFormat);
-                arguments.Add("poster", HostSettings.Name);
+                arguments.Add("poster", HostSettings.Author);
                 //arguments.Add("parent_pid", "");
                 arguments.Add("paste", "Send");
 
@@ -141,15 +141,17 @@ namespace ZSS.TextUploaderLib
         }
 
         [Serializable]
-        public class PastebinSettings : TextUploaderSettings 
+        public class PastebinSettings : TextUploaderSettings
         {
+            public string Author { get; set; }
             public TimeTypes ExpireTime { get; set; }
 
             public PastebinSettings()
             {
                 ExpireTime = TimeTypes.Month;
                 TextFormat = "text";
-                this.Name = Hostname;
+                this.ServiceName = string.Format("{0} - {1}", Hostname, TextFormat);
+                this.Author = Environment.UserName;
             }
 
             public enum TimeTypes
