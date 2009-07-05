@@ -26,15 +26,11 @@ namespace ZSS
                 case WatermarkType.NONE:
                     return img;
                 case WatermarkType.TEXT:
-                    return DrawWatermark(img, NameParser.Convert(NameParser.NameType.Watermark, true),
+                    return DrawWatermark(img, NameParser.Convert(new NameParserInfo(NameParserType.Watermark) { IsPreview = true, Picture = img }),
                         XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
                         XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor),
                         (int)Program.conf.WatermarkFontTrans, (int)Program.conf.WatermarkOffset,
-                        (int)Program.conf.WatermarkBackTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1),
-                        XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2),
-                        XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor),
-                        Program.conf.WatermarkPositionMode, (int)Program.conf.WatermarkCornerRadius,
-                        Program.conf.WatermarkGradientType);
+                        (int)Program.conf.WatermarkBackTrans, (int)Program.conf.WatermarkCornerRadius);
                 case WatermarkType.IMAGE:
                     return DrawImageWatermark(img, Program.conf.WatermarkImageLocation, Program.conf.WatermarkPositionMode,
                         (int)Program.conf.WatermarkOffset);
@@ -44,14 +40,13 @@ namespace ZSS
         }
 
         private static Bitmap DrawWatermark(Bitmap img, string drawText, Font font, Color fontColor, int fontTrans,
-            int offset, int backTrans, Color backColor1, Color backColor2, Color borderColor,
-            WatermarkPositionType position, int cornerRadius, LinearGradientMode gradientType)
+            int offset, int backTrans, int cornerRadius)
         {
             try
             {
                 Size textSize = TextRenderer.MeasureText(drawText, font);
                 Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
-                Point labelPosition = FindPosition(position, offset, img.Size,
+                Point labelPosition = FindPosition(Program.conf.WatermarkPositionMode, offset, img.Size,
                     new Size(textSize.Width + 10, textSize.Height + 10), 1);
                 if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) ||
                     (img.Height < labelSize.Height + offset)))
@@ -73,9 +68,9 @@ namespace ZSS
                 Graphics g = Graphics.FromImage(bmp);
                 g.SmoothingMode = SmoothingMode.HighQuality;
                 g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, backColor1),
-                    Color.FromArgb(backTrans, backColor2), gradientType), gPath);
-                g.DrawPath(new Pen(Color.FromArgb(backTrans, borderColor)), gPath);
+                g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1)),
+                    Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2)), Program.conf.WatermarkGradientType), gPath);
+                g.DrawPath(new Pen(Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor))), gPath);
                 g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), 5, 5);
                 Graphics gImg = Graphics.FromImage(img);
                 gImg.SmoothingMode = SmoothingMode.HighQuality;

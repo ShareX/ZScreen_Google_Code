@@ -793,19 +793,20 @@ namespace ZSS.Helpers
                 if (Clipboard.ContainsImage())
                 {
                     Image cImage = Clipboard.GetImage();
-                    string fp = FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), false);
+                    string fp = FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), false);
                     fp = FileSystem.SaveImage(cImage, fp);
                     StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
-                }               
+                }
                 else if (Clipboard.ContainsText())
                 {
                     MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
-                    string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir, NameParser.Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
+                    string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
+                        NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                     Adapter.WriteTextToFile(Clipboard.GetText(), fp);
                     temp.SetLocalFilePath(fp);
                     temp.MyText = Clipboard.GetText();
                     textWorkers.Add(temp);
-                }                
+                }
                 else if (Clipboard.ContainsFileDropList())
                 {
                     List<string> strListFilePath = new List<string>();
@@ -844,7 +845,7 @@ namespace ZSS.Helpers
                             using (StreamReader sr = new StreamReader(fp))
                             {
                                 temp.MyText = sr.ReadToEnd();
-                            }                            
+                            }
                             textWorkers.Add(temp);
                         }
                         else
@@ -882,9 +883,9 @@ namespace ZSS.Helpers
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                    return FileSystem.GetFilePath(NameParser.Convert(NameParser.NameType.EntireScreen), Program.conf.ManualNaming);
+                    return FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), Program.conf.ManualNaming);
                 case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    return FileSystem.GetFilePath(NameParser.Convert(Program.conf.NamingActiveWindow, NameParser.NameType.ActiveWindow), Program.conf.ManualNaming);
+                    return FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.ActiveWindow)), Program.conf.ManualNaming);
             }
             throw new Exception("Unsupported Job for getting File Path.");
         }
