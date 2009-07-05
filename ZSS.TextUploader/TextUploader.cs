@@ -163,12 +163,10 @@ namespace ZSS.TextUploaderLib
         }
     }
 
-    public abstract class TextUploaderSettings{
-
+    public abstract class TextUploaderSettings
+    {
         public string URL { get; set; }
         public string TextFormat { get; set; }
         public string Name { get; set; }
-
     }
-
 }

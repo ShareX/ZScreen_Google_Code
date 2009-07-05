@@ -25,20 +25,6 @@ namespace ZSS
 {
     public class Software
     {
-        public Software() { }
-
-        public Software(string sName, string sPath)
-        {
-            this.Name = sName;
-            this.Path = sPath;
-        }
-        public Software(string sName, string sPath, bool bProtected)
-            : this(sName, sPath)
-        {
-
-            this.Protected = bProtected;
-        }
-
         public string Name { get; set; }
         public string Path { get; set; }
 
@@ -46,6 +32,20 @@ namespace ZSS
         /// Built-in software are protected from being deleted
         /// </summary>
         public bool Protected;
+
+        public Software() { }
+
+        public Software(string sName, string sPath)
+        {
+            this.Name = sName;
+            this.Path = sPath;
+        }
+
+        public Software(string sName, string sPath, bool bProtected)
+            : this(sName, sPath)
+        {
+            this.Protected = bProtected;
+        }
 
         public override string ToString()
         {

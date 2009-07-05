@@ -26,8 +26,8 @@ namespace ZSS.UserControls
         {
             if (this.MyCollection.SelectedIndex > -1)
             {
-                TextUploader textUploader = this.MyCollection.Items[this.MyCollection.SelectedIndex] as TextUploader;
-                TextUploaderSettings settings = SettingsGrid.SelectedObject as TextUploaderSettings;
+                TextUploader textUploader = (TextUploader)this.MyCollection.Items[this.MyCollection.SelectedIndex];
+                TextUploaderSettings settings = (TextUploaderSettings)SettingsGrid.SelectedObject;
                 if (!string.IsNullOrEmpty(settings.Name))
                 {
                     textUploader.Name = settings.Name;
