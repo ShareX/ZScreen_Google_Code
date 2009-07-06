@@ -54,7 +54,7 @@ namespace ZSS
             NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
 
             //~~~~~~~~~~~~~~~~~~~~~
-            //  Watermark
+            //  Screenshots
             //~~~~~~~~~~~~~~~~~~~~~
 
             DrawReflection = false;
@@ -63,6 +63,8 @@ namespace ZSS
             ReflectionOffset = 0;
             ReflectionSkew = true;
             ReflectionSkewSize = 25;
+
+            BevelEffectOffset = 15;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  FTP
@@ -151,18 +153,25 @@ namespace ZSS
         [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }
 
-        [Category("Screenshots / Watermark"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
+        [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
         public bool DrawReflection { get; set; }
-        [Category("Screenshots / Watermark"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
+        [Category("Screenshots / Reflection"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
         public int ReflectionPercentage { get; set; }
-        [Category("Screenshots / Watermark"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
+        [Category("Screenshots / Reflection"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
         public int ReflectionTransparency { get; set; }
-        [Category("Screenshots / Watermark"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
+        [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
         public int ReflectionOffset { get; set; }
-        [Category("Screenshots / Watermark"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
+        [Category("Screenshots / Reflection"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
         public bool ReflectionSkew { get; set; }
-        [Category("Screenshots / Watermark"), DefaultValue(25), Description("How much pixel skew left to right.")]
+        [Category("Screenshots / Reflection"), DefaultValue(25), Description("How much pixel skew left to right.")]
         public int ReflectionSkewSize { get; set; }
+
+        [Category("Screenshots / Bevel"), DefaultValue(false), Description("Add bevel effect to screenshots.")]
+        public bool BevelEffect { get; set; }
+        [Category("Screenshots / Bevel"), DefaultValue(15), Description("Bevel effect size.")]
+        public int BevelEffectOffset { get; set; }
+        [Category("Screenshots / Bevel"), Description("Bevel effect filter type.")]
+        public FilterType BevelFilterType { get; set; }
 
         // Crop Shot
 

@@ -11,13 +11,13 @@ namespace ZSS
     public static class WatermarkMaker
     {
         /// <summary>Get Image with Watermark</summary>
-        public static Bitmap GetImage(Bitmap img)
+        public static Image GetImage(Image img)
         {
             return GetImage(img, Program.conf.WatermarkMode);
         }
 
         /// <summary>Get Image with Watermark</summary>
-        public static Bitmap GetImage(Bitmap img, WatermarkType watermarkType)
+        public static Image GetImage(Image img, WatermarkType watermarkType)
         {
             switch (watermarkType)
             {
@@ -31,15 +31,10 @@ namespace ZSS
             }
         }
 
-        public static Bitmap DrawWatermark(Bitmap img, string drawText)
+        public static Image DrawWatermark(Image img, string drawText)
         {
             try
             {
-                if (Program.conf.DrawReflection)
-                {
-                    img = WatermarkMaker.DrawReflection(img);
-                }
-
                 int offset = (int)Program.conf.WatermarkOffset;
                 Font font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont);
                 Size textSize = TextRenderer.MeasureText(drawText, font);
@@ -82,17 +77,12 @@ namespace ZSS
             return img;
         }
 
-        public static Bitmap DrawImageWatermark(Bitmap img, string imgPath)
+        public static Image DrawImageWatermark(Image img, string imgPath)
         {
             try
             {
                 if (!string.IsNullOrEmpty(imgPath) && File.Exists(imgPath))
                 {
-                    if (Program.conf.DrawReflection)
-                    {
-                        img = WatermarkMaker.DrawReflection(img);
-                    }
-
                     int offset = (int)Program.conf.WatermarkOffset;
                     Image img2 = Image.FromFile(imgPath);
                     img2 = ImageChangeSize((Bitmap)img2);
@@ -124,7 +114,20 @@ namespace ZSS
             return img;
         }
 
-        private static Bitmap DrawReflection(Bitmap bmp)
+        public static Image ApplyScreenshotEffects(Image img)
+        {
+            if (Program.conf.BevelEffect)
+            {
+                img = GraphicsMgr.BevelImage(img, Program.conf.BevelEffectOffset);
+            }
+            if (Program.conf.DrawReflection)
+            {
+                img = WatermarkMaker.DrawReflection(img);
+            }
+            return img;
+        }
+
+        private static Image DrawReflection(Image bmp)
         {
             Bitmap reflection = AddReflection(bmp, Program.conf.ReflectionPercentage, Program.conf.ReflectionTransparency);
             if (Program.conf.ReflectionSkew)
@@ -148,7 +151,7 @@ namespace ZSS
             return result;
         }
 
-        private static Bitmap AddReflection(Bitmap bmp, int percentage, int transparency)
+        private static Bitmap AddReflection(Image bmp, int percentage, int transparency)
         {
             Bitmap b = new Bitmap(bmp);
             b.RotateFlip(RotateFlipType.RotateNoneFlipY);
