@@ -88,7 +88,8 @@ namespace ZSS
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                img = WatermarkMaker.GetImage((Bitmap)img);
+                img = WatermarkMaker.ApplyScreenshotEffects(img);
+                img = WatermarkMaker.GetImage(img);
 
                 long size = (long)Program.conf.SwitchAfter * 1024;
 
@@ -436,7 +437,7 @@ namespace ZSS
         /// <returns></returns>
         public static bool IsValidLink(string url)
         {
-            return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);            
+            return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
         }
     }
 }
