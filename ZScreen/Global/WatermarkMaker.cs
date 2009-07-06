@@ -146,7 +146,7 @@ namespace ZSS
             Bitmap result = new Bitmap(bmp.Width + skew, bmp.Height);
             Graphics g = Graphics.FromImage(result);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            Point[] destinationPoints = { new Point(0, 0), new Point(bmp.Width - 1, 0), new Point(skew, bmp.Height - 1) };
+            Point[] destinationPoints = { new Point(0, 0), new Point(bmp.Width, 0), new Point(skew, bmp.Height - 1) };
             g.DrawImage(bmp, destinationPoints);
             return result;
         }
