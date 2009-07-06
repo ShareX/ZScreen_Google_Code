@@ -10,40 +10,38 @@ namespace ZSS
 {
     public static class WatermarkMaker
     {
-        /// <summary>
-        /// Get Image with Watermark
-        /// </summary>
-        /// <param name="img"></param>
-        /// <returns></returns>
+        /// <summary>Get Image with Watermark</summary>
         public static Bitmap GetImage(Bitmap img)
         {
-            if (Program.conf.DrawReflection)
+            return GetImage(img, Program.conf.WatermarkMode);
+        }
+
+        /// <summary>Get Image with Watermark</summary>
+        public static Bitmap GetImage(Bitmap img, WatermarkType watermarkType)
+        {
+            switch (watermarkType)
             {
-                img = WatermarkMaker.DrawReflection((Bitmap)img);
-            }
-            switch (Program.conf.WatermarkMode)
-            {
+                default:
                 case WatermarkType.NONE:
                     return img;
                 case WatermarkType.TEXT:
-                    return DrawWatermark(img, NameParser.Convert(new NameParserInfo(NameParserType.Watermark) { IsPreview = true, Picture = img }),
-                        XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
-                        XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor),
-                        (int)Program.conf.WatermarkFontTrans, (int)Program.conf.WatermarkOffset,
-                        (int)Program.conf.WatermarkBackTrans, (int)Program.conf.WatermarkCornerRadius);
+                    return DrawWatermark(img, NameParser.Convert(new NameParserInfo(NameParserType.Watermark) { IsPreview = true, Picture = img }));
                 case WatermarkType.IMAGE:
-                    return DrawImageWatermark(img, Program.conf.WatermarkImageLocation, Program.conf.WatermarkPositionMode,
-                        (int)Program.conf.WatermarkOffset);
-                default:
-                    return img;
+                    return DrawImageWatermark(img, Program.conf.WatermarkImageLocation);
             }
         }
 
-        private static Bitmap DrawWatermark(Bitmap img, string drawText, Font font, Color fontColor, int fontTrans,
-            int offset, int backTrans, int cornerRadius)
+        public static Bitmap DrawWatermark(Bitmap img, string drawText)
         {
             try
             {
+                if (Program.conf.DrawReflection)
+                {
+                    img = WatermarkMaker.DrawReflection(img);
+                }
+
+                int offset = (int)Program.conf.WatermarkOffset;
+                Font font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont);
                 Size textSize = TextRenderer.MeasureText(drawText, font);
                 Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
                 Point labelPosition = FindPosition(Program.conf.WatermarkPositionMode, offset, img.Size,
@@ -54,16 +52,11 @@ namespace ZSS
                     throw new Exception("Image size smaller than watermark size.");
                 }
                 Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
-                GraphicsPath gPath;
-                if (cornerRadius > 0)
-                {
-                    gPath = GraphicsMgr.RoundedRectangle(labelRectangle, cornerRadius);
-                }
-                else
-                {
-                    gPath = new GraphicsPath();
-                    gPath.AddRectangle(labelRectangle);
-                }
+                GraphicsPath gPath = RoundedRectangle.Create(labelRectangle, (int)Program.conf.WatermarkCornerRadius);
+
+                int backTrans = (int)Program.conf.WatermarkBackTrans;
+                int fontTrans = (int)Program.conf.WatermarkFontTrans;
+                Color fontColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
                 Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
                 Graphics g = Graphics.FromImage(bmp);
                 g.SmoothingMode = SmoothingMode.HighQuality;
@@ -71,9 +64,7 @@ namespace ZSS
                 g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1)),
                     Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2)), Program.conf.WatermarkGradientType), gPath);
                 g.DrawPath(new Pen(Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor))), gPath);
-                StringFormat sf = new StringFormat();
-                sf.Alignment = StringAlignment.Center;
-                sf.LineAlignment = StringAlignment.Center;
+                StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
                 g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), bmp.Width / 2, bmp.Height / 2, sf);
                 Graphics gImg = Graphics.FromImage(img);
                 gImg.SmoothingMode = SmoothingMode.HighQuality;
@@ -86,25 +77,32 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                Console.WriteLine(ex.ToString());
             }
             return img;
         }
 
-        private static Bitmap DrawImageWatermark(Bitmap img, string imgPath, WatermarkPositionType position, int offset)
+        public static Bitmap DrawImageWatermark(Bitmap img, string imgPath)
         {
             try
             {
                 if (!string.IsNullOrEmpty(imgPath) && File.Exists(imgPath))
                 {
+                    if (Program.conf.DrawReflection)
+                    {
+                        img = WatermarkMaker.DrawReflection(img);
+                    }
+
+                    int offset = (int)Program.conf.WatermarkOffset;
                     Image img2 = Image.FromFile(imgPath);
                     img2 = ImageChangeSize((Bitmap)img2);
-                    Point imgPos = FindPosition(position, offset, img.Size, img2.Size, 0);
+                    Point imgPos = FindPosition(Program.conf.WatermarkPositionMode, offset, img.Size, img2.Size, 0);
                     if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) ||
                         (img.Height < img2.Height + offset)))
                     {
                         throw new Exception("Image size smaller than watermark size.");
                     }
+
                     Graphics g = Graphics.FromImage(img);
                     g.SmoothingMode = SmoothingMode.HighQuality;
                     g.DrawImage(img2, imgPos);
@@ -121,12 +119,12 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                Console.WriteLine(ex.ToString());
             }
             return img;
         }
 
-        public static Bitmap DrawReflection(Bitmap bmp)
+        private static Bitmap DrawReflection(Bitmap bmp)
         {
             Bitmap reflection = AddReflection(bmp, Program.conf.ReflectionPercentage, Program.conf.ReflectionTransparency);
             if (Program.conf.ReflectionSkew)

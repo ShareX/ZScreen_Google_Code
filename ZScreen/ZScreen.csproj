@@ -127,6 +127,7 @@
     <Compile Include="Global\Adapter.cs" />
     <Compile Include="Global\RegistryMgr.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
+    <Compile Include="Helpers\RoundedRectangle.cs" />
     <Compile Include="Helpers\WorkerPrimary.cs" />
     <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Helpers\WorkerSecondary.cs" />

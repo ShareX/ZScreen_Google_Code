@@ -781,7 +781,6 @@ namespace ZSS.Helpers
 
         public void UploadUsingClipboard()
         {
-
             if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
             {
                 StartWorkerTranslator();

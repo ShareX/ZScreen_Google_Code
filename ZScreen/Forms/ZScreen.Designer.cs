@@ -2629,7 +2629,7 @@ namespace ZSS
             this.lblWatermarkCornerRadiusTip.Name = "lblWatermarkCornerRadiusTip";
             this.lblWatermarkCornerRadiusTip.Size = new System.Drawing.Size(146, 13);
             this.lblWatermarkCornerRadiusTip.TabIndex = 23;
-            this.lblWatermarkCornerRadiusTip.Text = "(0 - 10) 0 = Normal Rectangle";
+            this.lblWatermarkCornerRadiusTip.Text = "(0 - 15) 0 = Normal Rectangle";
             // 
             // nudWatermarkBackTrans
             // 
@@ -2651,7 +2651,7 @@ namespace ZSS
             // 
             this.nudWatermarkCornerRadius.Location = new System.Drawing.Point(144, 16);
             this.nudWatermarkCornerRadius.Maximum = new decimal(new int[] {
-            10,
+            15,
             0,
             0,
             0});
