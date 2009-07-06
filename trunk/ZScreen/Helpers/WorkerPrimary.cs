@@ -25,7 +25,6 @@ namespace ZSS.Helpers
 
         internal bool mSetHotkeys;
         internal int mHKSelectedRow = -1;
-        private HKcombo mHKSetcombo;
         private const int mWM_KEYDOWN = 0x0100, mWM_SYSKEYDOWN = 0x0104;
         public IntPtr KeyboardHookHandle = (IntPtr)1; //Used for the keyboard hook
 
@@ -750,18 +749,10 @@ namespace ZSS.Helpers
             {
                 mSetHotkeys = false;
 
+                mZScreen.lblHotkeyStatus.Text = mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey Updated.";
 
-                if (mHKSetcombo != null)
-                {
+                //mZScreen.lblHotkeyStatus.Text = "Aborted Hotkey selection. Click on a Hotkey to set.";
 
-                    mZScreen.lblHotkeyStatus.Text = mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey Updated.";
-                }
-                else
-                {
-                    mZScreen.lblHotkeyStatus.Text = "Aborted Hotkey selection. Click on a Hotkey to set.";
-                }
-
-                mHKSetcombo = null;
                 mHKSelectedRow = -1;
             }
         }
