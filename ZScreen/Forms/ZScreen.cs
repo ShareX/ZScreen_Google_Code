@@ -115,6 +115,12 @@ namespace ZSS
             ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(TextUploaders_SelectedIndexChanged);
             ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
 
+            // Watermark Codes Menu
+            codesMenu.AutoClose = false;
+            codesMenu.Font = new Font("Lucida Console", 8);
+            codesMenu.Opacity = 0.8;
+            codesMenu.ShowImageMargin = false;
+
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
             DrawZScreenLabel(false);
@@ -2036,13 +2042,8 @@ namespace ZSS
 
         private void CreateCodesMenu()
         {
-            codesMenu.AutoClose = false;
-            codesMenu.Font = new Font("Lucida Console", 8);
-            codesMenu.Opacity = 0.8;
-            codesMenu.ShowImageMargin = false;
-
             var variables = Enum.GetValues(typeof(ReplacementVariables)).Cast<ReplacementVariables>().
-                Select(x => new { Name = NameParser.prefix + Enum.GetName(typeof(ReplacementVariables), x), Description = x.GetDescription() });
+                Select(x => new { Name = NameParser.Prefix + Enum.GetName(typeof(ReplacementVariables), x), Description = x.GetDescription() });
 
             foreach (var variable in variables)
             {
@@ -2059,7 +2060,7 @@ namespace ZSS
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             int oldPos = txtWatermarkText.SelectionStart;
             string appendText;
-            if (oldPos > 0 && txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == NameParser.prefix[0])
+            if (oldPos > 0 && txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == NameParser.Prefix[0])
             {
                 appendText = tsi.Tag.ToString().TrimStart('%');
                 txtWatermarkText.Text =
@@ -3470,11 +3471,6 @@ namespace ZSS
         private void lblLogo_MouseLeave(object sender, EventArgs e)
         {
             DrawZScreenLabel(false);
-        }
-
-        private void tpMain_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

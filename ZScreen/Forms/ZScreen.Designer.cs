@@ -994,7 +994,6 @@ namespace ZSS
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
-            this.tpMain.Click += new System.EventHandler(this.tpMain_Click);
             // 
             // llblHelp
             // 

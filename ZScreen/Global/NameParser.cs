@@ -103,7 +103,7 @@ namespace ZSS
 
     public static class NameParser
     {
-        public const string prefix = "%";
+        public const string Prefix = "%";
 
         public static string Convert(NameParserInfo nameParser)
         {
@@ -200,7 +200,7 @@ namespace ZSS
 
         private static string ToString(ReplacementVariables replacement)
         {
-            return prefix + replacement.ToString();
+            return Prefix + replacement.ToString();
         }
     }
 }
