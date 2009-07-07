@@ -1017,8 +1017,7 @@ namespace ZSS
         {
             if (Program.conf.FTPAccountList.Count > 0)
             {
-                ViewRemote vr = new ViewRemote();
-                vr.Show();
+                new ViewRemote().Show();
             }
         }
 

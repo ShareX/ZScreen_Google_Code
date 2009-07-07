@@ -40,13 +40,13 @@ namespace ZSS
             this.btnSave = new System.Windows.Forms.Button();
             this.folderBrowseDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.pnlViewer = new System.Windows.Forms.Panel();
+            this.txtViewer = new System.Windows.Forms.TextBox();
             this.ssViewer = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.sBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.pBar = new System.Windows.Forms.ToolStripProgressBar();
             this.bwRemoteViewer = new System.ComponentModel.BackgroundWorker();
             this.tmrFetchFile = new System.Windows.Forms.Timer(this.components);
-            this.txtViewer = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).BeginInit();
             this.pnlControls.SuspendLayout();
             this.pnlViewer.SuspendLayout();
@@ -64,7 +64,6 @@ namespace ZSS
             this.pbViewer.TabIndex = 0;
             this.pbViewer.TabStop = false;
             this.pbViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseMove);
-            this.pbViewer.Click += new System.EventHandler(this.pbViewer_Click);
             this.pbViewer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseDown);
             // 
             // lbFiles
@@ -74,7 +73,7 @@ namespace ZSS
             this.lbFiles.Name = "lbFiles";
             this.lbFiles.ScrollAlwaysVisible = true;
             this.lbFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbFiles.Size = new System.Drawing.Size(244, 420);
+            this.lbFiles.Size = new System.Drawing.Size(245, 420);
             this.lbFiles.TabIndex = 1;
             this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.lbFiles_SelectedIndexChanged);
             // 
@@ -85,7 +84,7 @@ namespace ZSS
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(235, 24);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Delete Files";
+            this.btnDelete.Text = "Delete files";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -96,7 +95,7 @@ namespace ZSS
             this.btnCopyToClip.Name = "btnCopyToClip";
             this.btnCopyToClip.Size = new System.Drawing.Size(235, 24);
             this.btnCopyToClip.TabIndex = 3;
-            this.btnCopyToClip.Text = "Copy URL To Clipboard";
+            this.btnCopyToClip.Text = "Copy URL to clipboard";
             this.btnCopyToClip.UseVisualStyleBackColor = true;
             this.btnCopyToClip.Click += new System.EventHandler(this.btnCopyToClip_Click);
             // 
@@ -106,9 +105,9 @@ namespace ZSS
             this.cbReverse.Location = new System.Drawing.Point(7, 25);
             this.cbReverse.Margin = new System.Windows.Forms.Padding(0);
             this.cbReverse.Name = "cbReverse";
-            this.cbReverse.Size = new System.Drawing.Size(85, 17);
+            this.cbReverse.Size = new System.Drawing.Size(81, 17);
             this.cbReverse.TabIndex = 36;
-            this.cbReverse.Text = "Reverse List";
+            this.cbReverse.Text = "Reverse list";
             this.cbReverse.UseVisualStyleBackColor = true;
             // 
             // cbAddSpace
@@ -142,7 +141,7 @@ namespace ZSS
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(235, 24);
             this.btnSave.TabIndex = 37;
-            this.btnSave.Text = "Save Files...";
+            this.btnSave.Text = "Save files...";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -155,6 +154,16 @@ namespace ZSS
             this.pnlViewer.Name = "pnlViewer";
             this.pnlViewer.Size = new System.Drawing.Size(525, 560);
             this.pnlViewer.TabIndex = 38;
+            // 
+            // txtViewer
+            // 
+            this.txtViewer.BackColor = System.Drawing.SystemColors.Info;
+            this.txtViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtViewer.Location = new System.Drawing.Point(0, 0);
+            this.txtViewer.Multiline = true;
+            this.txtViewer.Name = "txtViewer";
+            this.txtViewer.Size = new System.Drawing.Size(525, 538);
+            this.txtViewer.TabIndex = 2;
             // 
             // ssViewer
             // 
@@ -186,7 +195,6 @@ namespace ZSS
             this.sBar.Spring = true;
             this.sBar.Text = "Ready.";
             this.sBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.sBar.Click += new System.EventHandler(this.sBar_Click);
             // 
             // pBar
             // 
@@ -206,16 +214,6 @@ namespace ZSS
             // 
             this.tmrFetchFile.Enabled = true;
             this.tmrFetchFile.Tick += new System.EventHandler(this.tmrFetchFile_Tick);
-            // 
-            // txtViewer
-            // 
-            this.txtViewer.BackColor = System.Drawing.SystemColors.Info;
-            this.txtViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtViewer.Location = new System.Drawing.Point(0, 0);
-            this.txtViewer.Multiline = true;
-            this.txtViewer.Name = "txtViewer";
-            this.txtViewer.Size = new System.Drawing.Size(525, 538);
-            this.txtViewer.TabIndex = 2;
             // 
             // ViewRemote
             // 

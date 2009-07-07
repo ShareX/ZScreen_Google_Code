@@ -31,7 +31,7 @@ using System.IO;
 
 namespace ZSS
 {
-    public partial class ViewRemote : System.Windows.Forms.Form
+    public partial class ViewRemote : Form
     {
         private System.Resources.ResourceManager mRes = Properties.Resources.ResourceManager;
 
@@ -40,9 +40,7 @@ namespace ZSS
         private int mConWidth, mConHeight, mConX, mConY;
         private int mPbWidth, mPbHeight;
 
-        private FTP mFTP/* = new FTP()*/;
-
-        // private List<string> toDelete = new List<string>();
+        private FTP mFTP;
 
         private int mOldX = 0, mOldY = 0;
 
@@ -56,7 +54,6 @@ namespace ZSS
             InitializeComponent();
             this.Icon = Properties.Resources.zss_main;
             setInitialHeightWidthVariables();
-
         }
 
         private void setInitialHeightWidthVariables()
@@ -109,44 +106,34 @@ namespace ZSS
             }
         }
 
-       private List<string> fetchList()
+        private List<string> FetchList()
         {
             List<string> result = new List<string>();
 
             try
             {
-                // ff.ChangeDir(acc.Path);
-
-                string[] str = mFTP.ListDirectory();//(System.String[])mFTP.ListFiles().ToArray(typeof(System.String);
-                string[] splode;
-
-                string s;
+                string[] splode, str = mFTP.ListDirectory();
                 string goodFile;
 
                 bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_PROGRESS_MAX, str.Length);
                 for (int x = 0; x < str.Length; x++)
                 {
-                    s = str[x];
-                    splode = s.Split(' ');
+                    splode = str[x].Split(' ');
                     goodFile = splode[splode.Length - 1];
-                    result.Add(goodFile);
-                    bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.ADD_FILE_TO_LISTBOX, goodFile);
-                    //if (checkFileTypes(goodFile))
-                    //{
-                        
-                    //}
+                    if (goodFile.Length > 2)
+                    {
+                        result.Add(goodFile);
+                        bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.ADD_FILE_TO_LISTBOX, goodFile);
+                    }
                 }
-
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.Windows.Forms.MessageBox.Show(e.Message, "ZScreen FTP");
+                MessageBox.Show(e.Message, "ZScreen FTP");
             }
 
             return result;
         }
-
-
 
         private void btnCopyToClip_Click(object sender, System.EventArgs e)
         {
@@ -155,17 +142,16 @@ namespace ZSS
             List<string> items = new List<string>();
 
             foreach (string obj in lbFiles.SelectedItems)
+            {
                 items.Add(obj);
+            }
 
-            if (cbReverse.Checked)
-                items.Reverse();
+            if (cbReverse.Checked) items.Reverse();
 
             foreach (object obj in items)
             {
                 str += mAcc.GetUriPath((string)obj) + System.Environment.NewLine;
             }
-
-
 
             if (str != "")
             {
@@ -182,12 +168,12 @@ namespace ZSS
         {
             try
             {
-                //mFTP.ChangeDir(mAcc.Path);
-
-                System.Collections.ArrayList items = new System.Collections.ArrayList();
+                ArrayList items = new ArrayList();
 
                 foreach (object obj in lbFiles.SelectedItems)
+                {
                     items.Add(obj);
+                }
 
                 foreach (object obj in items)
                 {
@@ -197,7 +183,6 @@ namespace ZSS
                         lbFiles.Items.Remove(obj);
                     }
                 }
-                //mFTP.Disconnect();
             }
             catch (Exception ex)
             {
@@ -205,8 +190,7 @@ namespace ZSS
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            if (lbFiles.Items.Count > 0)
-                lbFiles.SelectedIndex = 0;
+            if (lbFiles.Items.Count > 0) lbFiles.SelectedIndex = 0;
         }
 
         private void ViewRemote_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
@@ -219,30 +203,21 @@ namespace ZSS
         {
             string dir;
 
-            //choose directory / create directory popup
-            //remember old directory and display it
             folderBrowseDialog.SelectedPath = Program.ImagesDir;
             folderBrowseDialog.ShowNewFolderButton = true;
-            folderBrowseDialog.ShowDialog();
 
-            if (folderBrowseDialog.SelectedPath != "")
+            if (folderBrowseDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dir = folderBrowseDialog.SelectedPath))
             {
-                //Program.set.path = folderBrowseDialog.SelectedPath;
-                dir = folderBrowseDialog.SelectedPath;
                 try
                 {
-                    //mFTP.ChangeDir(mAcc.Path);
                     foreach (string str in lbFiles.SelectedItems)
                     {
                         mFTP.DownloadFile(str, dir + "\\" + str);
-
-                        //while (mFTP.DoDownload() > 0) ;
                     }
-                    //mFTP.Disconnect();
                 }
-                catch (System.Exception)
+                catch
                 {
-                    System.Windows.Forms.MessageBox.Show("Save Failed");
+                    MessageBox.Show("Save Failed");
                 }
             }
         }
@@ -263,7 +238,7 @@ namespace ZSS
                 if (FileSystem.IsValidImageFile(fp))
                 {
                     pbViewer.Left = 0;
-                    pbViewer.Top = 0;  
+                    pbViewer.Top = 0;
                 }
             }
         }
@@ -286,19 +261,15 @@ namespace ZSS
             }
         }
 
-
         private void sUpdateGuiControls()
         {
-
             foreach (System.Windows.Forms.Control ctl in this.pnlControls.Controls)
             {
                 if (ctl is System.Windows.Forms.Button)
                 {
                     ctl.Enabled = !bwRemoteViewer.IsBusy;
                 }
-
             }
-
         }
 
         private void sBwFetchlist()
@@ -308,20 +279,14 @@ namespace ZSS
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
                 string.Format("Fetching files from {0}", mAcc.Name));
 
-            if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server ))
+            if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server))
             {
-                //connect();
                 mFTP = new FTP(ref mAcc);
-                //test code
-                //mFTP.timeout = 30000;
-                //mFTP.Connect();
-                //end of test code
-                List<string> files = fetchList();
+                List<string> files = FetchList();
                 if (files.Count > 0)
                 {
                     sBwViewFile(files[0]);
                 }
-                //mFTP.Disconnect();
             }
         }
 
@@ -347,7 +312,6 @@ namespace ZSS
 
             // toDelete.Add(localfile);
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.VIEWING_FILE, localfile);
-
         }
 
         private void bwRemoteViewer_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -365,12 +329,10 @@ namespace ZSS
             }
 
             e.Result = rvt;
-
         }
 
         private void bwRemoteViewer_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-
             sUpdateGuiControls();
             pBar.Visible = true;
 
@@ -431,16 +393,12 @@ namespace ZSS
                     }
                     else if (FileSystem.IsValidText(fp))
                     {
-                        pbViewer.Visible = false ;
+                        pbViewer.Visible = false;
                         txtViewer.Visible = true;
                         txtViewer.Text = File.ReadAllText(fp);
                     }
-
-           
                     break;
-
             }
-
         }
 
         private void bwRemoteViewer_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -462,29 +420,12 @@ namespace ZSS
             sUpdateGuiControls();
             pBar.Value = 0;
             pBar.Visible = false;
-
-        }
-
-        private void pbViewer_Click(object sender, System.EventArgs e)
-        {
-
         }
 
         private void ViewRemote_Shown(object sender, System.EventArgs e)
         {
             RemoteViewerTask rvt = new RemoteViewerTask(RemoteViewerTask.Jobs.FETCH_LIST);
             bwRemoteViewer.RunWorkerAsync(rvt);
-
-        }
-
-        private void tmrSecond_Tick(object sender, System.EventArgs e)
-        {
-            // sUpdateGuiControls();
-        }
-
-        private void sBar_Click(object sender, System.EventArgs e)
-        {
-
         }
 
         private void tmrFetchFile_Tick(object sender, System.EventArgs e)
@@ -501,8 +442,6 @@ namespace ZSS
                     }
                 }
             }
-
         }
-
     }
 }
