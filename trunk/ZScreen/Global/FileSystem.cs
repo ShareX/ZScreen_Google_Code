@@ -286,16 +286,14 @@ namespace ZSS
         /// <returns></returns>
         public static bool IsValidImageFile(string fp)
         {
-            bool b = false;
             if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
             {
                 foreach (string s in Program.zImageFileTypes)
                 {
-                    if (Path.GetExtension(fp).ToLower().EndsWith(s))
-                        b = true;
+                    if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
                 }
             }
-            return b;
+            return false;
         }
 
         public static bool IsValidTextFile(string fp)
@@ -310,23 +308,21 @@ namespace ZSS
         /// <returns></returns>
         public static bool IsValidText(string fp)
         {
-            bool b = false;
             if (!string.IsNullOrEmpty(fp))
             {
                 if (File.Exists(fp))
                 {
                     foreach (string s in Program.zTextFileTypes)
                     {
-                        if (fp.EndsWith(s))
-                            b = true;
+                        if (fp.EndsWith(s)) return true;
                     }
                 }
                 else
                 {
-                    b = true;
+                    return true;
                 }
             }
-            return b;
+            return false;
         }
 
         /// <summary>
@@ -437,7 +433,7 @@ namespace ZSS
         /// <returns></returns>
         public static bool IsValidLink(string url)
         {
-            return Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
+            return Uri.IsWellFormedUriString(url, UriKind.Absolute);
         }
     }
 }
