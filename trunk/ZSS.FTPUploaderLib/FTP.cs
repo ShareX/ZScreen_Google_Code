@@ -115,15 +115,9 @@ namespace ZSS
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
-            request.KeepAlive = false;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader streamReader = new StreamReader(stream))
-            {
-
-            }
+            request.GetResponse();
         }
 
         public void Rename(string fileName, string newFileName)
@@ -133,14 +127,9 @@ namespace ZSS
 
             request.Method = WebRequestMethods.Ftp.Rename;
             request.RenameTo = newFileName;
-            request.UseBinary = true;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            {
-
-            }
+            request.GetResponse();
         }
 
         public long GetFileSize(string fileName)
@@ -153,7 +142,6 @@ namespace ZSS
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
             {
                 return response.ContentLength;
             }
@@ -191,11 +179,7 @@ namespace ZSS
             request.UseBinary = true;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            {
-
-            }
+            request.GetResponse();
         }
     }
 }
