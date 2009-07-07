@@ -29,18 +29,18 @@ namespace ZSS.UserControls
                 TextUploader textUploader = (TextUploader)this.MyCollection.Items[this.MyCollection.SelectedIndex];
                 if (SettingsGrid.SelectedObject.GetType() != typeof(FTPAccount))
                 {
-                    TextUploaderSettings settings = (TextUploaderSettings)SettingsGrid.SelectedObject;
-                    if (!string.IsNullOrEmpty(settings.ServiceName))
+                    TextUploaderSettings settings = (TextUploaderSettings)textUploader.Settings;
+                    if (string.IsNullOrEmpty(settings.Name))
                     {
-                        textUploader.Name = settings.ServiceName;                     
+                        settings.Name = (string)e.OldValue;
                     }
                 }
                 else
                 {
                     FTPAccount acc = SettingsGrid.SelectedObject as FTPAccount;
-                    if (!string.IsNullOrEmpty(acc.ToString()))
+                    if (string.IsNullOrEmpty(acc.Name))
                     {
-                        textUploader.Name = acc.ToString();
+                        acc.Name = (string)e.OldValue;
                     }
                 }
                 this.MyCollection.Items[this.MyCollection.SelectedIndex] = textUploader;

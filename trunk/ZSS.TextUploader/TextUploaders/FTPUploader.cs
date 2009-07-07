@@ -12,11 +12,6 @@ namespace ZSS.TextUploaderLib
     {
         public FTPAccount FTPAccount;
 
-        public override string Name
-        {
-            get { return FTPAccount.Name; }
-        }
-
         public const string Hostname = "FTP";
 
         public FTPUploader()
@@ -70,7 +65,7 @@ namespace ZSS.TextUploaderLib
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("FTP ({0})", this.Name);
+            return string.Format("FTP ({0})", FTPAccount.Name);
         }
     }
 }

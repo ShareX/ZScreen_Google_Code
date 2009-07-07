@@ -58,9 +58,9 @@ namespace ZSS.TextUploaderLib
             HostSettings.URL = "http://tinyurl.com/api-create.php";
         }
 
-        public override string Name
+        public override string ToString()
         {
-            get { return Hostname; }
+            return HostSettings.Name;
         }
 
         public override string UploadText(string text)
@@ -75,9 +75,15 @@ namespace ZSS.TextUploaderLib
         }
 
         [Serializable]
-        public class TinyURLSettings
+        public class TinyURLSettings : TextUploaderSettings
         {
-            public string URL { get; set; }
+            public override string Name { get; set; }
+            public override string URL { get; set; }
+
+            public TinyURLSettings()
+            {
+                Name = Hostname;
+            }
         }
     }
 }

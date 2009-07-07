@@ -55,8 +55,12 @@ namespace ZSS.TextUploaderLib
 
         public PastebinCaUploader()
         {
-            this.Name = Hostname;
             HostSettings.URL = "http://pastebin.ca/quiet-paste.php";
+        }
+
+        public override string ToString()
+        {
+            return HostSettings.Name;
         }
 
         public override string TesterString
@@ -86,14 +90,24 @@ namespace ZSS.TextUploaderLib
         [Serializable]
         public class PastebinCaSettings : TextUploaderSettings
         {
+            public override string Name { get; set; }
+            public override string URL { get; set; }
+            /// <summary>type</summary>
+            public override string TextFormat { get; set; }
+            /// <summary>expiry</summary>
             public string ExpireTime { get; set; }
+            /// <summary>description</summary>
             public string Description { get; set; }
+            /// <summary>name</summary>
             public string Author { get; set; }
 
             public PastebinCaSettings()
             {
-                ExpireTime = "1 month";
+                Name = Hostname;
                 TextFormat = "1";
+                ExpireTime = "1 month";
+                Description = "";
+                Author = "";
             }
         }
     }

@@ -56,13 +56,17 @@ namespace ZSS.TextUploaderLib
 
         public PastebinUploader()
         {
-            this.Name = Hostname;
             HostSettings.URL = "http://pastebin.com/pastebin.php";
         }
 
         public PastebinUploader(string url)
         {
             HostSettings.URL = url;
+        }
+
+        public override string ToString()
+        {
+            return HostSettings.Name;
         }
 
         public override string TesterString
@@ -143,15 +147,21 @@ namespace ZSS.TextUploaderLib
         [Serializable]
         public class PastebinSettings : TextUploaderSettings
         {
+            public override string Name { get; set; }
+            public override string URL { get; set; }
+            /// <summary>format</summary>
+            public override string TextFormat { get; set; }
+            /// <summary>poster</summary>
             public string Author { get; set; }
+            /// <summary>expiry</summary>
             public TimeTypes ExpireTime { get; set; }
 
             public PastebinSettings()
             {
-                ExpireTime = TimeTypes.Month;
+                Name = Hostname;
                 TextFormat = "text";
-                this.ServiceName = string.Format("{0} - {1}", Hostname, TextFormat);
-                this.Author = Environment.UserName;
+                Author = "";
+                ExpireTime = TimeTypes.Month;
             }
 
             public enum TimeTypes

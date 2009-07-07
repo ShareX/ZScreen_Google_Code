@@ -58,9 +58,9 @@ namespace ZSS.TextUploaderLib
             HostSettings.URL = "http://snipt.org/snip";
         }
 
-        public override string Name
+        public override string ToString()
         {
-            get { return Hostname; }
+            return HostSettings.Name;
         }
 
         public override string TesterString
@@ -75,7 +75,7 @@ namespace ZSS.TextUploaderLib
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("codeSnippet", HttpUtility.UrlEncode(text));
                 arguments.Add("codeSnippetTitle", HostSettings.SnippetTitle);
-                arguments.Add("lang", HostSettings.Language);
+                arguments.Add("lang", HostSettings.TextFormat);
                 arguments.Add("private", HostSettings.Visibility == Privacy.Private ? "1" : "0");
                 arguments.Add("shownums", HostSettings.LineNumbers ? "1" : "0");
                 arguments.Add("snipAction", "");
@@ -90,15 +90,24 @@ namespace ZSS.TextUploaderLib
         [Serializable]
         public class SniptSettings : TextUploaderSettings
         {
+            public override string Name { get; set; }
+            public override string URL { get; set; }
+            /// <summary>lang</summary>
+            public override string TextFormat { get; set; }
+            /// <summary>codeSnippetTitle</summary>
             public string SnippetTitle { get; set; }
-            public string Language { get; set; }
+            /// <summary>private</summary>
             public Privacy Visibility { get; set; }
+            /// <summary>shownums</summary>
             public bool LineNumbers { get; set; }
+            /// <summary>theme</summary>
             public string Theme { get; set; }
 
             public SniptSettings()
             {
-                Language = "text";
+                Name = Hostname;
+                TextFormat = "text";
+                SnippetTitle = "";
                 Visibility = Privacy.Private;
                 LineNumbers = true;
                 Theme = "1";
