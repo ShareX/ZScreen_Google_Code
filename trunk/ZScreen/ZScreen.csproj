@@ -123,6 +123,7 @@
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FormsMgr.cs" />
+    <Compile Include="Helpers\HotkeyInfo.cs" />
     <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Global\Adapter.cs" />
     <Compile Include="Global\RegistryMgr.cs" />
