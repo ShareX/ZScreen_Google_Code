@@ -162,7 +162,7 @@ namespace ZSS
 
             foreach (object obj in items)
             {
-                str += mAcc.getUriPath((string)obj) + System.Environment.NewLine;
+                str += mAcc.GetUriPath((string)obj) + System.Environment.NewLine;
             }
 
 

@@ -58,7 +58,7 @@ namespace ZSS
             this.Name = name;
         }
 
-        public string getUriPath(string fileName)
+        public string GetUriPath(string fileName)
         {
             StringBuilder sb = new StringBuilder();
             if (!string.IsNullOrEmpty(HttpPath))

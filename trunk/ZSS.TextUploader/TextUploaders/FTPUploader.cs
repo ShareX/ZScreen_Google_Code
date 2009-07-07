@@ -47,16 +47,14 @@ namespace ZSS.TextUploaderLib
         /// Uploads Text to the FTP. 
         /// If the method fails, it will return a list of zero images
         /// </summary>
-        /// <param name="localFilePath"></param>
+        /// <param name="text"></param>
         /// <returns>Returns a list of images.</returns>
-        public override string UploadText(string filepath)
+        public override string UploadText(string text)
         {
             FTP ftpClient = new FTP(ref this.FTPAccount);
-            //removed binary mode code line
-
-            string fName = Path.GetFileName(filepath);
-            ftpClient.UploadFile(filepath, fName);
-            return this.FTPAccount.getUriPath(fName);
+            string fileName = DateTime.Now.Ticks + ".txt";
+            ftpClient.UploadText(text, fileName);
+            return this.FTPAccount.GetUriPath(fileName);
         }
 
         /// <summary>
