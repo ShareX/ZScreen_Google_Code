@@ -70,11 +70,8 @@ namespace ZSS.TextUploaderLib
         {
             if (File.Exists(filePath))
             {
-                if (this.GetType() != typeof(FTPUploader))
-                {
-                    filePath = File.ReadAllText(filePath);
-                }
-                return UploadText(filePath);
+                string text = File.ReadAllText(filePath);
+                return UploadText(text);
             }
             return "";
         }

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 
 namespace ZSS
 {
@@ -46,44 +47,52 @@ namespace ZSS
             mAccount = acc;
         }
 
-        public void UploadFile(string fileName, string remoteName)
+        public void Upload(Stream stream, string remoteName)
         {
             byte[] buffer = new byte[BufferSize];
 
-            FileInfo fi = new FileInfo(fileName);
-
-            Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/" + fi.Name);
-
+            Uri uri = GetUri(remoteName);
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.UploadFile;
-            request.ContentLength = fi.Length;
+            request.ContentLength = stream.Length;
             request.KeepAlive = false;
             request.UseBinary = true;
             request.UsePassive = !mAccount.IsActive;
             request.Credentials = new NetworkCredential(mAccount.Username, mAccount.Password);
 
-            using (FileStream fs = fi.OpenRead())
-            using (Stream stream = request.GetRequestStream())
+            using (Stream requestStream = request.GetRequestStream())
             {
-                int contentLength = fs.Read(buffer, 0, BufferSize);
+                int contentLength = stream.Read(buffer, 0, BufferSize);
 
                 while (contentLength != 0)
                 {
-                    stream.Write(buffer, 0, contentLength);
-                    contentLength = fs.Read(buffer, 0, BufferSize);
+                    requestStream.Write(buffer, 0, contentLength);
+                    contentLength = stream.Read(buffer, 0, BufferSize);
                 }
 
+                requestStream.Close();
                 stream.Close();
-                fs.Close();
             }
+        }
+
+        public void UploadFile(string filePath, string remoteName)
+        {
+            FileStream stream = new FileStream(filePath, FileMode.Open);
+            Upload(stream, remoteName);
+        }
+
+        public void UploadText(string text, string remoteName)
+        {
+            MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(text), false);
+            Upload(stream, remoteName);
         }
 
         public void DownloadFile(string fileName, string filePath)
         {
             byte[] buffer = new byte[BufferSize];
 
-            Uri uri = new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/" + fileName);
+            Uri uri = GetUri(fileName);
 
             using (FileStream fStream = new FileStream(filePath, FileMode.Create))
             {
@@ -218,6 +227,11 @@ namespace ZSS
                 stream.Close();
             }
             response.Close();
+        }
+
+        private Uri GetUri(string name)
+        {
+            return new Uri("ftp://" + mAccount.Server + ":" + mAccount.Port + mAccount.Path + "/" + name);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace ZSS.ImageUploaderLib
             //perc = (int)(((ff.BytesTotal) * 100) / ff.FileSize);
             //}
 
-            ifl.Add(new ImageFile(this.FTPAccount.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
+            ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(fName), ImageFile.ImageType.FULLIMAGE));
 
             if (this.EnableThumbnail)
             {
@@ -89,7 +89,7 @@ namespace ZSS.ImageUploaderLib
                     {
                         ftpClient.UploadFile(thPath, Path.GetFileName(thPath));
                     }
-                    ifl.Add(new ImageFile(this.FTPAccount.getUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
+                    ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
                 }
                 catch (Exception ex)
                 {

@@ -161,7 +161,7 @@ namespace ZSS.Helpers
                         WorkingDir = Program.CacheDir
                     };
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
-                    mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
+                    mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;
                 }
             }
