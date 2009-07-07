@@ -58,9 +58,9 @@ namespace ZSS.TextUploaderLib
             HostSettings.URL = "http://slexy.org/index.php/submit";
         }
 
-        public override string Name
+        public override string ToString()
         {
-            get { return Hostname; }
+            return HostSettings.Name;
         }
 
         public override string TesterString
@@ -94,17 +94,29 @@ namespace ZSS.TextUploaderLib
         [Serializable]
         public class SlexySettings : TextUploaderSettings 
         {
+            public override string Name { get; set; }
+            public override string URL { get; set; }
+            /// <summary>language</summary>
+            public override string TextFormat { get; set; }
+            /// <summary>author</summary>
             public string Author { get; set; }
+            /// <summary>permissions</summary>
             public Privacy Visibility { get; set; }
+            /// <summary>desc</summary>
             public string Description { get; set; }
+            /// <summary>linenumbers</summary>
             public bool LineNumbers { get; set; }
+            /// <summary>expire</summary>
             [Description("Expiration time with seconds. Example: 0 = Forever, 60 = 1 minutes, 3600 = 1 hour, 2592000 = 1 month")]
             public string Expiration { get; set; }
 
             public SlexySettings()
             {
+                Name = Hostname;
                 TextFormat = "text";
+                Author = "";
                 Visibility = Privacy.Private;
+                Description = "";
                 LineNumbers = true;
                 Expiration = "2592000";
             }

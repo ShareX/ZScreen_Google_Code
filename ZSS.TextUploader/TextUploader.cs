@@ -23,14 +23,21 @@ namespace ZSS.TextUploaderLib
 
         public List<string> Errors { get; set; }
 
-        public virtual string Name { get; set; }
-
         /// <summary>
         /// String that is uploaded
         /// </summary>
         /// <param name="txt"></param>
         /// <returns></returns>
         public abstract string UploadText(string text);
+
+        /// <summary>
+        /// Descriptive name for the Text Uploader
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "TextUploader";
+        }
 
         /// <summary>
         /// String used to test the functionality
@@ -75,15 +82,6 @@ namespace ZSS.TextUploaderLib
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
-        }
-
-        /// <summary>
-        /// Descriptive name for the Text Uploader
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return this.Name;
         }
 
         /// <summary>
@@ -165,8 +163,8 @@ namespace ZSS.TextUploaderLib
 
     public abstract class TextUploaderSettings
     {
-        public string URL { get; set; }
-        public string TextFormat { get; set; }
-        public string ServiceName { get; set; }
+        public abstract string Name { get; set; }
+        public abstract string URL { get; set; }
+        public virtual string TextFormat { get; set; }
     }
 }

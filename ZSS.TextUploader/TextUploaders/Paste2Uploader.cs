@@ -57,9 +57,9 @@ namespace ZSS.TextUploaderLib
             HostSettings.URL = "http://paste2.org/new-paste";
         }
 
-        public override string Name
+        public override string ToString()
         {
-            get { return Hostname; }
+            return HostSettings.Name;
         }
 
         public override string TesterString
@@ -86,11 +86,18 @@ namespace ZSS.TextUploaderLib
         [Serializable]
         public class Paste2Settings : TextUploaderSettings
         {
+            public override string Name { get; set; }
+            public override string URL { get; set; }
+            /// <summary>lang</summary>
+            public override string TextFormat { get; set; }
+            /// <summary>description</summary>
             public string Description { get; set; }
 
             public Paste2Settings()
             {
+                Name = Hostname;
                 TextFormat = "text";
+                Description = "";
             }
         }
     }
