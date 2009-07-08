@@ -18,28 +18,55 @@ namespace ZSS.Global
     {
         public static void TestFTPAccount(FTPAccount acc)
         {
-            string msg = "";
+            string msg;
+            FTP ftp = new FTP(ref acc);
             try
             {
-                FTP ftp = new FTP(ref acc);
                 if (ftp.ListDirectory() != null)
                 {
-                    msg = "Success"; //Success
+                    msg = "Success.";
                 }
                 else
                 {
                     msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
                 }
             }
-            catch (Exception t)
+            catch (Exception ex)
             {
-                msg = t.Message;
+                if (ex.Message.Contains("(550) File unavailable") && acc.AutoCreateFolder)
+                {
+                    try
+                    {
+                        ftp.MakeDirectory(acc.Path);
+                        if (ftp.ListDirectory() != null)
+                        {
+                            msg = "Success.\nAuto created folder: " + acc.Path;
+                        }
+                        else
+                        {
+                            msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
+                        }
+                    }
+                    catch (Exception ex2)
+                    {
+                        msg = ex2.Message;
+                    }
+                }
+                else
+                {
+                    msg = ex.Message;
+                }
             }
 
             if (!string.IsNullOrEmpty(msg))
             {
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private static bool TestFTP(FTP ftp)
+        {
+            return ftp.ListDirectory() != null;
         }
 
         public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
