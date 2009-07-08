@@ -1,5 +1,8 @@
 Version 2.20 - 20090801
 
+2.20.06.1 Fixed a few more exceptions during FTP Upload
+2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86]
+2.20.05.0 FTP account settings now have the ability to auto create folders
 2.20.04.0 PropertyGrid settings to add bevel visual effect to Screenshots
 2.20.03.0 Watermark text supports %width and %height syntax to show Image dimensions
 2.20.02.0 Text Uploaders that are based on pastebin.com can be renamed to uniquely identify them e.g. kopyala.org
