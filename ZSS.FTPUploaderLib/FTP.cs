@@ -206,14 +206,21 @@ namespace ZSS
 
         public void MakeDirectory(string dirName)
         {
-            Uri uri = new Uri(CombineURL(FTPAddress, dirName));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+            try
+            {
+                Uri uri = new Uri(CombineURL(FTPAddress, dirName));
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
-            request.Method = WebRequestMethods.Ftp.MakeDirectory;
-            request.UseBinary = true;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.Method = WebRequestMethods.Ftp.MakeDirectory;
+                request.UseBinary = true;
+                request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
-            request.GetResponse();
+                request.GetResponse();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         public static string CombineURL(string url1, string url2)
