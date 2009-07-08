@@ -55,9 +55,8 @@ namespace ZSS
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get { return isActive; } set { isActive = value; } }
 
-        private bool autoCreateFolder = true;
-        [Category("FTP"), Description("For Test button if folder not found creating automaticly"), DefaultValue(true)]
-        public bool AutoCreateFolder { get { return autoCreateFolder; } set { autoCreateFolder = value; } }
+        [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button")]
+        public bool AutoCreateFolder { get; set; } 
 
         public FTPAccount() { }
 
