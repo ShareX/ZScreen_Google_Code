@@ -37,7 +37,7 @@ namespace ZSS.Global
                 {
                     try
                     {
-                        ftp.MakeDirectory(acc.Path);
+                        ftp.MakeMultiDirectory(acc.Path);
                         if (ftp.ListDirectory() != null)
                         {
                             msg = "Success.\nAuto created folder: " + acc.Path;
