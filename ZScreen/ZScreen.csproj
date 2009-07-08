@@ -204,9 +204,6 @@
     <Compile Include="Forms\Crop.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Crop.designer.cs">
-      <DependentUpon>Crop.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ViewRemote.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,10 +234,6 @@
     <Compile Include="UserControls\TextUploadersControl.Designer.cs">
       <DependentUpon>TextUploadersControl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\Crop.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>Crop.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>

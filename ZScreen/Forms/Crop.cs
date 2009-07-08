@@ -372,7 +372,7 @@ namespace ZSS
                     Refresh();
                 }
             }
-            if (e.Button == MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right)
             {
                 if (mMouseDown)
                 {
@@ -401,25 +401,50 @@ namespace ZSS
             }
         }
 
-        private void Crop_KeyPress(object sender, KeyPressEventArgs e)
+        private void Crop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (mMouseDown == false)
+            if (mMouseDown)
             {
-                if (e.KeyChar == (int)Keys.Space)
+                if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Space)
+                {
+                    CancelAndRestart();
+                }
+                if (!selectedWindowMode)
+                {
+                    for (int i = 0; i < (e.Shift ? 5 : 1); i++)
+                    {
+                        if (e.KeyCode == Keys.Left)
+                        {
+                            mousePosOnClick.X--;
+                        }
+                        else if (e.KeyCode == Keys.Right)
+                        {
+                            mousePosOnClick.X++;
+                        }
+                        else if (e.KeyCode == Keys.Up)
+                        {
+                            mousePosOnClick.Y--;
+                        }
+                        else if (e.KeyCode == Keys.Down)
+                        {
+                            mousePosOnClick.Y++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (e.KeyCode == Keys.Space)
                 {
                     CropRegion = new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height);
                     ReturnImageAndExit();
                 }
-                if (e.KeyChar == (int)Keys.Escape)
+                if (e.KeyCode == Keys.Escape)
                 {
                     ReturnNullAndExit();
                 }
             }
-            if (mMouseDown && (e.KeyChar == (int)Keys.Escape || e.KeyChar == (int)Keys.Space))
-            {
-                CancelAndRestart();
-            }
-            if (e.KeyChar == (int)Keys.Tab && !selectedWindowMode)
+            if (e.KeyCode == Keys.Tab && !selectedWindowMode)
             {
                 Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
                 Program.conf.Save();
@@ -472,6 +497,52 @@ namespace ZSS
             bmpBackground.Dispose();
             bmpRegion.Dispose();
         }
+
+        #region Windows Form Designer generated code
+
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CausesValidation = false;
+            this.ClientSize = new System.Drawing.Size(400, 400);
+            this.ControlBox = false;
+            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Crop";
+            this.KeyPreview = true;
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.TopMost = true;
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Crop_MouseUp);
+            this.Shown += new System.EventHandler(this.Crop_Shown);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Crop_FormClosed);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Crop_MouseDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Crop_KeyDown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Crop_FormClosing);
+            this.ResumeLayout(false);
+        }
+
+        #endregion
     }
 
     public class DynamicRectangle
