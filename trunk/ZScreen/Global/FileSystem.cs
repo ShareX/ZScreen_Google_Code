@@ -258,19 +258,17 @@ namespace ZSS
             {
                 InputBox ib = new InputBox
                 {
-                    Question = "Specify a Screenshot Name...",
-                    Answer = fName,
+                    Title = "Specify a Screenshot Name...",
+                    InputText = fName,
                     Icon = Properties.Resources.zss_main
                 };
-                //Program.MyInputBox.BringToFront();
                 ib.ShowDialog();
                 if (ib.DialogResult == DialogResult.OK)
                 {
-                    StringBuilder sb = new StringBuilder(ib.Answer);
+                    StringBuilder sb = new StringBuilder(ib.InputText);
                     sb = NameParser.Normalize(sb);
-                    if (!fName.Equals(ib.Answer))
+                    if (!fName.Equals(ib.InputText))
                     {
-                        //fName = string.Format("{0}-{1}", sb.ToString(), DateTime.Now.ToString("yyyyMMddHHmmss"));
                         fName = sb.ToString();
                     }
                 }

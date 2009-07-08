@@ -2637,7 +2637,7 @@ namespace ZSS
         {
             Program.Worker2.TestFTPAccountAsync(GetSelectedFTP());
         }
-   
+
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
         {
             Adapter.TestDekiWikiAccount(GetSelectedDekiWiki());

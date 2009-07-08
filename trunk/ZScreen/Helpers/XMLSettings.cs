@@ -517,7 +517,10 @@ namespace ZSS
 
         public void SaveThread(object filePath)
         {
-            Save((string)filePath);
+            lock (this)
+            {
+                Save((string)filePath);
+            }
         }
 
         public void Save(string filePath)

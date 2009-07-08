@@ -28,54 +28,50 @@ namespace ZSS.Forms
 {
     public partial class InputBox : Form
     {
-        public string Question { get; set; }
-        public string Answer { get; set; }
-
-        public InputBox(string q, string ans)
-            : this()
-        {
-            this.Text = q;
-            this.txtAns.Text = ans;
-        }
+        public string Title { get; set; }
+        public string InputText { get; set; }
 
         public InputBox()
         {
             InitializeComponent();
+        }
 
+        private void InputBox_Load(object sender, EventArgs e)
+        {
+            this.Text = this.Title;
+            this.txtInputText.Text = this.InputText;
+        }
+
+        private void InputBox_Shown(object sender, EventArgs e)
+        {
             User32.ActivateWindow(this.Handle);
-
-            //set translations for OK/Cancel
-            btnOK.Text = "OK";
-            btnCancel.Text = "Cancel";
+            txtInputText.Focus();
+            int start = this.InputText.IndexOf("<");
+            int end = this.InputText.IndexOf(">");
+            if (start != -1 && end != -1)
+            {
+                txtInputText.SelectionStart = start;
+            }
+            else
+            {
+                txtInputText.SelectionLength = txtInputText.Text.Length;
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtAns.Text))
+            if (!string.IsNullOrEmpty(txtInputText.Text))
             {
-                this.Answer = txtAns.Text;
+                this.InputText = txtInputText.Text;
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
             }
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Hide();
-        }
-
-        private void InputBox_Shown(object sender, EventArgs e)
-        {
-            txtAns.Focus();
-            txtAns.SelectionLength = txtAns.Text.Length;
-        }
-
-        private void InputBox_Load(object sender, EventArgs e)
-        {
-            this.Text = this.Question;
-            this.txtAns.Text = this.Answer;
         }
     }
 }
