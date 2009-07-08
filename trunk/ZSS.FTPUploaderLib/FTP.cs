@@ -172,6 +172,8 @@ namespace ZSS
             Uri uri = new Uri(url);
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
+            request.KeepAlive = false;
+            request.UseBinary = true;
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.UsePassive = !Account.IsActive;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
