@@ -166,7 +166,6 @@ namespace ZSS
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.UseBinary = true;
             request.UsePassive = !Account.IsActive;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
@@ -179,6 +178,20 @@ namespace ZSS
                 }
 
                 return directories.ToArray();
+            }
+        }
+
+        public void MakeMultiDirectory(string dirName)
+        {
+            string path = "";
+            string[] dirs = dirName.Split('/');
+            foreach (string dir in dirs)
+            {
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    path += dir + "/";
+                    MakeDirectory(path);
+                }
             }
         }
 
@@ -198,7 +211,18 @@ namespace ZSS
         {
             if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
             {
-                return "";
+                if (!string.IsNullOrEmpty(url1))
+                {
+                    return url1;
+                }
+                else if (!string.IsNullOrEmpty(url2))
+                {
+                    return url2;
+                }
+                else
+                {
+                    return "";
+                }
             }
             if (url1.EndsWith("/"))
             {

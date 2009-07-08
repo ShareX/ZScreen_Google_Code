@@ -38,24 +38,26 @@ namespace ZSS
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        private string mPath = "/";
-        [Category("FTP"), Description("FTP path: (ex: screenshots or /htdocs/screenshots)"), DefaultValue("")]
+        private string mPath = "";
+        [Category("FTP"), Description("FTP path: (ex: screenshots or /htdocs/screenshots)\nEmpty = Use main directory"), DefaultValue("")]
         public string Path { get { return mPath; } set { mPath = value; } }
 
-        private string mHttpPath = "%";
+        private string mHttpPath = "";
         [Category("FTP"), Description("HTTP path: (ex: brandonz.net/screenshots or %/screenshots)\n" +
-            "% = Server, Empty = Auto guess HTTP path (Server + FTP path)"), DefaultValue("%")]
+            "% = Server, Empty = Auto guess HTTP path (Server + FTP path)"), DefaultValue("")]
         public string HttpPath { get { return mHttpPath; } set { mHttpPath = value; } }
 
         private int mPort = 21;
         [Category("FTP"), Description("Port number"), DefaultValue(21)]
         public int Port { get { return mPort; } set { mPort = value; } }
 
+        private bool isActive = false;
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
-        public bool IsActive { get; set; }
+        public bool IsActive { get { return isActive; } set { isActive = value; } }
 
+        private bool autoCreateFolder = true;
         [Category("FTP"), Description("For Test button if folder not found creating automaticly"), DefaultValue(true)]
-        public bool AutoCreateFolder { get; set; }
+        public bool AutoCreateFolder { get { return autoCreateFolder; } set { autoCreateFolder = value; } }
 
         public FTPAccount() { }
 
