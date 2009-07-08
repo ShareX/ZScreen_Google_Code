@@ -31,6 +31,7 @@ using System.Xml.Serialization;
 using ZSS.Properties;
 using ZSS.TextUploaderLib;
 using System.Reflection;
+using System.Threading;
 
 namespace ZSS
 {
@@ -511,7 +512,12 @@ namespace ZSS
 
         public void Save()
         {
-            Save(Program.XMLSettingsFile);
+            new Thread(SaveThread).Start(Program.XMLSettingsFile);
+        }
+
+        public void SaveThread(object filePath)
+        {
+            Save((string)filePath);
         }
 
         public void Save(string filePath)
