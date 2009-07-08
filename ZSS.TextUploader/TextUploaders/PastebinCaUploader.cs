@@ -93,7 +93,7 @@ namespace ZSS.TextUploaderLib
             public override string Name { get; set; }
             public override string URL { get; set; }
             /// <summary>type</summary>
-            public override string TextFormat { get; set; }
+            public string TextFormat { get; set; }
             /// <summary>expiry</summary>
             public string ExpireTime { get; set; }
             /// <summary>description</summary>
