@@ -89,7 +89,7 @@ namespace ZSS.TextUploaderLib
             public override string Name { get; set; }
             public override string URL { get; set; }
             /// <summary>lang</summary>
-            public override string TextFormat { get; set; }
+            public string TextFormat { get; set; }
             /// <summary>description</summary>
             public string Description { get; set; }
 

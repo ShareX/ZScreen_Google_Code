@@ -95,27 +95,34 @@ namespace ZSS
 
         public void DownloadFile(string fileName, string filePath)
         {
-            Uri uri = new Uri(CombineURL(FTPAddress, Account.Path, fileName));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            request.KeepAlive = false;
-            request.UseBinary = true;
-            request.UsePassive = !Account.IsActive;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
-
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
+            try
             {
-                byte[] buffer = new byte[BufferSize];
-                int bytes = stream.Read(buffer, 0, BufferSize);
+                Uri uri = new Uri(CombineURL(FTPAddress, Account.Path, fileName));
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
-                while (bytes > 0)
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                request.KeepAlive = false;
+                request.UseBinary = true;
+                request.UsePassive = !Account.IsActive;
+                request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
                 {
-                    fileStream.Write(buffer, 0, bytes);
-                    bytes = stream.Read(buffer, 0, BufferSize);
+                    byte[] buffer = new byte[BufferSize];
+                    int bytes = stream.Read(buffer, 0, BufferSize);
+
+                    while (bytes > 0)
+                    {
+                        fileStream.Write(buffer, 0, bytes);
+                        bytes = stream.Read(buffer, 0, BufferSize);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 

@@ -185,6 +185,5 @@ namespace ZSS.TextUploaderLib
     {
         public abstract string Name { get; set; }
         public abstract string URL { get; set; }
-        public virtual string TextFormat { get; set; }
     }
 }

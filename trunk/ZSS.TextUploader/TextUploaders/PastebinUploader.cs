@@ -150,7 +150,7 @@ namespace ZSS.TextUploaderLib
             public override string Name { get; set; }
             public override string URL { get; set; }
             /// <summary>format</summary>
-            public override string TextFormat { get; set; }
+            public string TextFormat { get; set; }
             /// <summary>poster</summary>
             public string Author { get; set; }
             /// <summary>expiry</summary>

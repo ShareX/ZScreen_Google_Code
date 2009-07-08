@@ -120,7 +120,7 @@ namespace ZSS
                 {
                     splode = str[x].Split(' ');
                     goodFile = splode[splode.Length - 1];
-                    if (goodFile.Length > 2)
+                    if (goodFile.Length > 2 && goodFile.Contains("."))
                     {
                         result.Add(goodFile);
                         bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.ADD_FILE_TO_LISTBOX, goodFile);
