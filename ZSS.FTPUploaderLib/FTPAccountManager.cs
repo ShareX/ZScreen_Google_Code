@@ -52,11 +52,10 @@ namespace ZSS
                         new System.Xml.Serialization.XmlSerializer(typeof(FTPAccountManager));
                     xs.Serialize(fs, this);
                 }
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -66,7 +65,6 @@ namespace ZSS
             {
                 try
                 {
-
                     using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
                         System.Xml.Serialization.XmlSerializer xs =

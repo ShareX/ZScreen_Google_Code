@@ -24,6 +24,7 @@
 using System;
 using System.Text;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace ZSS
 {
@@ -33,23 +34,28 @@ namespace ZSS
         public string Name { get; set; }
         public string Server { get; set; }
         public string Username { get; set; }
+
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
         private string mPath = "/";
-        [Category("FTP"), Description("FTP Path: (ex: / or /htdocs/screenshots)")]
+        [Category("FTP"), Description("FTP path: (ex: screenshots or /htdocs/screenshots)"), DefaultValue("")]
         public string Path { get { return mPath; } set { mPath = value; } }
 
-        private string mHttpPath = "%/";
-        [Category("FTP"), Description("HTTP Path: (ex: brandonz.net/screenshots)")]
+        private string mHttpPath = "%";
+        [Category("FTP"), Description("HTTP path: (ex: brandonz.net/screenshots or %/screenshots)\n" +
+            "% = Server, Empty = Auto guess HTTP path (Server + FTP path)"), DefaultValue("%")]
         public string HttpPath { get { return mHttpPath; } set { mHttpPath = value; } }
 
         private int mPort = 21;
-        [Category("FTP"), Description("Port Number")]
+        [Category("FTP"), Description("Port number"), DefaultValue(21)]
         public int Port { get { return mPort; } set { mPort = value; } }
 
-        [Category("FTP"), Description("Set True if Active, False if Passive")]
+        [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get; set; }
+
+        [Category("FTP"), Description("For Test button if folder not found creating automaticly"), DefaultValue(true)]
+        public bool AutoCreateFolder { get; set; }
 
         public FTPAccount() { }
 
@@ -60,20 +66,23 @@ namespace ZSS
 
         public string GetUriPath(string fileName)
         {
-            StringBuilder sb = new StringBuilder();
             if (!string.IsNullOrEmpty(HttpPath))
             {
-                if (!HttpPath.Contains("http://"))
-                    sb.Append("http://");
-                sb.Append(HttpPath.Replace("%", Server));
+                fileName = fileName.Replace(" ", "%20");
+                string path = FTP.CombineURL(HttpPath.Replace("%", Server), fileName);
+                if (!path.StartsWith("http://")) path = "http://" + path;
+                return path;
             }
 
-            sb.Append("/");
+            return AutoGuessPath(fileName);
+        }
 
-            fileName = System.Text.RegularExpressions.Regex.Replace(fileName, " ", "%20");
-            sb.Append(fileName);
-
-            return sb.ToString();
+        private string AutoGuessPath(string fileName)
+        {
+            string path = FTP.CombineURL(Server, Path);
+            path = FTP.CombineURL(path, fileName);
+            if (!path.StartsWith("http://")) path = "http://" + path;
+            return path;
         }
 
         public override string ToString()

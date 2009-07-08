@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -34,6 +35,8 @@ namespace ZSS
         private const int BufferSize = 2048;
 
         private readonly FTPAccount Account;
+
+        private string FTPAddress { get { return string.Format("ftp://{0}:{1}", Account.Server, Account.Port); } }
 
         public FTP()
         {
@@ -47,27 +50,34 @@ namespace ZSS
 
         public void Upload(Stream stream, string remoteName)
         {
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + Account.Path + "/" + remoteName);
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-
-            request.Method = WebRequestMethods.Ftp.UploadFile;
-            request.ContentLength = stream.Length;
-            request.KeepAlive = false;
-            request.UseBinary = true;
-            request.UsePassive = !Account.IsActive;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
-
-            using (stream)
-            using (Stream requestStream = request.GetRequestStream())
+            try
             {
-                byte[] buffer = new byte[BufferSize];
-                int bytes = stream.Read(buffer, 0, BufferSize);
+                Uri uri = new Uri(CombineURL(FTPAddress, Account.Path, remoteName));
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
-                while (bytes > 0)
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.ContentLength = stream.Length;
+                request.KeepAlive = false;
+                request.UseBinary = true;
+                request.UsePassive = !Account.IsActive;
+                request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+
+                using (stream)
+                using (Stream requestStream = request.GetRequestStream())
                 {
-                    requestStream.Write(buffer, 0, bytes);
-                    bytes = stream.Read(buffer, 0, BufferSize);
+                    byte[] buffer = new byte[BufferSize];
+                    int bytes = stream.Read(buffer, 0, BufferSize);
+
+                    while (bytes > 0)
+                    {
+                        requestStream.Write(buffer, 0, bytes);
+                        bytes = stream.Read(buffer, 0, BufferSize);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -85,7 +95,7 @@ namespace ZSS
 
         public void DownloadFile(string fileName, string filePath)
         {
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + Account.Path + "/" + fileName);
+            Uri uri = new Uri(CombineURL(FTPAddress, Account.Path, fileName));
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -111,7 +121,7 @@ namespace ZSS
 
         public void DeleteFile(string fileName)
         {
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + "/" + fileName);
+            Uri uri = new Uri(CombineURL(FTPAddress, fileName));
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
@@ -122,7 +132,7 @@ namespace ZSS
 
         public void Rename(string fileName, string newFileName)
         {
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + "/" + fileName);
+            Uri uri = new Uri(CombineURL(FTPAddress, fileName));
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.Rename;
@@ -134,7 +144,7 @@ namespace ZSS
 
         public long GetFileSize(string fileName)
         {
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + "/" + fileName);
+            Uri uri = new Uri(CombineURL(FTPAddress, fileName));
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.GetFileSize;
@@ -150,7 +160,9 @@ namespace ZSS
         public string[] ListDirectory()
         {
             List<string> directories = new List<string>();
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + Account.Path + "/");
+            string url = CombineURL(FTPAddress, Account.Path);
+            if (!url.EndsWith("/")) url += "/";
+            Uri uri = new Uri(url);
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -172,7 +184,7 @@ namespace ZSS
 
         public void MakeDirectory(string dirName)
         {
-            Uri uri = new Uri("ftp://" + Account.Server + ":" + Account.Port + "/" + dirName + "/");
+            Uri uri = new Uri(CombineURL(FTPAddress, dirName));
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
 
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
@@ -180,6 +192,28 @@ namespace ZSS
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
             request.GetResponse();
+        }
+
+        public static string CombineURL(string url1, string url2)
+        {
+            if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
+            {
+                return "";
+            }
+            if (url1.EndsWith("/"))
+            {
+                url1 = url1.Substring(0, url1.Length - 1);
+            }
+            if (url2.StartsWith("/"))
+            {
+                url2 = url2.Remove(0, 1);
+            }
+            return url1 + "/" + url2;
+        }
+
+        public static string CombineURL(params string[] urls)
+        {
+            return urls.Aggregate((current, arg) => CombineURL(current, arg));
         }
     }
 }

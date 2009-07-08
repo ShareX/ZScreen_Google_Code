@@ -189,10 +189,8 @@ namespace ZSS
 
             foreach (char c in sb.ToString())
             {
-                if (char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_')
-                    temp.Append(c);
-                if (c == ' ')
-                    temp.Append('_');
+                if (char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_') temp.Append(c);
+                if (c == ' ') temp.Append('_');
             }
 
             return temp;
