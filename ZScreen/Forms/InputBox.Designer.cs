@@ -30,14 +30,14 @@
         {
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.txtAns = new System.Windows.Forms.TextBox();
+            this.txtInputText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(216, 49);
+            this.btnOK.Location = new System.Drawing.Point(208, 40);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(73, 23);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -45,28 +45,28 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(297, 49);
+            this.btnCancel.Location = new System.Drawing.Point(288, 40);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(72, 23);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // txtAns
+            // txtInputText
             // 
-            this.txtAns.Location = new System.Drawing.Point(12, 14);
-            this.txtAns.Name = "txtAns";
-            this.txtAns.Size = new System.Drawing.Size(360, 20);
-            this.txtAns.TabIndex = 2;
+            this.txtInputText.Location = new System.Drawing.Point(8, 8);
+            this.txtInputText.Name = "txtInputText";
+            this.txtInputText.Size = new System.Drawing.Size(352, 20);
+            this.txtInputText.TabIndex = 2;
             // 
             // InputBox
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(391, 89);
-            this.Controls.Add(this.txtAns);
+            this.ClientSize = new System.Drawing.Size(369, 73);
+            this.Controls.Add(this.txtInputText);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -87,6 +87,6 @@
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.TextBox txtAns;
+        private System.Windows.Forms.TextBox txtInputText;
     }
 }
