@@ -45,9 +45,10 @@ namespace ZSS
         private Pen crosshairPen = new Pen(XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor));
         private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
         private string strMouseUp = "Mouse Left Down: Create crop region" +
-            "\nMouse Right Down & Escape: Cancel Screenshot\nSpace: Capture Entire Screen\nTab: Toggle Crop Grid mode";
-        private string strMouseDown = "Mouse Left Up: Capture Screenshot" +
-            "\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle Crop Grid mode";
+            "\nMouse Right Down & Escape: Cancel screenshot\nSpace: Capture entire screen\nTab: Toggle crop grid mode";
+        private string strMouseDown = "Mouse Left Up: Capture screenshot" +
+            "\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle crop grid mode\n" +
+            "Arrow Keys: Re-position crop region (Hold shift to move faster)";
         private Queue windows = new Queue();
         private Timer timer = new Timer { Interval = 10 };
         private Timer windowCheck = new Timer { Interval = 250 };
