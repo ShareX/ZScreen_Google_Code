@@ -702,24 +702,11 @@ namespace ZSS
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            /* 
-             * Sometimes Settings.xml write delays cause a small pause when user press the close button
-             * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
-            */
-            if (e.CloseReason != CloseReason.WindowsShutDown)
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
             WriteSettings();
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 Hide();
-            }
-            else
-            {
-                FileSystem.AppendDebug("Closed " + Application.ProductName + "\n");
-                FileSystem.WriteDebugFile();
             }
         }
 
@@ -3438,7 +3425,7 @@ namespace ZSS
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.conf.AutoSaveSettings) new Thread(WriteSettings).Start();
+            if (Program.conf.AutoSaveSettings) WriteSettings();
         }
 
         private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
