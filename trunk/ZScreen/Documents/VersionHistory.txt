@@ -1,6 +1,6 @@
 Version 2.20 - 20090801
 
-2.20.06.2 Prevents csc.exe errors due to dynamic xml serialization while the computer is shutting down
+2.20.06.2 Prevented csc.exe errors due to dynamic xml serialization while the computer is shutting down
 2.20.06.1 Fixed a few more exceptions during FTP Upload
 2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86]
 2.20.05.0 FTP account settings now have the ability to auto create folders
