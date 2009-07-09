@@ -28,6 +28,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace ZSS
 {
@@ -206,25 +207,30 @@ namespace ZSS
             return null;
         }
 
+        private static Image DrawCursor(Image img)
+        {
+            MyCursor cursor = CaptureCursor();
+            if (cursor == null) cursor = new MyCursor();
+            Graphics g = Graphics.FromImage(img);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.DrawImage(cursor.Bitmap, cursor.Position);
+            return img;
+        }
+
         public static Image CaptureScreen(bool showCursor)
         {
             Image img = CaptureRectangle(GetDesktopWindow(), GraphicsMgr.GetScreenBounds());
-            if (showCursor)
-            {
-                MyCursor cursor = CaptureCursor();
-                Graphics g = Graphics.FromImage(img);
-                if (cursor != null)
-                {
-                    Rectangle rect = new Rectangle(cursor.Position, cursor.Cursor.Size);
-                    cursor.Cursor.Draw(g, rect);
-                }
-                else
-                {
-                    Rectangle rect = new Rectangle(new Point(Cursor.Position.X - Cursors.Default.HotSpot.X,
-                        Cursor.Position.Y - Cursors.Default.HotSpot.Y), Cursors.Default.Size);
-                    Cursors.Default.Draw(g, rect);
-                }
-            }
+            if (showCursor) DrawCursor(img);
+            return img;
+        }
+
+        public static Image GrabWindow(IntPtr handle, bool showCursor)
+        {
+            Rectangle windowRect = GetWindowRectangle(handle);
+            Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(img);
+            g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
+            if (showCursor) DrawCursor(img);
             return img;
         }
 
@@ -258,43 +264,24 @@ namespace ZSS
             return img;
         }
 
-        public static Image GrabWindow(IntPtr handle, bool showCursor)
-        {
-            Rectangle windowRect = GetWindowRectangle(handle);
-            Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
-            Graphics gfx = Graphics.FromImage(img);
-            gfx.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
-            if (showCursor)
-            {
-                MyCursor cursor = CaptureCursor();
-                Graphics g = Graphics.FromImage(img);
-                if (cursor != null)
-                {
-                    Rectangle rect = new Rectangle(new Point(cursor.Position.X - windowRect.X,
-                        cursor.Position.Y - windowRect.Y), cursor.Cursor.Size);
-                    cursor.Cursor.Draw(g, rect);
-                }
-                else
-                {
-                    Rectangle rect = new Rectangle(new Point(Cursor.Position.X - Cursors.Default.HotSpot.X - windowRect.X,
-                        Cursor.Position.Y - Cursors.Default.HotSpot.Y - windowRect.Y), Cursors.Default.Size);
-                    Cursors.Default.Draw(g, rect);
-                }
-            }
-            return img;
-        }
-
         public class MyCursor
         {
             public Cursor Cursor;
             public Point Position;
             public Bitmap Bitmap;
 
+            public MyCursor()
+            {
+                this.Cursor = Cursor.Current;
+                this.Position = new Point(Cursor.Position.X - this.Cursor.HotSpot.X, Cursor.Position.Y - this.Cursor.HotSpot.Y);
+                this.Bitmap = Icon.FromHandle(this.Cursor.Handle).ToBitmap();
+            }
+
             public MyCursor(Cursor cursor, Point position, Bitmap bitmap)
             {
-                Cursor = cursor;
-                Position = position;
-                Bitmap = bitmap;
+                this.Cursor = cursor;
+                this.Position = position;
+                this.Bitmap = bitmap;
             }
         }
 
