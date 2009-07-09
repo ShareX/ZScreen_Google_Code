@@ -447,8 +447,7 @@ namespace ZSS
             }
             if (e.KeyCode == Keys.Tab && !selectedWindowMode)
             {
-                Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
-                Program.conf.Save();
+                Program.conf.CropGridToggle = !Program.conf.CropGridToggle;             
                 forceCheck = true;
             }
         }
@@ -489,6 +488,7 @@ namespace ZSS
 
         private void Crop_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Program.conf.Save();
             DisposeImages();
         }
 
