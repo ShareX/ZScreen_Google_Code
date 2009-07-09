@@ -705,7 +705,7 @@ namespace ZSS
             /* 
              * Sometimes Settings.xml write delays cause a small pause when user press the close button
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
-            */            
+            */
             if (e.CloseReason != CloseReason.WindowsShutDown)
             {
                 this.WindowState = FormWindowState.Minimized;
