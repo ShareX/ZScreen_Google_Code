@@ -31,35 +31,40 @@ namespace ZSS
     [Serializable]
     public class FTPAccount
     {
+        [Category("FTP"), Description("In list will be visible like this: Name - Server:Port")]
         public string Name { get; set; }
+
+        [Category("FTP"), Description("Host")]
         public string Server { get; set; }
+
+        [Category("FTP"), Description("Port number"), DefaultValue(21)]
+        public int Port { get; set; }
+
+        [Category("FTP")]
         public string Username { get; set; }
 
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        private string mPath = "";
         [Category("FTP"), Description("FTP path: (ex: screenshots or /htdocs/screenshots)\nEmpty = Use main directory"), DefaultValue("")]
-        public string Path { get { return mPath; } set { mPath = value; } }
+        public string Path { get; set; }
 
-        private string mHttpPath = "";
         [Category("FTP"), Description("HTTP path: (ex: brandonz.net/screenshots or %/screenshots)\n" +
             "% = Server, Empty = Auto guess HTTP path (Server + FTP path)"), DefaultValue("")]
-        public string HttpPath { get { return mHttpPath; } set { mHttpPath = value; } }
+        public string HttpPath { get; set; }
 
-        private int mPort = 21;
-        [Category("FTP"), Description("Port number"), DefaultValue(21)]
-        public int Port { get { return mPort; } set { mPort = value; } }
-
-        private bool isActive = false;
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
-        public bool IsActive { get { return isActive; } set { isActive = value; } }
+        public bool IsActive { get; set; }
 
         [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button"), DefaultValue(true)]
         public bool AutoCreateFolder { get; set; }
 
         public FTPAccount()
         {
+            Port = 21;
+            Path = "";
+            HttpPath = "";
+            IsActive = false;
             AutoCreateFolder = true;
         }
 
