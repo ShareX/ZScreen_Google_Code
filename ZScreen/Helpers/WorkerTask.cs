@@ -239,15 +239,21 @@ namespace ZSS.Tasks
         {
             try
             {
-                Image.FromFile(LocalFilePath).Dispose();
-                IsImage = true;
+                if (File.Exists(LocalFilePath))
+                {
+                    Image.FromFile(LocalFilePath).Dispose();
+                    IsImage = true;
+                }
+                else
+                {
+                    IsImage = false;
+                }
             }
             catch
             {
                 IsImage = false;
             }
         }
-
 
         #region "Functions"
 
