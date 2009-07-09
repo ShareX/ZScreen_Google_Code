@@ -707,8 +707,10 @@ namespace ZSS
              * Noticing this is avoided by this.WindowState = FormWindowState.Minimized; 
             */
             this.WindowState = FormWindowState.Minimized;
-            WriteSettings();
-
+            if (e.CloseReason != CloseReason.WindowsShutDown)
+            {
+                WriteSettings();
+            }
             if (!mClose && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
