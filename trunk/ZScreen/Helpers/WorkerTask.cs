@@ -264,7 +264,7 @@ namespace ZSS.Tasks
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.GrabWindow(User32.GetWindowHandle(), Program.conf.ShowCursor));
+                this.SetImage(User32.CaptureWindow(User32.GetWindowHandle(), Program.conf.ShowCursor));
             }
         }
 
