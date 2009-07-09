@@ -85,22 +85,16 @@ namespace ZSS
         /// <returns></returns>
         public static string SetClipboardText()
         {
-            try
+            if (ScreenshotsHistory != null)
             {
                 string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
 
                 if (!string.IsNullOrEmpty(url))
                 {
-                    Clipboard.Clear();
                     Clipboard.SetText(url);
                 }
 
                 return url;
-
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
             }
 
             return "";

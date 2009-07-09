@@ -188,20 +188,16 @@ namespace ZSS
         public static MyCursor CaptureCursor()
         {
             CursorInfo ci = new CursorInfo();
-            IconInfo icInfo;
             ci.cbSize = Marshal.SizeOf(ci);
-            if (GetCursorInfo(out ci))
+            if (GetCursorInfo(out ci) && ci.flags == CURSOR_SHOWING)
             {
-                if (ci.flags == CURSOR_SHOWING)
+                IntPtr hicon = CopyIcon(ci.hCursor);
+                IconInfo icInfo;
+                if (GetIconInfo(hicon, out icInfo))
                 {
-                    IntPtr hicon = CopyIcon(ci.hCursor);
-                    if (GetIconInfo(hicon, out icInfo))
-                    {
-                        Point position = new Point(ci.ptScreenPos.X - icInfo.xHotspot, ci.ptScreenPos.Y - icInfo.yHotspot);
-                        Icon ic = Icon.FromHandle(hicon);
-                        Bitmap bmp = ic.ToBitmap();
-                        return new MyCursor(new Cursor(ci.hCursor), position, bmp);
-                    }
+                    Point position = new Point(ci.ptScreenPos.X - icInfo.xHotspot, ci.ptScreenPos.Y - icInfo.yHotspot);
+                    Bitmap bmp = Icon.FromHandle(hicon).ToBitmap();
+                    return new MyCursor(new Cursor(ci.hCursor), position, bmp);
                 }
             }
             return null;
@@ -224,14 +220,12 @@ namespace ZSS
             return img;
         }
 
-        public static Image GrabWindow(IntPtr handle, bool showCursor)
+        public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
-            Rectangle windowRect = GetWindowRectangle(handle);
-            Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(img);
-            g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
+            Image img = CaptureScreen(showCursor);
             if (showCursor) DrawCursor(img);
-            return img;
+            Rectangle windowRect = GetWindowRectangle(handle);
+            return GraphicsMgr.CropImage(img, windowRect);
         }
 
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
