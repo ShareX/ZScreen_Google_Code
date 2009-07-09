@@ -38,7 +38,7 @@ namespace ZSS
 {
     public static class FileSystem
     {
-        public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff, ImageFormat.Emf, ImageFormat.Wmf, ImageFormat.Icon };
+        public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff, ImageFormat.Icon };
 
         private static StringBuilder mDebug = new StringBuilder();
 
