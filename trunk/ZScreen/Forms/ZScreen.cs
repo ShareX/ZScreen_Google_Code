@@ -580,7 +580,7 @@ namespace ZSS
             cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
-            LoadHistoryItems();
+             LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
@@ -2805,7 +2805,7 @@ namespace ZSS
         private void cbHistoryListFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
-            LoadHistoryItems();
+            // LoadHistoryItems();
         }
 
         private void cbShowHistoryTooltip_CheckedChanged(object sender, EventArgs e)

@@ -242,7 +242,6 @@ namespace ZSS
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
             if (showCursor) DrawCursor(img);
             return img;
-
         }
 
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
