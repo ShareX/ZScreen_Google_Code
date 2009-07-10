@@ -34,6 +34,8 @@ namespace ZSS
 {
     public static class User32
     {
+        #region Variables
+
         public const int SM_CXSCREEN = 0;
         public const int SM_CYSCREEN = 1;
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -59,11 +61,50 @@ namespace ZSS
             public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor. 
         }
 
+        #endregion
+
+        #region Keyboard hook
+
+        public const int mWH_KEYBOARD_LL = 13;
+
+        public delegate IntPtr mLowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll")]
         public static extern bool SetActiveWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        public static mLowLevelKeyboardProc m_Proc;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(int idHook,
+            mLowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        public static IntPtr setHook()
+        {
+            using (Process currentProc = Process.GetCurrentProcess())
+            using (ProcessModule currentMod = currentProc.MainModule)
+            {
+                if (currentMod != null)
+                {
+                    return SetWindowsHookEx(mWH_KEYBOARD_LL, m_Proc, GetModuleHandle(currentMod.ModuleName), 0);
+                }
+                return IntPtr.Zero;
+            }
+        }
+
+        #endregion
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetDesktopWindow();
@@ -116,12 +157,6 @@ namespace ZSS
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
-
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
         public static string GetWindowLabel()
@@ -152,65 +187,23 @@ namespace ZSS
 
         public static MyCursor CaptureCursor()
         {
-            CursorInfo cursorInfo = new CursorInfo();
-            cursorInfo.cbSize = Marshal.SizeOf(cursorInfo);
-            if (GetCursorInfo(out cursorInfo) && cursorInfo.flags == CURSOR_SHOWING)
+            CursorInfo ci = new CursorInfo();
+            IconInfo icInfo;
+            ci.cbSize = Marshal.SizeOf(ci);
+            if (GetCursorInfo(out ci))
             {
-                IntPtr hicon = CopyIcon(cursorInfo.hCursor);
-                if (hicon != IntPtr.Zero)
+                if (ci.flags == CURSOR_SHOWING)
                 {
-                    IconInfo iconInfo;
-                    if (GetIconInfo(hicon, out iconInfo))
+                    IntPtr hicon = CopyIcon(ci.hCursor);
+                    if (GetIconInfo(hicon, out icInfo))
                     {
-                        Point position = new Point(cursorInfo.ptScreenPos.X - iconInfo.xHotspot, cursorInfo.ptScreenPos.Y - iconInfo.yHotspot);
-
-                        using (Bitmap maskBitmap = Bitmap.FromHbitmap(iconInfo.hbmMask))
-                        {
-                            Bitmap resultBitmap;
-
-                            // Is this a monochrome cursor?
-                            if (maskBitmap.Height == maskBitmap.Width * 2)
-                            {
-                                resultBitmap = new Bitmap(maskBitmap.Width, maskBitmap.Width);
-
-                                Graphics desktopGraphics = Graphics.FromHwnd(GetDesktopWindow());
-                                IntPtr desktopHdc = desktopGraphics.GetHdc();
-
-                                IntPtr maskHdc = GDI32.CreateCompatibleDC(desktopHdc);
-                                IntPtr oldPtr = GDI32.SelectObject(maskHdc, maskBitmap.GetHbitmap());
-
-                                using (Graphics resultGraphics = Graphics.FromImage(resultBitmap))
-                                {
-                                    IntPtr resultHdc = resultGraphics.GetHdc();
-
-                                    // These two operation will result in a black cursor over a white background.
-                                    // Later in the code, a call to MakeTransparent() will get rid of the white background.
-                                    GDI32.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, (uint)GDI32.TernaryRasterOperations.SRCCOPY);
-                                    GDI32.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, (uint)GDI32.TernaryRasterOperations.SRCINVERT);
-
-                                    resultGraphics.ReleaseHdc(resultHdc);
-                                }
-
-                                IntPtr newPtr = GDI32.SelectObject(maskHdc, oldPtr);
-                                GDI32.DeleteDC(newPtr);
-                                GDI32.DeleteDC(maskHdc);
-                                desktopGraphics.ReleaseHdc(desktopHdc);
-
-                                // Remove the white background from the BitBlt calls,
-                                // resulting in a black cursor over a transparent background.
-                                resultBitmap.MakeTransparent(Color.White);
-                            }
-                            else
-                            {
-                                resultBitmap = Icon.FromHandle(hicon).ToBitmap();
-                            }
-
-                            return new MyCursor(new Cursor(cursorInfo.hCursor), position, resultBitmap);
-                        }
+                        Point position = new Point(ci.ptScreenPos.X - icInfo.xHotspot, ci.ptScreenPos.Y - icInfo.yHotspot);
+                        Icon ic = Icon.FromHandle(hicon);
+                        Bitmap bmp = ic.ToBitmap();
+                        return new MyCursor(new Cursor(ci.hCursor), position, bmp);
                     }
                 }
             }
-
             return null;
         }
 
@@ -233,9 +226,12 @@ namespace ZSS
 
         public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
-            Image img = CaptureScreen(showCursor);
             Rectangle windowRect = GetWindowRectangle(handle);
-            return GraphicsMgr.CropImage(img, windowRect);
+            Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(img);
+            g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
+            if (showCursor) DrawCursor(img);
+            return img;
         }
 
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
@@ -255,7 +251,7 @@ namespace ZSS
             // select the bitmap object
             IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
             // bitblt over
-            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, (uint)GDI32.TernaryRasterOperations.SRCCOPY);
+            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, GDI32.SRCCOPY);
             // restore selection
             GDI32.SelectObject(hdcDest, hOld);
             // clean up
@@ -304,6 +300,12 @@ namespace ZSS
             DWMWA_DISALLOW_PEEK,
             DWMWA_LAST
         }
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
 
         public static Rectangle DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle)
         {
