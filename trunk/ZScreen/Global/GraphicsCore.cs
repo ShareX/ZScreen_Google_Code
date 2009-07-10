@@ -71,34 +71,8 @@ namespace ZSS
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        public static mLowLevelKeyboardProc m_Proc;
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr SetWindowsHookEx(int idHook,
-            mLowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        public static IntPtr setHook()
-        {
-            using (Process currentProc = Process.GetCurrentProcess())
-            using (ProcessModule currentMod = currentProc.MainModule)
-            {
-                if (currentMod != null)
-                {
-                    return SetWindowsHookEx(mWH_KEYBOARD_LL, m_Proc, GetModuleHandle(currentMod.ModuleName), 0);
-                }
-                return IntPtr.Zero;
-            }
-        }
 
         #endregion
 
@@ -325,6 +299,12 @@ namespace ZSS
             }
         }
 
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
+
         public enum DWMWINDOWATTRIBUTE
         {
             DWMWA_NCRENDERING_ENABLED = 1,
@@ -340,12 +320,6 @@ namespace ZSS
             DWMWA_DISALLOW_PEEK,
             DWMWA_LAST
         }
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
 
         public static Rectangle DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle)
         {
