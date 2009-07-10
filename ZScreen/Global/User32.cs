@@ -234,7 +234,6 @@ namespace ZSS
         public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
             Image img = CaptureScreen(showCursor);
-            if (showCursor) DrawCursor(img);
             Rectangle windowRect = GetWindowRectangle(handle);
             return GraphicsMgr.CropImage(img, windowRect);
         }
