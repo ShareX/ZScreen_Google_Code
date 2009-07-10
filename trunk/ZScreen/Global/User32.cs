@@ -251,7 +251,7 @@ namespace ZSS
             // select the bitmap object
             IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
             // bitblt over
-            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, GDI32.SRCCOPY);
+            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, ZSS.GDI32.TernaryRasterOperations.SRCCOPY);
             // restore selection
             GDI32.SelectObject(hdcDest, hOld);
             // clean up
