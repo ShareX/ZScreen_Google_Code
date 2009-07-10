@@ -34,8 +34,6 @@ namespace ZSS
 {
     public static class User32
     {
-        #region Variables
-
         public const int SM_CXSCREEN = 0;
         public const int SM_CYSCREEN = 1;
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -60,8 +58,6 @@ namespace ZSS
             public IntPtr hCursor;      // Handle to the cursor. 
             public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor. 
         }
-
-        #endregion
 
         #region Keyboard hook
 
@@ -187,25 +183,69 @@ namespace ZSS
 
         public static MyCursor CaptureCursor()
         {
-            CursorInfo ci = new CursorInfo();
-            IconInfo icInfo;
-            ci.cbSize = Marshal.SizeOf(ci);
-            if (GetCursorInfo(out ci))
+            CursorInfo cursorInfo = new CursorInfo();
+            cursorInfo.cbSize = Marshal.SizeOf(cursorInfo);
+            if (GetCursorInfo(out cursorInfo) && cursorInfo.flags == CURSOR_SHOWING)
             {
-                if (ci.flags == CURSOR_SHOWING)
+                IntPtr hicon = CopyIcon(cursorInfo.hCursor);
+                if (hicon != IntPtr.Zero)
                 {
-                    IntPtr hicon = CopyIcon(ci.hCursor);
-                    if (GetIconInfo(hicon, out icInfo))
+                    IconInfo iconInfo;
+                    if (GetIconInfo(hicon, out iconInfo))
                     {
-                        Point position = new Point(ci.ptScreenPos.X - icInfo.xHotspot, ci.ptScreenPos.Y - icInfo.yHotspot);
-                        Icon ic = Icon.FromHandle(hicon);
-                        Bitmap bmp = ic.ToBitmap();
-                        return new MyCursor(new Cursor(ci.hCursor), position, bmp);
+                        Point position = new Point(cursorInfo.ptScreenPos.X - iconInfo.xHotspot, cursorInfo.ptScreenPos.Y - iconInfo.yHotspot);
+
+                        using (Bitmap maskBitmap = Bitmap.FromHbitmap(iconInfo.hbmMask))
+                        {
+                            Bitmap resultBitmap;
+
+                            // Is this a monochrome cursor?
+                            if (maskBitmap.Height == maskBitmap.Width * 2)
+                            {
+                                resultBitmap = new Bitmap(maskBitmap.Width, maskBitmap.Width);
+
+                                Graphics desktopGraphics = Graphics.FromHwnd(GetDesktopWindow());
+                                IntPtr desktopHdc = desktopGraphics.GetHdc();
+
+                                IntPtr maskHdc = GDI32.CreateCompatibleDC(desktopHdc);
+                                IntPtr oldPtr = GDI32.SelectObject(maskHdc, maskBitmap.GetHbitmap());
+
+                                using (Graphics resultGraphics = Graphics.FromImage(resultBitmap))
+                                {
+                                    IntPtr resultHdc = resultGraphics.GetHdc();
+
+                                    // These two operation will result in a black cursor over a white background.
+                                    // Later in the code, a call to MakeTransparent() will get rid of the white background.
+                                    GDI32.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, GDI32.TernaryRasterOperations.SRCCOPY);
+                                    GDI32.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, GDI32.TernaryRasterOperations.SRCINVERT);
+
+                                    resultGraphics.ReleaseHdc(resultHdc);
+                                }
+
+                                IntPtr newPtr = GDI32.SelectObject(maskHdc, oldPtr);
+                                GDI32.DeleteDC(newPtr);
+                                GDI32.DeleteDC(maskHdc);
+                                desktopGraphics.ReleaseHdc(desktopHdc);
+
+                                // Remove the white background from the BitBlt calls,
+                                // resulting in a black cursor over a transparent background.
+                                resultBitmap.MakeTransparent(Color.White);
+                            }
+                            else
+                            {
+                                resultBitmap = Icon.FromHandle(hicon).ToBitmap();
+                            }
+
+
+                            return new MyCursor(new Cursor(cursorInfo.hCursor), position, resultBitmap);
+                        }
                     }
                 }
             }
+
             return null;
         }
+
 
         private static Image DrawCursor(Image img)
         {
