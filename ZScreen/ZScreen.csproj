@@ -197,7 +197,7 @@
     <Compile Include="Global\FileSystem.cs" />
     <Compile Include="Global\GDI32.cs" />
     <Compile Include="Global\Structures.cs" />
-    <Compile Include="Global\User32.cs" />
+    <Compile Include="Global\GraphicsCore.cs" />
     <Compile Include="Helpers\CacheCleanerTask.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\RemoteViewerTask.cs" />
