@@ -59,22 +59,11 @@ namespace ZSS
             public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor. 
         }
 
-        #region Keyboard hook
-
-        public const int mWH_KEYBOARD_LL = 13;
-
-        public delegate IntPtr mLowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
         [DllImport("user32.dll")]
         public static extern bool SetActiveWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        #endregion
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetDesktopWindow();
@@ -126,6 +115,12 @@ namespace ZSS
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
@@ -210,7 +205,6 @@ namespace ZSS
                                 resultBitmap = Icon.FromHandle(hicon).ToBitmap();
                             }
 
-
                             return new MyCursor(new Cursor(cursorInfo.hCursor), position, resultBitmap);
                         }
                     }
@@ -219,7 +213,6 @@ namespace ZSS
 
             return null;
         }
-
 
         private static Image DrawCursor(Image img)
         {
@@ -240,12 +233,16 @@ namespace ZSS
 
         public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
+            //Image img = CaptureScreen(showCursor);
+            //Rectangle windowRect = GetWindowRectangle(handle);
+            //return GraphicsMgr.CropImage(img, windowRect);
             Rectangle windowRect = GetWindowRectangle(handle);
             Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(img);
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
             if (showCursor) DrawCursor(img);
             return img;
+
         }
 
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
@@ -265,7 +262,7 @@ namespace ZSS
             // select the bitmap object
             IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
             // bitblt over
-            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, ZSS.GDI32.TernaryRasterOperations.SRCCOPY);
+            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, GDI32.TernaryRasterOperations.SRCCOPY);
             // restore selection
             GDI32.SelectObject(hdcDest, hOld);
             // clean up
@@ -298,12 +295,6 @@ namespace ZSS
                 this.Bitmap = bitmap;
             }
         }
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
 
         public enum DWMWINDOWATTRIBUTE
         {
