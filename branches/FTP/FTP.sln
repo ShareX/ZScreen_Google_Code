@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTP", "FTP\FTP.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPUploaderLib", "..\C# Projects\ZScreen\Google Code ZScreen\trunk\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj", "{6856E9A8-E067-49EE-8F58-DA3985295F53}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
