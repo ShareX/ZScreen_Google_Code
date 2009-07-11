@@ -69,6 +69,7 @@ namespace ZSS
         }
 
         public FTPAccount(string name)
+            : this()
         {
             this.Name = name;
         }
