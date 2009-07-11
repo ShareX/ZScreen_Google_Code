@@ -27,6 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ZSS
 {
@@ -34,7 +35,7 @@ namespace ZSS
     {
         private const int BufferSize = 2048;
 
-        private readonly FTPAccount Account;
+        public FTPAccount Account;
 
         private string FTPAddress { get { return string.Format("ftp://{0}:{1}", Account.Server, Account.Port); } }
 
@@ -43,7 +44,7 @@ namespace ZSS
             Account = new FTPAccount();
         }
 
-        public FTP(ref FTPAccount acc)
+        public FTP(FTPAccount acc)
         {
             Account = acc;
         }
@@ -52,15 +53,14 @@ namespace ZSS
         {
             try
             {
-                Uri uri = new Uri(CombineURL(FTPAddress, Account.Path, remoteName));
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+                string url = CombineURL(FTPAddress, Account.Path, remoteName);
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.UploadFile;
-                request.ContentLength = stream.Length;
-                request.KeepAlive = false;
-                request.UseBinary = true;
-                request.UsePassive = !Account.IsActive;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.KeepAlive = false;
+                request.UsePassive = !Account.IsActive;
 
                 using (stream)
                 using (Stream requestStream = request.GetRequestStream())
@@ -93,20 +93,20 @@ namespace ZSS
             Upload(stream, remoteName);
         }
 
-        public void DownloadFile(string fileName, string filePath)
+        public void DownloadFile(string fileName, string savePath)
         {
             try
             {
-                Uri uri = new Uri(CombineURL(FTPAddress, Account.Path, fileName));
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+                string url = CombineURL(FTPAddress, fileName);
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.DownloadFile;
-                request.KeepAlive = false;
-                request.UseBinary = true;
-                request.UsePassive = !Account.IsActive;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.KeepAlive = false;
+                request.UsePassive = !Account.IsActive;
 
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                using (FileStream fileStream = new FileStream(savePath, FileMode.Create))
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                 using (Stream stream = response.GetResponseStream())
                 {
@@ -128,8 +128,9 @@ namespace ZSS
 
         public void DeleteFile(string fileName)
         {
-            Uri uri = new Uri(CombineURL(FTPAddress, fileName));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+            string url = CombineURL(FTPAddress, fileName);
+
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
@@ -139,8 +140,9 @@ namespace ZSS
 
         public void Rename(string fileName, string newFileName)
         {
-            Uri uri = new Uri(CombineURL(FTPAddress, fileName));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+            string url = CombineURL(FTPAddress, fileName);
+
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.Rename;
             request.RenameTo = newFileName;
@@ -151,11 +153,11 @@ namespace ZSS
 
         public long GetFileSize(string fileName)
         {
-            Uri uri = new Uri(CombineURL(FTPAddress, fileName));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+            string url = CombineURL(FTPAddress, fileName);
+
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.GetFileSize;
-            request.UseBinary = true;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
@@ -164,30 +166,62 @@ namespace ZSS
             }
         }
 
-        public string[] ListDirectory()
+        public string[] ListDirectory(string url)
         {
-            List<string> directories = new List<string>();
-            string url = CombineURL(FTPAddress, Account.Path);
-            if (!url.EndsWith("/")) url += "/";
-            Uri uri = new Uri(url);
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+            List<string> result = new List<string>();
 
-            request.KeepAlive = false;
-            request.UseBinary = true;
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
+
             request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.UsePassive = !Account.IsActive;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.KeepAlive = false;
+            request.UsePassive = !Account.IsActive;
 
             using (WebResponse response = request.GetResponse())
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 while (!reader.EndOfStream)
                 {
-                    directories.Add(reader.ReadLine());
+                    result.Add(reader.ReadLine());
                 }
 
-                return directories.ToArray();
+                return result.ToArray();
             }
+        }
+
+        public string[] ListDirectory()
+        {
+            string url = CombineURL(FTPAddress, Account.Path);
+            return ListDirectory(url);
+        }
+
+        public FTPLineResult[] ListDirectoryDetails(string url)
+        {
+            List<FTPLineResult> result = new List<FTPLineResult>();
+
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
+
+            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.KeepAlive = false;
+            request.UsePassive = !Account.IsActive;
+
+            using (WebResponse response = request.GetResponse())
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                while (!reader.EndOfStream)
+                {
+                    result.Add(FTPLineParser.Parse(reader.ReadLine()));
+                }
+
+                return result.ToArray();
+            }
+        }
+
+        public FTPLineResult[] ListDirectoryDetails()
+        {
+            string url = CombineURL(FTPAddress, Account.Path);
+            return ListDirectoryDetails(url);
         }
 
         public void MakeMultiDirectory(string dirName)
@@ -208,11 +242,11 @@ namespace ZSS
         {
             try
             {
-                Uri uri = new Uri(CombineURL(FTPAddress, dirName));
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+                string url = CombineURL(FTPAddress, dirName);
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
-                request.UseBinary = true;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
                 request.GetResponse();
@@ -254,6 +288,87 @@ namespace ZSS
         public static string CombineURL(params string[] urls)
         {
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
+        }
+
+        public static class FTPLineParser
+        {
+            private static Regex unixStyle = new Regex(@"^(?<Permissions>(?<Directory>[-dl])(?<OwnerPerm>[-r][-w][-x])(?<GroupPerm>[-r][-w][-x])(?<EveryonePerm>[-r][-w][-x]))\s+(?<FileType>\d)\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Size>\d+)\s+(?<Month>\w+)\s+(?<Day>\d{1,2})\s+(?<Year>(?<Hour>\d{1,2}):*(?<Minutes>\d{1,2}))\s+(?<Name>.*)$");
+            private static Regex winStyle = new Regex(@"^(?<Month>\d{1,2})-(?<Day>\d{1,2})-(?<Year>\d{1,2})\s+(?<Hour>\d{1,2}):(?<Minutes>\d{1,2})(?<ampm>am|pm)\s+(?<Dir>[<]dir[>])?\s+(?<Size>\d+)?\s+(?<Name>.*)$");
+
+            public static FTPLineResult Parse(string line)
+            {
+                Match match = unixStyle.Match(line);
+                if (match.Success)
+                {
+                    return ParseMatch(match.Groups, ListStyle.Unix);
+                }
+
+                match = winStyle.Match(line);
+                if (match.Success)
+                {
+                    return ParseMatch(match.Groups, ListStyle.Windows);
+                }
+
+                throw new Exception("Invalid line format");
+            }
+
+            private static FTPLineResult ParseMatch(GroupCollection matchGroups, ListStyle style)
+            {
+                FTPLineResult result = new FTPLineResult();
+
+                result.Style = style;
+                string dirMatch = style == ListStyle.Unix ? "d" : "<dir>";
+                result.IsDirectory = matchGroups["Directory"].Value.Equals(dirMatch, StringComparison.InvariantCultureIgnoreCase);
+                result.Permissions = matchGroups["Permissions"].Value;
+                result.Name = matchGroups["Name"].Value;
+                if (!result.IsDirectory) result.SetSize(matchGroups["Size"].Value);
+                result.Owner = matchGroups["Owner"].Value;
+                result.Group = matchGroups["Group"].Value;
+                result.SetDateTime(matchGroups["Year"].Value, matchGroups["Month"].Value, matchGroups["Day"].Value);
+
+                return result;
+            }
+        }
+
+        public enum ListStyle
+        {
+            Unix,
+            Windows
+        }
+
+        public class FTPLineResult
+        {
+            public ListStyle Style;
+            public string Name;
+            public string Permissions;
+            public DateTime DateTime;
+            public bool TimeInfo;
+            public bool IsDirectory;
+            public long Size;
+            public string SizeString;
+            public string Owner;
+            public string Group;
+
+            public void SetSize(string size)
+            {
+                this.Size = long.Parse(size);
+                this.SizeString = this.Size.ToString("N0");
+            }
+
+            public void SetDateTime(string year, string month, string day)
+            {
+                string time = "";
+
+                if (year.Contains(':'))
+                {
+                    time = year;
+                    year = DateTime.Now.Year.ToString();
+                    this.TimeInfo = true;
+                }
+
+                this.DateTime = DateTime.Parse(string.Format("{0}/{1}/{2} {3}", year, month, day, time));
+                this.DateTime = this.DateTime.ToLocalTime();
+            }
         }
     }
 }
