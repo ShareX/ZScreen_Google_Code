@@ -20,22 +20,40 @@ namespace FTPTest
         public TestForm()
         {
             InitializeComponent();
+            lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
-            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) || string.IsNullOrEmpty(Settings.Default.Password))
+            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
+                string.IsNullOrEmpty(Settings.Default.Password))
             {
-                LoginDialog dlg = new LoginDialog();
-                dlg.ShowDialog();
+                new LoginDialog().ShowDialog();
             }
 
-            FTPAccount FTPAcc = new FTPAccount("FTP Test") { Server = Settings.Default.Server, Username = Settings.Default.UserName, Password = Settings.Default.Password };
+            FTPAccount FTPAcc = new FTPAccount("FTP Test")
+            {
+                Server = Settings.Default.Server,
+                Username = Settings.Default.UserName,
+                Password = Settings.Default.Password
+            };
+
             FTPClient = new FTP(FTPAcc);
+
             LoadDirectory("");
+        }
+
+        private void lvFTPList_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel)
+            {
+                FTP.FTPLineResult file = (FTP.FTPLineResult)lvFTPList.SelectedItems[0].Tag;
+                FTPClient.Rename(file.Name, e.DisplayText);
+            }
         }
 
         private void LoadDirectory(string path)
         {
             currentDirectory = path;
             FTPClient.Account.Path = currentDirectory;
+
             FTP.FTPLineResult[] list = FTPClient.ListDirectoryDetails();
             list = list.OrderBy(x => !x.IsDirectory).ThenBy(x => x.Name).ToArray();
             //list = (from x in list orderby !x.IsDirectory, x.Name select x).ToArray();
@@ -108,6 +126,28 @@ namespace FTPTest
                 {
                     //FTPClient.DownloadFile(path, "mycomputer");
                 }
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0)
+            {
+                lvFTPList.StartEditing(txtRename, lvFTPList.SelectedItems[0], 0);
+                int offset = 23;
+                txtRename.Left += offset;
+                txtRename.Width -= offset;
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0)
+            {
+                ListViewItem lvi = lvFTPList.SelectedItems[0];
+                FTP.FTPLineResult file = (FTP.FTPLineResult)lvi.Tag;
+                FTPClient.DeleteFile(file.Name);
+                lvFTPList.Items.Remove(lvi);
             }
         }
     }
