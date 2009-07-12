@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ZSS;
 using IconHelper;
 using FTPTest.Properties;
+using System.IO;
 
 namespace FTPTest
 {
@@ -36,33 +37,28 @@ namespace FTPTest
             };
 
             FTPClient = new FTP(FTPAcc);
+            FTPClient.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
 
-            LoadDirectory("");
+            LoadDirectory(FTPClient.FTPAddress);
         }
 
-        private void lvFTPList_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e)
-        {
-            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel)
-            {
-                FTP.FTPLineResult file = (FTP.FTPLineResult)lvFTPList.SelectedItems[0].Tag;
-                FTPClient.Rename(file.Name, e.DisplayText);
-                file.Name = e.DisplayText;
-            }
-        }
+        #region Methods
 
         private void LoadDirectory(string path)
         {
             currentDirectory = path;
             FTPClient.Account.Path = currentDirectory;
+            btnNavigateBack.Enabled = currentDirectory.Contains('/');
+            txtCurrentDirectory.Text = " " + currentDirectory;
 
-            FTP.FTPLineResult[] list = FTPClient.ListDirectoryDetails();
+            FTPLineResult[] list = FTPClient.ListDirectoryDetails(currentDirectory);
             list = list.OrderBy(x => !x.IsDirectory).ThenBy(x => x.Name).ToArray();
             //list = (from x in list orderby !x.IsDirectory, x.Name select x).ToArray();
 
             lvFTPList.Items.Clear();
             lvFTPList.SmallImageList = new ImageList { ColorDepth = ColorDepth.Depth32Bit };
 
-            foreach (FTP.FTPLineResult file in list)
+            foreach (FTPLineResult file in list)
             {
                 ListViewItem lvi = new ListViewItem(file.Name);
                 lvi.SubItems.Add(file.SizeString);
@@ -113,24 +109,33 @@ namespace FTPTest
             }
         }
 
-        private void lvFTPList_DoubleClick(object sender, EventArgs e)
+        private void FTPDownload(bool openDirectory)
         {
             if (lvFTPList.SelectedItems.Count > 0)
             {
-                FTP.FTPLineResult file = (FTP.FTPLineResult)lvFTPList.SelectedItems[0].Tag;
-                string path = FTP.CombineURL(currentDirectory, file.Name);
+                FTPLineResult file = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
+                string path = FTPHelpers.CombineURL(currentDirectory, file.Name);
                 if (file.IsDirectory)
                 {
-                    LoadDirectory(path);
+                    if (openDirectory)
+                    {
+                        LoadDirectory(path);
+                    }
                 }
-                else
+                else if (!string.IsNullOrEmpty(file.Name))
                 {
-                    //FTPClient.DownloadFile(path, "mycomputer");
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.FileName = file.Name;
+                    sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        FTPClient.DownloadFile(path, sfd.FileName);
+                    }
                 }
             }
         }
 
-        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FTPRename()
         {
             if (lvFTPList.SelectedItems.Count > 0)
             {
@@ -141,15 +146,81 @@ namespace FTPTest
             }
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void lvFTPList_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel)
+            {
+                FTPLineResult file = (FTPLineResult)lvFTPList.SelectedItems[0].Tag;
+                if (file.Name != e.DisplayText)
+                {
+                    string path = FTPHelpers.CombineURL(currentDirectory, file.Name);
+                    FTPClient.Rename(path, e.DisplayText);
+                    file.Name = e.DisplayText;
+                }
+            }
+        }
+
+        private void FTPDelete()
         {
             if (lvFTPList.SelectedItems.Count > 0)
             {
                 ListViewItem lvi = lvFTPList.SelectedItems[0];
-                FTP.FTPLineResult file = (FTP.FTPLineResult)lvi.Tag;
-                FTPClient.DeleteFile(file.Name);
-                lvFTPList.Items.Remove(lvi);
+                FTPLineResult file = lvi.Tag as FTPLineResult;
+                if (file != null && !string.IsNullOrEmpty(file.Name))
+                {
+                    string path = FTPHelpers.CombineURL(currentDirectory, file.Name);
+                    if (file.IsDirectory)
+                    {
+                        FTPClient.RemoveDirectoryFull(path);
+                    }
+                    else
+                    {
+                        FTPClient.DeleteFile(path);
+                    }
+                    lvFTPList.Items.Remove(lvi);
+                }
             }
         }
+
+        #endregion
+
+        #region Form events
+
+        private void lvFTPList_DoubleClick(object sender, EventArgs e)
+        {
+            FTPDownload(true);
+        }
+
+        private void downloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FTPDownload(false);
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FTPRename();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FTPDelete();
+        }
+
+        private void btnNavigateBack_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(currentDirectory))
+            {
+                if (currentDirectory.Contains('/'))
+                {
+                    LoadDirectory(currentDirectory.Substring(0, currentDirectory.LastIndexOf('/')));
+                }
+                else
+                {
+                    LoadDirectory("");
+                }
+            }
+        }
+
+        #endregion
     }
 }
