@@ -212,7 +212,7 @@ namespace ZSS
                 {
                     foreach (string str in lbFiles.SelectedItems)
                     {
-                        mFTP.DownloadFile(str, dir + "\\" + str);
+                        mFTP.DownloadFile(str, dir + "\\" + Path.GetFileName(str));
                     }
                 }
                 catch
@@ -293,15 +293,19 @@ namespace ZSS
         private void sBwViewFile(string file)
         {
             string localfile = FileSystem.GetTempFilePath(file);
-            if (!System.IO.File.Exists(localfile))
+            if (!File.Exists(localfile))
             {
                 bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.FETCHING_FILE, file);
 
                 try
                 {
                     //mFTP.ChangeDir(mAcc.Path);
+                    string directory = Path.GetDirectoryName(localfile);
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
                     mFTP.DownloadFile(file, localfile);
-
                 }
                 catch (System.Exception ex)
                 {
