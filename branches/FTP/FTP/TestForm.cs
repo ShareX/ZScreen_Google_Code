@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ZSS;
 using IconHelper;
+using FTPTest.Properties;
 
 namespace FTPTest
 {
@@ -20,10 +21,18 @@ namespace FTPTest
         {
             InitializeComponent();
 
-            FTPAccount FTPAcc = new FTPAccount("FTP Test") { Server = "", Username = "", Password = "" };
-            FTPClient = new FTP(FTPAcc);
+            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) || string.IsNullOrEmpty(Settings.Default.Password))
+            {
+                LoginDialog dlg = new LoginDialog();
+                dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    FTPAccount FTPAcc = new FTPAccount("FTP Test") { Server = dlg.txtServer.Text, Username = dlg.txtUserName.Text, Password = dlg.txtPassword.Text };
+                    FTPClient = new FTP(FTPAcc);
 
-            LoadDirectory("");
+                    LoadDirectory("");
+                }
+            }
         }
 
         private void LoadDirectory(string path)
