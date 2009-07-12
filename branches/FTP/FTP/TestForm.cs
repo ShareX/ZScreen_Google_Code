@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ZSS;
-using IconHelper;
 using FTPTest.Properties;
-using System.IO;
+using IconHelper;
+using ZSS;
 
 namespace FTPTest
 {
@@ -23,7 +18,7 @@ namespace FTPTest
             InitializeComponent();
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
-            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
+            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) || 
                 string.IsNullOrEmpty(Settings.Default.Password))
             {
                 new LoginDialog().ShowDialog();
@@ -66,6 +61,8 @@ namespace FTPTest
 
             foreach (FTPLineResult file in list)
             {
+                if (file.IsDirectory && (file.Name == "." || file.Name == "..")) continue;
+
                 ListViewItem lvi = new ListViewItem(file.Name);
                 lvi.SubItems.Add(file.SizeString);
                 lvi.SubItems.Add(IconReader.GetDisplayName(file.Name, file.IsDirectory));
@@ -228,23 +225,20 @@ namespace FTPTest
         {
             FTPCreateDirectory();
         }
+
         private void btnNavigateBack_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(currentDirectory))
+            if (!string.IsNullOrEmpty(currentDirectory) && currentDirectory.Contains('/'))
             {
-                if (currentDirectory.Contains('/'))
-                {
-                    LoadDirectory(currentDirectory.Substring(0, currentDirectory.LastIndexOf('/')));
-                }
-                else
-                {
-                    LoadDirectory("");
-                }
+                LoadDirectory(currentDirectory.Substring(0, currentDirectory.LastIndexOf('/')));
             }
         }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshDirectory();
+        }
+
         #endregion
-
-
     }
 }
