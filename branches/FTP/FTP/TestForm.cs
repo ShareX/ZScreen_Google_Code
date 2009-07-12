@@ -25,14 +25,11 @@ namespace FTPTest
             {
                 LoginDialog dlg = new LoginDialog();
                 dlg.ShowDialog();
-                if (dlg.DialogResult == DialogResult.OK)
-                {
-                    FTPAccount FTPAcc = new FTPAccount("FTP Test") { Server = dlg.txtServer.Text, Username = dlg.txtUserName.Text, Password = dlg.txtPassword.Text };
-                    FTPClient = new FTP(FTPAcc);
-
-                    LoadDirectory("");
-                }
             }
+
+            FTPAccount FTPAcc = new FTPAccount("FTP Test") { Server = Settings.Default.Server, Username = Settings.Default.UserName, Password = Settings.Default.Password };
+            FTPClient = new FTP(FTPAcc);
+            LoadDirectory("");
         }
 
         private void LoadDirectory(string path)
