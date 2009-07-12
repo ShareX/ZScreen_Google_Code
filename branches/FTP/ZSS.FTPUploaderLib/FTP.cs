@@ -135,6 +135,7 @@ namespace ZSS
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.KeepAlive = false;
 
             request.GetResponse();
 
@@ -147,6 +148,7 @@ namespace ZSS
 
             request.Method = WebRequestMethods.Ftp.RemoveDirectory;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.KeepAlive = false;
 
             request.GetResponse();
 
@@ -175,6 +177,7 @@ namespace ZSS
             request.Method = WebRequestMethods.Ftp.Rename;
             request.RenameTo = newFileName;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.KeepAlive = false;
 
             request.GetResponse();
 
@@ -187,6 +190,7 @@ namespace ZSS
 
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.KeepAlive = false;
 
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
@@ -246,7 +250,7 @@ namespace ZSS
             }
         }
 
-        public void MakeMultiDirectory(string dirName)
+        public void MakeMultiDirectory(string dirName) //TODO
         {
             string path = "";
             string[] dirs = dirName.Split('/');
@@ -262,20 +266,19 @@ namespace ZSS
             WriteOutput("MakeMultiDirectory: " + dirName);
         }
 
-        public void MakeDirectory(string dirName)
+        public void MakeDirectory(string url)
         {
             try
             {
-                string url = FTPHelpers.CombineURL(FTPAddress, dirName);
-
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.KeepAlive = false;
 
                 request.GetResponse();
 
-                WriteOutput("MakeMultiDirectory: " + dirName);
+                WriteOutput("MakeDirectory: " + url);
             }
             catch (Exception ex)
             {

@@ -39,16 +39,22 @@ namespace FTPTest
             FTPClient = new FTP(FTPAcc);
             FTPClient.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
 
-            LoadDirectory(FTPClient.FTPAddress);
+            currentDirectory = FTPClient.FTPAddress;
+            RefreshDirectory();
         }
 
         #region Methods
+
+        private void RefreshDirectory()
+        {
+            LoadDirectory(currentDirectory);
+        }
 
         private void LoadDirectory(string path)
         {
             currentDirectory = path;
             FTPClient.Account.Path = currentDirectory;
-            btnNavigateBack.Enabled = currentDirectory.Contains('/');
+            btnNavigateBack.Enabled = currentDirectory != FTPClient.FTPAddress;
             txtCurrentDirectory.Text = " " + currentDirectory;
 
             FTPLineResult[] list = FTPClient.ListDirectoryDetails(currentDirectory);
@@ -182,6 +188,18 @@ namespace FTPTest
             }
         }
 
+        private void FTPCreateDirectory()
+        {
+            InputBox ib = new InputBox { Text = "Create directory", Question = "Please enter the name of the directory which should be created:" };
+            ib.ShowDialog();
+            this.BringToFront();
+            if (ib.DialogResult == DialogResult.OK)
+            {
+                FTPClient.MakeDirectory(FTPHelpers.CombineURL(currentDirectory, ib.InputText));
+                RefreshDirectory();
+            }
+        }
+
         #endregion
 
         #region Form events
@@ -206,6 +224,10 @@ namespace FTPTest
             FTPDelete();
         }
 
+        private void createDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FTPCreateDirectory();
+        }
         private void btnNavigateBack_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(currentDirectory))
@@ -222,5 +244,7 @@ namespace FTPTest
         }
 
         #endregion
+
+
     }
 }

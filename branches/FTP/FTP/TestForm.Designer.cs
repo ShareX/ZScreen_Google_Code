@@ -37,6 +37,11 @@
             this.btnNavigateBack = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tcFTP = new System.Windows.Forms.TabControl();
+            this.tpMainTab = new System.Windows.Forms.TabPage();
+            this.tpConsole = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.TextBox();
+            this.createDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lvFTPList = new FTPTest.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
@@ -44,10 +49,6 @@
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
             this.chOwnerGroup = new System.Windows.Forms.ColumnHeader();
-            this.tcFTP = new System.Windows.Forms.TabControl();
-            this.tpMainTab = new System.Windows.Forms.TabPage();
-            this.tpConsole = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -62,21 +63,22 @@
             this.cmsRightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadToolStripMenuItem,
             this.renameToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.createDirectoryToolStripMenuItem});
             this.cmsRightClickMenu.Name = "cmsRightClickMenu";
-            this.cmsRightClickMenu.Size = new System.Drawing.Size(129, 70);
+            this.cmsRightClickMenu.Size = new System.Drawing.Size(159, 92);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.renameToolStripMenuItem.Text = "Rename";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
@@ -133,9 +135,60 @@
             // downloadToolStripMenuItem
             // 
             this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.downloadToolStripMenuItem.Text = "Download";
             this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
+            // 
+            // tcFTP
+            // 
+            this.tcFTP.Controls.Add(this.tpMainTab);
+            this.tcFTP.Controls.Add(this.tpConsole);
+            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcFTP.Location = new System.Drawing.Point(0, 0);
+            this.tcFTP.Name = "tcFTP";
+            this.tcFTP.SelectedIndex = 0;
+            this.tcFTP.Size = new System.Drawing.Size(972, 595);
+            this.tcFTP.TabIndex = 3;
+            // 
+            // tpMainTab
+            // 
+            this.tpMainTab.Controls.Add(this.splitContainer1);
+            this.tpMainTab.Location = new System.Drawing.Point(4, 22);
+            this.tpMainTab.Name = "tpMainTab";
+            this.tpMainTab.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMainTab.Size = new System.Drawing.Size(964, 569);
+            this.tpMainTab.TabIndex = 0;
+            this.tpMainTab.Text = "FTP Client";
+            this.tpMainTab.UseVisualStyleBackColor = true;
+            // 
+            // tpConsole
+            // 
+            this.tpConsole.Controls.Add(this.txtConsole);
+            this.tpConsole.Location = new System.Drawing.Point(4, 22);
+            this.tpConsole.Name = "tpConsole";
+            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
+            this.tpConsole.Size = new System.Drawing.Size(964, 569);
+            this.tpConsole.TabIndex = 1;
+            this.tpConsole.Text = "Console";
+            this.tpConsole.UseVisualStyleBackColor = true;
+            // 
+            // txtConsole
+            // 
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtConsole.Location = new System.Drawing.Point(3, 3);
+            this.txtConsole.Multiline = true;
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtConsole.Size = new System.Drawing.Size(958, 563);
+            this.txtConsole.TabIndex = 0;
+            // 
+            // createDirectoryToolStripMenuItem
+            // 
+            this.createDirectoryToolStripMenuItem.Name = "createDirectoryToolStripMenuItem";
+            this.createDirectoryToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.createDirectoryToolStripMenuItem.Text = "Create directory";
+            this.createDirectoryToolStripMenuItem.Click += new System.EventHandler(this.createDirectoryToolStripMenuItem_Click);
             // 
             // lvFTPList
             // 
@@ -192,49 +245,6 @@
             this.chOwnerGroup.Text = "Owner/Group";
             this.chOwnerGroup.Width = 100;
             // 
-            // tcFTP
-            // 
-            this.tcFTP.Controls.Add(this.tpMainTab);
-            this.tcFTP.Controls.Add(this.tpConsole);
-            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcFTP.Location = new System.Drawing.Point(0, 0);
-            this.tcFTP.Name = "tcFTP";
-            this.tcFTP.SelectedIndex = 0;
-            this.tcFTP.Size = new System.Drawing.Size(972, 595);
-            this.tcFTP.TabIndex = 3;
-            // 
-            // tpMainTab
-            // 
-            this.tpMainTab.Controls.Add(this.splitContainer1);
-            this.tpMainTab.Location = new System.Drawing.Point(4, 22);
-            this.tpMainTab.Name = "tpMainTab";
-            this.tpMainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainTab.Size = new System.Drawing.Size(964, 569);
-            this.tpMainTab.TabIndex = 0;
-            this.tpMainTab.Text = "FTP Client";
-            this.tpMainTab.UseVisualStyleBackColor = true;
-            // 
-            // tpConsole
-            // 
-            this.tpConsole.Controls.Add(this.txtConsole);
-            this.tpConsole.Location = new System.Drawing.Point(4, 22);
-            this.tpConsole.Name = "tpConsole";
-            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConsole.Size = new System.Drawing.Size(964, 569);
-            this.tpConsole.TabIndex = 1;
-            this.tpConsole.Text = "Console";
-            this.tpConsole.UseVisualStyleBackColor = true;
-            // 
-            // txtConsole
-            // 
-            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConsole.Location = new System.Drawing.Point(3, 3);
-            this.txtConsole.Multiline = true;
-            this.txtConsole.Name = "txtConsole";
-            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtConsole.Size = new System.Drawing.Size(958, 563);
-            this.txtConsole.TabIndex = 0;
-            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -279,5 +289,6 @@
         private System.Windows.Forms.TabPage tpMainTab;
         private System.Windows.Forms.TabPage tpConsole;
         private System.Windows.Forms.TextBox txtConsole;
+        private System.Windows.Forms.ToolStripMenuItem createDirectoryToolStripMenuItem;
     }
 }
