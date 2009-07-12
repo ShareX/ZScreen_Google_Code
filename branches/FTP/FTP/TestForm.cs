@@ -46,6 +46,7 @@ namespace FTPTest
             {
                 FTP.FTPLineResult file = (FTP.FTPLineResult)lvFTPList.SelectedItems[0].Tag;
                 FTPClient.Rename(file.Name, e.DisplayText);
+                file.Name = e.DisplayText;
             }
         }
 

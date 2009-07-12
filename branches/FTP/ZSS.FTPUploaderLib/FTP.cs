@@ -97,7 +97,7 @@ namespace ZSS
         {
             try
             {
-                string url = CombineURL(FTPAddress, fileName);
+                string url = CombineURL(FTPAddress, Account.Path, fileName);
 
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
@@ -128,7 +128,7 @@ namespace ZSS
 
         public void DeleteFile(string fileName)
         {
-            string url = CombineURL(FTPAddress, fileName);
+            string url = CombineURL(FTPAddress, Account.Path, fileName);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
@@ -140,7 +140,7 @@ namespace ZSS
 
         public void Rename(string fileName, string newFileName)
         {
-            string url = CombineURL(FTPAddress, fileName);
+            string url = CombineURL(FTPAddress, Account.Path, fileName);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
@@ -153,7 +153,7 @@ namespace ZSS
 
         public long GetFileSize(string fileName)
         {
-            string url = CombineURL(FTPAddress, fileName);
+            string url = CombineURL(FTPAddress, Account.Path, fileName);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
