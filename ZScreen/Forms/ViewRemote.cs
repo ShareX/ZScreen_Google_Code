@@ -281,7 +281,7 @@ namespace ZSS
 
             if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server))
             {
-                mFTP = new FTP(ref mAcc);
+                mFTP = new FTP(mAcc);
                 List<string> files = FetchList();
                 if (files.Count > 0)
                 {
