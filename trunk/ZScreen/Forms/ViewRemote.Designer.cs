@@ -30,7 +30,6 @@ namespace ZSS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewRemote));
-            this.pbViewer = new System.Windows.Forms.PictureBox();
             this.lbFiles = new System.Windows.Forms.ListBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCopyToClip = new System.Windows.Forms.Button();
@@ -39,41 +38,34 @@ namespace ZSS
             this.pnlControls = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
             this.folderBrowseDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.pnlViewer = new System.Windows.Forms.Panel();
-            this.txtViewer = new System.Windows.Forms.TextBox();
+            this.bwRemoteViewer = new System.ComponentModel.BackgroundWorker();
+            this.tmrFetchFile = new System.Windows.Forms.Timer(this.components);
+            this.pbViewer = new System.Windows.Forms.PictureBox();
             this.ssViewer = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.sBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.pBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.bwRemoteViewer = new System.ComponentModel.BackgroundWorker();
-            this.tmrFetchFile = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).BeginInit();
+            this.txtViewer = new System.Windows.Forms.TextBox();
+            this.pnlViewer = new System.Windows.Forms.Panel();
+            this.ViewRemotePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ControlsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pnlControls.SuspendLayout();
-            this.pnlViewer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).BeginInit();
             this.ssViewer.SuspendLayout();
+            this.pnlViewer.SuspendLayout();
+            this.ViewRemotePanel.SuspendLayout();
+            this.ControlsPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pbViewer
-            // 
-            this.pbViewer.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.pbViewer.Location = new System.Drawing.Point(0, 0);
-            this.pbViewer.Margin = new System.Windows.Forms.Padding(0);
-            this.pbViewer.Name = "pbViewer";
-            this.pbViewer.Size = new System.Drawing.Size(525, 560);
-            this.pbViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbViewer.TabIndex = 0;
-            this.pbViewer.TabStop = false;
-            this.pbViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseMove);
-            this.pbViewer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseDown);
             // 
             // lbFiles
             // 
+            this.lbFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbFiles.FormattingEnabled = true;
-            this.lbFiles.Location = new System.Drawing.Point(531, 129);
+            this.lbFiles.Location = new System.Drawing.Point(3, 141);
             this.lbFiles.Name = "lbFiles";
             this.lbFiles.ScrollAlwaysVisible = true;
             this.lbFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbFiles.Size = new System.Drawing.Size(245, 420);
+            this.lbFiles.Size = new System.Drawing.Size(245, 407);
             this.lbFiles.TabIndex = 1;
             this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.lbFiles_SelectedIndexChanged);
             // 
@@ -128,10 +120,11 @@ namespace ZSS
             this.pnlControls.Controls.Add(this.cbReverse);
             this.pnlControls.Controls.Add(this.btnDelete);
             this.pnlControls.Controls.Add(this.btnCopyToClip);
-            this.pnlControls.Location = new System.Drawing.Point(530, 0);
+            this.pnlControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(249, 126);
+            this.pnlControls.Size = new System.Drawing.Size(251, 138);
             this.pnlControls.TabIndex = 37;
             // 
             // btnSave
@@ -145,25 +138,31 @@ namespace ZSS
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // pnlViewer
+            // bwRemoteViewer
             // 
-            this.pnlViewer.Controls.Add(this.txtViewer);
-            this.pnlViewer.Controls.Add(this.ssViewer);
-            this.pnlViewer.Controls.Add(this.pbViewer);
-            this.pnlViewer.Location = new System.Drawing.Point(0, 0);
-            this.pnlViewer.Name = "pnlViewer";
-            this.pnlViewer.Size = new System.Drawing.Size(525, 560);
-            this.pnlViewer.TabIndex = 38;
+            this.bwRemoteViewer.WorkerReportsProgress = true;
+            this.bwRemoteViewer.WorkerSupportsCancellation = true;
+            this.bwRemoteViewer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwRemoteViewer_DoWork);
+            this.bwRemoteViewer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwRemoteViewer_RunWorkerCompleted);
+            this.bwRemoteViewer.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwRemoteViewer_ProgressChanged);
             // 
-            // txtViewer
+            // tmrFetchFile
             // 
-            this.txtViewer.BackColor = System.Drawing.SystemColors.Info;
-            this.txtViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtViewer.Location = new System.Drawing.Point(0, 0);
-            this.txtViewer.Multiline = true;
-            this.txtViewer.Name = "txtViewer";
-            this.txtViewer.Size = new System.Drawing.Size(525, 538);
-            this.txtViewer.TabIndex = 2;
+            this.tmrFetchFile.Enabled = true;
+            this.tmrFetchFile.Tick += new System.EventHandler(this.tmrFetchFile_Tick);
+            // 
+            // pbViewer
+            // 
+            this.pbViewer.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pbViewer.Location = new System.Drawing.Point(0, 0);
+            this.pbViewer.Margin = new System.Windows.Forms.Padding(0);
+            this.pbViewer.Name = "pbViewer";
+            this.pbViewer.Size = new System.Drawing.Size(519, 552);
+            this.pbViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbViewer.TabIndex = 0;
+            this.pbViewer.TabStop = false;
+            this.pbViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseMove);
+            this.pbViewer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseDown);
             // 
             // ssViewer
             // 
@@ -171,9 +170,9 @@ namespace ZSS
             this.toolStripStatusLabel1,
             this.sBar,
             this.pBar});
-            this.ssViewer.Location = new System.Drawing.Point(0, 538);
+            this.ssViewer.Location = new System.Drawing.Point(0, 530);
             this.ssViewer.Name = "ssViewer";
-            this.ssViewer.Size = new System.Drawing.Size(525, 22);
+            this.ssViewer.Size = new System.Drawing.Size(519, 22);
             this.ssViewer.SizingGrip = false;
             this.ssViewer.TabIndex = 1;
             this.ssViewer.Text = "statusStrip1";
@@ -191,7 +190,7 @@ namespace ZSS
             this.sBar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sBar.Name = "sBar";
             this.sBar.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.sBar.Size = new System.Drawing.Size(392, 17);
+            this.sBar.Size = new System.Drawing.Size(355, 17);
             this.sBar.Spring = true;
             this.sBar.Text = "Ready.";
             this.sBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -202,51 +201,86 @@ namespace ZSS
             this.pBar.Size = new System.Drawing.Size(100, 16);
             this.pBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
-            // bwRemoteViewer
+            // txtViewer
             // 
-            this.bwRemoteViewer.WorkerReportsProgress = true;
-            this.bwRemoteViewer.WorkerSupportsCancellation = true;
-            this.bwRemoteViewer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwRemoteViewer_DoWork);
-            this.bwRemoteViewer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwRemoteViewer_RunWorkerCompleted);
-            this.bwRemoteViewer.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwRemoteViewer_ProgressChanged);
+            this.txtViewer.BackColor = System.Drawing.SystemColors.Info;
+            this.txtViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtViewer.Location = new System.Drawing.Point(0, 0);
+            this.txtViewer.Multiline = true;
+            this.txtViewer.Name = "txtViewer";
+            this.txtViewer.Size = new System.Drawing.Size(519, 530);
+            this.txtViewer.TabIndex = 2;
             // 
-            // tmrFetchFile
+            // pnlViewer
             // 
-            this.tmrFetchFile.Enabled = true;
-            this.tmrFetchFile.Tick += new System.EventHandler(this.tmrFetchFile_Tick);
+            this.pnlViewer.Controls.Add(this.txtViewer);
+            this.pnlViewer.Controls.Add(this.ssViewer);
+            this.pnlViewer.Controls.Add(this.pbViewer);
+            this.pnlViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlViewer.Location = new System.Drawing.Point(3, 3);
+            this.pnlViewer.Name = "pnlViewer";
+            this.pnlViewer.Size = new System.Drawing.Size(519, 552);
+            this.pnlViewer.TabIndex = 38;
+            // 
+            // ViewRemotePanel
+            // 
+            this.ViewRemotePanel.ColumnCount = 2;
+            this.ViewRemotePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.13555F));
+            this.ViewRemotePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.86445F));
+            this.ViewRemotePanel.Controls.Add(this.pnlViewer, 0, 0);
+            this.ViewRemotePanel.Controls.Add(this.ControlsPanel, 1, 0);
+            this.ViewRemotePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ViewRemotePanel.Location = new System.Drawing.Point(0, 0);
+            this.ViewRemotePanel.Name = "ViewRemotePanel";
+            this.ViewRemotePanel.RowCount = 1;
+            this.ViewRemotePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ViewRemotePanel.Size = new System.Drawing.Size(782, 558);
+            this.ViewRemotePanel.TabIndex = 39;
+            // 
+            // ControlsPanel
+            // 
+            this.ControlsPanel.ColumnCount = 1;
+            this.ControlsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ControlsPanel.Controls.Add(this.pnlControls, 0, 0);
+            this.ControlsPanel.Controls.Add(this.lbFiles, 0, 1);
+            this.ControlsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ControlsPanel.Location = new System.Drawing.Point(528, 3);
+            this.ControlsPanel.Name = "ControlsPanel";
+            this.ControlsPanel.RowCount = 2;
+            this.ControlsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.ControlsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.ControlsPanel.Size = new System.Drawing.Size(251, 552);
+            this.ControlsPanel.TabIndex = 39;
             // 
             // ViewRemote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(782, 558);
-            this.Controls.Add(this.pnlViewer);
-            this.Controls.Add(this.pnlControls);
-            this.Controls.Add(this.lbFiles);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Controls.Add(this.ViewRemotePanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewRemote";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "View Remote Directory";
+            this.Load += new System.EventHandler(this.ViewRemote_Load);
             this.Shown += new System.EventHandler(this.ViewRemote_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ViewRemote_FormClosing);
-            this.Resize += new System.EventHandler(this.ViewRemote_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).EndInit();
             this.pnlControls.ResumeLayout(false);
             this.pnlControls.PerformLayout();
-            this.pnlViewer.ResumeLayout(false);
-            this.pnlViewer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).EndInit();
             this.ssViewer.ResumeLayout(false);
             this.ssViewer.PerformLayout();
+            this.pnlViewer.ResumeLayout(false);
+            this.pnlViewer.PerformLayout();
+            this.ViewRemotePanel.ResumeLayout(false);
+            this.ControlsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pbViewer;
         private System.Windows.Forms.ListBox lbFiles;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCopyToClip;
@@ -255,13 +289,16 @@ namespace ZSS
         private System.Windows.Forms.Panel pnlControls;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.FolderBrowserDialog folderBrowseDialog;
-        private System.Windows.Forms.Panel pnlViewer;
         private System.ComponentModel.BackgroundWorker bwRemoteViewer;
+        private System.Windows.Forms.Timer tmrFetchFile;
+        private System.Windows.Forms.PictureBox pbViewer;
         private System.Windows.Forms.StatusStrip ssViewer;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel sBar;
         private System.Windows.Forms.ToolStripProgressBar pBar;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.Timer tmrFetchFile;
         private System.Windows.Forms.TextBox txtViewer;
+        private System.Windows.Forms.Panel pnlViewer;
+        private System.Windows.Forms.TableLayoutPanel ViewRemotePanel;
+        private System.Windows.Forms.TableLayoutPanel ControlsPanel;
     }
 }

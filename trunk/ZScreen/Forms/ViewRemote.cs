@@ -72,39 +72,39 @@ namespace ZSS
             mPbHeight = pbViewer.Height;
         }
 
-        private void ViewRemote_Resize(object sender, System.EventArgs e)
-        {
-            if (WindowState == System.Windows.Forms.FormWindowState.Normal)
-            {
-                //Width = frmWidth;
-                //Height = frmHeight;
+        //private void ViewRemote_Resize(object sender, System.EventArgs e)
+        //{
+        //    if (WindowState == System.Windows.Forms.FormWindowState.Normal)
+        //    {
+        //        //Width = frmWidth;
+        //        //Height = frmHeight;
 
-                //width shrink
-                pnlControls.Location = new System.Drawing.Point(mConX + mFrmWidth - Width, pnlControls.Location.Y);
-                lbFiles.Location = new System.Drawing.Point(mLbX + mFrmWidth - Width, lbFiles.Location.Y);
-                pnlViewer.Width = mPbWidth + mFrmWidth - Width;
+        //        //width shrink
+        //        pnlControls.Location = new System.Drawing.Point(mConX + mFrmWidth - Width, pnlControls.Location.Y);
+        //        lbFiles.Location = new System.Drawing.Point(mLbX + mFrmWidth - Width, lbFiles.Location.Y);
+        //        pnlViewer.Width = mPbWidth + mFrmWidth - Width;
 
-                //height shrink
-                lbFiles.Height = mLbHeight + mFrmHeight - Height;
-                pnlViewer.Height = mPbHeight + mFrmHeight - Height;
-            }
+        //        //height shrink
+        //        lbFiles.Height = mLbHeight + mFrmHeight - Height;
+        //        pnlViewer.Height = mPbHeight + mFrmHeight - Height;
+        //    }
 
-            //width grow
-            if (Width - mFrmWidth > 0)
-            {
+        //    //width grow
+        //    if (Width - mFrmWidth > 0)
+        //    {
 
-                pnlControls.Location = new System.Drawing.Point(mConX + Width - mFrmWidth, pnlControls.Location.Y);
-                lbFiles.Location = new System.Drawing.Point(mLbX + Width - mFrmWidth, lbFiles.Location.Y);
-                pnlViewer.Width = mPbWidth + Width - mFrmWidth;
-            }
+        //        pnlControls.Location = new System.Drawing.Point(mConX + Width - mFrmWidth, pnlControls.Location.Y);
+        //        lbFiles.Location = new System.Drawing.Point(mLbX + Width - mFrmWidth, lbFiles.Location.Y);
+        //        pnlViewer.Width = mPbWidth + Width - mFrmWidth;
+        //    }
 
-            //Height grow
-            if (Height - mFrmHeight > 0)
-            {
-                lbFiles.Height = mLbHeight + Height - mFrmHeight;
-                pnlViewer.Height = mPbHeight + Height - mFrmHeight;
-            }
-        }
+        //    //Height grow
+        //    if (Height - mFrmHeight > 0)
+        //    {
+        //        lbFiles.Height = mLbHeight + Height - mFrmHeight;
+        //        pnlViewer.Height = mPbHeight + Height - mFrmHeight;
+        //    }
+        //}
 
         private List<string> FetchList()
         {
@@ -446,6 +446,11 @@ namespace ZSS
                     }
                 }
             }
+        }
+
+        private void ViewRemote_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
