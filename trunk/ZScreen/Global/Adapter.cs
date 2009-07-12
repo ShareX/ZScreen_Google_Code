@@ -19,7 +19,7 @@ namespace ZSS.Global
         public static void TestFTPAccount(FTPAccount acc)
         {
             string msg;
-            FTP ftp = new FTP(ref acc);
+            FTP ftp = new FTP(acc);
             try
             {
                 if (ftp.ListDirectory() != null)

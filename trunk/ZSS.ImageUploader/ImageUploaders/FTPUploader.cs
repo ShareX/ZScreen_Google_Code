@@ -59,7 +59,7 @@ namespace ZSS.ImageUploaderLib
         {
             List<ImageFile> ifl = new List<ImageFile>();
 
-            FTP ftpClient = new FTP(ref this.FTPAccount);
+            FTP ftpClient = new FTP(this.FTPAccount);
             //removed binary mode code line
 
             string fName = Path.GetFileName(localFilePath);

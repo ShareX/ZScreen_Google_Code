@@ -216,8 +216,14 @@ namespace ZSS
 
         private static Image DrawCursor(Image img)
         {
+            return DrawCursor(img, Point.Empty);
+        }
+
+        private static Image DrawCursor(Image img, Point offset)
+        {
             MyCursor cursor = CaptureCursor();
             if (cursor == null) cursor = new MyCursor();
+            cursor.Position.Offset(-offset.X, -offset.Y);
             Graphics g = Graphics.FromImage(img);
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.DrawImage(cursor.Bitmap, cursor.Position);
@@ -240,7 +246,7 @@ namespace ZSS
             Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(img);
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
-            if (showCursor) DrawCursor(img);
+            if (showCursor) DrawCursor(img, windowRect.Location);
             return img;
         }
 

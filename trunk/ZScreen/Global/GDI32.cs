@@ -28,7 +28,6 @@ namespace ZSS
 {
     public static class GDI32
     {
-
         /// <summary>
         ///     Specifies a raster-operation code. These codes define how the color data for the
         ///     source rectangle is to be combined with the color data for the destination
