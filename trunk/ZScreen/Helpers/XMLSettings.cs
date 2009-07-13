@@ -32,6 +32,7 @@ using ZSS.Properties;
 using ZSS.TextUploaderLib;
 using System.Reflection;
 using System.Threading;
+using ZSS.Helpers;
 
 namespace ZSS
 {
@@ -320,7 +321,7 @@ namespace ZSS
         //  HTTP
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // Image MyCollection
+        // Image Uploaders
 
         public UploadMode UploadMode = UploadMode.API;
         public decimal ErrorRetryCount = 3;
@@ -350,7 +351,7 @@ namespace ZSS
         [Category("Accounts / TwitPic"), PasswordPropertyText(true)]
         public string TwitPicPassword { get; set; }
 
-        // Custom Image MyCollection
+        // Custom Image Uploaders
 
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
@@ -392,9 +393,11 @@ namespace ZSS
 
         // General
 
-        public bool OpenMainWindow = false;
+        [Category("Options / General"), DefaultValue(true), Description("Open main window when ZScreen loads.")]
+        public bool OpenMainWindow { get; set; }
         public bool ShowInTaskbar = true;
-        public bool LockFormSize = false;
+        [Category("Options / General"), DefaultValue(true), Description("Disable resizing ZScreen and minimize ZScreen window size.")]
+        public bool LockFormSize { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Auto save settings whenever form is resized or main" +
             " tabs are changed. Normally settings are saved only after form is closed.")]
         public bool AutoSaveSettings { get; set; }
@@ -404,6 +407,12 @@ namespace ZSS
         public bool CheckExperimental = false;
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
+        // Proxy Settings 
+        public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
+        public int ProxySelected = 0;
+        public ProxyInfo ProxyActive = null;
+        [Category("Options / General"), DefaultValue(false), Description("Enable Web Proxy")]
+        public bool ProxyEnabled { get; set; }
 
         // Paths
 
@@ -414,8 +423,7 @@ namespace ZSS
         [Category("Options / Paths"), Description("Images directory where screenshots and pictures will be stored locally.")]
         public string ImagesDir { get; set; }
 
-        // Proxy Settings 
-        // public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
+
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture

@@ -26,12 +26,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+using System.ComponentModel;
 
 namespace ZSS.Helpers
 {
     [Serializable]
-    public class ProxyInfo : NetworkCredential
+    public class ProxyInfo
     {
+        public string UserName { get; set; }
+        [Category("Proxy"), PasswordPropertyText(true)]
+        public string Password { get; set; }
+        public string Domain { get; set; }
+        public ProxyInfo() { }
+
         public ProxyInfo(string userName, string password, string domain)
         {
             this.UserName = userName;

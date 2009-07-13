@@ -8,6 +8,8 @@ using ZSS.ImageUploaderLib;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using ZSS.Helpers;
+using System.Net;
 
 namespace ZSS.Global
 {
@@ -105,6 +107,27 @@ namespace ZSS.Global
 
                 // Set the success text
                 msg = "Success!"; //Success
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            if (!string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        public static void TestProxyAccount(ProxyInfo acc)
+        {
+            string msg = "Success!";
+            try
+            {
+                WebClient wc = new WebClient(); 
+                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password, acc.Domain);
+                WebProxy wp = new WebProxy(acc.Domain, true, null, cred);
+                wc.Proxy = wp;
+                string html = wc.DownloadString(new Uri("http://www.google.com"));                
             }
             catch (Exception ex)
             {

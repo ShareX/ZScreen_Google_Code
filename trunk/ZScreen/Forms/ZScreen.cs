@@ -103,6 +103,12 @@ namespace ZSS
             ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
             ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
+            // Options - Proxy
+            ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
+            ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
+            ucProxyAccounts.btnTest.Click += new EventHandler(ProxyAccountTestButton_Click);
+            ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
+
             // Text Services - URL Shorteners
             ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
             ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
@@ -124,6 +130,39 @@ namespace ZSS
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
             DrawZScreenLabel(false);
+        }
+
+        void ProxyAccountTestButton_Click(object sender, EventArgs e)
+        {
+            Adapter.TestProxyAccount(GetSelectedProxy());
+        }
+
+        void ProxyAccountsRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucProxyAccounts.AccountsList.SelectedIndex;
+            if (ucProxyAccounts.RemoveItem(sel) == true)
+            {
+                Program.conf.ProxyList.RemoveAt(sel);
+            }
+        }
+
+        void ProxyAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucProxyAccounts.AccountsList.SelectedIndex;            
+            if (Program.conf.ProxyList != null && sel != -1 && sel < Program.conf.ProxyList.Count && Program.conf.ProxyList[sel] != null)
+            {
+                ProxyInfo acc = Program.conf.ProxyList[sel];
+                ucProxyAccounts.SettingsGrid.SelectedObject = acc;
+                Program.conf.ProxyActive = acc;
+            }
+        }
+
+        void ProxyAccountsAddButton_Click(object sender, EventArgs e)
+        {
+            ProxyInfo acc = new ProxyInfo("userName", "password", "domain:port");
+            Program.conf.ProxyList.Add(acc);
+            ucProxyAccounts.AccountsList.Items.Add(acc);
+            ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -446,7 +485,7 @@ namespace ZSS
             chkDekiWikiForcePath.Checked = Program.conf.DekiWikiForcePath;
 
             ///////////////////////////////////
-            // HTTP Settings
+            // Image Uploader Settings
             ///////////////////////////////////
 
             chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
@@ -528,6 +567,7 @@ namespace ZSS
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
             cbLockFormSize.Checked = Program.conf.LockFormSize;
             cbShowHelpBalloonTips.Checked = Program.conf.ShowHelpBalloonTips;
+            chkProxyEnable.Checked = Program.conf.ProxyEnabled;
             ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
             if (cboUpdateCheckType.Items.Count == 0)
             {
@@ -539,6 +579,13 @@ namespace ZSS
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
+
+            // Proxy Settings
+            Proxyetup(Program.conf.ProxyList);
+            if (ucProxyAccounts.AccountsList.Items.Count > 0)
+            {
+                ucProxyAccounts.AccountsList.SelectedIndex = Program.conf.ProxySelected;
+            }
 
             ///////////////////////////////////
             // Image Uploaders
@@ -2501,6 +2548,20 @@ namespace ZSS
             }
         }
 
+        private void Proxyetup(IEnumerable<ProxyInfo> accs)
+        {
+            if (accs != null)
+            {
+                ucProxyAccounts.AccountsList.Items.Clear();
+                Program.conf.ProxyList = new List<ProxyInfo>();
+                Program.conf.ProxyList.AddRange(accs);
+                foreach (ProxyInfo acc in Program.conf.ProxyList)
+                {
+                    ucProxyAccounts.AccountsList.Items.Add(acc);
+                }
+            }
+        }
+
         #region FTP Accounts
 
         private void FTPSetup(IEnumerable<FTPAccount> accs)
@@ -2602,6 +2663,15 @@ namespace ZSS
             }
         }
 
+        private ProxyInfo GetSelectedProxy()
+        {
+            ProxyInfo acc = null;
+            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 && Program.conf.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
+            {
+                acc = Program.conf.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
+            }
+            return acc;
+        }
         private FTPAccount GetSelectedFTP()
         {
             FTPAccount acc = null;
@@ -3459,6 +3529,11 @@ namespace ZSS
         private void lblLogo_MouseLeave(object sender, EventArgs e)
         {
             DrawZScreenLabel(false);
+        }
+
+        private void chkProxyEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ProxyEnabled = chkProxyEnable.Checked;
         }
     }
 }
