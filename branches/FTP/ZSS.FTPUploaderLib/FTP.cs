@@ -250,22 +250,6 @@ namespace ZSS
             }
         }
 
-        public void MakeMultiDirectory(string dirName) //TODO
-        {
-            string path = "";
-            string[] dirs = dirName.Split('/');
-            foreach (string dir in dirs)
-            {
-                if (!string.IsNullOrEmpty(dir))
-                {
-                    //path += dir + "/";
-                    MakeDirectory(path);
-                }
-            }
-
-            WriteOutput("MakeMultiDirectory: " + dirName);
-        }
-
         public void MakeDirectory(string url)
         {
             try
@@ -284,6 +268,22 @@ namespace ZSS
             {
                 WriteOutput("Error - MakeDirectory: " + ex.Message);
             }
+        }
+
+        public void MakeMultiDirectory(string dirName) //TODO
+        {
+            string path = "";
+            string[] dirs = dirName.Split('/');
+            foreach (string dir in dirs)
+            {
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    //path += dir + "/";
+                    MakeDirectory(path);
+                }
+            }
+
+            WriteOutput("MakeMultiDirectory: " + dirName);
         }
 
         public void WriteOutput(string text)

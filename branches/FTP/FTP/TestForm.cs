@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FTPTest.Properties;
 using IconHelper;
 using ZSS;
+using System.Collections.Generic;
 
 namespace FTPTest
 {
@@ -12,13 +13,14 @@ namespace FTPTest
     {
         public FTP FTPClient;
         private string currentDirectory;
+        private ListViewItem tempSelected;
 
         public TestForm()
         {
             InitializeComponent();
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
-            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) || 
+            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
                 string.IsNullOrEmpty(Settings.Default.Password))
             {
                 new LoginDialog().ShowDialog();
@@ -165,9 +167,8 @@ namespace FTPTest
 
         private void FTPDelete()
         {
-            if (lvFTPList.SelectedItems.Count > 0)
+            foreach (ListViewItem lvi in lvFTPList.SelectedItems)
             {
-                ListViewItem lvi = lvFTPList.SelectedItems[0];
                 FTPLineResult file = lvi.Tag as FTPLineResult;
                 if (file != null && !string.IsNullOrEmpty(file.Name))
                 {
@@ -201,7 +202,7 @@ namespace FTPTest
 
         #region Form events
 
-        private void lvFTPList_DoubleClick(object sender, EventArgs e)
+        private void lvFTPList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             FTPDownload(true);
         }
@@ -237,6 +238,76 @@ namespace FTPTest
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             RefreshDirectory();
+        }
+
+        private void lvFTPList_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0)
+            {
+                List<string> filenames = new List<string>();
+                foreach (ListViewItem lvi in lvFTPList.SelectedItems)
+                {
+                    FTPLineResult file = lvi.Tag as FTPLineResult;
+                    if (file != null && !string.IsNullOrEmpty(file.Name))
+                    {
+                        filenames.Add(file.Name);
+                    }
+                }
+                if (filenames.Count > 0)
+                {
+                    lvFTPList.DoDragDrop(filenames.ToArray(), DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void lvFTPList_DragOver(object sender, DragEventArgs e)
+        {
+            Point point = lvFTPList.PointToClient(new Point(e.X, e.Y));
+            ListViewItem lvi = lvFTPList.GetItemAt(point.X, point.Y);
+            if (lvi != null && e.AllowedEffect == DragDropEffects.Move)
+            {
+                if (tempSelected != null && tempSelected != lvi)
+                {
+                    tempSelected.Selected = false;
+                }
+                FTPLineResult file = lvi.Tag as FTPLineResult;
+                if (file != null && file.IsDirectory)
+                {
+                    lvi.Selected = true;
+                    tempSelected = lvi;
+                    e.Effect = DragDropEffects.Move;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.None;
+                }
+            }
+        }
+
+        private void lvFTPList_DragDrop(object sender, DragEventArgs e)
+        {
+            Point point = lvFTPList.PointToClient(new Point(e.X, e.Y));
+            ListViewItem lvi = lvFTPList.GetItemAt(point.X, point.Y);
+            if (lvi != null && e.AllowedEffect == DragDropEffects.Move)
+            {
+                if (tempSelected != null && tempSelected != lvi)
+                {
+                    tempSelected.Selected = false;
+                }
+                FTPLineResult file = lvi.Tag as FTPLineResult;
+                if (file != null && file.IsDirectory)
+                {
+                    string[] filenames = (string[])e.Data.GetData(typeof(string[]));
+                    foreach (string filename in filenames)
+                    {
+                        string path = FTPHelpers.CombineURL(currentDirectory, filename);
+                        string movePath = FTPHelpers.CombineURL(file.Name, filename);
+                        FTPClient.Rename(path, movePath);
+                    }
+                    RefreshDirectory();
+                }
+            }
+            tempSelected = null;
         }
 
         #endregion
