@@ -9,12 +9,13 @@ using System.Windows.Forms;
 using ZSS.UpdateCheckerLib;
 using ZSS.Properties;
 using ZSS.Tasks;
+using System.Net;
 
 namespace ZSS.Helpers
 {
     public class WorkerSecondary
     {
-       
+
         private ZScreen mZScreen;
 
         public WorkerSecondary(ZScreen myZScreen)
@@ -56,7 +57,16 @@ namespace ZSS.Helpers
                 UpdateCheckType = Program.conf.UpdateCheckType,
                 MyNewVersionWindowOptions = nvwo
             };
-
+            if (Program.conf.ProxyEnabled && Program.conf.ProxyActive != null)
+            {                
+                NetworkCredential cred = new NetworkCredential
+                {
+                    UserName = Program.conf.ProxyActive.UserName,
+                    Password = Program.conf.ProxyActive.Password,
+                    Domain = Program.conf.ProxyActive.Domain
+                };                
+                uco.ProxySettings = new WebProxy(cred.Domain, true, null, cred);
+            }
             UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
             worker.ReportProgress(1, updateChecker.StartCheckUpdate());
             updateChecker.ShowPrompt();

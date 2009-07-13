@@ -36,6 +36,7 @@ namespace ZSS.UpdateCheckerLib
         public bool CheckExperimental { get; set; }
         public UpdateCheckType UpdateCheckType { get; set; }
         public NewVersionWindowOptions MyNewVersionWindowOptions { get; set; }
+        public WebProxy ProxySettings { get; set; }
     }
 
     public class UpdateChecker
@@ -137,6 +138,10 @@ namespace ZSS.UpdateCheckerLib
         {
             VersionInfo returnValue = new VersionInfo();
             WebClient wClient = new WebClient();
+            if (this.Options.ProxySettings != null)
+            {
+                wClient.Proxy = this.Options.ProxySettings;
+            }
             string source = wClient.DownloadString(link);
             returnValue.Link = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
             returnValue.Version = Regex.Match(returnValue.Link, @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
