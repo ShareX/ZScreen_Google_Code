@@ -159,7 +159,7 @@ namespace ZSS
 
         void ProxyAccountsAddButton_Click(object sender, EventArgs e)
         {
-            ProxyInfo acc = new ProxyInfo("userName", "password", "domain:port");
+            ProxyInfo acc = new ProxyInfo("userName", "password", "domain", 8080);
             Program.conf.ProxyList.Add(acc);
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;

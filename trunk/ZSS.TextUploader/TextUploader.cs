@@ -45,6 +45,7 @@ namespace ZSS.TextUploaderLib
         public TextUploader() { }
 
         public List<string> Errors { get; set; }
+        public WebProxy ProxySettings { get; set; }
 
         /// <summary>
         /// String that is uploaded
@@ -115,6 +116,10 @@ namespace ZSS.TextUploaderLib
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                if (ProxySettings != null)
+                {
+                    request.Proxy = ProxySettings;
+                }
                 request.AllowAutoRedirect = true;
                 request.Method = "POST";
 
