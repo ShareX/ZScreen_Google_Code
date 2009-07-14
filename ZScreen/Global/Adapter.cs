@@ -123,9 +123,9 @@ namespace ZSS.Global
             string msg = "Success!";
             try
             {
+                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
+                WebProxy wp = new WebProxy(acc.GetAddress(), true, null, cred);             
                 WebClient wc = new WebClient(); 
-                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password, acc.Domain);
-                WebProxy wp = new WebProxy(acc.Domain, true, null, cred);
                 wc.Proxy = wp;
                 string html = wc.DownloadString(new Uri("http://www.google.com"));                
             }

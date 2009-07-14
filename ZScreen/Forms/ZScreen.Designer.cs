@@ -406,6 +406,10 @@ namespace ZSS
             this.cbShowTaskbar = new System.Windows.Forms.CheckBox();
             this.cbOpenMainWindow = new System.Windows.Forms.CheckBox();
             this.cbStartWin = new System.Windows.Forms.CheckBox();
+            this.tpProxy = new System.Windows.Forms.TabPage();
+            this.gpProxySettings = new System.Windows.Forms.GroupBox();
+            this.chkProxyEnable = new System.Windows.Forms.CheckBox();
+            this.ucProxyAccounts = new ZSS.UserControls.AccountsControl();
             this.tpInteraction = new System.Windows.Forms.TabPage();
             this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
             this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
@@ -459,10 +463,6 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpProxy = new System.Windows.Forms.TabPage();
-            this.ucProxyAccounts = new ZSS.UserControls.AccountsControl();
-            this.gpProxySettings = new System.Windows.Forms.GroupBox();
-            this.chkProxyEnable = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -568,6 +568,8 @@ namespace ZSS
             this.tpGeneral.SuspendLayout();
             this.gbUpdates.SuspendLayout();
             this.gbMisc.SuspendLayout();
+            this.tpProxy.SuspendLayout();
+            this.gpProxySettings.SuspendLayout();
             this.tpInteraction.SuspendLayout();
             this.gbActionsToolbarSettings.SuspendLayout();
             this.gbDropBox.SuspendLayout();
@@ -583,8 +585,6 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.tpProxy.SuspendLayout();
-            this.gpProxySettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -4801,6 +4801,53 @@ namespace ZSS
             this.cbStartWin.UseVisualStyleBackColor = true;
             this.cbStartWin.CheckedChanged += new System.EventHandler(this.cbStartWin_CheckedChanged);
             // 
+            // tpProxy
+            // 
+            this.tpProxy.Controls.Add(this.gpProxySettings);
+            this.tpProxy.Controls.Add(this.ucProxyAccounts);
+            this.tpProxy.Location = new System.Drawing.Point(4, 22);
+            this.tpProxy.Name = "tpProxy";
+            this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
+            this.tpProxy.Size = new System.Drawing.Size(783, 399);
+            this.tpProxy.TabIndex = 6;
+            this.tpProxy.Text = "Proxy";
+            this.tpProxy.UseVisualStyleBackColor = true;
+            // 
+            // gpProxySettings
+            // 
+            this.gpProxySettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gpProxySettings.Controls.Add(this.chkProxyEnable);
+            this.gpProxySettings.Location = new System.Drawing.Point(16, 312);
+            this.gpProxySettings.Name = "gpProxySettings";
+            this.gpProxySettings.Size = new System.Drawing.Size(751, 72);
+            this.gpProxySettings.TabIndex = 117;
+            this.gpProxySettings.TabStop = false;
+            this.gpProxySettings.Text = "Proxy Settings";
+            // 
+            // chkProxyEnable
+            // 
+            this.chkProxyEnable.AutoSize = true;
+            this.chkProxyEnable.BackColor = System.Drawing.Color.Transparent;
+            this.chkProxyEnable.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkProxyEnable.Location = new System.Drawing.Point(16, 24);
+            this.chkProxyEnable.Name = "chkProxyEnable";
+            this.chkProxyEnable.Size = new System.Drawing.Size(88, 17);
+            this.chkProxyEnable.TabIndex = 113;
+            this.chkProxyEnable.Text = "Enable Proxy";
+            this.chkProxyEnable.UseVisualStyleBackColor = false;
+            this.chkProxyEnable.CheckedChanged += new System.EventHandler(this.chkProxyEnable_CheckedChanged);
+            // 
+            // ucProxyAccounts
+            // 
+            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucProxyAccounts.Name = "ucProxyAccounts";
+            this.ucProxyAccounts.Size = new System.Drawing.Size(777, 309);
+            this.ucProxyAccounts.TabIndex = 0;
+            // 
             // tpInteraction
             // 
             this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
@@ -5427,51 +5474,6 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
-            // tpProxy
-            // 
-            this.tpProxy.Controls.Add(this.gpProxySettings);
-            this.tpProxy.Controls.Add(this.ucProxyAccounts);
-            this.tpProxy.Location = new System.Drawing.Point(4, 22);
-            this.tpProxy.Name = "tpProxy";
-            this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProxy.Size = new System.Drawing.Size(783, 399);
-            this.tpProxy.TabIndex = 6;
-            this.tpProxy.Text = "Proxy";
-            this.tpProxy.UseVisualStyleBackColor = true;
-            // 
-            // ucProxyAccounts
-            // 
-            this.ucProxyAccounts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(777, 309);
-            this.ucProxyAccounts.TabIndex = 0;
-            // 
-            // gpProxySettings
-            // 
-            this.gpProxySettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gpProxySettings.Controls.Add(this.chkProxyEnable);
-            this.gpProxySettings.Location = new System.Drawing.Point(16, 312);
-            this.gpProxySettings.Name = "gpProxySettings";
-            this.gpProxySettings.Size = new System.Drawing.Size(751, 72);
-            this.gpProxySettings.TabIndex = 117;
-            this.gpProxySettings.TabStop = false;
-            this.gpProxySettings.Text = "Proxy Settings";
-            // 
-            // chkProxyEnable
-            // 
-            this.chkProxyEnable.AutoSize = true;
-            this.chkProxyEnable.BackColor = System.Drawing.Color.Transparent;
-            this.chkProxyEnable.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkProxyEnable.Location = new System.Drawing.Point(16, 24);
-            this.chkProxyEnable.Name = "chkProxyEnable";
-            this.chkProxyEnable.Size = new System.Drawing.Size(88, 17);
-            this.chkProxyEnable.TabIndex = 113;
-            this.chkProxyEnable.Text = "Enable Proxy";
-            this.chkProxyEnable.UseVisualStyleBackColor = false;
-            this.chkProxyEnable.CheckedChanged += new System.EventHandler(this.chkProxyEnable_CheckedChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5637,6 +5639,9 @@ namespace ZSS
             this.gbUpdates.PerformLayout();
             this.gbMisc.ResumeLayout(false);
             this.gbMisc.PerformLayout();
+            this.tpProxy.ResumeLayout(false);
+            this.gpProxySettings.ResumeLayout(false);
+            this.gpProxySettings.PerformLayout();
             this.tpInteraction.ResumeLayout(false);
             this.gbActionsToolbarSettings.ResumeLayout(false);
             this.gbActionsToolbarSettings.PerformLayout();
@@ -5659,9 +5664,6 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.tpProxy.ResumeLayout(false);
-            this.gpProxySettings.ResumeLayout(false);
-            this.gpProxySettings.PerformLayout();
             this.ResumeLayout(false);
 
         }

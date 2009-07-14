@@ -34,21 +34,28 @@ namespace ZSS.Helpers
     public class ProxyInfo
     {
         public string UserName { get; set; }
-        [Category("Proxy"), PasswordPropertyText(true)]
+        [PasswordPropertyText(true)]
         public string Password { get; set; }
         public string Domain { get; set; }
+        public int Port { get; set; }
         public ProxyInfo() { }
 
-        public ProxyInfo(string userName, string password, string domain)
+        public ProxyInfo(string userName, string password, string domain, int port)
         {
             this.UserName = userName;
             this.Password = password;
             this.Domain = domain;
+            this.Port = port;
         }
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}", this.UserName, this.Domain);
+            return string.Format("{0} - {1}:{2}", this.UserName, this.Domain, this.Port);
+        }
+
+        public string GetAddress()
+        {
+            return string.Format("{0}:{1}", this.Domain, this.Port);
         }
     }
 }
