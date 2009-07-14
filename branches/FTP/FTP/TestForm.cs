@@ -6,6 +6,7 @@ using FTPTest.Properties;
 using IconHelper;
 using ZSS;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FTPTest
 {
@@ -262,52 +263,86 @@ namespace FTPTest
 
         private void lvFTPList_DragOver(object sender, DragEventArgs e)
         {
-            Point point = lvFTPList.PointToClient(new Point(e.X, e.Y));
-            ListViewItem lvi = lvFTPList.GetItemAt(point.X, point.Y);
-            if (lvi != null && e.AllowedEffect == DragDropEffects.Move)
+            if (e.Data.GetDataPresent(typeof(string[])))
             {
-                if (tempSelected != null && tempSelected != lvi)
+                Point point = lvFTPList.PointToClient(new Point(e.X, e.Y));
+                ListViewItem lvi = lvFTPList.GetItemAt(point.X, point.Y);
+                if (lvi != null && e.AllowedEffect == DragDropEffects.Move)
                 {
-                    tempSelected.Selected = false;
+                    if (tempSelected != null && tempSelected != lvi)
+                    {
+                        tempSelected.Selected = false;
+                    }
+                    FTPLineResult file = lvi.Tag as FTPLineResult;
+                    if (file != null && file.IsDirectory)
+                    {
+                        lvi.Selected = true;
+                        tempSelected = lvi;
+                        e.Effect = DragDropEffects.Move;
+                    }
+                    else
+                    {
+                        e.Effect = DragDropEffects.None;
+                    }
                 }
-                FTPLineResult file = lvi.Tag as FTPLineResult;
-                if (file != null && file.IsDirectory)
-                {
-                    lvi.Selected = true;
-                    tempSelected = lvi;
-                    e.Effect = DragDropEffects.Move;
-                }
-                else
-                {
-                    e.Effect = DragDropEffects.None;
-                }
+            }
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
             }
         }
 
         private void lvFTPList_DragDrop(object sender, DragEventArgs e)
         {
-            Point point = lvFTPList.PointToClient(new Point(e.X, e.Y));
-            ListViewItem lvi = lvFTPList.GetItemAt(point.X, point.Y);
-            if (lvi != null && e.AllowedEffect == DragDropEffects.Move)
+            if (e.Data.GetDataPresent(typeof(string[])))
             {
-                if (tempSelected != null && tempSelected != lvi)
+                Point point = lvFTPList.PointToClient(new Point(e.X, e.Y));
+                ListViewItem lvi = lvFTPList.GetItemAt(point.X, point.Y);
+                if (lvi != null && e.AllowedEffect == DragDropEffects.Move)
                 {
-                    tempSelected.Selected = false;
-                }
-                FTPLineResult file = lvi.Tag as FTPLineResult;
-                if (file != null && file.IsDirectory)
-                {
-                    string[] filenames = (string[])e.Data.GetData(typeof(string[]));
-                    foreach (string filename in filenames)
+                    if (tempSelected != null && tempSelected != lvi)
                     {
-                        string path = FTPHelpers.CombineURL(currentDirectory, filename);
-                        string movePath = FTPHelpers.CombineURL(file.Name, filename);
-                        FTPClient.Rename(path, movePath);
+                        tempSelected.Selected = false;
+                    }
+                    FTPLineResult file = lvi.Tag as FTPLineResult;
+                    if (file != null && file.IsDirectory)
+                    {
+                        string[] filenames = e.Data.GetData(typeof(string[])) as string[];
+                        if (filenames != null)
+                        {
+                            foreach (string filename in filenames)
+                            {
+                                string path = FTPHelpers.CombineURL(currentDirectory, filename);
+                                string movePath = FTPHelpers.CombineURL(file.Name, filename);
+                                FTPClient.Rename(path, movePath);
+                            }
+                            RefreshDirectory();
+                        }
+                    }
+                }
+                tempSelected = null;
+            }
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files != null)
+                {
+                    string filename;
+                    foreach (string file in files)
+                    {
+                        filename = Path.GetFileName(file);
+                        if (filename.Contains('.'))
+                        {
+                            FTPClient.UploadFile(file, FTPHelpers.CombineURL(currentDirectory, filename));
+                        }
                     }
                     RefreshDirectory();
                 }
             }
-            tempSelected = null;
         }
 
         #endregion
