@@ -121,7 +121,7 @@ namespace ZSS
                     }
                 }
 
-                WriteOutput(string.Format("DownloadFile: {0} - {1}", url, savePath));
+                WriteOutput(string.Format("DownloadFile: {0} -> {1}", url, savePath));
             }
             catch (Exception ex)
             {
@@ -147,6 +147,24 @@ namespace ZSS
 
         public void RemoveDirectory(string url)
         {
+            string filename = FTPHelpers.GetFileName(url);
+            if (filename == "." || filename == "..") return;
+
+            FTPLineResult[] files = ListDirectoryDetails(url);
+            string path = FTPHelpers.GetDirectoryName(url);
+
+            foreach (FTPLineResult file in files)
+            {
+                if (file.IsDirectory)
+                {
+                    RemoveDirectory(FTPHelpers.CombineURL(url, file.Name));
+                }
+                else
+                {
+                    DeleteFile(FTPHelpers.CombineURL(url, file.Name));
+                }
+            }
+
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.RemoveDirectory;
@@ -156,28 +174,6 @@ namespace ZSS
             request.GetResponse();
 
             WriteOutput("RemoveDirectory: " + url);
-        }
-
-        public void RemoveDirectoryFull(string url)
-        {
-            string[] files = ListDirectory(url);
-            string path = FTPHelpers.GetDirectoryName(url);
-
-            foreach (string file in files)
-            {
-                if (file.Contains('.'))
-                {
-                    DeleteFile(FTPHelpers.CombineURL(path, file));
-                }
-                else
-                {
-                    RemoveDirectoryFull(FTPHelpers.CombineURL(url, FTPHelpers.GetFileName(file)));
-                }
-            }
-
-            RemoveDirectory(url);
-
-            WriteOutput("RemoveDirectoryFull: " + url);
         }
 
         public void Rename(string url, string newFileName)
@@ -191,7 +187,7 @@ namespace ZSS
 
             request.GetResponse();
 
-            WriteOutput(string.Format("Rename: {0} - {1}", url, newFileName));
+            WriteOutput(string.Format("Rename: {0} -> {1}", url, newFileName));
         }
 
         public long GetFileSize(string url)

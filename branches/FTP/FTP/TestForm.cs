@@ -177,7 +177,7 @@ namespace FTPTest
                     string path = FTPHelpers.CombineURL(currentDirectory, file.Name);
                     if (file.IsDirectory)
                     {
-                        FTPClient.RemoveDirectoryFull(path);
+                        FTPClient.RemoveDirectory(path);
                     }
                     else
                     {
