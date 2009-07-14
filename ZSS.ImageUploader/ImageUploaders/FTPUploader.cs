@@ -28,6 +28,7 @@ using System.Text;
 using System.Drawing;
 using ZSS.ImageUploaderLib.Helpers;
 using System.Net;
+using System.Xml.Serialization;
 
 namespace ZSS.ImageUploaderLib
 {
