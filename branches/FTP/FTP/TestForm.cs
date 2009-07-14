@@ -199,6 +199,28 @@ namespace FTPTest
             }
         }
 
+        private void FTPUploadFiles(string uploadDirectory, string[] files)
+        {
+            string filename;
+            foreach (string file in files)
+            {
+                filename = Path.GetFileName(file);
+                if (filename.Contains('.'))
+                {
+                    FTPClient.UploadFile(file, FTPHelpers.CombineURL(uploadDirectory, filename));
+                }
+                else
+                {
+                    List<string> filesList = new List<string>();
+                    filesList.AddRange(Directory.GetFiles(file));
+                    filesList.AddRange(Directory.GetDirectories(file));
+                    string path = FTPHelpers.CombineURL(uploadDirectory, filename);
+                    FTPClient.MakeDirectory(path);
+                    FTPUploadFiles(path, filesList.ToArray());
+                }
+            }
+        }
+
         #endregion
 
         #region Form events
@@ -331,15 +353,7 @@ namespace FTPTest
                 string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (files != null)
                 {
-                    string filename;
-                    foreach (string file in files)
-                    {
-                        filename = Path.GetFileName(file);
-                        if (filename.Contains('.'))
-                        {
-                            FTPClient.UploadFile(file, FTPHelpers.CombineURL(currentDirectory, filename));
-                        }
-                    }
+                    FTPUploadFiles(currentDirectory, files);
                     RefreshDirectory();
                 }
             }
