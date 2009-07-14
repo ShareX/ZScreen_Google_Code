@@ -72,6 +72,15 @@ namespace ZSS
             }
             return url;
         }
+
+        public static string GetFileName(string path)
+        {
+            if (path.Contains('/'))
+            {
+                path = path.Remove(0, path.LastIndexOf('/') + 1);
+            }
+            return path;
+        }
     }
 
     public static class FTPLineParser

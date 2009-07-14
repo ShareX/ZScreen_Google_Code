@@ -22,7 +22,7 @@ namespace FTPTest
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
-                string.IsNullOrEmpty(Settings.Default.Password))
+                !string.IsNullOrEmpty(Settings.Default.Password))
             {
                 new LoginDialog().ShowDialog();
             }

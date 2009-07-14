@@ -131,6 +131,9 @@ namespace ZSS
 
         public void DeleteFile(string url)
         {
+            string filename = FTPHelpers.GetFileName(url);
+            if (filename == "." || filename == "..") return;
+
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
