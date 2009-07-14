@@ -23,7 +23,7 @@ namespace FTPTest
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
-                !string.IsNullOrEmpty(Settings.Default.Password))
+                string.IsNullOrEmpty(Settings.Default.Password))
             {
                 new LoginDialog().ShowDialog();
             }
@@ -38,7 +38,6 @@ namespace FTPTest
             FTPClient = new FTP(FTPAcc);
             FTPClient.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
 
-            currentDirectory = FTPClient.FTPAddress;
             RefreshDirectory();
         }
 
@@ -46,6 +45,11 @@ namespace FTPTest
 
         private void RefreshDirectory()
         {
+            if (string.IsNullOrEmpty(currentDirectory))
+            {
+                currentDirectory = FTPClient.FTPAddress;
+            }
+
             LoadDirectory(currentDirectory);
         }
 
@@ -120,23 +124,32 @@ namespace FTPTest
         {
             if (lvFTPList.SelectedItems.Count > 0)
             {
-                FTPLineResult file = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
-                string path = FTPHelpers.CombineURL(currentDirectory, file.Name);
-                if (file.IsDirectory)
+                if (openDirectory)
                 {
-                    if (openDirectory)
+                    FTPLineResult checkDirectory = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
+                    string loadPath = FTPHelpers.CombineURL(currentDirectory, checkDirectory.Name);
+                    if (checkDirectory != null)
                     {
-                        LoadDirectory(path);
+                        LoadDirectory(loadPath);
+                        return;
                     }
                 }
-                else if (!string.IsNullOrEmpty(file.Name))
+
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                fbd.RootFolder = Environment.SpecialFolder.Desktop;
+
+                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(fbd.SelectedPath))
                 {
-                    SaveFileDialog sfd = new SaveFileDialog();
-                    sfd.FileName = file.Name;
-                    sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    if (sfd.ShowDialog() == DialogResult.OK)
+                    string path;
+                    foreach (ListViewItem lvi in lvFTPList.SelectedItems)
                     {
-                        FTPClient.DownloadFile(path, sfd.FileName);
+                        FTPLineResult file = lvi.Tag as FTPLineResult;
+                        path = FTPHelpers.CombineURL(currentDirectory, file.Name);
+
+                        if (!file.IsDirectory && !string.IsNullOrEmpty(file.Name))
+                        {
+                            FTPClient.DownloadFile(path, FTPHelpers.CombineURL(fbd.SelectedPath, file.Name));
+                        }
                     }
                 }
             }
@@ -155,7 +168,7 @@ namespace FTPTest
 
         private void lvFTPList_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e)
         {
-            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel)
+            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel && !string.IsNullOrEmpty(e.DisplayText))
             {
                 FTPLineResult file = (FTPLineResult)lvFTPList.SelectedItems[0].Tag;
                 if (file.Name != e.DisplayText)

@@ -241,7 +241,7 @@ namespace FTPTest
 
         #region Initialize editing depending of DoubleClickActivation property
 
-        protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
 
@@ -366,7 +366,7 @@ namespace FTPTest
             EndEditing(true);
         }
 
-        private void _editControl_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void _editControl_KeyPress(object sender, KeyPressEventArgs e)
         {
             switch (e.KeyChar)
             {
@@ -404,7 +404,10 @@ namespace FTPTest
 
             OnSubItemEndEditing(e);
 
-            _editItem.SubItems[_editSubItem].Text = e.DisplayText;
+            if (!string.IsNullOrEmpty(e.DisplayText))
+            {
+                _editItem.SubItems[_editSubItem].Text = e.DisplayText;
+            }
 
             _editingControl.Leave -= new EventHandler(_editControl_Leave);
             _editingControl.KeyPress -= new KeyPressEventHandler(_editControl_KeyPress);
