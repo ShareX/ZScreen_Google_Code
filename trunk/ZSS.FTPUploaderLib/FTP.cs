@@ -28,9 +28,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace ZSS
 {
+    
     public class FTP
     {
         private const int BufferSize = 2048;
@@ -104,7 +106,10 @@ namespace ZSS
                 string url = CombineURL(FTPAddress, fileName);
 
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+                if (ProxySettings != null)
+                {
+                    request.Proxy = ProxySettings;
+                }
                 request.Method = WebRequestMethods.Ftp.DownloadFile;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
                 request.KeepAlive = false;
@@ -135,7 +140,10 @@ namespace ZSS
             string url = CombineURL(FTPAddress, fileName);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+            if (ProxySettings != null)
+            {
+                request.Proxy = ProxySettings;
+            }
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
@@ -147,7 +155,10 @@ namespace ZSS
             string url = CombineURL(FTPAddress, fileName);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+            if (ProxySettings != null)
+            {
+                request.Proxy = ProxySettings;
+            }
             request.Method = WebRequestMethods.Ftp.Rename;
             request.RenameTo = newFileName;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
@@ -160,7 +171,10 @@ namespace ZSS
             string url = CombineURL(FTPAddress, fileName);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+            if (ProxySettings != null)
+            {
+                request.Proxy = ProxySettings;
+            }
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 
@@ -175,7 +189,10 @@ namespace ZSS
             List<string> result = new List<string>();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+            if (ProxySettings != null)
+            {
+                request.Proxy = ProxySettings;
+            }
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
             request.KeepAlive = false;
@@ -204,7 +221,10 @@ namespace ZSS
             List<FTPLineResult> result = new List<FTPLineResult>();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+            if (ProxySettings != null)
+            {
+                request.Proxy = ProxySettings;
+            }
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
             request.KeepAlive = false;
@@ -249,7 +269,10 @@ namespace ZSS
                 string url = CombineURL(FTPAddress, dirName);
 
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+                if (ProxySettings != null)
+                {
+                    request.Proxy = ProxySettings;
+                }
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
 

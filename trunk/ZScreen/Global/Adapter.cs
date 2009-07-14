@@ -119,17 +119,20 @@ namespace ZSS.Global
         }
 
         /// <summary>
-        /// Returns a WebProxy object based on active ProxyInfo, returns null otherwise
+        /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns null otherwise
         /// </summary>
         /// <returns></returns>
         public static WebProxy GetProxySettings()
         {
             WebProxy wp = null;
-            ProxyInfo acc = Program.conf.ProxyActive;
-            if (acc != null)
+            if (Program.conf.ProxyEnabled)
             {
-                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
-                wp = new WebProxy(acc.GetAddress(), true, null, cred);
+                ProxyInfo acc = Program.conf.ProxyActive;
+                if (acc != null)
+                {
+                    NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
+                    wp = new WebProxy(acc.GetAddress(), true, null, cred);
+                }
             }
             return wp;
         }

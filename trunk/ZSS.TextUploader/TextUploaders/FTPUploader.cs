@@ -75,6 +75,7 @@ namespace ZSS.TextUploaderLib
         public override string UploadText(string text)
         {
             FTP ftpClient = new FTP(this.FTPAccount);
+            ftpClient.ProxySettings = this.ProxySettings;
             string fileName = DateTime.Now.Ticks + ".txt";
             ftpClient.UploadText(text, fileName);
             return this.FTPAccount.GetUriPath(fileName);

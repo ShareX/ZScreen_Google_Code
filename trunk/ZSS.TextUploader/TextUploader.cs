@@ -45,6 +45,7 @@ namespace ZSS.TextUploaderLib
         public TextUploader() { }
 
         public List<string> Errors { get; set; }
+        [XmlIgnore]
         public WebProxy ProxySettings { get; set; }
 
         /// <summary>
