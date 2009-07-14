@@ -25,6 +25,7 @@ namespace ZSS.Helpers
         public void UploadImage()
         {
             mTask.StartTime = DateTime.Now;
+
             ImageUploader imageUploader = null;
 
             if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
@@ -68,6 +69,7 @@ namespace ZSS.Helpers
 
             if (imageUploader != null)
             {
+                imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
@@ -224,6 +226,7 @@ namespace ZSS.Helpers
             mTask.StartTime = DateTime.Now;
 
             TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
+            textUploader.ProxySettings = Adapter.GetProxySettings();
             string url = "";
             if (!string.IsNullOrEmpty(mTask.MyText))
             {

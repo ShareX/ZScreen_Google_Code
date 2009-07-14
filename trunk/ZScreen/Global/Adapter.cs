@@ -118,6 +118,22 @@ namespace ZSS.Global
             }
         }
 
+        /// <summary>
+        /// Returns a WebProxy object based on active ProxyInfo, returns null otherwise
+        /// </summary>
+        /// <returns></returns>
+        public static WebProxy GetProxySettings()
+        {
+            WebProxy wp = null;
+            ProxyInfo acc = Program.conf.ProxyActive;
+            if (acc != null)
+            {
+                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
+                wp = new WebProxy(acc.GetAddress(), true, null, cred);
+            }
+            return wp;
+        }
+
         public static void TestProxyAccount(ProxyInfo acc)
         {
             string msg = "Success!";
