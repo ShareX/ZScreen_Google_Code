@@ -161,11 +161,18 @@ namespace ZSS
         public void RemoveDirectoryFull(string url)
         {
             string[] files = ListDirectory(url);
-            string path = url.Substring(0, url.LastIndexOf('/'));
+            string path = FTPHelpers.GetDirectoryName(url);
 
             foreach (string file in files)
             {
-                DeleteFile(FTPHelpers.CombineURL(path, file));
+                if (file.Contains('.'))
+                {
+                    DeleteFile(FTPHelpers.CombineURL(path, file));
+                }
+                else
+                {
+                    RemoveDirectoryFull(FTPHelpers.CombineURL(url, FTPHelpers.GetFileName(file)));
+                }
             }
 
             RemoveDirectory(url);
