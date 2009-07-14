@@ -28,6 +28,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -36,6 +37,7 @@ namespace ZSS.UpdateCheckerLib
         public bool CheckExperimental { get; set; }
         public UpdateCheckType UpdateCheckType { get; set; }
         public NewVersionWindowOptions MyNewVersionWindowOptions { get; set; }
+        [XmlIgnore]
         public WebProxy ProxySettings { get; set; }
     }
 

@@ -57,11 +57,7 @@ namespace ZSS.Helpers
                 UpdateCheckType = Program.conf.UpdateCheckType,
                 MyNewVersionWindowOptions = nvwo
             };
-            if (Program.conf.ProxyEnabled && Program.conf.ProxyActive != null)
-            {                
-                NetworkCredential cred = new NetworkCredential(Program.conf.ProxyActive.UserName, Program.conf.ProxyActive.Password);                
-                uco.ProxySettings = new WebProxy(Program.conf.ProxyActive.GetAddress(), true, null, cred);
-            }
+            uco.ProxySettings = Adapter.GetProxySettings();
             UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
             worker.ReportProgress(1, updateChecker.StartCheckUpdate());
             updateChecker.ShowPrompt();

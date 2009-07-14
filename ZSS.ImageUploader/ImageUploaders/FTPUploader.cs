@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using ZSS.ImageUploaderLib.Helpers;
+using System.Net;
 
 namespace ZSS.ImageUploaderLib
 {
@@ -37,6 +38,8 @@ namespace ZSS.ImageUploaderLib
         private List<string> Errors { get; set; }
         public string Name { get; private set; }
         public const string Hostname = "FTP";
+        [XmlIgnore]
+        public WebProxy ProxySettings { get; set; }
 
         public FTPUploader(FTPAccount acc)
         {
@@ -60,15 +63,9 @@ namespace ZSS.ImageUploaderLib
             List<ImageFile> ifl = new List<ImageFile>();
 
             FTP ftpClient = new FTP(this.FTPAccount);
-            //removed binary mode code line
-
+            ftpClient.ProxySettings = this.ProxySettings;
             string fName = Path.GetFileName(localFilePath);
             ftpClient.UploadFile(localFilePath, fName);
-            //int perc = 0;
-            //while (ftpClient.DoUpload() > 0)
-            //{
-            //perc = (int)(((ff.BytesTotal) * 100) / ff.FileSize);
-            //}
 
             ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(fName), ImageFile.ImageType.FULLIMAGE));
 
