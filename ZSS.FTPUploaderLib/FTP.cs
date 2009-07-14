@@ -35,7 +35,8 @@ namespace ZSS
     {
         private const int BufferSize = 2048;
 
-        public FTPAccount Account;
+        public FTPAccount Account { get; set; }
+        public WebProxy ProxySettings { get; set; }
 
         private string FTPAddress { get { return string.Format("ftp://{0}:{1}", Account.Server, Account.Port); } }
 
@@ -56,7 +57,10 @@ namespace ZSS
                 string url = CombineURL(FTPAddress, Account.Path, remoteName);
 
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+                if (ProxySettings != null)
+                {
+                    request.Proxy = ProxySettings;
+                }
                 request.Method = WebRequestMethods.Ftp.UploadFile;
                 request.Credentials = new NetworkCredential(Account.Username, Account.Password);
                 request.KeepAlive = false;
