@@ -37,6 +37,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using ZSS.ImageUploaderLib.Helpers;
+using System.Xml.Serialization;
 
 namespace ZSS.ImageUploaderLib
 {
@@ -46,6 +47,7 @@ namespace ZSS.ImageUploaderLib
         /// List of Errors logged by ImageUploaders
         /// </summary>
         public List<string> Errors { get; private set; }
+        [XmlIgnore]
         public WebProxy ProxySettings { get; set; }
 
         /// <summary>
