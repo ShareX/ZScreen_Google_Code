@@ -29,7 +29,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using FTPTest.Properties;
+using ZSS.FTPClientLib.Properties;
 
 namespace FTPTest
 {

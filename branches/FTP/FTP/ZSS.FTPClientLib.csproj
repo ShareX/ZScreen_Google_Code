@@ -8,8 +8,8 @@
     <ProjectGuid>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FTPTest</RootNamespace>
-    <AssemblyName>FTP</AssemblyName>
+    <RootNamespace>ZSS.FTPClientLib</RootNamespace>
+    <AssemblyName>ZSS.FTPClientLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

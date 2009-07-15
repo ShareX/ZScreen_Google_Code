@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FTPTest.Properties;
+using ZSS.FTPClientLib.Properties;
 using IconHelper;
 using ZSS;
 using System.Collections.Generic;
