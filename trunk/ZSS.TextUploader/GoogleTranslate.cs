@@ -34,6 +34,7 @@ namespace ZSS.TextUploaderLib
     public class GoogleTranslate
     {
         public Options LanguageOptions { get; private set; }
+        public WebProxy ProxySettings { get; set; }
 
         public GoogleTranslate()
         {
@@ -48,7 +49,7 @@ namespace ZSS.TextUploaderLib
             // The remote name could not be resolved: 'translate.google.com'
             try
             {
-                WebClient webClient = new WebClient();
+                WebClient webClient = new WebClient();                
                 string source = webClient.DownloadString("http://translate.google.com/translate_t");
                 string[] selectName = new[] { "sl", "tl" };
 

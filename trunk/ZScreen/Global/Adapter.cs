@@ -21,10 +21,11 @@ namespace ZSS.Global
         public static void TestFTPAccount(FTPAccount acc)
         {
             string msg;
-            FTP ftp = new FTP(acc);
+            FTP ftpClient = new FTP(acc);
+            ftpClient.ProxySettings = GetProxySettings();
             try
             {
-                if (ftp.ListDirectory() != null)
+                if (ftpClient.ListDirectory() != null)
                 {
                     msg = "Success.";
                 }
@@ -39,8 +40,8 @@ namespace ZSS.Global
                 {
                     try
                     {
-                        ftp.MakeMultiDirectory(acc.Path);
-                        if (ftp.ListDirectory() != null)
+                        ftpClient.MakeMultiDirectory(acc.Path);
+                        if (ftpClient.ListDirectory() != null)
                         {
                             msg = "Success.\nAuto created folder: " + acc.Path;
                         }
@@ -168,6 +169,7 @@ namespace ZSS.Global
             if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL)
             {
                 TextUploader tu = Program.conf.UrlShortenerActive;
+                tu.ProxySettings = Adapter.GetProxySettings();
                 if (tu != null)
                 {
                     string temp = tu.UploadText(url);
@@ -188,6 +190,7 @@ namespace ZSS.Global
             if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) && !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
             {
                 TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                tpu.ProxySettings = Adapter.GetProxySettings();
                 string shuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
