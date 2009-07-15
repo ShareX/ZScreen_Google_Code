@@ -42,6 +42,7 @@
     <Compile Include="FTP.cs" />
     <Compile Include="FTPAccount.cs" />
     <Compile Include="FTPAccountManager.cs" />
+    <Compile Include="FTPHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
