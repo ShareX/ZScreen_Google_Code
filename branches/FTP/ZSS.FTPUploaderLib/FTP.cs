@@ -148,7 +148,7 @@ namespace ZSS
             string filename = FTPHelpers.GetFileName(url);
             if (filename == "." || filename == "..") return;
 
-            FTPLineResult[] files = ListDirectoryDetails(url);
+            List<FTPLineResult> files = ListDirectoryDetails(url);
             string path = FTPHelpers.GetDirectoryName(url);
 
             foreach (FTPLineResult file in files)
@@ -229,7 +229,7 @@ namespace ZSS
             }
         }
 
-        public FTPLineResult[] ListDirectoryDetails(string url)
+        public List<FTPLineResult> ListDirectoryDetails(string url)
         {
             List<FTPLineResult> result = new List<FTPLineResult>();
 
@@ -250,7 +250,7 @@ namespace ZSS
 
                 WriteOutput("ListDirectoryDetails: " + url);
 
-                return result.ToArray();
+                return result;
             }
         }
 

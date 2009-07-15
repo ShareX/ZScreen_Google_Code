@@ -150,6 +150,7 @@ namespace ZSS
         public string SizeString;
         public string Owner;
         public string Group;
+        public bool IsSpecial;
 
         public void SetSize(string size)
         {
