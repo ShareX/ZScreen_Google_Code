@@ -1,3 +1,5 @@
+2.21.0.0 Added HTTP Proxy support for image/text uploaders
+
 Version 2.20 - 20090801
 
 2.20.06.3 ZScreen will not save settings to file everytime the tab button is pressed while in Crop

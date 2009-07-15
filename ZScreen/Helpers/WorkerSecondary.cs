@@ -101,6 +101,7 @@ namespace ZSS.Helpers
             try
             {
                 Program.mGTranslator = new GoogleTranslate();
+                Program.mGTranslator.ProxySettings = Adapter.GetProxySettings();
                 Adapter.UpdateTinyPicShuk();
             }
             catch (Exception ex)
