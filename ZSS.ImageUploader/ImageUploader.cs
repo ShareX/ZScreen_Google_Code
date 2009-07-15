@@ -188,6 +188,7 @@ namespace ZSS.ImageUploaderLib
                     boundary, fileFormName ?? "file", this.mFileName, GetMimeType(imageFormat) ?? "application/octet-stream");
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + postData);
+                request.Proxy = this.ProxySettings;
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
                 request.Method = "POST";
 
@@ -235,8 +236,8 @@ namespace ZSS.ImageUploaderLib
                 image.Dispose();
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Proxy = this.ProxySettings;
                 string boundary = Guid.NewGuid().ToString();
-
                 request.PreAuthenticate = true;
                 request.AllowWriteStreamBuffering = true;
                 request.ContentType = string.Format("multipart/form-data; boundary={0}", boundary);

@@ -209,7 +209,7 @@ namespace ZSS.ImageUploaderLib
                 { "pass", password }
             };
 
-            string response = GetResponse(URLAPI, args);
+            string response = base.GetResponse(URLAPI, args);
             string result = GetXMLVal(response, "shuk");
             if (string.IsNullOrEmpty(result))
             {
