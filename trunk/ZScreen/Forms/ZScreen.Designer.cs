@@ -463,6 +463,7 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.tsmFTPClient = new System.Windows.Forms.ToolStripMenuItem();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -602,6 +603,7 @@ namespace ZSS
             this.tsmEditinImageSoftware,
             this.tsmCopytoClipboardMode,
             this.toolStripSeparator3,
+            this.tsmFTPClient,
             this.tsmViewRemoteDirectory,
             this.tsmViewLocalDirectory,
             this.toolStripSeparator1,
@@ -612,7 +614,7 @@ namespace ZSS
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 270);
+            this.cmTray.Size = new System.Drawing.Size(206, 314);
             // 
             // tsmiTabs
             // 
@@ -5474,6 +5476,14 @@ namespace ZSS
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
             // 
+            // tsmFTPClient
+            // 
+            this.tsmFTPClient.Image = global::ZSS.Properties.Resources.server_edit;
+            this.tsmFTPClient.Name = "tsmFTPClient";
+            this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
+            this.tsmFTPClient.Text = "FTP &Client...";
+            this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6100,6 +6110,7 @@ namespace ZSS
         private ZSS.UserControls.AccountsControl ucProxyAccounts;
         internal System.Windows.Forms.GroupBox gpProxySettings;
         internal System.Windows.Forms.CheckBox chkProxyEnable;
+        private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;
 
     }
 }

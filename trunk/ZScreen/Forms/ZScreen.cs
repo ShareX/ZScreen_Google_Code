@@ -3536,5 +3536,11 @@ namespace ZSS
         {
             Program.conf.ProxyEnabled = chkProxyEnable.Checked;
         }
+
+        private void tsmFTPClient_Click(object sender, EventArgs e)
+        {
+            ZSS.FTPClientLib.FTPClient ftpClient = new ZSS.FTPClientLib.FTPClient();
+            ftpClient.Show();
+        }
     }
 }
