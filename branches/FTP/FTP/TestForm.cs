@@ -53,11 +53,29 @@ namespace FTPTest
             LoadDirectory(currentDirectory);
         }
 
+        private void FillDirectories(string path)
+        {
+            path = path.Remove(0, FTPClient.FTPAddress.Length);
+            List<string> paths = FTPHelpers.GetPaths(path);
+            paths.Insert(0, "/");
+
+            cbDirectoryList.Items.Clear();
+            foreach (string directory in paths)
+            {
+                cbDirectoryList.Items.Add(directory);
+            }
+
+            if (cbDirectoryList.Items.Count > 0)
+            {
+                cbDirectoryList.SelectedIndex = cbDirectoryList.Items.Count - 1;
+            }
+        }
+
         private void LoadDirectory(string path)
         {
             currentDirectory = path;
             FTPClient.Account.Path = currentDirectory;
-            txtCurrentDirectory.Text = " " + currentDirectory;
+            FillDirectories(currentDirectory);
 
             List<FTPLineResult> list = FTPClient.ListDirectoryDetails(currentDirectory);
             list = list.OrderBy(x => !x.IsDirectory).ThenBy(x => x.Name).ToList();
@@ -306,11 +324,6 @@ namespace FTPTest
             FTPCreateDirectory();
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            RefreshDirectory();
-        }
-
         private void lvFTPList_ItemDrag(object sender, ItemDragEventArgs e)
         {
             if (lvFTPList.SelectedItems.Count > 0)
@@ -442,6 +455,24 @@ namespace FTPTest
                 downloadToolStripMenuItem.Enabled = !file.IsDirectory && !file.IsSpecial;
                 renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled = !file.IsSpecial;
                 //createDirectoryToolStripMenuItem.Enabled;
+            }
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshDirectory();
+        }
+
+        private void cbDirectoryList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbDirectoryList.Items.Count > 0)
+            {
+                string path = cbDirectoryList.SelectedItem.ToString().Remove(0, 1);
+                path = FTPHelpers.CombineURL(FTPClient.FTPAddress, path);
+                if (currentDirectory != path)
+                {
+                    LoadDirectory(path);
+                }
             }
         }
 

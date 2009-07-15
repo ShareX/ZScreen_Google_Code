@@ -118,6 +118,22 @@ namespace ZSS
             }
             return path;
         }
+
+        public static List<string> GetPaths(string path)
+        {
+            List<string> result = new List<string>();
+            string temp = "";
+            string[] dirs = path.Split('/');
+            foreach (string dir in dirs)
+            {
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    temp += "/" + dir;
+                    result.Add(temp);
+                }
+            }
+            return result;
+        }
     }
 
     public static class FTPLineParser

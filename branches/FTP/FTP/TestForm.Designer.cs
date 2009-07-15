@@ -35,13 +35,14 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtRename = new System.Windows.Forms.TextBox();
-            this.txtCurrentDirectory = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.tcFTP = new System.Windows.Forms.TabControl();
             this.tpMainTab = new System.Windows.Forms.TabPage();
             this.tpConsole = new System.Windows.Forms.TabPage();
             this.txtConsole = new System.Windows.Forms.TextBox();
+            this.cbDirectoryList = new System.Windows.Forms.ComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lvFTPList = new FTPTest.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
@@ -64,9 +65,11 @@
             this.downloadToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.refreshToolStripMenuItem,
             this.createDirectoryToolStripMenuItem});
             this.cmsRightClickMenu.Name = "cmsRightClickMenu";
-            this.cmsRightClickMenu.Size = new System.Drawing.Size(159, 92);
+            this.cmsRightClickMenu.Size = new System.Drawing.Size(159, 120);
             // 
             // downloadToolStripMenuItem
             // 
@@ -104,17 +107,6 @@
             this.txtRename.TabIndex = 1;
             this.txtRename.Visible = false;
             // 
-            // txtCurrentDirectory
-            // 
-            this.txtCurrentDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCurrentDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCurrentDirectory.Location = new System.Drawing.Point(88, 8);
-            this.txtCurrentDirectory.Name = "txtCurrentDirectory";
-            this.txtCurrentDirectory.ReadOnly = true;
-            this.txtCurrentDirectory.Size = new System.Drawing.Size(855, 21);
-            this.txtCurrentDirectory.TabIndex = 0;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -126,25 +118,15 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnRefresh);
-            this.splitContainer1.Panel1.Controls.Add(this.txtCurrentDirectory);
+            this.splitContainer1.Panel1.Controls.Add(this.cbDirectoryList);
+            this.splitContainer1.Panel1MinSize = 20;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lvFTPList);
             this.splitContainer1.Size = new System.Drawing.Size(952, 557);
-            this.splitContainer1.SplitterDistance = 39;
+            this.splitContainer1.SplitterDistance = 23;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(8, 7);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(72, 24);
-            this.btnRefresh.TabIndex = 2;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // tcFTP
             // 
@@ -190,6 +172,29 @@
             this.txtConsole.Size = new System.Drawing.Size(952, 557);
             this.txtConsole.TabIndex = 0;
             // 
+            // cbDirectoryList
+            // 
+            this.cbDirectoryList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbDirectoryList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDirectoryList.FormattingEnabled = true;
+            this.cbDirectoryList.Location = new System.Drawing.Point(0, 0);
+            this.cbDirectoryList.Name = "cbDirectoryList";
+            this.cbDirectoryList.Size = new System.Drawing.Size(952, 21);
+            this.cbDirectoryList.TabIndex = 3;
+            this.cbDirectoryList.SelectedIndexChanged += new System.EventHandler(this.cbDirectoryList_SelectedIndexChanged);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
             // lvFTPList
             // 
             this.lvFTPList.AllowColumnReorder = true;
@@ -210,7 +215,7 @@
             this.lvFTPList.HideSelection = false;
             this.lvFTPList.Location = new System.Drawing.Point(0, 0);
             this.lvFTPList.Name = "lvFTPList";
-            this.lvFTPList.Size = new System.Drawing.Size(952, 514);
+            this.lvFTPList.Size = new System.Drawing.Size(952, 530);
             this.lvFTPList.TabIndex = 0;
             this.lvFTPList.UseCompatibleStateImageBehavior = false;
             this.lvFTPList.View = System.Windows.Forms.View.Details;
@@ -262,7 +267,6 @@
             this.Text = "FTP Test";
             this.cmsRightClickMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.tcFTP.ResumeLayout(false);
@@ -287,7 +291,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.TextBox txtRename;
-        private System.Windows.Forms.TextBox txtCurrentDirectory;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
         private System.Windows.Forms.TabControl tcFTP;
@@ -295,6 +298,8 @@
         private System.Windows.Forms.TabPage tpConsole;
         private System.Windows.Forms.TextBox txtConsole;
         private System.Windows.Forms.ToolStripMenuItem createDirectoryToolStripMenuItem;
-        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ComboBox cbDirectoryList;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
     }
 }
