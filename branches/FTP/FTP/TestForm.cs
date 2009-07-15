@@ -325,7 +325,7 @@ namespace FTPTest
                 foreach (ListViewItem lvi in lvFTPList.SelectedItems)
                 {
                     FTPLineResult file = lvi.Tag as FTPLineResult;
-                    if (file != null && !string.IsNullOrEmpty(file.Name))
+                    if (file != null && !string.IsNullOrEmpty(file.Name) && !file.IsSpecial)
                     {
                         filenames.Add(file.Name);
                     }
@@ -390,13 +390,39 @@ namespace FTPTest
                         string[] filenames = e.Data.GetData(typeof(string[])) as string[];
                         if (filenames != null)
                         {
+                            int renameCount = 0;
                             foreach (string filename in filenames)
                             {
-                                string path = FTPHelpers.CombineURL(currentDirectory, filename);
-                                string movePath = FTPHelpers.CombineURL(file.Name, filename);
-                                FTPClient.Rename(path, movePath);
+                                if (file.Name != filename)
+                                {
+                                    string path = FTPHelpers.CombineURL(currentDirectory, filename);
+                                    string movePath = "";
+                                    if (file.IsSpecial)
+                                    {
+                                        if (file.Name == ".")
+                                        {
+                                            movePath = FTPHelpers.AddSlash(filename, FTPHelpers.SlashType.Prefix, 2);
+                                        }
+                                        else if (file.Name == "..")
+                                        {
+                                            movePath = FTPHelpers.AddSlash(filename, FTPHelpers.SlashType.Prefix);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        movePath = FTPHelpers.CombineURL(file.Name, filename);
+                                    }
+                                    if (!string.IsNullOrEmpty(movePath))
+                                    {
+                                        FTPClient.Rename(path, movePath);
+                                        renameCount++;
+                                    }
+                                }
                             }
-                            RefreshDirectory();
+                            if (renameCount > 0)
+                            {
+                                RefreshDirectory();
+                            }
                         }
                     }
                 }

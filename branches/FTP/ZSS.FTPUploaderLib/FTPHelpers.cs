@@ -64,11 +64,39 @@ namespace ZSS
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
         }
 
-        public static string AddSlash(string url)
+        public enum SlashType
         {
-            if (!url.EndsWith("/"))
+            Prefix, Suffix
+        }
+
+        public static string AddSlash(string url, SlashType slashType)
+        {
+            return AddSlash(url, slashType, 1);
+        }
+
+        public static string AddSlash(string url, SlashType slashType, int count)
+        {
+            if (slashType == SlashType.Prefix)
             {
-                url += "/";
+                if (url.StartsWith("/"))
+                {
+                    url = url.Remove(0, 1);
+                }
+                for (int i = 0; i < count; i++)
+                {
+                    url = "/" + url;
+                }
+            }
+            else
+            {
+                if (url.EndsWith("/"))
+                {
+                    url = url.Substring(0, url.Length - 1);
+                }
+                for (int i = 0; i < count; i++)
+                {
+                    url += "/";
+                }
             }
             return url;
         }
