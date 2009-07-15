@@ -74,7 +74,6 @@ namespace FTPTest
         private void LoadDirectory(string path)
         {
             currentDirectory = path;
-            FTPClient.Account.Path = currentDirectory;
             FillDirectories(currentDirectory);
 
             List<FTPLineResult> list = FTPClient.ListDirectoryDetails(currentDirectory);
@@ -473,6 +472,29 @@ namespace FTPTest
                 {
                     LoadDirectory(path);
                 }
+            }
+        }
+
+        private void copyURLsToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path;
+            List<string> list = new List<string>();
+            foreach (ListViewItem lvi in lvFTPList.SelectedItems)
+            {
+                FTPLineResult file = lvi.Tag as FTPLineResult;
+                if (!file.IsSpecial)
+                {
+                    path = currentDirectory.Remove(0, FTPClient.FTPAddress.Length);
+                    path = FTPHelpers.CombineURL(path, file.Name);
+                    list.Add(FTPClient.Account.GetUriPath(path));
+                }
+            }
+
+            string clipboard = string.Join("\r\n", list.ToArray());
+
+            if (!string.IsNullOrEmpty(clipboard))
+            {
+                Clipboard.SetText(clipboard);
             }
         }
 
