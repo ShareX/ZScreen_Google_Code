@@ -36,9 +36,12 @@
             this.createDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtRename = new System.Windows.Forms.TextBox();
             this.txtCurrentDirectory = new System.Windows.Forms.TextBox();
-            this.btnNavigateBack = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.tcFTP = new System.Windows.Forms.TabControl();
+            this.tpMainTab = new System.Windows.Forms.TabPage();
+            this.tpConsole = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.lvFTPList = new FTPTest.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
@@ -46,10 +49,6 @@
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
             this.chOwnerGroup = new System.Windows.Forms.ColumnHeader();
-            this.tcFTP = new System.Windows.Forms.TabControl();
-            this.tpMainTab = new System.Windows.Forms.TabPage();
-            this.tpConsole = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -110,21 +109,11 @@
             this.txtCurrentDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCurrentDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCurrentDirectory.Location = new System.Drawing.Point(171, 8);
+            this.txtCurrentDirectory.Location = new System.Drawing.Point(88, 8);
             this.txtCurrentDirectory.Name = "txtCurrentDirectory";
             this.txtCurrentDirectory.ReadOnly = true;
-            this.txtCurrentDirectory.Size = new System.Drawing.Size(772, 21);
+            this.txtCurrentDirectory.Size = new System.Drawing.Size(855, 21);
             this.txtCurrentDirectory.TabIndex = 0;
-            // 
-            // btnNavigateBack
-            // 
-            this.btnNavigateBack.Location = new System.Drawing.Point(8, 8);
-            this.btnNavigateBack.Name = "btnNavigateBack";
-            this.btnNavigateBack.Size = new System.Drawing.Size(72, 24);
-            this.btnNavigateBack.TabIndex = 1;
-            this.btnNavigateBack.Text = "Back";
-            this.btnNavigateBack.UseVisualStyleBackColor = true;
-            this.btnNavigateBack.Click += new System.EventHandler(this.btnNavigateBack_Click);
             // 
             // splitContainer1
             // 
@@ -139,7 +128,6 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.btnRefresh);
             this.splitContainer1.Panel1.Controls.Add(this.txtCurrentDirectory);
-            this.splitContainer1.Panel1.Controls.Add(this.btnNavigateBack);
             // 
             // splitContainer1.Panel2
             // 
@@ -150,72 +138,13 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(88, 8);
+            this.btnRefresh.Location = new System.Drawing.Point(8, 7);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(72, 24);
             this.btnRefresh.TabIndex = 2;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // lvFTPList
-            // 
-            this.lvFTPList.AllowColumnReorder = true;
-            this.lvFTPList.AllowDrop = true;
-            this.lvFTPList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chFilename,
-            this.chFilesize,
-            this.chFiletype,
-            this.chLastModified,
-            this.chPermissions,
-            this.chOwnerGroup});
-            this.lvFTPList.ContextMenuStrip = this.cmsRightClickMenu;
-            this.lvFTPList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvFTPList.DoubleClickActivation = false;
-            this.lvFTPList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvFTPList.FullRowSelect = true;
-            this.lvFTPList.GridLines = true;
-            this.lvFTPList.HideSelection = false;
-            this.lvFTPList.Location = new System.Drawing.Point(0, 0);
-            this.lvFTPList.Name = "lvFTPList";
-            this.lvFTPList.Size = new System.Drawing.Size(952, 514);
-            this.lvFTPList.TabIndex = 0;
-            this.lvFTPList.UseCompatibleStateImageBehavior = false;
-            this.lvFTPList.View = System.Windows.Forms.View.Details;
-            this.lvFTPList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvFTPList_MouseDoubleClick);
-            this.lvFTPList.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragDrop);
-            this.lvFTPList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lvFTPList_ItemDrag);
-            this.lvFTPList.DragOver += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragOver);
-            // 
-            // chFilename
-            // 
-            this.chFilename.Text = "Filename";
-            this.chFilename.Width = 300;
-            // 
-            // chFilesize
-            // 
-            this.chFilesize.Text = "Filesize";
-            this.chFilesize.Width = 100;
-            // 
-            // chFiletype
-            // 
-            this.chFiletype.Text = "Filetype";
-            this.chFiletype.Width = 167;
-            // 
-            // chLastModified
-            // 
-            this.chLastModified.Text = "Last modified";
-            this.chLastModified.Width = 150;
-            // 
-            // chPermissions
-            // 
-            this.chPermissions.Text = "Permissions";
-            this.chPermissions.Width = 100;
-            // 
-            // chOwnerGroup
-            // 
-            this.chOwnerGroup.Text = "Owner/Group";
-            this.chOwnerGroup.Width = 100;
             // 
             // tcFTP
             // 
@@ -261,6 +190,66 @@
             this.txtConsole.Size = new System.Drawing.Size(952, 557);
             this.txtConsole.TabIndex = 0;
             // 
+            // lvFTPList
+            // 
+            this.lvFTPList.AllowColumnReorder = true;
+            this.lvFTPList.AllowDrop = true;
+            this.lvFTPList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chFilename,
+            this.chFilesize,
+            this.chFiletype,
+            this.chLastModified,
+            this.chPermissions,
+            this.chOwnerGroup});
+            this.lvFTPList.ContextMenuStrip = this.cmsRightClickMenu;
+            this.lvFTPList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvFTPList.DoubleClickActivation = false;
+            this.lvFTPList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvFTPList.FullRowSelect = true;
+            this.lvFTPList.GridLines = true;
+            this.lvFTPList.HideSelection = false;
+            this.lvFTPList.Location = new System.Drawing.Point(0, 0);
+            this.lvFTPList.Name = "lvFTPList";
+            this.lvFTPList.Size = new System.Drawing.Size(952, 514);
+            this.lvFTPList.TabIndex = 0;
+            this.lvFTPList.UseCompatibleStateImageBehavior = false;
+            this.lvFTPList.View = System.Windows.Forms.View.Details;
+            this.lvFTPList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvFTPList_MouseDoubleClick);
+            this.lvFTPList.SelectedIndexChanged += new System.EventHandler(this.lvFTPList_SelectedIndexChanged);
+            this.lvFTPList.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragDrop);
+            this.lvFTPList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lvFTPList_ItemDrag);
+            this.lvFTPList.DragOver += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragOver);
+            // 
+            // chFilename
+            // 
+            this.chFilename.Text = "Filename";
+            this.chFilename.Width = 300;
+            // 
+            // chFilesize
+            // 
+            this.chFilesize.Text = "Filesize";
+            this.chFilesize.Width = 100;
+            // 
+            // chFiletype
+            // 
+            this.chFiletype.Text = "Filetype";
+            this.chFiletype.Width = 167;
+            // 
+            // chLastModified
+            // 
+            this.chLastModified.Text = "Last modified";
+            this.chLastModified.Width = 150;
+            // 
+            // chPermissions
+            // 
+            this.chPermissions.Text = "Permissions";
+            this.chPermissions.Width = 100;
+            // 
+            // chOwnerGroup
+            // 
+            this.chOwnerGroup.Text = "Owner/Group";
+            this.chOwnerGroup.Width = 100;
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,7 +288,6 @@
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.TextBox txtRename;
         private System.Windows.Forms.TextBox txtCurrentDirectory;
-        private System.Windows.Forms.Button btnNavigateBack;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
         private System.Windows.Forms.TabControl tcFTP;

@@ -57,7 +57,6 @@ namespace FTPTest
         {
             currentDirectory = path;
             FTPClient.Account.Path = currentDirectory;
-            btnNavigateBack.Enabled = currentDirectory != FTPClient.FTPAddress;
             txtCurrentDirectory.Text = " " + currentDirectory;
 
             List<FTPLineResult> list = FTPClient.ListDirectoryDetails(currentDirectory);
@@ -307,11 +306,6 @@ namespace FTPTest
             FTPCreateDirectory();
         }
 
-        private void btnNavigateBack_Click(object sender, EventArgs e)
-        {
-            FTPNavigateBack();
-        }
-
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             RefreshDirectory();
@@ -436,6 +430,18 @@ namespace FTPTest
                     FTPUploadFiles(currentDirectory, files);
                     RefreshDirectory();
                 }
+            }
+        }
+
+        private void lvFTPList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0)
+            {
+                FTPLineResult file = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
+
+                downloadToolStripMenuItem.Enabled = !file.IsDirectory && !file.IsSpecial;
+                renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled = !file.IsSpecial;
+                //createDirectoryToolStripMenuItem.Enabled;
             }
         }
 
