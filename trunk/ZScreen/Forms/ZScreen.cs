@@ -1840,6 +1840,7 @@ namespace ZSS
             if (ub.DialogResult == DialogResult.OK)
             {
                 TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                tpu.ProxySettings = Adapter.GetProxySettings();
                 txtTinyPicShuk.Text = tpu.UserAuth(ub.UserName, ub.Password);
                 if (Program.conf.RememberTinyPicUserPass)
                 {
