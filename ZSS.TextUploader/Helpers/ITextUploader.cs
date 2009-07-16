@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using System;
 
-namespace ZSS.TextUploaderLib.Helpers
+namespace ZSS.TextUploadersLib.Helpers
 {
     interface ITextUploader
     {

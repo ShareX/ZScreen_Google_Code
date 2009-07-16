@@ -26,11 +26,11 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib.Helpers;
 using System.Net;
 using System.Xml.Serialization;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     [Serializable]
     public sealed class FTPUploader : IUploader
@@ -63,7 +63,7 @@ namespace ZSS.ImageUploaderLib
         {
             List<ImageFile> ifl = new List<ImageFile>();
 
-            FTPAdapterOptions fopt = new FTPAdapterOptions(); 
+            FTPOptions fopt = new FTPOptions(); 
             fopt.Account = this.FTPAccount; 
             fopt.ProxySettings = this.ProxySettings;
             FTPAdapter ftpClient = new FTPAdapter(fopt);            

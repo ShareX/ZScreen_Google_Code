@@ -28,9 +28,9 @@ using System.Drawing.Imaging;
 using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib.Helpers;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public sealed class CustomUploader : ImageUploader
     {

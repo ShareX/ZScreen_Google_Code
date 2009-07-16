@@ -25,10 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploaderLib.Helpers;
+using ZSS.TextUploadersLib.Helpers;
 using System.IO;
 
-namespace ZSS.TextUploaderLib
+namespace ZSS.TextUploadersLib
 {
     [Serializable]
     public sealed class FTPUploader : TextUploader
@@ -74,7 +74,7 @@ namespace ZSS.TextUploaderLib
         /// <returns>Returns a list of images.</returns>
         public override string UploadText(string text)
         {
-        	FTPAdapterOptions fopt = new FTPAdapterOptions(); 
+        	FTPOptions fopt = new FTPOptions(); 
         	fopt.Account = this.FTPAccount;
         	fopt.ProxySettings = this.ProxySettings;
             FTPAdapter ftpClient = new FTPAdapter(fopt);            

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public static class Extensions
     {

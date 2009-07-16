@@ -29,8 +29,8 @@ using System.Threading;
 using ZSS.Properties;
 using ZSS.Forms;
 using ZSS.Helpers;
-using ZSS.TextUploaderLib;
-using ZSS.TextUploaderLib.URLShorteners;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.URLShorteners;
 
 namespace ZSS
 {

@@ -22,10 +22,10 @@
 #endregion
 
 using System;
-using ZSS.ImageUploaderLib.Helpers;
-using ZSS.Tasks;
-using System.Text;
 using System.IO;
+using System.Text;
+using ZSS.ImageUploadersLib.Helpers;
+using ZSS.Tasks;
 
 namespace ZSS.Helpers
 {

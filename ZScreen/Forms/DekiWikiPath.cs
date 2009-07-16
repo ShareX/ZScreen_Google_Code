@@ -7,27 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
 
 namespace ZSS.Forms
 {
+
     public partial class DekiWikiPath : Form
     {
+        public DekiWikiOptions Options { get; set; }
         public string path { set; get; }
-        private string currentPath;
-        private DekiWikiAccount acc;
+        private string currentPath;        
         private DekiWiki connector;
 
         public List<DekiWikiHistory> history = new List<DekiWikiHistory>();
 
-        public DekiWikiPath(ref DekiWikiAccount acc)
+        public DekiWikiPath(DekiWikiOptions options)
         {
             InitializeComponent();
 
-            this.acc = acc;
+            this.Options = options;
 
-            connector = new DekiWiki(ref acc);
+            connector = new DekiWiki(options);
 
-            lblAccount.Text = acc.Name;
+            lblAccount.Text = this.Options.Account.Name;
 
             try
             {
@@ -54,7 +56,7 @@ namespace ZSS.Forms
         private void SetRootUser()
         {
             // Set the path to the user's root
-            currentPath = "User:" + acc.Username;
+            currentPath = "User:" + this.Options.Account.Username;
 
             // Reset the tree
             PopulateTree(currentPath);

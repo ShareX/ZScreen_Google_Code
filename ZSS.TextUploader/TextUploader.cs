@@ -25,14 +25,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploaderLib.Helpers;
+using ZSS.TextUploadersLib.Helpers;
 using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using ZSS.TextUploaderLib.URLShorteners;
+using ZSS.TextUploadersLib.URLShorteners;
 
-namespace ZSS.TextUploaderLib
+namespace ZSS.TextUploadersLib
 {
     [Serializable]
     public abstract class TextUploader : ITextUploader
@@ -117,10 +117,7 @@ namespace ZSS.TextUploaderLib
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                if (ProxySettings != null)
-                {
-                    request.Proxy = ProxySettings;
-                }
+                request.Proxy = ProxySettings;
                 request.AllowAutoRedirect = true;
                 request.Method = "POST";
 
@@ -158,6 +155,7 @@ namespace ZSS.TextUploaderLib
             {
                 url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Proxy = this.ProxySettings;
                 HttpWebResponse res = (HttpWebResponse)request.GetResponse();
                 StreamReader reader = new StreamReader(res.GetResponseStream());
                 return reader.ReadToEnd();

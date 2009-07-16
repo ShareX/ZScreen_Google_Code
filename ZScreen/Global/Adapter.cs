@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.TextUploaderLib;
-using ZSS.TextUploaderLib.URLShorteners;
-using ZSS.ImageUploaderLib;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.URLShorteners;
+using ZSS.ImageUploadersLib;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -21,7 +21,7 @@ namespace ZSS.Global
         public static void TestFTPAccount(FTPAccount acc)
         {
             string msg;
-            FTPAdapterOptions opt = new FTPAdapterOptions(); 
+            FTPOptions opt = new FTPOptions(); 
             opt.Account = acc; 
             opt.ProxySettings = GetProxySettings();
             FTPAdapter ftpClient = new FTPAdapter(opt);
@@ -109,7 +109,7 @@ namespace ZSS.Global
             try
             {
                 // Create the connector
-                DekiWiki connector = new DekiWiki(ref acc);
+                DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, GetProxySettings()));
 
                 // Attempt to login
                 connector.Login();
@@ -233,7 +233,7 @@ namespace ZSS.Global
                 case SniptUploader.Hostname:
                     return new SniptUploader();
                 default:
-                    if (name == ZSS.TextUploaderLib.FTPUploader.Hostname)
+                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
                     {
                         if (Program.conf.FTPAccountList.Count > 0)
                         {
@@ -246,7 +246,7 @@ namespace ZSS.Global
                             {
                                 acc = Program.conf.FTPAccountList[0];
                             }
-                            return new ZSS.TextUploaderLib.FTPUploader(acc);
+                            return new ZSS.TextUploadersLib.FTPUploader(acc);
                         }
                     }
                     break;

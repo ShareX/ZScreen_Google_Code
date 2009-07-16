@@ -27,8 +27,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using ZSS.ImageUploaderLib.Helpers;
-using ZSS.TextUploaderLib;
+using ZSS.ImageUploadersLib.Helpers;
+using ZSS.TextUploadersLib;
 
 namespace ZSS.Tasks
 {

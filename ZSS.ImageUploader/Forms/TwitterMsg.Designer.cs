@@ -1,4 +1,4 @@
-﻿namespace ZSS.ImageUploaderLib
+﻿namespace ZSS.ImageUploadersLib
 {
     partial class TwitterMsg
     {

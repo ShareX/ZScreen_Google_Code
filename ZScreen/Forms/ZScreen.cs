@@ -37,12 +37,12 @@ using ZSS.ColorsLib;
 using ZSS.Forms;
 using ZSS.Global;
 using ZSS.Helpers;
-using ZSS.ImageUploaderLib;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib;
+using ZSS.ImageUploadersLib.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.TextUploaderLib.URLShorteners;
-using ZSS.TextUploaderLib;
+using ZSS.TextUploadersLib.URLShorteners;
+using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
 using ZSS.FTPClientLib;
 
@@ -3543,9 +3543,7 @@ namespace ZSS
             if (Adapter.CheckFTPAccounts())
             {
                 FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                FTPClientOptions opt = new FTPClientOptions();
-                opt.Account = acc;
-                opt.ProxySettings = Adapter.GetProxySettings();
+                FTPOptions opt = new FTPOptions(acc, Adapter.GetProxySettings());
                 FTPClient ftpClient = new FTPClient(opt);
                 ftpClient.Show();
             }

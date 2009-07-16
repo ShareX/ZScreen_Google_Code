@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using ZSS.Global;
-using ZSS.TextUploaderLib;
+using ZSS.TextUploadersLib;
 using System.Windows.Forms;
 using ZSS.UpdateCheckerLib;
 using ZSS.Properties;
