@@ -24,6 +24,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using IconHelper;
 using ZSS;
@@ -33,15 +34,25 @@ using System.Collections;
 
 namespace ZSS.FTPClientLib
 {
+	
+	public class FTPClientOptions{
+		
+		public FTPAccount Account {get; set;}
+		public WebProxy ProxySettings {get; set;}
+		
+	}
+	
     public partial class FTPClient : Form
     {
         public FTP FTPAdapter;
+        public FTPClientOptions Options {get; set;}
         private string currentDirectory;
         private ListViewItem tempSelected;
 
-        public FTPClient(FTPAccount FTPAcc)
+        public FTPClient(FTPClientOptions opt)
         {
             InitializeComponent();
+            
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             /*if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
@@ -50,7 +61,9 @@ namespace ZSS.FTPClientLib
                 new LoginDialog().ShowDialog();
             }*/
 
-            FTPAdapter = new FTP(FTPAcc);
+            this.Options = opt;
+            FTPAdapterOptions fopt =  new FTPAdapterOptions(this.Options.Account, this.Options.ProxySettings); 
+            FTPAdapter = new FTP(fopt);
             FTPAdapter.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
 
             RefreshDirectory();
@@ -62,7 +75,7 @@ namespace ZSS.FTPClientLib
         {
             if (string.IsNullOrEmpty(currentDirectory))
             {
-                currentDirectory = FTPAdapter.Account.FTPAddress;
+                currentDirectory = FTPAdapter.Options.Account.FTPAddress;
             }
 
             LoadDirectory(currentDirectory);
@@ -70,7 +83,7 @@ namespace ZSS.FTPClientLib
 
         private void FillDirectories(string path)
         {
-            path = path.Remove(0, FTPAdapter.Account.FTPAddress.Length);
+            path = path.Remove(0, FTPAdapter.Options.Account.FTPAddress.Length);
             List<string> paths = FTPHelpers.GetPaths(path);
             paths.Insert(0, "/");
 
@@ -95,7 +108,7 @@ namespace ZSS.FTPClientLib
             list = list.OrderBy(x => !x.IsDirectory).ThenBy(x => x.Name).ToList();
             //list = (from x in list orderby !x.IsDirectory, x.Name select x).ToArray();
 
-            if (path != FTPAdapter.Account.FTPAddress)
+            if (path != FTPAdapter.Options.Account.FTPAddress)
             {
                 list.Insert(0, new FTPLineResult { Name = ".", IsDirectory = true, IsSpecial = true });
                 list.Insert(1, new FTPLineResult { Name = "..", IsDirectory = true, IsSpecial = true });
@@ -174,7 +187,7 @@ namespace ZSS.FTPClientLib
                     {
                         if (checkDirectory.Name == ".")
                         {
-                            LoadDirectory(FTPAdapter.Account.FTPAddress);
+                            LoadDirectory(FTPAdapter.Options.Account.FTPAddress);
                         }
                         else if (checkDirectory.Name == "..")
                         {
@@ -508,7 +521,7 @@ namespace ZSS.FTPClientLib
             if (cbDirectoryList.Items.Count > 0)
             {
                 string path = cbDirectoryList.SelectedItem.ToString().Remove(0, 1);
-                path = FTPHelpers.CombineURL(FTPAdapter.Account.FTPAddress, path);
+                path = FTPHelpers.CombineURL(FTPAdapter.Options.Account.FTPAddress, path);
                 if (currentDirectory != path)
                 {
                     LoadDirectory(path);
@@ -526,8 +539,8 @@ namespace ZSS.FTPClientLib
                 FTPLineResult file = lvi.Tag as FTPLineResult;
                 if (!file.IsSpecial)
                 {
-                    path = currentDirectory.Remove(0, FTPAdapter.Account.FTPAddress.Length);
-                    path = FTPAdapter.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name), true);
+                    path = currentDirectory.Remove(0, FTPAdapter.Options.Account.FTPAddress.Length);
+                    path = FTPAdapter.Options.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name), true);
                     list.Add(path);
                 }
             }

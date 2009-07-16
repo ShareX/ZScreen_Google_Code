@@ -63,8 +63,10 @@ namespace ZSS.ImageUploaderLib
         {
             List<ImageFile> ifl = new List<ImageFile>();
 
-            FTP ftpClient = new FTP(this.FTPAccount);
-            ftpClient.ProxySettings = this.ProxySettings;
+            FTPAdapterOptions fopt = new FTPAdapterOptions(); 
+            fopt.Account = this.FTPAccount; 
+            fopt.ProxySettings = this.ProxySettings;
+            FTP ftpClient = new FTP(fopt);            
             string fName = Path.GetFileName(localFilePath);
             string path = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fName);
             ftpClient.UploadFile(localFilePath, path);

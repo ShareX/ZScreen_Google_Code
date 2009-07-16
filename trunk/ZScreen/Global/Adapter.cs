@@ -21,8 +21,10 @@ namespace ZSS.Global
         public static void TestFTPAccount(FTPAccount acc)
         {
             string msg;
-            FTP ftpClient = new FTP(acc);
-            ftpClient.ProxySettings = GetProxySettings();
+            FTPAdapterOptions opt = new FTPAdapterOptions(); 
+            opt.Account = acc; 
+            opt.ProxySettings = GetProxySettings();
+            FTP ftpClient = new FTP(opt);
             try
             {
                 if (ftpClient.ListDirectory(FTPHelpers.CombineURL(acc.FTPAddress, acc.Path)) != null)
@@ -41,7 +43,7 @@ namespace ZSS.Global
                     try
                     {
                         ftpClient.MakeMultiDirectory(acc.Path);
-                        if (ftpClient.ListDirectory(ftpClient.Account.Path) != null)
+                        if (ftpClient.ListDirectory(ftpClient.Options.Account.Path) != null)
                         {
                             msg = "Success.\nAuto created folder: " + acc.Path;
                         }
@@ -69,7 +71,7 @@ namespace ZSS.Global
 
         private static bool TestFTP(FTP ftp)
         {
-            return ftp.ListDirectory(ftp.Account.Path) != null;
+            return ftp.ListDirectory(ftp.Options.Account.Path) != null;
         }
 
         public static bool CheckFTPAccounts()
