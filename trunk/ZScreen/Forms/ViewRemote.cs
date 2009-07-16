@@ -78,7 +78,7 @@ namespace ZSS
 
             try
             {
-                string[] splode, str = mFTP.ListDirectory(mAcc.Path);
+                string[] splode, str = mFTP.ListDirectory(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path));
                 string goodFile;
 
                 bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_PROGRESS_MAX, str.Length);
@@ -101,7 +101,7 @@ namespace ZSS
             return result;
         }
 
-        private void btnCopyToClip_Click(object sender, System.EventArgs e)
+        private void btnCopyToClip_Click(object sender, EventArgs e)
         {
             string str = "";
 
@@ -109,24 +109,16 @@ namespace ZSS
 
             foreach (string obj in lbFiles.SelectedItems)
             {
-                items.Add(obj);
+                items.Add(mAcc.GetUriPath(FTPHelpers.GetFileName(obj)) + Environment.NewLine);
             }
 
             if (cbReverse.Checked) items.Reverse();
+            str = string.Join(Environment.NewLine, items.ToArray());
+            if (cbAddSpace.Checked) str = str.Insert(0, Environment.NewLine);
 
-            foreach (object obj in items)
+            if (!string.IsNullOrEmpty(str))
             {
-                str += mAcc.GetUriPath((string)obj) + System.Environment.NewLine;
-            }
-
-            if (str != "")
-            {
-                if (cbAddSpace.Checked)
-                    str = str.Insert(0, System.Environment.NewLine);
-                str = str.TrimEnd(System.Environment.NewLine.ToCharArray()); ;
-
-                //Set clipboard data
-                System.Windows.Forms.Clipboard.SetDataObject(str);
+                Clipboard.SetText(str);
             }
         }
 
@@ -134,18 +126,18 @@ namespace ZSS
         {
             try
             {
-                ArrayList items = new ArrayList();
+                List<string> list = new List<string>();
 
-                foreach (object obj in lbFiles.SelectedItems)
+                foreach (string item in lbFiles.SelectedItems)
                 {
-                    items.Add(obj);
+                    list.Add(item);
                 }
 
-                foreach (object obj in items)
+                foreach (string obj in list)
                 {
-                    if ((string)obj != "")
+                    if (!string.IsNullOrEmpty(obj))
                     {
-                        mFTP.DeleteFile(mAcc.Path + "/" + (string)obj);
+                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, obj));
                         lbFiles.Items.Remove(obj);
                     }
                 }
@@ -178,7 +170,7 @@ namespace ZSS
                 {
                     foreach (string str in lbFiles.SelectedItems)
                     {
-                        mFTP.DownloadFile(str, dir + "\\" + Path.GetFileName(str));
+                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, str), Path.Combine(dir, Path.GetFileName(str)));
                     }
                 }
                 catch
@@ -271,7 +263,7 @@ namespace ZSS
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    mFTP.DownloadFile(file, localfile);
+                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, file), localfile);
                 }
                 catch (System.Exception ex)
                 {
@@ -412,11 +404,6 @@ namespace ZSS
                     }
                 }
             }
-        }
-
-        private void ViewRemote_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

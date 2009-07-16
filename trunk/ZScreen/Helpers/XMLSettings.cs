@@ -76,14 +76,22 @@ namespace ZSS
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
-            //~~~~~~~~~~~~~~~~~~~~~            
+            //~~~~~~~~~~~~~~~~~~~~~    
+        
             AutoTranslateLength = 20;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options
             //~~~~~~~~~~~~~~~~~~~~~
 
+            ActionsToolbarMode = false;
+
+            OpenMainWindow = true;
+            LockFormSize = false;
+            AutoSaveSettings = false;
             WriteDebugFile = true;
+            ProxyEnabled = false;
+
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
             LimitLongURL = 100;
@@ -119,6 +127,7 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~~~~~~
         //  Destinations / Accounts
         //~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         public TwitPicUploadType TwiPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -277,12 +286,10 @@ namespace ZSS
         //  Text Uploaders
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // ** YOU CANNOT ADD NEW ITMES TO THE LIST HERE BECAUSE THAT IS GOING TO CAUSE DUPLATES **
         public List<TextUploader> TextUploadersList = new List<TextUploader>();
         public int SelectedTextUploader = 0;
         public TextUploader TextUploaderActive = new Paste2Uploader();
 
-        // ** YOU CANNOT ADD NEW ITMES TO THE LIST HERE BECAUSE THAT IS GOING TO CAUSE DUPLATES ** <- lol
         public List<TextUploader> UrlShortenersList = new List<TextUploader>();
         public int SelectedUrlShortener = 0;
         public TextUploader UrlShortenerActive = new TinyURLUploader();
@@ -386,7 +393,8 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         // Actions Toolbar 
-        [Category("Options / Actions Toolbar"), Description("Open Actions Toolbar on startup.")]
+
+        [Category("Options / Actions Toolbar"), DefaultValue(false), Description("Open Actions Toolbar on startup.")]
         public bool ActionsToolbarMode { get; set; }
         [Category("Options / Actions Toolbar"), Description("Action Toolbar Location.")]
         public Point ActionToolbarLocation { get; set; }
@@ -396,7 +404,7 @@ namespace ZSS
         [Category("Options / General"), DefaultValue(true), Description("Open main window when ZScreen loads.")]
         public bool OpenMainWindow { get; set; }
         public bool ShowInTaskbar = true;
-        [Category("Options / General"), DefaultValue(true), Description("Disable resizing ZScreen and minimize ZScreen window size.")]
+        [Category("Options / General"), DefaultValue(false), Description("Disable resizing ZScreen and minimize ZScreen window size.")]
         public bool LockFormSize { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Auto save settings whenever form is resized or main" +
             " tabs are changed. Normally settings are saved only after form is closed.")]
@@ -422,8 +430,6 @@ namespace ZSS
         public bool BackupApplicationSettings { get; set; }
         [Category("Options / Paths"), Description("Images directory where screenshots and pictures will be stored locally.")]
         public string ImagesDir { get; set; }
-
-
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture

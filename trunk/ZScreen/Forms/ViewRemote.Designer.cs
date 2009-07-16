@@ -190,7 +190,7 @@ namespace ZSS
             this.sBar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sBar.Name = "sBar";
             this.sBar.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.sBar.Size = new System.Drawing.Size(355, 17);
+            this.sBar.Size = new System.Drawing.Size(386, 17);
             this.sBar.Spring = true;
             this.sBar.Text = "Ready.";
             this.sBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -263,7 +263,6 @@ namespace ZSS
             this.Name = "ViewRemote";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "View Remote Directory";
-            this.Load += new System.EventHandler(this.ViewRemote_Load);
             this.Shown += new System.EventHandler(this.ViewRemote_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ViewRemote_FormClosing);
             this.pnlControls.ResumeLayout(false);
