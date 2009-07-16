@@ -26,6 +26,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using ZSS.Properties;
+using ZSS.Global;
 using ZSS.Tasks;
 using System.IO;
 
@@ -239,7 +240,10 @@ namespace ZSS
 
             if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server))
             {
-                mFTP = new FTP(mAcc);
+            	FTPAdapterOptions fopt = new FTPAdapterOptions();
+            	fopt.Account = mAcc; 
+            	fopt.ProxySettings = Adapter.GetProxySettings();
+                mFTP = new FTP(fopt);
                 List<string> files = FetchList();
                 if (files.Count > 0)
                 {

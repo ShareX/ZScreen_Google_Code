@@ -3543,7 +3543,10 @@ namespace ZSS
             if (Adapter.CheckFTPAccounts())
             {
                 FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                FTPClient ftpClient = new FTPClient(acc);
+                FTPClientOptions opt = new FTPClientOptions();
+                opt.Account = acc;
+                opt.ProxySettings = Adapter.GetProxySettings();
+                FTPClient ftpClient = new FTPClient(opt);
                 ftpClient.Show();
             }
         }

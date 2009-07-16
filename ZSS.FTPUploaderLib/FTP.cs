@@ -29,24 +29,34 @@ using System.Text;
 
 namespace ZSS
 {
+	
+	public class FTPAdapterOptions{		
+	
+		public FTPAdapterOptions() { }
+		
+		public FTPAdapterOptions(FTPAccount acc, WebProxy proxy){
+			
+			this.Account = acc; 
+			this.ProxySettings = proxy;
+		}
+		
+		public FTPAccount Account { get; set; }
+        public WebProxy ProxySettings { get; set; }
+        
+	}
+	
     public class FTP
     {
         public event StringEventHandler FTPOutput;
         public delegate void StringEventHandler(string text);
 
+        public FTPAdapterOptions Options; 
+        
         private const int BufferSize = 2048;
 
-        public FTPAccount Account { get; set; }
-        public WebProxy ProxySettings { get; set; }
-
-        public FTP()
+        public FTP(FTPAdapterOptions options)
         {
-            Account = new FTPAccount();
-        }
-
-        public FTP(FTPAccount acc)
-        {
-            Account = acc;
+        	this.Options = options;
         }
 
         public void Upload(Stream stream, string url)
@@ -56,9 +66,9 @@ namespace ZSS
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.UploadFile;
-                request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
                 request.KeepAlive = false;
-                request.UsePassive = !Account.IsActive;
+                request.UsePassive = !this.Options.Account.IsActive;
 
                 using (stream)
                 using (Stream requestStream = request.GetRequestStream())
@@ -100,9 +110,9 @@ namespace ZSS
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.DownloadFile;
-                request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
                 request.KeepAlive = false;
-                request.UsePassive = !Account.IsActive;
+                request.UsePassive = !this.Options.Account.IsActive;
 
                 using (FileStream fileStream = new FileStream(savePath, FileMode.Create))
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
@@ -134,7 +144,7 @@ namespace ZSS
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.DeleteFile;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
 
             request.GetResponse();
@@ -165,7 +175,7 @@ namespace ZSS
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.RemoveDirectory;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
 
             request.GetResponse();
@@ -179,7 +189,7 @@ namespace ZSS
 
             request.Method = WebRequestMethods.Ftp.Rename;
             request.RenameTo = newFileName;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
 
             request.GetResponse();
@@ -192,7 +202,7 @@ namespace ZSS
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
             request.Method = WebRequestMethods.Ftp.GetFileSize;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
 
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
@@ -208,11 +218,11 @@ namespace ZSS
             List<string> result = new List<string>();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-			request.Proxy = this.ProxySettings;
+			request.Proxy = this.Options.ProxySettings;
             request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
-            request.UsePassive = !Account.IsActive;
+            request.UsePassive = !this.Options.Account.IsActive;
 
             using (WebResponse response = request.GetResponse())
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
@@ -233,11 +243,11 @@ namespace ZSS
             List<FTPLineResult> result = new List<FTPLineResult>();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+            request.Proxy = this.Options.ProxySettings;
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-            request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+            request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
-            request.UsePassive = !Account.IsActive;
+            request.UsePassive = !this.Options.Account.IsActive;
 
             using (WebResponse response = request.GetResponse())
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
@@ -260,7 +270,7 @@ namespace ZSS
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
 
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
-                request.Credentials = new NetworkCredential(Account.Username, Account.Password);
+                request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
                 request.KeepAlive = false;
 
                 request.GetResponse();
