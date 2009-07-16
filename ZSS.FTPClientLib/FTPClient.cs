@@ -167,51 +167,76 @@ namespace ZSS.FTPClientLib
             if (lvFTPList.SelectedItems.Count > 0)
             {
                 FTPLineResult checkDirectory = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
-                if (openDirectory)
+
+                if (openDirectory && checkDirectory != null && checkDirectory.IsDirectory)
                 {
-                    if (checkDirectory != null)
+                    if (checkDirectory.IsSpecial)
                     {
-                        if (checkDirectory.IsDirectory)
+                        if (checkDirectory.Name == ".")
                         {
-                            if (checkDirectory.IsSpecial)
-                            {
-                                if (checkDirectory.Name == ".")
-                                {
-                                    LoadDirectory(FTPAdapter.Account.FTPAddress);
-                                }
-                                else if (checkDirectory.Name == "..")
-                                {
-                                    FTPNavigateBack();
-                                }
-                            }
-                            else
-                            {
-                                string loadPath = FTPHelpers.CombineURL(currentDirectory, checkDirectory.Name);
-                                LoadDirectory(loadPath);
-                            }
-                            return;
+                            LoadDirectory(FTPAdapter.Account.FTPAddress);
+                        }
+                        else if (checkDirectory.Name == "..")
+                        {
+                            FTPNavigateBack();
                         }
                     }
+                    else
+                    {
+                        string loadPath = FTPHelpers.CombineURL(currentDirectory, checkDirectory.Name);
+                        LoadDirectory(loadPath);
+                    }
+                    return;
                 }
 
-                if (!checkDirectory.IsDirectory && !checkDirectory.IsSpecial)
+                if (!checkDirectory.IsSpecial)
                 {
                     FolderBrowserDialog fbd = new FolderBrowserDialog();
                     fbd.RootFolder = Environment.SpecialFolder.Desktop;
 
                     if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(fbd.SelectedPath))
                     {
-                        string path;
+                        List<FTPLineResult> list = new List<FTPLineResult>();
                         foreach (ListViewItem lvi in lvFTPList.SelectedItems)
                         {
                             FTPLineResult file = lvi.Tag as FTPLineResult;
-                            path = FTPHelpers.CombineURL(currentDirectory, file.Name);
-
-                            if (!file.IsDirectory && !string.IsNullOrEmpty(file.Name))
+                            if (file != null)
                             {
-                                FTPAdapter.DownloadFile(path, FTPHelpers.CombineURL(fbd.SelectedPath, file.Name));
+                                list.Add(file);
                             }
                         }
+                        DownloadFiles(list, fbd.SelectedPath);
+                    }
+                }
+            }
+        }
+
+        private void DownloadFiles(List<FTPLineResult> files, string downloadPath)
+        {
+            DownloadFiles(files, "", downloadPath);
+        }
+
+        private void DownloadFiles(List<FTPLineResult> files, string directory, string downloadPath)
+        {
+            string path, savePath, directoryPath;
+            foreach (FTPLineResult file in files)
+            {
+                if (!file.IsSpecial && !string.IsNullOrEmpty(file.Name))
+                {
+                    if (file.IsDirectory)
+                    {
+                        List<FTPLineResult> newFiles = FTPAdapter.ListDirectoryDetails(FTPHelpers.CombineURL(currentDirectory, directory, file.Name));
+                        directoryPath = Path.Combine(Path.Combine(downloadPath, directory), file.Name);
+                        Directory.CreateDirectory(directoryPath);
+                        savePath = FTPHelpers.CombineURL(directory, file.Name);
+                        DownloadFiles(newFiles, savePath, downloadPath);
+                    }
+                    else
+                    {
+                        path = FTPHelpers.CombineURL(currentDirectory, directory, file.Name);
+                        savePath = Path.Combine(Path.Combine(downloadPath, directory), file.Name);
+                        savePath = savePath.Replace('/', '\\');
+                        FTPAdapter.DownloadFile(path, savePath);
                     }
                 }
             }
@@ -466,8 +491,7 @@ namespace ZSS.FTPClientLib
             {
                 FTPLineResult file = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
 
-                downloadToolStripMenuItem.Enabled = !file.IsDirectory && !file.IsSpecial;
-                renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
+                downloadToolStripMenuItem.Enabled = renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
                     copyURLsToClipboardToolStripMenuItem.Enabled = !file.IsSpecial;
                 //refreshToolStripMenuItem.Enabled
                 //createDirectoryToolStripMenuItem.Enabled
