@@ -158,8 +158,7 @@ namespace ZSS.Helpers
 
                     ZSS.ImageUploaderLib.FTPUploader fu = new ZSS.ImageUploaderLib.FTPUploader(acc)
                     {
-                        EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) ||
-                        Program.conf.FTPCreateThumbnail,
+                        EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
                         WorkingDir = Program.CacheDir
                     };
                     mTask.ImageManager = fu.UploadImage(fullFilePath);

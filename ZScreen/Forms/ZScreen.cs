@@ -44,6 +44,7 @@ using ZSS.Tasks;
 using ZSS.TextUploaderLib.URLShorteners;
 using ZSS.TextUploaderLib;
 using ZSS.UpdateCheckerLib;
+using ZSS.FTPClientLib;
 
 namespace ZSS
 {
@@ -148,7 +149,7 @@ namespace ZSS
 
         void ProxyAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int sel = ucProxyAccounts.AccountsList.SelectedIndex;            
+            int sel = ucProxyAccounts.AccountsList.SelectedIndex;
             if (Program.conf.ProxyList != null && sel != -1 && sel < Program.conf.ProxyList.Count && Program.conf.ProxyList[sel] != null)
             {
                 ProxyInfo acc = Program.conf.ProxyList[sel];
@@ -627,7 +628,7 @@ namespace ZSS
             cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
             cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
             cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
-             LoadHistoryItems();
+            LoadHistoryItems();
             nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
@@ -2673,12 +2674,13 @@ namespace ZSS
             }
             return acc;
         }
+
         private FTPAccount GetSelectedFTP()
         {
             FTPAccount acc = null;
-            if (ucFTPAccounts.AccountsList.SelectedIndex != -1 && Program.conf.FTPAccountList.Count >= ucFTPAccounts.AccountsList.Items.Count)
+            if (Adapter.CheckFTPAccounts())
             {
-                acc = Program.conf.FTPAccountList[ucFTPAccounts.AccountsList.SelectedIndex];
+                acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
             }
             return acc;
         }
@@ -3224,7 +3226,6 @@ namespace ZSS
         private void btnTranslateTo1_Click(object sender, EventArgs e)
         {
             Program.Worker.TranslateTo1();
-
         }
 
         private void cbLockFormSize_CheckedChanged(object sender, EventArgs e)
@@ -3539,8 +3540,12 @@ namespace ZSS
 
         private void tsmFTPClient_Click(object sender, EventArgs e)
         {
-            ZSS.FTPClientLib.FTPClient ftpClient = new ZSS.FTPClientLib.FTPClient();
-            ftpClient.Show();
+            if (Adapter.CheckFTPAccounts())
+            {
+                FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                FTPClient ftpClient = new FTPClient(acc);
+                ftpClient.Show();
+            }
         }
     }
 }
