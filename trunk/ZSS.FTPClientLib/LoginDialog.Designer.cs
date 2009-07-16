@@ -66,30 +66,24 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZSS.FTPClientLib.Properties.Settings.Default, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtPassword.Location = new System.Drawing.Point(79, 80);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(184, 20);
             this.txtPassword.TabIndex = 4;
-            this.txtPassword.Text = global::ZSS.FTPClientLib.Properties.Settings.Default.Password;
             // 
             // txtUserName
             // 
-            this.txtUserName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZSS.FTPClientLib.Properties.Settings.Default, "UserName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtUserName.Location = new System.Drawing.Point(79, 48);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(184, 20);
             this.txtUserName.TabIndex = 2;
-            this.txtUserName.Text = global::ZSS.FTPClientLib.Properties.Settings.Default.UserName;
             // 
             // txtServer
             // 
-            this.txtServer.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZSS.FTPClientLib.Properties.Settings.Default, "Server", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtServer.Location = new System.Drawing.Point(79, 16);
             this.txtServer.Name = "txtServer";
             this.txtServer.Size = new System.Drawing.Size(184, 20);
             this.txtServer.TabIndex = 0;
-            this.txtServer.Text = global::ZSS.FTPClientLib.Properties.Settings.Default.Server;
             // 
             // btnOK
             // 

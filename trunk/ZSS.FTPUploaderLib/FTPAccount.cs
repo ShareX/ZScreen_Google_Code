@@ -76,6 +76,11 @@ namespace ZSS
 
         public string GetUriPath(string fileName)
         {
+            return GetUriPath(fileName, false);
+        }
+
+        public string GetUriPath(string fileName, bool customPath)
+        {
             if (!string.IsNullOrEmpty(HttpPath))
             {
                 fileName = fileName.Replace(" ", "%20");
@@ -84,15 +89,16 @@ namespace ZSS
                 return path;
             }
 
-            return AutoGuessPath(fileName);
+            return AutoGuessPath(fileName, customPath);
         }
 
-        private string AutoGuessPath(string fileName)
+        private string AutoGuessPath(string fileName, bool customPath)
         {
-            string path = FTPHelpers.CombineURL(Server, Path);
-            path = FTPHelpers.CombineURL(path, fileName);
-            if (!path.StartsWith("http://")) path = "http://" + path;
-            return path;
+            string path = "";
+            if (!customPath) path = Path;
+            fileName = FTPHelpers.CombineURL(Server, path, fileName);
+            if (!fileName.StartsWith("http://")) fileName = "http://" + fileName;
+            return fileName;
         }
 
         public override string ToString()

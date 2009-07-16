@@ -29,7 +29,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ZSS.FTPClientLib.Properties;
 
 namespace ZSS.FTPClientLib
 {
@@ -48,7 +47,7 @@ namespace ZSS.FTPClientLib
 
         private void LoginDialog_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Settings.Default.Save();
+            //Settings.Default.Save();
         }
     }
 }

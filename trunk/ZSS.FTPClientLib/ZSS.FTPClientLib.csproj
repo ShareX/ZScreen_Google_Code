@@ -62,11 +62,6 @@
     <Compile Include="LoginDialog.Designer.cs">
       <DependentUpon>LoginDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="FTPClient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,7 +70,6 @@
     </Compile>
     <Compile Include="IconHelper.cs" />
     <Compile Include="IconListManager.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,13 +77,6 @@
       <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
       <Name>ZSS.FTPUploaderLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FTPClient.resx">

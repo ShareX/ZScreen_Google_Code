@@ -25,7 +25,7 @@ namespace ZSS.Global
             ftpClient.ProxySettings = GetProxySettings();
             try
             {
-                if (ftpClient.ListDirectory() != null)
+                if (ftpClient.ListDirectory(ftpClient.Account.Path) != null)
                 {
                     msg = "Success.";
                 }
@@ -41,7 +41,7 @@ namespace ZSS.Global
                     try
                     {
                         ftpClient.MakeMultiDirectory(acc.Path);
-                        if (ftpClient.ListDirectory() != null)
+                        if (ftpClient.ListDirectory(ftpClient.Account.Path) != null)
                         {
                             msg = "Success.\nAuto created folder: " + acc.Path;
                         }
@@ -69,10 +69,10 @@ namespace ZSS.Global
 
         private static bool TestFTP(FTP ftp)
         {
-            return ftp.ListDirectory() != null;
+            return ftp.ListDirectory(ftp.Account.Path) != null;
         }
 
-        public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
+        public static bool CheckFTPAccounts()
         {
             if (Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected)
             {
@@ -80,9 +80,15 @@ namespace ZSS.Global
             }
             else
             {
-                task.Errors.Add("An FTP account does not exist or not selected properly.");
                 return false;
             }
+        }
+
+        public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
+        {
+            bool result = CheckFTPAccounts();
+            if (!result) task.Errors.Add("An FTP account does not exist or not selected properly.");
+            return result;
         }
 
         public static bool CheckDekiWikiAccounts(ref Tasks.MainAppTask task)
@@ -144,10 +150,10 @@ namespace ZSS.Global
             try
             {
                 NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
-                WebProxy wp = new WebProxy(acc.GetAddress(), true, null, cred);             
-                WebClient wc = new WebClient(); 
+                WebProxy wp = new WebProxy(acc.GetAddress(), true, null, cred);
+                WebClient wc = new WebClient();
                 wc.Proxy = wp;
-                string html = wc.DownloadString(new Uri("http://www.google.com"));                
+                string html = wc.DownloadString(new Uri("http://www.google.com"));
             }
             catch (Exception ex)
             {

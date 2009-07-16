@@ -33,16 +33,13 @@
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtRename = new System.Windows.Forms.TextBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tcFTP = new System.Windows.Forms.TabControl();
-            this.tpMainTab = new System.Windows.Forms.TabPage();
-            this.tpConsole = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.TextBox();
-            this.cbDirectoryList = new System.Windows.Forms.ComboBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyURLsToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtRename = new System.Windows.Forms.TextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.cbDirectoryList = new System.Windows.Forms.ComboBox();
             this.lvFTPList = new ZSS.FTPClientLib.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
@@ -50,7 +47,10 @@
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
             this.chOwnerGroup = new System.Windows.Forms.ColumnHeader();
-            this.copyURLsToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tcFTP = new System.Windows.Forms.TabControl();
+            this.tpMainTab = new System.Windows.Forms.TabPage();
+            this.tpConsole = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -71,7 +71,7 @@
             this.createDirectoryToolStripMenuItem,
             this.copyURLsToClipboardToolStripMenuItem});
             this.cmsRightClickMenu.Name = "cmsRightClickMenu";
-            this.cmsRightClickMenu.Size = new System.Drawing.Size(207, 164);
+            this.cmsRightClickMenu.Size = new System.Drawing.Size(207, 142);
             // 
             // downloadToolStripMenuItem
             // 
@@ -94,12 +94,31 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
             // createDirectoryToolStripMenuItem
             // 
             this.createDirectoryToolStripMenuItem.Name = "createDirectoryToolStripMenuItem";
             this.createDirectoryToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.createDirectoryToolStripMenuItem.Text = "Create directory";
             this.createDirectoryToolStripMenuItem.Click += new System.EventHandler(this.createDirectoryToolStripMenuItem_Click);
+            // 
+            // copyURLsToClipboardToolStripMenuItem
+            // 
+            this.copyURLsToClipboardToolStripMenuItem.Name = "copyURLsToClipboardToolStripMenuItem";
+            this.copyURLsToClipboardToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.copyURLsToClipboardToolStripMenuItem.Text = "Copy URL(s) to clipboard";
+            this.copyURLsToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyURLsToClipboardToolStripMenuItem_Click);
             // 
             // txtRename
             // 
@@ -129,6 +148,78 @@
             this.splitContainer1.Size = new System.Drawing.Size(952, 557);
             this.splitContainer1.SplitterDistance = 23;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // cbDirectoryList
+            // 
+            this.cbDirectoryList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbDirectoryList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDirectoryList.FormattingEnabled = true;
+            this.cbDirectoryList.Location = new System.Drawing.Point(0, 0);
+            this.cbDirectoryList.Name = "cbDirectoryList";
+            this.cbDirectoryList.Size = new System.Drawing.Size(952, 21);
+            this.cbDirectoryList.TabIndex = 3;
+            this.cbDirectoryList.SelectedIndexChanged += new System.EventHandler(this.cbDirectoryList_SelectedIndexChanged);
+            // 
+            // lvFTPList
+            // 
+            this.lvFTPList.AllowColumnReorder = true;
+            this.lvFTPList.AllowDrop = true;
+            this.lvFTPList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chFilename,
+            this.chFilesize,
+            this.chFiletype,
+            this.chLastModified,
+            this.chPermissions,
+            this.chOwnerGroup});
+            this.lvFTPList.ContextMenuStrip = this.cmsRightClickMenu;
+            this.lvFTPList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvFTPList.DoubleClickActivation = false;
+            this.lvFTPList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvFTPList.FullRowSelect = true;
+            this.lvFTPList.GridLines = true;
+            this.lvFTPList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvFTPList.HideSelection = false;
+            this.lvFTPList.Location = new System.Drawing.Point(0, 0);
+            this.lvFTPList.Name = "lvFTPList";
+            this.lvFTPList.Size = new System.Drawing.Size(952, 530);
+            this.lvFTPList.TabIndex = 0;
+            this.lvFTPList.UseCompatibleStateImageBehavior = false;
+            this.lvFTPList.View = System.Windows.Forms.View.Details;
+            this.lvFTPList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvFTPList_MouseDoubleClick);
+            this.lvFTPList.SelectedIndexChanged += new System.EventHandler(this.lvFTPList_SelectedIndexChanged);
+            this.lvFTPList.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragDrop);
+            this.lvFTPList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lvFTPList_ItemDrag);
+            this.lvFTPList.DragOver += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragOver);
+            // 
+            // chFilename
+            // 
+            this.chFilename.Text = "Filename";
+            this.chFilename.Width = 300;
+            // 
+            // chFilesize
+            // 
+            this.chFilesize.Text = "Filesize";
+            this.chFilesize.Width = 100;
+            // 
+            // chFiletype
+            // 
+            this.chFiletype.Text = "Filetype";
+            this.chFiletype.Width = 167;
+            // 
+            // chLastModified
+            // 
+            this.chLastModified.Text = "Last modified";
+            this.chLastModified.Width = 150;
+            // 
+            // chPermissions
+            // 
+            this.chPermissions.Text = "Permissions";
+            this.chPermissions.Width = 100;
+            // 
+            // chOwnerGroup
+            // 
+            this.chOwnerGroup.Text = "Owner/Group";
+            this.chOwnerGroup.Width = 100;
             // 
             // tcFTP
             // 
@@ -174,106 +265,17 @@
             this.txtConsole.Size = new System.Drawing.Size(952, 557);
             this.txtConsole.TabIndex = 0;
             // 
-            // cbDirectoryList
-            // 
-            this.cbDirectoryList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbDirectoryList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDirectoryList.FormattingEnabled = true;
-            this.cbDirectoryList.Location = new System.Drawing.Point(0, 0);
-            this.cbDirectoryList.Name = "cbDirectoryList";
-            this.cbDirectoryList.Size = new System.Drawing.Size(952, 21);
-            this.cbDirectoryList.TabIndex = 3;
-            this.cbDirectoryList.SelectedIndexChanged += new System.EventHandler(this.cbDirectoryList_SelectedIndexChanged);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
-            // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.refreshToolStripMenuItem.Text = "Refresh";
-            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
-            // 
-            // lvFTPList
-            // 
-            this.lvFTPList.AllowColumnReorder = true;
-            this.lvFTPList.AllowDrop = true;
-            this.lvFTPList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chFilename,
-            this.chFilesize,
-            this.chFiletype,
-            this.chLastModified,
-            this.chPermissions,
-            this.chOwnerGroup});
-            this.lvFTPList.ContextMenuStrip = this.cmsRightClickMenu;
-            this.lvFTPList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvFTPList.DoubleClickActivation = false;
-            this.lvFTPList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvFTPList.FullRowSelect = true;
-            this.lvFTPList.GridLines = true;
-            this.lvFTPList.HideSelection = false;
-            this.lvFTPList.Location = new System.Drawing.Point(0, 0);
-            this.lvFTPList.Name = "lvFTPList";
-            this.lvFTPList.Size = new System.Drawing.Size(952, 530);
-            this.lvFTPList.TabIndex = 0;
-            this.lvFTPList.UseCompatibleStateImageBehavior = false;
-            this.lvFTPList.View = System.Windows.Forms.View.Details;
-            this.lvFTPList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvFTPList_MouseDoubleClick);
-            this.lvFTPList.SelectedIndexChanged += new System.EventHandler(this.lvFTPList_SelectedIndexChanged);
-            this.lvFTPList.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragDrop);
-            this.lvFTPList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lvFTPList_ItemDrag);
-            this.lvFTPList.DragOver += new System.Windows.Forms.DragEventHandler(this.lvFTPList_DragOver);
-            // 
-            // chFilename
-            // 
-            this.chFilename.Text = "Filename";
-            this.chFilename.Width = 300;
-            // 
-            // chFilesize
-            // 
-            this.chFilesize.Text = "Filesize";
-            this.chFilesize.Width = 100;
-            // 
-            // chFiletype
-            // 
-            this.chFiletype.Text = "Filetype";
-            this.chFiletype.Width = 167;
-            // 
-            // chLastModified
-            // 
-            this.chLastModified.Text = "Last modified";
-            this.chLastModified.Width = 150;
-            // 
-            // chPermissions
-            // 
-            this.chPermissions.Text = "Permissions";
-            this.chPermissions.Width = 100;
-            // 
-            // chOwnerGroup
-            // 
-            this.chOwnerGroup.Text = "Owner/Group";
-            this.chOwnerGroup.Width = 100;
-            // 
-            // copyURLsToClipboardToolStripMenuItem
-            // 
-            this.copyURLsToClipboardToolStripMenuItem.Name = "copyURLsToClipboardToolStripMenuItem";
-            this.copyURLsToClipboardToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.copyURLsToClipboardToolStripMenuItem.Text = "Copy URL(s) to clipboard";
-            this.copyURLsToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyURLsToClipboardToolStripMenuItem_Click);
-            // 
-            // TestForm
+            // FTPClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 595);
             this.Controls.Add(this.tcFTP);
             this.Controls.Add(this.txtRename);
-            this.Name = "TestForm";
+            this.Name = "FTPClient";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "FTP Test";
+            this.Resize += new System.EventHandler(this.FTPClient_Resize);
             this.cmsRightClickMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

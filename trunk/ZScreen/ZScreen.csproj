@@ -191,9 +191,6 @@
     <Compile Include="Forms\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\InputBox.Designer.cs">
-      <DependentUpon>InputBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Global\FileSystem.cs" />
     <Compile Include="Global\GDI32.cs" />
     <Compile Include="Global\Structures.cs" />
@@ -306,10 +303,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\InputBox.resx">
-      <DependentUpon>InputBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,8 +1,30 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2009  Brandon Zimmerman
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+#endregion
+
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ZSS.FTPClientLib.Properties;
 using IconHelper;
 using ZSS;
 using System.Collections.Generic;
@@ -17,23 +39,16 @@ namespace ZSS.FTPClientLib
         private string currentDirectory;
         private ListViewItem tempSelected;
 
-        public FTPClient()
+        public FTPClient(FTPAccount FTPAcc)
         {
             InitializeComponent();
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
-            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
+            /*if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
                 string.IsNullOrEmpty(Settings.Default.Password))
             {
                 new LoginDialog().ShowDialog();
-            }
-
-            FTPAccount FTPAcc = new FTPAccount("FTP Test")
-            {
-                Server = Settings.Default.Server,
-                Username = Settings.Default.UserName,
-                Password = Settings.Default.Password
-            };
+            }*/
 
             FTPAdapter = new FTP(FTPAcc);
             FTPAdapter.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
@@ -479,14 +494,15 @@ namespace ZSS.FTPClientLib
         {
             string path;
             List<string> list = new List<string>();
+
             foreach (ListViewItem lvi in lvFTPList.SelectedItems)
             {
                 FTPLineResult file = lvi.Tag as FTPLineResult;
                 if (!file.IsSpecial)
                 {
                     path = currentDirectory.Remove(0, FTPAdapter.FTPAddress.Length);
-                    path = FTPHelpers.CombineURL(path, file.Name);
-                    list.Add(FTPAdapter.Account.GetUriPath(path));
+                    path = FTPAdapter.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name), true);
+                    list.Add(path);
                 }
             }
 
@@ -496,6 +512,11 @@ namespace ZSS.FTPClientLib
             {
                 Clipboard.SetText(clipboard);
             }
+        }
+
+        private void FTPClient_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
 
         #endregion
