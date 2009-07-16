@@ -45,7 +45,7 @@ namespace ZSS
         
 	}
 	
-    public class FTP
+    public class FTPAdapter
     {
         public event StringEventHandler FTPOutput;
         public delegate void StringEventHandler(string text);
@@ -54,7 +54,7 @@ namespace ZSS
         
         private const int BufferSize = 2048;
 
-        public FTP(FTPAdapterOptions options)
+        public FTPAdapter(FTPAdapterOptions options)
         {
         	this.Options = options;
         }

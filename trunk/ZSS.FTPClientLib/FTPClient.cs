@@ -44,7 +44,7 @@ namespace ZSS.FTPClientLib
 	
     public partial class FTPClient : Form
     {
-        public FTP FTPAdapter;
+        public FTPAdapter FTPAdapter;
         public FTPClientOptions Options {get; set;}
         private string currentDirectory;
         private ListViewItem tempSelected;
@@ -63,7 +63,7 @@ namespace ZSS.FTPClientLib
 
             this.Options = opt;
             FTPAdapterOptions fopt =  new FTPAdapterOptions(this.Options.Account, this.Options.ProxySettings); 
-            FTPAdapter = new FTP(fopt);
+            FTPAdapter = new FTPAdapter(fopt);
             FTPAdapter.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
 
             RefreshDirectory();

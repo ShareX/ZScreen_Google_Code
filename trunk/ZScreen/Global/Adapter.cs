@@ -24,7 +24,7 @@ namespace ZSS.Global
             FTPAdapterOptions opt = new FTPAdapterOptions(); 
             opt.Account = acc; 
             opt.ProxySettings = GetProxySettings();
-            FTP ftpClient = new FTP(opt);
+            FTPAdapter ftpClient = new FTPAdapter(opt);
             try
             {
                 if (ftpClient.ListDirectory(FTPHelpers.CombineURL(acc.FTPAddress, acc.Path)) != null)
@@ -69,7 +69,7 @@ namespace ZSS.Global
             }
         }
 
-        private static bool TestFTP(FTP ftp)
+        private static bool TestFTP(FTPAdapter ftp)
         {
             return ftp.ListDirectory(ftp.Options.Account.Path) != null;
         }

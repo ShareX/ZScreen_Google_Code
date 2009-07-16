@@ -77,7 +77,7 @@ namespace ZSS.TextUploaderLib
         	FTPAdapterOptions fopt = new FTPAdapterOptions(); 
         	fopt.Account = this.FTPAccount;
         	fopt.ProxySettings = this.ProxySettings;
-            FTP ftpClient = new FTP(fopt);            
+            FTPAdapter ftpClient = new FTPAdapter(fopt);            
             string fileName = DateTime.Now.Ticks + ".txt";
             string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fileName);
             ftpClient.UploadText(text, url);
