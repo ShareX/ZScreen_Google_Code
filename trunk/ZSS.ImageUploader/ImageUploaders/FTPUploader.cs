@@ -66,7 +66,8 @@ namespace ZSS.ImageUploaderLib
             FTP ftpClient = new FTP(this.FTPAccount);
             ftpClient.ProxySettings = this.ProxySettings;
             string fName = Path.GetFileName(localFilePath);
-            ftpClient.UploadFile(localFilePath, fName);
+            string path = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fName);
+            ftpClient.UploadFile(localFilePath, path);
 
             ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(fName), ImageFile.ImageType.FULLIMAGE));
 
@@ -85,7 +86,8 @@ namespace ZSS.ImageUploaderLib
                     img.Save(thPath);
                     if (File.Exists(thPath))
                     {
-                        ftpClient.UploadFile(thPath, Path.GetFileName(thPath));
+                        string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, Path.GetFileName(thPath));
+                        ftpClient.UploadFile(thPath, url);
                     }
                     ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
                 }

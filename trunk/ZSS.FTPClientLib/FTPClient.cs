@@ -62,7 +62,7 @@ namespace ZSS.FTPClientLib
         {
             if (string.IsNullOrEmpty(currentDirectory))
             {
-                currentDirectory = FTPAdapter.FTPAddress;
+                currentDirectory = FTPAdapter.Account.FTPAddress;
             }
 
             LoadDirectory(currentDirectory);
@@ -70,7 +70,7 @@ namespace ZSS.FTPClientLib
 
         private void FillDirectories(string path)
         {
-            path = path.Remove(0, FTPAdapter.FTPAddress.Length);
+            path = path.Remove(0, FTPAdapter.Account.FTPAddress.Length);
             List<string> paths = FTPHelpers.GetPaths(path);
             paths.Insert(0, "/");
 
@@ -95,7 +95,7 @@ namespace ZSS.FTPClientLib
             list = list.OrderBy(x => !x.IsDirectory).ThenBy(x => x.Name).ToList();
             //list = (from x in list orderby !x.IsDirectory, x.Name select x).ToArray();
 
-            if (path != FTPAdapter.FTPAddress)
+            if (path != FTPAdapter.Account.FTPAddress)
             {
                 list.Insert(0, new FTPLineResult { Name = ".", IsDirectory = true, IsSpecial = true });
                 list.Insert(1, new FTPLineResult { Name = "..", IsDirectory = true, IsSpecial = true });
@@ -177,7 +177,7 @@ namespace ZSS.FTPClientLib
                             {
                                 if (checkDirectory.Name == ".")
                                 {
-                                    LoadDirectory(FTPAdapter.FTPAddress);
+                                    LoadDirectory(FTPAdapter.Account.FTPAddress);
                                 }
                                 else if (checkDirectory.Name == "..")
                                 {
@@ -482,7 +482,7 @@ namespace ZSS.FTPClientLib
             if (cbDirectoryList.Items.Count > 0)
             {
                 string path = cbDirectoryList.SelectedItem.ToString().Remove(0, 1);
-                path = FTPHelpers.CombineURL(FTPAdapter.FTPAddress, path);
+                path = FTPHelpers.CombineURL(FTPAdapter.Account.FTPAddress, path);
                 if (currentDirectory != path)
                 {
                     LoadDirectory(path);
@@ -500,7 +500,7 @@ namespace ZSS.FTPClientLib
                 FTPLineResult file = lvi.Tag as FTPLineResult;
                 if (!file.IsSpecial)
                 {
-                    path = currentDirectory.Remove(0, FTPAdapter.FTPAddress.Length);
+                    path = currentDirectory.Remove(0, FTPAdapter.Account.FTPAddress.Length);
                     path = FTPAdapter.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name), true);
                     list.Add(path);
                 }
