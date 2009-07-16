@@ -39,8 +39,6 @@ namespace ZSS
         public FTPAccount Account { get; set; }
         public WebProxy ProxySettings { get; set; }
 
-        public string FTPAddress { get { return string.Format("ftp://{0}:{1}", Account.Server, Account.Port); } }
-
         public FTP()
         {
             Account = new FTPAccount();

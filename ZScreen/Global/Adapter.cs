@@ -25,7 +25,7 @@ namespace ZSS.Global
             ftpClient.ProxySettings = GetProxySettings();
             try
             {
-                if (ftpClient.ListDirectory(ftpClient.Account.Path) != null)
+                if (ftpClient.ListDirectory(FTPHelpers.CombineURL(acc.FTPAddress, acc.Path)) != null)
                 {
                     msg = "Success.";
                 }
