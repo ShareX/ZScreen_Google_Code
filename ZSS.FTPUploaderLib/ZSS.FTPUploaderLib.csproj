@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FTP.cs" />
+    <Compile Include="FTPAdapter.cs" />
     <Compile Include="FTPAccount.cs" />
     <Compile Include="FTPAccountManager.cs" />
     <Compile Include="FTPHelpers.cs" />

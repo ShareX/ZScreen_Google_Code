@@ -41,7 +41,7 @@ namespace ZSS
         private int mConWidth, mConHeight, mConX, mConY;
         private int mPbWidth, mPbHeight;
 
-        private FTP mFTP;
+        private FTPAdapter mFTP;
 
         private int mOldX = 0, mOldY = 0;
 
@@ -243,7 +243,7 @@ namespace ZSS
             	FTPAdapterOptions fopt = new FTPAdapterOptions();
             	fopt.Account = mAcc; 
             	fopt.ProxySettings = Adapter.GetProxySettings();
-                mFTP = new FTP(fopt);
+                mFTP = new FTPAdapter(fopt);
                 List<string> files = FetchList();
                 if (files.Count > 0)
                 {
