@@ -120,12 +120,12 @@
 
         #endregion
 
-        internal System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.Label label3;
-        internal System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnOK;
+        public System.Windows.Forms.TextBox txtServer;
+        public System.Windows.Forms.TextBox txtUserName;
+        public System.Windows.Forms.TextBox txtPassword;
     }
 }
