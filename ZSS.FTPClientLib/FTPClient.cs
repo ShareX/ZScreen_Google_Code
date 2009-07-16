@@ -467,8 +467,10 @@ namespace ZSS.FTPClientLib
                 FTPLineResult file = lvFTPList.SelectedItems[0].Tag as FTPLineResult;
 
                 downloadToolStripMenuItem.Enabled = !file.IsDirectory && !file.IsSpecial;
-                renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled = !file.IsSpecial;
-                //createDirectoryToolStripMenuItem.Enabled;
+                renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
+                    copyURLsToClipboardToolStripMenuItem.Enabled = !file.IsSpecial;
+                //refreshToolStripMenuItem.Enabled
+                //createDirectoryToolStripMenuItem.Enabled
             }
         }
 
