@@ -26,12 +26,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using ZSS.TextUploaderLib;
-using ZSS.TextUploaderLib.Helpers;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.Helpers;
 using System.Xml.Linq;
 using System.Xml;
 
-namespace ZSS.TextUploaderLib.URLShorteners
+namespace ZSS.TextUploadersLib.URLShorteners
 {
     [Serializable]
     public sealed class BitlyUploader : TextUploader

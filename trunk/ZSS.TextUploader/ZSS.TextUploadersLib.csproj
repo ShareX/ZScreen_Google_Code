@@ -8,8 +8,8 @@
     <ProjectGuid>{04DEED7C-450E-4C12-9586-040448FC6DD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZSS.TextUploaderLib</RootNamespace>
-    <AssemblyName>ZSS.TextUploaderLib</AssemblyName>
+    <RootNamespace>ZSS.TextUploadersLib</RootNamespace>
+    <AssemblyName>ZSS.TextUploadersLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -36,10 +36,10 @@ using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib.Helpers;
 using System.Xml.Serialization;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public abstract class ImageUploader : IUploader
     {
@@ -103,10 +103,7 @@ namespace ZSS.ImageUploaderLib
             Uri postUri = new Uri(data);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(postUri);
-            if (ProxySettings != null)
-            {
-                request.Proxy = ProxySettings;
-            }
+            request.Proxy = ProxySettings;
             request.Method = "POST";
             request.UserAgent = "Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; WOW64; SV1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; InfoPath.1; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
             request.ContentType = "application/x-www-form-urlencoded";
@@ -127,7 +124,7 @@ namespace ZSS.ImageUploaderLib
         protected string GetResponse2(string url, IDictionary<string, string> arguments)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
+            request.Proxy = ProxySettings;
             request.AllowAutoRedirect = false;
             request.Method = "POST";
 

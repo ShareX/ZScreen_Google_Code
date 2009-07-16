@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib.Helpers;
+using System.Net;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public sealed class DekiWikiUploader : IUploader
     {
-        private DekiWikiAccount mAccount;
+        public DekiWikiOptions Options { get; set; }
+
         private List<string> Errors { get; set; }
         public string Name { get; private set; }
         public string WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        public DekiWikiUploader(DekiWikiAccount acc)
+        public DekiWikiUploader(DekiWikiOptions options)
         {
-            this.mAccount = acc;
-            this.Errors = new List<string>();
-            this.Name = mAccount.Name;
+            this.Options = options;            
+            this.Errors = new List<string>();            
         }
 
         public ImageFileManager UploadImage(string localFilePath)
@@ -26,8 +27,8 @@ namespace ZSS.ImageUploaderLib
             // Create a new ImageFile List
             List<ImageFile> ifl = new List<ImageFile>();
 
-            // Create the connector
-            DekiWiki connector = new DekiWiki(ref this.mAccount);
+            // Create the connector            
+            DekiWiki connector = new DekiWiki(this.Options);
 
             // Get the file name to save
             string fName = Path.GetFileName(localFilePath);
@@ -36,7 +37,7 @@ namespace ZSS.ImageUploaderLib
             connector.UploadImage(localFilePath, fName);
 
             // Add this to the list of uploaded images
-            ifl.Add(new ImageFile(this.mAccount.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
+            ifl.Add(new ImageFile(this.Options.Account.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
 
             // Create the file manager object
             ImageFileManager ifm = new ImageFileManager(ifl) { LocalFilePath = localFilePath };
@@ -53,5 +54,6 @@ namespace ZSS.ImageUploaderLib
             }
             return sb.ToString();
         }
+
     }
 }

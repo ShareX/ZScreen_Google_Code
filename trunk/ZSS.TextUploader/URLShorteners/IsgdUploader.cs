@@ -23,10 +23,10 @@
 
 using System;
 using System.Collections.Generic;
-using ZSS.TextUploaderLib;
-using ZSS.TextUploaderLib.Helpers;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.Helpers;
 
-namespace ZSS.TextUploaderLib.URLShorteners
+namespace ZSS.TextUploadersLib.URLShorteners
 {
     [Serializable]
     public sealed class IsgdUploader : TextUploader

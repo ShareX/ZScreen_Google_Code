@@ -5,10 +5,10 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using ZSS.Global;
-using ZSS.ImageUploaderLib;
+using ZSS.ImageUploadersLib;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.TextUploaderLib;
+using ZSS.TextUploadersLib;
 using System.ComponentModel;
 
 namespace ZSS.Helpers
@@ -156,7 +156,7 @@ namespace ZSS.Helpers
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
-                    ZSS.ImageUploaderLib.FTPUploader fu = new ZSS.ImageUploaderLib.FTPUploader(acc)
+                    ZSS.ImageUploadersLib.FTPUploader fu = new ZSS.ImageUploadersLib.FTPUploader(acc)
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
                         WorkingDir = Program.CacheDir
@@ -186,7 +186,7 @@ namespace ZSS.Helpers
 
                     if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Program.conf.DekiWikiForcePath == true)
                     {
-                        ZSS.Forms.DekiWikiPath diag = new ZSS.Forms.DekiWikiPath(ref acc);
+                        ZSS.Forms.DekiWikiPath diag = new ZSS.Forms.DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                         diag.history = acc.History;
                         diag.ShowDialog();
 
@@ -202,11 +202,11 @@ namespace ZSS.Helpers
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
 
-                    DekiWikiUploader uploader = new DekiWikiUploader(acc);
+                    DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                     mTask.ImageManager = uploader.UploadImage(mTask.LocalFilePath);
                     mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
 
-                    DekiWiki connector = new DekiWiki(ref acc);
+                    DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                     connector.UpdateHistory();
 
                     return true;

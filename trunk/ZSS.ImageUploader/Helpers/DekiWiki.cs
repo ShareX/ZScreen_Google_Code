@@ -9,14 +9,26 @@ using System.Windows.Forms;
 
 namespace ZSS
 {
+    public class DekiWikiOptions{
+
+        public DekiWikiAccount Account { get; set; }
+        public WebProxy ProxySettings { get; set; }
+
+        public DekiWikiOptions(DekiWikiAccount acc, WebProxy proxy)
+        {
+            this.Account = acc;
+            this.ProxySettings = proxy;
+        }
+    }
+
     public class DekiWiki
     {
         public class Page
         {
-            public string id       { set; get; }
-            public string path     { set; get; }
-            public string name     { set; get; }
-            public bool   terminal { set; get; }
+            public string id { set; get; }
+            public string path { set; get; }
+            public string name { set; get; }
+            public bool terminal { set; get; }
             public List<Page> children;
 
             public Page()
@@ -28,9 +40,9 @@ namespace ZSS
             {
                 children = new List<Page>();
 
-                this.id       = id;
-                this.path     = path;
-                this.name     = name;
+                this.id = id;
+                this.path = path;
+                this.name = name;
                 this.terminal = terminal;
             }
 
@@ -40,19 +52,14 @@ namespace ZSS
             }
         }
 
-        private DekiWikiAccount mAccount;
+        private DekiWikiOptions Options { get; set; }
         private string authToken;
 
         public static string savePath;
 
-        public DekiWiki()
+        public DekiWiki(DekiWikiOptions options)
         {
-            mAccount = new DekiWikiAccount();
-        }
-
-        public DekiWiki(ref DekiWikiAccount acc)
-        {
-            mAccount = acc;
+            this.Options = options;            
         }
 
         public void UploadImage(string fileName, string remoteName)
@@ -61,14 +68,14 @@ namespace ZSS
             Login();
 
             // Create the Uri
-            string uri = mAccount.Url;
+            string uri =  this.Options.Account.Url;
             uri += "/@api/deki/pages/=";
             uri += HttpUtility.UrlEncode(HttpUtility.UrlEncode(savePath));
             uri += "/files/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(remoteName));
 
             // Create the request
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-
+            request.Proxy = this.Options.ProxySettings;
             // Get the image's file info
             FileInfo fileInfo = new FileInfo(fileName);
 
@@ -116,7 +123,7 @@ namespace ZSS
         {
             List<DekiWikiHistory> remove = new List<DekiWikiHistory>();
 
-            foreach (DekiWikiHistory item in mAccount.History)
+            foreach (DekiWikiHistory item in this.Options.Account.History)
             {
                 if (item.Path == savePath)
                 {
@@ -126,33 +133,33 @@ namespace ZSS
 
             foreach (DekiWikiHistory item in remove)
             {
-                mAccount.History.Remove(item);
+                this.Options.Account.History.Remove(item);
             }
 
-            if (mAccount.History.Count == 10)
+            if (this.Options.Account.History.Count == 10)
             {
-                mAccount.History.RemoveAt(0);
+                this.Options.Account.History.RemoveAt(0);
             }
 
-            mAccount.History.Add(new DekiWikiHistory(savePath, DateTime.Now));
+            this.Options.Account.History.Add(new DekiWikiHistory(savePath, DateTime.Now));
         }
 
         public Page getPageInfo(string path)
         {
             // Create the URI
-            string uri = mAccount.Url + "/@api/deki/pages/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(path)) + "/info";
+            string uri = this.Options.Account.Url + "/@api/deki/pages/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(path)) + "/info";
 
             // Create the request
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(uri);
-
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Proxy = this.Options.ProxySettings;
             // We want a GET request
-            httpRequest.Method = WebRequestMethods.Http.Get;
+            request.Method = WebRequestMethods.Http.Get;
 
             // Get a response
             HttpWebResponse httpResponse;
             try
             {
-                httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                httpResponse = (HttpWebResponse)request.GetResponse();
             }
             catch (Exception ex)
             {
@@ -204,19 +211,19 @@ namespace ZSS
         public List<Page> getPathInfo(string path)
         {
             // Create the URI
-            string uri = mAccount.Url + "/@api/deki/pages/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(path)) + "/tree";
+            string uri = this.Options.Account.Url + "/@api/deki/pages/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(path)) + "/tree";
 
             // Create the request
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(uri);
-
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Proxy = this.Options.ProxySettings;
             // We want a GET request
-            httpRequest.Method = WebRequestMethods.Http.Get;
+            request.Method = WebRequestMethods.Http.Get;
 
             // Get a response
             HttpWebResponse httpResponse;
             try
             {
-                httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                httpResponse = (HttpWebResponse)request.GetResponse();
             }
             catch (Exception ex)
             {
@@ -245,7 +252,7 @@ namespace ZSS
 
             // Create the page list
             return parseXml(xmlDocument.DocumentElement);
-       }
+        }
 
         private List<Page> parseXml(XmlNode parent)
         {
@@ -282,26 +289,26 @@ namespace ZSS
         public void Login()
         {
             // Build the URI
-            string uri = mAccount.Url + "/@api/deki/users/authenticate";
+            string uri = this.Options.Account.Url + "/@api/deki/users/authenticate";
 
             // Create the request
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(uri);
-
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Proxy = this.Options.ProxySettings;
             // Set some properties
-            httpRequest.Method = WebRequestMethods.Http.Post;
-            httpRequest.ContentType = "Content-type: application/x-www-form-urlencoded";
-            httpRequest.ContentLength = 0;
+            request.Method = WebRequestMethods.Http.Post;
+            request.ContentType = "Content-type: application/x-www-form-urlencoded";
+            request.ContentLength = 0;
 
             // Encode the auth token
-            byte[] authBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(mAccount.Username + ":" + mAccount.Password);
+            byte[] authBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(this.Options.Account.Username + ":" + this.Options.Account.Password);
             string authEnc = System.Convert.ToBase64String(authBytes);
-            httpRequest.Headers["Authorization"] = "Basic " + authEnc;
+            request.Headers["Authorization"] = "Basic " + authEnc;
 
             // Send the request
-            httpRequest.GetRequestStream().Close();
+            request.GetRequestStream().Close();
 
             // Get the response
-            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse();
 
             // Check the code
             if (httpResponse.StatusCode.ToString() != "OK")

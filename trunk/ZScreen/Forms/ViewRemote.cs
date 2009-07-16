@@ -240,7 +240,7 @@ namespace ZSS
 
             if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server))
             {
-            	FTPAdapterOptions fopt = new FTPAdapterOptions();
+            	FTPOptions fopt = new FTPOptions();
             	fopt.Account = mAcc; 
             	fopt.ProxySettings = Adapter.GetProxySettings();
                 mFTP = new FTPAdapter(fopt);

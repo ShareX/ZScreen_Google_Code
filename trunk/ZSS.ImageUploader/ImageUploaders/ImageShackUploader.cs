@@ -35,9 +35,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Xml;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib.Helpers;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public sealed class ImageShackUploader : ImageUploader
     {
@@ -250,6 +250,7 @@ namespace ZSS.ImageUploaderLib
                 ServicePointManager.Expect100Continue = false;
 
                 HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URL);
+                httpRequest.Proxy = this.ProxySettings;
                 MemoryStream memoryStream = new MemoryStream();
                 StreamWriter streamWriter = new StreamWriter(memoryStream);
 

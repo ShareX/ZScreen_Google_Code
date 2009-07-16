@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System;
 
-namespace ZSS.TextUploaderLib
+namespace ZSS.TextUploadersLib
 {
     [Serializable]
     public enum TextDestType

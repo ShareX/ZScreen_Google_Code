@@ -36,9 +36,9 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib.Helpers;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public sealed class TinyPicUploader : ImageUploader
     {

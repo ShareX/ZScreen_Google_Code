@@ -25,15 +25,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZSS.ImageUploaderLib;
-using ZSS.ImageUploaderLib.Helpers;
+using ZSS.ImageUploadersLib;
+using ZSS.ImageUploadersLib.Helpers;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Xml.Linq;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public sealed class TwitPicUploader : ImageUploader
     {

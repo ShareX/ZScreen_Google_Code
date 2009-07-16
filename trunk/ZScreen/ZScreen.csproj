@@ -404,13 +404,13 @@
       <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
       <Name>ZSS.ImageEditorLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploaderLib.csproj">
+    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj">
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
-      <Name>ZSS.ImageUploaderLib</Name>
+      <Name>ZSS.ImageUploadersLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploaderLib.csproj">
+    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploadersLib.csproj">
       <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
-      <Name>ZSS.TextUploaderLib</Name>
+      <Name>ZSS.TextUploadersLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
       <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>

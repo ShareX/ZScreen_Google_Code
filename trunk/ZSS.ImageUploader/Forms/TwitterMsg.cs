@@ -24,7 +24,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ZSS.ImageUploaderLib
+namespace ZSS.ImageUploadersLib
 {
     public partial class TwitterMsg : Form
     {

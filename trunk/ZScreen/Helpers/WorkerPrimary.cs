@@ -38,7 +38,7 @@ using ZSS.Forms;
 using ZSS.Global;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.TextUploaderLib;
+using ZSS.TextUploadersLib;
 
 namespace ZSS.Helpers
 {

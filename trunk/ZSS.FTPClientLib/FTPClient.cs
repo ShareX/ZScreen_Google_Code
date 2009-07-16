@@ -35,21 +35,14 @@ using System.Collections;
 namespace ZSS.FTPClientLib
 {
 	
-	public class FTPClientOptions{
-		
-		public FTPAccount Account {get; set;}
-		public WebProxy ProxySettings {get; set;}
-		
-	}
-	
     public partial class FTPClient : Form
     {
         public FTPAdapter FTPAdapter;
-        public FTPClientOptions Options {get; set;}
+        public FTPOptions Options {get; set;}
         private string currentDirectory;
         private ListViewItem tempSelected;
 
-        public FTPClient(FTPClientOptions opt)
+        public FTPClient(FTPOptions opt)
         {
             InitializeComponent();
             
@@ -62,7 +55,7 @@ namespace ZSS.FTPClientLib
             }*/
 
             this.Options = opt;
-            FTPAdapterOptions fopt =  new FTPAdapterOptions(this.Options.Account, this.Options.ProxySettings); 
+            FTPOptions fopt =  new FTPOptions(this.Options.Account, this.Options.ProxySettings); 
             FTPAdapter = new FTPAdapter(fopt);
             FTPAdapter.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
 
