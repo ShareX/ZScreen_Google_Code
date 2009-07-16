@@ -208,7 +208,7 @@ namespace ZSS
             List<string> result = new List<string>();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-
+			request.Proxy = this.ProxySettings;
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.Credentials = new NetworkCredential(Account.Username, Account.Password);
             request.KeepAlive = false;

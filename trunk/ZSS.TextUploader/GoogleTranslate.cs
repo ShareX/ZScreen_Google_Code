@@ -36,9 +36,10 @@ namespace ZSS.TextUploaderLib
         public Options LanguageOptions { get; private set; }
         public WebProxy ProxySettings { get; set; }
 
-        public GoogleTranslate()
+        public GoogleTranslate(WebProxy proxySettings)
         {
-            this.LanguageOptions = this.GetLanguageOptions();
+        	this.ProxySettings = proxySettings;
+            this.LanguageOptions = this.GetLanguageOptions();            
         }
 
         /// <summary>Gets "from country" and "to country" lists from google.</summary>
@@ -49,7 +50,8 @@ namespace ZSS.TextUploaderLib
             // The remote name could not be resolved: 'translate.google.com'
             try
             {
-                WebClient webClient = new WebClient();                
+                WebClient webClient = new WebClient();
+                webClient.Proxy = this.ProxySettings;
                 string source = webClient.DownloadString("http://translate.google.com/translate_t");
                 string[] selectName = new[] { "sl", "tl" };
 
