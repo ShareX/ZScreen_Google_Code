@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Drawing.Text;
 
 namespace ZSS
 {
@@ -77,22 +78,6 @@ namespace ZSS
                 FileSystem.AppendDebug(ex.ToString());
             }
             return bmp;
-        }
-
-        public static GraphicsPath RoundedRectangle(Rectangle rect, int CornerRadius)
-        {
-            int X = rect.X, Y = rect.Y, RectWidth = rect.Width, RectHeight = rect.Height;
-            GraphicsPath gPath = new GraphicsPath();
-            gPath.AddLine(X + CornerRadius, Y, X + RectWidth - (CornerRadius * 2), Y);
-            gPath.AddArc(X + RectWidth - (CornerRadius * 2), Y, CornerRadius * 2, CornerRadius * 2, 270, 90);
-            gPath.AddLine(X + RectWidth, Y + CornerRadius, X + RectWidth, Y + RectHeight - (CornerRadius * 2));
-            gPath.AddArc(X + RectWidth - (CornerRadius * 2), Y + RectHeight - (CornerRadius * 2), CornerRadius * 2, CornerRadius * 2, 0, 90);
-            gPath.AddLine(X + RectWidth - (CornerRadius * 2), Y + RectHeight, X + CornerRadius, Y + RectHeight);
-            gPath.AddArc(X, Y + RectHeight - (CornerRadius * 2), CornerRadius * 2, CornerRadius * 2, 90, 90);
-            gPath.AddLine(X, Y + RectHeight - (CornerRadius * 2), X, Y + CornerRadius);
-            gPath.AddArc(X, Y, CornerRadius * 2, CornerRadius * 2, 180, 90);
-            gPath.CloseFigure();
-            return gPath;
         }
 
         public static void SaveImageToMemoryStream(Image img, MemoryStream ms, ImageFormat format)
@@ -345,6 +330,19 @@ namespace ZSS
             g2.DrawImage(bmp, new Rectangle(0, 0, image.Width, image.Height));
             g2.Dispose();
             return image;
+        }
+
+        public static Image DrawProgressIcon(int percentage)
+        {
+            Bitmap bmp = new Bitmap(16, 16);
+            Graphics g = Graphics.FromImage(bmp);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            GraphicsPath gPath = RoundedRectangle.Create(0, 0, 15, 15, 2);
+            g.FillPath(Brushes.Black, gPath);
+            StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+            return bmp;
         }
     }
 }

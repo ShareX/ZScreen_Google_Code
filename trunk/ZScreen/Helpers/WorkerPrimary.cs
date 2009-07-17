@@ -217,6 +217,11 @@ namespace ZSS.Helpers
                 case MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION:
                     mZScreen.cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
                     break;
+                case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
+                    ZSS.FTPAdapter.UploadProgress progress = (ZSS.FTPAdapter.UploadProgress)e.UserState;
+                    Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(progress.Progress);
+                    mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
+                    break;
             }
         }
 
