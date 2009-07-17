@@ -74,10 +74,10 @@ namespace ZSS.TextUploadersLib
         /// <returns>Returns a list of images.</returns>
         public override string UploadText(string text)
         {
-        	FTPOptions fopt = new FTPOptions(); 
-        	fopt.Account = this.FTPAccount;
-        	fopt.ProxySettings = this.ProxySettings;
-            FTPAdapter ftpClient = new FTPAdapter(fopt);            
+            FTPOptions fopt = new FTPOptions();
+            fopt.Account = this.FTPAccount;
+            fopt.ProxySettings = this.ProxySettings;
+            FTPAdapter ftpClient = new FTPAdapter(fopt);
             string fileName = DateTime.Now.Ticks + ".txt";
             string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fileName);
             ftpClient.UploadText(text, url);

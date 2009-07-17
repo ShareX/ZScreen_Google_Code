@@ -43,7 +43,7 @@ namespace ZSS.Global
                     try
                     {
                         ftpClient.MakeMultiDirectory(acc.Path);
-                        if (ftpClient.ListDirectory(ftpClient.Options.Account.Path) != null)
+                        if (ftpClient.ListDirectory(FTPHelpers.CombineURL(acc.FTPAddress, acc.Path)) != null)
                         {
                             msg = "Success.\nAuto created folder: " + acc.Path;
                         }
