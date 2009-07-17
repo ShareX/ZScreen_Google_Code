@@ -312,11 +312,11 @@ namespace ZSS
             g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
             g.Dispose();
             ColorMatrix cm;
-            switch(Program.conf.BevelFilterType)
+            switch (Program.conf.BevelFilterType)
             {
                 default:
                 case FilterType.Brightness:
-                    cm =  ColorMatrices.BrightnessFilter(filterValue);
+                    cm = ColorMatrices.BrightnessFilter(filterValue);
                     break;
                 case FilterType.Contrast:
                     cm = ColorMatrices.ContrastFilter(filterValue);
@@ -338,11 +338,13 @@ namespace ZSS
             Graphics g = Graphics.FromImage(bmp);
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            //GraphicsPath gPath = RoundedRectangle.Create(0, 0, 15, 15, 2);
-            //g.FillPath(Brushes.Black, gPath);
             g.FillRectangle(Brushes.Black, 0, 0, 16, 16);
-            StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+            g.FillRectangle(Brushes.RoyalBlue, 0, 0, (int)(0.16 * percentage), 16);
+            if (percentage < 100)
+            {
+                StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+            }
             g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             return bmp;
         }
