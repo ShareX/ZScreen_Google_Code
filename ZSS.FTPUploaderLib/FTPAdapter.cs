@@ -46,7 +46,7 @@ namespace ZSS
 
     public class FTPAdapter
     {
-        public event ProgressEventHandler UploadProgressChanged;
+        public event ProgressEventHandler ProgressChanged;
         public delegate void ProgressEventHandler(UploadProgress progress);
 
         public class UploadProgress
@@ -73,7 +73,12 @@ namespace ZSS
 
             public bool ChangeProgress(Stream stream)
             {
-                int percentage = (int)((double)stream.Position / stream.Length * 100);
+                return ChangeProgress(stream.Position, stream.Length);
+            }
+
+            public bool ChangeProgress(long position, long length)
+            {
+                int percentage = (int)((double)position / length * 100);
                 if (percentage != Progress.Percentage)
                 {
                     Progress.Percentage = percentage;
@@ -85,13 +90,13 @@ namespace ZSS
 
         private void ReportProgress(ProgressManager progress)
         {
-            if (UploadProgressChanged != null)
+            if (ProgressChanged != null)
             {
-                UploadProgressChanged(progress.Progress);
+                ProgressChanged(progress.Progress);
             }
         }
 
-        public void Upload(Stream stream, string url)
+        public bool Upload(Stream stream, string url)
         {
             try
             {
@@ -121,23 +126,25 @@ namespace ZSS
                 }
 
                 WriteOutput("Upload: " + url);
+                return true;
             }
             catch (Exception ex)
             {
-                WriteOutput("Error - Upload: " + ex.Message);
+                WriteOutput(string.Format("Error: {0} - Upload: {1}", ex.Message, url));
             }
+            return false;
         }
 
-        public void UploadFile(string filePath, string url)
+        public bool UploadFile(string filePath, string url)
         {
             FileStream stream = new FileStream(filePath, FileMode.Open);
-            Upload(stream, url);
+            return Upload(stream, url);
         }
 
-        public void UploadText(string text, string url)
+        public bool UploadText(string text, string url)
         {
             MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(text), false);
-            Upload(stream, url);
+            return Upload(stream, url);
         }
 
         #region Async Methods
@@ -201,9 +208,9 @@ namespace ZSS
         private void bw_AsyncUploadProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             UploadProgress progress = (UploadProgress)e.UserState;
-            if (UploadProgressChanged != null)
+            if (ProgressChanged != null)
             {
-                UploadProgressChanged(progress);
+                ProgressChanged(progress);
             }
         }
 
@@ -221,7 +228,7 @@ namespace ZSS
 
         #endregion
 
-        public void DownloadFile(string url, string savePath)
+        public bool DownloadFile(string url, string savePath)
         {
             try
             {
@@ -239,24 +246,27 @@ namespace ZSS
                     ProgressManager progress = new ProgressManager();
 
                     byte[] buffer = new byte[BufferSize];
-                    int bytes = stream.Read(buffer, 0, BufferSize);
+                    int bytes = stream.Read(buffer, 0, BufferSize), totalBytes = 0;
 
                     while (bytes > 0)
                     {
                         fileStream.Write(buffer, 0, bytes);
 
-                        if (progress.ChangeProgress(stream)) ReportProgress(progress);
+                        totalBytes += bytes;
+                        if (progress.ChangeProgress(totalBytes, response.ContentLength)) ReportProgress(progress);
 
                         bytes = stream.Read(buffer, 0, BufferSize);
                     }
                 }
 
                 WriteOutput(string.Format("DownloadFile: {0} -> {1}", url, savePath));
+                return true;
             }
             catch (Exception ex)
             {
-                WriteOutput("Error - DownloadFile: " + ex.Message);
+                WriteOutput(string.Format("Error: {0} - DownloadFile: {1} -> {2}", ex.Message, url, savePath));
             }
+            return false;
         }
 
         public void DeleteFile(string url)
@@ -388,7 +398,7 @@ namespace ZSS
             }
         }
 
-        public void MakeDirectory(string url)
+        public bool MakeDirectory(string url)
         {
             try
             {
@@ -401,11 +411,13 @@ namespace ZSS
                 request.GetResponse();
 
                 WriteOutput("MakeDirectory: " + url);
+                return true;
             }
             catch (Exception ex)
             {
-                WriteOutput("Error - MakeDirectory: " + ex.Message);
+                WriteOutput(string.Format("Error: {0} - MakeDirectory: {1}", ex.Message, url));
             }
+            return false;
         }
 
         public void MakeMultiDirectory(string dirName)

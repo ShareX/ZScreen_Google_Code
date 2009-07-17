@@ -28,7 +28,6 @@ namespace ZSS
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewRemote));
             this.lbFiles = new System.Windows.Forms.ListBox();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -39,7 +38,6 @@ namespace ZSS
             this.btnSave = new System.Windows.Forms.Button();
             this.folderBrowseDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.bwRemoteViewer = new System.ComponentModel.BackgroundWorker();
-            this.tmrFetchFile = new System.Windows.Forms.Timer(this.components);
             this.pbViewer = new System.Windows.Forms.PictureBox();
             this.ssViewer = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -145,11 +143,6 @@ namespace ZSS
             this.bwRemoteViewer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwRemoteViewer_DoWork);
             this.bwRemoteViewer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwRemoteViewer_RunWorkerCompleted);
             this.bwRemoteViewer.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwRemoteViewer_ProgressChanged);
-            // 
-            // tmrFetchFile
-            // 
-            this.tmrFetchFile.Enabled = true;
-            this.tmrFetchFile.Tick += new System.EventHandler(this.tmrFetchFile_Tick);
             // 
             // pbViewer
             // 
@@ -289,7 +282,6 @@ namespace ZSS
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.FolderBrowserDialog folderBrowseDialog;
         private System.ComponentModel.BackgroundWorker bwRemoteViewer;
-        private System.Windows.Forms.Timer tmrFetchFile;
         private System.Windows.Forms.PictureBox pbViewer;
         private System.Windows.Forms.StatusStrip ssViewer;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

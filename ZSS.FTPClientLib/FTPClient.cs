@@ -34,30 +34,24 @@ using System.Collections;
 
 namespace ZSS.FTPClientLib
 {
-	
+
     public partial class FTPClient : Form
     {
         public FTPAdapter FTPAdapter;
-        public FTPOptions Options {get; set;}
+        public FTPOptions Options { get; set; }
         private string currentDirectory;
         private ListViewItem tempSelected;
 
         public FTPClient(FTPOptions opt)
         {
             InitializeComponent();
-            
+
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
-            /*if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) ||
-                string.IsNullOrEmpty(Settings.Default.Password))
-            {
-                new LoginDialog().ShowDialog();
-            }*/
-
             this.Options = opt;
-            FTPOptions fopt =  new FTPOptions(this.Options.Account, this.Options.ProxySettings); 
+            FTPOptions fopt = new FTPOptions(this.Options.Account, this.Options.ProxySettings);
             FTPAdapter = new FTPAdapter(fopt);
-            FTPAdapter.FTPOutput += x => txtConsole.AppendText(x + "\r\n");
+            FTPAdapter.FTPOutput += new FTPAdapter.StringEventHandler(FTPAdapter_FTPOutput);
 
             RefreshDirectory();
         }
@@ -549,6 +543,12 @@ namespace ZSS.FTPClientLib
         private void FTPClient_Resize(object sender, EventArgs e)
         {
             this.Refresh();
+        }
+
+        private void FTPAdapter_FTPOutput(string text)
+        {
+            txtConsole.AppendText(text + "\r\n");
+            txtConsole.ScrollToCaret();
         }
 
         #endregion
