@@ -178,7 +178,10 @@ namespace ZSS.Helpers
 
         private void fu_UploadProgressChanged(FTPAdapter.UploadProgress progress)
         {
-            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
+            if (Program.conf.ShowTrayUploadProgress)
+            {
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
+            }
         }
 
         public bool UploadDekiWiki()

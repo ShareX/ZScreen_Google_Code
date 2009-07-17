@@ -30,7 +30,6 @@ using System.ComponentModel;
 
 namespace ZSS
 {
-
     public class FTPOptions
     {
         public FTPOptions() { }
@@ -341,6 +340,8 @@ namespace ZSS
         {
             List<string> result = new List<string>();
 
+            url = FTPHelpers.AddSlash(url, FTPHelpers.SlashType.Suffix);
+
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
             request.Proxy = this.Options.ProxySettings;
             request.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -407,7 +408,7 @@ namespace ZSS
             }
         }
 
-        public void MakeMultiDirectory(string dirName) //TODO
+        public void MakeMultiDirectory(string dirName)
         {
             string path = "";
             string[] dirs = dirName.Split('/');
@@ -415,8 +416,8 @@ namespace ZSS
             {
                 if (!string.IsNullOrEmpty(dir))
                 {
-                    //path += dir + "/";
-                    MakeDirectory(path);
+                    path = FTPHelpers.CombineURL(path, dir);
+                    MakeDirectory(FTPHelpers.CombineURL(Options.Account.FTPAddress, path));
                 }
             }
 

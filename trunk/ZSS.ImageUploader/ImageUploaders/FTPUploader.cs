@@ -49,7 +49,7 @@ namespace ZSS.ImageUploadersLib
             this.Name = FTPAccount.Name;
         }
 
-        public event ZSS.FTPAdapter.ProgressEventHandler UploadProgressChanged;
+        public event FTPAdapter.ProgressEventHandler UploadProgressChanged;
 
         public bool Resume { get; set; }
         public bool EnableThumbnail { get; set; }
@@ -109,7 +109,6 @@ namespace ZSS.ImageUploadersLib
         private void ftpClient_UploadProgressChanged(FTPAdapter.UploadProgress progress)
         {
             UploadProgressChanged(progress);
-            //Console.WriteLine("{0}% - {1}", progress.Progress, progress.URL);
         }
 
         public Bitmap LoadBitmap(string filepath)

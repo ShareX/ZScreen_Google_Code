@@ -77,7 +77,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
             //~~~~~~~~~~~~~~~~~~~~~    
-        
+
             AutoTranslateLength = 20;
 
             //~~~~~~~~~~~~~~~~~~~~~
@@ -91,6 +91,7 @@ namespace ZSS
             AutoSaveSettings = false;
             WriteDebugFile = true;
             ProxyEnabled = false;
+            ShowTrayUploadProgress = true;
 
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
@@ -421,6 +422,8 @@ namespace ZSS
         public ProxyInfo ProxyActive = null;
         [Category("Options / General"), DefaultValue(false), Description("Enable Web Proxy")]
         public bool ProxyEnabled { get; set; }
+        [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
+        public bool ShowTrayUploadProgress { get; set; }
 
         // Paths
 

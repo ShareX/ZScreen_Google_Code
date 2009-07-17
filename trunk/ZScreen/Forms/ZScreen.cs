@@ -3544,7 +3544,7 @@ namespace ZSS
             {
                 FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                 FTPOptions opt = new FTPOptions(acc, Adapter.GetProxySettings());
-                FTPClient ftpClient = new FTPClient(opt);
+                FTPClient ftpClient = new FTPClient(opt) { Icon = this.Icon };
                 ftpClient.Show();
             }
         }
