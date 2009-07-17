@@ -64,7 +64,7 @@ namespace ZSS.Tasks
             CUSTOM_UPLOADER_TEST
         }
 
-        public enum ProgressType
+        public enum ProgressType : int
         {
             ADD_FILE_TO_LISTBOX,
             COPY_TO_CLIPBOARD_URL,
@@ -76,7 +76,8 @@ namespace ZSS.Tasks
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
             UPDATE_CROP_MODE,
-            UPDATE_UPLOAD_DESTINATION
+            UPDATE_UPLOAD_DESTINATION,
+            CHANGE_TRAY_ICON_PROGRESS
         }
 
         #endregion

@@ -49,6 +49,8 @@ namespace ZSS.ImageUploadersLib
             this.Name = FTPAccount.Name;
         }
 
+        public event ZSS.FTPAdapter.ProgressEventHandler UploadProgressChanged;
+
         public bool Resume { get; set; }
         public bool EnableThumbnail { get; set; }
         public string WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -63,10 +65,11 @@ namespace ZSS.ImageUploadersLib
         {
             List<ImageFile> ifl = new List<ImageFile>();
 
-            FTPOptions fopt = new FTPOptions(); 
-            fopt.Account = this.FTPAccount; 
-            fopt.ProxySettings = this.ProxySettings;
-            FTPAdapter ftpClient = new FTPAdapter(fopt);            
+            FTPOptions fopt = new FTPOptions { Account = this.FTPAccount, ProxySettings = this.ProxySettings };
+
+            FTPAdapter ftpClient = new FTPAdapter(fopt);
+            ftpClient.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(ftpClient_UploadProgressChanged);
+
             string fName = Path.GetFileName(localFilePath);
             string path = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fName);
             ftpClient.UploadFile(localFilePath, path);
@@ -101,6 +104,12 @@ namespace ZSS.ImageUploadersLib
 
             ImageFileManager ifm = new ImageFileManager(ifl) { LocalFilePath = localFilePath };
             return ifm;
+        }
+
+        private void ftpClient_UploadProgressChanged(FTPAdapter.UploadProgress progress)
+        {
+            UploadProgressChanged(progress);
+            //Console.WriteLine("{0}% - {1}", progress.Progress, progress.URL);
         }
 
         public Bitmap LoadBitmap(string filepath)

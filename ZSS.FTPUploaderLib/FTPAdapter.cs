@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.ComponentModel;
 
 namespace ZSS
 {
@@ -72,12 +73,26 @@ namespace ZSS
                 using (stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
+                    int totalBytes = 0, percentage;
+
+                    UploadProgress progress = new UploadProgress();
+
                     byte[] buffer = new byte[BufferSize];
                     int bytes = stream.Read(buffer, 0, BufferSize);
 
                     while (bytes > 0)
                     {
                         requestStream.Write(buffer, 0, bytes);
+
+                        totalBytes += bytes;
+                        percentage = (int)((double)totalBytes / stream.Length * 100);
+                        if (percentage != progress.Progress)
+                        {
+                            progress.Progress = percentage;
+                            progress.URL = url;
+                            if (UploadProgressChanged != null) UploadProgressChanged(progress);
+                        }
+
                         bytes = stream.Read(buffer, 0, BufferSize);
                     }
                 }
@@ -101,6 +116,101 @@ namespace ZSS
             MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(text), false);
             Upload(stream, url);
         }
+
+        #region Async Methods
+
+        public event ProgressEventHandler UploadProgressChanged;
+        public delegate void ProgressEventHandler(UploadProgress progress);
+
+        private class AsyncUploadHelper
+        {
+            public BackgroundWorker BackgroundWorker;
+            public Stream Stream;
+            public string URL;
+        }
+
+        public class UploadProgress
+        {
+            public int Progress;
+            public string URL;
+        }
+
+        public void AsyncUpload(Stream stream, string url)
+        {
+            BackgroundWorker bw = new BackgroundWorker { WorkerReportsProgress = true };
+            bw.DoWork += new DoWorkEventHandler(bw_AsyncUploadDoWork);
+            bw.ProgressChanged += new ProgressChangedEventHandler(bw_AsyncUploadProgressChanged);
+            AsyncUploadHelper upload = new AsyncUploadHelper { BackgroundWorker = bw, Stream = stream, URL = url };
+            bw.RunWorkerAsync(upload);
+        }
+
+        private void bw_AsyncUploadDoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                AsyncUploadHelper upload = (AsyncUploadHelper)e.Argument;
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(upload.URL);
+                request.Proxy = this.Options.ProxySettings;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
+                request.KeepAlive = false;
+                request.UsePassive = !this.Options.Account.IsActive;
+
+                using (upload.Stream)
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[BufferSize];
+                    int bytes = upload.Stream.Read(buffer, 0, BufferSize);
+                    int totalBytes = 0;
+                    int percentage;
+
+                    UploadProgress progress = new UploadProgress();
+
+                    while (bytes > 0)
+                    {
+                        requestStream.Write(buffer, 0, bytes);
+
+                        totalBytes += bytes;
+                        percentage = (int)(requestStream.Length / totalBytes * 100);
+                        if (percentage != progress.Progress)
+                        {
+                            progress.Progress = percentage;
+                            progress.URL = upload.URL;
+                            upload.BackgroundWorker.ReportProgress(percentage, progress);
+                        }
+
+                        bytes = upload.Stream.Read(buffer, 0, BufferSize);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void bw_AsyncUploadProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            UploadProgress progress = (UploadProgress)e.UserState;
+            if (UploadProgressChanged != null)
+            {
+                UploadProgressChanged(progress);
+            }
+        }
+
+        public void AsyncUploadFile(string filePath, string url)
+        {
+            FileStream stream = new FileStream(filePath, FileMode.Open);
+            AsyncUpload(stream, url);
+        }
+
+        public void AsyncUploadText(string text, string url)
+        {
+            MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(text), false);
+            AsyncUpload(stream, url);
+        }
+
+        #endregion
 
         public void DownloadFile(string url, string savePath)
         {

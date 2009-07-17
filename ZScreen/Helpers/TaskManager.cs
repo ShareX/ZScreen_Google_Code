@@ -161,6 +161,8 @@ namespace ZSS.Helpers
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
                         WorkingDir = Program.CacheDir
                     };
+
+                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(fu_UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;
@@ -172,6 +174,11 @@ namespace ZSS.Helpers
             }
 
             return false;
+        }
+
+        private void fu_UploadProgressChanged(FTPAdapter.UploadProgress progress)
+        {
+            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
         }
 
         public bool UploadDekiWiki()

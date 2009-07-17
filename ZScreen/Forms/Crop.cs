@@ -293,7 +293,7 @@ namespace ZSS
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
             if (labelRect.Right > clientBound.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
             if (labelRect.Bottom > clientBound.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
-            GraphicsPath gPath = GraphicsMgr.RoundedRectangle(labelRect, 7);
+            GraphicsPath gPath = RoundedRectangle.Create(labelRect, 7);
             g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y),
                 new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.Black, Color.FromArgb(150, Color.Black)), gPath);
             g.DrawPath(labelBorderPen, gPath);
@@ -337,7 +337,7 @@ namespace ZSS
                 Point textPos = PointToClient(new Point(screenBound.Left +
                     (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
                 Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
-                GraphicsPath gPath = GraphicsMgr.RoundedRectangle(labelRect, 7);
+                GraphicsPath gPath = RoundedRectangle.Create(labelRect, 7);
                 g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X +
                     labelRect.Width, labelRect.Y), Color.White, Color.FromArgb(150, Color.White)), gPath);
                 g.DrawPath(labelBorderPen, gPath);
