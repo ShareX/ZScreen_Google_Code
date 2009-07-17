@@ -47,6 +47,15 @@ namespace ZSS
 
     public class FTPAdapter
     {
+        public event ProgressEventHandler UploadProgressChanged;
+        public delegate void ProgressEventHandler(UploadProgress progress);
+
+        public class UploadProgress
+        {
+            public int Percentage;
+            public string URL;
+        }
+
         public event StringEventHandler FTPOutput;
         public delegate void StringEventHandler(string text);
 
@@ -59,23 +68,45 @@ namespace ZSS
             this.Options = options;
         }
 
+        private class ProgressManager
+        {
+            public UploadProgress Progress = new UploadProgress();
+
+            public bool ChangeProgress(Stream stream)
+            {
+                int percentage = (int)((double)stream.Position / stream.Length * 100);
+                if (percentage != Progress.Percentage)
+                {
+                    Progress.Percentage = percentage;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private void ReportProgress(ProgressManager progress)
+        {
+            if (UploadProgressChanged != null)
+            {
+                UploadProgressChanged(progress.Progress);
+            }
+        }
+
         public void Upload(Stream stream, string url)
         {
             try
             {
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-                request.Proxy = this.Options.ProxySettings;
+                request.Proxy = Options.ProxySettings;
                 request.Method = WebRequestMethods.Ftp.UploadFile;
-                request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
+                request.Credentials = new NetworkCredential(Options.Account.Username, Options.Account.Password);
                 request.KeepAlive = false;
-                request.UsePassive = !this.Options.Account.IsActive;
+                request.UsePassive = !Options.Account.IsActive;
 
                 using (stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    int totalBytes = 0, percentage;
-
-                    UploadProgress progress = new UploadProgress();
+                    ProgressManager progress = new ProgressManager();
 
                     byte[] buffer = new byte[BufferSize];
                     int bytes = stream.Read(buffer, 0, BufferSize);
@@ -84,14 +115,7 @@ namespace ZSS
                     {
                         requestStream.Write(buffer, 0, bytes);
 
-                        totalBytes += bytes;
-                        percentage = (int)((double)totalBytes / stream.Length * 100);
-                        if (percentage != progress.Progress)
-                        {
-                            progress.Progress = percentage;
-                            progress.URL = url;
-                            if (UploadProgressChanged != null) UploadProgressChanged(progress);
-                        }
+                        if (progress.ChangeProgress(stream)) ReportProgress(progress);
 
                         bytes = stream.Read(buffer, 0, BufferSize);
                     }
@@ -119,19 +143,10 @@ namespace ZSS
 
         #region Async Methods
 
-        public event ProgressEventHandler UploadProgressChanged;
-        public delegate void ProgressEventHandler(UploadProgress progress);
-
         private class AsyncUploadHelper
         {
             public BackgroundWorker BackgroundWorker;
             public Stream Stream;
-            public string URL;
-        }
-
-        public class UploadProgress
-        {
-            public int Progress;
             public string URL;
         }
 
@@ -149,6 +164,7 @@ namespace ZSS
             try
             {
                 AsyncUploadHelper upload = (AsyncUploadHelper)e.Argument;
+
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(upload.URL);
                 request.Proxy = this.Options.ProxySettings;
                 request.Method = WebRequestMethods.Ftp.UploadFile;
@@ -159,24 +175,18 @@ namespace ZSS
                 using (upload.Stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
+                    ProgressManager progress = new ProgressManager();
+
                     byte[] buffer = new byte[BufferSize];
                     int bytes = upload.Stream.Read(buffer, 0, BufferSize);
-                    int totalBytes = 0;
-                    int percentage;
-
-                    UploadProgress progress = new UploadProgress();
 
                     while (bytes > 0)
                     {
                         requestStream.Write(buffer, 0, bytes);
 
-                        totalBytes += bytes;
-                        percentage = (int)(requestStream.Length / totalBytes * 100);
-                        if (percentage != progress.Progress)
+                        if (progress.ChangeProgress(upload.Stream))
                         {
-                            progress.Progress = percentage;
-                            progress.URL = upload.URL;
-                            upload.BackgroundWorker.ReportProgress(percentage, progress);
+                            upload.BackgroundWorker.ReportProgress(progress.Progress.Percentage, progress.Progress);
                         }
 
                         bytes = upload.Stream.Read(buffer, 0, BufferSize);
@@ -227,12 +237,17 @@ namespace ZSS
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                 using (Stream stream = response.GetResponseStream())
                 {
+                    ProgressManager progress = new ProgressManager();
+
                     byte[] buffer = new byte[BufferSize];
                     int bytes = stream.Read(buffer, 0, BufferSize);
 
                     while (bytes > 0)
                     {
                         fileStream.Write(buffer, 0, bytes);
+
+                        if (progress.ChangeProgress(stream)) ReportProgress(progress);
+
                         bytes = stream.Read(buffer, 0, BufferSize);
                     }
                 }

@@ -338,10 +338,12 @@ namespace ZSS
             Graphics g = Graphics.FromImage(bmp);
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            GraphicsPath gPath = RoundedRectangle.Create(0, 0, 15, 15, 2);
-            g.FillPath(Brushes.Black, gPath);
+            //GraphicsPath gPath = RoundedRectangle.Create(0, 0, 15, 15, 2);
+            //g.FillPath(Brushes.Black, gPath);
+            g.FillRectangle(Brushes.Black, 0, 0, 16, 16);
             StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+            g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             return bmp;
         }
     }
