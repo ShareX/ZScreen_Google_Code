@@ -68,7 +68,7 @@ namespace ZSS.ImageUploadersLib
             FTPOptions fopt = new FTPOptions { Account = this.FTPAccount, ProxySettings = this.ProxySettings };
 
             FTPAdapter ftpClient = new FTPAdapter(fopt);
-            ftpClient.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(ftpClient_UploadProgressChanged);
+            ftpClient.ProgressChanged += new FTPAdapter.ProgressEventHandler(ftpClient_UploadProgressChanged);
 
             string fName = Path.GetFileName(localFilePath);
             string path = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fName);

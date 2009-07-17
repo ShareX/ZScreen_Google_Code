@@ -334,17 +334,20 @@ namespace ZSS
 
         public static Image DrawProgressIcon(int percentage)
         {
+            if (percentage > 99) percentage = 99;
             Bitmap bmp = new Bitmap(16, 16);
             Graphics g = Graphics.FromImage(bmp);
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
             g.FillRectangle(Brushes.Black, 0, 0, 16, 16);
-            g.FillRectangle(Brushes.RoyalBlue, 0, 0, (int)(0.16 * percentage), 16);
-            if (percentage < 100)
+            int width = (int)(0.16 * percentage);
+            if (width > 0)
             {
-                StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+                Brush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 16), Color.SteelBlue, Color.MediumBlue, LinearGradientMode.Vertical);
+                g.FillRectangle(brush, 0, 0, width, 16);
             }
+            StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
             g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             return bmp;
         }

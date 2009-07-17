@@ -34,12 +34,7 @@ namespace ZSS
 {
     public partial class ViewRemote : Form
     {
-        private System.Resources.ResourceManager mRes = Properties.Resources.ResourceManager;
-
-        private int mFrmWidth, mFrmHeight;
-        private int mLbWidth, mLbHeight, mLbX, mLbY;
-        private int mConWidth, mConHeight, mConX, mConY;
-        private int mPbWidth, mPbHeight;
+        private System.Resources.ResourceManager mRes = Resources.ResourceManager;
 
         private FTPAdapter mFTP;
 
@@ -47,30 +42,10 @@ namespace ZSS
 
         private FTPAccount mAcc;
 
-        long mBytesTotal = 0;
-        long mBytesDownloaded = 0;
-
         public ViewRemote()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.zss_main;
-            setInitialHeightWidthVariables();
-        }
-
-        private void setInitialHeightWidthVariables()
-        {
-            mFrmWidth = Width;
-            mFrmHeight = Height;
-            mLbWidth = lbFiles.Width;
-            mLbHeight = lbFiles.Height;
-            mLbX = lbFiles.Location.X;
-            mLbY = lbFiles.Location.Y;
-            mConWidth = pnlControls.Width;
-            mConHeight = pnlControls.Height;
-            mConX = pnlControls.Location.X;
-            mConY = pnlControls.Location.Y;
-            mPbWidth = pbViewer.Width;
-            mPbHeight = pbViewer.Height;
+            this.Icon = Resources.zss_main;
         }
 
         private List<string> FetchList()
@@ -138,7 +113,7 @@ namespace ZSS
                 {
                     if (!string.IsNullOrEmpty(obj))
                     {
-                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, obj));
+                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path, obj));
                         lbFiles.Items.Remove(obj);
                     }
                 }
@@ -171,7 +146,7 @@ namespace ZSS
                 {
                     foreach (string str in lbFiles.SelectedItems)
                     {
-                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, str), Path.Combine(dir, Path.GetFileName(str)));
+                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path, str), Path.Combine(dir, Path.GetFileName(str)));
                     }
                 }
                 catch
@@ -211,9 +186,9 @@ namespace ZSS
             }
         }
 
-        private void pbViewer_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void pbViewer_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 pbViewer.Left += (e.X - mOldX);
                 pbViewer.Top += (e.Y - mOldY);
@@ -240,9 +215,9 @@ namespace ZSS
 
             if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server))
             {
-            	FTPOptions fopt = new FTPOptions();
-            	fopt.Account = mAcc; 
-            	fopt.ProxySettings = Adapter.GetProxySettings();
+                FTPOptions fopt = new FTPOptions();
+                fopt.Account = mAcc;
+                fopt.ProxySettings = Adapter.GetProxySettings();
                 mFTP = new FTPAdapter(fopt);
                 List<string> files = FetchList();
                 if (files.Count > 0)
@@ -267,7 +242,7 @@ namespace ZSS
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, file), localfile);
+                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path, file), localfile);
                 }
                 catch (System.Exception ex)
                 {
@@ -392,22 +367,6 @@ namespace ZSS
         {
             RemoteViewerTask rvt = new RemoteViewerTask(RemoteViewerTask.Jobs.FETCH_LIST);
             bwRemoteViewer.RunWorkerAsync(rvt);
-        }
-
-        private void tmrFetchFile_Tick(object sender, System.EventArgs e)
-        {
-            if (bwRemoteViewer.IsBusy)
-            {
-                if (mBytesDownloaded > 0 && mBytesTotal > 0)
-                {
-                    if (!(pBar.Value == 0 && mBytesTotal == mBytesDownloaded && mBytesDownloaded < mBytesTotal))
-                    {
-                        pBar.Maximum = (int)mBytesTotal;
-                        pBar.Value = (int)mBytesDownloaded;
-                        // System.FileSystem.AppendDebug(string.Format("{0}/{1}", pBar.Value, pBar.Maximum));
-                    }
-                }
-            }
         }
     }
 }
