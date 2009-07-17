@@ -219,7 +219,7 @@ namespace ZSS.Helpers
                     break;
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     ZSS.FTPAdapter.UploadProgress progress = (ZSS.FTPAdapter.UploadProgress)e.UserState;
-                    Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(progress.Progress);
+                    Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(progress.Percentage);
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
                     break;
             }
