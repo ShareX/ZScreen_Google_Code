@@ -1987,8 +1987,8 @@ namespace ZSS
                 {
                     bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
-                    bool checkImage = checkLocal && FileSystem.IsValidImageFile(hi.LocalPath);
-                    bool checkText = checkLocal && FileSystem.IsValidText(hi.LocalPath);
+                    bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath);
+                    bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
 
                     tsmCopyCbHistory.Enabled = checkRemote;
                     browseURLToolStripMenuItem.Enabled = checkRemote;
@@ -1996,26 +1996,25 @@ namespace ZSS
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
                     btnHistoryCopyImage.Enabled = checkImage;
-                    pbPreview.Visible = checkImage;
+                    pbPreview.Visible = checkImage || (!checkText && checkRemote);
                     txtPreview.Visible = checkText;
 
-                    if (FileSystem.IsValidImageFile(hi.LocalPath))
+                    if (checkImage)
                     {
-                        if (checkLocal)
-                        {
-                            pbPreview.ImageLocation = hi.LocalPath;
-                        }
-                        else if (checkRemote)
-                        {
-                            pbPreview.ImageLocation = hi.RemotePath;
-                        }
+                        pbPreview.ImageLocation = hi.LocalPath;
                     }
-                    else if (FileSystem.IsValidText(hi.LocalPath))
+                    else if (checkText)
                     {
                         txtPreview.Text = File.ReadAllText(hi.LocalPath);
                     }
+                    else if (checkRemote)
+                    {
+                        pbPreview.ImageLocation = hi.RemotePath;
+                    }
+
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
+
                     lblHistoryScreenshot.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
                 }
 
@@ -2024,7 +2023,6 @@ namespace ZSS
                     ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
                     ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
                 }
-
             }
         }
 

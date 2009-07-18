@@ -294,30 +294,18 @@ namespace ZSS
             return false;
         }
 
-        public static bool IsValidTextFile(string fp)
-        {
-            return IsValidText(fp) && File.Exists(fp);
-        }
-
         /// <summary>
         /// Function to check if file is a valid Text file by checking its extension
         /// </summary>
         /// <param name="fp"></param>
         /// <returns></returns>
-        public static bool IsValidText(string fp)
+        public static bool IsValidTextFile(string fp)
         {
-            if (!string.IsNullOrEmpty(fp))
+            if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
             {
-                if (File.Exists(fp))
+                foreach (string s in Program.zTextFileTypes)
                 {
-                    foreach (string s in Program.zTextFileTypes)
-                    {
-                        if (fp.EndsWith(s)) return true;
-                    }
-                }
-                else
-                {
-                    return true;
+                    if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
                 }
             }
             return false;
@@ -421,7 +409,6 @@ namespace ZSS
                     }
                 }
             }
-
         }
 
         /// <summary>

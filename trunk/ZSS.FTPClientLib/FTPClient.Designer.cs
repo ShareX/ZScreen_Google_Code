@@ -274,7 +274,7 @@
             this.Controls.Add(this.txtRename);
             this.Name = "FTPClient";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "FTP Client";
+            this.Text = "FTP Client Beta";
             this.Resize += new System.EventHandler(this.FTPClient_Resize);
             this.cmsRightClickMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
