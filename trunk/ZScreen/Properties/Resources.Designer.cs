@@ -361,28 +361,6 @@ namespace ZSS.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Extend ClipboardManager to support Text in clipboard
-        ///Text Editors tab
-        ///
-        ///- Support for scrolling windows via new hotkey
-        ///
-        ///- Ability to rename files in &apos;view remote directory&apos;
-        ///
-        ///- Timer: take full screen shot every .. seconds
-        ///
-        ///- Option to have Watermark in the middle
-        ///
-        ///- Send to -&gt; Printer
-        ///
-        ///- Support for &quot;sets&quot; via right-click menu which allows creation of a new directory in your previously specified path automatically using two controls &quot;Start Set&quot; and &quot;End Set.&quot; Optionally run image editing softwar [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string TODO {
-            get {
-                return ResourceManager.GetString("TODO", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Bitmap tr {
             get {
                 object obj = ResourceManager.GetObject("tr", resourceCulture);

@@ -165,17 +165,17 @@ namespace ZSS.Helpers
         {
             if (acc != null)
             {
+                mZScreen.ucFTPAccounts.btnTest.Enabled = false;
                 BackgroundWorker bw = new BackgroundWorker();
                 bw.DoWork += new DoWorkEventHandler(bw_DoWorkTestFTPAccount);
                 bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompletedTestFTPAccount);
-                mZScreen.ucFTPAccounts.btnTest.Enabled = false;
                 bw.RunWorkerAsync(acc);
             }
         }
 
         private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
         {
-            Adapter.TestFTPAccount(e.Argument as FTPAccount);
+            Adapter.TestFTPAccount((FTPAccount)e.Argument);
         }
 
         private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)

@@ -45,6 +45,7 @@ namespace ZSS.TextUploadersLib
         public TextUploader() { }
 
         public List<string> Errors { get; set; }
+
         [XmlIgnore]
         public WebProxy ProxySettings { get; set; }
 
@@ -127,19 +128,21 @@ namespace ZSS.TextUploadersLib
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = data.Length;
 
-                Stream response = request.GetRequestStream();
-                response.Write(data, 0, data.Length);
-                response.Close();
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    requestStream.Write(data, 0, data.Length);
+                }
 
-                HttpWebResponse res = (HttpWebResponse)request.GetResponse();
-                res.Close();
-
-                return res.ResponseUri.OriginalString;
+                using (WebResponse response = request.GetResponse())
+                {
+                    return response.ResponseUri.OriginalString;
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
+
             return "";
         }
 
@@ -154,16 +157,21 @@ namespace ZSS.TextUploadersLib
             try
             {
                 url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = this.ProxySettings;
-                HttpWebResponse res = (HttpWebResponse)request.GetResponse();
-                StreamReader reader = new StreamReader(res.GetResponseStream());
-                return reader.ReadToEnd();
+
+                using (WebResponse response = request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
+
             return "";
         }
 

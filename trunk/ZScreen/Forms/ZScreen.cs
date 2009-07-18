@@ -133,39 +133,6 @@ namespace ZSS
             DrawZScreenLabel(false);
         }
 
-        void ProxyAccountTestButton_Click(object sender, EventArgs e)
-        {
-            Adapter.TestProxyAccount(GetSelectedProxy());
-        }
-
-        void ProxyAccountsRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucProxyAccounts.AccountsList.SelectedIndex;
-            if (ucProxyAccounts.RemoveItem(sel) == true)
-            {
-                Program.conf.ProxyList.RemoveAt(sel);
-            }
-        }
-
-        void ProxyAccountsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucProxyAccounts.AccountsList.SelectedIndex;
-            if (Program.conf.ProxyList != null && sel != -1 && sel < Program.conf.ProxyList.Count && Program.conf.ProxyList[sel] != null)
-            {
-                ProxyInfo acc = Program.conf.ProxyList[sel];
-                ucProxyAccounts.SettingsGrid.SelectedObject = acc;
-                Program.conf.ProxyActive = acc;
-            }
-        }
-
-        void ProxyAccountsAddButton_Click(object sender, EventArgs e)
-        {
-            ProxyInfo acc = new ProxyInfo("userName", "password", "domain", 8080);
-            Program.conf.ProxyList.Add(acc);
-            ucProxyAccounts.AccountsList.Items.Add(acc);
-            ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
-        }
-
         private void ZScreen_Load(object sender, EventArgs e)
         {
             FileSystem.AppendDebug("Started ZScreen");
@@ -2698,9 +2665,9 @@ namespace ZSS
         private DekiWikiAccount GetSelectedDekiWiki()
         {
             DekiWikiAccount acc = null;
-            if (ucMindTouchAccounts.AccountsList.SelectedIndex != -1 && Program.conf.DekiWikiAccountList.Count >= ucMindTouchAccounts.AccountsList.Items.Count)
+            if (Adapter.CheckDekiWikiAccounts())
             {
-                acc = Program.conf.DekiWikiAccountList[ucMindTouchAccounts.AccountsList.SelectedIndex];
+                acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
             }
             return acc;
         }
@@ -2712,7 +2679,8 @@ namespace ZSS
 
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
         {
-            Adapter.TestDekiWikiAccount(GetSelectedDekiWiki());
+            DekiWikiAccount acc = GetSelectedDekiWiki();
+            if (acc != null) Adapter.TestDekiWikiAccount(acc);
         }
 
         private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
@@ -3557,6 +3525,43 @@ namespace ZSS
                 FTPClient ftpClient = new FTPClient(opt) { Icon = this.Icon };
                 ftpClient.Show();
             }
+        }
+
+        private void ProxyAccountTestButton_Click(object sender, EventArgs e)
+        {
+            ProxyInfo proxy = GetSelectedProxy();
+            if (proxy != null)
+            {
+                Adapter.TestProxyAccount(proxy);
+            }
+        }
+
+        private void ProxyAccountsRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucProxyAccounts.AccountsList.SelectedIndex;
+            if (ucProxyAccounts.RemoveItem(sel) == true)
+            {
+                Program.conf.ProxyList.RemoveAt(sel);
+            }
+        }
+
+        private void ProxyAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucProxyAccounts.AccountsList.SelectedIndex;
+            if (Program.conf.ProxyList != null && sel != -1 && sel < Program.conf.ProxyList.Count && Program.conf.ProxyList[sel] != null)
+            {
+                ProxyInfo acc = Program.conf.ProxyList[sel];
+                ucProxyAccounts.SettingsGrid.SelectedObject = acc;
+                Program.conf.ProxyActive = acc;
+            }
+        }
+
+        private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
+        {
+            ProxyInfo acc = new ProxyInfo("userName", "password", "domain", 8080);
+            Program.conf.ProxyList.Add(acc);
+            ucProxyAccounts.AccountsList.Items.Add(acc);
+            ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
     }
 }
