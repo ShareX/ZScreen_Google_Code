@@ -90,6 +90,16 @@ namespace ZSS.Helpers
                     break;
             }
 
+            switch (mTask.ImageDestCategory)
+            {
+                case ImageDestType.CUSTOM_UPLOADER:
+                case ImageDestType.IMAGESHACK:
+                case ImageDestType.TINYPIC:
+                case ImageDestType.TWITPIC:
+                    imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
+                    break;
+            }
+
             if (imageUploader != null)
             {
                 imageUploader.ProxySettings = Adapter.GetProxySettings();
@@ -185,7 +195,7 @@ namespace ZSS.Helpers
                         WorkingDir = Program.CacheDir
                     };
 
-                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(fu_UploadProgressChanged);
+                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;
@@ -199,11 +209,11 @@ namespace ZSS.Helpers
             return false;
         }
 
-        private void fu_UploadProgressChanged(FTPAdapter.UploadProgress progress)
+        private void UploadProgressChanged(int progress)
         {
             if (Program.conf.ShowTrayUploadProgress)
             {
-                UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress.Percentage;
+                UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress;
                 mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
             }
         }

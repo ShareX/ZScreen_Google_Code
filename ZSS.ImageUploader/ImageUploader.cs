@@ -65,6 +65,9 @@ namespace ZSS.ImageUploadersLib
         private string mFileName = "image";
         private bool RandomizeFileName { get; set; }
 
+        public event ProgressEventHandler ProgressChanged;
+        public delegate void ProgressEventHandler(int progress);
+
         protected ImageUploader()
         {
             this.Errors = new List<string>();
@@ -138,6 +141,35 @@ namespace ZSS.ImageUploadersLib
             return sb.ToString().ToLower();
         }
 
+        private class ProgressManager
+        {
+            public int Progress;
+
+            public bool ChangeProgress(Stream stream)
+            {
+                return ChangeProgress(stream.Position, stream.Length);
+            }
+
+            public bool ChangeProgress(long position, long length)
+            {
+                int percentage = (int)((double)position / length * 100);
+                if (percentage != Progress)
+                {
+                    Progress = percentage;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private void ReportProgress(int progress)
+        {
+            if (ProgressChanged != null)
+            {
+                ProgressChanged(progress);
+            }
+        }
+
         protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
         {
             try
@@ -168,14 +200,15 @@ namespace ZSS.ImageUploadersLib
                     using (Stream requestStream = request.GetRequestStream())
                     {
                         requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
-                        byte[] buffer = new byte[((int)Math.Min(4096, imageStream.Length)) - 1];
-                        int bytesRead;
-                        while (true)
+
+                        byte[] buffer = new byte[(int)Math.Min(4096, imageStream.Length)];
+                        int bytesRead = imageStream.Read(buffer, 0, buffer.Length);
+                        while (bytesRead > 0)
                         {
-                            bytesRead = imageStream.Read(buffer, 0, buffer.Length);
-                            if (bytesRead == 0) break;
                             requestStream.Write(buffer, 0, bytesRead);
+                            bytesRead = imageStream.Read(buffer, 0, buffer.Length);
                         }
+
                         requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
                     }
                 }
