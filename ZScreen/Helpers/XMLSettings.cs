@@ -41,6 +41,7 @@ namespace ZSS
     {
         public XMLSettings()
         {
+            #region "Default Values"
             //~~~~~~~~~~~~~~~~~~~~~
             //  Capture
             //~~~~~~~~~~~~~~~~~~~~~
@@ -74,6 +75,11 @@ namespace ZSS
 
             BackupFTPSettings = true;
 
+            //**************
+            // Image Hosting 
+            //**************
+            TwitPicShowFull = true;
+
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
             //~~~~~~~~~~~~~~~~~~~~~    
@@ -96,6 +102,7 @@ namespace ZSS
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
             LimitLongURL = 100;
+            #endregion 
         }
 
         #region Settings
@@ -358,6 +365,8 @@ namespace ZSS
         public string TwitPicUserName { get; set; }
         [Category("Accounts / TwitPic"), PasswordPropertyText(true)]
         public string TwitPicPassword { get; set; }
+        [Category("Accounts / TwitPic"), Description("Appened /full to the Full Image to show the image in full size")]
+        public bool TwitPicShowFull { get; set; }
 
         // Custom Image Uploaders
 
