@@ -43,7 +43,7 @@ namespace ZSS
         private static readonly string HistoryFileName = "History.xml";
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
-        private static readonly string PortableRootFolder = Path.Combine(Application.StartupPath, Application.ProductName);
+        private static readonly string PortableRootFolder = Application.ProductName; //Path.Combine(Application.StartupPath, Application.ProductName);
 
         public static string RootAppFolder { get; set; }
 
@@ -244,7 +244,13 @@ namespace ZSS
             bool bGrantedOwnership;
             try
             {
-                mAppMutex = new Mutex(true, @"Global\0167D1A0-6054-42f5-BA2A-243648899A6B", out bGrantedOwnership);
+                Guid assemblyGuid = Guid.Empty;
+                object[] assemblyObjects = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), true);
+                if (assemblyObjects.Length > 0)
+                {
+                    assemblyGuid = new Guid(((System.Runtime.InteropServices.GuidAttribute)assemblyObjects[0]).Value);
+                }
+                mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
             }
             catch (UnauthorizedAccessException)
             {

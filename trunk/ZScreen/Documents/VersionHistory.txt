@@ -1,4 +1,6 @@
-2.21.0.0 Added HTTP Proxy support for image/text uploaders
+2.21.0.2 Relative paths were not supported in ZScreen Portable mode
+2.21.0.1 Crashed when trying to open a deleted file from the History list [Issue 90]
+2.21.0.0 Added HTTP Proxy support for image/text uploaders (except FTP)
 
 Version 2.20 - 20090801
 
