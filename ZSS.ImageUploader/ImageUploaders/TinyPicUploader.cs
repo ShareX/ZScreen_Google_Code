@@ -102,18 +102,23 @@ namespace ZSS.ImageUploadersLib
 
                 string response = GetResponse(URLAPI, args);
                 string upk = GetXMLVal(response, "uploadkey");
+
                 if (string.IsNullOrEmpty(upk))
                 {
                     throw new Exception("Upload Key is Empty.");
                 }
 
-                if (String.IsNullOrEmpty(Shuk))
+                if (string.IsNullOrEmpty(Shuk))
+                {
                     action = "upload"; //anonymous upload
+                }
                 else
+                {
                     action = "userupload"; //user upload
+                }
 
                 ServicePointManager.Expect100Continue = false;
-                CookieContainer cookies = new CookieContainer();
+
                 Dictionary<string, string> arguments = new Dictionary<string, string>() 
                 {                 
                     { "action", action },
@@ -126,11 +131,14 @@ namespace ZSS.ImageUploadersLib
                 };
 
                 if (!string.IsNullOrEmpty(Shuk))
+                {
                     arguments.Add("shuk", Shuk);
+                }
 
-                ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments); //imgStream, URLAPI, "uploadfile", GetMimeType(imageFormat), arguments, cookies, "http://tinypic.com/");
-                string fullimage = GetXMLVal(ifm.Source, "fullsize"); // Regex.Match(imgSource, "(?<=fullsize>).+(?=</fullsize)").Value;
-                string thumbnail = GetXMLVal(ifm.Source, "thumbnail"); // Regex.Match(imgSource, "(?<=thumbnail>).+(?=</thumbnail)").Value;
+                ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
+
+                string fullimage = GetXMLVal(ifm.Source, "fullsize");
+                string thumbnail = GetXMLVal(ifm.Source, "thumbnail");
 
                 if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
                 if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
@@ -209,12 +217,8 @@ namespace ZSS.ImageUploadersLib
                 { "pass", password }
             };
 
-            string response = base.GetResponse(URLAPI, args);
+            string response = GetResponse(URLAPI, args);
             string result = GetXMLVal(response, "shuk");
-            if (string.IsNullOrEmpty(result))
-            {
-                //throw new Exception("Userauth key is Empty.");
-            }
 
             return HttpUtility.UrlEncode(result);
         }

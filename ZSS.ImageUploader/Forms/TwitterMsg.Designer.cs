@@ -36,9 +36,9 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(119, 88);
+            this.btnOK.Location = new System.Drawing.Point(120, 96);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(81, 24);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -46,9 +46,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(200, 88);
+            this.btnCancel.Location = new System.Drawing.Point(208, 96);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(80, 24);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -56,10 +56,10 @@
             // 
             // txtMsg
             // 
-            this.txtMsg.Location = new System.Drawing.Point(12, 14);
+            this.txtMsg.Location = new System.Drawing.Point(8, 8);
             this.txtMsg.Multiline = true;
             this.txtMsg.Name = "txtMsg";
-            this.txtMsg.Size = new System.Drawing.Size(268, 66);
+            this.txtMsg.Size = new System.Drawing.Size(280, 80);
             this.txtMsg.TabIndex = 2;
             // 
             // TwitterMsg
@@ -67,7 +67,7 @@
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 122);
+            this.ClientSize = new System.Drawing.Size(296, 128);
             this.Controls.Add(this.txtMsg);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);

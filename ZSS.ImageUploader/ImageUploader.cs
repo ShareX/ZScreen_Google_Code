@@ -20,10 +20,10 @@
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
 #endregion
+
 #region Shared Source Notification
 /* Portions of this code is thanks to Flaming Idiots
- * http://www.sythe.org/showthread.php?t=509358  
- */
+ * http://www.sythe.org/showthread.php?t=509358 */
 #endregion
 
 using System;
@@ -47,6 +47,7 @@ namespace ZSS.ImageUploadersLib
         /// List of Errors logged by ImageUploaders
         /// </summary>
         public List<string> Errors { get; private set; }
+
         [XmlIgnore]
         public WebProxy ProxySettings { get; set; }
 
@@ -109,52 +110,17 @@ namespace ZSS.ImageUploadersLib
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = bytes.Length;
 
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-            requestStream.Close();
-
-            WebResponse response = request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-            StreamReader responseReader = new StreamReader(responseStream);
-            string returnValue = responseReader.ReadToEnd();
-            responseStream.Close();
-            return returnValue;
-        }
-
-        protected string GetResponse2(string url, IDictionary<string, string> arguments)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Proxy = ProxySettings;
-            request.AllowAutoRedirect = false;
-            request.Method = "POST";
-
-            string post = arguments.Aggregate("?", (current, arg) => current + arg.Key + "=" + arg.Value + "&");
-            post = post.Substring(0, post.Length - 1);
-            byte[] data = Encoding.ASCII.GetBytes(post);
-
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-
-            Stream response = request.GetRequestStream();
-
-            response.Write(data, 0, data.Length);
-
-            response.Close();
-
-            HttpWebResponse res = (HttpWebResponse)request.GetResponse();
-            res.Close();
-            // note that there is no need to hook up a StreamReader and
-            // look at the response data, since it is of no need
-
-            if (res.StatusCode == HttpStatusCode.Found)
+            using (Stream requestStream = request.GetRequestStream())
             {
-                Console.WriteLine(res.Headers["location"]);
+                requestStream.Write(bytes, 0, bytes.Length);
             }
-            else
+
+            using (WebResponse response = request.GetResponse())
+            using (Stream responseStream = response.GetResponseStream())
+            using (StreamReader responseReader = new StreamReader(responseStream))
             {
-                Console.WriteLine("Error");
+                return responseReader.ReadToEnd();
             }
-            return "";
         }
 
         protected string GetMD5(string text)
@@ -174,7 +140,6 @@ namespace ZSS.ImageUploadersLib
 
         protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
         {
-            string returnValue = "";
             try
             {
                 ImageFormat imageFormat = image.RawFormat;
@@ -192,35 +157,42 @@ namespace ZSS.ImageUploadersLib
                 byte[] postHeaderBytes = Encoding.UTF8.GetBytes(postHeader);
                 byte[] boundaryBytes = Encoding.ASCII.GetBytes("\n--" + boundary + "\n");
 
-                MemoryStream imageStream = new MemoryStream();
-                image.Save(imageStream, imageFormat);
-                image.Dispose();
-                imageStream.Position = 0;
-
-                request.ContentLength = postHeaderBytes.Length + imageStream.Length + boundaryBytes.Length;
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
-                byte[] buffer = new byte[((int)Math.Min(4096, imageStream.Length)) - 1];
-                int bytesRead;
-                while (true)
+                using (MemoryStream imageStream = new MemoryStream())
                 {
-                    bytesRead = imageStream.Read(buffer, 0, buffer.Length);
-                    if (bytesRead == 0) break;
-                    requestStream.Write(buffer, 0, bytesRead);
+                    image.Save(imageStream, imageFormat);
+                    image.Dispose();
+                    imageStream.Position = 0;
+
+                    request.ContentLength = postHeaderBytes.Length + imageStream.Length + boundaryBytes.Length;
+
+                    using (Stream requestStream = request.GetRequestStream())
+                    {
+                        requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
+                        byte[] buffer = new byte[((int)Math.Min(4096, imageStream.Length)) - 1];
+                        int bytesRead;
+                        while (true)
+                        {
+                            bytesRead = imageStream.Read(buffer, 0, buffer.Length);
+                            if (bytesRead == 0) break;
+                            requestStream.Write(buffer, 0, bytesRead);
+                        }
+                        requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                    }
                 }
-                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
-                WebResponse response = request.GetResponse();
-                Stream responseStream = response.GetResponseStream();
-                StreamReader responseReader = new StreamReader(responseStream);
-                returnValue = responseReader.ReadToEnd();
-                responseStream.Close();
+
+                using (WebResponse response = request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 this.Errors.Add(ex.Message);
             }
-            return returnValue;
+
+            return "";
         }
 
         protected string PostImage2(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
@@ -228,13 +200,11 @@ namespace ZSS.ImageUploadersLib
             try
             {
                 ImageFormat imageFormat = image.RawFormat;
-                MemoryStream stream = new MemoryStream();
-                image.Save(stream, imageFormat);
-                image.Dispose();
+
+                string boundary = Guid.NewGuid().ToString();
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = this.ProxySettings;
-                string boundary = Guid.NewGuid().ToString();
                 request.PreAuthenticate = true;
                 request.AllowWriteStreamBuffering = true;
                 request.ContentType = string.Format("multipart/form-data; boundary={0}", boundary);
@@ -253,7 +223,14 @@ namespace ZSS.ImageUploadersLib
 
                 string fileContentType = GetMimeType(imageFormat);
                 contents.AppendLine(string.Format("Content-Type: {0}\n", fileContentType));
-                contents.AppendLine(encoding.GetString(stream.ToArray()));
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    image.Save(stream, imageFormat);
+                    image.Dispose();
+
+                    contents.AppendLine(encoding.GetString(stream.ToArray()));
+                }
 
                 foreach (KeyValuePair<string, string> argument in arguments)
                 {
@@ -269,14 +246,12 @@ namespace ZSS.ImageUploadersLib
                 using (Stream requestStream = request.GetRequestStream())
                 {
                     requestStream.Write(bytes, 0, bytes.Length);
+                }
 
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            return reader.ReadToEnd();
-                        }
-                    }
+                using (WebResponse response = request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
                 }
             }
             catch (Exception ex)
@@ -284,6 +259,7 @@ namespace ZSS.ImageUploadersLib
                 Console.WriteLine(ex.ToString());
                 Errors.Add(ex.Message);
             }
+
             return "";
         }
 
