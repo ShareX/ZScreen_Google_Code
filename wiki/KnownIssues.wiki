@@ -3,6 +3,7 @@
 
 = General = 
  * Uploading to FTP behind a Proxy is not supported
+ * Cannot take screenshots of scrolling windows
 
 = Windows XP = 
  * Balloon Tip will not be visible in some configurations regardless of the "Show Balloon Tip" option
