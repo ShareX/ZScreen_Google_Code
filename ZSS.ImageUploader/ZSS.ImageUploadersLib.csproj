@@ -77,6 +77,7 @@
     <Compile Include="Forms\TwitterMsg.Designer.cs">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
     </Compile>
+    <Compile Include="TCPClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
