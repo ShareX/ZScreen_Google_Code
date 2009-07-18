@@ -123,6 +123,7 @@
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FormsMgr.cs" />
+    <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Helpers\HotkeyInfo.cs" />
     <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Global\Adapter.cs" />
@@ -148,7 +149,7 @@
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\GraphicsMgr.cs" />
     <Compile Include="Helpers\AppInfo.cs" />
-    <Compile Include="Global\ClipboardManager.cs" />
+    <Compile Include="Global\UploadManager.cs" />
     <Compile Include="Helpers\HistoryItem.cs" />
     <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\ImageSoftware.cs" />

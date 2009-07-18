@@ -40,7 +40,7 @@ namespace ZSS.Forms
 
         private void TimerTick(object sender, EventArgs e)
         {
-            if (waitUploads && ClipboardManager.Workers > 0)
+            if (waitUploads && UploadManager.UploadInfos.Count > 0)
             {
                 timer.Interval = 1000;
             }

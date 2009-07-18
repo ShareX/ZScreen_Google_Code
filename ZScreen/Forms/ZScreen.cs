@@ -1706,7 +1706,7 @@ namespace ZSS
 
         private void OpenLastSource(ImageFileManager.SourceType sType)
         {
-            OpenSource(ClipboardManager.GetLastImageUpload(), sType);
+            OpenSource(UploadManager.GetLastImageUpload(), sType);
         }
 
         private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)

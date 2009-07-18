@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZSS.TextUploadersLib;
@@ -39,11 +40,13 @@ namespace ZSS
     /// <summary>
     /// Class reponsible for Adding or Retrieving Clipboard Text and Setting Text to Clipboard
     /// </summary>
-    public static class ClipboardManager
+    public static class UploadManager
     {
-        public static int Workers { get; private set; }
+        public static List<UploadInfo> UploadInfos = new List<UploadInfo>();
+
         private static ImageFileManager ScreenshotsHistory = new ImageFileManager();
         private static MainAppTask MyTask;
+        private static int UniqueNumber = 0;
 
         public static void AddTask(MainAppTask task)
         {
@@ -54,23 +57,34 @@ namespace ZSS
         /// <summary>
         /// Function to be called when a new Worker thread starts
         /// </summary>
-        public static void Queue()
+        public static int Queue()
         {
-            Workers++;
-            FileSystem.AppendDebug("Clipboard Queued. Total: " + Workers);
+            int number = UniqueNumber++;
+            UploadInfos.Add(new UploadInfo(number));
+            return number;
         }
 
         public static void Clear()
         {
-            Workers = 0;
+            UploadInfos.Clear();
         }
 
         /// <summary>
         /// Remove Last Screenshot from Clipboard Manager after setting to Clipboard
         /// </summary>
-        public static void Commit()
+        public static bool Commit(int number)
         {
-            Workers--;
+            UploadInfo find = GetInfo(number);
+            if (find != null)
+            {
+                return UploadInfos.Remove(find);
+            }
+            return false;
+        }
+
+        public static UploadInfo GetInfo(int number)
+        {
+            return UploadInfos.Find(x => x.UniqueID == number);
         }
 
         public static ImageFileManager GetLastImageUpload()
@@ -78,6 +92,10 @@ namespace ZSS
             return ScreenshotsHistory;
         }
 
+        public static int GetAverageProgress()
+        {
+            return UploadInfos.Sum(x => x.UploadPercentage) / UploadInfos.Count;
+        }
 
         /// <summary>
         /// Sets Clipboard text and returns the content
