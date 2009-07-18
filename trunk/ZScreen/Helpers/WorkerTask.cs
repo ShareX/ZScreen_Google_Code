@@ -111,6 +111,7 @@ namespace ZSS.Tasks
         }
         public int UploadDuration { get; set; }
         public bool IsImage { get; set; }
+        public int UniqueNumber { get; set; }
 
         #endregion
 

@@ -68,7 +68,7 @@ namespace ZSS.Helpers
         {
             MainAppTask task = (MainAppTask)e.Argument;
             task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
-            ClipboardManager.Queue();
+            task.UniqueNumber = UploadManager.Queue();
 
             if (Program.conf.PromptForUpload && task.ImageDestCategory != ImageDestType.CLIPBOARD &
                 task.ImageDestCategory != ImageDestType.FILE &&
@@ -219,7 +219,7 @@ namespace ZSS.Helpers
                     break;
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     FTPAdapter.UploadProgress progress = (FTPAdapter.UploadProgress)e.UserState;
-                    Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(progress.Percentage);
+                    Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
                     break;
             }
@@ -227,10 +227,10 @@ namespace ZSS.Helpers
 
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            MainAppTask task = (MainAppTask)e.Result;
+
             try
             {
-                MainAppTask task = (MainAppTask)e.Result;
-
                 FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
 
                 if (!RetryUpload(task))
@@ -306,8 +306,8 @@ namespace ZSS.Helpers
 
                     if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                     {
-                        ClipboardManager.AddTask(task);
-                        ClipboardManager.SetClipboardText();
+                        UploadManager.AddTask(task);
+                        UploadManager.SetClipboardText();
                     }
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
@@ -318,7 +318,7 @@ namespace ZSS.Helpers
                     }
 
                     this.mZScreen.niTray.Text = this.mZScreen.Text;
-                    if (ClipboardManager.Workers > 1)
+                    if (UploadManager.UploadInfos.Count > 1)
                     {
                         this.mZScreen.niTray.Icon = Resources.zss_busy;
                     }
@@ -349,11 +349,11 @@ namespace ZSS.Helpers
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                Console.WriteLine(ex.ToString());
             }
             finally
             {
-                ClipboardManager.Commit();
+                UploadManager.Commit(task.UniqueNumber);
             }
         }
 

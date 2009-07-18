@@ -180,6 +180,7 @@ namespace ZSS.Helpers
         {
             if (Program.conf.ShowTrayUploadProgress)
             {
+                UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress.Percentage;
                 mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
             }
         }
