@@ -1,4 +1,27 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2009  Brandon Zimmerman
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +33,7 @@ using System.Threading;
 using System.Windows.Forms;
 using ZSS.Helpers;
 using System.Net;
+using ZSS.Tasks;
 
 namespace ZSS.Global
 {
@@ -20,46 +44,35 @@ namespace ZSS.Global
     {
         public static void TestFTPAccount(FTPAccount acc)
         {
-            string msg;
-            FTPOptions opt = new FTPOptions(); 
-            opt.Account = acc; 
-            opt.ProxySettings = GetProxySettings();
-            FTPAdapter ftpClient = new FTPAdapter(opt);
+            string msg, path = FTPHelpers.CombineURL(acc.FTPAddress, acc.Path);
+
+            FTPOptions options = new FTPOptions { Account = acc, ProxySettings = GetProxySettings() };
+            FTPAdapter ftpClient = new FTPAdapter(options);
+
             try
             {
-                if (ftpClient.ListDirectory(FTPHelpers.CombineURL(acc.FTPAddress, acc.Path)) != null)
-                {
-                    msg = "Success.";
-                }
-                else
-                {
-                    msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
-                }
+                ftpClient.ListDirectory(path);
+                msg = "Success!";
             }
-            catch (Exception ex)
+            catch (WebException e)
             {
-                if (ex.Message.Contains("(550) File unavailable") && acc.AutoCreateFolder)
+                string status = ((FtpWebResponse)e.Response).StatusDescription;
+                if (status.StartsWith("550 Failed to change directory.") && acc.AutoCreateFolder)
                 {
                     try
                     {
                         ftpClient.MakeMultiDirectory(acc.Path);
-                        if (ftpClient.ListDirectory(FTPHelpers.CombineURL(acc.FTPAddress, acc.Path)) != null)
-                        {
-                            msg = "Success.\nAuto created folder: " + acc.Path;
-                        }
-                        else
-                        {
-                            msg = "FTP Settings are not set correctly. Make sure your FTP Path exists.";
-                        }
+                        ftpClient.ListDirectory(path);
+                        msg = "Success!\nAuto created folders: " + acc.Path;
                     }
-                    catch (Exception ex2)
+                    catch (WebException e2)
                     {
-                        msg = ex2.Message;
+                        msg = GetWebExceptionMessage(e2);
                     }
                 }
                 else
                 {
-                    msg = ex.Message;
+                    msg = GetWebExceptionMessage(e);
                 }
             }
 
@@ -69,58 +82,51 @@ namespace ZSS.Global
             }
         }
 
-        private static bool TestFTP(FTPAdapter ftp)
+        private static string GetWebExceptionMessage(WebException e)
         {
-            return ftp.ListDirectory(ftp.Options.Account.Path) != null;
+            string status = ((FtpWebResponse)e.Response).StatusDescription;
+            return string.Format("Status description:\n{0}\nException message:\n{1}", status, e.Message);
         }
 
         public static bool CheckFTPAccounts()
         {
-            if (Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected;
         }
 
-        public static bool CheckFTPAccounts(ref Tasks.MainAppTask task)
+        public static bool CheckFTPAccounts(ref MainAppTask task)
         {
             bool result = CheckFTPAccounts();
             if (!result) task.Errors.Add("An FTP account does not exist or not selected properly.");
             return result;
         }
 
-        public static bool CheckDekiWikiAccounts(ref Tasks.MainAppTask task)
+        public static bool CheckDekiWikiAccounts()
         {
-            if (Program.conf.DekiWikiAccountList.Count > 0 && Program.conf.DekiWikiSelected != -1 && Program.conf.DekiWikiAccountList.Count > Program.conf.DekiWikiSelected)
-            {
-                return true;
-            }
-            task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
-            return false;
+            return Program.conf.DekiWikiAccountList.Count > 0 && Program.conf.DekiWikiSelected >= 0 &&
+                Program.conf.DekiWikiAccountList.Count > Program.conf.DekiWikiSelected;
+        }
+
+        public static bool CheckDekiWikiAccounts(ref MainAppTask task)
+        {
+            bool result = CheckDekiWikiAccounts();
+            if (!result) task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
+            return result;
         }
 
         public static void TestDekiWikiAccount(DekiWikiAccount acc)
         {
-            string msg = string.Empty;
+            string msg = "Success!";
+
             try
             {
-                // Create the connector
                 DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, GetProxySettings()));
-
-                // Attempt to login
                 connector.Login();
-
-                // Set the success text
-                msg = "Success!"; //Success
             }
             catch (Exception ex)
             {
                 msg = ex.Message;
             }
+
             if (!string.IsNullOrEmpty(msg))
             {
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -130,7 +136,6 @@ namespace ZSS.Global
         /// <summary>
         /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns null otherwise
         /// </summary>
-        /// <returns></returns>
         public static WebProxy GetProxySettings()
         {
             WebProxy wp = null;
@@ -149,18 +154,19 @@ namespace ZSS.Global
         public static void TestProxyAccount(ProxyInfo acc)
         {
             string msg = "Success!";
+
             try
             {
                 NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
                 WebProxy wp = new WebProxy(acc.GetAddress(), true, null, cred);
-                WebClient wc = new WebClient();
-                wc.Proxy = wp;
-                string html = wc.DownloadString(new Uri("http://www.google.com"));
+                WebClient wc = new WebClient { Proxy = wp };
+                wc.DownloadString("http://www.google.com");
             }
             catch (Exception ex)
             {
                 msg = ex.Message;
             }
+
             if (!string.IsNullOrEmpty(msg))
             {
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -174,7 +180,8 @@ namespace ZSS.Global
         /// <returns></returns>
         public static string TryShortenURL(string url)
         {
-            if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL)
+            if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
+                Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL)
             {
                 TextUploader tu = Program.conf.UrlShortenerActive;
                 tu.ProxySettings = Adapter.GetProxySettings();
@@ -195,7 +202,8 @@ namespace ZSS.Global
         /// </summary>
         public static void UpdateTinyPicShuk()
         {
-            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) && !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
+            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) &&
+                !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
             {
                 TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
                 tpu.ProxySettings = Adapter.GetProxySettings();
@@ -214,8 +222,7 @@ namespace ZSS.Global
         public static bool MakeTinyURL()
         {
             // LimitLongURL = 0 means make tinyURL always
-            bool tinyurl = Program.conf.MakeTinyURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
-            return tinyurl;
+            return Program.conf.MakeTinyURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
         }
 
         public static TextUploader FindTextUploader(string name)
@@ -233,7 +240,7 @@ namespace ZSS.Global
                 case SniptUploader.Hostname:
                     return new SniptUploader();
                 default:
-                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
+                    if (name == TextUploadersLib.FTPUploader.Hostname)
                     {
                         if (Program.conf.FTPAccountList.Count > 0)
                         {
