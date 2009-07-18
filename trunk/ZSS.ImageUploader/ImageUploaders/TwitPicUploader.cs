@@ -35,14 +35,18 @@ using System.Xml.Linq;
 
 namespace ZSS.ImageUploadersLib
 {
+    public class TwitPicOptions
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }        
+        public TwitPicUploadType TwitPicUploadType { get; set; }
+        public bool ShowFull { get; set; }
+    }
+
     public sealed class TwitPicUploader : ImageUploader
     {
-        public enum ThumbnailType { Mini, Thumb }
-
-        public string Username { get; set; }
-        public string Password { get; set; }
-
-        public TwitPicUploadType TwitPicUploadType { get; set; }
+        private TwitPicOptions Options;
+        public enum ThumbnailType { Mini, Thumb }        
         public ThumbnailType TwitPicThumbnailType { get; set; }
 
         private const string UploadLink = "http://twitpic.com/api/upload";
@@ -50,16 +54,14 @@ namespace ZSS.ImageUploadersLib
 
         public override string Name { get { return "TwitPic"; } }
 
-        public TwitPicUploader(string username, string password, TwitPicUploadType uploadType)
+        public TwitPicUploader(TwitPicOptions options)
         {
-            Username = username;
-            Password = password;
-            TwitPicUploadType = uploadType;
+            this.Options = options;
         }
 
         public override ImageFileManager UploadImage(Image image)
         {
-            switch (TwitPicUploadType)
+            switch (this.Options.TwitPicUploadType)
             {
                 case TwitPicUploadType.UPLOAD_IMAGE_ONLY:
                     return Upload(image, "");
@@ -74,8 +76,8 @@ namespace ZSS.ImageUploadersLib
         private ImageFileManager Upload(Image image, string msg)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
-            arguments.Add("username", Username);
-            arguments.Add("password", Password);
+            arguments.Add("username", this.Options.Username);
+            arguments.Add("password", this.Options.Password);
             if (!string.IsNullOrEmpty(msg))
             {
                 arguments.Add("message", msg);
@@ -102,6 +104,7 @@ namespace ZSS.ImageUploadersLib
                         userid = xele.ElementValue("userid");
                         mediaid = xele.ElementValue("mediaid");
                         mediaurl = xele.ElementValue("mediaurl");
+                        if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
                         ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
                         ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
                             TwitPicThumbnailType.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));

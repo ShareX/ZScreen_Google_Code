@@ -70,6 +70,7 @@
     <Compile Include="URLShorteners\BitlyUploader.cs" />
     <Compile Include="URLShorteners\IsgdUploader.cs" />
     <Compile Include="URLShorteners\KlamUploader.cs" />
+    <Compile Include="URLShorteners\OwlyUploader.cs" />
     <Compile Include="URLShorteners\ThreelyUploader.cs" />
     <Compile Include="URLShorteners\TinyURLUploader.cs" />
   </ItemGroup>

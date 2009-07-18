@@ -86,7 +86,12 @@ namespace ZSS.Helpers
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
-                    imageUploader = new TwitPicUploader(Program.conf.TwitPicUserName, Program.conf.TwitPicPassword, Program.conf.TwiPicUploadMode);
+                    TwitPicOptions options = new TwitPicOptions();
+                    options.Username = Program.conf.TwitPicUserName;
+                    options.Password = Program.conf.TwitPicPassword;
+                    options.TwitPicUploadType = Program.conf.TwiPicUploadMode;
+                    options.ShowFull = Program.conf.TwitPicShowFull;
+                    imageUploader = new TwitPicUploader(options);
                     break;
             }
 

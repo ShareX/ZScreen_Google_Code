@@ -122,6 +122,8 @@ Filename: "{app}\ZScreen.exe."; Description: "{cm:LaunchProgram,ZScreen}"; Flags
 Type: filesandordirs; Name: "{app}\ru"
 Type: filesandordirs; Name: "{app}\en"
 Type: filesandordirs; Name: "{app}\nl"
+Type: files; Name: "{app}\ZSS.ImageUploader.dll"
+Type: files; Name: "{app}\ZSS.TextUploader.dll"
 Type: files; Name: "{app}\ImageUploader.dll"
 Type: files; Name: "{app}\ZSS.Colors.dll"
 
