@@ -47,13 +47,7 @@ namespace ZSS
     public class FTPAdapter
     {
         public event ProgressEventHandler ProgressChanged;
-        public delegate void ProgressEventHandler(UploadProgress progress);
-
-        public class UploadProgress
-        {
-            public int Percentage;
-            public string URL;
-        }
+        public delegate void ProgressEventHandler(int progress);
 
         public event StringEventHandler FTPOutput;
         public delegate void StringEventHandler(string text);
@@ -69,7 +63,7 @@ namespace ZSS
 
         private class ProgressManager
         {
-            public UploadProgress Progress = new UploadProgress();
+            public int Progress;
 
             public bool ChangeProgress(Stream stream)
             {
@@ -79,20 +73,20 @@ namespace ZSS
             public bool ChangeProgress(long position, long length)
             {
                 int percentage = (int)((double)position / length * 100);
-                if (percentage != Progress.Percentage)
+                if (percentage != Progress)
                 {
-                    Progress.Percentage = percentage;
+                    Progress = percentage;
                     return true;
                 }
                 return false;
             }
         }
 
-        private void ReportProgress(ProgressManager progress)
+        private void ReportProgress(int progress)
         {
             if (ProgressChanged != null)
             {
-                ProgressChanged(progress.Progress);
+                ProgressChanged(progress);
             }
         }
 
@@ -119,7 +113,7 @@ namespace ZSS
                     {
                         requestStream.Write(buffer, 0, bytes);
 
-                        if (progress.ChangeProgress(stream)) ReportProgress(progress);
+                        if (progress.ChangeProgress(stream)) ReportProgress(progress.Progress);
 
                         bytes = stream.Read(buffer, 0, BufferSize);
                     }
@@ -192,7 +186,7 @@ namespace ZSS
 
                         if (progress.ChangeProgress(upload.Stream))
                         {
-                            upload.BackgroundWorker.ReportProgress(progress.Progress.Percentage, progress.Progress);
+                            upload.BackgroundWorker.ReportProgress(progress.Progress);
                         }
 
                         bytes = upload.Stream.Read(buffer, 0, BufferSize);
@@ -207,10 +201,9 @@ namespace ZSS
 
         private void bw_AsyncUploadProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            UploadProgress progress = (UploadProgress)e.UserState;
             if (ProgressChanged != null)
             {
-                ProgressChanged(progress);
+                ProgressChanged(e.ProgressPercentage);
             }
         }
 
@@ -253,7 +246,7 @@ namespace ZSS
                         fileStream.Write(buffer, 0, bytes);
 
                         totalBytes += bytes;
-                        if (progress.ChangeProgress(totalBytes, response.ContentLength)) ReportProgress(progress);
+                        if (progress.ChangeProgress(totalBytes, response.ContentLength)) ReportProgress(progress.Progress);
 
                         bytes = stream.Read(buffer, 0, BufferSize);
                     }

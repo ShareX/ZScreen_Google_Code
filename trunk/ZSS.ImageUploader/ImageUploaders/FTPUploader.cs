@@ -106,7 +106,7 @@ namespace ZSS.ImageUploadersLib
             return ifm;
         }
 
-        private void ftpClient_UploadProgressChanged(FTPAdapter.UploadProgress progress)
+        private void ftpClient_UploadProgressChanged(int progress)
         {
             UploadProgressChanged(progress);
         }

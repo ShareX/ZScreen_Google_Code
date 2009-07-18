@@ -218,7 +218,7 @@ namespace ZSS.Helpers
                     mZScreen.cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
                     break;
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
-                    FTPAdapter.UploadProgress progress = (FTPAdapter.UploadProgress)e.UserState;
+                    int progress = (int)e.UserState;
                     Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
                     break;
