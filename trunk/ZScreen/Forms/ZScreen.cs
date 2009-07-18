@@ -2001,7 +2001,8 @@ namespace ZSS
 
                     if (checkImage)
                     {
-                        pbPreview.ImageLocation = hi.LocalPath;
+                        pbPreview.LoadAsync(hi.LocalPath);
+                        pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
                     }
                     else if (checkText)
                     {
@@ -2009,7 +2010,10 @@ namespace ZSS
                     }
                     else if (checkRemote)
                     {
-                        pbPreview.ImageLocation = hi.RemotePath;
+                        pbPreview.Image = Resources.ajax_loader;
+                        pbPreview.SizeMode = PictureBoxSizeMode.CenterImage;
+                        pbPreview.LoadAsync(hi.RemotePath);
+                        pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
                     }
 
                     txtHistoryLocalPath.Text = hi.LocalPath;
@@ -2023,6 +2027,14 @@ namespace ZSS
                     ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
                     ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
                 }
+            }
+        }
+
+        private void pbPreview_LoadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (!e.Cancelled && e.Error == null)
+            {
+                pbPreview.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
 

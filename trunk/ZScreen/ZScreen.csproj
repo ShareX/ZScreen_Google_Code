@@ -384,6 +384,7 @@
     <None Include="Resources\tr.png" />
     <None Include="Resources\au.png" />
     <None Include="Resources\us.png" />
+    <None Include="Resources\ajax-loader.gif" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>

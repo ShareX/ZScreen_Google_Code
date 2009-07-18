@@ -60,6 +60,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ajax_loader {
+            get {
+                object obj = ResourceManager.GetObject("ajax_loader", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_double {
             get {
                 object obj = ResourceManager.GetObject("application_double", resourceCulture);
@@ -391,15 +398,15 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 2.15 - 20090702
+        ///   Looks up a localized string similar to 2.21.0.0 Added HTTP Proxy support for image/text uploaders
         ///
-        ///2.15.01.1 Hotkeys tab was not displayed propery for DPI set at 120% [Issue 82]
-        ///2.15.01.0 Option to publish ImageShack images to the user&apos;s public profile
-        ///2.15.00.0 Integrated Image Editor based on Greenshot Image Editor 0.7.009 [Issue 81]
-        ///2.14.01.0 XML Option to automatically shorten the URL after image upload is completed
-        ///2.14.00.0 Added support for URL Shortener: 3.ly
-        ///2.13.00.0 Added support for URL Shorteners starting with TinyURL
-        ///2.13.02.0 Removed Active Help and introdu [rest of string was truncated]&quot;;.
+        ///Version 2.20 - 20090801
+        ///
+        ///2.20.06.3 ZScreen will not save settings to file everytime the tab button is pressed while in Crop
+        ///2.20.06.2 Prevented csc.exe errors due to dynamic xml serialization while the computer is shutting down
+        ///2.20.06.1 Fixed a few more exceptions during FTP Upload
+        ///2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86]
+        ///2.20.05.0 FTP account settings now have the ability to  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {
