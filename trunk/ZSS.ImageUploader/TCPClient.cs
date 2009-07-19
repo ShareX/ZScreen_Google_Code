@@ -14,12 +14,8 @@ namespace ZSS.ImageUploadersLib
     {
         private TcpClient client;
         private Uri url;
-        private WebHeaderCollection headers = new WebHeaderCollection();
-        private byte[] headerBytes;
-        private byte[] request;
-        private byte[] requestEnd;
-        private byte[] postMethod;
         private string boundary;
+        private byte[] postMethod, headerBytes, request, requestEnd;
 
         public TCPClient()
         {
@@ -30,6 +26,7 @@ namespace ZSS.ImageUploadersLib
         {
             postMethod = Encoding.Default.GetBytes("POST " + url.AbsolutePath + " HTTP/1.1\r\n");
 
+            WebHeaderCollection headers = new WebHeaderCollection();
             headers.Add(HttpRequestHeader.ContentType, "multipart/form-data, boundary=" + boundary);
             headers.Add(HttpRequestHeader.Host, url.DnsSafeHost);
             headers.Add(HttpRequestHeader.ContentLength, (request.Length + length + requestEnd.Length).ToString());
@@ -39,55 +36,50 @@ namespace ZSS.ImageUploadersLib
             headerBytes = headers.ToByteArray();
         }
 
-        private void BuildRequest(Dictionary<string, string> arguments, string fileFormName, string fileName, string imageFormat)
-        {
-            string header = string.Format("--{0}", boundary);
-
-            StringBuilder stringRequest = new StringBuilder();
-            stringRequest.AppendLine(header);
-
-            string postHeader = string.Format("Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"", fileFormName, fileName);
-            stringRequest.AppendLine(postHeader);
-
-            stringRequest.AppendLine(string.Format("Content-Type: {0}\n", imageFormat));
-
-            foreach (KeyValuePair<string, string> argument in arguments)
-            {
-                stringRequest.AppendLine(header);
-                stringRequest.AppendLine(string.Format("Content-Disposition: form-data; name=\"{0}\"\n\n{1}\n", argument.Key, argument.Value));
-            }
-
-            request = Encoding.Default.GetBytes(stringRequest.ToString());
-        }
-
         private string GetMimeType(ImageFormat format)
         {
             foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
+            {
                 if (codec.FormatID == format.Guid) return codec.MimeType;
+            }
             return "image/unknown";
         }
 
-        private void BuildRequestEnd()
+        private void BuildRequest(string fileFormName, string fileName, string fileMimeType)
         {
-            string header = string.Format("--{0}", boundary);
+            request = MakeFileInputContent(fileFormName, fileName, fileMimeType);
+        }
 
+        private void BuildRequestEnd(Dictionary<string, string> arguments)
+        {
             StringBuilder stringRequest = new StringBuilder();
-            stringRequest.AppendLine(header);
-            stringRequest.AppendLine("Content-Disposition: form-data; name=\"description\"\n");
-            stringRequest.AppendLine(header);
-            stringRequest.AppendLine("Content-Disposition: form-data; name=\"file_type\"\n\nimage\n");
-            stringRequest.AppendLine(header + "--");
 
-            /*string stringRequest =
-                "\r\n" + boundary + "\r\n" +
-                "Content-Disposition: form-data; name=\"description\"\r\n\r\n" +
-                "\r\n" + boundary + "\r\n" +
-                "Content-Disposition: form-data; name=\"file_type\"\r\n" + "\r\nimage" +
-                "\r\n" + boundary + "--\r\n";*/
+            foreach (KeyValuePair<string, string> argument in arguments)
+            {
+                stringRequest.Append(MakeInputContent(argument.Key, argument.Value));
+            }
 
-            // string stringRequest = string.Format("--{0}--", boundary);
+            stringRequest.Append(string.Format("\r\n{0}--", boundary));
 
             requestEnd = Encoding.Default.GetBytes(stringRequest.ToString());
+        }
+
+        private string MakeInputContent(string name, string value)
+        {
+            return string.Format("{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
+        }
+
+        private byte[] MakeFileInputContent(string name, string filename, string contentType)
+        {
+            string format = string.Format("{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
+                boundary, name, filename, contentType);
+
+            MemoryStream stream = new MemoryStream();
+
+            byte[] bytes = Encoding.Default.GetBytes(format);
+            stream.Write(bytes, 0, bytes.Length);
+
+            return stream.ToArray();
         }
 
         public void UploadImage(Image image, string link, string fileFormName, Dictionary<string, string> arguments)
@@ -99,10 +91,11 @@ namespace ZSS.ImageUploadersLib
 
                 url = new Uri(link);
 
-                boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+                boundary = "--------------------" + DateTime.Now.Ticks.ToString("x");
 
-                BuildRequest(arguments, fileFormName, "file", GetMimeType(image.RawFormat));
-                BuildRequestEnd();
+                BuildRequest(fileFormName, "file", GetMimeType(image.RawFormat));
+                BuildRequestEnd(arguments);
+
                 PreparePackets((int)stream.Length);
 
                 Send(stream, arguments);
