@@ -33,6 +33,7 @@ using ZSS.TextUploadersLib;
 using System.Reflection;
 using System.Threading;
 using ZSS.Helpers;
+using ZSS.ImageUploadersLib;
 
 namespace ZSS
 {
@@ -79,7 +80,7 @@ namespace ZSS
             // Image Hosting 
             //**************
             TwitPicShowFull = true;
-
+            TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
             //~~~~~~~~~~~~~~~~~~~~~    
@@ -365,8 +366,10 @@ namespace ZSS
         public string TwitPicUserName { get; set; }
         [Category("Accounts / TwitPic"), PasswordPropertyText(true)]
         public string TwitPicPassword { get; set; }
-        [Category("Accounts / TwitPic"), Description("Appened /full to the Full Image to show the image in full size")]
+        [Category("Accounts / TwitPic"), Description("Append /full to the Full Image to show the image in full size")]
         public bool TwitPicShowFull { get; set; }
+        [Category("Accounts / TwitPic")]
+        public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
 
         // Custom Image Uploaders
 

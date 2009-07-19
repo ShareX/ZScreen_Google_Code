@@ -35,20 +35,21 @@ using System.Xml.Linq;
 
 namespace ZSS.ImageUploadersLib
 {
+    public enum TwitPicThumbnailType { Mini, Thumb }        
+
     public class TwitPicOptions
     {
         public string Username { get; set; }
         public string Password { get; set; }        
         public TwitPicUploadType TwitPicUploadType { get; set; }
         public bool ShowFull { get; set; }
+        public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
     }
 
     public sealed class TwitPicUploader : ImageUploader
     {
         private TwitPicOptions Options;
-        public enum ThumbnailType { Mini, Thumb }        
-        public ThumbnailType TwitPicThumbnailType { get; set; }
-
+               
         private const string UploadLink = "http://twitpic.com/api/upload";
         private const string UploadAndPostLink = "http://twitpic.com/api/uploadAndPost";
 
@@ -107,7 +108,7 @@ namespace ZSS.ImageUploadersLib
                         if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
                         ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
                         ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
-                            TwitPicThumbnailType.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
+                            this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
                         break;
                     case "fail":
                         string code, msg;
