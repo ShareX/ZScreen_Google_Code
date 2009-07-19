@@ -90,6 +90,7 @@ namespace ZSS.Helpers
                     options.Username = Program.conf.TwitPicUserName;
                     options.Password = Program.conf.TwitPicPassword;
                     options.TwitPicUploadType = Program.conf.TwiPicUploadMode;
+                    options.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
                     options.ShowFull = Program.conf.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(options);
                     break;

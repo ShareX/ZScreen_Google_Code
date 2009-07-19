@@ -1,4 +1,3 @@
-2.21.1.0 PropertyGrid option to show TwitPic images in Fullsize {McoreD}
 2.21.0.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
 2.21.0.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
 2.21.0.0 Added HTTP Proxy support for image/text uploaders (except FTP) {McoreD}
