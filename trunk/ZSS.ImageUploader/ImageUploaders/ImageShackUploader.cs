@@ -121,7 +121,10 @@ namespace ZSS.ImageUploadersLib
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
+                
+                //new TCPClient().UploadImage(image, URLUnifiedAPI, "fileupload", mFileName, arguments);
                 ifm.Source = PostImage(image, URLUnifiedAPI, "fileupload", arguments);
+
                 string fullimage = GetXMLVal(ifm.Source, "image_link");
                 string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
 
@@ -170,7 +173,9 @@ namespace ZSS.ImageUploadersLib
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!Public) arguments.Add("public", "no");
 
-                ifm.Source = PostImage(image, URLStandard, "fileupload", arguments);
+                new TCPClient().UploadImage(image, URLStandard, "fileupload", mFileName, arguments);
+                //ifm.Source = PostImage(image, URLStandard, "fileupload", arguments);
+
                 string fullimage = GetXMLVal(ifm.Source, "image_link");
                 string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
 

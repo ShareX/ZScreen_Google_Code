@@ -135,7 +135,7 @@ namespace ZSS.ImageUploadersLib
                     arguments.Add("shuk", Shuk);
                 }
 
-                //new TCPClient().UploadImage(image, URLAPI, "uploadfile", arguments);
+                //new TCPClient().UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
                 ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
 
                 string fullimage = GetXMLVal(ifm.Source, "fullsize");

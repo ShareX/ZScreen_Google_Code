@@ -69,7 +69,7 @@ namespace ZSS.ImageUploadersLib
         /// The Email property allows you to upload images directly to someones account.
         /// </summary>
         public abstract string Name { get; }
-        private string mFileName = "image";
+        protected string mFileName = "image";
         private bool RandomizeFileName { get; set; }
 
         public event ProgressEventHandler ProgressChanged;

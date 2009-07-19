@@ -8,13 +8,13 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ZSS.ImageUploadersLib
+namespace ZSS
 {
     public class TCPClient
     {
         private TcpClient client;
         private Uri url;
-        private string boundary;
+        private string boundary, header, footer;
         private byte[] postMethod, headerBytes, request, requestEnd;
 
         public TCPClient()
@@ -22,12 +22,13 @@ namespace ZSS.ImageUploadersLib
             client = new TcpClient();
         }
 
-        private void PreparePackets(int length)
+        private void PreparePackets(long length)
         {
-            postMethod = Encoding.Default.GetBytes("POST " + url.AbsolutePath + " HTTP/1.1\r\n");
+            //string postData = "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+            postMethod = Encoding.Default.GetBytes(string.Format("POST {0} HTTP/1.1\r\n", url.AbsolutePath));
 
             WebHeaderCollection headers = new WebHeaderCollection();
-            headers.Add(HttpRequestHeader.ContentType, "multipart/form-data, boundary=" + boundary);
+            headers.Add(HttpRequestHeader.ContentType, "multipart/form-data; boundary=" + boundary);
             headers.Add(HttpRequestHeader.Host, url.DnsSafeHost);
             headers.Add(HttpRequestHeader.ContentLength, (request.Length + length + requestEnd.Length).ToString());
             headers.Add(HttpRequestHeader.Connection, "Keep-Alive");
@@ -45,13 +46,12 @@ namespace ZSS.ImageUploadersLib
             return "image/unknown";
         }
 
-        private void BuildRequest(string fileFormName, string fileName, string fileMimeType)
+        private void BuildRequests(string fileFormName, string fileName, string fileMimeType, Dictionary<string, string> arguments)
         {
-            request = MakeFileInputContent(fileFormName, fileName, fileMimeType);
-        }
+            MemoryStream stream = new MemoryStream();
 
-        private void BuildRequestEnd(Dictionary<string, string> arguments)
-        {
+            byte[] bytes;
+
             StringBuilder stringRequest = new StringBuilder();
 
             foreach (KeyValuePair<string, string> argument in arguments)
@@ -59,20 +59,28 @@ namespace ZSS.ImageUploadersLib
                 stringRequest.Append(MakeInputContent(argument.Key, argument.Value));
             }
 
-            stringRequest.Append(string.Format("\r\n{0}--", boundary));
+            bytes = Encoding.Default.GetBytes(stringRequest.ToString());
 
-            requestEnd = Encoding.Default.GetBytes(stringRequest.ToString());
+            stream.Write(bytes, 0, bytes.Length);
+
+            bytes = MakeFileInputContent(fileFormName, fileName, fileMimeType);
+
+            stream.Write(bytes, 0, bytes.Length);
+
+            request = stream.ToArray();
+
+            requestEnd = Encoding.Default.GetBytes("\r\n" + footer + "\r\n");
         }
 
         private string MakeInputContent(string name, string value)
         {
-            return string.Format("{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
+            return string.Format("{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", header, name, value);
         }
 
         private byte[] MakeFileInputContent(string name, string filename, string contentType)
         {
             string format = string.Format("{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                boundary, name, filename, contentType);
+                header, name, filename, contentType);
 
             MemoryStream stream = new MemoryStream();
 
@@ -82,21 +90,22 @@ namespace ZSS.ImageUploadersLib
             return stream.ToArray();
         }
 
-        public void UploadImage(Image image, string link, string fileFormName, Dictionary<string, string> arguments)
+        public void UploadImage(Image image, string link, string fileFormName, string fileName, Dictionary<string, string> arguments)
         {
             using (image)
             using (MemoryStream stream = new MemoryStream())
             {
                 image.Save(stream, image.RawFormat);
+                stream.Position = 0;
 
                 url = new Uri(link);
 
-                boundary = "--------------------" + DateTime.Now.Ticks.ToString("x");
+                boundary = "----------" + DateTime.Now.Ticks.ToString("x");
+                header = string.Format("--{0}", boundary);
+                footer = string.Format("--{0}--", boundary);
 
-                BuildRequest(fileFormName, "file", GetMimeType(image.RawFormat));
-                BuildRequestEnd(arguments);
-
-                PreparePackets((int)stream.Length);
+                BuildRequests(fileFormName, fileName, GetMimeType(image.RawFormat), arguments);
+                PreparePackets(stream.Length);
 
                 Send(stream, arguments);
             }
@@ -127,16 +136,11 @@ namespace ZSS.ImageUploadersLib
 
                 networkStream.Write(requestEnd, 0, requestEnd.Length);
 
-                string response = string.Empty;
-                int networkBytesRead = networkStream.Read(buffer, 0, buffer.Length);
+                StreamReader reader = new StreamReader(networkStream);
+                string response = reader.ReadToEnd();
 
-                while (networkBytesRead > 0)
-                {
-                    response += Encoding.Default.GetString(buffer);
-                    networkBytesRead = networkStream.Read(buffer, 0, buffer.Length);
-                }
-
-                return response;
+                throw new Exception(response);
+                //return response;
             }
         }
     }
