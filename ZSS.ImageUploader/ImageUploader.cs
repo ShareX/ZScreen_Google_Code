@@ -45,7 +45,7 @@ namespace ZSS.ImageUploadersLib
     public abstract class ImageUploaderOptions
     {
         public string Username { get; set; }
-        public string Password { get; set; }   
+        public string Password { get; set; }
     }
 
     public abstract class ImageUploader : IUploader
@@ -74,6 +74,14 @@ namespace ZSS.ImageUploadersLib
 
         public event ProgressEventHandler ProgressChanged;
         public delegate void ProgressEventHandler(int progress);
+
+        public void ReportProgress(int progress)
+        {
+            if (ProgressChanged != null)
+            {
+                ProgressChanged(progress);
+            }
+        }
 
         protected ImageUploader()
         {
@@ -146,35 +154,6 @@ namespace ZSS.ImageUploadersLib
             }
 
             return sb.ToString().ToLower();
-        }
-
-        private class ProgressManager
-        {
-            public int Progress;
-
-            public bool ChangeProgress(Stream stream)
-            {
-                return ChangeProgress(stream.Position, stream.Length);
-            }
-
-            public bool ChangeProgress(long position, long length)
-            {
-                int percentage = (int)((double)position / length * 100);
-                if (percentage != Progress)
-                {
-                    Progress = percentage;
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        private void ReportProgress(int progress)
-        {
-            if (ProgressChanged != null)
-            {
-                ProgressChanged(progress);
-            }
         }
 
         protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
