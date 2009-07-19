@@ -135,8 +135,8 @@ namespace ZSS.ImageUploadersLib
                     arguments.Add("shuk", Shuk);
                 }
 
-                //new TCPClient().UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
-                ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
+                ifm.Source = new TCPClient(this).UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
+                //ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
 
                 string fullimage = GetXMLVal(ifm.Source, "fullsize");
                 string thumbnail = GetXMLVal(ifm.Source, "thumbnail");
@@ -179,7 +179,10 @@ namespace ZSS.ImageUploadersLib
                     { "file_type", "image" },
                     { "dimension", "1600" }
                 };
-                ifm.Source = PostImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
+
+                ifm.Source = new TCPClient(this).UploadImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", mFileName, arguments);
+                //ifm.Source = PostImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
+
                 string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
                 string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;
                 string imgType = Regex.Match(ifm.Source, "(?<=ext\" value=\").*(?=\" />)").Value;

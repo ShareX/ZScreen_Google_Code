@@ -8,7 +8,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ZSS
+namespace ZSS.ImageUploadersLib
 {
     public class TCPClient
     {
@@ -16,9 +16,11 @@ namespace ZSS
         private Uri url;
         private string boundary, header, footer;
         private byte[] postMethod, headerBytes, request, requestEnd;
+        private ImageUploader uploader;
 
-        public TCPClient()
+        public TCPClient(ImageUploader imageUploader)
         {
+            uploader = imageUploader;
             client = new TcpClient();
         }
 
@@ -90,7 +92,7 @@ namespace ZSS
             return stream.ToArray();
         }
 
-        public void UploadImage(Image image, string link, string fileFormName, string fileName, Dictionary<string, string> arguments)
+        public string UploadImage(Image image, string link, string fileFormName, string fileName, Dictionary<string, string> arguments)
         {
             using (image)
             using (MemoryStream stream = new MemoryStream())
@@ -107,7 +109,7 @@ namespace ZSS
                 BuildRequests(fileFormName, fileName, GetMimeType(image.RawFormat), arguments);
                 PreparePackets(stream.Length);
 
-                Send(stream, arguments);
+                return Send(stream, arguments);
             }
         }
 
@@ -123,6 +125,8 @@ namespace ZSS
 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
 
+                ProgressManager progress = new ProgressManager();
+
                 using (stream)
                 {
                     int bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -130,6 +134,9 @@ namespace ZSS
                     while (bytesRead > 0)
                     {
                         networkStream.Write(buffer, 0, bytesRead);
+
+                        if (progress.ChangeProgress(stream)) uploader.ReportProgress(progress.Progress);
+
                         bytesRead = stream.Read(buffer, 0, buffer.Length);
                     }
                 }
@@ -139,8 +146,29 @@ namespace ZSS
                 StreamReader reader = new StreamReader(networkStream);
                 string response = reader.ReadToEnd();
 
-                throw new Exception(response);
-                //return response;
+                return response;
+            }
+        }
+
+        private class ProgressManager
+        {
+            public int Progress;
+
+            public bool ChangeProgress(Stream stream)
+            {
+                return ChangeProgress(stream.Position, stream.Length);
+            }
+
+            public bool ChangeProgress(long position, long length)
+            {
+                int percentage = (int)((double)position / length * 100);
+                Console.WriteLine(percentage);
+                if (percentage != Progress)
+                {
+                    Progress = percentage;
+                    return true;
+                }
+                return false;
             }
         }
     }
