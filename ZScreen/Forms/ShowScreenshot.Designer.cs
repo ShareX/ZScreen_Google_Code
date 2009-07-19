@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(284, 264);
             this.Name = "ShowScreenshot";
             this.Text = "ShowScreenshot";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ShowScreenshot_Load);
             this.Shown += new System.EventHandler(this.ShowScreenshot_Shown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowScreenshot_MouseDown);

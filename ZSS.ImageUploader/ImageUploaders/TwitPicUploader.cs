@@ -37,10 +37,8 @@ namespace ZSS.ImageUploadersLib
 {
     public enum TwitPicThumbnailType { Mini, Thumb }        
 
-    public class TwitPicOptions
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }        
+    public class TwitPicOptions : ImageUploaderOptions
+    {     
         public TwitPicUploadType TwitPicUploadType { get; set; }
         public bool ShowFull { get; set; }
         public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
