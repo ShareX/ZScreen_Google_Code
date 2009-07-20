@@ -1,29 +1,27 @@
-2.21.2.0 More efficient image uploading mechanism {Jaex}
-2.21.1.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
-2.21.1.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
-2.21.1.0 ZScreen tray icon changes to a Progress Bar tracking progress of uploading a file to FTP {Jaex}
-2.21.0.0 Added HTTP Proxy support for image/text uploaders (except FTP) {McoreD}
+Version 2.21 - 20090720
 
-Version 2.20 - 20090801
-
-2.20.06.3 ZScreen will not save settings to file everytime the tab button is pressed while in Crop
-2.20.06.2 Prevented csc.exe errors due to dynamic xml serialization while the computer is shutting down
-2.20.06.1 Fixed a few more exceptions during FTP Upload
-2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86]
-2.20.05.0 FTP account settings now have the ability to auto create folders
-2.20.04.0 PropertyGrid settings to add bevel visual effect to Screenshots
-2.20.03.0 Watermark text supports %width and %height syntax to show Image dimensions
-2.20.02.0 Text Uploaders that are based on pastebin.com can be renamed to uniquely identify them e.g. kopyala.org
-2.20.01.1 MakeTinyURL PropertyGrid Setting will not override Clipboard Copy mode anymore
-2.20.01.0 Added new Clipboard URL Type: Full Image (TinyURL)
-2.20.00.0 Support for uploading images to MindTouch Deki Wiki [http://techsurance.com/Screen_Capture]
-2.19.01.0 Changes in Keyboard Hook mechanism require reassigning the Hotkeys
-2.19.00.0 Added bit.ly URL Shortener support
-2.18.00.2 Prevented Image Editor from opening again when the first retry for image upload fails
-2.18.00.1 Selecting "File" as destination did not overrride "Delete file after capture" option [Issue 88]
-2.18.00.0 Added TwitPic Image Uploader support
-2.17.00.0 Added is.gd URL Shortener support
-2.16.00.0 Added kl.am URL Shortener support
+2.21.02.0 More efficient image uploading mechanism {Jaex}
+2.21.01.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
+2.21.01.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
+2.21.01.0 ZScreen tray icon changes to a Progress Bar tracking progress of uploading a file to FTP {Jaex}
+2.21.00.0 Added HTTP Proxy support for image/text uploaders (except FTP) {McoreD}
+2.20.06.2 ZScreen will not save settings to file everytime the tab button is pressed while in Crop {McoreD}
+2.20.06.1 Fixed a few more exceptions during FTP Upload {Jaex}
+2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86] {Jaex}
+2.20.05.0 FTP account settings now have the ability to auto create folders {Jaex}
+2.20.04.0 PropertyGrid settings to add bevel visual effect to Screenshots {Jaex}
+2.20.03.0 Watermark text supports %width and %height syntax to show Image dimensions {Jaex}
+2.20.02.0 Text Uploaders that are based on pastebin.com can be renamed to uniquely identify them e.g. kopyala.org {McoreD}
+2.20.01.1 MakeTinyURL PropertyGrid Setting will not override Clipboard Copy mode anymore {McoreD}
+2.20.01.0 Added new Clipboard URL Type: Full Image (TinyURL) {McoreD}
+2.20.00.0 Support for uploading images to MindTouch Deki Wiki [http://techsurance.com/Screen_Capture] {McoreD}
+2.19.01.0 Changes in Keyboard Hook mechanism require reassigning the Hotkeys {Jaex}
+2.19.00.0 Added bit.ly URL Shortener support {Jaex}
+2.18.00.2 Prevented Image Editor from opening again when the first retry for image upload fails {Jaex}
+2.18.00.1 Selecting "File" as destination did not overrride "Delete file after capture" option [Issue 88] {McoreD}
+2.18.00.0 Added TwitPic Image Uploader support {Jaex}
+2.17.00.0 Added is.gd URL Shortener support {McoreD}
+2.16.00.0 Added kl.am URL Shortener support {McoreD}
 
 Version 2.15 - 20090701
 
