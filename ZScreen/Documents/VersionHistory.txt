@@ -1,5 +1,7 @@
-2.21.0.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
-2.21.0.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
+2.21.2.0 More efficient image uploading mechanism {Jaex}
+2.21.1.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
+2.21.1.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
+2.21.1.0 ZScreen tray icon changes to a Progress Bar tracking progress of uploading a file to FTP {Jaex}
 2.21.0.0 Added HTTP Proxy support for image/text uploaders (except FTP) {McoreD}
 
 Version 2.20 - 20090801
