@@ -20,13 +20,6 @@
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
 #endregion
-#region Shared Source Notification
-/* 
- * Portions of this code is thanks to Flaming Idiots
- * http://www.sythe.org/showthread.php?t=509358  
- * 
- */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -122,11 +115,11 @@ namespace ZSS.ImageUploadersLib
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
 
-                ifm.Source = new TCPClient(this).UploadImage(image, URLUnifiedAPI, "fileupload", mFileName, arguments);
-                //ifm.Source = PostImage(image, URLUnifiedAPI, "fileupload", arguments);
+                ifm.Source = PostImage(image, URLUnifiedAPI, "fileupload", arguments);
+                //ifm.Source = new TCPClient(this).UploadImage(image, URLUnifiedAPI, "fileupload", mFileName, arguments);
 
-                string fullimage = GetXMLVal(ifm.Source, "image_link");
-                string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
+                string fullimage = GetXMLValue(ifm.Source, "image_link");
+                string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
 
                 if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
                 if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
@@ -173,11 +166,11 @@ namespace ZSS.ImageUploadersLib
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!Public) arguments.Add("public", "no");
 
-                ifm.Source = new TCPClient(this).UploadImage(image, URLStandard, "fileupload", mFileName, arguments);
-                //ifm.Source = PostImage(image, URLStandard, "fileupload", arguments);
+                ifm.Source = PostImage(image, URLStandard, "fileupload", arguments);
+                //ifm.Source = new TCPClient(this).UploadImage(image, URLStandard, "fileupload", mFileName, arguments);
 
-                string fullimage = GetXMLVal(ifm.Source, "image_link");
-                string thumbnail = GetXMLVal(ifm.Source, "thumb_link");
+                string fullimage = GetXMLValue(ifm.Source, "image_link");
+                string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
 
                 if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
                 if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
@@ -194,147 +187,5 @@ namespace ZSS.ImageUploadersLib
 
             return ifm;
         }
-
-        #region Old methods
-
-        /// <summary>
-        /// Old method of uploading to ImageShack
-        /// </summary>
-        /// <returns></returns>
-        public ImageFileManager UploadImageLegacy(string filePath)
-        {
-            //use a new guid as the boundary
-            string boundary = Guid.NewGuid().ToString().Replace("-", "");
-
-            byte[] fileBytes;
-
-            ImageFileManager ifm = null;
-            List<ImageFile> imageFiles = new List<ImageFile>();
-
-            try
-            {
-                //read the image into a stream
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
-                {
-                    byte[] tmp = new byte[fileStream.Length];
-                    fileStream.Read(tmp, 0, tmp.Length);
-                    fileBytes = tmp;
-                }
-            }
-            catch
-            {
-                return ifm; // empty
-            }
-
-            /*catch (FileNotFoundException e)
-            {
-                //MessageBox.Show(e.Message);
-                return imageFiles; //empty
-            }
-            catch (IOException e)
-            {
-                //MessageBox.Show(e.Message);
-                return imageFiles; //empty
-            }
-            catch (Exception e)
-            {
-                //MessageBox.Show(e.Message);
-                return imageFiles; //empty
-            }*/
-
-            try
-            {
-                string URL = URLStandard;
-                //if (DeveloperKey != null)
-                //    URL = URLUnifiedAPI;
-                //else
-                //{
-                //    URL = URLStandard;
-                //}
-                //dumb fix... required so it doesn't give the expect 100 error
-                ServicePointManager.Expect100Continue = false;
-
-                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URL);
-                httpRequest.Proxy = this.ProxySettings;
-                MemoryStream memoryStream = new MemoryStream();
-                StreamWriter streamWriter = new StreamWriter(memoryStream);
-
-                httpRequest.Method = "POST";
-                httpRequest.ContentType = String.Format("multipart/form-data; boundary={0}", boundary);
-                httpRequest.UserAgent = "ZScreen [http://brandonz.net/projects/zscreen]";
-
-                //write the file data
-                WriteFile(streamWriter, memoryStream, boundary, "fileupload", filePath, fileBytes);
-
-                //write the post data fields
-
-                if (URL == URLStandard)
-                    WritePost(streamWriter, boundary, "xml", "yes");
-
-                if (!Public)
-                    WritePost(streamWriter, boundary, "public", "no");
-
-                if (RegistrationCode != null)
-                    WritePost(streamWriter, boundary, "cookie", RegistrationCode);
-
-                if (DeveloperKey != null)
-                    WritePost(streamWriter, boundary, "key", DeveloperKey);
-
-                //base.WritePost(streamWriter, boundary, "MAX_FILE_SIZE", (1024 * 1024).ToString()); //1MB file limit
-
-                //optimage, optsize may be used in the future for resizing
-
-                httpRequest.ContentLength = memoryStream.Length;
-
-                Stream requestStream = httpRequest.GetRequestStream();
-
-                if (!Upload(memoryStream, requestStream))
-                    return null;
-
-                memoryStream.Close();
-                requestStream.Close();
-
-                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-                StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream());
-
-                //write xml data to a string
-                string xmlData = streamReader.ReadToEnd();
-                streamReader.Close();
-
-                //create an xml document from the string
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.LoadXml(xmlData);
-
-                //find matching elements and create new ImageFile of type FULLIMAGE/THUMBNAIL
-                foreach (XmlElement xmlElement in xmlDocument.SelectNodes("/links/*"))
-                {
-                    string tmpElement = xmlElement.Name;
-
-                    switch (tmpElement)
-                    {
-                        case "image_link":
-                            imageFiles.Add(new ImageFile(xmlElement.InnerText, ImageFile.ImageType.FULLIMAGE));
-                            break;
-                        case "thumb_link":
-                            imageFiles.Add(new ImageFile(xmlElement.InnerText, ImageFile.ImageType.THUMBNAIL));
-                            break;
-                    }
-                }
-                //if (imageFiles.Count == 2)
-                //{
-                //    imageFiles.Add(ImageFile.getThumbnailForum1ImageFile(imageFiles[0].URI, imageFiles[1].URI));
-                //}
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                //will return an empty list
-            }
-
-            ifm = new ImageFileManager(imageFiles);
-            return ifm;
-        }
-
-        #endregion
     }
 }

@@ -20,13 +20,6 @@
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
 #endregion
-#region Shared Source Notification
-/* 
- * Portions of this code is thanks to Flaming Idiots
- * http://www.sythe.org/showthread.php?t=509358  
- * 
- */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -101,7 +94,7 @@ namespace ZSS.ImageUploadersLib
                 };
 
                 string response = GetResponse(URLAPI, args);
-                string upk = GetXMLVal(response, "uploadkey");
+                string upk = GetXMLValue(response, "uploadkey");
 
                 if (string.IsNullOrEmpty(upk))
                 {
@@ -135,11 +128,11 @@ namespace ZSS.ImageUploadersLib
                     arguments.Add("shuk", Shuk);
                 }
 
-                ifm.Source = new TCPClient(this).UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
-                //ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
+                ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
+                //ifm.Source = new TCPClient(this).UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
 
-                string fullimage = GetXMLVal(ifm.Source, "fullsize");
-                string thumbnail = GetXMLVal(ifm.Source, "thumbnail");
+                string fullimage = GetXMLValue(ifm.Source, "fullsize");
+                string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
 
                 if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
                 if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
@@ -180,8 +173,8 @@ namespace ZSS.ImageUploadersLib
                     { "dimension", "1600" }
                 };
 
-                ifm.Source = new TCPClient(this).UploadImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", mFileName, arguments);
-                //ifm.Source = PostImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
+                ifm.Source = PostImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
+                //ifm.Source = new TCPClient(this).UploadImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", mFileName, arguments);
 
                 string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
                 string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;
@@ -222,7 +215,7 @@ namespace ZSS.ImageUploadersLib
             };
 
             string response = GetResponse(URLAPI, args);
-            string result = GetXMLVal(response, "shuk");
+            string result = GetXMLValue(response, "shuk");
 
             return HttpUtility.UrlEncode(result);
         }

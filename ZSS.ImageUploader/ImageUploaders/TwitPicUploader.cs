@@ -35,10 +35,10 @@ using System.Xml.Linq;
 
 namespace ZSS.ImageUploadersLib
 {
-    public enum TwitPicThumbnailType { Mini, Thumb }        
+    public enum TwitPicThumbnailType { Mini, Thumb }
 
     public class TwitPicOptions : ImageUploaderOptions
-    {     
+    {
         public TwitPicUploadType TwitPicUploadType { get; set; }
         public bool ShowFull { get; set; }
         public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
@@ -47,7 +47,7 @@ namespace ZSS.ImageUploadersLib
     public sealed class TwitPicUploader : ImageUploader
     {
         private TwitPicOptions Options;
-               
+
         private const string UploadLink = "http://twitpic.com/api/upload";
         private const string UploadAndPostLink = "http://twitpic.com/api/uploadAndPost";
 
@@ -74,15 +74,26 @@ namespace ZSS.ImageUploadersLib
 
         private ImageFileManager Upload(Image image, string msg)
         {
+            string url;
+
             Dictionary<string, string> arguments = new Dictionary<string, string>();
+
             arguments.Add("username", this.Options.Username);
             arguments.Add("password", this.Options.Password);
+
             if (!string.IsNullOrEmpty(msg))
             {
                 arguments.Add("message", msg);
+                url = UploadAndPostLink;
             }
-            string url = (string.IsNullOrEmpty(msg) ? UploadLink : UploadAndPostLink);
-            string source = PostImage2(image, url, "media", arguments);
+            else
+            {
+                url = UploadLink;
+            }
+
+            string source = PostImage(image, url, "media", arguments);
+            //string source = new TCPClient(this).UploadImage(image, url, "media", mFileName, arguments);
+
             return ParseResult(source);
         }
 
