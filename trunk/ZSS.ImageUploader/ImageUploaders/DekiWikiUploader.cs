@@ -18,8 +18,8 @@ namespace ZSS.ImageUploadersLib
 
         public DekiWikiUploader(DekiWikiOptions options)
         {
-            this.Options = options;            
-            this.Errors = new List<string>();            
+            this.Options = options;
+            this.Errors = new List<string>();
         }
 
         public ImageFileManager UploadImage(string localFilePath)
@@ -54,6 +54,5 @@ namespace ZSS.ImageUploadersLib
             }
             return sb.ToString();
         }
-
     }
 }

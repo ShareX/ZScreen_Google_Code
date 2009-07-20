@@ -11,9 +11,9 @@ namespace ZSS
     public class DekiWikiAccount
     {
         [Category("MindTouch")]
-        public string Name     { get; set; }
+        public string Name { get; set; }
         [Category("MindTouch")]
-        public string Url      { get; set; }
+        public string Url { get; set; }
         [Category("MindTouch")]
         public string Username { get; set; }
         [Category("MindTouch"), PasswordPropertyText(true)]
