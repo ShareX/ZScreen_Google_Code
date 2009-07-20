@@ -69,12 +69,6 @@ namespace ZSS.ImageUploadersLib
             this.Type = Type;
         }
 
-        //public static ImageFile getThumbnailForum1ImageFile(string fullPath, string thPath)
-        //{
-        //    return new ImageFile(string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", fullPath, thPath),
-        //        ImageType.THUMBNAIL_FORUMS1);
-        //}
-
         #region IComparable<ImageFile> Members
 
         int IComparable<ImageFile>.CompareTo(ImageFile other)

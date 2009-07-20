@@ -118,15 +118,15 @@ namespace ZSS.TextUploadersLib
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Proxy = ProxySettings;
-                request.AllowAutoRedirect = true;
-                request.Method = "POST";
 
                 string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
                 byte[] data = Encoding.UTF8.GetBytes(post);
 
-                request.ContentType = "application/x-www-form-urlencoded";
+                request.Method = "POST";
+                request.Proxy = this.ProxySettings;
+                request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
                 request.ContentLength = data.Length;
+                request.ContentType = "application/x-www-form-urlencoded";
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -160,6 +160,7 @@ namespace ZSS.TextUploadersLib
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = this.ProxySettings;
+                request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
 
                 using (WebResponse response = request.GetResponse())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
@@ -167,9 +168,9 @@ namespace ZSS.TextUploadersLib
                     return reader.ReadToEnd();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(e.ToString());
             }
 
             return "";

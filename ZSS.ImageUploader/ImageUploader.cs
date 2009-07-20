@@ -125,21 +125,28 @@ namespace ZSS.ImageUploadersLib
             return sb.ToString().ToLower();
         }
 
-        protected string GetResponse(string url, IDictionary<string, string> arguments)
+        protected string GetResponse(string url, Dictionary<string, string> arguments)
         {
-            string postData = "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + postData);
-            request.ContentLength = 0;
-            request.Method = "POST";
-            request.Proxy = this.ProxySettings;
-            request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
-
-            using (WebResponse response = request.GetResponse())
-            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            try
             {
-                return reader.ReadToEnd();
+                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Proxy = this.ProxySettings;
+                request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
+
+                using (WebResponse response = request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return "";
         }
 
         protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)

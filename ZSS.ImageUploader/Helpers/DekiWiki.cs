@@ -9,8 +9,8 @@ using System.Windows.Forms;
 
 namespace ZSS
 {
-    public class DekiWikiOptions{
-
+    public class DekiWikiOptions
+    {
         public DekiWikiAccount Account { get; set; }
         public WebProxy ProxySettings { get; set; }
 
@@ -59,7 +59,7 @@ namespace ZSS
 
         public DekiWiki(DekiWikiOptions options)
         {
-            this.Options = options;            
+            this.Options = options;
         }
 
         public void UploadImage(string fileName, string remoteName)
@@ -68,7 +68,7 @@ namespace ZSS
             Login();
 
             // Create the Uri
-            string uri =  this.Options.Account.Url;
+            string uri = this.Options.Account.Url;
             uri += "/@api/deki/pages/=";
             uri += HttpUtility.UrlEncode(HttpUtility.UrlEncode(savePath));
             uri += "/files/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(remoteName));

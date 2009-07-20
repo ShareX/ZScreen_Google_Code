@@ -94,6 +94,9 @@ namespace ZSS.ImageUploadersLib
                 };
 
                 string response = GetResponse(URLAPI, args);
+
+                if (string.IsNullOrEmpty(response)) throw new Exception("Unable to get upload key.");
+
                 string upk = GetXMLValue(response, "uploadkey");
 
                 if (string.IsNullOrEmpty(upk))
@@ -215,9 +218,15 @@ namespace ZSS.ImageUploadersLib
             };
 
             string response = GetResponse(URLAPI, args);
-            string result = GetXMLValue(response, "shuk");
 
-            return HttpUtility.UrlEncode(result);
+            if (!string.IsNullOrEmpty(response))
+            {
+                string result = GetXMLValue(response, "shuk");
+
+                return HttpUtility.UrlEncode(result);
+            }
+
+            return "";
         }
     }
 }
