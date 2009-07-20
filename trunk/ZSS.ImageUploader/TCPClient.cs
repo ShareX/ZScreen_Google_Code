@@ -106,7 +106,7 @@ namespace ZSS.ImageUploadersLib
                 header = string.Format("--{0}", boundary);
                 footer = string.Format("--{0}--", boundary);
 
-                BuildRequests(fileFormName, fileName, GetMimeType(image.RawFormat), arguments);
+                BuildRequests(fileFormName, Path.GetFileName(fileName), GetMimeType(image.RawFormat), arguments);
                 PreparePackets(stream.Length);
 
                 return Send(stream, arguments);
@@ -162,7 +162,6 @@ namespace ZSS.ImageUploadersLib
             public bool ChangeProgress(long position, long length)
             {
                 int percentage = (int)((double)position / length * 100);
-                Console.WriteLine(percentage);
                 if (percentage != Progress)
                 {
                     Progress = percentage;
