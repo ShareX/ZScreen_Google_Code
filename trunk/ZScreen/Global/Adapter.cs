@@ -138,7 +138,7 @@ namespace ZSS.Global
         /// </summary>
         public static WebProxy GetProxySettings()
         {
-            WebProxy wp = (WebProxy)GlobalProxySelection.GetEmptyWebProxy();
+            WebProxy wp = null; // Use 'null' instead of GetEmptyWebProxy. http://go.microsoft.com/fwlink/?linkid=14202'	
             if (Program.conf.ProxyEnabled)
             {
                 ProxyInfo acc = Program.conf.ProxyActive;
