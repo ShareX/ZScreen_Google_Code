@@ -1923,6 +1923,7 @@ namespace ZSS
 
         private void lbHistory_MouseDown(object sender, MouseEventArgs e)
         {
+            /*
             cmsHistory.Enabled = lbHistory.Items.Count > 0;
 
             int i = lbHistory.IndexFromPoint(e.X, e.Y);
@@ -1933,6 +1934,7 @@ namespace ZSS
             }
 
             lbHistory.Refresh();
+            */
         }
 
         private void lbHistory_DoubleClick(object sender, EventArgs e)
