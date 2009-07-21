@@ -138,7 +138,7 @@ namespace ZSS.Global
         /// </summary>
         public static WebProxy GetProxySettings()
         {
-            WebProxy wp = null;
+            WebProxy wp = (WebProxy)GlobalProxySelection.GetEmptyWebProxy();
             if (Program.conf.ProxyEnabled)
             {
                 ProxyInfo acc = Program.conf.ProxyActive;
