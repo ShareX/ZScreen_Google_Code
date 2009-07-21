@@ -69,27 +69,10 @@ namespace ZSS.ImageUploadersLib
         public event ProgressEventHandler ProgressChanged;
         public delegate void ProgressEventHandler(int progress);
 
-        public void ReportProgress(int progress)
-        {
-            if (ProgressChanged != null)
-            {
-                ProgressChanged(progress);
-            }
-        }
-
         protected ImageUploader()
         {
             this.Errors = new List<string>();
             this.UploadMode = UploadMode.ANONYMOUS;
-        }
-
-        protected string GetMimeType(ImageFormat format)
-        {
-            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
-            {
-                if (codec.FormatID == format.Guid) return codec.MimeType;
-            }
-            return "image/unknown";
         }
 
         public abstract ImageFileManager UploadImage(Image image);
@@ -123,6 +106,23 @@ namespace ZSS.ImageUploadersLib
             }
 
             return sb.ToString().ToLower();
+        }
+
+        public void ReportProgress(int progress)
+        {
+            if (ProgressChanged != null)
+            {
+                ProgressChanged(progress);
+            }
+        }
+
+        protected string GetMimeType(ImageFormat format)
+        {
+            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
+            {
+                if (codec.FormatID == format.Guid) return codec.MimeType;
+            }
+            return "image/unknown";
         }
 
         protected string GetResponse(string url, Dictionary<string, string> arguments)
