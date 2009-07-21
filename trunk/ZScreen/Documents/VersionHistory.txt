@@ -1,5 +1,6 @@
 Version 2.21 - 20090720
 
+2.21.02.1 Fixed multiple selection bug (shift click bug) in listbox of History tab {inf1ni}
 2.21.02.0 More efficient image uploading mechanism {Jaex}
 2.21.01.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
 2.21.01.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
