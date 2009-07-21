@@ -768,12 +768,29 @@ namespace ZSS.Helpers
             {
                 mSetHotkeys = false;
 
-                mZScreen.lblHotkeyStatus.Text = mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey Updated.";
-
-                //mZScreen.lblHotkeyStatus.Text = "Aborted Hotkey selection. Click on a Hotkey to set.";
+                mZScreen.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
+                
+                //reset hotkey text from <set keys> back to normal
+                mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
 
                 mHKSelectedRow = -1;
             }
+        }
+
+        public string GetSelectedHotkeyName()
+        {
+            return mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value.ToString();
+        }
+
+        public string GetSelectedHotkeySpecialString()
+        {
+            object obj = Program.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", ""));
+            if (obj != null && obj.GetType() == typeof(Keys))
+            {
+                return ((Keys)obj).ToSpecialString();
+            }
+
+            return "Error getting hotkey";
         }
 
         private void SetHotkey(int row, Keys key)

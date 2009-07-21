@@ -1714,6 +1714,8 @@ namespace ZSS
             Program.Worker.mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
+
+            dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = Program.Worker.GetSelectedHotkeySpecialString() + " <Set Keys>";
         }
 
         private void UpdateHotkeysDGV()
