@@ -3565,5 +3565,17 @@ namespace ZSS
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
+
+        private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Program.Worker.mSetHotkeys)
+            {
+                if (e.KeyValue == (int)Keys.Up || e.KeyValue == (int)Keys.Down || e.KeyValue == (int)Keys.Left || e.KeyValue == (int)Keys.Right)
+                {
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }
