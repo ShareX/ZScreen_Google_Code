@@ -1,5 +1,6 @@
-Version 2.21 - 20090720
+Version 2.22 - 20090801
 
+2.22.00.0 A new FTP Client (Beta) that is accessible from the system tray menu {Jaex}
 2.21.02.2 Fixed problem with arrow keys changing selected item during hotkey selection {inf1ni}
 2.21.02.1 Fixed multiple selection bug (shift click bug) in listbox of History tab {inf1ni}
 2.21.02.0 More efficient image uploading mechanism {Jaex}
