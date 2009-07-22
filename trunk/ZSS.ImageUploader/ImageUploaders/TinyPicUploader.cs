@@ -31,6 +31,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using ZSS.ImageUploadersLib.Helpers;
 using System.Collections;
+using System.Xml.Linq;
 
 namespace ZSS.ImageUploadersLib
 {
@@ -90,21 +91,21 @@ namespace ZSS.ImageUploadersLib
                 {
                     { "action", action },
                     { "tpid", tpid },
-                    { "tpk", tpk },
-                    { "sig", GetMD5(action + tpid + tpk) }
+                    { "sig", GetMD5(action + tpid + tpk) },
+                    { "responsetype", "XML" }
                 };
 
                 string response = GetResponse(URLAPI, args);
 
                 if (string.IsNullOrEmpty(response)) throw new Exception("Unable to get upload key.");
 
-                if (GetXMLValue(response, "status") == "OK")
+                if (CheckResponse(response))
                 {
                     string upk = GetXMLValue(response, "uploadkey");
 
                     if (string.IsNullOrEmpty(upk))
                     {
-                        throw new Exception("Upload Key is Empty.");
+                        throw new Exception("Upload key is empty.");
                     }
 
                     if (string.IsNullOrEmpty(Shuk))
@@ -120,13 +121,13 @@ namespace ZSS.ImageUploadersLib
 
                     Dictionary<string, string> arguments = new Dictionary<string, string>() 
                     {                 
-                    { "action", action },
-                    { "tpid", tpid },
-                    //{ "tpk", tpk },
-                    { "sig", GetMD5(action + tpid + tpk) },
-                    { "upk", upk },
-                    { "tags", "" },
-                    { "type", "image" }
+                        { "action", action },
+                        { "tpid", tpid },
+                        { "sig", GetMD5(action + tpid + tpk) },
+                        { "responsetype", "XML" },
+                        { "upk", upk },
+                        { "type", "image" },
+                        { "tags", "" }
                     };
 
                     if (!string.IsNullOrEmpty(Shuk))
@@ -137,18 +138,14 @@ namespace ZSS.ImageUploadersLib
                     ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
                     //ifm.Source = new TCPClient(this).UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
 
-                    string fullimage = GetXMLValue(ifm.Source, "fullsize");
-                    string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
+                    if (CheckResponse(ifm.Source))
+                    {
+                        string fullimage = GetXMLValue(ifm.Source, "fullsize");
+                        string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
 
-                    if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                    if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
-                }
-                else if(GetXMLValue(response, "status") == "FAIL")
-                {
-                    int errorCode = -1;
-                    Int32.TryParse(GetXMLValue(response, "errorcode"), out errorCode);
-
-                    this.Errors.Add(GetErrorMessage(errorCode));
+                        if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                        if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                    }
                 }
             }
             catch (Exception ex)
@@ -193,6 +190,7 @@ namespace ZSS.ImageUploadersLib
                 string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
                 string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;
                 string imgType = Regex.Match(ifm.Source, "(?<=ext\" value=\").*(?=\" />)").Value;
+
                 if ((imgIval != "") && (imgPic != ""))
                 {
                     if (imgType == "") imgType = ".jpg";
@@ -240,11 +238,43 @@ namespace ZSS.ImageUploadersLib
             return "";
         }
 
+        public bool CheckResponse(string response)
+        {
+            bool result = false;
+
+            XDocument xDoc = XDocument.Parse(response);
+            XElement xEle = xDoc.Element("response");
+            string status = xEle.ElementValue("status");
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                if (status == "OK")
+                {
+                    result = true;
+                }
+                else if (status == "FAIL")
+                {
+                    string errorcode = xEle.ElementValue("errorcode");
+                    if (!string.IsNullOrEmpty(errorcode))
+                    {
+                        int code;
+                        if (int.TryParse(errorcode, out code))
+                        {
+                            this.Errors.Add(GetErrorMessage(code));
+                        }
+                    }
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
         public string GetErrorMessage(int errorCode)
         {
             switch (errorCode)
             {
-                case 1: 
+                case 1:
                     return "Bad Authorization: Missing or invalid authentication parameter (tpid, tpk, sig, upk).";
                 case 2:
                     return "Bad Action: Invalid or no action passed.";
@@ -252,25 +282,25 @@ namespace ZSS.ImageUploadersLib
                     return "Bad Type: Invalid or no type passed.";
                 case 4:
                     return "Bad File: No upload file included in POST when required.";
-                case 5: 
+                case 5:
                     return "Bad Term: No search term included with search request.";
-                case 6: 
+                case 6:
                     return "Bad Media Key: Media key not included in a request that required a media key.";
                 case 7:
                     return "Bad Upload Key: Invalid or no upload key in a request that required an upload key.";
-                case 8: 
+                case 8:
                     return "Bad User Credentials: Invalid or no user credentials (username or pass) in a request that required username/pass to be valid.";
                 case 9:
                     return "Insufficient Permission: Action called that the specific tpid does not have permission to perform.";
                 case 10:
                     return "Image Processing Error: Uploaded image fails to process correctly.";
-                case 11: 
+                case 11:
                     return "Video Encoding Error: Unable to encode video.";
-                case 12: 
+                case 12:
                     return "Bad Album: Invalid or no albumid is passed when required.";
-                case 20: 
+                case 20:
                     return "Bad Email: Invalid or no email passed in register action.";
-                case 21: 
+                case 21:
                     return "Duplicate Email: Email passed in register action is already in use by another registered user.";
                 case 22:
                     return "Bad Password: Password passed in register action is less than six characters.";
@@ -280,7 +310,7 @@ namespace ZSS.ImageUploadersLib
                     return "User too Young: Birth date fields passed in register action place a user below the minimum age of 14 years.";
                 case 25:
                     return "Terms Agreement: Terms parameter for register action is either blank, non-existent, or does not say \"yes\"";
-                case 26: 
+                case 26:
                     return "Terms of Service Violation: originatingip parameter contains an IP address on the TinyPic banned list, or is in a nation that is banned from registering.";
                 case 27:
                     return "Bad IP: originationip parameter contains an invalid IP address.";
