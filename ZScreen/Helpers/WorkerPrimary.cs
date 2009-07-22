@@ -487,35 +487,38 @@ namespace ZSS.Helpers
 
         private string CaptureRegionOrWindow(ref MainAppTask task)
         {
+            mTakingScreenShot = true;
             string filePath = "";
-            Image imgSS = null;
 
             try
             {
-                mTakingScreenShot = true;
-                imgSS = User32.CaptureScreen(Program.conf.ShowCursor);
-
-                if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
+                using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
                 {
-                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
-                }
-                else
-                {
-                    Crop c = new Crop((Bitmap)imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
-                    if (c.ShowDialog() == DialogResult.OK)
+                    if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
                     {
-                        if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                        task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                    }
+                    else
+                    {
+                        using (Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
                         {
-                            task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
-                        }
-                        else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
-                        {
-                            task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
+                            if (c.ShowDialog() == DialogResult.OK)
+                            {
+                                if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                                {
+                                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                                }
+                                else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                                {
+                                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
+                                }
+                            }
                         }
                     }
                 }
 
                 mTakingScreenShot = false;
+
                 if (task.MyImage != null)
                 {
                     WriteImage(task);
@@ -524,7 +527,7 @@ namespace ZSS.Helpers
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                Console.WriteLine(ex.ToString());
                 task.Errors.Add(ex.Message);
                 if (Program.conf.CaptureEntireScreenOnError)
                 {
@@ -535,7 +538,6 @@ namespace ZSS.Helpers
             {
                 task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_CROP_MODE);
                 mTakingScreenShot = false;
-                if (imgSS != null) imgSS.Dispose();
             }
 
             return filePath;
@@ -769,7 +771,7 @@ namespace ZSS.Helpers
                 mSetHotkeys = false;
 
                 mZScreen.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
-                
+
                 //reset hotkey text from <set keys> back to normal
                 mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
 

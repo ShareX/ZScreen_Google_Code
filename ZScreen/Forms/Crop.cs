@@ -35,7 +35,7 @@ using System.Drawing.Imaging;
 
 namespace ZSS
 {
-    partial class Crop : Form
+    public class Crop : Form
     {
         private bool mMouseDown, selectedWindowMode, forceCheck;
         private Bitmap bmpClean, bmpBackground, bmpRegion;
@@ -69,7 +69,12 @@ namespace ZSS
             }
         }
 
-        public Crop(Bitmap myImage, bool windowMode)
+        /// <summary>
+        /// Crop shot or Selected Window captures
+        /// </summary>
+        /// <param name="myImage">Fullscreen image</param>
+        /// <param name="windowMode">True = Selected window, False = Crop shot</param>
+        public Crop(Image myImage, bool windowMode)
         {
             InitializeComponent();
             selectedWindowMode = windowMode;
@@ -447,7 +452,7 @@ namespace ZSS
             }
             if (e.KeyCode == Keys.Tab && !selectedWindowMode)
             {
-                Program.conf.CropGridToggle = !Program.conf.CropGridToggle;             
+                Program.conf.CropGridToggle = !Program.conf.CropGridToggle;
                 forceCheck = true;
             }
         }
@@ -505,6 +510,7 @@ namespace ZSS
 
         protected override void Dispose(bool disposing)
         {
+            DisposeImages();
             if (disposing && (components != null))
             {
                 components.Dispose();
