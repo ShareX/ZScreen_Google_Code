@@ -188,6 +188,7 @@ namespace Greenshot.Drawing
         private void InitControls()
         {
             grippers = new Label[8];
+
             for (int i = 0; i < grippers.Length; i++)
             {
                 grippers[i] = new Label();
@@ -200,6 +201,7 @@ namespace Greenshot.Drawing
                 grippers[i].MouseMove += new MouseEventHandler(gripperMouseMove);
                 grippers[i].Visible = false;
             }
+
             grippers[1].Cursor = Cursors.SizeNS;
             grippers[3].Cursor = Cursors.SizeWE;
             grippers[5].Cursor = Cursors.SizeNS;
@@ -329,7 +331,7 @@ namespace Greenshot.Drawing
                     this.Width -= e.X - mx;
                 }
                 ResumeLayout();
-                parent.Invalidate();
+                parent.Refresh();
             }
         }
 
@@ -369,12 +371,11 @@ namespace Greenshot.Drawing
 
         public void ShowGrippers()
         {
+            this.ResumeLayout();
             for (int i = 0; i < grippers.Length; i++)
             {
-                if (grippers[i].Enabled) grippers[i].Show();
-                else grippers[i].Hide();
+                grippers[i].Visible = grippers[i].Enabled;
             }
-            this.ResumeLayout();
         }
 
         public void HideGrippers()
