@@ -33,6 +33,8 @@ namespace ZSS.ImageUploadersLib
     {
         public static string ElementValue(this XElement xe, string name)
         {
+            if (xe == null) return "";
+
             XElement xeItem = xe.Element(name);
             if (xeItem != null)
             {

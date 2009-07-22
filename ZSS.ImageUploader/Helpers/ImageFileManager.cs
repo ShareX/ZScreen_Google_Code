@@ -33,6 +33,7 @@ namespace ZSS.ImageUploadersLib.Helpers
         public List<ImageFile> ImageFileList = new List<ImageFile>();
         public string URL { get; set; }
         public string Source { get; set; }
+
         /// <summary>
         /// Local File Path of the Image if exists
         /// </summary>
