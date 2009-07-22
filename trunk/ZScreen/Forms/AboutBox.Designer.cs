@@ -52,6 +52,8 @@
             // 
             this.labelProductName.AutoSize = true;
             this.labelProductName.BackColor = System.Drawing.Color.Transparent;
+            this.labelProductName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.labelProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelProductName.ForeColor = System.Drawing.Color.White;
             this.labelProductName.Location = new System.Drawing.Point(224, 24);
             this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
@@ -60,6 +62,7 @@
             this.labelProductName.TabIndex = 19;
             this.labelProductName.Text = "Product Name";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelProductName.Click += new System.EventHandler(this.labelProductName_Click);
             // 
             // labelCopyright
             // 
@@ -115,12 +118,15 @@
             // 
             this.lblBerk.AutoSize = true;
             this.lblBerk.BackColor = System.Drawing.Color.Transparent;
+            this.lblBerk.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblBerk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBerk.ForeColor = System.Drawing.Color.White;
-            this.lblBerk.Location = new System.Drawing.Point(53, 248);
+            this.lblBerk.Location = new System.Drawing.Point(53, 247);
             this.lblBerk.Name = "lblBerk";
             this.lblBerk.Size = new System.Drawing.Size(66, 13);
             this.lblBerk.TabIndex = 86;
             this.lblBerk.Text = "Jaex ( Berk )";
+            this.lblBerk.Click += new System.EventHandler(this.lblBerk_Click);
             // 
             // pbFlagAU
             // 
@@ -137,12 +143,15 @@
             // 
             this.lblMike.AutoSize = true;
             this.lblMike.BackColor = System.Drawing.Color.Transparent;
+            this.lblMike.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblMike.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMike.ForeColor = System.Drawing.Color.White;
-            this.lblMike.Location = new System.Drawing.Point(53, 224);
+            this.lblMike.Location = new System.Drawing.Point(53, 223);
             this.lblMike.Name = "lblMike";
             this.lblMike.Size = new System.Drawing.Size(126, 13);
             this.lblMike.TabIndex = 88;
             this.lblMike.Text = "McoreD ( Mike Delpach )";
+            this.lblMike.Click += new System.EventHandler(this.lblMike_Click);
             // 
             // pbFlagUS
             // 
@@ -159,16 +168,20 @@
             // 
             this.lblBrandon.AutoSize = true;
             this.lblBrandon.BackColor = System.Drawing.Color.Transparent;
+            this.lblBrandon.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblBrandon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBrandon.ForeColor = System.Drawing.Color.White;
-            this.lblBrandon.Location = new System.Drawing.Point(53, 200);
+            this.lblBrandon.Location = new System.Drawing.Point(53, 199);
             this.lblBrandon.Name = "lblBrandon";
             this.lblBrandon.Size = new System.Drawing.Size(144, 13);
             this.lblBrandon.TabIndex = 90;
             this.lblBrandon.Text = "inf1ni ( Brandon Zimmerman )";
+            this.lblBrandon.Click += new System.EventHandler(this.lblBrandon_Click);
             // 
             // pbLogo
             // 
             this.pbLogo.BackColor = System.Drawing.Color.Transparent;
+            this.pbLogo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbLogo.Image = global::ZSS.Properties.Resources.main;
             this.pbLogo.Location = new System.Drawing.Point(16, 16);
             this.pbLogo.Name = "pbLogo";
@@ -176,13 +189,14 @@
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLogo.TabIndex = 91;
             this.pbLogo.TabStop = false;
+            this.pbLogo.Click += new System.EventHandler(this.pbLogo_Click);
             // 
             // lblDevelopers
             // 
             this.lblDevelopers.AutoSize = true;
             this.lblDevelopers.BackColor = System.Drawing.Color.Transparent;
             this.lblDevelopers.ForeColor = System.Drawing.Color.White;
-            this.lblDevelopers.Location = new System.Drawing.Point(24, 176);
+            this.lblDevelopers.Location = new System.Drawing.Point(24, 174);
             this.lblDevelopers.Name = "lblDevelopers";
             this.lblDevelopers.Size = new System.Drawing.Size(61, 13);
             this.lblDevelopers.TabIndex = 92;

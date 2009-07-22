@@ -33,13 +33,17 @@ namespace ZSS.Forms
 {
     partial class AboutBox : Form
     {
+        private int saturation = 200;
+        private int step = 10;
+        private int multiply = 1;
+
         public AboutBox()
         {
             InitializeComponent();
             this.Icon = Properties.Resources.zss_main;
             Bitmap bmp = Properties.Resources.main;
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-            bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-200));
+            bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-250));
             pbLogo.Image = bmp;
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
@@ -62,6 +66,29 @@ namespace ZSS.Forms
             sbDesc.AppendLine("Settings file:");
             sbDesc.AppendLine(Program.DefaultXMLFilePath);
             this.textBoxDescription.Text = sbDesc.ToString();
+
+            Timer timer = new Timer { Interval = 100 };
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Start();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (saturation > 400)
+            {
+                step = -20;
+            }
+            else if (saturation < 200)
+            {
+                step = 20;
+            }
+
+            saturation += step;
+
+            Bitmap bmp = Properties.Resources.main;
+            bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+            bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-saturation * multiply));
+            pbLogo.Image = bmp;
         }
 
         #region Assembly Attribute Accessors
@@ -152,7 +179,6 @@ namespace ZSS.Forms
 
         #endregion
 
-
         private void AboutBox_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -162,9 +188,14 @@ namespace ZSS.Forms
             g.FillRectangle(brush, rect);
         }
 
+        private void labelProductName_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/p/zscreen");
+        }
+
         private void lblCompanyName_Click(object sender, EventArgs e)
         {
-            Process.Start("www.brandonz.net");
+            Process.Start("http://www.brandonz.net");
         }
 
         private void lblRev_Click_1(object sender, EventArgs e)
@@ -175,6 +206,26 @@ namespace ZSS.Forms
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void lblBrandon_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/u/rgrthat");
+        }
+
+        private void lblMike_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/u/mcored");
+        }
+
+        private void lblBerk_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/u/flexy123");
+        }
+
+        private void pbLogo_Click(object sender, EventArgs e)
+        {
+            multiply = -multiply;
         }
     }
 }
