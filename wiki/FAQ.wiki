@@ -4,7 +4,7 @@
 
 =What programming language is ZScreen made in?=
 
-ZScreen is made with C# 3.0
+ZScreen is made with C# 3.0 for Microsoft Windows.
 
 =Does that mean I need the .NET framework to run it?=
 
@@ -12,7 +12,7 @@ Yes, that is correct, you do need the .NET 3.5 framework to run ZScreen, but the
 
 =Is ZScreen free? Is there any kind of fee for using it?=
 
-ZScreen is completely free. The source code is published on [http://zscreen.svn.sourceforge.net/viewvc/zscreen/ Sourceforge.net.]
+ZScreen is completely free. The source code is published on http://code.google.com/p/zscreen/source/list
 
 =Why are you not selling this software?=
 
@@ -24,7 +24,7 @@ ZScreen does not close when you do this, it will stay open in the tray. If you w
 
 =Can I run multiple copies of ZScreen on one computer at the same time?=
 
-No, ZScreen 2.3 and prior versions will not run multiple copies. This feature was added to remove a big annoyance. Starting from ZScreen 2.3 multiple instances are supported. Newer instances will have a `*` which you will notice in Tray Icon when you mouse hover or in main application window. 
+Starting from ZScreen 2.3 multiple instances are supported. Newer instances will have a `*` which you will notice in Tray Icon when you mouse hover or in main application window. 
 
 =How can I suggest a feature for future releases or submit a bug report?=
 
