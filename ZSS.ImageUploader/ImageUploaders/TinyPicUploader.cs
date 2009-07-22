@@ -96,12 +96,10 @@ namespace ZSS.ImageUploadersLib
 
                 string response = GetResponse(URLAPI, args);
 
-
                 if (string.IsNullOrEmpty(response)) throw new Exception("Unable to get upload key.");
 
                 if (GetXMLValue(response, "status") == "OK")
                 {
-
                     string upk = GetXMLValue(response, "uploadkey");
 
                     if (string.IsNullOrEmpty(upk))
