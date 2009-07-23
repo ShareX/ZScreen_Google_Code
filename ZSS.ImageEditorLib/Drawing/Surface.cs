@@ -30,15 +30,6 @@
 */
 #endregion
 
-/*
- * Erstellt mit SharpDevelop.
- * Benutzer: Administrator
- * Datum: 14.03.2008
- * Zeit: 19:49
- * 
- * Sie können diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader ändern.
- */
-
 using System;
 using System.Drawing;
 using System.Windows.Forms;

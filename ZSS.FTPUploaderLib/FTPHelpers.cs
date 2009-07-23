@@ -149,6 +149,8 @@ namespace ZSS
                 return ParseMatch(match.Groups, ListStyle.Unix);
             }
 
+            throw new Exception("Only support Unix ftp servers.");
+
             match = winStyle.Match(line);
             if (match.Success)
             {
