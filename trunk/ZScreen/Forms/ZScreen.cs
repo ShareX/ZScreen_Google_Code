@@ -3384,7 +3384,7 @@ namespace ZSS
                 if (mGuiIsReady)
                 {
                     Program.conf.UrlShortenerSelected = ucUrlShorteners.MyCollection.SelectedIndex;
-                    cboURLShorteners.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
+                    cboURLShorteners.SelectedIndex = ucUrlShorteners.MyCollection.SelectedIndex;
                 }
 
                 bool hasOptions = textUploader != null;
