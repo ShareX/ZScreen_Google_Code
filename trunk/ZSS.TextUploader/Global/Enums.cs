@@ -36,7 +36,7 @@ namespace ZSS.TextUploadersLib
         [Description("paste2.org")]
         PASTE2,
         [Description("slexy.org")]
-        SLEXY,
+        SLEXY
     }
 
     [Serializable]
@@ -51,7 +51,7 @@ namespace ZSS.TextUploadersLib
         [Description("kl.am")]
         KLAM,
         [Description("tinyurl.com")]
-        TINYURL,
+        TINYURL
     }
 
     [Serializable]
