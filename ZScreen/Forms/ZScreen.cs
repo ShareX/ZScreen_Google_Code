@@ -378,10 +378,10 @@ namespace ZSS
                 }
             }
 
-            if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < ucTextUploaders.MyCollection.Items.Count)
+            if (Program.conf.TextUploaderSelected > -1 && Program.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
             {
-                ucTextUploaders.MyCollection.SelectedIndex = Program.conf.SelectedTextUploader;
-                cboTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
+                ucTextUploaders.MyCollection.SelectedIndex = Program.conf.TextUploaderSelected;
+                cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
             }
 
             ucTextUploaders.Templates.Items.Clear();
@@ -409,10 +409,10 @@ namespace ZSS
                 }
             }
 
-            if (Program.conf.SelectedUrlShortener > -1 && Program.conf.SelectedUrlShortener < ucUrlShorteners.MyCollection.Items.Count)
+            if (Program.conf.UrlShortenerSelected > -1 && Program.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
             {
-                ucUrlShorteners.MyCollection.SelectedIndex = Program.conf.SelectedUrlShortener;
-                cboURLShorteners.SelectedIndex = Program.conf.SelectedUrlShortener;
+                ucUrlShorteners.MyCollection.SelectedIndex = Program.conf.UrlShortenerSelected;
+                cboURLShorteners.SelectedIndex = Program.conf.UrlShortenerSelected;
             }
 
             ucUrlShorteners.Templates.Items.Clear();
@@ -3322,11 +3322,9 @@ namespace ZSS
             {
                 TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
 
-                Program.conf.TextUploaderActive = textUploader;
-
                 if (mGuiIsReady)
                 {
-                    Program.conf.SelectedTextUploader = ucTextUploaders.MyCollection.SelectedIndex;
+                    Program.conf.TextUploaderSelected = ucTextUploaders.MyCollection.SelectedIndex;
                     cboTextUploaders.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
                 }
 
@@ -3345,7 +3343,7 @@ namespace ZSS
             if (mGuiIsReady)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = cboTextUploaders.SelectedIndex;
-                Program.conf.SelectedTextUploader = cboTextUploaders.SelectedIndex;
+                Program.conf.TextUploaderSelected = cboTextUploaders.SelectedIndex;
             }
         }
 
@@ -3354,7 +3352,7 @@ namespace ZSS
             if (mGuiIsReady)
             {
                 ucUrlShorteners.MyCollection.SelectedIndex = cboURLShorteners.SelectedIndex;
-                Program.conf.SelectedUrlShortener = cboURLShorteners.SelectedIndex;
+                Program.conf.UrlShortenerSelected = cboURLShorteners.SelectedIndex;
             }
         }
 
@@ -3383,11 +3381,9 @@ namespace ZSS
             {
                 TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem; ;
 
-                Program.conf.UrlShortenerActive = textUploader;
-
                 if (mGuiIsReady)
                 {
-                    Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
+                    Program.conf.UrlShortenerSelected = ucUrlShorteners.MyCollection.SelectedIndex;
                     cboURLShorteners.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
                 }
 

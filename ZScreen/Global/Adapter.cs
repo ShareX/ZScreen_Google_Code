@@ -88,6 +88,16 @@ namespace ZSS.Global
             return string.Format("Status description:\n{0}\nException message:\n{1}", status, e.Message);
         }
 
+        public static bool CheckTextUploaders()
+        {
+            return Program.conf.TextUploaderSelected >= 0 && Program.conf.TextUploadersList.Count > 0;
+        }
+
+        public static bool CheckURLShorteners()
+        {
+            return Program.conf.UrlShortenerSelected >= 0 && Program.conf.UrlShortenersList.Count > 0;
+        }
+
         public static bool CheckFTPAccounts()
         {
             return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected;
@@ -183,7 +193,7 @@ namespace ZSS.Global
             if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
                 Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL)
             {
-                TextUploader tu = Program.conf.UrlShortenerActive;
+                TextUploader tu = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
                 tu.ProxySettings = Adapter.GetProxySettings();
                 if (tu != null)
                 {
