@@ -885,7 +885,7 @@ namespace ZSS.Helpers
 
                 foreach (MainAppTask temp in textWorkers)
                 {
-                    if (FileSystem.IsValidLink(temp.MyText))
+                    if (FileSystem.IsValidLink(temp.MyText) && Program.conf.AutoShortenURL)
                     {
                         if (Program.conf.UrlShortenerActive != null)
                         {
