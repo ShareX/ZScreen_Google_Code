@@ -50,16 +50,18 @@ namespace ZSS
 {
     public partial class ZScreen : Form
     {
-        #region Variables
+        #region Private Variables
 
         private bool mGuiIsReady, mClose;
 
         private int mHadFocusAt;
+
         private TextBox mHadFocus;
 
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
 
         private Debug debug;
+
         private List<int> mLogoRandomList = new List<int>(5);
 
         #endregion
@@ -204,9 +206,9 @@ namespace ZSS
                 tsmiTabs.DropDownItems.Add(tsmi);
             }
 
-            if (cboImagesDest.Items.Count == 0)
+            if (cboImageUploaders.Items.Count == 0)
             {
-                cboImagesDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+                cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
             foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
             {
@@ -216,7 +218,7 @@ namespace ZSS
                 tsmImageDest.DropDownItems.Add(tsmi);
             }
 
-            cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
@@ -354,7 +356,7 @@ namespace ZSS
 
             #endregion
 
-            #region "Text Uploaders"
+            #region "Text Uploaders & URL Shorteners"
 
             ///////////////////////////////////
             // Text Uploader Settings
@@ -362,56 +364,59 @@ namespace ZSS
 
             if (Program.conf.TextUploadersList.Count == 0)
             {
-                Program.conf.TextUploadersList = new List<TextUploader> { new Paste2Uploader(), new PastebinUploader(), new SlexyUploader() };
-            }
-            if (Program.conf.UrlShortenersList.Count == 0)
-            {
-                Program.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new TinyURLUploader() };
+                Program.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
 
             ucTextUploaders.MyCollection.Items.Clear();
-            cboTextDest.Items.Clear();
+            cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
                     ucTextUploaders.MyCollection.Items.Add(textUploader);
-                    cboTextDest.Items.Add(textUploader);
+                    cboTextUploaders.Items.Add(textUploader);
                 }
             }
+
             if (Program.conf.SelectedTextUploader > -1 && Program.conf.SelectedTextUploader < ucTextUploaders.MyCollection.Items.Count)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Program.conf.SelectedTextUploader;
-                cboTextDest.SelectedIndex = Program.conf.SelectedTextUploader;
+                cboTextUploaders.SelectedIndex = Program.conf.SelectedTextUploader;
             }
 
             ucTextUploaders.Templates.Items.Clear();
             ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
             ucTextUploaders.Templates.SelectedIndex = 1;
 
-            if (Program.conf.TextEditors.Count == 0)
-            {
-                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
-            }
-
             ///////////////////////////////////
             // URL Shorteners Settings
             ///////////////////////////////////
 
+            if (Program.conf.UrlShortenersList.Count == 0)
+            {
+                Program.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
+                    new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
+            }
+
             ucUrlShorteners.MyCollection.Items.Clear();
+            cboURLShorteners.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.UrlShortenersList)
             {
                 if (textUploader != null)
                 {
                     ucUrlShorteners.MyCollection.Items.Add(textUploader);
+                    cboURLShorteners.Items.Add(textUploader);
                 }
             }
+
             if (Program.conf.SelectedUrlShortener > -1 && Program.conf.SelectedUrlShortener < ucUrlShorteners.MyCollection.Items.Count)
             {
                 ucUrlShorteners.MyCollection.SelectedIndex = Program.conf.SelectedUrlShortener;
+                cboURLShorteners.SelectedIndex = Program.conf.SelectedUrlShortener;
             }
+
             ucUrlShorteners.Templates.Items.Clear();
-            ucUrlShorteners.Templates.Items.AddRange((typeof(UrlShortenerType).GetDescriptions()));
+            ucUrlShorteners.Templates.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
             ucUrlShorteners.Templates.SelectedIndex = 0;
 
             #endregion
@@ -486,7 +491,7 @@ namespace ZSS
             #region Image Editors
 
             ///////////////////////////////////
-            // Image Software Settings
+            // Image Editors Settings
             ///////////////////////////////////
 
             Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, "", true);
@@ -523,6 +528,13 @@ namespace ZSS
             }
 
             chkImageEditorAutoSave.Checked = Program.conf.ImageEditorAutoSave;
+
+            // Text Editors
+
+            if (Program.conf.TextEditors.Count == 0)
+            {
+                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
+            }
 
             #endregion
 
@@ -611,7 +623,7 @@ namespace ZSS
         void tsmiDestImages_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            cboImagesDest.SelectedIndex = (int)tsmi.Tag;
+            cboImageUploaders.SelectedIndex = (int)tsmi.Tag;
         }
 
         private void UpdateGuiControlsPaths()
@@ -1231,7 +1243,7 @@ namespace ZSS
 
         private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageDestType sdt = (ImageDestType)cboImagesDest.SelectedIndex;
+            ImageDestType sdt = (ImageDestType)cboImageUploaders.SelectedIndex;
             Program.conf.ScreenshotDestMode = sdt;
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
@@ -1250,8 +1262,8 @@ namespace ZSS
                 tsmi.Checked = tsmi == item;
             }
 
-            tsmCopytoClipboardMode.Enabled = cboImagesDest.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
-                cboImagesDest.SelectedIndex != (int)ImageDestType.FILE;
+            tsmCopytoClipboardMode.Enabled = cboImageUploaders.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
+                cboImageUploaders.SelectedIndex != (int)ImageDestType.FILE;
         }
 
         private void SetActiveImageSoftware()
@@ -3243,7 +3255,7 @@ namespace ZSS
                     {
                         Program.conf.TextUploadersList.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
-                        cboTextDest.Items.Add(textUploader);
+                        cboTextUploaders.Items.Add(textUploader);
                     }
                     ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
@@ -3257,7 +3269,7 @@ namespace ZSS
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
                 Program.conf.TextUploadersList.RemoveAt(index);
                 ucTextUploaders.MyCollection.Items.RemoveAt(index);
-                cboTextDest.Items.RemoveAt(index);
+                cboTextUploaders.Items.RemoveAt(index);
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
             }
         }
@@ -3315,7 +3327,7 @@ namespace ZSS
                 if (mGuiIsReady)
                 {
                     Program.conf.SelectedTextUploader = ucTextUploaders.MyCollection.SelectedIndex;
-                    cboTextDest.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
+                    cboTextUploaders.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
                 }
 
                 bool hasOptions = textUploader != null;
@@ -3332,8 +3344,17 @@ namespace ZSS
         {
             if (mGuiIsReady)
             {
-                ucTextUploaders.MyCollection.SelectedIndex = cboTextDest.SelectedIndex;
-                Program.conf.SelectedTextUploader = cboTextDest.SelectedIndex;
+                ucTextUploaders.MyCollection.SelectedIndex = cboTextUploaders.SelectedIndex;
+                Program.conf.SelectedTextUploader = cboTextUploaders.SelectedIndex;
+            }
+        }
+
+        private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (mGuiIsReady)
+            {
+                ucUrlShorteners.MyCollection.SelectedIndex = cboURLShorteners.SelectedIndex;
+                Program.conf.SelectedUrlShortener = cboURLShorteners.SelectedIndex;
             }
         }
 
@@ -3360,19 +3381,47 @@ namespace ZSS
         {
             if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
             {
+                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem; ;
 
-                Program.conf.UrlShortenerActive = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
-                Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
+                Program.conf.UrlShortenerActive = textUploader;
 
-                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
+                if (mGuiIsReady)
+                {
+                    Program.conf.SelectedUrlShortener = ucUrlShorteners.MyCollection.SelectedIndex;
+                    cboURLShorteners.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
+                }
+
                 bool hasOptions = textUploader != null;
                 ucUrlShorteners.SettingsGrid.Visible = hasOptions;
 
                 if (hasOptions)
                 {
-                    ucUrlShorteners.SettingsGrid.SelectedObject = ((TextUploader)textUploader).Settings;
+                    ucUrlShorteners.SettingsGrid.SelectedObject = textUploader.Settings;
                 }
+            }
+        }
 
+        /// <summary>
+        /// Method to add a Link Shorteners to the List of Link Shorteners
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UrlShortenersAddButton_Click(object sender, EventArgs e)
+        {
+            if (ucUrlShorteners.Templates.SelectedIndex > -1)
+            {
+                string name = ucUrlShorteners.Templates.SelectedItem.ToString();
+                if (!string.IsNullOrEmpty(name))
+                {
+                    TextUploader textUploader = Adapter.FindUrlShortener(name);
+                    if (textUploader != null)
+                    {
+                        Program.conf.UrlShortenersList.Add(textUploader);
+                        ucUrlShorteners.MyCollection.Items.Add(textUploader);
+                        cboURLShorteners.Items.Add(textUploader);
+                    }
+                    ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
+                }
             }
         }
 
@@ -3386,32 +3435,10 @@ namespace ZSS
             if (ucUrlShorteners.MyCollection.Items.Count > 0)
             {
                 int index = ucUrlShorteners.MyCollection.SelectedIndex;
-                ucUrlShorteners.MyCollection.Items.RemoveAt(index);
                 Program.conf.UrlShortenersList.RemoveAt(index);
+                ucUrlShorteners.MyCollection.Items.RemoveAt(index);
+                cboURLShorteners.Items.RemoveAt(index);
                 ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
-            }
-        }
-
-        /// <summary>
-        /// Method to add a Link Shorteners to the List of Link Shorteners
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UrlShortenersAddButton_Click(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.Templates.SelectedIndex > -1)
-            {
-                string name = (string)ucUrlShorteners.Templates.SelectedItem;
-                if (!string.IsNullOrEmpty(name))
-                {
-                    TextUploader textUploader = Adapter.FindUrlShortener(name);
-                    if (textUploader != null)
-                    {
-                        ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                        Program.conf.UrlShortenersList.Add(textUploader);
-                    }
-                    ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
-                }
             }
         }
 

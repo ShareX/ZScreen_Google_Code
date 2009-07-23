@@ -215,7 +215,7 @@ namespace ZSS.Helpers
                     mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
                     break;
                 case MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION:
-                    mZScreen.cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+                    mZScreen.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
                     break;
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
@@ -663,7 +663,6 @@ namespace ZSS.Helpers
             StartWorkerPictures(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
         }
 
-
         private void ScreenshotUsingDragDrop(string[] paths)
         {
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
@@ -1078,7 +1077,7 @@ namespace ZSS.Helpers
 
         private void QuickOptionsApplySettings(object sender, EventArgs e)
         {
-            mZScreen.cboImagesDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            mZScreen.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             mZScreen.cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
         }
 

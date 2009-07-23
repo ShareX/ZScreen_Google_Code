@@ -151,6 +151,7 @@ namespace ZSS
 
             throw new Exception("Only support Unix ftp servers.");
 
+            /*
             match = winStyle.Match(line);
             if (match.Success)
             {
@@ -158,6 +159,7 @@ namespace ZSS
             }
 
             throw new Exception("Invalid line format");
+            */
         }
 
         private static FTPLineResult ParseMatch(GroupCollection matchGroups, ListStyle style)
