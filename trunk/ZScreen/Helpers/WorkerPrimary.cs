@@ -882,22 +882,16 @@ namespace ZSS.Helpers
                     }
                 }
 
-                foreach (MainAppTask temp in textWorkers)
+                foreach (MainAppTask task in textWorkers)
                 {
-                    if (FileSystem.IsValidLink(temp.MyText) && Program.conf.AutoShortenURL)
+                    if (FileSystem.IsValidLink(task.MyText) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                     {
-                        if (Program.conf.UrlShortenerActive != null)
-                        {
-                            temp.MyTextUploader = Program.conf.UrlShortenerActive;
-                            temp.RunWorker();
-                        }
+                        task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                        task.RunWorker();
                     }
-                    else
+                    else if (Adapter.CheckTextUploaders())
                     {
-                        if (Program.conf.TextUploaderActive != null)
-                        {
-                            temp.RunWorker();
-                        }
+                        task.RunWorker();
                     }
                 }
             }

@@ -296,16 +296,14 @@ namespace ZSS
         public decimal WatermarkImageScale = 100;
 
         //~~~~~~~~~~~~~~~~~~~~~
-        //  Text Uploaders
+        //  Text Uploaders & URL Shorteners
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<TextUploader> TextUploadersList = new List<TextUploader>();
-        public int SelectedTextUploader = 0;
-        public TextUploader TextUploaderActive = new Paste2Uploader();
+        public int TextUploaderSelected = 0;
 
         public List<TextUploader> UrlShortenersList = new List<TextUploader>();
-        public int SelectedUrlShortener = 0;
-        public TextUploader UrlShortenerActive = new TinyURLUploader();
+        public int UrlShortenerSelected = 0;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
