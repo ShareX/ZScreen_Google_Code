@@ -745,7 +745,7 @@ namespace ZSS
             Program.conf.Save();
             Program.Worker.SaveHistoryItems();
             Settings.Default.Save();
-            Console.WriteLine("Settings written to file.");
+            FileSystem.AppendDebug("Settings written to file.");
         }
 
         private void RewriteImageEditorsRightClickMenu()
@@ -2133,7 +2133,7 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
             }
         }
 
