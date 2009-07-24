@@ -156,8 +156,15 @@ namespace ZSS
             return Path.Combine(dir, fileName);
         }
 
-        public static void AppendDebug(string msg)
+
+        public static void AppendDebug(Exception ex)
         {
+            FileSystem.AppendDebug(ex.ToString());
+            AppendDebug(ex.Message);
+        }
+
+        public static void AppendDebug(string msg)
+        {            
             mDebug.AppendLine(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + " " + msg);
         }
 

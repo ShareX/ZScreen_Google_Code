@@ -335,7 +335,7 @@ namespace ZSS.Helpers
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex.ToString());
+                            FileSystem.AppendDebug(ex.ToString());
                         }
                     }
                     else if (File.Exists(app.Path))

@@ -350,7 +350,7 @@ namespace ZSS.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
             }
             finally
             {
@@ -528,7 +528,7 @@ namespace ZSS.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
                 task.Errors.Add(ex.Message);
                 if (Program.conf.CaptureEntireScreenOnError)
                 {

@@ -575,7 +575,7 @@ namespace ZSS
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug(ex.ToString());
                 MessageBox.Show(ex.Message);
             }
         }
@@ -605,7 +605,7 @@ namespace ZSS
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
                     FileSystem.AppendDebug(ex.ToString());
-                    Console.WriteLine(ex.ToString());
+                    FileSystem.AppendDebug(ex.ToString());
                     OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
                     dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
                     dlg.InitialDirectory = Settings.Default.RootDir;
