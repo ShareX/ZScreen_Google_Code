@@ -105,6 +105,7 @@ namespace ZSS.TextUploadersLib
                 }
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
                 WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
+                webClient.Proxy = this.ProxySettings;
                 string wc = webClient.DownloadString(url);
                 result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=:</span> ).+?(?=</td>)").NextMatch().Value);
                 result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value);
