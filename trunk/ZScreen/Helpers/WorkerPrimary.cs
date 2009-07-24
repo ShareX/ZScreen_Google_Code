@@ -39,6 +39,7 @@ using ZSS.Global;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
+using ZSS.IndexersLib;
 
 namespace ZSS.Helpers
 {
@@ -887,6 +888,19 @@ namespace ZSS.Helpers
                     if (FileSystem.IsValidLink(task.MyText) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                     {
                         task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                        task.RunWorker();
+                    }
+                    else if (Directory.Exists(task.MyText)) // McoreD: can make this an option later
+                    {
+                        IndexerAdapter settings = new IndexerAdapter();
+                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir, Path.GetFileName(task.MyText) + ".log"));
+                        settings.GetConfig().SetSingleIndexPath(cbFilePath);
+                        settings.GetConfig().OutputDir = Program.TextDir;
+                        settings.GetConfig().FolderList.Add(task.MyText);
+                        TreeNetIndexer indexer = new TreeNetIndexer(settings);                        
+                        indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
+                        task.MyText = null;
+                        task.SetLocalFilePath(cbFilePath);
                         task.RunWorker();
                     }
                     else if (Adapter.CheckTextUploaders())

@@ -459,13 +459,15 @@ namespace ZSS
             this.btnOpenSourceText = new System.Windows.Forms.Button();
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
             this.tpOptionsAdv = new System.Windows.Forms.TabPage();
-            this.confApp = new System.Windows.Forms.PropertyGrid();
+            this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.tpUploadText = new System.Windows.Forms.TabPage();
             this.txtTextUploaderContent = new System.Windows.Forms.TextBox();
             this.btnUploadText = new System.Windows.Forms.Button();
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -588,6 +590,7 @@ namespace ZSS
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -4138,6 +4141,7 @@ namespace ZSS
             // 
             this.tcTextUploaders.Controls.Add(this.tpTextUploaders);
             this.tcTextUploaders.Controls.Add(this.tpURLShorteners);
+            this.tcTextUploaders.Controls.Add(this.tabPage1);
             this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcTextUploaders.Name = "tcTextUploaders";
@@ -5451,7 +5455,7 @@ namespace ZSS
             // 
             // tpOptionsAdv
             // 
-            this.tpOptionsAdv.Controls.Add(this.confApp);
+            this.tpOptionsAdv.Controls.Add(this.pgApp);
             this.tpOptionsAdv.Location = new System.Drawing.Point(4, 22);
             this.tpOptionsAdv.Name = "tpOptionsAdv";
             this.tpOptionsAdv.Padding = new System.Windows.Forms.Padding(3);
@@ -5462,12 +5466,12 @@ namespace ZSS
             // 
             // confApp
             // 
-            this.confApp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.confApp.Location = new System.Drawing.Point(3, 3);
-            this.confApp.Name = "confApp";
-            this.confApp.Size = new System.Drawing.Size(785, 404);
-            this.confApp.TabIndex = 0;
-            this.confApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.confApp_PropertyValueChanged);
+            this.pgApp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgApp.Location = new System.Drawing.Point(3, 3);
+            this.pgApp.Name = "confApp";
+            this.pgApp.Size = new System.Drawing.Size(785, 404);
+            this.pgApp.TabIndex = 0;
+            this.pgApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.confApp_PropertyValueChanged);
             // 
             // tpUploadText
             // 
@@ -5515,6 +5519,25 @@ namespace ZSS
             this.ttZScreen.InitialDelay = 500;
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 100;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.pgIndexer);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(791, 410);
+            this.tabPage1.TabIndex = 15;
+            this.tabPage1.Text = "Directory Indexer";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // pgIndexer
+            // 
+            this.pgIndexer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgIndexer.Location = new System.Drawing.Point(3, 3);
+            this.pgIndexer.Name = "pgIndexer";
+            this.pgIndexer.Size = new System.Drawing.Size(785, 404);
+            this.pgIndexer.TabIndex = 0;
             // 
             // ZScreen
             // 
@@ -5706,6 +5729,7 @@ namespace ZSS
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -6087,7 +6111,7 @@ namespace ZSS
         internal System.Windows.Forms.Button btnOpenSourceText;
         internal System.Windows.Forms.Button btnOpenSourceBrowser;
         internal System.Windows.Forms.TabPage tpOptionsAdv;
-        internal System.Windows.Forms.PropertyGrid confApp;
+        internal System.Windows.Forms.PropertyGrid pgApp;
         internal System.Windows.Forms.TabPage tpUploadText;
         internal System.Windows.Forms.TextBox txtTextUploaderContent;
         internal System.Windows.Forms.Button btnUploadText;
@@ -6145,6 +6169,8 @@ namespace ZSS
         private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;
         private System.Windows.Forms.Label lblURLShortener;
         private System.Windows.Forms.ComboBox cboURLShorteners;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.PropertyGrid pgIndexer;
 
     }
 }

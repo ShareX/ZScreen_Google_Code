@@ -81,6 +81,8 @@ namespace ZSS
             //**************
             TwitPicShowFull = true;
             TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
+            IndexerSettings = new ZSS.IndexersLib.IndexerConfig();
+
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
             //~~~~~~~~~~~~~~~~~~~~~    
@@ -372,6 +374,9 @@ namespace ZSS
         public bool TwitPicShowFull { get; set; }
         [Category("Accounts / TwitPic")]
         public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
+
+        // Indexer 
+        public ZSS.IndexersLib.IndexerConfig IndexerSettings = null;
 
         // Custom Image Uploaders
 
