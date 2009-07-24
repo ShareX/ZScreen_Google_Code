@@ -87,5 +87,11 @@ namespace ZSS
 
         [DllImport("gdi32.dll")]
         public static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nReghtRect, int nBottomRect);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nReghtRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
     }
 }
