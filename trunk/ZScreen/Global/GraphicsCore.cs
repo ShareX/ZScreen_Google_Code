@@ -39,6 +39,10 @@ namespace ZSS
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
         public const int CURSOR_SHOWING = 0x00000001;
+        public const int GWL_STYLE = -16;
+        public const ulong WS_VISIBLE = 0x10000000L;
+        public const ulong WS_BORDER = 0x00800000L;
+        public const ulong TARGETWINDOW = WS_BORDER | WS_VISIBLE;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct IconInfo
@@ -94,6 +98,12 @@ namespace ZSS
 
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowRgn(IntPtr hWnd, IntPtr hRgn);
+
+        [DllImport("user32.dll")]
+        public static extern ulong GetWindowLongA(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll")]
         public static extern bool GetCursorInfo(out CursorInfo pci);
@@ -247,6 +257,9 @@ namespace ZSS
             Graphics g = Graphics.FromImage(img);
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
             if (showCursor) DrawCursor(img, windowRect.Location);
+
+            img = MakeBackgroundTransparent(handle, img);
+
             return img;
         }
 
@@ -278,6 +291,39 @@ namespace ZSS
             // free up the Bitmap object
             GDI32.DeleteObject(hBitmap);
             return img;
+        }
+
+        private static Region GetRegionByHWnd(IntPtr hWnd)
+        {
+            IntPtr region = GDI32.CreateRectRgn(0, 0, 0, 0);
+            GetWindowRgn(hWnd, region);
+            return Region.FromHrgn(region);
+        }
+
+        private static Bitmap MakeBackgroundTransparent(IntPtr hWnd, Image capture)
+        {
+            Bitmap result = new Bitmap(capture.Width, capture.Height); 
+            Region region = GetRegionByHWnd(hWnd);
+
+            using (Graphics drawGraphics = Graphics.FromImage(result))
+            {
+                RectangleF bounds = region.GetBounds(drawGraphics);
+                if (bounds == RectangleF.Empty)
+                {
+                    GraphicsUnit unit = GraphicsUnit.Pixel;
+                    bounds = capture.GetBounds(ref unit);
+
+                    if ((GetWindowLongA(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
+                    {
+                        IntPtr windowRegion = GDI32.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
+                        region = Region.FromHrgn(windowRegion);
+                    }
+                }
+
+                drawGraphics.Clip = region;
+                drawGraphics.DrawImage(capture, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
+                return result;
+            }
         }
 
         public class MyCursor
