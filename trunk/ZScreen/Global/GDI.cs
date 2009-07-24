@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 
 namespace ZSS
 {
-    public static class GDI32
+    public static class GDI
     {
         /// <summary>
         ///     Specifies a raster-operation code. These codes define how the color data for the
@@ -93,5 +93,17 @@ namespace ZSS
 
         [DllImport("gdi32.dll")]
         public static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nReghtRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+        public static extern int GdipLoadImageFromFile(string filename, out IntPtr image);
+
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+        public static extern int GdipImageForceValidation(HandleRef image);
+
+        [DllImport("gdiplus.dll", EntryPoint = "GdipDisposeImage", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+        public static extern int IntGdipDisposeImage(HandleRef image);
+
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+        public static extern int GdipGetImageType(HandleRef image, out int type);
     }
 }

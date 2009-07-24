@@ -29,6 +29,7 @@ using System.IO;
 using System.Text;
 using ZSS.ImageUploadersLib.Helpers;
 using ZSS.TextUploadersLib;
+using System.Runtime.InteropServices;
 
 namespace ZSS.Tasks
 {
@@ -138,7 +139,7 @@ namespace ZSS.Tasks
             private set
             {
                 localFilePath = value;
-                CheckIsValidImage();
+                this.IsImage = GraphicsMgr.IsValidImage(localFilePath);
             }
         }
         /// <summary>
@@ -222,39 +223,6 @@ namespace ZSS.Tasks
         {
             this.LocalFilePath = fp;
             this.FileName = new StringBuilder(Path.GetFileName(fp));
-        }
-
-        /// <summary>
-        /// Check for valid image and update task.Errors with the error message
-        /// </summary>
-        /// <returns></returns>
-        public bool IsValidImage()
-        {
-            if (!IsImage)
-            {
-                Errors.Add("Unsupported image.");
-            }
-            return IsImage;
-        }
-
-        private void CheckIsValidImage()
-        {
-            try
-            {
-                if (File.Exists(LocalFilePath))
-                {
-                    Image.FromFile(LocalFilePath).Dispose();
-                    IsImage = true;
-                }
-                else
-                {
-                    IsImage = false;
-                }
-            }
-            catch
-            {
-                IsImage = false;
-            }
         }
 
         #region "Functions"

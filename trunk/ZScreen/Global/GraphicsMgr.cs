@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Drawing.Text;
+using System.Runtime.InteropServices;
 
 namespace ZSS
 {
@@ -175,24 +176,27 @@ namespace ZSS
         /// </summary>
         /// <param name="fp">File path of the Image</param>
         /// <returns></returns>
-        public static bool IsValidImage(string fp)
+        public static bool IsValidImage(string path)
         {
-            bool isImage = false;
+            bool result = false;
 
-            if (File.Exists(fp))
+            if (File.Exists(path))
             {
-                try
+                IntPtr zero = IntPtr.Zero;
+
+                if (GDI.GdipLoadImageFromFile(path, out zero) == 0 &&
+                    GDI.GdipImageForceValidation(new HandleRef(null, zero)) == 0)
                 {
-                    Image.FromFile(fp).Dispose();
-                    isImage = true;
+                    result = true;
                 }
-                catch (OutOfMemoryException)
+
+                if (zero != IntPtr.Zero)
                 {
-                    // do nothing
+                    GDI.IntGdipDisposeImage(new HandleRef(null, zero));
                 }
             }
 
-            return isImage;
+            return result;
         }
 
         public static Bitmap MagnifyingGlass(Bitmap bmp, Point point, int size, int power)
