@@ -126,6 +126,10 @@ namespace ZSS
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        [DllImport("User32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
+
         [DllImport("dwmapi.dll")]
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
 
@@ -186,8 +190,8 @@ namespace ZSS
                                 Graphics desktopGraphics = Graphics.FromHwnd(GetDesktopWindow());
                                 IntPtr desktopHdc = desktopGraphics.GetHdc();
 
-                                IntPtr maskHdc = GDI32.CreateCompatibleDC(desktopHdc);
-                                IntPtr oldPtr = GDI32.SelectObject(maskHdc, maskBitmap.GetHbitmap());
+                                IntPtr maskHdc = GDI.CreateCompatibleDC(desktopHdc);
+                                IntPtr oldPtr = GDI.SelectObject(maskHdc, maskBitmap.GetHbitmap());
 
                                 using (Graphics resultGraphics = Graphics.FromImage(resultBitmap))
                                 {
@@ -195,15 +199,15 @@ namespace ZSS
 
                                     // These two operation will result in a black cursor over a white background.
                                     // Later in the code, a call to MakeTransparent() will get rid of the white background.
-                                    GDI32.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, GDI32.TernaryRasterOperations.SRCCOPY);
-                                    GDI32.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, GDI32.TernaryRasterOperations.SRCINVERT);
+                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, GDI.TernaryRasterOperations.SRCCOPY);
+                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, GDI.TernaryRasterOperations.SRCINVERT);
 
                                     resultGraphics.ReleaseHdc(resultHdc);
                                 }
 
-                                IntPtr newPtr = GDI32.SelectObject(maskHdc, oldPtr);
-                                GDI32.DeleteDC(newPtr);
-                                GDI32.DeleteDC(maskHdc);
+                                IntPtr newPtr = GDI.SelectObject(maskHdc, oldPtr);
+                                GDI.DeleteDC(newPtr);
+                                GDI.DeleteDC(maskHdc);
                                 desktopGraphics.ReleaseHdc(desktopHdc);
 
                                 // Remove the white background from the BitBlt calls,
@@ -249,15 +253,13 @@ namespace ZSS
 
         public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
-            //Image img = CaptureScreen(showCursor);
-            //Rectangle windowRect = GetWindowRectangle(handle);
-            //return GraphicsMgr.CropImage(img, windowRect);
             Rectangle windowRect = GetWindowRectangle(handle);
             Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(img);
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
             if (showCursor) DrawCursor(img, windowRect.Location);
 
+            //img = PrintWindow(handle);
             img = MakeBackgroundTransparent(handle, img);
 
             return img;
@@ -273,41 +275,41 @@ namespace ZSS
             int width = rect.Width;
             int height = rect.Height;
             // create a device context we can copy to
-            IntPtr hdcDest = GDI32.CreateCompatibleDC(hdcSrc);
+            IntPtr hdcDest = GDI.CreateCompatibleDC(hdcSrc);
             // create a bitmap we can copy it to,
             // using GetDeviceCaps to get the width/height
-            IntPtr hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc, width, height);
+            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hdcSrc, width, height);
             // select the bitmap object
-            IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
+            IntPtr hOld = GDI.SelectObject(hdcDest, hBitmap);
             // bitblt over
-            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, GDI32.TernaryRasterOperations.SRCCOPY);
+            GDI.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, GDI.TernaryRasterOperations.SRCCOPY);
             // restore selection
-            GDI32.SelectObject(hdcDest, hOld);
+            GDI.SelectObject(hdcDest, hOld);
             // clean up
-            GDI32.DeleteDC(hdcDest);
+            GDI.DeleteDC(hdcDest);
             ReleaseDC(handle, hdcSrc);
             // get a .NET image object for it
             Image img = Image.FromHbitmap(hBitmap);
             // free up the Bitmap object
-            GDI32.DeleteObject(hBitmap);
+            GDI.DeleteObject(hBitmap);
             return img;
         }
 
         private static Region GetRegionByHWnd(IntPtr hWnd)
         {
-            IntPtr region = GDI32.CreateRectRgn(0, 0, 0, 0);
+            IntPtr region = GDI.CreateRectRgn(0, 0, 0, 0);
             GetWindowRgn(hWnd, region);
             return Region.FromHrgn(region);
         }
 
         private static Bitmap MakeBackgroundTransparent(IntPtr hWnd, Image capture)
         {
-            Bitmap result = new Bitmap(capture.Width, capture.Height); 
+            Bitmap result = new Bitmap(capture.Width, capture.Height);
             Region region = GetRegionByHWnd(hWnd);
 
-            using (Graphics drawGraphics = Graphics.FromImage(result))
+            using (Graphics g = Graphics.FromImage(result))
             {
-                RectangleF bounds = region.GetBounds(drawGraphics);
+                RectangleF bounds = region.GetBounds(g);
                 if (bounds == RectangleF.Empty)
                 {
                     GraphicsUnit unit = GraphicsUnit.Pixel;
@@ -315,15 +317,42 @@ namespace ZSS
 
                     if ((GetWindowLongA(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
                     {
-                        IntPtr windowRegion = GDI32.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
+                        IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
                         region = Region.FromHrgn(windowRegion);
                     }
                 }
 
-                drawGraphics.Clip = region;
-                drawGraphics.DrawImage(capture, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
+                g.Clip = region;
+                g.DrawImage(capture, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
+
                 return result;
             }
+        }
+
+        private static Bitmap PrintWindow(IntPtr hwnd)
+        {
+            RECT rc;
+            GetWindowRect(hwnd, out rc);
+
+            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+            Graphics gfxBmp = Graphics.FromImage(bmp);
+            IntPtr hdcBitmap = gfxBmp.GetHdc();
+            bool succeeded = PrintWindow(hwnd, hdcBitmap, 0);
+            gfxBmp.ReleaseHdc(hdcBitmap);
+            if (!succeeded)
+            {
+                gfxBmp.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(Point.Empty, bmp.Size));
+            }
+            IntPtr hRgn = GDI.CreateRectRgn(0, 0, 0, 0);
+            GetWindowRgn(hwnd, hRgn);
+            Region region = Region.FromHrgn(hRgn);
+            if (!region.IsEmpty(gfxBmp))
+            {
+                gfxBmp.ExcludeClip(region);
+                gfxBmp.Clear(Color.Transparent);
+            }
+            gfxBmp.Dispose();
+            return bmp;
         }
 
         public class MyCursor
@@ -369,7 +398,7 @@ namespace ZSS
             int result = DwmGetWindowAttribute(handle, (int)DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS,
                 out rect, Marshal.SizeOf(typeof(RECT)));
             if (result < 0) throw new Exception("Error: DWMWA_EXTENDED_FRAME_BOUNDS");
-            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+            return rect.ToRectangle();
         }
 
         public static bool DWMWA_NCRENDERING_ENABLED(IntPtr handle)
@@ -385,7 +414,7 @@ namespace ZSS
         {
             RECT rect;
             GetWindowRect(handle, out rect);
-            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+            return rect.ToRectangle();
         }
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
@@ -465,7 +494,7 @@ namespace ZSS
         {
             APPBARDATA abd = new APPBARDATA();
             SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, out abd);
-            return new Rectangle(abd.rc.left, abd.rc.top, abd.rc.right - abd.rc.left, abd.rc.bottom - abd.rc.top);
+            return abd.rc.ToRectangle();
         }
 
         /// <summary>
@@ -487,19 +516,19 @@ namespace ZSS
             {
                 case (int)ABEdge.ABE_BOTTOM:
                     taskBarEdge = TaskBarEdge.Bottom;
-                    height = abd.rc.bottom - abd.rc.top;
+                    height = abd.rc.Height;
                     break;
                 case (int)ABEdge.ABE_TOP:
                     taskBarEdge = TaskBarEdge.Top;
-                    height = abd.rc.bottom;
+                    height = abd.rc.Bottom;
                     break;
                 case (int)ABEdge.ABE_LEFT:
                     taskBarEdge = TaskBarEdge.Left;
-                    height = abd.rc.right - abd.rc.left;
+                    height = abd.rc.Width;
                     break;
                 case (int)ABEdge.ABE_RIGHT:
                     taskBarEdge = TaskBarEdge.Right;
-                    height = abd.rc.right - abd.rc.left;
+                    height = abd.rc.Width;
                     break;
             }
 

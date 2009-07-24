@@ -192,7 +192,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Global\GDI32.cs" />
+    <Compile Include="Global\GDI.cs" />
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\GraphicsCore.cs" />
     <Compile Include="Helpers\CacheCleanerTask.cs" />
