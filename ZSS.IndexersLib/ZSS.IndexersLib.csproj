@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZSS.IndexersLib</RootNamespace>
+    <AssemblyName>ZSS.IndexersLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp, Version=2.0.3.2, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global\Enums.cs" />
+    <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="IndexerAdapter.cs" />
+    <Compile Include="Helpers\TreeDir.cs" />
+    <Compile Include="Helpers\TreeDirComparer.cs" />
+    <Compile Include="Helpers\IndexerEngine.cs" />
+    <Compile Include="Helpers\TreeFile.cs" />
+    <Compile Include="Helpers\FilterHelper.cs" />
+    <Compile Include="Helpers\IndexerConfig.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="TreeNetIndexer.cs" />
+    <Compile Include="TreeWalkIndexer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TreeNetIndexerFiles\CSS\Default.css" />
+    <Content Include="TreeNetIndexerFiles\CSS\domCollapse.css" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.js" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\html.txt" />
+    <Content Include="TreeNetIndexerFiles\minus.gif" />
+    <Content Include="TreeNetIndexerFiles\plus.gif" />
+    <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Lib\taglib-sharp.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

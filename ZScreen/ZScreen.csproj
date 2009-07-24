@@ -408,6 +408,10 @@
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
       <Name>ZSS.ImageUploadersLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
+      <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
+      <Name>ZSS.IndexersLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploadersLib.csproj">
       <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
       <Name>ZSS.TextUploadersLib</Name>

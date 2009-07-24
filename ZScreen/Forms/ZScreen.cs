@@ -185,7 +185,8 @@ namespace ZSS
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
 
-            confApp.SelectedObject = Program.conf;
+            pgApp.SelectedObject = Program.conf;
+            pgIndexer.SelectedObject = Program.conf.IndexerSettings;
             txtRootFolder.Text = Program.RootAppFolder;
             UpdateGuiControlsPaths();
 

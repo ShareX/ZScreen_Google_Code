@@ -1,0 +1,30 @@
+﻿	.trigger {
+	  cursor: pointer;
+	}
+	.trigger:hover {
+	  cursor: pointer;
+	}
+	.expanded {
+	  cursor: pointer;
+	}
+	.expanded:hover {
+	  cursor: pointer;
+	}
+	.show {
+	  position: static;
+	  display: table;
+	}
+	.hide {
+	  position: absolute;
+	  left: -999em;
+	  height: 1px;
+	  width: 100px;
+	  overflow: hidden;
+	}
+	h2 img, h3 img, h4 img {
+	  border: none;
+	  padding-right: .5em;
+	}
+	a img {  
+	  border-style: none; 
+	}
