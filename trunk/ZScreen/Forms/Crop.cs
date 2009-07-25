@@ -24,14 +24,15 @@
 // Update: 20080401 (Isaac) Fixing multiple screen handling
 
 using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using ZSS.ColorsLib;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Windows.Forms;
+using ZSS.ColorsLib;
 
 namespace ZSS
 {
@@ -195,12 +196,20 @@ namespace ZSS
             }
         }
 
-        private bool EvalWindow(IntPtr hWnd, int lParam)
+        private bool EvalWindow(IntPtr hWnd, IntPtr lParam)
         {
             if (!User32.IsWindowVisible(hWnd)) return true;
             if (Handle == hWnd) return false;
 
-            User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalChildWindow);
+            foreach (KeyValuePair<IntPtr, Rectangle> pair in windows)
+            {
+                if (pair.Key == hWnd)
+                {
+                    return true;
+                }
+            }
+
+            User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
             User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
 
             Rectangle rect = User32.GetWindowRectangle(hWnd);
@@ -210,11 +219,20 @@ namespace ZSS
             return true;
         }
 
-        private bool EvalChildWindow(IntPtr hWnd, int lParam)
+        private bool EvalChildWindow(IntPtr hWnd, IntPtr lParam)
         {
+            if (!User32.IsWindowVisible(hWnd)) return true;
+            if (Handle == hWnd) return false;
+
+
+
+            User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalChildWindow);
+            User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
+
             Rectangle rect = User32.GetWindowRectangle(hWnd);
             rect.Intersect(Bounds);
             windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
+
             return true;
         }
 
