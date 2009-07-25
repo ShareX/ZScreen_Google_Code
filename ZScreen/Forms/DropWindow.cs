@@ -23,6 +23,7 @@
 
 using System.Drawing;
 using System.Windows.Forms;
+using System;
 
 namespace ZSS.Forms
 {
@@ -74,7 +75,7 @@ namespace ZSS.Forms
             if (e.Button == MouseButtons.Left)
             {
                 User32.ReleaseCapture();
-                User32.SendMessage(Handle, User32.WM_NCLBUTTONDOWN, User32.HT_CAPTION, 0);
+                User32.SendMessage(Handle, (UInt32)User32.WM_NCLBUTTONDOWN, (IntPtr)User32.HT_CAPTION, IntPtr.Zero);
             }
             else
             {

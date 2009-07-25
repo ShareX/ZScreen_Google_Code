@@ -92,7 +92,7 @@ namespace ZSS
             {
                 myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
                 User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
-                User32.EnumWindows(ewp, 0);
+                User32.EnumWindows(ewp, IntPtr.Zero);
             }
             else
             {
