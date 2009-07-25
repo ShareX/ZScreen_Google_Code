@@ -65,14 +65,14 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Default.css" />
-    <EmbeddedResource Include="TreeNetIndexerFiles\CSS\domCollapse.css" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.css" />
     <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.js" />
     <EmbeddedResource Include="TreeNetIndexerFiles\html.txt" />
     <EmbeddedResource Include="TreeNetIndexerFiles\minus.gif" />
     <EmbeddedResource Include="TreeNetIndexerFiles\plus.gif" />
     <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Lib\taglib-sharp.dll" />
-    <Content Include="TreeNetIndexerFiles\CSS\Demo.html" />
+    <Content Include="TreeNetIndexerFiles\Demo.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
