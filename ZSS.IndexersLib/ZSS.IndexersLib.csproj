@@ -72,6 +72,7 @@
     <EmbeddedResource Include="TreeNetIndexerFiles\plus.gif" />
     <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Lib\taglib-sharp.dll" />
+    <Content Include="TreeNetIndexerFiles\CSS\Demo.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
