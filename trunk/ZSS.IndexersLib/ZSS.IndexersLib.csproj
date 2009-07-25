@@ -65,13 +65,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Default.css" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\CSS\McoreD.css" />
     <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.css" />
     <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.js" />
     <EmbeddedResource Include="TreeNetIndexerFiles\html.txt" />
     <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Lib\taglib-sharp.dll" />
     <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Jaex.css" />
+    <Content Include="TreeNetIndexerFiles\CSS\Default.css" />
     <Content Include="TreeNetIndexerFiles\Demo.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,12 +1,35 @@
-﻿using System.IO;
-using ICSharpCode.SharpZipLib;
-using System.Windows.Forms;
-using System.Diagnostics;
+﻿#region License Information (GPL v2)
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2009  Brandon Zimmerman
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+#endregion
+
 using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
+using ICSharpCode.SharpZipLib;
 
 namespace ZSS.IndexersLib
 {
@@ -61,13 +84,10 @@ namespace ZSS.IndexersLib
 
         public string CurrentConfigFilePath { get; set; }
 
-
-
         public InitializationMode mInitMode = InitializationMode.MANUAL;
 
         public string fGetIndexFilePath(int folderID, IndexingMode mode)
         {
-
             //Dim strDirPath As String = GetConfig().FolderList.Item(folderID)
             string lPath = string.Empty;
             // strDirPath + "\" + GetConfig().GetIndexFileName
@@ -94,7 +114,6 @@ namespace ZSS.IndexersLib
                     break;
             }
 
-
             return lPath;
         }
 
@@ -102,13 +121,10 @@ namespace ZSS.IndexersLib
         {
             if (File.Exists(strFile))
             {
-
                 if (GetConfig().ZipAfterIndexed == true)
                 {
-
                     try
                     {
-
                         string zipFilePath = Path.ChangeExtension(strFile, ".zip");
                         if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
 
@@ -170,9 +186,7 @@ namespace ZSS.IndexersLib
                     {
                         Console.WriteLine(ex.ToString());
                     }
-
                 }
-
             }
         }
 
@@ -218,7 +232,6 @@ namespace ZSS.IndexersLib
 
         private string RenameFile(string filePath, string oldFileName, int i)
         {
-
             try
             {
                 //MessageBox.Show(oldFileName + i.ToString())
@@ -231,30 +244,27 @@ namespace ZSS.IndexersLib
                 RenameFile(filePath, oldFileName, m_Count);
             }
 
-
             return oldFileName + m_Count.ToString();
         }
 
         public void WriteOptionsFile()
         {
-
             try
             {
                 WriteOptionsFileXML(GetOptionsFilePath());
             }
-            catch (System.UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException ex)
             {
-                if ((MessageBox.Show(ex.Message + "\nDo you want to browse for the Options file to change Security Settings?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question)) == DialogResult.Yes)
+                if ((MessageBox.Show(ex.Message + "\nDo you want to browse for the Options file to change Security Settings?",
+                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question)) == DialogResult.Yes)
                 {
                     Process.Start(Path.GetDirectoryName(GetOptionsFilePath()));
                 }
-
             }
         }
 
         private void WriteOptionsFileBF(string filePath)
         {
-
             FileStream fs = new FileStream(filePath, FileMode.Create);
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(fs, GetOptions());
@@ -263,7 +273,6 @@ namespace ZSS.IndexersLib
 
         private void WriteOptionsFileXML(string filePath)
         {
-
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 XmlSerializer xs = new XmlSerializer(GetOptions().GetType());
@@ -273,7 +282,6 @@ namespace ZSS.IndexersLib
 
         public void LoadOptionsFile(string filePath)
         {
-
             if (LoadOptionsFileXML(filePath) == false)
             {
                 if (LoadOptionsFileBF(filePath) == false)
@@ -300,7 +308,6 @@ namespace ZSS.IndexersLib
             else
             {
                 mOptions.IsScheduledForToday = false;
-
             }
         }
 
@@ -337,7 +344,6 @@ namespace ZSS.IndexersLib
             {
                 Console.WriteLine(ex.ToString());
                 return false;
-
             }
         }
 
@@ -365,7 +371,6 @@ namespace ZSS.IndexersLib
         {
             if (File.Exists(filePath))
             {
-
                 Console.WriteLine("Accessed BF TGC Reader...");
 
                 FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -385,7 +390,6 @@ namespace ZSS.IndexersLib
                 finally
                 {
                     fs.Close();
-
                 }
             }
             return false;
@@ -446,7 +450,6 @@ namespace ZSS.IndexersLib
 
         public void WriteEventLog(List<string> folderList, InitializationMode myInitMode)
         {
-
             try
             {
                 EventLog MyLog = new EventLog(Application.ProductName);
@@ -498,7 +501,6 @@ namespace ZSS.IndexersLib
             }
         }
 
-
         public static string GetText(string name)
         {
             string text = "";
@@ -534,9 +536,5 @@ namespace ZSS.IndexersLib
                 sw.WriteLine(GetText(IndexerConfig.DefaultCssFileName));
             }
         }
-
     }
-
 }
-
-
