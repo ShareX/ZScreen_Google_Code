@@ -327,13 +327,13 @@ namespace ZSS
             DWMWA_LAST
         }
 
-        public static Rectangle DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle)
+        public static bool DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle, out Rectangle rectangle)
         {
             RECT rect;
             int result = DwmGetWindowAttribute(handle, (int)DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS,
                 out rect, Marshal.SizeOf(typeof(RECT)));
-            if (result < 0) throw new Exception("Error: DWMWA_EXTENDED_FRAME_BOUNDS");
-            return rect.ToRectangle();
+            rectangle = rect.ToRectangle();
+            return result >= 0;
         }
 
         public static bool DWMWA_NCRENDERING_ENABLED(IntPtr handle)
@@ -354,11 +354,12 @@ namespace ZSS
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
         {
-            try
+            Rectangle rectangle;
+            if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
             {
-                return DWMWA_EXTENDED_FRAME_BOUNDS(handle);
+                return rectangle;
             }
-            catch
+            else
             {
                 return GetWindowRect(handle);
             }
