@@ -2,9 +2,9 @@
 
 namespace ZSS.IndexersLib
 {
-    public class TreeDirComparer : IComparer<cDir>
+    public class TreeDirComparer : IComparer<TreeDir>
     {
-        public int Compare(cDir x, cDir y)
+        public int Compare(TreeDir x, TreeDir y)
         {
             return string.Compare(x.DirectorySize().ToString("0000000000"), y.DirectorySize().ToString("0000000000"));
         }

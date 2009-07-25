@@ -1,11 +1,11 @@
 ﻿using System.IO;
-public class cFile
+public class TreeFile
 {
 
     private double mSize;
     private string mPath;
 
-    public cFile(string filePath)
+    public TreeFile(string filePath)
     {
 
         this.mPath = filePath;
@@ -40,36 +40,36 @@ public class cFile
         this.mSize = size;
     }
 
-    public double GetSize(cDir.BinaryPrefix prefix)
+    public double GetSize(TreeDir.BinaryPrefix prefix)
     {
         switch (prefix)
         {
-            case cDir.BinaryPrefix.Bytes:
+            case TreeDir.BinaryPrefix.Bytes:
                 return mSize;
-            case cDir.BinaryPrefix.Kibibits:
+            case TreeDir.BinaryPrefix.Kibibits:
                 return (mSize / 128);
-            case cDir.BinaryPrefix.Kibibytes:
+            case TreeDir.BinaryPrefix.Kibibytes:
                 return (mSize / 1024);
-            case cDir.BinaryPrefix.Mebibytes:
+            case TreeDir.BinaryPrefix.Mebibytes:
                 return (mSize / (1024 * 1024));
-            case cDir.BinaryPrefix.Gibibytes:
+            case TreeDir.BinaryPrefix.Gibibytes:
                 return (mSize / (1024 * 1024 * 1024));
         }
         return mSize;
     }
 
-    public string GetSizeToString(cDir.BinaryPrefix prefix)
+    public string GetSizeToString(TreeDir.BinaryPrefix prefix)
     {
         string bp = "";
         switch (prefix)
         {
-            case cDir.BinaryPrefix.Gibibytes:
+            case TreeDir.BinaryPrefix.Gibibytes:
                 bp = " GiB";
                 break;
-            case cDir.BinaryPrefix.Mebibytes:
+            case TreeDir.BinaryPrefix.Mebibytes:
                 bp = " MiB";
                 break;
-            case cDir.BinaryPrefix.Kibibytes:
+            case TreeDir.BinaryPrefix.Kibibytes:
                 bp = " KiB";
                 break;
         }

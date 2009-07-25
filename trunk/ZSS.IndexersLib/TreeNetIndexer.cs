@@ -24,9 +24,9 @@ namespace ZSS.IndexersLib
             mFilter = new FilterHelper(mSettings);
         }
 
-        private cDir Analyze(string rootDirPath)
+        private TreeDir Analyze(string rootDirPath)
         {
-            cDir dirRoot = new cDir(rootDirPath);
+            TreeDir dirRoot = new TreeDir(rootDirPath);
             dirRoot = GetFiles(dirRoot.DirectoryPath());
             if (mSettings.GetConfig().SortBySize)
             {
@@ -39,16 +39,16 @@ namespace ZSS.IndexersLib
             return dirRoot;
         }
 
-        private cDir GetFiles(string dirPath)
+        private TreeDir GetFiles(string dirPath)
         {
 
-            cDir dir = new cDir(dirPath);
+            TreeDir dir = new TreeDir(dirPath);
 
             try
             {
                 foreach (string filepath in Directory.GetFiles(dirPath))
                 {
-                    dir.SetFile(filepath, cDir.BinaryPrefix.Kibibytes);
+                    dir.SetFile(filepath, TreeDir.BinaryPrefix.Kibibytes);
                 }
             }
             catch (System.UnauthorizedAccessException ex)
@@ -61,7 +61,7 @@ namespace ZSS.IndexersLib
                 foreach (string subDirPath in Directory.GetDirectories(dirPath))
                 {
 
-                    cDir subdir = new cDir(subDirPath);
+                    TreeDir subdir = new TreeDir(subDirPath);
                     subdir = GetFiles(subDirPath);
                     dir.AddDir(subdir);
                 }
@@ -75,7 +75,7 @@ namespace ZSS.IndexersLib
         }
 
 
-        private string fGetDirPath(cDir dir)
+        private string fGetDirPath(TreeDir dir)
         {
             string dirName = null;
             string[] c = dir.DirectoryPath().Split(Path.DirectorySeparatorChar);
@@ -99,29 +99,29 @@ namespace ZSS.IndexersLib
             return dirName;
         }
 
-        private string fGetDirSizeString(cDir dir)
+        private string fGetDirSizeString(TreeDir dir)
         {
 
             string dirSize = null;
 
             if (mBooFirstDir)
             {
-                dirSize = dir.DirectorySizeToString(cDir.BinaryPrefix.Gibibytes);
+                dirSize = dir.DirectorySizeToString(TreeDir.BinaryPrefix.Gibibytes);
                 if (decimal.Parse(Regex.Split(dirSize, "\\" + mDecimalSymbol)[0]) == 0)
                 {
-                    dirSize = dir.DirectorySizeToString(cDir.BinaryPrefix.Mebibytes);
+                    dirSize = dir.DirectorySizeToString(TreeDir.BinaryPrefix.Mebibytes);
                     if (decimal.Parse(Regex.Split(dirSize, " ")[0]) == 0)
                     {
-                        dirSize = dir.DirectorySizeToString(cDir.BinaryPrefix.Kibibytes);
+                        dirSize = dir.DirectorySizeToString(TreeDir.BinaryPrefix.Kibibytes);
                     }
                 }
             }
             else
             {
-                dirSize = dir.DirectorySizeToString(cDir.BinaryPrefix.Mebibytes);
+                dirSize = dir.DirectorySizeToString(TreeDir.BinaryPrefix.Mebibytes);
                 if (decimal.Parse(Regex.Split(dirSize, "\\" + mDecimalSymbol)[0]) == 0)
                 {
-                    dirSize = dir.DirectorySizeToString(cDir.BinaryPrefix.Kibibytes);
+                    dirSize = dir.DirectorySizeToString(TreeDir.BinaryPrefix.Kibibytes);
                 }
             }
 
@@ -142,7 +142,7 @@ namespace ZSS.IndexersLib
             return filePath;
         }
 
-        private bool fDivWrap(cDir dir)
+        private bool fDivWrap(TreeDir dir)
         {
 
             bool y = false;
@@ -157,14 +157,10 @@ namespace ZSS.IndexersLib
         //' If a folder has no files then don't have trigger
         //TODO war59312 - Hide folders from output in which all its files are ignored
         string rootDir = string.Empty;
-        private cDir IndexToHtmlFile(cDir dir, StreamWriter where)
+        private TreeDir IndexToHtmlFile(TreeDir dir, StreamWriter where)
         {
-
             HtmlHelper html = new HtmlHelper();
-
             bool isNotIndexableDir = mFilter.isBannedFolder(dir);
-            // (c(1).Length <> 0 And di.Attributes = FileAttributes.Hidden + FileAttributes.System + FileAttributes.Directory) And mSettings.GetOptions().mIgnoreHiddenFilesFolders
-            //System.Windows.Forms.MessageBox.Show(isNotIndexableDir)
 
             string dirName = fGetDirPath(dir);
             string dirSize = (string)fGetDirSizeString(dir);
@@ -174,13 +170,10 @@ namespace ZSS.IndexersLib
             if (mSettings.GetConfig().EnabledFiltering && mSettings.GetConfig().IgnoreEmptyFolders && dir.DirectorySize() == 0.0)
             {
                 //war59312 - dont show empty folders
-
-
                 dirTitle = "";
             }
             else
             {
-
                 if (mSettings.GetConfig().ShowDirSize)
                 {
                     dirTitle = html.GetValidXhtmlLine(string.Format("{0} [{1}]", dirName, dirSize));
@@ -188,7 +181,6 @@ namespace ZSS.IndexersLib
                 else
                 {
                     dirTitle = html.GetValidXhtmlLine(dirName);
-
                 }
             }
 
@@ -201,18 +193,14 @@ namespace ZSS.IndexersLib
             }
             else
             {
-
                 if (!isNotIndexableDir)
                 {
-
                     if (mSettings.GetConfig().EnabledFiltering && mSettings.GetConfig().IgnoreEmptyFolders && dir.DirectorySize() == 0.0)
                     {
                         //war59312 - dont show empty folders
                     }
                     else
                     {
-
-
                         if (mSettings.GetConfig().ShowFolderPathOnStatusBar)
                         {
                             string hyperlinkDir = null;
@@ -242,7 +230,6 @@ namespace ZSS.IndexersLib
 
             if (!isNotIndexableDir)
             {
-
                 if (mSettings.GetConfig().EnabledFiltering && mSettings.GetConfig().IgnoreEmptyFolders && dir.DirectorySize() == 0.0)
                 {
                     //war59312 - dont show empty folders
@@ -254,7 +241,7 @@ namespace ZSS.IndexersLib
                         where.WriteLine(html.OpenDiv());
                     }
 
-                    if (double.Parse(Regex.Split(dir.DirectorySizeToString(cDir.BinaryPrefix.Kibibytes), " ")[0]) > 0 | dir.GetFilesColl().Count > 0)
+                    if (double.Parse(Regex.Split(dir.DirectorySizeToString(TreeDir.BinaryPrefix.Kibibytes), " ")[0]) > 0 | dir.GetFilesColl().Count > 0)
                     {
 
                         if (mSettings.GetConfig().ShowFileCount)
@@ -287,7 +274,7 @@ namespace ZSS.IndexersLib
 
                         // Check if there is AT LEAST ONE valid file
                         bool booPrintList = false;
-                        foreach (cFile fp in dir.GetFilesColl())
+                        foreach (TreeFile fp in dir.GetFilesColl())
                         {
                             if (!mFilter.IsBannedFile(fp.GetFilePath()))
                             {
@@ -316,7 +303,7 @@ namespace ZSS.IndexersLib
                                 dir.GetFilesColl().Reverse();
                             }
 
-                            foreach (cFile f in dir.GetFilesColl())
+                            foreach (TreeFile f in dir.GetFilesColl())
                             {
                                 string lLine = null;
 
@@ -349,10 +336,10 @@ namespace ZSS.IndexersLib
 
                                     if (mSettings.GetConfig().ShowFileSize)
                                     {
-                                        string fileSize = f.GetSizeToString(cDir.BinaryPrefix.Mebibytes);
+                                        string fileSize = f.GetSizeToString(TreeDir.BinaryPrefix.Mebibytes);
                                         if (double.Parse(Regex.Split(fileSize, "\\" + mDecimalSymbol)[0]) == 0)
                                         {
-                                            fileSize = f.GetSizeToString(cDir.BinaryPrefix.Kibibytes);
+                                            fileSize = f.GetSizeToString(TreeDir.BinaryPrefix.Kibibytes);
                                         }
                                         lLine = html.GetValidXhtmlLine(strFilePath) + " " + html.GetSpan(string.Format(" [{0}]", fileSize), "filesize");
                                     }
@@ -367,7 +354,7 @@ namespace ZSS.IndexersLib
                                         try
                                         {
                                             TagLib.File audioFile = TagLib.File.Create(f.GetFilePath());
-                                            double fsize = f.GetSize(cDir.BinaryPrefix.Kibibits);
+                                            double fsize = f.GetSize(TreeDir.BinaryPrefix.Kibibits);
                                             double dura = audioFile.Properties.Duration.TotalSeconds;
 
                                             if (dura > 0)
@@ -408,10 +395,10 @@ namespace ZSS.IndexersLib
 
                     mNumTabs += 1;
 
-                    foreach (cDir d in dir.GetSubDirColl())
+                    foreach (TreeDir d in dir.GetSubDirColl())
                     {
 
-                        cDir sd = new cDir(d.DirectoryPath());
+                        TreeDir sd = new TreeDir(d.DirectoryPath());
 
                         sd = IndexToHtmlFile(d, where);
                     }
@@ -534,7 +521,7 @@ namespace ZSS.IndexersLib
                 mBooFirstIndexFile = false;
             }
 
-            cDir rootDir = new cDir(folderPath);
+            TreeDir rootDir = new TreeDir(folderPath);
 
             rootDir = Analyze(rootDir.DirectoryPath());
 
@@ -561,7 +548,7 @@ namespace ZSS.IndexersLib
 
                 // 2.7.1.6 TreeGUI crashed on Could not find a part of the path 
 
-                cDir dir = new cDir(folderPath);
+                TreeDir dir = new TreeDir(folderPath);
                 dir = Analyze(dir.DirectoryPath());
                 this.IndexToTxtFile(dir, sw);
                 if (AddFooter)
@@ -574,11 +561,11 @@ namespace ZSS.IndexersLib
             }
         }
 
-        private cDir IndexToTxtFile(cDir dir, StreamWriter where)
+        private TreeDir IndexToTxtFile(TreeDir dir, StreamWriter sw)
         {
+            bool isNotIndexableDir = mFilter.isBannedFolder(dir);
 
             string dirSize = fGetDirSizeString(dir);
-
             string dirTitle = string.Format("{0} [{1}]", dir.DirectoryName(), dirSize);
 
             string strStars = "";
@@ -589,77 +576,69 @@ namespace ZSS.IndexersLib
                 strStars += styleArray[i % styleArray.Length];
             }
 
-            where.WriteLine(GetTabs() + strStars);
-            where.WriteLine(GetTabs() + dirTitle);
-            where.WriteLine(GetTabs() + strStars);
+            sw.WriteLine(GetTabs() + strStars);
+            sw.WriteLine(GetTabs() + dirTitle);
+            sw.WriteLine(GetTabs() + strStars);
 
-            if (double.Parse(Regex.Split(dir.DirectorySizeToString(cDir.BinaryPrefix.Kibibytes), " ")[0]) == 0)
+            if (double.Parse(Regex.Split(dir.DirectorySizeToString(TreeDir.BinaryPrefix.Kibibytes), " ")[0]) == 0)
             {
-                where.WriteLine(GetTabs() + mSettings.GetOptions().EmptyFolderMessage);
+                sw.WriteLine(GetTabs() + mSettings.GetOptions().EmptyFolderMessage);
             }
 
             if (mSettings.GetConfig().ShowFilesTreeNet)
             {
-
-                foreach (cFile fp in dir.GetFilesColl())
+                foreach (TreeFile fi in dir.GetFilesColl())
                 {
-
-                    string fileDesc = GetTabs() + "  ";
-
-                    if (mSettings.GetConfig().ShowFileSize)
+                    if (!mFilter.IsBannedFile(fi.GetFilePath()))
                     {
-                        string fileSize = fp.GetSizeToString(cDir.BinaryPrefix.Mebibytes);
-                        if (double.Parse(Regex.Split(fileSize, "\\" + mDecimalSymbol)[0]) == 0)
+                        string fileDesc = GetTabs() + "  ";
+
+                        if (mSettings.GetConfig().ShowFileSize)
                         {
-                            fileSize = fp.GetSizeToString(cDir.BinaryPrefix.Kibibytes);
-                        }
-                        fileDesc += string.Format("{0} [{1}]", fp.GetFileName(), fileSize);
-                    }
-                    else
-                    {
-                        fileDesc += fp.GetFileName();
-                    }
-
-                    if (mSettings.GetConfig().AudioInfo && fIsAudio(fp.GetFileExtension().ToLower()) == true)
-                    {
-
-                        try
-                        {
-                            TagLib.File audioFile = TagLib.File.Create(fp.GetFilePath());
-                            double fsize = fp.GetSize(cDir.BinaryPrefix.Kibibits);
-                            double dura = audioFile.Properties.Duration.TotalSeconds;
-
-
-
-                            if (dura > 0)
+                            string fileSize = fi.GetSizeToString(TreeDir.BinaryPrefix.Mebibytes);
+                            if (double.Parse(Regex.Split(fileSize, "\\" + mDecimalSymbol)[0]) == 0)
                             {
-                                Console.WriteLine(fsize / dura);
-                                fileDesc += string.Format(" [{0} Kibit/s]", (fsize / dura).ToString("0.00"), fGetHMS(audioFile.Properties.Duration.TotalSeconds));
-                                fileDesc += string.Format(" [{0}]", fGetHMS(audioFile.Properties.Duration.TotalSeconds));
+                                fileSize = fi.GetSizeToString(TreeDir.BinaryPrefix.Kibibytes);
+                            }
+                            fileDesc += string.Format("{0} [{1}]", fi.GetFileName(), fileSize);
+                        }
+                        else
+                        {
+                            fileDesc += fi.GetFileName();
+                        }
 
+                        if (mSettings.GetConfig().AudioInfo && fIsAudio(fi.GetFileExtension().ToLower()) == true)
+                        {
+                            try
+                            {
+                                TagLib.File audioFile = TagLib.File.Create(fi.GetFilePath());
+                                double fsize = fi.GetSize(TreeDir.BinaryPrefix.Kibibits);
+                                double dura = audioFile.Properties.Duration.TotalSeconds;
+
+                                if (dura > 0)
+                                {
+                                    Console.WriteLine(fsize / dura);
+                                    fileDesc += string.Format(" [{0} Kibit/s]", (fsize / dura).ToString("0.00"), fGetHMS(audioFile.Properties.Duration.TotalSeconds));
+                                    fileDesc += string.Format(" [{0}]", fGetHMS(audioFile.Properties.Duration.TotalSeconds));
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.ToString() + "\n" + fi.GetFilePath());
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString() + "\n" + fp.GetFilePath());
-
-                        }
+                        sw.WriteLine(fileDesc);
                     }
-
-
-
-                    where.WriteLine(fileDesc);
-
                 }
             }
 
             mNumTabs += 1;
 
-            foreach (cDir d in dir.GetSubDirColl())
+            foreach (TreeDir d in dir.GetSubDirColl())
             {
 
-                cDir sd = new cDir(d.DirectoryPath());
-                sd = IndexToTxtFile(d, where);
+                TreeDir sd = new TreeDir(d.DirectoryPath());
+                sd = IndexToTxtFile(d, sw);
             }
             mNumTabs -= 1;
 
@@ -682,14 +661,10 @@ namespace ZSS.IndexersLib
 
             switch (IndexMode)
             {
-
                 case IndexingMode.IN_EACH_DIRECTORY:
-
                     IndexInEachDir(mSettings);
-
                     break;
                 case IndexingMode.IN_ONE_FOLDER_MERGED:
-
                     if (mSettings.GetConfig().MergeFiles)
                     {
                         fp = mSettings.fGetIndexFilePath(-1, IndexingMode.IN_ONE_FOLDER_MERGED);
@@ -701,7 +676,7 @@ namespace ZSS.IndexersLib
                             for (int i = 0; i <= mSettings.GetConfig().FolderList.Count - 2; i++)
                             {
                                 string strDirPath = mSettings.GetConfig().FolderList[i];
-                                cDir dir = new cDir(strDirPath);
+                                TreeDir dir = new TreeDir(strDirPath);
 
                                 this.CurrentDirMessage = "Indexing " + strDirPath;
 
@@ -720,7 +695,7 @@ namespace ZSS.IndexersLib
                             }
                         }
 
-                        cDir lastDir = new cDir(mSettings.GetConfig().FolderList[mSettings.GetConfig().FolderList.Count - 1]);
+                        TreeDir lastDir = new TreeDir(mSettings.GetConfig().FolderList[mSettings.GetConfig().FolderList.Count - 1]);
                         this.CurrentDirMessage = "Indexing " + lastDir.DirectoryPath();
 
                         if (ext.Contains(".html"))
@@ -742,8 +717,6 @@ namespace ZSS.IndexersLib
 
                         this.Progress += 1;
                     }
-
-
                     break;
                 case IndexingMode.IN_ONE_FOLDER_SEPERATE:
 
@@ -878,7 +851,7 @@ namespace ZSS.IndexersLib
             return tabs;
         }
 
-        private string GetHeadingOpen(cDir dir)
+        private string GetHeadingOpen(TreeDir dir)
         {
 
             string cName = "trigger";

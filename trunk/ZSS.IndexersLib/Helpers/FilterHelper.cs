@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ZSS.IndexersLib.Helpers;
 
 namespace ZSS.IndexersLib
 {
@@ -12,77 +13,57 @@ namespace ZSS.IndexersLib
 
         public FilterHelper(IndexerAdapter settings)
         {
-
             mSettings = settings;
-
-            mBannedFilter = Regex.Split(mSettings.GetConfig().IgnoreFilesList, mSettings.GetOptions().IgnoreFilesListDelimiter);
+            mBannedFilter = Regex.Split(mSettings.GetConfig().IgnoreFilesList, "\\" + mSettings.GetOptions().IgnoreFilesListDelimiter);
         }
 
-        public List<cFile> GetFilesCollFiltered(cDir dir)
+        public List<TreeFile> GetFilesCollFiltered(TreeDir dir)
         {
+            List<TreeFile> temp = new List<TreeFile>();
 
-            List<cFile> temp = new List<cFile>();
-
-            foreach (cFile f in dir.GetFilesColl())
+            foreach (TreeFile f in dir.GetFilesColl())
             {
                 if (IsBannedFile(f.GetFilePath()) == false)
                 {
                     temp.Add(f);
                 }
             }
-
-
             return temp;
         }
 
-        public bool isBannedFolder(cDir dir)
+        public bool isBannedFolder(TreeDir dir)
         {
-
             // Check if Option set to Enable Filtering
             if (mSettings.GetConfig().EnabledFiltering)
             {
-
                 DirectoryInfo di = new DirectoryInfo(dir.DirectoryPath());
+                FileAttributesEx dirAttrib = new FileAttributesEx(dir.DirectoryPath());
 
                 string[] c = dir.DirectoryPath().Split(Path.DirectorySeparatorChar);
                 // If Options says to filter protected OS folders 
                 if (mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders)
                 {
-                    //MsgBox(di.FullName + " is " + di.Attributes.ToString())
-                    bool banned = c[1].Length != 0 && ((File.GetAttributes(di.FullName) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly);
-                    banned = banned && ((File.GetAttributes(di.FullName) & FileAttributes.Directory) == FileAttributes.Directory);
-                    banned = banned && mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders;
-                    return banned;
+                    return c[1].Length != 0 && dirAttrib.isReadOnlyDirectory() && mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders;
                 }
 
-                //// If Config says to filter Hidden Folders
-                //if (mSettings.GetConfig().IgnoreHiddenFolders)
-                //{
-                //    if (di.Attributes == FileAttributes.Directory | FileAttributes.Hidden)
-                //    {
-                //        //MsgBox("Hidden Folder Check: " + di.FullName + " is " + di.Attributes.ToString())
-                //        return true;
-                //    }
-                //}
+                // If Config says to filter Hidden Folders
+                if (mSettings.GetConfig().IgnoreHiddenFolders)
+                {
+                    return dirAttrib.isHidden();
+                }
 
-                //// If Config says to filter System Folders 
-                //if (mSettings.GetConfig().IgnoreSystemFolders)
-                //{
-                //    if (di.Attributes == FileAttributes.Directory + FileAttributes.System)
-                //    {
-                //        //MsgBox("System Folder Check: " + di.FullName + " is " + di.Attributes.ToString())
-                //        return true;
-                //    }
-                //}
+                // If Config says to filter System Folders 
+                if (mSettings.GetConfig().IgnoreSystemFolders)
+                {
+                    return dirAttrib.isSystem();
+                }
 
-                //war59312 If Config says to filter Empty Folders 
+                //war59312: If Config says to filter Empty Folders 
                 if (mSettings.GetConfig().IgnoreEmptyFolders && dir.DirectorySize() == 0.0)
                 {
                     return true;
-
                 }
             }
-
 
             return false;
         }
@@ -95,35 +76,25 @@ namespace ZSS.IndexersLib
             {
 
                 // Establish an FileInfo, we need for the checks below
-                FileInfo fi = new FileInfo(filePath);
+                FileAttributesEx fi = new FileAttributesEx(filePath);
 
-                //// If Options says to filter protected OS files 
-                //if (mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders)
-                //{
-                //    if ((fi.Attributes == FileAttributes.Archive + FileAttributes.Hidden + FileAttributes.System) | (fi.Attributes == FileAttributes.ReadOnly + FileAttributes.Hidden + FileAttributes.System))
-                //    {
-                //        //Console.WriteLine("HideProtectedOperatingSystemFilesFolders Check: HS when " + fi.FullName + " is " + fi.Attributes.ToString())
-                //        return true;
-                //    }
-                //}
+                // If Options says to filter protected OS files 
+                if (mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders)
+                {
+                    return fi.isHiddenSystemFile();
+                }
 
-                //// If Config says to filter Hidden Files
-                //if (mSettings.GetConfig().IgnoreHiddenFiles)
-                //{
-                //    if (fi.Attributes == FileAttributes.Archive + FileAttributes.Hidden)
-                //    {
-                //        return true;
-                //    }
-                //}
+                // If Config says to filter Hidden Files
+                if (mSettings.GetConfig().IgnoreHiddenFiles)
+                {
+                    return fi.isHidden();
+                }
 
-                //// If Config says to filter System Files 
-                //if (mSettings.GetConfig().IgnoreSystemFiles)
-                //{
-                //    if (fi.Attributes == FileAttributes.Archive + FileAttributes.System)
-                //    {
-                //        return true;
-                //    }
-                //}
+                // If Config says to filter System Files 
+                if (mSettings.GetConfig().IgnoreSystemFiles)
+                {
+                    return fi.isSystem();
+                }
 
                 // If Config says to filter following files 
                 if (mSettings.GetConfig().IgnoreFollowingFiles)
