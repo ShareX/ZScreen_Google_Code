@@ -1,8 +1,31 @@
-﻿using System.Windows.Forms;
-using System.Collections.Generic;
-using System.IO;
+﻿#region License Information (GPL v2)
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2009  Brandon Zimmerman
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+#endregion
+
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace ZSS.IndexersLib
@@ -59,7 +82,7 @@ namespace ZSS.IndexersLib
         public bool IgnoreHiddenFiles { get; set; }
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system files when indexing")]
         public bool IgnoreSystemFiles { get; set; }
-        public bool IgnoreFollowingFiles = true;        
+        public bool IgnoreFollowingFiles = true;
         [Category("General / Filter"), Description("Ignore the following user files")]
         public string IgnoreFilesList { get; set; }
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system folders when indexing")]
@@ -163,6 +186,7 @@ namespace ZSS.IndexersLib
             {
                 paths[i] = FolderList[i] + Path.DirectorySeparatorChar + this.GetIndexFileName();
             }
+
             return paths;
         }
 
@@ -173,7 +197,6 @@ namespace ZSS.IndexersLib
         }
         public void SetSingleIndexPath(string fpath)
         {
-
             OutputDir = Path.GetDirectoryName(fpath);
             IndexFileNameWitoutExt = Path.GetFileNameWithoutExtension(fpath);
             IndexFileExt = Path.GetExtension(fpath);
@@ -189,4 +212,3 @@ namespace ZSS.IndexersLib
         #endregion
     }
 }
-
