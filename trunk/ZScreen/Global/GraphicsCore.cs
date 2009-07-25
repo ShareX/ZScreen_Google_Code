@@ -32,7 +32,7 @@ using System.Drawing.Drawing2D;
 
 namespace ZSS
 {
-    public static class User32
+    public static partial class User32
     {
         public const int SM_CXSCREEN = 0;
         public const int SM_CYSCREEN = 1;
@@ -63,78 +63,14 @@ namespace ZSS
             public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor. 
         }
 
-        [DllImport("user32.dll")]
-        public static extern bool SetActiveWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetDesktopWindow();
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetDC(IntPtr ptr);
-
-        [DllImport("user32.dll")]
-        public static extern int GetSystemMetrics(int abc);
-
-        [DllImport("user32.dll")]
-        public static extern void ReleaseDC(IntPtr dc);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        public static extern int GetWindowTextW(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder text, int count);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowDC(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        public static extern bool BringWindowToTop(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll")]
-        public static extern int GetWindowRgn(IntPtr hWnd, IntPtr hRgn);
-
-        [DllImport("user32.dll")]
-        public static extern ulong GetWindowLongA(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll")]
-        public static extern bool GetCursorInfo(out CursorInfo pci);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr CopyIcon(IntPtr hIcon);
-
-        [DllImport("user32.dll")]
-        public static extern bool GetIconInfo(IntPtr hIcon, out IconInfo piconinfo);
-
-        [DllImport("user32.dll")]
-        public static extern bool IsWindowVisible(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        public static extern int EnumWindows(EnumWindowsProc ewp, int lParam);
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        [DllImport("User32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
-
         [DllImport("dwmapi.dll")]
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
+
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern uint SHAppBarMessage(int dwMessage, out APPBARDATA pData);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
@@ -144,7 +80,7 @@ namespace ZSS
             IntPtr handle = GetForegroundWindow();
             StringBuilder sb = new StringBuilder(numOfChars);
 
-            if (GetWindowTextW(handle, sb, numOfChars) > 0)
+            if (GetWindowText(handle, sb, numOfChars) > 0)
             {
                 return sb.ToString();
             }
@@ -157,7 +93,7 @@ namespace ZSS
             IntPtr handle = GetForegroundWindow();
             StringBuilder sb = new StringBuilder(numOfChars);
 
-            if (GetWindowTextW(handle, sb, numOfChars) > 0)
+            if (GetWindowText(handle, sb, numOfChars) > 0)
             {
                 return handle;
             }
@@ -267,22 +203,16 @@ namespace ZSS
 
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
         {
-            // get te hDC of the target window
+            // get the hDC of the target window
             IntPtr hdcSrc = GetWindowDC(handle);
-            // get the size
-            int left = rect.X;
-            int top = rect.Y;
-            int width = rect.Width;
-            int height = rect.Height;
             // create a device context we can copy to
             IntPtr hdcDest = GDI.CreateCompatibleDC(hdcSrc);
-            // create a bitmap we can copy it to,
-            // using GetDeviceCaps to get the width/height
-            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hdcSrc, width, height);
+            // create a bitmap we can copy it to
+            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
             // select the bitmap object
             IntPtr hOld = GDI.SelectObject(hdcDest, hBitmap);
             // bitblt over
-            GDI.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, left, top, GDI.TernaryRasterOperations.SRCCOPY);
+            GDI.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, GDI.TernaryRasterOperations.SRCCOPY);
             // restore selection
             GDI.SelectObject(hdcDest, hOld);
             // clean up
@@ -315,11 +245,16 @@ namespace ZSS
                     GraphicsUnit unit = GraphicsUnit.Pixel;
                     bounds = capture.GetBounds(ref unit);
 
-                    if ((GetWindowLongA(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
+                    if ((GetWindowLong(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
                     {
                         IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
                         region = Region.FromHrgn(windowRegion);
                     }
+                }
+
+                if (region.IsEmpty(g))
+                {
+                    return (Bitmap)capture;
                 }
 
                 g.Clip = region;
@@ -436,9 +371,6 @@ namespace ZSS
         }
 
         #region Taskbar
-
-        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern uint SHAppBarMessage(int dwMessage, out APPBARDATA pData);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct APPBARDATA
