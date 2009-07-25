@@ -122,7 +122,7 @@ namespace ZSS.IndexersLib
                     if (mIndexMode == IndexingMode.IN_EACH_DIRECTORY | i == mSettings.GetConfig().FolderList.Count - 1 | (isMergeFile == false & mIndexMode == IndexingMode.IN_ONE_FOLDER_MERGED))
                     {
                         sw.WriteLine(mSettings.getBlankLine(tree.getCurrentIndexFilePath()));
-                        sw.WriteLine(mSettings.getFooterText(tree.getCurrentIndexFilePath(), IndexingEngine.TreeLib, false));
+                        sw.WriteLine(mSettings.GetFooterText(tree.getCurrentIndexFilePath(), IndexingEngine.TreeLib, false));
                     }
                     sw.WriteLine("DEL " + (char)34 + TEMP_FILE + (char)34);
                 }
