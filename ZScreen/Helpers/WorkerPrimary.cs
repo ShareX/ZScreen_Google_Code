@@ -831,9 +831,10 @@ namespace ZSS.Helpers
                     MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
-                    Adapter.WriteTextToFile(Clipboard.GetText(), fp);
+                    //Adapter.WriteTextToFile(Clipboard.GetText(), fp);
+                    Adapter.WriteToFile(Clipboard.GetText(), fp);
                     temp.SetLocalFilePath(fp);
-                    temp.MyText = TextInfo.FromClipboard();
+                    temp.MyText = TextInfo.FromFile(fp);
                     textWorkers.Add(temp);
                 }
                 else if (Clipboard.ContainsFileDropList())
@@ -902,10 +903,10 @@ namespace ZSS.Helpers
                         switch (settings.GetConfig().IndexingEngineType)
                         {
                             case IndexingEngine.TreeLib:
-                                indexer = new TreeWalkIndexer(settings);                                
+                                indexer = new TreeWalkIndexer(settings);
                                 break;
                             case IndexingEngine.TreeNetLib:
-                                indexer = new TreeNetIndexer(settings);                                
+                                indexer = new TreeNetIndexer(settings);
                                 break;
                         }
                         if (indexer != null)

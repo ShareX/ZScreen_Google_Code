@@ -300,7 +300,7 @@ namespace ZSS.Global
             new Thread(delegate() { WriteToFile(txt, path); }).Start();
         }
 
-        private static void WriteToFile(string txt, string path)
+        public static void WriteToFile(string txt, string path)
         {
             using (StreamWriter sw = new StreamWriter(path))
             {

@@ -28,7 +28,7 @@ namespace ZSS.TextUploadersLib.Helpers
                 text.LocalString = File.ReadAllText(filePath);
             }
             text.LocalPath = filePath;
-            return text; 
+            return text;
         }
 
         public static TextInfo FromString(string localSting)
@@ -45,5 +45,4 @@ namespace ZSS.TextUploadersLib.Helpers
             return text;
         }
     }
-
 }
