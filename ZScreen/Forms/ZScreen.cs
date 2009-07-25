@@ -35,16 +35,16 @@ using System.Threading;
 using System.Windows.Forms;
 using ZSS.ColorsLib;
 using ZSS.Forms;
+using ZSS.FTPClientLib;
 using ZSS.Global;
 using ZSS.Helpers;
 using ZSS.ImageUploadersLib;
 using ZSS.ImageUploadersLib.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
-using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.UpdateCheckerLib;
-using ZSS.FTPClientLib;
 
 namespace ZSS
 {
@@ -284,7 +284,6 @@ namespace ZSS
                 cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
             cbSelectedWindowStyle.SelectedIndex = (int)Program.conf.SelectedWindowRegionStyles;
-            cbSelectedWindowFront.Checked = Program.conf.SelectedWindowFront;
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
             cbSelectedWindowRuler.Checked = Program.conf.SelectedWindowRuler;
             pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
@@ -293,7 +292,7 @@ namespace ZSS
             nudSelectedWindowRegionInterval.Value = Program.conf.SelectedWindowRegionInterval;
             nudSelectedWindowRegionStep.Value = Program.conf.SelectedWindowRegionStep;
             nudSelectedWindowHueRange.Value = Program.conf.SelectedWindowHueRange;
-            cbSelectedWindowAddBorder.Checked = Program.conf.SelectedWindowAddBorder;
+            cbSelectedWindowCaptureObjects.Checked = Program.conf.SelectedWindowCaptureObjects;
 
             // Interaction
             nudFlashIconCount.Value = Program.conf.FlashTrayCount;
@@ -2712,11 +2711,6 @@ namespace ZSS
 
         #endregion
 
-        private void cbSelectedWindowFront_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.SelectedWindowFront = cbSelectedWindowFront.Checked;
-        }
-
         private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
@@ -3121,11 +3115,6 @@ namespace ZSS
         {
             Program.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             TestWatermark();
-        }
-
-        private void cbSelectedWindowAddBorder_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.SelectedWindowAddBorder = cbSelectedWindowAddBorder.Checked;
         }
 
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
@@ -3602,6 +3591,11 @@ namespace ZSS
                     e.Handled = true;
                 }
             }
+        }
+
+        private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SelectedWindowCaptureObjects = cbSelectedWindowCaptureObjects.Checked;
         }
     }
 }

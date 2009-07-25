@@ -38,7 +38,7 @@ namespace ZSS
 {
     public class Crop : Form
     {
-        private bool mMouseDown, selectedWindowMode, forceCheck;
+        private bool mMouseDown, selectedWindowMode, forceCheck, captureObjects;
         private Bitmap bmpClean, bmpBackground, bmpRegion;
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
         private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
@@ -91,6 +91,7 @@ namespace ZSS
 
             if (selectedWindowMode)
             {
+                captureObjects = Program.conf.SelectedWindowCaptureObjects;
                 myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
                 User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
                 User32.EnumWindows(ewp, IntPtr.Zero);
@@ -209,25 +210,11 @@ namespace ZSS
                 }
             }
 
-            User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
-            User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
-
-            Rectangle rect = User32.GetWindowRectangle(hWnd);
-            rect.Intersect(Bounds);
-            windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
-
-            return true;
-        }
-
-        private bool EvalChildWindow(IntPtr hWnd, IntPtr lParam)
-        {
-            if (!User32.IsWindowVisible(hWnd)) return true;
-            if (Handle == hWnd) return false;
-
-
-
-            User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalChildWindow);
-            User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
+            if (captureObjects)
+            {
+                User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
+                User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
+            }
 
             Rectangle rect = User32.GetWindowRectangle(hWnd);
             rect.Intersect(Bounds);
@@ -266,15 +253,6 @@ namespace ZSS
 
             if (selectedWindowMode)
             {
-                if (Program.conf.SelectedWindowAddBorder)
-                {
-                    IEnumerator enumerator = windows.GetEnumerator();
-                    while (enumerator.MoveNext())
-                    {
-                        KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
-                        g.DrawRectangle(new Pen(Brushes.Red), new Rectangle(PointToClient(kv.Value.Location), kv.Value.Size));
-                    }
-                }
                 myRectangle.DrawRectangle(g, CropRegion);
                 if (Program.conf.SelectedWindowRectangleInfo)
                 {
