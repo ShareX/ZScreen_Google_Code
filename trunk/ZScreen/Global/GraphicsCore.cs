@@ -239,24 +239,24 @@ namespace ZSS
 
             using (Graphics g = Graphics.FromImage(result))
             {
-                RectangleF bounds = region.GetBounds(g);
-                if (bounds == RectangleF.Empty)
-                {
-                    GraphicsUnit unit = GraphicsUnit.Pixel;
-                    bounds = capture.GetBounds(ref unit);
+               /*if (bounds == RectangleF.Empty)
+               {
+                   GraphicsUnit unit = GraphicsUnit.Pixel;
+                   bounds = capture.GetBounds(ref unit);
 
-                    if ((GetWindowLong(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
-                    {
-                        IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
-                        region = Region.FromHrgn(windowRegion);
-                    }
-                }
+                   if ((GetWindowLong(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
+                   {
+                       IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
+                       region = Region.FromHrgn(windowRegion);
+                   }
+               }*/
 
                 if (region.IsEmpty(g))
                 {
                     return (Bitmap)capture;
                 }
 
+                RectangleF bounds = region.GetBounds(g);
                 g.Clip = region;
                 g.DrawImage(capture, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
 
