@@ -200,10 +200,21 @@ namespace ZSS
             if (!User32.IsWindowVisible(hWnd)) return true;
             if (Handle == hWnd) return false;
 
+            User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalChildWindow);
+            User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
+
             Rectangle rect = User32.GetWindowRectangle(hWnd);
             rect.Intersect(Bounds);
             windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
 
+            return true;
+        }
+
+        private bool EvalChildWindow(IntPtr hWnd, int lParam)
+        {
+            Rectangle rect = User32.GetWindowRectangle(hWnd);
+            rect.Intersect(Bounds);
+            windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
             return true;
         }
 
