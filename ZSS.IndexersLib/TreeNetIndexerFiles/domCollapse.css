@@ -23,7 +23,6 @@
 .show
 {
     position: static;
-    display: table;
 }
 
 .hide

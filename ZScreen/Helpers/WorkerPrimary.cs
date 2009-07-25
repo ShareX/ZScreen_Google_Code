@@ -832,7 +832,7 @@ namespace ZSS.Helpers
                     string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                     //Adapter.WriteTextToFile(Clipboard.GetText(), fp);
-                    Adapter.WriteToFile(Clipboard.GetText(), fp);
+                    File.WriteAllText(fp, Clipboard.GetText());
                     temp.SetLocalFilePath(fp);
                     temp.MyText = TextInfo.FromFile(fp);
                     textWorkers.Add(temp);

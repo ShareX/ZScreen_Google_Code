@@ -294,18 +294,5 @@ namespace ZSS.Global
         {
             return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
         }
-
-        public static void WriteTextToFile(string txt, string path)
-        {
-            new Thread(delegate() { WriteToFile(txt, path); }).Start();
-        }
-
-        public static void WriteToFile(string txt, string path)
-        {
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                sw.WriteLine(txt);
-            }
-        }
     }
 }

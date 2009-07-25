@@ -19,9 +19,9 @@ dc = {
     showClass: 'show',
 
     // pictures and text alternatives
-    closedPic: 'plus.gif',
+    closedPic: 'folder.png',
     closedAlt: '+',
-    openPic: 'minus.gif',
+    openPic: 'folder-open.png',
     openAlt: '-',
     /* Doesn't work with Safari
     hoverClass:'hover',

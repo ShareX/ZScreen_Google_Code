@@ -827,6 +827,7 @@ namespace ZSS.IndexersLib
             string cName = "trigger";
             List<TreeFile> files = dir.GetFilesColl(mSettings);
 
+            /*
             if (mNumTabs > mSettings.GetConfig().FolderExpandLevel)
             {
                 cName = "expanded";
@@ -835,6 +836,7 @@ namespace ZSS.IndexersLib
             {
                 cName = "trigger";
             }
+            */
 
             string tabs = string.Empty;
 
