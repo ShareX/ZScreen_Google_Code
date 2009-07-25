@@ -46,7 +46,6 @@
             this.MyCollection.Name = "MyCollection";
             this.MyCollection.Size = new System.Drawing.Size(217, 329);
             this.MyCollection.TabIndex = 14;
-            this.MyCollection.SelectedIndexChanged += new System.EventHandler(this.MyCollection_SelectedIndexChanged);
             // 
             // btnItemTest
             // 

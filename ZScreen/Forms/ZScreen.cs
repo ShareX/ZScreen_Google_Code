@@ -113,17 +113,19 @@ namespace ZSS
             ucProxyAccounts.btnTest.Click += new EventHandler(ProxyAccountTestButton_Click);
             ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
 
-            // Text Services - URL Shorteners
-            ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
-            ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
-            ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
-            ucUrlShorteners.btnItemTest.Click += new EventHandler(UrlShortenerTestButton_Click);
-
             // Text Services - Text Uploaders
+            ucTextUploaders.MyComboBox = cboTextUploaders;
             ucTextUploaders.btnItemAdd.Click += new EventHandler(TextUploadersAddButton_Click);
             ucTextUploaders.btnItemRemove.Click += new EventHandler(TextUploadersRemoveButton_Click);
             ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(TextUploaders_SelectedIndexChanged);
             ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
+
+            // Text Services - URL Shorteners
+            ucUrlShorteners.MyComboBox = cboURLShorteners;
+            ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
+            ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
+            ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
+            ucUrlShorteners.btnItemTest.Click += new EventHandler(UrlShortenerTestButton_Click);
 
             // Watermark Codes Menu
             codesMenu.AutoClose = false;
