@@ -1,10 +1,10 @@
-﻿using System.IO;
-using System;
+﻿using System;
+using System.IO;
+using System.Text;
 
-// Version 1.0.0.0
 namespace ZSS.IndexersLib
 {
-    public class HtmlHelper
+    public static class HTMLHelper
     {
         public enum ListType
         {
@@ -12,37 +12,27 @@ namespace ZSS.IndexersLib
             Bulletted
         }
 
-        public string GetDocType()
+        public static string GetDocType()
         {
             return IndexerAdapter.GetText("html.txt");
         }
 
-        public string GetValidXhtmlLine(string line)
+        public static string GetValidXhtmlLine(string line)
         {
-
             if (line != null)
             {
-
                 line = line.Replace("&", "&amp;");
-                //Replace & 
                 line = line.Replace("™", "&trade;");
-                // Replace ™
                 line = line.Replace("©", "&copy;");
-                // Replace ©
-                // Replace ®
                 line = line.Replace("®", "&reg;");
             }
-
-
 
             return line;
         }
 
-
-        public string GetJavaScript(string filePath)
+        public static string GetJavaScript(string filePath)
         {
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("<script type=\"text/javascript\">");
             sb.AppendLine("// <![CDATA[");
 
@@ -61,29 +51,24 @@ namespace ZSS.IndexersLib
             sb.AppendLine("// ]]>");
             sb.AppendLine("</script>");
 
-
             return sb.ToString();
         }
 
-        public string GetCollapseJs()
+        public static string GetCollapseJs()
         {
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("<script type=\"text/javascript\">");
             sb.AppendLine("// <![CDATA[");
             sb.AppendLine(IndexerAdapter.GetText("domCollapse.js"));
             sb.AppendLine("// ]]>");
             sb.AppendLine("</script>");
 
-
             return sb.ToString();
         }
 
-
-        public string GetCollapseCss()
+        public static string GetCollapseCss()
         {
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            StringBuilder sb = new System.Text.StringBuilder();
             sb.AppendLine("<style type=\"text/css\">");
             sb.AppendLine(IndexerAdapter.GetText("domCollapse.css"));
             sb.AppendLine("</style>");
@@ -92,10 +77,9 @@ namespace ZSS.IndexersLib
             return sb.ToString();
         }
 
-        public string GetCssStyle(string filePath)
+        public static string GetCssStyle(string filePath)
         {
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("<style type=\"text/css\">");
             if (File.Exists(filePath))
             {
@@ -110,82 +94,84 @@ namespace ZSS.IndexersLib
             }
             sb.AppendLine("</style>");
 
-
             return sb.ToString();
         }
 
-        public string OpenDiv()
+        public static string MakeAnchor(string url, string text)
+        {
+            return string.Format("<a href=\"{0}\">{1}</a>", url, text);
+        }
+
+        public static string OpenDiv()
         {
             return "<div>";
         }
 
-        public string CloseDiv()
+        public static string CloseDiv()
         {
             return "</div>";
         }
 
-        public string OpenBulletedList()
+        public static string OpenBulletedList()
         {
             return "<ul>";
         }
 
-        public string CloseBulletedList()
+        public static string CloseBulletedList()
         {
             return "</ul>";
         }
 
-        public string OpenNumberedList()
+        public static string OpenNumberedList()
         {
             return "<ol>";
         }
 
-
-        public string CloseNumberedList()
+        public static string CloseNumberedList()
         {
             return "</ol>";
         }
 
-        public string GetTitle(string title)
+        public static string GetTitle(string title)
         {
             return "<title>" + title + "</title>";
         }
 
-        public string GetSpan(string lText, string lClass)
+        public static string GetSpan(string lText, string lClass)
         {
             return "<span class=\"" + lClass + "\">" + lText + "</span>";
         }
-        public string CloseHead()
+        public static string CloseHead()
         {
             return "</head>";
         }
 
-        public string OpenBody()
+        public static string OpenBody()
         {
             return "<body>";
         }
 
-        public string CloseBody()
+        public static string CloseBody()
         {
             return "</body></html>";
         }
 
-        public string AddBreak()
+        public static string AddBreak()
         {
             return "<br />";
         }
 
-        public string GetPara(string msg)
+        public static string GetPara(string msg)
         {
             return OpenPara("") + GetValidXhtmlLine(msg) + ClosePara();
         }
 
-
-        public string GetBreak()
+        public static string GetBreak()
         {
             return OpenPara("") + AddBreak() + ClosePara();
         }
 
-        public string OpenPara(string span)
+        public static string OpenPara(string span)
         {
             if (span.Length > 0)
             {
@@ -197,29 +183,28 @@ namespace ZSS.IndexersLib
             }
         }
 
-        public string ClosePara()
+        public static string ClosePara()
         {
             return "</p>";
         }
 
-        public string GetWarning(string msg)
+        public static string GetWarning(string msg)
         {
             return "<p class=\"warning\">" + GetValidXhtmlLine(msg) + ClosePara();
         }
 
-        public string GetList(string msg)
+        public static string GetList(string msg)
         {
             return "<li>" + GetValidXhtmlLine(msg) + "</li>";
         }
 
-        public string GetHeading(string msg, int order)
+        public static string GetHeading(string msg, int order)
         {
             return string.Format("<h{0}>{1}</h{0}>", order, GetValidXhtmlLine(msg));
         }
 
-        public string OpenList(ListType type)
+        public static string OpenList(ListType type)
         {
-
             switch (type)
             {
                 case ListType.Bulletted:
@@ -228,13 +213,11 @@ namespace ZSS.IndexersLib
                     return OpenNumberedList();
                 default:
                     return OpenNumberedList();
-
             }
         }
 
-        public string CloseList(ListType type)
+        public static string CloseList(ListType type)
         {
-
             switch (type)
             {
                 case ListType.Bulletted:
@@ -243,9 +226,7 @@ namespace ZSS.IndexersLib
                     return CloseNumberedList();
                 default:
                     return CloseNumberedList();
-
             }
         }
     }
 }
-

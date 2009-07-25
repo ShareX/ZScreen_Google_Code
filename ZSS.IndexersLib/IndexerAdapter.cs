@@ -16,7 +16,6 @@ namespace ZSS.IndexersLib
     //*******************************
     public class IndexerAdapter
     {
-
         private const string MSG_INIT_SERVICE = "Initialized using McoreIndexer Service";
         private const string MSG_INIT_TREEGUI = "Initialized using TreeGUI";
         private const string MSG_DATETIME_BASED = "Date and Time based Schedule.";
@@ -392,27 +391,34 @@ namespace ZSS.IndexersLib
             return false;
         }
 
-        public string getFooterText(string myCurrentIndexFilePath, IndexingEngine myEngine, bool html)
+        public string GetFooterText(string myCurrentIndexFilePath, IndexingEngine myEngine, bool html)
         {
-
             string appName = string.Format("{0} v{1}", Application.ProductName, Application.ProductVersion);
             string appUrl = "http://code.google.com/p/zscreen";
 
-            //v2.0.31.0
-            string strDateTime = System.DateTime.UtcNow.ToString("yyyy-MM-dd 'at' HH:mm:ss 'UTC'");
-            if (!mOptions.IndexedTimeInUTC)
+            string strDateTime;
+
+            if (mOptions.IndexedTimeInUTC)
+            {
+                strDateTime = DateTime.UtcNow.ToString("yyyy-MM-dd 'at' HH:mm:ss 'UTC'");
+            }
+            else
             {
                 strDateTime = DateTime.Now.ToString("yyyy-MM-dd 'at ' HH:mm:ss 'local time'");
             }
 
-            string lineBreak = Environment.NewLine;
-
             if (html)
             {
+                appName = HTMLHelper.MakeAnchor(appUrl, appName);
                 appUrl = "<a href=" + (char)34 + appUrl + (char)34 + ">Google Code</a>.";
-                lineBreak = "<br />";
             }
-            string footer = string.Format("Generated on {0} using {1}.{3}Latest version of can be downloaded from {2}", strDateTime, appName, appUrl, lineBreak);
+
+            string footer = string.Format("Generated on {0} using {1}", strDateTime, appName);
+
+            if (!html)
+            {
+                footer += "\r\nLatest version of can be downloaded from " + appUrl;
+            }
 
             switch (myEngine)
             {
