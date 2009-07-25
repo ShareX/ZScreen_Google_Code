@@ -17,20 +17,6 @@ namespace ZSS.IndexersLib
             mBannedFilter = Regex.Split(mSettings.GetConfig().IgnoreFilesList, "\\" + mSettings.GetOptions().IgnoreFilesListDelimiter);
         }
 
-        public List<TreeFile> GetFilesCollFiltered(TreeDir dir)
-        {
-            List<TreeFile> temp = new List<TreeFile>();
-
-            foreach (TreeFile f in dir.GetFilesColl())
-            {
-                if (IsBannedFile(f.GetFilePath()) == false)
-                {
-                    temp.Add(f);
-                }
-            }
-            return temp;
-        }
-
         public bool isBannedFolder(TreeDir dir)
         {
             // Check if Option set to Enable Filtering
