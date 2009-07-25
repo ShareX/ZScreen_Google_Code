@@ -31,8 +31,8 @@ namespace ZSS.IndexersLib
         public const string OPTIONS_FILE_EXT = ".xml";
         private readonly string OPTIONS_FILENAME = "\\TreeGUI" + OPTIONS_FILE_EXT;
 
-        public readonly string LOG_PATH_ONSTART = System.Windows.Forms.Application.StartupPath + "\\log";
-        public readonly string LOG_PATH_READER = System.Windows.Forms.Application.StartupPath + "\\Reader.log";
+        public string LOG_PATH_ONSTART = Application.StartupPath + "\\log";
+        public string LOG_PATH_READER = Application.StartupPath + "\\Reader.log";
 
         public string LogPathIndexer
         {
@@ -492,6 +492,42 @@ namespace ZSS.IndexersLib
             }
         }
 
+
+        public static string GetText(string name)
+        {
+            string text = "";
+            try
+            {
+                System.Reflection.Assembly oAsm = System.Reflection.Assembly.GetExecutingAssembly();
+
+                string fn = "";
+                foreach (string n in oAsm.GetManifestResourceNames())
+                {
+                    if (n.Contains(name))
+                    {
+                        fn = n;
+                        break;
+                    }
+                }
+                Stream oStrm = oAsm.GetManifestResourceStream(fn);
+                StreamReader oRdr = new StreamReader(oStrm);
+                text = oRdr.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return text;
+        }
+
+        public static void CopyDefaultCss(string destDir)
+        {
+            using (StreamWriter sw = new StreamWriter(Path.Combine(destDir, IndexerConfig.DefaultCssFileName)))
+            {
+                sw.WriteLine(GetText(IndexerConfig.DefaultCssFileName));
+            }
+        }
 
     }
 

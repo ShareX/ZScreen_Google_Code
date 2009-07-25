@@ -14,7 +14,7 @@ namespace ZSS.IndexersLib
 
         public string GetDocType()
         {
-            return GetText("html.txt");
+            return IndexerAdapter.GetText("html.txt");
         }
 
         public string GetValidXhtmlLine(string line)
@@ -55,7 +55,7 @@ namespace ZSS.IndexersLib
             }
             else
             {
-                sb.AppendLine(GetText("domCollapse.js"));
+                sb.AppendLine(IndexerAdapter.GetText("domCollapse.js"));
             }
 
             sb.AppendLine("// ]]>");
@@ -71,7 +71,7 @@ namespace ZSS.IndexersLib
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.AppendLine("<script type=\"text/javascript\">");
             sb.AppendLine("// <![CDATA[");
-            sb.AppendLine(GetText("domCollapse.js"));
+            sb.AppendLine(IndexerAdapter.GetText("domCollapse.js"));
             sb.AppendLine("// ]]>");
             sb.AppendLine("</script>");
 
@@ -85,7 +85,7 @@ namespace ZSS.IndexersLib
 
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.AppendLine("<style type=\"text/css\">");
-            sb.AppendLine(GetText("domCollapse.css"));
+            sb.AppendLine(IndexerAdapter.GetText("domCollapse.css"));
             sb.AppendLine("</style>");
 
 
@@ -106,7 +106,7 @@ namespace ZSS.IndexersLib
             }
             else
             {
-                sb.AppendLine(GetText("Default.css"));
+                sb.AppendLine(IndexerAdapter.GetText("Default.css"));
             }
             sb.AppendLine("</style>");
 
@@ -207,34 +207,6 @@ namespace ZSS.IndexersLib
             return "<p class=\"warning\">" + GetValidXhtmlLine(msg) + ClosePara();
         }
 
-        public static string GetText(string name)
-        {
-            string text = "";
-            try
-            {
-                System.Reflection.Assembly oAsm = System.Reflection.Assembly.GetExecutingAssembly();
-
-                string fn = "";
-                foreach (string n in oAsm.GetManifestResourceNames())
-                {
-                    if (n.Contains(name))
-                    {
-                        fn = n;
-                        break;
-                    }
-                }
-                Stream oStrm = oAsm.GetManifestResourceStream(fn);
-                StreamReader oRdr = new StreamReader(oStrm);
-                text = oRdr.ReadToEnd();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return text;
-        }
-
         public string GetList(string msg)
         {
             return "<li>" + GetValidXhtmlLine(msg) + "</li>";
@@ -242,8 +214,6 @@ namespace ZSS.IndexersLib
 
         public string GetHeading(string msg, int order)
         {
-
-
             return string.Format("<h{0}>{1}</h{0}>", order, GetValidXhtmlLine(msg));
         }
 
