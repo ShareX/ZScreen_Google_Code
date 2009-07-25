@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\ITextUploader.cs" />
+    <Compile Include="Helpers\TextInfo.cs" />
     <Compile Include="TextUploaders\FTPUploader.cs" />
     <Compile Include="TextUploaders\Paste2Uploader.cs" />
     <Compile Include="TextUploaders\PastebinCaUploader.cs" />

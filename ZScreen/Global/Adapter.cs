@@ -34,6 +34,7 @@ using System.Windows.Forms;
 using ZSS.Helpers;
 using System.Net;
 using ZSS.Tasks;
+using ZSS.TextUploadersLib.Helpers;
 
 namespace ZSS.Global
 {
@@ -197,7 +198,7 @@ namespace ZSS.Global
                 tu.ProxySettings = Adapter.GetProxySettings();
                 if (tu != null)
                 {
-                    string temp = tu.UploadText(url);
+                    string temp = tu.UploadText(TextInfo.FromString(url));
                     if (!string.IsNullOrEmpty(temp))
                     {
                         url = temp;

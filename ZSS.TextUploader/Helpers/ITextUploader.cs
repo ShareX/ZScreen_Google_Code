@@ -28,7 +28,7 @@ namespace ZSS.TextUploadersLib.Helpers
 {
     interface ITextUploader
     {
-        string UploadText(string text);
+        string UploadText(TextInfo text);
         string UploadTextFromClipboard();
         string UploadTextFromFile(string filePath);
         string ToErrorString();

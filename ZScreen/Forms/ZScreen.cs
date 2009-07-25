@@ -45,6 +45,7 @@ using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.UpdateCheckerLib;
+using ZSS.TextUploadersLib.Helpers;
 
 namespace ZSS
 {
@@ -3274,7 +3275,7 @@ namespace ZSS
                 if (!string.IsNullOrEmpty(name))
                 {
                     MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
-                    task.MyText = testString;
+                    task.MyText = TextInfo.FromString(testString);
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;
                     task.RunWorker();

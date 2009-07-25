@@ -54,7 +54,7 @@ namespace ZSS.TextUploadersLib
         /// </summary>
         /// <param name="txt"></param>
         /// <returns></returns>
-        public abstract string UploadText(string text);
+        public abstract string UploadText(TextInfo text);
 
         /// <summary>
         /// Descriptive name for the Text Uploader
@@ -79,7 +79,7 @@ namespace ZSS.TextUploadersLib
         {
             if (Clipboard.ContainsText())
             {
-                return UploadText(Clipboard.GetText());
+                return UploadText(TextInfo.FromClipboard());
             }
             else if (Clipboard.ContainsFileDropList())
             {
@@ -95,9 +95,8 @@ namespace ZSS.TextUploadersLib
         public string UploadTextFromFile(string filePath)
         {
             if (File.Exists(filePath))
-            {
-                string text = File.ReadAllText(filePath);
-                return UploadText(text);
+            {                
+                return UploadText(TextInfo.FromFile(filePath));
             }
             return "";
         }

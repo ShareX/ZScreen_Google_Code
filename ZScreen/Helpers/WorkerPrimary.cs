@@ -40,6 +40,7 @@ using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.IndexersLib;
+using ZSS.TextUploadersLib.Helpers;
 
 namespace ZSS.Helpers
 {
@@ -832,7 +833,7 @@ namespace ZSS.Helpers
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                     Adapter.WriteTextToFile(Clipboard.GetText(), fp);
                     temp.SetLocalFilePath(fp);
-                    temp.MyText = Clipboard.GetText();
+                    temp.MyText = TextInfo.FromClipboard(); 
                     textWorkers.Add(temp);
                 }
                 else if (Clipboard.ContainsFileDropList())
@@ -870,10 +871,7 @@ namespace ZSS.Helpers
                         {
                             MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                             temp.SetLocalFilePath(fp);
-                            using (StreamReader sr = new StreamReader(fp))
-                            {
-                                temp.MyText = sr.ReadToEnd();
-                            }
+                            temp.MyText = TextInfo.FromFile(fp);
                             textWorkers.Add(temp);
                         }
                         else
@@ -885,22 +883,22 @@ namespace ZSS.Helpers
 
                 foreach (MainAppTask task in textWorkers)
                 {
-                    if (FileSystem.IsValidLink(task.MyText) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
+                    if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                     {
                         task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
                         task.RunWorker();
                     }
-                    else if (Directory.Exists(task.MyText)) // McoreD: can make this an option later
+                    else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
                     {
                         IndexerAdapter settings = new IndexerAdapter();
-                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir, Path.GetFileName(task.MyText) + ".log"));
-                        settings.GetConfig().SetSingleIndexPath(cbFilePath);
-                        settings.GetConfig().OutputDir = Program.TextDir;
-                        settings.GetConfig().FolderList.Add(task.MyText);
-                        TreeNetIndexer indexer = new TreeNetIndexer(settings);                        
+                        string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
+                        string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
+                        settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
+                        settings.GetConfig().FolderList.Add(task.MyText.LocalString);
+                        TreeNetIndexer indexer = new TreeNetIndexer(settings);
                         indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
                         task.MyText = null;
-                        task.SetLocalFilePath(cbFilePath);
+                        task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
                         task.RunWorker();
                     }
                     else if (Adapter.CheckTextUploaders())

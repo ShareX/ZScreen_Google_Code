@@ -57,12 +57,12 @@ namespace ZSS.TextUploadersLib.URLShorteners
             return HostSettings.Name;
         }
 
-        public override string UploadText(string text)
+        public override string UploadText(TextInfo text)
         {
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("longurl", text);
+                arguments.Add("longurl", text.LocalString);
 
                 return GetResponse2(HostSettings.URL, arguments);
             }
