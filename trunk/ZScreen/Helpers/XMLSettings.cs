@@ -224,7 +224,6 @@ namespace ZSS
         // Selected Window
 
         public RegionStyles SelectedWindowRegionStyles = RegionStyles.BACKGROUND_REGION_TRANSPARENT;
-        public bool SelectedWindowFront = false;
         public bool SelectedWindowRectangleInfo = true;
         public bool SelectedWindowRuler = true;
         public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
@@ -233,7 +232,7 @@ namespace ZSS
         public decimal SelectedWindowRegionInterval = 75;
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
-        public bool SelectedWindowAddBorder = false;
+        public bool SelectedWindowCaptureObjects = true;
 
         // Interaction
 
