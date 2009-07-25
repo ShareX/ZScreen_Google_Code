@@ -27,16 +27,16 @@ namespace ZSS.IndexersLib
             : base(myReader)
         {
             this.mSettings = myReader;
-            if (this.mSettings.GetConfig().IndexFileExtension.Contains("html"))
+            if (this.mSettings.GetConfig().IndexFileExt.Contains("html"))
             {
-                this.mSettings.GetConfig().IndexFileExtension = ".txt";
+                this.mSettings.GetConfig().IndexFileExt = ".txt";
             }
         }
 
         private string getAddFilesSwitch()
         {
 
-            if (mSettings.GetConfig().isAddFiles)
+            if (mSettings.GetConfig().TreeShowFiles)
             {
                 return " /f";
             }
@@ -48,7 +48,7 @@ namespace ZSS.IndexersLib
         private string getAsciiSwitch()
         {
 
-            if (mSettings.GetConfig().isAscii == true)
+            if (mSettings.GetConfig().TreeUseAscii == true)
             {
                 return " /a";
             }
@@ -84,7 +84,7 @@ namespace ZSS.IndexersLib
                     return ">" + (char)34 + this.getCurrentIndexFilePath() + (char)34;
                 case IndexingMode.IN_ONE_FOLDER_MERGED:
                     //If chkSingleFile.CheckState = CheckState.Checked Then
-                    if (mSettings.GetConfig().isMergeFiles)
+                    if (mSettings.GetConfig().MergeFiles)
                     {
                         //Fixed after ALPHA 16
                         //Me.tarGetFilePath() = txtOutputDir.Text + "\" + txtFileName.Text + cboExt.Text
@@ -113,7 +113,7 @@ namespace ZSS.IndexersLib
         {
 
             TreeWalkIndexer tree = new TreeWalkIndexer(mSettings);
-            bool isMergeFile = mSettings.GetConfig().isMergeFiles;
+            bool isMergeFile = mSettings.GetConfig().MergeFiles;
             bool isRemoveBranches = mSettings.GetConfig().RemoveTreeBranches;
 
             for (int i = 0; i <= mSettings.GetConfig().FolderList.Count - 1; i++)

@@ -28,10 +28,10 @@ namespace ZSS.IndexersLib
         {
             cDir dirRoot = new cDir(rootDirPath);
             dirRoot = GetFiles(dirRoot.DirectoryPath());
-            if (mSettings.GetConfig().mSortBySize)
+            if (mSettings.GetConfig().SortBySize)
             {
                 dirRoot.GetSubDirColl().Sort(new TreeDirComparer());
-                if (1 == mSettings.GetConfig().mSortBySizeMode)
+                if (mSettings.GetConfig().SortBySizeMode == FileSortMode.Descending)
                 {
                     dirRoot.GetSubDirColl().Reverse();
                 }
@@ -157,7 +157,7 @@ namespace ZSS.IndexersLib
         //' If a folder has no files then don't have trigger
         //TODO war59312 - Hide folders from output in which all its files are ignored
         string rootDir = string.Empty;
-        private cDir IndexToHtmlFile(cDir dir, StreamWriter @where)
+        private cDir IndexToHtmlFile(cDir dir, StreamWriter where)
         {
 
             HtmlHelper html = new HtmlHelper();
@@ -195,7 +195,7 @@ namespace ZSS.IndexersLib
             if (mBooFirstDir)
             {
                 rootDir = dir.DirectoryPath();
-                @where.WriteLine("<h1>" + dirTitle + "</h1>");
+                where.WriteLine("<h1>" + dirTitle + "</h1>");
                 mBooFirstDir = false;
                 mNumTabs = 1;
             }
@@ -227,11 +227,11 @@ namespace ZSS.IndexersLib
                                 hyperlinkDir = "file://" + dir.DirectoryPath();
                             }
                             hyperlinkDir = "<a href=" + (char)34 + hyperlinkDir + (char)34 + ">" + dirTitle + "</a>";
-                            @where.WriteLine(GetHeadingOpen(dir) + hyperlinkDir + GetHeadingClose());
+                            where.WriteLine(GetHeadingOpen(dir) + hyperlinkDir + GetHeadingClose());
                         }
                         else
                         {
-                            @where.WriteLine(GetHeadingOpen(dir) + dirTitle + GetHeadingClose());
+                            where.WriteLine(GetHeadingOpen(dir) + dirTitle + GetHeadingClose());
 
                         }
 
@@ -300,13 +300,13 @@ namespace ZSS.IndexersLib
                         {
                             if (booPrintList)
                             {
-                                switch (mSettings.GetConfig().ListType)
+                                switch (mSettings.GetConfig().IndexListType)
                                 {
-                                    case IndexerConfig.eListType.Bullets:
-                                        @where.WriteLine(html.OpenBulletedList());
+                                    case XHTMLFileListMode.Bullets:
+                                        where.WriteLine(html.OpenBulletedList());
                                         break;
-                                    case IndexerConfig.eListType.Numbered:
-                                        @where.WriteLine(html.OpenNumberedList());
+                                    case XHTMLFileListMode.Numbered:
+                                        where.WriteLine(html.OpenNumberedList());
                                         break;
                                 }
                             }
@@ -390,13 +390,13 @@ namespace ZSS.IndexersLib
 
                             if (booPrintList)
                             {
-                                switch (mSettings.GetConfig().ListType)
+                                switch (mSettings.GetConfig().IndexListType)
                                 {
-                                    case IndexerConfig.eListType.Bullets:
-                                        @where.WriteLine(html.CloseBulletedList());
+                                    case XHTMLFileListMode.Bullets:
+                                        where.WriteLine(html.CloseBulletedList());
                                         break;
-                                    case IndexerConfig.eListType.Numbered:
-                                        @where.WriteLine(html.CloseNumberedList());
+                                    case XHTMLFileListMode.Numbered:
+                                        where.WriteLine(html.CloseNumberedList());
                                         break;
                                 }
 
@@ -413,7 +413,7 @@ namespace ZSS.IndexersLib
 
                         cDir sd = new cDir(d.DirectoryPath());
 
-                        sd = IndexToHtmlFile(d, @where);
+                        sd = IndexToHtmlFile(d, where);
                     }
 
                     if (fDivWrap(dir))
@@ -493,7 +493,7 @@ namespace ZSS.IndexersLib
         private bool mBooFirstIndexFile = true;
         private bool mBooMoreFilesToCome = false;
 
-        private void IndexRootFolderToHtml(string folderPath, StreamWriter sw, bool AddFooter)
+        private void IndexRootFolderToHtml(string folderPath, StreamWriter sw, bool bAddFooter)
         {
 
             HtmlHelper html = new HtmlHelper();
@@ -540,7 +540,7 @@ namespace ZSS.IndexersLib
 
             this.IndexToHtmlFile(rootDir, sw);
 
-            if (AddFooter)
+            if (bAddFooter)
             {
                 sw.WriteLine(html.OpenDiv());
                 sw.WriteLine("____" + html.AddBreak());
@@ -574,7 +574,7 @@ namespace ZSS.IndexersLib
             }
         }
 
-        private cDir IndexToTxtFile(cDir dir, StreamWriter @where)
+        private cDir IndexToTxtFile(cDir dir, StreamWriter where)
         {
 
             string dirSize = fGetDirSizeString(dir);
@@ -589,10 +589,9 @@ namespace ZSS.IndexersLib
                 strStars += styleArray[i % styleArray.Length];
             }
 
-            @where.WriteLine("");
-            @where.WriteLine(GetTabs() + strStars);
-            @where.WriteLine(GetTabs() + dirTitle);
-            @where.WriteLine(GetTabs() + strStars);
+            where.WriteLine(GetTabs() + strStars);
+            where.WriteLine(GetTabs() + dirTitle);
+            where.WriteLine(GetTabs() + strStars);
 
             if (double.Parse(Regex.Split(dir.DirectorySizeToString(cDir.BinaryPrefix.Kibibytes), " ")[0]) == 0)
             {
@@ -649,7 +648,7 @@ namespace ZSS.IndexersLib
 
 
 
-                    @where.WriteLine(fileDesc);
+                    where.WriteLine(fileDesc);
 
                 }
             }
@@ -660,7 +659,7 @@ namespace ZSS.IndexersLib
             {
 
                 cDir sd = new cDir(d.DirectoryPath());
-                sd = IndexToTxtFile(d, @where);
+                sd = IndexToTxtFile(d, where);
             }
             mNumTabs -= 1;
 
@@ -673,13 +672,13 @@ namespace ZSS.IndexersLib
         public override void IndexNow(IndexingMode IndexMode)
         {
 
-            string where = null;
+            string fp = null;
 
             List<string> folderList = new List<string>();
             folderList = mSettings.GetConfig().FolderList;
             TreeNetIndexer treeNetLib = new TreeNetIndexer(mSettings);
 
-            string ext = mSettings.GetConfig().IndexFileExtension;
+            string ext = mSettings.GetConfig().IndexFileExt;
 
             switch (IndexMode)
             {
@@ -691,11 +690,11 @@ namespace ZSS.IndexersLib
                     break;
                 case IndexingMode.IN_ONE_FOLDER_MERGED:
 
-                    if (mSettings.GetConfig().isMergeFiles)
+                    if (mSettings.GetConfig().MergeFiles)
                     {
-                        where = mSettings.fGetIndexFilePath(-1, IndexingMode.IN_ONE_FOLDER_MERGED);
+                        fp = mSettings.fGetIndexFilePath(-1, IndexingMode.IN_ONE_FOLDER_MERGED);
 
-                        StreamWriter sw = new StreamWriter(where, false);
+                        StreamWriter sw = new StreamWriter(fp, false);
 
                         if (mSettings.GetConfig().FolderList.Count > 1)
                         {
@@ -737,7 +736,7 @@ namespace ZSS.IndexersLib
                         sw.Close();
                         if (mSettings.GetConfig().ZipMergedFile)
                         {
-                            mSettings.ZipAdminFile(where, null);
+                            mSettings.ZipAdminFile(fp, null);
                         }
 
 
@@ -766,10 +765,11 @@ namespace ZSS.IndexersLib
 
                         //where = mSettings.GetConfig().OutputDir + "\" + sDrive + sep + sDirName + sep + mSettings.GetConfig().GetIndexFileName
                         // New Behavior for getting where location
-                        @where = mSettings.fGetIndexFilePath(i, IndexingMode.IN_ONE_FOLDER_SEPERATE);
+                        fp = mSettings.fGetIndexFilePath(i, IndexingMode.IN_ONE_FOLDER_SEPERATE);
+                        mSettings.GetConfig().SetIndexPath(fp);
                         //MsgBox(where = mSettings.GetConfig().OutputDir + "\" + sDrive + sep + sDirName + sep + mSettings.GetConfig().GetIndexFileName)
 
-                        StreamWriter sw = new StreamWriter(@where, false);
+                        StreamWriter sw = new StreamWriter(fp, false);
 
                         this.CurrentDirMessage = "Indexing " + strDirPath;
 
@@ -786,7 +786,7 @@ namespace ZSS.IndexersLib
                         sw.Close();
                         if (mSettings.GetConfig().ZipFilesInOutputDir)
                         {
-                            mSettings.ZipAdminFile(where, null);
+                            mSettings.ZipAdminFile(fp, null);
                         }
 
                         this.Progress += 1;
@@ -806,7 +806,7 @@ namespace ZSS.IndexersLib
             folderList = myReader.GetConfig().FolderList;
             TreeNetIndexer treeNetLib = new TreeNetIndexer(myReader);
 
-            string ext = myReader.GetConfig().IndexFileExtension;
+            string ext = myReader.GetConfig().IndexFileExt;
 
             for (int i = 0; i <= myReader.GetConfig().FolderList.Count - 1; i++)
             {
@@ -822,7 +822,7 @@ namespace ZSS.IndexersLib
                         Directory.CreateDirectory(Path.GetDirectoryName(where));
                     }
 
-                    StreamWriter sw = new StreamWriter(@where, false);
+                    StreamWriter sw = new StreamWriter(where, false);
 
                     try
                     {
@@ -832,11 +832,11 @@ namespace ZSS.IndexersLib
                         {
                             //MessageBox.Show(myReader.GetConfig().mCssFilePath)
                             treeNetLib.mBooFirstIndexFile = true;
-                            treeNetLib.IndexRootFolderToHtml(strDirPath, sw, true);
+                            treeNetLib.IndexRootFolderToHtml(strDirPath, sw, mSettings.GetConfig().AddFooter);
                         }
                         else
                         {
-                            treeNetLib.IndexFolderToTxt(strDirPath, sw, true);
+                            treeNetLib.IndexFolderToTxt(strDirPath, sw, mSettings.GetConfig().AddFooter);
                         }
 
 

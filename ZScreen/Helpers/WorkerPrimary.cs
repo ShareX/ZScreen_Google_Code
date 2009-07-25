@@ -833,7 +833,7 @@ namespace ZSS.Helpers
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                     Adapter.WriteTextToFile(Clipboard.GetText(), fp);
                     temp.SetLocalFilePath(fp);
-                    temp.MyText = TextInfo.FromClipboard(); 
+                    temp.MyText = TextInfo.FromClipboard();
                     textWorkers.Add(temp);
                 }
                 else if (Clipboard.ContainsFileDropList())
@@ -891,15 +891,30 @@ namespace ZSS.Helpers
                     else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
                     {
                         IndexerAdapter settings = new IndexerAdapter();
+                        settings.LoadConfig(Program.conf.IndexerConfig);
+                        Program.conf.IndexerConfig.FolderList.Clear();
                         string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
                         string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
                         settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
                         settings.GetConfig().FolderList.Add(task.MyText.LocalString);
-                        TreeNetIndexer indexer = new TreeNetIndexer(settings);
-                        indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
-                        task.MyText = null;
-                        task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
-                        task.RunWorker();
+
+                        Indexer indexer = null;
+                        switch (settings.GetConfig().IndexingEngineType)
+                        {
+                            case IndexingEngine.TreeLib:
+                                indexer = new TreeWalkIndexer(settings);                                
+                                break;
+                            case IndexingEngine.TreeNetLib:
+                                indexer = new TreeNetIndexer(settings);                                
+                                break;
+                        }
+                        if (indexer != null)
+                        {
+                            indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
+                            task.MyText = null; // force to upload from file
+                            task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
+                            task.RunWorker();
+                        }
                     }
                     else if (Adapter.CheckTextUploaders())
                     {

@@ -326,7 +326,6 @@ namespace ZSS.IndexersLib
 
         private bool LoadOptionsFileBF(string filePath)
         {
-
             try
             {
                 FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -348,13 +347,18 @@ namespace ZSS.IndexersLib
             mConfig = new IndexerConfig();
         }
 
+        public void LoadConfig(IndexerConfig config)
+        {
+            mConfig = config;
+        }
+
         public void LoadConfigFile(string filePath)
         {
             this.CurrentConfigFilePath = filePath;
 
-            if (mConfig.IndexingEngineID == 0 & mConfig.IndexFileExtension.Contains("html"))
+            if (mConfig.IndexingEngineType == IndexingEngine.TreeLib & mConfig.IndexFileExt.Contains("html"))
             {
-                mConfig.IndexFileExtension = ".txt";
+                mConfig.IndexFileExt = ".txt";
             }
         }
 

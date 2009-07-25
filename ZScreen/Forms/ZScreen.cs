@@ -189,7 +189,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
 
             pgApp.SelectedObject = Program.conf;
-            pgIndexer.SelectedObject = Program.conf.IndexerSettings;
+            pgIndexer.SelectedObject = Program.conf.IndexerConfig;
             txtRootFolder.Text = Program.RootAppFolder;
             UpdateGuiControlsPaths();
 
@@ -1982,7 +1982,7 @@ namespace ZSS
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
                     btnHistoryCopyImage.Enabled = checkImage;
-                    pbPreview.Visible = checkImage || (!checkText && checkRemote);
+                    pbPreview.Visible = checkImage;
                     txtPreview.Visible = checkText;
 
                     if (checkImage)

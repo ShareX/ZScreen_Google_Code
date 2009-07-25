@@ -81,7 +81,7 @@ namespace ZSS
             //**************
             TwitPicShowFull = true;
             TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-            IndexerSettings = new ZSS.IndexersLib.IndexerConfig();
+            IndexerConfig = new ZSS.IndexersLib.IndexerConfig();
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Translator
@@ -375,7 +375,7 @@ namespace ZSS
         public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
 
         // Indexer 
-        public ZSS.IndexersLib.IndexerConfig IndexerSettings = null;
+        public ZSS.IndexersLib.IndexerConfig IndexerConfig = null;
 
         // Custom Image Uploaders
 
@@ -603,8 +603,7 @@ namespace ZSS
                 {
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
-                    FileSystem.AppendDebug(ex.ToString());
-                    FileSystem.AppendDebug(ex.ToString());
+                    FileSystem.AppendDebug(ex.ToString());                   
                     OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
                     dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
                     dlg.InitialDirectory = Settings.Default.RootDir;

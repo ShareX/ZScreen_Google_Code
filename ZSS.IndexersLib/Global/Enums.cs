@@ -29,4 +29,18 @@ namespace ZSS.IndexersLib
         [Description("Tree.NET")]
         TreeNetLib
     }
+
+    [Serializable]
+    public enum XHTMLFileListMode
+    {
+        Bullets,
+        Numbered
+    }
+
+    [Serializable]
+    public enum FileSortMode
+    {
+        Ascending,
+        Descending
+    }
 }
