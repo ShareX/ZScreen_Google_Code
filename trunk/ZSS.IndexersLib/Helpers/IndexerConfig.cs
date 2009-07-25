@@ -13,7 +13,7 @@ namespace ZSS.IndexersLib
         //Default to Tree.NET
         [Category("Engines / General"), Description("Adjust CPU indexing priority level")]
         public System.Threading.ThreadPriority ProcessPriority { get; set; }
-     
+
         // Config > Engine > Tree 
         [Category("Engines / Tree Walk Utility"), DefaultValue(true), Description("Display the names of the files in each folder.")]
         public bool TreeShowFiles { get; set; }
@@ -41,7 +41,7 @@ namespace ZSS.IndexersLib
         public bool ShowFolderPathOnStatusBar { get; set; }
         [Category("Engines / Tree.NET"), DefaultValue("~*"), Description("Folder heading style")]
         public string FolderHeadingStyle { get; set; }
-       
+
         // Zip Operations
         public bool ZipAfterIndexed = false;
         public bool ZipAndDeleteFile = false;
@@ -58,7 +58,7 @@ namespace ZSS.IndexersLib
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system files when indexing")]
         public bool IgnoreSystemFiles { get; set; }
         public bool IgnoreFollowingFiles = true;
-        public const string mDefaultCssFileName = "Default.css";
+        public const string DefaultCssFileName = "Default.css";
         public string IgnoreFilesList = ".DS_Store|*.db|index.html|*.ini";
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system folders when indexing")]
         public bool IgnoreHiddenFolders { get; set; }
@@ -80,9 +80,9 @@ namespace ZSS.IndexersLib
         public bool ShowFileCount = false;
         [Category("General / Tree.NET / Display"), DefaultValue(false), Description("Display file count")]
         public bool SortBySize { get; set; }
-        [Category("General / Tree.NET / Display"), DefaultValue( FileSortMode.Ascending), Description("Sort files by Size")]
+        [Category("General / Tree.NET / Display"), DefaultValue(FileSortMode.Ascending), Description("Sort files by Size")]
         public FileSortMode SortBySizeMode { get; set; }
-        
+
         [Category("General / Audio"), DefaultValue(false), Description("Enable Quick Audio scan to index faster. Bitrate information will not be precise.")]
         public bool AudioQuickScan { get; set; }
         [Category("General / Audio"), DefaultValue(false), Description("Enable Audio file scan.")]
@@ -94,22 +94,19 @@ namespace ZSS.IndexersLib
         [Category("Engines / Tree.NET"), Description("Path for an image logo")]
         public string LogoPath { get; set; }
 
-        // 2.7.1.4 Default CSS file is read from Application startup path 
-        // default.css when current file does not exit
-        private string mCssFilePath = Application.StartupPath + mDefaultCssFileName;
-
         public IndexerConfig()
         {
             IndexingEngineType = IndexingEngine.TreeNetLib;
 
             TreeShowFiles = true;
-            TreeUseAscii = true; 
+            TreeUseAscii = true;
 
             AudioInfo = true;
             ShowFilesTreeNet = true;
             ShowFileSize = true;
             ShowDirSize = true;
 
+            CssFilePath = Path.Combine(Application.StartupPath, DefaultCssFileName);
             AudioQuickScan = true;
             IndexFileExt = ".html";
             FolderExpandLevel = 2;
@@ -121,28 +118,8 @@ namespace ZSS.IndexersLib
             FolderList = new List<string>();
         }
 
-        [Category("Engines / Tree.NET / XHTML"), Description("Cascading Style Sheet file name")]
-        public string CssFileName
-        {
-            get { return mDefaultCssFileName; }
-        }
-
         [Category("Engines / Tree.NET / XHTML"), Description("Cascading Style Sheet file path")]
-        public string CssFilePath
-        {
-            get { return this.mCssFilePath; }
-            set
-            {
-                if (File.Exists(value))
-                {
-                    this.mCssFilePath = value;
-                }
-                else
-                {
-                    mCssFilePath = Application.StartupPath + Path.DirectorySeparatorChar + mDefaultCssFileName;
-                }
-            }
-        }
+        public string CssFilePath { get; set; }
 
         [Category("Engines / Tree.NET / XHTML"), Description("Virtual folders list")]
         public List<string> VirtualFolderList = null;

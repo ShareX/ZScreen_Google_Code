@@ -81,6 +81,13 @@ namespace ZSS
             Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
 
             if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
+
+            string cssIndexer = Path.Combine(Program.SettingsDir, ZSS.IndexersLib.IndexerConfig.DefaultCssFileName);
+            if (!File.Exists(cssIndexer))
+            {
+                IndexersLib.IndexerAdapter.CopyDefaultCss(Program.SettingsDir);
+                Program.conf.IndexerConfig.CssFilePath = cssIndexer;
+            }            
         }
 
         private void ZScreen_SetFormSettings()
