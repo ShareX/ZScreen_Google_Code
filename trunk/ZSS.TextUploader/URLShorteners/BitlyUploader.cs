@@ -66,13 +66,13 @@ namespace ZSS.TextUploadersLib.URLShorteners
 
         // http://api.bit.ly/shorten?version=2.0.1&longUrl=http://code.google.com/p/zscreen&login=mcored&apiKey=R_55cef8c7f08a07d2ecd4323084610161"
 
-        public override string UploadText(string text)
+        public override string UploadText(TextInfo text)
         {
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("version", "2.0.1");
-                arguments.Add("longUrl", HttpUtility.UrlEncode(text));
+                arguments.Add("longUrl", HttpUtility.UrlEncode(text.LocalString));
                 arguments.Add("login", APILogin);
                 arguments.Add("apiKey", APIKey);
                 arguments.Add("format", "xml");

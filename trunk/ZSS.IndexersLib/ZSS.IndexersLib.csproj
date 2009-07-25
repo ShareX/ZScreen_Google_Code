@@ -64,12 +64,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TreeNetIndexerFiles\CSS\Default.css" />
-    <Content Include="TreeNetIndexerFiles\CSS\domCollapse.css" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Default.css" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\CSS\domCollapse.css" />
     <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.js" />
     <EmbeddedResource Include="TreeNetIndexerFiles\html.txt" />
-    <Content Include="TreeNetIndexerFiles\minus.gif" />
-    <Content Include="TreeNetIndexerFiles\plus.gif" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\minus.gif" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\plus.gif" />
     <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Lib\taglib-sharp.dll" />
   </ItemGroup>

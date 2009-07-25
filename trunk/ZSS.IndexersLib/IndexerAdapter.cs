@@ -392,7 +392,7 @@ namespace ZSS.IndexersLib
         {
 
             string appName = string.Format("{0} v{1}", Application.ProductName, Application.ProductVersion);
-            string appUrl = "http://code.google.com/p/zscreen/";
+            string appUrl = "http://code.google.com/p/zscreen";
 
             //v2.0.31.0
             string strDateTime = System.DateTime.UtcNow.ToString("yyyy-MM-dd 'at' HH:mm:ss 'UTC'");
@@ -405,10 +405,10 @@ namespace ZSS.IndexersLib
 
             if (html)
             {
-                appUrl = "<a href=" + (char)34 + appUrl + (char)34 + ">SourceForge</a>.";
+                appUrl = "<a href=" + (char)34 + appUrl + (char)34 + ">Google Code</a>.";
                 lineBreak = "<br />";
             }
-            string footer = string.Format("Generated on {0} using {1}.{3}Latest version of the Indexer can be downloaded from {2}", strDateTime, appName, appUrl, lineBreak);
+            string footer = string.Format("Generated on {0} using {1}.{3}Latest version of can be downloaded from {2}", strDateTime, appName, appUrl, lineBreak);
 
             switch (myEngine)
             {

@@ -726,7 +726,7 @@ namespace ZSS.IndexersLib
 
                         if (ext.Contains(".html"))
                         {
-                            treeNetLib.mBooFirstIndexFile = false;
+                            treeNetLib.mBooFirstIndexFile = false || mSettings.GetConfig().FolderList.Count == 1;
                             treeNetLib.IndexRootFolderToHtml(lastDir.DirectoryPath(), sw, true);
                         }
                         else

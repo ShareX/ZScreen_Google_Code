@@ -277,7 +277,7 @@ namespace ZSS.Helpers
             TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
             textUploader.ProxySettings = Adapter.GetProxySettings();
             string url = "";
-            if (!string.IsNullOrEmpty(mTask.MyText))
+            if (mTask.MyText != null)
             {
                 url = textUploader.UploadText(mTask.MyText);
             }

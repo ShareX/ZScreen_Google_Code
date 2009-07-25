@@ -1,8 +1,8 @@
-Version 2.25 - 20090801
+Version 2.23 - 20090801
 
-2.25.00.0 Unique 'Application' capture mode similar to WinSnap {Jaex}
-2.24.00.0 Ability to Clipboard Upload folder contents using TreeGUI indexer engines {McoreD}
-2.23.00.0 Ability to take screenshots of irregular windows forms or rounded corner windows with transparent background {Jaex}
+2.23.01.0 Selected Window can capture objects within each active window {Jaex}
+2.23.00.0 Ability to Clipboard Upload folder contents using TreeGUI indexer engines {McoreD}
+2.22.02.0 Screenshots of irregular windows forms or rounded corner windows with transparent background are now supported {Jaex}
 2.22.01.0 URL Shorteners are now accessible from the main tab {Jaex}
 2.22.00.0 FTP Client (Beta) that is accessible from the system tray menu {Jaex}
 2.21.02.2 Fixed problem with arrow keys changing selected item during hotkey selection {inf1ni}

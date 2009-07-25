@@ -7,8 +7,7 @@ namespace ZSS.IndexersLib
 {
     [Serializable()]
     public class IndexerConfig
-    {
-        private int m_IndexingEngineId = 1;
+    {        
         //Default to Tree.NET
         public System.Threading.ThreadPriority ProcessPriority;
 

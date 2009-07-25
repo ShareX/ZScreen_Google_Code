@@ -30,6 +30,7 @@ using System.Text;
 using ZSS.ImageUploadersLib.Helpers;
 using ZSS.TextUploadersLib;
 using System.Runtime.InteropServices;
+using ZSS.TextUploadersLib.Helpers;
 
 namespace ZSS.Tasks
 {
@@ -173,10 +174,10 @@ namespace ZSS.Tasks
         /// <summary>
         /// String object: Text captured from Clipboard
         /// </summary>
-        public string MyText { get; set; }
+        public TextInfo MyText { get; set; }
         public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
         /// <summary>
-        /// MyTextUploader Object
+        /// MyTextUploader
         /// </summary>
         public TextUploader MyTextUploader { get; set; }
         #endregion
