@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-public class cDir
+public class TreeDir
 {
-    private List<cDir> mSubDirCol = new List<cDir>();
+    private List<TreeDir> mSubDirCol = new List<TreeDir>();
     private double mSizeOfFiles = 0.0;
     private string mDirPath;
-    private List<cFile> mFiles = new List<cFile>();
+    private List<TreeFile> mFiles = new List<TreeFile>();
 
-    public cDir(string dirPath)
+    public TreeDir(string dirPath)
     {
         mDirPath = dirPath;
     }
@@ -26,7 +26,7 @@ public class cDir
     public string SetFile(string filePath, [OptionalAttribute, DefaultParameterValueAttribute(BinaryPrefix.Kibibytes)] BinaryPrefix prefix)
     {
 
-        cFile f = new cFile(filePath);
+        TreeFile f = new TreeFile(filePath);
         mFiles.Add(f);
 
         mSizeOfFiles += f.GetSize(BinaryPrefix.Kibibytes);
@@ -44,17 +44,17 @@ public class cDir
     }
 
 
-    public List<cFile> GetFilesColl()
+    public List<TreeFile> GetFilesColl()
     {
         return mFiles;
     }
 
-    public void AddDir(cDir mySubDir)
+    public void AddDir(TreeDir mySubDir)
     {
         mSubDirCol.Add(mySubDir);
     }
 
-    public List<cDir> GetSubDirColl()
+    public List<TreeDir> GetSubDirColl()
     {
         return mSubDirCol;
     }
@@ -63,7 +63,7 @@ public class cDir
     {
         double dirSize = this.mSizeOfFiles;
 
-        foreach (cDir dir in this.GetSubDirColl())
+        foreach (TreeDir dir in this.GetSubDirColl())
         {
             dirSize += dir.DirectorySize();
         }

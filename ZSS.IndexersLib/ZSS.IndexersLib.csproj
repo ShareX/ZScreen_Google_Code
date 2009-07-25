@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Helpers\FileAttributesEx.cs" />
     <Compile Include="IndexerAdapter.cs" />
     <Compile Include="Helpers\TreeDir.cs" />
     <Compile Include="Helpers\TreeDirComparer.cs" />

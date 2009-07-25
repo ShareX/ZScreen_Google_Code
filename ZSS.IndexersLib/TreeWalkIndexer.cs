@@ -82,12 +82,9 @@ namespace ZSS.IndexersLib
                     this.setCurrentIndexFilePath(mSettings.GetConfig().OutputDir + Path.DirectorySeparatorChar + strOutputFileName);
 
                     return ">" + (char)34 + this.getCurrentIndexFilePath() + (char)34;
-                case IndexingMode.IN_ONE_FOLDER_MERGED:
-                    //If chkSingleFile.CheckState = CheckState.Checked Then
+                case IndexingMode.IN_ONE_FOLDER_MERGED:                    
                     if (mSettings.GetConfig().MergeFiles)
                     {
-                        //Fixed after ALPHA 16
-                        //Me.tarGetFilePath() = txtOutputDir.Text + "\" + txtFileName.Text + cboExt.Text
                         this.setCurrentIndexFilePath(this.mSettings.GetConfig().GetIndexFilePath());
                         if (isFirstEntryToSingleFile == true)
                         {
@@ -99,10 +96,7 @@ namespace ZSS.IndexersLib
                             return ">>" + (char)34 + this.getCurrentIndexFilePath() + (char)34;
                         }
                     }
-
-
                     break;
-
             }
 
 
@@ -111,17 +105,14 @@ namespace ZSS.IndexersLib
 
         public override void IndexNow(IndexingMode mIndexMode)
         {
-
             TreeWalkIndexer tree = new TreeWalkIndexer(mSettings);
             bool isMergeFile = mSettings.GetConfig().MergeFiles;
             bool isRemoveBranches = mSettings.GetConfig().RemoveTreeBranches;
 
             for (int i = 0; i <= mSettings.GetConfig().FolderList.Count - 1; i++)
             {
-
                 string TEMP_FILE = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\temp" + i.ToString() + ".bat";
                 string CURRENT_DIR = mSettings.GetConfig().FolderList[i];
-
                 string TREE_COMMAND = "%windir%\\system32\\tree.com " + tree.getSourceSwitch(CURRENT_DIR) + tree.getAsciiSwitch() + tree.getAddFilesSwitch() + tree.getOutputSwitch(CURRENT_DIR, mIndexMode);
                 Console.WriteLine(TREE_COMMAND);
                 using (StreamWriter sw = new StreamWriter(TEMP_FILE))
@@ -145,16 +136,13 @@ namespace ZSS.IndexersLib
 
                 if (mIndexMode == IndexingMode.IN_EACH_DIRECTORY | i == mSettings.GetConfig().FolderList.Count - 1 | (isMergeFile == false & mIndexMode == IndexingMode.IN_ONE_FOLDER_MERGED))
                 {
-
                     if (mSettings.GetConfig().ZipFilesInEachDir)
                     {
                         mSettings.ZipAdminFile(tree.getCurrentIndexFilePath(), null);
                     }
-
                     if (mSettings.GetConfig().ZipMergedFile)
                     {
                         mSettings.ZipAdminFile(tree.getCurrentIndexFilePath(), null);
-
                     }
                 }
 

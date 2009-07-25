@@ -23,6 +23,7 @@ namespace ZSS.IndexersLib
         public bool RemoveTreeBranches { get; set; }
 
         // Engine > TreeNet 
+        public const string DefaultCssFileName = "Default.css";
         [Category("Engines / Tree.NET"), DefaultValue(true), Description("Display files")]
         public bool ShowFilesTreeNet { get; set; }
         [Category("Engines / Tree.NET"), DefaultValue(true), Description("Display file sizes")]
@@ -50,6 +51,7 @@ namespace ZSS.IndexersLib
         public bool ZipFilesInOutputDir = false;
 
         // Filter
+        [Category("General / Filter"), DefaultValue(false), Description("File files and folders according to filtering rules")]
         public bool EnabledFiltering = true;
         [Category("General / Filter"), DefaultValue(false), Description("Ignore protected Operating System files and folders when indexing")]
         public bool HideProtectedOperatingSystemFilesFolders { get; set; }
@@ -57,9 +59,9 @@ namespace ZSS.IndexersLib
         public bool IgnoreHiddenFiles { get; set; }
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system files when indexing")]
         public bool IgnoreSystemFiles { get; set; }
-        public bool IgnoreFollowingFiles = true;
-        public const string DefaultCssFileName = "Default.css";
-        public string IgnoreFilesList = ".DS_Store|*.db|index.html|*.ini";
+        public bool IgnoreFollowingFiles = true;        
+        [Category("General / Filter"), Description("Ignore the following user files")]
+        public string IgnoreFilesList { get; set; }
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system folders when indexing")]
         public bool IgnoreHiddenFolders { get; set; }
         [Category("General / Filter"), DefaultValue(false), Description("Ignore system folders when indexing")]
@@ -92,7 +94,7 @@ namespace ZSS.IndexersLib
         [Category("Engines / Tree.NET"), DefaultValue(false), Description("Collapse folders")]
         public bool CollapseFolders { get; set; }
         [Category("Engines / Tree.NET"), Description("Path for an image logo")]
-        public string LogoPath { get; set; }
+        public string LogoPath = string.Empty; // { get; set; }
 
         public IndexerConfig()
         {
@@ -105,6 +107,8 @@ namespace ZSS.IndexersLib
             ShowFilesTreeNet = true;
             ShowFileSize = true;
             ShowDirSize = true;
+
+            IgnoreFilesList = ".DS_Store|*.db|index.html|*.ini";
 
             CssFilePath = Path.Combine(Application.StartupPath, DefaultCssFileName);
             AudioQuickScan = true;
@@ -138,7 +142,7 @@ namespace ZSS.IndexersLib
         public string IndexFileExt { get; set; }
 
         [Category("Engines / General"), DefaultValue(false), Description("Merge index file")]
-        public bool MergeFiles { get; set; }
+        public bool MergeFiles = false;
         [Category("Engines / General"), Description("Output directory for merge index file")]
         public string OutputDir { get; set; }
         [Category("Engines / General"), Description("Indexing Engine")]
