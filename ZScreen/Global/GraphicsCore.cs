@@ -72,7 +72,7 @@ namespace ZSS
         [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern uint SHAppBarMessage(int dwMessage, out APPBARDATA pData);
 
-        public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
+        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
         public static string GetWindowLabel()
         {
