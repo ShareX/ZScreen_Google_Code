@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using ZSS.IndexersLib;
 public class TreeDir
 {
     private List<TreeDir> mSubDirCol = new List<TreeDir>();
@@ -43,8 +44,22 @@ public class TreeDir
         }
     }
 
+    public List<TreeFile> GetFilesColl(IndexerAdapter settings)
+    {
+        List<TreeFile> files = new List<TreeFile>();
+        files.AddRange(GetFilesColl());
+        FilterHelper filter = new FilterHelper(settings);
+        foreach (TreeFile f in GetFilesColl())
+        {
+            if (filter.IsBannedFile(f.GetFilePath()))
+            {
+                files.Remove(f);
+            }
+        }
+        return files;
+    }
 
-    public List<TreeFile> GetFilesColl()
+    private List<TreeFile> GetFilesColl()
     {
         return mFiles;
     }
