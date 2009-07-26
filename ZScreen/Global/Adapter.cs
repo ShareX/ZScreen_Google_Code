@@ -35,6 +35,7 @@ using ZSS.Helpers;
 using System.Net;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib.Helpers;
+using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 
 namespace ZSS.Global
 {
@@ -294,5 +295,35 @@ namespace ZSS.Global
         {
             return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
         }
+
+        #region "Windows 7 only"
+        public static List<Form> GetUserWindows()
+        {
+            List<Form> forms = new List<Form>();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.GetType() == typeof(ZSS.Forms.ToolbarWindow) || f.GetType() == typeof(ZScreen))
+                {
+                    forms.Add(f);
+                }
+            }
+            return forms;
+        }
+        public static void TaskbarSetState(TaskbarButtonProgressState tbps)
+        {
+            foreach (Form f in GetUserWindows())
+            {
+                Taskbar.MultipleViewProgressBar.SetState(f, tbps);
+            }
+        }
+        public static void TaskbarSetProgress(int progress)
+        {
+            foreach (Form f in GetUserWindows())
+            {
+                Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
+            }
+        }
+        #endregion
     }
+
 }

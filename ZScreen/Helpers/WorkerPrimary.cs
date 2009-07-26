@@ -224,18 +224,11 @@ namespace ZSS.Helpers
                     int progress = (int)e.UserState;
                     Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
-                    foreach (Form f in Application.OpenForms)
-                    {
-                        Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.Normal);
-                        Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
-                    }                       
+                    Adapter.TaskbarSetProgress(progress);                     
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarButtonProgressState tbps = (TaskbarButtonProgressState)e.UserState;
-                    foreach (Form f in Application.OpenForms)
-                    {
-                        Taskbar.MultipleViewProgressBar.SetState(f, tbps);
-                    }   
+                    Adapter.TaskbarSetState(tbps);
                     break;
             }
         }
@@ -360,10 +353,7 @@ namespace ZSS.Helpers
                     }
                 }
 
-                foreach (Form f in Application.OpenForms)
-                {
-                    Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.NoProgress);                
-                }                        
+                Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);                       
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
             }

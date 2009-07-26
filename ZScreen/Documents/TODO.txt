@@ -1,14 +1,15 @@
 ﻿Hotkey for Indexer
-
+		
+Windwos.Forms.WebBrowser			
+	Preview CSS editing in a WebBrowser
+	Preview HTML in History tab
+	
+JumpLists
+	Paths - Settings, Images
+	
 Clipboard Upload Wizard
 	User hit Clipboard Upload hotkey
 	Task List (refer to WindowsAPICodePack) pops up asking What you want to do? 
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
-		
-Windwos.Forms.WebBrowser			
-	Preview CSS editing in a WebBrowser
-	
-JumpLists
-	Paths - Settings, Images

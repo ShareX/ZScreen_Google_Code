@@ -204,7 +204,8 @@ namespace ZSS.Helpers
                         WorkingDir = Program.CacheDir
                     };
 
-                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
+                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Normal);
+                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);                    
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;
