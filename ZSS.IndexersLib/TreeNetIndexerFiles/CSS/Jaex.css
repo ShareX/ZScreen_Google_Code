@@ -4,6 +4,11 @@ body
     background-color: #E5E5E5;
 }
 
+img
+{
+	border-style: none;
+}
+
 a:link
 {
     color: #0066FF;

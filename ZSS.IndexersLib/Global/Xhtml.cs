@@ -27,7 +27,7 @@ using System.Text;
 
 namespace ZSS.IndexersLib
 {
-    public static class HTMLHelper
+    public static class Xhtml
     {
         public enum ListType
         {

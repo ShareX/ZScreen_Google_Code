@@ -413,13 +413,18 @@ namespace ZSS.IndexersLib
 
             if (html)
             {
-                appName = HTMLHelper.MakeAnchor(appUrl, appName);
-                appUrl = "<a href=" + (char)34 + appUrl + (char)34 + ">Google Code</a>.";
+                appName = Xhtml.MakeAnchor(appUrl, appName);                
             }
 
             string footer = string.Format("Generated on {0} using {1}", strDateTime, appName);
-
-            if (!html)
+            if (html)
+            {
+                if (mConfig.ShowValidXhtmlIcons)
+                {
+                    footer += GetText("valid_xhtml.txt");
+                }
+            }
+            else
             {
                 footer += "\r\nLatest version of can be downloaded from " + appUrl;
             }

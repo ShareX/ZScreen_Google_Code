@@ -188,11 +188,11 @@ namespace ZSS.IndexersLib
             {
                 if (mSettings.GetConfig().ShowDirSize)
                 {
-                    dirTitle = HTMLHelper.GetValidXhtmlLine(string.Format("{0} [{1}]", dirName, dirSize));
+                    dirTitle = Xhtml.GetValidXhtmlLine(string.Format("{0} [{1}]", dirName, dirSize));
                 }
                 else
                 {
-                    dirTitle = HTMLHelper.GetValidXhtmlLine(dirName);
+                    dirTitle = Xhtml.GetValidXhtmlLine(dirName);
                 }
             }
 
@@ -249,7 +249,7 @@ namespace ZSS.IndexersLib
 
                     if (fDivWrap(dir))
                     {
-                        where.WriteLine(HTMLHelper.OpenDiv());
+                        where.WriteLine(Xhtml.OpenDiv());
                     }
 
                     if (double.Parse(Regex.Split(dir.DirectorySizeToString(TreeDir.BinaryPrefix.Kibibytes), " ")[0]) > 0 | files.Count > 0)
@@ -258,9 +258,9 @@ namespace ZSS.IndexersLib
                         {
                             if (files.Count > 0)
                             {
-                                where.WriteLine(HTMLHelper.OpenPara("foldercount"));
+                                where.WriteLine(Xhtml.OpenPara("foldercount"));
                                 where.WriteLine("Files Count: " + files.Count.ToString());
-                                where.WriteLine(HTMLHelper.ClosePara());
+                                where.WriteLine(Xhtml.ClosePara());
                             }
                         }
                     }
@@ -271,9 +271,9 @@ namespace ZSS.IndexersLib
                         // it is an empty directory because there can be subfolders 
                         // with files
                         //System.Windows.Forms.MessageBox.Show(dir.GetFilesColl().Count)
-                        where.WriteLine(HTMLHelper.OpenPara(""));
-                        where.WriteLine(mSettings.GetOptions().EmptyFolderMessage + HTMLHelper.AddBreak());
-                        where.WriteLine(HTMLHelper.ClosePara());
+                        where.WriteLine(Xhtml.OpenPara(""));
+                        where.WriteLine(mSettings.GetOptions().EmptyFolderMessage + Xhtml.AddBreak());
+                        where.WriteLine(Xhtml.ClosePara());
                     }
 
                     if (files.Count > 0)
@@ -296,10 +296,10 @@ namespace ZSS.IndexersLib
                                 switch (mSettings.GetConfig().IndexListType)
                                 {
                                     case XHTMLFileListMode.Bullets:
-                                        where.WriteLine(HTMLHelper.OpenBulletedList());
+                                        where.WriteLine(Xhtml.OpenBulletedList());
                                         break;
                                     case XHTMLFileListMode.Numbered:
-                                        where.WriteLine(HTMLHelper.OpenNumberedList());
+                                        where.WriteLine(Xhtml.OpenNumberedList());
                                         break;
                                 }
                             }
@@ -347,11 +347,11 @@ namespace ZSS.IndexersLib
                                         {
                                             fileSize = f.GetSizeToString(TreeDir.BinaryPrefix.Kibibytes);
                                         }
-                                        lLine = HTMLHelper.GetValidXhtmlLine(strFilePath) + " " + HTMLHelper.GetSpan(string.Format(" [{0}]", fileSize), "filesize");
+                                        lLine = Xhtml.GetValidXhtmlLine(strFilePath) + " " + Xhtml.GetSpan(string.Format(" [{0}]", fileSize), "filesize");
                                     }
                                     else
                                     {
-                                        lLine = HTMLHelper.GetValidXhtmlLine(strFilePath);
+                                        lLine = Xhtml.GetValidXhtmlLine(strFilePath);
                                     }
 
                                     if (mSettings.GetConfig().AudioInfo && fIsAudio(f.GetFileExtension().ToLower()) == true)
@@ -365,8 +365,8 @@ namespace ZSS.IndexersLib
                                             if (dura > 0)
                                             {
                                                 Console.WriteLine(fsize / dura);
-                                                lLine += HTMLHelper.GetSpan(string.Format(" [{0} kb/s]", (fsize / dura).ToString("0.00"), fGetHMS(audioFile.Properties.Duration.TotalSeconds)), "audioinfo");
-                                                lLine += HTMLHelper.GetSpan(string.Format(" [{0}]", fGetHMS(audioFile.Properties.Duration.TotalSeconds)), "audiolength");
+                                                lLine += Xhtml.GetSpan(string.Format(" [{0} kb/s]", (fsize / dura).ToString("0.00"), fGetHMS(audioFile.Properties.Duration.TotalSeconds)), "audioinfo");
+                                                lLine += Xhtml.GetSpan(string.Format(" [{0}]", fGetHMS(audioFile.Properties.Duration.TotalSeconds)), "audiolength");
                                             }
                                         }
                                         catch (Exception ex)
@@ -384,10 +384,10 @@ namespace ZSS.IndexersLib
                                 switch (mSettings.GetConfig().IndexListType)
                                 {
                                     case XHTMLFileListMode.Bullets:
-                                        where.WriteLine(HTMLHelper.CloseBulletedList());
+                                        where.WriteLine(Xhtml.CloseBulletedList());
                                         break;
                                     case XHTMLFileListMode.Numbered:
-                                        where.WriteLine(HTMLHelper.CloseNumberedList());
+                                        where.WriteLine(Xhtml.CloseNumberedList());
                                         break;
                                 }
                             }
@@ -405,7 +405,7 @@ namespace ZSS.IndexersLib
 
                     if (fDivWrap(dir))
                     {
-                        where.WriteLine(HTMLHelper.CloseDiv());
+                        where.WriteLine(Xhtml.CloseDiv());
                     }
 
                     mNumTabs -= 1;
@@ -478,17 +478,17 @@ namespace ZSS.IndexersLib
         {
             if (mBooFirstIndexFile)
             {
-                sw.WriteLine(HTMLHelper.GetDocType());
+                sw.WriteLine(Xhtml.GetDocType());
                 if (mSettings.GetConfig().CollapseFolders)
                 {
-                    sw.WriteLine(HTMLHelper.GetCollapseJs());
-                    sw.WriteLine(HTMLHelper.GetCollapseCss());
+                    sw.WriteLine(Xhtml.GetCollapseJs());
+                    sw.WriteLine(Xhtml.GetCollapseCss());
                 }
-                sw.WriteLine(HTMLHelper.GetCssStyle(mSettings.GetConfig().CssFilePath));
+                sw.WriteLine(Xhtml.GetCssStyle(mSettings.GetConfig().CssFilePath));
 
                 if (mBooMoreFilesToCome)
                 {
-                    sw.WriteLine(HTMLHelper.GetTitle(mSettings.GetConfig().MergedHtmlTitle));
+                    sw.WriteLine(Xhtml.GetTitle(mSettings.GetConfig().MergedHtmlTitle));
                     mBooMoreFilesToCome = false;
                 }
                 else
@@ -496,16 +496,16 @@ namespace ZSS.IndexersLib
                     string[] c = folderPath.Split(Path.DirectorySeparatorChar);
                     if (c[1].Length == 0)
                     {
-                        sw.WriteLine(HTMLHelper.GetTitle("Index for " + folderPath));
+                        sw.WriteLine(Xhtml.GetTitle("Index for " + folderPath));
                     }
                     else
                     {
-                        sw.WriteLine(HTMLHelper.GetTitle("Index for " + Path.GetFileName(folderPath)));
+                        sw.WriteLine(Xhtml.GetTitle("Index for " + Path.GetFileName(folderPath)));
                     }
                 }
 
-                sw.WriteLine(HTMLHelper.CloseHead());
-                sw.WriteLine(HTMLHelper.OpenBody());
+                sw.WriteLine(Xhtml.CloseHead());
+                sw.WriteLine(Xhtml.OpenBody());
 
                 mBooFirstIndexFile = false;
             }
@@ -518,11 +518,11 @@ namespace ZSS.IndexersLib
 
             if (bAddFooter)
             {
-                sw.WriteLine(HTMLHelper.OpenDiv());
-                sw.WriteLine("<hr>");
-                sw.WriteLine(mSettings.GetFooterText(null, IndexingEngine.TreeNetLib, true));
-                sw.WriteLine(HTMLHelper.CloseDiv());
-                sw.WriteLine(HTMLHelper.CloseBody());
+                sw.WriteLine(Xhtml.OpenDiv());
+                sw.WriteLine("<hr />");
+                sw.WriteLine(mSettings.GetFooterText(null, IndexingEngine.TreeNetLib, true));                
+                sw.WriteLine(Xhtml.CloseDiv());
+                sw.WriteLine(Xhtml.CloseBody());
             }
 
             mBooFirstDir = true;
