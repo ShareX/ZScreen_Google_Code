@@ -89,13 +89,27 @@ namespace ZSS
             if (CoreHelpers.RunningOnWin7)
             {
                 jumpList = Taskbar.JumpList;
-                jumpList.UserTasks.Add(new JumpListLink
+                //jumpList.UserTasks.Add(new JumpListLink
+                //{
+                //    Title = "Crop Shot",
+                //    Arguments = "crop_shot",
+                //    Path = Application.ExecutablePath,
+                //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                //});
+                CustomCategory paths = new CustomCategory("Paths");
+                paths.JumpListItems.Add(new JumpListLink
                 {
-                    Title = "Crop Shot",
-                    Arguments = "crop_shot",
-                    Path = Application.ExecutablePath,
-                    IconReference = new IconReference(Application.ExecutablePath, 0)
+                    Title = "Settings",
+                    IconReference = new IconReference(Path.Combine( "%windir%", "explorer.exe"), 0),
+                    Path = Program.SettingsDir
+                });                
+                paths.JumpListItems.Add(new JumpListLink
+                {
+                    Title = "Images",
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                    Path = Program.ImagesDir
                 });
+                jumpList.CustomCategories.Add(paths);
                 Taskbar.JumpList.RefreshTaskbarList();
             }
         }
