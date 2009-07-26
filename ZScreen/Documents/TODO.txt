@@ -7,3 +7,8 @@ Clipboard Upload Wizard
 		Upload Everything (Images/Text/Files)
 		Index Folders
 		
+Windwos.Forms.WebBrowser			
+	Preview CSS editing in a WebBrowser
+	
+JumpLists
+	Paths - Settings, Images
