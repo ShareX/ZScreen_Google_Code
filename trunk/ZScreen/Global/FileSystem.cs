@@ -159,8 +159,8 @@ namespace ZSS
 
         public static void AppendDebug(Exception ex)
         {
-            FileSystem.AppendDebug(ex.ToString());
-            AppendDebug(ex.Message);
+            AppendDebug(ex.ToString());
+            Console.WriteLine(ex.ToString());
         }
 
         public static void AppendDebug(string msg)

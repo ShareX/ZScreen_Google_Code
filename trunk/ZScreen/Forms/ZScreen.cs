@@ -86,6 +86,13 @@ namespace ZSS
                 IndexersLib.IndexerAdapter.CopyDefaultCss(Program.SettingsDir);
                 Program.conf.IndexerConfig.CssFilePath = cssIndexer;
             }
+
+            ZScreen_Windows7onlyTasks();
+
+        }
+
+        private void ZScreen_Windows7onlyTasks()
+        {
             if (CoreHelpers.RunningOnWin7)
             {
                 jumpList = Taskbar.JumpList;
@@ -100,9 +107,9 @@ namespace ZSS
                 paths.JumpListItems.Add(new JumpListLink
                 {
                     Title = "Settings",
-                    IconReference = new IconReference(Path.Combine( "%windir%", "explorer.exe"), 0),
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
                     Path = Program.SettingsDir
-                });                
+                });
                 paths.JumpListItems.Add(new JumpListLink
                 {
                     Title = "Images",
