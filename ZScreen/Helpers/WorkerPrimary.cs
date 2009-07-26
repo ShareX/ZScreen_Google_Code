@@ -226,6 +226,7 @@ namespace ZSS.Helpers
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
                     foreach (Form f in Application.OpenForms)
                     {
+                        Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.Normal);
                         Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
                     }                       
                     break;
