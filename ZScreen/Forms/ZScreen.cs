@@ -46,6 +46,9 @@ using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.UpdateCheckerLib;
 using ZSS.TextUploadersLib.Helpers;
+using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack;
 
 namespace ZSS
 {
@@ -54,17 +57,12 @@ namespace ZSS
         #region Private Variables
 
         private bool mGuiIsReady, mClose;
-
         private int mHadFocusAt;
-
         private TextBox mHadFocus;
-
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
-
-        private Debug debug;
-
+        private Debug debug = null;
         private List<int> mLogoRandomList = new List<int>(5);
-
+        private JumpList jumpList = null;
         #endregion
 
         public ZScreen()
@@ -87,7 +85,19 @@ namespace ZSS
             {
                 IndexersLib.IndexerAdapter.CopyDefaultCss(Program.SettingsDir);
                 Program.conf.IndexerConfig.CssFilePath = cssIndexer;
-            }            
+            }
+            if (CoreHelpers.RunningOnWin7)
+            {
+                jumpList = Taskbar.JumpList;
+                jumpList.UserTasks.Add(new JumpListLink
+                {
+                    Title = "Crop Shot",
+                    Arguments = "crop_shot",
+                    Path = Application.ExecutablePath,
+                    IconReference = new IconReference(Application.ExecutablePath, 0)
+                });
+                Taskbar.JumpList.RefreshTaskbarList();
+            }
         }
 
         private void ZScreen_SetFormSettings()

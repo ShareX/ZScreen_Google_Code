@@ -50,6 +50,7 @@ namespace ZSS.Helpers
             mTask.StartTime = DateTime.Now;
 
             ImageUploader imageUploader = null;
+            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, 100);
 
             if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
@@ -108,6 +109,7 @@ namespace ZSS.Helpers
 
             if (imageUploader != null)
             {
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, -1);
                 imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;

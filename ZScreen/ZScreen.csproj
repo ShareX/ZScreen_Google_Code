@@ -73,6 +73,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -85,6 +87,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +390,8 @@
     <None Include="Resources\au.png" />
     <None Include="Resources\us.png" />
     <None Include="Resources\ajax-loader.gif" />
+    <Content Include="Lib\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="Lib\Microsoft.WindowsAPICodePack.Shell.dll" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
