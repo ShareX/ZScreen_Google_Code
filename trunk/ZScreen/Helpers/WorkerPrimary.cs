@@ -41,6 +41,7 @@ using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.IndexersLib;
 using ZSS.TextUploadersLib.Helpers;
+using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 
 namespace ZSS.Helpers
 {
@@ -223,6 +224,22 @@ namespace ZSS.Helpers
                     int progress = (int)e.UserState;
                     Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
+                    if (Taskbar.ProgressBar.State != TaskbarButtonProgressState.Indeterminate)
+                    {
+                        Taskbar.ProgressBar.CurrentValue = progress;
+                    }
+                    break;
+                case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
+                    int type = (int)e.UserState;
+                    if (type == 100)
+                    {
+                        Taskbar.ProgressBar.State = TaskbarButtonProgressState.Normal;
+                        Taskbar.ProgressBar.MaxValue = 100;
+                    }
+                    else if (type == -1)
+                    {
+                        Taskbar.ProgressBar.State = TaskbarButtonProgressState.Indeterminate;
+                    }
                     break;
             }
         }
@@ -346,6 +363,9 @@ namespace ZSS.Helpers
                         FileSystem.AppendDebug(task.Errors[task.Errors.Count - 1]);
                     }
                 }
+
+                Taskbar.ProgressBar.CurrentValue = 0;
+                Taskbar.ProgressBar.State = TaskbarButtonProgressState.NoProgress;
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
             }
