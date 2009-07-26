@@ -396,6 +396,7 @@
     <None Include="Resources\au.png" />
     <None Include="Resources\us.png" />
     <None Include="Resources\ajax-loader.gif" />
+    <Content Include="Documents\TODO.txt" />
     <Content Include="Lib\Microsoft.WindowsAPICodePack.dll" />
     <Content Include="Lib\Microsoft.WindowsAPICodePack.Shell.dll" />
     <Content Include="Resources\zss-main.ico" />

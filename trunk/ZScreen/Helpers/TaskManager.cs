@@ -33,6 +33,7 @@ using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using System.ComponentModel;
+using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 
 namespace ZSS.Helpers
 {
@@ -108,7 +109,7 @@ namespace ZSS.Helpers
 
             if (imageUploader != null)
             {
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, -1);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
                 imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
@@ -188,7 +189,7 @@ namespace ZSS.Helpers
             try
             {
                 string fullFilePath = mTask.LocalFilePath;
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, 100);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
@@ -275,6 +276,7 @@ namespace ZSS.Helpers
         public void UploadText()
         {
             mTask.StartTime = DateTime.Now;
+            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
 
             TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
             textUploader.ProxySettings = Adapter.GetProxySettings();
