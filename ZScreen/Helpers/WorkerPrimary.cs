@@ -230,21 +230,11 @@ namespace ZSS.Helpers
                     }                       
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
-                    int perc = (int)e.UserState;
-                    if (perc == 100)
+                    TaskbarButtonProgressState tbps = (TaskbarButtonProgressState)e.UserState;
+                    foreach (Form f in Application.OpenForms)
                     {
-                        foreach (Form f in Application.OpenForms)
-                        {
-                            Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.Normal);                        
-                        }                        
-                    }
-                    else if (perc == -1)
-                    {
-                        foreach (Form f in Application.OpenForms)
-                        {
-                            Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.Indeterminate);
-                        }   
-                    }
+                        Taskbar.MultipleViewProgressBar.SetState(f, tbps);
+                    }   
                     break;
             }
         }
@@ -877,6 +867,10 @@ namespace ZSS.Helpers
                                 string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
                                 File.Copy(fp, cbFilePath, true);
                                 strListFilePath.Add(cbFilePath);
+                            }
+                            else if (Directory.Exists(fp))
+                            {
+                                MessageBox.Show(fp);
                             }
                             else
                             {

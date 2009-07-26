@@ -1,0 +1,9 @@
+﻿Hotkey for Indexer
+
+Clipboard Upload Wizard
+	User hit Clipboard Upload hotkey
+	Task List (refer to WindowsAPICodePack) pops up asking What you want to do? 
+		Upload Images
+		Upload Everything (Images/Text/Files)
+		Index Folders
+		
