@@ -224,21 +224,26 @@ namespace ZSS.Helpers
                     int progress = (int)e.UserState;
                     Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
-                    if (Taskbar.ProgressBar.State != TaskbarButtonProgressState.Indeterminate)
+                    foreach (Form f in Application.OpenForms)
                     {
-                        Taskbar.ProgressBar.CurrentValue = progress;
-                    }
+                        Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
+                    }                       
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
-                    int type = (int)e.UserState;
-                    if (type == 100)
+                    int perc = (int)e.UserState;
+                    if (perc == 100)
                     {
-                        Taskbar.ProgressBar.State = TaskbarButtonProgressState.Normal;
-                        Taskbar.ProgressBar.MaxValue = 100;
+                        foreach (Form f in Application.OpenForms)
+                        {
+                            Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.Normal);                        
+                        }                        
                     }
-                    else if (type == -1)
+                    else if (perc == -1)
                     {
-                        Taskbar.ProgressBar.State = TaskbarButtonProgressState.Indeterminate;
+                        foreach (Form f in Application.OpenForms)
+                        {
+                            Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.Indeterminate);
+                        }   
                     }
                     break;
             }
@@ -364,8 +369,10 @@ namespace ZSS.Helpers
                     }
                 }
 
-                Taskbar.ProgressBar.CurrentValue = 0;
-                Taskbar.ProgressBar.State = TaskbarButtonProgressState.NoProgress;
+                foreach (Form f in Application.OpenForms)
+                {
+                    Taskbar.MultipleViewProgressBar.SetState(f, TaskbarButtonProgressState.NoProgress);                
+                }                        
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
             }
@@ -1018,6 +1025,12 @@ namespace ZSS.Helpers
             {
                 mZScreen.lbHistory.ClearSelected();
                 mZScreen.lbHistory.SelectedIndex = 0;
+            }
+            if (File.Exists(hi.LocalPath))
+            {
+                Taskbar.JumpList.AddToRecent(hi.LocalPath);
+                Taskbar.JumpList.KnownCategoryToDisplay = KnownCategoryType.Recent;
+                Taskbar.JumpList.RefreshTaskbarList();
             }
         }
 

@@ -50,8 +50,7 @@ namespace ZSS.Helpers
             mTask.StartTime = DateTime.Now;
 
             ImageUploader imageUploader = null;
-            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, 100);
-
+            
             if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
@@ -189,6 +188,7 @@ namespace ZSS.Helpers
             try
             {
                 string fullFilePath = mTask.LocalFilePath;
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, 100);
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
