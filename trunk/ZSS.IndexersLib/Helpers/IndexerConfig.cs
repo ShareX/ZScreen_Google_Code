@@ -102,9 +102,9 @@ namespace ZSS.IndexersLib
         public bool ShowValidXhtmlIcons { get; set; }
 
         [Category("General / Display"), DefaultValue(false), Description("Display files in reverse")]
-        public bool RevereFileOrder = false;
+        public bool RevereFileOrder { get; set; }
         [Category("General / Display"), DefaultValue(false), Description("Display file count")]
-        public bool ShowFileCount = false;
+        public bool ShowFileCount { get; set; }
         [Category("General / Tree.NET / Display"), DefaultValue(false), Description("Display file count")]
         public bool SortBySize { get; set; }
         [Category("General / Tree.NET / Display"), DefaultValue(FileSortMode.Ascending), Description("Sort files by Size")]
