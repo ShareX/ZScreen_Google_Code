@@ -59,7 +59,7 @@
     <Compile Include="Helpers\TreeFile.cs" />
     <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Helpers\IndexerConfig.cs" />
-    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Global\Xhtml.cs" />
     <Compile Include="TreeNetIndexer.cs" />
     <Compile Include="TreeWalkIndexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,8 +72,13 @@
     <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Lib\taglib-sharp.dll" />
     <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Jaex.css" />
-    <Content Include="TreeNetIndexerFiles\CSS\Default.css" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Default.css" />
     <Content Include="TreeNetIndexerFiles\Demo.html" />
+    <Content Include="TreeNetIndexerFiles\folder-open.png" />
+    <Content Include="TreeNetIndexerFiles\folder.png" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\valid_css.txt" />
+    <EmbeddedResource Include="TreeNetIndexerFiles\valid_xhtml.txt">
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

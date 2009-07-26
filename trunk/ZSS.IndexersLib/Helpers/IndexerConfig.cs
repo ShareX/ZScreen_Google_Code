@@ -95,9 +95,11 @@ namespace ZSS.IndexersLib
 
         // Misc
         [Category("Engines / Tree.NET / XHTML"), Description("Merged XHTML Title")]
-        public string MergedHtmlTitle { get; set; }
-        [Category("Engines / Tree.NET / XHTML"), Description("Service information e.g. ftp://domain:port")]
-        public string ServerInfo { get; set; }
+        public string MergedHtmlTitle = string.Empty;
+        [Category("Engines / Tree.NET / XHTML"), Description("Server information e.g. ftp://domain:port")]
+        public string ServerInfo = string.Empty;
+        [Category("Engines / Tree.NET / XHTML"), DefaultValue(true), Description("To show your readers that you have taken the care to create an interoperable Web page, you may display this icon on any page that validates")]
+        public bool ShowValidXhtmlIcons { get; set; }
 
         [Category("General / Display"), DefaultValue(false), Description("Display files in reverse")]
         public bool RevereFileOrder = false;
@@ -130,6 +132,7 @@ namespace ZSS.IndexersLib
             ShowFilesTreeNet = true;
             ShowFileSize = true;
             ShowDirSize = true;
+            ShowValidXhtmlIcons = true;
 
             IgnoreFilesList = ".DS_Store|*.db|index.html|*.ini";
 

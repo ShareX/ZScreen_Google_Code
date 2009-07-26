@@ -9,6 +9,11 @@ body
 	background-color:#CCCCCC;
 }
 
+img
+{
+	border-style: none;
+}
+
 a:link { 
 	font-weight:bold; 
 	text-decoration:none; 
