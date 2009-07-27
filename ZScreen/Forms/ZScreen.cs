@@ -2053,8 +2053,6 @@ namespace ZSS
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
                     btnHistoryCopyImage.Enabled = checkImage;
-                    pbPreview.Visible = checkImage;
-                    txtPreview.Visible = checkText;
 
                     if (checkImage)
                     {
@@ -2072,6 +2070,10 @@ namespace ZSS
                         pbPreview.LoadAsync(hi.RemotePath);
                         pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
                     }
+
+                    // preview text from remote path because otherwise Notepad is gonna open
+                    string url = (checkText ? (checkRemote ? hi.RemotePath : hi.LocalPath) : hi.LocalPath);
+                    historyBrowser.Navigate(url);
 
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;

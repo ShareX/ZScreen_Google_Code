@@ -92,7 +92,7 @@ namespace ZSS
         public const string DISABLED_IMAGE_EDITOR = "Disabled";
 
         public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif", "ico" };
-        public static string[] zTextFileTypes = { "txt", "log" };
+        public static string[] zTextFileTypes = { "txt", "log", "html" };
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
             Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
