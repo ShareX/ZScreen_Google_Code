@@ -2068,6 +2068,12 @@ namespace ZSS
                     {
                         txtPreview.Text = File.ReadAllText(hi.LocalPath);
                     }
+                    else if (checkWebpage)
+                    {
+                        // preview text from remote path because otherwise Notepad is gonna open
+                        string url = (checkText ? (checkRemote ? hi.RemotePath : hi.LocalPath) : hi.LocalPath);
+                        historyBrowser.Navigate(url);
+                    }
                     else if (checkRemote)
                     {
                         pbPreview.Image = Resources.ajax_loader;
@@ -2076,9 +2082,6 @@ namespace ZSS
                         pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
                     }
 
-                    // preview text from remote path because otherwise Notepad is gonna open
-                    string url = (checkText ? (checkRemote ? hi.RemotePath : hi.LocalPath) : hi.LocalPath);
-                    historyBrowser.Navigate(url);
 
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
