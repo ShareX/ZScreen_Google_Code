@@ -1,4 +1,8 @@
-﻿Hotkey for Indexer
+﻿Debug
+	Full OS Version
+	Full Application Version
+
+Hotkey for Indexer
 		
 Windwos.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser

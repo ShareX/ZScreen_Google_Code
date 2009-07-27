@@ -201,6 +201,9 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
+        	FileSystem.AppendDebug("OS: " + Environment.OSVersion.VersionString);
+        	FileSystem.AppendDebug("Started " + mAppInfo.GetApplicationTitleFull());
+                        
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -235,6 +238,8 @@ namespace ZSS
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
 
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
+            
             // Use Configuration Wizard Settings if applied
             if (cw != null)
             {
@@ -264,8 +269,17 @@ namespace ZSS
                 mAppInfo.AppName = mProductName;
             }
 
-            Application.Run(new ZScreen());
-            ZScreenKeyboardHook.Dispose();
+            try {
+            	  Application.Run(new ZScreen());
+            } catch (Exception ex) {
+            	FileSystem.AppendDebug(ex);
+            }       
+            finally 
+            {
+            FileSystem.WriteDebugFile();
+            ZScreenKeyboardHook.Dispose();            	
+            }
+
         }
     }
 }
