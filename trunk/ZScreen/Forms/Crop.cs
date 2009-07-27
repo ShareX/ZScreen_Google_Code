@@ -38,7 +38,7 @@ namespace ZSS
 {
     public class Crop : Form
     {
-        private bool mMouseDown, selectedWindowMode, forceCheck, captureObjects;
+        private bool mMouseDown, selectedWindowMode, forceCheck, captureObjects, dragging;
         private Bitmap bmpClean, bmpBackground, bmpRegion;
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
         private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
@@ -160,6 +160,17 @@ namespace ZSS
             }
         }
 
+        private bool IsDragging(Point point)
+        {
+            int checkSize = 0;
+            if (selectedWindowMode)
+            {
+                checkSize = 15;
+            }
+            return mMouseDown && (point.X > mousePosOnClick.X + checkSize || point.Y > mousePosOnClick.Y + checkSize ||
+                point.X < mousePosOnClick.X - checkSize || point.Y < mousePosOnClick.Y - checkSize);
+        }
+
         private void TimerTick(object sender, EventArgs e)
         {
             CalculateBoundaryFromMousePosition();
@@ -169,30 +180,36 @@ namespace ZSS
             {
                 oldMousePos = mousePos;
                 forceCheck = false;
+
+                dragging = IsDragging(mousePos);
+                Console.Write(dragging.ToString());
+
                 if (selectedWindowMode)
                 {
-                    IEnumerator enumerator = windows.GetEnumerator();
-                    while (enumerator.MoveNext())
+                    if (!dragging)
                     {
-                        KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
-                        if (kv.Value.Contains(Cursor.Position))
+                        IEnumerator enumerator = windows.GetEnumerator();
+                        while (enumerator.MoveNext())
                         {
-                            CropRegion = new Rectangle(PointToClient(kv.Value.Location), kv.Value.Size);
-                            break;
+                            KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
+                            if (kv.Value.Contains(Cursor.Position))
+                            {
+                                CropRegion = new Rectangle(PointToClient(kv.Value.Location), kv.Value.Size);
+                                break;
+                            }
                         }
                     }
                 }
-                else
+
+                if (mMouseDown && dragging)
                 {
-                    if (mMouseDown)
-                    {
-                        CropRegion = GraphicsMgr.GetRectangle(mousePos.X, mousePos.Y,
-                            mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
-                            Program.conf.CropGridToggle, ref mousePos);
-                        CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
-                        mousePos = mousePos.Intersect(rectIntersect);
-                    }
+                    CropRegion = GraphicsMgr.GetRectangle(mousePos.X, mousePos.Y,
+                        mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
+                        Program.conf.CropGridToggle, ref mousePos);
+                    CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
+                    mousePos = mousePos.Intersect(rectIntersect);
                 }
+
                 Refresh();
             }
         }
@@ -369,21 +386,10 @@ namespace ZSS
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (selectedWindowMode)
-                {
-                    //if (Program.conf.SelectedWindowFront)
-                    //{
-                    //    User32.ActivateWindow(mHandle);
-                    //}
-                    ReturnImageAndExit();
-                }
-                else
-                {
-                    mousePosOnClick = PointToClient(MousePosition);
-                    CropRegion = new Rectangle(mousePosOnClick, new Size(0, 0));
-                    mMouseDown = true;
-                    Refresh();
-                }
+                mousePosOnClick = PointToClient(MousePosition);
+                CropRegion = new Rectangle(mousePosOnClick, new Size(0, 0));
+                mMouseDown = true;
+                if (!selectedWindowMode) Refresh();
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -400,7 +406,7 @@ namespace ZSS
 
         private void Crop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!selectedWindowMode && mMouseDown)
+            if (mMouseDown)
             {
                 mMouseDown = false;
                 if (CropRegion.Width > 0 && CropRegion.Height > 0)
@@ -466,6 +472,7 @@ namespace ZSS
 
         private void CancelAndRestart()
         {
+            dragging = false;
             mMouseDown = false;
             Refresh();
         }
