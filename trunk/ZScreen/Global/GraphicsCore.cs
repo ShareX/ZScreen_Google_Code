@@ -21,6 +21,7 @@
 */
 #endregion
 
+using Microsoft.WindowsAPICodePack;
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
@@ -375,19 +376,19 @@ namespace ZSS
         public static Rectangle GetWindowRectangle(IntPtr handle)
         {
             Rectangle rectangle;
-            try {            	            
-            	if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
+            
+            if (Environment.OSVersion.Version.Major < 6) {
+            	return GetWindowRect(handle);
+            }
+            
+			if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
             {
                 return rectangle;
             }
             else
             {
                 return GetWindowRect(handle);
-            }
-            
-            } catch (Exception) {
-            	return GetWindowRect(handle);
-            }           
+            }      
         }
 
         public static void ActivateWindow(IntPtr handle)

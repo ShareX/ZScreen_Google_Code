@@ -1,5 +1,6 @@
 Version 2.23 - 20090801
 
+2.23.03.0 Selected Window can perform Crop Shot if required {Jaex}
 2.23.02.0 Windows 7 only: ZScreen taskbar icon shows progress when uploading {McoreD}
 2.23.01.0 Selected Window can capture objects within each active window {Jaex}
 2.23.00.0 Ability to Clipboard Upload folder contents using TreeGUI indexer engines {McoreD}

@@ -201,8 +201,8 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
-        	FileSystem.AppendDebug("OS: " + Environment.OSVersion.VersionString);
-        	FileSystem.AppendDebug("Started " + mAppInfo.GetApplicationTitleFull());
+        	FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
+        	FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
                         
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
