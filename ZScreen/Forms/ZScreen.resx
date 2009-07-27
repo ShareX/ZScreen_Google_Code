@@ -391,7 +391,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABa
-        PAAAAk1TRnQBSQFMAgEBDQEAAUgBDgFIAQ4BEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        PAAAAk1TRnQBSQFMAgEBDQEAAVgBDgFYAQ4BEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABQAMAAQEBAAEgBgABQCIAAlEBUgH3ASkCXwH7AUkCXwH7AVYCWAHBAzMBUwMWAR7oAAEsAl8B+wGU
         AccB+QH/AZEByQH5Af8BAAGFAckB/wIAAaoB/wGdAasBtwH/AxgBIeUAAYkBqgH/AeAB8gL/AQABmgHY
         Af8CAAG+Af8BAAGYAcUB/wEAAYsBwwH/AaABrgG7Af8DGAEh4AADOwFjAQABtgHVAf8BkAG3AdEB/wEA
@@ -2688,14 +2688,14 @@
         tjlf/P9WSqUeBOCQJwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="ttZScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>478, 17</value>
-  </metadata>
   <metadata name="chHotkeys_Description.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="chHotkeys_Keys.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="ttZScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>478, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>52</value>

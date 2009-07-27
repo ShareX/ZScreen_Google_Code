@@ -1125,7 +1125,7 @@ namespace ZSS
             this.llProjectPage.TabIndex = 83;
             this.llProjectPage.TabStop = true;
             this.llProjectPage.Text = "Project Page";
-            this.ttZScreen.SetToolTip(this.llProjectPage, "View ZScreen\\\'s project page on the web.");
+            this.ttZScreen.SetToolTip(this.llProjectPage, "View ZScreen\'s project page on the web.");
             this.llProjectPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llProjectPage_LinkClicked);
             // 
             // llWebsite
@@ -1151,8 +1151,8 @@ namespace ZSS
             this.llblBugReports.TabIndex = 81;
             this.llblBugReports.TabStop = true;
             this.llblBugReports.Text = "Bugs/Suggestions?";
-            this.ttZScreen.SetToolTip(this.llblBugReports, "Have a bug report or a suggestion for us?\\r\\nCome visit our website and create an" +
-                    " issue");
+            this.ttZScreen.SetToolTip(this.llblBugReports, "Have a bug report or a suggestion for us?\r\nCome visit our website and create an i" +
+                    "ssue");
             this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
             // 
             // gbMainOptions
@@ -4461,9 +4461,10 @@ namespace ZSS
             // lblHistoryScreenshot
             // 
             this.lblHistoryScreenshot.AutoSize = true;
+            this.lblHistoryScreenshot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblHistoryScreenshot.Location = new System.Drawing.Point(3, 0);
             this.lblHistoryScreenshot.Name = "lblHistoryScreenshot";
-            this.lblHistoryScreenshot.Size = new System.Drawing.Size(61, 13);
+            this.lblHistoryScreenshot.Size = new System.Drawing.Size(455, 20);
             this.lblHistoryScreenshot.TabIndex = 13;
             this.lblHistoryScreenshot.Text = "Screenshot";
             // 
@@ -4887,10 +4888,10 @@ namespace ZSS
             this.cbAutoSaveSettings.AutoSize = true;
             this.cbAutoSaveSettings.Location = new System.Drawing.Point(16, 168);
             this.cbAutoSaveSettings.Name = "cbAutoSaveSettings";
-            this.cbAutoSaveSettings.Size = new System.Drawing.Size(483, 17);
+            this.cbAutoSaveSettings.Size = new System.Drawing.Size(451, 17);
             this.cbAutoSaveSettings.TabIndex = 7;
-            this.cbAutoSaveSettings.Text = "Auto save settings on resize or on tab changes ( Note: ZScreen still saving setti" +
-                "ngs before close )";
+            this.cbAutoSaveSettings.Text = "Auto save settings on resize or on tab changes ( ZScreen still saves settings bef" +
+                "ore close )";
             this.cbAutoSaveSettings.UseVisualStyleBackColor = true;
             this.cbAutoSaveSettings.CheckedChanged += new System.EventHandler(this.cbAutoSaveSettings_CheckedChanged);
             // 
