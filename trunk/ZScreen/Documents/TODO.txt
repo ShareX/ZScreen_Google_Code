@@ -1,15 +1,8 @@
-﻿Debug
-	Full OS Version
-	Full Application Version
-
-Hotkey for Indexer
+﻿Hotkey for Indexer
 		
 Windwos.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser
-	Preview HTML in History tab
-	
-JumpLists
-	Paths - Settings, Images
+	Preview HTML in History tab	
 	
 Clipboard Upload Wizard
 	User hit Clipboard Upload hotkey
@@ -17,3 +10,6 @@ Clipboard Upload Wizard
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
+		
+ZScreen CLI		
+	JumpList - Selected Window
