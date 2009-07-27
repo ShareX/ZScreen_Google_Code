@@ -38,7 +38,7 @@ namespace ZSS
 {
     public class Crop : Form
     {
-        private bool mMouseDown, selectedWindowMode, forceCheck, captureObjects, dragging;
+        private bool mouseDown, selectedWindowMode, forceCheck, captureObjects, dragging;
         private Bitmap bmpClean, bmpBackground, bmpRegion;
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
         private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
@@ -167,7 +167,7 @@ namespace ZSS
             {
                 checkSize = 15;
             }
-            return mMouseDown && (point.X > mousePosOnClick.X + checkSize || point.Y > mousePosOnClick.Y + checkSize ||
+            return mouseDown && (point.X > mousePosOnClick.X + checkSize || point.Y > mousePosOnClick.Y + checkSize ||
                 point.X < mousePosOnClick.X - checkSize || point.Y < mousePosOnClick.Y - checkSize);
         }
 
@@ -201,7 +201,7 @@ namespace ZSS
                     }
                 }
 
-                if (mMouseDown && dragging)
+                if (mouseDown && dragging)
                 {
                     CropRegion = GraphicsMgr.GetRectangle(mousePos.X, mousePos.Y,
                         mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Program.conf.CropGridSize,
@@ -252,7 +252,7 @@ namespace ZSS
             if ((selectedWindowMode && (Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT ||
                 Program.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS)) ||
                 (!selectedWindowMode && (Program.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT ||
-                Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS) && mMouseDown))
+                Program.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS) && mouseDown))
             { //If Region Transparent or Region Brightness
                 g.DrawImage(bmpRegion, CropRegion, CropRegion, GraphicsUnit.Pixel);
             }
@@ -262,7 +262,7 @@ namespace ZSS
                 Program.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS)) ||
                 (!selectedWindowMode && (Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
                 Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
-                Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) && mMouseDown))
+                Program.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) && mouseDown))
                 && CropRegion.Width > 0 && CropRegion.Height > 0)
             { //If Background Region Transparent or Background Region Grayscale or Background Region Brightness
                 g.DrawImage(bmpClean, CropRegion, CropRegion, GraphicsUnit.Pixel);
@@ -284,7 +284,7 @@ namespace ZSS
                     g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(bmpBackground.Width, mousePos.Y));
                     g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, bmpBackground.Height));
                 }
-                if (mMouseDown)
+                if (mouseDown)
                 {
                     if (Program.conf.CropShowGrids && Program.conf.CropGridToggle)
                     {
@@ -316,20 +316,22 @@ namespace ZSS
 
         private void DrawTooltip(string text, Point offset, Graphics g)
         {
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             Font font = new Font(FontFamily.GenericSansSerif, 8);
             Point mPos = mousePos;
             Rectangle labelRect = new Rectangle(new Point(mPos.X + offset.X, mPos.Y + offset.Y),
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
             if (labelRect.Right > clientBound.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
             if (labelRect.Bottom > clientBound.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
-            GraphicsPath gPath = RoundedRectangle.Create(labelRect, 7);
+            GraphicsPath gPath = RoundedRectangle.Create(labelRect, 6);
             g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y),
-                new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.Black, Color.FromArgb(150, Color.Black)), gPath);
+                new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.FromArgb(200, Color.Black), Color.FromArgb(100, Color.Black)), gPath);
             g.DrawPath(labelBorderPen, gPath);
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
-            if (!selectedWindowMode && Program.conf.CropShowMagnifyingGlass)
+            if ((!selectedWindowMode || (selectedWindowMode && dragging)) && Program.conf.CropShowMagnifyingGlass)
             {
-                int posY = labelRect.Y - labelRect.Height - 100 - offset.Y;
+                int posY = labelRect.Y - offset.Y * 2 - 100;
                 if (posY < 5) posY = labelRect.Y + labelRect.Height + 10;
                 g.DrawImage(GraphicsMgr.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X, posY);
             }
@@ -388,12 +390,12 @@ namespace ZSS
             {
                 mousePosOnClick = PointToClient(MousePosition);
                 CropRegion = new Rectangle(mousePosOnClick, new Size(0, 0));
-                mMouseDown = true;
+                mouseDown = true;
                 if (!selectedWindowMode) Refresh();
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (mMouseDown)
+                if (mouseDown)
                 {
                     CancelAndRestart();
                 }
@@ -406,48 +408,47 @@ namespace ZSS
 
         private void Crop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (mMouseDown)
+            if (e.Button == MouseButtons.Left)
             {
-                mMouseDown = false;
-                if (CropRegion.Width > 0 && CropRegion.Height > 0)
+                if (mouseDown)
                 {
-                    ReturnImageAndExit();
-                }
-                else
-                {
-                    Refresh();
+                    if (CropRegion.Width > 0 && CropRegion.Height > 0)
+                    {
+                        ReturnImageAndExit();
+                    }
+                    else
+                    {
+                        CancelAndRestart();
+                    }
                 }
             }
         }
 
         private void Crop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (mMouseDown)
+            if (mouseDown)
             {
                 if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Space)
                 {
                     CancelAndRestart();
                 }
-                if (!selectedWindowMode)
+                for (int i = 0; i < (e.Shift ? 5 : 1); i++)
                 {
-                    for (int i = 0; i < (e.Shift ? 5 : 1); i++)
+                    if (e.KeyCode == Keys.Left)
                     {
-                        if (e.KeyCode == Keys.Left)
-                        {
-                            mousePosOnClick.X--;
-                        }
-                        else if (e.KeyCode == Keys.Right)
-                        {
-                            mousePosOnClick.X++;
-                        }
-                        else if (e.KeyCode == Keys.Up)
-                        {
-                            mousePosOnClick.Y--;
-                        }
-                        else if (e.KeyCode == Keys.Down)
-                        {
-                            mousePosOnClick.Y++;
-                        }
+                        mousePosOnClick.X--;
+                    }
+                    else if (e.KeyCode == Keys.Right)
+                    {
+                        mousePosOnClick.X++;
+                    }
+                    else if (e.KeyCode == Keys.Up)
+                    {
+                        mousePosOnClick.Y--;
+                    }
+                    else if (e.KeyCode == Keys.Down)
+                    {
+                        mousePosOnClick.Y++;
                     }
                 }
             }
@@ -472,16 +473,22 @@ namespace ZSS
 
         private void CancelAndRestart()
         {
-            dragging = false;
-            mMouseDown = false;
-            Refresh();
+            mouseDown = dragging = false;
+            this.Refresh();
         }
 
         private void ReturnImageAndExit()
         {
             if (selectedWindowMode)
             {
-                Program.LastCapture = CropRegion;
+                if (dragging)
+                {
+                    Program.LastCapture = rectRegion;
+                }
+                else
+                {
+                    Program.LastCapture = CropRegion;
+                }
             }
             else
             {
@@ -648,7 +655,7 @@ namespace ZSS
                 if (ruler)
                 {
                     DrawRuler(g, 5, 10);
-                    DrawRuler(g, 20, 100);
+                    DrawRuler(g, 20, 75);
                 }
             }
         }
@@ -686,7 +693,6 @@ namespace ZSS
                 currentStep = step;
             }
             ColorHue += currentStep;
-            //FileSystem.AppendDebug(colorHue + " " + colorHueMin + " " + colorHueMax + " " + (double)currentStep);
         }
     }
 

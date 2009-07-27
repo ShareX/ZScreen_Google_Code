@@ -174,9 +174,9 @@ namespace ZSS.Helpers
             for (int i = 0; i < (int)Program.conf.FlashTrayCount; i++)
             {
                 t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
-                Thread.Sleep(275);
+                Thread.Sleep(250);
                 t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_green);
-                Thread.Sleep(275);
+                Thread.Sleep(250);
             }
         }
 
