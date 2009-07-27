@@ -318,6 +318,23 @@ namespace ZSS
         }
 
         /// <summary>
+        /// Function to check if file is a valid Text file by checking its extension
+        /// </summary>
+        /// <param name="fp"></param>
+        /// <returns></returns>
+        public static bool IsValidWebpageFile(string fp)
+        {
+            if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
+            {
+                foreach (string s in Program.zWebpageFileTypes)
+                {
+                    if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// If file exist then adding number end of file name. Example: directory/fileName(2).exe
         /// </summary>
         /// <returns></returns>

@@ -2,7 +2,6 @@
 		
 Windwos.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser
-	Preview HTML in History tab	
 	
 Clipboard Upload Wizard
 	User hit Clipboard Upload hotkey
