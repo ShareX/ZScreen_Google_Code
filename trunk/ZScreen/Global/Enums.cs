@@ -84,24 +84,24 @@ namespace ZSS
 
     public enum WatermarkPositionType
     {
-        [Description("Top Left")]
+        [Description("Top - Left")]
         TOP_LEFT,
-        [Description("Top Right")]
-        TOP_RIGHT,
-        [Description("Bottom Right")]
-        BOTTOM_RIGHT,
-        [Description("Bottom Left")]
-        BOTTOM_LEFT,
-        [Description("Center")]
-        CENTER,
-        [Description("Left")]
-        LEFT,
-        [Description("Top")]
+        [Description("Top - Center")]
         TOP,
-        [Description("Right")]
+        [Description("Top - Right")]
+        TOP_RIGHT,
+        [Description("Center - Left")]
+        LEFT,
+        [Description("Centered")]
+        CENTER,
+        [Description("Center - Right")]
         RIGHT,
-        [Description("Bottom")]
-        BOTTOM
+        [Description("Bottom - Left")]
+        BOTTOM_LEFT,
+        [Description("Bottom - Center")]
+        BOTTOM,
+        [Description("Bottom - Right")]
+        BOTTOM_RIGHT
     }
 
     public enum AutoScreenshotterJobs

@@ -34,6 +34,7 @@ using System.Reflection;
 using System.Threading;
 using ZSS.Helpers;
 using ZSS.ImageUploadersLib;
+using ZSS.UpdateCheckerLib;
 
 namespace ZSS
 {
@@ -43,6 +44,7 @@ namespace ZSS
         public XMLSettings()
         {
             #region "Default Values"
+
             //~~~~~~~~~~~~~~~~~~~~~
             //  Capture
             //~~~~~~~~~~~~~~~~~~~~~
@@ -53,7 +55,6 @@ namespace ZSS
             BackgroundRegionTransparentValue = 100;
             BackgroundRegionBrightnessValue = 15;
             AutoIncrement = 0;
-
             NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
             NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
 
@@ -67,7 +68,6 @@ namespace ZSS
             ReflectionOffset = 0;
             ReflectionSkew = true;
             ReflectionSkewSize = 25;
-
             BevelEffectOffset = 15;
 
             //~~~~~~~~~~~~~~~~~~~~~
@@ -76,30 +76,14 @@ namespace ZSS
 
             BackupFTPSettings = true;
 
-            //**************
-            // Image Hosting 
-            //**************
-            TwitPicShowFull = true;
-            TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-            IndexerConfig = new ZSS.IndexersLib.IndexerConfig();
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Translator
-            //~~~~~~~~~~~~~~~~~~~~~    
-
-            AutoTranslateLength = 20;
-
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options
             //~~~~~~~~~~~~~~~~~~~~~
 
             ActionsToolbarMode = false;
 
-            OpenMainWindow = true;
-            LockFormSize = false;
-            AutoSaveSettings = false;
+            IndexerConfig = new ZSS.IndexersLib.IndexerConfig();
             WriteDebugFile = true;
-            ProxyEnabled = false;
             ShowTrayUploadProgress = true;
 
             BackupApplicationSettings = true;
@@ -117,7 +101,8 @@ namespace ZSS
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool RunOnce = false;
-        public Size WindowSize = new Size();
+        public Size WindowSize = Size.Empty;
+        public Point WindowLocation = Point.Empty;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
@@ -136,12 +121,6 @@ namespace ZSS
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
         public string HelpToLanguage = "en";
-
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~
-        //  Destinations / Accounts
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        public TwitPicUploadType TwiPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
@@ -240,11 +219,8 @@ namespace ZSS
         public bool CaptureEntireScreenOnError = false;
         public bool ShowBalloonTip = true;
         public bool BalloonTipOpenLink = false;
-        [Category("Options / Interaction"), Description("Show Upload Duration")]
         public bool ShowUploadDuration = false;
-        [Category("Options / Interaction"), Description("Play sound after task is completed")]
         public bool CompleteSound = false;
-        [Category("Options / Interaction"), Description("Close the Drop Window on mouse click")]
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
         public bool CloseQuickActions = false;
@@ -349,32 +325,30 @@ namespace ZSS
         public bool AutoChangeUploadDestination = true;
         public decimal UploadDurationLimit = 10000;
 
-        [Category("Accounts / ImageShack")]
-        public string ImageShackRegistrationCode { get; set; }
-        public string ImageShackUserName = "zscreen";
-        [Category("Accounts / ImageShack")]
-        public bool ImageShackShowImagesInPublic { get; set; }
+        // ImageShack
+
+        public string ImageShackRegistrationCode = "";
+        public string ImageShackUserName = "";
+        public bool ImageShackShowImagesInPublic = false;
+
+        // TinyPic
 
         public string TinyPicShuk = "";
-        [Category("Accounts / TinyPic")]
-        public string TinyPicUserName { get; set; }
-        [Category("Accounts / TinyPic"), PasswordPropertyText(true)]
-        public string TinyPicPassword { get; set; }
-        [Category("Accounts / TinyPic")]
-        public bool RememberTinyPicUserPass { get; set; }
-        [Category("Accounts / TinyPic")]
-        public bool TinyPicSizeCheck { get; set; }
+        public string TinyPicUserName = "";
+        public string TinyPicPassword = "";
+        public bool RememberTinyPicUserPass = false;
+        public bool TinyPicSizeCheck = true;
 
-        [Category("Accounts / TwitPic")]
-        public string TwitPicUserName { get; set; }
-        [Category("Accounts / TwitPic"), PasswordPropertyText(true)]
-        public string TwitPicPassword { get; set; }
-        [Category("Accounts / TwitPic"), Description("Append /full to the Full Image to show the image in full size")]
-        public bool TwitPicShowFull { get; set; }
-        [Category("Accounts / TwitPic")]
-        public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
+        // TwitPic
 
-        // Indexer 
+        public string TwitPicUserName = "";
+        public string TwitPicPassword = "";
+        public TwitPicUploadType TwitPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
+        public bool TwitPicShowFull = true;
+        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
+
+        // Indexer
+
         public ZSS.IndexersLib.IndexerConfig IndexerConfig = null;
 
         // Custom Image Uploaders
@@ -387,12 +361,9 @@ namespace ZSS
         public string FromLanguage = "auto";
         public string ToLanguage = "en";
         public string ToLanguage2 = "?";
-        [Category("Translator"), DefaultValue(false), Description("Automatically copy translated text to Clipboard")]
-        public bool ClipboardTranslate { get; set; }
-        [Category("Translator"), DefaultValue(false), Description("Set true to enable translating text instead of uploading for a text length less than AutoTranslateLength when the Clipboard Upload hotkey is pressed.")]
-        public bool AutoTranslate { get; set; }
-        [Category("Translator"), DefaultValue(20), Description("Maximum number of charactors before Clipboard Upload switches from Translate to Text Upload.")]
-        public int AutoTranslateLength { get; set; }
+        public bool ClipboardTranslate = false;
+        public bool AutoTranslate = false;
+        public int AutoTranslateLength = 20;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  History
@@ -418,28 +389,27 @@ namespace ZSS
         [Category("Options / Actions Toolbar"), Description("Action Toolbar Location.")]
         public Point ActionToolbarLocation { get; set; }
 
-        // General
+        // General - Program
 
-        [Category("Options / General"), DefaultValue(true), Description("Open main window when ZScreen loads.")]
-        public bool OpenMainWindow { get; set; }
+        public bool OpenMainWindow = true;
         public bool ShowInTaskbar = true;
-        [Category("Options / General"), DefaultValue(false), Description("Disable resizing ZScreen and minimize ZScreen window size.")]
-        public bool LockFormSize { get; set; }
-        [Category("Options / General"), DefaultValue(false), Description("Auto save settings whenever form is resized or main" +
-            " tabs are changed. Normally settings are saved only after form is closed.")]
-        public bool AutoSaveSettings { get; set; }
         public bool ShowHelpBalloonTips = true;
+        public bool SaveFormSizePosition = true;
+        public bool LockFormSize = false;
+        public bool AutoSaveSettings = true;
+
+        // General - Check Updates
+
         public bool CheckUpdates = true;
-        public ZSS.UpdateCheckerLib.UpdateCheckType UpdateCheckType = ZSS.UpdateCheckerLib.UpdateCheckType.SETUP;
+        public UpdateCheckType UpdateCheckType = UpdateCheckType.SETUP;
         public bool CheckExperimental = false;
-        [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
-        public bool WriteDebugFile { get; set; }
-        // Proxy Settings 
+
+        // Proxy Settings
+
         public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
         public int ProxySelected = 0;
         public ProxyInfo ProxyActive = null;
-        [Category("Options / General"), DefaultValue(false), Description("Enable Web Proxy")]
-        public bool ProxyEnabled { get; set; }
+        public bool ProxyEnabled = false;
         [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
 
@@ -451,6 +421,9 @@ namespace ZSS
         public bool BackupApplicationSettings { get; set; }
         [Category("Options / Paths"), Description("Images directory where screenshots and pictures will be stored locally.")]
         public string ImagesDir { get; set; }
+
+        [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
+        public bool WriteDebugFile { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture
@@ -603,7 +576,7 @@ namespace ZSS
                 {
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
-                    FileSystem.AppendDebug(ex.ToString());                   
+                    FileSystem.AppendDebug(ex.ToString());
                     OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
                     dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
                     dlg.InitialDirectory = Settings.Default.RootDir;

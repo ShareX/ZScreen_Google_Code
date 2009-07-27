@@ -33,14 +33,6 @@ namespace ZSS
         ANONYMOUS
     }
 
-    public enum TwitPicUploadType
-    {
-        [Description("Upload Image")]
-        UPLOAD_IMAGE_ONLY,
-        [Description("Upload Image and update Twitter Status")]
-        UPLOAD_IMAGE_AND_TWITTER
-    }
-
     public enum ClipboardUriType
     {
         [Description("Full Image")]
