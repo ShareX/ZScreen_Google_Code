@@ -239,17 +239,17 @@ namespace ZSS
 
             using (Graphics g = Graphics.FromImage(result))
             {
-               /*if (bounds == RectangleF.Empty)
-               {
-                   GraphicsUnit unit = GraphicsUnit.Pixel;
-                   bounds = capture.GetBounds(ref unit);
+                /*if (bounds == RectangleF.Empty)
+                {
+                    GraphicsUnit unit = GraphicsUnit.Pixel;
+                    bounds = capture.GetBounds(ref unit);
 
-                   if ((GetWindowLong(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
-                   {
-                       IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
-                       region = Region.FromHrgn(windowRegion);
-                   }
-               }*/
+                    if ((GetWindowLong(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
+                    {
+                        IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
+                        region = Region.FromHrgn(windowRegion);
+                    }
+                }*/
 
                 if (region.IsEmpty(g))
                 {
@@ -288,6 +288,26 @@ namespace ZSS
             }
             gfxBmp.Dispose();
             return bmp;
+
+            /*
+            RECT rect;
+            GetWindowRect(handle, out rect);
+
+            IntPtr hDC = GetDC(handle);
+            IntPtr hDCMem = GDI.CreateCompatibleDC(hDC);
+            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hDC, rect.Width, rect.Height);
+
+            IntPtr hOld = GDI.SelectObject(hDCMem, hBitmap);
+
+            SendMessage(handle, (uint)WM.PRINT, hDCMem, (IntPtr)(PRF.CHILDREN | PRF.CLIENT | PRF.ERASEBKGND | PRF.NONCLIENT | PRF.OWNED));
+            GDI.SelectObject(hDCMem, hOld);
+
+            Bitmap bmp = Bitmap.FromHbitmap(hBitmap);
+
+            GDI.DeleteDC(hDCMem);
+            ReleaseDC(handle, hDC);
+
+            return bmp;*/
         }
 
         public class MyCursor

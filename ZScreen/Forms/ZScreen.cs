@@ -62,7 +62,7 @@ namespace ZSS
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private Debug debug = null;
         private List<int> mLogoRandomList = new List<int>(5);
-        private JumpList jumpList = null;
+        public JumpList jumpList = null;
 
         #endregion
 
@@ -106,15 +106,15 @@ namespace ZSS
                 CustomCategory paths = new CustomCategory("Paths");
                 paths.JumpListItems.Add(new JumpListLink
                 {
-                    Title = "Settings",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.SettingsDir
-                });
-                paths.JumpListItems.Add(new JumpListLink
-                {
                     Title = "Images",
                     IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
                     Path = Program.ImagesDir
+                });
+                paths.JumpListItems.Add(new JumpListLink
+                {
+                    Title = "Settings",
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                    Path = Program.SettingsDir
                 });
                 jumpList.CustomCategories.Add(paths);
                 Taskbar.JumpList.RefreshTaskbarList();

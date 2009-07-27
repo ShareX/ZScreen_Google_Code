@@ -78,7 +78,6 @@ namespace ZSS.IndexersLib
             {
                 Directory.CreateDirectory(OPTIONS_DIR);
                 return OPTIONS_DIR + OPTIONS_FILENAME;
-
             }
         }
 
@@ -516,7 +515,7 @@ namespace ZSS.IndexersLib
                 string fn = "";
                 foreach (string n in oAsm.GetManifestResourceNames())
                 {
-                    if (n.Contains(name))
+                    if (n.EndsWith("." + name))
                     {
                         fn = n;
                         break;
