@@ -86,8 +86,9 @@ namespace ZSS.Tasks
                     dirSize += f.Size;
                 }
 
-                FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
-
+                if ( dirSize > 0 ) {
+                	FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
+                }                
                 while (dirSize > mCacheSize)
                 {
                     if (files.Count > 0)
@@ -99,8 +100,9 @@ namespace ZSS.Tasks
                         files.RemoveAt(0);
                     }
                 }
-
-                FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));
+                if ( dirSize > 0 ) {
+					FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));                	
+                }                
             }
         }
     }

@@ -129,8 +129,7 @@ namespace ZSS
 
         private void ViewRemote_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            pbViewer.ImageLocation = "";
-            FileSystem.WriteDebugFile();
+            pbViewer.ImageLocation = "";      
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)

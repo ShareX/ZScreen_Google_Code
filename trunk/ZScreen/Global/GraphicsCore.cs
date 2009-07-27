@@ -375,7 +375,8 @@ namespace ZSS
         public static Rectangle GetWindowRectangle(IntPtr handle)
         {
             Rectangle rectangle;
-            if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
+            try {            	            
+            	if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
             {
                 return rectangle;
             }
@@ -383,6 +384,10 @@ namespace ZSS
             {
                 return GetWindowRect(handle);
             }
+            
+            } catch (Exception) {
+            	return GetWindowRect(handle);
+            }           
         }
 
         public static void ActivateWindow(IntPtr handle)

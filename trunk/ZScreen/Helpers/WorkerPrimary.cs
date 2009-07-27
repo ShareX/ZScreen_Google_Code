@@ -41,6 +41,7 @@ using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.IndexersLib;
 using ZSS.TextUploadersLib.Helpers;
+using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 
 namespace ZSS.Helpers
@@ -353,7 +354,10 @@ namespace ZSS.Helpers
                     }
                 }
 
-                Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);
+                if (CoreHelpers.RunningOnWin7){
+                	Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);                       
+                }
+
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
             }
@@ -1011,7 +1015,7 @@ namespace ZSS.Helpers
                 mZScreen.lbHistory.ClearSelected();
                 mZScreen.lbHistory.SelectedIndex = 0;
             }
-            if (File.Exists(hi.LocalPath))
+            if (CoreHelpers.RunningOnWin7 && File.Exists(hi.LocalPath))
             {
                 Taskbar.JumpList.AddToRecent(hi.LocalPath);
                 Taskbar.JumpList.KnownCategoryToDisplay = KnownCategoryType.Recent;

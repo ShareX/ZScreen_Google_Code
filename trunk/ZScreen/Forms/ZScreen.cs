@@ -183,9 +183,6 @@ namespace ZSS
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-            FileSystem.AppendDebug("Started ZScreen");
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
-
             Rectangle screenRect = GraphicsMgr.GetScreenBounds();
             screenRect.Inflate(-100, -100);
             if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))

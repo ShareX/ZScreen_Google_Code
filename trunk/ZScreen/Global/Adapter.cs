@@ -35,6 +35,7 @@ using ZSS.Helpers;
 using System.Net;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib.Helpers;
+using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 
 namespace ZSS.Global
@@ -311,17 +312,23 @@ namespace ZSS.Global
         }
         public static void TaskbarSetState(TaskbarButtonProgressState tbps)
         {
-            foreach (Form f in GetUserWindows())
+        	if (CoreHelpers.RunningOnWin7){
+        		            foreach (Form f in GetUserWindows())
             {
                 Taskbar.MultipleViewProgressBar.SetState(f, tbps);
             }
+        	}
+
         }
         public static void TaskbarSetProgress(int progress)
         {
-            foreach (Form f in GetUserWindows())
+        	if (CoreHelpers.RunningOnWin7){
+        		            foreach (Form f in GetUserWindows())
             {
                 Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
             }
+        	}
+
         }
         #endregion
     }
