@@ -131,6 +131,9 @@ namespace ZSS
             this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
             this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
+            this.lblTwitPicThumbnailMode = new System.Windows.Forms.Label();
+            this.cbTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
+            this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.lblTwitPicUploadMode = new System.Windows.Forms.Label();
             this.cboTwitPicUploadMode = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -208,6 +211,7 @@ namespace ZSS
             this.tpWatermark = new System.Windows.Forms.TabPage();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
+            this.lblWatermarkOffsetPixel = new System.Windows.Forms.Label();
             this.cboWatermarkType = new System.Windows.Forms.ComboBox();
             this.cbWatermarkAutoHide = new System.Windows.Forms.CheckBox();
             this.cbWatermarkAddReflection = new System.Windows.Forms.CheckBox();
@@ -405,6 +409,8 @@ namespace ZSS
             this.cbCheckExperimental = new System.Windows.Forms.CheckBox();
             this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
+            this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
+            this.cbSaveFormSizePosition = new System.Windows.Forms.CheckBox();
             this.cbShowHelpBalloonTips = new System.Windows.Forms.CheckBox();
             this.cbLockFormSize = new System.Windows.Forms.CheckBox();
             this.cbShowTaskbar = new System.Windows.Forms.CheckBox();
@@ -1573,6 +1579,9 @@ namespace ZSS
             // 
             // tpTwitPic
             // 
+            this.tpTwitPic.Controls.Add(this.lblTwitPicThumbnailMode);
+            this.tpTwitPic.Controls.Add(this.cbTwitPicThumbnailMode);
+            this.tpTwitPic.Controls.Add(this.cbTwitPicShowFull);
             this.tpTwitPic.Controls.Add(this.lblTwitPicUploadMode);
             this.tpTwitPic.Controls.Add(this.cboTwitPicUploadMode);
             this.tpTwitPic.Controls.Add(this.groupBox1);
@@ -1584,20 +1593,51 @@ namespace ZSS
             this.tpTwitPic.Text = "TwitPic";
             this.tpTwitPic.UseVisualStyleBackColor = true;
             // 
+            // lblTwitPicThumbnailMode
+            // 
+            this.lblTwitPicThumbnailMode.AutoSize = true;
+            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 189);
+            this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
+            this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(88, 13);
+            this.lblTwitPicThumbnailMode.TabIndex = 15;
+            this.lblTwitPicThumbnailMode.Text = "Thumbnail mode:";
+            // 
+            // cbTwitPicThumbnailMode
+            // 
+            this.cbTwitPicThumbnailMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTwitPicThumbnailMode.FormattingEnabled = true;
+            this.cbTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 184);
+            this.cbTwitPicThumbnailMode.Name = "cbTwitPicThumbnailMode";
+            this.cbTwitPicThumbnailMode.Size = new System.Drawing.Size(144, 21);
+            this.cbTwitPicThumbnailMode.TabIndex = 14;
+            this.cbTwitPicThumbnailMode.SelectedIndexChanged += new System.EventHandler(this.cbTwitPicThumbnailMode_SelectedIndexChanged);
+            // 
+            // cbTwitPicShowFull
+            // 
+            this.cbTwitPicShowFull.AutoSize = true;
+            this.cbTwitPicShowFull.Location = new System.Drawing.Point(16, 160);
+            this.cbTwitPicShowFull.Name = "cbTwitPicShowFull";
+            this.cbTwitPicShowFull.Size = new System.Drawing.Size(121, 17);
+            this.cbTwitPicShowFull.TabIndex = 13;
+            this.cbTwitPicShowFull.Text = "Show TwitPic full url";
+            this.ttZScreen.SetToolTip(this.cbTwitPicShowFull, "Append /full to the url to show the image in full size");
+            this.cbTwitPicShowFull.UseVisualStyleBackColor = true;
+            this.cbTwitPicShowFull.CheckedChanged += new System.EventHandler(this.cbTwitPicShowFull_CheckedChanged);
+            // 
             // lblTwitPicUploadMode
             // 
             this.lblTwitPicUploadMode.AutoSize = true;
             this.lblTwitPicUploadMode.Location = new System.Drawing.Point(16, 133);
             this.lblTwitPicUploadMode.Name = "lblTwitPicUploadMode";
-            this.lblTwitPicUploadMode.Size = new System.Drawing.Size(80, 13);
+            this.lblTwitPicUploadMode.Size = new System.Drawing.Size(79, 13);
             this.lblTwitPicUploadMode.TabIndex = 12;
-            this.lblTwitPicUploadMode.Text = "Upload Method";
+            this.lblTwitPicUploadMode.Text = "Upload method";
             // 
             // cboTwitPicUploadMode
             // 
             this.cboTwitPicUploadMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTwitPicUploadMode.FormattingEnabled = true;
-            this.cboTwitPicUploadMode.Location = new System.Drawing.Point(104, 128);
+            this.cboTwitPicUploadMode.Location = new System.Drawing.Point(112, 128);
             this.cboTwitPicUploadMode.Name = "cboTwitPicUploadMode";
             this.cboTwitPicUploadMode.Size = new System.Drawing.Size(312, 21);
             this.cboTwitPicUploadMode.TabIndex = 11;
@@ -2492,14 +2532,15 @@ namespace ZSS
             // 
             this.pbWatermarkShow.BackColor = System.Drawing.Color.White;
             this.pbWatermarkShow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbWatermarkShow.Location = new System.Drawing.Point(8, 179);
+            this.pbWatermarkShow.Location = new System.Drawing.Point(8, 184);
             this.pbWatermarkShow.Name = "pbWatermarkShow";
-            this.pbWatermarkShow.Size = new System.Drawing.Size(272, 197);
+            this.pbWatermarkShow.Size = new System.Drawing.Size(272, 200);
             this.pbWatermarkShow.TabIndex = 13;
             this.pbWatermarkShow.TabStop = false;
             // 
             // gbWatermarkGeneral
             // 
+            this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffsetPixel);
             this.gbWatermarkGeneral.Controls.Add(this.cboWatermarkType);
             this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAutoHide);
             this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAddReflection);
@@ -2515,11 +2556,20 @@ namespace ZSS
             this.gbWatermarkGeneral.TabStop = false;
             this.gbWatermarkGeneral.Text = "Watermark Settings";
             // 
+            // lblWatermarkOffsetPixel
+            // 
+            this.lblWatermarkOffsetPixel.AutoSize = true;
+            this.lblWatermarkOffsetPixel.Location = new System.Drawing.Point(152, 88);
+            this.lblWatermarkOffsetPixel.Name = "lblWatermarkOffsetPixel";
+            this.lblWatermarkOffsetPixel.Size = new System.Drawing.Size(18, 13);
+            this.lblWatermarkOffsetPixel.TabIndex = 34;
+            this.lblWatermarkOffsetPixel.Text = "px";
+            // 
             // cboWatermarkType
             // 
             this.cboWatermarkType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboWatermarkType.FormattingEnabled = true;
-            this.cboWatermarkType.Location = new System.Drawing.Point(72, 20);
+            this.cboWatermarkType.Location = new System.Drawing.Point(88, 20);
             this.cboWatermarkType.Name = "cboWatermarkType";
             this.cboWatermarkType.Size = new System.Drawing.Size(120, 21);
             this.cboWatermarkType.TabIndex = 33;
@@ -2560,7 +2610,7 @@ namespace ZSS
             // 
             this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(72, 52);
+            this.cbWatermarkPosition.Location = new System.Drawing.Point(88, 52);
             this.cbWatermarkPosition.Name = "cbWatermarkPosition";
             this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
             this.cbWatermarkPosition.TabIndex = 18;
@@ -2571,13 +2621,13 @@ namespace ZSS
             this.lblWatermarkPosition.AutoSize = true;
             this.lblWatermarkPosition.Location = new System.Drawing.Point(16, 56);
             this.lblWatermarkPosition.Name = "lblWatermarkPosition";
-            this.lblWatermarkPosition.Size = new System.Drawing.Size(47, 13);
+            this.lblWatermarkPosition.Size = new System.Drawing.Size(60, 13);
             this.lblWatermarkPosition.TabIndex = 19;
-            this.lblWatermarkPosition.Text = "Position:";
+            this.lblWatermarkPosition.Text = "Placement:";
             // 
             // nudWatermarkOffset
             // 
-            this.nudWatermarkOffset.Location = new System.Drawing.Point(72, 80);
+            this.nudWatermarkOffset.Location = new System.Drawing.Point(88, 84);
             this.nudWatermarkOffset.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -2592,7 +2642,7 @@ namespace ZSS
             // lblWatermarkOffset
             // 
             this.lblWatermarkOffset.AutoSize = true;
-            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 84);
+            this.lblWatermarkOffset.Location = new System.Drawing.Point(16, 88);
             this.lblWatermarkOffset.Name = "lblWatermarkOffset";
             this.lblWatermarkOffset.Size = new System.Drawing.Size(38, 13);
             this.lblWatermarkOffset.TabIndex = 5;
@@ -4218,21 +4268,25 @@ namespace ZSS
             // 
             // txtAutoTranslate
             // 
-            this.txtAutoTranslate.Location = new System.Drawing.Point(440, 382);
+            this.txtAutoTranslate.Location = new System.Drawing.Point(440, 392);
             this.txtAutoTranslate.Name = "txtAutoTranslate";
             this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
             this.txtAutoTranslate.TabIndex = 11;
+            this.ttZScreen.SetToolTip(this.txtAutoTranslate, "Maximum number of characters before Clipboard Upload switches from Translate to T" +
+                    "ext Upload.");
             this.txtAutoTranslate.TextChanged += new System.EventHandler(this.txtAutoTranslate_TextChanged);
             // 
             // cbAutoTranslate
             // 
             this.cbAutoTranslate.AutoSize = true;
-            this.cbAutoTranslate.Location = new System.Drawing.Point(16, 384);
+            this.cbAutoTranslate.Location = new System.Drawing.Point(16, 394);
             this.cbAutoTranslate.Name = "cbAutoTranslate";
             this.cbAutoTranslate.Size = new System.Drawing.Size(418, 17);
             this.cbAutoTranslate.TabIndex = 10;
             this.cbAutoTranslate.Text = "If clipboard text length is smaller than this number then instead text upload, tr" +
                 "anslate";
+            this.ttZScreen.SetToolTip(this.cbAutoTranslate, "Set true to enable translating text instead of uploading for a text length less t" +
+                    "han AutoTranslateLength when the Clipboard Upload hotkey is pressed.");
             this.cbAutoTranslate.UseVisualStyleBackColor = true;
             this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
             // 
@@ -4272,7 +4326,7 @@ namespace ZSS
             // cbClipboardTranslate
             // 
             this.cbClipboardTranslate.AutoSize = true;
-            this.cbClipboardTranslate.Location = new System.Drawing.Point(16, 360);
+            this.cbClipboardTranslate.Location = new System.Drawing.Point(16, 370);
             this.cbClipboardTranslate.Name = "cbClipboardTranslate";
             this.cbClipboardTranslate.Size = new System.Drawing.Size(230, 17);
             this.cbClipboardTranslate.TabIndex = 6;
@@ -4720,7 +4774,7 @@ namespace ZSS
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.cbCheckExperimental);
             this.gbUpdates.Controls.Add(this.cbCheckUpdates);
-            this.gbUpdates.Location = new System.Drawing.Point(8, 160);
+            this.gbUpdates.Location = new System.Drawing.Point(8, 216);
             this.gbUpdates.Name = "gbUpdates";
             this.gbUpdates.Size = new System.Drawing.Size(752, 112);
             this.gbUpdates.TabIndex = 8;
@@ -4783,6 +4837,8 @@ namespace ZSS
             // gbMisc
             // 
             this.gbMisc.BackColor = System.Drawing.Color.Transparent;
+            this.gbMisc.Controls.Add(this.cbAutoSaveSettings);
+            this.gbMisc.Controls.Add(this.cbSaveFormSizePosition);
             this.gbMisc.Controls.Add(this.cbShowHelpBalloonTips);
             this.gbMisc.Controls.Add(this.cbLockFormSize);
             this.gbMisc.Controls.Add(this.cbShowTaskbar);
@@ -4790,10 +4846,33 @@ namespace ZSS
             this.gbMisc.Controls.Add(this.cbStartWin);
             this.gbMisc.Location = new System.Drawing.Point(8, 8);
             this.gbMisc.Name = "gbMisc";
-            this.gbMisc.Size = new System.Drawing.Size(752, 144);
+            this.gbMisc.Size = new System.Drawing.Size(752, 200);
             this.gbMisc.TabIndex = 7;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
+            // 
+            // cbAutoSaveSettings
+            // 
+            this.cbAutoSaveSettings.AutoSize = true;
+            this.cbAutoSaveSettings.Location = new System.Drawing.Point(16, 168);
+            this.cbAutoSaveSettings.Name = "cbAutoSaveSettings";
+            this.cbAutoSaveSettings.Size = new System.Drawing.Size(483, 17);
+            this.cbAutoSaveSettings.TabIndex = 7;
+            this.cbAutoSaveSettings.Text = "Auto save settings on resize or on tab changes ( Note: ZScreen still saving setti" +
+                "ngs before close )";
+            this.cbAutoSaveSettings.UseVisualStyleBackColor = true;
+            this.cbAutoSaveSettings.CheckedChanged += new System.EventHandler(this.cbAutoSaveSettings_CheckedChanged);
+            // 
+            // cbSaveFormSizePosition
+            // 
+            this.cbSaveFormSizePosition.AutoSize = true;
+            this.cbSaveFormSizePosition.Location = new System.Drawing.Point(16, 144);
+            this.cbSaveFormSizePosition.Name = "cbSaveFormSizePosition";
+            this.cbSaveFormSizePosition.Size = new System.Drawing.Size(222, 17);
+            this.cbSaveFormSizePosition.TabIndex = 6;
+            this.cbSaveFormSizePosition.Text = "Remember main window size and position";
+            this.cbSaveFormSizePosition.UseVisualStyleBackColor = true;
+            this.cbSaveFormSizePosition.CheckedChanged += new System.EventHandler(this.cbSaveFormSizePosition_CheckedChanged);
             // 
             // cbShowHelpBalloonTips
             // 
@@ -4811,9 +4890,9 @@ namespace ZSS
             this.cbLockFormSize.AutoSize = true;
             this.cbLockFormSize.Location = new System.Drawing.Point(16, 120);
             this.cbLockFormSize.Name = "cbLockFormSize";
-            this.cbLockFormSize.Size = new System.Drawing.Size(323, 17);
+            this.cbLockFormSize.Size = new System.Drawing.Size(348, 17);
             this.cbLockFormSize.TabIndex = 4;
-            this.cbLockFormSize.Text = "Lock window size to minimum possible size and not allow resize";
+            this.cbLockFormSize.Text = "Lock main window size to minimum possible size and not allow resize";
             this.cbLockFormSize.UseVisualStyleBackColor = true;
             this.cbLockFormSize.CheckedChanged += new System.EventHandler(this.cbLockFormSize_CheckedChanged);
             // 
@@ -4822,9 +4901,9 @@ namespace ZSS
             this.cbShowTaskbar.AutoSize = true;
             this.cbShowTaskbar.Location = new System.Drawing.Point(16, 72);
             this.cbShowTaskbar.Name = "cbShowTaskbar";
-            this.cbShowTaskbar.Size = new System.Drawing.Size(150, 17);
+            this.cbShowTaskbar.Size = new System.Drawing.Size(166, 17);
             this.cbShowTaskbar.TabIndex = 3;
-            this.cbShowTaskbar.Text = "Show ZScreen in Taskbar";
+            this.cbShowTaskbar.Text = "Show main window in taskbar";
             this.cbShowTaskbar.UseVisualStyleBackColor = true;
             this.cbShowTaskbar.CheckedChanged += new System.EventHandler(this.cbShowTaskbar_CheckedChanged);
             // 
@@ -4833,9 +4912,9 @@ namespace ZSS
             this.cbOpenMainWindow.AutoSize = true;
             this.cbOpenMainWindow.Location = new System.Drawing.Point(16, 48);
             this.cbOpenMainWindow.Name = "cbOpenMainWindow";
-            this.cbOpenMainWindow.Size = new System.Drawing.Size(162, 17);
+            this.cbOpenMainWindow.Size = new System.Drawing.Size(154, 17);
             this.cbOpenMainWindow.TabIndex = 2;
-            this.cbOpenMainWindow.Text = "Open Main Window on Load";
+            this.cbOpenMainWindow.Text = "Open main window on load";
             this.cbOpenMainWindow.UseVisualStyleBackColor = true;
             this.cbOpenMainWindow.CheckedChanged += new System.EventHandler(this.cbOpenMainWindow_CheckedChanged);
             // 
@@ -6155,6 +6234,12 @@ namespace ZSS
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.PropertyGrid pgIndexer;
         private System.Windows.Forms.CheckBox cbSelectedWindowCaptureObjects;
+        private System.Windows.Forms.Label lblWatermarkOffsetPixel;
+        private System.Windows.Forms.CheckBox cbSaveFormSizePosition;
+        private System.Windows.Forms.CheckBox cbAutoSaveSettings;
+        private System.Windows.Forms.CheckBox cbTwitPicShowFull;
+        private System.Windows.Forms.ComboBox cbTwitPicThumbnailMode;
+        private System.Windows.Forms.Label lblTwitPicThumbnailMode;
 
     }
 }

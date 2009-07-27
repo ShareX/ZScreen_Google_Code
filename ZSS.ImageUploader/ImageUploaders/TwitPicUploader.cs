@@ -23,19 +23,34 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZSS.ImageUploadersLib;
-using ZSS.ImageUploadersLib.Helpers;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Xml.Linq;
+using ZSS.ImageUploadersLib;
+using ZSS.ImageUploadersLib.Helpers;
 
 namespace ZSS.ImageUploadersLib
 {
-    public enum TwitPicThumbnailType { Mini, Thumb }
+    public enum TwitPicThumbnailType
+    {
+        [Description("Mini Thumbnail")]
+        Mini,
+        [Description("Normal Thumbnail")]
+        Thumb
+    }
+
+    public enum TwitPicUploadType
+    {
+        [Description("Upload Image")]
+        UPLOAD_IMAGE_ONLY,
+        [Description("Upload Image and update Twitter Status")]
+        UPLOAD_IMAGE_AND_TWITTER
+    }
 
     public class TwitPicOptions : ImageUploaderOptions
     {

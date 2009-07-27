@@ -33,6 +33,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 using ZSS.ColorsLib;
 using ZSS.Forms;
 using ZSS.FTPClientLib;
@@ -43,12 +46,9 @@ using ZSS.ImageUploadersLib.Helpers;
 using ZSS.Properties;
 using ZSS.Tasks;
 using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.UpdateCheckerLib;
-using ZSS.TextUploadersLib.Helpers;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
-using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack;
 
 namespace ZSS
 {
@@ -63,6 +63,7 @@ namespace ZSS
         private Debug debug = null;
         private List<int> mLogoRandomList = new List<int>(5);
         private JumpList jumpList = null;
+
         #endregion
 
         public ZScreen()
@@ -88,7 +89,6 @@ namespace ZSS
             }
 
             ZScreen_Windows7onlyTasks();
-
         }
 
         private void ZScreen_Windows7onlyTasks()
@@ -128,7 +128,12 @@ namespace ZSS
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
 
-            if (Program.conf.WindowSize.Height == 0 || Program.conf.WindowSize.Width == 0)
+            if (Program.conf.WindowLocation.IsEmpty)
+            {
+                Program.conf.WindowLocation = this.Location;
+            }
+
+            if (Program.conf.WindowSize.IsEmpty)
             {
                 Program.conf.WindowSize = this.Size;
             }
@@ -181,11 +186,18 @@ namespace ZSS
             FileSystem.AppendDebug("Started ZScreen");
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
+            Rectangle screenRect = GraphicsMgr.GetScreenBounds();
+            screenRect.Inflate(-100, -100);
+            if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
+            {
+                this.Size = Program.conf.WindowSize;
+                this.Location = Program.conf.WindowLocation;
+            }
+
             // tpMindTouch.Enabled = false;
 
             AddToClipboardByDoubleClick(tpHistory);
 
-            // Window Behaviour
             if (Program.conf.ActionsToolbarMode)
             {
                 this.Hide();
@@ -195,8 +207,7 @@ namespace ZSS
             {
                 if (Program.conf.OpenMainWindow)
                 {
-                    WindowState = FormWindowState.Normal;
-                    Size = Program.conf.WindowSize;
+                    this.WindowState = FormWindowState.Normal;
                     ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
                 else
@@ -484,6 +495,7 @@ namespace ZSS
             ///////////////////////////////////
             // MindTouch Deki Wiki Settings
             ///////////////////////////////////
+
             if (Program.conf.DekiWikiAccountList == null || Program.conf.DekiWikiAccountList.Count == 0)
             {
                 DekiWikiSetup(new List<DekiWikiAccount>());
@@ -502,13 +514,18 @@ namespace ZSS
             // Image Uploader Settings
             ///////////////////////////////////
 
-            chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
-            txtUserNameImageShack.Text = Program.conf.ImageShackUserName;
-            txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
+            // TinyPic
+
             txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
-            nudErrorRetry.Value = Program.conf.ErrorRetryCount;
-            cboAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
-            nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
+            chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
+
+            // ImageShack
+
+            txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
+            txtUserNameImageShack.Text = Program.conf.ImageShackUserName;
+            chkPublicImageShack.Checked = Program.conf.ImageShackShowImagesInPublic;
+
+            // TwitPic
 
             txtTwitPicUserName.Text = Program.conf.TwitPicUserName;
             txtTwitPicPassword.Text = Program.conf.TwitPicPassword;
@@ -516,7 +533,20 @@ namespace ZSS
             {
                 cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
             }
-            cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwiPicUploadMode;
+            cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwitPicUploadMode;
+            cbTwitPicShowFull.Checked = Program.conf.TwitPicShowFull;
+            if (cbTwitPicThumbnailMode.Items.Count == 0)
+            {
+                cbTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
+            }
+            cbTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
+
+            // Others
+
+            nudErrorRetry.Value = Program.conf.ErrorRetryCount;
+            cboAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
+            nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
+
             if (cboUploadMode.Items.Count == 0)
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
@@ -586,8 +616,11 @@ namespace ZSS
             cbStartWin.Checked = RegistryMgr.CheckStartWithWindows();
             cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
             cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
-            cbLockFormSize.Checked = Program.conf.LockFormSize;
             cbShowHelpBalloonTips.Checked = Program.conf.ShowHelpBalloonTips;
+            cbSaveFormSizePosition.Checked = Program.conf.SaveFormSizePosition;
+            cbLockFormSize.Checked = Program.conf.LockFormSize;
+            cbAutoSaveSettings.Checked = Program.conf.AutoSaveSettings;
+
             chkProxyEnable.Checked = Program.conf.ProxyEnabled;
             ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
             if (cboUpdateCheckType.Items.Count == 0)
@@ -675,7 +708,6 @@ namespace ZSS
             txtSettingsDir.Text = Program.SettingsDir;
         }
 
-
         #region "GUI Methods"
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
@@ -753,15 +785,12 @@ namespace ZSS
             {
                 if (this.WindowState == FormWindowState.Minimized)
                 {
-                    if (!Program.conf.ShowInTaskbar)
-                    {
-                        this.Hide();
-                        if (Program.conf.AutoSaveSettings) WriteSettings();
-                    }
+                    if (!Program.conf.ShowInTaskbar) this.Hide();
+
+                    if (Program.conf.AutoSaveSettings) WriteSettings();
                 }
                 else if (this.WindowState == FormWindowState.Normal)
                 {
-                    Program.conf.WindowSize = this.Size;
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                     this.Refresh();
                 }
@@ -782,9 +811,16 @@ namespace ZSS
 
         private void WriteSettings()
         {
+            if (mGuiIsReady && Program.conf.SaveFormSizePosition)
+            {
+                Program.conf.WindowLocation = this.Location;
+                Program.conf.WindowSize = this.Size;
+            }
+
             Program.conf.Save();
             Program.Worker.SaveHistoryItems();
             Settings.Default.Save();
+
             FileSystem.AppendDebug("Settings written to file.");
         }
 
@@ -3528,7 +3564,7 @@ namespace ZSS
 
         private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.TwiPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
+            Program.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
@@ -3637,6 +3673,40 @@ namespace ZSS
         private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.SelectedWindowCaptureObjects = cbSelectedWindowCaptureObjects.Checked;
+        }
+
+        private void cbSaveFormSizePosition_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.SaveFormSizePosition = cbSaveFormSizePosition.Checked;
+
+            if (mGuiIsReady)
+            {
+                if (Program.conf.SaveFormSizePosition)
+                {
+                    Program.conf.WindowLocation = this.Location;
+                    Program.conf.WindowSize = this.Size;
+                }
+                else
+                {
+                    Program.conf.WindowLocation = Point.Empty;
+                    Program.conf.WindowSize = Size.Empty;
+                }
+            }
+        }
+
+        private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
+        }
+
+        private void cbTwitPicShowFull_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.TwitPicShowFull = cbTwitPicShowFull.Checked;
+        }
+
+        private void cbTwitPicThumbnailMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cbTwitPicThumbnailMode.SelectedIndex;
         }
     }
 }
