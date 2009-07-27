@@ -2046,6 +2046,11 @@ namespace ZSS
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
                     bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
+                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath);
+
+                    pbPreview.Visible = checkImage;
+                    txtPreview.Visible = checkText;
+                    historyBrowser.Visible = checkWebpage && !checkImage && !checkText;
 
                     tsmCopyCbHistory.Enabled = checkRemote;
                     browseURLToolStripMenuItem.Enabled = checkRemote;

@@ -92,7 +92,8 @@ namespace ZSS
         public const string DISABLED_IMAGE_EDITOR = "Disabled";
 
         public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif", "ico" };
-        public static string[] zTextFileTypes = { "txt", "log", "html" };
+        public static string[] zTextFileTypes = { "txt", "log" };
+        public static string[] zWebpageFileTypes = { "html", "htm" };
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
             Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
@@ -201,9 +202,9 @@ namespace ZSS
         [STAThread]
         static void Main()
         {
-        	FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
-        	FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
-                        
+            FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
+            FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -239,7 +240,7 @@ namespace ZSS
             conf = XMLSettings.Read();
 
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
-            
+
             // Use Configuration Wizard Settings if applied
             if (cw != null)
             {
@@ -269,15 +270,18 @@ namespace ZSS
                 mAppInfo.AppName = mProductName;
             }
 
-            try {
-            	  Application.Run(new ZScreen());
-            } catch (Exception ex) {
-            	FileSystem.AppendDebug(ex);
-            }       
-            finally 
+            try
             {
-            FileSystem.WriteDebugFile();
-            ZScreenKeyboardHook.Dispose();            	
+                Application.Run(new ZScreen());
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
+            }
+            finally
+            {
+                FileSystem.WriteDebugFile();
+                ZScreenKeyboardHook.Dispose();
             }
 
         }
