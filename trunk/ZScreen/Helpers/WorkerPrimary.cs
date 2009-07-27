@@ -224,7 +224,7 @@ namespace ZSS.Helpers
                     int progress = (int)e.UserState;
                     Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                     mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
-                    Adapter.TaskbarSetProgress(progress);                     
+                    Adapter.TaskbarSetProgress(progress);
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarButtonProgressState tbps = (TaskbarButtonProgressState)e.UserState;
@@ -353,7 +353,7 @@ namespace ZSS.Helpers
                     }
                 }
 
-                Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);                       
+                Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);
 
                 if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
             }

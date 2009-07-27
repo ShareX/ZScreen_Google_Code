@@ -55,8 +55,6 @@ namespace ZSS
             BackgroundRegionTransparentValue = 100;
             BackgroundRegionBrightnessValue = 15;
             AutoIncrement = 0;
-            NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
-            NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Screenshots
@@ -233,10 +231,8 @@ namespace ZSS
 
         // Naming Conventions
 
-        [Category("Screenshots / File Naming"), Description("File Naming convention for Active Window Screenshots")]
-        public string NamingActiveWindow { get; set; }
-        [Category("Screenshots / File Naming"), Description("File Naming convention for Active Window Entire Screen")]
-        public string NamingEntireScreen { get; set; }
+        public string NamingActiveWindow  = "%t-%y.%mo.%d-%h.%mi.%s";
+        public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
         [Category("Screenshots / File Naming"), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
