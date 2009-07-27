@@ -110,5 +110,21 @@ namespace ZSS
             this.Value = this.Value;
             if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
         }
+
+        private void NumericUpDownTimer_Load(object sender, EventArgs e)
+        {
+            SetToolTip(this);
+        }
+
+        private void SetToolTip(Control c1)
+        {
+            toolTip.SetToolTip(c1, "Specify the amount of time to wait before taking a screenshot.");
+            foreach (Control c2 in c1.Controls)
+            {
+                SetToolTip(c2);
+            }
+            
+        }
+
     }
 }

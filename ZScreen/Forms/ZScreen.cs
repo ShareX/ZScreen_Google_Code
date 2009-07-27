@@ -3705,5 +3705,11 @@ namespace ZSS
         {
             Program.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cbTwitPicThumbnailMode.SelectedIndex;
         }
+
+        private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Hi!");
+            ttZScreen.Show(ttZScreen.GetToolTip(nudtScreenshotDelay), this);
+        }
     }
 }

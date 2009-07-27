@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.nudDelay = new System.Windows.Forms.NumericUpDown();
             this.cbDelay = new System.Windows.Forms.ComboBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +59,13 @@
             this.cbDelay.TabIndex = 2;
             this.cbDelay.SelectedIndexChanged += new System.EventHandler(this.cbDelay_SelectedIndexChanged);
             // 
+            // toolTip
+            // 
+            this.toolTip.AutoPopDelay = 5000;
+            this.toolTip.InitialDelay = 1000;
+            this.toolTip.IsBalloon = true;
+            this.toolTip.ReshowDelay = 100;
+            // 
             // NumericUpDownTimer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -65,6 +74,7 @@
             this.Controls.Add(this.nudDelay);
             this.Name = "NumericUpDownTimer";
             this.Size = new System.Drawing.Size(233, 27);
+            this.Load += new System.EventHandler(this.NumericUpDownTimer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.ResumeLayout(false);
 
@@ -74,5 +84,6 @@
 
         private System.Windows.Forms.NumericUpDown nudDelay;
         private System.Windows.Forms.ComboBox cbDelay;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
