@@ -26,14 +26,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using ZSS.Properties;
-using ZSS.TextUploadersLib;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 using ZSS.Helpers;
 using ZSS.ImageUploadersLib;
+using ZSS.IndexersLib;
+using ZSS.Properties;
+using ZSS.TextUploadersLib;
 using ZSS.UpdateCheckerLib;
 
 namespace ZSS
@@ -46,48 +47,70 @@ namespace ZSS
             #region "Default Values"
 
             //~~~~~~~~~~~~~~~~~~~~~
-            //  Capture
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            CopyImageUntilURL = false;
-            RegionTransparentValue = 75;
-            RegionBrightnessValue = 15;
-            BackgroundRegionTransparentValue = 100;
-            BackgroundRegionBrightnessValue = 15;
-            AutoIncrement = 0;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Screenshots
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            DrawReflection = false;
-            ReflectionPercentage = 20;
-            ReflectionTransparency = 255;
-            ReflectionOffset = 0;
-            ReflectionSkew = true;
-            ReflectionSkewSize = 25;
-            BevelEffectOffset = 15;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  FTP
+            //  Accounts / FTP
             //~~~~~~~~~~~~~~~~~~~~~
 
             BackupFTPSettings = true;
 
             //~~~~~~~~~~~~~~~~~~~~~
-            //  Options
+            //  Options / Actions Toolbar
             //~~~~~~~~~~~~~~~~~~~~~
 
             ActionsToolbarMode = false;
+            ActionToolbarLocation = Point.Empty;
 
-            IndexerConfig = new ZSS.IndexersLib.IndexerConfig();
-            WriteDebugFile = true;
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Options / General
+            //~~~~~~~~~~~~~~~~~~~~~
+
             ShowTrayUploadProgress = true;
+            WriteDebugFile = true;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Options / Interaction
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            AutoShortenURL = true;
+            LimitLongURL = 100;
+            MakeTinyURL = false;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Options / Paths
+            //~~~~~~~~~~~~~~~~~~~~~
 
             BackupApplicationSettings = true;
             ImagesDir = Program.ImagesDir;
-            LimitLongURL = 100;
-            AutoShortenURL = true;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Screenshots / Bevel
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            BevelEffect = false;
+            BevelEffectOffset = 15;
+            BevelFilterType = FilterType.Brightness;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Screenshots / General
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            AutoIncrement = 0;
+            BackgroundRegionBrightnessValue = -10;
+            BackgroundRegionTransparentValue = 100;
+            CopyImageUntilURL = false;
+            PromptForUpload = false;
+            RegionBrightnessValue = 15;
+            RegionTransparentValue = 75;
+
+            //~~~~~~~~~~~~~~~~~~~~~
+            //  Screenshots / Reflection
+            //~~~~~~~~~~~~~~~~~~~~~
+
+            DrawReflection = false;
+            ReflectionOffset = 0;
+            ReflectionPercentage = 20;
+            ReflectionSkew = true;
+            ReflectionSkewSize = 25;
+            ReflectionTransparency = 255;
 
             #endregion
         }
@@ -151,7 +174,7 @@ namespace ZSS
         public int RegionBrightnessValue { get; set; }
         [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
         public int BackgroundRegionTransparentValue { get; set; }
-        [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
+        [Category("Screenshots / General"), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }
 
         [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
@@ -171,12 +194,12 @@ namespace ZSS
         public bool BevelEffect { get; set; }
         [Category("Screenshots / Bevel"), DefaultValue(15), Description("Bevel effect size.")]
         public int BevelEffectOffset { get; set; }
-        [Category("Screenshots / Bevel"), Description("Bevel effect filter type.")]
+        [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
         public FilterType BevelFilterType { get; set; }
 
         // Crop Shot
 
-        public RegionStyles CropRegionStyles = RegionStyles.REGION_TRANSPARENT;
+        public RegionStyles CropRegionStyles = RegionStyles.BACKGROUND_REGION_BRIGHTNESS;
         public bool CropRegionRectangleInfo = true;
         public bool CropRegionHotkeyInfo = true;
 
@@ -200,7 +223,7 @@ namespace ZSS
 
         // Selected Window
 
-        public RegionStyles SelectedWindowRegionStyles = RegionStyles.BACKGROUND_REGION_TRANSPARENT;
+        public RegionStyles SelectedWindowRegionStyles = RegionStyles.BACKGROUND_REGION_BRIGHTNESS;
         public bool SelectedWindowRectangleInfo = true;
         public bool SelectedWindowRuler = true;
         public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
@@ -231,9 +254,9 @@ namespace ZSS
 
         // Naming Conventions
 
-        public string NamingActiveWindow  = "%t-%y.%mo.%d-%h.%mi.%s";
+        public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        [Category("Screenshots / File Naming"), Description("Adjust the current Auto-Increment number.")]
+        [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
         // Quality
@@ -345,7 +368,7 @@ namespace ZSS
 
         // Indexer
 
-        public ZSS.IndexersLib.IndexerConfig IndexerConfig = null;
+        public IndexerConfig IndexerConfig = new IndexerConfig();
 
         // Custom Image Uploaders
 
@@ -542,7 +565,6 @@ namespace ZSS
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
                 FileSystem.AppendDebug(ex.ToString());
                 MessageBox.Show(ex.Message);
             }
