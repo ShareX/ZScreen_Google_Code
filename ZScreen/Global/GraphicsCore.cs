@@ -374,13 +374,12 @@ namespace ZSS
         }
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
-        {
-            Rectangle rectangle;
-            
+        {            
             if (Environment.OSVersion.Version.Major < 6) {
             	return GetWindowRect(handle);
             }
             
+        	Rectangle rectangle;
 			if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
             {
                 return rectangle;
