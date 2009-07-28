@@ -181,8 +181,24 @@ namespace ZSS
             DrawZScreenLabel(false);
         }
 
+        private void SetToolTip(Control original)
+        {
+            SetToolTip(original, original);
+        }
+
+        private void SetToolTip(Control original, Control next)
+        {
+            ttZScreen.SetToolTip(next, ttZScreen.GetToolTip(original));
+            foreach (Control c in next.Controls)
+            {
+                SetToolTip(original, c);
+            }
+        }
+
         private void ZScreen_Load(object sender, EventArgs e)
         {
+            SetToolTip(nudtScreenshotDelay);
+
             Rectangle screenRect = GraphicsMgr.GetScreenBounds();
             screenRect.Inflate(-100, -100);
             if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
