@@ -263,25 +263,31 @@ namespace ZSS
             //  Main
             //~~~~~~~~~~~~~~~~~~~~~
 
-            foreach (TabPage tp in tcApp.TabPages)
+            if (tsmiTabs.DropDownItems.Count == 0)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text + "...");
-                tsmi.Click += new EventHandler(tsmiTab_Click);
-                tsmi.Image = ilApp.Images[tp.ImageKey];
-                tsmi.Tag = tp.Name;
-                tsmiTabs.DropDownItems.Add(tsmi);
+                foreach (TabPage tp in tcApp.TabPages)
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text + "...");
+                    tsmi.Click += new EventHandler(tsmiTab_Click);
+                    tsmi.Image = ilApp.Images[tp.ImageKey];
+                    tsmi.Tag = tp.Name;
+                    tsmiTabs.DropDownItems.Add(tsmi);
+                }
             }
 
             if (cboImageUploaders.Items.Count == 0)
             {
                 cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
-            foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
+            if (tsmImageDest.DropDownItems.Count == 0)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(idt.GetDescription());
-                tsmi.Click += new EventHandler(tsmiDestImages_Click);
-                tsmi.Tag = idt;
-                tsmImageDest.DropDownItems.Add(tsmi);
+                foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(idt.GetDescription());
+                    tsmi.Click += new EventHandler(tsmiDestImages_Click);
+                    tsmi.Tag = idt;
+                    tsmImageDest.DropDownItems.Add(tsmi);
+                }
             }
 
             cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
