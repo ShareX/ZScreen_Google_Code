@@ -62,7 +62,6 @@ namespace ZSS
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private Debug debug = null;
         private List<int> mLogoRandomList = new List<int>(5);
-        public JumpList jumpList = null;
 
         #endregion
 
@@ -70,6 +69,7 @@ namespace ZSS
         {
             InitializeComponent();
 
+            Program.ZScreen_Windows7onlyTasks();
             ZScreen_SetFormSettings();
             UpdateGuiControls();
 
@@ -80,45 +80,7 @@ namespace ZSS
             Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
 
             if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
-
-            string cssIndexer = Path.Combine(Program.SettingsDir, ZSS.IndexersLib.IndexerConfig.DefaultCssFileName);
-            if (!File.Exists(cssIndexer))
-            {
-                IndexersLib.IndexerAdapter.CopyDefaultCss(Program.SettingsDir);
-                Program.conf.IndexerConfig.CssFilePath = cssIndexer;
-            }
-
-            ZScreen_Windows7onlyTasks();
-        }
-
-        private void ZScreen_Windows7onlyTasks()
-        {
-            if (CoreHelpers.RunningOnWin7)
-            {
-                jumpList = Taskbar.JumpList;
-                //jumpList.UserTasks.Add(new JumpListLink
-                //{
-                //    Title = "Crop Shot",
-                //    Arguments = "crop_shot",
-                //    Path = Application.ExecutablePath,
-                //    IconReference = new IconReference(Application.ExecutablePath, 0)
-                //});
-                CustomCategory paths = new CustomCategory("Paths");
-                paths.JumpListItems.Add(new JumpListLink
-                {
-                    Title = "Images",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.ImagesDir
-                });
-                paths.JumpListItems.Add(new JumpListLink
-                {
-                    Title = "Settings",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.SettingsDir
-                });
-                jumpList.CustomCategories.Add(paths);
-                Taskbar.JumpList.RefreshTaskbarList();
-            }
+         
         }
 
         private void ZScreen_SetFormSettings()
