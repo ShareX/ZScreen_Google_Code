@@ -396,7 +396,10 @@ namespace ZSS
         public bool HistoryShowTooltips = true;
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
-
+		[Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
+        public bool PreferBrowserForText { get; set; }
+		[Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
+        public bool PreferBrowserForImages { get; set; }
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
         //~~~~~~~~~~~~~~~~~~~~~

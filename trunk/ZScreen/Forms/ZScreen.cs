@@ -2046,20 +2046,27 @@ namespace ZSS
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
                     bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
-                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath);
+                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText );
 
-                    pbPreview.Visible = checkImage;
-                    txtPreview.Visible = checkText;
-                    historyBrowser.Visible = checkWebpage && !checkImage && !checkText;
+                    historyBrowser.Visible = checkWebpage;
+                    pbPreview.Visible = checkImage && !checkWebpage;
+                    txtPreview.Visible = checkText && !checkWebpage;
 
                     tsmCopyCbHistory.Enabled = checkRemote;
+                    cmsHistory.Enabled = checkLocal;
                     browseURLToolStripMenuItem.Enabled = checkRemote;
                     btnHistoryCopyLink.Enabled = checkRemote;
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
                     btnHistoryCopyImage.Enabled = checkImage;
 
-                    if (checkImage)
+                    if (checkWebpage)
+                    {
+                        // preview text from remote path because otherwise Notepad is gonna open
+                        string url = (checkText ? (checkRemote ? hi.RemotePath : hi.LocalPath) : hi.LocalPath);
+                        historyBrowser.Navigate(url);
+                    }
+                    else if (checkImage)
                     {
                         pbPreview.LoadAsync(hi.LocalPath);
                         pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
@@ -2067,12 +2074,6 @@ namespace ZSS
                     else if (checkText)
                     {
                         txtPreview.Text = File.ReadAllText(hi.LocalPath);
-                    }
-                    else if (checkWebpage)
-                    {
-                        // preview text from remote path because otherwise Notepad is gonna open
-                        string url = (checkText ? (checkRemote ? hi.RemotePath : hi.LocalPath) : hi.LocalPath);
-                        historyBrowser.Navigate(url);
                     }
                     else if (checkRemote)
                     {
