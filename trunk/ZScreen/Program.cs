@@ -1,4 +1,4 @@
-#region License Information (GPL v2)
+﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -31,6 +31,9 @@ using ZSS.Forms;
 using ZSS.Helpers;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.URLShorteners;
+using Microsoft.WindowsAPICodePack;
+using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace ZSS
 {
@@ -142,6 +145,46 @@ namespace ZSS
             XMLPortableFile = Path.Combine(SettingsDir, XMLFileName);
         }
 
+        public static void InitializeFiles()
+        {
+            string cssIndexer = Path.Combine(SettingsDir, ZSS.IndexersLib.IndexerConfig.DefaultCssFileName);
+            if (!File.Exists(cssIndexer))
+            {
+                IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
+                conf.IndexerConfig.CssFilePath = cssIndexer;
+            }
+        }
+
+        public static void ZScreen_Windows7onlyTasks()
+        {
+            if (CoreHelpers.RunningOnWin7)
+            {
+                JumpList jumpList = Taskbar.JumpList;
+                //jumpList.UserTasks.Add(new JumpListLink
+                //{
+                //    Title = "Crop Shot",
+                //    Arguments = "crop_shot",
+                //    Path = Application.ExecutablePath,
+                //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                //});
+                CustomCategory paths = new CustomCategory("Paths");
+                paths.JumpListItems.Add(new JumpListLink
+                {
+                    Title = "Images",
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                    Path = Program.ImagesDir
+                });
+                paths.JumpListItems.Add(new JumpListLink
+                {
+                    Title = "Settings",
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                    Path = Program.SettingsDir
+                });
+                jumpList.CustomCategories.Add(paths);
+                Taskbar.JumpList.RefreshTaskbarList();
+            }
+        }
+
         public static string XMLSettingsFile
         {
             get
@@ -238,6 +281,7 @@ namespace ZSS
 
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
+            InitializeFiles();
 
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
