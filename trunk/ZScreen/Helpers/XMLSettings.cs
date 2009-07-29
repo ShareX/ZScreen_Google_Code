@@ -245,6 +245,8 @@ namespace ZSS
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
         public bool CloseQuickActions = false;
+        [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to Taskbar on Close")]
+        public bool MinimizeOnClose { get; set; }
         [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task")]
         public bool MakeTinyURL { get; set; }
         [Category("Options / Interaction"), DefaultValue(100), Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
