@@ -74,6 +74,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Icon application_double_ico {
+            get {
+                object obj = ResourceManager.GetObject("application_double_ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_edit {
             get {
                 object obj = ResourceManager.GetObject("application_edit", resourceCulture);
@@ -113,6 +120,13 @@ namespace ZSS.Properties {
             get {
                 object obj = ResourceManager.GetObject("camera_edit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon clipboard_upload_ico {
+            get {
+                object obj = ResourceManager.GetObject("clipboard_upload_ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -347,6 +361,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Icon shape_square_ico {
+            get {
+                object obj = ResourceManager.GetObject("shape_square_ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tag_blue_edit {
             get {
                 object obj = ResourceManager.GetObject("tag_blue_edit", resourceCulture);
@@ -376,15 +397,14 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.21.0.0 Added HTTP Proxy support for image/text uploaders
+        ///   Looks up a localized string similar to Version 2.23 - 20090801
         ///
-        ///Version 2.20 - 20090801
-        ///
-        ///2.20.06.3 ZScreen will not save settings to file everytime the tab button is pressed while in Crop
-        ///2.20.06.2 Prevented csc.exe errors due to dynamic xml serialization while the computer is shutting down
-        ///2.20.06.1 Fixed a few more exceptions during FTP Upload
-        ///2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86]
-        ///2.20.05.0 FTP account settings now have the ability to  [rest of string was truncated]&quot;;.
+        ///2.23.04.0 PropertyGrid options to prefer Browser View when navigating uploaded Images and Text in History tab {McoreD}
+        ///2.23.03.0 Selected Window can perform Crop Shot if required {Jaex}
+        ///2.23.02.0 Windows 7 only: ZScreen taskbar icon shows progress when uploading {McoreD}
+        ///2.23.01.0 Selected Window can capture objects within each active window {Jaex}
+        ///2.23.00.0 Ability to Clipboard Upload folder contents using TreeGUI indexer engines {McoreD}
+        ///2.22.02.0 Screenshots of irregular w [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

@@ -155,35 +155,7 @@ namespace ZSS
             }
         }
 
-        public static void ZScreen_Windows7onlyTasks()
-        {
-            if (CoreHelpers.RunningOnWin7)
-            {
-                JumpList jumpList = Taskbar.JumpList;
-                //jumpList.UserTasks.Add(new JumpListLink
-                //{
-                //    Title = "Crop Shot",
-                //    Arguments = "crop_shot",
-                //    Path = Application.ExecutablePath,
-                //    IconReference = new IconReference(Application.ExecutablePath, 0)
-                //});
-                CustomCategory paths = new CustomCategory("Paths");
-                paths.JumpListItems.Add(new JumpListLink
-                {
-                    Title = "Images",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.ImagesDir
-                });
-                paths.JumpListItems.Add(new JumpListLink
-                {
-                    Title = "Settings",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.SettingsDir
-                });
-                jumpList.CustomCategories.Add(paths);
-                Taskbar.JumpList.RefreshTaskbarList();
-            }
-        }
+
 
         public static string XMLSettingsFile
         {
