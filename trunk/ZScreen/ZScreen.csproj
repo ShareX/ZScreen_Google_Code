@@ -397,6 +397,9 @@
     <Content Include="Documents\TODO.txt" />
     <Content Include="Lib\Microsoft.WindowsAPICodePack.dll" />
     <Content Include="Lib\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <None Include="Resources\shape_square.ico" />
+    <None Include="Resources\application_double_ico.ico" />
+    <None Include="Resources\clipboard_upload_ico.ico" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>

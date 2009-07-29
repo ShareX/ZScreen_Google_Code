@@ -67,11 +67,10 @@ namespace ZSS
 
         public ZScreen()
         {
-            InitializeComponent();
-
-            Program.ZScreen_Windows7onlyTasks();
+            InitializeComponent();     
             ZScreen_SetFormSettings();
             UpdateGuiControls();
+            ZScreen_Windows7onlyTasks();
 
             Program.Worker = new WorkerPrimary(this);
             Program.Worker2 = new WorkerSecondary(this);
@@ -81,6 +80,46 @@ namespace ZSS
 
             if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
          
+        }
+
+        internal void ZScreen_Windows7onlyTasks()
+        {
+            if (CoreHelpers.RunningOnWin7)
+            {
+                Taskbar.AppId = Application.ProductName; 
+               
+                JumpList jumpList = Taskbar.JumpList;
+                Console.Write(jumpList.CustomCategories.Count);
+
+                //jumpList.UserTasks.Add(new JumpListLink
+                //{
+                //    Title = "Crop Shot",
+                //    Arguments = "crop_shot",
+                //    Path = Application.ExecutablePath,
+                //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                //});
+                CustomCategory paths = new CustomCategory("Paths");
+                paths.JumpListItems.Add(new JumpListLink
+                {
+                    Title = "Images",
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                    Path = Program.ImagesDir
+                });
+                paths.JumpListItems.Add(new JumpListLink
+                {
+                    Title = "Settings",
+                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                    Path = Program.SettingsDir
+                });
+                jumpList.CustomCategories.Add(paths);
+
+              //  Taskbar.JumpList.RefreshTaskbarList();
+            }
+        }
+
+        void cropShot_Click(object sender, EventArgs e)
+        {
+            Program.Worker.StartBW_CropShot();
         }
 
         private void ZScreen_SetFormSettings()
@@ -1177,6 +1216,28 @@ namespace ZSS
             {
                 FileSystem.BackupAppSettings();
             }
+
+            if (CoreHelpers.RunningOnWin7)
+            {
+                ThumbnailButton cropShot = new ThumbnailButton(Resources.shape_square_ico, "Crop Shot");
+                cropShot.Click += new EventHandler(cropShot_Click);
+                ThumbnailButton selWindow = new ThumbnailButton(Resources.application_double_ico, "Selected Window");
+                selWindow.Click += new EventHandler(selWindow_Click);
+                ThumbnailButton clipboardUpload = new ThumbnailButton(Resources.clipboard_upload_ico, "Clipboard Upload");
+                clipboardUpload.Click += new EventHandler(clipboardUpload_Click);
+                Taskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+            }
+
+        }
+
+        void clipboardUpload_Click(object sender, EventArgs e)
+        {
+            Program.Worker.UploadUsingClipboard();
+        }
+
+        void selWindow_Click(object sender, EventArgs e)
+        {
+            Program.Worker.StartBW_SelectedWindow();
         }
 
         private void AddToClipboardByDoubleClick(Control tp)
