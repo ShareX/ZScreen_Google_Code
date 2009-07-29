@@ -2391,7 +2391,12 @@ namespace ZSS
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lbHistory.SelectedIndex != -1)
+        	DeleteHistoryFiles();
+        }
+        
+        private void DeleteHistoryFiles(){
+        	
+        	if (lbHistory.SelectedIndex != -1)
             {
                 List<HistoryItem> temp = new List<HistoryItem>();
                 foreach (HistoryItem hi in lbHistory.SelectedItems)
@@ -2401,12 +2406,11 @@ namespace ZSS
                 foreach (HistoryItem hi in temp)
                 {
                     lbHistory.Items.Remove(hi);
-                    if (File.Exists(hi.LocalPath))
-                    {
-                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(hi.LocalPath,
-                            Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
-                    }
+                    Adapter.DeleteFile(hi.LocalPath);                
                 }
+                if (lbHistory.Items.Count>0) {
+					lbHistory.SelectedItem = 0;                	
+                }                
             }
         }
 
@@ -2925,6 +2929,9 @@ namespace ZSS
                 {
                     lbHistory.SetSelected(i, true);
                 }
+            }
+            else if (e.KeyCode == Keys.Delete) {
+            	this.DeleteHistoryFiles();
             }
         }
 
