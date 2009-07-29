@@ -51,7 +51,7 @@ namespace ZSS.Helpers
             mTask.StartTime = DateTime.Now;
 
             ImageUploader imageUploader = null;
-            
+
             if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
@@ -133,21 +133,10 @@ namespace ZSS.Helpers
                             break;
                         }
                     }
-
-                    //Set remote path for Screenshots history
-                    string url = mTask.ImageManager.GetFullImageUrl();
-                    if (mTask.MakeTinyURL)
-                    {
-                        url = Adapter.TryShortenURL(url);
-                    }
-                    if (mTask.ImageManager != null)
-                    {
-                        mTask.RemoteFilePath = url;
-                        mTask.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
-                    }
                 }
             }
 
+            this.SetRemoteFilePath();
             mTask.EndTime = DateTime.Now;
 
             if (Program.conf.AutoChangeUploadDestination && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
@@ -166,6 +155,21 @@ namespace ZSS.Helpers
             if (mTask.ImageManager != null)
             {
                 FlashIcon(mTask);
+            }
+        }
+
+        private void SetRemoteFilePath()
+        {
+            //Set remote path for Screenshots history
+            string url = mTask.ImageManager.GetFullImageUrl();
+            if (mTask.MakeTinyURL)
+            {
+                url = Adapter.TryShortenURL(url);
+            }
+            if (mTask.ImageManager != null)
+            {
+                mTask.RemoteFilePath = url;
+                mTask.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
             }
         }
 
@@ -205,7 +209,7 @@ namespace ZSS.Helpers
                     };
 
                     mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Normal);
-                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);                    
+                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;

@@ -67,7 +67,7 @@ namespace ZSS
 
         public ZScreen()
         {
-            InitializeComponent();     
+            InitializeComponent();
             ZScreen_SetFormSettings();
             UpdateGuiControls();
             ZScreen_Windows7onlyTasks();
@@ -79,15 +79,15 @@ namespace ZSS
             Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
 
             if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
-         
+
         }
 
         internal void ZScreen_Windows7onlyTasks()
         {
             if (CoreHelpers.RunningOnWin7)
             {
-                Taskbar.AppId = Application.ProductName; 
-               
+                Taskbar.AppId = Application.ProductName;
+
                 JumpList jumpList = Taskbar.JumpList;
                 Console.Write(jumpList.CustomCategories.Count);
 
@@ -113,7 +113,7 @@ namespace ZSS
                 });
                 jumpList.CustomCategories.Add(paths);
 
-              //  Taskbar.JumpList.RefreshTaskbarList();
+                //  Taskbar.JumpList.RefreshTaskbarList();
             }
         }
 
@@ -820,10 +820,17 @@ namespace ZSS
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             WriteSettings();
-            if (!mClose && e.CloseReason == CloseReason.UserClosing)
+            if (!mClose)
             {
-                e.Cancel = true;
-                Hide();
+                e.Cancel = true; // cancel the Close
+                if (Program.conf.MinimizeOnClose)
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                }
+                else if (e.CloseReason == CloseReason.UserClosing)
+                {
+                    Hide();
+                }
             }
         }
 
@@ -2091,7 +2098,7 @@ namespace ZSS
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
                     bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
-                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText );
+                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText);
 
                     historyBrowser.Visible = checkWebpage;
                     pbPreview.Visible = checkImage && !checkWebpage;
@@ -2452,12 +2459,13 @@ namespace ZSS
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        	DeleteHistoryFiles();
+            DeleteHistoryFiles();
         }
-        
-        private void DeleteHistoryFiles(){
-        	
-        	if (lbHistory.SelectedIndex != -1)
+
+        private void DeleteHistoryFiles()
+        {
+
+            if (lbHistory.SelectedIndex != -1)
             {
                 List<HistoryItem> temp = new List<HistoryItem>();
                 foreach (HistoryItem hi in lbHistory.SelectedItems)
@@ -2467,11 +2475,12 @@ namespace ZSS
                 foreach (HistoryItem hi in temp)
                 {
                     lbHistory.Items.Remove(hi);
-                    Adapter.DeleteFile(hi.LocalPath);                
+                    Adapter.DeleteFile(hi.LocalPath);
                 }
-                if (lbHistory.Items.Count>0) {
-					lbHistory.SelectedItem = 0;                	
-                }                
+                if (lbHistory.Items.Count > 0)
+                {
+                    lbHistory.SelectedItem = 0;
+                }
             }
         }
 
@@ -2991,8 +3000,9 @@ namespace ZSS
                     lbHistory.SetSelected(i, true);
                 }
             }
-            else if (e.KeyCode == Keys.Delete) {
-            	this.DeleteHistoryFiles();
+            else if (e.KeyCode == Keys.Delete)
+            {
+                this.DeleteHistoryFiles();
             }
         }
 
