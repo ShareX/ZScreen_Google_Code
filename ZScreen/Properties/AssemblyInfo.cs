@@ -1,4 +1,4 @@
-﻿#region License Information (GPL v2)
+#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -52,5 +52,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("2.23.0.893")]
+[assembly: AssemblyVersion("2.23.0.898")]
 [assembly: AssemblyFileVersion("2.23.4.0")]

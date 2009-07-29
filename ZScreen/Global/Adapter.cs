@@ -296,6 +296,13 @@ namespace ZSS.Global
         {
             return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
         }
+        
+        public static void DeleteFile(string fp){
+        	if ( File.Exists(fp) ) {
+                Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(fp, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, 
+        		                                                   Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+        	}
+        }
 
         #region "Windows 7 only"
         public static List<Form> GetUserWindows()
