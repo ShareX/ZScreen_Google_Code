@@ -107,6 +107,13 @@ namespace ZSS
             {
                 string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
 
+                if (MyTask.MakeTinyURL) {
+                	string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                	if (!string.IsNullOrEmpty(tinyUrl)) {
+                		url = tinyUrl.Trim();
+                	}
+                }
+                	
                 if (!string.IsNullOrEmpty(url))
                 {
                     Clipboard.SetText(url);
