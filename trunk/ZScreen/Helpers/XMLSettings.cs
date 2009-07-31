@@ -449,6 +449,11 @@ namespace ZSS
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
 
+        [Category("Options / Folder Monitor"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
+        public bool FolderMonitoring { get; set; }
+        [Category("Options / Folder Monitor"), Description("Folder monitor path where files automatically get uploaded.")]
+        public string FolderMonitorPath { get; set; }
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture
         //~~~~~~~~~~~~~~~~~~~~~

@@ -354,8 +354,9 @@ namespace ZSS.Helpers
                     }
                 }
 
-                if (CoreHelpers.RunningOnWin7){
-                	Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);                       
+                if (CoreHelpers.RunningOnWin7)
+                {
+                    Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);
                 }
 
 
@@ -821,6 +822,58 @@ namespace ZSS.Helpers
             return Program.conf.SetFieldValue("Hotkey" + name.Replace(" ", ""), key);
         }
 
+        public void UploadUsingFileSystem(List<string> fileList)
+        {
+            List<string> strListFilePath = new List<string>();
+
+            foreach (string fp in fileList)
+            {
+                try
+                {
+                    if (GraphicsMgr.IsValidImage(fp))
+                    {
+                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
+                        if (fp != cbFilePath)
+                        {
+                            File.Copy(fp, cbFilePath, true);
+                        }
+                        strListFilePath.Add(cbFilePath);
+                    }
+                    else
+                    {
+                        strListFilePath.Add(fp); // yes we use the orignal file path
+                    }
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.ToString());
+                }
+            }
+
+            List<MainAppTask> textWorkers = new List<MainAppTask>();
+
+            foreach (string fp in strListFilePath)
+            {
+                if (FileSystem.IsValidImageFile(fp))
+                {
+                    StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                }
+                else if (FileSystem.IsValidTextFile(fp))
+                {
+                    MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    temp.SetLocalFilePath(fp);
+                    temp.MyText = TextInfo.FromFile(fp);
+                    textWorkers.Add(temp);
+                }
+                else
+                {
+                    StartWorkerBinary(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                }
+            }
+
+            StartTextWorkers(textWorkers);
+
+        }
         public void UploadUsingClipboard()
         {
             if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
@@ -850,93 +903,55 @@ namespace ZSS.Helpers
                     textWorkers.Add(temp);
                 }
                 else if (Clipboard.ContainsFileDropList())
-                {
-                    List<string> strListFilePath = new List<string>();
-
-                    foreach (string fp in FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()))
-                    {
-                        try
-                        {
-                            if (GraphicsMgr.IsValidImage(fp))
-                            {
-                                string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
-                                File.Copy(fp, cbFilePath, true);
-                                strListFilePath.Add(cbFilePath);
-                            }
-                            else if (Directory.Exists(fp))
-                            {
-                                MessageBox.Show(fp);
-                            }
-                            else
-                            {
-                                strListFilePath.Add(fp); // yes we use the orignal file path
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            FileSystem.AppendDebug(ex.ToString());
-                        }
-                    }
-
-                    foreach (string fp in strListFilePath)
-                    {
-                        if (FileSystem.IsValidImageFile(fp))
-                        {
-                            StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
-                        }
-                        else if (FileSystem.IsValidTextFile(fp))
-                        {
-                            MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
-                            temp.SetLocalFilePath(fp);
-                            temp.MyText = TextInfo.FromFile(fp);
-                            textWorkers.Add(temp);
-                        }
-                        else
-                        {
-                            StartWorkerBinary(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
-                        }
-                    }
+                {                 
+                    this.UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
                 }
 
-                foreach (MainAppTask task in textWorkers)
-                {
-                    if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
-                    {
-                        task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
-                        task.RunWorker();
-                    }
-                    else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
-                    {
-                        IndexerAdapter settings = new IndexerAdapter();
-                        settings.LoadConfig(Program.conf.IndexerConfig);
-                        Program.conf.IndexerConfig.FolderList.Clear();
-                        string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
-                        string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
-                        settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
-                        settings.GetConfig().FolderList.Add(task.MyText.LocalString);
+                this.StartTextWorkers(textWorkers);
 
-                        Indexer indexer = null;
-                        switch (settings.GetConfig().IndexingEngineType)
-                        {
-                            case IndexingEngine.TreeLib:
-                                indexer = new TreeWalkIndexer(settings);
-                                break;
-                            case IndexingEngine.TreeNetLib:
-                                indexer = new TreeNetIndexer(settings);
-                                break;
-                        }
-                        if (indexer != null)
-                        {
-                            indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
-                            task.MyText = null; // force to upload from file
-                            task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
-                            task.RunWorker();
-                        }
-                    }
-                    else if (Adapter.CheckTextUploaders())
+            }
+        }
+
+        private void StartTextWorkers(List<MainAppTask> textWorkers)
+        {
+            foreach (MainAppTask task in textWorkers)
+            {
+                if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
+                {
+                    task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                    task.RunWorker();
+                }
+                else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
+                {
+                    IndexerAdapter settings = new IndexerAdapter();
+                    settings.LoadConfig(Program.conf.IndexerConfig);
+                    Program.conf.IndexerConfig.FolderList.Clear();
+                    string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
+                    string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
+                    settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
+                    settings.GetConfig().FolderList.Add(task.MyText.LocalString);
+
+                    Indexer indexer = null;
+                    switch (settings.GetConfig().IndexingEngineType)
                     {
+                        case IndexingEngine.TreeLib:
+                            indexer = new TreeWalkIndexer(settings);
+                            break;
+                        case IndexingEngine.TreeNetLib:
+                            indexer = new TreeNetIndexer(settings);
+                            break;
+                    }
+                    if (indexer != null)
+                    {
+                        indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
+                        task.MyText = null; // force to upload from file
+                        task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
                         task.RunWorker();
                     }
+                }
+                else if (Adapter.CheckTextUploaders())
+                {
+                    task.RunWorker();
                 }
             }
         }

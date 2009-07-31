@@ -654,6 +654,17 @@ namespace ZSS
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
+            FolderWatcher zWatcher = new FolderWatcher();
+            zWatcher.FolderPath = Program.conf.FolderMonitorPath;
+            if (Program.conf.FolderMonitoring)
+            {
+               zWatcher.StartWatching();
+            }
+            else
+            {
+               zWatcher.StopWatching();
+            }
+
             // Proxy Settings
             Proxyetup(Program.conf.ProxyList);
             if (ucProxyAccounts.AccountsList.Items.Count > 0)
