@@ -133,6 +133,7 @@
     <Compile Include="Global\FormsMgr.cs" />
     <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Global\User32.cs" />
+    <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Helpers\HotkeyInfo.cs" />
     <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Global\Adapter.cs" />
