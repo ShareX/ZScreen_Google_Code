@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Windows;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace ZSS.Helpers
 {
@@ -13,13 +14,14 @@ namespace ZSS.Helpers
         public string FolderPath { get; set; }
         private FileSystemWatcher Watcher = new FileSystemWatcher();
 
-        public FolderWatcher()
+        public FolderWatcher(ISynchronizeInvoke SynchronizingObject)
         {
+            this.Watcher.SynchronizingObject = SynchronizingObject;
             this.Watcher.Created += new FileSystemEventHandler(Watcher_Created);
         }
 
-        public FolderWatcher(string p)
-            : this()
+        public FolderWatcher(string p, ISynchronizeInvoke SynchronizingObject)
+            : this(SynchronizingObject)
         {
             this.FolderPath = p;
             this.Watcher = new FileSystemWatcher(p);            
@@ -39,11 +41,21 @@ namespace ZSS.Helpers
             this.Watcher.EnableRaisingEvents = false;
         }
 
-
+        [STAThread]
         void Watcher_Created(object sender, FileSystemEventArgs e)
         {
             FileSystem.AppendDebug(string.Format("Added {0}", e.FullPath));
-            Program.Worker.UploadUsingFileSystem(new List<string>() { e.FullPath });
+            if (Program.Worker.UploadUsingFileSystem(new List<string>() { e.FullPath }))
+            {
+                try
+                {
+                    File.Delete(e.FullPath);
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex);
+                }
+            }
         }
 
     }

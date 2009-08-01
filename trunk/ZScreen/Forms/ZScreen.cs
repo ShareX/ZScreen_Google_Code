@@ -654,7 +654,7 @@ namespace ZSS
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
             cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
-            FolderWatcher zWatcher = new FolderWatcher();
+            FolderWatcher zWatcher = new FolderWatcher(this);
             zWatcher.FolderPath = Program.conf.FolderMonitorPath;
             if (Program.conf.FolderMonitoring)
             {

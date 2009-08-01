@@ -822,10 +822,10 @@ namespace ZSS.Helpers
             return Program.conf.SetFieldValue("Hotkey" + name.Replace(" ", ""), key);
         }
 
-        public void UploadUsingFileSystem(List<string> fileList)
+        public bool UploadUsingFileSystem(List<string> fileList)
         {
             List<string> strListFilePath = new List<string>();
-
+            bool succ = true;
             foreach (string fp in fileList)
             {
                 try
@@ -847,6 +847,7 @@ namespace ZSS.Helpers
                 catch (Exception ex)
                 {
                     FileSystem.AppendDebug(ex.ToString());
+                    succ = false;
                 }
             }
 
@@ -872,8 +873,10 @@ namespace ZSS.Helpers
             }
 
             StartTextWorkers(textWorkers);
+            return succ;
 
         }
+
         public void UploadUsingClipboard()
         {
             if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)

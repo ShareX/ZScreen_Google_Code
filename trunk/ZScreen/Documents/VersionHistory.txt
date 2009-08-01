@@ -1,5 +1,6 @@
-Version 2.23 - 20090801
+Version 2.24 - 20090801
 
+2.24.00.0 Upload images from a Watch Folder (useful for Webpage Screenshots: Issue 46) {McoreD/inf1ni}
 2.23.05.0 PropertyGrid option to minimize ZScreen on Close (useful in conjunction with Taskbar Buttons) {McoreD}
 2.23.04.0 PropertyGrid options to prefer Browser View when navigating uploaded Images and Text in History tab {McoreD}
 2.23.03.0 Selected Window can perform Crop Shot if required {Jaex}
