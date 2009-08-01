@@ -703,12 +703,15 @@ namespace ZSS
 
             ///////////////////////////////////
             // History
-            ///////////////////////////////////
-            Program.Worker2.LoadHistoryItems();
+            ///////////////////////////////////            
             if (mGuiIsReady)
             {
                 nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
                 Program.Worker.UpdateGuiControlsHistory();
+            }
+            else
+            {
+                Program.Worker2.LoadHistoryItems();
             }
         }
 
