@@ -25,10 +25,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Design;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 using System.Xml.Serialization;
 using ZSS.Helpers;
 using ZSS.ImageUploadersLib;
@@ -439,19 +441,22 @@ namespace ZSS
 
         // Paths
 
-        public bool DeleteLocal = false;
+        [Browsable(false)]
+        public bool DeleteLocal { get; set; }
         public decimal ScreenshotCacheSize = 50;
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
         public bool BackupApplicationSettings { get; set; }
         [Category("Options / Paths"), Description("Images directory where screenshots and pictures will be stored locally.")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string ImagesDir { get; set; }
 
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
 
-        [Category("Options / Folder Monitor"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
+        [Category("Options / Watch Folder"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
         public bool FolderMonitoring { get; set; }
-        [Category("Options / Folder Monitor"), Description("Folder monitor path where files automatically get uploaded.")]
+        [Category("Options / Watch Folder"), Description("Folder monitor path where files automatically get uploaded.")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string FolderMonitorPath { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
