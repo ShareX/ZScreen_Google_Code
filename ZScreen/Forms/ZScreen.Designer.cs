@@ -4634,8 +4634,7 @@ namespace ZSS
             this.lbHistory.Size = new System.Drawing.Size(308, 398);
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
-            this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
-            this.lbHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbHistory_MouseDown);
+            this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);            
             this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
             // 
             // tpHistorySettings
