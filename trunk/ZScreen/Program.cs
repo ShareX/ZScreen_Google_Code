@@ -56,13 +56,13 @@ namespace ZSS
         {
             get
             {
-                if (conf != null && !String.IsNullOrEmpty(conf.ImagesDir))
+                if (conf != null && conf.UseCustomImagesDir && !String.IsNullOrEmpty(conf.CustomImagesDir))
                 {
-                    return Program.ImagesDir = conf.ImagesDir;
+                    return Program.ImagesDir = conf.CustomImagesDir;
                 }
                 else
                 {
-                    return Path.Combine(RootAppFolder, "Images");
+                    return GetDefaultImagesDir();
                 }
             }
             set
@@ -109,6 +109,12 @@ namespace ZSS
             RootAppFolder = dp;
         }
 
+        private static string GetDefaultImagesDir()
+        {
+            string ymDir = DateTime.Now.ToString("yyyy-MM");
+            return Path.Combine(RootAppFolder, Path.Combine("Images", ymDir));
+        }
+
         /// <summary>
         /// Function to update Default Folder Paths based on Root folder
         /// </summary>
@@ -117,14 +123,14 @@ namespace ZSS
             CacheDir = Path.Combine(RootAppFolder, "Cache");
             FilesDir = Path.Combine(RootAppFolder, "Files");
 
-            if (conf != null && Directory.Exists(conf.ImagesDir))
-            {
-                ImagesDir = conf.ImagesDir;
-            }
-            else
-            {
-                ImagesDir = Path.Combine(RootAppFolder, "Images");
-            }
+            //if (conf != null && Directory.Exists(conf.CustomImagesDir))
+            //{
+            //    ImagesDir = conf.CustomImagesDir;
+            //}
+            //else
+            //{
+            //    ImagesDir = GetDefaultImagesDir();             
+            //}
 
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");

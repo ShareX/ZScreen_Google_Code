@@ -114,32 +114,36 @@ namespace ZSS.ImageUploadersLib
 
         private ImageFileManager ParseResult(string source)
         {
+            
             ImageFileManager ifm = new ImageFileManager { Source = source };
 
-            XDocument xdoc = XDocument.Parse(source);
-            XElement xele = xdoc.Element("rsp");
+            if (!string.IsNullOrEmpty(source))
+            {             
+                XDocument xdoc = XDocument.Parse(source);
+                XElement xele = xdoc.Element("rsp");
 
-            if (xele != null)
-            {
-                switch (xele.AttributeFirstValue("status", "stat"))
+                if (xele != null)
                 {
-                    case "ok":
-                        string statusid, userid, mediaid, mediaurl;
-                        statusid = xele.ElementValue("statusid");
-                        userid = xele.ElementValue("userid");
-                        mediaid = xele.ElementValue("mediaid");
-                        mediaurl = xele.ElementValue("mediaurl");
-                        if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
-                        ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
-                        ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
-                            this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
-                        break;
-                    case "fail":
-                        string code, msg;
-                        code = xele.Element("err").Attribute("code").Value;
-                        msg = xele.Element("err").Attribute("msg").Value;
-                        Errors.Add(msg);
-                        break;
+                    switch (xele.AttributeFirstValue("status", "stat"))
+                    {
+                        case "ok":
+                            string statusid, userid, mediaid, mediaurl;
+                            statusid = xele.ElementValue("statusid");
+                            userid = xele.ElementValue("userid");
+                            mediaid = xele.ElementValue("mediaid");
+                            mediaurl = xele.ElementValue("mediaurl");
+                            if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
+                            ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
+                            ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
+                                this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
+                            break;
+                        case "fail":
+                            string code, msg;
+                            code = xele.Element("err").Attribute("code").Value;
+                            msg = xele.Element("err").Attribute("msg").Value;
+                            Errors.Add(msg);
+                            break;
+                    }
                 }
             }
 
