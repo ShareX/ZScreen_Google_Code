@@ -132,6 +132,7 @@
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FormsMgr.cs" />
+    <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Global\User32.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
@@ -402,6 +403,9 @@
     <None Include="Resources\shape_square.ico" />
     <None Include="Resources\application_double_ico.ico" />
     <None Include="Resources\clipboard_upload_ico.ico" />
+    <Content Include="RegistrationHelper.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>

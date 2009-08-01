@@ -88,7 +88,9 @@ namespace ZSS
         {
             if (CoreHelpers.RunningOnWin7)
             {
-                Taskbar.AppId = Application.ProductName;
+                Program.CheckFileRegistration();
+
+                Taskbar.AppId = Program.appId;
 
                 JumpList jumpList = Taskbar.JumpList;
                 Console.Write(jumpList.CustomCategories.Count);
