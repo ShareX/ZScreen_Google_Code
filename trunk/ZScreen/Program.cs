@@ -34,6 +34,9 @@ using ZSS.TextUploadersLib.URLShorteners;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.Win32;
+using System.Text;
+using System.Diagnostics;
 
 namespace ZSS
 {
@@ -91,6 +94,8 @@ namespace ZSS
         public const string TINYPIC_ID = "e2aabb8d555322fa";
         public const string TINYPIC_KEY = "00a68ed73ddd54da52dc2d5803fa35ee";
 
+        public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
+        private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
         public const string DISABLED_IMAGE_EDITOR = "Disabled";
 
@@ -161,7 +166,79 @@ namespace ZSS
             }
         }
 
+        /// <summary>
+        /// Check for file registration if running Windows 7 for Taskbar support
+        /// </summary>
+        public static void CheckFileRegistration()
+        {
+            bool registered = false;
 
+            try
+            {
+                RegistryKey openWithKey = Registry.ClassesRoot.OpenSubKey(Path.Combine(".png", "OpenWithProgIds"));
+                string value = openWithKey.GetValue(progId, null) as string;
+
+                if (value == null)
+                    registered = false;
+                else
+                    registered = true;
+            }
+            finally
+            {
+                // Let the user know
+                if (!registered)
+                {
+                    TaskDialog td = new TaskDialog();
+
+                    td.Text = "File type is not registered";
+                    td.InstructionText = "ZScreen needs to register image files as associated files to properly execute the Taskbar related features.";
+                    td.Icon = TaskDialogStandardIcon.Information;
+                    td.Cancelable = true;
+
+                    TaskDialogCommandLink button1 = new TaskDialogCommandLink("registerButton", "Register file type for this application",
+                        "Register image/text files with this application to run ZScreen correctly.");
+
+                    // Show UAC sheild as this task requires elevation
+                    button1.ShowElevationIcon = true;
+
+                    td.StandardButtons = TaskDialogStandardButtons.None;
+                    td.Controls.Add(button1);
+
+                    TaskDialogResult tdr = td.Show();
+
+                    RegistrationHelper.RegisterFileAssociations(
+                               progId,
+                               false,
+                               appId,
+                               Application.ExecutablePath + " /doc %1",
+                               GetExtensionsToRegister());
+                }
+            }
+        }
+
+        private static string GetExtensionsToRegister()
+        {
+            StringBuilder sbExt = new StringBuilder();
+            foreach (string ext in zImageFileTypes)
+            {
+                sbExt.Append(".");
+                sbExt.Append(ext);
+                sbExt.Append(" ");
+            }
+            foreach (string ext in zTextFileTypes)
+            {
+                sbExt.Append(".");
+                sbExt.Append(ext);
+                sbExt.Append(" ");
+            }
+            foreach (string ext in zWebpageFileTypes)
+            {
+                sbExt.Append(".");
+                sbExt.Append(ext);
+                sbExt.Append(" ");
+            }
+            return sbExt.ToString().Trim();
+        }
 
         public static string XMLSettingsFile
         {
@@ -222,6 +299,24 @@ namespace ZSS
 
         [STAThread]
         static void Main()
+        {
+            string[] args = Environment.GetCommandLineArgs();
+
+            if (args.Length > 2 && args[1] == "/doc")
+            {
+                string filePath = string.Join(" ", args, 2, args.Length - 2);
+                if (File.Exists(filePath))
+                {
+                    Process.Start(filePath);
+                }
+            }
+            else
+            {
+                RunZScreen();
+            }
+        }
+
+        private static void RunZScreen()
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
             FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());

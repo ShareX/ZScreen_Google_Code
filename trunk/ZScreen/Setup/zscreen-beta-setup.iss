@@ -105,6 +105,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: {#ExePath}; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Release\RegistrationHelper.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
@@ -112,7 +113,7 @@ Name: "{group}\{#ExeName}"; Filename: "{app}\ZScreen.exe"
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
 Name: "{userdesktop}\{#ExeName}"; Filename: "{app}\ZScreen.exe"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\ZScreen"; Filename: "{app}\ZScreen.exe."; Tasks: quicklaunchicon
-Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
+;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
 
 [Run]
 Filename: "{app}\ZScreen.exe."; Description: "{cm:LaunchProgram,ZScreen}"; Flags: nowait postinstall skipifsilent

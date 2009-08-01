@@ -1,5 +1,6 @@
 Version 2.24 - 20090801
 
+2.24.02.0 Windows 7 only: Recently uploaded items will be shown in Taskbar http://twitpic.com/cfk1z/full {McoreD}
 2.24.01.0 Webpage screenshot upload via Firefox: http://code.google.com/p/zscreen/wiki/WatchFolder [Issue 46] {inf1ni}
 2.24.00.0 Upload images from a Watch Folder (useful for Webpage Screenshots) {McoreD}
 2.23.05.0 PropertyGrid option to minimize ZScreen on Close (useful in conjunction with Taskbar Buttons) {McoreD}
@@ -55,6 +56,9 @@ Version 2.15 - 20090701
 2.10.10.1 URLs will only be appended in the History tab
 2.10.10.0 Actions Toolbar Mode to automatically open Toolbar on ZScreen startup
 2.10.09.0 Online Tasks such as updating TinyPic Registration Code will automatically happen every 6 hours
+
+Version 2.10.8 - 20090520
+
 2.10.08.1 Preview in History did not update if the file extensions were in CAPS
 2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via PropertyGrid Settings
 2.10.07.0 PropertyGrid Setting to hide Active Help from the GUI
@@ -66,7 +70,7 @@ Version 2.15 - 20090701
 2.10.03.1 Upload File to FTP could have failed if Enable Thumbnail was turned on for FTP
 2.10.03.0 Imaged directory location is now confirgurable via PropertyGrid Settings [Issue 62]
 
-Version 2.10 - 20090424
+Version 2.10.2 - 20090424
 
 2.10.02.1 Setting HTTP Upload mode to Anonymous made it impossible to auto switch destination
 2.10.02.0 Added new Clipboard URL Type: Full Image as HTML [Issue 57]
