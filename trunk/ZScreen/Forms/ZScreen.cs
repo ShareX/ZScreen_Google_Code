@@ -2057,17 +2057,20 @@ namespace ZSS
         /// <param name="e"></param>
         private void lbHistory_MouseDown(object sender, MouseEventArgs e)
         {
-            cmsHistory.Enabled = lbHistory.Items.Count > 0;
-
-            int i = lbHistory.IndexFromPoint(e.X, e.Y);
-
-            if (i >= 0 && i < lbHistory.Items.Count)
+            if (e.Button == MouseButtons.XButton2)
             {
-                lbHistory.SelectedIndex = -1;
-                lbHistory.SelectedIndex = i;
-            }
+                cmsHistory.Enabled = lbHistory.Items.Count > 0;
 
-            lbHistory.Refresh();
+                int i = lbHistory.IndexFromPoint(e.X, e.Y);
+
+                if (i >= 0 && i < lbHistory.Items.Count)
+                {
+                    lbHistory.SelectedIndex = -1;
+                    lbHistory.SelectedIndex = i;
+                }
+
+                lbHistory.Refresh();
+            }
 
         }
 
