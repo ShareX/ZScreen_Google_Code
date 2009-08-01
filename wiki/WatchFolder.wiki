@@ -1,0 +1,21 @@
+#summary How to setup and run Watch Folder
+#labels Phase-Support
+
+= Requirements =
+
+ * Mozilla Firefox 
+ * [https://addons.mozilla.org/en-US/firefox/addon/1146 ScreenGrab ] Firefox Addon
+
+Set up ZScreen Options as follows: 
+
+[http://img269.imageshack.us/img269/9159/ss20090801171141.png]
+
+= Using Mozilla Firefox addon =
+
+In Mozilla Firefox, click the Grab icon in the bottom right corner: 
+
+[http://img37.imageshack.us/img37/2574/ss20090801171500.png]
+
+ * Save > Complete Page/Frame...
+
+ * Save to the Watch Folder of ZScreen 
