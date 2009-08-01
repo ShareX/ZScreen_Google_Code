@@ -110,6 +110,14 @@ namespace ZSS
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        public enum RegionType
+        {
+            ERROR = 0,
+            NULLREGION = 1,
+            SIMPLEREGION = 2,
+            COMPLEXREGION = 3
+        }
+
         public enum PRF
         {
             CHECKVISIBLE = 0x01,

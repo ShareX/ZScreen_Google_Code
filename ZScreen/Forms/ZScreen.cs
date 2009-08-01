@@ -2077,7 +2077,7 @@ namespace ZSS
                     bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText);
 
                     historyBrowser.Visible = checkWebpage;
-                    pbPreview.Visible = checkImage && !checkWebpage;
+                    pbPreview.Visible = checkImage || (!checkText && checkRemote) && !checkWebpage;
                     txtPreview.Visible = checkText && !checkWebpage;
 
                     tsmCopyCbHistory.Enabled = checkRemote;

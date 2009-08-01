@@ -226,43 +226,35 @@ namespace ZSS
             return img;
         }
 
-        private static Region GetRegionByHWnd(IntPtr hWnd)
+        private static bool GetWindowRegion(IntPtr hWnd, out Region region)
         {
-            IntPtr region = GDI.CreateRectRgn(0, 0, 0, 0);
-            GetWindowRgn(hWnd, region);
-            return Region.FromHrgn(region);
+            IntPtr hRgn = GDI.CreateRectRgn(0, 0, 0, 0);
+            RegionType regionType = (RegionType)GetWindowRgn(hWnd, hRgn);
+            region = Region.FromHrgn(hRgn);
+            return regionType != RegionType.ERROR && regionType != RegionType.NULLREGION;
         }
 
-        private static Bitmap MakeBackgroundTransparent(IntPtr hWnd, Image capture)
+        private static Bitmap MakeBackgroundTransparent(IntPtr hWnd, Image image)
         {
-            Bitmap result = new Bitmap(capture.Width, capture.Height);
-            Region region = GetRegionByHWnd(hWnd);
-
-            using (Graphics g = Graphics.FromImage(result))
+            Region region;
+            if (GetWindowRegion(hWnd, out region))
             {
-                /*if (bounds == RectangleF.Empty)
-                {
-                    GraphicsUnit unit = GraphicsUnit.Pixel;
-                    bounds = capture.GetBounds(ref unit);
+                Bitmap result = new Bitmap(image.Width, image.Height);
 
-                    if ((GetWindowLong(hWnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    if (!region.IsEmpty(g))
                     {
-                        IntPtr windowRegion = GDI.CreateRoundRectRgn(0, 0, (int)bounds.Width + 1, (int)bounds.Height + 1, 9, 9);
-                        region = Region.FromHrgn(windowRegion);
+                        RectangleF bounds = region.GetBounds(g);
+                        g.Clip = region;
+                        g.DrawImage(image, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
+
+                        return result;
                     }
-                }*/
-
-                if (region.IsEmpty(g))
-                {
-                    return (Bitmap)capture;
                 }
-
-                RectangleF bounds = region.GetBounds(g);
-                g.Clip = region;
-                g.DrawImage(capture, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
-
-                return result;
             }
+
+            return (Bitmap)image;
         }
 
         private static Bitmap PrintWindow(IntPtr hwnd)
@@ -374,20 +366,21 @@ namespace ZSS
         }
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
-        {            
-            if (Environment.OSVersion.Version.Major < 6) {
-            	return GetWindowRect(handle);
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return GetWindowRect(handle);
             }
-            
-        	Rectangle rectangle;
-			if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
+
+            Rectangle rectangle;
+            if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
             {
                 return rectangle;
             }
             else
             {
                 return GetWindowRect(handle);
-            }      
+            }
         }
 
         public static void ActivateWindow(IntPtr handle)
