@@ -47,7 +47,7 @@ namespace ZSS.TextUploadersLib
         public List<string> Errors { get; set; }
 
         [XmlIgnore]
-        public WebProxy ProxySettings { get; set; }
+        public IWebProxy ProxySettings { get; set; }
 
         /// <summary>
         /// String that is uploaded

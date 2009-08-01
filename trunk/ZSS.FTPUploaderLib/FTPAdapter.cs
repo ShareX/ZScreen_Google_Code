@@ -34,14 +34,14 @@ namespace ZSS
     {
         public FTPOptions() { }
 
-        public FTPOptions(FTPAccount acc, WebProxy proxy)
+        public FTPOptions(FTPAccount acc, IWebProxy proxy)
         {
             this.Account = acc;
             this.ProxySettings = proxy;
         }
 
         public FTPAccount Account { get; set; }
-        public WebProxy ProxySettings { get; set; }
+        public IWebProxy ProxySettings { get; set; }
     }
 
     public class FTPAdapter

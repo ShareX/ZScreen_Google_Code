@@ -35,9 +35,9 @@ namespace ZSS
     public class DekiWikiOptions
     {
         public DekiWikiAccount Account { get; set; }
-        public WebProxy ProxySettings { get; set; }
+        public IWebProxy ProxySettings { get; set; }
 
-        public DekiWikiOptions(DekiWikiAccount acc, WebProxy proxy)
+        public DekiWikiOptions(DekiWikiAccount acc, IWebProxy proxy)
         {
             this.Account = acc;
             this.ProxySettings = proxy;

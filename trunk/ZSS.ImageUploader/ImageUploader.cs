@@ -51,7 +51,7 @@ namespace ZSS.ImageUploadersLib
         public List<string> Errors { get; private set; }
 
         [XmlIgnore]
-        public WebProxy ProxySettings { get; set; }
+        public IWebProxy ProxySettings { get; set; }
 
         /// <summary>
         /// API or Anonymous. Default: Anonymous
