@@ -2050,30 +2050,6 @@ namespace ZSS
             }
         }
 
-        /// <summary>
-        /// Method to activate selecting an item from Mouse Right click - McoreD
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lbHistory_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.XButton2)
-            {
-                cmsHistory.Enabled = lbHistory.Items.Count > 0;
-
-                int i = lbHistory.IndexFromPoint(e.X, e.Y);
-
-                if (i >= 0 && i < lbHistory.Items.Count)
-                {
-                    lbHistory.SelectedIndex = -1;
-                    lbHistory.SelectedIndex = i;
-                }
-
-                lbHistory.Refresh();
-            }
-
-        }
-
         private void lbHistory_DoubleClick(object sender, EventArgs e)
         {
             if (lbHistory.SelectedIndex > -1)
