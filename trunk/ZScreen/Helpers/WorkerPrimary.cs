@@ -855,7 +855,7 @@ namespace ZSS.Helpers
 
             foreach (string fp in strListFilePath)
             {
-                if (FileSystem.IsValidImageFile(fp))
+                if (GraphicsMgr.IsValidImage(fp))
                 {
                     StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
                 }

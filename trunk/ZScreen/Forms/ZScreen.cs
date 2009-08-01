@@ -69,11 +69,13 @@ namespace ZSS
         {
             InitializeComponent();
             ZScreen_SetFormSettings();
-            UpdateGuiControls();
-            ZScreen_Windows7onlyTasks();
 
             Program.Worker = new WorkerPrimary(this);
             Program.Worker2 = new WorkerSecondary(this);
+
+            UpdateGuiControls();
+            ZScreen_Windows7onlyTasks();
+
             Program.Worker2.PerformOnlineTasks();
 
             Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
@@ -658,11 +660,11 @@ namespace ZSS
             zWatcher.FolderPath = Program.conf.FolderMonitorPath;
             if (Program.conf.FolderMonitoring)
             {
-               zWatcher.StartWatching();
+                zWatcher.StartWatching();
             }
             else
             {
-               zWatcher.StopWatching();
+                zWatcher.StopWatching();
             }
 
             // Proxy Settings
@@ -702,18 +704,12 @@ namespace ZSS
             ///////////////////////////////////
             // History
             ///////////////////////////////////
-
-            cbHistorySave.Checked = Program.conf.HistorySave;
-            if (cbHistoryListFormat.Items.Count == 0)
+            Program.Worker2.LoadHistoryItems();
+            if (mGuiIsReady)
             {
-                cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
+                nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
+                Program.Worker.UpdateGuiControlsHistory();
             }
-            cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
-            cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
-            cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
-            cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
-            LoadHistoryItems();
-            nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
         }
 
         void tsmiTab_Click(object sender, EventArgs e)
@@ -750,24 +746,6 @@ namespace ZSS
         #endregion
 
         #region "Event Handlers"
-
-        private void LoadHistoryItems()
-        {
-            lbHistory.Items.Clear();
-            HistoryManager history = HistoryManager.Read();
-            for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
-            {
-                lbHistory.Items.Add(history.HistoryItems[i]);
-            }
-            if (lbHistory.Items.Count > 0)
-            {
-                lbHistory.SelectedIndex = 0;
-            }
-            if (mGuiIsReady)
-            {
-                Program.Worker.UpdateGuiControlsHistory();
-            }
-        }
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2072,20 +2050,25 @@ namespace ZSS
             }
         }
 
+        /// <summary>
+        /// Method to activate selecting an item from Mouse Right click - McoreD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lbHistory_MouseDown(object sender, MouseEventArgs e)
         {
-            /*
             cmsHistory.Enabled = lbHistory.Items.Count > 0;
 
             int i = lbHistory.IndexFromPoint(e.X, e.Y);
 
             if (i >= 0 && i < lbHistory.Items.Count)
             {
+                lbHistory.SelectedIndex = -1;
                 lbHistory.SelectedIndex = i;
             }
 
             lbHistory.Refresh();
-            */
+
         }
 
         private void lbHistory_DoubleClick(object sender, EventArgs e)
@@ -2107,7 +2090,7 @@ namespace ZSS
                 {
                     bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
-                    bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath);
+                    bool checkImage = GraphicsMgr.IsValidImage(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
                     bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText);
 
