@@ -79,9 +79,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options / Paths
             //~~~~~~~~~~~~~~~~~~~~~
-
-            BackupApplicationSettings = true;
-            ImagesDir = Program.ImagesDir;
+            BackupApplicationSettings = true;            
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Screenshots / Bevel
@@ -446,9 +444,11 @@ namespace ZSS
         public decimal ScreenshotCacheSize = 50;
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
         public bool BackupApplicationSettings { get; set; }
-        [Category("Options / Paths"), Description("Images directory where screenshots and pictures will be stored locally.")]
+        [Category("Options / Paths"), Description("Custom Images directory where screenshots and pictures will be stored locally.")]
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
-        public string ImagesDir { get; set; }
+        public string CustomImagesDir { get; set; }
+        [Category("Options / Paths"), DefaultValue(false), Description("Use Custom Images directory")]
+        public bool UseCustomImagesDir { get; set; }
 
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }

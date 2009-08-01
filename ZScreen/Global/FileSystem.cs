@@ -284,20 +284,13 @@ namespace ZSS
         }
 
         /// <summary>
-        /// Function to check if file is a valid Image file by checking its extension
+        /// Function to check if file is a valid Image file
         /// </summary>
         /// <param name="fp"></param>
         /// <returns></returns>
         public static bool IsValidImageFile(string fp)
         {
-            if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
-            {
-                foreach (string s in Program.zImageFileTypes)
-                {
-                    if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
-                }
-            }
-            return false;
+            return GraphicsMgr.IsValidImage(fp);
         }
 
         /// <summary>
