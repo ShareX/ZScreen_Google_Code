@@ -147,21 +147,20 @@ namespace ZSS.Global
         }
 
         /// <summary>
-        /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns null otherwise
+        /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns default system proxy otherwise
         /// </summary>
-        public static WebProxy GetProxySettings()
-        {
-            WebProxy wp = null; // Use 'null' instead of GetEmptyWebProxy. http://go.microsoft.com/fwlink/?linkid=14202'	
+        public static IWebProxy GetProxySettings()
+        {            
             if (Program.conf.ProxyEnabled)
             {
                 ProxyInfo acc = Program.conf.ProxyActive;
                 if (acc != null)
                 {
                     NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
-                    wp = new WebProxy(acc.GetAddress(), true, null, cred);
+                    return new WebProxy(acc.GetAddress(), true, null, cred);
                 }
             }
-            return wp;
+            return WebRequest.DefaultWebProxy;
         }
 
         public static void TestProxyAccount(ProxyInfo acc)

@@ -34,9 +34,9 @@ namespace ZSS.TextUploadersLib
     public class GoogleTranslate
     {
         public Options LanguageOptions { get; private set; }
-        public WebProxy ProxySettings { get; set; }
+        public IWebProxy ProxySettings { get; set; }
 
-        public GoogleTranslate(WebProxy proxySettings)
+        public GoogleTranslate(IWebProxy proxySettings)
         {
         	this.ProxySettings = proxySettings;
             this.LanguageOptions = this.GetLanguageOptions();            

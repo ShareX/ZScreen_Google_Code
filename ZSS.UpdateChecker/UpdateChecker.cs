@@ -38,7 +38,7 @@ namespace ZSS.UpdateCheckerLib
         public UpdateCheckType UpdateCheckType { get; set; }
         public NewVersionWindowOptions MyNewVersionWindowOptions { get; set; }
         [XmlIgnore]
-        public WebProxy ProxySettings { get; set; }
+        public IWebProxy ProxySettings { get; set; }
     }
 
     public class UpdateChecker
