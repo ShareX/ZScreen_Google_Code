@@ -36,6 +36,9 @@ using System.Net;
 
 namespace ZSS.Helpers
 {
+    /// <summary>
+    /// Class responsible for all other tasks except for Image Uploading
+    /// </summary>
     public class WorkerSecondary
     {
 
@@ -44,6 +47,7 @@ namespace ZSS.Helpers
         public WorkerSecondary(ZScreen myZScreen)
         {
             this.mZScreen = myZScreen;
+            this.LoadHistoryItems();
         }
 
         #region "Check Updates"
@@ -110,6 +114,45 @@ namespace ZSS.Helpers
 
         #endregion
 
+        public void LoadHistoryItems()
+        {
+            mZScreen.cbHistorySave.Checked = Program.conf.HistorySave;
+            if (mZScreen.cbHistoryListFormat.Items.Count == 0)
+            {
+                mZScreen.cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
+            }
+            mZScreen.cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
+            mZScreen.cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
+            mZScreen.cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
+            mZScreen.cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
+
+            BackgroundWorker bwHistoryReader = new BackgroundWorker();
+            bwHistoryReader.DoWork += new DoWorkEventHandler(bwHistoryReader_DoWork);
+            bwHistoryReader.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwHistoryReader_RunWorkerCompleted);
+            bwHistoryReader.RunWorkerAsync();
+        }
+
+        void bwHistoryReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            HistoryManager history = (HistoryManager)e.Result;
+
+            mZScreen.lbHistory.Items.Clear();
+
+            for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
+            {
+                mZScreen.lbHistory.Items.Add(history.HistoryItems[i]);
+            }
+            if (mZScreen.lbHistory.Items.Count > 0)
+            {
+                mZScreen.lbHistory.SelectedIndex = 0;
+            }
+        }
+
+        void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = HistoryManager.Read();
+
+        }
 
         public void PerformOnlineTasks()
         {
