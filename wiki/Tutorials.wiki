@@ -16,7 +16,7 @@ Main Article: [ClipboardUpload]
 == History == 
 == Options == 
 === Watch Folder ===
-Main Article: [Watch Folder]
+Main Article: [WatchFolder]
 
 This feature allows you to drag n drop or save images from external programs to a Windows folder so that ZScreen can automatically upload them to the active image hosting service. 
 
