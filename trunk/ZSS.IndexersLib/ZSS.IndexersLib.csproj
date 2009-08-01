@@ -36,6 +36,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
@@ -51,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Helpers\CssFileNameEditor.cs" />
     <Compile Include="Helpers\FileAttributesEx.cs" />
     <Compile Include="IndexerAdapter.cs" />
     <Compile Include="Helpers\TreeDir.cs" />
@@ -79,6 +83,9 @@
     <EmbeddedResource Include="TreeNetIndexerFiles\valid_css.txt" />
     <EmbeddedResource Include="TreeNetIndexerFiles\valid_xhtml.txt">
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

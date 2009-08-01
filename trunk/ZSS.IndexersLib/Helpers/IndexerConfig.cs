@@ -27,6 +27,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Windows.Forms.Design;
+using System.Drawing.Design;
+using ZSS.IndexersLib.Helpers;
 
 namespace ZSS.IndexersLib
 {
@@ -149,6 +152,7 @@ namespace ZSS.IndexersLib
         }
 
         [Category("Engines / Tree.NET / XHTML"), Description("Cascading Style Sheet file path")]
+        [EditorAttribute(typeof(CssFileNameEditor), typeof(UITypeEditor))]
         public string CssFilePath { get; set; }
 
         [Category("Engines / Tree.NET / XHTML"), Description("Virtual folders list")]
@@ -170,6 +174,7 @@ namespace ZSS.IndexersLib
         [Category("Engines / General"), DefaultValue(false), Description("Merge index file")]
         public bool MergeFiles = false;
         [Category("Engines / General"), Description("Output directory for merge index file")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string OutputDir { get; set; }
         [Category("Engines / General"), Description("Indexing Engine")]
         public IndexingEngine IndexingEngineType { get; set; }
