@@ -15,10 +15,12 @@ Main Article: [ClipboardUpload]
 == Translator == 
 == History == 
 == Options == 
-Add your content here.
+=== Watch Folder ===
+Main Article: [Watch Folder]
+
+This feature allows you to drag n drop or save images from external programs to a Windows folder so that ZScreen can automatically upload them to the active image hosting service. 
 
 = Image Editor =
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Main Article: [ZScreenImageEditor]
+
+ZScreen has a built-in Image Editor based on the Image Editor from Greenshot. 
