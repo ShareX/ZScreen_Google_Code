@@ -76,7 +76,7 @@ namespace ZSS
         }
         public static string LogsDir { get; set; }
         public static string SettingsDir { get; set; }
-        public static string TempDir { get; set; }
+        public static readonly string TempDir = Path.Combine(LocalAppDataFolder, "Temp");
         public static string TextDir { get; set; }
 
         private static string[] AppDirs;
@@ -145,8 +145,7 @@ namespace ZSS
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");
             TextDir = Path.Combine(RootAppFolder, "Text");
-            TempDir = Path.Combine(RootAppFolder, "Temp");
-
+            
             AppDirs = new[] { CacheDir, FilesDir, ImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
 
             foreach (string dp in AppDirs)
