@@ -74,7 +74,7 @@ namespace ZSS
                 this.WindowState = FormWindowState.Minimized;
                 Program.Worker = new WorkerPrimary(null);
                 if (args[1] == "crop_shot")
-                {                                     
+                {
                     Program.Worker.StartBW_CropShot();
                 }
                 else if (args[1] == "selected_window")
@@ -103,7 +103,7 @@ namespace ZSS
                 Program.CheckFileRegistration();
 
                 Taskbar.AppId = Program.appId;
-                JumpList jumpList = Taskbar.JumpList;                
+                JumpList jumpList = Taskbar.JumpList;
 
                 jumpList.UserTasks.Add(new JumpListLink
                 {
@@ -398,10 +398,6 @@ namespace ZSS
             cbCloseDropBox.Checked = Program.conf.CloseDropBox;
             cbCloseQuickActions.Checked = Program.conf.CloseQuickActions;
 
-            // Naming Conventions
-            txtActiveWindow.Text = Program.conf.NamingActiveWindow;
-            txtEntireScreen.Text = Program.conf.NamingEntireScreen;
-
             // Watermark
             if (cboWatermarkType.Items.Count == 0)
             {
@@ -450,7 +446,7 @@ namespace ZSS
 
             #endregion
 
-            #region "Text Uploaders & URL Shorteners"
+            #region Text Uploaders & URL Shorteners
 
             ///////////////////////////////////
             // Text Uploader Settings
@@ -686,6 +682,11 @@ namespace ZSS
             {
                 zWatcher.StopWatching();
             }
+
+            // Naming Conventions
+            txtActiveWindow.Text = Program.conf.ActiveWindowPattern;
+            txtEntireScreen.Text = Program.conf.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Program.conf.SaveFolderPattern;
 
             // Proxy Settings
             Proxyetup(Program.conf.ProxyList);
@@ -1462,13 +1463,13 @@ namespace ZSS
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.NamingActiveWindow = txtActiveWindow.Text;
+            Program.conf.ActiveWindowPattern = txtActiveWindow.Text;
             lblActiveWindowPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.ActiveWindow) { IsPreview = true });
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.NamingEntireScreen = txtEntireScreen.Text;
+            Program.conf.EntireScreenPattern = txtEntireScreen.Text;
             lblEntireScreenPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true });
         }
 
@@ -3779,6 +3780,13 @@ namespace ZSS
         {
             //MessageBox.Show("Hi!");
             ttZScreen.Show(ttZScreen.GetToolTip(nudtScreenshotDelay), this);
+        }
+
+        private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text = NameParser.Convert(NameParserType.SaveFolder);
+            txtImagesDir.Text = Program.ImagesDir;
         }
     }
 }

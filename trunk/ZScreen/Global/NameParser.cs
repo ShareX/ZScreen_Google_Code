@@ -25,6 +25,7 @@ using System;
 using System.Text;
 using System.Drawing;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace ZSS
 {
@@ -36,6 +37,8 @@ namespace ZSS
         y,
         [Description("Gets the current month")]
         mo,
+        [Description("Gets the current month name")]
+        mon,
         [Description("Gets the current day")]
         d,
         [Description("Gets the current hour")]
@@ -76,16 +79,16 @@ namespace ZSS
                 switch (type)
                 {
                     case NameParserType.ActiveWindow:
-                        Pattern = Program.conf.NamingActiveWindow;
+                        Pattern = Program.conf.ActiveWindowPattern;
                         break;
                     case NameParserType.EntireScreen:
-                        Pattern = Program.conf.NamingEntireScreen;
+                        Pattern = Program.conf.EntireScreenPattern;
                         break;
                     case NameParserType.Watermark:
                         Pattern = Program.conf.WatermarkText;
                         break;
                     case NameParserType.SaveFolder:
-                        Pattern = Program.conf.SaveFolder;
+                        Pattern = Program.conf.SaveFolderPattern;
                         break;
                 }
             }
@@ -93,6 +96,7 @@ namespace ZSS
 
         public bool IsPreview;
         public Image Picture;
+        public DateTime CustomDate;
 
         public NameParserInfo(string pattern)
         {
@@ -153,11 +157,17 @@ namespace ZSS
 
             #endregion
 
-            #region y, mo, d
+            #region y, mo, mon, d
 
             DateTime dt = DateTime.Now;
 
+            if (nameParser.CustomDate != DateTime.MinValue)
+            {
+                dt = nameParser.CustomDate;
+            }
+
             sb = sb.Replace(ToString(ReplacementVariables.y), dt.Year.ToString())
+                .Replace(ToString(ReplacementVariables.mon), CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dt.Month))
                 .Replace(ToString(ReplacementVariables.mo), AddZeroes(dt.Month))
                 .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day));
 
@@ -177,15 +187,19 @@ namespace ZSS
                     sb = sb.Replace(ToString(ReplacementVariables.h), AddZeroes(dt.Hour));
                 }
 
-                if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
-                {
-                    Program.conf.AutoIncrement++;
-                }
-
                 sb = sb.Replace(ToString(ReplacementVariables.mi), AddZeroes(dt.Minute))
                     .Replace(ToString(ReplacementVariables.s), AddZeroes(dt.Second))
-                    .Replace(ToString(ReplacementVariables.pm), (dt.Hour >= 12 ? "PM" : "AM"))
-                    .Replace(ToString(ReplacementVariables.i), AddZeroes(Program.conf.AutoIncrement, 4));
+                    .Replace(ToString(ReplacementVariables.pm), (dt.Hour >= 12 ? "PM" : "AM"));
+
+                if (nameParser.Type != NameParserType.SaveFolder)
+                {
+                    if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
+                    {
+                        Program.conf.AutoIncrement++;
+                    }
+
+                    sb = sb.Replace(ToString(ReplacementVariables.i), AddZeroes(Program.conf.AutoIncrement, 4));
+                }
             }
 
             #endregion
