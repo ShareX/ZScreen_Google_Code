@@ -143,13 +143,15 @@ namespace ZSS.Helpers
             {
                 if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
                 {
-                    Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
+                    mTask.ImageDestCategory = ImageDestType.TINYPIC;
+                    // Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
                 {
-                    Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
+                    mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
+                    // Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
+                // mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION); // We should not change settings without the awareness of the user
             }
 
             if (mTask.ImageManager != null)
