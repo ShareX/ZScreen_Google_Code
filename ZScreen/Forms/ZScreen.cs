@@ -67,21 +67,33 @@ namespace ZSS
 
         public ZScreen()
         {
-            InitializeComponent();
-            ZScreen_SetFormSettings();
-
-            Program.Worker = new WorkerPrimary(this);
-            Program.Worker2 = new WorkerSecondary(this);
-
-            UpdateGuiControls();
-            ZScreen_Windows7onlyTasks();
-
-            Program.Worker2.PerformOnlineTasks();
-
-            Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
-
-            if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
-
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                this.ShowInTaskbar = false;
+                this.WindowState = FormWindowState.Minimized;
+                Program.Worker = new WorkerPrimary(null);
+                if (args[1] == "crop_shot")
+                {                                     
+                    Program.Worker.StartBW_CropShot();
+                }
+                else if (args[1] == "selected_window")
+                {
+                    Program.Worker.StartBW_SelectedWindow();
+                }
+            }
+            else
+            {
+                InitializeComponent();
+                ZScreen_SetFormSettings();
+                Program.Worker = new WorkerPrimary(this);
+                Program.Worker2 = new WorkerSecondary(this);
+                UpdateGuiControls();
+                ZScreen_Windows7onlyTasks();
+                Program.Worker2.PerformOnlineTasks();
+                Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
+                if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
+            }
         }
 
         internal void ZScreen_Windows7onlyTasks()
@@ -91,17 +103,23 @@ namespace ZSS
                 Program.CheckFileRegistration();
 
                 Taskbar.AppId = Program.appId;
+                JumpList jumpList = Taskbar.JumpList;                
 
-                JumpList jumpList = Taskbar.JumpList;
-                Console.Write(jumpList.CustomCategories.Count);
+                jumpList.UserTasks.Add(new JumpListLink
+                {
+                    Title = "Crop Shot",
+                    Arguments = "crop_shot",
+                    Path = Application.ExecutablePath,
+                    IconReference = new IconReference(Application.ExecutablePath, 0)
+                });
+                jumpList.UserTasks.Add(new JumpListLink
+                {
+                    Title = "Selected Window",
+                    Arguments = "selected_window",
+                    Path = Application.ExecutablePath,
+                    IconReference = new IconReference(Application.ExecutablePath, 0)
+                });
 
-                //jumpList.UserTasks.Add(new JumpListLink
-                //{
-                //    Title = "Crop Shot",
-                //    Arguments = "crop_shot",
-                //    Path = Application.ExecutablePath,
-                //    IconReference = new IconReference(Application.ExecutablePath, 0)
-                //});
                 CustomCategory paths = new CustomCategory("Paths");
                 paths.JumpListItems.Add(new JumpListLink
                 {
@@ -117,7 +135,7 @@ namespace ZSS
                 });
                 jumpList.CustomCategories.Add(paths);
 
-                //  Taskbar.JumpList.RefreshTaskbarList();
+                Taskbar.JumpList.RefreshTaskbarList();
             }
         }
 

@@ -83,7 +83,7 @@ namespace ZSS
         internal static string DefaultXMLFilePath;
         private static string XMLPortableFile;
 
-        private static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen";
@@ -294,6 +294,7 @@ namespace ZSS
         public static WorkerSecondary Worker2;
 
         public static Mutex mAppMutex;
+        public static bool CLImode { get; set; }
 
         public static KeyboardHook ZScreenKeyboardHook = new KeyboardHook();
 
@@ -301,6 +302,7 @@ namespace ZSS
         static void Main()
         {
             string[] args = Environment.GetCommandLineArgs();
+            CLImode = args.Length > 1;
 
             if (args.Length > 2 && args[1] == "/doc")
             {
