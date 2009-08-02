@@ -150,7 +150,7 @@ namespace ZSS.Global
         /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns default system proxy otherwise
         /// </summary>
         public static IWebProxy GetProxySettings()
-        {            
+        {
             if (Program.conf.ProxyEnabled)
             {
                 ProxyInfo acc = Program.conf.ProxyActive;
@@ -296,12 +296,14 @@ namespace ZSS.Global
             if (Program.conf.ImageEditor == null) return false;
             return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
         }
-        
-        public static void DeleteFile(string fp){
-        	if ( File.Exists(fp) ) {
-                Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(fp, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, 
-        		                                                   Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
-        	}
+
+        public static void DeleteFile(string fp)
+        {
+            if (File.Exists(fp))
+            {
+                Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(fp, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                                                                   Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+            }
         }
 
         #region "Windows 7 only"
@@ -319,22 +321,24 @@ namespace ZSS.Global
         }
         public static void TaskbarSetState(TaskbarButtonProgressState tbps)
         {
-        	if (CoreHelpers.RunningOnWin7){
-        		            foreach (Form f in GetUserWindows())
+            if (CoreHelpers.RunningOnWin7)
             {
-                Taskbar.MultipleViewProgressBar.SetState(f, tbps);
+                foreach (Form f in GetUserWindows())
+                {
+                    Taskbar.MultipleViewProgressBar.SetState(f, tbps);
+                }
             }
-        	}
 
         }
         public static void TaskbarSetProgress(int progress)
         {
-        	if (CoreHelpers.RunningOnWin7){
-        		            foreach (Form f in GetUserWindows())
+            if (CoreHelpers.RunningOnWin7)
             {
-                Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
+                foreach (Form f in GetUserWindows())
+                {
+                    Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
+                }
             }
-        	}
 
         }
         #endregion

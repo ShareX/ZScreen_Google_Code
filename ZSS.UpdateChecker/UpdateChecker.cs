@@ -34,17 +34,14 @@ namespace ZSS.UpdateCheckerLib
 {
     public class UpdateCheckerOptions
     {
-        public bool CheckExperimental { get; set; }
-        public UpdateCheckType UpdateCheckType { get; set; }
+        public bool CheckBeta { get; set; }
         public NewVersionWindowOptions MyNewVersionWindowOptions { get; set; }
-        [XmlIgnore]
         public IWebProxy ProxySettings { get; set; }
     }
 
     public class UpdateChecker
     {
-        private string projectName, DefaultDownloads, AllDownloads, CurrentDownloads,
-            FeaturedDownloads, DeprecatedDownloads, InstallerDownloads, ExecutableDownloads;
+        private string projectName, downloadsList, labelFeatured, labelBeta;
 
         private UpdateCheckerOptions Options { get; set; }
         private VersionInfo MyVersionInfo;
@@ -57,13 +54,9 @@ namespace ZSS.UpdateCheckerLib
             set
             {
                 projectName = value.ToLower();
-                DefaultDownloads = "http://code.google.com/p/" + projectName + "/downloads/list";
-                AllDownloads = DefaultDownloads + "?can=1";
-                CurrentDownloads = DefaultDownloads + "?can=2";
-                FeaturedDownloads = DefaultDownloads + "?can=3";
-                DeprecatedDownloads = DefaultDownloads + "?can=4";
-                InstallerDownloads = "&q=label:Type-Installer";
-                ExecutableDownloads = "&q=label:Type-Executable";
+                downloadsList = "http://code.google.com/p/" + projectName + "/downloads/list";
+                labelFeatured = "?q=label:Featured";
+                labelBeta = "?q=label:Beta";
             }
         }
 
@@ -77,32 +70,14 @@ namespace ZSS.UpdateCheckerLib
         {
             try
             {
-                switch (this.Options.UpdateCheckType)
+                string url = downloadsList;
+
+                if (!this.Options.CheckBeta)
                 {
-                    case UpdateCheckType.SETUP:
-                        if (this.Options.CheckExperimental)
-                        {
-                            MyVersionInfo = CheckUpdate(AllDownloads + InstallerDownloads);
-                        }
-                        else
-                        {
-                            MyVersionInfo = CheckUpdate(CurrentDownloads + InstallerDownloads);
-                        }
-                        break;
-                    case UpdateCheckType.BIN:
-                        if (this.Options.CheckExperimental)
-                        {
-                            MyVersionInfo = CheckUpdate(AllDownloads + ExecutableDownloads);
-                        }
-                        else
-                        {
-                            MyVersionInfo = CheckUpdate(CurrentDownloads + ExecutableDownloads);
-                        }
-                        break;
-                    default:
-                        MyVersionInfo = CheckUpdate(DefaultDownloads);
-                        break;
+                    url += labelFeatured;
                 }
+
+                MyVersionInfo = CheckUpdate(url);
 
                 StringBuilder sbVersions = new StringBuilder();
                 sbVersions.AppendLine("Current version: " + Application.ProductVersion);

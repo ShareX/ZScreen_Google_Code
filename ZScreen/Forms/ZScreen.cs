@@ -666,16 +666,11 @@ namespace ZSS
 
             chkProxyEnable.Checked = Program.conf.ProxyEnabled;
             ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
-            if (cboUpdateCheckType.Items.Count == 0)
-            {
-                cboUpdateCheckType.Items.AddRange(typeof(UpdateCheckType).GetDescriptions());
-            }
-            cboUpdateCheckType.SelectedIndex = (int)Program.conf.UpdateCheckType;
+
             cbCheckUpdates.Checked = Program.conf.CheckUpdates;
-            cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
+            cbCheckUpdatesBeta.Checked = Program.conf.CheckUpdatesBeta;
             nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
             cbDeleteLocal.Checked = Program.conf.DeleteLocal;
-            cbCheckExperimental.Checked = Program.conf.CheckExperimental;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
             zWatcher.FolderPath = Program.conf.FolderMonitorPath;
@@ -2031,7 +2026,6 @@ namespace ZSS
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CheckUpdates = cbCheckUpdates.Checked;
-            cbCheckExperimental.Enabled = Program.conf.CheckUpdates;
         }
 
         private void txtActiveHelp_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -2872,11 +2866,6 @@ namespace ZSS
             Program.conf.SelectedWindowBorderSize = nudSelectedWindowBorderSize.Value;
         }
 
-        private void cbCheckExperimental_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.conf.CheckExperimental = cbCheckExperimental.Checked;
-        }
-
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
             Program.Worker2.CheckUpdates();
@@ -2929,11 +2918,6 @@ namespace ZSS
         private void cbCropShowGrids_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CropShowGrids = cbCropShowGrids.Checked;
-        }
-
-        private void cboUpdateCheckType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.conf.UpdateCheckType = (UpdateCheckType)cboUpdateCheckType.SelectedIndex;
         }
 
         private void cbAddSpace_CheckedChanged(object sender, EventArgs e)
@@ -3806,16 +3790,21 @@ namespace ZSS
         {
             try
             {
-               if (FileSystem.ManageImageFolders(Program.RootImagesDir))
-               {
-                   MessageBox.Show("Files successfully moved to save folders.");
-               }
+                if (FileSystem.ManageImageFolders(Program.RootImagesDir))
+                {
+                    MessageBox.Show("Files successfully moved to save folders.");
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex);
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void cbCheckUpdatesBeta_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.CheckUpdatesBeta = cbCheckUpdatesBeta.Checked;
         }
     }
 }
