@@ -58,7 +58,8 @@ namespace ZSS
     {
         EntireScreen,
         ActiveWindow,
-        Watermark
+        Watermark,
+        SaveFolder
     }
 
     public class NameParserInfo
@@ -83,6 +84,9 @@ namespace ZSS
                     case NameParserType.Watermark:
                         Pattern = Program.conf.WatermarkText;
                         break;
+                    case NameParserType.SaveFolder:
+                        Pattern = Program.conf.SaveFolder;
+                        break;
                 }
             }
         }
@@ -105,16 +109,18 @@ namespace ZSS
     {
         public const string Prefix = "%";
 
+        public static string Convert(NameParserType nameParserType)
+        {
+            return Convert(new NameParserInfo(nameParserType));
+        }
+
         public static string Convert(NameParserInfo nameParser)
         {
             if (string.IsNullOrEmpty(nameParser.Pattern)) return "";
 
             StringBuilder sb = new StringBuilder(nameParser.Pattern);
 
-            if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
-            {
-                Program.conf.AutoIncrement++;
-            }
+            #region width, height
 
             string width = "", height = "";
 
@@ -127,17 +133,9 @@ namespace ZSS
             sb = sb.Replace(ToString(ReplacementVariables.width), width);
             sb = sb.Replace(ToString(ReplacementVariables.height), height);
 
-            DateTime dt = DateTime.Now;
+            #endregion
 
-            if (sb.ToString().Contains(ToString(ReplacementVariables.pm)))
-            {
-                sb = sb.Replace(ToString(ReplacementVariables.h), dt.Hour == 0 ? "12" :
-                    ((dt.Hour > 12 ? AddZeroes(dt.Hour - 12) : AddZeroes(dt.Hour))));
-            }
-            else
-            {
-                sb = sb.Replace(ToString(ReplacementVariables.h), AddZeroes(dt.Hour));
-            }
+            #region t
 
             if (nameParser.Type == NameParserType.ActiveWindow || nameParser.Type == NameParserType.Watermark)
             {
@@ -153,21 +151,50 @@ namespace ZSS
                 sb = sb.Replace(ToString(ReplacementVariables.t), "");
             }
 
+            #endregion
+
+            #region y, mo, d
+
+            DateTime dt = DateTime.Now;
+
             sb = sb.Replace(ToString(ReplacementVariables.y), dt.Year.ToString())
                 .Replace(ToString(ReplacementVariables.mo), AddZeroes(dt.Month))
-                .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day))
-                .Replace(ToString(ReplacementVariables.mi), AddZeroes(dt.Minute))
-                .Replace(ToString(ReplacementVariables.s), AddZeroes(dt.Second))
-                .Replace(ToString(ReplacementVariables.i), AddZeroes(Program.conf.AutoIncrement, 4))
-                .Replace(ToString(ReplacementVariables.pm), (dt.Hour >= 12 ? "PM" : "AM"));
+                .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day));
+
+            #endregion
+
+            #region h, mi, s, pm, i
+
+            if (nameParser.Type != NameParserType.SaveFolder)
+            {
+                if (sb.ToString().Contains(ToString(ReplacementVariables.pm)))
+                {
+                    sb = sb.Replace(ToString(ReplacementVariables.h), dt.Hour == 0 ? "12" :
+                        ((dt.Hour > 12 ? AddZeroes(dt.Hour - 12) : AddZeroes(dt.Hour))));
+                }
+                else
+                {
+                    sb = sb.Replace(ToString(ReplacementVariables.h), AddZeroes(dt.Hour));
+                }
+
+                if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
+                {
+                    Program.conf.AutoIncrement++;
+                }
+
+                sb = sb.Replace(ToString(ReplacementVariables.mi), AddZeroes(dt.Minute))
+                    .Replace(ToString(ReplacementVariables.s), AddZeroes(dt.Second))
+                    .Replace(ToString(ReplacementVariables.pm), (dt.Hour >= 12 ? "PM" : "AM"))
+                    .Replace(ToString(ReplacementVariables.i), AddZeroes(Program.conf.AutoIncrement, 4));
+            }
+
+            #endregion
 
             if (nameParser.Type == NameParserType.Watermark)
             {
                 sb = sb.Replace("\\n", "\n");
             }
 
-            //normalize the entire thing, allow only characters and digits
-            //spaces become underscores, prevents possible problems
             if (nameParser.Type != NameParserType.Watermark) sb = Normalize(sb);
 
             return sb.ToString();
@@ -183,6 +210,10 @@ namespace ZSS
             return number.ToString("d" + digits);
         }
 
+        /// <summary>
+        ///    Normalize the entire thing, allow only characters and digits,
+        ///    spaces become underscores, prevents possible problems
+        /// </summary>
         public static StringBuilder Normalize(StringBuilder sb)
         {
             StringBuilder temp = new StringBuilder("");
