@@ -972,20 +972,6 @@ namespace ZSS.Helpers
             }
         }
 
-        private string GetFilePath(MainAppTask.Jobs job)
-        {
-            switch (job)
-            {
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                    return FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), Program.conf.ManualNaming);
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    return FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.ActiveWindow)), Program.conf.ManualNaming);
-            }
-            throw new Exception("Unsupported Job for getting File Path.");
-        }
-
         private bool RetryUpload(MainAppTask t)
         {
             if (Program.conf.ImageUploadRetry && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
@@ -1014,25 +1000,19 @@ namespace ZSS.Helpers
         {
             if (t.MyImage != null)
             {
-                switch (t.Job)
+                NameParserType type;
+                if (t.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
                 {
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED));
-                        break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED));
-                        break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN));
-                        break;
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                    case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                        t.SetLocalFilePath(this.GetFilePath(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE));
-                        break;
+                    type = NameParserType.ActiveWindow;
                 }
-                // Update LocalFilePath again, due to possible PNG to JPG changes
-                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, t.LocalFilePath));
+                else
+                {
+                    type = NameParserType.EntireScreen;
+                }
+
+                string filePath = FileSystem.GetFilePath(NameParser.Convert(type), Program.conf.ManualNaming);
+
+                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, filePath));
             }
         }
 
