@@ -65,7 +65,7 @@ namespace ZSS
                 }
                 else
                 {
-                    return GetDefaultImagesDir();
+                    return ImagesSaveFolder;
                 }
             }
             set
@@ -77,6 +77,8 @@ namespace ZSS
         public static string SettingsDir { get; set; }
         public static string TempDir { get; set; }
         public static string TextDir { get; set; }
+
+        private static string ImagesSaveFolder { get; set; }
 
         private static string[] AppDirs;
 
@@ -116,8 +118,8 @@ namespace ZSS
 
         private static string GetDefaultImagesDir()
         {
-            string ymDir = DateTime.Now.ToString("yyyy-MM");
-            return Path.Combine(RootAppFolder, Path.Combine("Images", ymDir));
+            string saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
+            return Path.Combine(RootAppFolder, Path.Combine("Images", saveFolderPath));
         }
 
         /// <summary>
@@ -356,6 +358,9 @@ namespace ZSS
 
             InitializeDefaultFolderPaths();
             conf = XMLSettings.Read();
+
+            ImagesSaveFolder = GetDefaultImagesDir();
+
             InitializeFiles();
 
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
