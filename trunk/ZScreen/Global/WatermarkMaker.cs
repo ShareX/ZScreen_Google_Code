@@ -56,47 +56,52 @@ namespace ZSS
 
         public static Image DrawWatermark(Image img, string drawText)
         {
-            try
+            if (!string.IsNullOrEmpty(drawText))
             {
-                int offset = (int)Program.conf.WatermarkOffset;
-                Font font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont);
-                Size textSize = TextRenderer.MeasureText(drawText, font);
-                Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
-                Point labelPosition = FindPosition(Program.conf.WatermarkPositionMode, offset, img.Size,
-                    new Size(textSize.Width + 10, textSize.Height + 10), 1);
-                if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) ||
-                    (img.Height < labelSize.Height + offset)))
+                try
                 {
-                    throw new Exception("Image size smaller than watermark size.");
-                }
-                Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
-                GraphicsPath gPath = RoundedRectangle.Create(labelRectangle, (int)Program.conf.WatermarkCornerRadius);
+                    int offset = (int)Program.conf.WatermarkOffset;
+                    Font font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont);
+                    Size textSize = TextRenderer.MeasureText(drawText, font);
+                    Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
+                    Point labelPosition = FindPosition(Program.conf.WatermarkPositionMode, offset, img.Size,
+                        new Size(textSize.Width + 10, textSize.Height + 10), 1);
+                    if (Program.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) ||
+                        (img.Height < labelSize.Height + offset)))
+                    {
+                        return img;
+                        //throw new Exception("Image size smaller than watermark size.");
+                    }
+                    Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
+                    GraphicsPath gPath = RoundedRectangle.Create(labelRectangle, (int)Program.conf.WatermarkCornerRadius);
 
-                int backTrans = (int)Program.conf.WatermarkBackTrans;
-                int fontTrans = (int)Program.conf.WatermarkFontTrans;
-                Color fontColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
-                Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
-                Graphics g = Graphics.FromImage(bmp);
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1)),
-                    Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2)), Program.conf.WatermarkGradientType), gPath);
-                g.DrawPath(new Pen(Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor))), gPath);
-                StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), bmp.Width / 2, bmp.Height / 2, sf);
-                Graphics gImg = Graphics.FromImage(img);
-                gImg.SmoothingMode = SmoothingMode.HighQuality;
-                gImg.DrawImage(bmp, labelPosition);
-                if (Program.conf.WatermarkAddReflection)
+                    int backTrans = (int)Program.conf.WatermarkBackTrans;
+                    int fontTrans = (int)Program.conf.WatermarkFontTrans;
+                    Color fontColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
+                    Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
+                    Graphics g = Graphics.FromImage(bmp);
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                    g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1)),
+                        Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2)), Program.conf.WatermarkGradientType), gPath);
+                    g.DrawPath(new Pen(Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor))), gPath);
+                    StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                    g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), bmp.Width / 2, bmp.Height / 2, sf);
+                    Graphics gImg = Graphics.FromImage(img);
+                    gImg.SmoothingMode = SmoothingMode.HighQuality;
+                    gImg.DrawImage(bmp, labelPosition);
+                    if (Program.conf.WatermarkAddReflection)
+                    {
+                        Bitmap bmp2 = AddReflection(bmp, 50, 200);
+                        gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
+                    }
+                }
+                catch (Exception ex)
                 {
-                    Bitmap bmp2 = AddReflection(bmp, 50, 200);
-                    gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
+                    FileSystem.AppendDebug(ex.ToString());
                 }
             }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-            }
+
             return img;
         }
 
@@ -113,7 +118,8 @@ namespace ZSS
                     if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) ||
                         (img.Height < img2.Height + offset)))
                     {
-                        throw new Exception("Image size smaller than watermark size.");
+                        return img;
+                        //throw new Exception("Image size smaller than watermark size.");
                     }
 
                     Graphics g = Graphics.FromImage(img);

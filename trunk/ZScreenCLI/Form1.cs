@@ -19,7 +19,6 @@ namespace ZScreenCLI
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-
                 ZSS.Program.SetRootFolder(!string.IsNullOrEmpty(ZSS.Properties.Settings.Default.RootDir) ? ZSS.Properties.Settings.Default.RootDir : ZSS.Program.DefaultRootAppFolder);
                 ZSS.Program.InitializeDefaultFolderPaths();
                 ZSS.Program.conf = ZSS.XMLSettings.Read();
