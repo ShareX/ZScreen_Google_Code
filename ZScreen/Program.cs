@@ -52,6 +52,7 @@ namespace ZSS
         private static readonly string PortableRootFolder = Application.ProductName; //Path.Combine(Application.StartupPath, Application.ProductName);
 
         public static string RootAppFolder { get; set; }
+        public static string RootImagesDir { get; private set; }
 
         public static string CacheDir { get; set; }
         public static string FilesDir { get; set; }
@@ -121,7 +122,7 @@ namespace ZSS
             {
                 saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
             }
-            return Path.Combine(RootAppFolder, Path.Combine("Images", saveFolderPath));
+            return Path.Combine(RootImagesDir, saveFolderPath);
         }
 
         /// <summary>
@@ -358,6 +359,7 @@ namespace ZSS
                 RootAppFolder = Settings.Default.RootDir;
             }
 
+            RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
             InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
             conf = XMLSettings.Read();
 

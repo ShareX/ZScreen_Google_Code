@@ -1246,6 +1246,7 @@ namespace ZSS
                 ThumbnailButton clipboardUpload = new ThumbnailButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                 clipboardUpload.Click += new EventHandler(clipboardUpload_Click);
                 Taskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                Taskbar.JumpList.RefreshTaskbarList();
             }
 
         }
@@ -2483,7 +2484,7 @@ namespace ZSS
 
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.ImagesDir);
+            ShowDirectory(Directory.Exists(Program.ImagesDir) ? Program.ImagesDir : Program.RootImagesDir);
         }
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
