@@ -125,7 +125,7 @@ namespace ZSS
                 {
                     Title = "Images",
                     IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.ImagesDir
+                    Path = FileSystem.GetImagesDir()
                 });
                 paths.JumpListItems.Add(new JumpListLink
                 {
@@ -2484,7 +2484,7 @@ namespace ZSS
 
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Directory.Exists(Program.ImagesDir) ? Program.ImagesDir : Program.RootImagesDir);
+            ShowDirectory(FileSystem.GetImagesDir());
         }
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)

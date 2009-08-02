@@ -146,6 +146,11 @@ namespace ZSS
             return config.FilePath;
         }
 
+        public static string GetImagesDir()
+        {
+            return Directory.Exists(Program.ImagesDir) ? Program.ImagesDir : Program.RootImagesDir;
+        }
+
         public static string GetTempFilePath(string fileName)
         {
             string dir = Program.CacheDir;
