@@ -37,8 +37,10 @@ namespace ZSS
         y,
         [Description("Gets the current month")]
         mo,
-        [Description("Gets the current month name")]
+        [Description("Gets the current month name (Local language)")]
         mon,
+        [Description("Gets the current month name (English)")]
+        mon2,
         [Description("Gets the current day")]
         d,
         [Description("Gets the current hour")]
@@ -167,6 +169,7 @@ namespace ZSS
             }
 
             sb = sb.Replace(ToString(ReplacementVariables.y), dt.Year.ToString())
+                .Replace(ToString(ReplacementVariables.mon2), CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(dt.Month))
                 .Replace(ToString(ReplacementVariables.mon), CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dt.Month))
                 .Replace(ToString(ReplacementVariables.mo), AddZeroes(dt.Month))
                 .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day));
