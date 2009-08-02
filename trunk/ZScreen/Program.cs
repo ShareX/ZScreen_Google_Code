@@ -69,10 +69,7 @@ namespace ZSS
                     return GetDefaultImagesDir();
                 }
             }
-            set
-            {
-                ;
-            }
+            set { ; }
         }
         public static string LogsDir { get; set; }
         public static string SettingsDir { get; set; }
@@ -145,12 +142,12 @@ namespace ZSS
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");
             TextDir = Path.Combine(RootAppFolder, "Text");
-            
-            AppDirs = new[] { CacheDir, FilesDir, ImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
+
+            AppDirs = new[] { CacheDir, FilesDir, RootImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
 
             foreach (string dp in AppDirs)
             {
-                if (!Directory.Exists(dp))
+                if (!string.IsNullOrEmpty(dp) && !Directory.Exists(dp))
                 {
                     Directory.CreateDirectory(dp);
                 }

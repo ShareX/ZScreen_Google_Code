@@ -174,9 +174,9 @@ namespace ZSS
                 dt = nameParser.CustomDate;
             }
 
-            sb = sb.Replace(ToString(ReplacementVariables.y), dt.Year.ToString())
-                .Replace(ToString(ReplacementVariables.mon2), CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(dt.Month))
+            sb = sb.Replace(ToString(ReplacementVariables.mon2), CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(dt.Month))
                 .Replace(ToString(ReplacementVariables.mon), CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dt.Month))
+                .Replace(ToString(ReplacementVariables.y), dt.Year.ToString())
                 .Replace(ToString(ReplacementVariables.mo), AddZeroes(dt.Month))
                 .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day));
 
@@ -220,7 +220,10 @@ namespace ZSS
                 sb = sb.Replace(ToString(ReplacementVariables.n), "\n");
             }
 
-            if (nameParser.Type != NameParserType.Watermark) sb = Normalize(sb);
+            if (nameParser.Type != NameParserType.Watermark)
+            {
+                sb = Normalize(sb, nameParser.Type != NameParserType.SaveFolder);
+            }
 
             return sb.ToString();
         }
@@ -235,18 +238,24 @@ namespace ZSS
             return number.ToString("d" + digits);
         }
 
+        public static StringBuilder Normalize(StringBuilder sb)
+        {
+            return Normalize(sb, true);
+        }
+
         /// <summary>
         ///    Normalize the entire thing, allow only characters and digits,
         ///    spaces become underscores, prevents possible problems
         /// </summary>
-        public static StringBuilder Normalize(StringBuilder sb)
+        public static StringBuilder Normalize(StringBuilder sb, bool convertSpace)
         {
             StringBuilder temp = new StringBuilder("");
 
             foreach (char c in sb.ToString())
             {
-                if (char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_') temp.Append(c);
-                if (c == ' ') temp.Append('_');
+                if (char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_' || (c == ' ' && !convertSpace)) temp.Append(c);
+
+                if (c == ' ' && convertSpace) temp.Append('_');
             }
 
             return temp;

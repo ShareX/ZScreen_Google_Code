@@ -54,18 +54,7 @@ namespace ZSS.Tasks
             if (Directory.Exists(mCacheDir))
             {
                 List<ImageFile> files = new List<ImageFile>();
-                /*
-                string[] jpgFiles = Directory.GetFiles(mCacheDir, "*.jpg", SearchOption.AllDirectories);
-                foreach (string f in jpgFiles)
-                {
-                    files.Add(new ImageFile(f));
-                }
-                string[] pngFiles = Directory.GetFiles(mCacheDir, "*.png", SearchOption.AllDirectories);
-                foreach (string f in pngFiles)
-                {
-                    files.Add(new ImageFile(f));
-                }
-                 */
+
                 //include all supported file types
                 foreach (string s in Program.zImageFileTypes)
                 {
@@ -86,9 +75,11 @@ namespace ZSS.Tasks
                     dirSize += f.Size;
                 }
 
-                if ( dirSize > 0 ) {
-                	FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
-                }                
+                if (dirSize > 0)
+                {
+                    FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
+                }
+
                 while (dirSize > mCacheSize)
                 {
                     if (files.Count > 0)
@@ -100,9 +91,11 @@ namespace ZSS.Tasks
                         files.RemoveAt(0);
                     }
                 }
-                if ( dirSize > 0 ) {
-					FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));                	
-                }                
+
+                if (dirSize > 0)
+                {
+                    FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));
+                }
             }
         }
     }

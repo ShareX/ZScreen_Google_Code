@@ -94,34 +94,34 @@ namespace ZSS
                 long size = (long)Program.conf.SwitchAfter * 1024;
 
                 MemoryStream ms = new MemoryStream();
-                GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.FileFormat]);
-
-                long len = ms.Length;
-
-                // Change PNG to JPG (Lossy) if file size is large
-
-                if (len > size && size != 0)
+                try
                 {
-                    ms = new MemoryStream();
+                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.FileFormat]);
 
-                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
+                    // Change PNG to JPG (Lossy) if file size is large
 
-                    filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
+                    if (ms.Length > size && size != 0)
+                    {
+                        ms = new MemoryStream();
+                        GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
 
+                        filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
+                    }
+
+                    if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    }
+
+                    using (FileStream fi = File.Create(filePath))
+                    {
+                        ms.WriteTo(fi);
+                    }
                 }
-
-                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                FileStream fi = File.Create(filePath);
-
-                ms.WriteTo(fi);
-
-                fi.Close();
-
-                ms.Dispose();
-                fi.Dispose();
-
+                finally
+                {
+                    if (ms != null) ((IDisposable)ms).Dispose();
+                }
             }
 
             return filePath;
@@ -441,6 +441,60 @@ namespace ZSS
         public static bool IsValidLink(string url)
         {
             return Uri.IsWellFormedUriString(url, UriKind.Absolute);
+        }
+
+        public static bool ManageImageFolders(string path)
+        {
+            if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
+            {
+                string[] images = Directory.GetFiles(path);
+
+                List<string> imagesList = new List<string>();
+
+                foreach (string image in images)
+                {
+                    foreach (string s in Program.zImageFileTypes)
+                    {
+                        if (Path.HasExtension(image) && Path.GetExtension(image) == "." + s)
+                        {
+                            imagesList.Add(image);
+                            break;
+                        }
+                    }
+                }
+
+                if (MessageBox.Show(string.Format("{0} files found in {1}\nPlease wait for complete.",
+                    imagesList.Count, path), "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                {
+                    return false;
+                }
+
+                DateTime time;
+                string newFolderPath;
+                string movePath;
+
+                foreach (string image in imagesList)
+                {
+                    if (File.Exists(image))
+                    {
+                        time = File.GetCreationTime(image);
+                        newFolderPath = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder) { CustomDate = time });
+                        newFolderPath = Path.Combine(Program.RootImagesDir, newFolderPath);
+
+                        if (!Directory.Exists(newFolderPath))
+                        {
+                            Directory.CreateDirectory(newFolderPath);
+                        }
+
+                        movePath = Path.Combine(newFolderPath, Path.GetFileName(image));
+                        File.Move(image, movePath);
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

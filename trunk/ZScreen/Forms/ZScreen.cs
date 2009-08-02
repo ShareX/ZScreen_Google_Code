@@ -3796,5 +3796,21 @@ namespace ZSS
                 codesMenu.Close();
             }
         }
+
+        private void btnMoveImageFiles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+               if (FileSystem.ManageImageFolders(Program.RootImagesDir))
+               {
+                   MessageBox.Show("Files successfully moved to save folders.");
+               }
+            }
+            catch(Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
