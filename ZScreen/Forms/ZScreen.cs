@@ -105,20 +105,25 @@ namespace ZSS
                 Taskbar.AppId = Program.appId;
                 JumpList jumpList = Taskbar.JumpList;
 
-                jumpList.UserTasks.Add(new JumpListLink
-                {
-                    Title = "Crop Shot",
-                    Arguments = "crop_shot",
-                    Path = Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), // Application.ExecutablePath,
-                    IconReference = new IconReference(Application.ExecutablePath, 0)
-                });
-                jumpList.UserTasks.Add(new JumpListLink
-                {
-                    Title = "Selected Window",
-                    Arguments = "selected_window",
-                    Path = Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), // Application.ExecutablePath,
-                    IconReference = new IconReference(Application.ExecutablePath, 0)
-                });
+                //*****************************************************************
+                // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
+                // DO NOT REMOVE
+                //*****************************************************************
+
+                //jumpList.UserTasks.Add(new JumpListLink
+                //{
+                //    Title = "Crop Shot",
+                //    Arguments = "crop_shot",
+                //    Path = Application.ExecutablePath, // Path.Combine(Application.StartupPath, "ZScreenCLI.exe"),
+                //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                //});
+                //jumpList.UserTasks.Add(new JumpListLink
+                //{
+                //    Title = "Selected Window",
+                //    Arguments = "selected_window",
+                //    Path = Application.ExecutablePath, // Path.Combine(Application.StartupPath, "ZScreenCLI.exe"),
+                //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                //});
 
                 CustomCategory paths = new CustomCategory("Paths");
                 paths.JumpListItems.Add(new JumpListLink

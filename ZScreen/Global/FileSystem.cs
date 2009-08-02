@@ -463,31 +463,34 @@ namespace ZSS
                     }
                 }
 
-                if (MessageBox.Show(string.Format("{0} files found in {1}\nPlease wait for complete.",
-                    imagesList.Count, path), "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                if (imagesList.Count > 0)
                 {
-                    return false;
-                }
-
-                DateTime time;
-                string newFolderPath;
-                string movePath;
-
-                foreach (string image in imagesList)
-                {
-                    if (File.Exists(image))
+                    if (MessageBox.Show(string.Format("{0} files found in {1}\nPlease wait until all the files are moved...",
+                        imagesList.Count, path), Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
                     {
-                        time = File.GetCreationTime(image);
-                        newFolderPath = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder) { CustomDate = time });
-                        newFolderPath = Path.Combine(Program.RootImagesDir, newFolderPath);
+                        return false;
+                    }
 
-                        if (!Directory.Exists(newFolderPath))
+                    DateTime time;
+                    string newFolderPath;
+                    string movePath;
+
+                    foreach (string image in imagesList)
+                    {
+                        if (File.Exists(image))
                         {
-                            Directory.CreateDirectory(newFolderPath);
-                        }
+                            time = File.GetCreationTime(image);
+                            newFolderPath = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder) { CustomDate = time });
+                            newFolderPath = Path.Combine(Program.RootImagesDir, newFolderPath);
 
-                        movePath = Path.Combine(newFolderPath, Path.GetFileName(image));
-                        File.Move(image, movePath);
+                            if (!Directory.Exists(newFolderPath))
+                            {
+                                Directory.CreateDirectory(newFolderPath);
+                            }
+
+                            movePath = Path.Combine(newFolderPath, Path.GetFileName(image));
+                            File.Move(image, movePath);
+                        }
                     }
                 }
 

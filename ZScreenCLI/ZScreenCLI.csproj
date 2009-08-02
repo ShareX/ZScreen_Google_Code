@@ -79,9 +79,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZScreen\ZScreen.csproj">
-      <Project>{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}</Project>
-      <Name>ZScreen</Name>
+    <ProjectReference Include="..\ZScreenLib\ZScreenLib.csproj">
+      <Project>{2CB31685-9F2D-4017-9A98-C4EF1B92C928}</Project>
+      <Name>ZScreenLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

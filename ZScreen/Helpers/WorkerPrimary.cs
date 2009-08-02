@@ -571,7 +571,7 @@ namespace ZSS.Helpers
             return filePath;
         }
 
-        private void CaptureScreen(ref MainAppTask task)
+        public void CaptureScreen(ref MainAppTask task)
         {
             task.CaptureScreen();
             WriteImage(task);
@@ -996,7 +996,7 @@ namespace ZSS.Helpers
             return false;
         }
 
-        private void WriteImage(MainAppTask t)
+        public void WriteImage(MainAppTask t)
         {
             if (t.MyImage != null)
             {
