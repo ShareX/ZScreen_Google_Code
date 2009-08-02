@@ -117,7 +117,7 @@ namespace ZSS
 
         private static string GetDefaultImagesDir()
         {
-            string saveFolderPath = DateTime.Now.ToString("yyyy-MM");
+            string saveFolderPath = string.Empty;
             if (Program.conf != null)
             {
                 saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
