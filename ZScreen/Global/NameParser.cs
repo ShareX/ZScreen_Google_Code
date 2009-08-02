@@ -33,22 +33,26 @@ namespace ZSS
     {
         [Description("Title of active window")]
         t,
-        [Description("Gets the current year")]
+        [Description("Current year")]
         y,
-        [Description("Gets the current month")]
+        [Description("Current month")]
         mo,
-        [Description("Gets the current month name (Local language)")]
+        [Description("Current month name (Local language)")]
         mon,
-        [Description("Gets the current month name (English)")]
+        [Description("Current month name (English)")]
         mon2,
-        [Description("Gets the current day")]
+        [Description("Current day")]
         d,
-        [Description("Gets the current hour")]
+        [Description("Current hour")]
         h,
-        [Description("Gets the current minute")]
+        [Description("Current minute")]
         mi,
-        [Description("Gets the current second")]
+        [Description("Current second")]
         s,
+        [Description("Current week name (Local language)")]
+        w,
+        [Description("Current week name (English)")]
+        w2,
         [Description("Auto increment")]
         i,
         [Description("Gets AM/PM")]
@@ -56,7 +60,9 @@ namespace ZSS
         [Description("Gets image width")]
         width,
         [Description("Gets image height")]
-        height
+        height,
+        [Description("New line")]
+        n
     }
 
     public enum NameParserType
@@ -159,7 +165,7 @@ namespace ZSS
 
             #endregion
 
-            #region y, mo, mon, d
+            #region y, mo, mon, mon2, d
 
             DateTime dt = DateTime.Now;
 
@@ -176,7 +182,7 @@ namespace ZSS
 
             #endregion
 
-            #region h, mi, s, pm, i
+            #region h, mi, s, w, w2, pm, i
 
             if (nameParser.Type != NameParserType.SaveFolder)
             {
@@ -192,6 +198,8 @@ namespace ZSS
 
                 sb = sb.Replace(ToString(ReplacementVariables.mi), AddZeroes(dt.Minute))
                     .Replace(ToString(ReplacementVariables.s), AddZeroes(dt.Second))
+                    .Replace(ToString(ReplacementVariables.w2), CultureInfo.InvariantCulture.DateTimeFormat.GetDayName(dt.DayOfWeek))
+                    .Replace(ToString(ReplacementVariables.w), CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dt.DayOfWeek))
                     .Replace(ToString(ReplacementVariables.pm), (dt.Hour >= 12 ? "PM" : "AM"));
 
                 if (nameParser.Type != NameParserType.SaveFolder)
@@ -209,7 +217,7 @@ namespace ZSS
 
             if (nameParser.Type == NameParserType.Watermark)
             {
-                sb = sb.Replace("\\n", "\n");
+                sb = sb.Replace(ToString(ReplacementVariables.n), "\n");
             }
 
             if (nameParser.Type != NameParserType.Watermark) sb = Normalize(sb);

@@ -3779,7 +3779,6 @@ namespace ZSS
 
         private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
         {
-            //MessageBox.Show("Hi!");
             ttZScreen.Show(ttZScreen.GetToolTip(nudtScreenshotDelay), this);
         }
 
@@ -3788,6 +3787,14 @@ namespace ZSS
             Program.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
             lblImagesFolderPatternPreview.Text = NameParser.Convert(NameParserType.SaveFolder);
             txtImagesDir.Text = Program.ImagesDir;
+        }
+
+        private void txtWatermarkText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && codesMenu.Visible)
+            {
+                codesMenu.Close();
+            }
         }
     }
 }
