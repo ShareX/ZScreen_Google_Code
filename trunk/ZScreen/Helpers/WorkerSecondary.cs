@@ -79,8 +79,7 @@ namespace ZSS.Helpers
 
             UpdateCheckerOptions uco = new UpdateCheckerOptions
             {
-                CheckExperimental = Program.conf.CheckExperimental,
-                UpdateCheckType = Program.conf.UpdateCheckType,
+                CheckBeta = Program.conf.CheckUpdatesBeta,
                 MyNewVersionWindowOptions = nvwo
             };
             uco.ProxySettings = Adapter.GetProxySettings();
@@ -149,7 +148,7 @@ namespace ZSS.Helpers
 
         void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
         {
-            FileSystem.AppendDebug("Reading History file...");            
+            FileSystem.AppendDebug("Reading History file...");
             e.Result = HistoryManager.Read();
         }
 

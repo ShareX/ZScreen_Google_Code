@@ -403,6 +403,7 @@ namespace ZSS
         public bool PreferBrowserForText { get; set; }
         [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
         public bool PreferBrowserForImages { get; set; }
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
         //~~~~~~~~~~~~~~~~~~~~~
@@ -426,8 +427,7 @@ namespace ZSS
         // General - Check Updates
 
         public bool CheckUpdates = true;
-        public UpdateCheckType UpdateCheckType = UpdateCheckType.SETUP;
-        public bool CheckExperimental = false;
+        public bool CheckUpdatesBeta = false;
 
         // Proxy Settings
 
