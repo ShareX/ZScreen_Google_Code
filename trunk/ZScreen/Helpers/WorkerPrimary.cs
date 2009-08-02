@@ -161,6 +161,8 @@ namespace ZSS.Helpers
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            if (mZScreen == null) return;
+
             switch ((MainAppTask.ProgressType)e.ProgressPercentage)
             {
                 case (MainAppTask.ProgressType)101:
@@ -261,16 +263,23 @@ namespace ZSS.Helpers
                             switch (task.Job)
                             {
                                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
-                                    this.mZScreen.txtTranslateText.Text = task.TranslationInfo.SourceText;
-                                    this.mZScreen.txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
-                                    this.mZScreen.txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
-                                    this.mZScreen.txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
+                                    if (mZScreen != null)
+                                    {
+                                        this.mZScreen.txtTranslateText.Text = task.TranslationInfo.SourceText;
+                                        this.mZScreen.txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
+                                        this.mZScreen.txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
+                                        this.mZScreen.txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
+                                    }
                                     if (Program.conf.ClipboardTranslate)
                                     {
                                         Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
                                     }
-                                    this.mZScreen.btnTranslate.Enabled = true;
-                                    this.mZScreen.btnTranslateTo1.Enabled = true;
+                                    if (mZScreen != null)
+                                    {
+                                        this.mZScreen.btnTranslate.Enabled = true;
+                                        this.mZScreen.btnTranslateTo1.Enabled = true;
+                                    }
+
                                     break;
                                 case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
@@ -369,6 +378,10 @@ namespace ZSS.Helpers
             finally
             {
                 UploadManager.Commit(task.UniqueNumber);
+                if (Program.CLImode)
+                {
+                    Application.Exit();
+                }
             }
         }
 
@@ -906,7 +919,7 @@ namespace ZSS.Helpers
                     textWorkers.Add(temp);
                 }
                 else if (Clipboard.ContainsFileDropList())
-                {                 
+                {
                     this.UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
                 }
 
