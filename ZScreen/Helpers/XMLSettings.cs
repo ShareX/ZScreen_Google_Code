@@ -79,7 +79,7 @@ namespace ZSS
             //~~~~~~~~~~~~~~~~~~~~~
             //  Options / Paths
             //~~~~~~~~~~~~~~~~~~~~~
-            BackupApplicationSettings = true;            
+            BackupApplicationSettings = true;
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Screenshots / Bevel
@@ -256,9 +256,9 @@ namespace ZSS
 
         // Naming Conventions
 
-        public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
-        public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        public string SaveFolder = "%y-%mo";
+        public string ActiveWindowPattern = "%t-%y.%mo.%d-%h.%mi.%s";
+        public string EntireScreenPattern = "SS-%y.%mo.%d-%h.%mi.%s";
+        public string SaveFolderPattern = "%y-%mo";
         [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
@@ -399,9 +399,9 @@ namespace ZSS
         public bool HistoryShowTooltips = true;
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
-		[Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
+        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
         public bool PreferBrowserForText { get; set; }
-		[Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
+        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
         public bool PreferBrowserForImages { get; set; }
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
