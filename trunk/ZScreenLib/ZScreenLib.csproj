@@ -35,6 +35,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -45,7 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\NameParser.cs" />
+    <Compile Include="Helpers\MainAppTask.cs" />
+    <Compile Include="Helpers\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj">
+      <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
+      <Name>ZSS.ImageUploadersLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploadersLib.csproj">
+      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
+      <Name>ZSS.TextUploadersLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
