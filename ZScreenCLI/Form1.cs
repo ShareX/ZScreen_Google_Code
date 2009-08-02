@@ -19,17 +19,24 @@ namespace ZScreenCLI
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                ZSS.Program.SetRootFolder(!string.IsNullOrEmpty(ZSS.Properties.Settings.Default.RootDir) ? ZSS.Properties.Settings.Default.RootDir : ZSS.Program.DefaultRootAppFolder);
-                ZSS.Program.InitializeDefaultFolderPaths();
-                ZSS.Program.conf = ZSS.XMLSettings.Read();
-                WorkerPrimary worker = new ZSS.Helpers.WorkerPrimary(null);
-                if (args[1] == "crop_shot")
+                try
                 {
-                    worker.StartBW_CropShot();
+                    ZSS.Program.SetRootFolder(!string.IsNullOrEmpty(ZSS.Properties.Settings.Default.RootDir) ? ZSS.Properties.Settings.Default.RootDir : ZSS.Program.DefaultRootAppFolder);
+                    ZSS.Program.InitializeDefaultFolderPaths();
+                    ZSS.Program.conf = ZSS.XMLSettings.Read();
+                    WorkerPrimary worker = new ZSS.Helpers.WorkerPrimary(null);
+                    if (args[1] == "crop_shot")
+                    {
+                        worker.StartBW_CropShot();
+                    }
+                    else if (args[1] == "selected_window")
+                    {
+                        worker.StartBW_SelectedWindow();
+                    }
                 }
-                else if (args[1] == "selected_window")
+                catch (Exception ex)
                 {
-                    worker.StartBW_SelectedWindow();
+                    MessageBox.Show(ex.ToString());
                 }
             }
         }

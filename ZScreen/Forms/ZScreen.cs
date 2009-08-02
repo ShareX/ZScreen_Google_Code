@@ -109,14 +109,14 @@ namespace ZSS
                 {
                     Title = "Crop Shot",
                     Arguments = "crop_shot",
-                    Path = Application.ExecutablePath,
+                    Path = Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), // Application.ExecutablePath,
                     IconReference = new IconReference(Application.ExecutablePath, 0)
                 });
                 jumpList.UserTasks.Add(new JumpListLink
                 {
                     Title = "Selected Window",
                     Arguments = "selected_window",
-                    Path = Application.ExecutablePath,
+                    Path = Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), // Application.ExecutablePath,
                     IconReference = new IconReference(Application.ExecutablePath, 0)
                 });
 
