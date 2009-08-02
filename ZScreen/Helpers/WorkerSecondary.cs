@@ -47,7 +47,6 @@ namespace ZSS.Helpers
         public WorkerSecondary(ZScreen myZScreen)
         {
             this.mZScreen = myZScreen;
-            this.LoadHistoryItems();
         }
 
         #region "Check Updates"
@@ -150,9 +149,8 @@ namespace ZSS.Helpers
 
         void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
         {
-            FileSystem.AppendDebug("Reading History file...");
+            FileSystem.AppendDebug("Reading History file...");            
             e.Result = HistoryManager.Read();
-
         }
 
         public void PerformOnlineTasks()
