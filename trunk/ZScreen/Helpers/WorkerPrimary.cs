@@ -780,7 +780,7 @@ namespace ZSS.Helpers
             }
             if (Program.conf.HotkeyLanguageTranslator == key) //Language Translator
             {
-                Program.Worker.StartWorkerTranslator();
+                StartWorkerTranslator();
                 return true;
             }
             if (Program.conf.HotkeyScreenColorPicker == key) //Screen Color Picker
@@ -1081,7 +1081,7 @@ namespace ZSS.Helpers
 
         public void StartBW_SelectedWindow()
         {
-            if (!Program.Worker.mTakingScreenShot)
+            if (!mTakingScreenShot)
             {
                 StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
             }
@@ -1089,7 +1089,7 @@ namespace ZSS.Helpers
 
         public void StartBW_CropShot()
         {
-            if (!Program.Worker.mTakingScreenShot)
+            if (!mTakingScreenShot)
             {
                 StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
             }

@@ -29,11 +29,30 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.SuspendLayout();
+            // 
+            // niTray
+            // 
+            this.niTray.Text = "notifyIcon1";
+            this.niTray.Visible = true;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.NotifyIcon niTray;
     }
 }
 

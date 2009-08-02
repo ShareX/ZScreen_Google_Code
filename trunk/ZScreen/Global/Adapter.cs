@@ -293,6 +293,7 @@ namespace ZSS.Global
 
         public static bool ImageSoftwareEnabled()
         {
+            if (Program.conf.ImageEditor == null) return false;
             return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
         }
         
