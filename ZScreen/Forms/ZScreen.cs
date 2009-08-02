@@ -1138,7 +1138,7 @@ namespace ZSS
 
         private void tsmViewDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.ImagesDir);
+            ShowDirectory(FileSystem.GetImagesDir());
         }
 
         private void ShowDirectory(string dir)

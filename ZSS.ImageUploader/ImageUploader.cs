@@ -133,7 +133,7 @@ namespace ZSS.ImageUploadersLib
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = this.ProxySettings;
-                request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
+                request.UserAgent = "Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; WOW64; SV1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; InfoPath.1; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)"; // Application.ProductName + " " + Application.ProductVersion;
 
                 using (WebResponse response = request.GetResponse())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
