@@ -40,7 +40,7 @@ using System.Diagnostics;
 
 namespace ZSS
 {
-    static class Program
+    public static class Program
     {
         private static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
@@ -65,7 +65,7 @@ namespace ZSS
                 }
                 else
                 {
-                    return ImagesSaveFolder;
+                    return GetDefaultImagesDir();
                 }
             }
             set
@@ -77,8 +77,6 @@ namespace ZSS
         public static string SettingsDir { get; set; }
         public static string TempDir { get; set; }
         public static string TextDir { get; set; }
-
-        private static string ImagesSaveFolder { get; set; }
 
         private static string[] AppDirs;
 
@@ -118,7 +116,11 @@ namespace ZSS
 
         private static string GetDefaultImagesDir()
         {
-            string saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
+            string saveFolderPath = DateTime.Now.ToString("yyyy-MM");
+            if (Program.conf != null)
+            {
+                saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
+            }
             return Path.Combine(RootAppFolder, Path.Combine("Images", saveFolderPath));
         }
 
@@ -356,10 +358,8 @@ namespace ZSS
                 RootAppFolder = Settings.Default.RootDir;
             }
 
-            InitializeDefaultFolderPaths();
+            InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
             conf = XMLSettings.Read();
-
-            ImagesSaveFolder = GetDefaultImagesDir();
 
             InitializeFiles();
 

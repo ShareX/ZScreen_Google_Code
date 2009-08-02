@@ -258,7 +258,7 @@ namespace ZSS
 
         public string NamingActiveWindow = "%t-%y.%mo.%d-%h.%mi.%s";
         public string NamingEntireScreen = "SS-%y.%mo.%d-%h.%mi.%s";
-        public string SaveFolder = "%y-%m";
+        public string SaveFolder = "%y-%mo";
         [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
