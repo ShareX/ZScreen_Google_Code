@@ -150,6 +150,7 @@ namespace ZSS.Helpers
 
         void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
         {
+            FileSystem.AppendDebug("Reading History file...");
             e.Result = HistoryManager.Read();
 
         }

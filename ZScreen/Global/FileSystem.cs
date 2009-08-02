@@ -163,8 +163,9 @@ namespace ZSS
 
         public static void AppendDebug(string msg)
         {
-            Console.WriteLine(msg);
-            mDebug.AppendLine(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + " " + msg);
+            string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + " " + msg;
+            Console.WriteLine(line);
+            mDebug.AppendLine(line);
         }
 
         public static void WriteDebugFile()
