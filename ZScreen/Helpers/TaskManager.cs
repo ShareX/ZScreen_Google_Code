@@ -143,15 +143,15 @@ namespace ZSS.Helpers
             {
                 if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
                 {
-                    mTask.ImageDestCategory = ImageDestType.TINYPIC;
-                    // Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
+                    //mTask.ImageDestCategory = ImageDestType.TINYPIC;
+                    Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
                 {
-                    mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
-                    // Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
+                    //mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
+                    Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
-                // mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION); // We should not change settings without the awareness of the user
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
             }
 
             if (mTask.ImageManager != null)
@@ -162,11 +162,10 @@ namespace ZSS.Helpers
 
         private void SetRemoteFilePath()
         {
-            //Set remote path for Screenshots history
             if (mTask.ImageManager != null)
             {
                 string url = mTask.ImageManager.GetFullImageUrl();
-                
+
                 if (mTask.MakeTinyURL)
                 {
                     url = Adapter.TryShortenURL(url);

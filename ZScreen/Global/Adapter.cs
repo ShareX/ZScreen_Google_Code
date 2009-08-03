@@ -192,8 +192,8 @@ namespace ZSS.Global
         /// <returns></returns>
         public static string TryShortenURL(string url)
         {
-            if (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
-                Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL)
+            if (!string.IsNullOrEmpty(url) && (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
+                Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
             {
                 TextUploader tu = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
                 tu.ProxySettings = Adapter.GetProxySettings();
