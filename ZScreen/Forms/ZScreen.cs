@@ -849,7 +849,13 @@ namespace ZSS
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!mClose)
+            {
+                mClose = e.CloseReason != CloseReason.UserClosing; // if Windows shuts down then close by setting mClose = true
+            }
+
             WriteSettings();
+
             if (!mClose)
             {
                 e.Cancel = true; // cancel the Close
