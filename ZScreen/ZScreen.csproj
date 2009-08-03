@@ -187,7 +187,7 @@
     <Compile Include="Forms\DropWindow.Designer.cs">
       <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global\WatermarkMaker.cs" />
+    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Helpers\ProxyInfo.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />

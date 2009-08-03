@@ -120,4 +120,9 @@ namespace ZSS
         UploadTextFromClipboard,
         UploadTextFromFile
     }
+
+    public enum ImageSizeType
+    {
+        DEFAULT, FIXED, RATIO
+    }
 }
