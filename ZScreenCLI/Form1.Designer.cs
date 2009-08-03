@@ -29,13 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // niTray
             // 
-            this.niTray.Text = "notifyIcon1";
+            this.niTray.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.niTray.Icon = ((System.Drawing.Icon)(resources.GetObject("niTray.Icon")));
+            this.niTray.Text = "Ready";
             this.niTray.Visible = true;
+            this.niTray.BalloonTipClosed += new System.EventHandler(this.niTray_BalloonTipClosed);
+            this.niTray.BalloonTipClicked += new System.EventHandler(this.niTray_BalloonTipClicked);
+            this.niTray.Click += new System.EventHandler(this.niTray_Click);
             // 
             // Form1
             // 

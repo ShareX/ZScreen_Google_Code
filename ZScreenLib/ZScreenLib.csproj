@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,14 +32,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ZScreen\Lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ZScreen\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -46,20 +57,111 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ConfigWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConfigWizard.designer.cs">
+      <DependentUpon>ConfigWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Crop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DekiWikiPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DekiWikiPath.designer.cs">
+      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Adapter.cs" />
+    <Compile Include="Global\ColorMatrices.cs" />
+    <Compile Include="Global\Enums.cs" />
+    <Compile Include="Global\Extensions.cs" />
+    <Compile Include="Global\FileSystem.cs" />
+    <Compile Include="Global\GDI.cs" />
+    <Compile Include="Global\GraphicsCore.cs" />
     <Compile Include="Global\NameParser.cs" />
+    <Compile Include="Global\GraphicsMgr.cs" />
+    <Compile Include="Global\Structures.cs" />
+    <Compile Include="Global\UploadInfo.cs" />
+    <Compile Include="Global\UploadManager.cs" />
+    <Compile Include="Global\User32.cs" />
+    <Compile Include="Global\WatermarkMaker.cs" />
+    <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Helpers\BalloonTipHelper.cs" />
+    <Compile Include="Helpers\ImageSoftware.cs" />
     <Compile Include="Helpers\MainAppTask.cs" />
+    <Compile Include="Helpers\ProxyInfo.cs" />
+    <Compile Include="Helpers\RoundedRectangle.cs" />
+    <Compile Include="Helpers\TaskManager.cs" />
     <Compile Include="Helpers\Worker.cs" />
+    <Compile Include="Helpers\XMLSettings.cs" />
+    <Compile Include="Forms\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
+      <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
+      <Name>ZSS.ColorsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
+      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
+      <Name>ZSS.FTPUploaderLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
+      <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
+      <Name>ZSS.ImageEditorLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj">
       <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
       <Name>ZSS.ImageUploadersLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
+      <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
+      <Name>ZSS.IndexersLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploadersLib.csproj">
       <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
       <Name>ZSS.TextUploadersLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
+      <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
+      <Name>ZSS.UpdateCheckerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\ConfigWizard.resx">
+      <DependentUpon>ConfigWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DekiWikiPath.resx">
+      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zss-green.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zss-main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zss-uploaded.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nav-home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nav-user.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

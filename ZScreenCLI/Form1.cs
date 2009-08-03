@@ -6,8 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ZSS.Helpers;
-using ZSS.Properties;
+using ZScreenLib.Helpers;
+using ZScreenLib.Global;
+using System.Diagnostics;
+using ZSS;
 
 namespace ZScreenCLI
 {
@@ -16,31 +18,66 @@ namespace ZScreenCLI
         public Form1()
         {
             InitializeComponent();
+            // Load ZScreenLib
+            ZScreenLib.Program.Load();
+
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
                 try
                 {
-                    ZSS.Program.SetRootFolder(!string.IsNullOrEmpty(ZSS.Properties.Settings.Default.RootDir) ? ZSS.Properties.Settings.Default.RootDir : ZSS.Program.DefaultRootAppFolder);
-                    ZSS.Program.InitializeDefaultFolderPaths();
-                    ZSS.Program.conf = ZSS.XMLSettings.Read();
-                    WorkerPrimary worker = new ZSS.Helpers.WorkerPrimary(null);
-                    if (args[1] == "crop_shot")
+                    if (args[1].ToLower() == "crop_shot")
                     {
-                        worker.StartBW_CropShot();
+                        // Crop Shot
+                        CropShot(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
                     }
-                    else if (args[1] == "selected_window")
+                    else if (args[1].ToLower() == "selected_window")
                     {
-                        worker.StartBW_SelectedWindow();
+                        // Selected Window
+                        CropShot(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                    }
+                    else if (args[1].ToLower() == "clipboard_upload")
+                    {
+                        // Clipboard Upload
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    Console.Write(ex.ToString());
                 }
             }
         }
 
-        
+        private void CropShot(MainAppTask.Jobs job)
+        {
+            Worker worker = new Worker();
+            // TODO: replace temp by null. Get Worker to check for null before using BackgroundWorker
+            BackgroundWorker temp = new BackgroundWorker();
+            temp.WorkerReportsProgress = true;
+            MainAppTask task = new MainAppTask(temp, job);
+            task.ImageDestCategory = ZScreenLib.Program.conf.ScreenshotDestMode;
+            worker.CaptureRegionOrWindow(ref task);
+            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
+        }
+
+        private void niTray_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void niTray_BalloonTipClosed(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void niTray_BalloonTipClicked(object sender, EventArgs e)
+        {
+            if (ZScreenLib.Program.conf.BalloonTipOpenLink)
+            {
+                NotifyIcon ni = (NotifyIcon)sender;
+                new BalloonTipHelper(ni).ClickBalloonTip();
+            }
+            this.Close();
+        }
     }
 }
