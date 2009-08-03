@@ -163,13 +163,15 @@ namespace ZSS.Helpers
         private void SetRemoteFilePath()
         {
             //Set remote path for Screenshots history
-            string url = mTask.ImageManager.GetFullImageUrl();
-            if (mTask.MakeTinyURL)
-            {
-                url = Adapter.TryShortenURL(url);
-            }
             if (mTask.ImageManager != null)
             {
+                string url = mTask.ImageManager.GetFullImageUrl();
+                
+                if (mTask.MakeTinyURL)
+                {
+                    url = Adapter.TryShortenURL(url);
+                }
+
                 mTask.RemoteFilePath = url;
                 mTask.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
             }
