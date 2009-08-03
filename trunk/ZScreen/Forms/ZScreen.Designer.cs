@@ -85,7 +85,6 @@ namespace ZSS
             this.llblHelp = new System.Windows.Forms.LinkLabel();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -105,14 +104,12 @@ namespace ZSS
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
-            this.ucMindTouchAccounts = new ZSS.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -279,6 +276,16 @@ namespace ZSS
             this.lblActiveWindowPreview = new System.Windows.Forms.Label();
             this.txtActiveWindow = new System.Windows.Forms.TextBox();
             this.tpCaptureQuality = new System.Windows.Forms.TabPage();
+            this.gbImageSize = new System.Windows.Forms.GroupBox();
+            this.rbImageSizeDefault = new System.Windows.Forms.RadioButton();
+            this.lblImageSizeFixedHeight = new System.Windows.Forms.Label();
+            this.rbImageSizeFixed = new System.Windows.Forms.RadioButton();
+            this.lblImageSizeFixedWidth = new System.Windows.Forms.Label();
+            this.txtImageSizeRatio = new System.Windows.Forms.TextBox();
+            this.lblImageSizeRatioPercentage = new System.Windows.Forms.Label();
+            this.txtImageSizeFixedWidth = new System.Windows.Forms.TextBox();
+            this.rbImageSizeRatio = new System.Windows.Forms.RadioButton();
+            this.txtImageSizeFixedHeight = new System.Windows.Forms.TextBox();
             this.gbPictureQuality = new System.Windows.Forms.GroupBox();
             this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
             this.nudImageQuality = new System.Windows.Forms.NumericUpDown();
@@ -353,9 +360,7 @@ namespace ZSS
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpTranslator = new System.Windows.Forms.TabPage();
@@ -422,7 +427,6 @@ namespace ZSS
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.chkProxyEnable = new System.Windows.Forms.CheckBox();
-            this.ucProxyAccounts = new ZSS.UserControls.AccountsControl();
             this.tpInteraction = new System.Windows.Forms.TabPage();
             this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
             this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
@@ -480,6 +484,12 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
+            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucMindTouchAccounts = new ZSS.UserControls.AccountsControl();
+            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
+            this.ucProxyAccounts = new ZSS.UserControls.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -552,6 +562,7 @@ namespace ZSS
             this.gbCodeTitle.SuspendLayout();
             this.gbActiveWindowNaming.SuspendLayout();
             this.tpCaptureQuality.SuspendLayout();
+            this.gbImageSize.SuspendLayout();
             this.gbPictureQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).BeginInit();
@@ -1069,21 +1080,6 @@ namespace ZSS
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
             // 
-            // nudtScreenshotDelay
-            // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Tag = "Test";
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
@@ -1324,16 +1320,6 @@ namespace ZSS
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(785, 320);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
             // gbFTPSettings
             // 
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -1407,16 +1393,6 @@ namespace ZSS
             this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
             this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
             this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
-            // 
-            // ucMindTouchAccounts
-            // 
-            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
-            this.ucMindTouchAccounts.Size = new System.Drawing.Size(785, 320);
-            this.ucMindTouchAccounts.TabIndex = 0;
             // 
             // tpTinyPic
             // 
@@ -3396,14 +3372,123 @@ namespace ZSS
             // 
             // tpCaptureQuality
             // 
+            this.tpCaptureQuality.Controls.Add(this.gbImageSize);
             this.tpCaptureQuality.Controls.Add(this.gbPictureQuality);
             this.tpCaptureQuality.Location = new System.Drawing.Point(4, 23);
             this.tpCaptureQuality.Name = "tpCaptureQuality";
             this.tpCaptureQuality.Padding = new System.Windows.Forms.Padding(3);
             this.tpCaptureQuality.Size = new System.Drawing.Size(791, 409);
             this.tpCaptureQuality.TabIndex = 0;
-            this.tpCaptureQuality.Text = "Quality";
+            this.tpCaptureQuality.Text = "Image Settings";
             this.tpCaptureQuality.UseVisualStyleBackColor = true;
+            // 
+            // gbImageSize
+            // 
+            this.gbImageSize.Controls.Add(this.rbImageSizeDefault);
+            this.gbImageSize.Controls.Add(this.lblImageSizeFixedHeight);
+            this.gbImageSize.Controls.Add(this.rbImageSizeFixed);
+            this.gbImageSize.Controls.Add(this.lblImageSizeFixedWidth);
+            this.gbImageSize.Controls.Add(this.txtImageSizeRatio);
+            this.gbImageSize.Controls.Add(this.lblImageSizeRatioPercentage);
+            this.gbImageSize.Controls.Add(this.txtImageSizeFixedWidth);
+            this.gbImageSize.Controls.Add(this.rbImageSizeRatio);
+            this.gbImageSize.Controls.Add(this.txtImageSizeFixedHeight);
+            this.gbImageSize.Location = new System.Drawing.Point(8, 152);
+            this.gbImageSize.Name = "gbImageSize";
+            this.gbImageSize.Size = new System.Drawing.Size(768, 128);
+            this.gbImageSize.TabIndex = 124;
+            this.gbImageSize.TabStop = false;
+            this.gbImageSize.Text = "Image Size";
+            // 
+            // rbImageSizeDefault
+            // 
+            this.rbImageSizeDefault.AutoSize = true;
+            this.rbImageSizeDefault.Location = new System.Drawing.Point(16, 24);
+            this.rbImageSizeDefault.Name = "rbImageSizeDefault";
+            this.rbImageSizeDefault.Size = new System.Drawing.Size(110, 17);
+            this.rbImageSizeDefault.TabIndex = 127;
+            this.rbImageSizeDefault.TabStop = true;
+            this.rbImageSizeDefault.Text = "Image size default";
+            this.rbImageSizeDefault.UseVisualStyleBackColor = true;
+            this.rbImageSizeDefault.CheckedChanged += new System.EventHandler(this.rbImageSize_CheckedChanged);
+            // 
+            // lblImageSizeFixedHeight
+            // 
+            this.lblImageSizeFixedHeight.AutoSize = true;
+            this.lblImageSizeFixedHeight.Location = new System.Drawing.Point(232, 59);
+            this.lblImageSizeFixedHeight.Name = "lblImageSizeFixedHeight";
+            this.lblImageSizeFixedHeight.Size = new System.Drawing.Size(61, 13);
+            this.lblImageSizeFixedHeight.TabIndex = 126;
+            this.lblImageSizeFixedHeight.Text = "Height (px):";
+            // 
+            // rbImageSizeFixed
+            // 
+            this.rbImageSizeFixed.AutoSize = true;
+            this.rbImageSizeFixed.Location = new System.Drawing.Point(16, 56);
+            this.rbImageSizeFixed.Name = "rbImageSizeFixed";
+            this.rbImageSizeFixed.Size = new System.Drawing.Size(103, 17);
+            this.rbImageSizeFixed.TabIndex = 123;
+            this.rbImageSizeFixed.TabStop = true;
+            this.rbImageSizeFixed.Text = "Image size fixed:";
+            this.rbImageSizeFixed.UseVisualStyleBackColor = true;
+            this.rbImageSizeFixed.CheckedChanged += new System.EventHandler(this.rbImageSize_CheckedChanged);
+            // 
+            // lblImageSizeFixedWidth
+            // 
+            this.lblImageSizeFixedWidth.AutoSize = true;
+            this.lblImageSizeFixedWidth.Location = new System.Drawing.Point(120, 59);
+            this.lblImageSizeFixedWidth.Name = "lblImageSizeFixedWidth";
+            this.lblImageSizeFixedWidth.Size = new System.Drawing.Size(58, 13);
+            this.lblImageSizeFixedWidth.TabIndex = 125;
+            this.lblImageSizeFixedWidth.Text = "Width (px):";
+            // 
+            // txtImageSizeRatio
+            // 
+            this.txtImageSizeRatio.Location = new System.Drawing.Point(120, 87);
+            this.txtImageSizeRatio.Name = "txtImageSizeRatio";
+            this.txtImageSizeRatio.Size = new System.Drawing.Size(32, 20);
+            this.txtImageSizeRatio.TabIndex = 116;
+            this.txtImageSizeRatio.Text = "100";
+            this.txtImageSizeRatio.TextChanged += new System.EventHandler(this.txtImageSizeRatio_TextChanged);
+            // 
+            // lblImageSizeRatioPercentage
+            // 
+            this.lblImageSizeRatioPercentage.AutoSize = true;
+            this.lblImageSizeRatioPercentage.Location = new System.Drawing.Point(159, 91);
+            this.lblImageSizeRatioPercentage.Name = "lblImageSizeRatioPercentage";
+            this.lblImageSizeRatioPercentage.Size = new System.Drawing.Size(15, 13);
+            this.lblImageSizeRatioPercentage.TabIndex = 118;
+            this.lblImageSizeRatioPercentage.Text = "%";
+            // 
+            // txtImageSizeFixedWidth
+            // 
+            this.txtImageSizeFixedWidth.Location = new System.Drawing.Point(184, 56);
+            this.txtImageSizeFixedWidth.Name = "txtImageSizeFixedWidth";
+            this.txtImageSizeFixedWidth.Size = new System.Drawing.Size(40, 20);
+            this.txtImageSizeFixedWidth.TabIndex = 119;
+            this.txtImageSizeFixedWidth.Text = "2500";
+            this.txtImageSizeFixedWidth.TextChanged += new System.EventHandler(this.txtImageSizeFixedWidth_TextChanged);
+            // 
+            // rbImageSizeRatio
+            // 
+            this.rbImageSizeRatio.AutoSize = true;
+            this.rbImageSizeRatio.Location = new System.Drawing.Point(16, 88);
+            this.rbImageSizeRatio.Name = "rbImageSizeRatio";
+            this.rbImageSizeRatio.Size = new System.Drawing.Size(101, 17);
+            this.rbImageSizeRatio.TabIndex = 122;
+            this.rbImageSizeRatio.TabStop = true;
+            this.rbImageSizeRatio.Text = "Image size ratio:";
+            this.rbImageSizeRatio.UseVisualStyleBackColor = true;
+            this.rbImageSizeRatio.CheckedChanged += new System.EventHandler(this.rbImageSize_CheckedChanged);
+            // 
+            // txtImageSizeFixedHeight
+            // 
+            this.txtImageSizeFixedHeight.Location = new System.Drawing.Point(296, 56);
+            this.txtImageSizeFixedHeight.Name = "txtImageSizeFixedHeight";
+            this.txtImageSizeFixedHeight.Size = new System.Drawing.Size(40, 20);
+            this.txtImageSizeFixedHeight.TabIndex = 120;
+            this.txtImageSizeFixedHeight.Text = "2500";
+            this.txtImageSizeFixedHeight.TextChanged += new System.EventHandler(this.txtImageSizeFixedHeight_TextChanged);
             // 
             // gbPictureQuality
             // 
@@ -3420,7 +3505,7 @@ namespace ZSS
             this.gbPictureQuality.Controls.Add(this.lblSwitchTo);
             this.gbPictureQuality.Location = new System.Drawing.Point(8, 8);
             this.gbPictureQuality.Name = "gbPictureQuality";
-            this.gbPictureQuality.Size = new System.Drawing.Size(752, 136);
+            this.gbPictureQuality.Size = new System.Drawing.Size(768, 136);
             this.gbPictureQuality.TabIndex = 115;
             this.gbPictureQuality.TabStop = false;
             this.gbPictureQuality.Text = "Picture Quality";
@@ -4217,14 +4302,6 @@ namespace ZSS
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(785, 404);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4235,14 +4312,6 @@ namespace ZSS
             this.tpURLShorteners.TabIndex = 13;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(785, 404);
-            this.ucUrlShorteners.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -5030,16 +5099,6 @@ namespace ZSS
             this.chkProxyEnable.UseVisualStyleBackColor = false;
             this.chkProxyEnable.CheckedChanged += new System.EventHandler(this.chkProxyEnable_CheckedChanged);
             // 
-            // ucProxyAccounts
-            // 
-            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(785, 320);
-            this.ucProxyAccounts.TabIndex = 0;
-            // 
             // tpInteraction
             // 
             this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
@@ -5708,6 +5767,67 @@ namespace ZSS
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Tag = "Test";
+            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(785, 320);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // ucMindTouchAccounts
+            // 
+            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(785, 320);
+            this.ucMindTouchAccounts.TabIndex = 0;
+            // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(785, 404);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
+            // ucUrlShorteners
+            // 
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(785, 404);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
+            // ucProxyAccounts
+            // 
+            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucProxyAccounts.Name = "ucProxyAccounts";
+            this.ucProxyAccounts.Size = new System.Drawing.Size(785, 320);
+            this.ucProxyAccounts.TabIndex = 0;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5827,6 +5947,8 @@ namespace ZSS
             this.gbActiveWindowNaming.ResumeLayout(false);
             this.gbActiveWindowNaming.PerformLayout();
             this.tpCaptureQuality.ResumeLayout(false);
+            this.gbImageSize.ResumeLayout(false);
+            this.gbImageSize.PerformLayout();
             this.gbPictureQuality.ResumeLayout(false);
             this.gbPictureQuality.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
@@ -6358,6 +6480,16 @@ namespace ZSS
         private System.Windows.Forms.Label lblImagesFolderPattern;
         private System.Windows.Forms.Button btnMoveImageFiles;
         private System.Windows.Forms.CheckBox cbCheckUpdatesBeta;
+        private System.Windows.Forms.RadioButton rbImageSizeFixed;
+        private System.Windows.Forms.RadioButton rbImageSizeRatio;
+        private System.Windows.Forms.TextBox txtImageSizeFixedHeight;
+        private System.Windows.Forms.TextBox txtImageSizeFixedWidth;
+        private System.Windows.Forms.Label lblImageSizeRatioPercentage;
+        private System.Windows.Forms.TextBox txtImageSizeRatio;
+        private System.Windows.Forms.GroupBox gbImageSize;
+        private System.Windows.Forms.RadioButton rbImageSizeDefault;
+        private System.Windows.Forms.Label lblImageSizeFixedHeight;
+        private System.Windows.Forms.Label lblImageSizeFixedWidth;
 
     }
 }

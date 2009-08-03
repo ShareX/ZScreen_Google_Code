@@ -262,12 +262,17 @@ namespace ZSS
         [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
-        // Quality
+        // Image Settings
 
         public int FileFormat = 0;
         public decimal ImageQuality = 90;
         public decimal SwitchAfter = 512;
         public int SwitchFormat = 1;
+
+        public ImageSizeType ImageSizeType = ImageSizeType.DEFAULT;
+        public int ImageSizeFixedWidth = 500;
+        public int ImageSizeFixedHeight = 500;
+        public float ImageSizeRatioPercentage = 50.0f;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Watermark

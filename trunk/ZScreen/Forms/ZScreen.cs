@@ -441,7 +441,8 @@ namespace ZSS
 
             TestWatermark();
 
-            // Quality
+            // Image Settings
+
             if (cbFileFormat.Items.Count == 0) cbFileFormat.Items.AddRange(Program.zImageFileTypes);
             cbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudImageQuality.Value = Program.conf.ImageQuality;
@@ -449,6 +450,22 @@ namespace ZSS
             if (cbSwitchFormat.Items.Count == 0) cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
             cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
 
+            switch(Program.conf.ImageSizeType)
+            {
+                case ImageSizeType.DEFAULT:
+                    rbImageSizeDefault.Checked = true;
+                    break;
+                case ImageSizeType.FIXED:
+                    rbImageSizeFixed.Checked = true;
+                    break;
+                case ImageSizeType.RATIO:
+                    rbImageSizeRatio.Checked = true;
+                    break;
+            }
+            txtImageSizeFixedWidth.Text = Program.conf.ImageSizeFixedWidth.ToString();
+            txtImageSizeFixedHeight.Text = Program.conf.ImageSizeFixedHeight.ToString();
+            txtImageSizeRatio.Text = Program.conf.ImageSizeRatioPercentage.ToString();
+          
             #endregion
 
             #region Text Uploaders & URL Shorteners
@@ -2366,7 +2383,7 @@ namespace ZSS
                 Graphics g = Graphics.FromImage(bmp2);
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.DrawImage(bmp, new Rectangle(0, 0, pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height));
-                pbWatermarkShow.Image = WatermarkMaker.GetImage(bmp2);
+                pbWatermarkShow.Image = ImageEffects.ApplyWatermark(bmp2);
             }
         }
 
@@ -3805,6 +3822,49 @@ namespace ZSS
         private void cbCheckUpdatesBeta_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CheckUpdatesBeta = cbCheckUpdatesBeta.Checked;
+        }
+
+        private void rbImageSize_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbImageSizeDefault.Checked)
+            {
+                Program.conf.ImageSizeType = ImageSizeType.DEFAULT;
+            }
+            else if (rbImageSizeFixed.Checked)
+            {
+                Program.conf.ImageSizeType = ImageSizeType.FIXED;
+            }
+            else if (rbImageSizeRatio.Checked)
+            {
+                Program.conf.ImageSizeType = ImageSizeType.RATIO;
+            }
+        }
+
+        private void txtImageSizeFixedWidth_TextChanged(object sender, EventArgs e)
+        {
+            int width;
+            if (int.TryParse(txtImageSizeFixedWidth.Text, out width))
+            {
+                Program.conf.ImageSizeFixedWidth = width;
+            }
+        }
+
+        private void txtImageSizeFixedHeight_TextChanged(object sender, EventArgs e)
+        {
+            int height;
+            if (int.TryParse(txtImageSizeFixedHeight.Text, out height))
+            {
+                Program.conf.ImageSizeFixedHeight = height;
+            }
+        }
+
+        private void txtImageSizeRatio_TextChanged(object sender, EventArgs e)
+        {
+            float percentage;
+            if (float.TryParse(txtImageSizeRatio.Text, out percentage))
+            {
+                Program.conf.ImageSizeRatioPercentage = percentage;
+            }
         }
     }
 }

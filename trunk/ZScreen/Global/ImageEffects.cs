@@ -31,16 +31,16 @@ using System.Drawing.Text;
 
 namespace ZSS
 {
-    public static class WatermarkMaker
+    public static class ImageEffects
     {
         /// <summary>Get Image with Watermark</summary>
-        public static Image GetImage(Image img)
+        public static Image ApplyWatermark(Image img)
         {
-            return GetImage(img, Program.conf.WatermarkMode);
+            return ApplyWatermark(img, Program.conf.WatermarkMode);
         }
 
         /// <summary>Get Image with Watermark</summary>
-        public static Image GetImage(Image img, WatermarkType watermarkType)
+        public static Image ApplyWatermark(Image img, WatermarkType watermarkType)
         {
             switch (watermarkType)
             {
@@ -54,7 +54,7 @@ namespace ZSS
             }
         }
 
-        public static Image DrawWatermark(Image img, string drawText)
+        private static Image DrawWatermark(Image img, string drawText)
         {
             if (!string.IsNullOrEmpty(drawText))
             {
@@ -105,7 +105,7 @@ namespace ZSS
             return img;
         }
 
-        public static Image DrawImageWatermark(Image img, string imgPath)
+        private static Image DrawImageWatermark(Image img, string imgPath)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace ZSS
                 {
                     int offset = (int)Program.conf.WatermarkOffset;
                     Image img2 = Image.FromFile(imgPath);
-                    img2 = ImageChangeSize((Bitmap)img2);
+                    img2 = GraphicsMgr.ChangeImageSize((Bitmap)img2, (float)Program.conf.WatermarkImageScale);
                     Point imgPos = FindPosition(Program.conf.WatermarkPositionMode, offset, img.Size, img2.Size, 0);
                     if (Program.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) ||
                         (img.Height < img2.Height + offset)))
@@ -147,11 +147,11 @@ namespace ZSS
         {
             if (Program.conf.BevelEffect)
             {
-                img = GraphicsMgr.BevelImage(img, Program.conf.BevelEffectOffset);
+                img = BevelImage(img, Program.conf.BevelEffectOffset);
             }
             if (Program.conf.DrawReflection)
             {
-                img = WatermarkMaker.DrawReflection(img);
+                img = DrawReflection(img);
             }
             return img;
         }
@@ -212,17 +212,6 @@ namespace ZSS
             return b;
         }
 
-        private static Bitmap ImageChangeSize(Bitmap img)
-        {
-            Bitmap bmp = new Bitmap((int)((float)img.Width / 100 * (float)Program.conf.WatermarkImageScale),
-                (int)((float)img.Height / 100 * (float)Program.conf.WatermarkImageScale));
-            Graphics g = Graphics.FromImage(bmp);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
-            return bmp;
-        }
-
         private static Point FindPosition(WatermarkPositionType positionType, int offset, Size img, Size img2, int add)
         {
             Point position;
@@ -260,6 +249,88 @@ namespace ZSS
                     break;
             }
             return position;
+        }
+
+        private static Image BevelImage(Image image, int offset)
+        {
+            Image defaultImage = (Image)image.Clone();
+
+            Point[] topPoints = {
+                                    new Point(0, 0), //Top left
+                                    new Point(image.Width, 0), //Top right
+                                    new Point(image.Width - offset, offset), //Bottom right
+                                    new Point(offset, offset) //Bottom left
+                                };
+            Point[] leftPoints = {
+                                     new Point(0, 0), //Top left
+                                     new Point(offset, offset), //Top right
+                                     new Point(offset, image.Height - offset), //Bottom right
+                                     new Point(0, image.Height) //Bottom left
+                                 };
+            Point[] bottomPoints = {
+                                       new Point(offset, image.Height - offset), //Top left
+                                       new Point(image.Width - offset, image.Height - offset), //Top right
+                                       new Point(image.Width, image.Height), //Bottom right
+                                       new Point(0, image.Height) //Bottom left
+                                   };
+            Point[] rightPoints = {
+                                      new Point(image.Width - offset, offset), //Top left
+                                      new Point(image.Width, 0), //Top right
+                                      new Point(image.Width, image.Height), //Bottom right
+                                      new Point(image.Width - offset, image.Height - offset) //Bottom left
+                                  };
+
+            PrepareBevel(defaultImage, topPoints, 25);
+            PrepareBevel(defaultImage, leftPoints, 50);
+            PrepareBevel(defaultImage, bottomPoints, -25);
+            PrepareBevel(defaultImage, rightPoints, -50);
+
+            return defaultImage;
+        }
+
+        private static Image PrepareBevel(Image image, Point[] points, int filterValue)
+        {
+            Bitmap bmp = new Bitmap(image.Width, image.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            GraphicsPath gp = new GraphicsPath();
+            gp.AddPolygon(points);
+            g.Clear(Color.Transparent);
+            g.SetClip(gp);
+            g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
+            g.Dispose();
+            ColorMatrix cm;
+            switch (Program.conf.BevelFilterType)
+            {
+                default:
+                case FilterType.Brightness:
+                    cm = ColorMatrices.BrightnessFilter(filterValue);
+                    break;
+                case FilterType.Contrast:
+                    cm = ColorMatrices.ContrastFilter(filterValue);
+                    break;
+                case FilterType.Saturation:
+                    cm = ColorMatrices.SaturationFilter(filterValue);
+                    break;
+            }
+            bmp = ColorMatrices.ApplyColorMatrix(bmp, cm);
+            Graphics g2 = Graphics.FromImage(image);
+            g2.DrawImage(bmp, new Rectangle(0, 0, image.Width, image.Height));
+            g2.Dispose();
+            return image;
+        }
+
+        public static Image ApplySizeChanges(Image img)
+        {
+            switch (Program.conf.ImageSizeType)
+            {
+                case ImageSizeType.FIXED:
+                    img = GraphicsMgr.ChangeImageSize(img, Program.conf.ImageSizeFixedWidth, Program.conf.ImageSizeFixedHeight);
+                    break;
+                case ImageSizeType.RATIO:
+                    img = GraphicsMgr.ChangeImageSize(img, Program.conf.ImageSizeRatioPercentage);
+                    break;
+            }
+            return img;
         }
     }
 }

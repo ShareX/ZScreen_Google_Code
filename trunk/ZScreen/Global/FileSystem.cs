@@ -88,8 +88,9 @@ namespace ZSS
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                img = WatermarkMaker.ApplyScreenshotEffects(img);
-                img = WatermarkMaker.GetImage(img);
+                img = ImageEffects.ApplySizeChanges(img);
+                img = ImageEffects.ApplyScreenshotEffects(img);
+                img = ImageEffects.ApplyWatermark(img);
 
                 long size = (long)Program.conf.SwitchAfter * 1024;
 
