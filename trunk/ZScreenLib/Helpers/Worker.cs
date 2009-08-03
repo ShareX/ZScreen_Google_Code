@@ -3,11 +3,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZScreenLib.Global;
+using System.Drawing;
+using System.Windows.Forms;
+using ZScreenLib.Forms;
 
 namespace ZScreenLib.Helpers
 {
    public class Worker
     {
+
+       internal bool mSetHotkeys, mTakingScreenShot, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
+
+       public string CaptureRegionOrWindow(ref MainAppTask task)
+       {
+           mTakingScreenShot = true;
+           string filePath = "";
+
+           try
+           {
+               using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
+               {
+                   if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
+                   {
+                       task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                   }
+                   else
+                   {
+                       using (Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
+                       {
+                           if (c.ShowDialog() == DialogResult.OK)
+                           {
+                               if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                               {
+                                   task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                               }
+                               else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                               {
+                                   task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
+                               }
+                           }
+                       }
+                   }
+               }
+
+               mTakingScreenShot = false;
+
+               if (task.MyImage != null)
+               {
+                   WriteImage(task);
+                   PublishImage(ref task);
+               }
+           }
+           catch (Exception ex)
+           {
+               FileSystem.AppendDebug(ex.ToString());
+               task.Errors.Add(ex.Message);
+               if (Program.conf.CaptureEntireScreenOnError)
+               {
+                   CaptureScreen(ref task);
+               }
+           }
+           finally
+           {
+               task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_CROP_MODE);
+               mTakingScreenShot = false;
+           }
+
+           return filePath;
+       }
+
        /// <summary>
        /// Method to Capture Screen
        /// </summary>
