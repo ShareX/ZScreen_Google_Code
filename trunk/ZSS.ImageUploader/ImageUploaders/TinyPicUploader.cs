@@ -232,7 +232,7 @@ namespace ZSS.ImageUploadersLib
             {
                 string result = GetXMLValue(response, "shuk");
 
-                return HttpUtility.UrlEncode(result);
+                return HttpUtility.HtmlEncode(result);
             }
 
             return "";
