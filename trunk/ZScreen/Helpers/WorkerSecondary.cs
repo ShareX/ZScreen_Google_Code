@@ -130,7 +130,7 @@ namespace ZSS.Helpers
             bwHistoryReader.RunWorkerAsync();
         }
 
-        void bwHistoryReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bwHistoryReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             HistoryManager history = (HistoryManager)e.Result;
 
@@ -140,13 +140,14 @@ namespace ZSS.Helpers
             {
                 mZScreen.lbHistory.Items.Add(history.HistoryItems[i]);
             }
+
             if (mZScreen.lbHistory.Items.Count > 0)
             {
                 mZScreen.lbHistory.SelectedIndex = 0;
             }
         }
 
-        void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
+        private void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
         {
             FileSystem.AppendDebug("Reading History file...");
             e.Result = HistoryManager.Read();

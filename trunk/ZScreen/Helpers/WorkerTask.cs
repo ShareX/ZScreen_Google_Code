@@ -79,7 +79,8 @@ namespace ZSS.Tasks
             UPDATE_TRAY_TITLE,
             UPDATE_CROP_MODE,
             UPDATE_UPLOAD_DESTINATION,
-            CHANGE_TRAY_ICON_PROGRESS
+            CHANGE_TRAY_ICON_PROGRESS,
+            SHOW_TRAY_MESSAGE
         }
 
         #endregion

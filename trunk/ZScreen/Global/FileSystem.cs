@@ -169,7 +169,7 @@ namespace ZSS
 
         public static void AppendDebug(string msg)
         {
-            string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + " " + msg;
+            string line = DateTime.Now.ToString("yyyy.MM.dd - HH:mm:ss - ") + msg;
             Console.WriteLine(line);
             mDebug.AppendLine(line);
         }
@@ -396,17 +396,13 @@ namespace ZSS
 
         public static void BackupFTPSettings()
         {
-            if (Program.conf.FTPAccountList != null)
+            if (Adapter.CheckFTPAccounts())
             {
-                if (Program.conf.FTPAccountList.Count > 0)
+                string fp = Path.Combine(Program.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
+                if (!File.Exists(fp))
                 {
-
-                    string fp = Path.Combine(Program.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
-                    if (!File.Exists(fp))
-                    {
-                        FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
-                        fam.Save(fp);
-                    }
+                    FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
+                    fam.Save(fp);
                 }
             }
         }
