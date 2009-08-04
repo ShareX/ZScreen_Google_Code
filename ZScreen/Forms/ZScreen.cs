@@ -36,21 +36,17 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using ZSS;
 using ZSS.ColorsLib;
-using ZSS.Forms;
 using ZSS.FTPClientLib;
-using ZSS.Global;
-using ZSS.Helpers;
 using ZSS.ImageUploadersLib;
 using ZSS.ImageUploadersLib.Helpers;
-using ZSS.Properties;
-using ZSS.Tasks;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
-using ZSS.UpdateCheckerLib;
+using ZSS.Properties;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public partial class ZScreen : Form
     {
@@ -882,7 +878,6 @@ namespace ZSS
 
             Program.conf.Save();
             Program.Worker.SaveHistoryItems();
-            Settings.Default.Save();
 
             FileSystem.AppendDebug("Settings written to file.");
         }
@@ -3206,7 +3201,7 @@ namespace ZSS
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Program.SetRootFolder(dlg.SelectedPath);
-                txtRootFolder.Text = Settings.Default.RootDir;
+                txtRootFolder.Text = Program.appSettings.RootDir;
             }
             FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
             UpdateGuiControlsPaths();
@@ -3259,7 +3254,7 @@ namespace ZSS
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
 
-            Bitmap bmp = new Bitmap(Properties.Resources.main);
+            Bitmap bmp = new Bitmap(ZSS.Properties.Resources.main);
             Random rand = new Random();
 
             if (mLogoRandomList.Count == 0)

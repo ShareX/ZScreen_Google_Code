@@ -27,24 +27,19 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Greenshot.Helpers;
-using ZSS.ColorsLib;
-using ZSS.Forms;
-using ZSS.Global;
-using ZSS.Properties;
-using ZSS.Tasks;
-using ZSS.TextUploadersLib;
-using ZSS.IndexersLib;
-using ZSS.TextUploadersLib.Helpers;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using ZSS;
+using ZSS.ColorsLib;
+using ZSS.IndexersLib;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.Helpers;
+using ZSS.Properties;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     public class WorkerPrimary
     {

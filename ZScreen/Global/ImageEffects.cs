@@ -28,8 +28,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using ZSS;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public static class ImageEffects
     {

@@ -21,21 +21,16 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
-using ZSS.Global;
-using ZSS.Tasks;
 using ZSS.ImageUploadersLib.Helpers;
+using ZSS;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
 
-namespace ZSS
+namespace ZScreenLib
 {
     /// <summary>
     /// Class reponsible for Adding or Retrieving Clipboard Text and Setting Text to Clipboard

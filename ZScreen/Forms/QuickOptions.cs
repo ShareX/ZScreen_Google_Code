@@ -23,8 +23,9 @@
 
 using System;
 using System.Windows.Forms;
+using ZSS;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
     public partial class QuickOptions : Form
     {

@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     [Serializable]
     public class HotkeyInfo

@@ -32,14 +32,13 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
-using ZSS.Helpers;
 using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
-using ZSS.Properties;
 using ZSS.TextUploadersLib;
-using ZSS.UpdateCheckerLib;
+using ZSS;
+using ZSS.Properties;
 
-namespace ZSS
+namespace ZScreenLib
 {
     [XmlRoot("Settings")]
     public class XMLSettings
@@ -620,7 +619,7 @@ namespace ZSS
                     FileSystem.AppendDebug(ex.ToString());
                     OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
                     dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                    dlg.InitialDirectory = Settings.Default.RootDir;
+                    dlg.InitialDirectory = Program.appSettings.RootDir;
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         return XMLSettings.Read(dlg.FileName);

@@ -23,22 +23,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.URLShorteners;
-using ZSS.ImageUploadersLib;
 using System.IO;
-using System.Threading;
-using System.Windows.Forms;
-using ZSS.Helpers;
 using System.Net;
-using ZSS.Tasks;
-using ZSS.TextUploadersLib.Helpers;
+using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using ZSS;
+using ZSS.ImageUploadersLib;
+using ZSS.TextUploadersLib;
+using ZSS.TextUploadersLib.Helpers;
+using ZSS.TextUploadersLib.URLShorteners;
 
-namespace ZSS.Global
+namespace ZScreenLib
 {
     /// <summary>
     /// Class for public static methods for use in ZScreen
@@ -252,7 +248,7 @@ namespace ZSS.Global
                 case SniptUploader.Hostname:
                     return new SniptUploader();
                 default:
-                    if (name == TextUploadersLib.FTPUploader.Hostname)
+                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
                     {
                         if (Program.conf.FTPAccountList.Count > 0)
                         {
@@ -312,7 +308,7 @@ namespace ZSS.Global
             List<Form> forms = new List<Form>();
             foreach (Form f in Application.OpenForms)
             {
-                if (f.GetType() == typeof(ZSS.Forms.ToolbarWindow) || f.GetType() == typeof(ZScreen))
+                if (f.GetType() == typeof(ToolbarWindow) || f.GetType() == typeof(ZScreen))
                 {
                     forms.Add(f);
                 }

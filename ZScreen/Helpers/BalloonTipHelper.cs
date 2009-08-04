@@ -21,14 +21,11 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using ZSS.Tasks;
 using System.Windows.Forms;
+using ZSS;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     public class BalloonTipHelper
     {

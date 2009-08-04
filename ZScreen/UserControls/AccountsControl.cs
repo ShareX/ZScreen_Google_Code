@@ -30,7 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ZSS.UserControls
+namespace ZScreenLib.UserControls
 {
     public partial class AccountsControl : UserControl
     {

@@ -22,19 +22,14 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
-using ZSS.Global;
-using ZSS.TextUploadersLib;
 using System.Windows.Forms;
-using ZSS.UpdateCheckerLib;
 using ZSS.Properties;
-using ZSS.Tasks;
-using System.Net;
+using ZSS.TextUploadersLib;
+using ZSS.UpdateCheckerLib;
+using ZSS;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     /// <summary>
     /// Class responsible for all other tasks except for Image Uploading

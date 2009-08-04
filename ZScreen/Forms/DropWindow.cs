@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
     /// <summary>
     /// Drop Window for Drag 'n' Drop

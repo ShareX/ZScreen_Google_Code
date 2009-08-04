@@ -25,8 +25,9 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using ZSS;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
     public partial class ConfigWizard : Form
     {

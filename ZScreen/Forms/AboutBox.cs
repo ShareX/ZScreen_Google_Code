@@ -29,7 +29,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
     partial class AboutBox : Form
     {
@@ -40,8 +40,8 @@ namespace ZSS.Forms
         public AboutBox()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.zss_main;
-            Bitmap bmp = Properties.Resources.main;
+            this.Icon = ZSS.Properties.Resources.zss_main;
+            Bitmap bmp = ZSS.Properties.Resources.main;
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-250));
             pbLogo.Image = bmp;
@@ -85,7 +85,7 @@ namespace ZSS.Forms
 
             saturation += step;
 
-            Bitmap bmp = Properties.Resources.main;
+            Bitmap bmp = ZSS.Properties.Resources.main;
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-saturation * multiply));
             pbLogo.Image = bmp;

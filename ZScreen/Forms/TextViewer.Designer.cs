@@ -1,4 +1,4 @@
-﻿namespace ZSS
+﻿namespace ZScreenLib
 {
     partial class frmTextViewer
     {

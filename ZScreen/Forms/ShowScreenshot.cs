@@ -25,7 +25,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
     public partial class ShowScreenshot : Form
     {

@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using ZSS.ImageUploadersLib;
 
-namespace ZSS.Tasks
+namespace ZScreenLib
 {
     /// <summary>
     /// This class is responsible to keep be cache size at its limit

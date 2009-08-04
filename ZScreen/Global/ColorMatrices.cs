@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public static class ColorMatrices
     {

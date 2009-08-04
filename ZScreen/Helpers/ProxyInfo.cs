@@ -28,7 +28,7 @@ using System.Text;
 using System.Net;
 using System.ComponentModel;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     [Serializable]
     public class ProxyInfo

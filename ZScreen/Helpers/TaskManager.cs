@@ -27,15 +27,13 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using ZSS.Global;
-using ZSS.ImageUploadersLib;
-using ZSS.Properties;
-using ZSS.Tasks;
-using ZSS.TextUploadersLib;
-using System.ComponentModel;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using ZSS;
+using ZSS.ImageUploadersLib;
+using ZSS.TextUploadersLib;
+using ZSS.Properties;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     public class TaskManager
     {
@@ -247,7 +245,7 @@ namespace ZSS.Helpers
 
                     if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Program.conf.DekiWikiForcePath == true)
                     {
-                        ZSS.Forms.DekiWikiPath diag = new ZSS.Forms.DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
+                        DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                         diag.history = acc.History;
                         diag.ShowDialog();
 

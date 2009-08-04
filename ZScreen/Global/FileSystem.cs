@@ -26,15 +26,14 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using ZSS.Forms;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
-using ZSS.Global;
+using ZSS;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public static class FileSystem
     {
@@ -274,7 +273,7 @@ namespace ZSS
                 {
                     Title = "Specify a Screenshot Name...",
                     InputText = fName,
-                    Icon = Properties.Resources.zss_main
+                    Icon = ZSS.Properties.Resources.zss_main
                 };
                 ib.ShowDialog();
                 if (ib.DialogResult == DialogResult.OK)

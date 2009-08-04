@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public class KeyboardHook : IDisposable
     {

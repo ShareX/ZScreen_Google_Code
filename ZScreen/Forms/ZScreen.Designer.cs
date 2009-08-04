@@ -1,4 +1,4 @@
-namespace ZSS
+namespace ZScreenLib
 {
     partial class ZScreen
     {
@@ -484,12 +484,12 @@ namespace ZSS
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.nudtScreenshotDelay = new ZSS.NumericUpDownTimer();
-            this.ucFTPAccounts = new ZSS.UserControls.AccountsControl();
-            this.ucMindTouchAccounts = new ZSS.UserControls.AccountsControl();
-            this.ucTextUploaders = new ZSS.UserControls.TextUploadersControl();
-            this.ucUrlShorteners = new ZSS.UserControls.TextUploadersControl();
-            this.ucProxyAccounts = new ZSS.UserControls.AccountsControl();
+            this.nudtScreenshotDelay = new NumericUpDownTimer();
+            this.ucFTPAccounts = new UserControls.AccountsControl();
+            this.ucMindTouchAccounts = new UserControls.AccountsControl();
+            this.ucTextUploaders = new UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new UserControls.TextUploadersControl();
+            this.ucProxyAccounts = new UserControls.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -5775,7 +5775,7 @@ namespace ZSS
             this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
             this.nudtScreenshotDelay.TabIndex = 121;
             this.nudtScreenshotDelay.Tag = "Test";
-            this.nudtScreenshotDelay.Time = ZSS.Times.Milliseconds;
+            this.nudtScreenshotDelay.Time = Times.Milliseconds;
             this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
             this.nudtScreenshotDelay.Value = ((long)(0));
             this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
@@ -6423,17 +6423,17 @@ namespace ZSS
         internal System.Windows.Forms.TextBox txtAutoTranslate;
         internal System.Windows.Forms.CheckBox cbAutoTranslate;
         internal System.Windows.Forms.TabPage tpURLShorteners;
-        internal ZSS.UserControls.TextUploadersControl ucUrlShorteners;
+        internal UserControls.TextUploadersControl ucUrlShorteners;
         internal System.Windows.Forms.TabPage tpTextUploaders;
-        internal ZSS.UserControls.TextUploadersControl ucTextUploaders;
+        internal UserControls.TextUploadersControl ucTextUploaders;
         internal System.Windows.Forms.ToolTip ttZScreen;
         internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.TabPage tpMindTouch;
-        internal ZSS.UserControls.AccountsControl ucMindTouchAccounts;
+        internal UserControls.AccountsControl ucMindTouchAccounts;
         internal System.Windows.Forms.GroupBox gbImageEditorSettings;
         internal System.Windows.Forms.CheckBox chkImageEditorAutoSave;
         internal System.Windows.Forms.TabPage tpFTP;
-        internal ZSS.UserControls.AccountsControl ucFTPAccounts;
+        internal UserControls.AccountsControl ucFTPAccounts;
         internal System.Windows.Forms.CheckBox chkPublicImageShack;
         internal System.Windows.Forms.Button btnImageShackProfile;
         internal System.Windows.Forms.Label label1;
@@ -6455,7 +6455,7 @@ namespace ZSS
         internal System.Windows.Forms.GroupBox gbMindTouchOptions;
         internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
         private System.Windows.Forms.TabPage tpProxy;
-        private ZSS.UserControls.AccountsControl ucProxyAccounts;
+        private UserControls.AccountsControl ucProxyAccounts;
         internal System.Windows.Forms.GroupBox gpProxySettings;
         internal System.Windows.Forms.CheckBox chkProxyEnable;
         private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;
