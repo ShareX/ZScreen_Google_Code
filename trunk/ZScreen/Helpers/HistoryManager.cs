@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     [Serializable]
     public class HistoryManager

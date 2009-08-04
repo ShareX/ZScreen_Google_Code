@@ -22,28 +22,23 @@
 #endregion
 
 using System;
-using System.Windows.Forms;
-using System.IO;
-using System.Drawing;
-using System.Threading;
-using ZSS.Properties;
-using ZSS.Forms;
-using ZSS.Helpers;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.URLShorteners;
-using Microsoft.WindowsAPICodePack;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
-using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.Win32;
-using System.Text;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack;
+using ZSS.TextUploadersLib;
+using ZSS.Properties;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public static class Program
     {
-        private static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        internal static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        public static AppSettings appSettings = AppSettings.Read();
 
         private static readonly string XMLFileName = "Settings.xml";
         private static readonly string HistoryFileName = "History.xml";
@@ -108,7 +103,7 @@ namespace ZSS
 
         public static void SetRootFolder(string dp)
         {
-            Settings.Default.RootDir = dp;
+            appSettings.RootDir = dp;
             RootAppFolder = dp;
         }
 
@@ -162,7 +157,7 @@ namespace ZSS
             string cssIndexer = Path.Combine(SettingsDir, ZSS.IndexersLib.IndexerConfig.DefaultCssFileName);
             if (!File.Exists(cssIndexer))
             {
-                IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
+                ZSS.IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
                 conf.IndexerConfig.CssFilePath = cssIndexer;
             }
         }
@@ -328,20 +323,12 @@ namespace ZSS
             Application.SetCompatibleTextRenderingDefault(false);
 
             ConfigWizard cw = null;
-            if (String.IsNullOrEmpty(Settings.Default.RootDir))
+            if (string.IsNullOrEmpty(appSettings.RootDir))
             {
-                /* 
-                 * Everytime SVN Revision is updated in AssemblyVersion, Default settings reset
-                 * So we need to Upgrade settings
-                 */
-                Settings.Default.Upgrade();
-                if (String.IsNullOrEmpty(Settings.Default.RootDir))
-                {
-                    // If RootDir is still empty that means it is a new installation
-                    cw = new ConfigWizard(DefaultRootAppFolder);
-                    cw.ShowDialog();
-                    Settings.Default.RootDir = cw.RootFolder;
-                }
+                cw = new ConfigWizard(DefaultRootAppFolder);
+                cw.ShowDialog();
+                appSettings.RootDir = cw.RootFolder;
+                appSettings.Save();
             }
 
             if (Directory.Exists(PortableRootFolder))
@@ -352,7 +339,7 @@ namespace ZSS
             }
             else
             {
-                RootAppFolder = Settings.Default.RootDir;
+                RootAppFolder = appSettings.RootDir;
             }
 
             RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir

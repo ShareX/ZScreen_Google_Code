@@ -23,7 +23,7 @@
 
 using System.Windows.Forms;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public partial class frmTextViewer : Form
     {

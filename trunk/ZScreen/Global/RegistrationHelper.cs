@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace ZSS
+namespace ZScreenLib
 {
     /// <summary>
     /// Helper class for registering file associations.

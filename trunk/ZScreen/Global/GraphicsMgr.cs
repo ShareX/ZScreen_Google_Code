@@ -30,7 +30,7 @@ using System.IO;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public enum FilterType
     {

@@ -25,12 +25,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ZSS.Properties;
-using ZSS.Global;
-using ZSS.Tasks;
 using System.IO;
+using ZSS;
+using ZSS.Properties;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public partial class ViewRemote : Form
     {

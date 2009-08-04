@@ -49,7 +49,7 @@ using Greenshot.Configuration;
 using Greenshot.Forms;
 using Greenshot.Helpers;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     /// <summary>
     /// Description of PrintHelper.

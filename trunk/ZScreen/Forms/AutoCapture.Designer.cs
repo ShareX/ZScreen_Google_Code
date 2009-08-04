@@ -1,4 +1,4 @@
-﻿namespace ZSS.Forms
+﻿namespace ZScreenLib
 {
     partial class AutoCapture
     {
@@ -36,7 +36,7 @@
             this.cbWaitUploads = new System.Windows.Forms.CheckBox();
             this.lblScreenshotType = new System.Windows.Forms.Label();
             this.cbAutoMinimize = new System.Windows.Forms.CheckBox();
-            this.nudDelay = new ZSS.NumericUpDownTimer();
+            this.nudDelay = new NumericUpDownTimer();
             this.ssBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,7 +120,7 @@
             this.nudDelay.RealValue = ((long)(0));
             this.nudDelay.Size = new System.Drawing.Size(297, 27);
             this.nudDelay.TabIndex = 9;
-            this.nudDelay.Time = ZSS.Times.Milliseconds;
+            this.nudDelay.Time = Times.Milliseconds;
             this.nudDelay.Value = ((long)(0));
             this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             this.nudDelay.SelectedIndexChanged += new System.EventHandler(this.nudDelay_SelectedIndexChanged);

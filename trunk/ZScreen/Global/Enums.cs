@@ -25,7 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace ZSS
+namespace ZScreenLib
 {
     /// <summary>
     /// Top level Capture Types for ZScreen. Pictures: Images that user created, Screenshots: Images that ZScreen created

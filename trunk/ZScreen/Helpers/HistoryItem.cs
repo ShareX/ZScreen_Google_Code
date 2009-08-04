@@ -24,10 +24,10 @@
 using System;
 using System.IO;
 using System.Text;
+using ZSS;
 using ZSS.ImageUploadersLib.Helpers;
-using ZSS.Tasks;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     public class HistoryItem
     {

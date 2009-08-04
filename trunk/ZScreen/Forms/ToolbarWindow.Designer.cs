@@ -1,4 +1,4 @@
-﻿namespace ZSS.Forms
+﻿namespace ZScreenLib
 {
     partial class ToolbarWindow
     {

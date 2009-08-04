@@ -25,7 +25,7 @@ using System;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace ZSS.Helpers
+namespace ZScreenLib
 {
     class PasswordManager
     {

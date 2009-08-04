@@ -29,7 +29,7 @@ using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
 
-namespace ZSS.Global
+namespace ZScreenLib
 {
     public static class RegistryMgr
     {

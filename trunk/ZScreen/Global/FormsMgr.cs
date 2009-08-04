@@ -21,15 +21,10 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
-using ZSS.Forms;
+using System.Windows.Forms;
 
-namespace ZSS.Global
+namespace ZScreenLib
 {
     public static class FormsMgr
     {
@@ -40,7 +35,7 @@ namespace ZSS.Global
             if (lic != string.Empty)
             {
                 frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "License"), lic) { Icon = Properties.Resources.zss_main };
+                    Application.ProductName, "License"), lic) { Icon = ZSS.Properties.Resources.zss_main };
                 v.ShowDialog();
             }
         }
@@ -55,7 +50,7 @@ namespace ZSS.Global
             if (h != string.Empty)
             {
                 frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "Version History"), h) { Icon = Properties.Resources.zss_main };
+                    Application.ProductName, "Version History"), h) { Icon = ZSS.Properties.Resources.zss_main };
                 v.ShowDialog();
             }
         }

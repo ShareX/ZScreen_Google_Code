@@ -30,8 +30,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZSS.TextUploadersLib;
+using ZSS;
 
-namespace ZSS.UserControls
+namespace ZScreenLib.UserControls
 {
     public partial class TextUploadersControl : UserControl
     {

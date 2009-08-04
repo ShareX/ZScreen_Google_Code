@@ -31,8 +31,9 @@ using ZSS.ImageUploadersLib.Helpers;
 using ZSS.TextUploadersLib;
 using System.Runtime.InteropServices;
 using ZSS.TextUploadersLib.Helpers;
+using ZSS;
 
-namespace ZSS.Tasks
+namespace ZScreenLib
 {
     public class MainAppTask
     {

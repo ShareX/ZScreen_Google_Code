@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public static partial class User32
     {

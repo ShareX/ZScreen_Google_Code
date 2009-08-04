@@ -24,9 +24,8 @@
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using ZSS.Tasks;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
     public partial class AutoCapture : Form
     {

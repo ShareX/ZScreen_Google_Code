@@ -25,7 +25,7 @@ using System;
 using System.Text;
 using System.Diagnostics;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public class Debug
     {

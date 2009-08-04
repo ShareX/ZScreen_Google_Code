@@ -31,8 +31,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
+using ZSS;
 
-namespace ZSS.Forms
+namespace ZScreenLib
 {
 
     public partial class DekiWikiPath : Form

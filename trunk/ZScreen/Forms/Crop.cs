@@ -34,7 +34,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ZSS.ColorsLib;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public class Crop : Form
     {

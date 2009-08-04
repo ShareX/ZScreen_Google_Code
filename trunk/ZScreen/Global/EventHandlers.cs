@@ -21,10 +21,10 @@
 */
 #endregion
 
-namespace ZSS
+namespace ZScreenLib
 {
     public delegate void StringEventHandler(object sender, string str);
     public delegate void StringsEventHandler(object sender, string[] strings);
     public delegate void IntegersEventHandler(object sender, int[] integers);
-    public delegate void JobsEventHandler(object sender, Tasks.MainAppTask.Jobs jobs);
+    public delegate void JobsEventHandler(object sender, MainAppTask.Jobs jobs);
 }
