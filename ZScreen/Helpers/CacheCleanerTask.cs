@@ -75,25 +75,22 @@ namespace ZSS.Tasks
                     dirSize += f.Size;
                 }
 
-                if (dirSize > 0)
+                if (dirSize > mCacheSize)
                 {
                     FileSystem.AppendDebug(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
-                }
 
-                while (dirSize > mCacheSize)
-                {
-                    if (files.Count > 0)
+                    while (dirSize > mCacheSize)
                     {
-                        ImageFile f = files[0];
-                        FileSystem.AppendDebug("Deleting: " + f.LocalFilePath);
-                        dirSize -= f.Size;
-                        File.Delete(f.LocalFilePath);
-                        files.RemoveAt(0);
+                        if (files.Count > 0)
+                        {
+                            ImageFile f = files[0];
+                            FileSystem.AppendDebug("Deleting: " + f.LocalFilePath);
+                            dirSize -= f.Size;
+                            File.Delete(f.LocalFilePath);
+                            files.RemoveAt(0);
+                        }
                     }
-                }
 
-                if (dirSize > 0)
-                {
                     FileSystem.AppendDebug(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));
                 }
             }

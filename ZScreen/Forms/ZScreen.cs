@@ -88,7 +88,7 @@ namespace ZSS
                 ZScreen_SetFormSettings();
                 Program.Worker = new WorkerPrimary(this);
                 Program.Worker2 = new WorkerSecondary(this);
-                UpdateGuiControls();
+                ZScreen_ConfigGUI();
                 ZScreen_Windows7onlyTasks();
                 Program.Worker2.PerformOnlineTasks();
                 Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
@@ -142,11 +142,6 @@ namespace ZSS
 
                 Taskbar.JumpList.RefreshTaskbarList();
             }
-        }
-
-        void cropShot_Click(object sender, EventArgs e)
-        {
-            Program.Worker.StartBW_CropShot();
         }
 
         private void ZScreen_SetFormSettings()
@@ -272,6 +267,8 @@ namespace ZSS
 
         private void ZScreen_ConfigGUI()
         {
+            FileSystem.AppendDebug("ZScreen_ConfigGUI started.");
+
             #region Global
 
             //~~~~~~~~~~~~~~~~~~~~~
@@ -450,7 +447,7 @@ namespace ZSS
             if (cbSwitchFormat.Items.Count == 0) cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
             cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
 
-            switch(Program.conf.ImageSizeType)
+            switch (Program.conf.ImageSizeType)
             {
                 case ImageSizeType.DEFAULT:
                     rbImageSizeDefault.Checked = true;
@@ -465,7 +462,7 @@ namespace ZSS
             txtImageSizeFixedWidth.Text = Program.conf.ImageSizeFixedWidth.ToString();
             txtImageSizeFixedHeight.Text = Program.conf.ImageSizeFixedHeight.ToString();
             txtImageSizeRatio.Text = Program.conf.ImageSizeRatioPercentage.ToString();
-          
+
             #endregion
 
             #region Text Uploaders & URL Shorteners
@@ -741,7 +738,8 @@ namespace ZSS
 
             ///////////////////////////////////
             // History
-            ///////////////////////////////////            
+            ///////////////////////////////////    
+
             if (mGuiIsReady)
             {
                 nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
@@ -751,9 +749,11 @@ namespace ZSS
             {
                 Program.Worker2.LoadHistoryItems();
             }
+
+            CheckFormSettings();
         }
 
-        void tsmiTab_Click(object sender, EventArgs e)
+        private void tsmiTab_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             tcApp.SelectedTab = tcApp.TabPages[(string)tsmi.Tag];
@@ -762,7 +762,7 @@ namespace ZSS
             tcApp.Focus();
         }
 
-        void tsmiDestImages_Click(object sender, EventArgs e)
+        private void tsmiDestImages_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             cboImageUploaders.SelectedIndex = (int)tsmi.Tag;
@@ -1236,12 +1236,7 @@ namespace ZSS
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
-            if (lbHistory.Items.Count > 0)
-            {
-                lbHistory.SelectedIndex = 0;
-            }
 
-            // Show settings if never ran before
             if (!Program.conf.RunOnce)
             {
                 Show();
@@ -1255,6 +1250,7 @@ namespace ZSS
             {
                 FileSystem.BackupFTPSettings();
             }
+
             if (Program.conf.BackupApplicationSettings)
             {
                 FileSystem.BackupAppSettings();
@@ -1270,15 +1266,14 @@ namespace ZSS
                 clipboardUpload.Click += new EventHandler(clipboardUpload_Click);
                 Taskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
             }
-
         }
 
-        void clipboardUpload_Click(object sender, EventArgs e)
+        private void clipboardUpload_Click(object sender, EventArgs e)
         {
             Program.Worker.UploadUsingClipboard();
         }
 
-        void selWindow_Click(object sender, EventArgs e)
+        private void selWindow_Click(object sender, EventArgs e)
         {
             Program.Worker.StartBW_SelectedWindow();
         }
@@ -1524,28 +1519,6 @@ namespace ZSS
             Program.conf.ShowBalloonTip = cbShowPopup.Checked;
         }
 
-        /// <summary>
-        /// Updates all the GUI Controls in ZScreen by deserializing the Settings.xml; 
-        /// Loads default Settings.xml if fails to load any control
-        /// </summary>
-        private void UpdateGuiControls()
-        {
-            //try
-            //{
-            ZScreen_ConfigGUI();
-            CheckFormSettings();
-            //}
-            //catch (Exception ex)
-            //{
-            //    FileSystem.AppendDebug(ex.ToString());
-            //    if (MessageBox.Show("Error occured while loading settings. Do you like to load Default settings?.\n\n" + ex.ToString(),
-            //        Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            //    {
-            //        LoadSettingsDefault();
-            //    }
-            //}
-        }
-
         private void LoadSettingsDefault()
         {
             Program.conf = new XMLSettings();
@@ -1561,6 +1534,11 @@ namespace ZSS
             {
                 LoadSettingsDefault();
             }
+        }
+
+        private void cropShot_Click(object sender, EventArgs e)
+        {
+            Program.Worker.StartBW_CropShot();
         }
 
         private void ShowMainWindow()
@@ -3386,7 +3364,7 @@ namespace ZSS
 
         private void confApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            this.UpdateGuiControls();
+            ZScreen_ConfigGUI();
         }
 
         private void TextUploadersAddButton_Click(object sender, EventArgs e)

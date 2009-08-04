@@ -65,6 +65,5 @@ namespace ZSS.Global
             AboutBox ab = new AboutBox();
             ab.ShowDialog();
         }
-
     }
 }

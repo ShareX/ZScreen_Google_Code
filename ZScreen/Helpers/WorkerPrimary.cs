@@ -233,6 +233,10 @@ namespace ZSS.Helpers
                     TaskbarButtonProgressState tbps = (TaskbarButtonProgressState)e.UserState;
                     Adapter.TaskbarSetState(tbps);
                     break;
+                case MainAppTask.ProgressType.SHOW_TRAY_MESSAGE:
+                    string message = (string)e.UserState;
+                    mZScreen.niTray.ShowBalloonTip(5000, mZScreen.Text, message, ToolTipIcon.Error);
+                    break;
             }
         }
 
@@ -990,6 +994,11 @@ namespace ZSS.Helpers
                     task.ImageDestCategory = ImageDestType.IMAGESHACK;
                 }
                 task.Retry = true;
+
+                string message = string.Format("{0}\r\n\r\nAutomaticly starting upload with {1}.", string.Join("\r\n", t.Errors.ToArray()),
+                    task.ImageDestCategory.GetDescription());
+                mZScreen.niTray.ShowBalloonTip(5000, "Error", message, ToolTipIcon.Error);
+
                 task.MyWorker.RunWorkerAsync(task);
                 return true;
             }

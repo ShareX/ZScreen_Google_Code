@@ -29,6 +29,7 @@ using System.Drawing;
 using ZSS.ImageUploadersLib.Helpers;
 using System.Net;
 using System.Xml.Serialization;
+using System.Drawing.Drawing2D;
 
 namespace ZSS.ImageUploadersLib
 {
@@ -80,7 +81,7 @@ namespace ZSS.ImageUploadersLib
             {
                 try
                 {
-                    Bitmap img = LoadBitmap(localFilePath);
+                    Image img = LoadBitmap(localFilePath);
                     if (img != null)
                     {
                         double sf = 128.0 / img.Width;
@@ -129,12 +130,15 @@ namespace ZSS.ImageUploadersLib
             return null;
         }
 
-        public Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
+        public static Image ResizeBitmap(Image img, int width, int height)
         {
-            Bitmap result = new Bitmap(nWidth, nHeight);
-            using (Graphics g = Graphics.FromImage(result))
-                g.DrawImage(b, 0, 0, nWidth, nHeight);
-            return result;
+            Image bmp = new Bitmap(width, height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            return bmp;
         }
 
         public string ToErrorString()
