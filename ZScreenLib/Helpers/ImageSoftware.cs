@@ -21,7 +21,7 @@
 */
 #endregion
 
-namespace ZScreenLib.Helpers
+namespace ZScreenLib
 {
     public class Software
     {

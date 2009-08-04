@@ -24,7 +24,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ZScreenLib.Forms
+namespace ZScreenLib
 {
     public partial class InputBox : Form
     {

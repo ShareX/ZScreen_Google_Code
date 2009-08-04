@@ -27,7 +27,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     public enum ReplacementVariables
     {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
-using ZScreenLib.Global;
 using System.Threading;
 
 namespace ZScreenLib.Helpers

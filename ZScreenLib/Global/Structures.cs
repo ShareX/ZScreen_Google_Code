@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct RECT

@@ -35,11 +35,10 @@ using System.Xml.Serialization;
 using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
 using ZSS.TextUploadersLib;
-using ZSS.UpdateCheckerLib;
 using ZSS;
-using ZScreenLib.Global;
+using ZScreenLib.Helpers;
 
-namespace ZScreenLib.Helpers
+namespace ZScreenLib
 {
     [XmlRoot("Settings")]
     public class XMLSettings
@@ -249,9 +248,11 @@ namespace ZScreenLib.Helpers
         public bool MinimizeOnClose { get; set; }
         [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task")]
         public bool MakeTinyURL { get; set; }
-        [Category("Options / Interaction"), DefaultValue(100), Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
+        [Category("Options / Interaction"), DefaultValue(100),
+        Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int LimitLongURL { get; set; }
-        [Category("Options / Interaction"), DefaultValue(true), Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
+        [Category("Options / Interaction"), DefaultValue(true),
+        Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool AutoShortenURL { get; set; }
 
         // Naming Conventions
@@ -262,12 +263,17 @@ namespace ZScreenLib.Helpers
         [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
-        // Quality
+        // Image Settings
 
         public int FileFormat = 0;
         public decimal ImageQuality = 90;
         public decimal SwitchAfter = 512;
         public int SwitchFormat = 1;
+
+        public ImageSizeType ImageSizeType = ImageSizeType.DEFAULT;
+        public int ImageSizeFixedWidth = 500;
+        public int ImageSizeFixedHeight = 500;
+        public float ImageSizeRatioPercentage = 50.0f;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Watermark
@@ -403,6 +409,7 @@ namespace ZScreenLib.Helpers
         public bool PreferBrowserForText { get; set; }
         [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
         public bool PreferBrowserForImages { get; set; }
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
         //~~~~~~~~~~~~~~~~~~~~~

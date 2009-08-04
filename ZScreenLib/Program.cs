@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using ZScreenLib.Global;
 using ZScreenLib.Helpers;
 using System.Drawing;
 using ZScreenLib.Forms;

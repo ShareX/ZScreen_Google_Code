@@ -25,7 +25,6 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-using ZScreenLib.Global;
 using ZSS;
 
 namespace ZScreenLib.Forms

@@ -26,15 +26,15 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using ZSS.Forms;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using ZSS;
-using ZScreenLib.Forms;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     public static class FileSystem
     {
@@ -88,8 +88,9 @@ namespace ZScreenLib.Global
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                img = WatermarkMaker.ApplyScreenshotEffects(img);
-                img = WatermarkMaker.GetImage(img);
+                img = ImageEffects.ApplySizeChanges(img);
+                img = ImageEffects.ApplyScreenshotEffects(img);
+                img = ImageEffects.ApplyWatermark(img);
 
                 long size = (long)Program.conf.SwitchAfter * 1024;
 
@@ -168,8 +169,9 @@ namespace ZScreenLib.Global
 
         public static void AppendDebug(string msg)
         {
-            string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + " " + msg;
-            Console.WriteLine(line);
+            // http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
+            string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss - ") + msg;
+            Console.WriteLine(msg);
             mDebug.AppendLine(line);
         }
 
@@ -268,11 +270,11 @@ namespace ZScreenLib.Global
         {
             if (Program.conf.ManualNaming)
             {
-              InputBox ib = new InputBox
+                InputBox ib = new InputBox
                 {
                     Title = "Specify a Screenshot Name...",
                     InputText = fName,
-                    Icon = Properties.Resources.zss_main
+                    Icon = ZScreenLib.Properties.Resources.zss_main
                 };
                 ib.ShowDialog();
                 if (ib.DialogResult == DialogResult.OK)
@@ -395,17 +397,13 @@ namespace ZScreenLib.Global
 
         public static void BackupFTPSettings()
         {
-            if (Program.conf.FTPAccountList != null)
+            if (Adapter.CheckFTPAccounts())
             {
-                if (Program.conf.FTPAccountList.Count > 0)
+                string fp = Path.Combine(Program.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
+                if (!File.Exists(fp))
                 {
-
-                    string fp = Path.Combine(Program.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
-                    if (!File.Exists(fp))
-                    {
-                        FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
-                        fam.Save(fp);
-                    }
+                    FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
+                    fam.Save(fp);
                 }
             }
         }

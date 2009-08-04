@@ -30,7 +30,7 @@ using System.IO;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     public enum FilterType
     {
@@ -259,81 +259,31 @@ namespace ZScreenLib.Global
 
         public static Image CropImage(Image img, Rectangle rect)
         {
-            Image cropped = new Bitmap(rect.Width, rect.Height);
-            Graphics e = Graphics.FromImage(cropped);
-            e.CompositingQuality = CompositingQuality.HighQuality;
-            e.SmoothingMode = SmoothingMode.HighQuality;
-            e.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            e.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
-            return cropped;
-        }
-
-        public static Image BevelImage(Image image, int offset)
-        {
-            Image defaultImage = (Image)image.Clone();
-
-            Point[] topPoints = {
-                                    new Point(0, 0), //Top left
-                                    new Point(image.Width, 0), //Top right
-                                    new Point(image.Width - offset, offset), //Bottom right
-                                    new Point(offset, offset) //Bottom left
-                                };
-            Point[] leftPoints = {
-                                     new Point(0, 0), //Top left
-                                     new Point(offset, offset), //Top right
-                                     new Point(offset, image.Height - offset), //Bottom right
-                                     new Point(0, image.Height) //Bottom left
-                                 };
-            Point[] bottomPoints = {
-                                       new Point(offset, image.Height - offset), //Top left
-                                       new Point(image.Width - offset, image.Height - offset), //Top right
-                                       new Point(image.Width, image.Height), //Bottom right
-                                       new Point(0, image.Height) //Bottom left
-                                   };
-            Point[] rightPoints = {
-                                      new Point(image.Width - offset, offset), //Top left
-                                      new Point(image.Width, 0), //Top right
-                                      new Point(image.Width, image.Height), //Bottom right
-                                      new Point(image.Width - offset, image.Height - offset) //Bottom left
-                                  };
-
-            PrepareBevel(defaultImage, topPoints, 25);
-            PrepareBevel(defaultImage, leftPoints, 50);
-            PrepareBevel(defaultImage, bottomPoints, -25);
-            PrepareBevel(defaultImage, rightPoints, -50);
-
-            return defaultImage;
-        }
-
-        private static Image PrepareBevel(Image image, Point[] points, int filterValue)
-        {
-            Bitmap bmp = new Bitmap(image.Width, image.Height);
+            Image bmp = new Bitmap(rect.Width, rect.Height);
             Graphics g = Graphics.FromImage(bmp);
-            GraphicsPath gp = new GraphicsPath();
-            gp.AddPolygon(points);
-            g.Clear(Color.Transparent);
-            g.SetClip(gp);
-            g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
-            g.Dispose();
-            ColorMatrix cm;
-            switch (Program.conf.BevelFilterType)
-            {
-                default:
-                case FilterType.Brightness:
-                    cm = ColorMatrices.BrightnessFilter(filterValue);
-                    break;
-                case FilterType.Contrast:
-                    cm = ColorMatrices.ContrastFilter(filterValue);
-                    break;
-                case FilterType.Saturation:
-                    cm = ColorMatrices.SaturationFilter(filterValue);
-                    break;
-            }
-            bmp = ColorMatrices.ApplyColorMatrix(bmp, cm);
-            Graphics g2 = Graphics.FromImage(image);
-            g2.DrawImage(bmp, new Rectangle(0, 0, image.Width, image.Height));
-            g2.Dispose();
-            return image;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
+            return bmp;
+        }
+
+        public static Image ChangeImageSize(Image img, float percentage)
+        {
+            int width = (int)(percentage / 100 * img.Width);
+            int height = (int)(percentage / 100 * img.Height);
+            return ChangeImageSize(img, width, height);
+        }
+
+        public static Image ChangeImageSize(Image img, int width, int height)
+        {
+            Image bmp = new Bitmap(width, height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            return bmp;
         }
 
         public static Image DrawProgressIcon(int percentage)

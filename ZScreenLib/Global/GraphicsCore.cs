@@ -31,7 +31,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     public static partial class User32
     {
