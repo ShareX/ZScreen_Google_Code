@@ -267,7 +267,7 @@ namespace ZSS
 
         private void ZScreen_ConfigGUI()
         {
-            FileSystem.AppendDebug("ZScreen_ConfigGUI started.");
+            FileSystem.AppendDebug("Configuring ZScreen GUI..");
 
             #region Global
 
