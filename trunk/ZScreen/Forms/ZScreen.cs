@@ -1269,7 +1269,6 @@ namespace ZSS
                 ThumbnailButton clipboardUpload = new ThumbnailButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                 clipboardUpload.Click += new EventHandler(clipboardUpload_Click);
                 Taskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-                Taskbar.JumpList.RefreshTaskbarList();
             }
 
         }

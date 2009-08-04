@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageUploadersLib", "ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj", "{223EC461-C070-4FF3-ADE7-92BC21AE66FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploadersLib", "ZSS.TextUploader\ZSS.TextUploadersLib.csproj", "{04DEED7C-450E-4C12-9586-040448FC6DD5}"
