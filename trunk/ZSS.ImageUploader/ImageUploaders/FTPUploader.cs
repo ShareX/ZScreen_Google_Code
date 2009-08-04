@@ -80,21 +80,23 @@ namespace ZSS.ImageUploadersLib
             {
                 try
                 {
-                    // load img to memory
                     Bitmap img = LoadBitmap(localFilePath);
-                    double sf = 128.0 / img.Width;
-                    img = ResizeBitmap(img, (int)(img.Width * sf), (int)(img.Height * sf));
-                    StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
-                    sb.Append(".th");
-                    sb.Append(Path.GetExtension(fName));
-                    string thPath = Path.Combine(this.WorkingDir, sb.ToString());
-                    img.Save(thPath);
-                    if (File.Exists(thPath))
+                    if (img != null)
                     {
-                        string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, Path.GetFileName(thPath));
-                        ftpClient.UploadFile(thPath, url);
+                        double sf = 128.0 / img.Width;
+                        img = ResizeBitmap(img, (int)(img.Width * sf), (int)(img.Height * sf));
+                        StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
+                        sb.Append(".th");
+                        sb.Append(Path.GetExtension(fName));
+                        string thPath = Path.Combine(this.WorkingDir, sb.ToString());
+                        img.Save(thPath);
+                        if (File.Exists(thPath))
+                        {
+                            string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, Path.GetFileName(thPath));
+                            ftpClient.UploadFile(thPath, url);
+                        }
+                        ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
                     }
-                    ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
                 }
                 catch (Exception ex)
                 {
@@ -113,18 +115,18 @@ namespace ZSS.ImageUploadersLib
 
         public Bitmap LoadBitmap(string filepath)
         {
-            Bitmap img = null;
             try
             {
-                Image temp = Image.FromFile(filepath);
-                img = new Bitmap(temp);
-                temp.Dispose();
+                using (Image temp = Image.FromFile(filepath))
+                {
+                    return new Bitmap(temp);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return img;
+            return null;
         }
 
         public Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
