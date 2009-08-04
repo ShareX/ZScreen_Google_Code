@@ -8,7 +8,7 @@ using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
    public static class Adapter
     {

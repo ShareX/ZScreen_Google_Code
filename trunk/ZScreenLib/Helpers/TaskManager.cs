@@ -33,10 +33,9 @@ using ZScreenLib.Helpers;
 using ZSS.ImageUploadersLib;
 using ZSS.TextUploadersLib;
 using ZSS;
-using ZScreenLib.Global;
 using ZScreenLib.Properties;
 
-namespace ZScreenLib.Helpers
+namespace ZScreenLib
 {
     public class TaskManager
     {
@@ -144,10 +143,12 @@ namespace ZScreenLib.Helpers
             {
                 if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
                 {
+                    //mTask.ImageDestCategory = ImageDestType.TINYPIC;
                     Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
                 {
+                    //mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
                     Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);

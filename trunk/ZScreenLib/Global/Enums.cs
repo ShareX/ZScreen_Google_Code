@@ -25,7 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     /// <summary>
     /// Top level Capture Types for ZScreen. Pictures: Images that user created, Screenshots: Images that ZScreen created
@@ -121,8 +121,8 @@ namespace ZScreenLib.Global
         UploadTextFromFile
     }
 
-    public enum Times
+    public enum ImageSizeType
     {
-        Milliseconds, Seconds, Minutes, Hours
+        DEFAULT, FIXED, RATIO
     }
 }

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZScreenLib.Helpers;
-using ZScreenLib.Global;
 using System.Diagnostics;
 using ZSS;
 

@@ -34,7 +34,6 @@ using System.Linq;
 using System.Windows.Forms;
 using ZSS.ColorsLib;
 using ZScreenLib.Helpers;
-using ZScreenLib.Global;
 using Greenshot.Drawing;
 
 namespace ZScreenLib.Forms

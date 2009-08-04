@@ -24,7 +24,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     public static class GDI
     {

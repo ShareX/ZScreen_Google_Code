@@ -30,7 +30,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ZScreenLib.Global
+namespace ZScreenLib
 {
     public static class Extensions
     {
