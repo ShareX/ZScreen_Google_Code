@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ZScreenLib.Helpers;
 using System.Diagnostics;
 using ZSS;
+using ZScreenLib;
 
 namespace ZScreenCLI
 {
@@ -23,6 +24,7 @@ namespace ZScreenCLI
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
+                this.niTray.Icon = ResxMgr.BusyIcon;
                 try
                 {
                     if (args[1].ToLower() == "crop_shot")
@@ -44,6 +46,11 @@ namespace ZScreenCLI
                 {
                     Console.Write(ex.ToString());
                 }
+                this.niTray.Icon = ResxMgr.ReadyIcon;
+            }
+            else
+            {
+                this.Close();
             }
         }
 

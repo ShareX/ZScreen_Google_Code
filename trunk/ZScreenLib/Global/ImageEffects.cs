@@ -29,7 +29,6 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using ZSS;
-using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
