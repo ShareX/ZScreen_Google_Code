@@ -96,47 +96,54 @@ namespace ZScreenLib
         {
             if (CoreHelpers.RunningOnWin7)
             {
-                Program.CheckFileRegistration();
-
-                Taskbar.AppId = Program.appId;
-                JumpList jumpList = Taskbar.JumpList;
-
-                //*****************************************************************
-                // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
-                // DO NOT REMOVE
-                //*****************************************************************
-
-                //jumpList.UserTasks.Add(new JumpListLink
-                //{
-                //    Title = "Crop Shot",
-                //    Arguments = "crop_shot",
-                //    Path = Application.ExecutablePath, // Path.Combine(Application.StartupPath, "ZScreenCLI.exe"),
-                //    IconReference = new IconReference(Application.ExecutablePath, 0)
-                //});
-                //jumpList.UserTasks.Add(new JumpListLink
-                //{
-                //    Title = "Selected Window",
-                //    Arguments = "selected_window",
-                //    Path = Application.ExecutablePath, // Path.Combine(Application.StartupPath, "ZScreenCLI.exe"),
-                //    IconReference = new IconReference(Application.ExecutablePath, 0)
-                //});
-
-                CustomCategory paths = new CustomCategory("Paths");
-                paths.JumpListItems.Add(new JumpListLink
+                try
                 {
-                    Title = "Images",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = FileSystem.GetImagesDir()
-                });
-                paths.JumpListItems.Add(new JumpListLink
-                {
-                    Title = "Settings",
-                    IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                    Path = Program.SettingsDir
-                });
-                jumpList.CustomCategories.Add(paths);
+                    Program.CheckFileRegistration();
 
-                Taskbar.JumpList.RefreshTaskbarList();
+                    Taskbar.AppId = Program.appId;
+                    JumpList jumpList = Taskbar.JumpList;
+
+                    //*****************************************************************
+                    // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
+                    // DO NOT REMOVE
+                    //*****************************************************************
+
+                    //jumpList.UserTasks.Add(new JumpListLink
+                    //{
+                    //    Title = "Crop Shot",
+                    //    Arguments = "crop_shot",
+                    //    Path = Application.ExecutablePath, // Path.Combine(Application.StartupPath, "ZScreenCLI.exe"),
+                    //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                    //});
+                    //jumpList.UserTasks.Add(new JumpListLink
+                    //{
+                    //    Title = "Selected Window",
+                    //    Arguments = "selected_window",
+                    //    Path = Application.ExecutablePath, // Path.Combine(Application.StartupPath, "ZScreenCLI.exe"),
+                    //    IconReference = new IconReference(Application.ExecutablePath, 0)
+                    //});
+
+                    CustomCategory paths = new CustomCategory("Paths");
+                    paths.JumpListItems.Add(new JumpListLink
+                    {
+                        Title = "Images",
+                        IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                        Path = FileSystem.GetImagesDir()
+                    });
+                    paths.JumpListItems.Add(new JumpListLink
+                    {
+                        Title = "Settings",
+                        IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
+                        Path = Program.SettingsDir
+                    });
+                    jumpList.CustomCategories.Add(paths);
+
+                    Taskbar.JumpList.RefreshTaskbarList();
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex);
+                }
             }
         }
 

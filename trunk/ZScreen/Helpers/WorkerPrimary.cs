@@ -1076,9 +1076,16 @@ namespace ZScreenLib
             }
             if (CoreHelpers.RunningOnWin7 && File.Exists(hi.LocalPath))
             {
-                Taskbar.JumpList.AddToRecent(hi.LocalPath);
-                Taskbar.JumpList.KnownCategoryToDisplay = KnownCategoryType.Recent;
-                Taskbar.JumpList.RefreshTaskbarList();
+                try
+                {
+                    Taskbar.JumpList.AddToRecent(hi.LocalPath);
+                    Taskbar.JumpList.KnownCategoryToDisplay = KnownCategoryType.Recent;
+                    Taskbar.JumpList.RefreshTaskbarList();
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex);
+                }
             }
         }
 
