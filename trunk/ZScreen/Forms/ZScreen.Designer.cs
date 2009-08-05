@@ -357,6 +357,12 @@ namespace ZScreenLib
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
+            this.tpWebPageUpload = new System.Windows.Forms.TabPage();
+            this.btnWebPageImageUpload = new System.Windows.Forms.Button();
+            this.pWebPageImage = new System.Windows.Forms.Panel();
+            this.pbWebPageImage = new System.Windows.Forms.PictureBox();
+            this.btnWebPageCaptureImage = new System.Windows.Forms.Button();
+            this.txtWebPageURL = new System.Windows.Forms.TextBox();
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
@@ -484,11 +490,11 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpWebPageUpload = new System.Windows.Forms.TabPage();
-            this.txtWebPageURL = new System.Windows.Forms.TextBox();
-            this.btnWebPageUploadImage = new System.Windows.Forms.Button();
-            this.pWebPageImage = new System.Windows.Forms.Panel();
-            this.pbWebPageImage = new System.Windows.Forms.PictureBox();
+            this.cbWebPageUseCustomSize = new System.Windows.Forms.CheckBox();
+            this.txtWebPageWidth = new System.Windows.Forms.TextBox();
+            this.txtWebPageHeight = new System.Windows.Forms.TextBox();
+            this.lblWebPageWidth = new System.Windows.Forms.Label();
+            this.lblWebPageHeight = new System.Windows.Forms.Label();
             this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenLib.UserControls.AccountsControl();
             this.ucMindTouchAccounts = new ZScreenLib.UserControls.AccountsControl();
@@ -585,6 +591,9 @@ namespace ZScreenLib
             this.gbImageUploaders.SuspendLayout();
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
+            this.tpWebPageUpload.SuspendLayout();
+            this.pWebPageImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).BeginInit();
             this.tpTextServices.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
@@ -623,9 +632,6 @@ namespace ZScreenLib
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.tpWebPageUpload.SuspendLayout();
-            this.pWebPageImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -4276,6 +4282,76 @@ namespace ZScreenLib
             this.txtArg1.Size = new System.Drawing.Size(112, 20);
             this.txtArg1.TabIndex = 0;
             // 
+            // tpWebPageUpload
+            // 
+            this.tpWebPageUpload.Controls.Add(this.lblWebPageHeight);
+            this.tpWebPageUpload.Controls.Add(this.lblWebPageWidth);
+            this.tpWebPageUpload.Controls.Add(this.txtWebPageHeight);
+            this.tpWebPageUpload.Controls.Add(this.txtWebPageWidth);
+            this.tpWebPageUpload.Controls.Add(this.cbWebPageUseCustomSize);
+            this.tpWebPageUpload.Controls.Add(this.btnWebPageImageUpload);
+            this.tpWebPageUpload.Controls.Add(this.pWebPageImage);
+            this.tpWebPageUpload.Controls.Add(this.btnWebPageCaptureImage);
+            this.tpWebPageUpload.Controls.Add(this.txtWebPageURL);
+            this.tpWebPageUpload.Location = new System.Drawing.Point(4, 23);
+            this.tpWebPageUpload.Name = "tpWebPageUpload";
+            this.tpWebPageUpload.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWebPageUpload.Size = new System.Drawing.Size(791, 409);
+            this.tpWebPageUpload.TabIndex = 12;
+            this.tpWebPageUpload.Text = "Web Page Upload";
+            this.tpWebPageUpload.UseVisualStyleBackColor = true;
+            // 
+            // btnWebPageImageUpload
+            // 
+            this.btnWebPageImageUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnWebPageImageUpload.Location = new System.Drawing.Point(680, 40);
+            this.btnWebPageImageUpload.Name = "btnWebPageImageUpload";
+            this.btnWebPageImageUpload.Size = new System.Drawing.Size(96, 24);
+            this.btnWebPageImageUpload.TabIndex = 1;
+            this.btnWebPageImageUpload.Text = "Upload";
+            this.btnWebPageImageUpload.UseVisualStyleBackColor = true;
+            // 
+            // pWebPageImage
+            // 
+            this.pWebPageImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pWebPageImage.AutoScroll = true;
+            this.pWebPageImage.BackColor = System.Drawing.Color.White;
+            this.pWebPageImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pWebPageImage.Controls.Add(this.pbWebPageImage);
+            this.pWebPageImage.Location = new System.Drawing.Point(16, 72);
+            this.pWebPageImage.Name = "pWebPageImage";
+            this.pWebPageImage.Size = new System.Drawing.Size(760, 320);
+            this.pWebPageImage.TabIndex = 2;
+            // 
+            // pbWebPageImage
+            // 
+            this.pbWebPageImage.BackColor = System.Drawing.Color.White;
+            this.pbWebPageImage.Location = new System.Drawing.Point(0, 0);
+            this.pbWebPageImage.Name = "pbWebPageImage";
+            this.pbWebPageImage.Size = new System.Drawing.Size(100, 50);
+            this.pbWebPageImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbWebPageImage.TabIndex = 0;
+            this.pbWebPageImage.TabStop = false;
+            // 
+            // btnWebPageCaptureImage
+            // 
+            this.btnWebPageCaptureImage.Location = new System.Drawing.Point(680, 13);
+            this.btnWebPageCaptureImage.Name = "btnWebPageCaptureImage";
+            this.btnWebPageCaptureImage.Size = new System.Drawing.Size(96, 24);
+            this.btnWebPageCaptureImage.TabIndex = 1;
+            this.btnWebPageCaptureImage.Text = "Capture Image";
+            this.btnWebPageCaptureImage.UseVisualStyleBackColor = true;
+            this.btnWebPageCaptureImage.Click += new System.EventHandler(this.btnWebPageUploadImage_Click);
+            // 
+            // txtWebPageURL
+            // 
+            this.txtWebPageURL.Location = new System.Drawing.Point(16, 16);
+            this.txtWebPageURL.Name = "txtWebPageURL";
+            this.txtWebPageURL.Size = new System.Drawing.Size(656, 20);
+            this.txtWebPageURL.TabIndex = 0;
+            // 
             // tpTextServices
             // 
             this.tpTextServices.Controls.Add(this.tcTextUploaders);
@@ -5374,6 +5450,7 @@ namespace ZScreenLib
             this.txtImagesFolderPattern.Name = "txtImagesFolderPattern";
             this.txtImagesFolderPattern.Size = new System.Drawing.Size(100, 20);
             this.txtImagesFolderPattern.TabIndex = 114;
+            this.ttZScreen.SetToolTip(this.txtImagesFolderPattern, "%y = Year\r\n%mo = Month\r\n%mon = Month Name\r\n%d = Day");
             this.txtImagesFolderPattern.TextChanged += new System.EventHandler(this.txtImagesFolderPattern_TextChanged);
             // 
             // cbDeleteLocal
@@ -5776,59 +5853,51 @@ namespace ZScreenLib
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tpWebPageUpload
+            // cbWebPageUseCustomSize
             // 
-            this.tpWebPageUpload.Controls.Add(this.pWebPageImage);
-            this.tpWebPageUpload.Controls.Add(this.btnWebPageUploadImage);
-            this.tpWebPageUpload.Controls.Add(this.txtWebPageURL);
-            this.tpWebPageUpload.Location = new System.Drawing.Point(4, 23);
-            this.tpWebPageUpload.Name = "tpWebPageUpload";
-            this.tpWebPageUpload.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWebPageUpload.Size = new System.Drawing.Size(791, 409);
-            this.tpWebPageUpload.TabIndex = 12;
-            this.tpWebPageUpload.Text = "Web Page Upload";
-            this.tpWebPageUpload.UseVisualStyleBackColor = true;
+            this.cbWebPageUseCustomSize.AutoSize = true;
+            this.cbWebPageUseCustomSize.Location = new System.Drawing.Point(16, 47);
+            this.cbWebPageUseCustomSize.Name = "cbWebPageUseCustomSize";
+            this.cbWebPageUseCustomSize.Size = new System.Drawing.Size(146, 17);
+            this.cbWebPageUseCustomSize.TabIndex = 3;
+            this.cbWebPageUseCustomSize.Text = "Use custom browser size:";
+            this.ttZScreen.SetToolTip(this.cbWebPageUseCustomSize, "Default size is primary monitor size");
+            this.cbWebPageUseCustomSize.UseVisualStyleBackColor = true;
+            this.cbWebPageUseCustomSize.CheckedChanged += new System.EventHandler(this.cbWebPageUseCustomSize_CheckedChanged);
             // 
-            // txtWebPageURL
+            // txtWebPageWidth
             // 
-            this.txtWebPageURL.Location = new System.Drawing.Point(16, 16);
-            this.txtWebPageURL.Name = "txtWebPageURL";
-            this.txtWebPageURL.Size = new System.Drawing.Size(656, 20);
-            this.txtWebPageURL.TabIndex = 0;
+            this.txtWebPageWidth.Location = new System.Drawing.Point(208, 43);
+            this.txtWebPageWidth.Name = "txtWebPageWidth";
+            this.txtWebPageWidth.Size = new System.Drawing.Size(40, 20);
+            this.txtWebPageWidth.TabIndex = 4;
+            this.txtWebPageWidth.TextChanged += new System.EventHandler(this.txtWebPageWidth_TextChanged);
             // 
-            // btnWebPageUploadImage
+            // txtWebPageHeight
             // 
-            this.btnWebPageUploadImage.Location = new System.Drawing.Point(680, 16);
-            this.btnWebPageUploadImage.Name = "btnWebPageUploadImage";
-            this.btnWebPageUploadImage.Size = new System.Drawing.Size(96, 23);
-            this.btnWebPageUploadImage.TabIndex = 1;
-            this.btnWebPageUploadImage.Text = "Capture Image";
-            this.btnWebPageUploadImage.UseVisualStyleBackColor = true;
-            this.btnWebPageUploadImage.Click += new System.EventHandler(this.btnWebPageUploadImage_Click);
+            this.txtWebPageHeight.Location = new System.Drawing.Point(304, 43);
+            this.txtWebPageHeight.Name = "txtWebPageHeight";
+            this.txtWebPageHeight.Size = new System.Drawing.Size(40, 20);
+            this.txtWebPageHeight.TabIndex = 5;
+            this.txtWebPageHeight.TextChanged += new System.EventHandler(this.txtWebPageHeight_TextChanged);
             // 
-            // pWebPageImage
+            // lblWebPageWidth
             // 
-            this.pWebPageImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pWebPageImage.AutoScroll = true;
-            this.pWebPageImage.BackColor = System.Drawing.Color.White;
-            this.pWebPageImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pWebPageImage.Controls.Add(this.pbWebPageImage);
-            this.pWebPageImage.Location = new System.Drawing.Point(16, 48);
-            this.pWebPageImage.Name = "pWebPageImage";
-            this.pWebPageImage.Size = new System.Drawing.Size(760, 344);
-            this.pWebPageImage.TabIndex = 2;
+            this.lblWebPageWidth.AutoSize = true;
+            this.lblWebPageWidth.Location = new System.Drawing.Point(168, 48);
+            this.lblWebPageWidth.Name = "lblWebPageWidth";
+            this.lblWebPageWidth.Size = new System.Drawing.Size(38, 13);
+            this.lblWebPageWidth.TabIndex = 6;
+            this.lblWebPageWidth.Text = "Width:";
             // 
-            // pbWebPageImage
+            // lblWebPageHeight
             // 
-            this.pbWebPageImage.BackColor = System.Drawing.Color.White;
-            this.pbWebPageImage.Location = new System.Drawing.Point(0, 0);
-            this.pbWebPageImage.Name = "pbWebPageImage";
-            this.pbWebPageImage.Size = new System.Drawing.Size(100, 50);
-            this.pbWebPageImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbWebPageImage.TabIndex = 0;
-            this.pbWebPageImage.TabStop = false;
+            this.lblWebPageHeight.AutoSize = true;
+            this.lblWebPageHeight.Location = new System.Drawing.Point(256, 48);
+            this.lblWebPageHeight.Name = "lblWebPageHeight";
+            this.lblWebPageHeight.Size = new System.Drawing.Size(41, 13);
+            this.lblWebPageHeight.TabIndex = 7;
+            this.lblWebPageHeight.Text = "Height:";
             // 
             // nudtScreenshotDelay
             // 
@@ -6037,6 +6106,11 @@ namespace ZScreenLib
             this.gbRegexp.PerformLayout();
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
+            this.tpWebPageUpload.ResumeLayout(false);
+            this.tpWebPageUpload.PerformLayout();
+            this.pWebPageImage.ResumeLayout(false);
+            this.pWebPageImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).EndInit();
             this.tpTextServices.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
@@ -6090,11 +6164,6 @@ namespace ZScreenLib
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.tpWebPageUpload.ResumeLayout(false);
-            this.tpWebPageUpload.PerformLayout();
-            this.pWebPageImage.ResumeLayout(false);
-            this.pWebPageImage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -6560,9 +6629,15 @@ namespace ZScreenLib
         private System.Windows.Forms.Label lblImageSizeFixedWidth;
         private System.Windows.Forms.TabPage tpWebPageUpload;
         private System.Windows.Forms.TextBox txtWebPageURL;
-        private System.Windows.Forms.Button btnWebPageUploadImage;
+        private System.Windows.Forms.Button btnWebPageCaptureImage;
         private System.Windows.Forms.Panel pWebPageImage;
         private System.Windows.Forms.PictureBox pbWebPageImage;
+        private System.Windows.Forms.Button btnWebPageImageUpload;
+        private System.Windows.Forms.Label lblWebPageHeight;
+        private System.Windows.Forms.Label lblWebPageWidth;
+        private System.Windows.Forms.TextBox txtWebPageHeight;
+        private System.Windows.Forms.TextBox txtWebPageWidth;
+        private System.Windows.Forms.CheckBox cbWebPageUseCustomSize;
 
     }
 }
