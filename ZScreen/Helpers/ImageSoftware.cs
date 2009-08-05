@@ -51,5 +51,30 @@ namespace ZScreenLib
         {
             return this.Name;
         }
+
+        public static bool Exist(string sName)
+        {
+            foreach (Software software in Program.conf.ImageEditors)
+            {
+                if (software.Name == sName) return true;
+            }
+            return false;
+        }
+
+        public static bool Remove(string sName)
+        {
+            if (Exist(sName))
+            {
+                foreach (Software software in Program.conf.ImageEditors)
+                {
+                    if (software.Name == sName)
+                    {
+                        Program.conf.ImageEditors.Remove(software);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

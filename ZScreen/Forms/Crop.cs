@@ -30,7 +30,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Windows.Forms;
 using ZSS.ColorsLib;
 
@@ -38,6 +37,8 @@ namespace ZScreenLib
 {
     public class Crop : Form
     {
+        #region Private Variables
+
         private bool mouseDown, selectedWindowMode, forceCheck, captureObjects, dragging;
         private Bitmap bmpClean, bmpBackground, bmpRegion;
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
@@ -69,6 +70,8 @@ namespace ZScreenLib
                 rectRegion.Size = new Size(cropRegion.Width + 1, cropRegion.Height + 1);
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Crop shot or Selected Window captures

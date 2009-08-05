@@ -35,9 +35,9 @@ using Microsoft.WindowsAPICodePack.Shell.Taskbar;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
+using ZSS.Properties;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
-using ZSS.Properties;
 
 namespace ZScreenLib
 {
@@ -308,15 +308,9 @@ namespace ZScreenLib
                                     this.mZScreen.btnUploadersTest.Enabled = true;
                                     break;
                             }
-                            if (task.ImageDestCategory != ImageDestType.FILE)
+                            if (task.ImageDestCategory != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
-                                if (Program.conf.DeleteLocal)
-                                {
-                                    if (File.Exists(task.LocalFilePath))
-                                    {
-                                        File.Delete(task.LocalFilePath);
-                                    }
-                                }
+                                File.Delete(task.LocalFilePath);
                             }
                             break;
                     }

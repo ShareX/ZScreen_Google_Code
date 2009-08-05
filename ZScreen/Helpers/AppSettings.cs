@@ -80,6 +80,5 @@ namespace ZScreenLib
                 FileSystem.AppendDebug(ex.ToString());
             }
         }
-
     }
 }

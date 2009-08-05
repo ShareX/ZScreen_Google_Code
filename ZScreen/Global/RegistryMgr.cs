@@ -86,7 +86,7 @@ namespace ZScreenLib
                     string filePath = stringReg.Substring(1, stringReg.LastIndexOf("%") - 4);
                     if (File.Exists(filePath)) //If notFound path exist
                     {
-                        if (!Program.conf.SoftwareExist(sName)) //If not added to Software list before
+                        if (!Software.Exist(sName)) //If not added to Software list before
                         {
                             Program.conf.ImageEditors.Add(new Software(sName, filePath, false));
                         }

@@ -41,10 +41,10 @@ using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.ImageUploadersLib;
 using ZSS.ImageUploadersLib.Helpers;
+using ZSS.Properties;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
-using ZSS.Properties;
 
 namespace ZScreenLib
 {
