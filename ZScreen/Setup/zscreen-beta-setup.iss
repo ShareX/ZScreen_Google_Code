@@ -184,7 +184,7 @@ begin
 	
 dotnetfx35();
 	//dotnetfx35lp();
-	//dotnetfx35sp1();
+dotnetfx35sp1();
 	//dotnetfx35sp1lp();
 	
 //	mdac28('2.7');

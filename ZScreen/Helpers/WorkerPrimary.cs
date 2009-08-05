@@ -154,6 +154,77 @@ namespace ZScreenLib
             e.Result = task;
         }
 
+        #region Worker Tasks
+        public void PrintImage(Image img)
+        {
+            if (img != null)
+            {
+                PrintHelper ph = new PrintHelper(img);
+                PrinterSettings ps = ph.PrintWithDialog();
+            }
+        }
+        public void CopyImageToClipboard(Image img)
+        {
+            if (img != null)
+            {
+                try
+                {
+                    ImageOutput.PrepareClipboardObject();
+                    ImageOutput.CopyToClipboard(img);
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.Message);
+                }
+            }
+        }
+        public void CopyImageToClipboard(string f)
+        {
+            if (File.Exists(f))
+            {
+                SaveImageToClipboard(f);
+                FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
+            }
+        }
+        public void FlashNotifyIcon(NotifyIcon ni, Icon ico)
+        {
+            if (ni != null && ico != null)
+            {
+                ni.Icon = ico;
+            }
+        }
+        public void SetNotifyIconStatus(MainAppTask task, NotifyIcon ni, Icon ico)
+        {
+            if (task != null && ni != null && ico != null)
+            {
+                ni.Icon = ico;
+                ni.Text = task.Job.GetDescription();
+            }
+        }
+        public void SetNotifyIconBalloonTip(NotifyIcon ni, string title, string msg, ToolTipIcon ico)
+        {
+            if (ni != null && !string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(msg))
+            {
+                ni.ShowBalloonTip(5000, title, msg, ico);
+            }
+        }
+        public void UpdateNotifyIconProgress(NotifyIcon ni, int progress)
+        {
+            if (ni != null)
+            {
+                Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
+                ni.Icon = Icon.FromHandle(img.GetHicon());
+            }
+        }
+        public void SaveImage(Image img)
+        {
+            if (img != null)
+            {
+                ImageOutput.SaveWithDialog(img);
+            }
+        }
+        #endregion
+
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (mZScreen == null) return;
@@ -161,56 +232,32 @@ namespace ZScreenLib
             switch ((MainAppTask.ProgressType)e.ProgressPercentage)
             {
                 case (MainAppTask.ProgressType)101:
-                    PrintHelper ph = new PrintHelper(e.UserState as Image);
-                    PrinterSettings ps = ph.PrintWithDialog();
+                    PrintImage(e.UserState as Image);
                     break;
                 case (MainAppTask.ProgressType)102:
-                    try
-                    {
-                        ImageOutput.PrepareClipboardObject();
-                        ImageOutput.CopyToClipboard(e.UserState as Image);
-                    }
-                    catch (Exception ex)
-                    {
-                        FileSystem.AppendDebug(ex.Message);
-                    }
+                    CopyImageToClipboard(e.UserState as Image);
                     break;
                 case (MainAppTask.ProgressType)103:
-                    ImageOutput.SaveWithDialog(e.UserState as Image);
+                    SaveImage(e.UserState as Image);
                     break;
                 case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
-                    AddHistoryItem((HistoryItem)e.UserState);
+                    AddHistoryItem(e.UserState as HistoryItem);
                     break;
                 case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
                     if (e.UserState.GetType() == typeof(string))
                     {
-                        string f = e.UserState.ToString();
-                        if (File.Exists(f))
-                        {
-                            SaveImageToClipboard(f);
-                            FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
-                        }
+                        CopyImageToClipboard(e.UserState as string);
                     }
                     else if (e.UserState.GetType() == typeof(Bitmap))
                     {
-                        try
-                        {
-                            Clipboard.SetImage((Image)e.UserState);
-                        }
-                        catch (Exception ex)
-                        {
-                            // Sometimes there are 'Clipboard Set did not succeed' errors
-                            FileSystem.AppendDebug(ex.Message);
-                        }
+                        CopyImageToClipboard(e.UserState as Image);
                     }
                     break;
                 case MainAppTask.ProgressType.FLASH_ICON:
-                    mZScreen.niTray.Icon = (Icon)e.UserState;
+                    FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
                     break;
                 case MainAppTask.ProgressType.SET_ICON_BUSY:
-                    MainAppTask task = (MainAppTask)e.UserState;
-                    mZScreen.niTray.Text = mZScreen.Text + " - " + task.Job.GetDescription();
-                    mZScreen.niTray.Icon = Resources.zss_busy;
+                    SetNotifyIconStatus(e.UserState as MainAppTask, mZScreen.niTray, Resources.zss_busy);
                     break;
                 case MainAppTask.ProgressType.UPDATE_CROP_MODE:
                     mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
@@ -220,8 +267,7 @@ namespace ZScreenLib
                     break;
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
-                    Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
-                    mZScreen.niTray.Icon = Icon.FromHandle(img.GetHicon());
+                    UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgress(progress);
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
@@ -229,8 +275,7 @@ namespace ZScreenLib
                     Adapter.TaskbarSetState(tbps);
                     break;
                 case MainAppTask.ProgressType.SHOW_TRAY_MESSAGE:
-                    string message = (string)e.UserState;
-                    mZScreen.niTray.ShowBalloonTip(5000, mZScreen.Text, message, ToolTipIcon.Error);
+                    SetNotifyIconBalloonTip(mZScreen.niTray, e.UserState as string, mZScreen.Text, ToolTipIcon.Error);
                     break;
             }
         }
@@ -1014,7 +1059,7 @@ namespace ZScreenLib
             }
         }
 
-        internal void AddHistoryItem(HistoryItem hi)
+        public void AddHistoryItem(HistoryItem hi)
         {
             mZScreen.lbHistory.Items.Insert(0, hi);
             CheckHistoryItems();
