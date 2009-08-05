@@ -79,14 +79,13 @@
     <Compile Include="Global\FileSystem.cs" />
     <Compile Include="Global\GDI.cs" />
     <Compile Include="Global\GraphicsCore.cs" />
-    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\NameParser.cs" />
     <Compile Include="Global\GraphicsMgr.cs" />
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Global\UploadManager.cs" />
     <Compile Include="Global\User32.cs" />
-    <Compile Include="Global\WatermarkMaker.cs" />
+    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
     <Compile Include="Helpers\ImageSoftware.cs" />
@@ -106,6 +105,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="UserControls\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,6 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\nav-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zss-busy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zss-tray.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

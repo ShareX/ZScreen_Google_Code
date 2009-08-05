@@ -37,7 +37,7 @@
             // 
             this.niTray.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.niTray.Icon = ((System.Drawing.Icon)(resources.GetObject("niTray.Icon")));
-            this.niTray.Text = "Ready";
+            this.niTray.Text = "ZScreen";
             this.niTray.Visible = true;
             this.niTray.BalloonTipClosed += new System.EventHandler(this.niTray_BalloonTipClosed);
             this.niTray.BalloonTipClicked += new System.EventHandler(this.niTray_BalloonTipClicked);

@@ -74,6 +74,13 @@ namespace ZScreenLib.Properties {
             }
         }
         
+        internal static System.Drawing.Icon zss_busy {
+            get {
+                object obj = ResourceManager.GetObject("zss_busy", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon zss_green {
             get {
                 object obj = ResourceManager.GetObject("zss_green", resourceCulture);
@@ -84,6 +91,13 @@ namespace ZScreenLib.Properties {
         internal static System.Drawing.Icon zss_main {
             get {
                 object obj = ResourceManager.GetObject("zss_main", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zss_tray {
+            get {
+                object obj = ResourceManager.GetObject("zss_tray", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
