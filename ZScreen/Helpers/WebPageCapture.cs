@@ -11,13 +11,17 @@ namespace ZScreenLib
     {
         public event ImageEventHandler DownloadCompleted;
         public delegate void ImageEventHandler(Image image);
-        public WebBrowser webBrowser = new WebBrowser();
+        public Size BrowserSize;
 
-        public WebPageCapture()
+        private WebBrowser webBrowser = new WebBrowser();
+
+        public WebPageCapture() : this(Screen.PrimaryScreen.Bounds.Size) { }
+
+        public WebPageCapture(Size browserSize)
         {
+            BrowserSize = browserSize;
             webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
             webBrowser.ScrollBarsEnabled = false;
-            webBrowser.Size = Screen.PrimaryScreen.Bounds.Size;
         }
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -25,16 +29,20 @@ namespace ZScreenLib
             Rectangle rect = webBrowser.Document.ActiveElement.ScrollRectangle;
             webBrowser.Size = new Size(rect.Width, rect.Height);
             Bitmap bmp = new Bitmap(rect.Width, rect.Height);
-            webBrowser.DrawToBitmap(bmp, rect);
 
-            if (DownloadCompleted != null)
+            try
             {
-                DownloadCompleted(bmp);
+                webBrowser.DrawToBitmap(bmp, rect);
+            }
+            finally
+            {
+                if (DownloadCompleted != null) DownloadCompleted(bmp);
             }
         }
 
         public void DownloadPage(string url)
         {
+            webBrowser.Size = BrowserSize;
             webBrowser.Navigate(url);
         }
 
