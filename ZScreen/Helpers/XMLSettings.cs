@@ -263,6 +263,12 @@ namespace ZScreenLib
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
 
+        // Web Page Upload
+
+        public bool WebPageUseCustomSize = true;
+        public int WebPageWidth = 1024;
+        public int WebPageHeight = 768;
+
         // Language Translator
 
         public string FromLanguage = "auto";

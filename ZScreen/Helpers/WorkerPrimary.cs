@@ -155,6 +155,7 @@ namespace ZScreenLib
         }
 
         #region Worker Tasks
+
         public void PrintImage(Image img)
         {
             if (img != null)
@@ -163,6 +164,7 @@ namespace ZScreenLib
                 PrinterSettings ps = ph.PrintWithDialog();
             }
         }
+
         public void CopyImageToClipboard(Image img)
         {
             if (img != null)
@@ -178,6 +180,7 @@ namespace ZScreenLib
                 }
             }
         }
+
         public void CopyImageToClipboard(string f)
         {
             if (File.Exists(f))
@@ -186,6 +189,7 @@ namespace ZScreenLib
                 FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
             }
         }
+
         public void FlashNotifyIcon(NotifyIcon ni, Icon ico)
         {
             if (ni != null && ico != null)
@@ -193,6 +197,7 @@ namespace ZScreenLib
                 ni.Icon = ico;
             }
         }
+
         public void SetNotifyIconStatus(MainAppTask task, NotifyIcon ni, Icon ico)
         {
             if (task != null && ni != null && ico != null)
@@ -201,6 +206,7 @@ namespace ZScreenLib
                 ni.Text = task.Job.GetDescription();
             }
         }
+
         public void SetNotifyIconBalloonTip(NotifyIcon ni, string title, string msg, ToolTipIcon ico)
         {
             if (ni != null && !string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(msg))
@@ -208,6 +214,7 @@ namespace ZScreenLib
                 ni.ShowBalloonTip(5000, title, msg, ico);
             }
         }
+
         public void UpdateNotifyIconProgress(NotifyIcon ni, int progress)
         {
             if (ni != null)
@@ -215,6 +222,7 @@ namespace ZScreenLib
                 Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                 ni.Icon = Icon.FromHandle(img.GetHicon());
             }
+
         }
         public void SaveImage(Image img)
         {
@@ -223,6 +231,7 @@ namespace ZScreenLib
                 ImageOutput.SaveWithDialog(img);
             }
         }
+
         #endregion
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -525,7 +534,6 @@ namespace ZScreenLib
             }
         }
 
-
         #region "Capture Method"
 
         private void CaptureActiveWindow(ref MainAppTask task)
@@ -624,7 +632,6 @@ namespace ZScreenLib
                 Clipboard.SetImage(img);
 
                 img.Dispose();
-
             }
         }
 
@@ -925,7 +932,6 @@ namespace ZScreenLib
 
             StartTextWorkers(textWorkers);
             return succ;
-
         }
 
         public void UploadUsingClipboard()
@@ -962,7 +968,6 @@ namespace ZScreenLib
                 }
 
                 this.StartTextWorkers(textWorkers);
-
             }
         }
 
@@ -1247,7 +1252,6 @@ namespace ZScreenLib
 
         public void TranslateTo1()
         {
-
             if (Program.conf.ToLanguage2 == "?")
             {
                 mZScreen.lblToLanguage.BorderStyle = BorderStyle.FixedSingle;

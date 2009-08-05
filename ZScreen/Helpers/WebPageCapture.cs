@@ -17,6 +17,8 @@ namespace ZScreenLib
 
         public WebPageCapture() : this(Screen.PrimaryScreen.Bounds.Size) { }
 
+        public WebPageCapture(int width, int height) : this(new Size(width, height)) { }
+
         public WebPageCapture(Size browserSize)
         {
             BrowserSize = browserSize;

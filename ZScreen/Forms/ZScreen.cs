@@ -612,6 +612,12 @@ namespace ZScreenLib
             cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
             cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
 
+            // Web Page Upload
+
+            cbWebPageUseCustomSize.Checked = Program.conf.WebPageUseCustomSize;
+            txtWebPageWidth.Text = Program.conf.WebPageWidth.ToString();
+            txtWebPageHeight.Text = Program.conf.WebPageHeight.ToString();
+
             #region Image Editors
 
             ///////////////////////////////////
@@ -3847,8 +3853,18 @@ namespace ZScreenLib
 
         private void btnWebPageUploadImage_Click(object sender, EventArgs e)
         {
-            btnWebPageUploadImage.Enabled = false;
-            WebPageCapture webPageCapture = new WebPageCapture();
+            btnWebPageCaptureImage.Enabled = false;
+
+            WebPageCapture webPageCapture;
+            if (Program.conf.WebPageUseCustomSize)
+            {
+                webPageCapture = new WebPageCapture(Program.conf.WebPageWidth, Program.conf.WebPageHeight);
+            }
+            else
+            {
+                webPageCapture = new WebPageCapture();
+            }
+
             webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
             webPageCapture.DownloadPage(txtWebPageURL.Text);
         }
@@ -3856,7 +3872,30 @@ namespace ZScreenLib
         private void webPageCapture_DownloadCompleted(Image image)
         {
             pbWebPageImage.Image = image;
-            btnWebPageUploadImage.Enabled = true;
+            btnWebPageCaptureImage.Enabled = true;
+        }
+
+        private void cbWebPageUseCustomSize_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.WebPageUseCustomSize = cbWebPageUseCustomSize.Checked;
+        }
+
+        private void txtWebPageWidth_TextChanged(object sender, EventArgs e)
+        {
+            int width;
+            if (int.TryParse(txtWebPageWidth.Text, out width))
+            {
+                Program.conf.WebPageWidth = width;
+            }
+        }
+
+        private void txtWebPageHeight_TextChanged(object sender, EventArgs e)
+        {
+            int height;
+            if (int.TryParse(txtWebPageHeight.Text, out height))
+            {
+                Program.conf.WebPageHeight = height;
+            }
         }
     }
 }
