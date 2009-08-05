@@ -3844,5 +3844,19 @@ namespace ZScreenLib
                 Program.conf.ImageSizeRatioPercentage = percentage;
             }
         }
+
+        private void btnWebPageUploadImage_Click(object sender, EventArgs e)
+        {
+            btnWebPageUploadImage.Enabled = false;
+            WebPageCapture webPageCapture = new WebPageCapture();
+            webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
+            webPageCapture.DownloadPage(txtWebPageURL.Text);
+        }
+
+        private void webPageCapture_DownloadCompleted(Image image)
+        {
+            pbWebPageImage.Image = image;
+            btnWebPageUploadImage.Enabled = true;
+        }
     }
 }
