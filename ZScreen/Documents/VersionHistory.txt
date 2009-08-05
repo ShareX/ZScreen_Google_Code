@@ -1,5 +1,6 @@
-Version 2.25 - 20090803
+Version 2.25 - 20090806
 
+2.25.01.2 Workarounds for errors on some Windows 7 systems during ZScreen [Issue 107] {McoreD}
 2.25.01.1 Fixed TinyPic upload issues due to recent API changes {Jaex}
 2.25.01.0 Tray icon will notify the user if upload destination is automatically changed due to errors or timeouts {Jaex}
 2.25.00.2 Fixed problem where ZScreen hangs on Windows Shutdown {McoreD}
