@@ -11,7 +11,9 @@ namespace ZScreenLib
     {
         public event ImageEventHandler DownloadCompleted;
         public delegate void ImageEventHandler(Image image);
-        public Size BrowserSize;
+        public Size BrowserSize { get; set; }
+        public string URL { get; set; }
+        public Image Image { get; private set; }
 
         private WebBrowser webBrowser = new WebBrowser();
 
@@ -35,6 +37,7 @@ namespace ZScreenLib
             try
             {
                 webBrowser.DrawToBitmap(bmp, rect);
+                this.Image = bmp;
             }
             finally
             {
@@ -42,15 +45,25 @@ namespace ZScreenLib
             }
         }
 
+        public void DownloadPage()
+        {
+            if (!string.IsNullOrEmpty(this.URL))
+            {
+                DownloadPage(this.URL);
+            }
+        }
+
         public void DownloadPage(string url)
         {
+            this.URL = url;
             webBrowser.Size = BrowserSize;
             webBrowser.Navigate(url);
         }
 
         public void Dispose()
         {
-            webBrowser.Dispose();
+            this.Image.Dispose();
+            this.webBrowser.Dispose();
         }
     }
 }

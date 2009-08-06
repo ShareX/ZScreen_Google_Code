@@ -624,6 +624,7 @@ namespace ZScreenLib
             cbWebPageUseCustomSize.Checked = Program.conf.WebPageUseCustomSize;
             txtWebPageWidth.Text = Program.conf.WebPageWidth.ToString();
             txtWebPageHeight.Text = Program.conf.WebPageHeight.ToString();
+            cbWebPageAutoUpload.Checked = Program.conf.WebPageAutoUpload;
 
             #region Image Editors
 
@@ -3858,7 +3859,12 @@ namespace ZScreenLib
         {
             pbWebPageImage.Image = img;
             btnWebPageCaptureImage.Enabled = true;
-            Program.Worker.StartWorkerPictures(MainAppTask.Jobs.UPLOAD_IMAGE, img);
+            btnWebPageImageUpload.Enabled = true;
+
+            if (Program.conf.WebPageAutoUpload)
+            {
+                WebPageUpload();
+            }
         }
 
         private void cbWebPageUseCustomSize_CheckedChanged(object sender, EventArgs e)
@@ -3882,6 +3888,25 @@ namespace ZScreenLib
             {
                 Program.conf.WebPageHeight = height;
             }
+        }
+
+        private void btnWebPageImageUpload_Click(object sender, EventArgs e)
+        {
+            WebPageUpload();
+        }
+
+        private void WebPageUpload()
+        {
+            if (pbWebPageImage.Image != null)
+            {
+                Bitmap bmp = new Bitmap(pbWebPageImage.Image);
+                Program.Worker.StartWorkerPictures(MainAppTask.Jobs.UPLOAD_IMAGE, bmp);
+            }
+        }
+
+        private void cbWebPageAutoUpload_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
     }
 }

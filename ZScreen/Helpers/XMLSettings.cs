@@ -268,6 +268,7 @@ namespace ZScreenLib
         public bool WebPageUseCustomSize = true;
         public int WebPageWidth = 1024;
         public int WebPageHeight = 768;
+        public bool WebPageAutoUpload = false;
 
         // Language Translator
 
