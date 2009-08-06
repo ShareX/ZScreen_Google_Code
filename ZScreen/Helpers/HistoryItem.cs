@@ -44,6 +44,7 @@ namespace ZScreenLib
         /// ImageShack, TinyPic, FTP...
         /// </summary>
         public string DestinationName { get; set; }
+        public string Description { get; set; }
         public ImageFileManager ScreenshotManager { get; set; }
         public JobCategoryType JobCategory { get; set; }
         public ImageDestType ImageDestCategory { get; set; }
@@ -72,6 +73,7 @@ namespace ZScreenLib
             {
                 this.FileSize = new FileInfo(this.LocalPath).Length;
             }
+            this.Description = task.GetDescription();
         }
 
         public override string ToString()

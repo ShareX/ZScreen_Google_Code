@@ -2123,7 +2123,7 @@ namespace ZScreenLib
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
 
-                    lblHistoryScreenshot.Text = string.Format("{0} ({1})", hi.JobName, hi.DestinationName);
+                    lblHistoryScreenshot.Text = hi.Description;
                 }
 
                 if (Program.conf.HistoryShowTooltips && hi != null)
