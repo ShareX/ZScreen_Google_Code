@@ -1,4 +1,4 @@
-2.27.0.0 Clipboard Copy chooser activated from PropertyGrid Options {McoreD}
+2.27.0.0 Clipboard Copy chooser [Issue 106] activated from PropertyGrid Options {McoreD}
 2.26.0.0 Ability to capture Webpages using a Hotkey {Jaex}
 
 Version 2.25 - 20090806

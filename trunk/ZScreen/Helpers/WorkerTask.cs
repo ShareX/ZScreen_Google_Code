@@ -229,6 +229,11 @@ namespace ZScreenLib
             this.FileName = new StringBuilder(Path.GetFileName(fp));
         }
 
+        public string GetDescription()
+        {
+            return string.Format("{0} ({1})", this.Job.GetDescription(), this.DestinationName);
+        }
+
         #region "Functions"
 
         /// <summary>

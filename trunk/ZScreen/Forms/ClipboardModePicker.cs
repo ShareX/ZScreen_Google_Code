@@ -15,6 +15,7 @@ namespace ZScreenLib
         public ClipboardModePicker(MainAppTask task)
         {
             InitializeComponent();
+            this.Text = task.FileName.ToString() + " - " + task.GetDescription();
 
             if (task.ImageManager != null)
             {
