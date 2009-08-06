@@ -97,32 +97,29 @@ namespace ZScreenLib
 
             if (ScreenshotsHistory != null)
             {
-                string url = string.Empty;
                 if (Program.conf.ShowClipboardModeChooser)
                 {
                     ClipboardModePicker cmp = new ClipboardModePicker(task);
                     cmp.Icon = Resources.zss_main;
                     cmp.Show();
                 }
-                else
+
+                string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
+
+                if (task.MakeTinyURL)
                 {
-                    url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
-
-                    if (task.MakeTinyURL)
+                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                    if (!string.IsNullOrEmpty(tinyUrl))
                     {
-                        string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                        if (!string.IsNullOrEmpty(tinyUrl))
-                        {
-                            url = tinyUrl.Trim();
-                        }
+                        url = tinyUrl.Trim();
                     }
-
-                    if (!string.IsNullOrEmpty(url))
-                    {
-                        Clipboard.SetText(url);
-                    }
-
                 }
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Clipboard.SetText(url);
+                }
+
                 return url;
             }
 
