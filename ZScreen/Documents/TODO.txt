@@ -1,4 +1,10 @@
-﻿Hotkey for Indexer
+﻿Post Upload Wizard [Issue 106]
+	Provide Clipboard Upload modes in a Form 
+	Double Click each textBox and copy URL to Clipboard
+	
+Image Destination for Printer
+
+Hotkey for Indexer
 		
 Windwos.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser
