@@ -235,7 +235,7 @@ namespace ZScreenLib
 
             // tpMindTouch.Enabled = false;
 
-            AddToClipboardByDoubleClick(tpHistory);
+            Adapter.AddToClipboardByDoubleClick(tpHistory);
 
             if (Program.conf.ActionsToolbarMode)
             {
@@ -1284,28 +1284,6 @@ namespace ZScreenLib
         private void selWindow_Click(object sender, EventArgs e)
         {
             Program.Worker.StartBW_SelectedWindow();
-        }
-
-        private void AddToClipboardByDoubleClick(Control tp)
-        {
-            Control ctl = tp.GetNextControl(tp, true);
-            while (ctl != null)
-            {
-                if (ctl.GetType() == typeof(TextBox))
-                {
-                    ctl.DoubleClick += TextBox_DoubleClick;
-                }
-                ctl = tp.GetNextControl(ctl, true);
-            }
-        }
-
-        void TextBox_DoubleClick(object sender, EventArgs e)
-        {
-            TextBox tb = ((TextBox)sender);
-            if (!string.IsNullOrEmpty(tb.Text))
-            {
-                Clipboard.SetText(tb.Text);
-            }
         }
 
         private void tsmAboutMain_Click(object sender, EventArgs e)

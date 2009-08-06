@@ -24,6 +24,7 @@
 using System.Text;
 using System.Windows.Forms;
 using ZSS;
+using ZSS.ImageUploadersLib;
 
 namespace ZScreenLib
 {

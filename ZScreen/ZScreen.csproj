@@ -106,6 +106,12 @@
     <Compile Include="Forms\AutoCapture.Designer.cs">
       <DependentUpon>AutoCapture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ClipboardModePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ClipboardModePicker.Designer.cs">
+      <DependentUpon>ClipboardModePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ConfigWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,6 +362,9 @@
     <EmbeddedResource Include="Documents\License.txt" />
     <EmbeddedResource Include="Forms\AutoCapture.resx">
       <DependentUpon>AutoCapture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ClipboardModePicker.resx">
+      <DependentUpon>ClipboardModePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigWizard.resx">
       <DependentUpon>ConfigWizard.cs</DependentUpon>

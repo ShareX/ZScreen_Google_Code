@@ -28,10 +28,10 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Shell.Taskbar;
-using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.TextUploadersLib;
 using ZSS.Properties;
+using ZSS;
 
 namespace ZScreenLib
 {
@@ -85,13 +85,19 @@ namespace ZScreenLib
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
-                    TwitPicOptions options = new TwitPicOptions();
-                    options.Username = Program.conf.TwitPicUserName;
-                    options.Password = Program.conf.TwitPicPassword;
-                    options.TwitPicUploadType = Program.conf.TwitPicUploadMode;
-                    options.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
-                    options.ShowFull = Program.conf.TwitPicShowFull;
-                    imageUploader = new TwitPicUploader(options);
+                    TwitPicOptions twitpicOpt = new TwitPicOptions();
+                    twitpicOpt.Username = Program.conf.TwitPicUserName;
+                    twitpicOpt.Password = Program.conf.TwitPicPassword;
+                    twitpicOpt.TwitPicUploadType = Program.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Program.conf.TwitPicShowFull;
+                    imageUploader = new TwitPicUploader(twitpicOpt);
+                    break;
+                case ImageDestType.TWITSNAPS:
+                    TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
+                    twitsnapsOpt.Username = Program.conf.TwitPicUserName;
+                    twitsnapsOpt.Password = Program.conf.TwitPicPassword;
+                    imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
             }
 

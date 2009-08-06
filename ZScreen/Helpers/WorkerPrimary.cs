@@ -38,6 +38,7 @@ using ZSS.IndexersLib;
 using ZSS.Properties;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
+using ZSS.ImageUploadersLib;
 
 namespace ZScreenLib
 {
@@ -371,8 +372,7 @@ namespace ZScreenLib
 
                     if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                     {
-                        UploadManager.AddTask(task);
-                        UploadManager.SetClipboardText();
+                        UploadManager.SetClipboardText(task);
                     }
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
@@ -383,7 +383,7 @@ namespace ZScreenLib
                     }
 
                     this.mZScreen.niTray.Text = this.mZScreen.Text;
-                    if (UploadManager.UploadInfos.Count > 1)
+                    if (UploadManager.UploadInfoList.Count > 1)
                     {
                         this.mZScreen.niTray.Icon = Resources.zss_busy;
                     }
@@ -995,7 +995,7 @@ namespace ZScreenLib
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Program.conf.IndexerConfig);
                     Program.conf.IndexerConfig.FolderList.Clear();
-                    string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
+                    string ext = (task.MyTextUploader.GetType() == typeof(ZSS.TextUploadersLib.FTPUploader)) ? ".html" : ".log";
                     string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
                     settings.GetConfig().FolderList.Add(task.MyText.LocalString);
