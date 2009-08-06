@@ -541,7 +541,7 @@ namespace ZScreenLib
             try
             {
                 task.CaptureActiveWindow();
-                WriteImage(task);
+                WriteImage(ref task);
                 PublishImage(ref task);
             }
             catch (ArgumentOutOfRangeException aor)
@@ -595,7 +595,7 @@ namespace ZScreenLib
 
                 if (task.MyImage != null)
                 {
-                    WriteImage(task);
+                    WriteImage(ref task);
                     PublishImage(ref task);
                 }
             }
@@ -620,7 +620,7 @@ namespace ZScreenLib
         public void CaptureScreen(ref MainAppTask task)
         {
             task.CaptureScreen();
-            WriteImage(task);
+            WriteImage(ref task);
             PublishImage(ref task);
         }
 
@@ -657,13 +657,23 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the image</param>
-        private void StartWorkerPictures(MainAppTask.Jobs job, string localFilePath)
+        public void StartWorkerPictures(MainAppTask.Jobs job, string localFilePath)
         {
             MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(localFilePath);
             t.SetLocalFilePath(localFilePath);
+            t.MyWorker.RunWorkerAsync(t);
+        }
+        
+        public void StartWorkerPictures(MainAppTask.Jobs job, Image img)
+        {
+        	MainAppTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.PICTURES;
+            t.MakeTinyURL = Adapter.MakeTinyURL();
+            t.SetImage(img);
+            WriteImage(ref t);            
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -1044,7 +1054,11 @@ namespace ZScreenLib
             return false;
         }
 
-        public void WriteImage(MainAppTask t)
+        /// <summary>
+        /// Writes MyImage object in a WorkerTask into a file
+        /// </summary>
+        /// <param name="t">WorkerTask</param>
+        public void WriteImage(ref MainAppTask t)
         {
             if (t.MyImage != null)
             {
@@ -1063,7 +1077,7 @@ namespace ZScreenLib
                 t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, filePath));
             }
         }
-
+        
         public void AddHistoryItem(HistoryItem hi)
         {
             mZScreen.lbHistory.Items.Insert(0, hi);

@@ -1,3 +1,5 @@
+2.26.0.0 Ability to capture Webpages using a Hotkey {Jaex}
+
 Version 2.25 - 20090806
 
 2.25.01.2 Workarounds for errors on some Windows 7 systems during ZScreen [Issue 107] {McoreD}

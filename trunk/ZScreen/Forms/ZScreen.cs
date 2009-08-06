@@ -3876,10 +3876,11 @@ namespace ZScreenLib
             webPageCapture.DownloadPage(txtWebPageURL.Text);
         }
 
-        private void webPageCapture_DownloadCompleted(Image image)
+        private void webPageCapture_DownloadCompleted(Image img)
         {
-            pbWebPageImage.Image = image;
+            pbWebPageImage.Image = img;
             btnWebPageCaptureImage.Enabled = true;
+            Program.Worker.StartWorkerPictures(MainAppTask.Jobs.UPLOAD_IMAGE, img);
         }
 
         private void cbWebPageUseCustomSize_CheckedChanged(object sender, EventArgs e)
