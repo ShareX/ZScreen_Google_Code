@@ -41,6 +41,28 @@ namespace ZScreenLib
     /// </summary>
     public static class Adapter
     {
+        public static void AddToClipboardByDoubleClick(Control tp)
+        {
+            Control ctl = tp.GetNextControl(tp, true);
+            while (ctl != null)
+            {
+                if (ctl.GetType() == typeof(TextBox))
+                {
+                    ctl.DoubleClick += TextBox_DoubleClick;
+                }
+                ctl = tp.GetNextControl(ctl, true);
+            }
+        }
+
+        public static void TextBox_DoubleClick(object sender, EventArgs e)
+        {
+            TextBox tb = ((TextBox)sender);
+            if (!string.IsNullOrEmpty(tb.Text))
+            {
+                Clipboard.SetText(tb.Text);
+            }
+        }
+
         public static void TestFTPAccount(FTPAccount acc)
         {
             string msg, path = FTPHelpers.CombineURL(acc.FTPAddress, acc.Path);

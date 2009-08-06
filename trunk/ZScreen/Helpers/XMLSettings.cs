@@ -415,7 +415,8 @@ namespace ZScreenLib
         public Point ActionToolbarLocation { get; set; }
 
         // Options / General
-
+        [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
+        public bool ShowClipboardModeChooser { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]

@@ -32,6 +32,7 @@ using ZSS.TextUploadersLib;
 using System.Runtime.InteropServices;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS;
+using ZSS.ImageUploadersLib;
 
 namespace ZScreenLib
 {

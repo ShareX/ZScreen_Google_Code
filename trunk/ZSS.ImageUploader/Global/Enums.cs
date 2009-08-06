@@ -23,7 +23,7 @@
 
 using System.ComponentModel;
 
-namespace ZSS
+namespace ZSS.ImageUploadersLib
 {
     public enum UploadMode
     {
@@ -67,6 +67,8 @@ namespace ZSS
         IMAGESHACK,
         [Description("TwitPic")]
         TWITPIC,
+        [Description("TwitSnaps")]
+        TWITSNAPS,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,
         [Description("MindTouch Deki Wiki")]

@@ -68,6 +68,7 @@
     <Compile Include="Helpers\DekiWikiAccount.cs" />
     <Compile Include="Helpers\DekiWikiHistory.cs" />
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />
+    <Compile Include="ImageUploaders\TwitSnapsUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageUploader.cs" />
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
