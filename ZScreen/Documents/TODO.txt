@@ -1,8 +1,4 @@
-﻿Post Upload Wizard [Issue 106]
-	Provide Clipboard Upload modes in a Form 
-	Double Click each textBox and copy URL to Clipboard
-	
-Image Destination for Printer
+﻿Image Destination for Printer
 
 Hotkey for Indexer
 		
