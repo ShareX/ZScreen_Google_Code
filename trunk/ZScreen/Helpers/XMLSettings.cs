@@ -248,8 +248,8 @@ namespace ZScreenLib
 
         // TwitPic
 
-        public string TwitPicUserName = "";
-        public string TwitPicPassword = "";
+        public string TwitterUserName = "";
+        public string TwitterPassword = "";
         public TwitPicUploadType TwitPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
         public bool TwitPicShowFull = true;
         public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;

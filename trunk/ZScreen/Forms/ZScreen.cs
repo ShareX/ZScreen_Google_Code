@@ -587,8 +587,8 @@ namespace ZScreenLib
 
             // TwitPic
 
-            txtTwitPicUserName.Text = Program.conf.TwitPicUserName;
-            txtTwitPicPassword.Text = Program.conf.TwitPicPassword;
+            txtTwitPicUserName.Text = Program.conf.TwitterUserName;
+            txtTwitPicPassword.Text = Program.conf.TwitterPassword;
             if (cboTwitPicUploadMode.Items.Count == 0)
             {
                 cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
@@ -3594,7 +3594,7 @@ namespace ZScreenLib
         {
             if (mGuiIsReady)
             {
-                Program.conf.TwitPicUserName = txtTwitPicUserName.Text;
+                Program.conf.TwitterUserName = txtTwitPicUserName.Text;
             }
         }
 
@@ -3602,7 +3602,7 @@ namespace ZScreenLib
         {
             if (mGuiIsReady)
             {
-                Program.conf.TwitPicPassword = txtTwitPicPassword.Text;
+                Program.conf.TwitterPassword = txtTwitPicPassword.Text;
             }
         }
 

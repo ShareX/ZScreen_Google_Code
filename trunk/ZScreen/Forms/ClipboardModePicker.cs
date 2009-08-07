@@ -30,26 +30,32 @@ namespace ZScreenLib
                 int count = 0;
                 foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
                 {
-                    Label lbl = new Label();
-                    lbl.Location = new Point(20, count * yGap + yOffset);
-                    lbl.AutoSize = true;
-                    lbl.Text = type.GetDescription();
-                    this.Controls.Add(lbl);
-
-                    TextBox txtUrl = new TextBox();
-                    txtUrl.Location = new Point(170, count * yGap + yOffset);
-                    txtUrl.Size = new Size(320, 20);
-                    txtUrl.Text = task.ImageManager.GetUrlByType(type);
-                    this.Controls.Add(txtUrl);
-
-                    Button btnCopy = new Button();
-                    btnCopy.Text = "Copy";
-                    btnCopy.Tag = txtUrl;
-                    btnCopy.AutoSize = true;
-                    btnCopy.Location = new Point(txtUrl.Size.Width + 180, count * yGap + yOffset);
-                    btnCopy.Click += new EventHandler(btnCopy_Click);
-                    this.Controls.Add(btnCopy);
-                    count++;
+                    string url = task.ImageManager.GetUrlByType(type);
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        // URL Label
+                        Label lbl = new Label();
+                        lbl.Location = new Point(20, count * yGap + yOffset);
+                        lbl.AutoSize = true;
+                        lbl.Text = type.GetDescription();
+                        this.Controls.Add(lbl);
+                        // URL TextBox
+                        TextBox txtUrl = new TextBox();
+                        txtUrl.Location = new Point(170, count * yGap + yOffset);
+                        txtUrl.Size = new Size(320, 20);
+                        txtUrl.Text = url;
+                        this.Controls.Add(txtUrl);
+                        // Copy Button
+                        Button btnCopy = new Button();
+                        btnCopy.Text = "Copy";
+                        btnCopy.Tag = txtUrl;
+                        btnCopy.AutoSize = true;
+                        btnCopy.Location = new Point(txtUrl.Size.Width + 180, count * yGap + yOffset);
+                        btnCopy.Click += new EventHandler(btnCopy_Click);
+                        this.Controls.Add(btnCopy);
+                        // Offset
+                        count++;
+                    }
                 }
 
                 int yBottomControl = count * yGap + yOffset * 2;
