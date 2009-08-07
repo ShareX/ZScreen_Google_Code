@@ -86,8 +86,8 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.Username = Program.conf.TwitPicUserName;
-                    twitpicOpt.Password = Program.conf.TwitPicPassword;
+                    twitpicOpt.Username = Program.conf.TwitterUserName;
+                    twitpicOpt.Password = Program.conf.TwitterPassword;
                     twitpicOpt.TwitPicUploadType = Program.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
                     twitpicOpt.ShowFull = Program.conf.TwitPicShowFull;
@@ -95,8 +95,8 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.TWITSNAPS:
                     TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.Username = Program.conf.TwitPicUserName;
-                    twitsnapsOpt.Password = Program.conf.TwitPicPassword;
+                    twitsnapsOpt.Username = Program.conf.TwitterUserName;
+                    twitsnapsOpt.Password = Program.conf.TwitterPassword;
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
             }

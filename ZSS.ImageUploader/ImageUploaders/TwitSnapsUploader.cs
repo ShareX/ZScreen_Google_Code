@@ -45,7 +45,7 @@ namespace ZSS.ImageUploadersLib
 
         private const string UploadAndPostLink = "http://www.twitsnaps.com/api.php";
 
-        public override string Name { get { return "TwitPic"; } }
+        public override string Name { get { return "TwitSnaps"; } }
 
         public TwitSnapsUploader(TwitSnapsOptions options)
         {
@@ -65,7 +65,7 @@ namespace ZSS.ImageUploadersLib
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-            arguments.Add("username", this.Options.Username);
+            arguments.Add("user_name", this.Options.Username);
             arguments.Add("password", this.Options.Password);
 
             if (!string.IsNullOrEmpty(msg))
@@ -74,7 +74,7 @@ namespace ZSS.ImageUploadersLib
                 url = UploadAndPostLink;
             }
 
-            string source = PostImage(image, url, "media", arguments);
+            string source = PostImage(image, url, "file", arguments);
 
             return ParseResult(source);
         }

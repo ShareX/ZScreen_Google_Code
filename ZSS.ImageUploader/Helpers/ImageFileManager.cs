@@ -141,7 +141,13 @@ namespace ZSS.ImageUploadersLib.Helpers
 
         public string GetLinkedThumbnailForumUrl()
         {
-            return string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", GetFullImageUrl(), GetThumbnailUrl());
+            string full = GetFullImageUrl();
+            string thumb = GetThumbnailUrl();
+            if (!string.IsNullOrEmpty(full) && !string.IsNullOrEmpty(thumb))
+            {
+                return string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", full, thumb);
+            }
+            return string.Empty;            
         }
 
         public string GetLinkedThumbnailWikiUrl()
