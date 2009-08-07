@@ -65,7 +65,7 @@ namespace ZSS.ImageUploadersLib
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-            arguments.Add("user_name", this.Options.Username);
+            arguments.Add("user_name", this.Options.UserName);
             arguments.Add("password", this.Options.Password);
 
             if (!string.IsNullOrEmpty(msg))

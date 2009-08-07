@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZSS.ImageUploadersLib;
+using System.Diagnostics;
+using System.IO;
 
 namespace ZScreenLib
 {
@@ -21,7 +23,7 @@ namespace ZScreenLib
             this.mTask = task;
             this.Text = task.FileName.ToString() + " - " + task.GetDescription();
 
-            if (task.ImageManager != null)
+            if (task != null && task.ImageManager != null)
             {
                 int xGap = 10;
                 int yOffset = 20;
@@ -60,16 +62,23 @@ namespace ZScreenLib
 
                 int yBottomControl = count * yGap + yOffset * 2;
 
-                Button btnPreview = new Button();
-                btnPreview.Text = "Open &Preview";
-                btnPreview.Location = new Point(20, yBottomControl);
-                btnPreview.AutoSize = true;
-                btnPreview.Click += new EventHandler(btnPreview_Click);
-                this.Controls.Add(btnPreview);
+                Button btnOpenLocal = new Button();
+                btnOpenLocal.Text = "Open &Local file";
+                btnOpenLocal.Location = new Point(20, yBottomControl);
+                btnOpenLocal.AutoSize = true;
+                btnOpenLocal.Click += new EventHandler(btnPreview_Click);
+                this.Controls.Add(btnOpenLocal);
+
+                Button btnOpenRemote = new Button();
+                btnOpenRemote.Text = "Open &Remote file";
+                btnOpenRemote.Location = new Point(20 + btnOpenLocal.Width + xGap, yBottomControl);
+                btnOpenRemote.AutoSize = true;
+                btnOpenRemote.Click += new EventHandler(btnOpenRemote_Click);
+                this.Controls.Add(btnOpenRemote);
 
                 Button btnDeleteClose = new Button();
-                btnDeleteClose.Text = "&Delete Local File and Close";
-                btnDeleteClose.Location = new Point(20 + btnPreview.Width + xGap, yBottomControl);
+                btnDeleteClose.Text = "&Delete Local file and Close";
+                btnDeleteClose.Location = new Point(btnOpenRemote.Location.X + btnOpenRemote.Width + xGap, yBottomControl);
                 btnDeleteClose.AutoSize = true;
                 btnDeleteClose.Click += new EventHandler(btnDeleteClose_Click);
                 this.Controls.Add(btnDeleteClose);
@@ -81,8 +90,16 @@ namespace ZScreenLib
                 btnClose.Click += new EventHandler(btnClose_Click);
                 this.Controls.Add(btnClose);
 
-                this.Height = yBottomControl + btnPreview.Size.Height + yOffset * 2;
+                this.Height = yBottomControl + btnOpenLocal.Size.Height + yOffset * 2;
                 Adapter.AddToClipboardByDoubleClick(this);
+            }
+        }
+
+        void btnOpenRemote_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(mTask.RemoteFilePath))
+            {
+                Process.Start(mTask.RemoteFilePath);
             }
         }
 
@@ -93,9 +110,9 @@ namespace ZScreenLib
 
         void btnDeleteClose_Click(object sender, EventArgs e)
         {
-            if (mTask != null && System.IO.File.Exists(mTask.LocalFilePath))
+            if (mTask != null && File.Exists(mTask.LocalFilePath))
             {
-                System.IO.File.Delete(mTask.LocalFilePath);
+                File.Delete(mTask.LocalFilePath);
             }
             btnClose_Click(sender, e);
         }
@@ -104,7 +121,7 @@ namespace ZScreenLib
         {
             if (mTask != null && !string.IsNullOrEmpty(mTask.LocalFilePath))
             {
-                System.Diagnostics.Process.Start(mTask.LocalFilePath);
+                Process.Start(mTask.LocalFilePath);
             }
         }
 

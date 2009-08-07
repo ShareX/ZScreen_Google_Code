@@ -69,6 +69,8 @@ namespace ZSS.ImageUploadersLib
         TWITPIC,
         [Description("TwitSnaps")]
         TWITSNAPS,
+        [Description("yFrog")]
+        YFROG,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,
         [Description("MindTouch Deki Wiki")]

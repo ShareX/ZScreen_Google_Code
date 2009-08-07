@@ -85,6 +85,7 @@ namespace ZScreenLib
             this.llblHelp = new System.Windows.Forms.LinkLabel();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
+            this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -104,12 +105,14 @@ namespace ZScreenLib
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
+            this.ucFTPAccounts = new ZScreenLib.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbAutoSwitchFTP = new System.Windows.Forms.CheckBox();
             this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
             this.tpMindTouch = new System.Windows.Forms.TabPage();
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
+            this.ucMindTouchAccounts = new ZScreenLib.UserControls.AccountsControl();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.gbTinyPic = new System.Windows.Forms.GroupBox();
             this.btnGalleryTinyPic = new System.Windows.Forms.Button();
@@ -375,8 +378,10 @@ namespace ZScreenLib
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
+            this.ucTextUploaders = new ZScreenLib.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ucUrlShorteners = new ZScreenLib.UserControls.TextUploadersControl();
+            this.tpTreeGUI = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
@@ -442,6 +447,7 @@ namespace ZScreenLib
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.chkProxyEnable = new System.Windows.Forms.CheckBox();
+            this.ucProxyAccounts = new ZScreenLib.UserControls.AccountsControl();
             this.tpInteraction = new System.Windows.Forms.TabPage();
             this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
             this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
@@ -499,12 +505,7 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
-            this.ucFTPAccounts = new ZScreenLib.UserControls.AccountsControl();
-            this.ucMindTouchAccounts = new ZScreenLib.UserControls.AccountsControl();
-            this.ucTextUploaders = new ZScreenLib.UserControls.TextUploadersControl();
-            this.ucUrlShorteners = new ZScreenLib.UserControls.TextUploadersControl();
-            this.ucProxyAccounts = new ZScreenLib.UserControls.AccountsControl();
+            this.tpYfrog = new System.Windows.Forms.TabPage();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -604,7 +605,7 @@ namespace ZScreenLib
             this.tcTextUploaders.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tpTreeGUI.SuspendLayout();
             this.tpTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tcHistory.SuspendLayout();
@@ -1101,6 +1102,21 @@ namespace ZScreenLib
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
             // 
+            // nudtScreenshotDelay
+            // 
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
+            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudtScreenshotDelay.RealValue = ((long)(0));
+            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudtScreenshotDelay.TabIndex = 121;
+            this.nudtScreenshotDelay.Tag = "Test";
+            this.nudtScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudtScreenshotDelay.Value = ((long)(0));
+            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudtScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            // 
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
@@ -1341,6 +1357,16 @@ namespace ZScreenLib
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
             // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(785, 319);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
             // gbFTPSettings
             // 
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -1414,6 +1440,16 @@ namespace ZScreenLib
             this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
             this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
             this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
+            // 
+            // ucMindTouchAccounts
+            // 
+            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(785, 319);
+            this.ucMindTouchAccounts.TabIndex = 0;
             // 
             // tpTinyPic
             // 
@@ -1625,6 +1661,7 @@ namespace ZScreenLib
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tcTwitter.Controls.Add(this.tpTwitPic);
             this.tcTwitter.Controls.Add(this.tpTwitSnaps);
+            this.tcTwitter.Controls.Add(this.tpYfrog);
             this.tcTwitter.Location = new System.Drawing.Point(8, 120);
             this.tcTwitter.Name = "tcTwitter";
             this.tcTwitter.SelectedIndex = 0;
@@ -1661,18 +1698,18 @@ namespace ZScreenLib
             this.lblTwitPicThumbnailMode.AutoSize = true;
             this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 77);
             this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
-            this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(88, 13);
+            this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(89, 13);
             this.lblTwitPicThumbnailMode.TabIndex = 15;
-            this.lblTwitPicThumbnailMode.Text = "Thumbnail mode:";
+            this.lblTwitPicThumbnailMode.Text = "Thumbnail Mode:";
             // 
             // lblTwitPicUploadMode
             // 
             this.lblTwitPicUploadMode.AutoSize = true;
             this.lblTwitPicUploadMode.Location = new System.Drawing.Point(16, 21);
             this.lblTwitPicUploadMode.Name = "lblTwitPicUploadMode";
-            this.lblTwitPicUploadMode.Size = new System.Drawing.Size(79, 13);
+            this.lblTwitPicUploadMode.Size = new System.Drawing.Size(80, 13);
             this.lblTwitPicUploadMode.TabIndex = 12;
-            this.lblTwitPicUploadMode.Text = "Upload method";
+            this.lblTwitPicUploadMode.Text = "Upload Method";
             // 
             // cbTwitPicThumbnailMode
             // 
@@ -1689,9 +1726,9 @@ namespace ZScreenLib
             this.cbTwitPicShowFull.AutoSize = true;
             this.cbTwitPicShowFull.Location = new System.Drawing.Point(20, 48);
             this.cbTwitPicShowFull.Name = "cbTwitPicShowFull";
-            this.cbTwitPicShowFull.Size = new System.Drawing.Size(121, 17);
+            this.cbTwitPicShowFull.Size = new System.Drawing.Size(94, 17);
             this.cbTwitPicShowFull.TabIndex = 13;
-            this.cbTwitPicShowFull.Text = "Show TwitPic full url";
+            this.cbTwitPicShowFull.Text = "Show full URL";
             this.ttZScreen.SetToolTip(this.cbTwitPicShowFull, "Append /full to the url to show the image in full size");
             this.cbTwitPicShowFull.UseVisualStyleBackColor = true;
             this.cbTwitPicShowFull.CheckedChanged += new System.EventHandler(this.cbTwitPicShowFull_CheckedChanged);
@@ -4469,7 +4506,7 @@ namespace ZScreenLib
             // 
             this.tcTextUploaders.Controls.Add(this.tpTextUploaders);
             this.tcTextUploaders.Controls.Add(this.tpURLShorteners);
-            this.tcTextUploaders.Controls.Add(this.tabPage1);
+            this.tcTextUploaders.Controls.Add(this.tpTreeGUI);
             this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcTextUploaders.Name = "tcTextUploaders";
@@ -4488,6 +4525,14 @@ namespace ZScreenLib
             this.tpTextUploaders.Text = "Text Uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
             // 
+            // ucTextUploaders
+            // 
+            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.ucTextUploaders.Name = "ucTextUploaders";
+            this.ucTextUploaders.Size = new System.Drawing.Size(785, 404);
+            this.ucTextUploaders.TabIndex = 0;
+            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.ucUrlShorteners);
@@ -4499,16 +4544,24 @@ namespace ZScreenLib
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // ucUrlShorteners
             // 
-            this.tabPage1.Controls.Add(this.pgIndexer);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(791, 410);
-            this.tabPage1.TabIndex = 15;
-            this.tabPage1.Text = "Directory Indexer";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
+            this.ucUrlShorteners.Name = "ucUrlShorteners";
+            this.ucUrlShorteners.Size = new System.Drawing.Size(785, 404);
+            this.ucUrlShorteners.TabIndex = 0;
+            // 
+            // tpTreeGUI
+            // 
+            this.tpTreeGUI.Controls.Add(this.pgIndexer);
+            this.tpTreeGUI.Location = new System.Drawing.Point(4, 22);
+            this.tpTreeGUI.Name = "tpTreeGUI";
+            this.tpTreeGUI.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTreeGUI.Size = new System.Drawing.Size(791, 410);
+            this.tpTreeGUI.TabIndex = 15;
+            this.tpTreeGUI.Text = "Directory Indexer";
+            this.tpTreeGUI.UseVisualStyleBackColor = true;
             // 
             // pgIndexer
             // 
@@ -5285,6 +5338,16 @@ namespace ZScreenLib
             this.chkProxyEnable.UseVisualStyleBackColor = false;
             this.chkProxyEnable.CheckedChanged += new System.EventHandler(this.chkProxyEnable_CheckedChanged);
             // 
+            // ucProxyAccounts
+            // 
+            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucProxyAccounts.Name = "ucProxyAccounts";
+            this.ucProxyAccounts.Size = new System.Drawing.Size(785, 320);
+            this.ucProxyAccounts.TabIndex = 0;
+            // 
             // tpInteraction
             // 
             this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
@@ -5954,66 +6017,15 @@ namespace ZScreenLib
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // nudtScreenshotDelay
+            // tpYfrog
             // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Tag = "Test";
-            this.nudtScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(785, 319);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
-            // ucMindTouchAccounts
-            // 
-            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
-            this.ucMindTouchAccounts.Size = new System.Drawing.Size(785, 319);
-            this.ucMindTouchAccounts.TabIndex = 0;
-            // 
-            // ucTextUploaders
-            // 
-            this.ucTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.ucTextUploaders.Name = "ucTextUploaders";
-            this.ucTextUploaders.Size = new System.Drawing.Size(785, 404);
-            this.ucTextUploaders.TabIndex = 0;
-            // 
-            // ucUrlShorteners
-            // 
-            this.ucUrlShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUrlShorteners.Location = new System.Drawing.Point(3, 3);
-            this.ucUrlShorteners.Name = "ucUrlShorteners";
-            this.ucUrlShorteners.Size = new System.Drawing.Size(785, 404);
-            this.ucUrlShorteners.TabIndex = 0;
-            // 
-            // ucProxyAccounts
-            // 
-            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(785, 320);
-            this.ucProxyAccounts.TabIndex = 0;
+            this.tpYfrog.Location = new System.Drawing.Point(4, 22);
+            this.tpYfrog.Name = "tpYfrog";
+            this.tpYfrog.Padding = new System.Windows.Forms.Padding(3);
+            this.tpYfrog.Size = new System.Drawing.Size(768, 260);
+            this.tpYfrog.TabIndex = 2;
+            this.tpYfrog.Text = "yFrog";
+            this.tpYfrog.UseVisualStyleBackColor = true;
             // 
             // ZScreen
             // 
@@ -6172,7 +6184,7 @@ namespace ZScreenLib
             this.tcTextUploaders.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tpTreeGUI.ResumeLayout(false);
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
@@ -6655,7 +6667,7 @@ namespace ZScreenLib
         private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;
         private System.Windows.Forms.Label lblURLShortener;
         private System.Windows.Forms.ComboBox cboURLShorteners;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tpTreeGUI;
         private System.Windows.Forms.PropertyGrid pgIndexer;
         private System.Windows.Forms.CheckBox cbSelectedWindowCaptureObjects;
         private System.Windows.Forms.Label lblWatermarkOffsetPixel;
@@ -6699,6 +6711,7 @@ namespace ZScreenLib
         private System.Windows.Forms.TabControl tcTwitter;
         private System.Windows.Forms.TabPage tpTwitPic;
         private System.Windows.Forms.TabPage tpTwitSnaps;
+        private System.Windows.Forms.TabPage tpYfrog;
 
     }
 }

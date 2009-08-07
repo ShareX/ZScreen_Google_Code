@@ -34,12 +34,13 @@ using System.Security.Cryptography;
 using ZSS.ImageUploadersLib.Helpers;
 using System.Xml.Serialization;
 using System.Windows.Forms;
+using System.Collections.Specialized;
 
 namespace ZSS.ImageUploadersLib
 {
     public abstract class ImageUploaderOptions
     {
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
     }
 
@@ -377,5 +378,6 @@ namespace ZSS.ImageUploadersLib
             }
             return sb.ToString();
         }
+
     }
 }
