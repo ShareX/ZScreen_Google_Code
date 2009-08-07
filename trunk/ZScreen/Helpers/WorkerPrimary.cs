@@ -233,6 +233,33 @@ namespace ZScreenLib
             }
         }
 
+        public void CaptureWebpage(MainAppTask task)
+        {
+            if (task != null && FileSystem.IsValidLink(task.MyText.LocalString))
+            {
+                WebPageCapture webPageCapture;
+                if (Program.conf.WebPageUseCustomSize)
+                {
+                    webPageCapture = new WebPageCapture(Program.conf.WebPageWidth, Program.conf.WebPageHeight);
+                }
+                else
+                {
+                    webPageCapture = new WebPageCapture();
+                }
+
+                webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
+                webPageCapture.DownloadPage(task.MyText.LocalString);
+            }
+        }
+        private void webPageCapture_DownloadCompleted(Image img)
+        {
+            if (img != null)
+            {
+                Bitmap bmp = new Bitmap(img);
+                
+            }
+        }
+
         #endregion
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -666,14 +693,14 @@ namespace ZScreenLib
             t.SetLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
         }
-        
+
         public void StartWorkerPictures(MainAppTask.Jobs job, Image img)
         {
-        	MainAppTask t = CreateTask(job);
+            MainAppTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
-            WriteImage(ref t);            
+            WriteImage(ref t);
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -1077,7 +1104,7 @@ namespace ZScreenLib
                 t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, filePath));
             }
         }
-        
+
         public void AddHistoryItem(HistoryItem hi)
         {
             mZScreen.lbHistory.Items.Insert(0, hi);

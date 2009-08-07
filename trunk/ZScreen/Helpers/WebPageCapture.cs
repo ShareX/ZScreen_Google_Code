@@ -11,6 +11,7 @@ namespace ZScreenLib
     {
         public event ImageEventHandler DownloadCompleted;
         public delegate void ImageEventHandler(Image image);
+        
         public Size BrowserSize { get; set; }
         public string URL { get; set; }
         public Image Image { get; private set; }

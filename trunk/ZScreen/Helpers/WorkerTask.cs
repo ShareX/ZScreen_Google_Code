@@ -65,7 +65,9 @@ namespace ZScreenLib
             [Description("Upload Image")]
             UPLOAD_IMAGE,
             [Description("Custom Uploader Test")]
-            CUSTOM_UPLOADER_TEST
+            CUSTOM_UPLOADER_TEST,
+            [Description("Webpage Capture")]
+            WEBPAGE_CAPTURE
         }
 
         public enum ProgressType : int

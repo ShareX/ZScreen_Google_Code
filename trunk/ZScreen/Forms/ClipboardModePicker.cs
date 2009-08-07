@@ -12,22 +12,22 @@ namespace ZScreenLib
 {
     public partial class ClipboardModePicker : Form
     {
-    	private MainAppTask mTask = null;
-    	
+        private MainAppTask mTask = null;
+
         public ClipboardModePicker(MainAppTask task)
         {
             InitializeComponent();
-            
+
             this.mTask = task;
             this.Text = task.FileName.ToString() + " - " + task.GetDescription();
 
             if (task.ImageManager != null)
             {
-            	int xOffset = 25;
+                int xGap = 10;
                 int yOffset = 20;
                 int yGap = 25;
-                    
-            	int count = 0;
+
+                int count = 0;
                 foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
                 {
                     Label lbl = new Label();
@@ -49,55 +49,57 @@ namespace ZScreenLib
                     btnCopy.Location = new Point(txtUrl.Size.Width + 180, count * yGap + yOffset);
                     btnCopy.Click += new EventHandler(btnCopy_Click);
                     this.Controls.Add(btnCopy);
-                    count++;              
+                    count++;
                 }
-                
-                int yBottomControl = count * yGap + yOffset;
-                
+
+                int yBottomControl = count * yGap + yOffset * 2;
+
                 Button btnPreview = new Button();
                 btnPreview.Text = "Open &Preview";
                 btnPreview.Location = new Point(20, yBottomControl);
                 btnPreview.AutoSize = true;
                 btnPreview.Click += new EventHandler(btnPreview_Click);
                 this.Controls.Add(btnPreview);
-                
-                Button btnDeleteClose = new Button(); 
-                btnDeleteClose.Text = "&Delete and Close"; 
-                btnDeleteClose.Location = new Point(20 + btnPreview.Width + xOffset, yBottomControl);
+
+                Button btnDeleteClose = new Button();
+                btnDeleteClose.Text = "&Delete Local File and Close";
+                btnDeleteClose.Location = new Point(20 + btnPreview.Width + xGap, yBottomControl);
                 btnDeleteClose.AutoSize = true;
                 btnDeleteClose.Click += new EventHandler(btnDeleteClose_Click);
                 this.Controls.Add(btnDeleteClose);
-                
-                Button btnClose = new Button(); 
-                btnClose.Text = "&Close"; 
-                btnClose.Location = new Point(btnDeleteClose.Location.X + btnDeleteClose.Width + xOffset, yBottomControl);
-                btnClose.AutoSize = true; 
+
+                Button btnClose = new Button();
+                btnClose.Text = "&Close";
+                btnClose.Location = new Point(btnDeleteClose.Location.X + btnDeleteClose.Width + xGap, yBottomControl);
+                btnClose.AutoSize = true;
                 btnClose.Click += new EventHandler(btnClose_Click);
                 this.Controls.Add(btnClose);
-                
-                this.Height = yBottomControl + 75;
+
+                this.Height = yBottomControl + btnPreview.Size.Height + yOffset * 2;
                 Adapter.AddToClipboardByDoubleClick(this);
             }
         }
 
         void btnClose_Click(object sender, EventArgs e)
         {
-        	this.Close();
+            this.Close();
         }
 
         void btnDeleteClose_Click(object sender, EventArgs e)
         {
-        	if ( mTask != null && System.IO.File.Exists(mTask.LocalFilePath) ) {
-        		System.IO.File.Delete(mTask.LocalFilePath);
-        	}
-        	this.Close();
+            if (mTask != null && System.IO.File.Exists(mTask.LocalFilePath))
+            {
+                System.IO.File.Delete(mTask.LocalFilePath);
+            }
+            btnClose_Click(sender, e);
         }
 
         void btnPreview_Click(object sender, EventArgs e)
         {
-        	if ( mTask != null && !string.IsNullOrEmpty(mTask.LocalFilePath) ) {
-				System.Diagnostics.Process.Start(mTask.LocalFilePath);        		
-        	}        	
+            if (mTask != null && !string.IsNullOrEmpty(mTask.LocalFilePath))
+            {
+                System.Diagnostics.Process.Start(mTask.LocalFilePath);
+            }
         }
 
         void btnCopy_Click(object sender, EventArgs e)
