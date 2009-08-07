@@ -168,7 +168,7 @@ namespace ZScreenLib
 
         public static void AppendDebug(string msg)
         {
-        	// http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
+            // http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
             string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss - ") + msg;
             Console.WriteLine(msg);
             mDebug.AppendLine(line);
@@ -437,7 +437,12 @@ namespace ZScreenLib
         /// <returns></returns>
         public static bool IsValidLink(string url)
         {
-            return Uri.IsWellFormedUriString(url, UriKind.Absolute);
+            bool b = false;
+            if (!string.IsNullOrEmpty(url))
+            {
+                b = Uri.IsWellFormedUriString(url, UriKind.Absolute);
+            }
+            return b;
         }
 
         public static bool ManageImageFolders(string path)
