@@ -113,11 +113,18 @@ namespace ZScreenLib
             Button btn = sender as Button;
             TextBox txtUrl = btn.Tag as TextBox;
             Clipboard.SetText(txtUrl.Text);
+            tmrClose.Stop();
+            tmrClose.Start();
         }
 
         private void ClipboardModePicker_Shown(object sender, EventArgs e)
         {
             User32.ActivateWindow(this.Handle);
+        }
+
+        private void tmrClose_Tick(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

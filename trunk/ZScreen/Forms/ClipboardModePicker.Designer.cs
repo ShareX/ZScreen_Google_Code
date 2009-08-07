@@ -28,7 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.tmrClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // tmrClose
+            // 
+            this.tmrClose.Enabled = true;
+            this.tmrClose.Interval = 60000;
+            this.tmrClose.Tick += new System.EventHandler(this.tmrClose_Tick);
             // 
             // ClipboardModePicker
             // 
@@ -47,6 +55,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrClose;
 
     }
 }
