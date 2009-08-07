@@ -86,7 +86,7 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.Username = Program.conf.TwitterUserName;
+                    twitpicOpt.UserName = Program.conf.TwitterUserName;
                     twitpicOpt.Password = Program.conf.TwitterPassword;
                     twitpicOpt.TwitPicUploadType = Program.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
@@ -95,9 +95,17 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.TWITSNAPS:
                     TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.Username = Program.conf.TwitterUserName;
+                    twitsnapsOpt.UserName = Program.conf.TwitterUserName;
                     twitsnapsOpt.Password = Program.conf.TwitterPassword;
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
+                    break;
+                case ImageDestType.YFROG:
+                    YfrogOptions yfrogOp = new YfrogOptions(Program.IMAGESHACK_KEY);
+                    yfrogOp.UserName = Program.conf.TwitterUserName;
+                    yfrogOp.Password = Program.conf.TwitterPassword;
+                    yfrogOp.Source = Application.ProductName;
+                    yfrogOp.UploadType = Program.conf.YfrogUploadMode;
+                    imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
 
@@ -107,6 +115,8 @@ namespace ZScreenLib
                 case ImageDestType.IMAGESHACK:
                 case ImageDestType.TINYPIC:
                 case ImageDestType.TWITPIC:
+                case ImageDestType.TWITSNAPS:
+                case ImageDestType.YFROG:
                     imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
                     break;
             }

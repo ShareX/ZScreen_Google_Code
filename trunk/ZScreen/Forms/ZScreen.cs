@@ -593,11 +593,11 @@ namespace ZScreenLib
 
             txtTwitPicUserName.Text = Program.conf.TwitterUserName;
             txtTwitPicPassword.Text = Program.conf.TwitterPassword;
-            if (cboTwitPicUploadMode.Items.Count == 0)
+            if (cboTwitterUploadMode.Items.Count == 0)
             {
-                cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
+                cboTwitterUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
             }
-            cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwitPicUploadMode;
+            cboTwitterUploadMode.SelectedIndex = (int)Program.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Program.conf.TwitPicShowFull;
             if (cbTwitPicThumbnailMode.Items.Count == 0)
             {
@@ -3615,7 +3615,7 @@ namespace ZScreenLib
 
         private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
+            Program.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitterUploadMode.SelectedIndex;
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)

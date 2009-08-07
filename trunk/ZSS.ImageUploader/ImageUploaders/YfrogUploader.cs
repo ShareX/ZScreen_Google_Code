@@ -36,7 +36,7 @@ using ZSS.ImageUploadersLib.Helpers;
 
 namespace ZSS.ImageUploadersLib
 {
-    public enum TwitPicThumbnailType
+    public enum YfrogThumbnailType
     {
         [Description("Mini Thumbnail")]
         Mini,
@@ -44,7 +44,7 @@ namespace ZSS.ImageUploadersLib
         Thumb
     }
 
-    public enum TwitPicUploadType
+    public enum YfrogUploadType
     {
         [Description("Upload Image")]
         UPLOAD_IMAGE_ONLY,
@@ -52,34 +52,41 @@ namespace ZSS.ImageUploadersLib
         UPLOAD_IMAGE_AND_TWITTER
     }
 
-    public class TwitPicOptions : ImageUploaderOptions
+    public class YfrogOptions : ImageUploaderOptions
     {
-        public TwitPicUploadType TwitPicUploadType { get; set; }
+        public string DeveloperKey { get; set; }
+        public string Source { get; set; }
+        public YfrogUploadType UploadType { get; set; }        
         public bool ShowFull { get; set; }
-        public TwitPicThumbnailType TwitPicThumbnailMode { get; set; }
+        public YfrogThumbnailType ThumbnailMode { get; set; }
+        
+        public YfrogOptions(string devKey)
+        {
+            this.DeveloperKey = devKey;
+        }
     }
 
-    public sealed class TwitPicUploader : ImageUploader
+    public sealed class YfrogUploader : ImageUploader
     {
-        private TwitPicOptions Options;
+        private YfrogOptions Options;
 
-        private const string UploadLink = "http://twitpic.com/api/upload";
-        private const string UploadAndPostLink = "http://twitpic.com/api/uploadAndPost";
+        private const string UploadLink = "http://yfrog.com/api/upload";
+        private const string UploadAndPostLink = "http://yfrog.com/api/uploadAndPost";
 
-        public override string Name { get { return "TwitPic"; } }
+        public override string Name { get { return "yfrog"; } }
 
-        public TwitPicUploader(TwitPicOptions options)
+        public YfrogUploader(YfrogOptions options)
         {
             this.Options = options;
         }
 
         public override ImageFileManager UploadImage(Image image)
         {
-            switch (this.Options.TwitPicUploadType)
+            switch (this.Options.UploadType)
             {
-                case TwitPicUploadType.UPLOAD_IMAGE_ONLY:
+                case YfrogUploadType.UPLOAD_IMAGE_ONLY:
                     return Upload(image, "");
-                case TwitPicUploadType.UPLOAD_IMAGE_AND_TWITTER:
+                case YfrogUploadType.UPLOAD_IMAGE_AND_TWITTER:
                     TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
                     msgBox.ShowDialog();
                     return Upload(image, msgBox.Message);
@@ -105,20 +112,24 @@ namespace ZSS.ImageUploadersLib
             {
                 url = UploadLink;
             }
+            if (!string.IsNullOrEmpty(this.Options.Source))
+            {
+                arguments.Add("source", this.Options.Source);
+            }
+
+            arguments.Add("key", this.Options.DeveloperKey);
 
             string source = PostImage(image, url, "media", arguments);
-            //string source = new TCPClient(this).UploadImage(image, url, "media", mFileName, arguments);
 
             return ParseResult(source);
         }
 
         private ImageFileManager ParseResult(string source)
         {
-            
             ImageFileManager ifm = new ImageFileManager { Source = source };
 
             if (!string.IsNullOrEmpty(source))
-            {             
+            {
                 XDocument xdoc = XDocument.Parse(source);
                 XElement xele = xdoc.Element("rsp");
 
@@ -134,8 +145,7 @@ namespace ZSS.ImageUploadersLib
                             mediaurl = xele.ElementValue("mediaurl");
                             if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
                             ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
-                            ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
-                                this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
+                            ifm.ImageFileList.Add(new ImageFile(mediaurl + ".th.jpg", ImageFile.ImageType.THUMBNAIL));
                             break;
                         case "fail":
                             string code, msg;

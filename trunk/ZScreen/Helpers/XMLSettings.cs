@@ -268,7 +268,7 @@ namespace ZScreenLib
         public bool WebPageUseCustomSize = true;
         public int WebPageWidth = 1024;
         public int WebPageHeight = 768;
-        public bool WebPageAutoUpload = false;
+        public bool WebPageAutoUpload = true;
 
         // Language Translator
 
@@ -407,6 +407,10 @@ namespace ZScreenLib
 
         [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
+
+        // Destinations / Twitter
+        [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]
+        public YfrogUploadType YfrogUploadMode { get; set; }
 
         // Options / Actions Toolbar
 
