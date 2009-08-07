@@ -58,6 +58,7 @@ namespace ZScreenLib
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private Debug debug = null;
         private List<int> mLogoRandomList = new List<int>(5);
+        private ImageEffects.TurnImage turnLogo;
 
         #endregion
 
@@ -264,6 +265,9 @@ namespace ZScreenLib
             CreateCodesMenu();
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
+
+            turnLogo = new ImageEffects.TurnImage((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+            turnLogo.ImageTurned += new ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
 
             niTray.Visible = true;
         }
@@ -3245,7 +3249,9 @@ namespace ZScreenLib
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
+            turnLogo.StartTurn();
 
+            /*
             Bitmap bmp = new Bitmap(ZSS.Properties.Resources.main);
             Random rand = new Random();
 
@@ -3282,11 +3288,12 @@ namespace ZScreenLib
             }
 
             mLogoRandomList.RemoveAt(0);
+            */
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
         {
-            pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+            //pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -333,5 +333,111 @@ namespace ZScreenLib
             }
             return img;
         }
+
+        public class TurnImage
+        {
+            public event ImageEventHandler ImageTurned;
+            public delegate void ImageEventHandler(Image img);
+            public bool IsTurning;
+            private Image image1, image2;
+            private Timer timer;
+            private Bitmap bitmap;
+            private Graphics g;
+            private int progress = 1;
+            private int speed = 5;
+            private int step = 1;
+
+            public TurnImage(Image img)
+            {
+                image1 = (Image)img.Clone();
+                image2 = (Image)img.Clone();
+                image2.RotateFlip(RotateFlipType.RotateNoneFlipX);
+
+                bitmap = new Bitmap(image1.Width, image2.Height);
+
+                g = Graphics.FromImage(bitmap);
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+
+                timer = new Timer { Interval = 25 };
+                timer.Tick += new EventHandler(timer_Tick);
+            }
+
+            public void StartTurn()
+            {
+                if (!IsTurning && !timer.Enabled)
+                {
+                    IsTurning = timer.Enabled = true;
+                }
+            }
+
+            public void StopTurn()
+            {
+                IsTurning = timer.Enabled = false;
+            }
+
+            private void ReportImage(Image img)
+            {
+                if (ImageTurned != null)
+                {
+                    ImageTurned(bitmap);
+                }
+            }
+
+            private void ResetSettings()
+            {
+                IsTurning = timer.Enabled = false;
+                progress = step = 1;
+
+                ReportImage(image1);
+            }
+
+            private void timer_Tick(object sender, EventArgs e)
+            {
+                if (progress > bitmap.Width + speed)
+                {
+                    if (step == 1)
+                    {
+                        step = 2;
+                        progress = 0;
+                    }
+                    else
+                    {
+                        ResetSettings();
+                        return;
+                    }
+                }
+
+                g.Clear(Color.Transparent);
+
+                if (step == 1)
+                {
+                    if (progress < bitmap.Width / 2)
+                    {
+                        g.DrawImage(image1, new Rectangle(progress, 0, bitmap.Width - progress * 2, bitmap.Height));
+                    }
+                    else
+                    {
+                        g.DrawImage(image2, new Rectangle(bitmap.Width - progress, 0, (progress - bitmap.Width / 2) * 2, bitmap.Height));
+                    }
+                }
+                else
+                {
+                    if (progress < bitmap.Width / 2)
+                    {
+                        g.DrawImage(image2, new Rectangle(progress, 0, bitmap.Width - progress * 2, bitmap.Height));
+                    }
+                    else
+                    {
+                        g.DrawImage(image1, new Rectangle(bitmap.Width - progress, 0, (progress - bitmap.Width / 2) * 2, bitmap.Height));
+                    }
+                }
+
+                progress += speed;
+
+                ReportImage(bitmap);
+            }
+        }
     }
 }
