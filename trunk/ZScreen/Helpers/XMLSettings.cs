@@ -131,7 +131,7 @@ namespace ZScreenLib
         public decimal FlashTrayCount = 1;
         public bool CaptureEntireScreenOnError = false;
         public bool ShowBalloonTip = true;
-        public bool BalloonTipOpenLink = false;
+        public bool BalloonTipOpenLink = true;
         public bool ShowUploadDuration = false;
         public bool CompleteSound = false;
         public bool CloseDropBox = false;

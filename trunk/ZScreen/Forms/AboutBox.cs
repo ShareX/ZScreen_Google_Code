@@ -58,7 +58,9 @@ namespace ZScreenLib
             sbDesc.AppendLine();
             sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Modified version of Greenshot Image Editor 0.7.009 and Portions of Selected Window code from Greenshot: https://sourceforge.net/projects/greenshot");
+            sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009 and portions of Selected Window code are from Greenshot: https://sourceforge.net/projects/greenshot");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net/");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");
             sbDesc.AppendLine(Application.ExecutablePath);
