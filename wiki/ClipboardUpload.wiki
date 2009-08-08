@@ -2,17 +2,28 @@
 #labels Phase-Support
 <wiki:toc max_depth="3" />
 
+= Hotkeys = 
+ * Personalize and use your Clipboard Upload hotkey
+
+[http://i30.tinypic.com/mr7qbt.png]
+
 = Images =
 
-Add your content here.
+ * You can copy any of the following in Windows Explorer to Clipboard: 
+  # entire folders 
+  # images files 
+  # images from another Image Editor/Viewer
 
 = Text =
 
 == Source Code / Notes ==
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+ * You can copy any of the following in Windows Explorer to Clipboard: 
+  # files containing text
+  # text 
+
 == URLs ==
+ * If the Clipboard contains a URL, ZScreen will attempt to shorten it
 
 = Files =
+ * Any binary file that do not belong to images/text will be uploaded as it is via FTP
