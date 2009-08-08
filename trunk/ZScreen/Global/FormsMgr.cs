@@ -28,36 +28,58 @@ namespace ZScreenLib
 {
     public static class FormsMgr
     {
+        public static AboutBox AboutWindow = null;
+        public static TextViewer VersionHistoryWindow = null;
+        public static TextViewer LicenseWindow = null;
+
+        private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
+        {
+            string h = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
+            if (h == string.Empty)
+            {
+                h = FileSystem.GetText(manifestFileName);
+            }
+            if (h != string.Empty)
+            {
+                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), h) { Icon = ZSS.Properties.Resources.zss_main };
+            }
+            return viewer;
+        }
+
         public static void ShowLicense()
         {
-            string lic = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, "License.txt"));
-            lic = lic != string.Empty ? lic : FileSystem.GetText("License.txt");
-            if (lic != string.Empty)
+            if (LicenseWindow == null)
             {
-                frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "License"), lic) { Icon = ZSS.Properties.Resources.zss_main };
-                v.ShowDialog();
+                LicenseWindow = FillTextViewer(LicenseWindow, "License", "License.txt");
+            }
+            if (LicenseWindow != null)
+            {
+                LicenseWindow.Activate();
+                LicenseWindow.Show();
             }
         }
 
         public static void ShowVersionHistory()
         {
-            string h = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, "VersionHistory.txt"));
-            if (h == string.Empty)
+            if (VersionHistoryWindow == null)
             {
-                h = FileSystem.GetText("VersionHistory.txt");
+                VersionHistoryWindow = FillTextViewer(VersionHistoryWindow, "Version History", "VersionHistory.txt");
             }
-            if (h != string.Empty)
+            if (VersionHistoryWindow != null)
             {
-                frmTextViewer v = new frmTextViewer(string.Format("{0} - {1}",
-                    Application.ProductName, "Version History"), h) { Icon = ZSS.Properties.Resources.zss_main };
-                v.ShowDialog();
+                VersionHistoryWindow.Activate();
+                VersionHistoryWindow.Show();
             }
         }
 
         public static void ShowAboutWindow()
         {
-            new AboutBox().Show();
+            if (AboutWindow == null)
+            {
+                AboutWindow = new AboutBox();
+            }
+            AboutWindow.Activate();
+            AboutWindow.Show();
         }
     }
 }

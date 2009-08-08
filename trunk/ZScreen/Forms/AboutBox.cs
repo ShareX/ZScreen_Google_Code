@@ -31,7 +31,7 @@ using System.Drawing.Drawing2D;
 
 namespace ZScreenLib
 {
-    partial class AboutBox : Form
+    public partial class AboutBox : Form
     {
         private int saturation = 200;
         private int step = 10;
