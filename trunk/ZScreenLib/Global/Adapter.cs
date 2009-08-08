@@ -7,11 +7,35 @@ using ZScreenLib.Helpers;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS;
+using ZSS.ImageUploadersLib;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
    public static class Adapter
     {
+       public static void AddToClipboardByDoubleClick(Control tp)
+       {
+           Control ctl = tp.GetNextControl(tp, true);
+           while (ctl != null)
+           {
+               if (ctl.GetType() == typeof(TextBox))
+               {
+                   ctl.DoubleClick += TextBox_DoubleClick;
+               }
+               ctl = tp.GetNextControl(ctl, true);
+           }
+       }
+
+       public static void TextBox_DoubleClick(object sender, EventArgs e)
+       {
+           TextBox tb = ((TextBox)sender);
+           if (!string.IsNullOrEmpty(tb.Text))
+           {
+               Clipboard.SetText(tb.Text);
+           }
+       }
+
        public static bool CheckFTPAccounts()
        {
            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected;

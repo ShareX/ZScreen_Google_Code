@@ -26,13 +26,13 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using ZSS.Forms;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using ZSS;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -274,7 +274,7 @@ namespace ZScreenLib
                 {
                     Title = "Specify a Screenshot Name...",
                     InputText = fName,
-                    Icon = ZScreenLib.Properties.Resources.zss_main
+                    Icon = Resources.zss_main
                 };
                 ib.ShowDialog();
                 if (ib.DialogResult == DialogResult.OK)
@@ -438,7 +438,12 @@ namespace ZScreenLib
         /// <returns></returns>
         public static bool IsValidLink(string url)
         {
-            return Uri.IsWellFormedUriString(url, UriKind.Absolute);
+            bool b = false;
+            if (!string.IsNullOrEmpty(url))
+            {
+                b = Uri.IsWellFormedUriString(url, UriKind.Absolute);
+            }
+            return b;
         }
 
         public static bool ManageImageFolders(string path)

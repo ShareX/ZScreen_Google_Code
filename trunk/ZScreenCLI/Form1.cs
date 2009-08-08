@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ZScreenLib.Helpers;
-using System.Diagnostics;
-using ZSS;
 using ZScreenLib;
+using ZScreenLib.Helpers;
 
 namespace ZScreenCLI
 {
@@ -18,7 +11,6 @@ namespace ZScreenCLI
         public Form1()
         {
             InitializeComponent();
-            // Load ZScreenLib
             ZScreenLib.Program.Load();
 
             string[] args = Environment.GetCommandLineArgs();
@@ -64,6 +56,7 @@ namespace ZScreenCLI
             task.ImageDestCategory = ZScreenLib.Program.conf.ScreenshotDestMode;
             worker.CaptureRegionOrWindow(ref task);
             new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
+            UploadManager.SetClipboardText(task);
         }
 
         private void niTray_Click(object sender, EventArgs e)
