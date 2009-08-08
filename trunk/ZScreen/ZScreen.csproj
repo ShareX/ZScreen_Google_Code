@@ -72,14 +72,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxSHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Desktop\test\AxSHDocVw.dll</HintPath>
-    </Reference>
-    <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Desktop\test\IECaptComImports.dll</HintPath>
-    </Reference>
+    <Reference Include="AxSHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
@@ -419,6 +413,8 @@
     <None Include="RegistrationHelper.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Lib\AxSHDocVw.dll" />
+    <None Include="Lib\IECaptComImports.dll" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
