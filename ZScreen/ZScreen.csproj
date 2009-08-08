@@ -83,6 +83,7 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -415,6 +416,7 @@
     </None>
     <None Include="Lib\AxSHDocVw.dll" />
     <None Include="Lib\IECaptComImports.dll" />
+    <None Include="Lib\SHDocVw.dll" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
