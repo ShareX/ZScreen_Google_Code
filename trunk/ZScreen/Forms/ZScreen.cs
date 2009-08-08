@@ -3250,15 +3250,14 @@ namespace ZScreenLib
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
-            turnLogo.StartTurn();
+            if (turnLogo.IsTurning) return;
 
-            /*
             Bitmap bmp = new Bitmap(ZSS.Properties.Resources.main);
             Random rand = new Random();
 
             if (mLogoRandomList.Count == 0)
             {
-                List<int> numbers = new List<int>() { 1, 2, 3, 4 };
+                List<int> numbers = Enumerable.Range(1, 7).ToList();
 
                 int count = numbers.Count;
 
@@ -3284,17 +3283,28 @@ namespace ZScreenLib
                     break;
                 case 4:
                     pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(0, 501) - 250));
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(100, 300)));
+                    break;
+                case 5:
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -100)));
+                    break;
+                case 6:
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(150, 300)));
+                    break;
+                case 7:
+                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -150)));
                     break;
             }
 
             mLogoRandomList.RemoveAt(0);
-            */
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
         {
-            //pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+            if (turnLogo.IsTurning) return;
+
+            pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3935,6 +3945,11 @@ namespace ZScreenLib
         private void cbWebPageAutoUpload_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
+        }
+
+        private void pbLogo_MouseClick(object sender, MouseEventArgs e)
+        {
+            turnLogo.StartTurn();
         }
     }
 }

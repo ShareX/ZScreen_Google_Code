@@ -409,6 +409,7 @@ namespace ZScreenLib
         public bool BackupFTPSettings { get; set; }
 
         // Destinations / Twitter
+
         [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]
         public YfrogUploadType YfrogUploadMode { get; set; }
 
@@ -420,6 +421,7 @@ namespace ZScreenLib
         public Point ActionToolbarLocation { get; set; }
 
         // Options / General
+
         [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
         public bool ShowClipboardModeChooser { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]

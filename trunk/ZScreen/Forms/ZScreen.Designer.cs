@@ -139,6 +139,7 @@ namespace ZScreenLib
             this.cbTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
             this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.tpTwitSnaps = new System.Windows.Forms.TabPage();
+            this.tpYfrog = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtTwitPicPassword = new System.Windows.Forms.TextBox();
@@ -505,7 +506,6 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpYfrog = new System.Windows.Forms.TabPage();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1316,6 +1316,7 @@ namespace ZScreenLib
             this.pbLogo.TabIndex = 72;
             this.pbLogo.TabStop = false;
             this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
+            this.pbLogo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbLogo_MouseClick);
             this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             // 
             // tpDestinations
@@ -1742,6 +1743,16 @@ namespace ZScreenLib
             this.tpTwitSnaps.TabIndex = 1;
             this.tpTwitSnaps.Text = "TwitSnaps";
             this.tpTwitSnaps.UseVisualStyleBackColor = true;
+            // 
+            // tpYfrog
+            // 
+            this.tpYfrog.Location = new System.Drawing.Point(4, 22);
+            this.tpYfrog.Name = "tpYfrog";
+            this.tpYfrog.Padding = new System.Windows.Forms.Padding(3);
+            this.tpYfrog.Size = new System.Drawing.Size(768, 260);
+            this.tpYfrog.TabIndex = 2;
+            this.tpYfrog.Text = "yFrog";
+            this.tpYfrog.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -6016,16 +6027,6 @@ namespace ZScreenLib
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
-            // 
-            // tpYfrog
-            // 
-            this.tpYfrog.Location = new System.Drawing.Point(4, 22);
-            this.tpYfrog.Name = "tpYfrog";
-            this.tpYfrog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpYfrog.Size = new System.Drawing.Size(768, 260);
-            this.tpYfrog.TabIndex = 2;
-            this.tpYfrog.Text = "yFrog";
-            this.tpYfrog.UseVisualStyleBackColor = true;
             // 
             // ZScreen
             // 
