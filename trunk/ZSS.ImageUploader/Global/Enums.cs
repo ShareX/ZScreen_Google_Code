@@ -75,5 +75,7 @@ namespace ZSS.ImageUploadersLib
         CUSTOM_UPLOADER,
         [Description("MindTouch Deki Wiki")]
         DEKIWIKI,
+        [Description("Printer")]
+        PRINTER,
     }
 }
