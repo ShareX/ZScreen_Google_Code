@@ -20,14 +20,17 @@ namespace ZScreenLib
         {
             InitializeComponent();
 
-            this.mTask = task;
-            this.Text = task.FileName.ToString() + " - " + task.GetDescription();
-
             if (task != null && task.ImageManager != null)
             {
+                this.mTask = task;
+                this.Text = task.FileName.ToString() + " - " + task.GetDescription();
+                // this.pbPreview.Image = task.MyImage;
+                this.pbPreview.LoadAsync(task.LocalFilePath);
+
                 int xGap = 10;
                 int yOffset = 20;
                 int yGap = 25;
+                int yMargin = pbPreview.Height + yOffset;
 
                 int count = 0;
                 foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
@@ -37,13 +40,13 @@ namespace ZScreenLib
                     {
                         // URL Label
                         Label lbl = new Label();
-                        lbl.Location = new Point(20, count * yGap + yOffset);
+                        lbl.Location = new Point(20, count * yGap + yMargin + yOffset);
                         lbl.AutoSize = true;
                         lbl.Text = type.GetDescription();
                         this.Controls.Add(lbl);
                         // URL TextBox
                         TextBox txtUrl = new TextBox();
-                        txtUrl.Location = new Point(170, count * yGap + yOffset);
+                        txtUrl.Location = new Point(170, count * yGap + yMargin + yOffset);
                         txtUrl.Size = new Size(320, 20);
                         txtUrl.Text = url;
                         this.Controls.Add(txtUrl);
@@ -52,7 +55,7 @@ namespace ZScreenLib
                         btnCopy.Text = "Copy";
                         btnCopy.Tag = txtUrl;
                         btnCopy.AutoSize = true;
-                        btnCopy.Location = new Point(txtUrl.Size.Width + 180, count * yGap + yOffset);
+                        btnCopy.Location = new Point(txtUrl.Size.Width + 180, count * yGap + yMargin + yOffset);
                         btnCopy.Click += new EventHandler(btnCopy_Click);
                         this.Controls.Add(btnCopy);
                         // Offset
@@ -60,7 +63,7 @@ namespace ZScreenLib
                     }
                 }
 
-                int yBottomControl = count * yGap + yOffset * 2;
+                int yBottomControl = yMargin+ count * yGap + yOffset * 2;
 
                 Button btnOpenLocal = new Button();
                 btnOpenLocal.Text = "Open &Local file";
