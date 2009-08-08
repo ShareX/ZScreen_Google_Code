@@ -57,8 +57,7 @@ namespace ZScreenLib
 
         public static void ShowAboutWindow()
         {
-            AboutBox ab = new AboutBox();
-            ab.ShowDialog();
+            new AboutBox().Show();
         }
     }
 }
