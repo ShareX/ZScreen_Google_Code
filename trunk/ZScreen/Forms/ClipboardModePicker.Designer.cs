@@ -42,10 +42,9 @@
             // 
             // pbPreview
             // 
-            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbPreview.Location = new System.Drawing.Point(174, 16);
+            this.pbPreview.Location = new System.Drawing.Point(43, 16);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(250, 200);
+            this.pbPreview.Size = new System.Drawing.Size(512, 200);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 0;
             this.pbPreview.TabStop = false;
