@@ -106,7 +106,6 @@ namespace ZScreenLib
                     Program.zWindowsTaskbar.ApplicationId = Program.appId;
 
                     Program.zJumpList = JumpList.CreateJumpList();
-                    // JumpList jumpList = Taskbar.JumpList;
 
                     //*****************************************************************
                     // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
@@ -145,7 +144,9 @@ namespace ZScreenLib
                     selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
                     ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
-                    TaskbarManager.Instance.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+
+                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+
                 }
                 catch (Exception ex)
                 {
@@ -157,7 +158,7 @@ namespace ZScreenLib
         private void ZScreen_SetFormSettings()
         {
             this.Icon = Resources.zss_main;
-            this.Text = Program.mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
+            this.Text = Program.GetProductName();
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
 
