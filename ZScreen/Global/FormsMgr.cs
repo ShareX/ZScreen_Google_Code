@@ -34,21 +34,21 @@ namespace ZScreenLib
 
         private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
         {
-            string h = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
-            if (h == string.Empty)
+            string txt = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
+            if (txt == string.Empty)
             {
-                h = FileSystem.GetText(manifestFileName);
+                txt = FileSystem.GetText(manifestFileName);
             }
-            if (h != string.Empty)
+            if (txt != string.Empty)
             {
-                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), h) { Icon = ZSS.Properties.Resources.zss_main };
+                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = ZSS.Properties.Resources.zss_main };
             }
             return viewer;
         }
 
         public static void ShowLicense()
         {
-            if (LicenseWindow == null)
+            if (LicenseWindow == null || LicenseWindow.IsDisposed)
             {
                 LicenseWindow = FillTextViewer(LicenseWindow, "License", "License.txt");
             }
@@ -61,7 +61,7 @@ namespace ZScreenLib
 
         public static void ShowVersionHistory()
         {
-            if (VersionHistoryWindow == null)
+            if (VersionHistoryWindow == null || VersionHistoryWindow.IsDisposed)
             {
                 VersionHistoryWindow = FillTextViewer(VersionHistoryWindow, "Version History", "VersionHistory.txt");
             }
@@ -74,7 +74,7 @@ namespace ZScreenLib
 
         public static void ShowAboutWindow()
         {
-            if (AboutWindow == null)
+            if (AboutWindow == null || AboutWindow.IsDisposed)
             {
                 AboutWindow = new AboutBox();
             }
