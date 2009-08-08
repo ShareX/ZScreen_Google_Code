@@ -3886,7 +3886,7 @@ namespace ZScreenLib
         {
             pbWebPageImage.Image = img;
             btnWebPageCaptureImage.Enabled = true;
-            btnWebPageImageUpload.Enabled = true;
+            btnWebPageImageUpload.Enabled = img != null;
 
             if (Program.conf.WebPageAutoUpload)
             {

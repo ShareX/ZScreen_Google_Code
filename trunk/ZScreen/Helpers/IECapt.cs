@@ -95,10 +95,8 @@ public class IECapt
 
         mWb = new AxWebBrowser();
 
-        Form main = new Form();
-
         mWb.BeginInit();
-        mWb.Parent = main;
+        mWb.Parent = new Form();
         mWb.EndInit();
 
         // Set the initial dimensions of the browser's client area.
@@ -138,7 +136,6 @@ public class IECapt
     private void IE_DocumentComplete(object sender, DWebBrowserEvents2_DocumentCompleteEvent e)
     {
         AxWebBrowser wb = (AxWebBrowser)sender;
-        //Form main = (Form)wb.Parent;
 
         // Skip document complete event for embedded frames.
         if (wb.Application != e.pDisp) return;
@@ -155,7 +152,6 @@ public class IECapt
     private void IE_NavigateError(object sender, DWebBrowserEvents2_NavigateErrorEvent e)
     {
         AxWebBrowser wb = (AxWebBrowser)sender;
-        //Form main = (Form)wb.Parent;
 
         // Ignore errors for embedded documents
         if (wb.Application != e.pDisp) return;
@@ -163,6 +159,7 @@ public class IECapt
         // If we get here, the main document cannot be navigated 
         // to meaning there is nothing to draw, so we just croak.
         Console.Error.WriteLine("Failed to navigate to {0} (0x{1:X08})", e.uRL, e.statusCode);
+        ReportCapture(null);
 
         wb.Dispose();
     }
@@ -178,6 +175,7 @@ public class IECapt
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            ReportCapture(null);
         }
 
         mWb.Dispose();
@@ -205,6 +203,7 @@ public class IECapt
         // some additional terminating condition like n attempts.
         width = Math.Max(body2.scrollWidth, root2.scrollWidth);
         height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+
         mWb.SetBounds(0, 0, width, height);
 
         Bitmap image = new Bitmap(width, height);
@@ -225,21 +224,23 @@ public class IECapt
 
         g.ReleaseHdc(hdc);
 
-        if (ImageCaptured != null)
-        {
-            ImageCaptured((Image)image.Clone());
-        }
+        ReportCapture((Image)image.Clone());
 
         image.Dispose();
+    }
+
+    private void ReportCapture(Image img)
+    {
+        if (ImageCaptured != null)
+        {
+            ImageCaptured(img);
+        }
     }
 }
 
 public class IECaptUIHandler : IDocHostUIHandler
 {
-    public void ShowContextMenu(uint dwID, ref tagPOINT ppt, object pcmdtReserved, object pdispReserved)
-    {
-
-    }
+    public void ShowContextMenu(uint dwID, ref tagPOINT ppt, object pcmdtReserved, object pdispReserved) { }
 
     public void GetHostInfo(ref _DOCHOSTUIINFO pInfo)
     {
@@ -251,68 +252,38 @@ public class IECaptUIHandler : IDocHostUIHandler
             | tagDOCHOSTUIFLAG.DOCHOSTUIFLAG_NO3DOUTERBORDER);
     }
 
-    public void ShowUI(uint dwID, IOleInPlaceActiveObject pActiveObject, IOleCommandTarget pCommandTarget, IOleInPlaceFrame pFrame, IOleInPlaceUIWindow pDoc)
-    {
+    public void ShowUI(uint dwID, IOleInPlaceActiveObject pActiveObject, IOleCommandTarget pCommandTarget, IOleInPlaceFrame pFrame, IOleInPlaceUIWindow pDoc) { }
 
-    }
+    public void HideUI() { }
 
-    public void HideUI()
-    {
+    public void UpdateUI() { }
 
-    }
+    public void EnableModeless(int fEnable) { }
 
-    public void UpdateUI()
-    {
+    public void OnDocWindowActivate(int fActivate) { }
 
-    }
+    public void OnFrameWindowActivate(int fActivate) { }
 
-    public void EnableModeless(int fEnable)
-    {
+    public void ResizeBorder(ref tagRECT prcBorder, IOleInPlaceUIWindow pUIWindow, int fRameWindow) { }
 
-    }
-
-    public void OnDocWindowActivate(int fActivate)
-    {
-
-    }
-
-    public void OnFrameWindowActivate(int fActivate)
-    {
-
-    }
-
-    public void ResizeBorder(ref tagRECT prcBorder, IOleInPlaceUIWindow pUIWindow, int fRameWindow)
-    {
-
-    }
-
-    public void TranslateAccelerator(ref tagMSG lpmsg, ref Guid pguidCmdGroup, uint nCmdID)
-    {
-
-    }
+    public void TranslateAccelerator(ref tagMSG lpmsg, ref Guid pguidCmdGroup, uint nCmdID) { }
 
     public void GetOptionKeyPath(out string pchKey, uint dw)
     {
         pchKey = null;
-
     }
 
     public void GetDropTarget(IECaptComImports.IDropTarget pDropTarget, out IECaptComImports.IDropTarget ppDropTarget)
     {
         ppDropTarget = null;
-
     }
 
     public void GetExternal(out object ppDispatch)
     {
         ppDispatch = null;
-
     }
 
-    public void TranslateUrl(uint dwTranslate, ref ushort pchURLIn, IntPtr ppchURLOut)
-    {
-
-    }
+    public void TranslateUrl(uint dwTranslate, ref ushort pchURLIn, IntPtr ppchURLOut) { }
 
     public void FilterDataObject(IECaptComImports.IDataObject pDO, out IECaptComImports.IDataObject ppDORet)
     {
