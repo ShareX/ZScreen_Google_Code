@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls
 {
     /// <summary>
     /// Internal class that contains interop declarations for 

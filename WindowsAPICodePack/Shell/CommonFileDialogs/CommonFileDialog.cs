@@ -8,8 +8,12 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Markup;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Dialogs.Controls;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Defines the abstract base class for the common file dialogs.
@@ -85,7 +89,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         // Events.
         /// <summary>
-        /// Raised just before the dialog is about to return with a result.
+        /// Raised just before the dialog is about to return with a result. Occurs when the user clicks on the Open 
+        /// or Save button on a file dialog box. 
         /// </summary>
         public event CancelEventHandler FileOk;
         /// <summary>
@@ -107,7 +112,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Raised when the dialog is opening.
         /// </summary>
-        public event EventHandler Opening;
+        public event EventHandler DialogOpening;
 
         private CommonFileDialogControlCollection<CommonFileDialogControl> controls;
         /// <summary>
@@ -143,72 +148,59 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
 
-        private bool addExtension;
-        /// <summary>
-        /// Gets or sets a value that determines whether the file extension
-        /// set via the DefaultExtension property is appended to the file name.
-        /// </summary>
-        /// <value>A <see cref="System.Boolean"/> value.</value>
-        /// 
-        public bool AddExtension
-        {
-            get { return addExtension; }
-            set { addExtension = value; }
-        }
-
         // This is the first of many properties that are backed by the FOS_*
         // bitflag options set with IFileDialog.SetOptions(). 
         // SetOptions() fails
         // if called while dialog is showing (e.g. from a callback).
-        private bool checkFileExists;
+        private bool ensureFileExists;
         /// <summary>
         /// Gets or sets a value that determines whether the file must exist beforehand.
         /// </summary>
         /// <value>A <see cref="System.Boolean"/> value. <b>true</b> if the file must exist.</value>
         /// <exception cref="System.InvalidOperationException">This property cannot be set when the dialog is visible.</exception>
-        public bool CheckFileExists
+        public bool EnsureFileExists
         {
-            get { return checkFileExists; }
+            get { return ensureFileExists; }
             set
             {
-                ThrowIfDialogShowing("CheckFileExists" + IllegalPropertyChangeString);
-                checkFileExists = value;
+                ThrowIfDialogShowing("EnsureFileExists" + IllegalPropertyChangeString);
+                ensureFileExists = value;
             }
         }
 
-        private bool checkPathExists;
+        private bool ensurePathExists;
         /// <summary>
         /// Gets or sets a value that specifies whether the returned file must be in an existing folder.
         /// </summary>
         /// <value>A <see cref="System.Boolean"/> value. <b>true</b> if the file must exist.</value>
         /// <exception cref="System.InvalidOperationException">This property cannot be set when the dialog is visible.</exception>
-        public bool CheckPathExists
+        public bool EnsurePathExists
         {
-            get { return checkPathExists; }
+            get { return ensurePathExists; }
             set
             {
-                ThrowIfDialogShowing("CheckPathExists" + IllegalPropertyChangeString);
-                checkPathExists = value;
+                ThrowIfDialogShowing("EnsurePathExists" + IllegalPropertyChangeString);
+                ensurePathExists = value;
             }
         }
 
-        private bool checkValidNames;
+        private bool ensureValidNames;
         /// <summary>Gets or sets a value that determines whether to validate file names.
         /// </summary>
         ///<value>A <see cref="System.Boolean"/> value. <b>true </b>to check for situations that would prevent an application from opening the selected file, such as sharing violations or access denied errors.</value>
         /// <exception cref="System.InvalidOperationException">This property cannot be set when the dialog is visible.</exception>
         /// 
-        public bool CheckValidNames
+        public bool EnsureValidNames
         {
-            get { return checkValidNames; }
+            get { return ensureValidNames; }
             set
             {
-                ThrowIfDialogShowing("CheckValidNames" + IllegalPropertyChangeString);
-                checkValidNames = value;
+                ThrowIfDialogShowing("EnsureValidNames" + IllegalPropertyChangeString);
+                ensureValidNames = value;
             }
         }
 
-        private bool checkReadOnly;
+        private bool ensureReadOnly;
         /// <summary>
         /// Gets or sets a value that determines whether read-only items are returned.
         /// Default value for CommonOpenFileDialog is true (allow read-only files) and 
@@ -216,13 +208,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// </summary>
         /// <value>A <see cref="System.Boolean"/> value. <b>true</b> includes read-only items.</value>
         /// <exception cref="System.InvalidOperationException">This property cannot be set when the dialog is visible.</exception>
-        public bool CheckReadOnly
+        public bool EnsureReadOnly
         {
-            get { return checkReadOnly; }
+            get { return ensureReadOnly; }
             set
             {
-                ThrowIfDialogShowing("CheckReadOnly" + IllegalPropertyChangeString);
-                checkReadOnly = value;
+                ThrowIfDialogShowing("EnsureReadOnly" + IllegalPropertyChangeString);
+                ensureReadOnly = value;
             }
         }
 
@@ -268,12 +260,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// </summary>
         /// <value>A <see cref="System.Boolean"/> value.</value>
         /// <exception cref="System.InvalidOperationException">This property cannot be set when the dialog is visible.</exception>
-        public bool AddToMruList
+        public bool AddToMostRecentlyUsedList
         {
             get { return addToMruList; }
             set
             {
-                ThrowIfDialogShowing("AddToMruList" + IllegalPropertyChangeString);
+                ThrowIfDialogShowing("AddToMostRecentlyUsedList" + IllegalPropertyChangeString);
                 addToMruList = value;
             }
         }
@@ -305,43 +297,35 @@ namespace Microsoft.WindowsAPICodePack.Shell
             set { allowPropertyEditing = value; }
         }
 
-        private bool dereferenceLinks = true;
+        private bool navigateToShortcut = true;
         ///<summary>
         /// Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file.
         /// </summary>
         /// <value>A <see cref="System.Boolean"/> value. <b>true</b> indicates that shortcuts should be treated as their targets. </value>
         /// <exception cref="System.InvalidOperationException">This property cannot be set when the dialog is visible.</exception>
-        public bool DereferenceLinks
+        public bool NavigateToShortcut
         {
-            get { return dereferenceLinks; }
+            get { return navigateToShortcut; }
             set
             {
-                ThrowIfDialogShowing("DereferenceLinks" + IllegalPropertyChangeString);
-                dereferenceLinks = value;
+                ThrowIfDialogShowing("NavigateToShortcut" + IllegalPropertyChangeString);
+                navigateToShortcut = value;
             }
         }
 
-        private string defaultExtension = null;
-
         /// <summary>
-        /// Gets or sets the default file extension to be added to file names.
+        /// Gets or sets the default file extension to be added to file names. If the value is null
+        /// or String.Empty, the extension is not added to the file names.
         /// </summary>
         public string DefaultExtension
         {
-            get { return defaultExtension; }
-            set
-            {
-                // Sanitize - null equals not set.
-                if (String.IsNullOrEmpty(value))
-                    value = null;
-
-                defaultExtension = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
         /// Tries to set the File(s) Type Combo to match the value in 
-        /// 'defaultExtension'.  Only doing this if 'this' is a Save dialog 
+        /// 'DefaultExtension'.  Only doing this if 'this' is a Save dialog 
         /// as it makes no sense to do this if only Opening a file.
         /// </summary>
         /// 
@@ -351,7 +335,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         {
             // make sure it's a Save dialog and that there is a default 
             // extension to sync to.
-            if (!(this is CommonSaveFileDialog) || defaultExtension == null ||
+            if (!(this is CommonSaveFileDialog) || DefaultExtension == null ||
                 filters.Count <= 0)
             {
                 return;
@@ -370,7 +354,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             {
                 filter = (CommonFileDialogFilter)filters[(int)filtersCounter];
 
-                if (filter.Extensions.Contains(defaultExtension))
+                if (filter.Extensions.Contains(DefaultExtension))
                 {
                     // set the docType combo to match this 
                     // extension. property is a 1-based index.
@@ -403,12 +387,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 // Basic), the returned string contains the specified 
                 // path with its extension removed."  Since we do not want 
                 // to remove any existing extension, make sure the 
-                // defaultExtension property is NOT null.
+                // DefaultExtension property is NOT null.
 
                 // if we should, and there is one to set...
-                if (addExtension && !string.IsNullOrEmpty(defaultExtension))
+                if (!string.IsNullOrEmpty(DefaultExtension))
                 {
-                    returnFilename = System.IO.Path.ChangeExtension(returnFilename, defaultExtension);
+                    returnFilename = System.IO.Path.ChangeExtension(returnFilename, DefaultExtension);
                 }
 
                 return returnFilename;
@@ -421,7 +405,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <value>A <see cref="Microsoft.WindowsAPICodePack.Shell.ShellObject"></see> object.</value>
         /// <exception cref="System.InvalidOperationException">This property cannot be used when multiple files
         /// are selected.</exception>
-        public ShellObject Item
+        public ShellObject FileAsShellObject
         {
             get
             {
@@ -494,7 +478,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         // Null = use default directory.
         private string initialDirectory;
         /// <summary>
-        /// Gets or sets the initial directory displayed when the dialog is shown. A null or empty string indicates that the dialog is using the default directory.
+        /// Gets or sets the initial directory displayed when the dialog is shown. 
+        /// A null or empty string indicates that the dialog is using the default directory.
         /// </summary>
         /// <value>A <see cref="System.String"/> object.</value>
         public string InitialDirectory
@@ -503,19 +488,21 @@ namespace Microsoft.WindowsAPICodePack.Shell
             set { initialDirectory = value; }
         }
 
-        private ShellContainer initialLocation;
+        private ShellContainer initialDirectoryShellContainer;
         /// <summary>
-        /// Gets or sets a location that is always selected when the dialog is opened, regardless of previous user action. A null or empty string implies that the dialog is using the default location.
+        /// Gets or sets a location that is always selected when the dialog is opened, 
+        /// regardless of previous user action. A null value implies that the dialog is using 
+        /// the default location.
         /// </summary>
-        public ShellContainer InitialLocation
+        public ShellContainer InitialDirectoryShellContainer
         {
             get
             {
-                return initialLocation;
+                return initialDirectoryShellContainer;
             }
             set
             {
-                initialLocation = value;
+                initialDirectoryShellContainer = value;
             }
         }
 
@@ -529,27 +516,27 @@ namespace Microsoft.WindowsAPICodePack.Shell
             set { defaultDirectory = value; }
         }
 
-        private ShellContainer defaultLocation;
+        private ShellContainer defaultDirectoryShellContainer;
         /// <summary>
         /// Sets the location (<see cref="Microsoft.WindowsAPICodePack.Shell.ShellContainer">ShellContainer</see> 
         /// used as a default if there is not a recently used folder value available.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1044:PropertiesShouldNotBeWriteOnly", Justification="This is following the native API")]
-        public ShellContainer DefaultLocation
+        public ShellContainer DefaultDirectoryShellContainer
         {
-            set { defaultLocation = value; }
+            set { defaultDirectoryShellContainer = value; }
         }
 
         // Null = use default identifier.
-        private Guid usageIdentifier;
+        private Guid cookieIdentifier;
         /// <summary>
         /// Gets or sets a value that enables a calling application 
         /// to associate a GUID with a dialog's persisted state.
         /// </summary>
-        public Guid UsageIdentifier
+        public Guid CookieIdentifier
         {
-            get { return usageIdentifier; }
-            set { usageIdentifier = value; }
+            get { return cookieIdentifier; }
+            set { cookieIdentifier = value; }
         }
 
 
@@ -557,7 +544,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Displays the dialog.
         /// </summary>
-        /// <returns>A <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialogResult"/> object.</returns>
+        /// <returns>A <see cref="CommonFileDialogResult"/> object.</returns>
         public CommonFileDialogResult ShowDialog()
         {
             CommonFileDialogResult result;
@@ -586,11 +573,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
             if (CoreErrorHelper.Matches(hresult, (int)HRESULT.ERROR_CANCELLED))
             {
                 canceled = true;
+                result = CommonFileDialogResult.Cancel;
                 fileNames.Clear();
             }
             else
             {
                 canceled = false;
+                result = CommonFileDialogResult.OK;
 
                 // Populate filenames if user didn't cancel.
                 PopulateWithFileNames(fileNames);
@@ -598,7 +587,6 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 // Populate the actual IShellItems
                 PopulateWithIShellItems(items);
             }
-            result = new CommonFileDialogResult(canceled.Value);
 
             return result;
         }
@@ -622,7 +610,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 || FolderChanged != null
                 || SelectionChanged != null
                 || FileTypeChanged != null
-                || Opening != null
+                || DialogOpening != null
                 || (controls != null && controls.Count > 0))
             {
                 uint cookie;
@@ -652,13 +640,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
             // Other property sets.
             if (title != null)
                 dialog.SetTitle(title);
-            if (initialLocation != null)
+            if (initialDirectoryShellContainer != null)
             {
-                dialog.SetFolder(((ShellObject)initialLocation).NativeShellItem);
+                dialog.SetFolder(((ShellObject)initialDirectoryShellContainer).NativeShellItem);
             }
-            if (defaultLocation != null)
+            if (defaultDirectoryShellContainer != null)
             {
-                dialog.SetDefaultFolder(((ShellObject)defaultLocation).NativeShellItem);
+                dialog.SetDefaultFolder(((ShellObject)defaultDirectoryShellContainer).NativeShellItem);
             }
             if (!String.IsNullOrEmpty(initialDirectory))
             {
@@ -697,11 +685,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 SyncFileTypeComboToDefaultExtension(dialog);
             }
 
-            if (usageIdentifier != Guid.Empty)
-                dialog.SetClientGuid(ref usageIdentifier);
+            if (cookieIdentifier != Guid.Empty)
+                dialog.SetClientGuid(ref cookieIdentifier);
 
             // Set the default extension
-            if (AddExtension && !string.IsNullOrEmpty(DefaultExtension))
+            if (!string.IsNullOrEmpty(DefaultExtension))
                 dialog.SetDefaultExtension(DefaultExtension);
 
         }
@@ -719,13 +707,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
             flags = GetDerivedOptionFlags(flags);
 
             // Apply other optional flags.
-            if (checkFileExists)
+            if (ensureFileExists)
                 flags |= ShellNativeMethods.FOS.FOS_FILEMUSTEXIST;
-            if (checkPathExists)
+            if (ensurePathExists)
                 flags |= ShellNativeMethods.FOS.FOS_PATHMUSTEXIST;
-            if (!checkValidNames)
+            if (!ensureValidNames)
                 flags |= ShellNativeMethods.FOS.FOS_NOVALIDATE;
-            if (!CheckReadOnly)
+            if (!EnsureReadOnly)
                 flags |= ShellNativeMethods.FOS.FOS_NOREADONLYRETURN;
             if (restoreDirectory)
                 flags |= ShellNativeMethods.FOS.FOS_NOCHANGEDIR;
@@ -735,7 +723,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 flags |= ShellNativeMethods.FOS.FOS_DONTADDTORECENT;
             if (showHiddenItems)
                 flags |= ShellNativeMethods.FOS.FOS_FORCESHOWHIDDEN;
-            if (!dereferenceLinks)
+            if (!navigateToShortcut)
                 flags |= ShellNativeMethods.FOS.FOS_NODEREFERENCELINKS;
             return flags;
         }
@@ -910,8 +898,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
             string filename = null;
             IntPtr pszString = IntPtr.Zero;
             HRESULT hr = item.GetDisplayName( ShellNativeMethods.SIGDN.SIGDN_DESKTOPABSOLUTEPARSING, out pszString );
-            if( hr == HRESULT.S_OK  && pszString != IntPtr.Zero )
-                filename = Marshal.PtrToStringAuto( pszString );
+            if (hr == HRESULT.S_OK && pszString != IntPtr.Zero)
+            {
+                filename = Marshal.PtrToStringAuto(pszString);
+                Marshal.FreeCoTaskMem(pszString);
+            }
             return filename;
         }
 
@@ -954,7 +945,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #region CheckChanged handling members
         /// <summary>
-        /// Raises the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialog.FileOk"/> event just before the dialog is about to return with a result.
+        /// Raises the <see cref="CommonFileDialog.FileOk"/> event just before the dialog is about to return with a result.
         /// </summary>
         /// <param name="e">The event data.</param>
         protected virtual void OnFileOk(CancelEventArgs e)
@@ -966,7 +957,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
         /// <summary>
-        /// Raises the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialog.FolderChanging"/> to stop navigation to a particular location.
+        /// Raises the <see cref="FolderChanging"/> to stop navigation to a particular location.
         /// </summary>
         /// <param name="e">Cancelable event arguments.</param>
         protected virtual void OnFolderChanging(CommonFileDialogFolderChangeEventArgs e)
@@ -978,7 +969,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
         /// <summary>
-        /// Raises the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialog.FolderChanged"/> event when the user navigates to a new folder.
+        /// Raises the <see cref="CommonFileDialog.FolderChanged"/> event when the user navigates to a new folder.
         /// </summary>
         /// <param name="e">The event data.</param>
         protected virtual void OnFolderChanged(EventArgs e)
@@ -990,7 +981,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
         /// <summary>
-        /// Raises the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialog.SelectionChanged"/> event when the user changes the selection in the dialog's view.
+        /// Raises the <see cref="CommonFileDialog.SelectionChanged"/> event when the user changes the selection in the dialog's view.
         /// </summary>
         /// <param name="e">The event data.</param>
         protected virtual void OnSelectionChanged(EventArgs e)
@@ -1002,7 +993,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
         /// <summary>
-        /// Raises the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialog.FileTypeChanged"/> event when the dialog is opened to notify the 
+        /// Raises the <see cref="CommonFileDialog.FileTypeChanged"/> event when the dialog is opened to notify the 
         /// application of the initial chosen filetype.
         /// </summary>
         /// <param name="e">The event data.</param>
@@ -1015,12 +1006,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
         /// <summary>
-        /// Raises the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialog.Opening"/> event when the dialog is opened.
+        /// Raises the <see cref="CommonFileDialog.DialogOpening"/> event when the dialog is opened.
         /// </summary>
         /// <param name="e">The event data.</param>
         protected virtual void OnOpening(EventArgs e)
         {
-            EventHandler handler = Opening;
+            EventHandler handler = DialogOpening;
             if (handler != null)
             {
                 handler(this, e);
@@ -1099,7 +1090,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
             public void OnOverwrite(IFileDialog pfd, IShellItem psi, out ShellNativeMethods.FDE_OVERWRITE_RESPONSE pResponse)
             {
-                pResponse = ShellNativeMethods.FDE_OVERWRITE_RESPONSE.FDEOR_ACCEPT;
+                // Don't accept or reject the dialog, keep default settings
+                pResponse = ShellNativeMethods.FDE_OVERWRITE_RESPONSE.FDEOR_DEFAULT;
             }
 
             public void OnItemSelected(IFileDialogCustomize pfdc, int dwIDCtl, int dwIDItem)
@@ -1191,6 +1183,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #endregion
 
+        /// <summary>
+        /// Indicates whether this feature is supported on the current platform.
+        /// </summary>
+        public static bool IsPlatformSupported
+        {
+            get
+            {
+                // We need Windows Vista onwards ...
+                return CoreHelpers.RunningOnVista;
+            }
+        }
     }
 
 

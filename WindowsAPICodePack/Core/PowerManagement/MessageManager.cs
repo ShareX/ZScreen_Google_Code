@@ -9,7 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// This class generates .NET events based on Windows messages.  
@@ -136,6 +136,7 @@ namespace Microsoft.WindowsAPICodePack
             /// Executes any registered event handlers.
             /// </summary>
             /// <param name="eventHandlerList">ArrayList of event handlers.</param>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             private static void ExecuteEvents(ArrayList eventHandlerList)
             {
                 ArrayList tempList = (ArrayList)eventHandlerList.Clone();
@@ -164,7 +165,7 @@ namespace Microsoft.WindowsAPICodePack
                     PowerManagementNativeMethods.PowerBroadcastSetting ps =
                          (PowerManagementNativeMethods.PowerBroadcastSetting)Marshal.PtrToStructure(
                              m.LParam, typeof(PowerManagementNativeMethods.PowerBroadcastSetting));
-                    IntPtr pData = (IntPtr)((int)m.LParam + Marshal.SizeOf(ps));
+                    IntPtr pData = new IntPtr(m.LParam.ToInt64() + Marshal.SizeOf(ps));
                     Guid currentEvent = ps.PowerSetting;
 
                     // Update the appropriate Property.

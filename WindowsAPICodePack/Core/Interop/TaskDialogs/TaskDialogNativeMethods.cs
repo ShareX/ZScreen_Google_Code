@@ -3,8 +3,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
 
     /// <summary>
@@ -16,18 +17,6 @@ namespace Microsoft.WindowsAPICodePack
     internal static class TaskDialogNativeMethods
     {
         #region TaskDialog Definitions
-
-        [DllImport(CommonDllNames.ComCtl32, CharSet = CharSet.Auto,
-            SetLastError = true)]
-        internal static extern HRESULT TaskDialog(
-            IntPtr hwndParent,
-            IntPtr hInstance,
-            [MarshalAs(UnmanagedType.LPWStr)] string pszWindowtitle,
-            [MarshalAs(UnmanagedType.LPWStr)] string pszMainInstruction,
-            [MarshalAs(UnmanagedType.LPWStr)] string pszContent,
-            TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons,
-            [MarshalAs(UnmanagedType.LPWStr)]string pszIcon,
-            [In, Out] ref int pnButton);
 
         [DllImport(CommonDllNames.ComCtl32, CharSet = CharSet.Auto,
             SetLastError = true)]

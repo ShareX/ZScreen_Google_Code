@@ -8,7 +8,7 @@ using System.IO;
 namespace Microsoft.WindowsAPICodePack.Shell
 {
     /// <summary>
-    /// Represents a registered/known folder in the system.
+    /// Represents a registered or known folder in the system.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification="This will complicate the class hierarchy and naming convention used in the Shell area")]
     public interface IKnownFolder : IDisposable, IEnumerable<ShellObject>

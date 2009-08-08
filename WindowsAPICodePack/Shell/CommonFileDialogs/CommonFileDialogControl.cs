@@ -1,6 +1,8 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack.Shell
+using Microsoft.WindowsAPICodePack.Dialogs;
+
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     /// Defines an abstract class that supports shared functionality for the 

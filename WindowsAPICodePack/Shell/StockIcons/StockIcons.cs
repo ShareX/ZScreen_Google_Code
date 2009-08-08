@@ -275,6 +275,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         ///  Icon for a SVCD media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Svcd")]
         public StockIcon MediaSvcd { get { return GetStockIcon(StockIconIdentifier.MediaSvcd); } }
         
         /// <summary>
@@ -325,11 +326,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         ///  Icon for CD-RW media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDRW")]
         public StockIcon MediaCDRW { get { return GetStockIcon(StockIconIdentifier.MediaCDRW); } }
         
         /// <summary>
         ///  Icon for a CD-R media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDR")]
         public StockIcon MediaCDR { get { return GetStockIcon(StockIconIdentifier.MediaCDR); } }
         
         /// <summary>
@@ -445,11 +448,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         ///  Icon for BluRay media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         public StockIcon MediaBluRay { get { return GetStockIcon(StockIconIdentifier.MediaBluRay); } }
         
         /// <summary>
         ///  Icon for VCD media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vcd")]
         public StockIcon MediaVcd { get { return GetStockIcon(StockIconIdentifier.MediaVcd); } }
         
         /// <summary>
@@ -530,41 +535,49 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// HDDVD Drive (all types)
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVD")]
         public StockIcon DriveHDDVD { get { return GetStockIcon(StockIconIdentifier.DriveHDDVD); } }
         
         /// <summary>
         /// Icon for BluRay Drive (all types)
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         public StockIcon DriveBluRay { get { return GetStockIcon(StockIconIdentifier.DriveBluRay); } }
         
         /// <summary>
         /// Icon for HDDVD-ROM Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVDROM")]
         public StockIcon MediaHDDVDROM { get { return GetStockIcon(StockIconIdentifier.MediaHDDVDROM); } }
         
         /// <summary>
         /// Icon for HDDVD-R Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVDR")]
         public StockIcon MediaHDDVDR { get { return GetStockIcon(StockIconIdentifier.MediaHDDVDR); } }
         
         /// <summary>
         /// Icon for HDDVD-RAM Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVDRAM")]
         public StockIcon MediaHDDVDRAM { get { return GetStockIcon(StockIconIdentifier.MediaHDDVDRAM); } }
         
         /// <summary>
         /// Icon for BluRay ROM Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ROM")]
         public StockIcon MediaBluRayROM { get { return GetStockIcon(StockIconIdentifier.MediaBluRayROM); } }
         
         /// <summary>
         /// Icon for BluRay R Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         public StockIcon MediaBluRayR { get { return GetStockIcon(StockIconIdentifier.MediaBluRayR); } }
         
         /// <summary>
         /// Icon for BluRay RE Media (Rewriable and RAM)
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         public StockIcon MediaBluRayRE { get { return GetStockIcon(StockIconIdentifier.MediaBluRayRE); } }
 
         /// <summary>

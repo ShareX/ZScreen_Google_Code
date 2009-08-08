@@ -6,8 +6,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Creates a Vista or Windows 7 Common File Dialog, allowing the user to select one or more files.
@@ -24,7 +25,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         public CommonOpenFileDialog() : base() 
         {
             // For Open file dialog, allow read only files.
-            base.CheckReadOnly = true;
+            base.EnsureReadOnly = true;
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         public CommonOpenFileDialog(string name) : base(name) 
         {
             // For Open file dialog, allow read only files.
-            base.CheckReadOnly = true;
+            base.EnsureReadOnly = true;
         }
 
         #region Public API specific to Open
@@ -43,7 +44,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Gets a collection of the selected file names.
         /// </summary>
         /// <remarks>This property should only be used when the
-        /// <see cref="Microsoft.WindowsAPICodePack.Shell.CommonOpenFileDialog.Multiselect"/>
+        /// <see cref="CommonOpenFileDialog.Multiselect"/>
         /// property is <b>true</b>.</remarks>
         public Collection<string> FileNames
         {
@@ -58,9 +59,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Gets a collection of the selected items as ShellObject objects.
         /// </summary>
         /// <remarks>This property should only be used when the
-        /// <see cref="Microsoft.WindowsAPICodePack.Shell.CommonOpenFileDialog.Multiselect"/>
+        /// <see cref="CommonOpenFileDialog.Multiselect"/>
         /// property is <b>true</b>.</remarks>
-        public ICollection<ShellObject> Items
+        public ICollection<ShellObject> FilesAsShellObject
         {
             get
             {
@@ -91,14 +92,15 @@ namespace Microsoft.WindowsAPICodePack.Shell
             set { multiselect = value; }
         }
 
-        private bool foldersOnly;
+        private bool isFolderPicker;
         /// <summary>
         /// Gets or sets a value that determines whether the user can select folders or files.
+        /// Default value is false.
         /// </summary>
-        public bool FoldersOnly
+        public bool IsFolderPicker
         {
-            get { return foldersOnly; }
-            set { foldersOnly = value; }
+            get { return isFolderPicker; }
+            set { isFolderPicker = value; }
         }
 
         private bool allowNonFileSystem;
@@ -158,7 +160,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         {
             if (multiselect)
                 flags |= ShellNativeMethods.FOS.FOS_ALLOWMULTISELECT;
-            if (foldersOnly)
+            if (isFolderPicker)
                 flags |= ShellNativeMethods.FOS.FOS_PICKFOLDERS;
             if (!allowNonFileSystem)
                 flags |= ShellNativeMethods.FOS.FOS_FORCEFILESYSTEM;

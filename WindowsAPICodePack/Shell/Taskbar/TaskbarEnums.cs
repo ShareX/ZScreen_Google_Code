@@ -1,11 +1,11 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
     /// Known category to display
     /// </summary>
-    public enum KnownCategoryType
+    public enum JumpListKnownCategoryType
     {
         /// <summary>
         /// Don't display either known category. You must have at least one
@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
     /// <summary>
     /// Represents the thumbnail progress bar state.
     /// </summary>
-    public enum TaskbarButtonProgressState
+    public enum TaskbarProgressBarState
     {
         /// <summary>
         /// No progress is displayed.

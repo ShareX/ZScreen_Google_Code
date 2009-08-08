@@ -3,6 +3,8 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using MS.WindowsAPICodePack.Internal;
 namespace Microsoft.WindowsAPICodePack.Shell
 {
     /// <summary>
@@ -34,6 +36,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
             if (pszPath != IntPtr.Zero)
             {
                 path = Marshal.PtrToStringAuto(pszPath);
+                Marshal.FreeCoTaskMem( pszPath );
+                pszPath = IntPtr.Zero;
             }
 
             if (path == null)
@@ -42,6 +46,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 if (hr == HRESULT.S_OK && pszPath != IntPtr.Zero)
                 {
                     path = Marshal.PtrToStringAuto(pszPath);
+                    Marshal.FreeCoTaskMem( pszPath );
+                    pszPath = IntPtr.Zero;
                 }
 
             }

@@ -1,6 +1,6 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack
+namespace MS.WindowsAPICodePack.Internal
 {
     /// <summary>
     /// Safe Region Handle

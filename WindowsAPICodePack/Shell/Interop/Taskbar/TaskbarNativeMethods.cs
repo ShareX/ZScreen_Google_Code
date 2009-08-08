@@ -4,8 +4,11 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     #region Enums
     internal enum KNOWNDESTCATEGORY
@@ -81,7 +84,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         internal IntPtr pElems;
     }
     
-    [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal struct THUMBBUTTON
     {
         /// <summary>
@@ -159,6 +162,43 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         [DllImport(CommonDllNames.User32, EntryPoint = "RegisterWindowMessage", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
 
+
+        [DllImport(CommonDllNames.Shell32)]
+        public static extern int SHGetPropertyStoreForWindow(
+            IntPtr hwnd,
+            ref Guid iid /*IID_IPropertyStore*/,
+            [Out(), MarshalAs(UnmanagedType.Interface)]
+                out IPropertyStore propertyStore);
+
+        /// <summary>
+        /// Sets the window's application id by its window handle.
+        /// </summary>
+        /// <param name="hwnd">The window handle.</param>
+        /// <param name="appId">The application id.</param>
+        internal static void SetWindowAppId(IntPtr hwnd, string appId)
+        {
+            IPropertyStore propStore = GetWindowPropertyStore(hwnd);
+
+            PropVariant pv = new PropVariant();
+            pv.SetString(appId);
+            PropertyKey appUserModelId = SystemProperties.System.AppUserModel.ID;
+            propStore.SetValue(ref appUserModelId, ref pv);
+
+            Marshal.ReleaseComObject(propStore);
+        }
+
+        internal static IPropertyStore GetWindowPropertyStore(IntPtr hwnd)
+        {
+            IPropertyStore propStore;
+            Guid guid = new Guid(ShellIIDGuid.IPropertyStore);
+            int rc = SHGetPropertyStoreForWindow(
+                hwnd,
+                ref guid,
+                out propStore);
+            if (rc != 0)
+                throw Marshal.GetExceptionForHR(rc);
+            return propStore;
+        }
 
         #endregion
     }

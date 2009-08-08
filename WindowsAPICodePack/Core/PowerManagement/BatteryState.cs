@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// A snapshot of the state of the battery.
@@ -131,6 +131,8 @@ namespace Microsoft.WindowsAPICodePack
         /// Generates a string that represents this <b>BatteryState</b> object.
         /// </summary>
         /// <returns>A <see cref="System.String"/> representation of this object's current state.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"
+            , Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
             return string.Format(

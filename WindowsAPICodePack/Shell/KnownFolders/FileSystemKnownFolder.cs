@@ -10,7 +10,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
     /// Represents a registered file system Known Folder
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
-    public class FileSystemKnownFolder : FileSystemFolder, IKnownFolder, IDisposable
+    public class FileSystemKnownFolder : ShellFileSystemFolder, IKnownFolder, IDisposable
     {
         #region Private Fields
 
@@ -258,9 +258,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Release resources
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">Indicates that this mothod is being called from Dispose() rather than the finalizer.</param>
         protected override void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                knownFolderSettings = null;
+            }
+
             if (knownFolderNative != null)
             {
                 Marshal.ReleaseComObject(knownFolderNative);
@@ -269,6 +274,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
             base.Dispose(disposing);
         }
+
         #endregion
     }
 }

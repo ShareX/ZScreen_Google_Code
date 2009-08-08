@@ -4,8 +4,9 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Creates a Vista or Windows 7 Common File Dialog, allowing the user to select the filename and location for a saved file.
@@ -30,11 +31,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #region Public API specific to Save
 
-        private bool overwritePrompt;
-
+        private bool overwritePrompt = true;
         /// <summary>
         /// Gets or sets a value that controls whether to prompt before 
-        /// overwriting an existing file of the same name. 
+        /// overwriting an existing file of the same name. Default value is true.
         /// </summary>
         /// <permission cref="System.InvalidOperationException">
         /// This property cannot be changed when the dialog is showing.
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
 
-        private bool enableMiniMode;
+        private bool isExpandedMode;
         /// <summary>
         /// Gets or sets a value that controls whether to the save dialog 
         /// displays in expanded mode. 
@@ -77,17 +77,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <permission cref="System.InvalidOperationException">
         /// This property cannot be changed when the dialog is showing.
         /// </permission>
-        public bool EnableMiniMode
+        public bool IsExpandedMode
         {
-            get { return enableMiniMode; }
+            get { return isExpandedMode; }
             set 
             {
-                ThrowIfDialogShowing("EnableMiniMode" + IllegalPropertyChangeString);
-                enableMiniMode = value; 
+                ThrowIfDialogShowing("IsExpandedMode" + IllegalPropertyChangeString);
+                isExpandedMode = value; 
             }
         }
 
-        private bool strictExtensions;
+        private bool alwaysAppendSelectedExtension;
         /// <summary>
         /// Gets or sets a value that controls whether the 
         /// returned file name has a file extension that matches the 
@@ -97,13 +97,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <permission cref="System.InvalidOperationException">
         /// This property cannot be changed when the dialog is showing.
         /// </permission>
-        public bool StrictExtensions
+        public bool AlwaysAppendSelectedExtension
         {
-            get { return strictExtensions; }
+            get { return alwaysAppendSelectedExtension; }
             set
             {
-                ThrowIfDialogShowing("StrictExtensions" + IllegalPropertyChangeString);
-                strictExtensions = value;
+                ThrowIfDialogShowing("AlwaysAppendSelectedExtension" + IllegalPropertyChangeString);
+                alwaysAppendSelectedExtension = value;
             }
         }
 
@@ -177,9 +177,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 flags |= ShellNativeMethods.FOS.FOS_OVERWRITEPROMPT;
             if (createPrompt)
                 flags |= ShellNativeMethods.FOS.FOS_CREATEPROMPT;
-            if (!enableMiniMode)
+            if (!isExpandedMode)
                 flags |= ShellNativeMethods.FOS.FOS_DEFAULTNOMINIMODE;
-            if (strictExtensions)
+            if (alwaysAppendSelectedExtension)
                 flags |= ShellNativeMethods.FOS.FOS_STRICTFILETYPES;
             return flags;
         }

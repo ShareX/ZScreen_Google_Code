@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Provides a visual representation of the progress of a long running operation.
@@ -43,6 +43,8 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets or sets the minimum value for the control.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value",
+                        Justification="Value is standard for progressbar's current value property")]
         public int Minimum
         {
             get { return minimum; }
@@ -62,6 +64,8 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets or sets the maximum value for the control.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value",
+            Justification="Value is standard for progressbar's current value property")]
         public int Maximum
         {
             get { return maximum; }
@@ -78,6 +82,8 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets or sets the current value for the control.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value",
+                        Justification="Value is standard for progressbar's current value property")]
         public int Value
         {
             get { return this.value; }

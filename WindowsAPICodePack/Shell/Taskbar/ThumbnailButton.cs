@@ -3,13 +3,14 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
     /// Represents a taskbar thumbnail button in the thumbnail toolbar.
     /// </summary>
-    public sealed class ThumbnailButton
+    public sealed class ThumbnailToolbarButton: IDisposable
     {
         private static uint nextId = 101;
         private THUMBBUTTON win32ThumbButton;
@@ -18,7 +19,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// The event that occurs when the taskbar thumbnail button
         /// is clicked.
         /// </summary>
-        public event EventHandler Click;
+        public event EventHandler<ThumbnailButtonClickedEventArgs> Click;
 
         // Internal bool to track whether we should be updating the taskbar 
         // if any of our properties change or if it's just an internal update
@@ -26,11 +27,11 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         private bool internalUpdate = false;
 
         /// <summary>
-        /// 
+        /// Initializes an instance of this class
         /// </summary>
-        /// <param name="icon"></param>
-        /// <param name="tooltip"></param>
-        public ThumbnailButton(Icon icon, string tooltip)
+        /// <param name="icon">The icon to use for this button</param>
+        /// <param name="tooltip">The tooltip string to use for this button.</param>
+        public ThumbnailToolbarButton(Icon icon, string tooltip)
         {
             // Start internal update (so we don't accidently update the taskbar
             // via the native API)
@@ -273,10 +274,16 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// The window manager should call this method to raise the public click event to all
         /// the subscribers.
         /// </summary>
-        internal void FireClick()
+        /// <param name="taskbarWindow">Taskbar Window associated with this button</param>
+        internal void FireClick(TaskbarWindow taskbarWindow)
         {
-            if (Click != null)
-                Click(this, EventArgs.Empty);
+            if (Click != null && taskbarWindow != null)
+            {
+                if (taskbarWindow.UserWindowHandle != IntPtr.Zero)
+                    Click(this, new ThumbnailButtonClickedEventArgs(taskbarWindow.UserWindowHandle, this));
+                else if (taskbarWindow.WindowsControl != null)
+                    Click(this, new ThumbnailButtonClickedEventArgs(taskbarWindow.WindowsControl, this));
+            }
         }
 
         /// <summary>
@@ -306,7 +313,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             // Get the array of thumbnail buttons in native format
             THUMBBUTTON[] nativeButtons = { Win32ThumbButton };
 
-            HRESULT hr = Taskbar.TaskbarList.ThumbBarUpdateButtons(WindowHandle, 1, nativeButtons);
+            HRESULT hr = TaskbarManager.Instance.TaskbarList.ThumbBarUpdateButtons(WindowHandle, 1, nativeButtons);
 
             if (!CoreErrorHelper.Succeeded((int)hr))
                 Marshal.ThrowExceptionForHR((int)hr);
@@ -315,6 +322,40 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
 
         #endregion
 
+        #region IDisposable Members
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ~ThumbnailToolbarButton()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Release the native objects.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Release the native objects.
+        /// </summary>
+        /// <param name="disposing"></param>
+        public void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Dispose managed resources
+                Icon.Dispose();
+                tooltip = null;
+            }
+        }
+
+        #endregion
     }
 
 }

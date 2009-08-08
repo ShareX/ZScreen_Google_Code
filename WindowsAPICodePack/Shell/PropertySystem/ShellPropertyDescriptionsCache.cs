@@ -1,8 +1,9 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System.Collections.Generic;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     internal class ShellPropertyDescriptionsCache
     {

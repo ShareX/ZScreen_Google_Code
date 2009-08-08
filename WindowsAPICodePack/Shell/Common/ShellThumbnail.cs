@@ -5,11 +5,12 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
     /// <summary>
-    /// Represents a thumbnail or an icon for a ShellObject
+    /// Represents a thumbnail or an icon for a ShellObject.
     /// </summary>
     public class ShellThumbnail
     {
@@ -52,11 +53,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Public properties
 
         /// <summary>
-        /// Gets or sets the default size of the thumbnail or icon. Default for icons is 32x32 pixels and 
-        /// for thumbnails 256x256 pixels.
-        /// If the size specified is larger than the maximum size (1024x1024 for Thumbnails, 256x256 for icons), 
-        /// a <see cref="System.ArgumentOutOfRangeException"/> will be thrown.
+        /// Gets or sets the default size of the thumbnail or icon. The default is 32x32 pixels for icons and 
+        /// 256x256 pixels for thumbnails.
         /// </summary>
+        /// <remarks>If the size specified is larger than the maximum size of 1024x1024 for thumbnails and 256x256 for icons,
+        /// an <see cref="System.ArgumentOutOfRangeException"/> is thrown.
+        /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "We are not currently handling globalization or localization")]
         public System.Windows.Size CurrentSize
         {
@@ -87,8 +89,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the thumbnail or icon image in <see cref="System.Drawing.Bitmap"/> format. 
-        /// If the ShellObject does not have any thumbnail, null will be returned.
+        /// Gets the thumbnail or icon image in <see cref="System.Drawing.Bitmap"/> format.
+        /// Null is returned if the ShellObject does not have a thumbnail or icon image.
         /// </summary>
         public Bitmap Bitmap
         {
@@ -100,7 +102,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         /// <summary>
         /// Gets the thumbnail or icon image in <see cref="System.Windows.Media.Imaging.BitmapSource"/> format. 
-        /// If the ShellObject does not have any thumbnail, null will be returned.
+        /// Null is returned if the ShellObject does not have a thumbnail or icon image.
         /// </summary>
         public BitmapSource BitmapSource
         {
@@ -112,7 +114,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         /// <summary>
         /// Gets the thumbnail or icon image in <see cref="System.Drawing.Icon"/> format. 
-        /// If the ShellObject does not have any thumbnail or icon, null will be returned.
+        /// Null is returned if the ShellObject does not have a thumbnail or icon image.
         /// </summary>
         public Icon Icon
         {
@@ -280,7 +282,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets or sets the current retrieval option (default - cache or extract, cache only, or from memory only)
+        /// Gets or sets a value that determines if the current retrieval option is cache or extract, cache only, or from memory only.
+        /// The default is cache or extract.
         /// </summary>
         public ShellThumbnailRetrievalOptions RetrievalOption
         {
@@ -290,7 +293,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         private ShellThumbnailFormatOptions formatOption = ShellThumbnailFormatOptions.Default;
         /// <summary>
-        /// Gets or sets the current format option (default - thumbnail or icon, thumbnail only, or icon only)
+        /// Gets or sets a value that determines if the current format option is thumbnail or icon, thumbnail only, or icon only.
+        /// The default is thumbnail or icon.
         /// </summary>
         public ShellThumbnailFormatOptions FormatOption
         {
@@ -315,13 +319,15 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets or sets the property to allow the user to manually stretch the returned image.
-        /// Default value is set to false.
-        /// (For example, if the caller passes in 80x80 a 96x96 thumbnail could be returned). 
-        /// This could be used as a performance optimization if the caller will need to stretch 
-        /// the image themselves anyway. Note that Shells implementation performs a GDI stretch blit. 
-        /// If the caller wants a higher quality image stretch they should pass this flag and do it themselves.
+        /// Gets or sets a value that determines if the user can manually stretch the returned image.
+        /// The default value is false.
         /// </summary>
+        /// <remarks>
+        /// For example, if the caller passes in 80x80 a 96x96 thumbnail could be returned. 
+        /// This could be used as a performance optimization if the caller will need to stretch 
+        /// the image themselves anyway. Note that the Shell implementation performs a GDI stretch blit. 
+        /// If the caller wants a higher quality image stretch, they should pass this flag and do it themselves.
+        /// </remarks>
         public bool AllowBiggerSize
         {
             get;
@@ -371,6 +377,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
             {
                 // Thumbnail was requested, but this ShellItem doesn't have a thumbnail.
                 throw new InvalidOperationException("The current ShellObject does not have a thumbnail. Try using ShellThumbnailFormatOptions.Default to get the icon for this item.", Marshal.GetExceptionForHR((int)hr));
+            }
+            else if ((uint)hr == 0x80040154) // REGDB_E_CLASSNOTREG
+            {
+                throw new NotSupportedException("The current ShellObject does not have a valid thumbnail handler or there was a problem in extracting the thumbnail for this specific shell object.", Marshal.GetExceptionForHR((int)hr));
             }
             else
                 throw Marshal.GetExceptionForHR((int)hr);

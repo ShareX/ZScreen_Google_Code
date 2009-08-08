@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Net
 {
     /// <summary>
     /// Represents a network on the local machine. 
@@ -11,7 +11,7 @@ namespace Microsoft.WindowsAPICodePack
     /// </summary>
     /// <remarks>
     /// Instances of this class are obtained by calling 
-    /// methods on the <see cref="Microsoft.WindowsAPICodePack.NetworkListManager"/> class.
+    /// methods on the <see cref="NetworkListManager"/> class.
     /// </remarks>
     public class Network
     {
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAPICodePack
         /// categories are trusted, untrusted, or 
         /// authenticated.
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.NetworkCategory"/> value.</value>
+        /// <value>A <see cref="NetworkCategory"/> value.</value>
         public NetworkCategory Category
         {
             get
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets the network connections for the network.
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.NetworkConnectionCollection"/> object.</value>
+        /// <value>A <see cref="NetworkConnectionCollection"/> object.</value>
         public NetworkConnectionCollection Connections
         {
             get
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets the connectivity state of the network.
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.Connectivity"/> value.</value>
+        /// <value>A <see cref="Connectivity"/> value.</value>
         /// <remarks>Connectivity provides information on whether
         /// the network is connected, and the protocols
         /// in use for network traffic.</remarks>
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets the domain type of the network. 
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.DomainType"/> value.</value>
+        /// <value>A <see cref="DomainType"/> value.</value>
         /// <remarks>The domain
         /// indictates whether the network is an Active
         /// Directory Network, and whether the machine

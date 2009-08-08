@@ -35,7 +35,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
@@ -45,6 +45,7 @@ using ZSS.Properties;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
+using MS.WindowsAPICodePack.Internal;
 
 namespace ZScreenLib
 {
@@ -86,7 +87,7 @@ namespace ZScreenLib
                 Program.Worker = new WorkerPrimary(this);
                 Program.Worker2 = new WorkerSecondary(this);
                 ZScreen_ConfigGUI();
-                ZScreen_Windows7onlyTasks();
+
                 Program.Worker2.PerformOnlineTasks();
                 Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
                 if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
@@ -101,8 +102,11 @@ namespace ZScreenLib
                 {
                     Program.CheckFileRegistration();
 
-                    Taskbar.AppId = Program.appId;
-                    JumpList jumpList = Taskbar.JumpList;
+                    Program.zWindowsTaskbar = TaskbarManager.Instance;
+                    Program.zWindowsTaskbar.ApplicationId = Program.appId;
+
+                    Program.zJumpList = JumpList.CreateJumpList();
+                    // JumpList jumpList = Taskbar.JumpList;
 
                     //*****************************************************************
                     // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
@@ -124,22 +128,24 @@ namespace ZScreenLib
                     //    IconReference = new IconReference(Application.ExecutablePath, 0)
                     //});
 
-                    CustomCategory paths = new CustomCategory("Paths");
-                    paths.JumpListItems.Add(new JumpListLink
-                    {
-                        Title = "Images",
-                        IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                        Path = FileSystem.GetImagesDir()
-                    });
-                    paths.JumpListItems.Add(new JumpListLink
-                    {
-                        Title = "Settings",
-                        IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0),
-                        Path = Program.SettingsDir
-                    });
-                    jumpList.CustomCategories.Add(paths);
+                    JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
 
-                    Taskbar.JumpList.RefreshTaskbarList();
+                    JumpListLink imagesJumpListLink = new JumpListLink(FileSystem.GetImagesDir(), "Images");
+                    imagesJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+                    JumpListLink settingsJumpListLink = new JumpListLink(Program.SettingsDir, "Settings");
+                    settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+
+                    paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink);
+
+                    Program.zJumpList.AddCustomCategories(paths);
+
+                    ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
+                    cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
+                    ThumbnailToolbarButton selWindow = new ThumbnailToolbarButton(Resources.application_double_ico, "Selected Window");
+                    selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
+                    ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
+                    clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
+                    TaskbarManager.Instance.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
                 }
                 catch (Exception ex)
                 {
@@ -1250,6 +1256,8 @@ namespace ZScreenLib
         {
             mGuiIsReady = true;
 
+
+
             if (!Program.conf.RunOnce)
             {
                 Show();
@@ -1269,16 +1277,8 @@ namespace ZScreenLib
                 FileSystem.BackupAppSettings();
             }
 
-            if (CoreHelpers.RunningOnWin7)
-            {
-                ThumbnailButton cropShot = new ThumbnailButton(Resources.shape_square_ico, "Crop Shot");
-                cropShot.Click += new EventHandler(cropShot_Click);
-                ThumbnailButton selWindow = new ThumbnailButton(Resources.application_double_ico, "Selected Window");
-                selWindow.Click += new EventHandler(selWindow_Click);
-                ThumbnailButton clipboardUpload = new ThumbnailButton(Resources.clipboard_upload_ico, "Clipboard Upload");
-                clipboardUpload.Click += new EventHandler(clipboardUpload_Click);
-                Taskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-            }
+            ZScreen_Windows7onlyTasks();
+
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)

@@ -2,41 +2,46 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     #region Property System Enumerations
 
     /// <summary>
-    /// Indicates the format of a preoperty string.
-    /// Typically use one, or a bitwise combination of 
-    /// these flags to specify format. Some flags are mutually exclusive, 
-    /// for example ShortTime | LongTime | HideTime, is not allowed.
+    /// Delineates the format of a property string.
     /// </summary>
+    /// <remarks>
+    /// Typically use one, or a bitwise combination of 
+    /// these flags, to specify the format. Some flags are mutually exclusive, 
+    /// so combinations like <c>ShortTime | LongTime | HideTime</c> are not allowed.
+    /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "This is following the native API"), Flags]
     public enum PropertyDescriptionFormat
     {
         /// <summary>
-        /// Use the format settings specified in the property's .propdesc file.
+        /// The format settings specified in the property's .propdesc file.
         /// </summary>
         Default = 0,
 
         /// <summary>
-        /// Precede the value with the property's display name. 
-        /// If the hideLabelPrefix attribute of the labelInfo element 
-        /// in the property's .propinfo file is set to true, then this flag is ignored.
+        /// The value preceded with the property's display name.
         /// </summary>
+        /// <remarks>
+        /// This flag is ignored when the <c>hideLabelPrefix</c> attribute of the <c>labelInfo</c> element 
+        /// in the property's .propinfo file is set to true.
+        /// </remarks>
         PrefixName = 0x1,
 
         /// <summary>
-        /// Treat the string as a file name.
+        /// The string treated as a file name.
         /// </summary>
         FileName = 0x2,
 
         /// <summary>
-        /// Byte sizes are always displayed in kilobytes (KB), regardless of size. 
-        /// This allows for the clean alignment of the values in the column. 
-        /// This flag only applies to properties of Integer types.
+        /// The sizes displayed in kilobytes (KB), regardless of size. 
         /// </summary>
+        /// <remarks>
+        /// This flag applies to properties of <c>Integer</c> types and aligns the values in the column. 
+        /// </remarks>
         AlwaysKB = 0x4,
 
         /// <summary>
@@ -45,48 +50,51 @@ namespace Microsoft.WindowsAPICodePack.Shell
         RightToLeft = 0x8,
 
         /// <summary>
-        /// Display time as 'hh:mm am/pm'.
+        /// The time displayed as 'hh:mm am/pm'.
         /// </summary>
         ShortTime = 0x10,
 
         /// <summary>
-        /// Display time as 'hh:mm:ss am/pm'.
+        /// The time displayed as 'hh:mm:ss am/pm'.
         /// </summary>
         LongTime = 0x20,
 
         /// <summary>
-        /// Hide the time portion of datetime.
+        /// The time portion of date/time hidden.
         /// </summary>
         HideTime = 64,
 
         /// <summary>
-        /// Display date as 'MM/DD/YY'. For example, '3/21/04'.
+        /// The date displayed as 'MM/DD/YY'. For example, '3/21/04'.
         /// </summary>
         ShortDate = 0x80,
 
         /// <summary>
-        /// Display date as 'DayOfWeek Month day, year'. 
+        /// The date displayed as 'DayOfWeek Month day, year'. 
         /// For example, 'Monday, March 21, 2004'.
         /// </summary>
         LongDate = 0x100,
 
         /// <summary>
-        /// Hide the date portion of datetime.
+        /// The date portion of date/time hidden.
         /// </summary>
         HideDate = 0x200,
 
         /// <summary>
-        /// Use friendly date descriptions. For example, "Yesterday".
+        /// The friendly date descriptions, such as "Yesterday".
         /// </summary>
         RelativeDate = 0x400,
 
         /// <summary>
-        /// Return the invitation text if formatting failed or the value was empty. 
+        /// The text displayed in a text box as a cue for the user, such as 'Enter your name'.
+        /// </summary>
+        /// <remarks>
+        /// The invitation text is returned if formatting failed or the value was empty. 
         /// Invitation text is text displayed in a text box as a cue for the user, 
-        /// such as 'Enter your name.' Formatting can fail if the data entered 
+        /// Formatting can fail if the data entered 
         /// is not of an expected type, such as putting alpha characters in 
         /// a phone number field.
-        /// </summary>
+        /// </remarks>
         UseEditInvitation = 0x800,
 
         /// <summary>
@@ -98,7 +106,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         ReadOnly = 0x1000,
 
         /// <summary>
-        /// Do not detect reading order automatically. Useful when converting 
+        /// The detection of the reading order is not automatic. Useful when converting 
         /// to ANSI to omit the Unicode reading order characters.
         /// </summary>
         NoAutoReadingOrder = 0x2000,
@@ -110,32 +118,32 @@ namespace Microsoft.WindowsAPICodePack.Shell
     }
 
     /// <summary>
-    /// Display Types for a Property
+    /// Specifies the display types for a property.
     /// </summary>
     public enum PropertyDisplayType
     {
         /// <summary>
-        /// String Display, this is the default if the property doesn't have one
+        /// The String Display. This is the default if the property doesn't specify a display type.
         /// </summary>
         String = 0,
 
         /// <summary>
-        /// Number Display
+        /// The Number Display.
         /// </summary>
         Number = 1,
 
         /// <summary>
-        /// Boolean Display
+        /// The Boolean Display.
         /// </summary>
         Boolean = 2,
 
         /// <summary>
-        /// DateTime Display
+        /// The DateTime Display.
         /// </summary>
         DateTime = 3,
 
         /// <summary>
-        /// Enumerated Display
+        /// The Enumerated Display.
         /// </summary>
         Enumerated = 4
     }
@@ -146,35 +154,35 @@ namespace Microsoft.WindowsAPICodePack.Shell
     public enum PropertyAggregationType
     {
         /// <summary>
-        /// Display the string "Multiple Values".
+        /// The string "Multiple Values" is displayed.
         /// </summary>
         Default = 0,
 
         /// <summary>
-        /// Display the first value in the selection.
+        /// The first value in the selection is displayed.
         /// </summary>
         First = 1,
 
         /// <summary>
-        /// Display the sum of the selected values. This flag is never returned 
+        /// The sum of the selected values is displayed. This flag is never returned 
         /// for data types VT_LPWSTR, VT_BOOL, and VT_FILETIME.
         /// </summary>
         Sum = 2,
 
         /// <summary>
-        /// Display the numerical average of the selected values. This flag 
+        /// The numerical average of the selected values is displayed. This flag 
         /// is never returned for data types VT_LPWSTR, VT_BOOL, and VT_FILETIME.
         /// </summary>
         Average = 3,
 
         /// <summary>
-        /// Display the date range of the selected values. This flag is only 
+        /// The date range of the selected values is displayed. This flag is only 
         /// returned for values of the VT_FILETIME data type.
         /// </summary>
         DateRange = 4,
 
         /// <summary>
-        /// Display a concatenated string of all the values. The order of 
+        /// A concatenated string of all the values is displayed. The order of 
         /// individual values in the string is undefined. The concatenated 
         /// string omits duplicate values; if a value occurs more than once, 
         /// it only appears a single time in the concatenated string.
@@ -182,12 +190,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         Union = 5,
 
         /// <summary>
-        /// Display the highest of the selected values.
+        /// The highest of the selected values is displayed.
         /// </summary>
         Max = 6,
 
         /// <summary>
-        /// Display the lowest of the selected values.
+        /// The lowest of the selected values is displayed.
         /// </summary>
         Min = 7
     }
@@ -219,7 +227,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
     };
 
     /// <summary>
-    /// Describes how a property should be treated. 
+    /// Describes how a property should be treated for display purposes.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "This is following the native API"), Flags]
     public enum PropertyColumnState : uint
@@ -329,49 +337,49 @@ namespace Microsoft.WindowsAPICodePack.Shell
     }
 
     /// <summary>
-    /// Describes the condition type to use when displaying the property in the query builder user interface (UI).
+    /// Specifies the condition type to use when displaying the property in the query builder user interface (UI).
     /// </summary>
     public enum PropertyConditionType
     {
         /// <summary>
-        /// Default condition type
+        /// The default condition type.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Indicates string.
+        /// The string type.
         /// </summary>
         String = 1,
 
         /// <summary>
-        /// Indicates size.
+        /// The size type.
         /// </summary>
         Size = 2,
 
         /// <summary>
-        /// Indicates date/time.
+        /// The date/time type.
         /// </summary>
         DateTime = 3,
 
         /// <summary>
-        /// Indicates Boolean.
+        /// The Boolean type.
         /// </summary>
         Boolean = 4,
 
         /// <summary>
-        /// Indicates number.
+        /// The number type.
         /// </summary>
         Number = 5,
     }
 
     /// <summary>
     /// Provides a set of flags to be used with IConditionFactory, 
-    /// ICondition, and IConditionGenerator to indicate the operation
+    /// ICondition, and IConditionGenerator to indicate the operation.
     /// </summary>
     public enum PropertyConditionOperation
     {
         /// <summary>
-        /// An implicit comparison between the value of the property and the value of the constant.
+        /// The implicit comparison between the value of the property and the value of the constant.
         /// </summary>
         Implicit,
 
@@ -449,82 +457,84 @@ namespace Microsoft.WindowsAPICodePack.Shell
     }
 
     /// <summary>
-    /// Property description grouping ranges
+    /// Specifies the property description grouping ranges.
     /// </summary>
     public enum PropertyGroupingRange
     {
         /// <summary>
-        /// Displays individual values.
+        /// The individual values.
         /// </summary>
         Discrete = 0,
 
         /// <summary>
-        /// Display static alphanumeric ranges.
+        /// The static alphanumeric ranges.
         /// </summary>
         Alphanumeric = 1,
 
         /// <summary>
-        /// Display static size ranges.
+        /// The static size ranges.
         /// </summary>
         Size = 2,
 
         /// <summary>
-        /// Display dynamically created ranges.
+        /// The dynamically-created ranges.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dymamic", Justification = "This is following the native API")]
         Dymamic = 3,
 
         /// <summary>
-        /// Display month and year groups.
+        /// The month and year groups.
         /// </summary>
         Date = 4,
 
         /// <summary>
-        /// Display percent groups.
+        /// The percent groups.
         /// </summary>
         Percent = 5,
 
         /// <summary>
-        /// Enumerated
+        /// The enumerated groups.
         /// </summary>
         Enumerated = 6,
     }
 
     /// <summary>
-    /// Indicates the particular wordings of sort offerings.
-    /// <para>Note that the strings shown are English versions only. 
-    /// Localized strings are used for other locales.</para>
+    /// Describes the particular wordings of sort offerings.
     /// </summary>
+    /// <remarks>
+    /// Note that the strings shown are English versions only; 
+    /// localized strings are used for other locales.
+    /// </remarks>
     public enum PropertySortDescription
     {
         /// <summary>
-        /// Default. "Sort going up", "Sort going down"
+        /// The default ascending or descending property sort, "Sort going up", "Sort going down".
         /// </summary>
         General,
 
         /// <summary>
-        /// "A on top", "Z on top"
+        /// The alphabetical sort, "A on top", "Z on top".
         /// </summary>
         AToZ,
 
         /// <summary>
-        /// "Lowest on top", "Highest on top"
+        /// The numerical sort, "Lowest on top", "Highest on top".
         /// </summary>
         LowestToHighest,
 
         /// <summary>
-        /// "Smallest on top", "Largest on top"
+        /// The size sort, "Smallest on top", "Largest on top".
         /// </summary>
         SmallestToBiggest,
 
         /// <summary>
-        /// "Oldest on top", "Newest on top"
+        /// The chronological sort, "Oldest on top", "Newest on top".
         /// </summary>
         OldestToNewest,
     }
 
     /// <summary>
-    /// These flags describe attributes of the typeInfo element in the property's .propdesc file.
+    /// Describes the attributes of the <c>typeInfo</c> element in the property's <c>.propdesc</c> file.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "This is following the native API"), Flags]
     public enum PropertyTypeFlags : uint
@@ -535,53 +545,89 @@ namespace Microsoft.WindowsAPICodePack.Shell
         Default = 0x00000000,
 
         /// <summary>
-        /// The property can have multiple values. These values are stored as a VT_VECTOR in the PROPVARIANT structure. This value is set by the multipleValues attribute of the typeInfo element in the property's .propdesc file.
+        /// The property can have multiple values.   
         /// </summary>
+        /// <remarks>
+        /// These values are stored as a VT_VECTOR in the PROPVARIANT structure.
+        /// This value is set by the multipleValues attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         MultipleValues = 0x00000001,
 
         /// <summary>
-        /// This property cannot be written to. This value is set by the isInnate attribute of the typeInfo element in the property's .propdesc file.
+        /// This property cannot be written to. 
         /// </summary>
+        /// <remarks>
+        /// This value is set by the isInnate attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         IsInnate = 0x00000002,
 
         /// <summary>
-        /// The property is a group heading. This value is set by the isGroup attribute of the typeInfo element in the property's .propdesc file.
+        /// The property is a group heading. 
         /// </summary>
+        /// <remarks>
+        /// This value is set by the isGroup attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         IsGroup = 0x00000004,
 
         /// <summary>
-        /// The user can group by this property. This value is set by the canGroupBy attribute of the typeInfo element in the property's .propdesc file.
+        /// The user can group by this property. 
         /// </summary>
+        /// <remarks>
+        /// This value is set by the canGroupBy attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         CanGroupBy = 0x00000008,
 
         /// <summary>
-        /// The user can stack by this property. This value is set by the canStackBy attribute of the typeInfo element in the property's .propdesc file.
+        /// The user can stack by this property. 
         /// </summary>
+        /// <remarks>
+        /// This value is set by the canStackBy attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         CanStackBy = 0x00000010,
 
         /// <summary>
-        /// This property contains a hierarchy. This value is set by the isTreeProperty attribute of the typeInfo element in the property's .propdesc file.
+        /// This property contains a hierarchy. 
         /// </summary>
+        /// <remarks>
+        /// This value is set by the isTreeProperty attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         IsTreeProperty = 0x00000020,
 
         /// <summary>
-        /// Include this property in any full text query that is performed. This value is set by the includeInFullTextQuery attribute of the typeInfo element in the property's .propdesc file.
+        /// Include this property in any full text query that is performed. 
         /// </summary>
+        /// <remarks>
+        /// This value is set by the includeInFullTextQuery attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         IncludeInFullTextQuery = 0x00000040,
 
         /// <summary>
-        /// This property is meant to be viewed by the user. This influences whether the property shows up in the "Choose Columns" dialog, for example. This value is set by the isViewable attribute of the typeInfo element in the property's .propdesc file.
+        /// This property is meant to be viewed by the user.  
         /// </summary>
+        /// <remarks>
+        /// This influences whether the property shows up in the "Choose Columns" dialog, for example.
+        /// This value is set by the isViewable attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         IsViewable = 0x00000080,
 
         /// <summary>
-        /// This property is included in the list of properties that can be queried. A queryable property must also be viewable. This influences whether the property shows up in the query builder UI. This value is set by the isQueryable attribute of the typeInfo element in the property's .propdesc file.
+        /// This property is included in the list of properties that can be queried.   
         /// </summary>
+        /// <remarks>
+        /// A queryable property must also be viewable.
+        /// This influences whether the property shows up in the query builder UI.
+        /// This value is set by the isQueryable attribute of the typeInfo element in the property's .propdesc file.
+        /// </remarks>
         IsQueryable = 0x00000100,
 
         /// <summary>
-        /// Windows Vista with Service Pack 1 (SP1) and later. Used with an innate property (that is, a value calculated from other property values) to indicate that it can be deleted. This value is used by the Remove Properties user interface (UI) to determine whether to display a check box next to an property that allows that property to be selected for removal. Note that a property that is not innate can always be purged regardless of the presence or absence of this flag.
+        /// Used with an innate property (that is, a value calculated from other property values) to indicate that it can be deleted.  
         /// </summary>
+        /// <remarks>
+        /// Windows Vista with Service Pack 1 (SP1) and later.
+        /// This value is used by the Remove Properties user interface (UI) to determine whether to display a check box next to an property that allows that property to be selected for removal.
+        /// Note that a property that is not innate can always be purged regardless of the presence or absence of this flag.
+        /// </remarks>
         CanBePurged = 0x00000200,
 
         /// <summary>
@@ -596,73 +642,73 @@ namespace Microsoft.WindowsAPICodePack.Shell
     }
 
     /// <summary>
-    /// These flags are associated with property names in property description list strings.
+    /// Associates property names with property description list strings.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue"), Flags]
     public enum PropertyViewFlags : uint
     {
         /// <summary>
-        /// Show by default.
+        /// The property is shown by default.
         /// </summary>
         Default = 0x00000000,
 
         /// <summary>
-        /// This property should be centered.
+        /// The property is centered.
         /// </summary>
         CenterAlign = 0x00000001,
 
         /// <summary>
-        /// This property should be right aligned.
+        /// The property is right aligned.
         /// </summary>
         RightAlign = 0x00000002,
 
         /// <summary>
-        /// Show this property as the beginning of the next collection of properties in the view.
+        /// The property is shown as the beginning of the next collection of properties in the view.
         /// </summary>
         BeginNewGroup = 0x00000004,
 
         /// <summary>
-        /// Fill the remainder of the view area with the content of this property.
+        /// The remainder of the view area is filled with the content of this property.
         /// </summary>
         FillArea = 0x00000008,
 
         /// <summary>
-        /// Applies to a property in a list of sorted properties, specifies "reverse sort" on that property.
+        /// The property is reverse sorted if it is a property in a list of sorted properties.
         /// </summary>
         SortDescending = 0x00000010,
 
         /// <summary>
-        /// Only show this property if it is present.
+        /// The property is only shown if it is present.
         /// </summary>
         ShowOnlyIfPresent = 0x00000020,
 
         /// <summary>
-        /// The property should be shown by default in a view (where applicable).
+        /// The property is shown by default in a view (where applicable).
         /// </summary>
         ShowByDefault = 0x00000040,
 
         /// <summary>
-        /// The property should be shown by default in primary column selection user interface (UI).
+        /// The property is shown by default in primary column selection user interface (UI).
         /// </summary>
         ShowInPrimaryList = 0x00000080,
 
         /// <summary>
-        /// The property should be shown by default in secondary column selection UI.
+        /// The property is shown by default in secondary column selection UI.
         /// </summary>
         ShowInSecondaryList = 0x00000100,
 
         /// <summary>
-        /// Hide the label if the view is normally inclined to show the label.
+        /// The label is hidden if the view is normally inclined to show the label.
         /// </summary>
         HideLabel = 0x00000200,
 
         /// <summary>
-        /// This property should not be displayed as a column in the UI.
+        /// The property is not displayed as a column in the UI.
         /// </summary>
         Hidden = 0x00000800,
 
         /// <summary>
-        /// This property can be wrapped to the next row.
+        /// The property is wrapped to the next row.
         /// </summary>
         CanWrap = 0x00001000,
 

@@ -1,4 +1,4 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using System.Windows.Interop;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
@@ -17,7 +18,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
     /// A Shell Library in the Shell Namespace
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
-    public sealed class ShellLibrary : ShellContainer, IList<FileSystemFolder>
+    public sealed class ShellLibrary : ShellContainer, IList<ShellFileSystemFolder>
     {
         #region Private Fields
 
@@ -53,8 +54,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// using the given IKnownFolder
         /// </summary>
         /// <param name="sourceKnownFolder">KnownFolder from which to create the new Shell Library</param>
-        /// <param name="isReadOnly"></param>
-        public ShellLibrary(IKnownFolder sourceKnownFolder, bool isReadOnly)
+        /// <param name="isReadOnly">If <B>true</B> , opens the library in read-only mode.</param>
+        private ShellLibrary(IKnownFolder sourceKnownFolder, bool isReadOnly)
         {
             CoreHelpers.ThrowIfNotWin7();
 
@@ -76,7 +77,18 @@ namespace Microsoft.WindowsAPICodePack.Shell
             Guid guid = sourceKnownFolder.FolderId;
 
             // Load the library from the IShellItem2
-            nativeShellLibrary.LoadLibraryFromKnownFolder(ref guid, flags);
+            try
+            {
+                nativeShellLibrary.LoadLibraryFromKnownFolder(ref guid, flags);
+            }
+            catch (InvalidCastException)
+            {
+                throw new ArgumentException("The given known folder is not a valid library.", "sourceKnownFolder");
+            }
+            catch (NotImplementedException)
+            {
+                throw new ArgumentException("The given known folder is not a valid library.", "sourceKnownFolder");
+            }
         }
 
         /// <summary>
@@ -84,7 +96,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// using the given shell library name.
         /// </summary>
         /// <param name="libraryName">The name of this library</param>
-        /// <param name="overwrite">Override an existing library with the same name</param>
+        /// <param name="overwrite">Allow overwriting an existing library; if one exists with the same name</param>
         public ShellLibrary(string libraryName, bool overwrite)
         {
             CoreHelpers.ThrowIfNotWin7();
@@ -124,7 +136,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             knownFolder = sourceKnownFolder;
 
             this.Name = libraryName;
-            Guid guid = knownFolder.FolderTypeId;
+            Guid guid = knownFolder.FolderId;
 
             ShellNativeMethods.LIBRARYSAVEFLAGS flags =
                 overwrite ?
@@ -165,10 +177,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
             Guid guid = new Guid(ShellIIDGuid.IShellItem);
 
-            string libraryPath = System.IO.Path.Combine(folderPath, libraryName + FileExtension);
-
             IShellItem shellItemIn = null;
-            ShellNativeMethods.SHCreateItemFromParsingName(libraryPath, IntPtr.Zero, ref guid, out shellItemIn);
+            ShellNativeMethods.SHCreateItemFromParsingName(folderPath, IntPtr.Zero, ref guid, out shellItemIn);
 
             nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCoClass();
             nativeShellLibrary.Save(shellItemIn, libraryName, flags, out nativeShellItem);
@@ -197,7 +207,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// 
+        /// The Resource Reference to the icon.
         /// </summary>
         public IconReference IconResourceId
         {
@@ -349,73 +359,6 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Public Methods
 
         /// <summary>
-        /// Shows the library management dialog which enables users to mange the library folders and default save location.
-        /// </summary>
-        /// <param name="windowHandle">The parent window,or IntPtr.Zero for no parent</param>
-        /// <param name="title">A title for the library management dialog, or null to use the library name as the title</param>
-        /// <param name="instruction">An optional help string to display for the library management dialog</param>
-        /// <param name="allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
-        /// <returns>true if the user cliked O.K, false if the user clicked Cancel</returns>
-        public bool ShowManageLibraryUI(IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
-        {
-            // this method is not safe for MTA consumption and will blow
-            // Access Violations if called from an MTA thread so we wrap this
-            // call up into a Worker thread that performs all operations in a
-            // single threaded apartment
-
-            int hr = 0;
-
-            Thread staWorker = new Thread(() =>
-            {
-                 hr = ShellNativeMethods.SHShowManageLibraryUI(
-                     NativeShellItem, 
-                     windowHandle, 
-                     title, 
-                     instruction, 
-                     allowAllLocations ? 
-                        ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LMD_NOUNINDEXABLELOCATIONWARNING : 
-                        ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LMD_DEFAULT);
-            });
-
-            staWorker.SetApartmentState(ApartmentState.STA);
-            staWorker.Start();
-            staWorker.Join();
-
-            if (!CoreErrorHelper.Succeeded(hr))
-                Marshal.ThrowExceptionForHR(hr);
-
-            return true; //At this point we're sure the function has succeeded 
-        }
-
-        /// <summary>
-        /// Shows the library management dialog which enables users to mange the library folders and default save location.
-        /// </summary>
-        /// <param name="mainWindow">The parent window for a WPF app</param>
-        /// <param name="title">A title for the library management dialog, or null to use the library name as the title</param>
-        /// <param name="instruction">An optional help string to display for the library management dialog</param>
-        /// <param name="allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
-        /// <returns>true if the user cliked O.K, false if the user clicked Cancel</returns>
-        public bool ShowManageLibraryUI(Window mainWindow, string title, string instruction, bool allowAllLocations)
-        {
-            WindowInteropHelper helper = new WindowInteropHelper(mainWindow);
-            return ShowManageLibraryUI(helper.Handle, title, instruction, allowAllLocations);
-        }
-
-        /// <summary>
-        /// Shows the library management dialog which enables users to mange the library folders and default save location.
-        /// </summary>
-        /// <param name="form">A windows form (WinForm)</param>
-        /// <param name="title">A title for the library management dialog, or null to use the library name as the title</param>
-        /// <param name="instruction">An optional help string to display for the library management dialog</param>
-        /// <param name="allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
-        /// <returns>true if the user cliked O.K, false if the user clicked Cancel</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification="Only top-level windows are allowed")]
-        public bool ShowManageLibraryUI(Form form, string title, string instruction, bool allowAllLocations)
-        {
-            return ShowManageLibraryUI(form.Handle, title, instruction, allowAllLocations);
-        }
-
-        /// <summary>
         /// Close the library, and release its associated file system resources
         /// </summary>
         public void Close()
@@ -451,43 +394,6 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Static Shell Library methods
 
         /// <summary>
-        /// Creates a copy of a ShellLibrary, 
-        /// using a new name and path
-        /// </summary>
-        /// <param name="library"></param>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
-        /// <param name="overrideExisting"></param>
-        /// <returns></returns>
-        public static ShellLibrary Copy(
-            ShellLibrary library, 
-            string name, string path,
-            bool overrideExisting) 
-        {
-            CoreHelpers.ThrowIfNotWin7();
-            throw new NotImplementedException(); 
-        }
-        
-        /// <summary>
-        /// Creates a copy of a ShellLibrary, 
-        /// using a new name and known folder
-        /// </summary>
-        /// <param name="library"></param>
-        /// <param name="name"></param>
-        /// <param name="destinationKnownFolder"></param>
-        /// <param name="overrideExisting"></param>
-        /// <returns></returns>
-        public static ShellLibrary Copy(
-            ShellLibrary library, 
-            string name, 
-            IKnownFolder destinationKnownFolder,
-            bool overrideExisting) 
-        {
-            CoreHelpers.ThrowIfNotWin7();
-            throw new NotImplementedException(); 
-        }
-
-        /// <summary>
         /// Get a the known folder FOLDERID_Libraries 
         /// </summary>
         public static IKnownFolder LibrariesKnownFolder
@@ -500,36 +406,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Resolve a renamed/moved folder in a library
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="timeoutMilliseconds"></param>
-        /// <returns></returns>
-        public static FileSystemFolder ResolveFolder(
-            string path, int timeoutMilliseconds)
-        {
-            CoreHelpers.ThrowIfNotWin7();
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Resolve a renamed/moved folder in a library
-        /// </summary>
-        /// <param name="folder"></param>
-        /// <param name="timeoutMilliseconds"></param>
-        /// <returns></returns>
-        public static FileSystemFolder ResolveFolder(
-            FileSystemFolder folder, int timeoutMilliseconds)
-        {
-            CoreHelpers.ThrowIfNotWin7();
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Load the library using a number of options
         /// </summary>
-        /// <param name="libraryName"></param>
-        /// <param name="isReadOnly"></param>
+        /// <param name="libraryName">The name of the library</param>
+        /// <param name="isReadOnly">If <B>true</B>, loads the library in read-only mode.</param>
         /// <returns>A ShellLibrary Object</returns>
         public static ShellLibrary Load(
             string libraryName, 
@@ -565,9 +445,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Load the library using a number of options
         /// </summary>
-        /// <param name="libraryName"></param>
-        /// <param name="folderPath"></param>
-        /// <param name="isReadOnly"></param>
+        /// <param name="libraryName">The name of the library.</param>
+        /// <param name="folderPath">The path to the library.</param>
+        /// <param name="isReadOnly">If <B>true</B>, opens the library in read-only mode.</param>
         /// <returns>A ShellLibrary Object</returns>
         public static ShellLibrary Load(
             string libraryName,
@@ -589,14 +469,18 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     ShellNativeMethods.STGM.ReadWrite;
             nativeShellLibrary.LoadLibraryFromItem(nativeShellItem, flags);
 
-            return new ShellLibrary(nativeShellLibrary);
+            ShellLibrary library = new ShellLibrary(nativeShellLibrary);
+            library.nativeShellItem = (IShellItem2)nativeShellItem;
+            library.Name = libraryName;
+
+            return library;
         }
 
         /// <summary>
         /// Load the library using a number of options
         /// </summary>
-        /// <param name="nativeShellItem"></param>
-        /// <param name="isReadOnly"></param>
+        /// <param name="nativeShellItem">IShellItem</param>
+        /// <param name="isReadOnly">read-only flag</param>
         /// <returns>A ShellLibrary Object</returns>
         internal static ShellLibrary FromShellItem(
             IShellItem nativeShellItem,
@@ -622,8 +506,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Load the library using a number of options
         /// </summary>
-        /// <param name="sourceKnownFolder"></param>
-        /// <param name="isReadOnly"></param>
+        /// <param name="sourceKnownFolder">A known folder.</param>
+        /// <param name="isReadOnly">If <B>true</B>, opens the library in read-only mode.</param>
         /// <returns>A ShellLibrary Object</returns>
         public static ShellLibrary Load(
             IKnownFolder sourceKnownFolder,
@@ -633,6 +517,94 @@ namespace Microsoft.WindowsAPICodePack.Shell
             return new ShellLibrary(sourceKnownFolder, isReadOnly);
         }
 
+        private static void ShowManageLibraryUI(ShellLibrary shellLibrary, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
+        {
+            int hr = 0;
+
+            Thread staWorker = new Thread(() =>
+            {
+                hr = ShellNativeMethods.SHShowManageLibraryUI(
+                    shellLibrary.NativeShellItem,
+                    windowHandle,
+                    title,
+                    instruction,
+                    allowAllLocations ?
+                       ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LMD_NOUNINDEXABLELOCATIONWARNING :
+                       ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LMD_DEFAULT);
+            });
+
+            staWorker.SetApartmentState(ApartmentState.STA);
+            staWorker.Start();
+            staWorker.Join();
+
+            if (!CoreErrorHelper.Succeeded(hr))
+                Marshal.ThrowExceptionForHR(hr);
+        }
+
+        /// <summary>
+        /// Shows the library management dialog which enables users to mange the library folders and default save location.
+        /// </summary>
+        /// <param name="libraryName">The name of the library</param>
+        /// <param name="folderPath">The path to the library.</param>
+        /// <param name="windowHandle">The parent window,or IntPtr.Zero for no parent</param>
+        /// <param name="title">A title for the library management dialog, or null to use the library name as the title</param>
+        /// <param name="instruction">An optional help string to display for the library management dialog</param>
+        /// <param name="allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
+        /// <remarks>If the library is already open in read-write mode, the dialog will not save the changes.</remarks>
+        public static void ShowManageLibraryUI(string libraryName, string folderPath, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
+        {
+            // this method is not safe for MTA consumption and will blow
+            // Access Violations if called from an MTA thread so we wrap this
+            // call up into a Worker thread that performs all operations in a
+            // single threaded apartment
+            using (ShellLibrary shellLibrary = ShellLibrary.Load(libraryName, folderPath, true))
+            {
+                ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+            }
+        }
+
+        /// <summary>
+        /// Shows the library management dialog which enables users to mange the library folders and default save location.
+        /// </summary>
+        /// <param name="libraryName">The name of the library</param>
+        /// <param name="windowHandle">The parent window,or IntPtr.Zero for no parent</param>
+        /// <param name="title">A title for the library management dialog, or null to use the library name as the title</param>
+        /// <param name="instruction">An optional help string to display for the library management dialog</param>
+        /// <param name="allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
+        /// <remarks>If the library is already open in read-write mode, the dialog will not save the changes.</remarks>
+        public static void ShowManageLibraryUI(string libraryName, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
+        {
+            // this method is not safe for MTA consumption and will blow
+            // Access Violations if called from an MTA thread so we wrap this
+            // call up into a Worker thread that performs all operations in a
+            // single threaded apartment
+            using (ShellLibrary shellLibrary = ShellLibrary.Load(libraryName, true))
+            {
+                ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+            }
+        }
+
+        /// <summary>
+        /// Shows the library management dialog which enables users to mange the library folders and default save location.
+        /// </summary>
+        /// <param name="sourceKnownFolder">A known folder.</param>
+        /// <param name="windowHandle">The parent window,or IntPtr.Zero for no parent</param>
+        /// <param name="title">A title for the library management dialog, or null to use the library name as the title</param>
+        /// <param name="instruction">An optional help string to display for the library management dialog</param>
+        /// <param name="allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
+        /// <remarks>If the library is already open in read-write mode, the dialog will not save the changes.</remarks>
+        public static void ShowManageLibraryUI(IKnownFolder sourceKnownFolder, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
+        {
+            // this method is not safe for MTA consumption and will blow
+            // Access Violations if called from an MTA thread so we wrap this
+            // call up into a Worker thread that performs all operations in a
+            // single threaded apartment
+            using (ShellLibrary shellLibrary = ShellLibrary.Load(sourceKnownFolder, true))
+            {
+                ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+            }
+        }
+        
         #endregion
 
         #region Collection Members
@@ -640,8 +612,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Add a new FileSystemFolder or SearchConnector
         /// </summary>
-        /// <param name="item"></param>
-        public void Add(FileSystemFolder item)
+        /// <param name="item">The folder to add to the library.</param>
+        public void Add(ShellFileSystemFolder item)
         {
             nativeShellLibrary.AddFolder(item.NativeShellItem);
             nativeShellLibrary.Commit();
@@ -650,7 +622,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Add an existing folder to this library
         /// </summary>
-        /// <param name="folderPath"></param>
+        /// <param name="folderPath">The path to the folder to be added to the library.</param>
         public void Add(string folderPath)
         {
             if (!Directory.Exists(folderPath))
@@ -658,7 +630,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 throw new DirectoryNotFoundException("Folder path not found.");
             }
 
-            Add(FileSystemFolder.FromFolderPath(folderPath));
+            Add(ShellFileSystemFolder.FromFolderPath(folderPath));
         }
 
         /// <summary>
@@ -666,8 +638,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// </summary>
         public void Clear()
         {
-            List<FileSystemFolder> list = ItemsList;
-            foreach (FileSystemFolder folder in list)
+            List<ShellFileSystemFolder> list = ItemsList;
+            foreach (ShellFileSystemFolder folder in list)
             {
                 nativeShellLibrary.RemoveFolder(folder.NativeShellItem);
             }
@@ -678,9 +650,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Remove a folder or search connector
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public bool Remove(FileSystemFolder item)
+        /// <param name="item">The item to remove.</param>
+        /// <returns><B>true</B> if the item was removed.</returns>
+        public bool Remove(ShellFileSystemFolder item)
         {
             try
             {
@@ -698,11 +670,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Remove a folder or search connector
         /// </summary>
-        /// <param name="folderPath"></param>
-        /// <returns></returns>
+        /// <param name="folderPath">The path of the item to remove.</param>
+        /// <returns><B>true</B> if the item was removed.</returns>
         public bool Remove(string folderPath)
         {
-            FileSystemFolder item = FileSystemFolder.FromFolderPath(folderPath);
+            ShellFileSystemFolder item = ShellFileSystemFolder.FromFolderPath(folderPath);
             return Remove(item);
         }        
         
@@ -713,7 +685,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Release resources
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">Indicates that this was called from Dispose(), rather than from the finalizer.</param>
         protected override void Dispose(bool disposing)
         {
             if (nativeShellLibrary != null)
@@ -737,7 +709,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #region Private Properties
 
-        private List<FileSystemFolder> ItemsList
+        private List<ShellFileSystemFolder> ItemsList
         {
             get
             {
@@ -745,9 +717,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
 
         }
-        private List<FileSystemFolder> GetFolders()
+        private List<ShellFileSystemFolder> GetFolders()
         {
-            List<FileSystemFolder> list = new List<FileSystemFolder>();
+            List<ShellFileSystemFolder> list = new List<ShellFileSystemFolder>();
             IShellItemArray itemArray;
 
             Guid shellItemArrayGuid = new Guid(ShellIIDGuid.IShellItemArray);
@@ -764,7 +736,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             {
                 IShellItem shellItem;
                 itemArray.GetItemAt(i, out shellItem);
-                list.Add(new FileSystemFolder(shellItem as IShellItem2));
+                list.Add(new ShellFileSystemFolder(shellItem as IShellItem2));
             }
 
             if (itemArray != null)
@@ -778,13 +750,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #endregion
 
-        #region IEnumerable<FileSystemFolder> Members
+        #region IEnumerable<ShellFileSystemFolder> Members
 
         /// <summary>
-        /// 
+        /// Retrieves the collection enumerator.
         /// </summary>
-        /// <returns></returns>
-        new public IEnumerator<FileSystemFolder> GetEnumerator()
+        /// <returns>The enumerator.</returns>
+        new public IEnumerator<ShellFileSystemFolder> GetEnumerator()
         {
             return ItemsList.GetEnumerator();
         }
@@ -794,9 +766,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region IEnumerable Members
 
         /// <summary>
-        /// 
+        /// Retrieves the collection enumerator.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The enumerator.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return ItemsList.GetEnumerator();
@@ -804,14 +776,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #endregion
 
-        #region ICollection<FileSystemFolder> Members
+        #region ICollection<ShellFileSystemFolder> Members
 
 
         /// <summary>
-        /// 
+        /// Determines if an item with the specified path exists in the collection.
         /// </summary>
-        /// <param name="fullPath"></param>
-        /// <returns></returns>
+        /// <param name="fullPath">The path of the item.</param>
+        /// <returns><B>true</B> if the item exists in the collection.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1309:UseOrdinalStringComparison", MessageId = "System.String.Equals(System.String,System.StringComparison)", Justification = "We are not currently handling globalization or localization")]
         public bool Contains(string fullPath)
         {
@@ -820,9 +792,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 throw new ArgumentNullException("fullPath");
             }
 
-            List<FileSystemFolder> list = ItemsList;
+            List<ShellFileSystemFolder> list = ItemsList;
 
-            foreach (FileSystemFolder folder in list)
+            foreach (ShellFileSystemFolder folder in list)
             {
                 if (fullPath.Equals(folder.Path, StringComparison.InvariantCultureIgnoreCase))
                     return true;
@@ -832,21 +804,21 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// 
+        /// Determines if a folder exists in the collection.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">The folder.</param>
+        /// <returns><B>true</B>, if the folder exists in the collection.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1309:UseOrdinalStringComparison", MessageId = "System.String.Equals(System.String,System.StringComparison)", Justification = "We are not currently handling globalization or localization")]
-        public bool Contains(FileSystemFolder item)
+        public bool Contains(ShellFileSystemFolder item)
         {
             if (item == null)
             {
                 throw new ArgumentNullException("item");
             }
 
-            List<FileSystemFolder> list = ItemsList;
+            List<ShellFileSystemFolder> list = ItemsList;
 
-            foreach (FileSystemFolder folder in list)
+            foreach (ShellFileSystemFolder folder in list)
             {
                 if (item.Path.Equals(folder.Path, StringComparison.InvariantCultureIgnoreCase))
                     return true;
@@ -863,42 +835,42 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Searches for the specified FileSystemFolder and returns the zero-based index of the
         /// first occurrence within Library list.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public int IndexOf(FileSystemFolder item)
+        /// <param name="item">The item to search for.</param>
+        /// <returns>The index of the item in the collection, or -1 if the item does not exist.</returns>
+        public int IndexOf(ShellFileSystemFolder item)
         {
             return ItemsList.IndexOf(item);
         }
 
         /// <summary>
-        /// 
+        /// Inserts a FileSystemFolder at the specified index.
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="item"></param>
-        public void Insert(int index, FileSystemFolder item)
+        /// <param name="index">The index to insert at.</param>
+        /// <param name="item">The FileSystemFolder to insert.</param>
+        void IList<ShellFileSystemFolder>.Insert(int index, ShellFileSystemFolder item)
         {
-            // Index related options are not supported as we IShellLibrary
+            // Index related options are not supported by IShellLibrary
             // doesn't support them.
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// 
+        /// Removes an item at the specified index.
         /// </summary>
-        /// <param name="index"></param>
-        public void RemoveAt(int index)
+        /// <param name="index">The index to remove.</param>
+        void IList<ShellFileSystemFolder>.RemoveAt(int index)
         {
-            // Index related options are not supported as we IShellLibrary
+            // Index related options are not supported by IShellLibrary
             // doesn't support them.
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// 
+        /// Retrieves the folder at the specified index
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public FileSystemFolder this[int index]
+        /// <param name="index">The index of the folder to retrieve.</param>
+        /// <returns>A folder.</returns>
+        public ShellFileSystemFolder this[int index]
         {
             get
             {
@@ -906,28 +878,27 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
             set
             {
-                // Index related options are not supported as we IShellLibrary
+                // Index related options are not supported by IShellLibrary
                 // doesn't support them.
                 throw new NotImplementedException();
             }
         }
-
         #endregion
 
-        #region ICollection<FileSystemFolder> Members
+        #region ICollection<ShellFileSystemFolder> Members
 
         /// <summary>
-        /// 
+        /// Copies the collection to an array.
         /// </summary>
-        /// <param name="array"></param>
-        /// <param name="arrayIndex"></param>
-        public void CopyTo(FileSystemFolder[] array, int arrayIndex)
+        /// <param name="array">The array to copy to.</param>
+        /// <param name="arrayIndex">The index in the array at which to start the copy.</param>
+        void ICollection<ShellFileSystemFolder>.CopyTo(ShellFileSystemFolder[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// 
+        /// The count of the items in the list.
         /// </summary>
         public int Count
         {
@@ -935,14 +906,26 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// 
+        /// Indicates whether this list is read-only or not.
         /// </summary>
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         #endregion
+
+        /// <summary>
+        /// Indicates whether this feature is supported on the current platform.
+        /// </summary>
+        public static bool IsPlatformSupported
+        {
+            get
+            {
+                // We need Windows 7 onwards ...
+                return CoreHelpers.RunningOnWin7;
+            }
+        }
     }
 
 }

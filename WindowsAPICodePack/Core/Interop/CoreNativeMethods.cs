@@ -4,14 +4,19 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace MS.WindowsAPICodePack.Internal
 {
     /// <summary>
     /// Wrappers for Native Methods and Structs.
     /// This type is intended for internal use only
     /// </summary>
-    public class CoreNativeMethods
+    public sealed class CoreNativeMethods
     {
+        private CoreNativeMethods()
+        {
+
+        }
+
         #region Common Defintions
 
         #endregion
@@ -31,8 +36,9 @@ namespace Microsoft.WindowsAPICodePack
         /// <param name="msg">Specifies the message to be sent.</param>
         /// <param name="wParam">Specifies additional message-specific information.</param>
         /// <param name="lParam">Specifies additional message-specific information.</param>
-        /// <returns></returns>
-        [DllImport(CommonDllNames.User32,
+        /// <returns>A return code specific to the message being sent.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "w"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "l"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "h"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wnd"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Param"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible", 
+            Justification="This is used from another assembly, also it's in an internal namespace"), DllImport(CommonDllNames.User32,
             CharSet = CharSet.Auto,
             SetLastError = true)]
         public static extern IntPtr SendMessage(
@@ -47,12 +53,21 @@ namespace Microsoft.WindowsAPICodePack
         /// the window procedure for the specified window and does not return until the window 
         /// procedure has processed the message. 
         /// </summary>
-        [DllImport(CommonDllNames.User32,
+        /// <param name="hWnd">Handle to the window whose window procedure will receive the message. 
+        /// If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+        /// including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+        /// but the message is not sent to child windows.
+        /// </param>
+        /// <param name="msg">Specifies the message to be sent.</param>
+        /// <param name="wParam">Specifies additional message-specific information.</param>
+        /// <param name="lParam">Specifies additional message-specific information.</param>
+        /// <returns>A return code specific to the message being sent.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "w" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "l" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "h" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wnd" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Param" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible" ), DllImport( CommonDllNames.User32,
             CharSet = CharSet.Auto,
             SetLastError = true)]
         public static extern IntPtr SendMessage(
            IntPtr hWnd,
-            uint Msg,
+            uint msg,
            int wParam,
            [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
@@ -61,10 +76,21 @@ namespace Microsoft.WindowsAPICodePack
         /// the window procedure for the specified window and does not return until the window 
         /// procedure has processed the message. 
         /// </summary>
-        [DllImport(CommonDllNames.User32, CharSet = CharSet.Auto, SetLastError = true)]
+        /// <param name="hWnd">Handle to the window whose window procedure will receive the message. 
+        /// If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+        /// including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+        /// but the message is not sent to child windows.
+        /// </param>
+        /// <param name="msg">Specifies the message to be sent.</param>
+        /// <param name="wParam">Specifies additional message-specific information.</param>
+        /// <param name="lParam">Specifies additional message-specific information.</param>
+        /// <returns>A return code specific to the message being sent.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Param" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wnd" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "h" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "l" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "w" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible" ), System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "2#", 
+            Justification="This is an in/out parameter"), 
+        DllImport(CommonDllNames.User32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(
           IntPtr hWnd,
-            uint Msg,
+            uint msg,
           ref int wParam,
             [MarshalAs(UnmanagedType.LPWStr)] StringBuilder lParam);
         
@@ -74,12 +100,6 @@ namespace Microsoft.WindowsAPICodePack
         ThrowOnUnmappableChar = true, BestFitMapping = false)]
         internal static extern IntPtr LoadLibrary(
              [MarshalAs(UnmanagedType.LPStr)] string lpFileName);
-
-        [DllImport(CommonDllNames.Kernel32, SetLastError = true,
-            ThrowOnUnmappableChar = true, BestFitMapping = false)]
-        internal static extern IntPtr GetProcAddress(
-            IntPtr hModule,
-            [MarshalAs(UnmanagedType.LPStr)] string lpProcName);
 
         [DllImport(CommonDllNames.User32)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -91,59 +111,23 @@ namespace Microsoft.WindowsAPICodePack
             StringBuilder buffer,
             int nBufferMax);
 
-        [DllImport(CommonDllNames.Shell32, CharSet = CharSet.Unicode)]
-        internal static extern SafeIconHandle ExtractIcon(IntPtr hInst,
-            string fileName,
-            int iconIndex);
-
         /// <summary>
         /// Destroys an icon and frees any memory the icon occupied.
         /// </summary>
         /// <param name="hIcon">Handle to the icon to be destroyed. The icon must not be in use. </param>
         /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
-        [DllImport(CommonDllNames.User32, SetLastError = true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "h"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible", Justification = "This is used from other assemblies, also it's in an internal namespace"), 
+        DllImport(CommonDllNames.User32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyIcon(IntPtr hIcon);
-
-        [DllImport("ole32.dll", CharSet = CharSet.Unicode, ExactSpelling = true, PreserveSig = false)]
-        [return: MarshalAs(UnmanagedType.Interface)]
-        internal static extern object CoGetObject(
-           string pszName,
-           [In] ref CoreNativeMethods.BIND_OPTS3 pBindOptions,
-           [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
 
         #endregion
 
         #region Window Handling
 
-        [DllImport(CommonDllNames.User32, SetLastError = true, EntryPoint = "CreateWindowExW")]
-        internal static extern SafeWindowHandle CreateWindowEx(int dwExStyle,
-            int lpClass,
-            [MarshalAs(UnmanagedType.LPWStr)]string lpWindowName,
-            int dwStyle, int X, int Y, int nWidth, int nHeight,
-            int hWndParent, int hMenu, IntPtr hInstance, IntPtr lpParam);
-
         [DllImport(CommonDllNames.User32, SetLastError = true, EntryPoint = "DestroyWindow",
          CallingConvention = CallingConvention.StdCall)]
         internal static extern int DestroyWindow(IntPtr handle);
-
-        [DllImport(CommonDllNames.User32)]
-        internal static extern int GetMessage(
-            out CoreNativeMethods.MSG lpMsg,
-            SafeWindowHandle hWnd,
-            uint wMsgFilterMin,
-            uint wMsgFilterMax);
-
-        [DllImport(CommonDllNames.User32, SetLastError = true, EntryPoint = "RegisterClassExW")]
-        internal static extern int RegisterClassEx(
-            ref CoreNativeMethods.WNDCLASSEX wndcls);
-
-        [DllImport(CommonDllNames.User32)]
-        internal static extern int DispatchMessage([In] ref CoreNativeMethods.MSG lpmsg);
-
-        [DllImport(CommonDllNames.User32)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool TranslateMessage([In] ref CoreNativeMethods.MSG lpMsg);
 
         #endregion
 
@@ -162,35 +146,27 @@ namespace Microsoft.WindowsAPICodePack
         internal const uint ResultFalse = 1;
         internal const uint ResultNotFound = 0x80070490;
 
-
-        [DllImport(CommonDllNames.Kernel32, CharSet = CharSet.Auto)]
-        internal static extern int FormatMessage(
-                int flags,
-                IntPtr source,
-                int messageId,
-                int languageId,
-                [MarshalAs(UnmanagedType.LPWStr)] StringBuilder buffer,
-                int size,
-                IntPtr args);
-
         /// <summary>
         /// Gets the HiWord
         /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public static int HIWORD(int i)
+        /// <param name="dword">The value to get the hi word from.</param>
+        /// <param name="size">Size</param>
+        /// <returns>The upper half of the dword.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dword"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HIWORD")]
+        public static int HIWORD(long dword, int size)
         {
-            return (short)(i >> 16);
+            return (short)(dword >> size);
         }
 
         /// <summary>
         /// Gets the LoWord
         /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public static int LOWORD(int i)
+        /// <param name="dword">The value to get the low word from.</param>
+        /// <returns>The lower half of the dword.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "LOWORD"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dword")]
+        public static int LOWORD(long dword)
         {
-            return (short)(i & 0xFFFF);
+            return (short)(dword & 0xFFFF);
         }
 
         #endregion
@@ -200,40 +176,47 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// A Wrapper for a SIZE struct
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SIZE"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible"), StructLayout(LayoutKind.Sequential)]
         public struct SIZE
         {
             /// <summary>
             /// Width
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "cx")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int cx;
             /// <summary>
             /// Height
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int cy;
         };
 
         /// <summary>
         /// A Wrapper for a RECT struct
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "RECT"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible"), StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
             /// <summary>
             /// Position of left edge
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int left;
             /// <summary>
             /// Position of top edge
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int top;
             /// <summary>
             /// Position of right edge
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int right;
             /// <summary>
             /// Position of bottom edge
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int bottom;
         };
 
@@ -278,54 +261,6 @@ namespace Microsoft.WindowsAPICodePack
             internal bool fUseSourceRate;
             internal UNSIGNED_RATIO uiNumerator;
         };
-
-
-        [StructLayout(LayoutKind.Explicit)]
-        internal struct DWM_TIMING_INFO
-        {
-            [FieldOffset(0)]
-            internal UInt32 cbSize;
-            [FieldOffset(4)]
-            internal UNSIGNED_RATIO rateRefresh;// Monitor refresh rate
-            [FieldOffset(12)]
-            internal UNSIGNED_RATIO rateCompose;// composition rate     
-            [FieldOffset(20)]
-            internal UInt64 qpcVBlank;          // QPC time at VBlank
-            [FieldOffset(28)]
-            internal UInt64 cRefresh;           // DWM refresh counter
-            [FieldOffset(36)]
-            internal UInt64 qpcCompose;         // QPC time at a compose time
-            [FieldOffset(44)]
-            internal UInt64 cFrame;             // Frame number that was composed at qpcCompose
-            [FieldOffset(52)]
-            internal UInt64 cRefreshFrame;      // Refresh count of the frame that was composed at qpcCompose
-            [FieldOffset(60)]
-            internal UInt64 cRefreshConfirmed;  // The target refresh count of the last
-            // frame confirmed completed by the GPU
-            [FieldOffset(68)]
-            internal UInt32 cFlipsOutstanding;  // the number of outstanding flips
-
-            //
-            // Feedback on previous performance only valid on 2nd and subsequent calls
-            //
-            [FieldOffset(72)]
-            internal UInt64 cFrameCurrent;      // Last frame displayed
-            [FieldOffset(80)]
-            internal UInt64 cFramesAvailable;   // number of frames available but not displayed, used or dropped
-            [FieldOffset(88)]
-            internal UInt64 cFrameCleared;      // Source frame number when the following statistics where last cleared
-            [FieldOffset(96)]
-            internal UInt64 cFramesReceived;    // number of new frames received
-            [FieldOffset(104)]
-            internal UInt64 cFramesDisplayed;   // number of unique frames displayed
-            [FieldOffset(112)]
-            internal UInt64 cFramesDropped;     // number of rendered frames that wer  never
-            [FieldOffset(120)]                // displayed because composition occured too late
-            internal UInt64 cFramesMissed;      // number of times an old frame was composed 
-            // when a new frame should have been used
-            // but was not available
-        };
-
 
         internal const int DWM_BB_ENABLE = 0x00000001;  // fEnable has been specified
         internal const int DWM_BB_BLURREGION = 0x00000002;  // hRgnBlur has been specified
@@ -435,24 +370,29 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// A Wrapper for a POINT struct
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "POINT"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible"), StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
             /// <summary>
             /// The X coordinate of the point
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "X")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int X;
 
             /// <summary>
             /// The Y coordinate of the point
             /// </summary>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Y")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
             public int Y;
 
             /// <summary>
             /// Initialize the point
             /// </summary>
-            /// <param name="x"></param>
-            /// <param name="y"></param>
+            /// <param name="x">The x coordinate of the point.</param>
+            /// <param name="y">The y coordinate of the point.</param>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "y"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
             public POINT(int x, int y)
             {
                 this.X = x;

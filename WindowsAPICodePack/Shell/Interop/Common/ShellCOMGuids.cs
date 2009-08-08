@@ -37,6 +37,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
         internal const string IPropertyEnumType = "11E1FBF9-2D56-4A6B-8DB3-7CD193A471F2";
         internal const string IPropertyEnumType2 = "9B6E051C-5DDD-4321-9070-FE2ACB55E794";
         internal const string IPropertyEnumTypeList = "A99400F4-3D84-4557-94BA-1242FB2CC9A6";
+
+        internal const string ICondition = "0FC988D4-C935-4b97-A973-46282EA175C8";
+        internal const string ISearchFolderItemFactory = "a0ffbc28-5482-4366-be27-3e81e78e06c2";
+        internal const string IConditionFactory = "A5EFE073-B16F-474f-9F3E-9F8B497A3E08";
+        internal const string IRichChunk = "4FDEF69C-DBC9-454e-9910-B34F3C64B510";
     }
 
     internal static class ShellCLSIDGuid
@@ -51,7 +56,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         internal const string FileSaveDialog = "C0B4E2F3-BA21-4773-8DBA-335EC946EB8B";
         internal const string KnownFolderManager = "4DF0C730-DF9D-4AE3-9153-AA6B82E9795A";
         internal const string ShellLibrary = "D9B3211D-E57F-4426-AAEF-30A806ADD397";
-        
+        internal const string SearchFolderItemFactory = "14010e02-bbbd-41f0-88e3-eda371216584";
+        internal const string ConditionFactory = "E03E85B0-7BE3-4000-BA98-6C13DE9FA486";
     }
 
     internal static class ShellKFIDGuid
@@ -73,5 +79,15 @@ namespace Microsoft.WindowsAPICodePack.Shell
         internal const string VideosLibrary = "5fa96407-7e77-483c-ac93-691d05850de8";
 
         internal const string Libraries = "1B3EA5DC-B587-4786-B4EF-BD1DC332AEAE";
+    }
+
+    internal static class ShellBHIDGuid
+    {
+        static ShellBHIDGuid( )
+        {
+            // Hide default constructor
+        }
+
+        internal const string ShellFolderObject = "3981e224-f559-11d3-8e3a-00c04f6837d5";
     }
 }

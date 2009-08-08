@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// Defines methods and properties for recovery settings, and specifies options for an application that attempts
@@ -10,7 +10,7 @@ namespace Microsoft.WindowsAPICodePack
     /// unhandled exception.
     /// </summary>
     /// <remarks>This class is used to register for application recovery.
-    /// See the <see cref="Microsoft.WindowsAPICodePack.ApplicationRestartRecoveryManager"/> class.
+    /// See the <see cref="ApplicationRestartRecoveryManager"/> class.
     /// </remarks>
     public class RecoverySettings
     {
@@ -23,9 +23,9 @@ namespace Microsoft.WindowsAPICodePack
         /// <param name="data">A recovery data object that contains the callback method (invoked by the system
         /// before Windows Error Reporting terminates the application) and an optional state object.</param>
         /// <param name="interval">The time interval within which the 
-        /// callback method must invoke <see cref="Microsoft.WindowsAPICodePack.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to 
+        /// callback method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to 
         /// prevent WER from terminating the application.</param>
-        /// <seealso cref="Microsoft.WindowsAPICodePack.ApplicationRestartRecoveryManager"/>
+        /// <seealso cref="ApplicationRestartRecoveryManager"/>
         public RecoverySettings(RecoveryData data, uint interval)
         {
             this.recoveryData = data;
@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAPICodePack
         /// parameter (usually the state of the application) to be passed to the 
         /// callback method.
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.RecoveryData"/> object.</value>
+        /// <value>A <see cref="RecoveryData"/> object.</value>
         public RecoveryData RecoveryData
         {
             get { return recoveryData; }
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAPICodePack
 
         /// <summary>
         /// Gets the time interval for notifying Windows Error Reporting.  
-        /// The <see cref="Microsoft.WindowsAPICodePack.RecoveryCallback"/> method must invoke <see cref="Microsoft.WindowsAPICodePack.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> 
+        /// The <see cref="RecoveryCallback"/> method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> 
         /// within this interval to prevent WER from terminating the application.
         /// </summary>
         /// <remarks>        
@@ -63,6 +63,8 @@ namespace Microsoft.WindowsAPICodePack
         /// of this object.
         /// </summary>
         /// <returns>A <see cref="System.String"/> object.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)", 
+            Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
             return String.Format("delegate: {0}, state: {1}, ping: {2}",

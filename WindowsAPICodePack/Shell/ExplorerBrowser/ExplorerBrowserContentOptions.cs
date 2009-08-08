@@ -3,8 +3,10 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Controls.WindowsForms;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls
 {
     /// <summary>
     /// These options control how the content of the Explorer Browser 
@@ -17,7 +19,6 @@ namespace Microsoft.WindowsAPICodePack.Shell
         internal ExplorerBrowserContentOptions( ExplorerBrowser eb )
         {
             this.eb = eb;
-            folderSettings.fFlags = FOLDERFLAGS.FWF_SINGLESEL;
         }
         #endregion
 

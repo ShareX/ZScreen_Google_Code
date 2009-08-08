@@ -3,13 +3,16 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using System.Security.Cryptography;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
     /// <summary>
-    /// The base class for all Shell objects in Shell Namespace
+    /// The base class for all Shell objects in Shell Namespace.
     /// </summary>
-    abstract public class ShellObject : IDisposable
+    abstract public class ShellObject : IDisposable, IEquatable<ShellObject>
     {
 
         #region Public Static Methods
@@ -18,8 +21,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Creates a ShellObject subclass given a parsing name.
         /// For file system items, this method will only accept absolute paths.
         /// </summary>
-        /// <param name="parsingName"></param>
-        /// <returns>A newly constructed ShellObject object</returns>
+        /// <param name="parsingName">The parsing name of the object.</param>
+        /// <returns>A newly constructed ShellObject object.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
         public static ShellObject FromParsingName(string parsingName)
         {
             return ShellObjectFactory.Create(parsingName);
@@ -38,13 +42,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         internal ShellObject()
         {
-            properties = new ShellProperties(this);
         }
 
         internal ShellObject(IShellItem2 shellItem)
         {
             nativeShellItem = shellItem;
-            properties = new ShellProperties(this);
         }
 
         #region Protected Fields
@@ -121,18 +123,22 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         private ShellProperties properties = null;
         /// <summary>
-        /// This object allows the manipulation of Shell properties of this Shell Item
+        /// Gets an object that allows the manipulation of ShellProperties for this shell item.
         /// </summary>
         public ShellProperties Properties
         {
             get
             {
+                if (properties == null)
+                {
+                    properties = new ShellProperties(this);
+                }
                 return properties;
             }
         }
 
         /// <summary>
-        /// The parsing name for this Shell Item
+        /// Gets the parsing name for this ShellItem.
         /// </summary>
         virtual public string ParsingName
         {
@@ -151,7 +157,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// The Normal Display for this Shell Item
+        /// Gets the normal display for this ShellItem.
         /// </summary>
         virtual public string Name
         {
@@ -164,6 +170,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     if (hr == HRESULT.S_OK && pszString != IntPtr.Zero)
                     {
                         internalName = Marshal.PtrToStringAuto(pszString);
+
+                        // Free the string
+                        Marshal.FreeCoTaskMem(pszString);
+
                     }
                 }
                 return internalName;
@@ -176,7 +186,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// The PID List (PIDL) for this ShellItem
+        /// Gets the PID List (PIDL) for this ShellItem.
         /// </summary>
         virtual internal IntPtr PIDL
         {
@@ -184,7 +194,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             {
                 // Get teh PIDL for the ShellItem
                 if (internalPIDL == IntPtr.Zero && NativeShellItem != null)
-                    internalPIDL = ShellHelper.PidlFromShellItem(nativeShellItem);
+                    internalPIDL = ShellHelper.PidlFromShellItem(NativeShellItem);
 
                 return internalPIDL;
             }
@@ -195,21 +205,21 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Override object.ToString()
+        /// Overrides object.ToString()
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string representation of the object.</returns>
         public override string ToString()
         {
             return this.Name;
         }
 
         /// <summary>
-        /// Gets the display name of the ShellFolder object. DisplayNameType represents one of the 
+        /// Returns the display name of the ShellFolder object. DisplayNameType represents one of the 
         /// values that indicates how the name should look. 
         /// See <see cref="Microsoft.WindowsAPICodePack.Shell.DisplayNameType"/>for a list of possible values.
         /// </summary>
-        /// <param name="displayNameType"></param>
-        /// <returns></returns>
+        /// <param name="displayNameType">A disaply name type.</param>
+        /// <returns>A string.</returns>
         virtual public string GetDisplayName(DisplayNameType displayNameType)
         {
             string returnValue = null;
@@ -226,7 +236,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Checks if this Shell Object is a link or shortcut
+        /// Gets a value that determines if this ShellObject is a link or shortcut.
         /// </summary>
         public bool IsLink
         {
@@ -251,7 +261,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Checks if this Shell Object is a link or shortcut
+        /// Gets a value that determines if this ShellObject is a file system object.
         /// </summary>
         public bool IsFileSystemObject
         {
@@ -292,22 +302,30 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         private ShellObject parentShellObject = null;
         /// <summary>
-        /// Gets the parent ShellObject
+        /// Gets the parent ShellObject.
+        /// Returns null if the object has no parent, i.e. if this object is the Desktop folder.
         /// </summary>
         public ShellObject Parent
         {
             get
             {
-                if (parentShellObject == null && nativeShellItem != null)
+                if (parentShellObject == null && NativeShellItem2 != null)
                 {
                     IShellItem parentShellItem = null;
 
-                    HRESULT hr = nativeShellItem.GetParent(out parentShellItem);
+                    HRESULT hr = NativeShellItem2.GetParent(out parentShellItem);
 
                     if (hr == HRESULT.S_OK && parentShellItem != null)
                         parentShellObject = ShellObjectFactory.Create(parentShellItem);
+                    else if (hr == HRESULT.NO_OBJECT)
+                    {
+                        // Should return null if the parent is desktop
+                        return null;
+                    }
                     else
+                    {
                         throw Marshal.GetExceptionForHR((int)hr);
+                    }
                 }
 
                 return parentShellObject;
@@ -322,6 +340,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Release the native and managed objects
         /// </summary>
+        /// <param name="disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -330,12 +349,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 internalParsingName = null;
                 properties = null;
                 thumbnail = null;
+                parentShellObject = null;
             }
-
 
             if (internalPIDL != IntPtr.Zero)
             {
-                Marshal.Release(internalPIDL);
+                ShellNativeMethods.ILFree(internalPIDL);
                 internalPIDL = IntPtr.Zero;
             }
 
@@ -354,7 +373,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Release the native objects
+        /// Release the native objects.
         /// </summary>
         public void Dispose()
         {
@@ -363,12 +382,111 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// 
+        /// Implement the finalizer.
         /// </summary>
         ~ShellObject()
         {
             Dispose(false);
         }
+
+        #endregion
+
+        #region equality and hashing
+
+        /// <summary>
+        /// Returns the hash code of the object.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode( )
+        {
+            if( !hashValue.HasValue )
+            {
+                uint size = ShellNativeMethods.ILGetSize( PIDL );
+                byte[ ] pidlData = new byte[ size ];
+                Marshal.Copy( PIDL, pidlData, 0, (int)size );
+                byte[ ] hashData = ShellObject.hashProvider.ComputeHash( pidlData );
+                hashValue = BitConverter.ToInt32( hashData, 0 );
+            }
+            return hashValue.Value;
+        }
+        private static MD5CryptoServiceProvider hashProvider = new MD5CryptoServiceProvider( );
+        private int? hashValue;
+
+        /// <summary>
+        /// Determines if two ShellObjects are identical.
+        /// </summary>
+        /// <param name="other">The ShellObject to comare this one to.</param>
+        /// <returns>True if the ShellObjects are equal, false otherwise.</returns>
+        public bool Equals(ShellObject other)
+        {
+            bool areEqual = false;
+
+            if ((object)other != null)
+            {
+                IShellItem ifirst = this.NativeShellItem;
+                IShellItem isecond = other.NativeShellItem;
+                if (((ifirst != null) && (isecond != null)))
+                {
+                    int result = 0;
+                    HRESULT hr = ifirst.Compare(
+                        isecond, SICHINTF.SICHINT_ALLFIELDS, out result);
+
+                    if ((hr == HRESULT.S_OK) && (result == 0))
+                        areEqual = true;
+                }
+            }
+
+            return areEqual;
+        }
+
+        /// <summary>
+        /// Returns whether this object is equal to another.
+        /// </summary>
+        /// <param name="obj">The object to compare against.</param>
+        /// <returns>Equality result.</returns>
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as ShellObject);
+        }
+
+        /// <summary>
+        /// Implements the == (equality) operator.
+        /// </summary>
+        /// <param name="a">Object a.</param>
+        /// <param name="b">Object b.</param>
+        /// <returns>true if object a equals object b; false otherwise.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b")]
+        public static bool operator ==(ShellObject a, ShellObject b)
+        {
+            if ((object)a == null)
+            {
+                return ((object)b == null);
+            }
+            else
+            {
+                return a.Equals(b);
+            }
+        }
+
+        /// <summary>
+        /// Implements the != (inequality) operator.
+        /// </summary>
+        /// <param name="a">Object a.</param>
+        /// <param name="b">Object b.</param>
+        /// <returns>true if object a does not equal object b; false otherwise.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b")]
+        public static bool operator !=(ShellObject a, ShellObject b)
+        {
+            if ((object)a == null)
+            {
+                return ((object)b != null);
+            }
+            else
+            {
+                return !a.Equals(b);
+            }
+        }
+
 
         #endregion
     }

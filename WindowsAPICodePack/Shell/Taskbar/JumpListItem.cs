@@ -3,8 +3,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
     /// Represents a jump list item.
@@ -38,15 +39,6 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             {
                 base.Path = value;
             }
-        }
-
-        /// <summary>
-        /// Returns an <b>IShellItem</b> representation of this object.
-        /// </summary>
-        /// <returns>An IShellItem object.</returns>
-        object IJumpListItem.GetShellRepresentation()
-        {
-            return NativeShellItem;
         }
 
         #endregion

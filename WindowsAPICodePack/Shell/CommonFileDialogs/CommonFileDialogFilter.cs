@@ -4,8 +4,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Text;
 using Microsoft.WindowsAPICodePack;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Stores the file extensions used when filtering files in File Open and File Save dialogs.
@@ -144,7 +145,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 filterList.Append(extension);
                 
             }
-            return new ShellNativeMethods.COMDLG_FILTERSPEC(rawDisplayName, filterList.ToString());
+            return new ShellNativeMethods.COMDLG_FILTERSPEC(DisplayName, filterList.ToString());
         }
 
         /// <summary>

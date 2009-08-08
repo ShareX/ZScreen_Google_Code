@@ -8,14 +8,22 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls.WindowsForms
 {
-    
+
     /// <summary>
     /// This class is a wrapper around the Windows Explorer Browser control.
     /// </summary>
-    public class ExplorerBrowser : System.Windows.Forms.UserControl, Microsoft.WindowsAPICodePack.Shell.IServiceProvider, IExplorerPaneVisibility, IExplorerBrowserEvents, ICommDlgBrowser
+    public class ExplorerBrowser :
+        System.Windows.Forms.UserControl,
+        Microsoft.WindowsAPICodePack.Controls.IServiceProvider,
+        IExplorerPaneVisibility,
+        IExplorerBrowserEvents,
+        ICommDlgBrowser,
+        IMessageFilter
     {
         #region properties
         /// <summary>
@@ -36,6 +44,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
             private set;
         }
 
+        private IShellItemArray shellItemsArray;
+        private ShellObjectCollection itemsCollection;
         /// <summary>
         /// The set of ShellObjects in the Explorer Browser
         /// </summary>
@@ -43,10 +53,24 @@ namespace Microsoft.WindowsAPICodePack.Shell
         {
             get
             {
-                return new ShellObjectCollection( GetItemsArray( ) );
+                if (shellItemsArray != null)
+                    Marshal.ReleaseComObject(shellItemsArray);
+
+                if (itemsCollection != null)
+                {
+                    itemsCollection.Dispose();
+                    itemsCollection = null;
+                }
+
+                shellItemsArray = GetItemsArray();
+                itemsCollection = new ShellObjectCollection(shellItemsArray, true);
+
+                return itemsCollection;
             }
         }
 
+        private IShellItemArray selectedShellItemsArray;
+        private ShellObjectCollection selectedItemsCollection;
         /// <summary>
         /// The set of selected ShellObjects in the Explorer Browser
         /// </summary>
@@ -54,7 +78,20 @@ namespace Microsoft.WindowsAPICodePack.Shell
         {
             get
             {
-                return new ShellObjectCollection( GetSelectedItemsArray( ) );
+                if (selectedShellItemsArray != null)
+                    Marshal.ReleaseComObject(selectedShellItemsArray);
+
+                if (selectedItemsCollection != null)
+                {
+                    selectedItemsCollection.Dispose();
+                    selectedItemsCollection = null;
+                }
+
+                selectedShellItemsArray = GetSelectedItemsArray();
+                selectedItemsCollection = new ShellObjectCollection(selectedShellItemsArray, true);
+
+
+                return selectedItemsCollection;
             }
         }
 
@@ -79,30 +116,42 @@ namespace Microsoft.WindowsAPICodePack.Shell
             set
             {
                 propertyBagName = value;
-                explorerBrowserControl.SetPropertyBag( propertyBagName );
+                if (explorerBrowserControl != null)
+                    explorerBrowserControl.SetPropertyBag(propertyBagName);
             }
         }
 
         #endregion
-       
+
         #region operations
         /// <summary>
         /// Clears the Explorer Browser of existing content, fills it with
-        /// the specified content, and adds a new point to the Travel Log.
+        /// content from the specified container, and adds a new point to the Travel Log.
         /// </summary>
-        /// <param name="shellObject"></param>
-        public void Navigate( ShellObject shellObject )
+        /// <param name="shellObject">The shell container to navigate to.</param>
+        /// <exception cref="System.Runtime.InteropServices.COMException">Will throw if navigation fails for any other reason.</exception>
+        public void Navigate(ShellObject shellObject)
         {
-            if( explorerBrowserControl == null )
+            if (explorerBrowserControl == null)
             {
                 antecreationNavigationTarget = shellObject;
             }
             else
             {
-                HRESULT hr = explorerBrowserControl.BrowseToObject( shellObject.NativeShellItem, 0 );
-                if( hr != HRESULT.S_OK )
+                HRESULT hr = explorerBrowserControl.BrowseToObject(shellObject.NativeShellItem, 0);
+                if (hr != HRESULT.S_OK)
                 {
-                    throw new COMException( "BrowseToObject failed", (int)hr );
+                    if (hr == HRESULT.RESOURCE_IN_USE)
+                    {
+                        if (NavigationFailed != null)
+                        {
+                            NavigationFailedEventArgs args = new NavigationFailedEventArgs();
+                            args.FailedLocation = shellObject;
+                            NavigationFailed(this, args);
+                        }
+                    }
+                    else
+                        throw new COMException("BrowseToObject failed", (int)hr);
                 }
             }
         }
@@ -112,10 +161,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// locations in the navigation log.
         /// </summary>
         /// <param name="direction">Forward of Backward</param>
-        /// <returns></returns>
-        public bool NavigateLogLocation( NavigationLogDirection direction )
+        /// <returns>True if the navigation succeeded, false if it failed for any reason.</returns>
+        public bool NavigateLogLocation(NavigationLogDirection direction)
         {
-            return NavigationLog.NavigateLog( direction );
+            return NavigationLog.NavigateLog(direction);
         }
 
         /// <summary>
@@ -123,10 +172,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// locations in the navigation log.
         /// </summary>
         /// <param name="navigationLogIndex">An index into the navigation logs Locations collection.</param>
-        /// <returns></returns>
-        public bool NavigateLogLocation( int navigationLogIndex )
+        /// <returns>True if the navigation succeeded, false if it failed for any reason.</returns>
+        public bool NavigateLogLocation(int navigationLogIndex)
         {
-            return NavigationLog.NavigateLog( navigationLogIndex );
+            return NavigationLog.NavigateLog(navigationLogIndex);
         }
         #endregion
 
@@ -143,7 +192,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// </summary>
         /// <remarks>Arrives on a non-UI thread</remarks>
         public event ExplorerBrowserItemsChangedEventHandler ItemsChanged;
-        
+
         /// <summary>
         /// Fires when a navigation has been initiated, but is not yet complete.
         /// </summary>
@@ -158,7 +207,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// </summary>
         /// <remarks>Arrives on a non-UI thread</remarks>
         public event ExplorerBrowserNavigationCompleteEventHandler NavigationComplete;
-        
+
         /// <summary>
         /// Fires when either a NavigationPending listener cancels the navigation, or
         /// if the operating system determines that navigation is not possible.
@@ -172,32 +221,34 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #region construction
         internal ExplorerBrowserClass explorerBrowserControl = null;
-        
+
         // for the IExplorerBrowserEvents Advise call
         internal uint eventsCookie = 0;
 
         // for doing background state update of the collections
         System.Windows.Forms.Timer collectionStateUpdateTimer;
-        System.Threading.AutoResetEvent updateCollectionState = new AutoResetEvent( false );
+        System.Threading.AutoResetEvent selectionChangedEvent = new AutoResetEvent(false);
+        System.Threading.AutoResetEvent itemsChangedEvent = new AutoResetEvent(false);
 
         // name of the property bag that contains the view state options of the browser
-        string propertyBagName = typeof( ExplorerBrowser ).FullName;
+        string propertyBagName = typeof(ExplorerBrowser).FullName;
 
         /// <summary>
         /// Initializes the ExplorerBorwser WinForms wrapper.
         /// </summary>
-        public ExplorerBrowser( )
-            : base( )
+        public ExplorerBrowser()
+            : base()
         {
-            NavigationOptions = new ExplorerBrowserNavigationOptions( this );
-            ContentOptions = new ExplorerBrowserContentOptions( this );
-            NavigationLog = new ExplorerBrowserNavigationLog( this );
+            NavigationOptions = new ExplorerBrowserNavigationOptions(this);
+            ContentOptions = new ExplorerBrowserContentOptions(this);
+            NavigationLog = new ExplorerBrowserNavigationLog(this);
 
             collectionStateUpdateTimer = new System.Windows.Forms.Timer();
-            collectionStateUpdateTimer.Tick += new EventHandler( TestForCollectionUpdate );
+            collectionStateUpdateTimer.Tick += new EventHandler(TestForCollectionUpdate);
             collectionStateUpdateTimer.Interval = 100;
-            collectionStateUpdateTimer.Start( );
+            collectionStateUpdateTimer.Start();
         }
+
         #endregion
 
         #region message handlers
@@ -205,32 +256,32 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Displays a placeholder for the explorer browser in design mode
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnPaint( PaintEventArgs e )
+        /// <param name="e">Contains information about the paint event.</param>
+        protected override void OnPaint(PaintEventArgs e)
         {
-            if( DesignMode )
+            if (DesignMode)
             {
                 LinearGradientBrush linGrBrush = new LinearGradientBrush(
                     ClientRectangle,
                     Color.Aqua,
                     Color.CadetBlue,
-                    LinearGradientMode.ForwardDiagonal );
+                    LinearGradientMode.ForwardDiagonal);
 
 
-                e.Graphics.FillRectangle( linGrBrush, ClientRectangle );
+                e.Graphics.FillRectangle(linGrBrush, ClientRectangle);
 
-                StringFormat sf = new StringFormat( );
+                StringFormat sf = new StringFormat();
                 sf.Alignment = StringAlignment.Center;
                 sf.LineAlignment = StringAlignment.Center;
                 e.Graphics.DrawString(
                     "ExplorerBrowserControl",
-                    new Font( "Garamond", 30 ),
+                    new Font("Garamond", 30),
                     Brushes.White,
                     ClientRectangle,
-                    sf );
+                    sf);
             }
 
-            base.OnPaint( e );
+            base.OnPaint(e);
         }
 
         ShellObject antecreationNavigationTarget = null;
@@ -238,152 +289,140 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Creates and initializes the native ExplorerBrowser control
         /// </summary>
-        protected override void OnCreateControl( )
+        protected override void OnCreateControl()
         {
-            base.OnCreateControl( );
+            base.OnCreateControl();
 
             HRESULT hr = HRESULT.S_OK;
 
-            if( this.DesignMode == false )
+            if (this.DesignMode == false)
             {
-                explorerBrowserControl = new ExplorerBrowserClass( );
+                explorerBrowserControl = new ExplorerBrowserClass();
 
                 // hooks up IExplorerPaneVisibility and ICommDlgBrowser event notifications
-                hr = ExplorerBrowserNativeMethods.IUnknown_SetSite( explorerBrowserControl, this );
+                hr = ExplorerBrowserNativeMethods.IUnknown_SetSite(explorerBrowserControl, this);
 
                 // hooks up IExplorerBrowserEvents event notification
-                hr = explorerBrowserControl.Advise( 
-                    Marshal.GetComInterfaceForObject( this, typeof( IExplorerBrowserEvents ) ),
-                    out eventsCookie );
+                hr = explorerBrowserControl.Advise(
+                    Marshal.GetComInterfaceForObject(this, typeof(IExplorerBrowserEvents)),
+                    out eventsCookie);
 
-                CoreNativeMethods.RECT rect = new CoreNativeMethods.RECT( );
+                CoreNativeMethods.RECT rect = new CoreNativeMethods.RECT();
                 rect.top = ClientRectangle.Top;
                 rect.left = ClientRectangle.Left;
                 rect.right = ClientRectangle.Right;
                 rect.bottom = ClientRectangle.Bottom;
 
-                explorerBrowserControl.Initialize( this.Handle, ref rect, null );
+                explorerBrowserControl.Initialize(this.Handle, ref rect, null);
 
                 // Force an initial show frames so that IExplorerPaneVisibility works the first time it is set.
                 // This also enables the control panel to be browsed to. If it is not set, then navigating to 
                 // the control panel succeeds, but no items are visible in the view.
-                explorerBrowserControl.SetOptions( EXPLORER_BROWSER_OPTIONS.EBO_SHOWFRAMES );
-                
-                explorerBrowserControl.SetPropertyBag( propertyBagName );
+                explorerBrowserControl.SetOptions(EXPLORER_BROWSER_OPTIONS.EBO_SHOWFRAMES);
 
-                if( antecreationNavigationTarget != null )
+                explorerBrowserControl.SetPropertyBag(propertyBagName);
+
+                if (antecreationNavigationTarget != null)
                 {
-                    BeginInvoke( new MethodInvoker(
+                    BeginInvoke(new MethodInvoker(
                     delegate
                     {
-                        Navigate( antecreationNavigationTarget );
+                        Navigate(antecreationNavigationTarget);
                         antecreationNavigationTarget = null;
-                    } ) );
+                    }));
                 }
             }
+
+            Application.AddMessageFilter(this);
         }
 
         /// <summary>
         /// Sizes the native control to match the WinForms control wrapper.
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnSizeChanged( EventArgs e )
+        /// <param name="e">Contains information about the size changed event.</param>
+        protected override void OnSizeChanged(EventArgs e)
         {
-            if( explorerBrowserControl != null )
+            if (explorerBrowserControl != null)
             {
-                CoreNativeMethods.RECT rect = new CoreNativeMethods.RECT( );
+                CoreNativeMethods.RECT rect = new CoreNativeMethods.RECT();
                 rect.top = ClientRectangle.Top;
                 rect.left = ClientRectangle.Left;
                 rect.right = ClientRectangle.Right;
                 rect.bottom = ClientRectangle.Bottom;
                 IntPtr ptr = IntPtr.Zero;
-                explorerBrowserControl.SetRect( ref ptr, rect );
+                explorerBrowserControl.SetRect(ref ptr, rect);
             }
 
-            base.OnSizeChanged( e );
+            base.OnSizeChanged(e);
         }
 
         /// <summary>
-        /// cleans up the explorer browser events+object when our window is being taken down
+        /// Cleans up the explorer browser events+object when the window is being taken down.
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnHandleDestroyed( EventArgs e )
+        /// <param name="e">An EventArgs that contains event data.</param>
+        protected override void OnHandleDestroyed(EventArgs e)
         {
-            if( explorerBrowserControl != null )
+            if (explorerBrowserControl != null)
             {
                 // unhook events
-                HRESULT hr = explorerBrowserControl.Unadvise( eventsCookie );
-                ExplorerBrowserNativeMethods.IUnknown_SetSite( explorerBrowserControl, null );
+                HRESULT hr = explorerBrowserControl.Unadvise(eventsCookie);
+                ExplorerBrowserNativeMethods.IUnknown_SetSite(explorerBrowserControl, null);
 
                 // destroy the explorer browser control
-                explorerBrowserControl.Destroy( );
+                explorerBrowserControl.Destroy();
 
                 // release com reference to it
-                Marshal.ReleaseComObject( explorerBrowserControl );
+                Marshal.ReleaseComObject(explorerBrowserControl);
                 explorerBrowserControl = null;
             }
 
-            base.OnHandleDestroyed( e );
+            base.OnHandleDestroyed(e);
         }
 
-        private List<ShellObject> previousItems = new List<ShellObject>( );
-        private List<ShellObject> previousSelection = new List<ShellObject>( );
+        private List<ShellObject> previousItems = new List<ShellObject>();
+        private List<ShellObject> previousSelection = new List<ShellObject>();
 
         /// <summary>
         /// Tests for collection update and fires the events if neccessary
         /// </summary>
-        void TestForCollectionUpdate( object sender, EventArgs e )
+        void TestForCollectionUpdate(object sender, EventArgs e)
         {
-            ShellObjectCollection newItems = Items;
-            if( previousItems.Count != newItems.Count )
+            // If the items count hasn't changed, don't get the items again
+            if( itemsChangedEvent.WaitOne( 0 )  ||
+                previousItems.Count != GetItemsCount( ) )
             {
-                // item count is different, notify clients
-                previousItems.Clear( );
-                foreach( ShellObject shobj in newItems )
-                    previousItems.Add( shobj );
+                ShellObjectCollection newItems = Items;
 
-                if( ItemsChanged != null )
+                // item count is different, notify clients
+                foreach (ShellObject item in previousItems)
+                    item.Dispose();
+
+                previousItems.Clear();
+
+                foreach (ShellObject shobj in newItems)
+                    previousItems.Add(shobj);
+
+                if (ItemsChanged != null)
                 {
-                    ItemsChanged( this, EventArgs.Empty );
+                    ItemsChanged(this, EventArgs.Empty);
                 }
             }
 
-            ShellObjectCollection newSelection = SelectedItems;
-            if( previousSelection.Count != newSelection.Count )
+            if( selectionChangedEvent.WaitOne( 0 )  ||
+                previousSelection.Count != GetSelectedItemsCount( ) )
             {
                 // the selection count has changed, notify clients
-                previousSelection.Clear( );
-                foreach( ShellObject shobj in newSelection )
-                    previousSelection.Add( shobj );
+                foreach (ShellObject item in previousSelection)
+                    item.Dispose();
 
-                if( SelectionChanged != null )
+                previousSelection.Clear();
+
+                foreach (ShellObject shobj in SelectedItems)
+                    previousSelection.Add(shobj);
+
+                if (SelectionChanged != null)
                 {
-                    SelectionChanged( this, EventArgs.Empty );
-                }
-            }
-
-            // The selection can change without the number of items changing.
-            // Because collection comparison is more expensive than counting,
-            // limit camparison to when the ICommDlgBrowser tells up that the
-            // selection has changed.
-            if( updateCollectionState.WaitOne( 0 ) )
-            {
-                for( uint index = 0; index < previousSelection.Count; index++ )
-                {
-                    if( false == ShellObjectsAreEqual( previousSelection[ (int)index ], newSelection[ index ] )  )
-                    {
-                        // the selection items are different, notify client 
-                        previousSelection.Clear( );
-                        foreach( ShellObject shobj in newSelection )
-                            previousSelection.Add( shobj );
-
-                        if( SelectionChanged != null )
-                        {
-                            SelectionChanged( this, EventArgs.Empty );
-                        }
-
-                        break;
-                    }
+                    SelectionChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -393,26 +432,26 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region object interfaces
 
         #region IServiceProvider
-        HRESULT Microsoft.WindowsAPICodePack.Shell.IServiceProvider.QueryService(
-            ref Guid guidService, ref Guid riid, out IntPtr ppvObject )
+        HRESULT Microsoft.WindowsAPICodePack.Controls.IServiceProvider.QueryService(
+            ref Guid guidService, ref Guid riid, out IntPtr ppvObject)
         {
             HRESULT hr = HRESULT.S_OK;
 
-            if( guidService.CompareTo( new Guid( ExplorerBrowserIIDGuid.IExplorerPaneVisibility ) ) == 0 )
+            if (guidService.CompareTo(new Guid(ExplorerBrowserIIDGuid.IExplorerPaneVisibility)) == 0)
             {
                 // Responding to this SID allows us to control the visibility of the 
                 // explorer browser panes
                 ppvObject =
-                    Marshal.GetComInterfaceForObject( this, typeof( IExplorerPaneVisibility ) );
+                    Marshal.GetComInterfaceForObject(this, typeof(IExplorerPaneVisibility));
                 hr = HRESULT.S_OK;
             }
-            else if( guidService.CompareTo( new Guid( ExplorerBrowserIIDGuid.ICommDlgBrowser ) ) == 0) 
+            else if (guidService.CompareTo(new Guid(ExplorerBrowserIIDGuid.ICommDlgBrowser)) == 0)
             {
                 // Responding to this SID allows us to hook up our ICommDlgBrowser
                 // implementation so we get selection change events from the view.
-                if( riid.CompareTo( new Guid( ExplorerBrowserIIDGuid.ICommDlgBrowser ) ) == 0 )
+                if (riid.CompareTo(new Guid(ExplorerBrowserIIDGuid.ICommDlgBrowser)) == 0)
                 {
-                    ppvObject = Marshal.GetComInterfaceForObject( this, typeof( ICommDlgBrowser ) );
+                    ppvObject = Marshal.GetComInterfaceForObject(this, typeof(ICommDlgBrowser));
                     hr = HRESULT.S_OK;
                 }
                 else
@@ -439,48 +478,48 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <param name="explorerPane">a guid identifying the pane</param>
         /// <param name="peps">the pane state desired</param>
         /// <returns></returns>
-        HRESULT IExplorerPaneVisibility.GetPaneState( ref Guid explorerPane, out EXPLORERPANESTATE peps )
+        HRESULT IExplorerPaneVisibility.GetPaneState(ref Guid explorerPane, out EXPLORERPANESTATE peps)
         {
-            switch( explorerPane.ToString( ) )
+            switch (explorerPane.ToString())
             {
                 case ExplorerBrowserViewPanes.AdvancedQuery:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.AdvancedQuery );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.AdvancedQuery);
                     break;
                 case ExplorerBrowserViewPanes.Commands:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.Commands );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.Commands);
                     break;
                 case ExplorerBrowserViewPanes.CommandsOrganize:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.CommandsOrganize );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.CommandsOrganize);
                     break;
                 case ExplorerBrowserViewPanes.CommandsView:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.CommandsView );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.CommandsView);
                     break;
                 case ExplorerBrowserViewPanes.Details:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.Details );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.Details);
                     break;
                 case ExplorerBrowserViewPanes.Navigation:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.Navigation );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.Navigation);
                     break;
                 case ExplorerBrowserViewPanes.Preview:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.Preview );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.Preview);
                     break;
                 case ExplorerBrowserViewPanes.Query:
-                    peps = VisibilityToPaneState( NavigationOptions.PaneVisibility.Query );
+                    peps = VisibilityToPaneState(NavigationOptions.PaneVisibility.Query);
                     break;
                 default:
 #if LOG_UNKNOWN_PANES
                     System.Diagnostics.Debugger.Log( 4, "ExplorerBrowser", "unknown pane view state. id=" + explorerPane.ToString( ) );
 #endif
-                    peps = EXPLORERPANESTATE.EPS_DONTCARE;
+                    peps = VisibilityToPaneState(PaneVisibilityState.Show);
                     break;
             }
 
             return HRESULT.S_OK;
         }
 
-        private EXPLORERPANESTATE VisibilityToPaneState( PaneVisibilityState visibility )
+        private EXPLORERPANESTATE VisibilityToPaneState(PaneVisibilityState visibility)
         {
-            switch( visibility )
+            switch (visibility)
             {
                 case PaneVisibilityState.DontCare:
                     return EXPLORERPANESTATE.EPS_DONTCARE;
@@ -492,102 +531,107 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     return EXPLORERPANESTATE.EPS_DEFAULT_ON | EXPLORERPANESTATE.EPS_FORCE;
 
                 default:
-                    throw new ArgumentException( "unexpected PaneVisibilityState" );
+                    throw new ArgumentException("unexpected PaneVisibilityState");
             }
         }
 
         #endregion
 
         #region IExplorerBrowserEvents
-        HRESULT IExplorerBrowserEvents.OnNavigationPending( IntPtr pidlFolder )
+        HRESULT IExplorerBrowserEvents.OnNavigationPending(IntPtr pidlFolder)
         {
             bool canceled = false;
 
-            if( NavigationPending != null )
+            if (NavigationPending != null)
             {
-                NavigationPendingEventArgs args = new NavigationPendingEventArgs( );
+                NavigationPendingEventArgs args = new NavigationPendingEventArgs();
 
                 // For some special items (like network machines), ShellObject.FromIDList
                 // might return null
-                args.PendingLocation = ShellObjectFactory.Create( pidlFolder );
+                args.PendingLocation = ShellObjectFactory.Create(pidlFolder);
 
-                if( args.PendingLocation != null )
+                if (args.PendingLocation != null)
                 {
-                    foreach( Delegate del in NavigationPending.GetInvocationList( ) )
+                    foreach (Delegate del in NavigationPending.GetInvocationList())
                     {
-                        del.DynamicInvoke( new object[ ] { this, args } );
-                        if( args.Cancel )
+                        del.DynamicInvoke(new object[] { this, args });
+                        if (args.Cancel)
                         {
                             canceled = true;
                         }
                     }
                 }
             }
-        
+
             return canceled ? HRESULT.E_FAIL : HRESULT.S_OK;
         }
 
-        HRESULT IExplorerBrowserEvents.OnViewCreated( IntPtr psv )
+        HRESULT IExplorerBrowserEvents.OnViewCreated(IntPtr psv)
         {
-            // The new view is empty, so both items and selection have changed
-            previousItems.Clear( );
-            if( ItemsChanged != null )
-            {
-                ItemsChanged( this, EventArgs.Empty );
-            }
-
-            previousSelection.Clear( );
-            if( SelectionChanged != null )
-            {
-                SelectionChanged( this, EventArgs.Empty );
-            }
-
             return HRESULT.S_OK;
         }
 
-        HRESULT IExplorerBrowserEvents.OnNavigationComplete( IntPtr pidlFolder )
+        HRESULT IExplorerBrowserEvents.OnNavigationComplete(IntPtr pidlFolder)
         {
             // view mode may change 
-            ContentOptions.folderSettings.ViewMode = GetCurrentViewMode( );
+            ContentOptions.folderSettings.ViewMode = GetCurrentViewMode();
 
-            if( NavigationComplete != null )
+            if (NavigationComplete != null)
             {
-                NavigationCompleteEventArgs args = new NavigationCompleteEventArgs( );
+                NavigationCompleteEventArgs args = new NavigationCompleteEventArgs();
                 args.NewLocation = ShellObjectFactory.Create(pidlFolder);
-                NavigationComplete( this, args );
+                NavigationComplete(this, args);
             }
             return HRESULT.S_OK;
         }
 
-        HRESULT IExplorerBrowserEvents.OnNavigationFailed( IntPtr pidlFolder )
+        HRESULT IExplorerBrowserEvents.OnNavigationFailed(IntPtr pidlFolder)
         {
-            if( NavigationFailed != null )
+            if (NavigationFailed != null)
             {
-                NavigationFailedEventArgs args = new NavigationFailedEventArgs( );
+                NavigationFailedEventArgs args = new NavigationFailedEventArgs();
                 args.FailedLocation = ShellObjectFactory.Create(pidlFolder);
-                NavigationFailed( this, args );
+                NavigationFailed(this, args);
             }
             return HRESULT.S_OK;
         }
         #endregion
 
         #region ICommDlgBrowser
-        HRESULT ICommDlgBrowser.OnDefaultCommand( IntPtr ppshv )
+        HRESULT ICommDlgBrowser.OnDefaultCommand(IntPtr ppshv)
         {
             return HRESULT.S_FALSE;
         }
 
-        HRESULT ICommDlgBrowser.OnStateChange( IntPtr ppshv, CommDlgBrowserStateChange uChange )
+        HRESULT ICommDlgBrowser.OnStateChange(IntPtr ppshv, CommDlgBrowserStateChange uChange)
         {
-            if( uChange == CommDlgBrowserStateChange.CDBOSC_SELCHANGE )
-                updateCollectionState.Set( );
+            if (uChange == CommDlgBrowserStateChange.CDBOSC_SELCHANGE)
+                selectionChangedEvent.Set();
 
             return HRESULT.S_OK;
         }
 
-        HRESULT ICommDlgBrowser.IncludeObject( IntPtr ppshv, IntPtr pidl )
+        HRESULT ICommDlgBrowser.IncludeObject(IntPtr ppshv, IntPtr pidl)
         {
+            // items in the view have changed, so the collections need updating
+            itemsChangedEvent.Set();
+
             return HRESULT.S_OK;
+        }
+
+        #endregion
+
+        #region IMessageFilter Members
+
+        bool IMessageFilter.PreFilterMessage(ref Message m)
+        {
+            HRESULT hr = HRESULT.S_FALSE;
+            if (explorerBrowserControl != null)
+            {
+                // translate keyboard input
+                hr = ((IInputObject)explorerBrowserControl).TranslateAcceleratorIO(ref m);
+            }
+            return (hr == HRESULT.S_OK);
         }
 
         #endregion
@@ -595,44 +639,44 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #endregion
 
         #region utilities
-        
+
         /// <summary>
         /// Returns the current view mode of the browser
         /// </summary>
         /// <returns></returns>
         internal FOLDERVIEWMODE GetCurrentViewMode()
         {
-            IFolderView2 ifv2 = GetFolderView2( );
+            IFolderView2 ifv2 = GetFolderView2();
             uint viewMode = 0;
-            if( ifv2 != null )
+            if (ifv2 != null)
             {
                 try
                 {
-                    HRESULT hr = ifv2.GetCurrentViewMode( out viewMode );
-                    if( hr != HRESULT.S_OK )
-                        throw Marshal.GetExceptionForHR( (int)hr );
+                    HRESULT hr = ifv2.GetCurrentViewMode(out viewMode);
+                    if (hr != HRESULT.S_OK)
+                        throw Marshal.GetExceptionForHR((int)hr);
                 }
                 finally
                 {
-                    Marshal.ReleaseComObject( ifv2 );
+                    Marshal.ReleaseComObject(ifv2);
                     ifv2 = null;
                 }
             }
             return (FOLDERVIEWMODE)viewMode;
         }
-        
+
         /// <summary>
         /// Gets the IFolderView2 interface from the explorer browser.
         /// </summary>
         /// <returns></returns>
-        internal IFolderView2 GetFolderView2( )
+        internal IFolderView2 GetFolderView2()
         {
-            Guid iid = new Guid( ExplorerBrowserIIDGuid.IFolderView2 );
+            Guid iid = new Guid(ExplorerBrowserIIDGuid.IFolderView2);
             IntPtr view = IntPtr.Zero;
-            if( this.explorerBrowserControl != null )
+            if (this.explorerBrowserControl != null)
             {
-                HRESULT hr = this.explorerBrowserControl.GetCurrentView( ref iid, out view );
-                switch( hr )
+                HRESULT hr = this.explorerBrowserControl.GetCurrentView(ref iid, out view);
+                switch (hr)
                 {
                     case HRESULT.S_OK:
                         break;
@@ -645,10 +689,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
                         return null;
 
                     default:
-                        throw new COMException( "ExplorerBrowser failed to get current view.", (int)hr );
+                        throw new COMException("ExplorerBrowser failed to get current view.", (int)hr);
                 }
 
-                return (IFolderView2)Marshal.GetObjectForIUnknown( view );
+                return (IFolderView2)Marshal.GetObjectForIUnknown(view);
             }
             else
             {
@@ -660,101 +704,129 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Gets the selected items in the explorer browser as an IShellItemArray
         /// </summary>
         /// <returns></returns>
-        internal IShellItemArray GetSelectedItemsArray( )
+        internal IShellItemArray GetSelectedItemsArray()
         {
             IShellItemArray iArray = null;
-            IFolderView2 iFV2 = GetFolderView2( );
-            if( iFV2 != null )
+            IFolderView2 iFV2 = GetFolderView2();
+            if (iFV2 != null)
             {
                 try
                 {
-                    Guid iidShellItemArray = new Guid( ShellIIDGuid.IShellItemArray );
+                    Guid iidShellItemArray = new Guid(ShellIIDGuid.IShellItemArray);
                     object oArray = null;
-                    HRESULT hr = iFV2.Items( (uint)SVGIO.SVGIO_SELECTION, ref iidShellItemArray, out oArray );
+                    HRESULT hr = iFV2.Items((uint)SVGIO.SVGIO_SELECTION, ref iidShellItemArray, out oArray);
                     iArray = oArray as IShellItemArray;
-                    if( hr != HRESULT.S_OK &&
+                    if (hr != HRESULT.S_OK &&
                         hr != HRESULT.E_ELEMENTNOTFOUND &&
-                        hr != HRESULT.E_FAIL )
+                        hr != HRESULT.E_FAIL)
                     {
-                        throw new COMException( "unexpected error retrieving selection", (int)hr );
+                        throw new COMException("unexpected error retrieving selection", (int)hr);
                     }
                 }
                 finally
                 {
-                    Marshal.ReleaseComObject( iFV2 );
+                    Marshal.ReleaseComObject(iFV2);
                     iFV2 = null;
                 }
             }
 
             return iArray;
+        }
+
+        internal int GetItemsCount()
+        {
+            int itemsCount = 0;
+
+            IFolderView2 iFV2 = GetFolderView2();
+            if (iFV2 != null)
+            {
+                try
+                {
+                    HRESULT hr = iFV2.ItemCount((uint)SVGIO.SVGIO_ALLVIEW, out itemsCount);
+
+                    if (hr != HRESULT.S_OK &&
+                        hr != HRESULT.E_ELEMENTNOTFOUND &&
+                        hr != HRESULT.E_FAIL)
+                    {
+                        throw new COMException("unexpected error retrieving item count", (int)hr);
+                    }
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(iFV2);
+                    iFV2 = null;
+                }
+            }
+
+            return itemsCount;
+        }
+
+        internal int GetSelectedItemsCount()
+        {
+            int itemsCount = 0;
+
+            IFolderView2 iFV2 = GetFolderView2();
+            if (iFV2 != null)
+            {
+                try
+                {
+                    HRESULT hr = iFV2.ItemCount((uint)SVGIO.SVGIO_SELECTION, out itemsCount);
+
+                    if( hr != HRESULT.S_OK &&
+                        hr != HRESULT.E_ELEMENTNOTFOUND &&
+                        hr != HRESULT.E_FAIL )
+                    {
+                        throw new COMException( "unexpected error retrieving selected item count", (int)hr );
+                    }
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(iFV2);
+                    iFV2 = null;
+                }
+            }
+
+            return itemsCount;
         }
 
         /// <summary>
         /// Gets the items in the ExplorerBrowser as an IShellItemArray
         /// </summary>
         /// <returns></returns>
-        internal IShellItemArray GetItemsArray( )
+        internal IShellItemArray GetItemsArray()
         {
             IShellItemArray iArray = null;
-            IFolderView2 iFV2 = GetFolderView2( );
-            if( iFV2 != null )
+            IFolderView2 iFV2 = GetFolderView2();
+            if (iFV2 != null)
             {
                 try
                 {
-                    Guid iidShellItemArray = new Guid( ShellIIDGuid.IShellItemArray );
+                    Guid iidShellItemArray = new Guid(ShellIIDGuid.IShellItemArray);
                     object oArray = null;
-                    HRESULT hr = iFV2.Items( (uint)SVGIO.SVGIO_ALLVIEW, ref iidShellItemArray, out oArray );
-                    if( hr != HRESULT.S_OK &&
+                    HRESULT hr = iFV2.Items((uint)SVGIO.SVGIO_ALLVIEW, ref iidShellItemArray, out oArray);
+                    if (hr != HRESULT.S_OK &&
                         hr != HRESULT.E_FAIL &&
                         hr != HRESULT.E_ELEMENTNOTFOUND &&
-                        hr != HRESULT.E_INVALIDARG )
+                        hr != HRESULT.E_INVALIDARG)
                     {
-                        throw new COMException( "unexpected error retrieving view items", (int)hr );
+                        throw new COMException("unexpected error retrieving view items", (int)hr);
                     }
 
                     iArray = oArray as IShellItemArray;
                 }
                 finally
                 {
-                    Marshal.ReleaseComObject( iFV2 );
+                    Marshal.ReleaseComObject(iFV2);
                     iFV2 = null;
                 }
             }
             return iArray;
         }
 
-        /// <summary>
-        /// This does a rigorous test for shell object equality
-        /// </summary>
-        /// <param name="first"></param>
-        /// <param name="second"></param>
-        /// <returns></returns>
-        bool ShellObjectsAreEqual( ShellObject first, ShellObject second )
-        {
-            bool areEqual = false;
-
-            if( first != null && second != null )
-            {
-                IShellItem ifirst = first.NativeShellItem;
-                IShellItem isecond = second.NativeShellItem;
-                if( ( ifirst != null ) && ( isecond != null ) )
-                {
-                    int result = 0;
-                    HRESULT hr = ifirst.Compare(
-                        isecond, SICHINTF.SICHINT_ALLFIELDS, out result );
-
-                    if( ( hr == HRESULT.S_OK ) && ( result == 0 ) )
-                        areEqual = true;
-                }
-            }
-
-            return areEqual;
-        }
-        
-        
         #endregion
 
         #endregion
+
     }
 
 }

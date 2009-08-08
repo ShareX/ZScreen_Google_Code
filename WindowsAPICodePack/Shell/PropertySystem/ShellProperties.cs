@@ -3,13 +3,15 @@
 using System.Runtime.InteropServices;
 using System;
 using System.Runtime.InteropServices.ComTypes;
+using Microsoft.WindowsAPICodePack.Shell;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
-    /// Partial class that implements helper methods for retrieving Shell properties
-    /// using a canonical name, property key, or a strongly typed property. Also provides
-    /// access to all the strongly typed system properties and default properties collection.
+    /// Defines a partial class that implements helper methods for retrieving Shell properties
+    /// using a canonical name, property key, or a strongly-typed property. Also provides
+    /// access to all the strongly-typed system properties and default properties collections.
     /// </summary>
     public partial class ShellProperties
     {
@@ -22,46 +24,46 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Get a property that's available in the default property collection using 
-        /// the given property key
+        /// Returns a property available in the default property collection using 
+        /// the given property key.
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">The property key.</param>
+        /// <returns>An IShellProperty.</returns>
         public IShellProperty GetProperty(PropertyKey key)
         {
             return CreateTypedProperty(key);
         }
 
         /// <summary>
-        /// Get a property that's available in the default property collection using 
-        /// the given canonical name
+        /// Returns a property available in the default property collection using 
+        /// the given canonical name.
         /// </summary>
-        /// <param name="canonicalName"></param>
-        /// <returns></returns>
+        /// <param name="canonicalName">The canonical name.</param>
+        /// <returns>An IShellProperty.</returns>
         public IShellProperty GetProperty(string canonicalName)
         {
             return CreateTypedProperty(canonicalName);
         }
 
         /// <summary>
-        /// Get a strongly typed property that's available in the default property collection using 
-        /// the given property key
+        /// Returns a strongly typed property available in the default property collection using 
+        /// the given property key.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of property to retrieve.</typeparam>
+        /// <param name="key">The property key.</param>
+        /// <returns>A strongly-typed ShellProperty for the given property key.</returns>
         public ShellProperty<T> GetProperty<T>(PropertyKey key)
         {
             return CreateTypedProperty(key) as ShellProperty<T>;
         }
 
         /// <summary>
-        /// Get a strongly typed property that's available in the default property collection using 
-        /// the given canonical name
+        /// Returns a strongly typed property available in the default property collection using 
+        /// the given canonical name.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="canonicalName"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of property to retrieve.</typeparam>
+        /// <param name="canonicalName">The canonical name.</param>
+        /// <returns>A strongly-typed ShellProperty for the given canonical name.</returns>
         public ShellProperty<T> GetProperty<T>(string canonicalName)
         {
             return CreateTypedProperty(canonicalName) as ShellProperty<T>;
@@ -69,7 +71,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         private PropertySystem propertySystem = null;
         /// <summary>
-        /// Gets the accessor for all the system properties
+        /// Gets all the properties for the system through an accessor.
         /// </summary>
         public PropertySystem System
         {
@@ -83,7 +85,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Collection of all the default properties for this item.
+        /// Gets the collection of all the default properties for this item.
         /// </summary>
         public ShellPropertyCollection DefaultPropertyCollection
         {
@@ -97,9 +99,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Returns the property writer for writing multiple properties.
+        /// Returns the shell property writer used when writing multiple properties.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ShellPropertyWriter.</returns>
         /// <remarks>Use the Using pattern with the returned ShellPropertyWriter or
         /// manually call the Close method on the writer to commit the changes 
         /// and dispose the writer</remarks>

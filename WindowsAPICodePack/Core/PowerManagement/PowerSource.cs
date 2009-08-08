@@ -1,6 +1,6 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// Specifies the power source currently supplying power to the system.
@@ -29,6 +29,6 @@ namespace Microsoft.WindowsAPICodePack
         /// The computer is powered by a short-term power source 
         /// such as a UPS device.
         /// </summary>
-        UPS = 2
+        Ups = 2
     }
 }

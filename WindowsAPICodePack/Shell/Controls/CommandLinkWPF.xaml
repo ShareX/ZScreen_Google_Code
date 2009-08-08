@@ -1,6 +1,6 @@
 <!-- Copyright (c) Microsoft Corporation.  All rights reserved. -->
 
-<UserControl x:Class="Microsoft.WindowsAPICodePack.Shell.CommandLinkWPF"
+<UserControl x:Class="Microsoft.WindowsAPICodePack.Controls.WindowsPresentationFoundation.CommandLink"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Width="325"

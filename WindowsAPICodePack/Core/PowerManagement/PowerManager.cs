@@ -1,8 +1,9 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// Enables registration for 
@@ -149,7 +150,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets a snapshot of the current battery state.
         /// </summary>
-        /// <returns>A <see cref="Microsoft.WindowsAPICodePack.BatteryState"/> instance that represents 
+        /// <returns>A <see cref="BatteryState"/> instance that represents 
         /// the state of the battery at the time this method was called.</returns>
         /// <exception cref="System.InvalidOperationException">The system does not have a battery.</exception>
         /// <exception cref="System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>
@@ -278,7 +279,11 @@ namespace Microsoft.WindowsAPICodePack
             {
                 CoreHelpers.ThrowIfNotXP();
 
-                return Power.GetSystemPowerCapabilities().UpsPresent;
+                // Because the native method doesn't return the correct value for .UpsPresent,
+                // use .BatteriesAreShortTerm and .SystemBatteriesPresent to check for UPS
+                PowerManagementNativeMethods.SystemPowerCapabilities batt = Power.GetSystemPowerCapabilities();
+
+                return (batt.BatteriesAreShortTerm && batt.SystemBatteriesPresent);
             }
         }
 
@@ -286,7 +291,7 @@ namespace Microsoft.WindowsAPICodePack
         /// Gets a value that indicates the current power scheme.  
         /// </summary>
         /// <exception cref="System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.PowerPersonality"/> value.</value>
+        /// <value>A <see cref="PowerPersonality"/> value.</value>
         public static PowerPersonality PowerPersonality
         {
             get 
@@ -387,7 +392,7 @@ namespace Microsoft.WindowsAPICodePack
         /// Gets the current power source.  
         /// </summary>
         /// <exception cref="System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.PowerSource"/> value.</value>
+        /// <value>A <see cref="PowerSource"/> value.</value>
         public static PowerSource PowerSource
         {
             get 

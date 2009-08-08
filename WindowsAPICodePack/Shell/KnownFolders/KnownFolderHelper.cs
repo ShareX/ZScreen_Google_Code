@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
     /// <summary>
-    /// Helper class for Known Folders
+    /// Creates the helper class for known folders.
     /// </summary>
     public static class KnownFolderHelper
     {
@@ -37,10 +38,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Returns a Known Folder from a unique identifier (GUID).
+        /// Returns a known folder given a globally unique identifier.
         /// </summary>
-        /// <param name="knownFolderId">Unique identifier (GUID) for the requested Known Folder</param>
-        /// <returns></returns>
+        /// <param name="knownFolderId">A GUID for the requested known folder.</param>
+        /// <returns>A known folder representing the specified name.</returns>
         public static IKnownFolder FromKnownFolderId(Guid knownFolderId)
         {
             IKnownFolderNative knownFolderNative;
@@ -98,9 +99,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the known folder identified by its canonical name.
+        /// Returns the known folder given its canonical name.
         /// </summary>
-        /// <param name="canonicalName">A non-localized canonical name for the known folder (e.g. MyComputer)</param>
+        /// <param name="canonicalName">A non-localized canonical name for the known folder, such as MyComputer.</param>
         /// <returns>A known folder representing the specified name.</returns>
         public static IKnownFolder FromCanonicalName(string canonicalName)
         {
@@ -112,58 +113,69 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Return a Known Folder from its Shell path (e.g. C:\users\public\documents) or 
-        /// "::{645FF040-5081-101B-9F08-00AA002F954E}" for Recycle Bin
+        /// Returns a known folder given its shell path, such as <c>C:\users\public\documents</c> or 
+        /// <c>::{645FF040-5081-101B-9F08-00AA002F954E}</c> for the Recycle Bin.
         /// </summary>
-        /// <param name="path">Path for the requested Known Folder (physical path or virtual path)</param>
-        /// <returns></returns>
+        /// <param name="path">The path for the requested known folder; either a physical path or a virtual path.</param>
+        /// <returns>A known folder representing the specified name.</returns>
         public static IKnownFolder FromPath(string path)
         {
             return KnownFolderHelper.FromParsingName(path);
         }
 
         /// <summary>
-        /// Return a Known Folder from its Shell namespace Parsing name. 
-        /// Example "::{645FF040-5081-101B-9F08-00AA002F954E}" for Recycle Bin.
+        /// Returns a known folder given its shell namespace parsing name, such as 
+        /// <c>::{645FF040-5081-101B-9F08-00AA002F954E}</c> for the Recycle Bin.
         /// </summary>
-        /// <param name="parsingName">Parsing name (or path) for the requested Known Folder</param>
-        /// <returns></returns>
+        /// <param name="parsingName">The parsing name (or path) for the requested known folder.</param>
+        /// <returns>A known folder representing the specified name.</returns>
         public static IKnownFolder FromParsingName(string parsingName)
         {
-            IntPtr pidl = ShellHelper.PidlFromParsingName(parsingName);
+            IntPtr pidl = IntPtr.Zero;
+            IntPtr pidl2 = IntPtr.Zero;
 
-            if (pidl == IntPtr.Zero)
+            try
             {
-                throw new ArgumentException("Parsing name is invalid.", "parsingName");
-            }
-
-
-            // It's probably a special folder, try to get it                
-            IKnownFolderNative knownFolderNative = KnownFolderHelper.FromPIDL(pidl);
-            if (knownFolderNative != null)
-            {
-                return KnownFolderHelper.GetKnownFolder(knownFolderNative);
-            }
-            else
-            {
-                // No physical storage was found for this known folder
-                // We'll try again with a different name
-
-                // try one more time with a trailing \0
-                pidl = ShellHelper.PidlFromParsingName(parsingName.PadRight(1, '\0'));
+                pidl = ShellHelper.PidlFromParsingName(parsingName);
 
                 if (pidl == IntPtr.Zero)
                 {
                     throw new ArgumentException("Parsing name is invalid.", "parsingName");
                 }
 
-                IKnownFolder kf = KnownFolderHelper.GetKnownFolder(KnownFolderHelper.FromPIDL(pidl));
 
-                if (kf != null)
-                    return kf;
+                // It's probably a special folder, try to get it                
+                IKnownFolderNative knownFolderNative = KnownFolderHelper.FromPIDL(pidl);
+
+                if (knownFolderNative != null)
+                    return KnownFolderHelper.GetKnownFolder(knownFolderNative);
                 else
-                    throw new ArgumentException("Parsing name is invalid.", "parsingName");
+                {
+                    // No physical storage was found for this known folder
+                    // We'll try again with a different name
+
+                    // try one more time with a trailing \0
+                    pidl2 = ShellHelper.PidlFromParsingName(parsingName.PadRight(1, '\0'));
+
+                    if (pidl2 == IntPtr.Zero)
+                    {
+                        throw new ArgumentException("Parsing name is invalid.", "parsingName");
+                    }
+
+                    IKnownFolder kf = KnownFolderHelper.GetKnownFolder(KnownFolderHelper.FromPIDL(pidl));
+
+                    if (kf != null)
+                        return kf;
+                    else
+                        throw new ArgumentException("Parsing name is invalid.", "parsingName");
+                }
             }
+            finally
+            {
+                ShellNativeMethods.ILFree(pidl);
+                ShellNativeMethods.ILFree(pidl2);
+            }
+
         }
     }
 }

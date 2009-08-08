@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Returns the display name relative to the desktop.
         /// </summary>
-        Normal = 0x00000000,
+        Default = 0x00000000,
 
         /// <summary>
         /// Returns the parsing name relative to the parent folder.
@@ -172,5 +172,178 @@ namespace Microsoft.WindowsAPICodePack.Shell
         ForceMinimize = 11
     }
 
+    /// <summary>
+    /// Provides a set of flags to be used with <see cref="Microsoft.WindowsAPICodePack.Shell.SearchCondition"/> 
+    /// to indicate the operation in <see cref="Microsoft.WindowsAPICodePack.Shell.SearchConditionFactory"/> methods.
+    /// </summary>
+    public enum SearchConditionOperation
+    {
+        /// <summary>
+        /// An implicit comparison between the value of the property and the value of the constant.
+        /// </summary>
+        Implicit = 0,
 
+        /// <summary>
+        /// The value of the property and the value of the constant must be equal.
+        /// </summary>
+        Equal = 1,
+
+        /// <summary>
+        /// The value of the property and the value of the constant must not be equal.
+        /// </summary>
+        NotEqual = 2,
+
+        /// <summary>
+        /// The value of the property must be less than the value of the constant.
+        /// </summary>
+        LessThan = 3,
+
+        /// <summary>
+        /// The value of the property must be greater than the value of the constant.
+        /// </summary>
+        GreaterThan = 4,
+
+        /// <summary>
+        /// The value of the property must be less than or equal to the value of the constant.
+        /// </summary>
+        LessThanOrEqual = 5,
+
+        /// <summary>
+        /// The value of the property must be greater than or equal to the value of the constant.
+        /// </summary>
+        GreaterThanOrEqual = 6,
+
+        /// <summary>
+        /// The value of the property must begin with the value of the constant.
+        /// </summary>
+        ValueStartsWith = 7,
+
+        /// <summary>
+        /// The value of the property must end with the value of the constant.
+        /// </summary>
+        ValueEndsWith = 8,
+
+        /// <summary>
+        /// The value of the property must contain the value of the constant.
+        /// </summary>
+        ValueContains = 9,
+
+        /// <summary>
+        /// The value of the property must not contain the value of the constant.
+        /// </summary>
+        ValueNotContains = 10,
+
+        /// <summary>
+        /// The value of the property must match the value of the constant, where '?' 
+        /// matches any single character and '*' matches any sequence of characters.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DOS")]
+        DOSWildcards = 11,
+
+        /// <summary>
+        /// The value of the property must contain a word that is the value of the constant.
+        /// </summary>
+        WordEqual = 12,
+
+        /// <summary>
+        /// The value of the property must contain a word that begins with the value of the constant.
+        /// </summary>
+        WordStartsWith = 13,
+
+        /// <summary>
+        /// The application is free to interpret this in any suitable way.
+        /// </summary>
+        ApplicationSpecific = 14
+    }
+
+    /// <summary>
+    /// Set of flags to be used with <see cref="Microsoft.WindowsAPICodePack.Shell.SearchConditionFactory"/>.
+    /// </summary>
+    public enum SearchConditionType
+    {
+        /// <summary>
+        /// Indicates that the values of the subterms are combined by "AND".
+        /// </summary>
+        And = 0,
+
+        /// <summary>
+        /// Indicates that the values of the subterms are combined by "OR".
+        /// </summary>
+        Or = 1,
+
+        /// <summary>
+        /// Indicates a "NOT" comparison of subterms.
+        /// </summary>
+        Not = 2,
+
+        /// <summary>
+        /// Indicates that the node is a comparison between a property and a 
+        /// constant value using a <see cref="Microsoft.WindowsAPICodePack.Shell.SearchConditionOperation"/>.
+        /// </summary>
+        Leaf = 3,
+    }
+
+    /// <summary>
+    /// Used to describe the view mode.
+    /// </summary>
+    public enum FolderLogicalViewMode
+    {
+        /// <summary>
+        /// The view is not specified.
+        /// </summary>
+        Unspecified = -1,
+
+        /// <summary>
+        /// The minimum valid enumeration value. Used for validation purposes only.
+        /// </summary>
+        First = 1,
+
+        /// <summary>
+        /// Details view.
+        /// </summary>
+        Details = 1,
+
+        /// <summary>
+        /// Tiles view.
+        /// </summary>
+        Tiles = 2,
+
+        /// <summary>
+        /// Icons view.
+        /// </summary>
+        Icons = 3,
+
+        /// <summary>
+        /// Windows 7 and later. List view.
+        /// </summary>
+        List = 4,
+
+        /// <summary>
+        /// Windows 7 and later. Content view.
+        /// </summary>
+        Content = 5,
+
+        /// <summary>
+        /// The maximum valid enumeration value. Used for validation purposes only.
+        /// </summary>
+        Last = 5
+    }
+
+    /// <summary>
+    /// The direction in which the items are sorted.
+    /// </summary>
+    public enum SortDirection
+    {
+        /// <summary>
+        /// The items are sorted in descending order. Whether the sort is alphabetical, numerical, 
+        /// and so on, is determined by the data type of the column indicated in propkey.
+        /// </summary>
+        Descending = -1,
+
+        /// <summary>
+        /// The items are sorted in ascending order. Whether the sort is alphabetical, numerical, 
+        /// and so on, is determined by the data type of the column indicated in propkey.
+        /// </summary>
+        Ascending = 1,
+    }
 }

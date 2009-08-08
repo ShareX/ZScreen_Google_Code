@@ -2,6 +2,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
@@ -512,7 +513,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         #region Shell Helper Methods
 
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode,
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode, SetLastError = true )]
+        internal static extern int SHCreateShellItemArrayFromDataObject(
+            System.Runtime.InteropServices.ComTypes.IDataObject pdo,
+            ref Guid riid,
+            [MarshalAs( UnmanagedType.Interface )] out IShellItemArray iShellItemArray );
+
+        [DllImport( "shell32.dll", CharSet = CharSet.Unicode,
             SetLastError = true)]
         internal static extern int SHCreateItemFromParsingName(
             [MarshalAs(UnmanagedType.LPWStr)] string path,
@@ -525,10 +532,32 @@ namespace Microsoft.WindowsAPICodePack.Shell
             SetLastError = true)]
         internal static extern int SHCreateItemFromParsingName(
             [MarshalAs(UnmanagedType.LPWStr)] string path,
+            [MarshalAs(UnmanagedType.Interface)] IBindCtx pbc,
+            ref Guid riid,
+            [MarshalAs(UnmanagedType.Interface)] out IShellItem2 shellItem);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode,
+            SetLastError = true)]
+        internal static extern int SHCreateItemFromParsingName(
+            [MarshalAs(UnmanagedType.LPWStr)] string path,
+            [MarshalAs(UnmanagedType.Interface)] IBindCtx pbc,
+            ref Guid riid,
+            [MarshalAs(UnmanagedType.Interface)] out IShellItem shellItem);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode,
+            SetLastError = true)]
+        internal static extern int SHCreateItemFromParsingName(
+            [MarshalAs(UnmanagedType.LPWStr)] string path,
             // The following parameter is not used - binding context.
             IntPtr pbc,
             ref Guid riid,
             [MarshalAs(UnmanagedType.Interface)] out IShellItem shellItem);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode,
+            SetLastError = true)]
+        internal static extern int SHCreateShellItemArrayFromShellItem(IShellItem psi, 
+            ref Guid riid, 
+            [MarshalAs(UnmanagedType.Interface)] out IShellItemArray ppenum);
 
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode,
             SetLastError = true)]
@@ -569,60 +598,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
             [MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi
         );
 
+        [DllImport( "shell32.dll", CharSet = CharSet.Unicode, SetLastError = true )]
+        internal static extern uint ILGetSize( IntPtr pidl );
+
+        [DllImport( "shell32.dll", CharSet = CharSet.None )]
+        public static extern void ILFree( IntPtr pidl );
+
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteObject(IntPtr hObject);
 
-        [DllImport("shell32.dll")]
-        public static extern int SHGetPropertyStoreForWindow(IntPtr hwnd, ref Guid iid /*IID_IPropertyStore*/,
-            [Out(), MarshalAs(UnmanagedType.Interface)]
-                out IPropertyStore propertyStore);
-
-        internal static Guid IID_IPropertyStore = new Guid(ShellIIDGuid.IPropertyStore);
-
-        internal static IPropertyStore GetWindowPropertyStore(IntPtr windowHandle)
-        {
-            IPropertyStore propStore;
-            int rc = SHGetPropertyStoreForWindow(windowHandle, ref IID_IPropertyStore, out propStore);
-
-            if (rc != 0)
-                throw Marshal.GetExceptionForHR(rc);
-
-            return propStore;
-        }
-
-        internal static PropertyKey PKEY_AppUserModel_ID = new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 5);
-
-        /// <summary>
-        /// Gets a window's application id by its window handle.
-        /// </summary>
-        /// <param name="hwnd">The window handle.</param>
-        /// <returns>The application id of that window.</returns>
-        internal static string GetWindowAppId(IntPtr hwnd)
-        {
-            IPropertyStore propStore = GetWindowPropertyStore(hwnd);
-
-            PropVariant pv;
-            propStore.GetValue(ref PKEY_AppUserModel_ID, out pv);
-
-            Marshal.ReleaseComObject(propStore);
-
-            return pv.GetValue<string>();
-        }
-        /// <summary>
-        /// Sets the window's application id by its window handle.
-        /// </summary>
-        /// <param name="hwnd">The window handle.</param>
-        /// <param name="appId">The application id.</param>
-        internal static void SetWindowAppId(IntPtr hwnd, string appId)
-        {
-            IPropertyStore propStore = GetWindowPropertyStore(hwnd);
-
-            PropVariant pv = new PropVariant();
-            pv.SetString(appId);
-            propStore.SetValue(ref PKEY_AppUserModel_ID, ref pv);
-
-            Marshal.ReleaseComObject(propStore);
-        }
+        [DllImport("ole32.dll")]
+        public static extern int CreateBindCtx(int reserved, out IBindCtx ppbc);
 
         #endregion
 

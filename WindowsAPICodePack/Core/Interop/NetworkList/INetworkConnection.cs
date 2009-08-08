@@ -5,7 +5,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Net
 {
     [ComImport]
     [TypeLibType((short)0x1040)]

@@ -7,8 +7,9 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.WindowsAPICodePack;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Encapsulates the native logic required to create, 
@@ -62,7 +63,6 @@ namespace Microsoft.WindowsAPICodePack
         public DialogShowState ShowState
         {
             get { return showState; }
-            set { showState = value; }
         }
 
         private int selectedButtonID;
@@ -72,6 +72,7 @@ namespace Microsoft.WindowsAPICodePack
         }
 
         private int selectedRadioButtonID;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal int SelectedRadioButtonID
         {
             get { return selectedRadioButtonID; }
@@ -85,6 +86,8 @@ namespace Microsoft.WindowsAPICodePack
 
         #endregion
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)",
+            Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
             // Applies config struct and other settings, then
@@ -110,7 +113,7 @@ namespace Microsoft.WindowsAPICodePack
                     nativeDialogConfig,
                     out selectedButtonID,
                     out selectedRadioButtonID,
-                    out checkBoxChecked );
+                    out checkBoxChecked);
 
                 if (CoreErrorHelper.Failed(hresult))
                 {
@@ -125,14 +128,18 @@ namespace Microsoft.WindowsAPICodePack
                             break;
                         default:
                             msg = String.Format(
-                             
+
                                 "An unexpected internal error occurred in the Win32 call:{0:x}",
                                 hresult);
                             break;
                     }
                     Exception e = Marshal.GetExceptionForHR((int)hresult);
-                    throw new Win32Exception(msg,e);
+                    throw new Win32Exception(msg, e);
                 }
+            }
+            catch (EntryPointNotFoundException)
+            {
+                throw new NotSupportedException("TaskDialog feature needs to load version 6 of comctl32.dll but a different version is current loaded in memory.");
             }
             finally
             {
@@ -147,12 +154,26 @@ namespace Microsoft.WindowsAPICodePack
         // simply call "Close" and we'll "click" the cancel button. 
         // Note that the cancel button doesn't actually
         // have to exist for this to work.
-        internal void NativeClose()
+        internal void NativeClose(TaskDialogResult result)
         {
             showState = DialogShowState.Closing;
-            SendMessageHelper(
-                TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_CLICK_BUTTON,
-                (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDCANCEL, 0);
+
+            int id = (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDCANCEL;
+
+            if(result == TaskDialogResult.Close)
+                id = (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDCLOSE;
+            else if(result == TaskDialogResult.CustomButtonClicked)
+                id = DialogsDefaults.MinimumDialogControlId; // custom buttons
+            else if(result == TaskDialogResult.No)
+                id = (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDNO;
+            else if(result == TaskDialogResult.Ok)
+                id = (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDOK;
+            else if(result == TaskDialogResult.Retry)
+                id = (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDRETRY;
+            else if(result == TaskDialogResult.Yes)
+                id = (int)TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDYES;
+
+            SendMessageHelper(TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_CLICK_BUTTON, id, 0);
         }
 
         #region Main Dialog Proc
@@ -251,7 +272,10 @@ namespace Microsoft.WindowsAPICodePack
             // as an atomic action,
             // but it is more .NET friendly to split them up.
             // Unfortunately, we do NOT have the return values at this stage.
-            return outerDialog.RaiseClosingEvent(id);
+            if(id <= 9)
+                return outerDialog.RaiseClosingEvent(id);
+            else
+                return 1;
         }
 
         private int HandleRadioButtonClick(int id)
@@ -401,22 +425,15 @@ namespace Microsoft.WindowsAPICodePack
 
         internal void UpdateButtonEnabled(int buttonID, bool enabled)
         {
-           // throw new NotImplementedException("UpdateButtonEnabled");
-            //TDM_ENABLE_BUTTON = CoreNativeMethods.WM_USER + 111, // lParam = 0 (disable), lParam != 0 (enable), wParam = Button ID
-            //TDM_ENABLE_RADIO_BUTTON = CoreNativeMethods.WM_USER + 112, // lParam = 0 (disable), lParam != 0 (enable), wParam = Radio Button ID
             AssertCurrentlyShowing();
             SendMessageHelper(
-                TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_ENABLE_BUTTON,
-                enabled == true ? 1 : 0,
-                buttonID);
+                TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_ENABLE_BUTTON, buttonID, enabled == true ? 1 : 0);
         }
         internal void UpdateRadioButtonEnabled(int buttonID, bool enabled)
         {
             AssertCurrentlyShowing();
             SendMessageHelper(
-                TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_ENABLE_RADIO_BUTTON,
-                enabled == true? 1 : 0,
-                buttonID);
+                TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_ENABLE_RADIO_BUTTON, buttonID, enabled == true? 1 : 0);
         }
 
         internal void AssertCurrentlyShowing()
@@ -547,7 +564,7 @@ namespace Microsoft.WindowsAPICodePack
                 // itself has been instructed to close.
 
                 if (showState == DialogShowState.Showing)
-                    NativeClose();
+                    NativeClose(TaskDialogResult.Cancel);
                 
                 // Clean up custom allocated strings that were updated
                 // while the dialog was showing. Note that the strings

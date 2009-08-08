@@ -1,17 +1,15 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Identifies one of the standard buttons that 
     /// can be displayed via TaskDialog.
     /// </summary>
     [Flags]
-    public enum TaskDialogStandardButton
+    public enum TaskDialogStandardButtons
     {
         /// <summary>
         /// No buttons on the dialog.

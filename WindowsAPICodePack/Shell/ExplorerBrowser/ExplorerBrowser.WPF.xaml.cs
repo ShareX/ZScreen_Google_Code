@@ -14,9 +14,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
 using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Controls;
 using System.Windows.Threading;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Presentation
+
+namespace Microsoft.WindowsAPICodePack.Controls.WindowsPresentationFoundation
 {
     /// <summary>
     /// Interaction logic for ExplorerBrowser.xaml
@@ -26,7 +28,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Presentation
         /// <summary>
         /// The underlying WinForms control
         /// </summary>
-        public Microsoft.WindowsAPICodePack.Shell.ExplorerBrowser ExplorerBrowserControl
+        public Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser ExplorerBrowserControl
         {
             get;
             set;
@@ -48,7 +50,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Presentation
             InitializeComponent( );
 
             // the ExplorerBrowser WinForms control
-            ExplorerBrowserControl = new Microsoft.WindowsAPICodePack.Shell.ExplorerBrowser( );
+            ExplorerBrowserControl = new Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser( );
 
             // back the dependency collection properties with instances
             SelectedItems = selectedItems = new ObservableCollection<ShellObject>();

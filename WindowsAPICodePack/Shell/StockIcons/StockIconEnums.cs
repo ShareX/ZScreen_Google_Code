@@ -164,6 +164,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         ///  Icon for a SVCD media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Svcd")]
         MediaSvcd = 56,
         /// <summary>
         ///  Icon for a folder containing other items.
@@ -204,10 +205,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         ///  Icon for CD-RW media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDRW")]
         MediaCDRW = 66,
         /// <summary>
         ///  Icon for a CD-R media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDR")]
         MediaCDR = 67,
         /// <summary>
         ///  Icon burning a CD.
@@ -300,10 +303,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         ///  Icon for BluRay media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         MediaBluRay = 90,
         /// <summary>
         ///  Icon for VCD media.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vcd")]
         MediaVcd = 91,
         /// <summary>
         ///  Icon for DVD+R media.
@@ -372,41 +377,50 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// HDDVD Drive (all types)
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVD")]
         DriveHDDVD = 132,        
 
         /// <summary>
         /// Icon for BluRay Drive (all types)
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         DriveBluRay = 133,           
 
         /// <summary>
         /// Icon for HDDVD-ROM Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVDROM")]
         MediaHDDVDROM = 134,     
 
         /// <summary>
         /// Icon for HDDVD-R Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVDR")]
         MediaHDDVDR = 135,        
 
         /// <summary>
         /// Icon for HDDVD-RAM Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "HDDVDRAM")]
         MediaHDDVDRAM = 136,     
 
         /// <summary>
         /// Icon for BluRay ROM Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ROM")]
         MediaBluRayROM = 137,        
 
         /// <summary>
         /// Icon for BluRay R Media
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         MediaBluRayR = 138,          
 
         /// <summary>
         /// Icon for BluRay RE Media (Rewriable and RAM)
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Blu")]
         MediaBluRayRE = 139, 
 
         /// <summary>

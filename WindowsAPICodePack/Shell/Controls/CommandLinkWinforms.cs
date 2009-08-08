@@ -4,14 +4,16 @@ using System;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls.WindowsForms
 {
     /// <summary>
     /// Implements a CommandLink button that can be used in 
     /// WinForms user interfaces.
     /// </summary>
-    public class CommandLinkWinForms : Button
+    public class CommandLink : Button
     {
         /// <summary>
         /// Gets a System.Windows.Forms.CreateParams on the base class when 
@@ -34,8 +36,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Creates a new instance of this class.
         /// </summary>
-        public CommandLinkWinForms()
+        public CommandLink()
         {
+            // Throw PlatformNotSupportedException if the user is not running Vista or beyond
+            CoreHelpers.ThrowIfNotVista();
+
             FlatStyle = FlatStyle.System;
         }
 
@@ -135,5 +140,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         #endregion
+
+        /// <summary>
+        /// Indicates whether this feature is supported on the current platform.
+        /// </summary>
+        public static bool IsPlatformSupported
+        {
+            get
+            {
+                // We need Windows Vista onwards ...
+                return CoreHelpers.RunningOnVista;
+            }
+        }
     }
 }

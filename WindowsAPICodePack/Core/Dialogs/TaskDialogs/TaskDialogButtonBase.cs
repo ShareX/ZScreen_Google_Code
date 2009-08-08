@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     // ContentProperty allows us to specify the text 
     // of the button as the child text of
@@ -75,7 +75,8 @@ namespace Microsoft.WindowsAPICodePack
         private bool enabled = true;
         /// <summary>
         /// Gets or sets a value that determines whether the
-        /// button is enabled.
+        /// button is enabled. The enabled state can cannot be changed
+        /// before the dialog is shown.
         /// </summary>
         public bool Enabled
         {

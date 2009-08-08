@@ -1,30 +1,404 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
-using System.Drawing;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 using System.Threading;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
-    /// Represents the main class for adding and removing tabbed thumbnails on the Taskbar
-    /// for child windows and controls.
+    /// Represents a tabbed thumbnail on the taskbar for a given window or a control.
     /// </summary>
-    public class TabbedThumbnail
+    public class TabbedThumbnail : IDisposable
     {
-        /// <summary>
-        /// Internal dictionary to keep track of the user's window handle and its 
-        /// corresponding thumbnail preview objects.
-        /// </summary>
-        private IDictionary<IntPtr, TabbedThumbnailPreview> tabbedThumbnailList;
-        private IDictionary<UIElement, TabbedThumbnailPreview> tabbedThumbnailListWPF; // list for WPF controls
+        #region Internal members
 
-        #region Public Events
+        internal IntPtr WindowHandle
+        {
+            get;
+            set;
+        }
+
+        internal IntPtr ParentWindowHandle
+        {
+            get;
+            set;
+        }
+
+        internal UIElement WindowsControl
+        {
+            get;
+            set;
+        }
+
+        internal Window WindowsControlParentWindow
+        {
+            get;
+            set;
+        }
+
+        private TaskbarWindow taskbarWindow;
+        internal TaskbarWindow TaskbarWindow
+        {
+            get { return taskbarWindow; }
+            set
+            {
+                taskbarWindow = value;
+
+                // If we have a TaskbarWindow assigned, set it's icon
+                if (taskbarWindow != null && taskbarWindow.TabbedThumbnailProxyWindow != null)
+                    TaskbarWindow.TabbedThumbnailProxyWindow.Icon = Icon;
+            }
+        }
+
+        private bool addedToTaskbar;
+        internal bool AddedToTaskbar
+        {
+            get
+            {
+                return addedToTaskbar;
+            }
+            set
+            {
+                addedToTaskbar = value;
+
+                // The user has updated the clipping region, so invalidate our existing preview
+                if (TaskbarWindowManager.Instance != null && ClippingRectangle != Rectangle.Empty)
+                    TaskbarWindowManager.Instance.InvalidatePreview(this.TaskbarWindow);
+            }
+        }
+
+        internal bool RemovedFromTaskbar
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new TabbedThumbnail with the given window handle of the parent and
+        /// a child control/window's handle (e.g. TabPage or Panel)
+        /// </summary>
+        /// <param name="parentWindowHandle">Window handle of the parent window. 
+        /// This window has to be a top-level window and the handle cannot be null or IntPtr.Zero</param>
+        /// <param name="windowHandle">Window handle of the child control or window for which a tabbed 
+        /// thumbnail needs to be displayed</param>
+        public TabbedThumbnail(IntPtr parentWindowHandle, IntPtr windowHandle)
+        {
+            if (parentWindowHandle == IntPtr.Zero)
+                throw new ArgumentException("Parent window handle cannot be zero.", "parentWindowHandle");
+            if (windowHandle == IntPtr.Zero)
+                throw new ArgumentException("Child control's window handle cannot be zero.", "windowHandle");
+
+            WindowHandle = windowHandle;
+            ParentWindowHandle = parentWindowHandle;
+        }
+
+        /// <summary>
+        /// Creates a new TabbedThumbnail with the given window handle of the parent and
+        /// a child control (e.g. TabPage or Panel)
+        /// </summary>
+        /// <param name="parentWindowHandle">Window handle of the parent window. 
+        /// This window has to be a top-level window and the handle cannot be null or IntPtr.Zero</param>
+        /// <param name="control">Child control for which a tabbed thumbnail needs to be displayed</param>
+        /// <remarks>This method can also be called when using a WindowsFormHost control in a WPF application.
+        ///  Call this method with the main WPF Window's handle, and windowsFormHost.Child control.</remarks>
+        public TabbedThumbnail(IntPtr parentWindowHandle, Control control)
+        {
+            if (parentWindowHandle == IntPtr.Zero)
+                throw new ArgumentException("Parent window handle cannot be zero.", "parentWindowHandle");
+            if (control == null)
+                throw new ArgumentNullException("control");
+
+            WindowHandle = control.Handle;
+            ParentWindowHandle = parentWindowHandle;
+        }
+
+        /// <summary>
+        /// Creates a new TabbedThumbnail with the given window handle of the parent and
+        /// a WPF child Window. For WindowsFormHost control, use TabbedThumbnail(IntPtr, Control) overload and pass
+        /// the WindowsFormHost.Child as the second parameter.
+        /// </summary>
+        /// <param name="parentWindow">Parent window for the UIElement control. 
+        /// This window has to be a top-level window and the handle cannot be null</param>
+        /// <param name="windowsControl">WPF Control (UIElement) for which a tabbed thumbnail needs to be displayed</param>
+        /// <param name="peekOffset">Offset point used for displaying the peek bitmap. This setting is
+        /// recomended for hidden WPF controls as it is difficult to calculate their offset.</param>
+        public TabbedThumbnail(Window parentWindow, UIElement windowsControl, Vector peekOffset)
+        {
+            if (windowsControl == null)
+                throw new ArgumentNullException("control");
+            if (parentWindow == null)
+                throw new ArgumentNullException("parentWindow");
+
+            WindowHandle = IntPtr.Zero;
+            WindowsControl = windowsControl;
+            WindowsControlParentWindow = parentWindow;
+            ParentWindowHandle = (new WindowInteropHelper(parentWindow)).Handle;
+            PeekOffset = peekOffset;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// This event is raised when the Title property changes.
+        /// </summary>
+        public event EventHandler TitleChanged;
+
+        /// <summary>
+        /// This event is raised when the Tooltip property changes.
+        /// </summary>
+        public event EventHandler TooltipChanged;
+
+        private string title;
+        /// <summary>
+        /// Title for the window shown as the taskbar thumbnail.
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                if (value != title)
+                {
+                    title = value;
+
+                    if (TitleChanged != null)
+                        TitleChanged(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        private string tooltip;
+        /// <summary>
+        /// Tooltip to be shown for this thumbnail on the taskbar. 
+        /// By default this is full title of the window shown on the taskbar.
+        /// </summary>
+        public string Tooltip
+        {
+            get { return tooltip; }
+            set
+            {
+                if (value != tooltip)
+                {
+                    tooltip = value;
+
+                    if (TooltipChanged != null)
+                        TooltipChanged(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        internal Icon Icon
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Sets the window icon for this thumbnail preview
+        /// </summary>
+        /// <param name="icon">System.Drawing.Icon for the window/control associated with this preview</param>
+        public void SetWindowIcon(Icon icon)
+        {
+            Icon = icon;
+
+            // If we have a TaskbarWindow assigned, set it's icon
+            if (TaskbarWindow != null && TaskbarWindow.TabbedThumbnailProxyWindow != null)
+                TaskbarWindow.TabbedThumbnailProxyWindow.Icon = Icon;
+        }
+
+        /// <summary>
+        /// Sets the window icon for this thumbnail preview
+        /// </summary>
+        /// <param name="hIcon">Icon handle (hIcon) for the window/control associated with this preview</param>
+        /// <remarks>This method will not release the icon handle. It is the caller's responsibility to release the icon handle.</remarks>
+        public void SetWindowIcon(IntPtr hIcon)
+        {
+            if (hIcon != IntPtr.Zero)
+                Icon = System.Drawing.Icon.FromHandle(hIcon);
+            else
+                Icon = null;
+
+            // If we have a TaskbarWindow assigned, set it's icon
+            if (TaskbarWindow != null && TaskbarWindow.TabbedThumbnailProxyWindow != null)
+                TaskbarWindow.TabbedThumbnailProxyWindow.Icon = Icon;
+        }
+
+        private Rectangle clippingRectangle;
+        /// <summary>
+        /// Specifies that only a portion of the window's client area
+        /// should be used in the window's thumbnail.
+        /// </summary>
+        public Rectangle ClippingRectangle
+        {
+            get { return clippingRectangle; }
+            set
+            {
+                clippingRectangle = value;
+
+                // The user has updated the clipping region, so invalidate our existing preview
+                if (TaskbarWindowManager.Instance != null)
+                    TaskbarWindowManager.Instance.InvalidatePreview(this.TaskbarWindow);
+            }
+        }
+
+        internal IntPtr Bitmap
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Override the thumbnail and peek bitmap. 
+        /// By providing this bitmap manually, Thumbnail Window manager will provide the 
+        /// Desktop Window Manager (DWM) this bitmap instead of rendering one automatically.
+        /// Use this property to update the bitmap whenever the control is updated and the user
+        /// needs to be shown a new thumbnail on the taskbar preview (or aero peek).
+        /// </summary>
+        /// <param name="bitmap">The image to use.</param>
+        /// <remarks>
+        /// If the bitmap doesn't have the right dimensions, the DWM may scale it or not 
+        /// render certain areas as appropriate - it is the user's responsibility
+        /// to render a bitmap with the proper dimensions.
+        /// </remarks>
+        public void SetImage(Bitmap bitmap)
+        {
+            if (bitmap != null)
+                SetImage(bitmap.GetHbitmap());
+            else
+                Bitmap = IntPtr.Zero;
+        }
+
+        /// <summary>
+        /// Override the thumbnail and peek bitmap. 
+        /// By providing this bitmap manually, Thumbnail Window manager will provide the 
+        /// Desktop Window Manager (DWM) this bitmap instead of rendering one automatically.
+        /// Use this property to update the bitmap whenever the control is updated and the user
+        /// needs to be shown a new thumbnail on the taskbar preview (or aero peek).
+        /// </summary>
+        /// <param name="bitmapSource">The image to use.</param>
+        /// <remarks>
+        /// If the bitmap doesn't have the right dimensions, the DWM may scale it or not 
+        /// render certain areas as appropriate - it is the user's responsibility
+        /// to render a bitmap with the proper dimensions.
+        /// </remarks>
+        public void SetImage(BitmapSource bitmapSource)
+        {
+            if (bitmapSource == null)
+            {
+                Bitmap = IntPtr.Zero;
+                return;
+            }
+
+            int width = bitmapSource.PixelWidth;
+            int height = bitmapSource.PixelHeight;
+            int stride = width * ((bitmapSource.Format.BitsPerPixel + 7) / 8);
+
+            byte[] bits = new byte[height * stride];
+
+            bitmapSource.CopyPixels(bits, stride, 0);
+
+            IntPtr ptr = Marshal.AllocHGlobal(bits.Length);
+            System.Runtime.InteropServices.Marshal.Copy(bits, 0, ptr, bits.Length);
+
+            Bitmap bmp = new Bitmap(
+                        width,
+                        height,
+                        stride,
+                        System.Drawing.Imaging.PixelFormat.Format32bppPArgb,
+                        ptr);
+   
+            SetImage(bmp.GetHbitmap());
+        }
+
+
+        /// <summary>
+        /// Override the thumbnail and peek bitmap. 
+        /// By providing this bitmap manually, Thumbnail Window manager will provide the 
+        /// Desktop Window Manager (DWM) this bitmap instead of rendering one automatically.
+        /// Use this property to update the bitmap whenever the control is updated and the user
+        /// needs to be shown a new thumbnail on the taskbar preview (or aero peek).
+        /// </summary>
+        /// <param name="hBitmap">The image to use.</param>
+        /// <remarks>
+        /// If the bitmap doesn't have the right dimensions, the DWM may scale it or not 
+        /// render certain areas as appropriate - it is the user's responsibility
+        /// to render a bitmap with the proper dimensions.
+        /// </remarks>
+        internal void SetImage(IntPtr hBitmap)
+        {
+            // Before we set the bitmap, dispose the old bitmap
+            if (Bitmap != IntPtr.Zero)
+                ShellNativeMethods.DeleteObject(Bitmap);
+            
+            // Set the new bitmap
+            Bitmap = hBitmap;
+
+            // Let DWM know to invalidate its cached thumbnail/preview and ask us for a new one (i.e. the one
+            // user just updated)
+            if (TaskbarWindowManager.Instance != null)
+                TaskbarWindowManager.Instance.InvalidatePreview(TaskbarWindow);
+        }
+
+        /// <summary>
+        /// Specifies whether a standard window frame will be displayed
+        /// around the bitmap.  If the bitmap represents a top-level window,
+        /// you would probably set this flag to <b>true</b>.  If the bitmap
+        /// represents a child window (or a frameless window), you would
+        /// probably set this flag to <b>false</b>.
+        /// </summary>
+        public bool DisplayFrameAroundBitmap
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Invalidate any existing thumbnail preview. Calling this method
+        /// will force DWM to request a new bitmap next time user previews the thumbnails
+        /// or requests Aero peek preview.
+        /// </summary>
+        public void InvalidatePreview()
+        {
+            // invalidate the thumbnail bitmap
+            if (TaskbarWindowManager.Instance != null)
+            {
+                TaskbarWindowManager.Instance.InvalidatePreview(TaskbarWindow);
+                SetImage(IntPtr.Zero);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the offset used for displaying the peek bitmap. This setting is
+        /// recomended for hidden WPF controls as it is difficult to calculate their offset.
+        /// </summary>
+        public Vector? PeekOffset
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Events
+
 
         /// <summary>
         /// The event that occurs when a tab is closed on the taskbar thumbnail preview.
@@ -49,407 +423,131 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// <summary>
         /// The event that occurs when a thumbnail or peek bitmap is requested by the user.
         /// </summary>
-        public event EventHandler<TabbedThumbnailEventArgs> TabbedThumbnailBitmapRequested;
+        public event EventHandler<TabbedThumbnailBitmapRequestedEventArgs> TabbedThumbnailBitmapRequested;
 
-        #endregion
 
-        /// <summary>
-        /// Internal constructor that creates a new dictionary for keeping track of the window handles
-        /// and their corresponding thumbnail preview objects.
-        /// </summary>
-        internal TabbedThumbnail()
-        {
-            tabbedThumbnailList = new Dictionary<IntPtr, TabbedThumbnailPreview>();
-            tabbedThumbnailListWPF = new Dictionary<UIElement, TabbedThumbnailPreview>();
-
-            // Register for standard events from the window manager
-            TaskbarWindowManager.Instance.TabbedThumbnailClosed += new EventHandler<TabbedThumbnailEventArgs>(windowManager_TabbedThumbnailClosed);
-            TaskbarWindowManager.Instance.TabbedThumbnailActivated += new EventHandler<TabbedThumbnailEventArgs>(windowManager_TabbedThumbnailActivated);
-            TaskbarWindowManager.Instance.TabbedThumbnailMaximized += new EventHandler<TabbedThumbnailEventArgs>(windowManager_TabbedThumbnailMaximized);
-            TaskbarWindowManager.Instance.TabbedThumbnailMinimized += new EventHandler<TabbedThumbnailEventArgs>(windowManager_TabbedThumbnailMinimized);
-            TaskbarWindowManager.Instance.TabbedThumbnailBitmapRequested += new EventHandler<TabbedThumbnailEventArgs>(windowManager_TabbedThumbnailBitmapRequested);
-        }
-
-        /// <summary>
-        /// Adds a new tabbed thumbnail to the taskbar.
-        /// </summary>
-        /// <param name="preview">Thumbnail preview for a specific window handle or control. The preview
-        /// object can be initialized with specific properties for the title, bitmap, and tooltip.</param>
-        /// <exception cref="System.ArgumentException">If the tabbed thumbnail has already been added</exception>
-        public void AddThumbnailPreview(TabbedThumbnailPreview preview)
-        {
-            if (preview.WindowHandle == IntPtr.Zero) // it's most likely a UI Element
-            {
-                if (tabbedThumbnailListWPF.ContainsKey(preview.WpfControl))
-                    throw new ArgumentException("This preview has already been added");
-            }
-            else
-            {
-                // Regular control with a valid handle
-                if (tabbedThumbnailList.ContainsKey(preview.WindowHandle))
-                    throw new ArgumentException("This preview has already been added");
-            }
-
-            TaskbarWindowManager.Instance.AddTabbedThumbnail(preview);
-
-            // Add the preview and window manager to our cache
-
-            // Probably a UIElement control
-            if (preview.WindowHandle == IntPtr.Zero)
-                tabbedThumbnailListWPF.Add(preview.WpfControl, preview);
-            else
-                tabbedThumbnailList.Add(preview.WindowHandle, preview);
-
-            InvalidateThumbnails();
-        }
-
-        #region Internal Event Handlers
-
-        /// <summary>
-        /// Event handler to recieve the event from the window manager and then forward it to the user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void windowManager_TabbedThumbnailBitmapRequested(object sender, TabbedThumbnailEventArgs e)
-        {
-            // Foward the event to the user
-            if (TabbedThumbnailBitmapRequested != null)
-                TabbedThumbnailBitmapRequested(this, e);
-        }
-
-        /// <summary>
-        /// Event handler to recieve the event from the window manager and then forward it to the user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void windowManager_TabbedThumbnailMinimized(object sender, TabbedThumbnailEventArgs e)
-        {
-            if (TabbedThumbnailMinimized != null)
-                TabbedThumbnailMinimized(this, e);
-            else
-            {
-                // No one is listening to these events.
-                // Forward the message to the main window
-                TabbedThumbnailPreview preview = null;
-                
-                if (e.WindowHandle != IntPtr.Zero)
-                    preview = GetThumbnailPreview(e.WindowHandle);
-                else if (e.WPFControl != null)
-                    preview = GetThumbnailPreview(e.WPFControl);
-
-                if (preview != null)
-                    CoreNativeMethods.SendMessage(preview.ParentWindowHandle, TabbedThumbnailNativeMethods.WM_SYSCOMMAND, new IntPtr(TabbedThumbnailNativeMethods.SC_MINIMIZE), IntPtr.Zero);
-            }
-        }
-
-        /// <summary>
-        /// Event handler to recieve the event from the window manager and then forward it to the user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void windowManager_TabbedThumbnailMaximized(object sender, TabbedThumbnailEventArgs e)
+        internal void OnTabbedThumbnailMaximized()
         {
             if (TabbedThumbnailMaximized != null)
-                TabbedThumbnailMaximized(this, e);
+                TabbedThumbnailMaximized(this, GetTabbedThumbnailEventArgs());
             else
             {
                 // No one is listening to these events.
                 // Forward the message to the main window
-                TabbedThumbnailPreview preview = null;
-
-                if (e.WindowHandle != IntPtr.Zero)
-                    preview = GetThumbnailPreview(e.WindowHandle);
-                else if (e.WPFControl != null)
-                    preview = GetThumbnailPreview(e.WPFControl);
-
-                if (preview != null)
-                    CoreNativeMethods.SendMessage(preview.ParentWindowHandle, TabbedThumbnailNativeMethods.WM_SYSCOMMAND, new IntPtr(TabbedThumbnailNativeMethods.SC_MAXIMIZE), IntPtr.Zero);
+                CoreNativeMethods.SendMessage(ParentWindowHandle, TabbedThumbnailNativeMethods.WM_SYSCOMMAND, new IntPtr(TabbedThumbnailNativeMethods.SC_MAXIMIZE), IntPtr.Zero);
             }
         }
 
-        /// <summary>
-        /// Event handler to recieve the event from the window manager and then forward it to the user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void windowManager_TabbedThumbnailActivated(object sender, TabbedThumbnailEventArgs e)
+        internal void OnTabbedThumbnailMinimized()
         {
-            if (TabbedThumbnailActivated != null)
-                TabbedThumbnailActivated(this, e);
+            if (TabbedThumbnailMinimized != null)
+                TabbedThumbnailMinimized(this, GetTabbedThumbnailEventArgs());
             else
             {
                 // No one is listening to these events.
                 // Forward the message to the main window
-                TabbedThumbnailPreview preview = null;
-
-                if (e.WindowHandle != IntPtr.Zero)
-                    preview = GetThumbnailPreview(e.WindowHandle);
-                else if (e.WPFControl != null)
-                    preview = GetThumbnailPreview(e.WPFControl);
-
-                if (preview != null)
-                    CoreNativeMethods.SendMessage(
-                        preview.ParentWindowHandle, 
-                        TabbedThumbnailNativeMethods.WM_ACTIVATEAPP,   
-                        new IntPtr(1),
-                        new IntPtr(Thread.CurrentThread.GetHashCode()));
+                CoreNativeMethods.SendMessage(ParentWindowHandle, TabbedThumbnailNativeMethods.WM_SYSCOMMAND, new IntPtr(TabbedThumbnailNativeMethods.SC_MINIMIZE), IntPtr.Zero);
             }
+
         }
 
-        /// <summary>
-        /// Event handler to recieve the event from the window manager and then forward it to the user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void windowManager_TabbedThumbnailClosed(object sender, TabbedThumbnailEventArgs e)
+        internal void OnTabbedThumbnailClosed()
         {
-            // Forward the event to the user
             if (TabbedThumbnailClosed != null)
-                TabbedThumbnailClosed(this, e);
+                TabbedThumbnailClosed(this, GetTabbedThumbnailEventArgs());
             else
             {
                 // No one is listening to these events.
                 // Forward the message to the main window
-                TabbedThumbnailPreview preview = null;
-
-                if (e.WindowHandle != IntPtr.Zero)
-                    preview = GetThumbnailPreview(e.WindowHandle);
-                else if (e.WPFControl != null)
-                    preview = GetThumbnailPreview(e.WPFControl);
-
-                if (preview != null)
-                    CoreNativeMethods.SendMessage(preview.ParentWindowHandle, TabbedThumbnailNativeMethods.WM_NCDESTROY, IntPtr.Zero, IntPtr.Zero);
+                CoreNativeMethods.SendMessage(ParentWindowHandle, TabbedThumbnailNativeMethods.WM_NCDESTROY, IntPtr.Zero, IntPtr.Zero);
             }
 
             // Remove it from the internal list as well as the taskbar
-            if (e.WindowHandle != IntPtr.Zero)
-                RemoveThumbnailPreview(e.WindowHandle);
+            TaskbarManager.Instance.TabbedThumbnail.RemoveThumbnailPreview(this);
+        }
+
+        internal void OnTabbedThumbnailActivated()
+        {
+            if (TabbedThumbnailActivated != null)
+                TabbedThumbnailActivated(this, GetTabbedThumbnailEventArgs());
             else
-                RemoveThumbnailPreview(e.WPFControl);
+            {
+                // No one is listening to these events.
+                // Forward the message to the main window
+                CoreNativeMethods.SendMessage(ParentWindowHandle, TabbedThumbnailNativeMethods.WM_ACTIVATEAPP, new IntPtr(1), new IntPtr(Thread.CurrentThread.GetHashCode()));
+            }
+        }
+
+        internal void OnTabbedThumbnailBitmapRequested()
+        {
+            TabbedThumbnailBitmapRequestedEventArgs eventArgs = null;
+
+            if (this.WindowHandle != IntPtr.Zero)
+                eventArgs = new TabbedThumbnailBitmapRequestedEventArgs(this.WindowHandle, this);
+            else if (this.WindowsControl != null)
+                eventArgs = new TabbedThumbnailBitmapRequestedEventArgs(this.WindowsControl, this);
+
+            if (TabbedThumbnailBitmapRequested != null)
+                TabbedThumbnailBitmapRequested(this, eventArgs);
+        }
+
+        private TabbedThumbnailEventArgs GetTabbedThumbnailEventArgs()
+        {
+            TabbedThumbnailEventArgs eventArgs = null;
+
+            if (this.WindowHandle != IntPtr.Zero)
+                eventArgs = new TabbedThumbnailEventArgs(this.WindowHandle, this);
+            else if (this.WindowsControl != null)
+                eventArgs = new TabbedThumbnailEventArgs(this.WindowsControl, this);
+                
+            return eventArgs;
         }
 
         #endregion
 
-        /// <summary>
-        /// Gets the TabbedThumbnailPreview object associated with the given window handle
-        /// </summary>
-        /// <param name="windowHandle">Window handle for the control/window</param>
-        /// <returns>TabbedThumbnailPreview associated with the given window handle</returns>
-        public TabbedThumbnailPreview GetThumbnailPreview(IntPtr windowHandle)
-        {
-            if (windowHandle == IntPtr.Zero)
-                throw new ArgumentException("Window handle is invalid", "windowHandle");
 
-            if (tabbedThumbnailList.ContainsKey(windowHandle))
-                return tabbedThumbnailList[windowHandle];
-            else
-                return null;
+        #region IDisposable Members
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ~TabbedThumbnail()
+        {
+            Dispose(false);
         }
 
         /// <summary>
-        /// Gets the TabbedThumbnailPreview object associated with the given control
+        /// Release the native objects.
         /// </summary>
-        /// <param name="control">Specific control for which the preview object is requested</param>
-        /// <returns>TabbedThumbnailPreview associated with the given control</returns>
-        public TabbedThumbnailPreview GetThumbnailPreview(Control control)
+        public void Dispose()
         {
-            if (control == null)
-                throw new ArgumentNullException("control");
-
-            return GetThumbnailPreview(control.Handle);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
-        /// Gets the TabbedThumbnailPreview object associated with the given WPF Window
+        /// Release the native objects.
         /// </summary>
-        /// <param name="wpfControl">WPF Control (UIElement) for which the preview object is requested</param>
-        /// <returns>TabbedThumbnailPreview associated with the given WPF Window</returns>
-        public TabbedThumbnailPreview GetThumbnailPreview(UIElement wpfControl)
+        /// <param name="disposing"></param>
+        public void Dispose(bool disposing)
         {
-            if (wpfControl == null)
-                throw new ArgumentNullException("wpfControl");
-
-            if (tabbedThumbnailListWPF.ContainsKey(wpfControl))
-                return tabbedThumbnailListWPF[wpfControl];
-            else
-                return null;
-
-        }
-
-        /// <summary>
-        /// Remove the tabbed thumbnail from the taskbar.
-        /// </summary>
-        /// <param name="preview">TabbedThumbnailPreview associated with the control/window that 
-        /// is to be removed from the taskbar</param>
-        public void RemoveThumbnailPreview(TabbedThumbnailPreview preview)
-        {
-            if (preview == null)
-                throw new ArgumentNullException("preview");
-
-            if (tabbedThumbnailList.ContainsKey(preview.WindowHandle))
-                RemoveThumbnailPreview(preview.WindowHandle);
-            else if (tabbedThumbnailListWPF.ContainsKey(preview.WpfControl))
-                RemoveThumbnailPreview(preview.WpfControl);
-        }
-
-        /// <summary>
-        /// Remove the tabbed thumbnail from the taskbar.
-        /// </summary>
-        /// <param name="windowHandle">TabbedThumbnailPreview associated with the window handle that 
-        /// is to be removed from the taskbar</param>
-        public void RemoveThumbnailPreview(IntPtr windowHandle)
-        {
-            if (tabbedThumbnailList.ContainsKey(windowHandle))
+            if (disposing)
             {
-                TaskbarWindowManager.Instance.UnregisterTab(tabbedThumbnailList[windowHandle].TaskbarWindow);
+                taskbarWindow = null;
 
-                tabbedThumbnailList.Remove(windowHandle);
+                if (Icon != null)
+                    Icon.Dispose();
+                Icon = null;
+
+                title = null;
+                tooltip = null;
+                WindowsControl = null;
             }
-            else
-                throw new ArgumentException("The given control has not been added to the taskbar.");
+
+            if (Bitmap != IntPtr.Zero)
+                ShellNativeMethods.DeleteObject(Bitmap);
         }
 
-        /// <summary>
-        /// Remove the tabbed thumbnail from the taskbar.
-        /// </summary>
-        /// <param name="control">TabbedThumbnailPreview associated with the control that 
-        /// is to be removed from the taskbar</param>
-        public void RemoveThumbnailPreview(Control control)
-        {
-            if (control == null)
-                throw new ArgumentNullException("control");
-
-            IntPtr handle = control.Handle;
-
-            RemoveThumbnailPreview(handle);
-        }
-
-        /// <summary>
-        /// Remove the tabbed thumbnail from the taskbar.
-        /// </summary>
-        /// <param name="wpfControl">TabbedThumbnailPreview associated with the WPF Control (UIElement) that 
-        /// is to be removed from the taskbar</param>
-        public void RemoveThumbnailPreview(UIElement wpfControl)
-        {
-            if (wpfControl == null)
-                throw new ArgumentNullException("wpfControl");
-
-            if (tabbedThumbnailListWPF.ContainsKey(wpfControl))
-            {
-                TaskbarWindowManager.Instance.UnregisterTab(tabbedThumbnailListWPF[wpfControl].TaskbarWindow);
-
-                tabbedThumbnailListWPF.Remove(wpfControl);
-            }
-            else
-                throw new ArgumentException("The given control has not been added to the taskbar.");
-        }
-
-        /// <summary>
-        /// Sets the given tabbed thumbnail preview object as being active on the taskbar tabbed thumbnails list.
-        /// Call this method to keep the application and the taskbar in sync as to which window/control
-        /// is currently active (or selected, in the case of tabbed application).
-        /// </summary>
-        /// <param name="preview">TabbedThumbnailPreview for the specific control/indow that is currently active in the application</param>
-        /// <exception cref="System.ArgumentException">If the control/window is not yet added to the tabbed thumbnails list</exception>
-        public void SetActiveTab(TabbedThumbnailPreview preview)
-        {
-            if (preview.WindowHandle != IntPtr.Zero)
-            {
-                if (tabbedThumbnailList.ContainsKey(preview.WindowHandle))
-                    TaskbarWindowManager.Instance.SetActiveTab(tabbedThumbnailList[preview.WindowHandle].TaskbarWindow);
-                else
-                    throw new ArgumentException("The given preview has not been added to the taskbar.");
-            }
-            else if (preview.WpfControl != null)
-            {
-                if (tabbedThumbnailListWPF.ContainsKey(preview.WpfControl))
-                    TaskbarWindowManager.Instance.SetActiveTab(tabbedThumbnailListWPF[preview.WpfControl].TaskbarWindow);
-                else
-                    throw new ArgumentException("The given preview has not been added to the taskbar.");
-            }
-        }
-
-        /// <summary>
-        /// Sets the given window handle as being active on the taskbar tabbed thumbnails list.
-        /// Call this method to keep the application and the taskbar in sync as to which window/control
-        /// is currently active (or selected, in the case of tabbed application).
-        /// </summary>
-        /// <param name="windowHandle">Window handle for the control/window that is currently active in the application</param>
-        /// <exception cref="System.ArgumentException">If the control/window is not yet added to the tabbed thumbnails list</exception>
-        public void SetActiveTab(IntPtr windowHandle)
-        {
-            if (tabbedThumbnailList.ContainsKey(windowHandle))
-                TaskbarWindowManager.Instance.SetActiveTab(tabbedThumbnailList[windowHandle].TaskbarWindow);
-            else
-                throw new ArgumentException("The given control has not been added to the taskbar.");
-        }
-
-        /// <summary>
-        /// Sets the given Control/Form window as being active on the taskbar tabbed thumbnails list.
-        /// Call this method to keep the application and the taskbar in sync as to which window/control
-        /// is currently active (or selected, in the case of tabbed application).
-        /// </summary>
-        /// <param name="control">Control/Form that is currently active in the application</param>
-        /// <exception cref="System.ArgumentException">If the control/window is not yet added to the tabbed thumbnails list</exception>
-        public void SetActiveTab(Control control)
-        {
-            if (control == null)
-                throw new ArgumentNullException("control");
-
-            SetActiveTab(control.Handle);
-        }
-
-        /// <summary>
-        /// Sets the given WPF window as being active on the taskbar tabbed thumbnails list.
-        /// Call this method to keep the application and the taskbar in sync as to which window/control
-        /// is currently active (or selected, in the case of tabbed application).
-        /// </summary>
-        /// <param name="wpfControl">WPF control that is currently active in the application</param>
-        /// <exception cref="System.ArgumentException">If the control/window is not yet added to the tabbed thumbnails list</exception>
-        public void SetActiveTab(UIElement wpfControl)
-        {
-            if (wpfControl == null)
-                throw new ArgumentNullException("wpfControl");
-
-            if (tabbedThumbnailListWPF.ContainsKey(wpfControl))
-                TaskbarWindowManager.Instance.SetActiveTab(tabbedThumbnailListWPF[wpfControl].TaskbarWindow);
-            else
-                throw new ArgumentException("The given control has not been added to the taskbar.");
-        }
-
-        /// <summary>
-        /// Invalidates all the tabbed thumbnails. This will force the Desktop Window Manager
-        /// to not use the cached thumbnail or preview or aero peek and request a new one next time.
-        /// </summary>
-        public void InvalidateThumbnails()
-        {
-            // Invalidate all the previews currently in our cache.
-            // This will ensure we get updated bitmaps next time
-            tabbedThumbnailList.Values.ToList<TabbedThumbnailPreview>().ForEach(thumbPreview => TaskbarWindowManager.Instance.InvalidatePreview(tabbedThumbnailList[thumbPreview.WindowHandle].TaskbarWindow));
-            tabbedThumbnailListWPF.Values.ToList<TabbedThumbnailPreview>().ForEach(thumbPreview => TaskbarWindowManager.Instance.InvalidatePreview(tabbedThumbnailListWPF[thumbPreview.WpfControl].TaskbarWindow));
-
-            tabbedThumbnailList.Values.ToList<TabbedThumbnailPreview>().ForEach(thumbPreview => thumbPreview.SetImage(IntPtr.Zero));
-            tabbedThumbnailListWPF.Values.ToList<TabbedThumbnailPreview>().ForEach(thumbPreview => thumbPreview.SetImage(IntPtr.Zero));
-
-        }
-
-        /// <summary>
-        /// Selects a portion of a window's client area to display as that window's thumbnail in the taskbar.
-        /// </summary>
-        /// <param name="windowHandle">The handle to a window represented in the taskbar. This has to be a top-level window.</param>
-        /// <param name="clippingRect">Rectangle structure that specifies a selection within the window's client area,
-        /// relative to the upper-left corner of that client area.</param>
-        /// <remarks>To clear a clip that is already in place and return to the default display of the thumbnail, set
-        /// the clippingRect parameter to an empty rectangle (Rectangle.Empty)</remarks>
-        public void SetThumbnailClip(IntPtr windowHandle, Rectangle clippingRect)
-        {
-            CoreNativeMethods.RECT rect = new CoreNativeMethods.RECT();
-            rect.left = clippingRect.Left;
-            rect.top = clippingRect.Top;
-            rect.right = clippingRect.Right;
-            rect.bottom = clippingRect.Bottom;
-
-            Taskbar.TaskbarList.SetThumbnailClip(windowHandle, ref rect);
-        }
+        #endregion
     }
 }

@@ -32,6 +32,8 @@ using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack;
 using ZSS.TextUploadersLib;
 using ZSS.Properties;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace ZScreenLib
 {
@@ -100,6 +102,9 @@ namespace ZScreenLib
             Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         public static bool MultipleInstance;
         private static string mProductName = Application.ProductName;
+
+        public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
+        public static TaskbarManager zWindowsTaskbar;
 
         public static void SetRootFolder(string dp)
         {

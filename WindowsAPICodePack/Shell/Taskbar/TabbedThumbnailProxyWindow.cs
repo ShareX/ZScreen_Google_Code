@@ -5,16 +5,19 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows;
+using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
-    internal sealed class TabbedThumbnailProxyWindow : Form
+    internal sealed class TabbedThumbnailProxyWindow : Form, IDisposable
     {
         private IntPtr proxyingFor;
 
-        internal TabbedThumbnailProxyWindow(TabbedThumbnailPreview preview)
+        internal TabbedThumbnailProxyWindow(TabbedThumbnail preview)
         {
-            TabbedThumbnailPreview = preview;
+            TabbedThumbnail = preview;
 
             if (preview.WindowHandle != IntPtr.Zero)
             {
@@ -32,17 +35,17 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
                 if(!string.IsNullOrEmpty(Text) && string.IsNullOrEmpty(preview.Title))
                     preview.Title = Text;
             }
-            else if (preview.WpfControl != null)
+            else if (preview.WindowsControl != null)
             {
                 proxyingFor = IntPtr.Zero;
-                WPFControl = preview.WpfControl;
+                WindowsControl = preview.WindowsControl;
                 Size = new System.Drawing.Size(1, 1);
                 // Since we can't get the text/caption for a UIElement, not setting this.Text here.
 
             }
         }
 
-        internal TabbedThumbnailPreview TabbedThumbnailPreview
+        internal TabbedThumbnail TabbedThumbnail
         {
             get;
             private set;
@@ -53,7 +56,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             get { return proxyingFor; }
         }
 
-        internal UIElement WPFControl
+        internal UIElement WindowsControl
         {
             get;
             private set;
@@ -68,10 +71,58 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         {
             bool handled = false;
 
-            handled = TaskbarWindowManager.Instance.DispatchMessage(ref m, this.TabbedThumbnailPreview.TaskbarWindow);
+            if(this.TabbedThumbnail != null)
+                handled = TaskbarWindowManager.Instance.DispatchMessage(ref m, this.TabbedThumbnail.TaskbarWindow);
 
-            if (!handled)
+            // If it's a WM_Destroy message, then also forward it to the base class (our native window)
+            if ((m.Msg == (int)TabbedThumbnailNativeMethods.WM_DESTROY) ||
+               (m.Msg == (int)TabbedThumbnailNativeMethods.WM_NCDESTROY) ||
+               ((m.Msg == (int)TabbedThumbnailNativeMethods.WM_SYSCOMMAND) && (((int)m.WParam) == TabbedThumbnailNativeMethods.SC_CLOSE)))
+            {
+                base.WndProc(ref m);
+            }
+            else if (!handled)
                 base.WndProc(ref m);
         }
+
+        #region IDisposable Members
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ~TabbedThumbnailProxyWindow()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Release the native objects.
+        /// </summary>
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+
+            base.Dispose();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Dispose managed resources
+                if (TabbedThumbnail != null)
+                    TabbedThumbnail.Dispose();
+
+                TabbedThumbnail = null;
+
+                // 
+                WindowsControl = null;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }
