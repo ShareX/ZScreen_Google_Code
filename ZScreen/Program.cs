@@ -112,6 +112,11 @@ namespace ZScreenLib
             RootAppFolder = dp;
         }
 
+        public static string GetProductName()
+        {
+            return mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
+        }
+
         private static string GetDefaultImagesDir()
         {
             string saveFolderPath = string.Empty;

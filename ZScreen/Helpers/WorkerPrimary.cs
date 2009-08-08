@@ -307,6 +307,7 @@ namespace ZScreenLib
                     int progress = (int)e.UserState;
                     UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgress(progress);
+                    mZScreen.Text = string.Format("{0}% - {1}", progress, Program.GetProductName());
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
@@ -321,6 +322,7 @@ namespace ZScreenLib
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MainAppTask task = (MainAppTask)e.Result;
+            mZScreen.Text = Program.GetProductName();
 
             try
             {
