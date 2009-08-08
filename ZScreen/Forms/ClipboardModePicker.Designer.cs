@@ -30,19 +30,32 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tmrClose = new System.Windows.Forms.Timer(this.components);
+            this.pbPreview = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // tmrClose
             // 
             this.tmrClose.Enabled = true;
-            this.tmrClose.Interval = 60000;
+            this.tmrClose.Interval = 30000;
             this.tmrClose.Tick += new System.EventHandler(this.tmrClose_Tick);
+            // 
+            // pbPreview
+            // 
+            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPreview.Location = new System.Drawing.Point(174, 16);
+            this.pbPreview.Name = "pbPreview";
+            this.pbPreview.Size = new System.Drawing.Size(250, 200);
+            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbPreview.TabIndex = 0;
+            this.pbPreview.TabStop = false;
             // 
             // ClipboardModePicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 217);
+            this.ClientSize = new System.Drawing.Size(599, 453);
+            this.Controls.Add(this.pbPreview);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -50,6 +63,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clipboard Copy Mode";
             this.Shown += new System.EventHandler(this.ClipboardModePicker_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -57,6 +71,7 @@
         #endregion
 
         private System.Windows.Forms.Timer tmrClose;
+        private System.Windows.Forms.PictureBox pbPreview;
 
     }
 }
