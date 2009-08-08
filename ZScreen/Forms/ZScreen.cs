@@ -3846,8 +3846,27 @@ namespace ZScreenLib
 
         private void btnWebPageUploadImage_Click(object sender, EventArgs e)
         {
-            btnWebPageCaptureImage.Enabled = false;
+            string url = txtWebPageURL.Text;
 
+            if (!string.IsNullOrEmpty(url))
+            {
+                url = url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) ? url : "http://" + url;
+                btnWebPageCaptureImage.Enabled = false;
+
+                IECapt capture;
+                if (Program.conf.WebPageUseCustomSize)
+                {
+                    capture = new IECapt(Program.conf.WebPageWidth, Program.conf.WebPageHeight, 1);
+                }
+                else
+                {
+                    capture = new IECapt(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, 1);
+                }
+                capture.ImageCaptured += new IECapt.ImageEventHandler(capture_ImageCaptured);
+                capture.CapturePage(txtWebPageURL.Text);
+            }
+
+            /*
             WebPageCapture webPageCapture;
             if (Program.conf.WebPageUseCustomSize)
             {
@@ -3857,12 +3876,13 @@ namespace ZScreenLib
             {
                 webPageCapture = new WebPageCapture();
             }
-
+            
             webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
             webPageCapture.DownloadPage(txtWebPageURL.Text);
+            */
         }
 
-        private void webPageCapture_DownloadCompleted(Image img)
+        private void capture_ImageCaptured(Image img)
         {
             pbWebPageImage.Image = img;
             btnWebPageCaptureImage.Enabled = true;
