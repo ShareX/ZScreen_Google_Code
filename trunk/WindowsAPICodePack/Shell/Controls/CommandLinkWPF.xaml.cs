@@ -10,19 +10,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls.WindowsPresentationFoundation
 {
     /// <summary>
     /// Implements a CommandLink button that can be used in WPF user interfaces.
     /// </summary>
-    public partial class CommandLinkWPF : UserControl, INotifyPropertyChanged
+    public partial class CommandLink : UserControl, INotifyPropertyChanged
     {
         /// <summary>
         /// Creates a new instance of this class.
         /// </summary>
-        public CommandLinkWPF()
+        public CommandLink()
         {
+            // Throw PlatformNotSupportedException if the user is not running Vista or beyond
+            CoreHelpers.ThrowIfNotVista();
+
             this.DataContext = this;
             InitializeComponent();
             this.button.Click += new RoutedEventHandler(button_Click);
@@ -54,7 +58,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         private string link;
 
         /// <summary>
-        /// 
+        /// Specifies the main instruction text
         /// </summary>
         public string Link
         {
@@ -125,5 +129,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        /// <summary>
+        /// Indicates whether this feature is supported on the current platform.
+        /// </summary>
+        public static bool IsPlatformSupported
+        {
+            get
+            {
+                // We need Windows Vista onwards ...
+                return CoreHelpers.RunningOnVista;
+            }
+        }
     }
 }

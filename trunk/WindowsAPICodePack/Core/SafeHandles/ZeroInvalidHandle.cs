@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace MS.WindowsAPICodePack.Internal
 {
     /// <summary>
     /// Base class for Safe handles with Null IntPtr as invalid
@@ -13,7 +13,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ZeroInvalidHandle()
+        protected ZeroInvalidHandle()
             : base(IntPtr.Zero, true)
         {
         }

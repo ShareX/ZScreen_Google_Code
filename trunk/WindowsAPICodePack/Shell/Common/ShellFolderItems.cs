@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
@@ -15,17 +16,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         private IEnumIDList nativeEnumIdList = null;
         private ShellObject currentItem = null;
-        IShellFolder nativeShellFolder;
+        ShellContainer nativeShellFolder;
 
         #endregion
 
         #region Internal Constructor
 
-        internal ShellFolderItems(IShellFolder nativeShellFolder)
+        internal ShellFolderItems(ShellContainer nativeShellFolder)
         {
             this.nativeShellFolder = nativeShellFolder;
 
-            HRESULT hr = nativeShellFolder.EnumObjects(
+            HRESULT hr = nativeShellFolder.NativeShellFolder.EnumObjects(
                 IntPtr.Zero,
                 ShellNativeMethods.SHCONT.SHCONTF_FOLDERS | ShellNativeMethods.SHCONT.SHCONTF_NONFOLDERS,
                 out nativeEnumIdList);

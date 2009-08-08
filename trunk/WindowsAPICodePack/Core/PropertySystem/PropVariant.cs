@@ -1,13 +1,15 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack
+namespace MS.WindowsAPICodePack.Internal
 {
     using System;
     using System.Runtime.InteropServices;
     using System.Diagnostics;
+    using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
     /// <summary>
     /// Represents the OLE struct PROPVARIANT.
+    /// This class is intended for internal use only.
     /// </summary>
     /// <remarks>
     /// Must call Clear when finished to avoid memory leaks. If you get the value of
@@ -64,6 +66,161 @@ namespace Microsoft.WindowsAPICodePack
         #region public Methods
 
         /// <summary>
+        /// Creates a PropVariant from an object
+        /// </summary>
+        /// <param name="value">The object containing the data.</param>
+        /// <returns>An initialized PropVariant</returns>
+        public static PropVariant FromObject( object value )
+        {
+            PropVariant propVar = new PropVariant( );
+
+            if( value == null )
+            {
+                propVar.Clear( );
+                return propVar;
+            }
+
+            if( value.GetType( ) == typeof( string ) )
+            {
+                //Strings require special consideration, because they cannot be empty as well
+                if( String.IsNullOrEmpty( value as string ) || String.IsNullOrEmpty( (value as string).Trim( ) ) )
+                    throw new ArgumentException( "String argument cannot be null or empty." );
+                propVar.SetString( value as string );
+            }
+            else if( value.GetType( ) == typeof( bool? ) )
+            {
+                propVar.SetBool( (value as bool?).Value );
+            }
+            else if( value.GetType( ) == typeof( bool ) )
+            {
+                propVar.SetBool( (bool)value );
+            }
+            else if( value.GetType( ) == typeof( byte? ) )
+            {
+                propVar.SetByte( (value as byte?).Value );
+            }
+            else if( value.GetType( ) == typeof( byte ) )
+            {
+                propVar.SetByte( (byte)value );
+            }
+            else if( value.GetType( ) == typeof( sbyte? ) )
+            {
+                propVar.SetSByte( (value as sbyte?).Value );
+            }
+            else if( value.GetType( ) == typeof( sbyte ) )
+            {
+                propVar.SetSByte( (sbyte)value );
+            }
+            else if( value.GetType( ) == typeof( short? ) )
+            {
+                propVar.SetShort( (value as short?).Value );
+            }
+            else if( value.GetType( ) == typeof( short ) )
+            {
+                propVar.SetShort( (short)value );
+            }
+            else if( value.GetType( ) == typeof( ushort? ) )
+            {
+                propVar.SetUShort( (value as ushort?).Value );
+            }
+            else if( value.GetType( ) == typeof( ushort ) )
+            {
+                propVar.SetUShort( (ushort)value );
+            }
+            else if( value.GetType( ) == typeof( int? ) )
+            {
+                propVar.SetInt( (value as int?).Value );
+            }
+            else if( value.GetType( ) == typeof( int ) )
+            {
+                propVar.SetInt( (int)value );
+            }
+            else if( value.GetType( ) == typeof( uint? ) )
+            {
+                propVar.SetUInt( (value as uint?).Value );
+            }
+            else if( value.GetType( ) == typeof( uint ) )
+            {
+                propVar.SetUInt( (uint)value );
+            }
+            else if( value.GetType( ) == typeof( long? ) )
+            {
+                propVar.SetLong( (value as long?).Value );
+            }
+            else if( value.GetType( ) == typeof( long ) )
+            {
+                propVar.SetLong( (long)value );
+            }
+            else if( value.GetType( ) == typeof( ulong? ) )
+            {
+                propVar.SetULong( (value as ulong?).Value );
+            }
+            else if( value.GetType( ) == typeof( ulong ) )
+            {
+                propVar.SetULong( (ulong)value );
+            }
+            else if( value.GetType( ) == typeof( double? ) )
+            {
+                propVar.SetDouble( (value as double?).Value );
+            }
+            else if( value.GetType( ) == typeof( double ) )
+            {
+                propVar.SetDouble( (double)value );
+            }
+            else if( value.GetType( ) == typeof( DateTime? ) )
+            {
+                propVar.SetDateTime( (value as DateTime?).Value );
+            }
+            else if( value.GetType( ) == typeof( DateTime ) )
+            {
+                propVar.SetDateTime( (DateTime)value );
+            }
+            else if( value.GetType( ) == typeof( string[ ] ) )
+            {
+                propVar.SetStringVector( (value as string[ ]) );
+            }
+            else if( value.GetType( ) == typeof( short[ ] ) )
+            {
+                propVar.SetShortVector( (value as short[ ]) );
+            }
+            else if( value.GetType( ) == typeof( ushort[ ] ) )
+            {
+                propVar.SetUShortVector( (value as ushort[ ]) );
+            }
+            else if( value.GetType( ) == typeof( int[ ] ) )
+            {
+                propVar.SetIntVector( (value as int[ ]) );
+            }
+            else if( value.GetType( ) == typeof( uint[ ] ) )
+            {
+                propVar.SetUIntVector( (value as uint[ ]) );
+            }
+            else if( value.GetType( ) == typeof( long[ ] ) )
+            {
+                propVar.SetLongVector( (value as long[ ]) );
+            }
+            else if( value.GetType( ) == typeof( ulong[ ] ) )
+            {
+                propVar.SetULongVector( (value as ulong[ ]) );
+            }
+            else if( value.GetType( ) == typeof( DateTime[ ] ) )
+            {
+                propVar.SetDateTimeVector( (value as DateTime[ ]) );
+            }
+            else if( value.GetType( ) == typeof( bool[ ] ) )
+            {
+                propVar.SetBoolVector( (value as bool[ ]) );
+            }
+            else
+            {
+                throw new ArgumentException( "This Value type is not supported." );
+            }
+
+            return propVar;
+        }
+
+
+        /// <summary>
         /// Called to clear the PropVariant's referenced and local memory.
         /// </summary>
         /// <remarks>
@@ -87,7 +244,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a string value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetString(string value)
         {
             valueType = (ushort)VarEnum.VT_LPWSTR;
@@ -97,7 +254,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a string vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetStringVector(string[] value)
         {
             PropVariant propVar;
@@ -109,7 +266,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a bool vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetBoolVector(bool[] value)
         {
             PropVariant propVar;
@@ -120,7 +277,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a short vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetShortVector(short[] value)
         {
             PropVariant propVar;
@@ -131,7 +288,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a short vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetUShortVector(ushort[] value)
         {
             PropVariant propVar;
@@ -142,7 +299,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set an int vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetIntVector(int[] value)
         {
             PropVariant propVar;
@@ -153,7 +310,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set an uint vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetUIntVector(uint[] value)
         {
             PropVariant propVar;
@@ -164,7 +321,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a long vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetLongVector(long[] value)
         {
             PropVariant propVar;
@@ -175,7 +332,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a ulong vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetULongVector(ulong[] value)
         {
             PropVariant propVar;
@@ -186,7 +343,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a double vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetDoubleVector(double[] value)
         {
             PropVariant propVar;
@@ -197,7 +354,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a DateTime vector
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetDateTimeVector(DateTime[] value)
         {
             System.Runtime.InteropServices.ComTypes.FILETIME[] fileTimeArr = 
@@ -214,9 +371,9 @@ namespace Microsoft.WindowsAPICodePack
         }
 
         /// <summary>
-        /// Set an IUknown value
+        /// Set an IUnknown value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetIUnknown(object value)
         {
             valueType = (ushort)VarEnum.VT_UNKNOWN;
@@ -226,7 +383,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a bool value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetBool(bool value)
         {
             valueType = (ushort)VarEnum.VT_BOOL;
@@ -236,7 +393,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a DateTime value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetDateTime(DateTime value)
         {
             valueType = (ushort)VarEnum.VT_FILETIME;
@@ -250,7 +407,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a safe array value
         /// </summary>
-        /// <param name="array"></param>
+        /// <param name="array">The new value to set.</param>
         public void SetSafeArray(Array array)
         {
             const ushort vtUnknown = 13;
@@ -278,7 +435,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a byte value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetByte(byte value)
         {
             valueType = (ushort)VarEnum.VT_UI1;
@@ -288,7 +445,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a sbyte value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetSByte(sbyte value)
         {
             valueType = (ushort)VarEnum.VT_I1;
@@ -298,7 +455,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a short value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetShort(short value)
         {
             valueType = (ushort)VarEnum.VT_I2;
@@ -308,7 +465,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set an unsigned short value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetUShort(ushort value)
         {
             valueType = (ushort)VarEnum.VT_UI2;
@@ -318,7 +475,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set an int value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetInt(int value)
         {
             valueType = (ushort)VarEnum.VT_I4;
@@ -328,7 +485,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set an unsigned int value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetUInt(uint value)
         {
             valueType = (ushort)VarEnum.VT_UI4;
@@ -338,7 +495,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a decimal  value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetDecimal(decimal value)
         {
             valueType = (ushort)VarEnum.VT_DECIMAL;
@@ -349,7 +506,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a long
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetLong(long value)
         {
             long[] valueArr = new long[] { value };
@@ -363,7 +520,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a ulong
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetULong(ulong value)
         {
             PropVariant propVar;
@@ -376,7 +533,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Set a double
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new value to set.</param>
         public void SetDouble(double value)
         {
             double[] valueArr = new double[] { value };
@@ -418,16 +575,6 @@ namespace Microsoft.WindowsAPICodePack
         {
             get { return (VarEnum)valueType; }
             set { valueType = (ushort) value; }
-        }
-
-        /// <summary>
-        /// Gets a value of a specified Type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T GetValue<T>()
-        {
-            return (T)Value;
         }
 
         /// <summary>
@@ -632,16 +779,21 @@ namespace Microsoft.WindowsAPICodePack
             {
                 pBlobData = new IntPtr(valueDataExt);
             }
-            else if (IntPtr.Size == 8)
+            else if( IntPtr.Size == 8 )
             {
                 // In this case, we need to derive a pointer at offset 12,
                 // because the size of the blob is represented as a 4-byte int
                 // but the pointer is immediately after that.
-                pBlobData = new IntPtr(BitConverter.ToInt64(GetDataBytes(), 0));
+                pBlobData = new IntPtr(
+                    (Int64)(BitConverter.ToInt32( GetDataBytes( ), sizeof( int ) )) +
+                    (Int64)(BitConverter.ToInt32( GetDataBytes( ), 2 * sizeof( int ) ) << 32) );
             }
             else
-                throw new NotSupportedException();
+            {
+                throw new NotSupportedException( );
+            }
             Marshal.Copy(pBlobData, blobData, 0, lVal);
+ 
             return blobData;
         }
 

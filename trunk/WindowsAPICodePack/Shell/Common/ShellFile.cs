@@ -8,10 +8,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
     /// <summary>
     /// A file in the Shell Namespace
     /// </summary>
-    public class ShellFile : ShellEntity, IDisposable
+    public class ShellFile : ShellObjectNode, IDisposable
     {
         #region Internal Constructor
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         internal ShellFile(string path)
         {
             // Get the absolute path
@@ -21,8 +22,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
             if (!File.Exists(absPath))
                 throw new FileNotFoundException(string.Format("The given path does not exist ({0})", path));
 
-            base.ParsingName = absPath;
-            this.Path = absPath;
+            ParsingName = absPath;
+            Path = absPath;
         }
 
         internal ShellFile(IShellItem2 shellItem)
@@ -37,6 +38,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Constructs a new ShellFile object given a file path
         /// </summary>
         /// <param name="path">The file or folder path</param>
+        /// <returns>ShellFile object created using given file path.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "We are not currently handling globalization or localization")]
         static public ShellFile FromFilePath(string path)
         {
@@ -79,9 +81,32 @@ namespace Microsoft.WindowsAPICodePack.Shell
         
         #region IDisposable Members
 
+        /// <summary>
+        /// Release the native objects.
+        /// </summary>
         void IDisposable.Dispose()
         {
-            internalPath = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ~ShellFile()
+        {
+            Dispose(false);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Release the native and managed objects
+        /// </summary>
+        /// <param name="disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
+        new void Dispose(bool disposing)
+        {
+            if(disposing)
+                internalPath = null;
 
             base.Dispose();
         }

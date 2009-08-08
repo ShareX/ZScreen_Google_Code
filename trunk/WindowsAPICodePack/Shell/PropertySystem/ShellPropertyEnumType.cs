@@ -1,11 +1,12 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
-    /// A possible enumeration value for a property
+    /// Defines the enumeration values for a property type.
     /// </summary>
     public class ShellPropertyEnumType
     {

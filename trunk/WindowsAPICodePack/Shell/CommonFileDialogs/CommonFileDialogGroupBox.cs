@@ -4,8 +4,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Markup;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     /// Represents a group box control for the Common File Dialog.

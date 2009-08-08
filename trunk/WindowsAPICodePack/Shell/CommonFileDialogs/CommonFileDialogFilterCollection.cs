@@ -2,8 +2,9 @@
 
 using System.Collections.ObjectModel;
 using Microsoft.WindowsAPICodePack;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Provides a strongly typed collection for file dialog filters.

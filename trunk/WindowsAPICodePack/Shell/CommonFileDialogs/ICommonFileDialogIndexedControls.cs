@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     /// Specifies a property, event and method that indexed controls need

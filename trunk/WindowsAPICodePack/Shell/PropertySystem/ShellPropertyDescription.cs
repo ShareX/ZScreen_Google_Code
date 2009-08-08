@@ -5,11 +5,13 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Collections.Generic;
+using Microsoft.WindowsAPICodePack.Shell;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
-    /// Provides information that describe a property.
+    /// Defines the shell property description information for a property.
     /// </summary>
     public class ShellPropertyDescription : IDisposable
     {
@@ -39,8 +41,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Public Properties
 
         /// <summary>
-        /// Gets the case-sensitive name by which 
-        /// a property is known to the system, regardless of its localized name.
+        /// Gets the case-sensitive name of a property as it is known to the system, 
+        /// regardless of its localized name.
         /// </summary>
         public string CanonicalName
         {
@@ -56,7 +58,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// The property key identifying the underlying property
+        /// Gets the property key identifying the underlying property.
         /// </summary>
         public PropertyKey PropertyKey
         {
@@ -78,9 +80,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     IntPtr dispNameptr = IntPtr.Zero;
 
                     HRESULT hr = NativePropertyDescription.GetDisplayName(out dispNameptr);
-                    
+
                     if (CoreErrorHelper.Succeeded((int)hr) && dispNameptr != IntPtr.Zero)
+                    {
                         displayName = Marshal.PtrToStringUni(dispNameptr);
+
+                        // Free the string
+                        Marshal.FreeCoTaskMem(dispNameptr);
+                    }
                 }
 
                 return displayName;
@@ -100,9 +107,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     IntPtr ptr = IntPtr.Zero;
 
                     HRESULT hr = NativePropertyDescription.GetEditInvitation(out ptr);
-                    
+
                     if (CoreErrorHelper.Succeeded((int)hr) && ptr != IntPtr.Zero)
+                    {
                         editInvitation = Marshal.PtrToStringUni(ptr);
+                        // Free the string
+                        Marshal.FreeCoTaskMem(ptr);
+                    }
                 }
 
                 return editInvitation;
@@ -110,7 +121,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// The VarEnum OLE Type for value of this property
+        /// Gets the VarEnum OLE type for this property.
         /// </summary>
         public VarEnum VarEnumType
         {
@@ -131,8 +142,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// The System (.Net) Type for a value of this property
-        /// A null return means the type is empty
+        /// Gets the .NET system type for a value of this property, or
+        /// null if the value is empty.
         /// </summary>
         public Type ValueType
         {
@@ -167,7 +178,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// The default UI column width for this property
+        /// Gets the default user interface (UI) column width for this property.
         /// </summary>
         public uint DefaultColumWidth
         {
@@ -210,7 +221,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Enumerate the possible values for this property
+        /// Gets a list of the possible values for this property.
         /// </summary>
         public ReadOnlyCollection<ShellPropertyEnumType> PropertyEnumTypes
         {
@@ -276,8 +287,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// of predicate conditions (for example, equals, less than, and 
         /// contains) that are shown for this property.
         /// </summary>
-        /// <remarks>For more information, see the conditionType attribute 
-        /// of the typeInfo element in the property's .propdesc file.</remarks>
+        /// <remarks>For more information, see the <c>conditionType</c> attribute 
+        /// of the <c>typeInfo</c> element in the property's .propdesc file.</remarks>
         public PropertyConditionType ConditionType
         {
             get
@@ -308,8 +319,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// (for example, equals, less than, and contains) that are shown 
         /// for this property.
         /// </summary>
-        /// <remarks>For more information, see the conditionType attribute of the 
-        /// typeInfo element in the property's .propdesc file.</remarks>
+        /// <remarks>For more information, see the <c>conditionType</c> attribute of the 
+        /// <c>typeInfo</c> element in the property's .propdesc file.</remarks>
         public PropertyConditionOperation ConditionOperation
         {
             get
@@ -337,7 +348,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Gets the method used when a view is grouped by this property.
         /// </summary>
         /// <remarks>The information retrieved by this method comes from 
-        /// the groupingRange attribute of the typeInfo element in the 
+        /// the <c>groupingRange</c> attribute of the <c>typeInfo</c> element in the 
         /// property's .propdesc file.</remarks>
         public PropertyGroupingRange GroupingRange
         {
@@ -363,7 +374,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// which indicate the particular wordings of sort offerings.
         /// </summary>
         /// <remarks>The settings retrieved by this method are set 
-        /// through the sortDescription attribute of the labelInfo 
+        /// through the <c>sortDescription</c> attribute of the <c>labelInfo</c> 
         /// element in the property's .propdesc file.</remarks>
         public PropertySortDescription SortDescription
         {
@@ -387,11 +398,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Gets the localized display string that describes the current sort order.
         /// </summary>
-        /// <param name="descending">Sort order. TRUE if the return value should 
-        /// reference the string "Z on top"; FALSE to reference the string "A on top".</param>
-        /// <returns>The sort description for this property</returns>
+        /// <param name="descending">Indicates the sort order should 
+        /// reference the string "Z on top"; otherwise, the sort order should reference the string "A on top".</param>
+        /// <returns>The sort description for this property.</returns>
         /// <remarks>The string retrieved by this method is determined by flags set in the 
-        /// sortDescription attribute of the labelInfo element in the property's .propdesc file.</remarks>
+        /// <c>sortDescription</c> attribute of the <c>labelInfo</c> element in the property's .propdesc file.</remarks>
         public string GetSortDescriptionLabel(bool descending)
         {
             IntPtr ptr = IntPtr.Zero;
@@ -401,9 +412,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
             {
                 HRESULT hr = NativePropertyDescription.GetSortDescriptionLabel(descending, out ptr);
 
-                if (CoreErrorHelper.Succeeded((int)hr))
+                if (CoreErrorHelper.Succeeded((int)hr) && ptr != IntPtr.Zero)
                 {
                     label = Marshal.PtrToStringUni(ptr);
+                    // Free the string
+                    Marshal.FreeCoTaskMem(ptr);
                 }
             }
 
@@ -450,7 +463,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Indicates whether the native property description is present on the system.
+        /// Gets a value that determines if the native property description is present on the system.
         /// </summary>
         public bool HasSystemDescription
         {
@@ -625,6 +638,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Release the native objects
         /// </summary>
+        /// <param name="disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
         public void Dispose(bool disposing)
         {
             if (nativePropertyDescription != null)

@@ -1,29 +1,20 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
-    /// Stores the result of displaying a dialog.
+    /// Specifies identifiers to indicate the return value of a CommonFileDialog dialog.
     /// </summary>
-    public class CommonFileDialogResult
+    public enum CommonFileDialogResult
     {
         /// <summary>
-        /// Creates a new instance of this class.
+        /// The dialog box return value is OK (usually sent from a button labeled OK or Save).
         /// </summary>
-        /// <param name="canceled">The starting value for the <see cref="Microsoft.WindowsAPICodePack.Shell.CommonFileDialogResult.Canceled"/> property.</param>
-        public CommonFileDialogResult(bool canceled) 
-        {
-            this.canceled = canceled;
-        }
+        OK = 1,
 
-        private bool canceled;
         /// <summary>
-        /// Gets a value that indicates if the end user canceled the dialog.
+        /// The dialog box return value is Cancel (usually sent from a button labeled Cancel).
         /// </summary>
-        public bool Canceled
-        {
-            get { return canceled; }
-        }
-
+        Cancel = 2,
     }
 }

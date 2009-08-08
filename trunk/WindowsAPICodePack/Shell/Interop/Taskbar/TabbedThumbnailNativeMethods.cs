@@ -4,8 +4,9 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     internal class TabbedThumbnailNativeMethods
     {
@@ -84,7 +85,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetWindowRect(IntPtr hwnd, ref Microsoft.WindowsAPICodePack.CoreNativeMethods.RECT rect);
+        internal static extern bool GetWindowRect(IntPtr hwnd, ref CoreNativeMethods.RECT rect);
 
         [DllImport("User32.dll", SetLastError = true)]
         internal static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
@@ -98,11 +99,11 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetClientRect(IntPtr hwnd, ref Microsoft.WindowsAPICodePack.CoreNativeMethods.RECT rect);
+        internal static extern bool GetClientRect(IntPtr hwnd, ref CoreNativeMethods.RECT rect);
 
         internal static bool GetClientSize(IntPtr hwnd, out System.Drawing.Size size)
         {
-            Microsoft.WindowsAPICodePack.CoreNativeMethods.RECT rect = new Microsoft.WindowsAPICodePack.CoreNativeMethods.RECT();
+            CoreNativeMethods.RECT rect = new CoreNativeMethods.RECT();
             if (!GetClientRect(hwnd, ref rect))
             {
                 size = new System.Drawing.Size(-1, -1);
@@ -183,14 +184,26 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// frame around the bitmap.</param>
         internal static void SetPeekBitmap(IntPtr hwnd, IntPtr bitmap, Point offset, bool displayFrame)
         {
-            var nativePoint = new Microsoft.WindowsAPICodePack.CoreNativeMethods.POINT(offset.X, offset.Y);
+            var nativePoint = new CoreNativeMethods.POINT(offset.X, offset.Y);
             int rc = DwmSetIconicLivePreviewBitmap(
                 hwnd,
                 bitmap,
                 ref nativePoint,
                 displayFrame ? DWM_SIT_DISPLAYFRAME : (uint)0);
+
             if (rc != 0)
-                throw Marshal.GetExceptionForHR(rc);
+            {
+                Exception e = Marshal.GetExceptionForHR(rc);
+
+                if (e is ArgumentException)
+                {
+                    // Ignore argument exception as it's not really recommended to be throwing
+                    // exception when rendering the peek bitmap. If it's some other kind of exception,
+                    // then throw it.
+                }
+                else
+                    throw e;
+            }
         }
 
         /// <summary>

@@ -2,8 +2,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
         internal static class PropVariantNativeMethods
         {
@@ -32,9 +33,6 @@ namespace Microsoft.WindowsAPICodePack
             [DllImport("OleAut32.dll", PreserveSig = false)] // returns hresult
             [return: MarshalAs(UnmanagedType.IUnknown)]
             internal extern static object SafeArrayGetElement(IntPtr psa, ref int rgIndices);
-
-            [DllImport("OleAut32.dll", PreserveSig = false)]
-            internal extern static void SafeArrayDestroy(IntPtr psa);
 
             [DllImport("propsys.dll", CharSet = CharSet.Unicode, SetLastError = true)]
             internal static extern int InitPropVariantFromPropVariantVectorElem([In] ref PropVariant propvarIn, uint iElem, [Out] out PropVariant ppropvar);

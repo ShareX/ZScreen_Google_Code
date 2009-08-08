@@ -5,13 +5,13 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Net
 {
     /// <summary>
     /// Represents a connection to a network.
     /// </summary>
     /// <remarks> A collection containing instances of this class is obtained by calling
-    /// the <see cref="P:Microsoft.WindowsAPICodePack.Network.Connections"/> property.</remarks>
+    /// the <see cref="P:Microsoft.WindowsAPICodePack.Net.Network.Connections"/> property.</remarks>
     public class NetworkConnection
     {
         #region Private Fields
@@ -24,15 +24,20 @@ namespace Microsoft.WindowsAPICodePack
         {
             this.networkConnection = networkConnection;
         }
+
         /// <summary>
         /// Retrieves an object that represents the network 
         /// associated with this connection.
         /// </summary>
-        /// <returns>A <see cref="Microsoft.WindowsAPICodePack.Network"/> object.</returns>
-        public Network GetNetwork()
+        /// <returns>A <see cref="Network"/> object.</returns>
+        public Network Network
         {
-            return new Network(networkConnection.GetNetwork());
+            get
+            {
+                return new Network(networkConnection.GetNetwork());
+            }
         }
+
         /// <summary>
         /// Gets the adapter identifier for this connection.
         /// </summary>
@@ -58,7 +63,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <summary>
         /// Gets a value that indicates the connectivity of this connection.
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.Connectivity"/> value.</value>
+        /// <value>A <see cref="Connectivity"/> value.</value>
         public Connectivity Connectivity
         {
             get
@@ -66,13 +71,14 @@ namespace Microsoft.WindowsAPICodePack
                 return networkConnection.GetConnectivity();
             }
         }
+
         /// <summary>
         /// Gets a value that indicates whether the network associated
         /// with this connection is 
         /// an Active Directory network and whether the machine
         /// has been authenticated by Active Directory.
         /// </summary>
-        /// <value>A <see cref="Microsoft.WindowsAPICodePack.DomainType"/> value.</value>
+        /// <value>A <see cref="DomainType"/> value.</value>
         public DomainType DomainType
         {
             get
@@ -92,6 +98,7 @@ namespace Microsoft.WindowsAPICodePack
                 return networkConnection.IsConnectedToInternet;
             }
         }
+
         /// <summary>
         /// Gets a value that indicates whether this connection has
         /// network connectivity.

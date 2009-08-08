@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     ///  Defines the text box controls in the Common File Dialog.
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     customizedDialog.SetEditBoxText( this.Id, value );
                 }
 
-                Text = value;
+                base.Text = value;
             }
 
         }

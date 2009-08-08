@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
-    internal class TaskbarWindow
+    internal class TaskbarWindow : IDisposable
     {
         internal TabbedThumbnailProxyWindow TabbedThumbnailProxyWindow
         {
@@ -39,8 +40,14 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             set;
         }
 
-        private TabbedThumbnailPreview tabbedThumbnailPreview = null;
-        internal TabbedThumbnailPreview TabbedThumbnailPreview
+        internal UIElement WindowsControl
+        {
+            get;
+            set;
+        }
+
+        private TabbedThumbnail tabbedThumbnailPreview = null;
+        internal TabbedThumbnail TabbedThumbnail
         {
             get { return tabbedThumbnailPreview; }
             set
@@ -55,8 +62,8 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             }
         }
 
-        private ThumbnailButton[] thumbnailButtons;
-        internal ThumbnailButton[] ThumbnailButtons
+        private ThumbnailToolbarButton[] thumbnailButtons;
+        internal ThumbnailToolbarButton[] ThumbnailButtons
         {
             get { return thumbnailButtons; }
             set
@@ -64,11 +71,11 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
                 thumbnailButtons = value;
 
                 // Set the window handle on the buttons (for future updates)
-                Array.ForEach(thumbnailButtons, new Action<ThumbnailButton>(UpdateHandle));
+                Array.ForEach(thumbnailButtons, new Action<ThumbnailToolbarButton>(UpdateHandle));
             }
         }
 
-        private void UpdateHandle(ThumbnailButton button)
+        private void UpdateHandle(ThumbnailToolbarButton button)
         {
             button.WindowHandle = WindowToTellTaskbarAbout;
             button.AddedToTaskbar = false;
@@ -100,7 +107,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             }
         }
 
-        internal TaskbarWindow(IntPtr userWindowHandle, params ThumbnailButton[] buttons)
+        internal TaskbarWindow(IntPtr userWindowHandle, params ThumbnailToolbarButton[] buttons)
         {
             if (userWindowHandle == IntPtr.Zero)
                 throw new ArgumentException("userWindowHandle");
@@ -119,18 +126,19 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             //
             this.ThumbnailButtons = buttons;
             UserWindowHandle = userWindowHandle;
+            WindowsControl = null;
         }
 
-        internal TaskbarWindow(System.Windows.UIElement wpfControl, params ThumbnailButton[] buttons)
+        internal TaskbarWindow(System.Windows.UIElement windowsControl, params ThumbnailToolbarButton[] buttons)
         {
-            if (wpfControl == null)
-                throw new ArgumentNullException("wpfControl");
+            if (windowsControl == null)
+                throw new ArgumentNullException("windowsControl");
 
             if (buttons == null || buttons.Length == 0)
                 throw new ArgumentException("buttons");
 
             // Create our proxy window
-            ThumbnailToolbarProxyWindow = new ThumbnailToolbarProxyWindow(wpfControl, buttons);
+            ThumbnailToolbarProxyWindow = new ThumbnailToolbarProxyWindow(windowsControl, buttons);
             ThumbnailToolbarProxyWindow.TaskbarWindow = this;
 
             // Set our current state
@@ -139,9 +147,10 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
             
             this.ThumbnailButtons = buttons;
             UserWindowHandle = IntPtr.Zero;
+            WindowsControl = windowsControl;
         }
 
-        internal TaskbarWindow(TabbedThumbnailPreview preview)
+        internal TaskbarWindow(TabbedThumbnail preview)
         {
             if (preview == null)
                 throw new ArgumentException("preview");
@@ -155,9 +164,54 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
 
             //
             UserWindowHandle = preview.WindowHandle;
-            TabbedThumbnailPreview = preview;
-            
+            WindowsControl = preview.WindowsControl; 
+            TabbedThumbnail = preview;
         }
 
+
+        #region IDisposable Members
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ~TaskbarWindow()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Release the native objects.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Dispose managed resources
+                if (tabbedThumbnailPreview != null)
+                    tabbedThumbnailPreview.Dispose();
+                tabbedThumbnailPreview = null;
+
+                if (ThumbnailToolbarProxyWindow != null)
+                    ThumbnailToolbarProxyWindow.Dispose();
+                ThumbnailToolbarProxyWindow = null;
+
+                if (TabbedThumbnailProxyWindow != null)
+                    TabbedThumbnailProxyWindow.Dispose();
+                TabbedThumbnailProxyWindow = null;
+
+                // Don't dispose the thumbnail buttons
+                // as they might be used in another window.
+                // Setting them to null will indicate we don't need use anymore.
+                thumbnailButtons = null;
+            }
+        }
+
+        #endregion
     }
 }

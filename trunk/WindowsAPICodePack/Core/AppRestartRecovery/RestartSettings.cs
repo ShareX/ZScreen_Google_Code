@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// Specifies the options for an application to be automatically
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAPICodePack
         /// Gets the set of conditions when the application 
         /// should not be restarted.
         /// </summary>
-        /// <value>A set of <see cref="Microsoft.WindowsAPICodePack.RestartRestrictions"/> values.</value>
+        /// <value>A set of <see cref="RestartRestrictions"/> values.</value>
         public RestartRestrictions Restrictions
         {
             get { return restrictions; }
@@ -58,6 +58,8 @@ namespace Microsoft.WindowsAPICodePack
         /// <returns>A <see cref="System.String"/> that displays 
         /// the command line arguments 
         /// and restrictions for restarting the application.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)",
+            Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
             return String.Format("command: {0} restrictions: {1}", command, restrictions.ToString());

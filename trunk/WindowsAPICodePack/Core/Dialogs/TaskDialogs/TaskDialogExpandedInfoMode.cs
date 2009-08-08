@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Specifies the options for expand/collapse sections in dialogs.

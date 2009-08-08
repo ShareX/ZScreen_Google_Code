@@ -1,6 +1,6 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls
 {
     internal static class ExplorerBrowserIIDGuid
     {
@@ -18,6 +18,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         internal const string IServiceProvider = "6d5140c1-7436-11ce-8034-00aa006009fa";
         internal const string IExplorerPaneVisibility = "e07010ec-bc17-44c0-97b0-46c7c95b9edc";
         internal const string IExplorerBrowserEvents = "361bbdc7-e6ee-4e13-be58-58e2240c810f";
+        internal const string IInputObject = "68284fAA-6A48-11D0-8c78-00C04fd918b4";
     }
 
     internal static class ExplorerBrowserViewPanes

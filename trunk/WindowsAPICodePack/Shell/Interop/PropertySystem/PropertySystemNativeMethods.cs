@@ -5,8 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.WindowsAPICodePack;
 using System.Runtime.InteropServices.ComTypes;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     internal static class PropertySystemNativeMethods
     {

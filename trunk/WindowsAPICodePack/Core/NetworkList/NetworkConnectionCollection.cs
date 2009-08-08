@@ -7,10 +7,10 @@ using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Net
 {
     /// <summary>
-    /// An enumerable collection of <see cref="Microsoft.WindowsAPICodePack.NetworkConnection"/> objects.
+    /// An enumerable collection of <see cref="NetworkConnection"/> objects.
     /// </summary>
     public class NetworkConnectionCollection : IEnumerable<NetworkConnection>
     {

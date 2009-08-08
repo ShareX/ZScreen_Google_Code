@@ -2,11 +2,13 @@
 
 using System;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
-    /// Writer that supports setting multiple properties for a given ShellObject.
+    /// Creates a property writer capable of setting multiple properties for a given ShellObject.
     /// </summary>
     public class ShellPropertyWriter : IDisposable
     {
@@ -69,184 +71,23 @@ namespace Microsoft.WindowsAPICodePack.Shell
             private set { parentShellObject = value; }
         }
 
-        #region Private Methods
-
         /// <summary>
-        /// Set the property value. 
-        /// At this point we're sure every 
-        /// property has a value, or for non Nullable types, it's not null
+        /// Writes the given property key and value.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        private PropVariant SetValue(object value)
-        {
-            PropVariant propVar = new PropVariant();
-
-            if (value == null)
-            {
-                propVar.Clear();
-                return propVar;
-            }
-
-            if (value.GetType() == typeof(string))
-            {
-                //Strings require special consideration, because they cannot be empty as well
-                if (String.IsNullOrEmpty(value as string) || String.IsNullOrEmpty((value as string).Trim()))
-                    throw new ArgumentException("String argument cannot be null or empty.");
-                propVar.SetString(value as string);
-            }
-            else if (value.GetType() == typeof(bool?))
-            {
-                propVar.SetBool((value as bool?).Value);
-            }
-            else if (value.GetType() == typeof(bool))
-            {
-                propVar.SetBool((bool)value);
-            }
-            else if (value.GetType() == typeof(byte?))
-            {
-                propVar.SetByte((value as byte?).Value);
-            }
-            else if (value.GetType() == typeof(byte))
-            {
-                propVar.SetByte((byte)value);
-            }
-            else if (value.GetType() == typeof(sbyte?))
-            {
-                propVar.SetSByte((value as sbyte?).Value);
-            }
-            else if (value.GetType() == typeof(sbyte))
-            {
-                propVar.SetSByte((sbyte)value);
-            }
-            else if (value.GetType() == typeof(short?))
-            {
-                propVar.SetShort((value as short?).Value);
-            }
-            else if (value.GetType() == typeof(short))
-            {
-                propVar.SetShort((short)value);
-            }
-            else if (value.GetType() == typeof(ushort?))
-            {
-                propVar.SetUShort((value as ushort?).Value);
-            }
-            else if (value.GetType() == typeof(ushort))
-            {
-                propVar.SetUShort((ushort)value);
-            }
-            else if (value.GetType() == typeof(int?))
-            {
-                propVar.SetInt((value as int?).Value);
-            }
-            else if (value.GetType() == typeof(int))
-            {
-                propVar.SetInt((int)value);
-            }
-            else if (value.GetType() == typeof(uint?))
-            {
-                propVar.SetUInt((value as uint?).Value);
-            }
-            else if (value.GetType() == typeof(uint))
-            {
-                propVar.SetUInt((uint)value);
-            }
-            else if (value.GetType() == typeof(long?))
-            {
-                propVar.SetLong((value as long?).Value);
-            }
-            else if (value.GetType() == typeof(long))
-            {
-                propVar.SetLong((long)value);
-            }
-            else if (value.GetType() == typeof(ulong?))
-            {
-                propVar.SetULong((value as ulong?).Value);
-            }
-            else if (value.GetType() == typeof(ulong))
-            {
-                propVar.SetULong((ulong)value);
-            }
-            else if (value.GetType() == typeof(double?))
-            {
-                propVar.SetDouble((value as double?).Value);
-            }
-            else if (value.GetType() == typeof(double))
-            {
-                propVar.SetDouble((double)value);
-            }
-            else if (value.GetType() == typeof(DateTime?))
-            {
-                propVar.SetDateTime((value as DateTime?).Value);
-            }
-            else if (value.GetType() == typeof(DateTime))
-            {
-                propVar.SetDateTime((DateTime)value);
-            }
-            else if (value.GetType() == typeof(string[]))
-            {
-                propVar.SetStringVector((value as string[]));
-            }
-            else if (value.GetType() == typeof(short[]))
-            {
-                propVar.SetShortVector((value as short[]));
-            }
-            else if (value.GetType() == typeof(ushort[]))
-            {
-                propVar.SetUShortVector((value as ushort[]));
-            }
-            else if (value.GetType() == typeof(int[]))
-            {
-                propVar.SetIntVector((value as int[]));
-            }
-            else if (value.GetType() == typeof(uint[]))
-            {
-                propVar.SetUIntVector((value as uint[]));
-            }
-            else if (value.GetType() == typeof(long[]))
-            {
-                propVar.SetLongVector((value as long[]));
-            }
-            else if (value.GetType() == typeof(ulong[]))
-            {
-                propVar.SetULongVector((value as ulong[]));
-            }
-            else if (value.GetType() == typeof(DateTime[]))
-            {
-                propVar.SetDateTimeVector((value as DateTime[]));
-            }
-            else if (value.GetType() == typeof(bool[]))
-            {
-                propVar.SetBoolVector((value as bool[]));
-            }
-            else
-            {
-                //Should not happen!
-                throw new NotSupportedException("This Value type is not supported");
-            }
-
-            return propVar;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Writes the given property (using a PropertyKey and value)
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="key">The property key.</param>
+        /// <param name="value">The value associated with the key.</param>
         public void WriteProperty(PropertyKey key, object value)
         {
             WriteProperty(key, value, true);
         }
 
         /// <summary>
-        /// Writes the given property (using a PropertyKey and value). Set allowTruncatedValue
-        /// parameter to true if the property allow truncation of the given value. Default is true.
+        /// Writes the given property key and value. To allow truncation of the given value, set allowTruncatedValue
+        /// to true.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="allowTruncatedValue"></param>
+        /// <param name="key">The property key.</param>
+        /// <param name="value">The value associated with the key.</param>
+        /// <param name="allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
         /// <exception cref="System.InvalidOperationException">If the writable property store is already 
         /// closed.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">If AllowTruncatedValue is set to false 
@@ -257,7 +98,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             if (writablePropStore == null)
                 throw new InvalidOperationException("Writeable store has been closed.");
 
-            PropVariant propVar = SetValue(value);
+            PropVariant propVar = PropVariant.FromObject(value);
             int result = writablePropStore.SetValue(ref key, ref propVar);
 
             if (!allowTruncatedValue && (result == InPlaceStringTruncated))
@@ -278,23 +119,23 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Writes the given property (using a canonical name and value)
+        /// Writes the specified property given the canonical name and a value.
         /// </summary>
-        /// <param name="canonicalName"></param>
-        /// <param name="value"></param>
+        /// <param name="canonicalName">The canonical name.</param>
+        /// <param name="value">The property value.</param>
         public void WriteProperty(string canonicalName, object value)
         {
             WriteProperty(canonicalName, value, true);
         }
 
         /// <summary>
-        /// Writes the given property (using a canonical name and value). Set allowTruncatedValue
-        /// parameter to true if the property allow truncation of the given value. Default is true.
+        /// Writes the specified property given the canonical name and a value. To allow truncation of the given value, set allowTruncatedValue
+        /// to true.
         /// </summary>
-        /// <param name="canonicalName"></param>
-        /// <param name="value"></param>
-        /// <param name="allowTruncatedValue"></param>
-        /// <exception cref="System.ArgumentException">If the given canonical name is not valid</exception>
+        /// <param name="canonicalName">The canonical name.</param>
+        /// <param name="value">The property value.</param>
+        /// <param name="allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
+        /// <exception cref="System.ArgumentException">If the given canonical name is not valid.</exception>
         public void WriteProperty(string canonicalName, object value, bool allowTruncatedValue)
         {
             // Get the PropertyKey using the canonicalName passed in
@@ -313,45 +154,45 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Writes the given property (using a IShellProperty and value)
+        /// Writes the specified property using an IShellProperty and a value.
         /// </summary>
-        /// <param name="shellProperty"></param>
-        /// <param name="value"></param>
+        /// <param name="shellProperty">The property name.</param>
+        /// <param name="value">The property value.</param>
         public void WriteProperty(IShellProperty shellProperty, object value)
         {
             WriteProperty(shellProperty, value, true);
         }
 
         /// <summary>
-        /// Writes the given property (using a IShellProperty and value). Set allowTruncatedValue
-        /// parameter to true if the property allow truncation of the given value. Default is true.
+        /// Writes the specified property given an IShellProperty and a value. To allow truncation of the given value, set allowTruncatedValue
+        /// to true.
         /// </summary>
-        /// <param name="shellProperty"></param>
-        /// <param name="value"></param>
-        /// <param name="allowTruncatedValue"></param>
+        /// <param name="shellProperty">The property name.</param>
+        /// <param name="value">The property value.</param>
+        /// <param name="allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
         public void WriteProperty(IShellProperty shellProperty, object value, bool allowTruncatedValue)
         {
             WriteProperty(shellProperty.PropertyKey, value, allowTruncatedValue);
         }
 
         /// <summary>
-        /// Writes the given property (using a strongly typed ShellProperty and value)
+        /// Writes the specified property using a strongly-typed ShellProperty and a value.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="shellProperty"></param>
-        /// <param name="value"></param>
+        /// <typeparam name="T">The type of the property name.</typeparam>
+        /// <param name="shellProperty">The property name.</param>
+        /// <param name="value">The property value.</param>
         public void WriteProperty<T>(ShellProperty<T> shellProperty, T value)
         {
             WriteProperty<T>(shellProperty, value, true);
         }
         /// <summary>
-        /// Writes the given property (using a strongly typed ShellProperty and value). Set allowTruncatedValue
-        /// parameter to true if the property allow truncation of the given value. Default is true.
+        /// Writes the specified property given a strongly-typed ShellProperty and a value. To allow truncation of the given value, set allowTruncatedValue
+        /// to true.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="shellProperty"></param>
-        /// <param name="value"></param>
-        /// <param name="allowTruncatedValue"></param>
+        /// <typeparam name="T">The type of the property name.</typeparam>
+        /// <param name="shellProperty">The property name.</param>
+        /// <param name="value">The property value.</param>
+        /// <param name="allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
         public void WriteProperty<T>(ShellProperty<T> shellProperty, T value, bool allowTruncatedValue)
         {
             WriteProperty(shellProperty.PropertyKey, value, allowTruncatedValue);
@@ -360,7 +201,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region IDisposable Members
 
         /// <summary>
-        /// Release the native objects
+        /// Release the native objects.
         /// </summary>
         public void Dispose()
         {
@@ -377,8 +218,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Release the native and managed objects
+        /// Release the native and managed objects.
         /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             Close();

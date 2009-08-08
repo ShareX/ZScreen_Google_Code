@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     ///<summary>
     /// Encapsulates additional configuration needed by NativeTaskDialog
@@ -74,6 +74,7 @@ namespace Microsoft.WindowsAPICodePack
         }
 
         private bool invokeHelp;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public bool InvokeHelp
         {
             get { return invokeHelp; }
@@ -84,7 +85,6 @@ namespace Microsoft.WindowsAPICodePack
         public TaskDialogNativeMethods.TASKDIALOGCONFIG NativeConfiguration
         {
             get { return nativeConfiguration; }
-            set { nativeConfiguration = value; }
         }
 
         private TaskDialogNativeMethods.TASKDIALOG_BUTTON[] buttons;

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls
 {
     /// <summary>
     /// Controls the visibility of the various ExplorerBrowser panes on subsequent navigation

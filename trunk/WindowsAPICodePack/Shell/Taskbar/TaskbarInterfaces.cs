@@ -1,6 +1,6 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
     /// Interface for jump list items
@@ -11,12 +11,6 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// Gets or sets this item's path
         /// </summary>
         string Path { get; set; }
-
-        /// <summary>
-        /// Gets a shell representation of this object
-        /// </summary>
-        /// <returns>Shell representation of this object</returns>
-        object GetShellRepresentation();
     }
 
     /// <summary>
@@ -24,10 +18,5 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
     /// </summary>
     public interface IJumpListTask
     {
-        /// <summary>
-        /// Gets a shell representation of this object
-        /// </summary>
-        /// <returns>Shell representation of this object</returns>
-        object GetShellRepresentation();
     }
 }

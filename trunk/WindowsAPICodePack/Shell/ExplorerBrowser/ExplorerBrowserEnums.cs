@@ -3,7 +3,7 @@
 using System;
 
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls
 {
     /// <summary>
     /// Indicates the viewing mode of the explorer browser
@@ -57,9 +57,11 @@ namespace Microsoft.WindowsAPICodePack.Shell
         Tile = 6
     }
 
+    /// <summary>
     /// Specifies the options that control subsequent navigation.
     /// Typically use one, or a bitwise combination of these
     /// flags to specify how the explorer browser navigates.
+    /// </summary>
     [Flags]
     public enum ExplorerBrowserNavigationFlags
     {
@@ -74,10 +76,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         NavigateOnce = 0x00000001,
     }
 
+    /// <summary>
     /// Indicates the content options of the explorer browser.
     /// Typically use one, or a bitwise combination of these
     /// flags to specify how conent should appear in the
     /// explorer browser control
+    /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags", Justification = "This is following the native API"), Flags]
     public enum ExplorerBrowserContentFlags : uint
     {

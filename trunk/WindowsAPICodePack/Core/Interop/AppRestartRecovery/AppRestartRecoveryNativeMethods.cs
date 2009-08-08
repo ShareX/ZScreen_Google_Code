@@ -2,10 +2,11 @@
 
 using System.Runtime.InteropServices;
 using System;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
-    internal class AppRestartRecoveryNativeMethods
+    internal static class AppRestartRecoveryNativeMethods
     {
         #region Application Restart and Recovery Definitions
 

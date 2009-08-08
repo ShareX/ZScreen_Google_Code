@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     /// Creates the push button controls used by the Common File Dialog.

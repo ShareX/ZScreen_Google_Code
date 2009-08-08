@@ -4,17 +4,19 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
-    /// A strongly typed Property object. 
-    /// Writable Property objects must be of this type 
-    /// to be able to call the Value Setter
+    /// Defines a strongly-typed property object. 
+    /// All writable property objects must be of this type 
+    /// to be able to call the value setter.
     /// </summary>
-    /// <typeparam name="T">The type for this property's value. 
-    /// Because a property value can be empty, only Nullable types 
-    /// are allowed; e.g uint? or string for its value</typeparam>
+    /// <typeparam name="T">The type of this property's value. 
+    /// Because a property value can be empty, only nullable types 
+    /// are allowed.</typeparam>
     public class ShellProperty<T> : IShellProperty
     {
         #region Private Fields
@@ -33,7 +35,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
         private ShellObject ParentShellObject { get; set; }
 
-        private void GetImageRefernece()
+        private void GetImageReference()
         {
             PropVariant propVar;
 
@@ -138,14 +140,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Public Properties
 
         /// <summary>
-        /// The value of this property, using a strong type.
-        /// If the Value is set to null, it will be cleared.
+        /// Gets or sets the strongly-typed value of this property.
+        /// The value of the property is cleared if the value is set to null.
         /// </summary>
         /// <exception cref="System.Runtime.InteropServices.COMException">
         /// If the property value cannot be retrieved or updated in the Property System</exception>
         /// <exception cref="NotSupportedException">If the type of this property is not supported; e.g. writing a binary object.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if is <see cref="AllowSetTruncatedValue"/> false, and
-        /// a value had to be truncated in a string value or rounded if a numeric value</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <see cref="AllowSetTruncatedValue"/> is false, and either 
+        /// a string value was truncated or a numeric value was rounded.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "We are not currently handling globalization or localization")]
         public T Value
         {
@@ -227,7 +229,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region IProperty Members
 
         /// <summary>
-        /// The Property Key identifying this Property
+        /// Gets the property key identifying this property.
         /// </summary>
         public PropertyKey PropertyKey
         {
@@ -237,14 +239,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
         /// <summary>
-        /// Trys to get a formatted, Unicode string representation of a property value
+        /// Returns a formatted, Unicode string representation of a property value.
         /// </summary>
         /// <param name="format">One or more of the PropertyDescriptionFormat flags 
-        /// that indicate the desired format</param>
+        /// that indicate the desired format.</param>
         /// <param name="formattedString">The formatted value as a string, or null if this property 
-        /// cannot be formatted for display</param>
-        /// <returns>Returns true if the method succeeds in getting the formatted string, else
-        /// return false.</returns>
+        /// cannot be formatted for display.</param>
+        /// <returns>True if the method successfully locates the formatted string; otherwise 
+        /// False.</returns>
         public bool TryFormatForDisplay(PropertyDescriptionFormat format, out string formattedString)
         {
             PropVariant propVar;
@@ -278,12 +280,12 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets a formatted, Unicode string representation of a property value
+        /// Returns a formatted, Unicode string representation of a property value.
         /// </summary>
         /// <param name="format">One or more of the PropertyDescriptionFormat flags 
-        /// that indicate the desired format</param>
+        /// that indicate the desired format.</param>
         /// <returns>The formatted value as a string, or null if this property 
-        /// cannot be formatted for display</returns>
+        /// cannot be formatted for display.</returns>
         public string FormatForDisplay(PropertyDescriptionFormat format)
         {
             string formattedString;
@@ -314,7 +316,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Get the property description object
+        /// Get the property description object.
         /// </summary>
         public ShellPropertyDescription Description
         {
@@ -325,8 +327,8 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the case-sensitive name by which 
-        /// a property is known to the system, regardless of its localized name.
+        /// Gets the case-sensitive name of a property as it is known to the system,
+        /// regardless of its localized name.
         /// </summary>
         public string CanonicalName
         {
@@ -337,7 +339,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Clear the value for the property
+        /// Clears the value of the property.
         /// </summary>
         public void ClearValue()
         {
@@ -348,7 +350,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Return the value for this property using generic "Object" type.
+        /// Gets the value for this property using the generic Object type.
         /// To obtain a specific type for this value, use the more type strong
         /// Property&lt;T&gt; class.
         /// Also, you can only set a value for this type using Property&lt;T&gt;
@@ -382,7 +384,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Get the associated Runtime Type
+        /// Gets the associated runtime type.
         /// </summary>
         public Type ValueType
         {
@@ -396,8 +398,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the image reference path and icon index associated with a property value 
-        /// This is a Windows 7 only API
+        /// Gets the image reference path and icon index associated with a property value (Windows 7 only).
         /// </summary>
         public IconReference IconReference
         {
@@ -408,7 +409,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     throw new PlatformNotSupportedException("This Property is available on Windows 7 only.");
                 }
 
-                GetImageRefernece();
+                GetImageReference();
                 int index = (imageReferenceIconIndex.HasValue ? imageReferenceIconIndex.Value : -1);
 
                 return new IconReference(imageReferencePath, index);
@@ -416,12 +417,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Allow setting a truncated value.
-        /// If this property is not set to true, and 
-        /// a property value was set, but then truncated in a string value or rounded if a numeric value, 
-        /// an <see cref="ArgumentOutOfRangeException"/> will be thrown.
-        /// Default for this property is false.
+        /// Gets or sets a value that determines if a value can be truncated. The default for this property is false.
         /// </summary>
+        /// <remarks>
+        /// An <see cref="ArgumentOutOfRangeException"/> will be thrown if
+        /// this property is not set to true, and a property value was set
+        /// but later truncated. 
+        /// 
+        /// </remarks>
         public bool AllowSetTruncatedValue
         {
             get;

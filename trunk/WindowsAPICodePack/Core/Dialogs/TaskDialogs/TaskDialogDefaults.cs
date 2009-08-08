@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.WindowsAPICodePack;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     internal static class TaskDialogDefaults
     {

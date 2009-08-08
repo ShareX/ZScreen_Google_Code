@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Markup;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     /// Creates the ComboBox controls in the Common File Dialog.
@@ -161,7 +161,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Creates a new instance of this class with the specified text.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">The text to use for the combo box item.</param>
         public CommonFileDialogComboBoxItem(string text)
         {
             this.text = text;

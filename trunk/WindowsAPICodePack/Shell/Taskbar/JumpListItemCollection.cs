@@ -4,13 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
     /// Represents a collection of jump list items.
     /// </summary>
     /// <typeparam name="T">The type of elements in this collection.</typeparam>
-    public class JumpListItemCollection<T> : ICollection<T>, INotifyCollectionChanged
+    internal class JumpListItemCollection<T> : ICollection<T>, INotifyCollectionChanged
     {
         private List<T> items = new List<T>();
 

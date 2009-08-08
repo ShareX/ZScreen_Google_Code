@@ -2,49 +2,108 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>
     /// Represents a separator in the user task list. The JumpListSeparator control
     /// can only be used in a user task list.
     /// </summary>
-    public class JumpListSeparator : ShellLink, IJumpListTask
+    public class JumpListSeparator : IJumpListTask, IDisposable
     {
-        internal static PropertyKey PKEY_AppUserModel_IsDestListSeparator = new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 6);
-
+        internal static PropertyKey PKEY_AppUserModel_IsDestListSeparator = SystemProperties.System.AppUserModel.IsDestListSeparator;
+        
         /// <summary>
         /// Initializes a new instance of a JumpListSeparator.
         /// </summary>
         public JumpListSeparator()
-            : base("")
         {
-            // Set the property IShellLinkW that specifies that this is a jumplist separator
-            if (NativeShellLink != null)
+        }
+
+        private IPropertyStore nativePropertyStore;
+        private IShellLinkW nativeShellLink;
+        /// <summary>
+        /// Gets an IShellLinkW representation of this object
+        /// </summary>
+        internal IShellLinkW NativeShellLink
+        {
+            get
             {
-                IPropertyStore propertyStore = (IPropertyStore)NativeShellLink;
+                if (nativeShellLink != null)
+                {
+                    Marshal.ReleaseComObject(nativeShellLink);
+                    nativeShellLink = null;
+                }
+
+                nativeShellLink = (IShellLinkW)new CShellLink();
+
+                if (nativePropertyStore != null)
+                {
+                    Marshal.ReleaseComObject(nativePropertyStore);
+                    nativePropertyStore = null;
+                }
+
+                nativePropertyStore = (IPropertyStore)nativeShellLink;
+
                 PropVariant propVariant = new PropVariant();
 
                 propVariant.SetBool(true);
-                propertyStore.SetValue(ref PKEY_AppUserModel_IsDestListSeparator, ref propVariant);
+                nativePropertyStore.SetValue(ref PKEY_AppUserModel_IsDestListSeparator, ref propVariant);
                 propVariant.Clear();
 
-                propertyStore.Commit();
+                nativePropertyStore.Commit();
+
+                return nativeShellLink;;
             }
         }
 
 
         #region IJumpListTask Members
 
+        #endregion
+
+        #region IDisposable Members
+
         /// <summary>
-        /// Returns an <b>IShellLinkW</b> representation of this object.
+        /// Release the native and managed objects
         /// </summary>
-        /// <returns>An IShellLinkW object</returns>
-        object IJumpListTask.GetShellRepresentation()
+        /// <param name="disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
+        public void Dispose(bool disposing)
         {
-            return NativeShellLink;
+            if (nativePropertyStore != null)
+            {
+                Marshal.ReleaseComObject(nativePropertyStore);
+                nativePropertyStore = null;
+            }
+
+            if (nativeShellLink != null)
+            {
+                Marshal.ReleaseComObject(nativeShellLink);
+                nativeShellLink = null;
+            }
+        }
+
+        /// <summary>
+        /// Release the native objects.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Implement the finalizer.
+        /// </summary>
+        ~JumpListSeparator()
+        {
+            Dispose(false);
         }
 
         #endregion
+
     }
 }

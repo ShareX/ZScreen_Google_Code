@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
@@ -172,6 +173,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         private IntPtr GetHIcon()
         {
             // Create our internal flag to pass to the native method
@@ -219,6 +221,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <summary>
         /// Release the native and managed objects
         /// </summary>
+        /// <param name="disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
         public void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,6 +1,6 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Indicates that the implementing class is a dialog that can host
@@ -16,11 +16,11 @@ namespace Microsoft.WindowsAPICodePack
         /// PostProcess should pass on changes to native control, 
         /// if appropriate.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if collection change is allowed.</returns>
         bool IsCollectionChangeAllowed();
 
         /// <summary>
-        /// 
+        /// Applies changes to the collection.
         /// </summary>
         void ApplyCollectionChanged();
 
@@ -32,15 +32,17 @@ namespace Microsoft.WindowsAPICodePack
         /// PostProcess should pass on changes to native control, 
         /// if appropriate.
         /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="control"></param>
-        /// <returns></returns>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="control">The control propertyName applies to.</param>
+        /// <returns>true if the property change is allowed.</returns>
         bool IsControlPropertyChangeAllowed(string propertyName, DialogControl control);
+
         /// <summary>
-        /// 
+        /// Called when a control currently in the collection 
+        /// has a property changed.
         /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="control"></param>
+        /// <param name="propertyName">The name of the property changed.</param>
+        /// <param name="control">The control whose property has changed.</param>
         void ApplyControlPropertyChange(string propertyName, DialogControl control);
     }
 }

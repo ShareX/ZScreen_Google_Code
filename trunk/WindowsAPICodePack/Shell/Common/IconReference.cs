@@ -27,9 +27,6 @@ namespace Microsoft.WindowsAPICodePack.Shell
             if (string.IsNullOrEmpty(moduleName))
                 throw new ArgumentNullException("moduleName", "Module name cannot be null or empty string");
             
-            if (resourceId < 0)
-                throw new ArgumentOutOfRangeException("resourceId", "Resource Id is invalid.");
-
             this.moduleName = moduleName;
             this.resourceId = resourceId;
             referencePath = moduleName + "," + resourceId;
@@ -85,9 +82,6 @@ namespace Microsoft.WindowsAPICodePack.Shell
             }
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", "Resource Id cannot be negative.");
-
                 resourceId = value;
             }
         }

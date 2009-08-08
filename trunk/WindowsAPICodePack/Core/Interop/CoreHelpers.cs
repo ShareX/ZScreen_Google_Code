@@ -1,13 +1,10 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace MS.WindowsAPICodePack.Internal
 {
     /// <summary>
     /// Common Helper methods
@@ -32,7 +29,7 @@ namespace Microsoft.WindowsAPICodePack
         {
             if (!CoreHelpers.RunningOnXP)
             {
-                throw new PlatformNotSupportedException("Only supported on Windows XP.");
+                throw new PlatformNotSupportedException("Only supported on Windows XP or newer.");
             }
         }
         
@@ -54,7 +51,7 @@ namespace Microsoft.WindowsAPICodePack
         {
             if (!CoreHelpers.RunningOnVista)
             {
-                throw new PlatformNotSupportedException("Only supported on Windows Vista.");
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
             }
         }
 
@@ -77,7 +74,7 @@ namespace Microsoft.WindowsAPICodePack
         {
             if (!CoreHelpers.RunningOnWin7)
             {
-                throw new PlatformNotSupportedException("Only supported on Windows 7.");
+                throw new PlatformNotSupportedException("Only supported on Windows 7 or newer.");
             }
         }
 

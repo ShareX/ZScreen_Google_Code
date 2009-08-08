@@ -3,8 +3,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     [ComImportAttribute()]
     [GuidAttribute("6332DEBF-87B5-4670-90C0-5E57B408A49E")]
@@ -116,7 +117,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         [PreserveSig]
         void SetTabOrder(IntPtr hwndTab, IntPtr hwndInsertBefore);
         [PreserveSig]
-        void SetTabActive(IntPtr hwndTab, IntPtr hwndMDI, uint dwReserved);
+        void SetTabActive(IntPtr hwndTab, IntPtr hwndInsertBefore, uint dwReserved);
         [PreserveSig]
         HRESULT ThumbBarAddButtons(
             IntPtr hwnd,
@@ -141,7 +142,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         [PreserveSig]
         void SetThumbnailClip(
             IntPtr hwnd,
-            ref Microsoft.WindowsAPICodePack.CoreNativeMethods.RECT prcClip);
+            ref CoreNativeMethods.RECT prcClip);
 
         // ITaskbarList4
         void SetTabProperties(IntPtr hwndTab, STPFLAG stpFlags);

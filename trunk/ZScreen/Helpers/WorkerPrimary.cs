@@ -31,7 +31,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Greenshot.Helpers;
 using Microsoft.WindowsAPICodePack;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
@@ -39,6 +39,7 @@ using ZSS.Properties;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.ImageUploadersLib;
+using MS.WindowsAPICodePack.Internal;
 
 namespace ZScreenLib
 {
@@ -308,7 +309,7 @@ namespace ZScreenLib
                     Adapter.TaskbarSetProgress(progress);
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
-                    TaskbarButtonProgressState tbps = (TaskbarButtonProgressState)e.UserState;
+                    TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
                     Adapter.TaskbarSetState(tbps);
                     break;
                 case MainAppTask.ProgressType.SHOW_TRAY_MESSAGE:
@@ -439,7 +440,7 @@ namespace ZScreenLib
 
                 if (CoreHelpers.RunningOnWin7)
                 {
-                    Adapter.TaskbarSetState(TaskbarButtonProgressState.NoProgress);
+                    Adapter.TaskbarSetState(TaskbarProgressBarState.NoProgress);
                 }
 
 
@@ -1119,9 +1120,9 @@ namespace ZScreenLib
             {
                 try
                 {
-                    Taskbar.JumpList.AddToRecent(hi.LocalPath);
-                    Taskbar.JumpList.KnownCategoryToDisplay = KnownCategoryType.Recent;
-                    Taskbar.JumpList.RefreshTaskbarList();
+                    Program.zJumpList.AddToRecent(hi.LocalPath);
+                    Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
+                    Program.zJumpList.Refresh();
                 }
                 catch (Exception ex)
                 {

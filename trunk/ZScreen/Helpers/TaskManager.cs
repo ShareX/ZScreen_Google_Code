@@ -27,7 +27,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using ZSS.ImageUploadersLib;
 using ZSS.TextUploadersLib;
 using ZSS.Properties;
@@ -123,7 +123,7 @@ namespace ZScreenLib
 
             if (imageUploader != null)
             {
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
@@ -210,7 +210,7 @@ namespace ZScreenLib
             try
             {
                 string fullFilePath = mTask.LocalFilePath;
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
@@ -225,7 +225,7 @@ namespace ZScreenLib
                         WorkingDir = Program.CacheDir
                     };
 
-                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Normal);
+                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
@@ -298,7 +298,7 @@ namespace ZScreenLib
         public void UploadText()
         {
             mTask.StartTime = DateTime.Now;
-            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
+            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
             TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
             textUploader.ProxySettings = Adapter.GetProxySettings();

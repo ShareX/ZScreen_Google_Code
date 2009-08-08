@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Collections;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Dialogs.Controls
 {
     /// <summary>
     /// Provides a strongly typed collection for dialog controls.
@@ -129,7 +131,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// <returns>A DialogControl who's Id matches the value of the
         /// <paramref name="id"/> parameter.</returns>
         /// 
-        internal DialogControl GetSubControlbyId(IEnumerable<T> ctrlColl,
+        internal DialogControl GetSubControlbyId(IEnumerable ctrlColl,
             int id)
         {
             DialogControl foundControl = null;
@@ -159,7 +161,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     if (iSubCtrlCount > 0)
                     {
                         foundControl = this.GetSubControlbyId(
-                            groupBox.Items as IEnumerable<T>,
+                            groupBox.Items as IEnumerable,
                             id);
 
                         // make sure something was actually found

@@ -5,21 +5,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
-    /// Data associated with <see cref="E:Microsoft.SDK.Samples.VistaBridge.Library.TaskDialog.Closing"/> event.
+    /// Data associated with <see cref="TaskDialog.Closing"/> event.
     /// </summary>
     public class TaskDialogClosingEventArgs : CancelEventArgs
     {
-        private TaskDialogStandardButton standardButton;
+        private TaskDialogResult taskDialogResult;
         /// <summary>
         /// Gets or sets the standard button that was clicked.
         /// </summary>
-        public TaskDialogStandardButton StandardButton
+        public TaskDialogResult TaskDialogResult
         {
-            get { return standardButton; }
-            set { standardButton = value; }
+            get { return taskDialogResult; }
+            set { taskDialogResult = value; }
         }
 
         private string customButton;

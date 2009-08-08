@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
     /// Defines a unique key for a Shell Property
@@ -117,6 +117,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <param name="a">Object a.</param>
         /// <param name="b">Object b.</param>
         /// <returns>true if object a equals object b. false otherwise.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
         public static bool operator ==( PropertyKey a, PropertyKey b )
         {
             return a.Equals( b );
@@ -128,6 +129,7 @@ namespace Microsoft.WindowsAPICodePack
         /// <param name="a">Object a.</param>
         /// <param name="b">Object b.</param>
         /// <returns>true if object a does not equal object b. false otherwise.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
         public static bool operator !=( PropertyKey a, PropertyKey b )
         {
             return !a.Equals( b );
@@ -137,6 +139,7 @@ namespace Microsoft.WindowsAPICodePack
         /// Override ToString() to provide a user friendly string representation
         /// </summary>
         /// <returns>String representing the property key</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)")]
         public override string ToString()
         {
             return String.Format("{0}, {1}", formatId.ToString("B"), propertyId);

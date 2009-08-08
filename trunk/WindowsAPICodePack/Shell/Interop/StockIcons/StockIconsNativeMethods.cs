@@ -2,6 +2,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {

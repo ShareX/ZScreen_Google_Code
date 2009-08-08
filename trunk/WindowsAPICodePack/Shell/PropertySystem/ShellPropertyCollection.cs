@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using Microsoft.WindowsAPICodePack.Shell;
+using MS.WindowsAPICodePack.Internal;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {
     /// <summary>
-    /// A readonly collection of IProperty objects
+    /// Creates a readonly collection of IProperty objects.
     /// </summary>
     public class ShellPropertyCollection : ReadOnlyCollection<IShellProperty>
     {
@@ -46,9 +48,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Public Constructor
 
         /// <summary>
-        /// Creates a new Property Collection given a file or folder path
+        /// Creates a new <c>ShellPropertyCollection</c> object with the specified file or folder path.
         /// </summary>
-        /// <param name="path">The path to the file or folder</param>
+        /// <param name="path">The path to the file or folder.</param>
         public ShellPropertyCollection(string path) :
             this(ShellObjectFactory.Create(path))
         {
@@ -80,24 +82,14 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
             Guid guid = new Guid(ShellIIDGuid.IPropertyStore);
             int hr = shellObj.NativeShellItem2.GetPropertyStore(
-                   ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_DEFAULT,
-                   ref guid,
-                   out nativePropertyStore);
-
-            // if we fail, try one more time with a more powerful flag!
-            // This time, we won't catch any exceptions
-            if (nativePropertyStore == null || !CoreErrorHelper.Succeeded(hr))
-            {
-                hr = shellObj.NativeShellItem2.GetPropertyStore(
                    ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_BESTEFFORT,
                    ref guid,
                    out nativePropertyStore);
 
-                // This time actually throw
-                if (!CoreErrorHelper.Succeeded(hr))
-                {
-                    throw new ExternalException("Unable to obtain property store", Marshal.GetExceptionForHR(hr));
-                }
+            // throw on failure 
+            if (nativePropertyStore == null || !CoreErrorHelper.Succeeded(hr))
+            {
+                Marshal.ThrowExceptionForHR(hr);
             }
 
             return nativePropertyStore;
@@ -111,8 +103,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Collection Public Methods
 
         /// <summary>
-        /// Checks if a property with the given Canaonical Name is available
+        /// Checks if a property with the given canonical name is available.
         /// </summary>
+        /// <param name="canonicalName">The canonical name of the property.</param>
+        /// <returns><B>True</B> if available, <B>false</B> otherwise.</returns>
         public bool Contains(string canonicalName)
         {
             if (string.IsNullOrEmpty(canonicalName))
@@ -127,24 +121,26 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Checks if a property with the given Property Key is available
+        /// Checks if a property with the given property key is available.
         /// </summary>
+        /// <param name="key">The property key.</param>
+        /// <returns><B>True</B> if available, <B>false</B> otherwise.</returns>
         public bool Contains(PropertyKey key)
         {
             return Items.
-                Where(p => p.PropertyKey.FormatId == key.FormatId && p.PropertyKey.PropertyId == key.PropertyId).
+                Where(p => p.PropertyKey == key).
                 Count() > 0;
         }
 
         /// <summary>
-        /// Returns the Property with the supplied canonicalName string
-        /// Property Canonical name is Case Sensitive.
-        /// Also gets a property that might not be in the current collection
+        /// Gets the property associated with the supplied canonical name string.
+        /// The canonical name property is case-sensitive.
+        /// 
         /// </summary>
-        /// <param name="canonicalName">The canonical name</param>
-        /// <returns>The Property having the canonical name, if found</returns>
+        /// <param name="canonicalName">The canonical name.</param>
+        /// <returns>The property associated with the canonical name, if found.</returns>
         /// <exception cref="IndexOutOfRangeException">Throws IndexOutOfRangeException 
-        /// if no matching Property is found</exception>
+        /// if no matching property is found.</exception>
         public IShellProperty this[string canonicalName]
         {
             get
@@ -165,13 +161,13 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Returns a Property that have the supplied PropertyKey
-        /// Also gets a property that might not be in the current collection
+        /// Gets a property associated with the supplied property key.
+        /// 
         /// </summary>
-        /// <param name="key">The property key</param>
-        /// <returns>The Property having the PropertyKey, if found</returns>
+        /// <param name="key">The property key.</param>
+        /// <returns>The property associated with the property key, if found.</returns>
         /// <exception cref="IndexOutOfRangeException">Throws IndexOutOfRangeException 
-        /// if no matching Property is found</exception>
+        /// if no matching property is found.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1043:UseIntegralOrStringArgumentForIndexers", Justification="We need the ability to get item from the collection using a property key")]
         public IShellProperty this[PropertyKey key]
         {
@@ -179,7 +175,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
             {
                 IShellProperty[] props =
                     Items
-                    .Where(p => p.PropertyKey.PropertyId == key.PropertyId && p.PropertyKey.FormatId == key.FormatId)
+                    .Where(p => p.PropertyKey == key)
                     .ToArray();
 
                 if (props != null && props.Length > 0)

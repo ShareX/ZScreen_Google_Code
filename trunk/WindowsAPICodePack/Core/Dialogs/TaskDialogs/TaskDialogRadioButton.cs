@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.Dialogs
 {
     /// <summary>
     /// Defines a radio button that can be hosted in by a 
-    /// <see cref="Microsoft.WindowsAPICodePack.TaskDialog"/> object.
+    /// <see cref="TaskDialog"/> object.
     /// </summary>
     public class TaskDialogRadioButton : TaskDialogButtonBase
     {
@@ -22,7 +22,7 @@ namespace Microsoft.WindowsAPICodePack
         /// </summary>
         /// <param name="name">The name for this control.</param>
         /// <param name="text">The value for this controls 
-        /// <see cref="P:Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogButtonBase.Text"/> property.</param>
+        /// <see cref="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.Text"/> property.</param>
         public TaskDialogRadioButton(string name, string text) : base(name, text) { }
     }
 }

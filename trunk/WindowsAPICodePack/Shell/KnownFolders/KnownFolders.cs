@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.IO;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
     /// <summary>
-    /// Provides access to the metadata for known folders. 
-    /// This class contains properties to get the path of 
-    /// standard known folders.
+    /// Defines properties for known folders that identify the path of standard known folders.
     /// </summary>
     public static class KnownFolders
     {
@@ -19,9 +18,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         /// Internal cache for all the KnownFolders we create.
         /// </summary>
         private static Dictionary<Guid, IKnownFolder> knownFoldersCache = new Dictionary<Guid, IKnownFolder>();
-        
+
         /// <summary>
-        /// Returns a strongly typed read only collection of all the registered Known Folders
+        /// Gets a strongly-typed read-only collection of all the registered known folders.
         /// </summary>
         public static ICollection<IKnownFolder> All
         {
@@ -50,7 +49,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 for (int i = 0; i < count; i++)
                 {
                     // Read the current pointer
-                    IntPtr current = new IntPtr(folders.ToInt32() + (Marshal.SizeOf(typeof(Guid)) * i));
+                    IntPtr current = new IntPtr(folders.ToInt64() + (Marshal.SizeOf(typeof(Guid)) * i));
 
                     // Convert to Guid
                     Guid knownFolderID = (Guid)Marshal.PtrToStructure(current, typeof(Guid));
@@ -62,17 +61,17 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     {
                         kf = KnownFolderHelper.FromKnownFolderId(knownFolderID);
                     }
-                    catch(FileNotFoundException)
+                    catch (FileNotFoundException)
                     {
                         // Ignore, don't throw the exception to the user or return null. Just return
                         // them all the valid KnownFolders on the current system.
                     }
-                    catch(DirectoryNotFoundException)
+                    catch (DirectoryNotFoundException)
                     {
                         // Ignore, don't throw the exception to the user or return null. Just return
                         // them all the valid KnownFolders on the current system.
                     }
-                    catch(ArgumentException)
+                    catch (ArgumentException)
                     {
                         // Ignore, don't throw the exception to the user or return null. Just return
                         // them all the valid KnownFolders on the current system.
@@ -80,7 +79,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
 
                     // Add to our collection if it's not null (some folders might not exist on the system
                     // or we could have an exception that resulted in the null return from above method call
-                    if(kf != null)
+                    if (kf != null)
                         foldersList.Add(kf);
                 }
             }
@@ -99,7 +98,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                 knownFoldersCache.Add(guid,
                     KnownFolderHelper.FromKnownFolderId(guid));
             }
-            
+
             // Return the IKnownFolder from the cache
             return knownFoldersCache[guid];
         }
@@ -107,9 +106,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         #region Default Known Folders
 
         /// <summary>
-        /// Gets the computer folder.
+        /// Gets the metadata for the <b>Computer</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Computer
         {
             get
@@ -120,9 +119,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Windows Vista Synchronization Manager folder.
+        /// Gets the metadata for the <b>Conflict</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Conflict
         {
             get
@@ -133,9 +132,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the control panel.
+        /// Gets the metadata for the <b>ControlPanel</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ControlPanel
         {
             get
@@ -146,9 +145,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the desktop folder.
+        /// Gets the metadata for the <b>Desktop</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Desktop
         {
             get
@@ -159,9 +158,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the internet explorer folder.
+        /// Gets the metadata for the <b>Internet</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Internet
         {
             get
@@ -172,9 +171,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the My Network Places folder.
+        /// Gets the metadata for the <b>Network</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Network
         {
             get
@@ -185,9 +184,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Printers and Faxes folder.
+        /// Gets the metadata for the <b>Printers</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Printers
         {
             get
@@ -198,9 +197,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Sync Center folder.
+        /// Gets the metadata for the <b>SyncManager</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SyncManager
         {
             get
@@ -211,9 +210,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the network connections folder.
+        /// Gets the metadata for the <b>Connections</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Connections
         {
             get
@@ -224,9 +223,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Synch Setup folder.
+        /// Gets the metadata for the <b>SyncSetup</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SyncSetup
         {
             get
@@ -237,9 +236,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Sync Results folder.
+        /// Gets the metadata for the <b>SyncResults</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SyncResults
         {
             get
@@ -250,9 +249,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the recycle bin.
+        /// Gets the metadata for the <b>RecycleBin</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder RecycleBin
         {
             get
@@ -263,9 +262,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the fonts folder.
+        /// Gets the metadata for the <b>Fonts</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Fonts
         {
             get
@@ -275,9 +274,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the startup folder.
+        /// Gets the metadata for the <b>Startup</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Startup
         {
             get
@@ -287,9 +286,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the programs folder.
+        /// Gets the metadata for the <b>Programs</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Programs
         {
             get
@@ -299,9 +298,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user start menu folder.
+        /// Gets the metadata for the per-user <b>StartMenu</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder StartMenu
         {
             get
@@ -311,9 +310,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user My Recent Documents folder.
+        /// Gets the metadata for the per-user <b>Recent</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Recent
         {
             get
@@ -323,9 +322,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user SendTo folder.
+        /// Gets the metadata for the per-user <b>SendTo</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SendTo
         {
             get
@@ -335,9 +334,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user documents folder.
+        /// Gets the metadata for the per-user <b>Documents</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Documents
         {
             get
@@ -347,9 +346,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user favorites folder.
+        /// Gets the metadata for the per-user <b>Favorites</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Favorites
         {
             get
@@ -359,9 +358,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the network shortcuts folder.
+        /// Gets the metadata for the <b>NetHood</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder NetHood
         {
             get
@@ -371,9 +370,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Printer Shortcuts folder.
+        /// Gets the metadata for the <b>PrintHood</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PrintHood
         {
             get
@@ -383,9 +382,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the templates folder.
+        /// Gets the metadata for the <b>Templates</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Templates
         {
             get
@@ -395,9 +394,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common startup folder.
+        /// Gets the metadata for the <b>CommonStartup</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder CommonStartup
         {
             get
@@ -407,9 +406,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common programs folder.
+        /// Gets the metadata for the <b>CommonPrograms</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder CommonPrograms
         {
             get
@@ -419,9 +418,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common start menu folder.
+        /// Gets the metadata for the <b>CommonStartMenu</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder CommonStartMenu
         {
             get
@@ -431,9 +430,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the public desktop folder.
+        /// Gets the metadata for the <b>PublicDesktop</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicDesktop
         {
             get
@@ -443,9 +442,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Application Data folder.
+        /// Gets the metadata for the <b>ProgramData</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramData
         {
             get
@@ -455,9 +454,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common templates folder.
+        /// Gets the metadata for the <b>CommonTemplates</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder CommonTemplates
         {
             get
@@ -467,9 +466,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the public documents folder.
+        /// Gets the metadata for the <b>PublicDocuments</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicDocuments
         {
             get
@@ -479,9 +478,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the roaming application data folder.
+        /// Gets the metadata for the <b>RoamingAppData</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder RoamingAppData
         {
             get
@@ -491,10 +490,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user 
-        /// application data folder.
+        /// Gets the metadata for the per-user <b>LocalAppData</b>  
+        /// folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder LocalAppData
         {
             get
@@ -504,9 +503,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the LocalAppDataLow folder.
+        /// Gets the metadata for the <b>LocalAppDataLow</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder LocalAppDataLow
         {
             get
@@ -516,9 +515,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the tempory internet files folder.
+        /// Gets the metadata for the <b>InternetCache</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder InternetCache
         {
             get
@@ -528,9 +527,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the cookies folder.
+        /// Gets the metadata for the <b>Cookies</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Cookies
         {
             get
@@ -540,9 +539,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the history folder.
+        /// Gets the metadata for the <b>History</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder History
         {
             get
@@ -552,9 +551,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the System32 folder.
+        /// Gets the metadata for the <b>System</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder System
         {
             get
@@ -564,10 +563,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the System32 
-        /// folder on x86 systems.
+        /// Gets the metadata for the <b>SystemX86</b>  
+        /// folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SystemX86
         {
             get
@@ -577,9 +576,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the windows folder.
+        /// Gets the metadata for the <b>Windows</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Windows
         {
             get
@@ -589,9 +588,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the current user's root folder.
+        /// Gets the metadata for the <b>Profile</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Profile
         {
             get
@@ -601,9 +600,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user My Pictures folder.
+        /// Gets the metadata for the per-user <b>Pictures</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Pictures
         {
             get
@@ -613,9 +612,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the ProgramFiles folder on x86 systems.
+        /// Gets the metadata for the <b>ProgramFilesX86</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramFilesX86
         {
             get
@@ -625,9 +624,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common Program files folder on x86 systems.
+        /// Gets the metadata for the <b>ProgramFilesCommonX86</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramFilesCommonX86
         {
             get
@@ -637,9 +636,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the ProgramsFiles folder on x64 systems.
+        /// Gets the metadata for the <b>ProgramsFilesX64</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramFilesX64
         {
             get
@@ -649,9 +648,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common Program files folder on x64 systems.
+        ///  Gets the metadata for the <b> ProgramFilesCommonX64</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramFilesCommonX64
         {
             get
@@ -661,9 +660,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the program files folder.
+        /// Gets the metadata for the <b>ProgramFiles</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramFiles
         {
             get
@@ -673,9 +672,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common program files folder.
+        /// Gets the metadata for the <b>ProgramFilesCommon</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ProgramFilesCommon
         {
             get
@@ -685,9 +684,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the administrative tools folder.
+        /// Gets the metadata for the <b>AdminTools</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder AdminTools
         {
             get
@@ -697,9 +696,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common administrative tools folder.
+        /// Gets the metadata for the <b>CommonAdminTools</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder CommonAdminTools
         {
             get
@@ -709,9 +708,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user My Music folder.
+        /// Gets the metadata for the per-user <b>Music</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Music
         {
             get
@@ -721,9 +720,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the videos folder.
+        /// Gets the metadata for the <b>Videos</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Videos
         {
             get
@@ -733,9 +732,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Shared Pictures folder.
+        /// Gets the metadata for the <b>PublicPictures</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicPictures
         {
             get
@@ -745,9 +744,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Shared Music folder.
+        /// Gets the metadata for the <b>PublicMusic</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicMusic
         {
             get
@@ -757,9 +756,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Shared Videos folder.
+        /// Gets the metadata for the <b>PublicVideos</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicVideos
         {
             get
@@ -769,9 +768,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Resources  folder.
+        /// Gets the metadata for the <b>ResourceDir</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ResourceDir
         {
             get
@@ -781,9 +780,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the localized resources directory folder.
+        /// Gets the metadata for the <b>LocalizedResourcesDir</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder LocalizedResourcesDir
         {
             get
@@ -793,9 +792,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the common OEM links folder. 
+        /// Gets the metadata for the <b>CommonOEMLinks</b> folder. 
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "OEM", Justification = "This is following the native API")]
         public static IKnownFolder CommonOEMLinks
         {
@@ -806,10 +805,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the folder used to hold files that 
-        /// are waiting to be copied onto CD.
+        /// Gets the metadata for the <b>CDBurning</b> folder. 
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder CDBurning
         {
             get
@@ -819,9 +817,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Users folder.
+        /// Gets the metadata for the <b>UserProfiles</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder UserProfiles
         {
             get
@@ -831,9 +829,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the playlists folder.
+        /// Gets the metadata for the <b>Playlists</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Playlists", Justification = "This is following the native API")]
         public static IKnownFolder Playlists
         {
@@ -844,9 +842,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the sample playlists folder.
+        /// Gets the metadata for the <b>SamplePlaylists</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Playlists", Justification = "This is following the native API")]
         public static IKnownFolder SamplePlaylists
         {
@@ -857,9 +855,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the music samples folder.
+        /// Gets the metadata for the <b>SampleMusic</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SampleMusic
         {
             get
@@ -869,9 +867,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the picture samples folder.
+        /// Gets the metadata for the <b>SamplePictures</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SamplePictures
         {
             get
@@ -881,9 +879,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the video samples folder.
+        /// Gets the metadata for the <b>SampleVideos</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SampleVideos
         {
             get
@@ -893,9 +891,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Slide Shows folder.
+        /// Gets the metadata for the <b>PhotoAlbums</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PhotoAlbums
         {
             get
@@ -905,9 +903,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the public folder.
+        /// Gets the metadata for the <b>Public</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Public
         {
             get
@@ -917,9 +915,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the change/remove programs folder.
+        /// Gets the metadata for the <b>ChangeRemovePrograms</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder ChangeRemovePrograms
         {
             get
@@ -929,9 +927,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the installed updates folder.
+        /// Gets the metadata for the <b>AppUpdates</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder AppUpdates
         {
             get
@@ -941,9 +939,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Programs and Features folder.
+        /// Gets the metadata for the <b>AddNewPrograms</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder AddNewPrograms
         {
             get
@@ -953,9 +951,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user downloads folder.
+        /// Gets the metadata for the per-user <b>Downloads</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Downloads
         {
             get
@@ -965,9 +963,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the public downloads folder.
+        /// Gets the metadata for the <b>PublicDownloads</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicDownloads
         {
             get
@@ -977,9 +975,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user saved searches folder.
+        /// Gets the metadata for the per-user <b>SavedSearches</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SavedSearches
         {
             get
@@ -989,9 +987,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user Quick Launch folder.
+        /// Gets the metadata for the per-user <b>QuickLaunch</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder QuickLaunch
         {
             get
@@ -1001,9 +999,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the contacts folder.
+        /// Gets the metadata for the <b>Contacts</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Contacts
         {
             get
@@ -1013,9 +1011,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user gadgets folder.
+        /// Gets the metadata for the <b>SidebarParts</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SidebarParts
         {
             get
@@ -1025,9 +1023,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the shared Gadgets folder.
+        /// Gets the metadata for the <b>SidebarDefaultParts</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SidebarDefaultParts
         {
             get
@@ -1037,9 +1035,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the tree properties folder.
+        /// Gets the metadata for the <b>TreeProperties</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder TreeProperties
         {
             get
@@ -1049,9 +1047,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the public game tasks folder.
+        /// Gets the metadata for the <b>PublicGameTasks</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder PublicGameTasks
         {
             get
@@ -1061,9 +1059,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the game explorer folder.
+        /// Gets the metadata for the <b>GameTasks</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder GameTasks
         {
             get
@@ -1073,9 +1071,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user saved games folder.
+        /// Gets the metadata for the per-user <b>SavedGames</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SavedGames
         {
             get
@@ -1085,9 +1083,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the games folder.
+        /// Gets the metadata for the <b>Games</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Games
         {
             get
@@ -1097,9 +1095,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the recorded tv folder.
+        /// Gets the metadata for the <b>RecordedTV</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         /// <remarks>This folder is not used.</remarks>
         public static IKnownFolder RecordedTV
         {
@@ -1110,9 +1108,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Microsoft Office Outlook folder.
+        /// Gets the metadata for the <b>SearchMapi</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SearchMapi
         {
             get
@@ -1122,10 +1120,10 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the offline files folder.
+        /// Gets the metadata for the <b>SearchCsc</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Csc", Justification="This is following the native API")]
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Csc", Justification = "This is following the native API")]
         public static IKnownFolder SearchCsc
         {
             get
@@ -1135,9 +1133,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the per-user links folder.
+        /// Gets the metadata for the per-user <b>Links</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder Links
         {
             get
@@ -1147,9 +1145,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the user files folder.
+        /// Gets the metadata for the <b>UsersFiles</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder UsersFiles
         {
             get
@@ -1159,9 +1157,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the search results folder.
+        /// Gets the metadata for the <b>SearchHome</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder SearchHome
         {
             get
@@ -1171,9 +1169,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the original images folder.
+        /// Gets the metadata for the <b>OriginalImages</b> folder.
         /// </summary>
-        /// <value>A <see cref="IKnownFolder"/> object.</value>
+        /// <value>An <see cref="IKnownFolder"/> object.</value>
         public static IKnownFolder OriginalImages
         {
             get
@@ -1183,7 +1181,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the ProgramFiles folder
+        /// Gets the metadata for the <b>UserProgramFiles</b> folder.
         /// </summary>
         public static IKnownFolder UserProgramFiles
         {
@@ -1195,7 +1193,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the ProgramFiles\\Common folder
+        /// Gets the metadata for the <b>UserProgramFilesCommon</b> folder.
         /// </summary>
         public static IKnownFolder UserProgramFilesCommon
         {
@@ -1207,7 +1205,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Ringtones folder
+        /// Gets the metadata for the <b>Ringtones</b> folder.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ringtones", Justification = "This is following the native API")]
         public static IKnownFolder Ringtones
@@ -1220,7 +1218,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Public Ringtones folder
+        /// Gets the metadata for the <b>PublicRingtones</b> folder.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ringtones", Justification = "This is following the native API")]
         public static IKnownFolder PublicRingtones
@@ -1233,7 +1231,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the user's Libraries folder
+        /// Gets the metadata for the <b>UsersLibraries</b> folder.
         /// </summary>
         public static IKnownFolder UsersLibraries
         {
@@ -1245,7 +1243,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Documents Library folder
+        /// Gets the metadata for the <b>DocumentsLibrary</b> folder.
         /// </summary>
         public static IKnownFolder DocumentsLibrary
         {
@@ -1257,7 +1255,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Music Library folder
+        /// Gets the metadata for the <b>MusicLibrary</b> folder.
         /// </summary>
         public static IKnownFolder MusicLibrary
         {
@@ -1269,7 +1267,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Pictures Library folder
+        /// Gets the metadata for the <b>PicturesLibrary</b> folder.
         /// </summary>
         public static IKnownFolder PicturesLibrary
         {
@@ -1281,7 +1279,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Videos Library folder
+        /// Gets the metadata for the <b>VideosLibrary</b> folder.
         /// </summary>
         public static IKnownFolder VideosLibrary
         {
@@ -1293,7 +1291,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the RecordedTV Library folder
+        /// Gets the metadata for the <b>RecordedTVLibrary</b> folder.
         /// </summary>
         public static IKnownFolder RecordedTVLibrary
         {
@@ -1305,7 +1303,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the OtherUsers folder
+        /// Gets the metadata for the <b>OtherUsers</b> folder.
         /// </summary>
         public static IKnownFolder OtherUsers
         {
@@ -1317,7 +1315,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the DeviceMetadataStore folder
+        /// Gets the metadata for the <b>DeviceMetadataStore</b> folder.
         /// </summary>
         public static IKnownFolder DeviceMetadataStore
         {
@@ -1329,7 +1327,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the Libraries folder
+        /// Gets the metadata for the <b>Libraries</b> folder.
         /// </summary>
         public static IKnownFolder Libraries
         {
@@ -1341,7 +1339,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the UserPinned folder
+        ///Gets the metadata for the <b>UserPinned</b> folder.
         /// </summary>
         public static IKnownFolder UserPinned
         {
@@ -1353,7 +1351,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
         }
 
         /// <summary>
-        /// Gets the ImplicitAppShortcuts folder
+        /// Gets the metadata for the <b>ImplicitAppShortcuts</b> folder.
         /// </summary>
         public static IKnownFolder ImplicitAppShortcuts
         {

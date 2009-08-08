@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     /// <summary>
     /// The <see cref="System.Delegate"/> that represents the callback method invoked
@@ -14,8 +14,8 @@ namespace Microsoft.WindowsAPICodePack
     /// <remarks>The callback method will be invoked
     /// prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 
     /// the callback method completes, the callback method must
-    /// periodically call the <see cref="Microsoft.WindowsAPICodePack.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method. </remarks>
-    /// <seealso cref="Microsoft.WindowsAPICodePack.ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(Microsoft.WindowsAPICodePack.RecoverySettings)"/>
+    /// periodically call the <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method. </remarks>
+    /// <seealso cref="ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(RecoverySettings)"/>
     public delegate int RecoveryCallback(object state);
 
     /// <summary>
@@ -28,8 +28,8 @@ namespace Microsoft.WindowsAPICodePack
         /// Initializes a recovery data wrapper with a callback method and the current
         /// state of the application.
         /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
+        /// <param name="callback">The callback delegate.</param>
+        /// <param name="state">The current state of the application.</param>
         public RecoveryData(RecoveryCallback callback, object state)
         {
             Callback = callback;

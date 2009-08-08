@@ -26,8 +26,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
+using Microsoft.WindowsAPICodePack.Taskbar;
+using MS.WindowsAPICodePack.Internal;
 using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.TextUploadersLib;
@@ -325,40 +325,23 @@ namespace ZScreenLib
         }
 
         #region "Windows 7 only"
-        public static List<Form> GetUserWindows()
-        {
-            List<Form> forms = new List<Form>();
-            foreach (Form f in Application.OpenForms)
-            {
-                if (f.GetType() == typeof(ToolbarWindow) || f.GetType() == typeof(ZScreen))
-                {
-                    forms.Add(f);
-                }
-            }
-            return forms;
-        }
-        public static void TaskbarSetState(TaskbarButtonProgressState tbps)
-        {
-            if (CoreHelpers.RunningOnWin7)
-            {
-                foreach (Form f in GetUserWindows())
-                {
-                    Taskbar.MultipleViewProgressBar.SetState(f, tbps);
-                }
-            }
 
+        public static void TaskbarSetState(TaskbarProgressBarState tbps)
+        {
+            if (TaskbarManager.IsPlatformSupported && Program.zWindowsTaskbar != null)
+            {
+                Program.zWindowsTaskbar.SetProgressState(tbps);
+            }
         }
+
         public static void TaskbarSetProgress(int progress)
         {
-            if (CoreHelpers.RunningOnWin7)
+            if (TaskbarManager.IsPlatformSupported && Program.zWindowsTaskbar != null)
             {
-                foreach (Form f in GetUserWindows())
-                {
-                    Taskbar.MultipleViewProgressBar.SetCurrentValue(f, progress);
-                }
+                Program.zWindowsTaskbar.SetProgressValue(progress, 100);
             }
-
         }
+
         #endregion
     }
 

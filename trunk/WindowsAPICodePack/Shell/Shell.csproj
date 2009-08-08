@@ -12,14 +12,10 @@
     <AssemblyName>Microsoft.WindowsAPICodePack.Shell</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName></SccProjectName>
+    <SccLocalPath></SccLocalPath>
+    <SccAuxPath></SccAuxPath>
+    <SccProvider></SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Microsoft.WindowsAPICodePack.Shell.XML</DocumentationFile>
-    <CodeAnalysisRules>-Microsoft.Design#CA2210;-Microsoft.Design#CA1005;-Microsoft.Design#CA1020;-Microsoft.Design#CA1021;-Microsoft.Design#CA1010;-Microsoft.Design#CA1047;-Microsoft.Design#CA1000;-Microsoft.Design#CA1048;-Microsoft.Design#CA1002;-Microsoft.Design#CA1061;-Microsoft.Design#CA1006;-Microsoft.Design#CA1065;-Microsoft.Design#CA1064;-Microsoft.Design#CA1004;-Microsoft.Design#CA1035;-Microsoft.Design#CA1063;-Microsoft.Design#CA1033;-Microsoft.Design#CA1016;-Microsoft.Design#CA1060;-Microsoft.Design#CA1013;-Microsoft.Design#CA1001;-Microsoft.Design#CA1049;-Microsoft.Design#CA1003;-Microsoft.Design#CA1007;-Microsoft.Design#CA1024;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1308;-Microsoft.Interoperability#CA1407;-Microsoft.Interoperability#CA1410;-Microsoft.Interoperability#CA1411;-Microsoft.Interoperability#CA1409;-Microsoft.Interoperability#CA1415;-Microsoft.Interoperability#CA1414;-Microsoft.Interoperability#CA1412;-Microsoft.Interoperability#CA1400;-Microsoft.Naming#CA1717;-Microsoft.Naming#CA1725;-Microsoft.Naming#CA1726;-Microsoft.Performance#CA1809;-Microsoft.Performance#CA1823;-Microsoft.Performance#CA1800;-Microsoft.Performance#CA1805;-Microsoft.Performance#CA1810;-Microsoft.Performance#CA1824;-Microsoft.Performance#CA1822;-Microsoft.Performance#CA1821;-Microsoft.Performance#CA1804;-Microsoft.Performance#CA1820;-Microsoft.Performance#CA1802;-Microsoft.Reliability#CA2003;-Microsoft.Usage#CA2243;-Microsoft.Usage#CA1816;-Microsoft.Usage#CA2222;-Microsoft.Usage#CA1806;-Microsoft.Usage#CA2212;-Microsoft.Usage#CA2219;-Microsoft.Usage#CA2201;-Microsoft.Usage#CA2238;-Microsoft.Usage#CA2232;-Microsoft.Usage#CA2223;-Microsoft.Usage#CA2226;-Microsoft.Usage#CA2231;-Microsoft.Usage#CA2239;-Microsoft.Usage#CA2200;-Microsoft.Usage#CA1801;-Microsoft.Usage#CA2242;-Microsoft.Usage#CA2205</CodeAnalysisRules>
+    <CodeAnalysisRules>-Microsoft.Design#CA2210;-Microsoft.Design#CA1005;-Microsoft.Design#CA1020;-Microsoft.Design#CA1021;-Microsoft.Design#CA1010;-Microsoft.Design#CA1047;-Microsoft.Design#CA1000;-Microsoft.Design#CA1048;-Microsoft.Design#CA1002;-Microsoft.Design#CA1061;-Microsoft.Design#CA1006;-Microsoft.Design#CA1065;-Microsoft.Design#CA1064;-Microsoft.Design#CA1004;-Microsoft.Design#CA1035;-Microsoft.Design#CA1063;-Microsoft.Design#CA1033;-Microsoft.Design#CA1016;-Microsoft.Design#CA1060;-Microsoft.Design#CA1013;-Microsoft.Design#CA1001;-Microsoft.Design#CA1049;-Microsoft.Design#CA1003;-Microsoft.Design#CA1007;-Microsoft.Design#CA1024;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1308;-Microsoft.Interoperability#CA1407;-Microsoft.Interoperability#CA1410;-Microsoft.Interoperability#CA1411;-Microsoft.Interoperability#CA1409;-Microsoft.Interoperability#CA1415;-Microsoft.Interoperability#CA1414;-Microsoft.Interoperability#CA1412;-Microsoft.Interoperability#CA1400;-Microsoft.Naming#CA1717;-Microsoft.Naming#CA1725;-Microsoft.Naming#CA1726;-Microsoft.Performance#CA1809;-Microsoft.Performance#CA1823;-Microsoft.Performance#CA1800;-Microsoft.Performance#CA1805;-Microsoft.Performance#CA1810;-Microsoft.Performance#CA1824;-Microsoft.Performance#CA1822;-Microsoft.Performance#CA1821;-Microsoft.Performance#CA1804;-Microsoft.Performance#CA1820;-Microsoft.Performance#CA1802;-Microsoft.Reliability#CA2003;-Microsoft.Security#CA2122;-Microsoft.Usage#CA2243;-Microsoft.Usage#CA1816;-Microsoft.Usage#CA2222;-Microsoft.Usage#CA1806;-Microsoft.Usage#CA2212;-Microsoft.Usage#CA2219;-Microsoft.Usage#CA2201;-Microsoft.Usage#CA2238;-Microsoft.Usage#CA2232;-Microsoft.Usage#CA2223;-Microsoft.Usage#CA2226;-Microsoft.Usage#CA2231;-Microsoft.Usage#CA2239;-Microsoft.Usage#CA2200;-Microsoft.Usage#CA1801;-Microsoft.Usage#CA2242;-Microsoft.Usage#CA2205</CodeAnalysisRules>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -78,16 +74,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\FileSystemFolder.cs" />
+    <Compile Include="Common\EnumUnknown.cs" />
+    <Compile Include="Common\ShellFileSystemFolder.cs" />
     <Compile Include="Common\IconReference.cs" />
+    <Compile Include="Common\SearchCondition.cs" />
+    <Compile Include="Common\SearchConditionFactory.cs" />
+    <Compile Include="Common\ShellSearchFolder.cs" />
     <Compile Include="Common\ShellFile.cs" />
     <Compile Include="Common\ShellFolder.cs" />
     <Compile Include="Common\ShellFolderItems.cs" />
     <Compile Include="Common\ShellHelper.cs" />
+    <Compile Include="Common\ShellItemArray.cs" />
     <Compile Include="Common\ShellObjectFactory.cs" />
     <Compile Include="Common\ShellThumbnail.cs" />
     <Compile Include="Common\ShellObjectCollection.cs" />
     <Compile Include="Common\DefaultShellImageSizes.cs" />
+    <Compile Include="Common\SortColumn.cs" />
     <Compile Include="Controls\CommandLinkWinforms.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,7 +111,7 @@
     <Compile Include="ExplorerBrowser\NavigationLogEvents.cs" />
     <Compile Include="ExplorerBrowser\NavigationOptions.cs" />
     <Compile Include="Interop\StockIcons\StockIconsNativeMethods.cs" />
-    <Compile Include="Interop\WindowUtilities.cs" />
+    <Compile Include="Interop\Common\WindowUtilities.cs" />
     <Compile Include="KnownFolders\IKnownFolder.cs" />
     <Compile Include="Interop\Common\ShellCOMClasses.cs" />
     <Compile Include="Interop\ExplorerBrowser\ExplorerBrowserCOMGuids.cs">
@@ -128,7 +130,7 @@
     <Compile Include="KnownFolders\KnownFolderSettings.cs" />
     <Compile Include="KnownFolders\RedirectionCapabilities.cs" />
     <Compile Include="KnownFolders\RetrievalOptions.cs" />
-    <Compile Include="Common\SearchConnector.cs" />
+    <Compile Include="Common\ShellSearchConnector.cs" />
     <Compile Include="Common\ShellEnums.cs" />
     <Compile Include="Common\ShellLibrary.cs" />
     <Compile Include="Common\ShellObject.cs" />
@@ -164,30 +166,30 @@
     <Compile Include="PropertySystem\ShellPropertyEnums.cs" />
     <Compile Include="PropertySystem\ShellPropertyEnumType.cs" />
     <Compile Include="KnownFolders\FileSystemKnownFolder.cs" />
-    <Compile Include="Common\ShellEntity.cs" />
-    <Compile Include="Common\NonFileSystemItem.cs" />
-    <Compile Include="Common\NonFileSystemFolder.cs" />
+    <Compile Include="Common\ShellObjectNode.cs" />
+    <Compile Include="Common\ShellNonFileSystemItem.cs" />
+    <Compile Include="Common\ShellNonFileSystemFolder.cs" />
     <Compile Include="KnownFolders\NonFileSystemKnownFolder.cs" />
     <Compile Include="Common\ShellThumbnailEnums.cs" />
-    <Compile Include="Common\SearchContainer.cs" />
-    <Compile Include="Common\ShellContainer.cs" />
+    <Compile Include="Common\ShellSearchCollection.cs" />
+    <Compile Include="Common\ShellObjectContainer.cs" />
     <Compile Include="Common\ShellLink.cs" />
     <Compile Include="PropertySystem\ShellPropertyWriter.cs" />
     <Compile Include="PropertySystem\StronglyTypedProperties.cs" />
+    <Compile Include="PropertySystem\SystemProperties.cs" />
     <Compile Include="StockIcons\StockIcon.cs" />
     <Compile Include="StockIcons\StockIconEnums.cs" />
     <Compile Include="StockIcons\StockIcons.cs" />
-    <Compile Include="Taskbar\CustomCategoryCollection.cs" />
+    <Compile Include="Taskbar\JumpListCustomCategoryCollection.cs" />
     <Compile Include="Taskbar\JumpListItemCollection.cs" />
     <Compile Include="Taskbar\JumpListLink.cs" />
     <Compile Include="Taskbar\JumpListSeparator.cs" />
-    <Compile Include="Taskbar\MultiViewProgressBar.cs" />
-    <Compile Include="Taskbar\ProgressBar.cs" />
     <Compile Include="Taskbar\ProgressBarStateSettings.cs" />
-    <Compile Include="Taskbar\ScreenCapture.cs" />
-    <Compile Include="Taskbar\TabbedThumbnail.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailScreenCapture.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailManager.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailBitmapRequestedEventArgs.cs" />
     <Compile Include="Taskbar\TabbedThumbnailEventArgs.cs" />
-    <Compile Include="Taskbar\TabbedThumbnailPreview.cs" />
+    <Compile Include="Taskbar\TabbedThumbnail.cs" />
     <Compile Include="Taskbar\TabbedThumbnailProxyWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,22 +204,22 @@
     <Compile Include="Interop\Common\ShellNativeMethods.cs" />
     <Compile Include="Interop\Common\ShellCOMInterfaces.cs" />
     <Compile Include="Interop\Dialogs\DialogsCOMInterfaces.cs" />
-    <Compile Include="Common\SavedSearch.cs" />
+    <Compile Include="Common\ShellSavedSearchCollection.cs" />
     <Compile Include="PropertySystem\ShellProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Taskbar\CustomCategory.cs" />
+    <Compile Include="Taskbar\JumpListCustomCategory.cs" />
     <Compile Include="Taskbar\JumpList.cs" />
     <Compile Include="Taskbar\JumpListItem.cs" />
-    <Compile Include="Taskbar\Taskbar.cs">
+    <Compile Include="Taskbar\TaskbarManager.cs">
     </Compile>
     <Compile Include="Taskbar\TaskbarInterfaces.cs" />
-    <Compile Include="Taskbar\OverlayImage.cs" />
     <Compile Include="Taskbar\TaskbarWindow.cs" />
     <Compile Include="Taskbar\TaskbarWindowManager.cs" />
     <Compile Include="Taskbar\ThumbnailButton.cs" />
+    <Compile Include="Taskbar\ThumbnailButtonClickedEventArgs.cs" />
     <Compile Include="Taskbar\ThumbnailToolbarManager.cs" />
     <Compile Include="Taskbar\ThumbnailToolbarProxyWindow.cs" />
-    <Compile Include="Taskbar\UserRemovedItemsEventArg.cs" />
+    <Compile Include="Taskbar\UserRemovedJumpListItemsEventArg.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

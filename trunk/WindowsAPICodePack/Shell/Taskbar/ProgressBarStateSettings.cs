@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
+namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     internal class ProgressBarStateSettings
     {
@@ -28,13 +28,13 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// Represents a collection of name/value pairs for each HWND and it’s 
         /// current progress bar state.
         /// </summary>
-        internal IDictionary<IntPtr, TaskbarButtonProgressState> States;
+        internal IDictionary<IntPtr, TaskbarProgressBarState> States;
 
         internal ProgressBarStateSettings()
         {
             CurrentValues = new Dictionary<IntPtr, int>();
             MaxValues = new Dictionary<IntPtr, int>();
-            States = new Dictionary<IntPtr, TaskbarButtonProgressState>();
+            States = new Dictionary<IntPtr, TaskbarProgressBarState>();
         }
 
         private static ProgressBarStateSettings instance;
@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         {
             get
             {
-                return Taskbar.OwnerHandle;
+                return TaskbarManager.Instance.OwnerHandle;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// <param name="maxValue">Current progress bar max value</param>
         internal void RefreshValue(IntPtr hwnd, int currentValue, int maxValue)
         {
-            Taskbar.TaskbarList.SetProgressValue(hwnd, (ulong)currentValue, (ulong)maxValue);
+            TaskbarManager.Instance.TaskbarList.SetProgressValue(hwnd, (ulong)currentValue, (ulong)maxValue);
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace Microsoft.WindowsAPICodePack.Shell.Taskbar
         /// </summary>
         /// <param name="hwnd">Current window handle</param>
         /// <param name="state">Current progress bar state</param>
-        internal void RefreshState(IntPtr hwnd, TaskbarButtonProgressState state)
+        internal void RefreshState(IntPtr hwnd, TaskbarProgressBarState state)
         {
-            Taskbar.TaskbarList.SetProgressState(hwnd, (TBPFLAG)state);
+            TaskbarManager.Instance.TaskbarList.SetProgressState(hwnd, (TBPFLAG)state);
         }
 
     }

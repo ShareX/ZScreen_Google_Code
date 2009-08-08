@@ -3,10 +3,15 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAPICodePack
+namespace Microsoft.WindowsAPICodePack.ApplicationServices
 {
     internal class PowerManagementNativeMethods
     {
+        private PowerManagementNativeMethods()
+        {
+
+        }
+
         #region Power Management
 
         internal const uint WM_POWERBROADCAST = 536;
@@ -126,12 +131,6 @@ namespace Microsoft.WindowsAPICodePack
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern ExecutionState SetThreadExecutionState(ExecutionState esFlags);
-
-        [DllImport("user32.dll",
-            EntryPoint = "SystemParametersInfo", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SystemParametersInfoSet(
-           uint action, uint param, IntPtr vparam, uint init);
 
         #endregion
     }

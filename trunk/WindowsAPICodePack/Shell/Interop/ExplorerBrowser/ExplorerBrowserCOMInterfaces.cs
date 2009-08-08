@@ -6,8 +6,10 @@ using System.Runtime.InteropServices.CustomMarshalers;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.CompilerServices;
 using Microsoft.WindowsAPICodePack;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Shell;
 
-namespace Microsoft.WindowsAPICodePack.Shell
+namespace Microsoft.WindowsAPICodePack.Controls
 {
     internal enum SVGIO : uint
     {
@@ -410,8 +412,9 @@ namespace Microsoft.WindowsAPICodePack.Shell
         [MethodImpl( MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime )]
         void Item( int iItemIndex, out IntPtr ppidl );
 
-        [MethodImpl( MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime )]
-        void ItemCount( uint uFlags, out int pcItems );
+        [PreserveSig]
+        [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+        HRESULT ItemCount( uint uFlags, out int pcItems );
 
         [PreserveSig]
         [MethodImpl( MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime )]
@@ -573,6 +576,26 @@ namespace Microsoft.WindowsAPICodePack.Shell
             IntPtr ppshv,
             IntPtr pidl );
     }
+
+
+    [ComImport,
+     Guid( ExplorerBrowserIIDGuid.IInputObject ),
+     InterfaceType( ComInterfaceType.InterfaceIsIUnknown )]
+    internal interface IInputObject
+    {
+        [PreserveSig]
+        [MethodImpl( MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime )]
+        HRESULT UIActivateIO( bool fActivate, ref System.Windows.Forms.Message pMsg );
+        
+        [PreserveSig]
+        [MethodImpl( MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime )]
+        HRESULT HasFocusIO( );
+        
+        [PreserveSig]
+        [MethodImpl( MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime )]
+        HRESULT TranslateAcceleratorIO( ref System.Windows.Forms.Message pMsg );
+        
+    };
 
 #pragma warning restore 108
 
