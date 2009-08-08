@@ -25,9 +25,9 @@ using System.Windows.Forms;
 
 namespace ZScreenLib
 {
-    public partial class frmTextViewer : Form
+    public partial class TextViewer : Form
     {
-        public frmTextViewer(string title, string txt)
+        public TextViewer(string title, string txt)
         {
             InitializeComponent();
 

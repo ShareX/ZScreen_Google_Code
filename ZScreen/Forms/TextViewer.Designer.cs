@@ -1,6 +1,6 @@
 ﻿namespace ZScreenLib
 {
-    partial class frmTextViewer
+    partial class TextViewer
     {
         /// <summary>
         /// Required designer variable.
