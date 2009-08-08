@@ -49,6 +49,7 @@ namespace ZScreenLib
                         txtUrl.Location = new Point(170, count * yGap + yMargin + yOffset);
                         txtUrl.Size = new Size(320, 20);
                         txtUrl.Text = url;
+                        txtUrl.ReadOnly = true;
                         this.Controls.Add(txtUrl);
                         // Copy Button
                         Button btnCopy = new Button();
