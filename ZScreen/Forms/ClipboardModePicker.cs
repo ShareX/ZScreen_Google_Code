@@ -140,7 +140,7 @@ namespace ZScreenLib
 
         private void ClipboardModePicker_Shown(object sender, EventArgs e)
         {
-            User32.ActivateWindow(this.Handle);
+           // User32.ActivateWindow(this.Handle); // steals focus and this is annoying - McoreD
         }
 
         private void tmrClose_Tick(object sender, EventArgs e)

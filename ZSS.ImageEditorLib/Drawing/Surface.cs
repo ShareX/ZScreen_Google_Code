@@ -373,6 +373,17 @@ namespace Greenshot.Drawing
             return ret;
         }
 
+        public static Bitmap GetImageForExport(Image img)
+        {
+            Bitmap ret = new Bitmap(img.Width, img.Height);
+            Graphics g = Graphics.FromImage(ret);
+            g.DrawImageUnscaled(img, new Point(0, 0));
+            DrawableContainerList elements = new DrawableContainerList();
+            elements.Draw(g, DrawableContainer.RenderMode.EXPORT);
+            g.DrawImage(ret, 0, 0);
+            return ret;
+        }
+
         public void RemoveSelectedElements()
         {
             if (selectedElements.Count > 0)

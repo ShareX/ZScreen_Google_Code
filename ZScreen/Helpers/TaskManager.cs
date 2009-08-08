@@ -80,6 +80,9 @@ namespace ZScreenLib
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
                     ((ImageShackUploader)imageUploader).Public = Program.conf.ImageShackShowImagesInPublic;
                     break;
+                case ImageDestType.PRINTER:
+                    mTask.MyWorker.ReportProgress(101, Greenshot.Drawing.Surface.GetImageForExport(mTask.MyImage));
+                    break;
                 case ImageDestType.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
