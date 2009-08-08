@@ -32,8 +32,9 @@ using ZSS.TextUploadersLib;
 using System.Runtime.InteropServices;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS;
+using ZSS.ImageUploadersLib;
 
-namespace ZScreenLib.Helpers
+namespace ZScreenLib
 {
     public class MainAppTask
     {
@@ -64,7 +65,9 @@ namespace ZScreenLib.Helpers
             [Description("Upload Image")]
             UPLOAD_IMAGE,
             [Description("Custom Uploader Test")]
-            CUSTOM_UPLOADER_TEST
+            CUSTOM_UPLOADER_TEST,
+            [Description("Webpage Capture")]
+            WEBPAGE_CAPTURE
         }
 
         public enum ProgressType : int
@@ -80,7 +83,8 @@ namespace ZScreenLib.Helpers
             UPDATE_TRAY_TITLE,
             UPDATE_CROP_MODE,
             UPDATE_UPLOAD_DESTINATION,
-            CHANGE_TRAY_ICON_PROGRESS
+            CHANGE_TRAY_ICON_PROGRESS,
+            SHOW_TRAY_MESSAGE
         }
 
         #endregion
@@ -225,6 +229,11 @@ namespace ZScreenLib.Helpers
         {
             this.LocalFilePath = fp;
             this.FileName = new StringBuilder(Path.GetFileName(fp));
+        }
+
+        public string GetDescription()
+        {
+            return string.Format("{0} ({1})", this.Job.GetDescription(), this.DestinationName);
         }
 
         #region "Functions"

@@ -21,38 +21,28 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
 using ZSS.ImageUploadersLib.Helpers;
-using ZScreenLib.Helpers;
-using ZScreenLib;
+using ZSS;
+using ZSS.ImageUploadersLib;
+using ZScreenLib.Properties;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
 
-namespace ZSS
+namespace ZScreenLib
 {
     /// <summary>
     /// Class reponsible for Adding or Retrieving Clipboard Text and Setting Text to Clipboard
     /// </summary>
     public static class UploadManager
     {
-        public static List<UploadInfo> UploadInfos = new List<UploadInfo>();
+        public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
 
         private static ImageFileManager ScreenshotsHistory = new ImageFileManager();
-        private static MainAppTask MyTask;
         private static int UniqueNumber = 0;
-
-        public static void AddTask(MainAppTask task)
-        {
-            MyTask = task;
-            ScreenshotsHistory = task.ImageManager;
-        }
 
         /// <summary>
         /// Function to be called when a new Worker thread starts
@@ -60,13 +50,13 @@ namespace ZSS
         public static int Queue()
         {
             int number = UniqueNumber++;
-            UploadInfos.Add(new UploadInfo(number));
+            UploadInfoList.Add(new UploadInfo(number));
             return number;
         }
 
         public static void Clear()
         {
-            UploadInfos.Clear();
+            UploadInfoList.Clear();
         }
 
         /// <summary>
@@ -77,14 +67,14 @@ namespace ZSS
             UploadInfo find = GetInfo(number);
             if (find != null)
             {
-                return UploadInfos.Remove(find);
+                return UploadInfoList.Remove(find);
             }
             return false;
         }
 
         public static UploadInfo GetInfo(int number)
         {
-            return UploadInfos.Find(x => x.UniqueID == number);
+            return UploadInfoList.Find(x => x.UniqueID == number);
         }
 
         public static ImageFileManager GetLastImageUpload()
@@ -94,26 +84,37 @@ namespace ZSS
 
         public static int GetAverageProgress()
         {
-            return UploadInfos.Sum(x => x.UploadPercentage) / UploadInfos.Count;
+            return UploadInfoList.Sum(x => x.UploadPercentage) / UploadInfoList.Count;
         }
 
         /// <summary>
         /// Sets Clipboard text and returns the content
         /// </summary>
         /// <returns></returns>
-        public static string SetClipboardText()
+        public static string SetClipboardText(MainAppTask task)
         {
+            ScreenshotsHistory = task.ImageManager;
+
             if (ScreenshotsHistory != null)
             {
+                if (Program.conf.ShowClipboardModeChooser)
+                {
+                    ClipboardModePicker cmp = new ClipboardModePicker(task);
+                    cmp.Icon = Resources.zss_main;
+                    cmp.Show();
+                }
+
                 string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
 
-                if (MyTask.MakeTinyURL) {
-                	string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                	if (!string.IsNullOrEmpty(tinyUrl)) {
-                		url = tinyUrl.Trim();
-                	}
+                if (task.MakeTinyURL)
+                {
+                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                    if (!string.IsNullOrEmpty(tinyUrl))
+                    {
+                        url = tinyUrl.Trim();
+                    }
                 }
-                	
+
                 if (!string.IsNullOrEmpty(url))
                 {
                     Clipboard.SetText(url);

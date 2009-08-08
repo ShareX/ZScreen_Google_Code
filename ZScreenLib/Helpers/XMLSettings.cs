@@ -32,88 +32,16 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
+using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
 using ZSS.TextUploadersLib;
-using ZSS;
-using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
     [XmlRoot("Settings")]
     public class XMLSettings
     {
-        public XMLSettings()
-        {
-            #region "Default Values"
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Accounts / FTP
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            BackupFTPSettings = true;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Options / Actions Toolbar
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            ActionsToolbarMode = false;
-            ActionToolbarLocation = Point.Empty;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Options / General
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            ShowTrayUploadProgress = true;
-            WriteDebugFile = true;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Options / Interaction
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            AutoShortenURL = true;
-            LimitLongURL = 100;
-            MakeTinyURL = false;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Options / Paths
-            //~~~~~~~~~~~~~~~~~~~~~
-            BackupApplicationSettings = true;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Screenshots / Bevel
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            BevelEffect = false;
-            BevelEffectOffset = 15;
-            BevelFilterType = FilterType.Brightness;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Screenshots / General
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            AutoIncrement = 0;
-            BackgroundRegionBrightnessValue = -10;
-            BackgroundRegionTransparentValue = 100;
-            CopyImageUntilURL = false;
-            PromptForUpload = false;
-            RegionBrightnessValue = 15;
-            RegionTransparentValue = 75;
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Screenshots / Reflection
-            //~~~~~~~~~~~~~~~~~~~~~
-
-            DrawReflection = false;
-            ReflectionOffset = 0;
-            ReflectionPercentage = 20;
-            ReflectionSkew = true;
-            ReflectionSkewSize = 25;
-            ReflectionTransparency = 255;
-
-            #endregion
-        }
-
         #region Settings
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -133,8 +61,6 @@ namespace ZScreenLib
         public TextDestType TextDestMode = TextDestType.FTP;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
-        [Category("Screenshots / General"), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window")]
-        public bool PromptForUpload { get; set; }
         public bool ManualNaming = false;
         public bool ShowCursor = false;
         public bool ShowWatermark = false;
@@ -162,39 +88,6 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
         //  Capture
         //~~~~~~~~~~~~~~~~~~~~~
-
-        // General
-
-        [Category("Screenshots / General"), DefaultValue(false), Description("Copy image to clipboard until URL is retrieved.")]
-        public bool CopyImageUntilURL { get; set; }
-        [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
-        public int RegionTransparentValue { get; set; }
-        [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
-        public int RegionBrightnessValue { get; set; }
-        [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
-        public int BackgroundRegionTransparentValue { get; set; }
-        [Category("Screenshots / General"), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
-        public int BackgroundRegionBrightnessValue { get; set; }
-
-        [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
-        public bool DrawReflection { get; set; }
-        [Category("Screenshots / Reflection"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
-        public int ReflectionPercentage { get; set; }
-        [Category("Screenshots / Reflection"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
-        public int ReflectionTransparency { get; set; }
-        [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
-        public int ReflectionOffset { get; set; }
-        [Category("Screenshots / Reflection"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
-        public bool ReflectionSkew { get; set; }
-        [Category("Screenshots / Reflection"), DefaultValue(25), Description("How much pixel skew left to right.")]
-        public int ReflectionSkewSize { get; set; }
-
-        [Category("Screenshots / Bevel"), DefaultValue(false), Description("Add bevel effect to screenshots.")]
-        public bool BevelEffect { get; set; }
-        [Category("Screenshots / Bevel"), DefaultValue(15), Description("Bevel effect size.")]
-        public int BevelEffectOffset { get; set; }
-        [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
-        public FilterType BevelFilterType { get; set; }
 
         // Crop Shot
 
@@ -238,30 +131,18 @@ namespace ZScreenLib
         public decimal FlashTrayCount = 1;
         public bool CaptureEntireScreenOnError = false;
         public bool ShowBalloonTip = true;
-        public bool BalloonTipOpenLink = false;
+        public bool BalloonTipOpenLink = true;
         public bool ShowUploadDuration = false;
         public bool CompleteSound = false;
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
         public bool CloseQuickActions = false;
-        [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to Taskbar on Close")]
-        public bool MinimizeOnClose { get; set; }
-        [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task")]
-        public bool MakeTinyURL { get; set; }
-        [Category("Options / Interaction"), DefaultValue(100),
-        Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
-        public int LimitLongURL { get; set; }
-        [Category("Options / Interaction"), DefaultValue(true),
-        Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
-        public bool AutoShortenURL { get; set; }
 
         // Naming Conventions
 
         public string ActiveWindowPattern = "%t-%y.%mo.%d-%h.%mi.%s";
         public string EntireScreenPattern = "SS-%y.%mo.%d-%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
-        [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
-        public int AutoIncrement { get; set; }
 
         // Image Settings
 
@@ -329,8 +210,6 @@ namespace ZScreenLib
         public int FTPSelected = 0;
         public bool FTPCreateThumbnail = false;
         public bool AutoSwitchFTP = true;
-        [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
-        public bool BackupFTPSettings { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  DekiWiki
@@ -350,8 +229,8 @@ namespace ZScreenLib
         public decimal ErrorRetryCount = 3;
         public bool ImageUploadRetry = true;
         public bool AddFailedScreenshot = false;
-        public bool AutoChangeUploadDestination = true;
-        public decimal UploadDurationLimit = 10000;
+        public bool AutoChangeUploadDestination = false;
+        public decimal UploadDurationLimit = 15000;
 
         // ImageShack
 
@@ -369,8 +248,8 @@ namespace ZScreenLib
 
         // TwitPic
 
-        public string TwitPicUserName = "";
-        public string TwitPicPassword = "";
+        public string TwitterUserName = "";
+        public string TwitterPassword = "";
         public TwitPicUploadType TwitPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
         public bool TwitPicShowFull = true;
         public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
@@ -383,6 +262,13 @@ namespace ZScreenLib
 
         public List<ImageHostingService> ImageUploadersList = null;
         public int ImageUploaderSelected = 0;
+
+        // Web Page Upload
+
+        public bool WebPageUseCustomSize = true;
+        public int WebPageWidth = 1024;
+        public int WebPageHeight = 768;
+        public bool WebPageAutoUpload = true;
 
         // Language Translator
 
@@ -405,21 +291,10 @@ namespace ZScreenLib
         public bool HistoryShowTooltips = true;
         public bool HistoryAddSpace = false;
         public bool HistoryReverseList = false;
-        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
-        public bool PreferBrowserForText { get; set; }
-        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
-        public bool PreferBrowserForImages { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
         //~~~~~~~~~~~~~~~~~~~~~
-
-        // Actions Toolbar 
-
-        [Category("Options / Actions Toolbar"), DefaultValue(false), Description("Open Actions Toolbar on startup.")]
-        public bool ActionsToolbarMode { get; set; }
-        [Category("Options / Actions Toolbar"), Description("Action Toolbar Location.")]
-        public Point ActionToolbarLocation { get; set; }
 
         // General - Program
 
@@ -441,30 +316,11 @@ namespace ZScreenLib
         public int ProxySelected = 0;
         public ProxyInfo ProxyActive = null;
         public bool ProxyEnabled = false;
-        [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
-        public bool ShowTrayUploadProgress { get; set; }
 
         // Paths
 
-        [Browsable(false)]
-        public bool DeleteLocal { get; set; }
+        public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;
-        [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
-        public bool BackupApplicationSettings { get; set; }
-        [Category("Options / Paths"), Description("Custom Images directory where screenshots and pictures will be stored locally.")]
-        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
-        public string CustomImagesDir { get; set; }
-        [Category("Options / Paths"), DefaultValue(false), Description("Use Custom Images directory")]
-        public bool UseCustomImagesDir { get; set; }
-
-        [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
-        public bool WriteDebugFile { get; set; }
-
-        [Category("Options / Watch Folder"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
-        public bool FolderMonitoring { get; set; }
-        [Category("Options / Watch Folder"), Description("Folder monitor path where files automatically get uploaded.")]
-        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
-        public string FolderMonitorPath { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture
@@ -475,6 +331,184 @@ namespace ZScreenLib
         public Times AutoCaptureDelayTimes = Times.Seconds;
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
+
+        #region Default Values
+
+        public XMLSettings()
+        {
+            // Accounts / FTP
+
+            BackupFTPSettings = true;
+
+            // Options / Actions Toolbar
+
+            ActionsToolbarMode = false;
+            ActionToolbarLocation = Point.Empty;
+
+            // Options / General
+
+            ShowTrayUploadProgress = true;
+            WriteDebugFile = true;
+
+            // Options / History Settings
+
+            PreferBrowserForImages = false;
+            PreferBrowserForText = false;
+
+            // Options / Interaction
+
+            AutoShortenURL = true;
+            LimitLongURL = 100;
+            MakeTinyURL = false;
+            MinimizeOnClose = false;
+
+            // Options / Paths
+
+            BackupApplicationSettings = true;
+            CustomImagesDir = String.Empty;
+            UseCustomImagesDir = false;
+
+            // Options / Watch Folder
+
+            FolderMonitoring = false;
+            FolderMonitorPath = String.Empty;
+
+            // Screenshots / Bevel
+
+            BevelEffect = false;
+            BevelEffectOffset = 15;
+            BevelFilterType = FilterType.Brightness;
+
+            // Screenshots / General
+
+            AutoIncrement = 0;
+            BackgroundRegionBrightnessValue = -10;
+            BackgroundRegionTransparentValue = 100;
+            CopyImageUntilURL = false;
+            PromptForUpload = false;
+            RegionBrightnessValue = 15;
+            RegionTransparentValue = 75;
+
+            // Screenshots / Reflection
+
+            DrawReflection = false;
+            ReflectionOffset = 0;
+            ReflectionPercentage = 20;
+            ReflectionSkew = true;
+            ReflectionSkewSize = 25;
+            ReflectionTransparency = 255;
+        }
+
+        #endregion
+
+        #region Properties
+
+        // Accounts / FTP
+
+        [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
+        public bool BackupFTPSettings { get; set; }
+
+        // Destinations / Twitter
+
+        [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]
+        public YfrogUploadType YfrogUploadMode { get; set; }
+
+        // Options / Actions Toolbar
+
+        [Category("Options / Actions Toolbar"), DefaultValue(false), Description("Open Actions Toolbar on startup.")]
+        public bool ActionsToolbarMode { get; set; }
+        [Category("Options / Actions Toolbar"), Description("Action Toolbar Location.")]
+        public Point ActionToolbarLocation { get; set; }
+
+        // Options / General
+
+        [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
+        public bool ShowClipboardModeChooser { get; set; }
+        [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
+        public bool ShowTrayUploadProgress { get; set; }
+        [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
+        public bool WriteDebugFile { get; set; }
+
+        // Options / History Settings
+
+        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
+        public bool PreferBrowserForImages { get; set; }
+        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
+        public bool PreferBrowserForText { get; set; }
+
+        // Options / Interaction
+
+        [Category("Options / Interaction"), DefaultValue(true),
+        Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
+        public bool AutoShortenURL { get; set; }
+        [Category("Options / Interaction"), DefaultValue(100),
+        Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
+        public int LimitLongURL { get; set; }
+        [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
+        public bool MakeTinyURL { get; set; }
+        [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to taskbar on close.")]
+        public bool MinimizeOnClose { get; set; }
+
+        // Options / Paths
+
+        [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
+        public bool BackupApplicationSettings { get; set; }
+        [Category("Options / Paths"), Description("Custom Images directory where screenshots and pictures will be stored locally.")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        public string CustomImagesDir { get; set; }
+        [Category("Options / Paths"), DefaultValue(false), Description("Use Custom Images directory.")]
+        public bool UseCustomImagesDir { get; set; }
+
+        // Options / Watch Folder
+
+        [Category("Options / Watch Folder"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
+        public bool FolderMonitoring { get; set; }
+        [Category("Options / Watch Folder"), Description("Folder monitor path where files automatically get uploaded.")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        public string FolderMonitorPath { get; set; }
+
+        // Screenshots / Bevel
+
+        [Category("Screenshots / Bevel"), DefaultValue(false), Description("Add bevel effect to screenshots.")]
+        public bool BevelEffect { get; set; }
+        [Category("Screenshots / Bevel"), DefaultValue(15), Description("Bevel effect size.")]
+        public int BevelEffectOffset { get; set; }
+        [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
+        public FilterType BevelFilterType { get; set; }
+
+        // Screenshots / General
+
+        [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
+        public int AutoIncrement { get; set; }
+        [Category("Screenshots / General"), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
+        public int BackgroundRegionBrightnessValue { get; set; }
+        [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
+        public int BackgroundRegionTransparentValue { get; set; }
+        [Category("Screenshots / General"), DefaultValue(false), Description("Copy image to clipboard until URL is retrieved.")]
+        public bool CopyImageUntilURL { get; set; }
+        [Category("Screenshots / General"), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window.")]
+        public bool PromptForUpload { get; set; }
+        [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
+        public int RegionBrightnessValue { get; set; }
+        [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
+        public int RegionTransparentValue { get; set; }
+
+        // Screenshots / Reflection
+
+        [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
+        public bool DrawReflection { get; set; }
+        [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
+        public int ReflectionOffset { get; set; }
+        [Category("Screenshots / Reflection"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
+        public int ReflectionPercentage { get; set; }
+        [Category("Screenshots / Reflection"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
+        public bool ReflectionSkew { get; set; }
+        [Category("Screenshots / Reflection"), DefaultValue(25), Description("How much pixel skew left to right.")]
+        public int ReflectionSkewSize { get; set; }
+        [Category("Screenshots / Reflection"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
+        public int ReflectionTransparency { get; set; }
+
+        #endregion
 
         #endregion
 
@@ -521,6 +555,7 @@ namespace ZScreenLib
 
                     return Color.FromArgb(a, r, g, b);
             }
+
             return Color.Empty;
         }
 
@@ -577,7 +612,9 @@ namespace ZScreenLib
             try
             {
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                {
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                }
 
                 XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
@@ -600,7 +637,9 @@ namespace ZScreenLib
         public static XMLSettings Read(string filePath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
 
             if (File.Exists(filePath))
             {
@@ -648,31 +687,6 @@ namespace ZScreenLib
             {
                 fieldInfo.SetValue(this, value);
                 return true;
-            }
-            return false;
-        }
-
-        public bool SoftwareExist(string sName)
-        {
-            foreach (Software iS in this.ImageEditors)
-            {
-                if (iS.Name == sName) return true;
-            }
-            return false;
-        }
-
-        public bool SoftwareRemove(string sName)
-        {
-            if (SoftwareExist(sName))
-            {
-                foreach (Software iS in this.ImageEditors)
-                {
-                    if (iS.Name == sName)
-                    {
-                        this.ImageEditors.Remove(iS);
-                        return true;
-                    }
-                }
             }
             return false;
         }

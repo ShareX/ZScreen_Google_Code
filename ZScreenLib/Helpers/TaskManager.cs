@@ -27,12 +27,10 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack.Shell.Taskbar;
-using ZScreenLib;
-using ZScreenLib.Helpers;
+using Microsoft.WindowsAPICodePack.Taskbar;
+using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.TextUploadersLib;
-using ZSS;
 using ZScreenLib.Properties;
 
 namespace ZScreenLib
@@ -82,18 +80,35 @@ namespace ZScreenLib
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
                     ((ImageShackUploader)imageUploader).Public = Program.conf.ImageShackShowImagesInPublic;
                     break;
+                case ImageDestType.PRINTER:
+                    mTask.MyWorker.ReportProgress(101, Greenshot.Drawing.Surface.GetImageForExport(mTask.MyImage));
+                    break;
                 case ImageDestType.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
                     ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
-                    TwitPicOptions options = new TwitPicOptions();
-                    options.Username = Program.conf.TwitPicUserName;
-                    options.Password = Program.conf.TwitPicPassword;
-                    options.TwitPicUploadType = Program.conf.TwitPicUploadMode;
-                    options.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
-                    options.ShowFull = Program.conf.TwitPicShowFull;
-                    imageUploader = new TwitPicUploader(options);
+                    TwitPicOptions twitpicOpt = new TwitPicOptions();
+                    twitpicOpt.UserName = Program.conf.TwitterUserName;
+                    twitpicOpt.Password = Program.conf.TwitterPassword;
+                    twitpicOpt.TwitPicUploadType = Program.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Program.conf.TwitPicShowFull;
+                    imageUploader = new TwitPicUploader(twitpicOpt);
+                    break;
+                case ImageDestType.TWITSNAPS:
+                    TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
+                    twitsnapsOpt.UserName = Program.conf.TwitterUserName;
+                    twitsnapsOpt.Password = Program.conf.TwitterPassword;
+                    imageUploader = new TwitSnapsUploader(twitsnapsOpt);
+                    break;
+                case ImageDestType.YFROG:
+                    YfrogOptions yfrogOp = new YfrogOptions(Program.IMAGESHACK_KEY);
+                    yfrogOp.UserName = Program.conf.TwitterUserName;
+                    yfrogOp.Password = Program.conf.TwitterPassword;
+                    yfrogOp.Source = Application.ProductName;
+                    yfrogOp.UploadType = Program.conf.YfrogUploadMode;
+                    imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
 
@@ -103,13 +118,15 @@ namespace ZScreenLib
                 case ImageDestType.IMAGESHACK:
                 case ImageDestType.TINYPIC:
                 case ImageDestType.TWITPIC:
+                case ImageDestType.TWITSNAPS:
+                case ImageDestType.YFROG:
                     imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
                     break;
             }
 
             if (imageUploader != null)
             {
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
@@ -196,7 +213,7 @@ namespace ZScreenLib
             try
             {
                 string fullFilePath = mTask.LocalFilePath;
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
@@ -211,7 +228,7 @@ namespace ZScreenLib
                         WorkingDir = Program.CacheDir
                     };
 
-                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Normal);
+                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
@@ -247,7 +264,7 @@ namespace ZScreenLib
 
                     if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Program.conf.DekiWikiForcePath == true)
                     {
-                        ZSS.Forms.DekiWikiPath diag = new ZSS.Forms.DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
+                        DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                         diag.history = acc.History;
                         diag.ShowDialog();
 
@@ -284,7 +301,7 @@ namespace ZScreenLib
         public void UploadText()
         {
             mTask.StartTime = DateTime.Now;
-            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarButtonProgressState.Indeterminate);
+            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
             TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
             textUploader.ProxySettings = Adapter.GetProxySettings();

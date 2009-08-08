@@ -57,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ClipboardModePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ClipboardModePicker.designer.cs">
+      <DependentUpon>ClipboardModePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ConfigWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ClipboardModePicker.resx">
+      <DependentUpon>ClipboardModePicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigWizard.resx">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
     </EmbeddedResource>

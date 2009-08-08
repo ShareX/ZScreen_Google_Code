@@ -1,4 +1,4 @@
-﻿namespace ZScreenLib.Forms
+﻿namespace ZScreenLib
 {
     partial class ConfigWizard
     {

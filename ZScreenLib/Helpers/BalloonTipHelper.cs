@@ -21,30 +21,28 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZSS;
+using ZSS.ImageUploadersLib;
 using System.Diagnostics;
 
-namespace ZScreenLib.Helpers
+namespace ZScreenLib
 {
     public class BalloonTipHelper
     {
         private MainAppTask task;
         private NotifyIcon niTray;
 
+        public BalloonTipHelper(NotifyIcon notifyIcon)
+        {
+            this.niTray = notifyIcon;
+        }
+
         public BalloonTipHelper(NotifyIcon notifyIcon, MainAppTask task)
             : this(notifyIcon)
         {
             this.task = task;
-        }
-
-        public BalloonTipHelper(NotifyIcon notifyIcon)
-        {
-            this.niTray = notifyIcon;
         }
 
         public string ShowBalloonTip()
