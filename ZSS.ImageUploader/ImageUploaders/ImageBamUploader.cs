@@ -33,16 +33,19 @@ namespace ZSS.ImageUploadersLib
 {
     public sealed class ImageBamUploader : ImageUploader
     {
-        private const string UploadURL = "http://www.imagebam.com/services/upload/";
         private const string Key = "3702805a5d94b0161052e7aa4c69f046";
         private const string Secret = "9b7ae269fee7f2aa5253a4d4b7608b9c";
 
-        public string UserKey, UserSecret;
+        private const string upload = "http://www.imagebam.com/services/upload/";
+        private const string generate_GID = "http://www.imagebam.com/services/generate_GID/";
 
-        public ImageBamUploader(string userKey, string userSecret)
+        public string UserKey, UserSecret, GalleryID;
+
+        public ImageBamUploader(string userKey, string userSecret, string galleryID)
         {
             UserKey = userKey;
             UserSecret = userSecret;
+            GalleryID = galleryID;
         }
 
         public override string Name
@@ -56,7 +59,7 @@ namespace ZSS.ImageUploadersLib
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-            //arguments.Add("gallery", ""); // The gallery ID (GID) to be used. The GID must be generated before uploading a photo. (optional)
+            arguments.Add("gallery", GalleryID); // The gallery ID (GID) to be used. The GID must be generated before uploading a photo.
             arguments.Add("content_type", "0"); // Content type: SFW (0), NSFW(1)
             arguments.Add("API_key_dev", Key); // Your API-Key.
             arguments.Add("API_key_user", UserKey); // The user's API key.
@@ -69,9 +72,29 @@ namespace ZSS.ImageUploadersLib
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
             arguments.Add("secret", GetMD5(Secret + UserSecret + salt));
 
-            string source = PostImage(image, UploadURL, "photo", arguments);
+            string source = PostImage(image, upload, "photo", arguments);
 
             return ParseResult(source);
+        }
+
+        public string CreateGalleryID()
+        {
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
+
+            arguments.Add("API_key_dev", Key); // Your API-Key.
+            arguments.Add("API_key_user", UserKey); // The user's API key.
+
+            string salt = RandomAlphanumeric(32);
+
+            // Random string of 32 characters (a-zA-Z0-9) for higher security.
+            arguments.Add("salt", salt);
+
+            // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
+            arguments.Add("secret", GetMD5(Secret + UserSecret + salt));
+
+            string source = GetResponse(generate_GID, arguments);
+
+            return GetXMLValue(source, "URL");
         }
 
         private ImageFileManager ParseResult(string source)
