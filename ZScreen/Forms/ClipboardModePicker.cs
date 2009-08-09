@@ -70,7 +70,7 @@ namespace ZScreenLib
                 btnOpenLocal.Text = "Open &Local file";
                 btnOpenLocal.Location = new Point(20, yBottomControl);
                 btnOpenLocal.AutoSize = true;
-                btnOpenLocal.Click += new EventHandler(btnPreview_Click);
+                btnOpenLocal.Click += new EventHandler(btnOpenLocal_Click);
                 this.Controls.Add(btnOpenLocal);
 
                 Button btnOpenRemote = new Button();
@@ -105,6 +105,8 @@ namespace ZScreenLib
             {
                 Process.Start(mTask.RemoteFilePath);
             }
+            tmrClose.Stop();
+            tmrClose.Start();
         }
 
         void btnClose_Click(object sender, EventArgs e)
@@ -121,12 +123,14 @@ namespace ZScreenLib
             btnClose_Click(sender, e);
         }
 
-        void btnPreview_Click(object sender, EventArgs e)
+        void btnOpenLocal_Click(object sender, EventArgs e)
         {
             if (mTask != null && !string.IsNullOrEmpty(mTask.LocalFilePath))
             {
                 Process.Start(mTask.LocalFilePath);
             }
+            tmrClose.Stop();
+            tmrClose.Start();
         }
 
         void btnCopy_Click(object sender, EventArgs e)
