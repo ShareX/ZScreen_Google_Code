@@ -36,6 +36,7 @@ using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
 using ZSS.TextUploadersLib;
+using System.Collections.Specialized;
 
 namespace ZScreenLib
 {
@@ -77,6 +78,9 @@ namespace ZScreenLib
 
         public string ImageBamApiKey = string.Empty;
         public string ImageBamSecret = string.Empty;
+        public int ImageBamGalleryActive = 0;
+        public bool ImageBamContentNSFW = false;
+        public StringCollection ImageBamGalleryIDs = new StringCollection();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys

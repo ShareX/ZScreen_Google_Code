@@ -31,6 +31,29 @@ using System.Xml.Linq;
 
 namespace ZSS.ImageUploadersLib
 {
+    public sealed class ImageBamUploaderOptions
+    {
+        public string UserKey, UserSecret, GalleryID;
+        public bool NSFW { get; set; }
+
+        public ImageBamUploaderOptions(string userKey, string userSecret)
+        {
+            UserKey = userKey;
+            UserSecret = userSecret;
+        }
+
+        public ImageBamUploaderOptions(string userKey, string userSecret, string galleryID)
+            : this(userKey, userSecret)
+        {
+            GalleryID = galleryID;
+        }
+
+        public string GetContentType()
+        {
+            return NSFW == true ? "1" : "0";
+        }
+    }
+
     public sealed class ImageBamUploader : ImageUploader
     {
         private const string Key = "3702805a5d94b0161052e7aa4c69f046";
@@ -39,13 +62,11 @@ namespace ZSS.ImageUploadersLib
         private const string upload = "http://www.imagebam.com/services/upload/";
         private const string generate_GID = "http://www.imagebam.com/services/generate_GID/";
 
-        public string UserKey, UserSecret, GalleryID;
+        private ImageBamUploaderOptions Options { get; set; }
 
-        public ImageBamUploader(string userKey, string userSecret, string galleryID)
+        public ImageBamUploader(ImageBamUploaderOptions options)
         {
-            UserKey = userKey;
-            UserSecret = userSecret;
-            GalleryID = galleryID;
+            this.Options = options;
         }
 
         public override string Name
@@ -59,10 +80,10 @@ namespace ZSS.ImageUploadersLib
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-            arguments.Add("gallery", GalleryID); // The gallery ID (GID) to be used. The GID must be generated before uploading a photo.
-            arguments.Add("content_type", "0"); // Content type: SFW (0), NSFW(1)
+            arguments.Add("gallery", Options.GalleryID); // The gallery ID (GID) to be used. The GID must be generated before uploading a photo.
+            arguments.Add("content_type", Options.GetContentType()); // Content type: SFW (0), NSFW(1)
             arguments.Add("API_key_dev", Key); // Your API-Key.
-            arguments.Add("API_key_user", UserKey); // The user's API key.
+            arguments.Add("API_key_user", Options.UserKey); // The user's API key.
 
             string salt = RandomAlphanumeric(32);
 
@@ -70,7 +91,7 @@ namespace ZSS.ImageUploadersLib
             arguments.Add("salt", salt);
 
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
-            arguments.Add("secret", GetMD5(Secret + UserSecret + salt));
+            arguments.Add("secret", GetMD5(Secret + Options.UserSecret + salt));
 
             string source = PostImage(image, upload, "photo", arguments);
 
@@ -82,7 +103,7 @@ namespace ZSS.ImageUploadersLib
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
             arguments.Add("API_key_dev", Key); // Your API-Key.
-            arguments.Add("API_key_user", UserKey); // The user's API key.
+            arguments.Add("API_key_user", Options.UserKey); // The user's API key.
 
             string salt = RandomAlphanumeric(32);
 
@@ -90,11 +111,11 @@ namespace ZSS.ImageUploadersLib
             arguments.Add("salt", salt);
 
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
-            arguments.Add("secret", GetMD5(Secret + UserSecret + salt));
+            arguments.Add("secret", GetMD5(Secret + Options.UserSecret + salt));
 
             string source = GetResponse(generate_GID, arguments);
 
-            return GetXMLValue(source, "URL");
+            return GetXMLValue(source, "GID");
         }
 
         private ImageFileManager ParseResult(string source)

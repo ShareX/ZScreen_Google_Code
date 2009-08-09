@@ -30,9 +30,9 @@ namespace ZScreenLib
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,6 +142,15 @@ namespace ZScreenLib
             this.txtTwitPicPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtTwitPicUserName = new System.Windows.Forms.TextBox();
+            this.tpImageBam = new System.Windows.Forms.TabPage();
+            this.gbImageBamLinks = new System.Windows.Forms.GroupBox();
+            this.btnImageBamRegister = new System.Windows.Forms.Button();
+            this.btnImageBamApiKeysUrl = new System.Windows.Forms.Button();
+            this.gbImageBamApiKeys = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtImageBamSecret = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtImageBamApiKey = new System.Windows.Forms.TextBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
@@ -499,12 +508,9 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpImageBam = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtImageBamApiKey = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtImageBamSecret = new System.Windows.Forms.TextBox();
-            this.btnImageBamApiKeysUrl = new System.Windows.Forms.Button();
+            this.gbImageBamGalleries = new System.Windows.Forms.GroupBox();
+            this.lbImageBamGalleries = new System.Windows.Forms.ListBox();
+            this.btnImageBamCreateGallery = new System.Windows.Forms.Button();
             this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenLib.UserControls.AccountsControl();
             this.ucMindTouchAccounts = new ZScreenLib.UserControls.AccountsControl();
@@ -512,9 +518,8 @@ namespace ZScreenLib
             this.ucUrlShorteners = new ZScreenLib.UserControls.TextUploadersControl();
             this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenLib.UserControls.AccountsControl();
-            this.btnImageBamRegister = new System.Windows.Forms.Button();
-            this.gbImageBamApiKeys = new System.Windows.Forms.GroupBox();
-            this.gbImageBamLinks = new System.Windows.Forms.GroupBox();
+            this.btnImageBamRemoveGallery = new System.Windows.Forms.Button();
+            this.chkImageBamContentNSFW = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -536,6 +541,9 @@ namespace ZScreenLib
             this.tcTwitter.SuspendLayout();
             this.tpTwitPic.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tpImageBam.SuspendLayout();
+            this.gbImageBamLinks.SuspendLayout();
+            this.gbImageBamApiKeys.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpScreenshots.SuspendLayout();
@@ -648,9 +656,7 @@ namespace ZScreenLib
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.tpImageBam.SuspendLayout();
-            this.gbImageBamApiKeys.SuspendLayout();
-            this.gbImageBamLinks.SuspendLayout();
+            this.gbImageBamGalleries.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1780,6 +1786,106 @@ namespace ZScreenLib
             this.txtTwitPicUserName.TabIndex = 6;
             this.txtTwitPicUserName.TextChanged += new System.EventHandler(this.txtTwitPicUserName_TextChanged);
             // 
+            // tpImageBam
+            // 
+            this.tpImageBam.Controls.Add(this.gbImageBamGalleries);
+            this.tpImageBam.Controls.Add(this.gbImageBamLinks);
+            this.tpImageBam.Controls.Add(this.gbImageBamApiKeys);
+            this.tpImageBam.Location = new System.Drawing.Point(4, 23);
+            this.tpImageBam.Name = "tpImageBam";
+            this.tpImageBam.Padding = new System.Windows.Forms.Padding(3);
+            this.tpImageBam.Size = new System.Drawing.Size(791, 409);
+            this.tpImageBam.TabIndex = 7;
+            this.tpImageBam.Text = "ImageBam";
+            this.tpImageBam.UseVisualStyleBackColor = true;
+            // 
+            // gbImageBamLinks
+            // 
+            this.gbImageBamLinks.Controls.Add(this.chkImageBamContentNSFW);
+            this.gbImageBamLinks.Controls.Add(this.btnImageBamRemoveGallery);
+            this.gbImageBamLinks.Controls.Add(this.btnImageBamCreateGallery);
+            this.gbImageBamLinks.Controls.Add(this.btnImageBamRegister);
+            this.gbImageBamLinks.Controls.Add(this.btnImageBamApiKeysUrl);
+            this.gbImageBamLinks.Location = new System.Drawing.Point(512, 16);
+            this.gbImageBamLinks.Name = "gbImageBamLinks";
+            this.gbImageBamLinks.Size = new System.Drawing.Size(176, 264);
+            this.gbImageBamLinks.TabIndex = 9;
+            this.gbImageBamLinks.TabStop = false;
+            this.gbImageBamLinks.Text = "Tasks";
+            // 
+            // btnImageBamRegister
+            // 
+            this.btnImageBamRegister.AutoSize = true;
+            this.btnImageBamRegister.Location = new System.Drawing.Point(16, 24);
+            this.btnImageBamRegister.Name = "btnImageBamRegister";
+            this.btnImageBamRegister.Size = new System.Drawing.Size(130, 23);
+            this.btnImageBamRegister.TabIndex = 7;
+            this.btnImageBamRegister.Text = "Register at ImageBam...";
+            this.btnImageBamRegister.UseVisualStyleBackColor = true;
+            this.btnImageBamRegister.Click += new System.EventHandler(this.btnImageBamRegister_Click);
+            // 
+            // btnImageBamApiKeysUrl
+            // 
+            this.btnImageBamApiKeysUrl.AutoSize = true;
+            this.btnImageBamApiKeysUrl.Location = new System.Drawing.Point(16, 56);
+            this.btnImageBamApiKeysUrl.Name = "btnImageBamApiKeysUrl";
+            this.btnImageBamApiKeysUrl.Size = new System.Drawing.Size(128, 23);
+            this.btnImageBamApiKeysUrl.TabIndex = 6;
+            this.btnImageBamApiKeysUrl.Text = "View your API Keys...";
+            this.btnImageBamApiKeysUrl.UseVisualStyleBackColor = true;
+            this.btnImageBamApiKeysUrl.Click += new System.EventHandler(this.btnImageBamApiKeysUrl_Click);
+            // 
+            // gbImageBamApiKeys
+            // 
+            this.gbImageBamApiKeys.Controls.Add(this.label5);
+            this.gbImageBamApiKeys.Controls.Add(this.txtImageBamSecret);
+            this.gbImageBamApiKeys.Controls.Add(this.label4);
+            this.gbImageBamApiKeys.Controls.Add(this.txtImageBamApiKey);
+            this.gbImageBamApiKeys.Location = new System.Drawing.Point(16, 16);
+            this.gbImageBamApiKeys.Name = "gbImageBamApiKeys";
+            this.gbImageBamApiKeys.Size = new System.Drawing.Size(480, 96);
+            this.gbImageBamApiKeys.TabIndex = 8;
+            this.gbImageBamApiKeys.TabStop = false;
+            this.gbImageBamApiKeys.Text = "API-Keys";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Secret:";
+            // 
+            // txtImageBamSecret
+            // 
+            this.txtImageBamSecret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageBamSecret.Location = new System.Drawing.Point(63, 52);
+            this.txtImageBamSecret.Name = "txtImageBamSecret";
+            this.txtImageBamSecret.Size = new System.Drawing.Size(393, 20);
+            this.txtImageBamSecret.TabIndex = 4;
+            this.txtImageBamSecret.TextChanged += new System.EventHandler(this.txtImageBamSecret_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(29, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Key:";
+            // 
+            // txtImageBamApiKey
+            // 
+            this.txtImageBamApiKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageBamApiKey.Location = new System.Drawing.Point(62, 22);
+            this.txtImageBamApiKey.Name = "txtImageBamApiKey";
+            this.txtImageBamApiKey.Size = new System.Drawing.Size(394, 20);
+            this.txtImageBamApiKey.TabIndex = 2;
+            this.txtImageBamApiKey.TextChanged += new System.EventHandler(this.txtImageBamApiKey_TextChanged);
+            // 
             // tpHotkeys
             // 
             this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
@@ -1815,38 +1921,38 @@ namespace ZScreenLib
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5971,66 +6077,34 @@ namespace ZScreenLib
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tpImageBam
+            // gbImageBamGalleries
             // 
-            this.tpImageBam.Controls.Add(this.gbImageBamLinks);
-            this.tpImageBam.Controls.Add(this.gbImageBamApiKeys);
-            this.tpImageBam.Location = new System.Drawing.Point(4, 23);
-            this.tpImageBam.Name = "tpImageBam";
-            this.tpImageBam.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageBam.Size = new System.Drawing.Size(791, 409);
-            this.tpImageBam.TabIndex = 7;
-            this.tpImageBam.Text = "ImageBam";
-            this.tpImageBam.UseVisualStyleBackColor = true;
+            this.gbImageBamGalleries.Controls.Add(this.lbImageBamGalleries);
+            this.gbImageBamGalleries.Location = new System.Drawing.Point(16, 128);
+            this.gbImageBamGalleries.Name = "gbImageBamGalleries";
+            this.gbImageBamGalleries.Size = new System.Drawing.Size(480, 152);
+            this.gbImageBamGalleries.TabIndex = 10;
+            this.gbImageBamGalleries.TabStop = false;
+            this.gbImageBamGalleries.Text = "Galleries";
             // 
-            // label4
+            // lbImageBamGalleries
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(29, 26);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Key:";
+            this.lbImageBamGalleries.FormattingEnabled = true;
+            this.lbImageBamGalleries.Location = new System.Drawing.Point(16, 24);
+            this.lbImageBamGalleries.Name = "lbImageBamGalleries";
+            this.lbImageBamGalleries.Size = new System.Drawing.Size(440, 108);
+            this.lbImageBamGalleries.TabIndex = 0;
+            this.lbImageBamGalleries.SelectedIndexChanged += new System.EventHandler(this.lbImageBamGalleries_SelectedIndexChanged);
             // 
-            // txtImageBamApiKey
+            // btnImageBamCreateGallery
             // 
-            this.txtImageBamApiKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtImageBamApiKey.Location = new System.Drawing.Point(62, 22);
-            this.txtImageBamApiKey.Name = "txtImageBamApiKey";
-            this.txtImageBamApiKey.Size = new System.Drawing.Size(418, 20);
-            this.txtImageBamApiKey.TabIndex = 2;
-            this.txtImageBamApiKey.TextChanged += new System.EventHandler(this.txtImageBamApiKey_TextChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 56);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Secret:";
-            // 
-            // txtImageBamSecret
-            // 
-            this.txtImageBamSecret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtImageBamSecret.Location = new System.Drawing.Point(63, 52);
-            this.txtImageBamSecret.Name = "txtImageBamSecret";
-            this.txtImageBamSecret.Size = new System.Drawing.Size(417, 20);
-            this.txtImageBamSecret.TabIndex = 4;
-            this.txtImageBamSecret.TextChanged += new System.EventHandler(this.txtImageBamSecret_TextChanged);
-            // 
-            // btnImageBamApiKeysUrl
-            // 
-            this.btnImageBamApiKeysUrl.AutoSize = true;
-            this.btnImageBamApiKeysUrl.Location = new System.Drawing.Point(152, 24);
-            this.btnImageBamApiKeysUrl.Name = "btnImageBamApiKeysUrl";
-            this.btnImageBamApiKeysUrl.Size = new System.Drawing.Size(118, 23);
-            this.btnImageBamApiKeysUrl.TabIndex = 6;
-            this.btnImageBamApiKeysUrl.Text = "View your API Keys...";
-            this.btnImageBamApiKeysUrl.UseVisualStyleBackColor = true;
-            this.btnImageBamApiKeysUrl.Click += new System.EventHandler(this.btnImageBamApiKeysUrl_Click);
+            this.btnImageBamCreateGallery.Location = new System.Drawing.Point(16, 88);
+            this.btnImageBamCreateGallery.Name = "btnImageBamCreateGallery";
+            this.btnImageBamCreateGallery.Size = new System.Drawing.Size(128, 23);
+            this.btnImageBamCreateGallery.TabIndex = 8;
+            this.btnImageBamCreateGallery.Text = "Create &Gallery";
+            this.btnImageBamCreateGallery.UseVisualStyleBackColor = true;
+            this.btnImageBamCreateGallery.Click += new System.EventHandler(this.btnImageBamCreateGallery_Click);
             // 
             // nudtScreenshotDelay
             // 
@@ -6102,40 +6176,27 @@ namespace ZScreenLib
             this.ucProxyAccounts.Size = new System.Drawing.Size(785, 320);
             this.ucProxyAccounts.TabIndex = 0;
             // 
-            // btnImageBamRegister
+            // btnImageBamRemoveGallery
             // 
-            this.btnImageBamRegister.AutoSize = true;
-            this.btnImageBamRegister.Location = new System.Drawing.Point(16, 24);
-            this.btnImageBamRegister.Name = "btnImageBamRegister";
-            this.btnImageBamRegister.Size = new System.Drawing.Size(130, 23);
-            this.btnImageBamRegister.TabIndex = 7;
-            this.btnImageBamRegister.Text = "Register at ImageBam...";
-            this.btnImageBamRegister.UseVisualStyleBackColor = true;
-            this.btnImageBamRegister.Click += new System.EventHandler(this.btnImageBamRegister_Click);
+            this.btnImageBamRemoveGallery.Location = new System.Drawing.Point(16, 120);
+            this.btnImageBamRemoveGallery.Name = "btnImageBamRemoveGallery";
+            this.btnImageBamRemoveGallery.Size = new System.Drawing.Size(128, 23);
+            this.btnImageBamRemoveGallery.TabIndex = 9;
+            this.btnImageBamRemoveGallery.Text = "Remove &Gallery";
+            this.btnImageBamRemoveGallery.UseVisualStyleBackColor = true;
+            this.btnImageBamRemoveGallery.Click += new System.EventHandler(this.btnImageBamRemoveGallery_Click);
             // 
-            // gbImageBamApiKeys
+            // chkImageBamContentNSFW
             // 
-            this.gbImageBamApiKeys.Controls.Add(this.label5);
-            this.gbImageBamApiKeys.Controls.Add(this.txtImageBamSecret);
-            this.gbImageBamApiKeys.Controls.Add(this.label4);
-            this.gbImageBamApiKeys.Controls.Add(this.txtImageBamApiKey);
-            this.gbImageBamApiKeys.Location = new System.Drawing.Point(16, 16);
-            this.gbImageBamApiKeys.Name = "gbImageBamApiKeys";
-            this.gbImageBamApiKeys.Size = new System.Drawing.Size(512, 96);
-            this.gbImageBamApiKeys.TabIndex = 8;
-            this.gbImageBamApiKeys.TabStop = false;
-            this.gbImageBamApiKeys.Text = "API-Keys";
-            // 
-            // gbImageBamLinks
-            // 
-            this.gbImageBamLinks.Controls.Add(this.btnImageBamRegister);
-            this.gbImageBamLinks.Controls.Add(this.btnImageBamApiKeysUrl);
-            this.gbImageBamLinks.Location = new System.Drawing.Point(16, 120);
-            this.gbImageBamLinks.Name = "gbImageBamLinks";
-            this.gbImageBamLinks.Size = new System.Drawing.Size(512, 64);
-            this.gbImageBamLinks.TabIndex = 9;
-            this.gbImageBamLinks.TabStop = false;
-            this.gbImageBamLinks.Text = "Links";
+            this.chkImageBamContentNSFW.AutoSize = true;
+            this.chkImageBamContentNSFW.Location = new System.Drawing.Point(16, 152);
+            this.chkImageBamContentNSFW.Name = "chkImageBamContentNSFW";
+            this.chkImageBamContentNSFW.Size = new System.Drawing.Size(98, 17);
+            this.chkImageBamContentNSFW.TabIndex = 10;
+            this.chkImageBamContentNSFW.Text = "NSFW Content";
+            this.ttZScreen.SetToolTip(this.chkImageBamContentNSFW, "If you are uploading NSFW (Not Safe for Work) content then tick this checkbox");
+            this.chkImageBamContentNSFW.UseVisualStyleBackColor = true;
+            this.chkImageBamContentNSFW.CheckedChanged += new System.EventHandler(this.chkImageBamContentNSFW_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -6190,6 +6251,11 @@ namespace ZScreenLib
             this.tpTwitPic.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tpImageBam.ResumeLayout(false);
+            this.gbImageBamLinks.ResumeLayout(false);
+            this.gbImageBamLinks.PerformLayout();
+            this.gbImageBamApiKeys.ResumeLayout(false);
+            this.gbImageBamApiKeys.PerformLayout();
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -6343,11 +6409,7 @@ namespace ZScreenLib
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.tpImageBam.ResumeLayout(false);
-            this.gbImageBamApiKeys.ResumeLayout(false);
-            this.gbImageBamApiKeys.PerformLayout();
-            this.gbImageBamLinks.ResumeLayout(false);
-            this.gbImageBamLinks.PerformLayout();
+            this.gbImageBamGalleries.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -6836,6 +6898,11 @@ namespace ZScreenLib
         private System.Windows.Forms.GroupBox gbImageBamLinks;
         private System.Windows.Forms.Button btnImageBamRegister;
         private System.Windows.Forms.GroupBox gbImageBamApiKeys;
+        private System.Windows.Forms.GroupBox gbImageBamGalleries;
+        private System.Windows.Forms.ListBox lbImageBamGalleries;
+        private System.Windows.Forms.Button btnImageBamCreateGallery;
+        private System.Windows.Forms.Button btnImageBamRemoveGallery;
+        private System.Windows.Forms.CheckBox chkImageBamContentNSFW;
 
     }
 }

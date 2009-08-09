@@ -33,6 +33,7 @@ using ZSS.ImageUploadersLib;
 using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
+using ZSS.Properties;
 
 namespace ZScreenLib
 {
@@ -62,6 +63,44 @@ namespace ZScreenLib
                 Clipboard.SetText(tb.Text);
             }
         }
+
+        #region "ImageBam Methods"
+        public static string GetTinyPicShuk()
+        {
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = Resources.zss_main };
+            ub.ShowDialog();
+            if (ub.DialogResult == DialogResult.OK)
+            {
+                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                tpu.ProxySettings = Adapter.GetProxySettings();
+                if (Program.conf.RememberTinyPicUserPass)
+                {
+                    Program.conf.TinyPicUserName = ub.UserName;
+                    Program.conf.TinyPicPassword = ub.Password;
+                }
+                return tpu.UserAuth(ub.UserName, ub.Password);
+            }
+            return string.Empty;
+        }
+
+        public static string CreateImageBamGallery()
+        {
+            ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret));
+            string galleryId = ibu.CreateGalleryID();
+            Program.conf.ImageBamGalleryIDs.Add(galleryId);
+            return galleryId;
+        }
+
+        public static string GetImageBamGalleryActive()
+        {
+            string galleryId = string.Empty;
+            if (Program.conf.ImageBamGalleryIDs.Count > Program.conf.ImageBamGalleryActive)
+            {
+                galleryId = Program.conf.ImageBamGalleryIDs[Program.conf.ImageBamGalleryActive];
+            }
+            return galleryId;
+        }
+        #endregion
 
         public static void TestFTPAccount(FTPAccount acc)
         {
