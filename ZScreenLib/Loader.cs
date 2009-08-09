@@ -7,7 +7,7 @@ using ZScreenLib.Forms;
 
 namespace ZScreenLib
 {
-    public static class Program
+    public static class Loader
     {
         public static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
@@ -34,7 +34,7 @@ namespace ZScreenLib
             {
                 if (conf != null && conf.UseCustomImagesDir && !String.IsNullOrEmpty(conf.CustomImagesDir))
                 {
-                    return Program.ImagesDir = conf.CustomImagesDir;
+                    return Loader.ImagesDir = conf.CustomImagesDir;
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace ZScreenLib
         private static string GetDefaultImagesDir()
         {
             string saveFolderPath = string.Empty;
-            if (Program.conf != null)
+            if (Loader.conf != null)
             {
                 saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
             }

@@ -596,7 +596,7 @@ namespace ZScreenLib
 
         public void Save()
         {
-            new Thread(SaveThread).Start(Program.XMLSettingsFile);
+            new Thread(SaveThread).Start(Loader.XMLSettingsFile);
         }
 
         public void SaveThread(object filePath)
@@ -631,7 +631,7 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            return Read(Program.XMLSettingsFile);
+            return Read(Loader.XMLSettingsFile);
         }
 
         public static XMLSettings Read(string filePath)
@@ -656,9 +656,9 @@ namespace ZScreenLib
                     // We dont need a MessageBox when we rename enumerations
                     // Renaming enums tend to break parts of serialization
                     FileSystem.AppendDebug(ex.ToString());
-                    OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
+                    OpenFileDialog dlg = new OpenFileDialog { Filter = Loader.FILTER_SETTINGS };
                     dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                    dlg.InitialDirectory = Program.appSettings.RootDir;
+                    dlg.InitialDirectory = Loader.appSettings.RootDir;
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         return XMLSettings.Read(dlg.FileName);

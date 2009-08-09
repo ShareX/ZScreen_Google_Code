@@ -11,13 +11,13 @@ namespace ZScreenLib.Helpers
     [Serializable]
     public class AppSettings
     {
-        private static string AppSettingsFile = Path.Combine(Program.LocalAppDataFolder, "AppSettings.xml");
+        private static string AppSettingsFile = Path.Combine(Loader.LocalAppDataFolder, "AppSettings.xml");
 
         public string RootDir { get; set; }
 
         public AppSettings()
         {
-            //RootDir = Program.DefaultRootAppFolder;
+            //RootDir = Loader.DefaultRootAppFolder;
         }
 
         public static AppSettings Read()

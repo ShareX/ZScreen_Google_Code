@@ -11,7 +11,7 @@ namespace ZScreenCLI
         public Form1()
         {
             InitializeComponent();
-            ZScreenLib.Program.Load();
+            ZScreenLib.Loader.Load();
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
@@ -53,7 +53,7 @@ namespace ZScreenCLI
             BackgroundWorker temp = new BackgroundWorker();
             temp.WorkerReportsProgress = true;
             MainAppTask task = new MainAppTask(temp, job);
-            task.ImageDestCategory = ZScreenLib.Program.conf.ScreenshotDestMode;
+            task.ImageDestCategory = ZScreenLib.Loader.conf.ScreenshotDestMode;
             worker.CaptureRegionOrWindow(ref task);
             new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
             UploadManager.SetClipboardText(task);
@@ -71,7 +71,7 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (ZScreenLib.Program.conf.BalloonTipOpenLink)
+            if (ZScreenLib.Loader.conf.BalloonTipOpenLink)
             {
                 NotifyIcon ni = (NotifyIcon)sender;
                 new BalloonTipHelper(ni).ClickBalloonTip();

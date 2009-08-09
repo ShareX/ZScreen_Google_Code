@@ -50,7 +50,7 @@ namespace ZScreenLib
 
             ImageUploader imageUploader = null;
 
-            if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
+            if (Loader.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
@@ -65,9 +65,9 @@ namespace ZScreenLib
                     mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:
-                    if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
+                    if (Loader.conf.ImageUploadersList != null && Loader.conf.ImageUploaderSelected != -1)
                     {
-                        imageUploader = new CustomUploader(Program.conf.ImageUploadersList[Program.conf.ImageUploaderSelected]);
+                        imageUploader = new CustomUploader(Loader.conf.ImageUploadersList[Loader.conf.ImageUploaderSelected]);
                     }
                     break;
                 case ImageDestType.FTP:
@@ -77,37 +77,37 @@ namespace ZScreenLib
                     UploadDekiWiki();
                     break;
                 case ImageDestType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
-                    ((ImageShackUploader)imageUploader).Public = Program.conf.ImageShackShowImagesInPublic;
+                    imageUploader = new ImageShackUploader(Loader.IMAGESHACK_KEY, Loader.conf.ImageShackRegistrationCode, Loader.conf.UploadMode);
+                    ((ImageShackUploader)imageUploader).Public = Loader.conf.ImageShackShowImagesInPublic;
                     break;
                 case ImageDestType.PRINTER:
                     mTask.MyWorker.ReportProgress(101, Greenshot.Drawing.Surface.GetImageForExport(mTask.MyImage));
                     break;
                 case ImageDestType.TINYPIC:
-                    imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
-                    ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
+                    imageUploader = new TinyPicUploader(Loader.TINYPIC_ID, Loader.TINYPIC_KEY, Loader.conf.UploadMode);
+                    ((TinyPicUploader)imageUploader).Shuk = Loader.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.UserName = Program.conf.TwitterUserName;
-                    twitpicOpt.Password = Program.conf.TwitterPassword;
-                    twitpicOpt.TwitPicUploadType = Program.conf.TwitPicUploadMode;
-                    twitpicOpt.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
-                    twitpicOpt.ShowFull = Program.conf.TwitPicShowFull;
+                    twitpicOpt.UserName = Loader.conf.TwitterUserName;
+                    twitpicOpt.Password = Loader.conf.TwitterPassword;
+                    twitpicOpt.TwitPicUploadType = Loader.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Loader.conf.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Loader.conf.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageDestType.TWITSNAPS:
                     TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.UserName = Program.conf.TwitterUserName;
-                    twitsnapsOpt.Password = Program.conf.TwitterPassword;
+                    twitsnapsOpt.UserName = Loader.conf.TwitterUserName;
+                    twitsnapsOpt.Password = Loader.conf.TwitterPassword;
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
                 case ImageDestType.YFROG:
-                    YfrogOptions yfrogOp = new YfrogOptions(Program.IMAGESHACK_KEY);
-                    yfrogOp.UserName = Program.conf.TwitterUserName;
-                    yfrogOp.Password = Program.conf.TwitterPassword;
+                    YfrogOptions yfrogOp = new YfrogOptions(Loader.IMAGESHACK_KEY);
+                    yfrogOp.UserName = Loader.conf.TwitterUserName;
+                    yfrogOp.Password = Loader.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
-                    yfrogOp.UploadType = Program.conf.YfrogUploadMode;
+                    yfrogOp.UploadType = Loader.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
@@ -132,7 +132,7 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
+                    for (int i = 1; i <= (int)Loader.conf.ErrorRetryCount &&
                         (mTask.ImageManager == null || (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
@@ -144,7 +144,7 @@ namespace ZScreenLib
                             mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage);
                         }
                         mTask.Errors = imageUploader.Errors;
-                        if (Program.conf.ImageUploadRetry && (mTask.ImageDestCategory ==
+                        if (Loader.conf.ImageUploadRetry && (mTask.ImageDestCategory ==
                             ImageDestType.IMAGESHACK || mTask.ImageDestCategory == ImageDestType.TINYPIC))
                         {
                             break;
@@ -156,17 +156,17 @@ namespace ZScreenLib
             this.SetRemoteFilePath();
             mTask.EndTime = DateTime.Now;
 
-            if (Program.conf.AutoChangeUploadDestination && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
+            if (Loader.conf.AutoChangeUploadDestination && mTask.UploadDuration > (int)Loader.conf.UploadDurationLimit)
             {
                 if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
                 {
                     //mTask.ImageDestCategory = ImageDestType.TINYPIC;
-                    Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
+                    Loader.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
                 {
                     //mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
-                    Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
+                    Loader.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
             }
@@ -195,7 +195,7 @@ namespace ZScreenLib
 
         private void FlashIcon(MainAppTask t)
         {
-            for (int i = 0; i < (int)Program.conf.FlashTrayCount; i++)
+            for (int i = 0; i < (int)Loader.conf.FlashTrayCount; i++)
             {
                 t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
                 Thread.Sleep(250);
@@ -217,15 +217,15 @@ namespace ZScreenLib
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
-                    FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                    FTPAccount acc = Loader.conf.FTPAccountList[Loader.conf.FTPSelected];
                     mTask.DestinationName = acc.Name;
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
                     ZSS.ImageUploadersLib.FTPUploader fu = new ZSS.ImageUploadersLib.FTPUploader(acc)
                     {
-                        EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
-                        WorkingDir = Program.CacheDir
+                        EnableThumbnail = (Loader.conf.ClipboardUriMode != ClipboardUriType.FULL) || Loader.conf.FTPCreateThumbnail,
+                        WorkingDir = Loader.CacheDir
                     };
 
                     mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
@@ -245,7 +245,7 @@ namespace ZScreenLib
 
         private void UploadProgressChanged(int progress)
         {
-            if (Program.conf.ShowTrayUploadProgress)
+            if (Loader.conf.ShowTrayUploadProgress)
             {
                 UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress;
                 mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
@@ -260,9 +260,9 @@ namespace ZScreenLib
 
                 if (Adapter.CheckDekiWikiAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
-                    DekiWikiAccount acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
+                    DekiWikiAccount acc = Loader.conf.DekiWikiAccountList[Loader.conf.DekiWikiSelected];
 
-                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Program.conf.DekiWikiForcePath == true)
+                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Loader.conf.DekiWikiForcePath == true)
                     {
                         DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                         diag.history = acc.History;
@@ -328,7 +328,7 @@ namespace ZScreenLib
             if (File.Exists(mTask.LocalFilePath))
             {
                 Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.TextEditorActive.Path)
+                ProcessStartInfo psi = new ProcessStartInfo(Loader.conf.TextEditorActive.Path)
                 {
                     Arguments = string.Format("{0}{1}{0}", "\"", mTask.LocalFilePath)
                 };
@@ -347,16 +347,16 @@ namespace ZScreenLib
             if (File.Exists(mTask.LocalFilePath))
             {
                 Process p = new Process();
-                Software app = Program.conf.ImageEditor;
+                Software app = Loader.conf.ImageEditor;
                 if (app != null)
                 {
-                    if (app.Name == Program.ZSCREEN_IMAGE_EDITOR)
+                    if (app.Name == Loader.ZSCREEN_IMAGE_EDITOR)
                     {
                         try
                         {
-                            Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Program.SettingsDir, "ImageEditor.bin");
+                            Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Loader.SettingsDir, "ImageEditor.bin");
                             Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                            editor.AutoSave = Program.conf.ImageEditorAutoSave;
+                            editor.AutoSave = Loader.conf.ImageEditorAutoSave;
                             editor.MyWorker = mTask.MyWorker;
                             editor.SetImage(mTask.MyImage);
                             editor.SetImagePath(mTask.LocalFilePath);
