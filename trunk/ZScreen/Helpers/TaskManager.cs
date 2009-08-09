@@ -77,7 +77,7 @@ namespace ZScreenLib
                     UploadDekiWiki();
                     break;
                 case ImageDestType.IMAGEBAM:
-                    imageUploader = new ImageBamUploader(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret, "");
+                    imageUploader = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret, Adapter.GetImageBamGalleryActive()) { NSFW = Program.conf.ImageBamContentNSFW });
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);

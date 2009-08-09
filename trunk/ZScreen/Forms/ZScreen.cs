@@ -544,6 +544,8 @@ namespace ZScreenLib
 
             #endregion
 
+            #region "FTP Settings"
+
             ///////////////////////////////////
             // FTP Settings
             ///////////////////////////////////
@@ -563,6 +565,10 @@ namespace ZScreenLib
             chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
             cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
 
+            #endregion
+
+            #region "MindTouch Settings"
+
             ///////////////////////////////////
             // MindTouch Deki Wiki Settings
             ///////////////////////////////////
@@ -580,7 +586,9 @@ namespace ZScreenLib
                 }
             }
             chkDekiWikiForcePath.Checked = Program.conf.DekiWikiForcePath;
-                       
+
+            #endregion
+
             ///////////////////////////////////
             // Image Uploader Settings
             ///////////////////////////////////
@@ -616,6 +624,16 @@ namespace ZScreenLib
 
             txtImageBamApiKey.Text = Program.conf.ImageBamApiKey;
             txtImageBamSecret.Text = Program.conf.ImageBamSecret;
+            chkImageBamContentNSFW.Checked = Program.conf.ImageBamContentNSFW;
+            if (Program.conf.ImageBamGalleryIDs.Count == 0)
+            {
+                Program.conf.ImageBamGalleryIDs.Add("");
+            }
+            foreach (string id in Program.conf.ImageBamGalleryIDs)
+            {
+                lbImageBamGalleries.Items.Add(id);
+            }
+            lbImageBamGalleries.SelectedIndex = Program.conf.ImageBamGalleryActive;
 
             // Others
 
@@ -1952,21 +1970,7 @@ namespace ZScreenLib
 
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
         {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password",
-                string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" :
-                Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = this.Icon };
-            ub.ShowDialog();
-            if (ub.DialogResult == DialogResult.OK)
-            {
-                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                tpu.ProxySettings = Adapter.GetProxySettings();
-                txtTinyPicShuk.Text = tpu.UserAuth(ub.UserName, ub.Password);
-                if (Program.conf.RememberTinyPicUserPass)
-                {
-                    Program.conf.TinyPicUserName = ub.UserName;
-                    Program.conf.TinyPicPassword = ub.Password;
-                }
-            }
+            txtTinyPicShuk.Text = Adapter.GetTinyPicShuk();
             this.BringToFront();
         }
 
@@ -3975,6 +3979,33 @@ namespace ZScreenLib
         private void btnImageBamRegister_Click(object sender, EventArgs e)
         {
             Process.Start("http://www.imagebam.com/register");
+        }
+
+        private void btnImageBamCreateGallery_Click(object sender, EventArgs e)
+        {
+            lbImageBamGalleries.Items.Add(Adapter.CreateImageBamGallery());
+        }
+
+        private void lbImageBamGalleries_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageBamGalleryActive = lbImageBamGalleries.SelectedIndex;
+        }
+
+        private void btnImageBamRemoveGallery_Click(object sender, EventArgs e)
+        {
+            if (lbImageBamGalleries.SelectedIndex > -1)
+            {
+                if (!string.IsNullOrEmpty(Adapter.GetImageBamGalleryActive()))
+                {
+                    lbImageBamGalleries.Items.RemoveAt(lbImageBamGalleries.SelectedIndex);
+                    Program.conf.ImageBamGalleryIDs.RemoveAt(lbImageBamGalleries.SelectedIndex);
+                }
+            }
+        }
+
+        private void chkImageBamContentNSFW_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageBamContentNSFW = chkImageBamContentNSFW.Checked;
         }
     }
 }
