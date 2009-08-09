@@ -30,7 +30,7 @@ using ZSS.ImageUploadersLib.Helpers;
 
 namespace ZSS.ImageUploadersLib
 {
-    public sealed class ImageBam : ImageUploader
+    public sealed class ImageBamUploader : ImageUploader
     {
         private const string UploadURL = "http://www.imagebam.com/services/upload/";
         private const string Key = "3702805a5d94b0161052e7aa4c69f046";
@@ -38,7 +38,7 @@ namespace ZSS.ImageUploadersLib
 
         public string UserKey, UserSecret;
 
-        public ImageBam(string userKey, string userSecret)
+        public ImageBamUploader(string userKey, string userSecret)
         {
             UserKey = userKey;
             UserSecret = userSecret;
