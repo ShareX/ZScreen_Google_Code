@@ -70,11 +70,11 @@ namespace ZScreenLib
                         imageUploader = new CustomUploader(Program.conf.ImageUploadersList[Program.conf.ImageUploaderSelected]);
                     }
                     break;
-                case ImageDestType.FTP:
-                    UploadFtp();
-                    break;
                 case ImageDestType.DEKIWIKI:
                     UploadDekiWiki();
+                    break;
+                case ImageDestType.FTP:
+                    UploadFtp();
                     break;
                 case ImageDestType.IMAGEBAM:
                     imageUploader = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret, Adapter.GetImageBamGalleryActive()) { NSFW = Program.conf.ImageBamContentNSFW });

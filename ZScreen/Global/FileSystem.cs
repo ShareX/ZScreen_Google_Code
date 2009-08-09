@@ -170,7 +170,7 @@ namespace ZScreenLib
         {
             // http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
             string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss - ") + msg;
-            Console.WriteLine(msg);
+            Console.WriteLine(line);
             mDebug.AppendLine(line);
         }
 
