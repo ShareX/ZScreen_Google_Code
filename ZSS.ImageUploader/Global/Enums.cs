@@ -65,6 +65,8 @@ namespace ZSS.ImageUploadersLib
         TINYPIC,
         [Description("ImageShack")]
         IMAGESHACK,
+        [Description("ImageBam")]
+        IMAGEBAM,
         [Description("TwitPic")]
         TWITPIC,
         [Description("TwitSnaps")]
@@ -76,6 +78,6 @@ namespace ZSS.ImageUploadersLib
         [Description("MindTouch Deki Wiki")]
         DEKIWIKI,
         [Description("Printer")]
-        PRINTER,
+        PRINTER
     }
 }

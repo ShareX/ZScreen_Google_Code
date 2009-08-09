@@ -76,6 +76,9 @@ namespace ZScreenLib
                 case ImageDestType.DEKIWIKI:
                     UploadDekiWiki();
                     break;
+                case ImageDestType.IMAGEBAM:
+                    imageUploader = new ImageBam("", "");
+                    break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
                     ((ImageShackUploader)imageUploader).Public = Program.conf.ImageShackShowImagesInPublic;

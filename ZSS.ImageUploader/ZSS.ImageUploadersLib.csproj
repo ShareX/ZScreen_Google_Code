@@ -62,6 +62,7 @@
     <Compile Include="Helpers\ImageHostingServiceManager.cs" />
     <Compile Include="ImageUploaders\CustomUploader.cs" />
     <Compile Include="Helpers\ImageFile.cs" />
+    <Compile Include="ImageUploaders\ImageBam.cs" />
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
     <Compile Include="Helpers\ImageHostingService.cs" />
     <Compile Include="Helpers\IUploader.cs" />

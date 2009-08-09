@@ -109,6 +109,21 @@ namespace ZSS.ImageUploadersLib
             return sb.ToString().ToLower();
         }
 
+        protected string RandomAlphanumeric(int length)
+        {
+            Random random = new Random();
+            string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+            
+            StringBuilder sb = new StringBuilder();
+
+            while (length-- > 0)
+            {
+                sb.Append(alphanumeric[(int)(random.NextDouble() * alphanumeric.Length)]);
+            }
+
+            return sb.ToString();
+        }
+
         public void ReportProgress(int progress)
         {
             if (ProgressChanged != null)
@@ -378,6 +393,5 @@ namespace ZSS.ImageUploadersLib
             }
             return sb.ToString();
         }
-
     }
 }

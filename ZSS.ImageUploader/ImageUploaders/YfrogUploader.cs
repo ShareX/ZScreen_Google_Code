@@ -56,10 +56,10 @@ namespace ZSS.ImageUploadersLib
     {
         public string DeveloperKey { get; set; }
         public string Source { get; set; }
-        public YfrogUploadType UploadType { get; set; }        
+        public YfrogUploadType UploadType { get; set; }
         public bool ShowFull { get; set; }
         public YfrogThumbnailType ThumbnailMode { get; set; }
-        
+
         public YfrogOptions(string devKey)
         {
             this.DeveloperKey = devKey;

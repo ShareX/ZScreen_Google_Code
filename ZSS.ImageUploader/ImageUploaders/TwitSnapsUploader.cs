@@ -36,7 +36,6 @@ using ZSS.ImageUploadersLib.Helpers;
 
 namespace ZSS.ImageUploadersLib
 {
-
     public class TwitSnapsOptions : ImageUploaderOptions { }
 
     public sealed class TwitSnapsUploader : ImageUploader
@@ -81,7 +80,6 @@ namespace ZSS.ImageUploadersLib
 
         private ImageFileManager ParseResult(string source)
         {
-
             ImageFileManager ifm = new ImageFileManager { Source = source };
 
             if (!string.IsNullOrEmpty(source))
@@ -94,8 +92,8 @@ namespace ZSS.ImageUploadersLib
                     switch (xele.AttributeFirstValue("status", "stat"))
                     {
                         case "ok":
-                            string userid, imageurl;                            
-                            userid = xele.ElementValue("userid");                            
+                            string userid, imageurl;
+                            userid = xele.ElementValue("userid");
                             imageurl = xele.ElementValue("imageurl");
                             ifm.ImageFileList.Add(new ImageFile(imageurl, ImageFile.ImageType.FULLIMAGE));
                             break;
