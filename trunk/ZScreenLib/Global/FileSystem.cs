@@ -92,21 +92,21 @@ namespace ZScreenLib
                 img = ImageEffects.ApplyScreenshotEffects(img);
                 img = ImageEffects.ApplyWatermark(img);
 
-                long size = (long)Program.conf.SwitchAfter * 1024;
+                long size = (long)Loader.conf.SwitchAfter * 1024;
 
                 MemoryStream ms = new MemoryStream();
                 try
                 {
-                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.FileFormat]);
+                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Loader.conf.FileFormat]);
 
                     // Change PNG to JPG (Lossy) if file size is large
 
                     if (ms.Length > size && size != 0)
                     {
                         ms = new MemoryStream();
-                        GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Program.conf.SwitchFormat]);
+                        GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Loader.conf.SwitchFormat]);
 
-                        filePath = Path.ChangeExtension(filePath, Program.zImageFileTypes[Program.conf.SwitchFormat]);
+                        filePath = Path.ChangeExtension(filePath, Loader.zImageFileTypes[Loader.conf.SwitchFormat]);
                     }
 
                     if (!Directory.Exists(Path.GetDirectoryName(filePath)))
@@ -149,12 +149,12 @@ namespace ZScreenLib
 
         public static string GetImagesDir()
         {
-            return Directory.Exists(Program.ImagesDir) ? Program.ImagesDir : Program.RootImagesDir;
+            return Directory.Exists(Loader.ImagesDir) ? Loader.ImagesDir : Loader.RootImagesDir;
         }
 
         public static string GetTempFilePath(string fileName)
         {
-            string dir = Program.CacheDir;
+            string dir = Loader.CacheDir;
             if (string.IsNullOrEmpty(dir))
                 dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
             if (!Directory.Exists(dir))
@@ -177,10 +177,10 @@ namespace ZScreenLib
 
         public static void WriteDebugFile()
         {
-            if (!string.IsNullOrEmpty(Program.LogsDir))
+            if (!string.IsNullOrEmpty(Loader.LogsDir))
             {
-                string fpDebug = Path.Combine(Program.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
-                if (Program.conf.WriteDebugFile)
+                string fpDebug = Path.Combine(Loader.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
+                if (Loader.conf.WriteDebugFile)
                 {
                     if (mDebug.Length > 0)
                     {
@@ -247,8 +247,8 @@ namespace ZScreenLib
         /// <returns>Full qualitied File Path</returns>
         public static string GetFilePath(string fileName, bool manualNaming)
         {
-            string filePath = GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." +
-                Program.zImageFileTypes[Program.conf.FileFormat]));
+            string filePath = GetUniqueFilePath(Path.Combine(Loader.ImagesDir, fileName + "." +
+                Loader.zImageFileTypes[Loader.conf.FileFormat]));
 
             if (manualNaming)
             {
@@ -268,7 +268,7 @@ namespace ZScreenLib
         /// <returns></returns>
         private static string GetScreenshotName(string fName)
         {
-            if (Program.conf.ManualNaming)
+            if (Loader.conf.ManualNaming)
             {
                 InputBox ib = new InputBox
                 {
@@ -310,7 +310,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
             {
-                foreach (string s in Program.zTextFileTypes)
+                foreach (string s in Loader.zTextFileTypes)
                 {
                     if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
                 }
@@ -327,7 +327,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
             {
-                foreach (string s in Program.zWebpageFileTypes)
+                foreach (string s in Loader.zWebpageFileTypes)
                 {
                     if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
                 }
@@ -385,12 +385,12 @@ namespace ZScreenLib
 
         public static void BackupAppSettings()
         {
-            if (Program.conf != null)
+            if (Loader.conf != null)
             {
-                string fp = Path.Combine(Program.SettingsDir, string.Format("Settings-{0}-backup.xml", DateTime.Now.ToString("yyyyMM")));
+                string fp = Path.Combine(Loader.SettingsDir, string.Format("Settings-{0}-backup.xml", DateTime.Now.ToString("yyyyMM")));
                 if (!File.Exists(fp))
                 {
-                    Program.conf.Save(fp);
+                    Loader.conf.Save(fp);
                 }
             }
         }
@@ -399,10 +399,10 @@ namespace ZScreenLib
         {
             if (Adapter.CheckFTPAccounts())
             {
-                string fp = Path.Combine(Program.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Program.EXT_FTP_ACCOUNTS));
+                string fp = Path.Combine(Loader.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Loader.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Loader.conf.FTPAccountList);
                     fam.Save(fp);
                 }
             }
@@ -456,7 +456,7 @@ namespace ZScreenLib
 
                 foreach (string image in images)
                 {
-                    foreach (string s in Program.zImageFileTypes)
+                    foreach (string s in Loader.zImageFileTypes)
                     {
                         if (Path.HasExtension(image) && Path.GetExtension(image) == "." + s)
                         {
@@ -484,7 +484,7 @@ namespace ZScreenLib
                         {
                             time = File.GetCreationTime(image);
                             newFolderPath = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder) { CustomDate = time });
-                            newFolderPath = Path.Combine(Program.RootImagesDir, newFolderPath);
+                            newFolderPath = Path.Combine(Loader.RootImagesDir, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))
                             {

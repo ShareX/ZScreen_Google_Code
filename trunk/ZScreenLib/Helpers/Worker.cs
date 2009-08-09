@@ -20,11 +20,11 @@ namespace ZScreenLib.Helpers
 
            try
            {
-               using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
+               using (Image imgSS = User32.CaptureScreen(Loader.conf.ShowCursor))
                {
-                   if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
+                   if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Loader.LastRegion.IsEmpty)
                    {
-                       task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                       task.SetImage(GraphicsMgr.CropImage(imgSS, Loader.LastRegion));
                    }
                    else
                    {
@@ -32,13 +32,13 @@ namespace ZScreenLib.Helpers
                        {
                            if (c.ShowDialog() == DialogResult.OK)
                            {
-                               if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                               if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Loader.LastRegion.IsEmpty)
                                {
-                                   task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                                   task.SetImage(GraphicsMgr.CropImage(imgSS, Loader.LastRegion));
                                }
-                               else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                               else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Loader.LastCapture.IsEmpty)
                                {
-                                   task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
+                                   task.SetImage(GraphicsMgr.CropImage(imgSS, Loader.LastCapture));
                                }
                            }
                        }
@@ -57,7 +57,7 @@ namespace ZScreenLib.Helpers
            {
                FileSystem.AppendDebug(ex.ToString());
                task.Errors.Add(ex.Message);
-               if (Program.conf.CaptureEntireScreenOnError)
+               if (Loader.conf.CaptureEntireScreenOnError)
                {
                    CaptureScreen(ref task);
                }
@@ -100,7 +100,7 @@ namespace ZScreenLib.Helpers
                    type = NameParserType.EntireScreen;
                }
 
-               string filePath = FileSystem.GetFilePath(NameParser.Convert(type), Program.conf.ManualNaming);
+               string filePath = FileSystem.GetFilePath(NameParser.Convert(type), Loader.conf.ManualNaming);
 
                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, filePath));
            }

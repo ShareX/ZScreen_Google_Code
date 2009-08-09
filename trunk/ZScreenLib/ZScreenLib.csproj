@@ -95,7 +95,7 @@
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
     <Compile Include="Helpers\ImageSoftware.cs" />
-    <Compile Include="Helpers\MainAppTask.cs" />
+    <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\ProxyInfo.cs" />
     <Compile Include="Helpers\RoundedRectangle.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
@@ -104,7 +104,7 @@
     <Compile Include="Forms\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

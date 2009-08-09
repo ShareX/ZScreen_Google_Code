@@ -132,7 +132,7 @@ namespace ZScreenLib
                     sbMsg.AppendLine(fileOrUrl);
                 }
 
-                if (Program.conf.ShowUploadDuration && task.UploadDuration > 0)
+                if (Loader.conf.ShowUploadDuration && task.UploadDuration > 0)
                 {
                     sbMsg.AppendLine("Upload duration: " + task.UploadDuration + " ms");
                 }
