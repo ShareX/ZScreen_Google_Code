@@ -14,6 +14,7 @@ namespace ZScreenLib
         private static string AppSettingsFile = Path.Combine(Program.LocalAppDataFolder, "AppSettings.xml");
 
         public string RootDir { get; set; }
+        public string XMLSettingsFile { get; set; }
 
         public AppSettings()
         {
@@ -23,6 +24,11 @@ namespace ZScreenLib
         public static AppSettings Read()
         {
             return Read(AppSettingsFile);
+        }
+
+        public string GetSettingsFilePath()
+        {
+            return Path.Combine(Program.SettingsDir, XMLSettings.XMLFileName);
         }
 
         public static AppSettings Read(string filePath)
@@ -49,7 +55,7 @@ namespace ZScreenLib
             return new AppSettings();
         }
 
-        public void Save()
+        public void Write()
         {
             new Thread(SaveThread).Start(AppSettingsFile);
         }
@@ -58,11 +64,11 @@ namespace ZScreenLib
         {
             lock (this)
             {
-                Save((string)filePath);
+                Write((string)filePath);
             }
         }
 
-        public void Save(string filePath)
+        public void Write(string filePath)
         {
             try
             {

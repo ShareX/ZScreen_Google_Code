@@ -389,7 +389,7 @@ namespace ZScreenLib
                 string fp = Path.Combine(Program.SettingsDir, string.Format("Settings-{0}-backup.xml", DateTime.Now.ToString("yyyyMM")));
                 if (!File.Exists(fp))
                 {
-                    Program.conf.Save(fp);
+                    Program.conf.Write(fp);
                 }
             }
         }

@@ -906,7 +906,7 @@ namespace ZScreenLib
                 Program.conf.WindowSize = this.Size;
             }
 
-            Program.conf.Save();
+            Program.conf.Write();
             Program.Worker.SaveHistoryItems();
 
             FileSystem.AppendDebug("Settings written to file.");
@@ -1327,7 +1327,7 @@ namespace ZScreenLib
             SaveFileDialog dlg = new SaveFileDialog { Filter = Program.FILTER_SETTINGS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Program.conf.Save(dlg.FileName);
+                Program.conf.Write(dlg.FileName);
             }
         }
 
@@ -1521,7 +1521,7 @@ namespace ZScreenLib
             Program.conf = new XMLSettings();
             ZScreen_ConfigGUI();
             Program.conf.RunOnce = true;
-            Program.conf.Save();
+            Program.conf.Write();
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
@@ -3974,7 +3974,7 @@ namespace ZScreenLib
 
         private void btnImageBamRegister_Click(object sender, EventArgs e)
         {
-            Process.Start(" http://www.imagebam.com/register");
+            Process.Start("http://www.imagebam.com/register");
         }
     }
 }
