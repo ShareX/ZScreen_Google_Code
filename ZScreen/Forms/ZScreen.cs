@@ -580,7 +580,7 @@ namespace ZScreenLib
                 }
             }
             chkDekiWikiForcePath.Checked = Program.conf.DekiWikiForcePath;
-
+                       
             ///////////////////////////////////
             // Image Uploader Settings
             ///////////////////////////////////
@@ -611,6 +611,11 @@ namespace ZScreenLib
                 cbTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
             }
             cbTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
+
+            // ImageBam
+
+            txtImageBamApiKey.Text = Program.conf.ImageBamApiKey;
+            txtImageBamSecret.Text = Program.conf.ImageBamSecret;
 
             // Others
 
@@ -3950,6 +3955,21 @@ namespace ZScreenLib
         private void pbLogo_MouseClick(object sender, MouseEventArgs e)
         {
             turnLogo.StartTurn();
+        }
+
+        private void txtImageBamApiKey_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageBamApiKey = txtImageBamApiKey.Text;
+        }
+
+        private void txtImageBamSecret_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.ImageBamSecret = txtImageBamSecret.Text;
+        }
+
+        private void btnImageBamApiKeysUrl_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.imagebam.com/nav/API_Keys");
         }
     }
 }

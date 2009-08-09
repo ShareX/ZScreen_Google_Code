@@ -28,10 +28,10 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using ZSS.ImageUploadersLib;
-using ZSS.TextUploadersLib;
-using ZSS.Properties;
 using ZSS;
+using ZSS.ImageUploadersLib;
+using ZSS.Properties;
+using ZSS.TextUploadersLib;
 
 namespace ZScreenLib
 {
@@ -77,7 +77,7 @@ namespace ZScreenLib
                     UploadDekiWiki();
                     break;
                 case ImageDestType.IMAGEBAM:
-                    imageUploader = new ImageBam("", "");
+                    imageUploader = new ImageBamUploader(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret);
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);

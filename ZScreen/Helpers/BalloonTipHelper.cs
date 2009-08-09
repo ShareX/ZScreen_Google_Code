@@ -25,6 +25,7 @@ using System.Text;
 using System.Windows.Forms;
 using ZSS;
 using ZSS.ImageUploadersLib;
+using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -33,9 +34,14 @@ namespace ZScreenLib
         private MainAppTask task;
         private NotifyIcon niTray;
 
-        public BalloonTipHelper(NotifyIcon notifyIcon, MainAppTask task)
+        public BalloonTipHelper(NotifyIcon notifyIcon)
         {
             this.niTray = notifyIcon;
+        }
+
+        public BalloonTipHelper(NotifyIcon notifyIcon, MainAppTask task)
+            : this(notifyIcon)
+        {
             this.task = task;
         }
 
@@ -135,6 +141,45 @@ namespace ZScreenLib
             niTray.ShowBalloonTip(1000, Application.ProductName, sbMsg.ToString(), tti);
 
             return sbMsg.ToString();
+        }
+
+        public void ClickBalloonTip()
+        {
+            if (niTray.Tag != null)
+            {
+                MainAppTask task = (MainAppTask)niTray.Tag;
+                string cbString;
+                switch (task.Job)
+                {
+                    case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                        cbString = task.TranslationInfo.Result.TranslatedText;
+                        if (!string.IsNullOrEmpty(cbString))
+                        {
+                            Clipboard.SetText(cbString);
+                        }
+                        break;
+                    default:
+                        switch (task.ImageDestCategory)
+                        {
+                            case ImageDestType.FILE:
+                            case ImageDestType.CLIPBOARD:
+                                cbString = task.LocalFilePath;
+                                if (!string.IsNullOrEmpty(cbString))
+                                {
+                                    Process.Start(cbString);
+                                }
+                                break;
+                            default:
+                                cbString = task.RemoteFilePath;
+                                if (!string.IsNullOrEmpty(cbString))
+                                {
+                                    Process.Start(cbString);
+                                }
+                                break;
+                        }
+                        break;
+                }
+            }
         }
     }
 }

@@ -69,6 +69,15 @@ namespace ZScreenLib
         public string HelpToLanguage = "en";
 
         //~~~~~~~~~~~~~~~~~~~~~
+        //  Destinations
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        // ImageBam 
+
+        public string ImageBamApiKey = string.Empty;
+        public string ImageBamSecret = string.Empty;
+
+        //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
 
