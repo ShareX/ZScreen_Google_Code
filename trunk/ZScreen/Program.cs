@@ -302,7 +302,7 @@ namespace ZScreenLib
         public static Mutex mAppMutex;
         public static bool CLImode { get; set; }
 
-        public static KeyboardHook ZScreenKeyboardHook = new KeyboardHook();
+        public static KeyboardHook ZScreenKeyboardHook;
 
         [STAThread]
         static void Main()
@@ -391,6 +391,7 @@ namespace ZScreenLib
 
             try
             {
+                ZScreenKeyboardHook = new KeyboardHook();
                 Application.Run(new ZScreen());
             }
             catch (Exception ex)

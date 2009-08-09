@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using ZSS.ImageUploadersLib.Helpers;
+using System.Xml.Linq;
 
 namespace ZSS.ImageUploadersLib
 {
@@ -62,14 +63,52 @@ namespace ZSS.ImageUploadersLib
 
             string salt = RandomAlphanumeric(32);
 
-            arguments.Add("salt", salt); // Random string of 32 characters (a-zA-Z0-9) for higher security.
+            // Random string of 32 characters (a-zA-Z0-9) for higher security.
+            arguments.Add("salt", salt);
 
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
             arguments.Add("secret", GetMD5(Secret + UserSecret + salt));
 
             string source = PostImage(image, UploadURL, "photo", arguments);
 
+            return ParseResult(source);
+        }
+
+        private ImageFileManager ParseResult(string source)
+        {
             ImageFileManager ifm = new ImageFileManager { Source = source };
+
+            if (!string.IsNullOrEmpty(source))
+            {
+                XDocument xdoc = XDocument.Parse(source);
+                XElement xele = xdoc.Element("rsp");
+
+                if (xele != null)
+                {
+                    switch (xele.AttributeFirstValue("status", "stat"))
+                    {
+                        case "ok":
+                            string ID, URL, thumbnail, delcode;
+                            ID = xele.ElementValue("ID");
+                            URL = xele.ElementValue("URL");
+                            thumbnail = xele.ElementValue("thumbnail");
+                            delcode = xele.ElementValue("delcode");
+
+                            ifm.ImageFileList.Add(new ImageFile(URL, ImageFile.ImageType.FULLIMAGE));
+                            ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+
+                            break;
+                        case "fail":
+                            string code, msg;
+                            code = xele.Element("err").Attribute("code").Value;
+                            msg = xele.Element("err").Attribute("msg").Value;
+
+                            base.Errors.Add(msg);
+
+                            break;
+                    }
+                }
+            }
 
             return ifm;
         }
