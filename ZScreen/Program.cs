@@ -46,7 +46,7 @@ namespace ZScreenLib
         private static readonly string HistoryFileName = "History.xml";
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
-        private static readonly string PortableRootFolder = Application.ProductName; //Path.Combine(Application.StartupPath, Application.ProductName);
+        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
 
         public static string RootAppFolder { get; set; }
         public static string RootImagesDir { get; private set; }
@@ -76,8 +76,7 @@ namespace ZScreenLib
         private static string[] AppDirs;
 
         internal static string DefaultXMLFilePath;
-        private static string XMLPortableFile;
-
+        
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
@@ -134,16 +133,6 @@ namespace ZScreenLib
         {
             CacheDir = Path.Combine(RootAppFolder, "Cache");
             FilesDir = Path.Combine(RootAppFolder, "Files");
-
-            //if (conf != null && Directory.Exists(conf.CustomImagesDir))
-            //{
-            //    ImagesDir = conf.CustomImagesDir;
-            //}
-            //else
-            //{
-            //    ImagesDir = GetDefaultImagesDir();             
-            //}
-
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");
             TextDir = Path.Combine(RootAppFolder, "Text");
@@ -158,8 +147,12 @@ namespace ZScreenLib
                 }
             }
 
-            DefaultXMLFilePath = Path.Combine(SettingsDir, XMLFileName);
-            XMLPortableFile = Path.Combine(SettingsDir, XMLFileName);
+            DefaultXMLFilePath = Path.Combine(SettingsDir, XMLSettings.XMLFileName);
+            string DefaultXMLFilePathOld = Path.Combine(SettingsDir, XMLFileName);
+            if (!File.Exists(DefaultXMLFilePath) && File.Exists(DefaultXMLFilePathOld))
+            {
+                DefaultXMLFilePath = DefaultXMLFilePathOld;
+            }
         }
 
         public static void InitializeFiles()
@@ -257,23 +250,20 @@ namespace ZScreenLib
 
                 if (File.Exists(OldXMLPortableFile))
                 {
-                    if (!File.Exists(XMLPortableFile))
+                    if (!File.Exists(DefaultXMLFilePath))                   // Portable
                     {
-                        File.Move(OldXMLPortableFile, XMLPortableFile);
-                    }
-                    return XMLPortableFile;                               // Portable
+                        File.Move(OldXMLPortableFile, DefaultXMLFilePath);
+                    }                    
                 }
-
-                if (File.Exists(OldXMLFilePath))
+                else if (File.Exists(OldXMLFilePath))                       // v1.x
                 {
                     if (!File.Exists(DefaultXMLFilePath))
                     {
                         File.Move(OldXMLFilePath, DefaultXMLFilePath);
                     }
-                    return DefaultXMLFilePath;                            // v1.x
                 }
 
-                return DefaultXMLFilePath;                                // v2.x
+                return DefaultXMLFilePath;                                  // v2.x
             }
         }
 
@@ -338,7 +328,6 @@ namespace ZScreenLib
                 cw = new ConfigWizard(DefaultRootAppFolder);
                 cw.ShowDialog();
                 appSettings.RootDir = cw.RootFolder;
-                appSettings.Save();
             }
 
             if (Directory.Exists(PortableRootFolder))
@@ -401,6 +390,7 @@ namespace ZScreenLib
             finally
             {
                 FileSystem.WriteDebugFile();
+                appSettings.Write();
                 ZScreenKeyboardHook.Dispose();
             }
         }

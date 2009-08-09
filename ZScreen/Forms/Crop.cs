@@ -517,7 +517,7 @@ namespace ZScreenLib
 
         private void Crop_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Program.conf.Save();
+            Program.conf.Write();
             DisposeImages();
         }
 
