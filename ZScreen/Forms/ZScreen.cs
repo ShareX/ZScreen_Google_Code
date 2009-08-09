@@ -3971,5 +3971,10 @@ namespace ZScreenLib
         {
             Process.Start("http://www.imagebam.com/nav/API_Keys");
         }
+
+        private void btnImageBamRegister_Click(object sender, EventArgs e)
+        {
+            Process.Start(" http://www.imagebam.com/register");
+        }
     }
 }
