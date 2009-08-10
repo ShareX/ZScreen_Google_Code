@@ -306,14 +306,15 @@ namespace ZScreenLib
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
                     UpdateNotifyIconProgress(mZScreen.niTray, progress);
-                    Adapter.TaskbarSetProgress(progress);
+                    Adapter.TaskbarSetProgressValue(progress);
                     mZScreen.Text = string.Format("{0}% - {1}", progress, Program.GetProductName());
                     break;
                 case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
-                    Adapter.TaskbarSetState(tbps);
+                    Adapter.TaskbarSetProgressState(tbps);
                     break;
                 case MainAppTask.ProgressType.SHOW_TRAY_MESSAGE:
+                    Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
                     SetNotifyIconBalloonTip(mZScreen.niTray, e.UserState as string, mZScreen.Text, ToolTipIcon.Error);
                     break;
             }
@@ -442,7 +443,7 @@ namespace ZScreenLib
 
                 if (CoreHelpers.RunningOnWin7)
                 {
-                    Adapter.TaskbarSetState(TaskbarProgressBarState.NoProgress);
+                    Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
                 }
 
 
