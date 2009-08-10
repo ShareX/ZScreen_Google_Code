@@ -71,7 +71,7 @@ namespace ZSS.ImageUploadersLib
         TWITPIC,
         [Description("TwitSnaps")]
         TWITSNAPS,
-        [Description("yFrog")]
+        [Description("YFrog")]
         YFROG,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,

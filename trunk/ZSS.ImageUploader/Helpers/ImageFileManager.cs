@@ -131,12 +131,20 @@ namespace ZSS.ImageUploadersLib.Helpers
 
         public string GetFullImageForumsUrl()
         {
-            return string.Format("[IMG]{0}[/IMG]", this.GetFullImageUrl());
+        	string url = this.GetFullImageUrl();
+        	if (!string.IsNullOrEmpty(url)) {
+        		return string.Format("[IMG]{0}[/IMG]", url);
+        	}
+            return string.Empty;
         }
 
         public string GetFullImageWiki()
         {
-            return string.Format("[{0}]", this.GetFullImageUrl());
+        	string url = this.GetFullImageUrl();
+        	if (!string.IsNullOrEmpty(url)) {
+        		return string.Format("[{0}]", url);
+        	}
+            return string.Empty;
         }
 
         public string GetLinkedThumbnailForumUrl()
@@ -153,12 +161,22 @@ namespace ZSS.ImageUploadersLib.Helpers
         public string GetLinkedThumbnailWikiUrl()
         {
             // [http://code.google.com/ http://code.google.com/images/code_sm.png]
-            return string.Format("[{0} {1}]", GetFullImageUrl(), GetThumbnailUrl());
+            string full = GetFullImageUrl();
+            string thumb = GetThumbnailUrl();
+            if (!string.IsNullOrEmpty(full) && !string.IsNullOrEmpty(thumb))
+            {
+            	return string.Format("[{0} {1}]", full, thumb);
+            }
+            return string.Empty;                     
         }
 
         public string GetFullImageHTML()
         {
-            return string.Format("<img src=\"{0}\"/>", this.GetFullImageUrl());
+            string url = GetFullImageUrl();
+            if (!string.IsNullOrEmpty(url)) {
+        		return string.Format("<img src=\"{0}\"/>", url);
+        	}         
+            return string.Empty;
         }
 
         public enum SourceType

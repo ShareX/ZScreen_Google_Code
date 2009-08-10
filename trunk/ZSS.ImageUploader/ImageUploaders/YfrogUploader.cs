@@ -73,7 +73,7 @@ namespace ZSS.ImageUploadersLib
         private const string UploadLink = "http://yfrog.com/api/upload";
         private const string UploadAndPostLink = "http://yfrog.com/api/uploadAndPost";
 
-        public override string Name { get { return "yfrog"; } }
+        public override string Name { get { return "YFrog"; } }
 
         public YfrogUploader(YfrogOptions options)
         {
