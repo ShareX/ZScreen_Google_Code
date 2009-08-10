@@ -462,12 +462,12 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
     <PostBuildEvent>cd  "$(ProjectDir)Setup\"
 $(inno) /cc zscreen-beta-setup.iss
 start explorer /n,"$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
     <PreBuildEvent>"$(ProjectDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
     <PostBuildEvent>mkdir "$(TargetDir)ILMerge"
 "$(ProjectDir)Tools\ILMerge.exe" /wildcards /t:winexe /out:"$(TargetDir)ILMerge\ZScreen.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
