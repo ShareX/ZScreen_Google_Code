@@ -31,7 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -49,7 +52,10 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.0.3.2, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL" />
+    <Reference Include="taglib-sharp, Version=2.0.3.2, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\taglib-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global\Enums.cs" />
@@ -73,8 +79,6 @@
     <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.css" />
     <EmbeddedResource Include="TreeNetIndexerFiles\domCollapse.js" />
     <EmbeddedResource Include="TreeNetIndexerFiles\html.txt" />
-    <Content Include="Lib\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="Lib\taglib-sharp.dll" />
     <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Jaex.css" />
     <EmbeddedResource Include="TreeNetIndexerFiles\CSS\Default.css" />
     <Content Include="TreeNetIndexerFiles\Demo.html" />

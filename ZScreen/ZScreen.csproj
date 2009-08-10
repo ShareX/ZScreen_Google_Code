@@ -72,18 +72,33 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxSHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="AxSHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\AxSHDocVw.dll</HintPath>
+    </Reference>
+    <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\IECaptComImports.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\SHDocVw.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -416,17 +431,12 @@
     <None Include="Resources\us.png" />
     <None Include="Resources\ajax-loader.gif" />
     <Content Include="Documents\TODO.txt" />
-    <None Include="Lib\Microsoft.WindowsAPICodePack.dll" />
-    <None Include="Lib\Microsoft.WindowsAPICodePack.Shell.dll" />
     <None Include="Resources\shape_square.ico" />
     <None Include="Resources\application_double_ico.ico" />
     <None Include="Resources\clipboard_upload_ico.ico" />
     <None Include="RegistrationHelper.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Lib\AxSHDocVw.dll" />
-    <None Include="Lib\IECaptComImports.dll" />
-    <None Include="Lib\SHDocVw.dll" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>

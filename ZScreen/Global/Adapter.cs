@@ -365,7 +365,7 @@ namespace ZScreenLib
 
         #region "Windows 7 only"
 
-        public static void TaskbarSetState(TaskbarProgressBarState tbps)
+        public static void TaskbarSetProgressState(TaskbarProgressBarState tbps)
         {
             if (TaskbarManager.IsPlatformSupported && Program.zWindowsTaskbar != null)
             {
@@ -373,7 +373,7 @@ namespace ZScreenLib
             }
         }
 
-        public static void TaskbarSetProgress(int progress)
+        public static void TaskbarSetProgressValue(int progress)
         {
             if (TaskbarManager.IsPlatformSupported && Program.zWindowsTaskbar != null)
             {

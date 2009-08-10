@@ -24,6 +24,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EE237035
 		Tools\sgen.exe = Tools\sgen.exe
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-3588-4A1D-926E-22C8692D345F}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\AxSHDocVw.dll = Lib\AxSHDocVw.dll
+		Lib\ICSharpCode.SharpZipLib.dll = Lib\ICSharpCode.SharpZipLib.dll
+		Lib\IECaptComImports.dll = Lib\IECaptComImports.dll
+		Lib\Microsoft.WindowsAPICodePack.dll = Lib\Microsoft.WindowsAPICodePack.dll
+		Lib\Microsoft.WindowsAPICodePack.Shell.dll = Lib\Microsoft.WindowsAPICodePack.Shell.dll
+		Lib\SHDocVw.dll = Lib\SHDocVw.dll
+		Lib\taglib-sharp.dll = Lib\taglib-sharp.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
