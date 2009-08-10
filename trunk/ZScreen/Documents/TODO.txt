@@ -1,6 +1,4 @@
-﻿Image Destination for Printer
-
-Hotkey for Indexer
+﻿Hotkey for Indexer
 		
 Windwos.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser
