@@ -11,14 +11,14 @@ namespace ZSS
 {
     public static class Loader
     {
-        internal static ZSS.Forms.SplashScreen Splash = null;
+       // internal static ZSS.Forms.SplashScreen Splash = null;
 
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Splash = new SplashScreen();
+            //Splash = new ZSS.Forms.SplashScreen();
             //AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
             //Splash.Show();
 
@@ -38,9 +38,9 @@ namespace ZSS
             }
         }
 
-        static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
-        {
-            Splash.AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);
-        }
+        //static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        //{
+        //    Splash.AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);
+        //}
     }
 }

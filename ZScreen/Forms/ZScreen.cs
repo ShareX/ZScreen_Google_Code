@@ -1277,8 +1277,6 @@ namespace ZScreenLib
         {
             mGuiIsReady = true;
 
-
-
             if (!Program.conf.RunOnce)
             {
                 Show();
@@ -1299,7 +1297,7 @@ namespace ZScreenLib
             }
 
             ZScreen_Windows7onlyTasks();
-
+           // Loader.Splash.Close();
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
