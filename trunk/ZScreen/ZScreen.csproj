@@ -127,6 +127,12 @@
     <Compile Include="Forms\DekiWikiPath.designer.cs">
       <DependentUpon>DekiWikiPath.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ToolbarWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +165,7 @@
     <Compile Include="Helpers\WorkerPrimary.cs" />
     <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Helpers\WorkerSecondary.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="UserControls\AccountsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -376,6 +383,9 @@
     <EmbeddedResource Include="Forms\DekiWikiPath.resx">
       <DependentUpon>DekiWikiPath.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ToolbarWindow.resx">
       <DependentUpon>ToolbarWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -467,8 +477,10 @@
 $(inno) /cc zscreen-beta-setup.iss
 start explorer /n,"$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PreBuildEvent>"$(ProjectDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
     <PostBuildEvent>mkdir "$(TargetDir)ILMerge"
 "$(ProjectDir)Tools\ILMerge.exe" /wildcards /t:winexe /out:"$(TargetDir)ILMerge\ZScreen.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
   </PropertyGroup>

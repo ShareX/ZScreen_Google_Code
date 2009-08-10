@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
-using System.Windows.Forms;
-using ZSS.Forms;
 using ZScreenLib;
+using System.Windows.Forms;
 
 namespace ZSS
 {
     public static class Loader
     {
-        internal static SplashScreen Splash = null;
+        internal static ZSS.Forms.SplashScreen Splash = null;
 
         [STAThread]
         static void Main()
