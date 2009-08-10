@@ -455,10 +455,6 @@ namespace ZScreenLib
             finally
             {
                 UploadManager.Commit(task.UniqueNumber);
-                if (Program.CLImode)
-                {
-                    Application.Exit();
-                }
             }
         }
 
@@ -503,8 +499,8 @@ namespace ZScreenLib
             {
                 case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
                     mZScreen.btnTranslate.Enabled = false;
-                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text, Program.mGTranslator.LanguageOptions.SourceLangList[mZScreen.cbFromLanguage.SelectedIndex],
-                        Program.mGTranslator.LanguageOptions.TargetLangList[mZScreen.cbToLanguage.SelectedIndex]);
+                    t.TranslationInfo = new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text, ZScreen.mGTranslator.LanguageOptions.SourceLangList[mZScreen.cbFromLanguage.SelectedIndex],
+                        ZScreen.mGTranslator.LanguageOptions.TargetLangList[mZScreen.cbToLanguage.SelectedIndex]);
                     if (t.TranslationInfo.IsEmpty())
                     {
                         mZScreen.btnTranslate.Enabled = true;
@@ -669,7 +665,7 @@ namespace ZScreenLib
 
         public void LanguageTranslator(ref MainAppTask t)
         {
-            t.TranslationInfo.Result = Program.mGTranslator.TranslateText(t.TranslationInfo);
+            t.TranslationInfo.Result = ZScreen.mGTranslator.TranslateText(t.TranslationInfo);
         }
 
         public void StartWorkerTranslator()
@@ -677,8 +673,8 @@ namespace ZScreenLib
             if (Clipboard.ContainsText())
             {
                 StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(Clipboard.GetText(),
-                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, Program.mGTranslator.LanguageOptions.SourceLangList),
-                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage, Program.mGTranslator.LanguageOptions.TargetLangList)));
+                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
             }
         }
 
@@ -1313,8 +1309,8 @@ namespace ZScreenLib
             else
             {
                 StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text,
-                     GoogleTranslate.FindLanguage(Program.conf.FromLanguage, Program.mGTranslator.LanguageOptions.SourceLangList),
-                     GoogleTranslate.FindLanguage(Program.conf.ToLanguage2, Program.mGTranslator.LanguageOptions.TargetLangList)));
+                     GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                     GoogleTranslate.FindLanguage(Program.conf.ToLanguage2, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
             }
         }
 

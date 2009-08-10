@@ -34,6 +34,7 @@ using ZSS.TextUploadersLib;
 using ZSS.Properties;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using ZSS.Forms;
 
 namespace ZScreenLib
 {
@@ -76,7 +77,7 @@ namespace ZScreenLib
         private static string[] AppDirs;
 
         internal static string DefaultXMLFilePath;
-        
+
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
@@ -253,7 +254,7 @@ namespace ZScreenLib
                     if (!File.Exists(DefaultXMLFilePath))                   // Portable
                     {
                         File.Move(OldXMLPortableFile, DefaultXMLFilePath);
-                    }                    
+                    }
                 }
                 else if (File.Exists(OldXMLFilePath))                       // v1.x
                 {
@@ -276,7 +277,6 @@ namespace ZScreenLib
         }
 
         public static XMLSettings conf;
-        internal static GoogleTranslate mGTranslator;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
@@ -290,37 +290,13 @@ namespace ZScreenLib
         public static WorkerSecondary Worker2;
 
         public static Mutex mAppMutex;
-        public static bool CLImode { get; set; }
 
         public static KeyboardHook ZScreenKeyboardHook;
 
-        [STAThread]
-        static void Main()
-        {
-            string[] args = Environment.GetCommandLineArgs();
-            CLImode = args.Length > 1;
-
-            if (args.Length > 2 && args[1] == "/doc")
-            {
-                string filePath = string.Join(" ", args, 2, args.Length - 2);
-                if (File.Exists(filePath))
-                {
-                    Process.Start(filePath);
-                }
-            }
-            else
-            {
-                RunZScreen();
-            }
-        }
-
-        private static void RunZScreen()
+        internal static void RunZScreen()
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
             FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
             ConfigWizard cw = null;
             if (string.IsNullOrEmpty(appSettings.RootDir))
@@ -340,14 +316,16 @@ namespace ZScreenLib
             {
                 RootAppFolder = appSettings.RootDir;
             }
-
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
             RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
+
+            FileSystem.AppendDebug("Initializing Default folder paths...");
             InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
+            // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
+            FileSystem.AppendDebug("Reading " + Path.GetFileName(Program.XMLSettingsFile));
             conf = XMLSettings.Read();
 
             InitializeFiles();
-
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
 
             // Use Configuration Wizard Settings if applied
             if (cw != null)

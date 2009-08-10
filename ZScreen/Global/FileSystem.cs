@@ -140,12 +140,6 @@ namespace ZScreenLib
             return s;
         }
 
-        public static string GetConfigFilePath()
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-            return config.FilePath;
-        }
-
         public static string GetImagesDir()
         {
             return Directory.Exists(Program.ImagesDir) ? Program.ImagesDir : Program.RootImagesDir;
