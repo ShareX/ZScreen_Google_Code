@@ -59,6 +59,11 @@ namespace ZScreenCLI
             UploadManager.SetClipboardText(task);
         }
 
+        private void ClipboardUpload()
+        {
+
+        }
+
         private void niTray_Click(object sender, EventArgs e)
         {
             this.Close();

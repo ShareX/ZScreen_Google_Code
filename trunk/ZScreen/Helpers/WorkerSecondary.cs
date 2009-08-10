@@ -160,7 +160,7 @@ namespace ZScreenLib
         {
             try
             {
-                Program.mGTranslator = new GoogleTranslate(Adapter.GetProxySettings());
+                ZScreen.mGTranslator = new GoogleTranslate(Adapter.GetProxySettings());
                 Adapter.UpdateTinyPicShuk();
             }
             catch (Exception ex)
@@ -171,21 +171,21 @@ namespace ZScreenLib
 
         private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Program.mGTranslator != null)
+            if (ZScreen.mGTranslator != null)
             {
                 mZScreen.cbFromLanguage.Items.Clear();
                 mZScreen.cbToLanguage.Items.Clear();
-                foreach (GoogleTranslate.GTLanguage gtLang in Program.mGTranslator.LanguageOptions.SourceLangList)
+                foreach (GoogleTranslate.GTLanguage gtLang in ZScreen.mGTranslator.LanguageOptions.SourceLangList)
                 {
                     mZScreen.cbFromLanguage.Items.Add(gtLang.Name);
                 }
-                foreach (GoogleTranslate.GTLanguage gtLang in Program.mGTranslator.LanguageOptions.TargetLangList)
+                foreach (GoogleTranslate.GTLanguage gtLang in ZScreen.mGTranslator.LanguageOptions.TargetLangList)
                 {
                     mZScreen.cbToLanguage.Items.Add(gtLang.Name);
                 }
                 SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
                 GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Program.conf.ToLanguage2,
-                    Program.mGTranslator.LanguageOptions.TargetLangList);
+                    ZScreen.mGTranslator.LanguageOptions.TargetLangList);
                 if (secondLang != null)
                 {
                     mZScreen.btnTranslateTo1.Text = "To " + secondLang.Name;
@@ -202,17 +202,17 @@ namespace ZScreenLib
 
         public void SelectLanguage(string srcLangValue, string targetLangValue, string helpTargetLangValue)
         {
-            for (int i = 0; i < Program.mGTranslator.LanguageOptions.SourceLangList.Count; i++)
+            for (int i = 0; i < ZScreen.mGTranslator.LanguageOptions.SourceLangList.Count; i++)
             {
-                if (Program.mGTranslator.LanguageOptions.SourceLangList[i].Value == srcLangValue)
+                if (ZScreen.mGTranslator.LanguageOptions.SourceLangList[i].Value == srcLangValue)
                 {
                     if (mZScreen.cbFromLanguage.Items.Count > i) mZScreen.cbFromLanguage.SelectedIndex = i;
                     break;
                 }
             }
-            for (int i = 0; i < Program.mGTranslator.LanguageOptions.TargetLangList.Count; i++)
+            for (int i = 0; i < ZScreen.mGTranslator.LanguageOptions.TargetLangList.Count; i++)
             {
-                if (Program.mGTranslator.LanguageOptions.TargetLangList[i].Value == targetLangValue)
+                if (ZScreen.mGTranslator.LanguageOptions.TargetLangList[i].Value == targetLangValue)
                 {
                     if (mZScreen.cbToLanguage.Items.Count > i) mZScreen.cbToLanguage.SelectedIndex = i;
                 }
