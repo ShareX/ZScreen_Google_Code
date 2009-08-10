@@ -60,6 +60,7 @@ namespace ZScreenLib
         private Debug debug = null;
         private List<int> mLogoRandomList = new List<int>(5);
         private ImageEffects.TurnImage turnLogo;
+        internal static GoogleTranslate mGTranslator = null;
 
         #endregion
 
@@ -2571,19 +2572,19 @@ namespace ZScreenLib
         private void btnTranslateMethod()
         {
             Program.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
-                GoogleTranslate.FindLanguage(Program.conf.FromLanguage, Program.mGTranslator.LanguageOptions.SourceLangList),
-                GoogleTranslate.FindLanguage(Program.conf.ToLanguage, Program.mGTranslator.LanguageOptions.TargetLangList)));
+                GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                GoogleTranslate.FindLanguage(Program.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
         }
 
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FromLanguage = Program.mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
+            Program.conf.FromLanguage = ZScreen.mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
         }
 
         private void cbToLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.ToLanguage = Program.mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
+            Program.conf.ToLanguage = ZScreen.mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
         }
 
         private void cbClipboardTranslate_CheckedChanged(object sender, EventArgs e)
@@ -3346,7 +3347,7 @@ namespace ZScreenLib
         private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
         {
             GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
-               Program.mGTranslator.LanguageOptions.TargetLangList);
+               ZScreen.mGTranslator.LanguageOptions.TargetLangList);
             Program.conf.ToLanguage2 = lang.Value;
             btnTranslateTo1.Text = "To " + lang.Name;
         }
