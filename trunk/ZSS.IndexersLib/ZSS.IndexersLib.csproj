@@ -95,4 +95,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PostBuildEvent>"$(SolutionDir)Tools\sgen.exe" /force /assembly:"$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
