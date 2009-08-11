@@ -67,6 +67,10 @@ namespace ZSS.ImageUploadersLib
         public ImageBamUploader(ImageBamUploaderOptions options)
         {
             this.Options = options;
+            if (string.IsNullOrEmpty(options.UserKey) || string.IsNullOrEmpty(options.UserSecret))
+            {
+                this.Errors.Add("In order to upload images to ImageBam, you need to register first.");
+            }
         }
 
         public override string Name
