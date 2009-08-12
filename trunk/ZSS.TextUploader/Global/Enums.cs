@@ -35,6 +35,8 @@ namespace ZSS.TextUploadersLib
         PASTEBIN,
         [Description("paste2.org")]
         PASTE2,
+        //[Description("pastebin.ca")]
+        //PASTEBIN_CA,
         [Description("slexy.org")]
         SLEXY
     }

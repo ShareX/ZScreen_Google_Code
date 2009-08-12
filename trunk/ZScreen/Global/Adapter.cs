@@ -64,7 +64,6 @@ namespace ZScreenLib
             }
         }
 
-        #region "ImageBam Methods"
         public static string GetTinyPicShuk()
         {
             UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = Resources.zss_main };
@@ -83,23 +82,26 @@ namespace ZScreenLib
             return string.Empty;
         }
 
+        #region ImageBam Methods
+
         public static string CreateImageBamGallery()
         {
             ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret));
             string galleryId = ibu.CreateGalleryID();
-            Program.conf.ImageBamGalleryIDs.Add(galleryId);
+            Program.conf.ImageBamGallery.Add(galleryId);
             return galleryId;
         }
 
         public static string GetImageBamGalleryActive()
         {
             string galleryId = string.Empty;
-            if (Program.conf.ImageBamGalleryIDs.Count > Program.conf.ImageBamGalleryActive)
+            if (CheckImageBamGallery())
             {
-                galleryId = Program.conf.ImageBamGalleryIDs[Program.conf.ImageBamGalleryActive];
+                galleryId = Program.conf.ImageBamGallery[Program.conf.ImageBamGalleryActive];
             }
             return galleryId;
         }
+
         #endregion
 
         public static void TestFTPAccount(FTPAccount acc)
@@ -148,19 +150,24 @@ namespace ZScreenLib
             return string.Format("Status description:\n{0}\nException message:\n{1}", status, e.Message);
         }
 
+        public static bool CheckList<T>(List<T> list, int selected)
+        {
+            return list.Count > 0 && selected >= 0 && list.Count > selected;
+        }
+
         public static bool CheckTextUploaders()
         {
-            return Program.conf.TextUploaderSelected >= 0 && Program.conf.TextUploadersList.Count > 0;
+            return CheckList(Program.conf.TextUploadersList, Program.conf.TextUploaderSelected);
         }
 
         public static bool CheckURLShorteners()
         {
-            return Program.conf.UrlShortenerSelected >= 0 && Program.conf.UrlShortenersList.Count > 0;
+            return CheckList(Program.conf.UrlShortenersList, Program.conf.UrlShortenerSelected);
         }
 
         public static bool CheckFTPAccounts()
         {
-            return Program.conf.FTPAccountList.Count > 0 && Program.conf.FTPSelected >= 0 && Program.conf.FTPAccountList.Count > Program.conf.FTPSelected;
+            return CheckList(Program.conf.FTPAccountList, Program.conf.FTPSelected);
         }
 
         public static bool CheckFTPAccounts(ref MainAppTask task)
@@ -172,8 +179,7 @@ namespace ZScreenLib
 
         public static bool CheckDekiWikiAccounts()
         {
-            return Program.conf.DekiWikiAccountList.Count > 0 && Program.conf.DekiWikiSelected >= 0 &&
-                Program.conf.DekiWikiAccountList.Count > Program.conf.DekiWikiSelected;
+            return CheckList(Program.conf.DekiWikiAccountList, Program.conf.DekiWikiSelected);
         }
 
         public static bool CheckDekiWikiAccounts(ref MainAppTask task)
@@ -181,6 +187,11 @@ namespace ZScreenLib
             bool result = CheckDekiWikiAccounts();
             if (!result) task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
             return result;
+        }
+
+        public static bool CheckImageBamGallery()
+        {
+            return CheckList(Program.conf.ImageBamGallery, Program.conf.ImageBamGallerySelected);
         }
 
         public static void TestDekiWikiAccount(DekiWikiAccount acc)
@@ -382,6 +393,6 @@ namespace ZScreenLib
         }
 
         #endregion
-    }
 
+    }
 }

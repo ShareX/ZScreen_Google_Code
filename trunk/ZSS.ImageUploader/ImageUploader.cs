@@ -113,7 +113,7 @@ namespace ZSS.ImageUploadersLib
         {
             Random random = new Random();
             string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-            
+
             StringBuilder sb = new StringBuilder();
 
             while (length-- > 0)
@@ -362,23 +362,23 @@ namespace ZSS.ImageUploadersLib
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
 
-            return Encoding.Default.GetBytes(format);
+            return Encoding.UTF8.GetBytes(format);
         }
 
         private byte[] MakeFileInputContent(string boundary, string name, string filename, string contentType, byte[] content)
         {
-            MemoryStream stream = new MemoryStream();
-            byte[] bytes;
-
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                 boundary, name, filename, contentType);
 
-            bytes = Encoding.Default.GetBytes(format);
+            MemoryStream stream = new MemoryStream();
+            byte[] bytes;
+
+            bytes = Encoding.UTF8.GetBytes(format);
             stream.Write(bytes, 0, bytes.Length);
 
             stream.Write(content, 0, content.Length);
 
-            bytes = Encoding.Default.GetBytes("\r\n");
+            bytes = Encoding.UTF8.GetBytes("\r\n");
             stream.Write(bytes, 0, bytes.Length);
 
             return stream.ToArray();
