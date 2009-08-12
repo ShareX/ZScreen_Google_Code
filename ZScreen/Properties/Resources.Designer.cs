@@ -165,6 +165,13 @@ namespace ZSS.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap explorer_001 {
+            get {
+                object obj = ResourceManager.GetObject("explorer 001", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap folder_edit {
             get {
                 object obj = ResourceManager.GetObject("folder_edit", resourceCulture);
@@ -397,14 +404,18 @@ namespace ZSS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 2.23 - 20090801
+        ///   Looks up a localized string similar to Version 3.0 - 20091015
         ///
-        ///2.23.04.0 PropertyGrid options to prefer Browser View when navigating uploaded Images and Text in History tab {McoreD}
-        ///2.23.03.0 Selected Window can perform Crop Shot if required {Jaex}
-        ///2.23.02.0 Windows 7 only: ZScreen taskbar icon shows progress when uploading {McoreD}
-        ///2.23.01.0 Selected Window can capture objects within each active window {Jaex}
-        ///2.23.00.0 Ability to Clipboard Upload folder contents using TreeGUI indexer engines {McoreD}
-        ///2.22.02.0 Screenshots of irregular w [rest of string was truncated]&quot;;.
+        ///3.00.0.0 Established foundation for File Hosting Services starting with RapidShare {Jaex}
+        ///2.31.0.0 Added ImageBam Image Uploader support {Jaex}
+        ///
+        ///Version 2.30 - 20090815
+        ///
+        ///2.30.1.0 Application Version specific Settings Read/Write mechanism to avoid settings resets {McoreD}
+        ///2.30.0.0 Added capability to Print images {McoreD}
+        ///2.29.0.0 Added yFrog Image Uploader support {McoreD}
+        ///2.28.0.0 Added TwitSnaps Image Uploader support {McoreD}
+        ///2.27.0.0 Clipboard Copy chooser [Issue 106]  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VersionHistory {
             get {

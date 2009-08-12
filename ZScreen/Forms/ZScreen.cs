@@ -1327,7 +1327,7 @@ namespace ZScreenLib
             }
 
             ZScreen_Windows7onlyTasks();
-           // Loader.Splash.Close();
+            // Loader.Splash.Close();
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
@@ -2122,6 +2122,7 @@ namespace ZScreenLib
                     bool checkImage = GraphicsMgr.IsValidImage(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
                     bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText);
+                    bool checkBinary = !checkImage && !checkText && !checkWebpage;
 
                     historyBrowser.Visible = checkWebpage;
                     pbPreview.Visible = checkImage || (!checkText && checkRemote) && !checkWebpage;
@@ -2143,21 +2144,27 @@ namespace ZScreenLib
                     }
                     else if (checkImage)
                     {
-                        pbPreview.LoadAsync(hi.LocalPath);
-                        pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
+                        if (checkLocal)
+                        {
+                            pbPreview.LoadAsync(hi.LocalPath);
+                            pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
+                        }
+                        else if (checkRemote)
+                        {
+                            pbPreview.Image = Resources.ajax_loader;
+                            pbPreview.SizeMode = PictureBoxSizeMode.CenterImage;
+                            pbPreview.LoadAsync(hi.RemotePath);
+                            pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
+                        }
                     }
                     else if (checkText)
                     {
                         txtPreview.Text = File.ReadAllText(hi.LocalPath);
                     }
-                    else if (checkRemote)
+                    else if (checkBinary)
                     {
-                        pbPreview.Image = Resources.ajax_loader;
-                        pbPreview.SizeMode = PictureBoxSizeMode.CenterImage;
-                        pbPreview.LoadAsync(hi.RemotePath);
-                        pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
+                        pbPreview.Image = Resources.explorer_001;
                     }
-
 
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
@@ -4042,12 +4049,12 @@ namespace ZScreenLib
 
         private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.RapidShareCollectorsID = txtRapidShareCollectorID.Text; 
+            Program.conf.RapidShareCollectorsID = txtRapidShareCollectorID.Text;
         }
 
         private void txtRapidSharePremiumUserName_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text; 
+            Program.conf.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text;
         }
 
         private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)

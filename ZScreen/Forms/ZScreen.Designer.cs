@@ -94,6 +94,8 @@ namespace ZScreenLib
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
             this.lblURLShortener = new System.Windows.Forms.Label();
             this.lblImageUploader = new System.Windows.Forms.Label();
@@ -159,6 +161,15 @@ namespace ZScreenLib
             this.txtImageBamSecret = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtImageBamApiKey = new System.Windows.Forms.TextBox();
+            this.tpRapidShare = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
+            this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
+            this.txtRapidShareCollectorID = new System.Windows.Forms.TextBox();
+            this.cboRapidShareAcctType = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
@@ -520,17 +531,6 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpRapidShare = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cboRapidShareAcctType = new System.Windows.Forms.ComboBox();
-            this.txtRapidShareCollectorID = new System.Windows.Forms.TextBox();
-            this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
-            this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -556,6 +556,7 @@ namespace ZScreenLib
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
             this.gbImageBamApiKeys.SuspendLayout();
+            this.tpRapidShare.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpScreenshots.SuspendLayout();
@@ -669,7 +670,6 @@ namespace ZScreenLib
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.tpRapidShare.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1253,6 +1253,27 @@ namespace ZScreenLib
             this.gbMainOptions.TabIndex = 79;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Upload Destinations";
+            // 
+            // cboFileUploaders
+            // 
+            this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFileUploaders.FormattingEnabled = true;
+            this.cboFileUploaders.Location = new System.Drawing.Point(128, 96);
+            this.cboFileUploaders.Name = "cboFileUploaders";
+            this.cboFileUploaders.Size = new System.Drawing.Size(232, 21);
+            this.cboFileUploaders.TabIndex = 126;
+            this.ttZScreen.SetToolTip(this.cboFileUploaders, "Specify which URL Shortener to use.\r\nTo add/remove/change them see Text Services " +
+                    "-> URL Shorteners tab.\r\nThis setting relies on Clipboard Upload which can be set" +
+                    " in the Hotkeys tab. ");
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(48, 99);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(72, 13);
+            this.label10.TabIndex = 125;
+            this.label10.Text = "File Uploader:";
             // 
             // cboURLShorteners
             // 
@@ -1987,6 +2008,94 @@ namespace ZScreenLib
             this.txtImageBamApiKey.Size = new System.Drawing.Size(394, 20);
             this.txtImageBamApiKey.TabIndex = 2;
             this.txtImageBamApiKey.TextChanged += new System.EventHandler(this.txtImageBamApiKey_TextChanged);
+            // 
+            // tpRapidShare
+            // 
+            this.tpRapidShare.Controls.Add(this.label9);
+            this.tpRapidShare.Controls.Add(this.label8);
+            this.tpRapidShare.Controls.Add(this.label7);
+            this.tpRapidShare.Controls.Add(this.txtRapidSharePassword);
+            this.tpRapidShare.Controls.Add(this.txtRapidSharePremiumUserName);
+            this.tpRapidShare.Controls.Add(this.txtRapidShareCollectorID);
+            this.tpRapidShare.Controls.Add(this.cboRapidShareAcctType);
+            this.tpRapidShare.Controls.Add(this.label6);
+            this.tpRapidShare.Location = new System.Drawing.Point(4, 23);
+            this.tpRapidShare.Name = "tpRapidShare";
+            this.tpRapidShare.Padding = new System.Windows.Forms.Padding(3);
+            this.tpRapidShare.Size = new System.Drawing.Size(791, 409);
+            this.tpRapidShare.TabIndex = 8;
+            this.tpRapidShare.Text = "RapidShare";
+            this.tpRapidShare.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(72, 120);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Password";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(22, 88);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(103, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Premium User Name";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(56, 56);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Collector\'s ID";
+            // 
+            // txtRapidSharePassword
+            // 
+            this.txtRapidSharePassword.Location = new System.Drawing.Point(136, 120);
+            this.txtRapidSharePassword.Name = "txtRapidSharePassword";
+            this.txtRapidSharePassword.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePassword.TabIndex = 4;
+            this.txtRapidSharePassword.TextChanged += new System.EventHandler(this.txtRapidSharePassword_TextChanged);
+            // 
+            // txtRapidSharePremiumUserName
+            // 
+            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(136, 88);
+            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
+            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePremiumUserName.TabIndex = 3;
+            this.txtRapidSharePremiumUserName.TextChanged += new System.EventHandler(this.txtRapidSharePremiumUserName_TextChanged);
+            // 
+            // txtRapidShareCollectorID
+            // 
+            this.txtRapidShareCollectorID.Location = new System.Drawing.Point(136, 56);
+            this.txtRapidShareCollectorID.Name = "txtRapidShareCollectorID";
+            this.txtRapidShareCollectorID.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidShareCollectorID.TabIndex = 2;
+            this.txtRapidShareCollectorID.TextChanged += new System.EventHandler(this.txtRapidShareCollectorID_TextChanged);
+            // 
+            // cboRapidShareAcctType
+            // 
+            this.cboRapidShareAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRapidShareAcctType.FormattingEnabled = true;
+            this.cboRapidShareAcctType.Location = new System.Drawing.Point(136, 24);
+            this.cboRapidShareAcctType.Name = "cboRapidShareAcctType";
+            this.cboRapidShareAcctType.Size = new System.Drawing.Size(121, 21);
+            this.cboRapidShareAcctType.TabIndex = 1;
+            this.cboRapidShareAcctType.SelectedIndexChanged += new System.EventHandler(this.cboRapidShareAcctType_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(51, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Account Type";
             // 
             // tpHotkeys
             // 
@@ -5139,6 +5248,7 @@ namespace ZScreenLib
             this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPreview.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbPreview.InitialImage = global::ZSS.Properties.Resources.explorer_001;
             this.pbPreview.Location = new System.Drawing.Point(0, 0);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(459, 242);
@@ -6213,115 +6323,6 @@ namespace ZScreenLib
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tpRapidShare
-            // 
-            this.tpRapidShare.Controls.Add(this.label9);
-            this.tpRapidShare.Controls.Add(this.label8);
-            this.tpRapidShare.Controls.Add(this.label7);
-            this.tpRapidShare.Controls.Add(this.txtRapidSharePassword);
-            this.tpRapidShare.Controls.Add(this.txtRapidSharePremiumUserName);
-            this.tpRapidShare.Controls.Add(this.txtRapidShareCollectorID);
-            this.tpRapidShare.Controls.Add(this.cboRapidShareAcctType);
-            this.tpRapidShare.Controls.Add(this.label6);
-            this.tpRapidShare.Location = new System.Drawing.Point(4, 23);
-            this.tpRapidShare.Name = "tpRapidShare";
-            this.tpRapidShare.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRapidShare.Size = new System.Drawing.Size(791, 409);
-            this.tpRapidShare.TabIndex = 8;
-            this.tpRapidShare.Text = "RapidShare";
-            this.tpRapidShare.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(51, 24);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Account Type";
-            // 
-            // cboRapidShareAcctType
-            // 
-            this.cboRapidShareAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboRapidShareAcctType.FormattingEnabled = true;
-            this.cboRapidShareAcctType.Location = new System.Drawing.Point(136, 24);
-            this.cboRapidShareAcctType.Name = "cboRapidShareAcctType";
-            this.cboRapidShareAcctType.Size = new System.Drawing.Size(121, 21);
-            this.cboRapidShareAcctType.TabIndex = 1;
-            this.cboRapidShareAcctType.SelectedIndexChanged += new System.EventHandler(this.cboRapidShareAcctType_SelectedIndexChanged);
-            // 
-            // txtRapidShareCollectorID
-            // 
-            this.txtRapidShareCollectorID.Location = new System.Drawing.Point(136, 56);
-            this.txtRapidShareCollectorID.Name = "txtRapidShareCollectorID";
-            this.txtRapidShareCollectorID.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidShareCollectorID.TabIndex = 2;
-            this.txtRapidShareCollectorID.TextChanged += new System.EventHandler(this.txtRapidShareCollectorID_TextChanged);
-            // 
-            // txtRapidSharePremiumUserName
-            // 
-            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(136, 88);
-            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
-            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidSharePremiumUserName.TabIndex = 3;
-            this.txtRapidSharePremiumUserName.TextChanged += new System.EventHandler(this.txtRapidSharePremiumUserName_TextChanged);
-            // 
-            // txtRapidSharePassword
-            // 
-            this.txtRapidSharePassword.Location = new System.Drawing.Point(136, 120);
-            this.txtRapidSharePassword.Name = "txtRapidSharePassword";
-            this.txtRapidSharePassword.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidSharePassword.TabIndex = 4;
-            this.txtRapidSharePassword.TextChanged += new System.EventHandler(this.txtRapidSharePassword_TextChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(56, 56);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Collector\'s ID";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 88);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(103, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Premium User Name";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(72, 120);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Password";
-            // 
-            // cboFileUploaders
-            // 
-            this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFileUploaders.FormattingEnabled = true;
-            this.cboFileUploaders.Location = new System.Drawing.Point(128, 96);
-            this.cboFileUploaders.Name = "cboFileUploaders";
-            this.cboFileUploaders.Size = new System.Drawing.Size(232, 21);
-            this.cboFileUploaders.TabIndex = 126;
-            this.ttZScreen.SetToolTip(this.cboFileUploaders, "Specify which URL Shortener to use.\r\nTo add/remove/change them see Text Services " +
-                    "-> URL Shorteners tab.\r\nThis setting relies on Clipboard Upload which can be set" +
-                    " in the Hotkeys tab. ");
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(48, 99);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(72, 13);
-            this.label10.TabIndex = 125;
-            this.label10.Text = "File Uploader:";
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6381,6 +6382,8 @@ namespace ZScreenLib
             this.gbImageBamLinks.PerformLayout();
             this.gbImageBamApiKeys.ResumeLayout(false);
             this.gbImageBamApiKeys.PerformLayout();
+            this.tpRapidShare.ResumeLayout(false);
+            this.tpRapidShare.PerformLayout();
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -6536,8 +6539,6 @@ namespace ZScreenLib
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.tpRapidShare.ResumeLayout(false);
-            this.tpRapidShare.PerformLayout();
             this.ResumeLayout(false);
 
         }
