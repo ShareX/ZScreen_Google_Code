@@ -642,7 +642,7 @@ namespace ZScreenLib
             // Others
 
             nudErrorRetry.Value = Program.conf.ErrorRetryCount;
-            cboAutoChangeUploadDestination.Checked = Program.conf.AutoChangeUploadDestination;
+            cboImageUploadRetryOnTimeout.Checked = Program.conf.ImageUploadRetryOnTimeout;
             nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
 
             if (cboUploadMode.Items.Count == 0)
@@ -650,7 +650,7 @@ namespace ZScreenLib
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
             }
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
-            chkImageUploadRetry.Checked = Program.conf.ImageUploadRetry;
+            chkImageUploadRetryOnFail.Checked = Program.conf.ImageUploadRetryOnFail;
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
             cbAutoTranslate.Checked = Program.conf.AutoTranslate;
             txtAutoTranslate.Text = Program.conf.AutoTranslateLength.ToString();
@@ -2669,7 +2669,7 @@ namespace ZScreenLib
 
         private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageUploadRetry = chkImageUploadRetry.Checked;
+            Program.conf.ImageUploadRetryOnFail = chkImageUploadRetryOnFail.Checked;
         }
 
         private void DekiWikiSetup(IEnumerable<DekiWikiAccount> accs)
@@ -3145,7 +3145,7 @@ namespace ZScreenLib
 
         private void cbAutoChangeUploadDestination_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoChangeUploadDestination = cboAutoChangeUploadDestination.Checked;
+            Program.conf.ImageUploadRetryOnTimeout = cboImageUploadRetryOnTimeout.Checked;
         }
 
         private void nudUploadDurationLimit_ValueChanged(object sender, EventArgs e)
