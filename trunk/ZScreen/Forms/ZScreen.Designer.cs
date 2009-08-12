@@ -30,9 +30,9 @@ namespace ZScreenLib
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,7 +143,12 @@ namespace ZScreenLib
             this.label2 = new System.Windows.Forms.Label();
             this.txtTwitPicUserName = new System.Windows.Forms.TextBox();
             this.tpImageBam = new System.Windows.Forms.TabPage();
+            this.gbImageBamGalleries = new System.Windows.Forms.GroupBox();
+            this.lbImageBamGalleries = new System.Windows.Forms.ListBox();
             this.gbImageBamLinks = new System.Windows.Forms.GroupBox();
+            this.chkImageBamContentNSFW = new System.Windows.Forms.CheckBox();
+            this.btnImageBamRemoveGallery = new System.Windows.Forms.Button();
+            this.btnImageBamCreateGallery = new System.Windows.Forms.Button();
             this.btnImageBamRegister = new System.Windows.Forms.Button();
             this.btnImageBamApiKeysUrl = new System.Windows.Forms.Button();
             this.gbImageBamApiKeys = new System.Windows.Forms.GroupBox();
@@ -327,12 +332,11 @@ namespace ZScreenLib
             this.lblUploadDurationLimit = new System.Windows.Forms.Label();
             this.cbTinyPicSizeCheck = new System.Windows.Forms.CheckBox();
             this.nudUploadDurationLimit = new System.Windows.Forms.NumericUpDown();
-            this.cboAutoChangeUploadDestination = new System.Windows.Forms.CheckBox();
+            this.cboImageUploadRetryOnTimeout = new System.Windows.Forms.CheckBox();
             this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
-            this.chkImageUploadRetry = new System.Windows.Forms.CheckBox();
+            this.chkImageUploadRetryOnFail = new System.Windows.Forms.CheckBox();
             this.cboUploadMode = new System.Windows.Forms.ComboBox();
             this.lblUploadAs = new System.Windows.Forms.Label();
-            this.lblErrorRetry = new System.Windows.Forms.Label();
             this.nudErrorRetry = new System.Windows.Forms.NumericUpDown();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtUploadersLog = new System.Windows.Forms.RichTextBox();
@@ -508,9 +512,7 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.gbImageBamGalleries = new System.Windows.Forms.GroupBox();
-            this.lbImageBamGalleries = new System.Windows.Forms.ListBox();
-            this.btnImageBamCreateGallery = new System.Windows.Forms.Button();
+            this.gbImageUploadRetry = new System.Windows.Forms.GroupBox();
             this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenLib.UserControls.AccountsControl();
             this.ucMindTouchAccounts = new ZScreenLib.UserControls.AccountsControl();
@@ -518,8 +520,6 @@ namespace ZScreenLib
             this.ucUrlShorteners = new ZScreenLib.UserControls.TextUploadersControl();
             this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenLib.UserControls.AccountsControl();
-            this.btnImageBamRemoveGallery = new System.Windows.Forms.Button();
-            this.chkImageBamContentNSFW = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -542,6 +542,7 @@ namespace ZScreenLib
             this.tpTwitPic.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tpImageBam.SuspendLayout();
+            this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
             this.gbImageBamApiKeys.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
@@ -656,7 +657,7 @@ namespace ZScreenLib
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.gbImageBamGalleries.SuspendLayout();
+            this.gbImageUploadRetry.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1799,6 +1800,25 @@ namespace ZScreenLib
             this.tpImageBam.Text = "ImageBam";
             this.tpImageBam.UseVisualStyleBackColor = true;
             // 
+            // gbImageBamGalleries
+            // 
+            this.gbImageBamGalleries.Controls.Add(this.lbImageBamGalleries);
+            this.gbImageBamGalleries.Location = new System.Drawing.Point(16, 128);
+            this.gbImageBamGalleries.Name = "gbImageBamGalleries";
+            this.gbImageBamGalleries.Size = new System.Drawing.Size(480, 152);
+            this.gbImageBamGalleries.TabIndex = 10;
+            this.gbImageBamGalleries.TabStop = false;
+            this.gbImageBamGalleries.Text = "Galleries";
+            // 
+            // lbImageBamGalleries
+            // 
+            this.lbImageBamGalleries.FormattingEnabled = true;
+            this.lbImageBamGalleries.Location = new System.Drawing.Point(16, 24);
+            this.lbImageBamGalleries.Name = "lbImageBamGalleries";
+            this.lbImageBamGalleries.Size = new System.Drawing.Size(440, 108);
+            this.lbImageBamGalleries.TabIndex = 0;
+            this.lbImageBamGalleries.SelectedIndexChanged += new System.EventHandler(this.lbImageBamGalleries_SelectedIndexChanged);
+            // 
             // gbImageBamLinks
             // 
             this.gbImageBamLinks.Controls.Add(this.chkImageBamContentNSFW);
@@ -1812,6 +1832,38 @@ namespace ZScreenLib
             this.gbImageBamLinks.TabIndex = 9;
             this.gbImageBamLinks.TabStop = false;
             this.gbImageBamLinks.Text = "Tasks";
+            // 
+            // chkImageBamContentNSFW
+            // 
+            this.chkImageBamContentNSFW.AutoSize = true;
+            this.chkImageBamContentNSFW.Location = new System.Drawing.Point(16, 152);
+            this.chkImageBamContentNSFW.Name = "chkImageBamContentNSFW";
+            this.chkImageBamContentNSFW.Size = new System.Drawing.Size(98, 17);
+            this.chkImageBamContentNSFW.TabIndex = 10;
+            this.chkImageBamContentNSFW.Text = "NSFW Content";
+            this.ttZScreen.SetToolTip(this.chkImageBamContentNSFW, "If you are uploading NSFW (Not Safe for Work) content then tick this checkbox");
+            this.chkImageBamContentNSFW.UseVisualStyleBackColor = true;
+            this.chkImageBamContentNSFW.CheckedChanged += new System.EventHandler(this.chkImageBamContentNSFW_CheckedChanged);
+            // 
+            // btnImageBamRemoveGallery
+            // 
+            this.btnImageBamRemoveGallery.Location = new System.Drawing.Point(16, 120);
+            this.btnImageBamRemoveGallery.Name = "btnImageBamRemoveGallery";
+            this.btnImageBamRemoveGallery.Size = new System.Drawing.Size(128, 23);
+            this.btnImageBamRemoveGallery.TabIndex = 9;
+            this.btnImageBamRemoveGallery.Text = "Remove &Gallery";
+            this.btnImageBamRemoveGallery.UseVisualStyleBackColor = true;
+            this.btnImageBamRemoveGallery.Click += new System.EventHandler(this.btnImageBamRemoveGallery_Click);
+            // 
+            // btnImageBamCreateGallery
+            // 
+            this.btnImageBamCreateGallery.Location = new System.Drawing.Point(16, 88);
+            this.btnImageBamCreateGallery.Name = "btnImageBamCreateGallery";
+            this.btnImageBamCreateGallery.Size = new System.Drawing.Size(128, 23);
+            this.btnImageBamCreateGallery.TabIndex = 8;
+            this.btnImageBamCreateGallery.Text = "Create &Gallery";
+            this.btnImageBamCreateGallery.UseVisualStyleBackColor = true;
+            this.btnImageBamCreateGallery.Click += new System.EventHandler(this.btnImageBamCreateGallery_Click);
             // 
             // btnImageBamRegister
             // 
@@ -1921,38 +1973,38 @@ namespace ZScreenLib
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3962,6 +4014,7 @@ namespace ZScreenLib
             // 
             // tpImageUploaders
             // 
+            this.tpImageUploaders.Controls.Add(this.gbImageUploadRetry);
             this.tpImageUploaders.Controls.Add(this.gbImageUploaderOptions);
             this.tpImageUploaders.Location = new System.Drawing.Point(4, 23);
             this.tpImageUploaders.Name = "tpImageUploaders";
@@ -3973,29 +4026,21 @@ namespace ZScreenLib
             // 
             // gbImageUploaderOptions
             // 
-            this.gbImageUploaderOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbImageUploaderOptions.Controls.Add(this.lblUploadDurationLimit);
             this.gbImageUploaderOptions.Controls.Add(this.cbTinyPicSizeCheck);
-            this.gbImageUploaderOptions.Controls.Add(this.nudUploadDurationLimit);
-            this.gbImageUploaderOptions.Controls.Add(this.cboAutoChangeUploadDestination);
             this.gbImageUploaderOptions.Controls.Add(this.cbAddFailedScreenshot);
-            this.gbImageUploaderOptions.Controls.Add(this.chkImageUploadRetry);
             this.gbImageUploaderOptions.Controls.Add(this.cboUploadMode);
             this.gbImageUploaderOptions.Controls.Add(this.lblUploadAs);
-            this.gbImageUploaderOptions.Controls.Add(this.lblErrorRetry);
-            this.gbImageUploaderOptions.Controls.Add(this.nudErrorRetry);
             this.gbImageUploaderOptions.Location = new System.Drawing.Point(16, 16);
             this.gbImageUploaderOptions.Name = "gbImageUploaderOptions";
-            this.gbImageUploaderOptions.Size = new System.Drawing.Size(759, 168);
+            this.gbImageUploaderOptions.Size = new System.Drawing.Size(759, 112);
             this.gbImageUploaderOptions.TabIndex = 7;
             this.gbImageUploaderOptions.TabStop = false;
-            this.gbImageUploaderOptions.Text = "Options";
+            this.gbImageUploaderOptions.Text = "General Options";
             // 
             // lblUploadDurationLimit
             // 
             this.lblUploadDurationLimit.AutoSize = true;
-            this.lblUploadDurationLimit.Location = new System.Drawing.Point(376, 112);
+            this.lblUploadDurationLimit.Location = new System.Drawing.Point(368, 48);
             this.lblUploadDurationLimit.Name = "lblUploadDurationLimit";
             this.lblUploadDurationLimit.Size = new System.Drawing.Size(61, 13);
             this.lblUploadDurationLimit.TabIndex = 10;
@@ -4004,7 +4049,7 @@ namespace ZScreenLib
             // cbTinyPicSizeCheck
             // 
             this.cbTinyPicSizeCheck.AutoSize = true;
-            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(16, 136);
+            this.cbTinyPicSizeCheck.Location = new System.Drawing.Point(16, 80);
             this.cbTinyPicSizeCheck.Name = "cbTinyPicSizeCheck";
             this.cbTinyPicSizeCheck.Size = new System.Drawing.Size(440, 17);
             this.cbTinyPicSizeCheck.TabIndex = 7;
@@ -4015,32 +4060,32 @@ namespace ZScreenLib
             // 
             // nudUploadDurationLimit
             // 
-            this.nudUploadDurationLimit.Location = new System.Drawing.Point(280, 108);
+            this.nudUploadDurationLimit.Location = new System.Drawing.Point(297, 46);
             this.nudUploadDurationLimit.Maximum = new decimal(new int[] {
             300000,
             0,
             0,
             0});
             this.nudUploadDurationLimit.Name = "nudUploadDurationLimit";
-            this.nudUploadDurationLimit.Size = new System.Drawing.Size(88, 20);
+            this.nudUploadDurationLimit.Size = new System.Drawing.Size(64, 20);
             this.nudUploadDurationLimit.TabIndex = 9;
             this.nudUploadDurationLimit.ValueChanged += new System.EventHandler(this.nudUploadDurationLimit_ValueChanged);
             // 
-            // cboAutoChangeUploadDestination
+            // cboImageUploadRetryOnTimeout
             // 
-            this.cboAutoChangeUploadDestination.AutoSize = true;
-            this.cboAutoChangeUploadDestination.Location = new System.Drawing.Point(16, 112);
-            this.cboAutoChangeUploadDestination.Name = "cboAutoChangeUploadDestination";
-            this.cboAutoChangeUploadDestination.Size = new System.Drawing.Size(261, 17);
-            this.cboAutoChangeUploadDestination.TabIndex = 8;
-            this.cboAutoChangeUploadDestination.Text = "Timeout to use another Image Uploader next time ";
-            this.cboAutoChangeUploadDestination.UseVisualStyleBackColor = true;
-            this.cboAutoChangeUploadDestination.CheckedChanged += new System.EventHandler(this.cbAutoChangeUploadDestination_CheckedChanged);
+            this.cboImageUploadRetryOnTimeout.AutoSize = true;
+            this.cboImageUploadRetryOnTimeout.Location = new System.Drawing.Point(16, 48);
+            this.cboImageUploadRetryOnTimeout.Name = "cboImageUploadRetryOnTimeout";
+            this.cboImageUploadRetryOnTimeout.Size = new System.Drawing.Size(282, 17);
+            this.cboImageUploadRetryOnTimeout.TabIndex = 8;
+            this.cboImageUploadRetryOnTimeout.Text = "Change the Image Uploader if the upload times out by ";
+            this.cboImageUploadRetryOnTimeout.UseVisualStyleBackColor = true;
+            this.cboImageUploadRetryOnTimeout.CheckedChanged += new System.EventHandler(this.cbAutoChangeUploadDestination_CheckedChanged);
             // 
             // cbAddFailedScreenshot
             // 
             this.cbAddFailedScreenshot.AutoSize = true;
-            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(16, 88);
+            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(16, 56);
             this.cbAddFailedScreenshot.Name = "cbAddFailedScreenshot";
             this.cbAddFailedScreenshot.Size = new System.Drawing.Size(143, 17);
             this.cbAddFailedScreenshot.TabIndex = 7;
@@ -4048,16 +4093,17 @@ namespace ZScreenLib
             this.cbAddFailedScreenshot.UseVisualStyleBackColor = true;
             this.cbAddFailedScreenshot.CheckedChanged += new System.EventHandler(this.cbAddFailedScreenshot_CheckedChanged);
             // 
-            // chkImageUploadRetry
+            // chkImageUploadRetryOnFail
             // 
-            this.chkImageUploadRetry.AutoSize = true;
-            this.chkImageUploadRetry.Location = new System.Drawing.Point(16, 64);
-            this.chkImageUploadRetry.Name = "chkImageUploadRetry";
-            this.chkImageUploadRetry.Size = new System.Drawing.Size(390, 17);
-            this.chkImageUploadRetry.TabIndex = 6;
-            this.chkImageUploadRetry.Text = "Retry with other Image Uploaders if the initial Image Uploader failed uploading";
-            this.chkImageUploadRetry.UseVisualStyleBackColor = true;
-            this.chkImageUploadRetry.CheckedChanged += new System.EventHandler(this.cbImageUploadRetry_CheckedChanged);
+            this.chkImageUploadRetryOnFail.AutoSize = true;
+            this.chkImageUploadRetryOnFail.Location = new System.Drawing.Point(16, 24);
+            this.chkImageUploadRetryOnFail.Name = "chkImageUploadRetryOnFail";
+            this.chkImageUploadRetryOnFail.Size = new System.Drawing.Size(484, 17);
+            this.chkImageUploadRetryOnFail.TabIndex = 6;
+            this.chkImageUploadRetryOnFail.Text = "Retry with another Image Uploader if the Image Uploader fails the first attempt. " +
+                "Number of Retries:";
+            this.chkImageUploadRetryOnFail.UseVisualStyleBackColor = true;
+            this.chkImageUploadRetryOnFail.CheckedChanged += new System.EventHandler(this.cbImageUploadRetry_CheckedChanged);
             // 
             // cboUploadMode
             // 
@@ -4078,18 +4124,9 @@ namespace ZScreenLib
             this.lblUploadAs.TabIndex = 4;
             this.lblUploadAs.Text = "Upload as:";
             // 
-            // lblErrorRetry
-            // 
-            this.lblErrorRetry.AutoSize = true;
-            this.lblErrorRetry.Location = new System.Drawing.Point(216, 28);
-            this.lblErrorRetry.Name = "lblErrorRetry";
-            this.lblErrorRetry.Size = new System.Drawing.Size(187, 13);
-            this.lblErrorRetry.TabIndex = 1;
-            this.lblErrorRetry.Text = "Number of Retries after Upload Failed:";
-            // 
             // nudErrorRetry
             // 
-            this.nudErrorRetry.Location = new System.Drawing.Point(408, 24);
+            this.nudErrorRetry.Location = new System.Drawing.Point(504, 22);
             this.nudErrorRetry.Name = "nudErrorRetry";
             this.nudErrorRetry.Size = new System.Drawing.Size(40, 20);
             this.nudErrorRetry.TabIndex = 3;
@@ -6077,34 +6114,19 @@ namespace ZScreenLib
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // gbImageBamGalleries
+            // gbImageUploadRetry
             // 
-            this.gbImageBamGalleries.Controls.Add(this.lbImageBamGalleries);
-            this.gbImageBamGalleries.Location = new System.Drawing.Point(16, 128);
-            this.gbImageBamGalleries.Name = "gbImageBamGalleries";
-            this.gbImageBamGalleries.Size = new System.Drawing.Size(480, 152);
-            this.gbImageBamGalleries.TabIndex = 10;
-            this.gbImageBamGalleries.TabStop = false;
-            this.gbImageBamGalleries.Text = "Galleries";
-            // 
-            // lbImageBamGalleries
-            // 
-            this.lbImageBamGalleries.FormattingEnabled = true;
-            this.lbImageBamGalleries.Location = new System.Drawing.Point(16, 24);
-            this.lbImageBamGalleries.Name = "lbImageBamGalleries";
-            this.lbImageBamGalleries.Size = new System.Drawing.Size(440, 108);
-            this.lbImageBamGalleries.TabIndex = 0;
-            this.lbImageBamGalleries.SelectedIndexChanged += new System.EventHandler(this.lbImageBamGalleries_SelectedIndexChanged);
-            // 
-            // btnImageBamCreateGallery
-            // 
-            this.btnImageBamCreateGallery.Location = new System.Drawing.Point(16, 88);
-            this.btnImageBamCreateGallery.Name = "btnImageBamCreateGallery";
-            this.btnImageBamCreateGallery.Size = new System.Drawing.Size(128, 23);
-            this.btnImageBamCreateGallery.TabIndex = 8;
-            this.btnImageBamCreateGallery.Text = "Create &Gallery";
-            this.btnImageBamCreateGallery.UseVisualStyleBackColor = true;
-            this.btnImageBamCreateGallery.Click += new System.EventHandler(this.btnImageBamCreateGallery_Click);
+            this.gbImageUploadRetry.Controls.Add(this.lblUploadDurationLimit);
+            this.gbImageUploadRetry.Controls.Add(this.chkImageUploadRetryOnFail);
+            this.gbImageUploadRetry.Controls.Add(this.cboImageUploadRetryOnTimeout);
+            this.gbImageUploadRetry.Controls.Add(this.nudUploadDurationLimit);
+            this.gbImageUploadRetry.Controls.Add(this.nudErrorRetry);
+            this.gbImageUploadRetry.Location = new System.Drawing.Point(16, 136);
+            this.gbImageUploadRetry.Name = "gbImageUploadRetry";
+            this.gbImageUploadRetry.Size = new System.Drawing.Size(760, 88);
+            this.gbImageUploadRetry.TabIndex = 8;
+            this.gbImageUploadRetry.TabStop = false;
+            this.gbImageUploadRetry.Text = "Retry Options";
             // 
             // nudtScreenshotDelay
             // 
@@ -6176,28 +6198,6 @@ namespace ZScreenLib
             this.ucProxyAccounts.Size = new System.Drawing.Size(785, 320);
             this.ucProxyAccounts.TabIndex = 0;
             // 
-            // btnImageBamRemoveGallery
-            // 
-            this.btnImageBamRemoveGallery.Location = new System.Drawing.Point(16, 120);
-            this.btnImageBamRemoveGallery.Name = "btnImageBamRemoveGallery";
-            this.btnImageBamRemoveGallery.Size = new System.Drawing.Size(128, 23);
-            this.btnImageBamRemoveGallery.TabIndex = 9;
-            this.btnImageBamRemoveGallery.Text = "Remove &Gallery";
-            this.btnImageBamRemoveGallery.UseVisualStyleBackColor = true;
-            this.btnImageBamRemoveGallery.Click += new System.EventHandler(this.btnImageBamRemoveGallery_Click);
-            // 
-            // chkImageBamContentNSFW
-            // 
-            this.chkImageBamContentNSFW.AutoSize = true;
-            this.chkImageBamContentNSFW.Location = new System.Drawing.Point(16, 152);
-            this.chkImageBamContentNSFW.Name = "chkImageBamContentNSFW";
-            this.chkImageBamContentNSFW.Size = new System.Drawing.Size(98, 17);
-            this.chkImageBamContentNSFW.TabIndex = 10;
-            this.chkImageBamContentNSFW.Text = "NSFW Content";
-            this.ttZScreen.SetToolTip(this.chkImageBamContentNSFW, "If you are uploading NSFW (Not Safe for Work) content then tick this checkbox");
-            this.chkImageBamContentNSFW.UseVisualStyleBackColor = true;
-            this.chkImageBamContentNSFW.CheckedChanged += new System.EventHandler(this.chkImageBamContentNSFW_CheckedChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6252,6 +6252,7 @@ namespace ZScreenLib
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tpImageBam.ResumeLayout(false);
+            this.gbImageBamGalleries.ResumeLayout(false);
             this.gbImageBamLinks.ResumeLayout(false);
             this.gbImageBamLinks.PerformLayout();
             this.gbImageBamApiKeys.ResumeLayout(false);
@@ -6409,7 +6410,8 @@ namespace ZScreenLib
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.gbImageBamGalleries.ResumeLayout(false);
+            this.gbImageUploadRetry.ResumeLayout(false);
+            this.gbImageUploadRetry.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -6651,12 +6653,11 @@ namespace ZScreenLib
         internal System.Windows.Forms.Label lblUploadDurationLimit;
         internal System.Windows.Forms.CheckBox cbTinyPicSizeCheck;
         internal System.Windows.Forms.NumericUpDown nudUploadDurationLimit;
-        internal System.Windows.Forms.CheckBox cboAutoChangeUploadDestination;
+        internal System.Windows.Forms.CheckBox cboImageUploadRetryOnTimeout;
         internal System.Windows.Forms.CheckBox cbAddFailedScreenshot;
-        internal System.Windows.Forms.CheckBox chkImageUploadRetry;
+        internal System.Windows.Forms.CheckBox chkImageUploadRetryOnFail;
         internal System.Windows.Forms.ComboBox cboUploadMode;
         internal System.Windows.Forms.Label lblUploadAs;
-        internal System.Windows.Forms.Label lblErrorRetry;
         internal System.Windows.Forms.NumericUpDown nudErrorRetry;
         internal System.Windows.Forms.GroupBox gbImageShack;
         internal System.Windows.Forms.Button btnGalleryImageShack;
@@ -6903,6 +6904,7 @@ namespace ZScreenLib
         private System.Windows.Forms.Button btnImageBamCreateGallery;
         private System.Windows.Forms.Button btnImageBamRemoveGallery;
         private System.Windows.Forms.CheckBox chkImageBamContentNSFW;
+        private System.Windows.Forms.GroupBox gbImageUploadRetry;
 
     }
 }

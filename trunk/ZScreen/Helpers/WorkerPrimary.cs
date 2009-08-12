@@ -257,7 +257,7 @@ namespace ZScreenLib
             if (img != null)
             {
                 Bitmap bmp = new Bitmap(img);
-                
+
             }
         }
 
@@ -300,9 +300,9 @@ namespace ZScreenLib
                 case MainAppTask.ProgressType.UPDATE_CROP_MODE:
                     mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
                     break;
-                case MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION:                    
+                case MainAppTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
                     mZScreen.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-                    SetNotifyIconBalloonTip(mZScreen.niTray, string.Format("Images Destination was updated to {0}", Program.conf.ScreenshotDestMode.GetDescription()) , mZScreen.Text, ToolTipIcon.Warning);
+                    SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Program.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
                     break;
                 case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
@@ -316,7 +316,7 @@ namespace ZScreenLib
                     break;
                 case MainAppTask.ProgressType.SHOW_TRAY_MESSAGE:
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
-                    SetNotifyIconBalloonTip(mZScreen.niTray, e.UserState as string, mZScreen.Text, ToolTipIcon.Warning);
+                    SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;
             }
         }
@@ -1055,7 +1055,7 @@ namespace ZScreenLib
 
         private bool RetryUpload(MainAppTask t)
         {
-            if (Program.conf.ImageUploadRetry && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
+            if (Program.conf.ImageUploadRetryOnFail && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
                 (t.ImageDestCategory == ImageDestType.IMAGESHACK || t.ImageDestCategory == ImageDestType.TINYPIC))
             {
                 MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);

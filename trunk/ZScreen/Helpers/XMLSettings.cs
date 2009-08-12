@@ -242,9 +242,9 @@ namespace ZScreenLib
 
         public UploadMode UploadMode = UploadMode.API;
         public decimal ErrorRetryCount = 3;
-        public bool ImageUploadRetry = true;
+        public bool ImageUploadRetryOnFail = true;
         public bool AddFailedScreenshot = false;
-        public bool AutoChangeUploadDestination = false;
+        public bool ImageUploadRetryOnTimeout = false;
         public decimal UploadDurationLimit = 15000;
 
         // ImageShack

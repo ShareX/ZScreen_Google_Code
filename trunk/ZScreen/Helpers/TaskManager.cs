@@ -149,9 +149,10 @@ namespace ZScreenLib
                             mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage);
                         }
                         mTask.Errors = imageUploader.Errors;
-                        if (Program.conf.ImageUploadRetry && (mTask.ImageDestCategory ==
+                        if (Program.conf.ImageUploadRetryOnTimeout && (mTask.ImageDestCategory ==
                             ImageDestType.IMAGESHACK || mTask.ImageDestCategory == ImageDestType.TINYPIC))
                         {
+                            // 
                             break;
                         }
                     }
@@ -161,17 +162,17 @@ namespace ZScreenLib
             this.SetRemoteFilePath();
             mTask.EndTime = DateTime.Now;
 
-            if (Program.conf.AutoChangeUploadDestination && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
+            if (Program.conf.ImageUploadRetryOnTimeout && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
             {
                 if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
-                {                    
+                {
                     Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
-                {                 
+                {
                     Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
+                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }
 
             if (mTask.ImageManager != null)
