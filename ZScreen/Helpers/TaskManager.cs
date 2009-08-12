@@ -162,13 +162,11 @@ namespace ZScreenLib
             if (Program.conf.AutoChangeUploadDestination && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
             {
                 if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
-                {
-                    //mTask.ImageDestCategory = ImageDestType.TINYPIC;
+                {                    
                     Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
-                {
-                    //mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
+                {                 
                     Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_UPLOAD_DESTINATION);
