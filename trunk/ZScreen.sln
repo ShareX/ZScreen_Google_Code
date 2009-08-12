@@ -35,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 		Lib\taglib-sharp.dll = Lib\taglib-sharp.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FileUploadersLib", "ZSS.FileUploadersLib\ZSS.FileUploadersLib.csproj", "{9D204619-BCBC-4E8D-B37E-F278D01D8A95}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -119,6 +123,22 @@ Global
 		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.Inno|Any CPU.Build.0 = Release|Any CPU
 		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.CodeAnalysisDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.CodeAnalysisDebug|Any CPU.Build.0 = Debug|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.CodeAnalysisDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.CodeAnalysisDebug|Any CPU.Build.0 = Debug|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D204619-BCBC-4E8D-B37E-F278D01D8A95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
