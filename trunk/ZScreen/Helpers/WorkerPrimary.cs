@@ -291,6 +291,13 @@ namespace ZScreenLib
                         CopyImageToClipboard(e.UserState as Image);
                     }
                     break;
+                case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL:
+                    string url = e.UserState as string;
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        Clipboard.SetText(url);
+                    }
+                    break;
                 case WorkerTask.ProgressType.FLASH_ICON:
                     FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
                     break;

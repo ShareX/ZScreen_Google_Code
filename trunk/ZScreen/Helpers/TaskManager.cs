@@ -89,6 +89,9 @@ namespace ZScreenLib
                 case ImageDestType.CLIPBOARD:
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
+                case ImageDestType.FILE:
+                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, mTask.LocalFilePath);
+                    break;
                 case ImageDestType.CUSTOM_UPLOADER:
                     if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
                     {
