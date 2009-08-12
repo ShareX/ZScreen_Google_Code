@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileUploaders\RapidShareUploader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">

@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS;
 using ZSS.ImageUploadersLib;
+using ZSS.FileUploadersLib;
 
 namespace ZScreenLib
 {
-    public class MainAppTask
+    public class WorkerTask
     {
         #region "Enums"
 
@@ -167,7 +168,7 @@ namespace ZScreenLib
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
-        public ImageDestType ImageDestCategory { get; set; }
+        public ImageDestType MyImageUploader { get; set; }
         /// <summary>
         /// Pictures List to access Local file path, URL
         /// </summary>
@@ -187,12 +188,17 @@ namespace ZScreenLib
         public TextUploader MyTextUploader { get; set; }
         #endregion
 
+        #region "Properties for Category: Binary"
+        public FileUploaderType MyFileUploader { get; set; }
+        public byte[] MyFile { get; set; }
+        #endregion
+
         /// <summary>
         /// Constructor taking Worker and Job
         /// </summary>
         /// <param name="worker"></param>
         /// <param name="job"></param>
-        public MainAppTask(BackgroundWorker worker, Jobs job)
+        public WorkerTask(BackgroundWorker worker, Jobs job)
         {
             this.MyWorker = worker;
             this.Job = job;
@@ -205,14 +211,14 @@ namespace ZScreenLib
             if (Program.conf.CopyImageUntilURL)
             {
                 // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
-                this.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
             }
         }
 
         public bool SafeToUpload()
         {
             bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UPLOAD_FROM_CLIPBOARD)
-                && this.ImageDestCategory == ImageDestType.FTP) || this.MyImage != null;
+                && this.MyImageUploader == ImageDestType.FTP) || this.MyImage != null;
             if (!safe)
             {
                 this.Errors.Add("Not a valid image.");

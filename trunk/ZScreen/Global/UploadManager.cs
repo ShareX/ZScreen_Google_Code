@@ -91,7 +91,7 @@ namespace ZScreenLib
         /// Sets Clipboard text and returns the content
         /// </summary>
         /// <returns></returns>
-        public static string SetClipboardText(MainAppTask task)
+        public static string SetClipboardText(WorkerTask task)
         {
             ScreenshotsHistory = task.ImageManager;
 

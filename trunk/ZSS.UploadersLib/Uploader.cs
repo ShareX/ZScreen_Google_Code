@@ -29,11 +29,13 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ZSS
+namespace ZSS.UploadersLib
 {
     public abstract class Uploader
     {
         public abstract string Upload(byte[] file, string fileName);
+
+        public abstract string Name { get; }
 
         public string Upload(string filePath)
         {

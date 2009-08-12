@@ -34,7 +34,7 @@ namespace ZScreenLib
 
         private Timer timer = new Timer();
         private Timer statusTimer = new Timer { Interval = 250 };
-        private MainAppTask.Jobs mJob;
+        private WorkerTask.Jobs mJob;
         private int mDelay;
         private bool waitUploads;
         private int count;
@@ -95,13 +95,13 @@ namespace ZScreenLib
                 switch (Program.conf.AutoCaptureScreenshotTypes)
                 {
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
-                        mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN;
+                        mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN;
                         break;
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                        mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE;
+                        mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE;
                         break;
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                        mJob = MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED;
+                        mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED;
                         break;
                 }
 

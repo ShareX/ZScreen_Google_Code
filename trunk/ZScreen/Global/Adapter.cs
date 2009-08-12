@@ -170,7 +170,7 @@ namespace ZScreenLib
             return CheckList(Program.conf.FTPAccountList, Program.conf.FTPSelected);
         }
 
-        public static bool CheckFTPAccounts(ref MainAppTask task)
+        public static bool CheckFTPAccounts(ref WorkerTask task)
         {
             bool result = CheckFTPAccounts();
             if (!result) task.Errors.Add("An FTP account does not exist or not selected properly.");
@@ -182,7 +182,7 @@ namespace ZScreenLib
             return CheckList(Program.conf.DekiWikiAccountList, Program.conf.DekiWikiSelected);
         }
 
-        public static bool CheckDekiWikiAccounts(ref MainAppTask task)
+        public static bool CheckDekiWikiAccounts(ref WorkerTask task)
         {
             bool result = CheckDekiWikiAccounts();
             if (!result) task.Errors.Add("A Mindtouch account does not exist or not selected properly.");

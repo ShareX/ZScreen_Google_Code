@@ -55,17 +55,17 @@ namespace ZScreenLib
 
         public HistoryItem() { }
 
-        public HistoryItem(MainAppTask task)
+        public HistoryItem(WorkerTask task)
         {
             this.JobName = task.Job.GetDescription();
             this.FileName = task.FileName.ToString();
             this.LocalPath = task.LocalFilePath;
             this.RemotePath = task.RemoteFilePath;
-            this.DestinationMode = task.ImageDestCategory.GetDescription();
+            this.DestinationMode = task.MyImageUploader.GetDescription();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.ImageManager;
             this.JobCategory = task.JobCategory;
-            this.ImageDestCategory = task.ImageDestCategory;
+            this.ImageDestCategory = task.MyImageUploader;
             this.StartTime = task.StartTime;
             this.EndTime = task.EndTime;
             this.UploadDuration = task.UploadDuration + " ms";
@@ -113,29 +113,29 @@ namespace ZScreenLib
             return sb.ToString().TrimEnd();
         }
 
-        private string GetDestinationName(MainAppTask t)
+        private string GetDestinationName(WorkerTask t)
         {
             switch (t.JobCategory)
             {
                 case JobCategoryType.PICTURES:
                 case JobCategoryType.SCREENSHOTS:
-                    switch (t.ImageDestCategory)
+                    switch (t.MyImageUploader)
                     {
                         case ImageDestType.FTP:
                         case ImageDestType.CUSTOM_UPLOADER:
-                            return string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.DestinationName);
+                            return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
                         default:
-                            return string.Format("{0}", t.ImageDestCategory.GetDescription());
+                            return string.Format("{0}", t.MyImageUploader.GetDescription());
                     }
                 case JobCategoryType.TEXT:
                     return string.Format("{0}", t.MyTextUploader.ToString());
                 case JobCategoryType.BINARY:
-                    switch (t.ImageDestCategory)
+                    switch (t.MyImageUploader)
                     {
                         case ImageDestType.FTP:
-                            return string.Format("{0}: {1}", t.ImageDestCategory.GetDescription(), t.DestinationName);
+                            return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
                         default:
-                            return string.Format("{0}", t.ImageDestCategory.GetDescription());
+                            return string.Format("{0}", t.MyImageUploader.GetDescription());
                     }
             }
             return "";

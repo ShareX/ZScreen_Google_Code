@@ -1,3 +1,6 @@
+Version 3.0 - 20091015
+
+3.00.0.0 Established foundation for File Hosting Services starting with RapidShare {Jaex}
 2.31.0.0 Added ImageBam Image Uploader support {Jaex}
 
 Version 2.30 - 20090815

@@ -14,9 +14,9 @@ namespace ZScreenLib
 {
     public partial class ClipboardModePicker : Form
     {
-        private MainAppTask mTask = null;
+        private WorkerTask mTask = null;
 
-        public ClipboardModePicker(MainAppTask task)
+        public ClipboardModePicker(WorkerTask task)
         {
             InitializeComponent();
 

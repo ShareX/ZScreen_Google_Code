@@ -31,7 +31,7 @@ namespace ZScreenLib
 {
     public class BalloonTipHelper
     {
-        private MainAppTask task;
+        private WorkerTask task;
         private NotifyIcon niTray;
 
         public BalloonTipHelper(NotifyIcon notifyIcon)
@@ -39,7 +39,7 @@ namespace ZScreenLib
             this.niTray = notifyIcon;
         }
 
-        public BalloonTipHelper(NotifyIcon notifyIcon, MainAppTask task)
+        public BalloonTipHelper(NotifyIcon notifyIcon, WorkerTask task)
             : this(notifyIcon)
         {
             this.task = task;
@@ -52,7 +52,7 @@ namespace ZScreenLib
 
             niTray.Tag = task;
 
-            if (task.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR)
+            if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
             {
                 //sbMsg.AppendLine("Languages: " + task.TranslationInfo.Result.TranslationType);
                 sbMsg.AppendLine(task.TranslationInfo.Result.TranslationType);
@@ -69,16 +69,16 @@ namespace ZScreenLib
                         break;
                     case JobCategoryType.SCREENSHOTS:
                     case JobCategoryType.PICTURES:
-                        switch (task.ImageDestCategory)
+                        switch (task.MyImageUploader)
                         {
                             case ImageDestType.FTP:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.ImageDestCategory.GetDescription(), task.DestinationName));
+                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.MyImageUploader.GetDescription(), task.DestinationName));
                                 break;
                             case ImageDestType.CUSTOM_UPLOADER:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.ImageDestCategory.GetDescription(), task.DestinationName));
+                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.MyImageUploader.GetDescription(), task.DestinationName));
                                 break;
                             default:
-                                sbMsg.AppendLine(string.Format("Destination: {0}", task.ImageDestCategory.GetDescription()));
+                                sbMsg.AppendLine(string.Format("Destination: {0}", task.MyImageUploader.GetDescription()));
                                 break;
                         }
                         break;
@@ -87,14 +87,14 @@ namespace ZScreenLib
 
                 string fileOrUrl = "";
 
-                if (task.ImageDestCategory == ImageDestType.CLIPBOARD || task.ImageDestCategory == ImageDestType.FILE)
+                if (task.MyImageUploader == ImageDestType.CLIPBOARD || task.MyImageUploader == ImageDestType.FILE)
                 {
                     // just local file 
                     if (!string.IsNullOrEmpty(task.FileName.ToString()))
                     {
                         sbMsg.AppendLine("Name: " + task.FileName);
                     }
-                    fileOrUrl = string.Format("{0}: {1}", task.ImageDestCategory.GetDescription(), task.LocalFilePath);
+                    fileOrUrl = string.Format("{0}: {1}", task.MyImageUploader.GetDescription(), task.LocalFilePath);
                 }
                 else
                 {
@@ -147,11 +147,11 @@ namespace ZScreenLib
         {
             if (niTray.Tag != null)
             {
-                MainAppTask task = (MainAppTask)niTray.Tag;
+                WorkerTask task = (WorkerTask)niTray.Tag;
                 string cbString;
                 switch (task.Job)
                 {
-                    case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                    case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                         cbString = task.TranslationInfo.Result.TranslatedText;
                         if (!string.IsNullOrEmpty(cbString))
                         {
@@ -159,7 +159,7 @@ namespace ZScreenLib
                         }
                         break;
                     default:
-                        switch (task.ImageDestCategory)
+                        switch (task.MyImageUploader)
                         {
                             case ImageDestType.FILE:
                             case ImageDestType.CLIPBOARD:

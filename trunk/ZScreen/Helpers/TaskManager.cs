@@ -32,16 +32,41 @@ using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.Properties;
 using ZSS.TextUploadersLib;
+using ZSS.UploadersLib;
+using ZSS.FileUploadersLib;
 
 namespace ZScreenLib
 {
     public class TaskManager
     {
-        private MainAppTask mTask;
+        private WorkerTask mTask;
 
-        public TaskManager(ref MainAppTask task)
+        public TaskManager(ref WorkerTask task)
         {
             this.mTask = task;
+        }
+
+        public void UploadFile()
+        {
+            Uploader uploader = null;
+            switch (mTask.MyFileUploader)
+            {
+                case ZSS.FileUploadersLib.FileUploaderType.RapidShare:
+                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+                    uploader = new RapidShareUploader(new RapidShareUploaderOptions()
+                    {
+                        AccountType = Program.conf.RapidShareAccountType,
+                        PremiumUsername = Program.conf.RapidSharePremiumUserName,
+                        Password = Program.conf.RapidSharePassword,
+                        CollectorsID = Program.conf.RapidShareCollectorsID
+                    });
+                    break;
+            }
+            if (uploader != null)
+            {
+                mTask.DestinationName = uploader.Name;
+                mTask.RemoteFilePath = uploader.Upload(mTask.LocalFilePath);
+            }
         }
 
         public void UploadImage()
@@ -50,19 +75,19 @@ namespace ZScreenLib
 
             ImageUploader imageUploader = null;
 
-            if (Program.conf.TinyPicSizeCheck && mTask.ImageDestCategory == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
+            if (Program.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
-                    mTask.ImageDestCategory = ImageDestType.IMAGESHACK;
+                    mTask.MyImageUploader = ImageDestType.IMAGESHACK;
                 }
             }
 
-            switch (mTask.ImageDestCategory)
+            switch (mTask.MyImageUploader)
             {
                 case ImageDestType.CLIPBOARD:
-                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
+                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:
                     if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
@@ -117,7 +142,7 @@ namespace ZScreenLib
                     break;
             }
 
-            switch (mTask.ImageDestCategory)
+            switch (mTask.MyImageUploader)
             {
                 case ImageDestType.CUSTOM_UPLOADER:
                 case ImageDestType.IMAGESHACK:
@@ -131,7 +156,7 @@ namespace ZScreenLib
 
             if (imageUploader != null)
             {
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
@@ -149,8 +174,8 @@ namespace ZScreenLib
                             mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage);
                         }
                         mTask.Errors = imageUploader.Errors;
-                        if (Program.conf.ImageUploadRetryOnTimeout && (mTask.ImageDestCategory ==
-                            ImageDestType.IMAGESHACK || mTask.ImageDestCategory == ImageDestType.TINYPIC))
+                        if (Program.conf.ImageUploadRetryOnTimeout && (mTask.MyImageUploader ==
+                            ImageDestType.IMAGESHACK || mTask.MyImageUploader == ImageDestType.TINYPIC))
                         {
                             // 
                             break;
@@ -164,15 +189,15 @@ namespace ZScreenLib
 
             if (Program.conf.ImageUploadRetryOnTimeout && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
             {
-                if (mTask.ImageDestCategory == ImageDestType.IMAGESHACK)
+                if (mTask.MyImageUploader == ImageDestType.IMAGESHACK)
                 {
                     Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
-                else if (mTask.ImageDestCategory == ImageDestType.TINYPIC)
+                else if (mTask.MyImageUploader == ImageDestType.TINYPIC)
                 {
                     Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
+                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }
 
             if (mTask.ImageManager != null)
@@ -197,13 +222,13 @@ namespace ZScreenLib
             }
         }
 
-        private void FlashIcon(MainAppTask t)
+        private void FlashIcon(WorkerTask t)
         {
             for (int i = 0; i < (int)Program.conf.FlashTrayCount; i++)
             {
-                t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
+                t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
                 Thread.Sleep(250);
-                t.MyWorker.ReportProgress((int)MainAppTask.ProgressType.FLASH_ICON, Resources.zss_green);
+                t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_green);
                 Thread.Sleep(250);
             }
         }
@@ -217,7 +242,7 @@ namespace ZScreenLib
             try
             {
                 string fullFilePath = mTask.LocalFilePath;
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
@@ -232,7 +257,7 @@ namespace ZScreenLib
                         WorkingDir = Program.CacheDir
                     };
 
-                    mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
+                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
@@ -252,7 +277,7 @@ namespace ZScreenLib
             if (Program.conf.ShowTrayUploadProgress)
             {
                 UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress;
-                mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
+                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
             }
         }
 
@@ -305,7 +330,7 @@ namespace ZScreenLib
         public void UploadText()
         {
             mTask.StartTime = DateTime.Now;
-            mTask.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+            mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
             TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
             textUploader.ProxySettings = Adapter.GetProxySettings();

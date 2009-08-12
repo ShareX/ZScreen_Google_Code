@@ -46,6 +46,7 @@ using ZSS.TextUploadersLib;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
 using MS.WindowsAPICodePack.Internal;
+using ZSS.FileUploadersLib;
 
 namespace ZScreenLib
 {
@@ -586,6 +587,8 @@ namespace ZScreenLib
 
             #endregion
 
+            #region "Image Uploaders"
+
             ///////////////////////////////////
             // Image Uploader Settings
             ///////////////////////////////////
@@ -638,6 +641,26 @@ namespace ZScreenLib
             {
                 lbImageBamGalleries.SelectedIndex = 0;
             }
+            #endregion
+
+            #region "File Uploaders"
+
+            if (cboFileUploaders.Items.Count == 0)
+            {
+                cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
+            }
+            cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
+
+            // RapidShare
+            if (cboRapidShareAcctType.Items.Count == 0)
+            {
+                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
+            }
+            cboRapidShareAcctType.SelectedIndex = (int)Program.conf.RapidShareAccountType;
+            txtRapidShareCollectorID.Text = Program.conf.RapidShareCollectorsID;
+            txtRapidSharePassword.Text = Program.conf.RapidSharePassword;
+            txtRapidSharePremiumUserName.Text = Program.conf.RapidSharePremiumUserName;
+            #endregion
 
             // Others
 
@@ -1577,11 +1600,11 @@ namespace ZScreenLib
                     NotifyIcon ni = (NotifyIcon)sender;
                     if (ni.Tag != null)
                     {
-                        MainAppTask t = (MainAppTask)niTray.Tag;
+                        WorkerTask t = (WorkerTask)niTray.Tag;
                         string cbString;
                         switch (t.Job)
                         {
-                            case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                            case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                                 cbString = t.TranslationInfo.Result.TranslatedText;
                                 if (!string.IsNullOrEmpty(cbString))
                                 {
@@ -1589,7 +1612,7 @@ namespace ZScreenLib
                                 }
                                 break;
                             default:
-                                switch (t.ImageDestCategory)
+                                switch (t.MyImageUploader)
                                 {
                                     case ImageDestType.FILE:
                                     case ImageDestType.CLIPBOARD:
@@ -1774,7 +1797,7 @@ namespace ZScreenLib
             if (lbUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
-                Program.Worker.StartWorkerScreenshots(MainAppTask.Jobs.CUSTOM_UPLOADER_TEST);
+                Program.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CUSTOM_UPLOADER_TEST);
             }
         }
 
@@ -3423,7 +3446,7 @@ namespace ZScreenLib
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    MainAppTask task = Program.Worker.GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask task = Program.Worker.GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     task.MyText = TextInfo.FromString(testString);
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;
@@ -3949,7 +3972,7 @@ namespace ZScreenLib
             if (pbWebPageImage.Image != null)
             {
                 Bitmap bmp = new Bitmap(pbWebPageImage.Image);
-                Program.Worker.StartWorkerPictures(MainAppTask.Jobs.UPLOAD_IMAGE, bmp);
+                Program.Worker.StartWorkerPictures(WorkerTask.Jobs.UPLOAD_IMAGE, bmp);
             }
         }
 
@@ -4008,6 +4031,28 @@ namespace ZScreenLib
         private void chkImageBamContentNSFW_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ImageBamContentNSFW = chkImageBamContentNSFW.Checked;
+        }
+
+        private void cboRapidShareAcctType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
+            txtRapidSharePremiumUserName.Enabled = Program.conf.RapidShareAccountType == RapidShareAcctType.Premium;
+            txtRapidShareCollectorID.Enabled = !txtRapidSharePremiumUserName.Enabled;
+        }
+
+        private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.RapidShareCollectorsID = txtRapidShareCollectorID.Text; 
+        }
+
+        private void txtRapidSharePremiumUserName_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text; 
+        }
+
+        private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.RapidSharePassword = txtRapidSharePassword.Text;
         }
     }
 }

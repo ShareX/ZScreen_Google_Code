@@ -37,6 +37,7 @@ using ZSS;
 using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
 using ZSS.TextUploadersLib;
+using ZSS.FileUploadersLib;
 
 namespace ZScreenLib
 {
@@ -61,6 +62,7 @@ namespace ZScreenLib
         public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
+        public FileUploaderType FileDestMode = FileUploaderType.RapidShare;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
@@ -83,6 +85,14 @@ namespace ZScreenLib
         public List<string> ImageBamGallery = new List<string>();
         public int ImageBamGallerySelected = 0;
 
+        // Rapid Share 
+
+        public string RapidSharePremiumUserName = string.Empty;
+        public string RapidShareCollectorsID = string.Empty;
+        public string RapidSharePassword = string.Empty;
+        public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
+        
+        
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
