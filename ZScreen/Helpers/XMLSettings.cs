@@ -80,7 +80,8 @@ namespace ZScreenLib
         public string ImageBamSecret = string.Empty;
         public int ImageBamGalleryActive = 0;
         public bool ImageBamContentNSFW = false;
-        public StringCollection ImageBamGalleryIDs = new StringCollection();
+        public List<string> ImageBamGallery = new List<string>();
+        public int ImageBamGallerySelected = 0;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys

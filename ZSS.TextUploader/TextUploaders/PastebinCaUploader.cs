@@ -81,7 +81,7 @@ namespace ZSS.TextUploadersLib
                 arguments.Add("s", "Submit Post");
                 arguments.Add("type", HostSettings.TextFormat);
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetResponse2(HostSettings.URL, arguments);
             }
 
             return "";

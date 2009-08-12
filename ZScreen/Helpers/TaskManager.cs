@@ -77,7 +77,9 @@ namespace ZScreenLib
                     UploadFtp();
                     break;
                 case ImageDestType.IMAGEBAM:
-                    imageUploader = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret, Adapter.GetImageBamGalleryActive()) { NSFW = Program.conf.ImageBamContentNSFW });
+                    ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret,
+                        Adapter.GetImageBamGalleryActive()) { NSFW = Program.conf.ImageBamContentNSFW };
+                    imageUploader = new ImageBamUploader(imageBamOptions);
                     break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);

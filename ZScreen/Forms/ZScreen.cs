@@ -622,15 +622,22 @@ namespace ZScreenLib
             txtImageBamApiKey.Text = Program.conf.ImageBamApiKey;
             txtImageBamSecret.Text = Program.conf.ImageBamSecret;
             chkImageBamContentNSFW.Checked = Program.conf.ImageBamContentNSFW;
-            if (Program.conf.ImageBamGalleryIDs.Count == 0)
+            if (Program.conf.ImageBamGallery.Count == 0)
             {
-                Program.conf.ImageBamGalleryIDs.Add("");
+                Program.conf.ImageBamGallery.Add("");
             }
-            foreach (string id in Program.conf.ImageBamGalleryIDs)
+            foreach (string id in Program.conf.ImageBamGallery)
             {
                 lbImageBamGalleries.Items.Add(id);
             }
-            lbImageBamGalleries.SelectedIndex = Program.conf.ImageBamGalleryActive;
+            if (lbImageBamGalleries.Items.Count > Program.conf.ImageBamGalleryActive)
+            {
+                lbImageBamGalleries.SelectedIndex = Program.conf.ImageBamGalleryActive;
+            }
+            else
+            {
+                lbImageBamGalleries.SelectedIndex = 0;
+            }
 
             // Others
 
@@ -3993,7 +4000,7 @@ namespace ZScreenLib
                 if (!string.IsNullOrEmpty(Adapter.GetImageBamGalleryActive()))
                 {
                     lbImageBamGalleries.Items.RemoveAt(lbImageBamGalleries.SelectedIndex);
-                    Program.conf.ImageBamGalleryIDs.RemoveAt(lbImageBamGalleries.SelectedIndex);
+                    Program.conf.ImageBamGallery.RemoveAt(lbImageBamGalleries.SelectedIndex);
                 }
             }
         }
