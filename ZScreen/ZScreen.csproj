@@ -445,6 +445,10 @@
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
       <Name>ZSS.ColorsLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZSS.FileUploadersLib\ZSS.FileUploadersLib.csproj">
+      <Project>{9D204619-BCBC-4E8D-B37E-F278D01D8A95}</Project>
+      <Name>ZSS.FileUploadersLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj">
       <Project>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</Project>
       <Name>ZSS.FTPClientLib</Name>
@@ -472,6 +476,10 @@
     <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
       <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
       <Name>ZSS.UpdateCheckerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
+      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
+      <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

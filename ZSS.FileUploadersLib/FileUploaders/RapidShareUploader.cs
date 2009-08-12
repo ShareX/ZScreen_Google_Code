@@ -26,22 +26,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ZSS.UploadersLib;
 
-namespace ZSS
+namespace ZSS.FileUploadersLib
 {
+    public class RapidShareUploaderOptions
+    {
+        public RapidShareAcctType AccountType = RapidShareAcctType.Free;
+        public string PremiumUsername { get; set; }
+        public string CollectorsID { get; set; }
+        public string Password { get; set; }
+        public bool CheckFileSize, CheckFileMD5;
+    }
+
     public class RapidShareUploader : Uploader
     {
-        public UploadType UploadMethod;
-        public string PremiumUsername, CollectorsID, Password;
-        public bool CheckFileSize, CheckFileMD5;
-
-        public enum UploadType { Free, Collectors, Premium }
-
         private string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
+        private RapidShareUploaderOptions Options { get; set; }
 
-        public RapidShareUploader()
+        public override string Name
         {
+            get { return "RapidShare"; }
+        }
 
+        public RapidShareUploader(RapidShareUploaderOptions options)
+        {
+            this.Options = options;
         }
 
         public override string Upload(byte[] file, string fileName)
@@ -54,15 +64,15 @@ namespace ZSS
 
             args.Add("rsapi_v1", "1");
 
-            if (UploadMethod == UploadType.Collectors && !string.IsNullOrEmpty(CollectorsID) && !string.IsNullOrEmpty(Password))
+            if (Options.AccountType == RapidShareAcctType.Collectors && !string.IsNullOrEmpty(Options.CollectorsID) && !string.IsNullOrEmpty(Options.Password))
             {
-                args.Add("freeaccountid", CollectorsID);
-                args.Add("password", Password);
+                args.Add("freeaccountid", Options.CollectorsID);
+                args.Add("password", Options.Password);
             }
-            else if (UploadMethod == UploadType.Premium && !string.IsNullOrEmpty(PremiumUsername) && !string.IsNullOrEmpty(Password))
+            else if (Options.AccountType == RapidShareAcctType.Premium && !string.IsNullOrEmpty(Options.PremiumUsername) && !string.IsNullOrEmpty(Options.Password))
             {
-                args.Add("login", CollectorsID);
-                args.Add("password", Password);
+                args.Add("login", Options.CollectorsID);
+                args.Add("password", Options.Password);
             }
 
             string result = UploadFile(file, fileName, url, "filecontent", args);
@@ -71,7 +81,7 @@ namespace ZSS
 
             UploadInfo info = new UploadInfo(result);
 
-            if (CheckFileSize)
+            if (Options.CheckFileSize)
             {
                 string fileSize = file.Count().ToString();
                 if (fileSize != info.Size)
@@ -80,7 +90,7 @@ namespace ZSS
                 }
             }
 
-            if (CheckFileMD5)
+            if (Options.CheckFileMD5)
             {
                 string fileMD5 = GetMD5(file);
                 if (!fileMD5.Equals(info.MD5, StringComparison.InvariantCultureIgnoreCase))

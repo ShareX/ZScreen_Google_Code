@@ -67,15 +67,15 @@ namespace ZScreenLib
 
         private void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
-            MainAppTask task = (MainAppTask)e.Argument;
-            task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.SET_ICON_BUSY, task);
+            WorkerTask task = (WorkerTask)e.Argument;
+            task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
-            if (Program.conf.PromptForUpload && task.ImageDestCategory != ImageDestType.CLIPBOARD &
-                task.ImageDestCategory != ImageDestType.FILE &&
-                (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
-                task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
-                MessageBox.Show("Do you really want to upload to " + task.ImageDestCategory.GetDescription() + "?",
+            if (Program.conf.PromptForUpload && task.MyImageUploader != ImageDestType.CLIPBOARD &
+                task.MyImageUploader != ImageDestType.FILE &&
+                (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
+                task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
+                MessageBox.Show("Do you really want to upload to " + task.MyImageUploader.GetDescription() + "?",
                 Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 e.Result = task;
@@ -101,19 +101,19 @@ namespace ZScreenLib
                 case JobCategoryType.SCREENSHOTS:
                     switch (task.Job)
                     {
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                        case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                             CaptureScreen(ref task);
                             break;
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                        case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                        case WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                        case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                             CaptureRegionOrWindow(ref task);
                             break;
-                        case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
-                        case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                        case WorkerTask.Jobs.CUSTOM_UPLOADER_TEST:
+                        case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                             CaptureActiveWindow(ref task);
                             break;
-                        case MainAppTask.Jobs.UPLOAD_IMAGE:
+                        case WorkerTask.Jobs.UPLOAD_IMAGE:
                             PublishImage(ref task);
                             break;
                     }
@@ -121,10 +121,10 @@ namespace ZScreenLib
                 case JobCategoryType.TEXT:
                     switch (task.Job)
                     {
-                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                        case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                             PublishText(ref task);
                             break;
-                        case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                        case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                             LanguageTranslator(ref task);
                             break;
                     }
@@ -132,10 +132,10 @@ namespace ZScreenLib
                 case JobCategoryType.BINARY:
                     switch (task.Job)
                     {
-                        case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                        case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                             if (Program.conf.AutoSwitchFTP)
                             {
-                                task.ImageDestCategory = ImageDestType.FTP;
+                                task.MyImageUploader = ImageDestType.FTP;
                                 PublishBinary(ref task);
                             }
                             break;
@@ -149,7 +149,7 @@ namespace ZScreenLib
                     (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 ||
                     task.JobCategory == JobCategoryType.TEXT))
                 {
-                    task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
+                    task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
             }
 
@@ -200,7 +200,7 @@ namespace ZScreenLib
             }
         }
 
-        public void SetNotifyIconStatus(MainAppTask task, NotifyIcon ni, Icon ico)
+        public void SetNotifyIconStatus(WorkerTask task, NotifyIcon ni, Icon ico)
         {
             if (task != null && ni != null && ico != null)
             {
@@ -234,7 +234,7 @@ namespace ZScreenLib
             }
         }
 
-        public void CaptureWebpage(MainAppTask task)
+        public void CaptureWebpage(WorkerTask task)
         {
             if (task != null && FileSystem.IsValidLink(task.MyText.LocalString))
             {
@@ -267,21 +267,21 @@ namespace ZScreenLib
         {
             if (mZScreen == null) return;
 
-            switch ((MainAppTask.ProgressType)e.ProgressPercentage)
+            switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
-                case (MainAppTask.ProgressType)101:
+                case (WorkerTask.ProgressType)101:
                     PrintImage(e.UserState as Image);
                     break;
-                case (MainAppTask.ProgressType)102:
+                case (WorkerTask.ProgressType)102:
                     CopyImageToClipboard(e.UserState as Image);
                     break;
-                case (MainAppTask.ProgressType)103:
+                case (WorkerTask.ProgressType)103:
                     SaveImage(e.UserState as Image);
                     break;
-                case MainAppTask.ProgressType.ADD_FILE_TO_LISTBOX:
+                case WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem(e.UserState as HistoryItem);
                     break;
-                case MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
+                case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
                     if (e.UserState.GetType() == typeof(string))
                     {
                         CopyImageToClipboard(e.UserState as string);
@@ -291,30 +291,30 @@ namespace ZScreenLib
                         CopyImageToClipboard(e.UserState as Image);
                     }
                     break;
-                case MainAppTask.ProgressType.FLASH_ICON:
+                case WorkerTask.ProgressType.FLASH_ICON:
                     FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
                     break;
-                case MainAppTask.ProgressType.SET_ICON_BUSY:
-                    SetNotifyIconStatus(e.UserState as MainAppTask, mZScreen.niTray, Resources.zss_busy);
+                case WorkerTask.ProgressType.SET_ICON_BUSY:
+                    SetNotifyIconStatus(e.UserState as WorkerTask, mZScreen.niTray, Resources.zss_busy);
                     break;
-                case MainAppTask.ProgressType.UPDATE_CROP_MODE:
+                case WorkerTask.ProgressType.UPDATE_CROP_MODE:
                     mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
                     break;
-                case MainAppTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
+                case WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
                     mZScreen.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
                     SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Program.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
                     break;
-                case MainAppTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
+                case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
                     UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
                     mZScreen.Text = string.Format("{0}% - {1}", progress, Program.GetProductName());
                     break;
-                case MainAppTask.ProgressType.UPDATE_PROGRESS_MAX:
+                case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
                     Adapter.TaskbarSetProgressState(tbps);
                     break;
-                case MainAppTask.ProgressType.SHOW_TRAY_MESSAGE:
+                case WorkerTask.ProgressType.SHOW_TRAY_MESSAGE:
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
                     SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;
@@ -323,7 +323,7 @@ namespace ZScreenLib
 
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MainAppTask task = (MainAppTask)e.Result;
+            WorkerTask task = (WorkerTask)e.Result;
             mZScreen.Text = Program.GetProductName();
 
             try
@@ -337,7 +337,7 @@ namespace ZScreenLib
                         case JobCategoryType.BINARY:
                             switch (task.Job)
                             {
-                                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
                                     {
                                         Clipboard.SetText(task.RemoteFilePath);
@@ -348,7 +348,7 @@ namespace ZScreenLib
                         case JobCategoryType.TEXT:
                             switch (task.Job)
                             {
-                                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                                case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                                     if (mZScreen != null)
                                     {
                                         this.mZScreen.txtTranslateText.Text = task.TranslationInfo.SourceText;
@@ -367,7 +367,7 @@ namespace ZScreenLib
                                     }
 
                                     break;
-                                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
                                     {
                                         Clipboard.SetText(task.RemoteFilePath);
@@ -378,7 +378,7 @@ namespace ZScreenLib
                         case JobCategoryType.SCREENSHOTS:
                             switch (task.Job)
                             {
-                                case MainAppTask.Jobs.CUSTOM_UPLOADER_TEST:
+                                case WorkerTask.Jobs.CUSTOM_UPLOADER_TEST:
                                     if (task.ImageManager != null && task.ImageManager.ImageFileList.Count > 0)
                                     {
                                         if (task.ImageManager.GetFullImageUrl() != "")
@@ -395,7 +395,7 @@ namespace ZScreenLib
                                     this.mZScreen.btnUploadersTest.Enabled = true;
                                     break;
                             }
-                            if (task.ImageDestCategory != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (task.MyImageUploader != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 File.Delete(task.LocalFilePath);
                             }
@@ -424,7 +424,7 @@ namespace ZScreenLib
                         this.mZScreen.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.Job == MainAppTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
+                    if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
                     {
                         if (Program.conf.CompleteSound)
                         {
@@ -462,22 +462,23 @@ namespace ZScreenLib
 
         #endregion
 
-        internal MainAppTask CreateTask(MainAppTask.Jobs job)
+        internal WorkerTask CreateTask(WorkerTask.Jobs job)
         {
             BackgroundWorker bwApp = CreateWorker();
-            MainAppTask task = new MainAppTask(bwApp, job);
-            if (task.Job != MainAppTask.Jobs.CUSTOM_UPLOADER_TEST)
+            WorkerTask task = new WorkerTask(bwApp, job);
+            if (task.Job != WorkerTask.Jobs.CUSTOM_UPLOADER_TEST)
             {
-                task.ImageDestCategory = Program.conf.ScreenshotDestMode;
+                task.MyImageUploader = Program.conf.ScreenshotDestMode;
+                task.MyFileUploader = Program.conf.FileDestMode;
             }
             else
             {
-                task.ImageDestCategory = ImageDestType.CUSTOM_UPLOADER;
+                task.MyImageUploader = ImageDestType.CUSTOM_UPLOADER;
             }
             return task;
         }
 
-        public MainAppTask GetWorkerText(MainAppTask.Jobs job)
+        public WorkerTask GetWorkerText(WorkerTask.Jobs job)
         {
             return GetWorkerText(job, "");
         }
@@ -486,9 +487,9 @@ namespace ZScreenLib
         /// Worker for Text: Paste2, Pastebin
         /// </summary>
         /// <returns></returns>
-        public MainAppTask GetWorkerText(MainAppTask.Jobs job, string localFilePath)
+        public WorkerTask GetWorkerText(WorkerTask.Jobs job, string localFilePath)
         {
-            MainAppTask t = CreateTask(job);
+            WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
             // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = (TextUploader)mZScreen.ucTextUploaders.MyCollection.SelectedItem;
@@ -499,7 +500,7 @@ namespace ZScreenLib
 
             switch (job)
             {
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                     mZScreen.btnTranslate.Enabled = false;
                     t.TranslationInfo = new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text, ZScreen.mGTranslator.LanguageOptions.SourceLangList[mZScreen.cbFromLanguage.SelectedIndex],
                         ZScreen.mGTranslator.LanguageOptions.TargetLangList[mZScreen.cbToLanguage.SelectedIndex]);
@@ -516,47 +517,47 @@ namespace ZScreenLib
         {
             if (hi != null && File.Exists(hi.LocalPath))
             {
-                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
+                WorkerTask task = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task.JobCategory = hi.JobCategory;
                 task.SetImage(hi.LocalPath);
                 task.SetLocalFilePath(hi.LocalPath);
-                task.ImageDestCategory = hi.ImageDestCategory;
+                task.MyImageUploader = hi.ImageDestCategory;
                 task.MyWorker.RunWorkerAsync(task);
             }
         }
 
-        internal void EventJobs(object sender, MainAppTask.Jobs jobs)
+        internal void EventJobs(object sender, WorkerTask.Jobs jobs)
         {
             switch (jobs)
             {
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                     StartBW_EntireScreen();
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                     StartBW_ActiveWindow();
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
                     StartBW_SelectedWindow();
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                case WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED:
                     StartBW_CropShot();
                     break;
-                case MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                     StartBW_LastCropShot();
                     break;
-                case MainAppTask.Jobs.AUTO_CAPTURE:
+                case WorkerTask.Jobs.AUTO_CAPTURE:
                     ShowAutoCapture();
                     break;
-                case MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
                     UploadUsingClipboard();
                     break;
-                case MainAppTask.Jobs.PROCESS_DRAG_N_DROP:
+                case WorkerTask.Jobs.PROCESS_DRAG_N_DROP:
                     ShowDropWindow();
                     break;
-                case MainAppTask.Jobs.LANGUAGE_TRANSLATOR:
+                case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                     StartWorkerTranslator();
                     break;
-                case MainAppTask.Jobs.SCREEN_COLOR_PICKER:
+                case WorkerTask.Jobs.SCREEN_COLOR_PICKER:
                     ScreenColorPicker();
                     break;
             }
@@ -564,7 +565,7 @@ namespace ZScreenLib
 
         #region "Capture Method"
 
-        private void CaptureActiveWindow(ref MainAppTask task)
+        private void CaptureActiveWindow(ref WorkerTask task)
         {
             try
             {
@@ -587,7 +588,7 @@ namespace ZScreenLib
             }
         }
 
-        private string CaptureRegionOrWindow(ref MainAppTask task)
+        private string CaptureRegionOrWindow(ref WorkerTask task)
         {
             mTakingScreenShot = true;
             string filePath = "";
@@ -596,21 +597,21 @@ namespace ZScreenLib
             {
                 using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
                 {
-                    if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
+                    if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
                     {
                         task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
                     }
                     else
                     {
-                        using (Crop c = new Crop(imgSS, task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
+                        using (Crop c = new Crop(imgSS, task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
                         {
                             if (c.ShowDialog() == DialogResult.OK)
                             {
-                                if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                                if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
                                 {
                                     task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
                                 }
-                                else if (task.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                                else if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
                                 {
                                     task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
                                 }
@@ -638,14 +639,14 @@ namespace ZScreenLib
             }
             finally
             {
-                task.MyWorker.ReportProgress((int)MainAppTask.ProgressType.UPDATE_CROP_MODE);
+                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_CROP_MODE);
                 mTakingScreenShot = false;
             }
 
             return filePath;
         }
 
-        public void CaptureScreen(ref MainAppTask task)
+        public void CaptureScreen(ref WorkerTask task)
         {
             task.CaptureScreen();
             WriteImage(ref task);
@@ -665,7 +666,7 @@ namespace ZScreenLib
 
         #endregion
 
-        public void LanguageTranslator(ref MainAppTask t)
+        public void LanguageTranslator(ref WorkerTask t)
         {
             t.TranslationInfo.Result = ZScreen.mGTranslator.TranslateText(t.TranslationInfo);
         }
@@ -685,9 +686,9 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the image</param>
-        public void StartWorkerPictures(MainAppTask.Jobs job, string localFilePath)
+        public void StartWorkerPictures(WorkerTask.Jobs job, string localFilePath)
         {
-            MainAppTask t = CreateTask(job);
+            WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(localFilePath);
@@ -695,9 +696,9 @@ namespace ZScreenLib
             t.MyWorker.RunWorkerAsync(t);
         }
 
-        public void StartWorkerPictures(MainAppTask.Jobs job, Image img)
+        public void StartWorkerPictures(WorkerTask.Jobs job, Image img)
         {
-            MainAppTask t = CreateTask(job);
+            WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
@@ -709,9 +710,9 @@ namespace ZScreenLib
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void StartWorkerScreenshots(MainAppTask.Jobs job)
+        public void StartWorkerScreenshots(WorkerTask.Jobs job)
         {
-            MainAppTask t = CreateTask(job);
+            WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.SCREENSHOTS;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.MyWorker.RunWorkerAsync(t);
@@ -722,20 +723,28 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the file</param>
-        private void StartWorkerBinary(MainAppTask.Jobs job, string localFilePath)
+        private void StartWorkerBinary(WorkerTask.Jobs job, string localFilePath)
         {
-            MainAppTask t = CreateTask(job);
+            WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.BINARY;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
         }
 
-        private void PublishBinary(ref MainAppTask task)
+        private void PublishBinary(ref WorkerTask task)
         {
             task.StartTime = DateTime.Now;
             TaskManager tm = new TaskManager(ref task);
-            tm.UploadFtp();
+            switch (task.MyFileUploader)
+            {
+                case ZSS.FileUploadersLib.FileUploaderType.RapidShare:
+                    tm.UploadFile();
+                    break;
+                case ZSS.FileUploadersLib.FileUploaderType.Ftp:
+                    tm.UploadFtp();
+                    break;
+            }
             task.EndTime = DateTime.Now;
         }
 
@@ -743,11 +752,11 @@ namespace ZScreenLib
         /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
         /// </summary>
         /// <param name="task"></param>
-        private void PublishImage(ref MainAppTask task)
+        private void PublishImage(ref WorkerTask task)
         {
             TaskManager tm = new TaskManager(ref task);
 
-            if (task.MyImage != null && Adapter.ImageSoftwareEnabled() && task.Job != MainAppTask.Jobs.UPLOAD_IMAGE)
+            if (task.MyImage != null && Adapter.ImageSoftwareEnabled() && task.Job != WorkerTask.Jobs.UPLOAD_IMAGE)
             {
                 tm.ImageEdit();
             }
@@ -763,7 +772,7 @@ namespace ZScreenLib
         /// Function to edit Text in a Text Editor and Upload
         /// </summary>
         /// <param name="task"></param>
-        private void PublishText(ref MainAppTask task)
+        private void PublishText(ref WorkerTask task)
         {
             TaskManager tm = new TaskManager(ref task);
             tm.UploadText();
@@ -771,7 +780,7 @@ namespace ZScreenLib
 
         private void ScreenshotUsingDragDrop(string fp)
         {
-            StartWorkerPictures(MainAppTask.Jobs.PROCESS_DRAG_N_DROP, fp);
+            StartWorkerPictures(WorkerTask.Jobs.PROCESS_DRAG_N_DROP, fp);
         }
 
         private void ScreenshotUsingDragDrop(string[] paths)
@@ -947,24 +956,24 @@ namespace ZScreenLib
                 }
             }
 
-            List<MainAppTask> textWorkers = new List<MainAppTask>();
+            List<WorkerTask> textWorkers = new List<WorkerTask>();
 
             foreach (string fp in strListFilePath)
             {
                 if (GraphicsMgr.IsValidImage(fp))
                 {
-                    StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                    StartWorkerPictures(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     temp.SetLocalFilePath(fp);
                     temp.MyText = TextInfo.FromFile(fp);
                     textWorkers.Add(temp);
                 }
                 else
                 {
-                    StartWorkerBinary(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                    StartWorkerBinary(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
                 }
             }
 
@@ -980,21 +989,20 @@ namespace ZScreenLib
             }
             else
             {
-                List<MainAppTask> textWorkers = new List<MainAppTask>();
+                List<WorkerTask> textWorkers = new List<WorkerTask>();
 
                 if (Clipboard.ContainsImage())
                 {
                     Image cImage = Clipboard.GetImage();
                     string fp = FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), false);
                     fp = FileSystem.SaveImage(cImage, fp);
-                    StartWorkerPictures(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                    StartWorkerPictures(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    MainAppTask temp = GetWorkerText(MainAppTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
-                    //Adapter.WriteTextToFile(Clipboard.GetText(), fp);
                     File.WriteAllText(fp, Clipboard.GetText());
                     temp.SetLocalFilePath(fp);
                     temp.MyText = TextInfo.FromFile(fp);
@@ -1009,9 +1017,9 @@ namespace ZScreenLib
             }
         }
 
-        private void StartTextWorkers(List<MainAppTask> textWorkers)
+        private void StartTextWorkers(List<WorkerTask> textWorkers)
         {
-            foreach (MainAppTask task in textWorkers)
+            foreach (WorkerTask task in textWorkers)
             {
                 if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                 {
@@ -1053,27 +1061,27 @@ namespace ZScreenLib
             }
         }
 
-        private bool RetryUpload(MainAppTask t)
+        private bool RetryUpload(WorkerTask t)
         {
             if (Program.conf.ImageUploadRetryOnFail && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
-                (t.ImageDestCategory == ImageDestType.IMAGESHACK || t.ImageDestCategory == ImageDestType.TINYPIC))
+                (t.MyImageUploader == ImageDestType.IMAGESHACK || t.MyImageUploader == ImageDestType.TINYPIC))
             {
-                MainAppTask task = CreateTask(MainAppTask.Jobs.UPLOAD_IMAGE);
+                WorkerTask task = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task.JobCategory = t.JobCategory;
                 task.SetImage(t.LocalFilePath);
                 task.SetLocalFilePath(t.LocalFilePath);
-                if (t.ImageDestCategory == ImageDestType.IMAGESHACK)
+                if (t.MyImageUploader == ImageDestType.IMAGESHACK)
                 {
-                    task.ImageDestCategory = ImageDestType.TINYPIC;
+                    task.MyImageUploader = ImageDestType.TINYPIC;
                 }
                 else
                 {
-                    task.ImageDestCategory = ImageDestType.IMAGESHACK;
+                    task.MyImageUploader = ImageDestType.IMAGESHACK;
                 }
                 task.Retry = true;
 
                 string message = string.Format("{0}\r\n\r\nAutomaticly starting upload with {1}.", string.Join("\r\n", t.Errors.ToArray()),
-                    task.ImageDestCategory.GetDescription());
+                    task.MyImageUploader.GetDescription());
                 mZScreen.niTray.ShowBalloonTip(5000, "Error", message, ToolTipIcon.Error);
 
                 task.MyWorker.RunWorkerAsync(task);
@@ -1086,12 +1094,12 @@ namespace ZScreenLib
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
         /// <param name="t">WorkerTask</param>
-        public void WriteImage(ref MainAppTask t)
+        public void WriteImage(ref WorkerTask t)
         {
             if (t.MyImage != null)
             {
                 NameParserType type;
-                if (t.Job == MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
+                if (t.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
                 {
                     type = NameParserType.ActiveWindow;
                 }
@@ -1137,7 +1145,7 @@ namespace ZScreenLib
         {
             if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0 && !translationInfo.IsEmpty())
             {
-                MainAppTask t = CreateTask(MainAppTask.Jobs.LANGUAGE_TRANSLATOR);
+                WorkerTask t = CreateTask(WorkerTask.Jobs.LANGUAGE_TRANSLATOR);
                 t.JobCategory = JobCategoryType.TEXT;
                 mZScreen.btnTranslate.Enabled = false;
                 mZScreen.btnTranslateTo1.Enabled = false;
@@ -1148,19 +1156,19 @@ namespace ZScreenLib
 
         public void StartBW_EntireScreen()
         {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_SCREEN);
+            StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN);
         }
 
         public void StartBW_ActiveWindow()
         {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
+            StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
         }
 
         public void StartBW_SelectedWindow()
         {
             if (!mTakingScreenShot)
             {
-                StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
             }
         }
 
@@ -1168,13 +1176,13 @@ namespace ZScreenLib
         {
             if (!mTakingScreenShot)
             {
-                StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
+                StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED);
             }
         }
 
         public void StartBW_LastCropShot()
         {
-            StartWorkerScreenshots(MainAppTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
+            StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
         }
 
         #region Quick Actions
