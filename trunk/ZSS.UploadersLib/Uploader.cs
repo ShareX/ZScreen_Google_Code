@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -30,35 +31,27 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using Microsoft.Win32;
 
 namespace ZSS.UploadersLib
 {
-    public abstract class Uploader
+    public class Uploader
     {
-        #region Until FileUploader.cs
+        public List<string> Errors { get; set; }
 
-        public virtual string Name
+        public string ToErrorString()
         {
-            get { return null; }
+            return string.Join("\r\n", Errors.ToArray());
         }
 
-        public virtual string Upload(byte[] data, string fileName)
+        [XmlIgnore]
+        public IWebProxy ProxySettings { get; set; }
+
+        public Uploader()
         {
-            return null;
+            Errors = new List<string>();
         }
-
-        public string Upload(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                return Upload(File.ReadAllBytes(filePath), Path.GetFileName(filePath));
-            }
-
-            return null;
-        }
-
-        #endregion
 
         #region Protected Methods
 
@@ -69,6 +62,7 @@ namespace ZSS.UploadersLib
                 url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Proxy = this.ProxySettings;
 
                 using (WebResponse response = request.GetResponse())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
@@ -88,9 +82,19 @@ namespace ZSS.UploadersLib
         {
             try
             {
-                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                byte[] data = Encoding.UTF8.GetBytes(post);
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.ContentLength = data.Length;
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.Method = "POST";
+                request.Proxy = this.ProxySettings;
+
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    requestStream.Write(data, 0, data.Length);
+                }
 
                 using (WebResponse response = request.GetResponse())
                 {
@@ -103,6 +107,19 @@ namespace ZSS.UploadersLib
             }
 
             return "";
+        }
+
+        protected string UploadImage(Image image, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
+        {
+            byte[] data;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, image.RawFormat);
+                data = stream.ToArray();
+            }
+
+            return UploadData(data, fileName, url, fileFormName, arguments);
         }
 
         protected string UploadData(byte[] data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
@@ -137,6 +154,7 @@ namespace ZSS.UploadersLib
                     request.ContentLength = stream.Length;
                     request.ContentType = "multipart/form-data; boundary=" + boundary;
                     request.Method = "POST";
+                    request.Proxy = this.ProxySettings;
 
                     using (Stream requestStream = request.GetRequestStream())
                     {

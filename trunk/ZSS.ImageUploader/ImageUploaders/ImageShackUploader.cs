@@ -70,14 +70,14 @@ namespace ZSS.ImageUploadersLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImageAPI(image);
+                    return UploadImageAPI(image, fileName);
                 case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(image);
+                    return UploadImageAnonymous(image, fileName);
             }
 
             return null;
@@ -89,7 +89,7 @@ namespace ZSS.ImageUploadersLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Image image)
+        private ImageFileManager UploadImageAPI(Image image, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -115,8 +115,7 @@ namespace ZSS.ImageUploadersLib
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
 
-                ifm.Source = PostImage(image, URLUnifiedAPI, "fileupload", arguments);
-                //ifm.Source = new TCPClient(this).UploadImage(image, URLUnifiedAPI, "fileupload", mFileName, arguments);
+                ifm.Source = UploadImage(image, fileName, URLUnifiedAPI, "fileupload", arguments);
 
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
@@ -143,7 +142,7 @@ namespace ZSS.ImageUploadersLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Image image)
+        private ImageFileManager UploadImageAnonymous(Image image, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -166,8 +165,7 @@ namespace ZSS.ImageUploadersLib
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!Public) arguments.Add("public", "no");
 
-                ifm.Source = PostImage(image, URLStandard, "fileupload", arguments);
-                //ifm.Source = new TCPClient(this).UploadImage(image, URLStandard, "fileupload", mFileName, arguments);
+                ifm.Source = UploadImage(image, fileName, URLStandard, "fileupload", arguments);
 
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");

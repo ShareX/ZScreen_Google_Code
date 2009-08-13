@@ -80,7 +80,7 @@ namespace ZSS.ImageUploadersLib
 
         // http://www.imagebam.com/nav/API_uploading_photos
 
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
@@ -97,7 +97,7 @@ namespace ZSS.ImageUploadersLib
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
             arguments.Add("secret", GetMD5(Secret + Options.UserSecret + salt));
 
-            string source = PostImage(image, upload, "photo", arguments);
+            string source = UploadImage(image, fileName, upload, "photo", arguments);
 
             return ParseResult(source);
         }

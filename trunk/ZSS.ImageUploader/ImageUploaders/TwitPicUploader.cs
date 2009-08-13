@@ -73,21 +73,21 @@ namespace ZSS.ImageUploadersLib
             this.Options = options;
         }
 
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             switch (this.Options.TwitPicUploadType)
             {
                 case TwitPicUploadType.UPLOAD_IMAGE_ONLY:
-                    return Upload(image, "");
+                    return Upload(image, fileName, "");
                 case TwitPicUploadType.UPLOAD_IMAGE_AND_TWITTER:
                     TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
                     msgBox.ShowDialog();
-                    return Upload(image, msgBox.Message);
+                    return Upload(image, fileName, msgBox.Message);
             }
             return null;
         }
 
-        private ImageFileManager Upload(Image image, string msg)
+        private ImageFileManager Upload(Image image, string fileName, string msg)
         {
             string url;
 
@@ -106,19 +106,18 @@ namespace ZSS.ImageUploadersLib
                 url = UploadLink;
             }
 
-            string source = PostImage(image, url, "media", arguments);
-            //string source = new TCPClient(this).UploadImage(image, url, "media", mFileName, arguments);
+            string source = UploadImage(image, fileName, url, "media", arguments);
 
             return ParseResult(source);
         }
 
         private ImageFileManager ParseResult(string source)
         {
-            
+
             ImageFileManager ifm = new ImageFileManager { Source = source };
 
             if (!string.IsNullOrEmpty(source))
-            {             
+            {
                 XDocument xdoc = XDocument.Parse(source);
                 XElement xele = xdoc.Element("rsp");
 

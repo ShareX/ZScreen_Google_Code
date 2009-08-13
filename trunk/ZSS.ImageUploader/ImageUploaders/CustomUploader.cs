@@ -46,7 +46,7 @@ namespace ZSS.ImageUploadersLib
             get { return iHosting.Name; }
         }
 
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -59,7 +59,7 @@ namespace ZSS.ImageUploadersLib
                 {
                     arguments.Add(args[0], args[1]);
                 }
-                ifm.Source = PostImage(image, iHosting.UploadURL, iHosting.FileForm, arguments);
+                ifm.Source = UploadImage(image, fileName, iHosting.UploadURL, iHosting.FileForm, arguments);
                 if (!string.IsNullOrEmpty(ifm.Source))
                 {
                     List<String> regexps = new List<string>();

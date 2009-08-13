@@ -80,21 +80,21 @@ namespace ZSS.ImageUploadersLib
             this.Options = options;
         }
 
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             switch (this.Options.UploadType)
             {
                 case YfrogUploadType.UPLOAD_IMAGE_ONLY:
-                    return Upload(image, "");
+                    return Upload(image, fileName, "");
                 case YfrogUploadType.UPLOAD_IMAGE_AND_TWITTER:
                     TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
                     msgBox.ShowDialog();
-                    return Upload(image, msgBox.Message);
+                    return Upload(image, fileName, msgBox.Message);
             }
             return null;
         }
 
-        private ImageFileManager Upload(Image image, string msg)
+        private ImageFileManager Upload(Image image, string fileName, string msg)
         {
             string url;
 
@@ -119,7 +119,7 @@ namespace ZSS.ImageUploadersLib
 
             arguments.Add("key", this.Options.DeveloperKey);
 
-            string source = PostImage(image, url, "media", arguments);
+            string source = UploadImage(image, fileName, url, "media", arguments);
 
             return ParseResult(source);
         }

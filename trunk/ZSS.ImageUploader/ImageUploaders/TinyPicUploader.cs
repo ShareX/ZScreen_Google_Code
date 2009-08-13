@@ -60,14 +60,14 @@ namespace ZSS.ImageUploadersLib
             get { return "TinyPic"; }
         }
 
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImageAPI(image);
+                    return UploadImageAPI(image, fileName);
                 case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(image);
+                    return UploadImageAnonymous(image, fileName);
             }
             return null;
         }
@@ -78,7 +78,7 @@ namespace ZSS.ImageUploadersLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Image image)
+        private ImageFileManager UploadImageAPI(Image image, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -135,8 +135,7 @@ namespace ZSS.ImageUploadersLib
                         arguments.Add("shuk", Shuk);
                     }
 
-                    ifm.Source = PostImage(image, URLAPI, "uploadfile", arguments);
-                    //ifm.Source = new TCPClient(this).UploadImage(image, URLAPI, "uploadfile", mFileName, arguments);
+                    ifm.Source = UploadImage(image, fileName, URLAPI, "uploadfile", arguments);
 
                     if (CheckResponse(ifm.Source))
                     {
@@ -167,7 +166,7 @@ namespace ZSS.ImageUploadersLib
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Image image)
+        private ImageFileManager UploadImageAnonymous(Image image, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -184,8 +183,7 @@ namespace ZSS.ImageUploadersLib
                     { "dimension", "1600" }
                 };
 
-                ifm.Source = PostImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
-                //ifm.Source = new TCPClient(this).UploadImage(image, "http://s5.tinypic.com/plugin/upload.php", "the_file", mFileName, arguments);
+                ifm.Source = UploadImage(image, fileName, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
 
                 string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
                 string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;
