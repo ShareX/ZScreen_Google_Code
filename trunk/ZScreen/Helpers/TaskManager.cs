@@ -55,7 +55,6 @@ namespace ZScreenLib
                     UploadFtp();
                     break;
                 case FileUploaderType.RapidShare:
-                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                     uploader = new RapidShareUploader(new RapidShareUploaderOptions()
                     {
                         AccountType = Program.conf.RapidShareAccountType,
@@ -67,9 +66,15 @@ namespace ZScreenLib
             }
             if (uploader != null)
             {
+                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 uploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = uploader.Name;
-                mTask.RemoteFilePath = uploader.Upload(mTask.LocalFilePath);
+                string url = uploader.Upload(mTask.LocalFilePath);
+                if (!string.IsNullOrEmpty(url) && mTask.MakeTinyURL)
+                {
+                    url = Adapter.TryShortenURL(url);
+                }
+                mTask.RemoteFilePath = url;
             }
         }
 
@@ -182,7 +187,7 @@ namespace ZScreenLib
                         }
                         mTask.Errors = imageUploader.Errors;
 
-                        if (Program.conf.ImageUploadRetryOnTimeout && (mTask.MyImageUploader == ImageDestType.IMAGESHACK ||
+                        if (Program.conf.ImageUploadRetryOnFail && (mTask.MyImageUploader == ImageDestType.IMAGESHACK ||
                             mTask.MyImageUploader == ImageDestType.TINYPIC)) break;
                     }
                 }
