@@ -4062,5 +4062,10 @@ namespace ZScreenLib
         {
             Program.conf.RapidSharePassword = txtRapidSharePassword.Text;
         }
+
+        private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.FileDestMode = (FileUploaderType)cboFileUploaders.SelectedIndex;
+        }
     }
 }
