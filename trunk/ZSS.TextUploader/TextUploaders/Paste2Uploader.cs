@@ -77,7 +77,7 @@ namespace ZSS.TextUploadersLib
                 arguments.Add("lang", HostSettings.TextFormat);
                 arguments.Add("parent", "0");
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
             return "";

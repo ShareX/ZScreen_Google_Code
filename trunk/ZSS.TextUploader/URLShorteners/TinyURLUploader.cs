@@ -69,7 +69,7 @@ namespace ZSS.TextUploadersLib
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("url", HttpUtility.UrlEncode(text.LocalString));
-                return GetResponse2(HostSettings.URL, arguments);
+                return GetResponse(HostSettings.URL, arguments);
             }
             return "";
         }

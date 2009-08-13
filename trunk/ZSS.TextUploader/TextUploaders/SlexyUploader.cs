@@ -85,7 +85,7 @@ namespace ZSS.TextUploadersLib
                 arguments.Add("tabbing", "true");
                 arguments.Add("tabtype", "real");
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
             return "";

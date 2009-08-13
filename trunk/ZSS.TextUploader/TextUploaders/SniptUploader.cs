@@ -81,7 +81,7 @@ namespace ZSS.TextUploadersLib
                 arguments.Add("snipAction", "");
                 arguments.Add("theme", HostSettings.Theme);
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
             return "";
