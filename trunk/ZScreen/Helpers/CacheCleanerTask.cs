@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using ZSS.ImageUploadersLib;
+using UploadersLib.Helpers;
 
 namespace ZScreenLib
 {

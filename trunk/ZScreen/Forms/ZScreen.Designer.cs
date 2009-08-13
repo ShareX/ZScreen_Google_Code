@@ -4231,7 +4231,7 @@ namespace ZScreenLib
             // 
             // nudUploadDurationLimit
             // 
-            this.nudUploadDurationLimit.Location = new System.Drawing.Point(297, 46);
+            this.nudUploadDurationLimit.Location = new System.Drawing.Point(299, 46);
             this.nudUploadDurationLimit.Maximum = new decimal(new int[] {
             300000,
             0,

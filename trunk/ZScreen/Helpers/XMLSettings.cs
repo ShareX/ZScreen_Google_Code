@@ -33,11 +33,11 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
 using ZSS;
-using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
-using ZSS.TextUploadersLib;
-using ZSS.FileUploadersLib;
 
 namespace ZScreenLib
 {
@@ -91,8 +91,8 @@ namespace ZScreenLib
         public string RapidShareCollectorsID = string.Empty;
         public string RapidSharePassword = string.Empty;
         public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
-        
-        
+
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~

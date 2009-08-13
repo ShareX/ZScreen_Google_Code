@@ -30,7 +30,6 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack;
-using ZSS.TextUploadersLib;
 using ZSS.Properties;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;

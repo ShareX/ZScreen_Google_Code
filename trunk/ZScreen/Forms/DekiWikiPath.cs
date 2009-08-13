@@ -32,15 +32,15 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using ZSS;
+using UploadersLib.Helpers;
 
 namespace ZScreenLib
 {
-
     public partial class DekiWikiPath : Form
     {
         public DekiWikiOptions Options { get; set; }
         public string path { set; get; }
-        private string currentPath;        
+        private string currentPath;
         private DekiWiki connector;
 
         public List<DekiWikiHistory> history = new List<DekiWikiHistory>();

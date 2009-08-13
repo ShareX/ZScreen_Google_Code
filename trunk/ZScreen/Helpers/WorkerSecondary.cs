@@ -25,9 +25,9 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using ZSS.Properties;
-using ZSS.TextUploadersLib;
-using ZSS.UpdateCheckerLib;
 using ZSS;
+using UploadersLib.TextServices;
+using ZSS.UpdateCheckerLib;
 
 namespace ZScreenLib
 {

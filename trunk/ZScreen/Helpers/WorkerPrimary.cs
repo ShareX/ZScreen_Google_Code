@@ -32,14 +32,14 @@ using System.Windows.Forms;
 using Greenshot.Helpers;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using MS.WindowsAPICodePack.Internal;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.TextServices;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
 using ZSS.Properties;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
-using ZSS.ImageUploadersLib;
-using MS.WindowsAPICodePack.Internal;
 
 namespace ZScreenLib
 {
@@ -1030,7 +1030,7 @@ namespace ZScreenLib
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Program.conf.IndexerConfig);
                     Program.conf.IndexerConfig.FolderList.Clear();
-                    string ext = (task.MyTextUploader.GetType() == typeof(ZSS.TextUploadersLib.FTPUploader)) ? ".html" : ".log";
+                    string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
                     string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
                     settings.GetConfig().FolderList.Add(task.MyText.LocalString);

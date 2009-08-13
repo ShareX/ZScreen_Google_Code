@@ -24,10 +24,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ZSS.ImageUploadersLib.Helpers;
 using ZSS;
-using ZSS.ImageUploadersLib;
 using ZSS.Properties;
+using UploadersLib.Helpers;
+using UploadersLib;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550

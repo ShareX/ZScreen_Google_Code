@@ -36,17 +36,17 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using MS.WindowsAPICodePack.Internal;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
+using UploadersLib.TextServices;
+using UploadersLib.TextUploaders;
+using UploadersLib.URLShorteners;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using ZSS.ImageUploadersLib;
-using ZSS.ImageUploadersLib.Helpers;
 using ZSS.Properties;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
-using ZSS.TextUploadersLib.URLShorteners;
-using MS.WindowsAPICodePack.Internal;
-using ZSS.FileUploadersLib;
 
 namespace ZScreenLib
 {

@@ -27,13 +27,11 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using ZSS.ImageUploadersLib.Helpers;
-using ZSS.TextUploadersLib;
 using System.Runtime.InteropServices;
-using ZSS.TextUploadersLib.Helpers;
 using ZSS;
-using ZSS.ImageUploadersLib;
-using ZSS.FileUploadersLib;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.TextServices;
 
 namespace ZScreenLib
 {
