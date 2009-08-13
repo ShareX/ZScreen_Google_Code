@@ -35,11 +35,13 @@ namespace ZSS.TextUploadersLib
     public abstract class TextUploader : Uploader
     {
         #region ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
-
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader),
             typeof (PastebinUploader), typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader),
             typeof(KlamUploader), typeof(IsgdUploader), typeof(BitlyUploader), typeof(TextUploader) };
 
+        /// <summary>
+        /// String that is uploaded
+        /// </summary>
         #endregion
 
         protected TextUploader() { }

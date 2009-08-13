@@ -37,22 +37,23 @@ using Microsoft.Win32;
 namespace ZSS.UploadersLib
 {
     public class Uploader
-    {
+    {    	
+        #region Inheritable Properties
+        [XmlIgnore]
+        public IWebProxy ProxySettings { get; set; }
         public List<string> Errors { get; set; }
-
+        #endregion
+        
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
         }
 
-        [XmlIgnore]
-        public IWebProxy ProxySettings { get; set; }
-
         public Uploader()
         {
             Errors = new List<string>();
         }
-
+       
         #region Protected Methods
 
         protected string GetResponse(string url, Dictionary<string, string> arguments)
@@ -72,6 +73,7 @@ namespace ZSS.UploadersLib
             }
             catch (Exception e)
             {
+            	this.Errors.Add(e.Message);
                 Console.WriteLine(e.ToString());
             }
 

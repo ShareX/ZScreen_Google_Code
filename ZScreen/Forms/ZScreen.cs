@@ -4044,7 +4044,8 @@ namespace ZScreenLib
         {
             Program.conf.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
             txtRapidSharePremiumUserName.Enabled = Program.conf.RapidShareAccountType == RapidShareAcctType.Premium;
-            txtRapidShareCollectorID.Enabled = !txtRapidSharePremiumUserName.Enabled;
+            txtRapidShareCollectorID.Enabled = Program.conf.RapidShareAccountType != RapidShareAcctType.Free && !txtRapidSharePremiumUserName.Enabled;
+            txtRapidSharePassword.Enabled = Program.conf.RapidShareAccountType != RapidShareAcctType.Free;
         }
 
         private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
