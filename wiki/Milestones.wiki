@@ -1,0 +1,23 @@
+#summary Significant stages/events in the development of ZScreen
+#labels Phase-Support
+
+= Version 3 - XXXX-XX-XX =
+
+ * Established foundation for supporting File uploading services like RapidShare
+
+= Version 2 - 2009-02-28 =
+
+ * Multi-monitor support was properly implemented thanks to Isaac
+ * Support Watermarks
+ * Development was moved to Google Code
+ * Google Translate engine was implemented into ZScreen
+ * Established foundation for supporting Text uploading services like paste2 and pastebin
+ * Jaex joined the development of ZScreen
+
+= Version 1 - 2007-08-22 =
+
+ * Multiple language support was dropped 
+ * Upload destinations were ImageShack, TinyPic and FTP
+ * McoreD joined the development of ZScreen
+ * Active Window, Crop Shot and Entire Screen capturing
+ * inf1ni started development of ZScreen in SourceForge
