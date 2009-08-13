@@ -1,7 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageUploadersLib", "ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj", "{223EC461-C070-4FF3-ADE7-92BC21AE66FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.TextUploadersLib", "ZSS.TextUploader\ZSS.TextUploadersLib.csproj", "{04DEED7C-450E-4C12-9586-040448FC6DD5}"
@@ -36,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 		Lib\taglib-sharp.dll = Lib\taglib-sharp.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersLib", "ZSS.UploadersLib\UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FileUploadersLib", "ZSS.FileUploadersLib\ZSS.FileUploadersLib.csproj", "{9D204619-BCBC-4E8D-B37E-F278D01D8A95}"
 EndProject

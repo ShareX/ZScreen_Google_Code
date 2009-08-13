@@ -28,11 +28,12 @@ using System.Net;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
+using UploadersLib.TextUploaders;
+using UploadersLib.URLShorteners;
 using ZSS;
-using ZSS.ImageUploadersLib;
-using ZSS.TextUploadersLib;
-using ZSS.TextUploadersLib.Helpers;
-using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.Properties;
 
 namespace ZScreenLib
@@ -320,7 +321,7 @@ namespace ZScreenLib
                 case SniptUploader.Hostname:
                     return new SniptUploader();
                 default:
-                    if (name == ZSS.TextUploadersLib.FTPUploader.Hostname)
+                    if (name == UploadersLib.FTPUploader.Hostname)
                     {
                         if (Program.conf.FTPAccountList.Count > 0)
                         {
@@ -333,7 +334,7 @@ namespace ZScreenLib
                             {
                                 acc = Program.conf.FTPAccountList[0];
                             }
-                            return new ZSS.TextUploadersLib.FTPUploader(acc);
+                            return new UploadersLib.FTPUploader(acc);
                         }
                     }
                     break;

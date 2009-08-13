@@ -34,26 +34,31 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 
-namespace ZSS.UploadersLib
+namespace UploadersLib
 {
     public class Uploader
-    {    	
+    {
         #region Inheritable Properties
+
         [XmlIgnore]
         public IWebProxy ProxySettings { get; set; }
-        public List<string> Errors { get; set; }
+
+        public List<string> Errors = new List<string>();
+
         #endregion
-        
+
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
         }
 
+        public string UserAgent = "ZScreen";
+
         public Uploader()
         {
             Errors = new List<string>();
         }
-       
+
         #region Protected Methods
 
         protected string GetResponse(string url, Dictionary<string, string> arguments)
@@ -64,6 +69,7 @@ namespace ZSS.UploadersLib
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = this.ProxySettings;
+                request.UserAgent = UserAgent;
 
                 using (WebResponse response = request.GetResponse())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
@@ -73,7 +79,7 @@ namespace ZSS.UploadersLib
             }
             catch (Exception e)
             {
-            	this.Errors.Add(e.Message);
+                this.Errors.Add(e.Message);
                 Console.WriteLine(e.ToString());
             }
 
@@ -92,6 +98,7 @@ namespace ZSS.UploadersLib
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.Method = "POST";
                 request.Proxy = this.ProxySettings;
+                request.UserAgent = UserAgent;
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -157,6 +164,7 @@ namespace ZSS.UploadersLib
                     request.ContentType = "multipart/form-data; boundary=" + boundary;
                     request.Method = "POST";
                     request.Proxy = this.ProxySettings;
+                    request.UserAgent = UserAgent;
 
                     using (Stream requestStream = request.GetRequestStream())
                     {

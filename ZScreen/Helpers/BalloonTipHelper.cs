@@ -21,11 +21,11 @@
 */
 #endregion
 
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
+using UploadersLib;
 using ZSS;
-using ZSS.ImageUploadersLib;
-using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -99,7 +99,7 @@ namespace ZScreenLib
                 else
                 {
                     // remote file
-                   if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
                     {
                         if (task.FileName != null && !string.IsNullOrEmpty(task.FileName.ToString()))
                         {

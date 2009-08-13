@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ZSS.ImageUploadersLib;
-using System.Diagnostics;
-using System.IO;
+using UploadersLib;
 
 namespace ZScreenLib
 {

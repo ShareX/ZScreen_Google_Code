@@ -29,11 +29,11 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ZSS;
-using ZSS.ImageUploadersLib;
 using ZSS.Properties;
-using ZSS.TextUploadersLib;
-using ZSS.UploadersLib;
-using ZSS.FileUploadersLib;
+using UploadersLib.FileUploaders;
+using UploadersLib;
+using UploadersLib.ImageUploaders;
+using UploadersLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -51,10 +51,10 @@ namespace ZScreenLib
             FileUploader uploader = null;
             switch (mTask.MyFileUploader)
             {
-            	case FileUploaderType.Ftp:
-            		UploadFtp();
-            		break;
-                case ZSS.FileUploadersLib.FileUploaderType.RapidShare:
+                case FileUploaderType.Ftp:
+                    UploadFtp();
+                    break;
+                case FileUploaderType.RapidShare:
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                     uploader = new RapidShareUploader(new RapidShareUploaderOptions()
                     {
@@ -67,7 +67,7 @@ namespace ZScreenLib
             }
             if (uploader != null)
             {
-            	uploader.ProxySettings = Adapter.GetProxySettings();
+                uploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = uploader.Name;
                 mTask.RemoteFilePath = uploader.Upload(mTask.LocalFilePath);
             }
@@ -255,7 +255,7 @@ namespace ZScreenLib
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
-                    ZSS.ImageUploadersLib.FTPUploader fu = new ZSS.ImageUploadersLib.FTPUploader(acc)
+                    UploadersLib.ImageUploaders.FTPUploader fu = new UploadersLib.ImageUploaders.FTPUploader(acc)
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
                         WorkingDir = Program.CacheDir

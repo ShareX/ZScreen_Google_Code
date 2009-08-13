@@ -53,9 +53,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ITextUploader.cs" />
     <Compile Include="Helpers\IUploader.cs" />
     <Compile Include="Helpers\oAuth.cs" />
     <Compile Include="Helpers\oAuthTwitter.cs" />
+    <Compile Include="Helpers\TextInfo.cs" />
     <Compile Include="ImageUploaders\FTPUploader.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\Extensions.cs" />

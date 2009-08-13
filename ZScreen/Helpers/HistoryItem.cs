@@ -25,8 +25,8 @@ using System;
 using System.IO;
 using System.Text;
 using ZSS;
-using ZSS.ImageUploadersLib.Helpers;
-using ZSS.ImageUploadersLib;
+using UploadersLib;
+using UploadersLib.Helpers;
 
 namespace ZScreenLib
 {
