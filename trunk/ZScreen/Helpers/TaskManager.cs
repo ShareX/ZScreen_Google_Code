@@ -51,6 +51,9 @@ namespace ZScreenLib
             FileUploader uploader = null;
             switch (mTask.MyFileUploader)
             {
+            	case FileUploaderType.Ftp:
+            		UploadFtp();
+            		break;
                 case ZSS.FileUploadersLib.FileUploaderType.RapidShare:
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                     uploader = new RapidShareUploader(new RapidShareUploaderOptions()
@@ -64,6 +67,7 @@ namespace ZScreenLib
             }
             if (uploader != null)
             {
+            	uploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = uploader.Name;
                 mTask.RemoteFilePath = uploader.Upload(mTask.LocalFilePath);
             }

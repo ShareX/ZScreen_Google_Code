@@ -743,15 +743,7 @@ namespace ZScreenLib
         {
             task.StartTime = DateTime.Now;
             TaskManager tm = new TaskManager(ref task);
-            switch (task.MyFileUploader)
-            {
-                case ZSS.FileUploadersLib.FileUploaderType.RapidShare:
-                    tm.UploadFile();
-                    break;
-                case ZSS.FileUploadersLib.FileUploaderType.Ftp:
-                    tm.UploadFtp();
-                    break;
-            }
+            tm.UploadFile();
             task.EndTime = DateTime.Now;
         }
 

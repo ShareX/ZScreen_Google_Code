@@ -30,13 +30,10 @@ namespace ZSS.ImageUploadersLib
 {
     public abstract class ImageUploader : Uploader
     {
-        public abstract string Name { get; }
-
-        /// <summary>
-        /// API or Anonymous. Default: Anonymous
+    	public abstract string Name {get;}
+    	/// API or Anonymous. Default: Anonymous
         /// </summary>
-        protected UploadMode UploadMode { get; set; }
-
+        protected UploadMode UploadMode { get; set; }		
         public event ProgressEventHandler ProgressChanged;
         public delegate void ProgressEventHandler(int progress);
 
@@ -44,7 +41,7 @@ namespace ZSS.ImageUploadersLib
         {
             this.UploadMode = UploadMode.ANONYMOUS;
         }
-
+        
         public abstract ImageFileManager UploadImage(Image image, string fileName);
 
         public ImageFileManager UploadImage(string filePath)

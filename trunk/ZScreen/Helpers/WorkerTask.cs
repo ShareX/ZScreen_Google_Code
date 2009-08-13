@@ -164,7 +164,7 @@ namespace ZScreenLib
         ///// <summary>
         ///// FTP Account Name, TinyPic, ImageShack
         ///// </summary>
-        public string DestinationName { get; set; }
+        public string DestinationName = "File";
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
