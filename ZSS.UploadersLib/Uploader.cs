@@ -23,19 +23,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 namespace ZSS.UploadersLib
 {
     public abstract class Uploader
     {
-        public abstract string Upload(byte[] file, string fileName);
+        #region Until FileUploader.cs
 
-        public abstract string Name { get; }
+        public virtual string Name
+        {
+            get { return null; }
+        }
+
+        public virtual string Upload(byte[] data, string fileName)
+        {
+            return null;
+        }
 
         public string Upload(string filePath)
         {
@@ -46,6 +57,10 @@ namespace ZSS.UploadersLib
 
             return null;
         }
+
+        #endregion
+
+        #region Protected Methods
 
         protected string GetResponse(string url, Dictionary<string, string> arguments)
         {
@@ -69,7 +84,28 @@ namespace ZSS.UploadersLib
             return "";
         }
 
-        protected string UploadFile(byte[] file, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
+        protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
+        {
+            try
+            {
+                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+                using (WebResponse response = request.GetResponse())
+                {
+                    return response.ResponseUri.OriginalString;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return "";
+        }
+
+        protected string UploadData(byte[] data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
             try
             {
@@ -90,7 +126,7 @@ namespace ZSS.UploadersLib
                         }
                     }
 
-                    bytes = MakeFileInputContent(boundary, fileFormName, fileName, file);
+                    bytes = MakeFileInputContent(boundary, fileFormName, fileName, data);
                     stream.Write(bytes, 0, bytes.Length);
 
                     bytes = Encoding.UTF8.GetBytes(string.Format("--{0}--\r\n", boundary));
@@ -122,25 +158,34 @@ namespace ZSS.UploadersLib
                     return reader.ReadToEnd();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(e.ToString());
             }
 
             return "";
         }
 
-        private byte[] MakeInputContent(string boundary, string name, string value)
+        #endregion
+
+        #region Public Static Methods
+
+        public static byte[] MakeInputContent(string boundary, string name, string value)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
 
             return Encoding.UTF8.GetBytes(format);
         }
 
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content)
+        public static byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content)
+        {
+            return MakeFileInputContent(boundary, name, fileName, content, GetMimeType(fileName));
+        }
+
+        public static byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, string contentType)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                boundary, name, fileName, GetMimeType(fileName));
+                boundary, name, fileName, contentType);
 
             MemoryStream stream = new MemoryStream();
             byte[] bytes;
@@ -156,19 +201,32 @@ namespace ZSS.UploadersLib
             return stream.ToArray();
         }
 
-        protected string GetMimeType(string fileName)
+        public static string GetXMLValue(string input, string tag)
         {
-            string mimeType = "application/octetstream";
-            string ext = Path.GetExtension(fileName).ToLower();
-            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-            if (regKey != null && regKey.GetValue("Content Type") != null)
-            {
-                mimeType = regKey.GetValue("Content Type").ToString();
-            }
-            return mimeType;
+            return Regex.Match(input, String.Format("(?<={0}>).+(?=</{0})", tag)).Value;
         }
 
-        protected string GetMD5(byte[] data)
+        public static string GetMimeType(string fileName)
+        {
+            string ext = Path.GetExtension(fileName).ToLower();
+            RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+            {
+                return regKey.GetValue("Content Type").ToString();
+            }
+            return "application/octetstream";
+        }
+
+        public static string GetMimeType(ImageFormat format)
+        {
+            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
+            {
+                if (codec.FormatID == format.Guid) return codec.MimeType;
+            }
+            return "image/unknown";
+        }
+
+        public static string GetMD5(byte[] data)
         {
             byte[] bytes = new MD5CryptoServiceProvider().ComputeHash(data);
 
@@ -182,12 +240,12 @@ namespace ZSS.UploadersLib
             return sb.ToString().ToLower();
         }
 
-        protected string GetMD5(string text)
+        public static string GetMD5(string text)
         {
             return GetMD5(Encoding.UTF8.GetBytes(text));
         }
 
-        protected string GetRandomAlphanumeric(int length)
+        public static string GetRandomAlphanumeric(int length)
         {
             Random random = new Random();
             string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
@@ -201,5 +259,40 @@ namespace ZSS.UploadersLib
 
             return sb.ToString();
         }
+
+        public static string CombineURL(string url1, string url2)
+        {
+            if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
+            {
+                if (!string.IsNullOrEmpty(url1))
+                {
+                    return url1;
+                }
+                else if (!string.IsNullOrEmpty(url2))
+                {
+                    return url2;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            if (url1.EndsWith("/"))
+            {
+                url1 = url1.Substring(0, url1.Length - 1);
+            }
+            if (url2.StartsWith("/"))
+            {
+                url2 = url2.Remove(0, 1);
+            }
+            return url1 + "/" + url2;
+        }
+
+        public static string CombineURL(params string[] urls)
+        {
+            return urls.Aggregate((current, arg) => CombineURL(current, arg));
+        }
+
+        #endregion
     }
 }

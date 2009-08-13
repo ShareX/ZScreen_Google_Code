@@ -86,7 +86,7 @@ namespace ZSS.TextUploadersLib
                 //arguments.Add("parent_pid", "");
                 arguments.Add("paste", "Send");
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
             return "";

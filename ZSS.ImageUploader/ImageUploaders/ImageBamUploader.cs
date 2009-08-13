@@ -89,7 +89,7 @@ namespace ZSS.ImageUploadersLib
             arguments.Add("API_key_dev", Key); // Your API-Key.
             arguments.Add("API_key_user", Options.UserKey); // The user's API key.
 
-            string salt = RandomAlphanumeric(32);
+            string salt = GetRandomAlphanumeric(32);
 
             // Random string of 32 characters (a-zA-Z0-9) for higher security.
             arguments.Add("salt", salt);
@@ -109,7 +109,7 @@ namespace ZSS.ImageUploadersLib
             arguments.Add("API_key_dev", Key); // Your API-Key.
             arguments.Add("API_key_user", Options.UserKey); // The user's API key.
 
-            string salt = RandomAlphanumeric(32);
+            string salt = GetRandomAlphanumeric(32);
 
             // Random string of 32 characters (a-zA-Z0-9) for higher security.
             arguments.Add("salt", salt);

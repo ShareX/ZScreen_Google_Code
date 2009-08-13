@@ -67,7 +67,7 @@ namespace ZSS.TextUploadersLib.URLShorteners
                 arguments.Add("format", "text");
                 arguments.Add("api_key", APIKey);
 
-                return GetResponse2(HostSettings.URL, arguments);
+                return GetResponse(HostSettings.URL, arguments);
             }
             return "";
         }

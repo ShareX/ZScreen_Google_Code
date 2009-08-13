@@ -75,7 +75,7 @@ namespace ZSS.FileUploadersLib
                 args.Add("password", Options.Password);
             }
 
-            string result = UploadFile(file, fileName, url, "filecontent", args);
+            string result = UploadData(file, fileName, url, "filecontent", args);
 
             if (string.IsNullOrEmpty(result)) throw new Exception("Upload result is empty.");
 

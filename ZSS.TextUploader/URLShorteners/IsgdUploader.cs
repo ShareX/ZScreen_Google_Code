@@ -64,7 +64,7 @@ namespace ZSS.TextUploadersLib.URLShorteners
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("longurl", text.LocalString);
 
-                return GetResponse2(HostSettings.URL, arguments);
+                return GetResponse(HostSettings.URL, arguments);
             }
             return "";
         }

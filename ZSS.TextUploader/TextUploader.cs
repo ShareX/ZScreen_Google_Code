@@ -23,19 +23,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZSS.TextUploadersLib.Helpers;
-using System.Net;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
+using ZSS.UploadersLib;
 
 namespace ZSS.TextUploadersLib
 {
     [Serializable]
-    public abstract class TextUploader : ITextUploader
+    public abstract class TextUploader : Uploader
     {
         // ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP ** 
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
@@ -52,14 +53,11 @@ namespace ZSS.TextUploadersLib
         /// <summary>
         /// String that is uploaded
         /// </summary>
-        /// <param name="txt"></param>
-        /// <returns></returns>
         public abstract string UploadText(TextInfo text);
 
         /// <summary>
         /// Descriptive name for the Text Uploader
         /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             return "TextUploader";
@@ -95,7 +93,7 @@ namespace ZSS.TextUploadersLib
         public string UploadTextFromFile(string filePath)
         {
             if (File.Exists(filePath))
-            {                
+            {
                 return UploadText(TextInfo.FromFile(filePath));
             }
             return "";
@@ -104,92 +102,6 @@ namespace ZSS.TextUploadersLib
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
-        }
-
-        /// <summary>
-        /// Method to retrieve Link from Header
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="arguments"></param>
-        /// <returns></returns>
-        protected string GetResponse(string url, Dictionary<string, string> arguments)
-        {
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-                string post = string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
-                byte[] data = Encoding.UTF8.GetBytes(post);
-
-                request.Method = "POST";
-                request.Proxy = this.ProxySettings;
-                request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
-                request.ContentLength = data.Length;
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                using (Stream requestStream = request.GetRequestStream())
-                {
-                    requestStream.Write(data, 0, data.Length);
-                }
-
-                using (WebResponse response = request.GetResponse())
-                {
-                    return response.ResponseUri.OriginalString;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            return "";
-        }
-
-        /// <summary>
-        /// Method to return Source of the Response
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="arguments"></param>
-        /// <returns></returns>
-        protected string GetResponse2(string url, Dictionary<string, string> arguments)
-        {
-            try
-            {
-                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Proxy = this.ProxySettings;
-                request.UserAgent = Application.ProductName + " " + Application.ProductVersion;
-
-                using (WebResponse response = request.GetResponse())
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            return "";
-        }
-
-        protected string CombineURL(string url1, string url2)
-        {
-            if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
-            {
-                return "";
-            }
-            if (url1.EndsWith("/"))
-            {
-                url1 = url1.Substring(0, url1.Length - 1);
-            }
-            if (url2.StartsWith("/"))
-            {
-                url2 = url2.Remove(0, 1);
-            }
-            return url1 + "/" + url2;
         }
     }
 

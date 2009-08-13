@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\IUploader.cs" />
     <Compile Include="Helpers\oAuth.cs" />
     <Compile Include="Helpers\oAuthTwitter.cs" />
     <Compile Include="ImageUploaders\FTPUploader.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="ImageUploaders\ImageBamUploader.cs" />
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
     <Compile Include="Helpers\ImageHostingService.cs" />
-    <Compile Include="Helpers\IUploader.cs" />
     <Compile Include="ImageUploaders\TwitPicUploader.cs" />
     <Compile Include="Helpers\DekiWiki.cs" />
     <Compile Include="Helpers\DekiWikiAccount.cs" />

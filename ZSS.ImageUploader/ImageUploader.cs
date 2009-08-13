@@ -22,30 +22,27 @@
 #endregion
 
 using System;
-using System.IO;
-using System.Drawing.Imaging;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Drawing;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Security.Cryptography;
-using ZSS.ImageUploadersLib.Helpers;
-using System.Xml.Serialization;
 using System.Windows.Forms;
-using System.Collections.Specialized;
+using System.Xml.Serialization;
+using ZSS.ImageUploadersLib.Helpers;
+using ZSS.UploadersLib;
 
 namespace ZSS.ImageUploadersLib
 {
-    public abstract class ImageUploaderOptions
+    public abstract class ImageUploader : Uploader
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-    }
+        public abstract string Name { get; }
 
-    public abstract class ImageUploader : IUploader
-    {
         /// <summary>
         /// List of Errors logged by ImageUploaders
         /// </summary>
@@ -58,11 +55,6 @@ namespace ZSS.ImageUploadersLib
         /// API or Anonymous. Default: Anonymous
         /// </summary>
         protected UploadMode UploadMode { get; set; }
-
-        /// <summary>
-        /// The Email property allows you to upload images directly to someones account.
-        /// </summary>
-        public abstract string Name { get; }
 
         private string mFileName = "image";
         private bool RandomizeFileName { get; set; }
@@ -89,80 +81,12 @@ namespace ZSS.ImageUploadersLib
             return ifm;
         }
 
-        protected string GetXMLValue(string input, string tag)
-        {
-            return Regex.Match(input, String.Format("(?<={0}>).+(?=</{0})", tag)).Value;
-        }
-
-        protected string GetMD5(string text)
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(text);
-            bytes = new MD5CryptoServiceProvider().ComputeHash(bytes);
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (byte b in bytes)
-            {
-                sb.Append(b.ToString("x2"));
-            }
-
-            return sb.ToString().ToLower();
-        }
-
-        protected string RandomAlphanumeric(int length)
-        {
-            Random random = new Random();
-            string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-
-            StringBuilder sb = new StringBuilder();
-
-            while (length-- > 0)
-            {
-                sb.Append(alphanumeric[(int)(random.NextDouble() * alphanumeric.Length)]);
-            }
-
-            return sb.ToString();
-        }
-
         public void ReportProgress(int progress)
         {
             if (ProgressChanged != null)
             {
                 ProgressChanged(progress);
             }
-        }
-
-        protected string GetMimeType(ImageFormat format)
-        {
-            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
-            {
-                if (codec.FormatID == format.Guid) return codec.MimeType;
-            }
-            return "image/unknown";
-        }
-
-        protected string GetResponse(string url, Dictionary<string, string> arguments)
-        {
-            try
-            {
-                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Proxy = this.ProxySettings;
-                request.UserAgent = "Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; WOW64; SV1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; InfoPath.1; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)"; // Application.ProductName + " " + Application.ProductVersion;
-
-                using (WebResponse response = request.GetResponse())
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            return "";
         }
 
         protected string PostImage(Image image, string url, string fileFormName, Dictionary<string, string> arguments)
@@ -188,7 +112,7 @@ namespace ZSS.ImageUploadersLib
                     {
                         image.Save(imageStream, image.RawFormat);
 
-                        bytes = MakeFileInputContent(boundary, fileFormName, mFileName, GetMimeType(image.RawFormat), imageStream.ToArray());
+                        bytes = MakeFileInputContent(boundary, fileFormName, mFileName, imageStream.ToArray(), GetMimeType(image.RawFormat));
                         stream.Write(bytes, 0, bytes.Length);
                     }
 
@@ -358,40 +282,15 @@ namespace ZSS.ImageUploadersLib
             return "";
         }
 
-        private byte[] MakeInputContent(string boundary, string name, string value)
-        {
-            string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
-
-            return Encoding.UTF8.GetBytes(format);
-        }
-
-        private byte[] MakeFileInputContent(string boundary, string name, string filename, string contentType, byte[] content)
-        {
-            string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                boundary, name, filename, contentType);
-
-            MemoryStream stream = new MemoryStream();
-            byte[] bytes;
-
-            bytes = Encoding.UTF8.GetBytes(format);
-            stream.Write(bytes, 0, bytes.Length);
-
-            stream.Write(content, 0, content.Length);
-
-            bytes = Encoding.UTF8.GetBytes("\r\n");
-            stream.Write(bytes, 0, bytes.Length);
-
-            return stream.ToArray();
-        }
-
         public string ToErrorString()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (string err in this.Errors)
-            {
-                sb.AppendLine(err);
-            }
-            return sb.ToString();
+            return string.Join("\r\n", Errors.ToArray());
         }
+    }
+
+    public abstract class ImageUploaderOptions
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }
