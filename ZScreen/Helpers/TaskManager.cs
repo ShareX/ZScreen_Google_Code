@@ -48,7 +48,7 @@ namespace ZScreenLib
 
         public void UploadFile()
         {
-            Uploader uploader = null;
+            FileUploader uploader = null;
             switch (mTask.MyFileUploader)
             {
                 case ZSS.FileUploadersLib.FileUploaderType.RapidShare:
@@ -172,17 +172,14 @@ namespace ZScreenLib
                         {
                             mTask.ImageManager = imageUploader.UploadImage(fullFilePath);
                         }
-                        else if (mTask.MyImage != null)
+                        else if (mTask.MyImage != null && mTask.FileName != null)
                         {
-                            mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage);
+                            mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
                         }
                         mTask.Errors = imageUploader.Errors;
-                        if (Program.conf.ImageUploadRetryOnTimeout && (mTask.MyImageUploader ==
-                            ImageDestType.IMAGESHACK || mTask.MyImageUploader == ImageDestType.TINYPIC))
-                        {
-                            // 
-                            break;
-                        }
+
+                        if (Program.conf.ImageUploadRetryOnTimeout && (mTask.MyImageUploader == ImageDestType.IMAGESHACK ||
+                            mTask.MyImageUploader == ImageDestType.TINYPIC)) break;
                     }
                 }
             }

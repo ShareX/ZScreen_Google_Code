@@ -39,7 +39,7 @@ namespace ZSS.FileUploadersLib
         public bool CheckFileSize, CheckFileMD5;
     }
 
-    public class RapidShareUploader : Uploader
+    public class RapidShareUploader : FileUploader
     {
         private string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
         private RapidShareUploaderOptions Options { get; set; }

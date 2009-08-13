@@ -65,7 +65,7 @@
     <Compile Include="TextUploaders\SlexyUploader.cs" />
     <Compile Include="TextUploaders\SniptUploader.cs" />
     <Compile Include="TextUploader.cs" />
-    <Compile Include="GoogleTranslate.cs" />
+    <Compile Include="TextServices\GoogleTranslate.cs" />
     <Compile Include="TextUploaders\PastebinUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="URLShorteners\BitlyUploader.cs" />

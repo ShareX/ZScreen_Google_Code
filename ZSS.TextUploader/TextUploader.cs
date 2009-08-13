@@ -24,11 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using ZSS.TextUploadersLib.Helpers;
 using ZSS.TextUploadersLib.URLShorteners;
 using ZSS.UploadersLib;
@@ -38,22 +34,15 @@ namespace ZSS.TextUploadersLib
     [Serializable]
     public abstract class TextUploader : Uploader
     {
-        // ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP ** 
-        public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof (PastebinUploader),
-                                                          typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader),
-                                                          typeof(KlamUploader), typeof(IsgdUploader), typeof(BitlyUploader), typeof(TextUploader)};
+        #region ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
 
-        public TextUploader() { }
+        public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader),
+            typeof (PastebinUploader), typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader),
+            typeof(KlamUploader), typeof(IsgdUploader), typeof(BitlyUploader), typeof(TextUploader) };
 
-        public List<string> Errors { get; set; }
+        #endregion
 
-        [XmlIgnore]
-        public IWebProxy ProxySettings { get; set; }
-
-        /// <summary>
-        /// String that is uploaded
-        /// </summary>
-        public abstract string UploadText(TextInfo text);
+        protected TextUploader() { }
 
         /// <summary>
         /// Descriptive name for the Text Uploader
@@ -72,6 +61,8 @@ namespace ZSS.TextUploadersLib
         }
 
         public virtual object Settings { get; set; }
+
+        public abstract string UploadText(TextInfo text);
 
         public string UploadTextFromClipboard()
         {
@@ -97,11 +88,6 @@ namespace ZSS.TextUploadersLib
                 return UploadText(TextInfo.FromFile(filePath));
             }
             return "";
-        }
-
-        public string ToErrorString()
-        {
-            return string.Join("\r\n", Errors.ToArray());
         }
     }
 

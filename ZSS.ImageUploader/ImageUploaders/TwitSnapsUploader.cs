@@ -51,14 +51,14 @@ namespace ZSS.ImageUploadersLib
             this.Options = options;
         }
 
-        public override ImageFileManager UploadImage(Image image)
+        public override ImageFileManager UploadImage(Image image, string fileName)
         {
             TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
             msgBox.ShowDialog();
-            return Upload(image, msgBox.Message);
+            return Upload(image, fileName, msgBox.Message);
         }
 
-        private ImageFileManager Upload(Image image, string msg)
+        private ImageFileManager Upload(Image image, string fileName, string msg)
         {
             string url = string.Empty;
 
@@ -73,7 +73,7 @@ namespace ZSS.ImageUploadersLib
                 url = UploadAndPostLink;
             }
 
-            string source = PostImage(image, url, "file", arguments);
+            string source = UploadImage(image, fileName, url, "file", arguments);
 
             return ParseResult(source);
         }

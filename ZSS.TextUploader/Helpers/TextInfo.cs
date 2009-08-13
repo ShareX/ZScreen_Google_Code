@@ -29,8 +29,6 @@ using System.IO;
 
 namespace ZSS.TextUploadersLib.Helpers
 {
-    // REMINDER: DONT FCUKING BE A NOSTRADAMUS 
-
     public class TextInfo
     {
         private TextInfo() { }
@@ -38,6 +36,7 @@ namespace ZSS.TextUploadersLib.Helpers
         public string LocalString { get; set; }
         public string RemoteString { get; set; }
         public string LocalPath { get; set; }
+
         /// <summary>
         /// URL of the Text: pastebin URL, paste2 URL
         /// </summary>
