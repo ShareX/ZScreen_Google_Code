@@ -38,12 +38,14 @@ namespace UploadersLib.FileUploaders
 
         public UploadInfo CurrentUploadInfo;
 
-        private string appVersion = "1.0";
+        /// <summary>
+        /// Upload speed limit in kilobytes, 0 for unlimited
+        /// </summary>
+        public int SpeedLimit = 0;
 
-        public SendSpace()
-        {
+        public string AppVersion = "1.0";
 
-        }
+        public SendSpace() { }
 
         public override string Name
         {
@@ -78,7 +80,7 @@ namespace UploadersLib.FileUploaders
                 packet.ErrorCode = error.Attribute("code").Value;
                 packet.ErrorText = error.Attribute("text").Value;
 
-                base.Errors.Add(string.Format("( {0} - {1} ) {2}", packet.ErrorCode, packet.Method, packet.ErrorText));
+                base.Errors.Add(string.Format("({0} - {1}) {2}", packet.ErrorCode, packet.Method, packet.ErrorText));
             }
 
             return packet;
@@ -187,7 +189,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.createToken");
             args.Add("api_key", SENDSPACE_API_KEY); // Received from sendspace
             args.Add("api_version", SENDSPACE_API_VERSION); // Value must be: 1.0
-            args.Add("app_version", appVersion); // Application specific, formatting / style is up to you
+            args.Add("app_version", AppVersion); // Application specific, formatting / style is up to you
             args.Add("response_format", "xml"); // Value must be: XML
 
             string response = GetResponse(SENDSPACE_API_URL, args);
@@ -286,14 +288,39 @@ namespace UploadersLib.FileUploaders
         /// http://www.sendspace.com/dev_method.html?method=upload.getInfo
         /// </summary>
         /// <param name="sessionKey">Received from auth.login</param>
-        /// <param name="speedLimit">Upload speed limit in kilobytes, 0 for unlimited</param>
         /// <returns>URL to upload the file to, progress_url for real-time progress information, max_file_size for max size current user can upload, upload_identifier & extra_info to be passed with the upload form</returns>
-        public UploadInfo UploadGetInfo(string sessionKey, string speedLimit)
+        public UploadInfo UploadGetInfo(string sessionKey)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "upload.getInfo");
             args.Add("session_key", sessionKey);
-            args.Add("speed_limit", speedLimit);
+            args.Add("speed_limit", SpeedLimit.ToString());
+
+            string response = GetResponse(SENDSPACE_API_URL, args);
+
+            ResponsePacket packet = ParseResponse(response);
+
+            if (!packet.Error)
+            {
+                UploadInfo uploadInfo = new UploadInfo(packet.Result);
+                return uploadInfo;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Obtains the basic information needed to make an anonymous upload. This method does not require authentication or login.
+        /// </summary>
+        /// <returns>URL to upload the file to, progress_url for real-time progress information, max_file_size for max size current user can upload, upload_identifier & extra_info to be passed in the upload form</returns>
+        public UploadInfo AnonymousUploadGetInfo()
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("method", "anonymous.uploadGetInfo");
+            args.Add("speed_limit", SpeedLimit.ToString());
+            args.Add("api_key", SENDSPACE_API_KEY);
+            args.Add("api_version", SENDSPACE_API_VERSION);
+            args.Add("app_version", AppVersion);
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
