@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace UploadersLib.FileUploaders
 {
@@ -34,7 +35,7 @@ namespace UploadersLib.FileUploaders
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
         private const string SENDSPACE_API_VERSION = "1.0";
 
-        private string appVersion;
+        private string appVersion = "1.0";
 
         public SendSpace()
         {
@@ -46,12 +47,92 @@ namespace UploadersLib.FileUploaders
             get { return "SendSpace"; }
         }
 
+        #region Helpers
+
+        public class ResponsePacket
+        {
+            public string Method { get; set; }
+            public string Status { get; set; }
+            public bool Error { get; set; }
+            public string ErrorCode { get; set; }
+            public string ErrorText { get; set; }
+            public XElement Result { get; set; }
+        }
+
+        public ResponsePacket ParseResponse(string response)
+        {
+            ResponsePacket packet = new ResponsePacket();
+
+            XDocument xml = XDocument.Parse(response);
+            packet.Result = xml.Element("result");
+            packet.Method = packet.Result.Attribute("method").Value;
+            packet.Status = packet.Result.Attribute("status").Value;
+            packet.Error = packet.Status == "fail";
+
+            if (packet.Error)
+            {
+                XElement error = packet.Result.Element("error");
+                packet.ErrorCode = error.Attribute("code").Value;
+                packet.ErrorText = error.Attribute("text").Value;
+
+                base.Errors.Add(string.Format("( {0} - {1} ) {2}", packet.ErrorCode, packet.Method, packet.ErrorText));
+            }
+
+            return packet;
+        }
+
+        public class LoginInfo
+        {
+            /// <summary>
+            /// Session key to be sent with all method calls, user information, including the user account's capabilities
+            /// </summary>
+            public string SessionKey { get; set; }
+            public string Username { get; set; }
+            public string EMail { get; set; }
+            public string MembershipType { get; set; }
+            public string MembershipEnds { get; set; }
+            public bool CapableUpload { get; set; }
+            public bool CapableDownload { get; set; }
+            public bool CapableFolders { get; set; }
+            public bool CapableFiles { get; set; }
+            public bool CapableHTTPS { get; set; }
+            public bool CapableAddressBook { get; set; }
+            public string BandwidthLeft { get; set; }
+            public string DiskSpaceLeft { get; set; }
+            public string DiskSpaceUsed { get; set; }
+            public string Points { get; set; }
+
+            public LoginInfo() { }
+
+            public LoginInfo(XElement element)
+            {
+                SessionKey = element.ElementValue("session_key");
+                Username = element.ElementValue("user_name");
+                EMail = element.ElementValue("email");
+                MembershipType = element.ElementValue("membership_type");
+                MembershipEnds = element.ElementValue("membership_ends");
+                CapableUpload = element.ElementValue("capable_upload") != "0";
+                CapableDownload = element.ElementValue("capable_download") != "0";
+                CapableFolders = element.ElementValue("capable_folders") != "0";
+                CapableFiles = element.ElementValue("capable_files") != "0";
+                CapableHTTPS = element.ElementValue("capable_https") != "0";
+                CapableAddressBook = element.ElementValue("capable_addressbook") != "0";
+                BandwidthLeft = element.ElementValue("bandwidth_left");
+                DiskSpaceLeft = element.ElementValue("diskspace_left");
+                DiskSpaceUsed = element.ElementValue("diskspace_used");
+                Points = element.ElementValue("points");
+            }
+        }
+
+        #endregion
+
         #region Authentication
 
         /// <summary>
         /// Creates a new user account. An activation/validation email will be sent automatically to the user.
         /// http://www.sendspace.com/dev_method.html?method=auth.register
         /// </summary>
+        /// <returns>true = success, false = error</returns>
         public bool AuthRegister(string username, string fullname, string email, string password)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -64,7 +145,7 @@ namespace UploadersLib.FileUploaders
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return true;
+            return !ParseResponse(response).Error;
         }
 
         /// <summary>
@@ -83,6 +164,13 @@ namespace UploadersLib.FileUploaders
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
+            ResponsePacket packet = ParseResponse(response);
+
+            if (!packet.Error)
+            {
+                return packet.Result.ElementValue("token");
+            }
+
             return "";
         }
 
@@ -93,8 +181,8 @@ namespace UploadersLib.FileUploaders
         /// <param name="token">Received on create token</param>
         /// <param name="username">Registered user name</param>
         /// <param name="password">Registered password</param>
-        /// <returns>session_key to be sent with all method calls, user information, including the user account's capabilities</returns>
-        public string AuthLogin(string token, string username, string password)
+        /// <returns>Account informations including session key</returns>
+        public LoginInfo AuthLogin(string token, string username, string password)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.login");
@@ -104,7 +192,15 @@ namespace UploadersLib.FileUploaders
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return "";
+            ResponsePacket packet = ParseResponse(response);
+
+            if (!packet.Error)
+            {
+                LoginInfo info = new LoginInfo(packet.Result);
+                return info;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -112,6 +208,7 @@ namespace UploadersLib.FileUploaders
         /// http://www.sendspace.com/dev_method.html?method=auth.checksession
         /// </summary>
         /// <param name="sessionKey">Received from auth.login</param>
+        /// <returns>true = success, false = error</returns>
         public bool AuthCheckSession(string sessionKey)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -120,7 +217,19 @@ namespace UploadersLib.FileUploaders
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return true;
+            ResponsePacket packet = ParseResponse(response);
+
+            if (!packet.Error)
+            {
+                string session = packet.Result.ElementValue("session");
+
+                if (!string.IsNullOrEmpty(session))
+                {
+                    return session == "ok";
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -128,6 +237,7 @@ namespace UploadersLib.FileUploaders
         /// http://www.sendspace.com/dev_method.html?method=auth.logout
         /// </summary>
         /// <param name="sessionKey">Received from auth.login</param>
+        /// <returns>true = success, false = error</returns>
         public bool AuthLogout(string sessionKey)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -136,7 +246,7 @@ namespace UploadersLib.FileUploaders
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return true;
+            return !ParseResponse(response).Error;
         }
 
         #endregion
@@ -202,7 +312,7 @@ namespace UploadersLib.FileUploaders
 
         public override string Upload(byte[] data, string fileName)
         {
-
+            return "";
         }
 
         #endregion

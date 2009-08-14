@@ -40,10 +40,8 @@ namespace UploadersLib
             {
                 return xeItem.Value;
             }
-            else
-            {
-                return "";
-            }
+
+            return "";
         }
 
         public static string AttributeValue(this XElement xe, string name)
@@ -53,10 +51,8 @@ namespace UploadersLib
             {
                 return xeItem.Value;
             }
-            else
-            {
-                return "";
-            }
+
+            return "";
         }
 
         public static string AttributeFirstValue(this XElement xe, params string[] names)
