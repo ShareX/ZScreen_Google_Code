@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace UploadersLib.FileUploaders
 {
@@ -34,6 +35,8 @@ namespace UploadersLib.FileUploaders
         private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
         private const string SENDSPACE_API_VERSION = "1.0";
+
+        public UploadInfo CurrentUploadInfo;
 
         private string appVersion = "1.0";
 
@@ -124,6 +127,27 @@ namespace UploadersLib.FileUploaders
             }
         }
 
+        public class UploadInfo
+        {
+            public string URL { get; set; }
+            public string ProgressURL { get; set; }
+            public string MaxFileSize { get; set; }
+            public string UploadIdentifier { get; set; }
+            public string ExtraInfo { get; set; }
+
+            public UploadInfo() { }
+
+            public UploadInfo(XElement element)
+            {
+                XElement upload = element.Element("upload");
+                URL = upload.AttributeValue("url");
+                ProgressURL = upload.AttributeValue("progress_url");
+                MaxFileSize = upload.AttributeValue("max_file_size");
+                UploadIdentifier = upload.AttributeValue("upload_identifier");
+                ExtraInfo = upload.AttributeValue("extra_info");
+            }
+        }
+
         #endregion
 
         #region Authentication
@@ -132,16 +156,20 @@ namespace UploadersLib.FileUploaders
         /// Creates a new user account. An activation/validation email will be sent automatically to the user.
         /// http://www.sendspace.com/dev_method.html?method=auth.register
         /// </summary>
+        /// <param name="username">a-z/A-Z/0-9, 3-20 chars</param>
+        /// <param name="fullname">a-z/A-Z/space, 3-20 chars</param>
+        /// <param name="email">Valid email address required</param>
+        /// <param name="password">Can be left empty and the API will create a unique password or enter one with 4-20 chars</param>
         /// <returns>true = success, false = error</returns>
         public bool AuthRegister(string username, string fullname, string email, string password)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.register");
-            args.Add("api_key", SENDSPACE_API_KEY); // Received from sendspace
-            args.Add("user_name", username); // a-z/A-Z/0-9, 3-20 chars
-            args.Add("full_name", fullname); // a-z/A-Z/space, 3-20 chars
-            args.Add("email", email); // Valid email address required
-            args.Add("password", password); // Can be left empty and the API will create a unique password or enter one with 4-20 chars
+            args.Add("api_key", SENDSPACE_API_KEY);
+            args.Add("user_name", username);
+            args.Add("full_name", fullname);
+            args.Add("email", email);
+            args.Add("password", password);
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
@@ -171,7 +199,7 @@ namespace UploadersLib.FileUploaders
                 return packet.Result.ElementValue("token");
             }
 
-            return "";
+            return null;
         }
 
         /// <summary>
@@ -186,8 +214,8 @@ namespace UploadersLib.FileUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.login");
-            args.Add("token", token); // Received on create token
-            args.Add("user_name", username); // Registered user name
+            args.Add("token", token);
+            args.Add("user_name", username);
             args.Add("tokened_password", GetMD5(token + GetMD5(password))); // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
 
             string response = GetResponse(SENDSPACE_API_URL, args);
@@ -196,8 +224,8 @@ namespace UploadersLib.FileUploaders
 
             if (!packet.Error)
             {
-                LoginInfo info = new LoginInfo(packet.Result);
-                return info;
+                LoginInfo loginInfo = new LoginInfo(packet.Result);
+                return loginInfo;
             }
 
             return null;
@@ -213,7 +241,7 @@ namespace UploadersLib.FileUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.checkSession");
-            args.Add("session_key", sessionKey); // Received from auth.login
+            args.Add("session_key", sessionKey);
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
@@ -242,7 +270,7 @@ namespace UploadersLib.FileUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.logout");
-            args.Add("session_key", sessionKey); // Received from auth.login
+            args.Add("session_key", sessionKey);
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
@@ -260,16 +288,24 @@ namespace UploadersLib.FileUploaders
         /// <param name="sessionKey">Received from auth.login</param>
         /// <param name="speedLimit">Upload speed limit in kilobytes, 0 for unlimited</param>
         /// <returns>URL to upload the file to, progress_url for real-time progress information, max_file_size for max size current user can upload, upload_identifier & extra_info to be passed with the upload form</returns>
-        public string UploadGetInfo(string sessionKey, string speedLimit)
+        public UploadInfo UploadGetInfo(string sessionKey, string speedLimit)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "upload.getInfo");
-            args.Add("session_key", sessionKey); // Received from auth.login
-            args.Add("speed_limit", speedLimit); // Upload speed limit in kilobytes, 0 for unlimited
+            args.Add("session_key", sessionKey);
+            args.Add("speed_limit", speedLimit);
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return "";
+            ResponsePacket packet = ParseResponse(response);
+
+            if (!packet.Error)
+            {
+                UploadInfo uploadInfo = new UploadInfo(packet.Result);
+                return uploadInfo;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -310,9 +346,23 @@ namespace UploadersLib.FileUploaders
             return PrepareArguments(max_file_size, upload_identifier, extra_info, null, null, null, null, null, null);
         }
 
+        public string Upload(byte[] data, string fileName, UploadInfo uploadInfo)
+        {
+            Dictionary<string, string> args = PrepareArguments(uploadInfo.MaxFileSize, uploadInfo.UploadIdentifier, uploadInfo.ExtraInfo);
+
+            string response = UploadData(data, fileName, uploadInfo.URL, "userfile", args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return "http://www.sendspace.com/file/" + Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
+            }
+
+            return "";
+        }
+
         public override string Upload(byte[] data, string fileName)
         {
-            return "";
+            return Upload(data, fileName, this.CurrentUploadInfo);
         }
 
         #endregion
