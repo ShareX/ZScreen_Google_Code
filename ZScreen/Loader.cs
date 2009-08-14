@@ -11,7 +11,7 @@ namespace ZSS
 {
     public static class Loader
     {
-       // internal static ZSS.Forms.SplashScreen Splash = null;
+        // internal static ZSS.Forms.SplashScreen Splash = null;
 
         [STAThread]
         static void Main()
@@ -33,7 +33,7 @@ namespace ZSS
                 }
             }
             else
-            {             
+            {
                 Program.RunZScreen();
             }
         }
