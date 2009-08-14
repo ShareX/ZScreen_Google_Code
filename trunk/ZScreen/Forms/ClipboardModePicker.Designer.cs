@@ -61,7 +61,6 @@
             this.Name = "ClipboardModePicker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clipboard Copy Mode";
-            this.Shown += new System.EventHandler(this.ClipboardModePicker_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.ResumeLayout(false);
 
