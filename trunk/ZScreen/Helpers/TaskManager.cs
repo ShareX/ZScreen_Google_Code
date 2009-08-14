@@ -54,6 +54,17 @@ namespace ZScreenLib
                 case FileUploaderType.Ftp:
                     UploadFtp();
                     break;
+                case FileUploaderType.SendSpace:
+                    switch (Program.conf.SendSpaceAccountType)
+                    {
+                        case AcctType.Anonymous:
+                            uploader = new SendSpaceUploader();
+                            break;
+                        case AcctType.User:
+                            uploader = new SendSpaceUploader(Program.conf.SendSpaceUserName, Program.conf.SendSpacePassword);
+                            break;
+                    }
+                    break;
                 case FileUploaderType.RapidShare:
                     uploader = new RapidShareUploader(new RapidShareUploaderOptions()
                     {

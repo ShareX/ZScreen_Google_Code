@@ -30,7 +30,7 @@ using System.Text.RegularExpressions;
 
 namespace UploadersLib.FileUploaders
 {
-    public class SendSpace : FileUploader
+    public class SendSpaceUploader : FileUploader
     {
         private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
@@ -45,7 +45,17 @@ namespace UploadersLib.FileUploaders
 
         public string AppVersion = "1.0";
 
-        public SendSpace() { }
+        public SendSpaceUploader()
+        {
+            this.CurrentUploadInfo = this.AnonymousUploadGetInfo();
+        }
+
+        public SendSpaceUploader(string userName, string password)
+        {
+            string token = this.AuthCreateToken();
+            LoginInfo loginInfo = this.AuthLogin(token, userName, password);
+            this.CurrentUploadInfo = this.UploadGetInfo(loginInfo.SessionKey);
+        }
 
         public override string Name
         {
@@ -389,6 +399,10 @@ namespace UploadersLib.FileUploaders
 
         public override string Upload(byte[] data, string fileName)
         {
+            if (this.CurrentUploadInfo == null)
+            {
+
+            }
             return Upload(data, fileName, this.CurrentUploadInfo);
         }
 

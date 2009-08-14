@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\RapidShareUploader.cs" />
-    <Compile Include="FileUploaders\SendSpace.cs" />
+    <Compile Include="FileUploaders\SendSpaceUploader.cs" />
     <Compile Include="Forms\TwitterMsg.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -92,6 +92,11 @@ namespace ZScreenLib
         public string RapidSharePassword = string.Empty;
         public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
 
+        // SendSpace
+
+        public AcctType SendSpaceAccountType = AcctType.Anonymous;
+        public string SendSpaceUserName = string.Empty;
+        public string SendSpacePassword = string.Empty;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys

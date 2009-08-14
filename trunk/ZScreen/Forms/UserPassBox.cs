@@ -28,15 +28,32 @@ namespace ZScreenLib
 {
     public partial class UserPassBox : Form
     {
-        public UserPassBox(string q, string userName, string password)
+        public string FullName { get; private set; }
+        public string UserName { get; private set; }
+        public string Password { get; private set; }
+        public string Email { get; private set; }
+        public bool Success { get; set; }
+
+        public UserPassBox(string title, string userName, string password)
         {
             InitializeComponent();
-            this.Text = q;
+            this.Text = title;
             this.txtUserName.Text = userName;
             this.txtPassword.Text = password;
-            //set translations for OK/Cancel
-            btnOK.Text = "OK";
-            btnCancel.Text = "Cancel";
+        }
+
+        public UserPassBox(string q, string fullName, string userName, string password)
+            :this(q, userName, password)
+        {
+            this.txtFullName.Text = fullName;
+            txtFullName.Enabled = true;
+        }
+
+        public UserPassBox(string q, string fullName, string email, string userName, string password)
+            : this(q, fullName, userName, password)
+        {
+            txtEmail.Text = email;
+            txtEmail.Enabled = true;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -58,13 +75,30 @@ namespace ZScreenLib
             this.Close();
         }
 
-        public string UserName { get; private set; }
-        public string Password { get; private set; }
-
         private void InputBox_Shown(object sender, EventArgs e)
         {
             txtUserName.Focus();
             txtUserName.SelectionLength = txtUserName.Text.Length;
+        }
+
+        private void UserPassBox_Load(object sender, EventArgs e)
+        {
+            Control ctl = this.GetNextControl(this, true);
+            while (ctl != null)
+            {
+                if (ctl.GetType() == typeof(TextBox))
+                {
+                    ctl.Click += new EventHandler(TextBox_Click);
+                }
+                ctl = this.GetNextControl(ctl, true);
+            }
+        }
+
+        void TextBox_Click(object sender, EventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            txtBox.SelectionStart = 0;
+            txtBox.SelectionLength = txtBox.Text.Length;
         }
     }
 }

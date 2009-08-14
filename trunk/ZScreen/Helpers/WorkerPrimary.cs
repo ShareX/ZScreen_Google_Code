@@ -1079,10 +1079,9 @@ namespace ZScreenLib
                 }
                 task.Retry = true;
 
-                string message = string.Format("{0}\r\n\r\nAutomaticly starting upload with {1}.", string.Join("\r\n", t.Errors.ToArray()),
+                string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", t.Errors.ToArray()),
                     task.MyImageUploader.GetDescription());
-                mZScreen.niTray.ShowBalloonTip(5000, "Error", message, ToolTipIcon.Error);
-
+                mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 task.MyWorker.RunWorkerAsync(task);
                 return true;
             }
