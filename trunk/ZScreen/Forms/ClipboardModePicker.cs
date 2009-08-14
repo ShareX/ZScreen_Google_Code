@@ -109,9 +109,9 @@ namespace ZScreenLib
 
         void btnCopyImage_Click(object sender, EventArgs e)
         {
-            if (mTask.MyImage != null)
+            using (Image img = GraphicsMgr.GetImageSafely(mTask.LocalFilePath))
             {
-                Clipboard.SetImage(mTask.MyImage);
+                Clipboard.SetImage(img);
             }
         }
 
