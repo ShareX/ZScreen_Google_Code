@@ -24,7 +24,7 @@ namespace ZScreenLib
             {
                 this.mTask = task;
                 this.Text = task.FileName.ToString() + " - " + task.GetDescription();
-                // this.pbPreview.Image = task.MyImage;
+                Console.WriteLine(task.MyImage.Height);
                 this.pbPreview.LoadAsync(task.LocalFilePath);
 
                 int xGap = 10;
@@ -64,18 +64,25 @@ namespace ZScreenLib
                     }
                 }
 
-                int yBottomControl = yMargin+ count * yGap + yOffset * 2;
+                int yBottomControl = yMargin + count * yGap + yOffset * 2;
+
+                Button btnCopyImage = new Button();
+                btnCopyImage.Text = "Copy &Image";
+                btnCopyImage.Location = new Point(20, yBottomControl);
+                btnCopyImage.AutoSize = true;
+                btnCopyImage.Click += new EventHandler(btnCopyImage_Click);
+                this.Controls.Add(btnCopyImage);
 
                 Button btnOpenLocal = new Button();
                 btnOpenLocal.Text = "Open &Local file";
-                btnOpenLocal.Location = new Point(20, yBottomControl);
+                btnOpenLocal.Location = new Point(btnCopyImage.Location.X + btnCopyImage.Width + xGap, yBottomControl);
                 btnOpenLocal.AutoSize = true;
                 btnOpenLocal.Click += new EventHandler(btnOpenLocal_Click);
                 this.Controls.Add(btnOpenLocal);
 
                 Button btnOpenRemote = new Button();
                 btnOpenRemote.Text = "Open &Remote file";
-                btnOpenRemote.Location = new Point(20 + btnOpenLocal.Width + xGap, yBottomControl);
+                btnOpenRemote.Location = new Point(btnOpenLocal.Location.X + btnOpenLocal.Width + xGap, yBottomControl);
                 btnOpenRemote.AutoSize = true;
                 btnOpenRemote.Click += new EventHandler(btnOpenRemote_Click);
                 this.Controls.Add(btnOpenRemote);
@@ -96,6 +103,15 @@ namespace ZScreenLib
 
                 this.Height = yBottomControl + btnOpenLocal.Size.Height + yOffset * 2;
                 Adapter.AddToClipboardByDoubleClick(this);
+                ResetTimer();
+            }
+        }
+
+        void btnCopyImage_Click(object sender, EventArgs e)
+        {
+            if (mTask.MyImage != null)
+            {
+                Clipboard.SetImage(mTask.MyImage);
             }
         }
 
@@ -105,8 +121,6 @@ namespace ZScreenLib
             {
                 Process.Start(mTask.RemoteFilePath);
             }
-            tmrClose.Stop();
-            tmrClose.Start();
         }
 
         void btnClose_Click(object sender, EventArgs e)
@@ -129,8 +143,6 @@ namespace ZScreenLib
             {
                 Process.Start(mTask.LocalFilePath);
             }
-            tmrClose.Stop();
-            tmrClose.Start();
         }
 
         void btnCopy_Click(object sender, EventArgs e)
@@ -138,18 +150,30 @@ namespace ZScreenLib
             Button btn = sender as Button;
             TextBox txtUrl = btn.Tag as TextBox;
             Clipboard.SetText(txtUrl.Text);
-            tmrClose.Stop();
-            tmrClose.Start();
-        }
-
-        private void ClipboardModePicker_Shown(object sender, EventArgs e)
-        {
-           // User32.ActivateWindow(this.Handle); // steals focus and this is annoying - McoreD
         }
 
         private void tmrClose_Tick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ResetTimer()
+        {
+            Control ctl = this.GetNextControl(this, true);
+            while (ctl != null)
+            {
+                if (ctl.GetType() == typeof(Button))
+                {
+                    ctl.Click += new EventHandler(Button_Click);
+                }
+                ctl = this.GetNextControl(ctl, true);
+            }
+        }
+
+        void Button_Click(object sender, EventArgs e)
+        {
+            tmrClose.Stop();
+            tmrClose.Start();
         }
     }
 }
