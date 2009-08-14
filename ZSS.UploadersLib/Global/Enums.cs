@@ -133,6 +133,8 @@ namespace UploadersLib
     {
         [Description("RapidShare")]
         RapidShare,
+        [Description("SendSpace")]
+        SendSpace,
         [Description("FTP")]
         Ftp,
     }
@@ -145,6 +147,14 @@ namespace UploadersLib
         Collectors,
         [Description("Premium Account")]
         Premium
+    }
+
+    public enum AcctType
+    {
+        [Description("Anonymous")]
+        Anonymous,
+        [Description("User")]
+        User,
     }
 
     #endregion

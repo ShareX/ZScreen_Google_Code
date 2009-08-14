@@ -165,9 +165,9 @@ namespace ZSS.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap explorer_001 {
+        internal static System.Drawing.Bitmap explorer {
             get {
-                object obj = ResourceManager.GetObject("explorer 001", resourceCulture);
+                object obj = ResourceManager.GetObject("explorer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

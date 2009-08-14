@@ -29,11 +29,67 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using ZSS;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ZScreenLib
 {
     public static class ImageEffects
     {
+        private static List<int> mLogoRandomList = new List<int>(5);
+
+        public static Bitmap GetRandomLogo(Bitmap logo)
+        {
+            Bitmap bmp = new Bitmap(logo);
+            Random rand = new Random();
+
+            if (mLogoRandomList.Count == 0)
+            {
+                List<int> numbers = Enumerable.Range(1, 7).ToList();
+
+                int count = numbers.Count;
+
+                for (int x = 0; x < count; x++)
+                {
+                    int r = rand.Next(0, numbers.Count - 1);
+                    mLogoRandomList.Add(numbers[r]);
+                    numbers.RemoveAt(r);
+                }
+            }
+
+            switch (mLogoRandomList[0])
+            {
+                case 1:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+                    break;
+                case 2:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
+                    break;
+                case 3:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+                    break;
+                case 4:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(100, 300)));
+                    break;
+                case 5:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -100)));
+                    break;
+                case 6:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(150, 300)));
+                    break;
+                case 7:
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -150)));
+                    break;
+            }
+
+            mLogoRandomList.RemoveAt(0);
+
+            return logo;
+        }
+
         /// <summary>Get Image with Watermark</summary>
         public static Image ApplyWatermark(Image img)
         {

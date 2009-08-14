@@ -59,7 +59,6 @@ namespace ZScreenLib
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private Debug debug = null;
-        private List<int> mLogoRandomList = new List<int>(5);
         private ImageEffects.TurnImage turnLogo;
         internal static GoogleTranslate mGTranslator = null;
 
@@ -238,8 +237,6 @@ namespace ZScreenLib
                 this.Size = Program.conf.WindowSize;
                 this.Location = Program.conf.WindowLocation;
             }
-
-            // tpMindTouch.Enabled = false;
 
             Adapter.AddToClipboardByDoubleClick(tpHistory);
 
@@ -660,6 +657,15 @@ namespace ZScreenLib
             txtRapidShareCollectorID.Text = Program.conf.RapidShareCollectorsID;
             txtRapidSharePassword.Text = Program.conf.RapidSharePassword;
             txtRapidSharePremiumUserName.Text = Program.conf.RapidSharePremiumUserName;
+
+            // SendSpace
+            if (cboSendSpaceAcctType.Items.Count == 0)
+            {
+                cboSendSpaceAcctType.Items.AddRange(typeof(AcctType).GetDescriptions());
+            }
+            cboSendSpaceAcctType.SelectedIndex = (int)Program.conf.SendSpaceAccountType;
+            txtSendSpacePassword.Text = Program.conf.SendSpacePassword;
+            txtSendSpaceUserName.Text = Program.conf.SendSpaceUserName;
             #endregion
 
             // Others
@@ -1327,6 +1333,7 @@ namespace ZScreenLib
             }
 
             ZScreen_Windows7onlyTasks();
+            this.pbLogo.Image = ImageEffects.GetRandomLogo(Resources.main);
             // Loader.Splash.Close();
         }
 
@@ -2163,7 +2170,7 @@ namespace ZScreenLib
                     }
                     else if (checkBinary)
                     {
-                        pbPreview.Image = Resources.explorer_001;
+                        pbPreview.Image = Resources.explorer;
                     }
 
                     txtHistoryLocalPath.Text = hi.LocalPath;
@@ -3292,53 +3299,7 @@ namespace ZScreenLib
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
             if (turnLogo.IsTurning) return;
-
-            Bitmap bmp = new Bitmap(ZSS.Properties.Resources.main);
-            Random rand = new Random();
-
-            if (mLogoRandomList.Count == 0)
-            {
-                List<int> numbers = Enumerable.Range(1, 7).ToList();
-
-                int count = numbers.Count;
-
-                for (int x = 0; x < count; x++)
-                {
-                    int r = rand.Next(0, numbers.Count - 1);
-                    mLogoRandomList.Add(numbers[r]);
-                    numbers.RemoveAt(r);
-                }
-            }
-
-            switch (mLogoRandomList[0])
-            {
-                case 1:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    break;
-                case 2:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
-                    break;
-                case 3:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.GrayscaleFilter());
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    break;
-                case 4:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(100, 300)));
-                    break;
-                case 5:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -100)));
-                    break;
-                case 6:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(150, 300)));
-                    break;
-                case 7:
-                    pbLogo.Image = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -150)));
-                    break;
-            }
-
-            mLogoRandomList.RemoveAt(0);
+            pbLogo.Image = ImageEffects.GetRandomLogo(Resources.main);
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
@@ -4061,6 +4022,32 @@ namespace ZScreenLib
         private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
         {
             Program.conf.RapidSharePassword = txtRapidSharePassword.Text;
+        }
+
+        private void txtSendSpaceUserName_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.SendSpaceUserName = txtSendSpaceUserName.Text;
+        }
+
+        private void txtSendSpacePassword_TextChanged(object sender, EventArgs e)
+        {
+            Program.conf.SendSpacePassword = txtSendSpacePassword.Text;
+        }
+
+        private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.SendSpaceAccountType = (AcctType)cboSendSpaceAcctType.SelectedIndex;
+        }
+
+        private void btnSendSpaceRegister_Click(object sender, EventArgs e)
+        {
+            UserPassBox upb = Adapter.SendSpaceRegister();
+            if (upb.Success)
+            {
+                txtSendSpaceUserName.Text = upb.UserName;
+                txtSendSpacePassword.Text = upb.Password;
+                cboSendSpaceAcctType.SelectedIndex = (int)AcctType.User;
+            }
         }
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)

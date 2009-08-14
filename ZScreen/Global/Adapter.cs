@@ -35,6 +35,7 @@ using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZSS;
 using ZSS.Properties;
+using UploadersLib.FileUploaders;
 
 namespace ZScreenLib
 {
@@ -298,6 +299,18 @@ namespace ZScreenLib
                     Program.conf.TinyPicShuk = shuk;
                 }
             }
+        }
+
+        public static UserPassBox SendSpaceRegister()
+        {
+            UserPassBox upb = new UserPassBox("SendSpace Registration...", "John Doe", "john.doe@gmail.com", "JohnDoe", "");
+            upb.ShowDialog();
+            if (upb.DialogResult == DialogResult.OK)
+            {
+                SendSpaceUploader ssu = new SendSpaceUploader();
+                upb.Success = ssu.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
+            }
+            return upb;
         }
 
         public static bool MakeTinyURL()
