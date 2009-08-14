@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploaderTester", "UploaderTester\UploaderTester.csproj", "{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersLib", "..\..\trunk\ZSS.UploadersLib\UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPUploaderLib", "..\..\trunk\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj", "{6856E9A8-E067-49EE-8F58-DA3985295F53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

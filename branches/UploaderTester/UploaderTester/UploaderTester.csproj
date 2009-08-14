@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2E942548-941C-4112-97B1-7912E4213058}</ProjectGuid>
+    <ProjectGuid>{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileUploaderTester</RootNamespace>
-    <AssemblyName>FileUploaderTester</AssemblyName>
+    <RootNamespace>UploaderTester</RootNamespace>
+    <AssemblyName>UploaderTester</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,12 +47,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Projects\ZScreen\trunk\ZSS.FileUploadersLib\ZSS.FileUploadersLib.csproj">
-      <Project>{9D204619-BCBC-4E8D-B37E-F278D01D8A95}</Project>
-      <Name>ZSS.FileUploadersLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
