@@ -97,7 +97,7 @@ namespace ZScreenLib
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (CoreHelpers.RunningOnWin7)
+            if (Program.conf.ShowInTaskbar && CoreHelpers.RunningOnWin7)
             {
                 try
                 {
@@ -2541,6 +2541,7 @@ namespace ZScreenLib
             if (mGuiIsReady)
             {
                 this.ShowInTaskbar = Program.conf.ShowInTaskbar;
+                this.ZScreen_Windows7onlyTasks();
             }
         }
 
