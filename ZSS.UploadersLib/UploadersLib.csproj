@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileUploader.cs" />
-    <Compile Include="FileUploaders\RapidShareUploader.cs" />
+    <Compile Include="FileUploaders\RapidShare.cs" />
     <Compile Include="FileUploaders\SendSpace.cs" />
     <Compile Include="Forms\TwitterMsg.cs">
       <SubType>Form</SubType>
@@ -70,7 +70,6 @@
     <Compile Include="Helpers\IUploader.cs" />
     <Compile Include="Helpers\oAuth.cs" />
     <Compile Include="Helpers\oAuthTwitter.cs" />
-    <Compile Include="Helpers\SendSpaceManager.cs" />
     <Compile Include="Helpers\TCPClient.cs" />
     <Compile Include="Helpers\TextInfo.cs" />
     <Compile Include="ImageUploader.cs" />

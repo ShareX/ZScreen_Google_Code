@@ -307,7 +307,7 @@ namespace ZScreenLib
             upb.ShowDialog();
             if (upb.DialogResult == DialogResult.OK)
             {
-                SendSpace sendSpace = new SendSpace();
+                SendSpaceUploader sendSpace = new SendSpaceUploader();
                 upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
                 if (!upb.Success && sendSpace.Errors.Count > 0)
                 {
