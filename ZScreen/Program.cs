@@ -46,6 +46,7 @@ namespace ZScreenLib
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
+        public static bool Portable { get; private set; }
 
         public static string RootAppFolder { get; set; }
         public static string RootImagesDir { get; private set; }
@@ -98,7 +99,7 @@ namespace ZScreenLib
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
             Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
-        public static bool MultipleInstance;
+        public static bool MultipleInstance { get; private set; }
         private static string mProductName = Application.ProductName;
 
         public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
@@ -297,23 +298,25 @@ namespace ZScreenLib
             FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
 
             ConfigWizard cw = null;
-            if (string.IsNullOrEmpty(appSettings.RootDir))
-            {
-                cw = new ConfigWizard(DefaultRootAppFolder);
-                cw.ShowDialog();
-                appSettings.RootDir = cw.RootFolder;
-            }
 
-            if (Directory.Exists(PortableRootFolder))
+            if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
+                Portable = true;
                 RootAppFolder = PortableRootFolder;
                 mProductName += " Portable";
                 mAppInfo.AppName = mProductName;
             }
             else
             {
+                if (string.IsNullOrEmpty(appSettings.RootDir))
+                {
+                    cw = new ConfigWizard(DefaultRootAppFolder);
+                    cw.ShowDialog();
+                    appSettings.RootDir = cw.RootFolder;
+                }
                 RootAppFolder = appSettings.RootDir;
             }
+
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
             RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
 
@@ -366,7 +369,10 @@ namespace ZScreenLib
             finally
             {
                 FileSystem.WriteDebugFile();
-                appSettings.Write();
+                if (!Portable)
+                {
+                    appSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+                }
                 ZScreenKeyboardHook.Dispose();
             }
         }

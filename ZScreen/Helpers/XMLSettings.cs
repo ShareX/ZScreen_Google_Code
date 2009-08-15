@@ -680,43 +680,44 @@ namespace ZScreenLib
             {
                 // Update AppSettings.xml
                 File.Copy(settingsFile, Program.appSettings.GetSettingsFilePath());
-                Program.appSettings.XMLSettingsFile = Program.appSettings.GetSettingsFilePath();
             }
 
+            Program.appSettings.XMLSettingsFile = Program.appSettings.GetSettingsFilePath();
             return Read(Program.appSettings.XMLSettingsFile);
 
         }
 
-
         public static XMLSettings Read(string filePath)
         {
-            string settingsDir = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(settingsDir))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                Directory.CreateDirectory(settingsDir);
-            }
-
-            if (File.Exists(filePath))
-            {
-                try
+                string settingsDir = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(settingsDir))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open))
-                    {
-                        return xs.Deserialize(fs) as XMLSettings;
-                    }
+                    Directory.CreateDirectory(settingsDir);
                 }
-                catch (Exception ex)
+                if (File.Exists(filePath))
                 {
-                    // We dont need a MessageBox when we rename enumerations
-                    // Renaming enums tend to break parts of serialization
-                    FileSystem.AppendDebug(ex.ToString());
-                    OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
-                    dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                    dlg.InitialDirectory = Program.appSettings.RootDir;
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                    try
                     {
-                        return XMLSettings.Read(dlg.FileName);
+                        XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
+                        using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                        {
+                            return xs.Deserialize(fs) as XMLSettings;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // We dont need a MessageBox when we rename enumerations
+                        // Renaming enums tend to break parts of serialization
+                        FileSystem.AppendDebug(ex.ToString());
+                        OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
+                        dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
+                        dlg.InitialDirectory = Program.appSettings.RootDir;
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            return XMLSettings.Read(dlg.FileName);
+                        }
                     }
                 }
             }

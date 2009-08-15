@@ -1,5 +1,6 @@
 Version 3.0 - 20091015
 
+3.01.0.1 Bug fixes to run Portable mode better {McoreD}
 3.01.0.0 Added SendSpace File Uploader support {Jaex}
 3.00.0.0 Established foundation for File Hosting Services starting with RapidShare {Jaex}
 2.31.0.0 Added ImageBam Image Uploader support {Jaex}
