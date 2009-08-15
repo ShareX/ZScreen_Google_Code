@@ -36,7 +36,7 @@ namespace UploadersLib
     {
         public FTPAccount FTPAccount;
 
-        public const string Hostname = "FTP";
+        public static readonly string Hostname = TextDestType.FTP.GetDescription();
 
         public FTPUploader()
         {

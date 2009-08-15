@@ -31,15 +31,15 @@ namespace UploadersLib
     [Serializable]
     public enum TextDestType
     {
-        [Description("FTP")]
+        [Description("FTP Server")]
         FTP,
-        [Description("pastebin.com")]
+        [Description("pastebin - www.pastebin.com")]
         PASTEBIN,
-        [Description("paste2.org")]
+        [Description("Paste2 - www.paste2.org")]
         PASTE2,
         //[Description("pastebin.ca")]
         //PASTEBIN_CA,
-        [Description("slexy.org")]
+        [Description("Slexy 2.0 - www.slexy.org")]
         SLEXY
     }
 
@@ -103,19 +103,19 @@ namespace UploadersLib
         CLIPBOARD,
         [Description("File")]
         FILE,
-        [Description("FTP")]
+        [Description("FTP Server")]
         FTP,
-        [Description("imageshack.us")]
+        [Description("ImageShack - www.imageshack.us")]
         IMAGESHACK,
-        [Description("TinyPic (tinypic.com)")]
+        [Description("TinyPic - www.tinypic.com)")]
         TINYPIC,
-        [Description("ImageBam (imagebam.com)")]
+        [Description("ImageBam - www.imagebam.com")]
         IMAGEBAM,
-        [Description("TwitPic (twitpic.com)")]
+        [Description("TwitPic - www.twitpic.com")]
         TWITPIC,
-        [Description("twitsnaps.com")]
+        [Description("TwitSnaps - www.twitsnaps.com")]
         TWITSNAPS,
-        [Description("yFrog (yfrog.com)")]
+        [Description("yFrog - www.yfrog.com")]
         YFROG,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,
@@ -131,11 +131,11 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("FTP")]
+        [Description("FTP Server")]
         FTP,
-        [Description("RapidShare (rapidshare.com)")]
+        [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
-        [Description("SendSpace (sendspace.com)")]
+        [Description("SendSpace - www.sendspace.com")]
         SendSpace
     }
 

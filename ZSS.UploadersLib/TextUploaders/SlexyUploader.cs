@@ -37,7 +37,7 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class SlexyUploader : TextUploader
     {
-        public const string Hostname = "slexy.org";
+        public static readonly string Hostname = TextDestType.SLEXY.GetDescription();
 
         public override object Settings
         {

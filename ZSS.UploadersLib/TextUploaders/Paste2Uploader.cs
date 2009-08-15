@@ -36,7 +36,7 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class Paste2Uploader : TextUploader
     {
-        public const string Hostname = "paste2.org";
+        public static readonly string Hostname = TextDestType.PASTE2.GetDescription();
 
         public override object Settings
         {
