@@ -1333,7 +1333,6 @@ namespace ZScreenLib
             }
 
             ZScreen_Windows7onlyTasks();
-            this.pbLogo.Image = ImageEffects.GetRandomLogo(Resources.main);
             // Loader.Splash.Close();
         }
 
@@ -3593,11 +3592,6 @@ namespace ZScreenLib
         private void txtUserNameImageShack_TextChanged(object sender, EventArgs e)
         {
             Program.conf.ImageShackUserName = txtUserNameImageShack.Text;
-        }
-
-        private void llblHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(Program.URL_HELP);
         }
 
         private void ucTextUploaders_Load(object sender, EventArgs e)
