@@ -39,7 +39,7 @@ namespace ZScreenLib
     {
         public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff, ImageFormat.Icon };
 
-        private static StringBuilder mDebug = new StringBuilder();
+        public static StringBuilder mDebug = new StringBuilder();
 
         /// <summary>
         /// Returns a list of file paths from a collection of files and directories

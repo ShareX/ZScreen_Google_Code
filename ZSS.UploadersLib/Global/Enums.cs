@@ -93,7 +93,7 @@ namespace UploadersLib
         LINKED_THUMBNAIL,
         [Description("Linked Thumbnail for Wiki")]
         LINKED_THUMBNAIL_WIKI,
-        [Description("Full Image (TinyURL)")]
+        [Description("Full Image for Twitter")]
         FULL_TINYURL
     }
 
@@ -107,7 +107,7 @@ namespace UploadersLib
         FTP,
         [Description("ImageShack - www.imageshack.us")]
         IMAGESHACK,
-        [Description("TinyPic - www.tinypic.com)")]
+        [Description("TinyPic - www.tinypic.com")]
         TINYPIC,
         [Description("ImageBam - www.imagebam.com")]
         IMAGEBAM,

@@ -230,12 +230,15 @@ namespace ZScreenLib
         {
             SetToolTip(nudtScreenshotDelay);
 
-            Rectangle screenRect = GraphicsMgr.GetScreenBounds();
-            screenRect.Inflate(-100, -100);
-            if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
+            if (this.WindowState != FormWindowState.Maximized)
             {
-                this.Size = Program.conf.WindowSize;
-                this.Location = Program.conf.WindowLocation;
+                Rectangle screenRect = GraphicsMgr.GetScreenBounds();
+                screenRect.Inflate(-100, -100);
+                if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
+                {
+                    this.Size = Program.conf.WindowSize;
+                    this.Location = Program.conf.WindowLocation;
+                }
             }
 
             Adapter.AddToClipboardByDoubleClick(tpHistory);
@@ -249,7 +252,7 @@ namespace ZScreenLib
             {
                 if (Program.conf.OpenMainWindow)
                 {
-                    this.WindowState = FormWindowState.Normal;
+                    this.WindowState = Program.conf.WindowState;
                     ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
                 else
@@ -921,6 +924,7 @@ namespace ZScreenLib
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                     this.Refresh();
                 }
+                Program.conf.WindowState = this.WindowState;
             }
         }
 
@@ -2701,7 +2705,7 @@ namespace ZScreenLib
 
         private void btnCopyStats_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(lblDebugInfo.Text);
+            Clipboard.SetText(txtDebugInfo.Text);
         }
 
         private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
@@ -3200,7 +3204,16 @@ namespace ZScreenLib
         {
             if (this.Visible)
             {
-                lblDebugInfo.Text = e;
+                StringBuilder sb = new StringBuilder();
+                sb.Append(e);
+                sb.AppendLine();
+                sb.Append(FileSystem.mDebug.ToString());
+                txtDebugInfo.Text = sb.ToString();
+                if (cboDebugAutoScroll.Checked)
+                {
+                    txtDebugInfo.SelectionStart = txtDebugInfo.Text.Length;
+                    txtDebugInfo.ScrollToCaret();
+                }
             }
         }
 
