@@ -325,36 +325,44 @@ namespace ZScreenLib
 
         public static TextUploader FindTextUploader(string name)
         {
-            switch (name)
+            if (name.Equals(PastebinUploader.Hostname))
             {
-                case PastebinUploader.Hostname:
-                    return new PastebinUploader();
-                case PastebinCaUploader.Hostname:
-                    return new PastebinCaUploader();
-                case Paste2Uploader.Hostname:
-                    return new Paste2Uploader();
-                case SlexyUploader.Hostname:
-                    return new SlexyUploader();
-                case SniptUploader.Hostname:
-                    return new SniptUploader();
-                default:
-                    if (name == UploadersLib.FTPUploader.Hostname)
+                return new PastebinUploader();
+            }
+            else if (name.Equals(PastebinCaUploader.Hostname))
+            {
+                return new PastebinCaUploader();
+            }
+            else if (name.Equals(Paste2Uploader.Hostname))
+            {
+                return new Paste2Uploader();
+            }
+            else if (name.Equals(SlexyUploader.Hostname))
+            {
+                return new SlexyUploader();
+            }
+            else if (name.Equals(SniptUploader.Hostname))
+            {
+                return new SniptUploader();
+            }
+            else
+            {
+                if (name == UploadersLib.FTPUploader.Hostname)
+                {
+                    if (Program.conf.FTPAccountList.Count > 0)
                     {
-                        if (Program.conf.FTPAccountList.Count > 0)
+                        FTPAccount acc = new FTPAccount();
+                        if (Program.conf.FTPSelected >= 0)
                         {
-                            FTPAccount acc = new FTPAccount();
-                            if (Program.conf.FTPSelected >= 0)
-                            {
-                                acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                            }
-                            else
-                            {
-                                acc = Program.conf.FTPAccountList[0];
-                            }
-                            return new UploadersLib.FTPUploader(acc);
+                            acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                         }
+                        else
+                        {
+                            acc = Program.conf.FTPAccountList[0];
+                        }
+                        return new UploadersLib.FTPUploader(acc);
                     }
-                    break;
+                }
             }
             return null;
         }
