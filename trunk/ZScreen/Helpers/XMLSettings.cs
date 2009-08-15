@@ -661,28 +661,6 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            XMLSettings settings = Read(UpgradeSettings());
-            if (!File.Exists(Program.appSettings.XMLSettingsFile))
-            {
-                settings.Write(Program.appSettings.XMLSettingsFile);
-            }
-            return settings;
-        }
-
-        /* *******************
-         * Dedicated for Jaex:
-         * *******************
-         * [10:28] <@Jaex> WTF
-         * [10:28] <@Jaex> my settings reseted?
-         * [10:28] <@Jaex> i opened old zscreen
-         * [10:28] <@Jaex> and all settings reseted
-         * [10:28] <@Jaex> PFFFF
-         * [10:28] <@Jaex> i hate this
-         * [10:28] <@Jaex> i cant open zscreen from my desktop everytime
-         * [10:29] <@Jaex> screwing up all settings
-         */
-        public static string UpgradeSettings()
-        {
             string settingsFile = Program.appSettings.GetSettingsFilePath();
             if (!File.Exists(settingsFile))
             {
@@ -698,14 +676,17 @@ namespace ZScreenLib
                 }
             }
 
-            if (Program.appSettings.XMLSettingsFile != Program.appSettings.GetSettingsFilePath())
+            if (settingsFile != Program.appSettings.GetSettingsFilePath())
             {
                 // Update AppSettings.xml
+                File.Copy(settingsFile, Program.appSettings.GetSettingsFilePath());
                 Program.appSettings.XMLSettingsFile = Program.appSettings.GetSettingsFilePath();
             }
 
-            return settingsFile;
+            return Read(Program.appSettings.XMLSettingsFile);
+
         }
+
 
         public static XMLSettings Read(string filePath)
         {

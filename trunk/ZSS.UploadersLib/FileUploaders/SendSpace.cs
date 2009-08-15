@@ -25,10 +25,73 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
+using System;
 
 namespace UploadersLib.FileUploaders
 {
-    public class SendSpace : FileUploader
+    public static class SendSpaceManager
+    {
+        public static string Token;
+        public static string SessionKey;
+        public static DateTime LastSessionKey;
+        public static AcctType AccountType;
+        public static string Username;
+        public static string Password;
+        public static SendSpaceUploader.UploadInfo UploadInfo;
+
+        public static bool PrepareUploadInfo(string username, string password)
+        {
+            SendSpaceUploader sendSpace = new SendSpaceUploader();
+
+            try
+            {
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                {
+                    AccountType = AcctType.Anonymous;
+
+                    UploadInfo = sendSpace.AnonymousUploadGetInfo();
+                    if (UploadInfo == null) throw new Exception("UploadInfo is null.");
+                }
+                else
+                {
+                    AccountType = AcctType.User;
+                    Username = username;
+                    Password = password;
+
+                    if (string.IsNullOrEmpty(Token))
+                    {
+                        Token = sendSpace.AuthCreateToken();
+                        if (string.IsNullOrEmpty(Token)) throw new Exception("Token is null or empty.");
+                    }
+                    if (string.IsNullOrEmpty(SessionKey) || (DateTime.Now - LastSessionKey).Minutes > 30)
+                    {
+                        SessionKey = sendSpace.AuthLogin(Token, username, password).SessionKey;
+                        if (string.IsNullOrEmpty(Token)) throw new Exception("SessionKey is null or empty.");
+                        LastSessionKey = DateTime.Now;
+                    }
+                    UploadInfo = sendSpace.UploadGetInfo(SessionKey);
+                    if (UploadInfo == null) throw new Exception("UploadInfo is null.");
+                }
+            }
+            catch (Exception e)
+            {
+                if (sendSpace.Errors.Count > 0)
+                {
+                    Console.WriteLine(sendSpace.ToErrorString());
+                }
+                else
+                {
+                    Console.WriteLine(e.ToString());
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    public class SendSpaceUploader : FileUploader
     {
         private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
@@ -41,7 +104,7 @@ namespace UploadersLib.FileUploaders
 
         public string AppVersion = "1.0";
 
-        public SendSpace() { }
+        public SendSpaceUploader() { }
 
         public override string Name
         {

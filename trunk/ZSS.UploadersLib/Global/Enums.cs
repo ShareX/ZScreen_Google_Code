@@ -107,15 +107,15 @@ namespace UploadersLib
         FTP,
         [Description("imageshack.us")]
         IMAGESHACK,
-        [Description("tinypic.com")]
+        [Description("TinyPic (tinypic.com)")]
         TINYPIC,
-        [Description("imagebam.com")]
+        [Description("ImageBam (imagebam.com)")]
         IMAGEBAM,
-        [Description("twitpic.com")]
+        [Description("TwitPic (twitpic.com)")]
         TWITPIC,
         [Description("twitsnaps.com")]
         TWITSNAPS,
-        [Description("yfrog.com")]
+        [Description("yFrog (yfrog.com)")]
         YFROG,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,
@@ -133,9 +133,9 @@ namespace UploadersLib
     {
         [Description("FTP")]
         FTP,
-        [Description("rapidshare.com")]
+        [Description("RapidShare (rapidshare.com)")]
         RapidShare,
-        [Description("sendspace.com")]
+        [Description("SendSpace (sendspace.com)")]
         SendSpace
     }
 

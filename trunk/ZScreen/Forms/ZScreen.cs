@@ -4035,12 +4035,14 @@ namespace ZScreenLib
 
         private void btnSendSpaceRegister_Click(object sender, EventArgs e)
         {
-            UserPassBox upb = Adapter.SendSpaceRegister();
-            if (upb.Success)
+            using (UserPassBox upb = Adapter.SendSpaceRegister())
             {
-                txtSendSpaceUserName.Text = upb.UserName;
-                txtSendSpacePassword.Text = upb.Password;
-                cboSendSpaceAcctType.SelectedIndex = (int)AcctType.User;
+                if (upb.Success)
+                {
+                    txtSendSpaceUserName.Text = upb.UserName;
+                    txtSendSpacePassword.Text = upb.Password;
+                    cboSendSpaceAcctType.SelectedIndex = (int)AcctType.User;
+                }
             }
         }
 
