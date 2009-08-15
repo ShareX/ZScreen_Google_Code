@@ -51,6 +51,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool RunOnce = false;
+        public FormWindowState WindowState = FormWindowState.Normal;
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
         public static string XMLFileName = string.Format("{0}-{1}-Settings.xml", Application.ProductName, Application.ProductVersion);
