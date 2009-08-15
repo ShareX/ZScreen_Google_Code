@@ -307,8 +307,12 @@ namespace ZScreenLib
             upb.ShowDialog();
             if (upb.DialogResult == DialogResult.OK)
             {
-                SendSpaceUploader ssu = new SendSpaceUploader();
-                upb.Success = ssu.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
+                SendSpace sendSpace = new SendSpace();
+                upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
+                if (!upb.Success && sendSpace.Errors.Count > 0)
+                {
+                    MessageBox.Show(sendSpace.ToErrorString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             return upb;
         }

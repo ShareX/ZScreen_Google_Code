@@ -21,22 +21,18 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.FileUploaders
 {
-    public class SendSpaceUploader : FileUploader
+    public class SendSpace : FileUploader
     {
         private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
         private const string SENDSPACE_API_VERSION = "1.0";
-
-        public UploadInfo CurrentUploadInfo;
 
         /// <summary>
         /// Upload speed limit in kilobytes, 0 for unlimited
@@ -45,17 +41,7 @@ namespace UploadersLib.FileUploaders
 
         public string AppVersion = "1.0";
 
-        public SendSpaceUploader()
-        {
-            this.CurrentUploadInfo = this.AnonymousUploadGetInfo();
-        }
-
-        public SendSpaceUploader(string userName, string password)
-        {
-            string token = this.AuthCreateToken();
-            LoginInfo loginInfo = this.AuthLogin(token, userName, password);
-            this.CurrentUploadInfo = this.UploadGetInfo(loginInfo.SessionKey);
-        }
+        public SendSpace() { }
 
         public override string Name
         {
@@ -90,7 +76,7 @@ namespace UploadersLib.FileUploaders
                 packet.ErrorCode = error.Attribute("code").Value;
                 packet.ErrorText = error.Attribute("text").Value;
 
-                base.Errors.Add(string.Format("({0} - {1}) {2}", packet.ErrorCode, packet.Method, packet.ErrorText));
+                base.Errors.Add(string.Format("Code: {0}, Method: {1}\r\nText: {2}", packet.ErrorCode, packet.Method, packet.ErrorText));
             }
 
             return packet;
@@ -385,13 +371,16 @@ namespace UploadersLib.FileUploaders
 
         public string Upload(byte[] data, string fileName, UploadInfo uploadInfo)
         {
-            Dictionary<string, string> args = PrepareArguments(uploadInfo.MaxFileSize, uploadInfo.UploadIdentifier, uploadInfo.ExtraInfo);
-
-            string response = UploadData(data, fileName, uploadInfo.URL, "userfile", args);
-
-            if (!string.IsNullOrEmpty(response))
+            if (uploadInfo != null)
             {
-                return "http://www.sendspace.com/file/" + Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
+                Dictionary<string, string> args = PrepareArguments(uploadInfo.MaxFileSize, uploadInfo.UploadIdentifier, uploadInfo.ExtraInfo);
+
+                string response = UploadData(data, fileName, uploadInfo.URL, "userfile", args);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    return "http://www.sendspace.com/file/" + Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
+                }
             }
 
             return "";
@@ -399,11 +388,7 @@ namespace UploadersLib.FileUploaders
 
         public override string Upload(byte[] data, string fileName)
         {
-            if (this.CurrentUploadInfo == null)
-            {
-
-            }
-            return Upload(data, fileName, this.CurrentUploadInfo);
+            return Upload(data, fileName, SendSpaceManager.UploadInfo);
         }
 
         #endregion

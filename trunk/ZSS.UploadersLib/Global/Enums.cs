@@ -94,7 +94,7 @@ namespace UploadersLib
         [Description("Linked Thumbnail for Wiki")]
         LINKED_THUMBNAIL_WIKI,
         [Description("Full Image (TinyURL)")]
-        FULL_TINYURL,
+        FULL_TINYURL
     }
 
     public enum ImageDestType
@@ -105,17 +105,17 @@ namespace UploadersLib
         FILE,
         [Description("FTP")]
         FTP,
-        [Description("TinyPic")]
-        TINYPIC,
-        [Description("ImageShack")]
+        [Description("imageshack.us")]
         IMAGESHACK,
-        [Description("ImageBam")]
+        [Description("tinypic.com")]
+        TINYPIC,
+        [Description("imagebam.com")]
         IMAGEBAM,
-        [Description("TwitPic")]
+        [Description("twitpic.com")]
         TWITPIC,
-        [Description("TwitSnaps")]
+        [Description("twitsnaps.com")]
         TWITSNAPS,
-        [Description("YFrog")]
+        [Description("yfrog.com")]
         YFROG,
         [Description("Custom Uploader")]
         CUSTOM_UPLOADER,
@@ -131,12 +131,12 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("RapidShare")]
-        RapidShare,
-        [Description("SendSpace")]
-        SendSpace,
         [Description("FTP")]
-        Ftp,
+        FTP,
+        [Description("rapidshare.com")]
+        RapidShare,
+        [Description("sendspace.com")]
+        SendSpace
     }
 
     public enum RapidShareAcctType
@@ -154,7 +154,7 @@ namespace UploadersLib
         [Description("Anonymous")]
         Anonymous,
         [Description("User")]
-        User,
+        User
     }
 
     #endregion

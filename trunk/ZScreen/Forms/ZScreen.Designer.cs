@@ -82,7 +82,6 @@ namespace ZScreenLib
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.llblHelp = new System.Windows.Forms.LinkLabel();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
@@ -1089,7 +1088,6 @@ namespace ZScreenLib
             // tpMain
             // 
             this.tpMain.AllowDrop = true;
-            this.tpMain.Controls.Add(this.llblHelp);
             this.tpMain.Controls.Add(this.gbImageSettings);
             this.tpMain.Controls.Add(this.llProjectPage);
             this.tpMain.Controls.Add(this.llWebsite);
@@ -1106,19 +1104,6 @@ namespace ZScreenLib
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
             // 
-            // llblHelp
-            // 
-            this.llblHelp.AutoSize = true;
-            this.llblHelp.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblHelp.Location = new System.Drawing.Point(736, 400);
-            this.llblHelp.Name = "llblHelp";
-            this.llblHelp.Size = new System.Drawing.Size(47, 13);
-            this.llblHelp.TabIndex = 124;
-            this.llblHelp.TabStop = true;
-            this.llblHelp.Text = "Tutorials";
-            this.llblHelp.Visible = false;
-            this.llblHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblHelp_LinkClicked);
-            // 
             // gbImageSettings
             // 
             this.gbImageSettings.Controls.Add(this.lblScreenshotDelay);
@@ -1127,9 +1112,9 @@ namespace ZScreenLib
             this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
             this.gbImageSettings.Controls.Add(this.cbShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
-            this.gbImageSettings.Location = new System.Drawing.Point(32, 200);
+            this.gbImageSettings.Location = new System.Drawing.Point(48, 200);
             this.gbImageSettings.Name = "gbImageSettings";
-            this.gbImageSettings.Size = new System.Drawing.Size(376, 144);
+            this.gbImageSettings.Size = new System.Drawing.Size(360, 144);
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
@@ -1137,7 +1122,7 @@ namespace ZScreenLib
             // lblScreenshotDelay
             // 
             this.lblScreenshotDelay.AutoSize = true;
-            this.lblScreenshotDelay.Location = new System.Drawing.Point(27, 25);
+            this.lblScreenshotDelay.Location = new System.Drawing.Point(16, 24);
             this.lblScreenshotDelay.Name = "lblScreenshotDelay";
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
@@ -1145,7 +1130,7 @@ namespace ZScreenLib
             // 
             // nudtScreenshotDelay
             // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(126, 19);
+            this.nudtScreenshotDelay.Location = new System.Drawing.Point(112, 18);
             this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
             this.nudtScreenshotDelay.RealValue = ((long)(0));
             this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
@@ -1161,7 +1146,7 @@ namespace ZScreenLib
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
-            this.lblCopytoClipboard.Location = new System.Drawing.Point(27, 53);
+            this.lblCopytoClipboard.Location = new System.Drawing.Point(16, 52);
             this.lblCopytoClipboard.Name = "lblCopytoClipboard";
             this.lblCopytoClipboard.Size = new System.Drawing.Size(93, 13);
             this.lblCopytoClipboard.TabIndex = 117;
@@ -1171,7 +1156,7 @@ namespace ZScreenLib
             // 
             this.cboClipboardTextMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboClipboardTextMode.FormattingEnabled = true;
-            this.cboClipboardTextMode.Location = new System.Drawing.Point(128, 49);
+            this.cboClipboardTextMode.Location = new System.Drawing.Point(114, 48);
             this.cboClipboardTextMode.Name = "cboClipboardTextMode";
             this.cboClipboardTextMode.Size = new System.Drawing.Size(232, 21);
             this.cboClipboardTextMode.TabIndex = 116;
@@ -1257,9 +1242,9 @@ namespace ZScreenLib
             this.gbMainOptions.Controls.Add(this.lblTextUploader);
             this.gbMainOptions.Controls.Add(this.cboImageUploaders);
             this.gbMainOptions.Controls.Add(this.cboTextUploaders);
-            this.gbMainOptions.Location = new System.Drawing.Point(32, 48);
+            this.gbMainOptions.Location = new System.Drawing.Point(48, 64);
             this.gbMainOptions.Name = "gbMainOptions";
-            this.gbMainOptions.Size = new System.Drawing.Size(376, 136);
+            this.gbMainOptions.Size = new System.Drawing.Size(360, 128);
             this.gbMainOptions.TabIndex = 79;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Upload Destinations";
@@ -1268,19 +1253,16 @@ namespace ZScreenLib
             // 
             this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFileUploaders.FormattingEnabled = true;
-            this.cboFileUploaders.Location = new System.Drawing.Point(128, 96);
+            this.cboFileUploaders.Location = new System.Drawing.Point(109, 93);
             this.cboFileUploaders.Name = "cboFileUploaders";
             this.cboFileUploaders.Size = new System.Drawing.Size(232, 21);
             this.cboFileUploaders.TabIndex = 126;
-            this.ttZScreen.SetToolTip(this.cboFileUploaders, "Specify which URL Shortener to use.\r\nTo add/remove/change them see Text Services " +
-                    "-> URL Shorteners tab.\r\nThis setting relies on Clipboard Upload which can be set" +
-                    " in the Hotkeys tab. ");
             this.cboFileUploaders.SelectedIndexChanged += new System.EventHandler(this.cboFileUploaders_SelectedIndexChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(48, 99);
+            this.label10.Location = new System.Drawing.Point(29, 96);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(72, 13);
             this.label10.TabIndex = 125;
@@ -1290,7 +1272,7 @@ namespace ZScreenLib
             // 
             this.cboURLShorteners.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboURLShorteners.FormattingEnabled = true;
-            this.cboURLShorteners.Location = new System.Drawing.Point(128, 72);
+            this.cboURLShorteners.Location = new System.Drawing.Point(109, 69);
             this.cboURLShorteners.Name = "cboURLShorteners";
             this.cboURLShorteners.Size = new System.Drawing.Size(232, 21);
             this.cboURLShorteners.TabIndex = 124;
@@ -1302,7 +1284,7 @@ namespace ZScreenLib
             // lblURLShortener
             // 
             this.lblURLShortener.AutoSize = true;
-            this.lblURLShortener.Location = new System.Drawing.Point(39, 75);
+            this.lblURLShortener.Location = new System.Drawing.Point(20, 72);
             this.lblURLShortener.Name = "lblURLShortener";
             this.lblURLShortener.Size = new System.Drawing.Size(81, 13);
             this.lblURLShortener.TabIndex = 123;
@@ -1311,7 +1293,7 @@ namespace ZScreenLib
             // lblImageUploader
             // 
             this.lblImageUploader.AutoSize = true;
-            this.lblImageUploader.Location = new System.Drawing.Point(35, 27);
+            this.lblImageUploader.Location = new System.Drawing.Point(16, 24);
             this.lblImageUploader.Name = "lblImageUploader";
             this.lblImageUploader.Size = new System.Drawing.Size(85, 13);
             this.lblImageUploader.TabIndex = 1;
@@ -1320,7 +1302,7 @@ namespace ZScreenLib
             // lblTextUploader
             // 
             this.lblTextUploader.AutoSize = true;
-            this.lblTextUploader.Location = new System.Drawing.Point(43, 51);
+            this.lblTextUploader.Location = new System.Drawing.Point(24, 48);
             this.lblTextUploader.Name = "lblTextUploader";
             this.lblTextUploader.Size = new System.Drawing.Size(77, 13);
             this.lblTextUploader.TabIndex = 122;
@@ -1330,7 +1312,7 @@ namespace ZScreenLib
             // 
             this.cboImageUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboImageUploaders.FormattingEnabled = true;
-            this.cboImageUploaders.Location = new System.Drawing.Point(128, 24);
+            this.cboImageUploaders.Location = new System.Drawing.Point(109, 21);
             this.cboImageUploaders.Name = "cboImageUploaders";
             this.cboImageUploaders.Size = new System.Drawing.Size(232, 21);
             this.cboImageUploaders.TabIndex = 0;
@@ -1342,7 +1324,7 @@ namespace ZScreenLib
             // 
             this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(128, 48);
+            this.cboTextUploaders.Location = new System.Drawing.Point(109, 45);
             this.cboTextUploaders.Name = "cboTextUploaders";
             this.cboTextUploaders.Size = new System.Drawing.Size(232, 21);
             this.cboTextUploaders.TabIndex = 121;
@@ -7058,7 +7040,6 @@ namespace ZScreenLib
         internal System.Windows.Forms.GroupBox gbDynamicRegionBorderColorSettings;
         internal System.Windows.Forms.DataGridViewTextBoxColumn chHotkeys_Description;
         internal System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
-        internal System.Windows.Forms.LinkLabel llblHelp;
         internal System.Windows.Forms.TabPage tpTwitter;
         internal System.Windows.Forms.Label label3;
         internal System.Windows.Forms.TextBox txtTwitPicPassword;

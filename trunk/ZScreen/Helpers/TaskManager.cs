@@ -51,17 +51,18 @@ namespace ZScreenLib
             FileUploader uploader = null;
             switch (mTask.MyFileUploader)
             {
-                case FileUploaderType.Ftp:
+                case FileUploaderType.FTP:
                     UploadFtp();
                     break;
                 case FileUploaderType.SendSpace:
+                    uploader = new SendSpace();
                     switch (Program.conf.SendSpaceAccountType)
                     {
                         case AcctType.Anonymous:
-                            uploader = new SendSpaceUploader();
+                            SendSpaceManager.PrepareUploadInfo(null, null);
                             break;
                         case AcctType.User:
-                            uploader = new SendSpaceUploader(Program.conf.SendSpaceUserName, Program.conf.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(Program.conf.SendSpaceUserName, Program.conf.SendSpacePassword);
                             break;
                     }
                     break;
