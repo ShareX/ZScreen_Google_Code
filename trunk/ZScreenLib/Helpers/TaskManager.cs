@@ -32,8 +32,8 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
-using ZSS;
 using ZScreenLib.Properties;
+using ZSS;
 
 namespace ZScreenLib
 {
@@ -48,14 +48,14 @@ namespace ZScreenLib
 
         public void UploadFile()
         {
-            FileUploader uploader = null;
+            FileUploader fileHost = null;
             switch (mTask.MyFileUploader)
             {
                 case FileUploaderType.FTP:
                     UploadFtp();
                     break;
                 case FileUploaderType.SendSpace:
-                    uploader = new SendSpace();
+                    fileHost = new SendSpace();
                     switch (Program.conf.SendSpaceAccountType)
                     {
                         case AcctType.Anonymous:
@@ -67,7 +67,7 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.RapidShare:
-                    uploader = new RapidShareUploader(new RapidShareUploaderOptions()
+                    fileHost = new RapidShare(new RapidShareOptions()
                     {
                         AccountType = Program.conf.RapidShareAccountType,
                         PremiumUsername = Program.conf.RapidSharePremiumUserName,
@@ -76,13 +76,13 @@ namespace ZScreenLib
                     });
                     break;
             }
-            if (uploader != null)
+            if (fileHost != null)
             {
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-                uploader.ProxySettings = Adapter.GetProxySettings();
-                mTask.DestinationName = uploader.Name;
-                uploader.ProgressChanged += UploadProgressChanged;
-                string url = uploader.Upload(mTask.LocalFilePath);
+                fileHost.ProxySettings = Adapter.GetProxySettings();
+                mTask.DestinationName = fileHost.Name;
+                fileHost.ProgressChanged += UploadProgressChanged;
+                string url = fileHost.Upload(mTask.LocalFilePath);
                 if (!string.IsNullOrEmpty(url) && mTask.MakeTinyURL)
                 {
                     url = Adapter.TryShortenURL(url);
