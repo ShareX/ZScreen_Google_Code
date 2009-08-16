@@ -55,7 +55,7 @@ namespace ZScreenLib
                     UploadFtp();
                     break;
                 case FileUploaderType.SendSpace:
-                    uploader = new SendSpaceUploader();
+                    uploader = new SendSpace();
                     switch (Program.conf.SendSpaceAccountType)
                     {
                         case AcctType.Anonymous:

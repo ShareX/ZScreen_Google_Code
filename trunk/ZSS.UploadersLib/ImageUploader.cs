@@ -24,24 +24,22 @@
 using System.Drawing;
 using System.IO;
 using UploadersLib.Helpers;
-using UploadersLib;
 
 namespace UploadersLib
 {
     public abstract class ImageUploader : Uploader
     {
-    	public abstract string Name {get;}
-    	/// API or Anonymous. Default: Anonymous
+        public abstract string Name { get; }
+
+        /// API or Anonymous. Default: Anonymous
         /// </summary>
-        protected UploadMode UploadMode { get; set; }		
-        public event ProgressEventHandler ProgressChanged;
-        public delegate void ProgressEventHandler(int progress);
+        protected UploadMode UploadMode { get; set; }
 
         protected ImageUploader()
         {
             this.UploadMode = UploadMode.ANONYMOUS;
         }
-        
+
         public abstract ImageFileManager UploadImage(Image image, string fileName);
 
         public ImageFileManager UploadImage(string filePath)
@@ -50,14 +48,6 @@ namespace UploadersLib
             ImageFileManager ifm = UploadImage(Image.FromFile(filePath), fileName);
             ifm.LocalFilePath = filePath;
             return ifm;
-        }
-
-        public void ReportProgress(int progress)
-        {
-            if (ProgressChanged != null)
-            {
-                ProgressChanged(progress);
-            }
         }
     }
 

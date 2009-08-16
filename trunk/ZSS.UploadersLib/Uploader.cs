@@ -38,14 +38,21 @@ namespace UploadersLib
 {
     public class Uploader
     {
-        #region Inheritable Properties
+        public event ProgressEventHandler ProgressChanged;
+        public delegate void ProgressEventHandler(int progress);
+
+        public void ReportProgress(int progress)
+        {
+            if (ProgressChanged != null)
+            {
+                ProgressChanged(progress);
+            }
+        }
 
         [XmlIgnore]
         public IWebProxy ProxySettings { get; set; }
 
         public List<string> Errors = new List<string>();
-
-        #endregion
 
         public string ToErrorString()
         {
@@ -61,11 +68,19 @@ namespace UploadersLib
 
         #region Protected Methods
 
+        protected string GetResponse(string url)
+        {
+            return GetResponse(url, null);
+        }
+
         protected string GetResponse(string url, Dictionary<string, string> arguments)
         {
             try
             {
-                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                if (arguments != null)
+                {
+                    url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + x.Value).ToArray());
+                }
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = this.ProxySettings;
