@@ -467,6 +467,7 @@ namespace UploadersLib.FileUploaders
             private SendSpace sendSpace;
             private BackgroundWorker bw;
             private string url;
+            private int interval = 1000;
 
             public CheckProgress(string progressURL, SendSpace sendSpace)
             {
@@ -481,9 +482,11 @@ namespace UploadersLib.FileUploaders
             {
                 Thread.Sleep(1000);
                 ProgressInfo progressInfo = new ProgressInfo();
-                int progress;
+                int progress, elapsed;
+                DateTime time;
                 while (!bw.CancellationPending)
                 {
+                    time = DateTime.Now;
                     try
                     {
                         progressInfo.ParseResponse(sendSpace.GetResponse(url));
@@ -496,7 +499,11 @@ namespace UploadersLib.FileUploaders
                         }
                     }
                     catch { }
-                    Thread.Sleep(1000);
+                    elapsed = (int)(DateTime.Now - time).TotalMilliseconds;
+                    if (elapsed < interval)
+                    {
+                        Thread.Sleep(interval - elapsed);
+                    }
                 }
             }
 
