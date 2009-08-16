@@ -81,6 +81,7 @@ namespace ZScreenLib
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 uploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = uploader.Name;
+                uploader.ProgressChanged += UploadProgressChanged;
                 string url = uploader.Upload(mTask.LocalFilePath);
                 if (!string.IsNullOrEmpty(url) && mTask.MakeTinyURL)
                 {
