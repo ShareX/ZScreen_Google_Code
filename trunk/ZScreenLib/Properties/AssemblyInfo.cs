@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZScreenLib")]
-[assembly: AssemblyDescription("Advanced image/text uploading utility")]
+[assembly: AssemblyTitle("ZScreen")]
+[assembly: AssemblyDescription("Advanced image/text/file uploading utility")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ZScreen")]
+[assembly: AssemblyCompany("BrandonZ.net")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2009")]
+[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
