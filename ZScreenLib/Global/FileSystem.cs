@@ -163,8 +163,8 @@ namespace ZScreenLib
 
         public static void AppendDebug(string msg)
         {
-            // http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
-            string line = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss - ") + msg;
+            // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
+            string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
             Console.WriteLine(line);
             mDebug.AppendLine(line);
         }
