@@ -22,7 +22,6 @@
 #endregion
 
 using System.IO;
-using UploadersLib;
 
 namespace UploadersLib
 {

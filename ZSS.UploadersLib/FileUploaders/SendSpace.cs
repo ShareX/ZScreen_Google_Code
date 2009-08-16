@@ -26,6 +26,9 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
 using System;
+using System.Windows.Forms;
+using System.ComponentModel;
+using System.Threading;
 
 namespace UploadersLib.FileUploaders
 {
@@ -37,11 +40,11 @@ namespace UploadersLib.FileUploaders
         public static AcctType AccountType;
         public static string Username;
         public static string Password;
-        public static SendSpaceUploader.UploadInfo UploadInfo;
+        public static SendSpace.UploadInfo UploadInfo;
 
         public static bool PrepareUploadInfo(string username, string password)
         {
-            SendSpaceUploader sendSpace = new SendSpaceUploader();
+            SendSpace sendSpace = new SendSpace();
 
             try
             {
@@ -91,7 +94,7 @@ namespace UploadersLib.FileUploaders
         }
     }
 
-    public class SendSpaceUploader : FileUploader
+    public class SendSpace : FileUploader
     {
         private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
@@ -104,7 +107,7 @@ namespace UploadersLib.FileUploaders
 
         public string AppVersion = "1.0";
 
-        public SendSpaceUploader() { }
+        public SendSpace() { }
 
         public override string Name
         {
@@ -438,7 +441,12 @@ namespace UploadersLib.FileUploaders
             {
                 Dictionary<string, string> args = PrepareArguments(uploadInfo.MaxFileSize, uploadInfo.UploadIdentifier, uploadInfo.ExtraInfo);
 
-                string response = UploadData(data, fileName, uploadInfo.URL, "userfile", args);
+                string response;
+
+                using (CheckProgress progress = new CheckProgress(uploadInfo.ProgressURL, this))
+                {
+                    response = UploadData(data, fileName, uploadInfo.URL, "userfile", args);
+                }
 
                 if (!string.IsNullOrEmpty(response))
                 {
@@ -452,6 +460,88 @@ namespace UploadersLib.FileUploaders
         public override string Upload(byte[] data, string fileName)
         {
             return Upload(data, fileName, SendSpaceManager.UploadInfo);
+        }
+
+        public class CheckProgress : IDisposable
+        {
+            private SendSpace sendSpace;
+            private BackgroundWorker bw;
+            private string url;
+
+            public CheckProgress(string progressURL, SendSpace sendSpace)
+            {
+                url = progressURL;
+                this.sendSpace = sendSpace;
+                bw = new BackgroundWorker { WorkerSupportsCancellation = true };
+                bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+                bw.RunWorkerAsync();
+            }
+
+            private void bw_DoWork(object sender, DoWorkEventArgs e)
+            {
+                Thread.Sleep(1000);
+                ProgressInfo progressInfo = new ProgressInfo();
+                int progress;
+                while (!bw.CancellationPending)
+                {
+                    try
+                    {
+                        progressInfo.ParseResponse(sendSpace.GetResponse(url));
+                        if (progressInfo.Status != "fail" && !string.IsNullOrEmpty(progressInfo.Meter))
+                        {
+                            if (int.TryParse(progressInfo.Meter, out progress))
+                            {
+                                sendSpace.ReportProgress(progress);
+                            }
+                        }
+                    }
+                    catch { }
+                    Thread.Sleep(1000);
+                }
+            }
+
+            public class ProgressInfo
+            {
+                public string Status { get; set; }
+                public string ETA { get; set; }
+                public string Speed { get; set; }
+                public string UploadedBytes { get; set; }
+                public string TotalSize { get; set; }
+                public string Elapsed { get; set; }
+                public string Meter { get; set; }
+
+                public ProgressInfo() { }
+
+                public ProgressInfo(string response)
+                {
+                    ParseResponse(response);
+                }
+
+                public void ParseResponse(string response)
+                {
+                    XDocument xml = XDocument.Parse(response);
+                    XElement element = xml.Element("progress");
+
+                    Status = element.ElementValue("status");
+                    ETA = element.ElementValue("eta");
+                    Speed = element.ElementValue("speed");
+                    UploadedBytes = element.ElementValue("uploaded_bytes");
+                    TotalSize = element.ElementValue("total_size");
+                    Elapsed = element.ElementValue("elapsed");
+                    Meter = element.ElementValue("meter");
+                }
+
+                public override string ToString()
+                {
+                    return string.Format("Status: {0}, ETA: {1}, Speed: {2}\r\nBytes: {3}/{4}, Elapsed: {5}, Meter: {6}%",
+                        Status, ETA, Speed, UploadedBytes, TotalSize, Elapsed, Meter);
+                }
+            }
+
+            public void Dispose()
+            {
+                bw.CancelAsync();
+            }
         }
 
         #endregion
