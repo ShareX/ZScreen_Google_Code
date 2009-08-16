@@ -86,7 +86,7 @@
             // btnViewRootDir
             // 
             this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(480, 24);
+            this.btnViewRootDir.Location = new System.Drawing.Point(480, 22);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewRootDir.TabIndex = 116;
@@ -99,7 +99,7 @@
             this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseRootDir.Location = new System.Drawing.Point(392, 24);
+            this.btnBrowseRootDir.Location = new System.Drawing.Point(392, 22);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseRootDir.TabIndex = 115;

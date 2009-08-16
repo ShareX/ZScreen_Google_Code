@@ -42,7 +42,7 @@
             // 
             // pbPreview
             // 
-            this.pbPreview.Location = new System.Drawing.Point(43, 16);
+            this.pbPreview.Location = new System.Drawing.Point(44, 16);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(512, 200);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -53,7 +53,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 453);
+            this.ClientSize = new System.Drawing.Size(600, 452);
             this.Controls.Add(this.pbPreview);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -61,7 +61,6 @@
             this.Name = "ClipboardModePicker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clipboard Copy Mode";
-            this.Shown += new System.EventHandler(this.ClipboardModePicker_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.ResumeLayout(false);
 

@@ -32,7 +32,6 @@ namespace ZScreenLib
 {
     public partial class ConfigWizard : Form
     {
-
         public string RootFolder { get; private set; }
         public ImageDestType ImageDestinationType { get; private set; }
 
