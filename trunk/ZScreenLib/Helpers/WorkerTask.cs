@@ -46,9 +46,9 @@ namespace ZScreenLib
             [Description("Active Window")]
             TAKE_SCREENSHOT_WINDOW_ACTIVE,
             [Description("Selected Window")]
-            TAKE_SCREENSHOT_WINDOW_SELECTED,
+            TakeScreenshotWindowSelected,
             [Description("Crop Shot")]
-            TAKE_SCREENSHOT_CROPPED,
+            TakeScreenshotCropped,
             [Description("Last Crop Shot")]
             TAKE_SCREENSHOT_LAST_CROPPED,
             [Description("Auto Capture")]
@@ -80,7 +80,7 @@ namespace ZScreenLib
             UPDATE_STATUS_BAR_TEXT,
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
-            UPDATE_CROP_MODE,
+            UpdateCropMode,
             CHANGE_UPLOAD_DESTINATION,
             CHANGE_TRAY_ICON_PROGRESS,
             SHOW_TRAY_MESSAGE

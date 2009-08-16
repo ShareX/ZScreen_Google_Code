@@ -104,8 +104,8 @@ namespace ZScreenLib
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
                             CaptureScreen(ref task);
                             break;
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                        case WorkerTask.Jobs.TakeScreenshotWindowSelected:
+                        case WorkerTask.Jobs.TakeScreenshotCropped:
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                             CaptureRegionOrWindow(ref task);
                             break;
@@ -158,7 +158,7 @@ namespace ZScreenLib
 
         #region Worker Tasks
 
-        public void PrintImage(Image img)
+        public static void PrintImage(Image img)
         {
             if (img != null)
             {
@@ -167,7 +167,7 @@ namespace ZScreenLib
             }
         }
 
-        public void CopyImageToClipboard(Image img)
+        public static void CopyImageToClipboard(Image img)
         {
             if (img != null)
             {
@@ -183,7 +183,7 @@ namespace ZScreenLib
             }
         }
 
-        public void CopyImageToClipboard(string f)
+        public static void CopyImageToClipboard(string f)
         {
             if (File.Exists(f))
             {
@@ -192,7 +192,7 @@ namespace ZScreenLib
             }
         }
 
-        public void FlashNotifyIcon(NotifyIcon ni, Icon ico)
+        public static void FlashNotifyIcon(NotifyIcon ni, Icon ico)
         {
             if (ni != null && ico != null)
             {
@@ -200,7 +200,7 @@ namespace ZScreenLib
             }
         }
 
-        public void SetNotifyIconStatus(WorkerTask task, NotifyIcon ni, Icon ico)
+        public static void SetNotifyIconStatus(WorkerTask task, NotifyIcon ni, Icon ico)
         {
             if (task != null && ni != null && ico != null)
             {
@@ -209,7 +209,7 @@ namespace ZScreenLib
             }
         }
 
-        public void SetNotifyIconBalloonTip(NotifyIcon ni, string title, string msg, ToolTipIcon ico)
+        public static void SetNotifyIconBalloonTip(NotifyIcon ni, string title, string msg, ToolTipIcon ico)
         {
             if (ni != null && !string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(msg))
             {
@@ -217,7 +217,7 @@ namespace ZScreenLib
             }
         }
 
-        public void UpdateNotifyIconProgress(NotifyIcon ni, int progress)
+        public static void UpdateNotifyIconProgress(NotifyIcon ni, int progress)
         {
             if (ni != null)
             {
@@ -226,7 +226,7 @@ namespace ZScreenLib
             }
 
         }
-        public void SaveImage(Image img)
+        public static void SaveImage(Image img)
         {
             if (img != null)
             {
@@ -304,7 +304,7 @@ namespace ZScreenLib
                 case WorkerTask.ProgressType.SET_ICON_BUSY:
                     SetNotifyIconStatus(e.UserState as WorkerTask, mZScreen.niTray, Resources.zss_busy);
                     break;
-                case WorkerTask.ProgressType.UPDATE_CROP_MODE:
+                case WorkerTask.ProgressType.UpdateCropMode:
                     mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
                     break;
                 case WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
@@ -543,10 +543,10 @@ namespace ZScreenLib
                 case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                     StartBW_ActiveWindow();
                     break;
-                case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED:
+                case WorkerTask.Jobs.TakeScreenshotWindowSelected:
                     StartBW_SelectedWindow();
                     break;
-                case WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED:
+                case WorkerTask.Jobs.TakeScreenshotCropped:
                     StartBW_CropShot();
                     break;
                 case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
@@ -610,15 +610,15 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        using (Crop c = new Crop(imgSS, task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
+                        using (Crop c = new Crop(imgSS, task.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected))
                         {
                             if (c.ShowDialog() == DialogResult.OK)
                             {
-                                if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                                if (task.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Program.LastRegion.IsEmpty)
                                 {
                                     task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
                                 }
-                                else if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                                else if (task.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Program.LastCapture.IsEmpty)
                                 {
                                     task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
                                 }
@@ -646,7 +646,7 @@ namespace ZScreenLib
             }
             finally
             {
-                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_CROP_MODE);
+                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
                 mTakingScreenShot = false;
             }
 
@@ -660,7 +660,7 @@ namespace ZScreenLib
             PublishImage(ref task);
         }
 
-        private void SaveImageToClipboard(string fullFile)
+        private static void SaveImageToClipboard(string fullFile)
         {
             if (File.Exists(fullFile))
             {
@@ -1166,7 +1166,7 @@ namespace ZScreenLib
         {
             if (!mTakingScreenShot)
             {
-                StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotWindowSelected);
             }
         }
 
@@ -1174,7 +1174,7 @@ namespace ZScreenLib
         {
             if (!mTakingScreenShot)
             {
-                StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED);
+                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotCropped);
             }
         }
 

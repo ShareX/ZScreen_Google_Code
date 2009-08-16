@@ -249,7 +249,7 @@ namespace ZScreenLib
                     this.WindowState = Program.conf.WindowState;
                     ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
-                if (Program.conf.ShowInTaskbar)
+                if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
                 {
                     ShowInTaskbar = true;
                 }
@@ -1340,7 +1340,7 @@ namespace ZScreenLib
 
             ZScreen_Windows7onlyTasks();
             // Loader.Splash.Close();
-            if (Program.conf.ShowInTaskbar)
+            if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
             {
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = true;
