@@ -33,13 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ZScreen\Lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ZScreen\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -57,16 +57,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ClipboardModePicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ClipboardModePicker.designer.cs">
+    <Compile Include="Forms\ClipboardModePicker.Designer.cs">
       <DependentUpon>ClipboardModePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ConfigWizard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConfigWizard.designer.cs">
+    <Compile Include="Forms\ConfigWizard.Designer.cs">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Crop.cs">
@@ -78,44 +84,60 @@
     <Compile Include="Forms\DekiWikiPath.designer.cs">
       <DependentUpon>DekiWikiPath.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextViewer.Designer.cs">
+      <DependentUpon>TextViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserPassBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserPassBox.Designer.cs">
+      <DependentUpon>UserPassBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global\Adapter.cs" />
     <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\Enums.cs" />
+    <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FileSystem.cs" />
     <Compile Include="Global\GDI.cs" />
-    <Compile Include="Global\GraphicsCore.cs" />
-    <Compile Include="Global\NameParser.cs" />
     <Compile Include="Global\GraphicsMgr.cs" />
+    <Compile Include="Global\ImageEffects.cs" />
+    <Compile Include="Global\NameParser.cs" />
+    <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Global\UploadManager.cs" />
     <Compile Include="Global\User32.cs" />
-    <Compile Include="Global\ImageEffects.cs" />
+    <Compile Include="Helpers\AppInfo.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
+    <Compile Include="Helpers\Debug.cs" />
+    <Compile Include="Helpers\GraphicsCore.cs" />
+    <Compile Include="Helpers\HistoryItem.cs" />
+    <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\ImageSoftware.cs" />
-    <Compile Include="Helpers\WorkerTask.cs" />
+    <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Helpers\ProxyInfo.cs" />
     <Compile Include="Helpers\RoundedRectangle.cs" />
-    <Compile Include="Helpers\TaskManager.cs" />
-    <Compile Include="Helpers\Worker.cs" />
+    <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
-    <Compile Include="Forms\InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Loader.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="UserControls\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\NumericUpDownTimer.designer.cs">
+    <Compile Include="UserControls\NumericUpDownTimer.Designer.cs">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -132,24 +154,24 @@
       <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
       <Name>ZSS.ImageEditorLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj">
-      <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
-      <Name>ZSS.ImageUploadersLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
       <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
       <Name>ZSS.IndexersLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploadersLib.csproj">
-      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
-      <Name>ZSS.TextUploadersLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
       <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
       <Name>ZSS.UpdateCheckerLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
+      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
+      <Name>UploadersLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ClipboardModePicker.resx">
       <DependentUpon>ClipboardModePicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +180,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DekiWikiPath.resx">
       <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TextViewer.resx">
+      <DependentUpon>TextViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserPassBox.resx">
+      <DependentUpon>UserPassBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -187,6 +217,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zss-tray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\au.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\us.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -106,7 +106,7 @@
             // pbFlagTR
             // 
             this.pbFlagTR.BackColor = System.Drawing.Color.Transparent;
-            this.pbFlagTR.Image = global::ZSS.Properties.Resources.tr;
+            this.pbFlagTR.Image = global::ZScreenLib.Properties.Resources.tr;
             this.pbFlagTR.Location = new System.Drawing.Point(29, 248);
             this.pbFlagTR.Name = "pbFlagTR";
             this.pbFlagTR.Size = new System.Drawing.Size(16, 11);
@@ -131,7 +131,7 @@
             // pbFlagAU
             // 
             this.pbFlagAU.BackColor = System.Drawing.Color.Transparent;
-            this.pbFlagAU.Image = global::ZSS.Properties.Resources.au;
+            this.pbFlagAU.Image = global::ZScreenLib.Properties.Resources.au;
             this.pbFlagAU.Location = new System.Drawing.Point(29, 224);
             this.pbFlagAU.Name = "pbFlagAU";
             this.pbFlagAU.Size = new System.Drawing.Size(16, 11);
@@ -156,7 +156,7 @@
             // pbFlagUS
             // 
             this.pbFlagUS.BackColor = System.Drawing.Color.Transparent;
-            this.pbFlagUS.Image = global::ZSS.Properties.Resources.us;
+            this.pbFlagUS.Image = global::ZScreenLib.Properties.Resources.us;
             this.pbFlagUS.Location = new System.Drawing.Point(29, 200);
             this.pbFlagUS.Name = "pbFlagUS";
             this.pbFlagUS.Size = new System.Drawing.Size(16, 11);
@@ -182,7 +182,7 @@
             // 
             this.pbLogo.BackColor = System.Drawing.Color.Transparent;
             this.pbLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbLogo.Image = global::ZSS.Properties.Resources.main;
+            this.pbLogo.Image = global::ZScreenLib.Properties.Resources.main;
             this.pbLogo.Location = new System.Drawing.Point(16, 16);
             this.pbLogo.Name = "pbLogo";
             this.pbLogo.Size = new System.Drawing.Size(192, 136);

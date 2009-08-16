@@ -1,6 +1,6 @@
 ﻿namespace ZScreenLib
 {
-    partial class NumericUpDownTimer
+    public partial class NumericUpDownTimer
     {
         /// <summary> 
         /// Required designer variable.

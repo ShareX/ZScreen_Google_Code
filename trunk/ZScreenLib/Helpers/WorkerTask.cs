@@ -27,16 +27,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using ZSS.ImageUploadersLib.Helpers;
-using ZSS.TextUploadersLib;
 using System.Runtime.InteropServices;
-using ZSS.TextUploadersLib.Helpers;
 using ZSS;
-using ZSS.ImageUploadersLib;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.TextServices;
 
 namespace ZScreenLib
 {
-    public class MainAppTask
+    public class WorkerTask
     {
         #region "Enums"
 
@@ -82,7 +81,7 @@ namespace ZScreenLib
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
             UPDATE_CROP_MODE,
-            UPDATE_UPLOAD_DESTINATION,
+            CHANGE_UPLOAD_DESTINATION,
             CHANGE_TRAY_ICON_PROGRESS,
             SHOW_TRAY_MESSAGE
         }
@@ -163,11 +162,11 @@ namespace ZScreenLib
         ///// <summary>
         ///// FTP Account Name, TinyPic, ImageShack
         ///// </summary>
-        public string DestinationName { get; set; }
+        public string DestinationName = "File";
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
-        public ImageDestType ImageDestCategory { get; set; }
+        public ImageDestType MyImageUploader { get; set; }
         /// <summary>
         /// Pictures List to access Local file path, URL
         /// </summary>
@@ -187,12 +186,17 @@ namespace ZScreenLib
         public TextUploader MyTextUploader { get; set; }
         #endregion
 
+        #region "Properties for Category: Binary"
+        public FileUploaderType MyFileUploader { get; set; }
+        public byte[] MyFile { get; set; }
+        #endregion
+
         /// <summary>
         /// Constructor taking Worker and Job
         /// </summary>
         /// <param name="worker"></param>
         /// <param name="job"></param>
-        public MainAppTask(BackgroundWorker worker, Jobs job)
+        public WorkerTask(BackgroundWorker worker, Jobs job)
         {
             this.MyWorker = worker;
             this.Job = job;
@@ -202,17 +206,17 @@ namespace ZScreenLib
         public void SetImage(Image img)
         {
             this.MyImage = img;
-            if (Loader.conf.CopyImageUntilURL)
+            if (Program.conf.CopyImageUntilURL)
             {
                 // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
-                this.MyWorker.ReportProgress((int)MainAppTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
             }
         }
 
         public bool SafeToUpload()
         {
             bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UPLOAD_FROM_CLIPBOARD)
-                && this.ImageDestCategory == ImageDestType.FTP) || this.MyImage != null;
+                && this.MyImageUploader == ImageDestType.FTP) || this.MyImage != null;
             if (!safe)
             {
                 this.Errors.Add("Not a valid image.");
@@ -245,7 +249,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureWindow(User32.GetWindowHandle(), Loader.conf.ShowCursor));
+                this.SetImage(User32.CaptureWindow(User32.GetWindowHandle(), Program.conf.ShowCursor));
             }
         }
 
@@ -256,7 +260,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureScreen(Loader.conf.ShowCursor));
+                this.SetImage(User32.CaptureScreen(Program.conf.ShowCursor));
             }
         }
 

@@ -24,7 +24,7 @@
 #region Source code: Greenshot (GPL)
 /*
     This file originated from the Greenshot project (GPL). It may or may not have been modified.
-    Please do not contact Greenshot about errors with this code. Instead contact the creators of this Loader.
+    Please do not contact Greenshot about errors with this code. Instead contact the creators of this program.
     URL: http://greenshot.sourceforge.net/
     Code (CVS): http://greenshot.cvs.sourceforge.net/viewvc/greenshot/
 */
@@ -43,7 +43,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace ZSS
+namespace ZScreenLib
 {
     public static class RoundedRectangle
     {

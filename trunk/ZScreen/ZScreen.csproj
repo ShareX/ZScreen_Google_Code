@@ -124,23 +124,11 @@
     <Compile Include="Forms\AutoCapture.Designer.cs">
       <DependentUpon>AutoCapture.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ClipboardModePicker.cs">
+    <Compile Include="Forms\DropWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ClipboardModePicker.Designer.cs">
-      <DependentUpon>ClipboardModePicker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ConfigWizard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ConfigWizard.Designer.cs">
-      <DependentUpon>ConfigWizard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\DekiWikiPath.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DekiWikiPath.designer.cs">
-      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    <Compile Include="Forms\DropWindow.Designer.cs">
+      <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SplashScreen.cs">
       <SubType>Form</SubType>
@@ -160,22 +148,11 @@
     <Compile Include="Forms\ShowScreenshot.Designer.cs">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global\ColorMatrices.cs" />
-    <Compile Include="Global\EventHandlers.cs" />
-    <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FormsMgr.cs" />
-    <Compile Include="Global\RegistrationHelper.cs" />
-    <Compile Include="Global\UploadInfo.cs" />
-    <Compile Include="Global\User32.cs" />
-    <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Helpers\HotkeyInfo.cs" />
     <Compile Include="Helpers\IECapt.cs" />
-    <Compile Include="Helpers\KeyboardHook.cs" />
-    <Compile Include="Global\Adapter.cs" />
     <Compile Include="Global\RegistryMgr.cs" />
-    <Compile Include="Helpers\BalloonTipHelper.cs" />
-    <Compile Include="Helpers\RoundedRectangle.cs" />
     <Compile Include="Helpers\WebPageCapture.cs" />
     <Compile Include="Helpers\WorkerPrimary.cs" />
     <Compile Include="Helpers\PrintHelper.cs" />
@@ -187,69 +164,16 @@
     <Compile Include="UserControls\AccountsControl.Designer.cs">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\NumericUpDownTimer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\NumericUpDownTimer.Designer.cs">
-      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Helpers\Debug.cs" />
-    <Compile Include="Global\Enums.cs" />
-    <Compile Include="Global\GraphicsMgr.cs" />
-    <Compile Include="Helpers\AppInfo.cs" />
-    <Compile Include="Global\UploadManager.cs" />
-    <Compile Include="Helpers\HistoryItem.cs" />
-    <Compile Include="Helpers\HistoryManager.cs" />
-    <Compile Include="Helpers\ImageSoftware.cs" />
-    <Compile Include="Global\NameParser.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
-    <Compile Include="Forms\UserPassBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\UserPassBox.Designer.cs">
-      <DependentUpon>UserPassBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\QuickOptions.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\QuickOptions.Designer.cs">
       <DependentUpon>QuickOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DropWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DropWindow.Designer.cs">
-      <DependentUpon>DropWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Global\ImageEffects.cs" />
-    <Compile Include="Helpers\ProxyInfo.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
-    <Compile Include="Helpers\XMLSettings.cs" />
-    <Compile Include="Forms\AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TextViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextViewer.Designer.cs">
-      <DependentUpon>TextViewer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Global\GDI.cs" />
-    <Compile Include="Global\Structures.cs" />
-    <Compile Include="Global\GraphicsCore.cs" />
     <Compile Include="Helpers\CacheCleanerTask.cs" />
-    <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\RemoteViewerTask.cs" />
-    <Compile Include="Forms\Crop.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\ViewRemote.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,7 +186,6 @@
     <Compile Include="Forms\ZScreen.Designer.cs">
       <DependentUpon>ZScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -325,28 +248,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ShowScreenshot.resx">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UserPassBox.resx">
-      <DependentUpon>UserPassBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\QuickOptions.resx">
       <DependentUpon>QuickOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DropWindow.resx">
-      <DependentUpon>DropWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TextViewer.resx">
-      <DependentUpon>TextViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -389,14 +296,9 @@
     <EmbeddedResource Include="Forms\AutoCapture.resx">
       <DependentUpon>AutoCapture.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ClipboardModePicker.resx">
-      <DependentUpon>ClipboardModePicker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ConfigWizard.resx">
-      <DependentUpon>ConfigWizard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DekiWikiPath.resx">
-      <DependentUpon>DekiWikiPath.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DropWindow.resx">
+      <DependentUpon>DropWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
@@ -407,9 +309,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\AccountsControl.resx">
       <DependentUpon>AccountsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
-      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
     <EmbeddedResource Include="UserControls\TextUploadersControl.resx">
@@ -443,6 +342,10 @@
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZScreenLib\ZScreenLib.csproj">
+      <Project>{2CB31685-9F2D-4017-9A98-C4EF1B92C928}</Project>
+      <Name>ZScreenLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
       <Name>ZSS.ColorsLib</Name>

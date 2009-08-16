@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersLib", "ZSS.UploadersLib\UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenLib", "ZScreenLib\ZScreenLib.csproj", "{2CB31685-9F2D-4017-9A98-C4EF1B92C928}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -213,6 +215,26 @@ Global
 		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Win32.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.CodeAnalysisDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.CodeAnalysisDebug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.CodeAnalysisDebug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.CodeAnalysisDebug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.CodeAnalysisDebug|Win32.ActiveCfg = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Inno|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Inno|Any CPU.Build.0 = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Inno|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Inno|Mixed Platforms.Build.0 = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Inno|Win32.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

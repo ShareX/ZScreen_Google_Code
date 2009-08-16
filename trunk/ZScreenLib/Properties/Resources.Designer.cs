@@ -60,6 +60,20 @@ namespace ZScreenLib.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap au {
+            get {
+                object obj = ResourceManager.GetObject("au", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap main {
+            get {
+                object obj = ResourceManager.GetObject("main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap nav_home {
             get {
                 object obj = ResourceManager.GetObject("nav_home", resourceCulture);
@@ -70,6 +84,20 @@ namespace ZScreenLib.Properties {
         internal static System.Drawing.Bitmap nav_user {
             get {
                 object obj = ResourceManager.GetObject("nav_user", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tr {
+            get {
+                object obj = ResourceManager.GetObject("tr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap us {
+            get {
+                object obj = ResourceManager.GetObject("us", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

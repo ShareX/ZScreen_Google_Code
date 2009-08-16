@@ -6,12 +6,15 @@ using System.IO;
 using System.Diagnostics;
 using ZScreenLib;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace ZSS
 {
     public static class Loader
     {
         // internal static ZSS.Forms.SplashScreen Splash = null;
+        public static WorkerPrimary Worker;
+        public static WorkerSecondary Worker2;
 
         [STAThread]
         static void Main()
@@ -34,7 +37,24 @@ namespace ZSS
             }
             else
             {
-                Program.RunZScreen();
+                RunZScreen();
+            }
+        }
+
+        private static void RunZScreen()
+        {
+            try
+            {
+                Program.Load();
+                Application.Run(new ZScreen());
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
+            }
+            finally
+            {
+                Program.Unload();
             }
         }
 
