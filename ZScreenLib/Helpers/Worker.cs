@@ -23,15 +23,15 @@ namespace ZScreenLib
                    }
                    else
                    {
-                       using (Crop c = new Crop(imgSS, task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED))
+                       using (Crop c = new Crop(imgSS, task.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected))
                        {
                            if (c.ShowDialog() == DialogResult.OK)
                            {
-                               if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED && !Program.LastRegion.IsEmpty)
+                               if (task.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Program.LastRegion.IsEmpty)
                                {
                                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
                                }
-                               else if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED && !Program.LastCapture.IsEmpty)
+                               else if (task.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Program.LastCapture.IsEmpty)
                                {
                                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
                                }
@@ -59,7 +59,7 @@ namespace ZScreenLib
            }
            finally
            {
-               task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_CROP_MODE);
+               task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
                mTakingScreenShot = false;
            }
 

@@ -54,12 +54,12 @@ namespace ZScreenLib
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+            DoJob(this, WorkerTask.Jobs.TakeScreenshotWindowSelected);
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED);
+            DoJob(this, WorkerTask.Jobs.TakeScreenshotCropped);
         }
 
         private void tsbLastCropShot_Click(object sender, EventArgs e)
