@@ -89,13 +89,9 @@
       <Project>{2CB31685-9F2D-4017-9A98-C4EF1B92C928}</Project>
       <Name>ZScreenLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.ImageUploader\ZSS.ImageUploadersLib.csproj">
-      <Project>{223EC461-C070-4FF3-ADE7-92BC21AE66FC}</Project>
-      <Name>ZSS.ImageUploadersLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.TextUploader\ZSS.TextUploadersLib.csproj">
-      <Project>{04DEED7C-450E-4C12-9586-040448FC6DD5}</Project>
-      <Name>ZSS.TextUploadersLib</Name>
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
+      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
+      <Name>UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
