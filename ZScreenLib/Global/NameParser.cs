@@ -87,16 +87,16 @@ namespace ZScreenLib
                 switch (type)
                 {
                     case NameParserType.ActiveWindow:
-                        Pattern = Loader.conf.ActiveWindowPattern;
+                        Pattern = Program.conf.ActiveWindowPattern;
                         break;
                     case NameParserType.EntireScreen:
-                        Pattern = Loader.conf.EntireScreenPattern;
+                        Pattern = Program.conf.EntireScreenPattern;
                         break;
                     case NameParserType.Watermark:
-                        Pattern = Loader.conf.WatermarkText;
+                        Pattern = Program.conf.WatermarkText;
                         break;
                     case NameParserType.SaveFolder:
-                        Pattern = Loader.conf.SaveFolderPattern;
+                        Pattern = Program.conf.SaveFolderPattern;
                         break;
                 }
             }
@@ -206,10 +206,10 @@ namespace ZScreenLib
                 {
                     if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
                     {
-                        Loader.conf.AutoIncrement++;
+                        Program.conf.AutoIncrement++;
                     }
 
-                    sb = sb.Replace(ToString(ReplacementVariables.i), AddZeroes(Loader.conf.AutoIncrement, 4));
+                    sb = sb.Replace(ToString(ReplacementVariables.i), AddZeroes(Program.conf.AutoIncrement, 4));
                 }
             }
 

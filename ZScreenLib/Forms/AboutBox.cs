@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using System.Text;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -40,8 +41,8 @@ namespace ZScreenLib
         public AboutBox()
         {
             InitializeComponent();
-            this.Icon = ZSS.Properties.Resources.zss_main;
-            Bitmap bmp = ZSS.Properties.Resources.main;
+            this.Icon = Resources.zss_main;
+            Bitmap bmp = Resources.main;
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-250));
             pbLogo.Image = bmp;
@@ -87,7 +88,7 @@ namespace ZScreenLib
 
             saturation += step;
 
-            Bitmap bmp = ZSS.Properties.Resources.main;
+            Bitmap bmp = Resources.main;
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(-saturation * multiply));
             pbLogo.Image = bmp;

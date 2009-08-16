@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using ZSS;
 
 namespace ZScreenLib
 {
@@ -45,7 +46,7 @@ namespace ZScreenLib
         void Watcher_Created(object sender, FileSystemEventArgs e)
         {
             FileSystem.AppendDebug(string.Format("Added {0}", e.FullPath));
-            if (Program.Worker.UploadUsingFileSystem(new List<string>() { e.FullPath }))
+            if (Loader.Worker.UploadUsingFileSystem(new List<string>() { e.FullPath }))
             {
                 try
                 {

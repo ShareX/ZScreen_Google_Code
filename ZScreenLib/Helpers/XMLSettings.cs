@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
@@ -32,10 +33,11 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
+using UploadersLib;
+using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
 using ZSS;
-using ZSS.ImageUploadersLib;
 using ZSS.IndexersLib;
-using ZSS.TextUploadersLib;
 
 namespace ZScreenLib
 {
@@ -49,8 +51,10 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool RunOnce = false;
+        public FormWindowState WindowState = FormWindowState.Normal;
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
+        public static string XMLFileName = string.Format("{0}-{1}-Settings.xml", Application.ProductName, Application.ProductVersion);
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
@@ -59,6 +63,7 @@ namespace ZScreenLib
         public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextDestMode = TextDestType.FTP;
+        public FileUploaderType FileDestMode = FileUploaderType.RapidShare;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
@@ -67,6 +72,32 @@ namespace ZScreenLib
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
         public string HelpToLanguage = "en";
+
+        //~~~~~~~~~~~~~~~~~~~~~
+        //  Destinations
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        // ImageBam 
+
+        public string ImageBamApiKey = string.Empty;
+        public string ImageBamSecret = string.Empty;
+        public int ImageBamGalleryActive = 0;
+        public bool ImageBamContentNSFW = false;
+        public List<string> ImageBamGallery = new List<string>();
+        public int ImageBamGallerySelected = 0;
+
+        // Rapid Share 
+
+        public string RapidSharePremiumUserName = string.Empty;
+        public string RapidShareCollectorsID = string.Empty;
+        public string RapidSharePassword = string.Empty;
+        public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
+
+        // SendSpace
+
+        public AcctType SendSpaceAccountType = AcctType.Anonymous;
+        public string SendSpaceUserName = string.Empty;
+        public string SendSpacePassword = string.Empty;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
@@ -181,9 +212,9 @@ namespace ZScreenLib
         public bool WatermarkUseBorder = false;
         public decimal WatermarkImageScale = 100;
 
-        //~~~~~~~~~~~~~~~~~~~~~
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         //  Text Uploaders & URL Shorteners
-        //~~~~~~~~~~~~~~~~~~~~~
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public List<TextUploader> TextUploadersList = new List<TextUploader>();
         public int TextUploaderSelected = 0;
@@ -227,9 +258,9 @@ namespace ZScreenLib
 
         public UploadMode UploadMode = UploadMode.API;
         public decimal ErrorRetryCount = 3;
-        public bool ImageUploadRetry = true;
+        public bool ImageUploadRetryOnFail = true;
         public bool AddFailedScreenshot = false;
-        public bool AutoChangeUploadDestination = false;
+        public bool ImageUploadRetryOnTimeout = false;
         public decimal UploadDurationLimit = 15000;
 
         // ImageShack
@@ -594,20 +625,20 @@ namespace ZScreenLib
 
         #region I/O Methods
 
-        public void Save()
+        public void Write()
         {
-            new Thread(SaveThread).Start(Loader.XMLSettingsFile);
+            new Thread(SaveThread).Start(Program.appSettings.GetSettingsFilePath());
         }
 
         public void SaveThread(object filePath)
         {
             lock (this)
             {
-                Save((string)filePath);
+                Write((string)filePath);
             }
         }
 
-        public void Save(string filePath)
+        public void Write(string filePath)
         {
             try
             {
@@ -631,37 +662,63 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            return Read(Loader.XMLSettingsFile);
+            string settingsFile = Program.appSettings.GetSettingsFilePath();
+            if (!File.Exists(settingsFile))
+            {
+                if (File.Exists(Program.appSettings.XMLSettingsFile))
+                {
+                    // Step 2 - Attempt to read previous Application Version specific Settings file
+                    settingsFile = Program.appSettings.XMLSettingsFile;
+                }
+                else
+                {
+                    // Step 3 - Attempt to read conventional Settings file
+                    settingsFile = Program.XMLSettingsFile;
+                }
+            }
+
+            if (settingsFile != Program.appSettings.GetSettingsFilePath())
+            {
+                // Update AppSettings.xml
+                File.Copy(settingsFile, Program.appSettings.GetSettingsFilePath());
+            }
+
+            Program.appSettings.XMLSettingsFile = Program.appSettings.GetSettingsFilePath();
+            return Read(Program.appSettings.XMLSettingsFile);
+
         }
 
         public static XMLSettings Read(string filePath)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            }
-
-            if (File.Exists(filePath))
-            {
-                try
+                string settingsDir = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(settingsDir))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open))
-                    {
-                        return xs.Deserialize(fs) as XMLSettings;
-                    }
+                    Directory.CreateDirectory(settingsDir);
                 }
-                catch (Exception ex)
+                if (File.Exists(filePath))
                 {
-                    // We dont need a MessageBox when we rename enumerations
-                    // Renaming enums tend to break parts of serialization
-                    FileSystem.AppendDebug(ex.ToString());
-                    OpenFileDialog dlg = new OpenFileDialog { Filter = Loader.FILTER_SETTINGS };
-                    dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                    dlg.InitialDirectory = Loader.appSettings.RootDir;
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                    try
                     {
-                        return XMLSettings.Read(dlg.FileName);
+                        XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
+                        using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                        {
+                            return xs.Deserialize(fs) as XMLSettings;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // We dont need a MessageBox when we rename enumerations
+                        // Renaming enums tend to break parts of serialization
+                        FileSystem.AppendDebug(ex.ToString());
+                        OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
+                        dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
+                        dlg.InitialDirectory = Program.appSettings.RootDir;
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            return XMLSettings.Read(dlg.FileName);
+                        }
                     }
                 }
             }

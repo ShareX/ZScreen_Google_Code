@@ -24,9 +24,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ZSS.ImageUploadersLib.Helpers;
-using ZSS;
-using ZSS.ImageUploadersLib;
+using UploadersLib;
+using UploadersLib.Helpers;
 using ZScreenLib.Properties;
 
 // Last working class that supports multiple screenshots histories:
@@ -91,20 +90,20 @@ namespace ZScreenLib
         /// Sets Clipboard text and returns the content
         /// </summary>
         /// <returns></returns>
-        public static string SetClipboardText(MainAppTask task)
+        public static string SetClipboardText(WorkerTask task)
         {
             ScreenshotsHistory = task.ImageManager;
 
             if (ScreenshotsHistory != null)
             {
-                if (Loader.conf.ShowClipboardModeChooser)
+                if (Program.conf.ShowClipboardModeChooser)
                 {
                     ClipboardModePicker cmp = new ClipboardModePicker(task);
                     cmp.Icon = Resources.zss_main;
                     cmp.Show();
                 }
 
-                string url = ScreenshotsHistory.GetUrlByType(Loader.conf.ClipboardUriMode).ToString().Trim();
+                string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
 
                 if (task.MakeTinyURL)
                 {

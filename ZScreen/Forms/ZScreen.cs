@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
@@ -71,27 +70,27 @@ namespace ZScreenLib
             {
                 this.ShowInTaskbar = false;
                 this.WindowState = FormWindowState.Minimized;
-                Program.Worker = new WorkerPrimary(null);
+                Loader.Worker = new WorkerPrimary(null);
                 if (args[1] == "crop_shot")
                 {
-                    Program.Worker.StartBW_CropShot();
+                    Loader.Worker.StartBW_CropShot();
                 }
                 else if (args[1] == "selected_window")
                 {
-                    Program.Worker.StartBW_SelectedWindow();
+                    Loader.Worker.StartBW_SelectedWindow();
                 }
             }
             else
             {
                 InitializeComponent();
                 ZScreen_SetFormSettings();
-                Program.Worker = new WorkerPrimary(this);
-                Program.Worker2 = new WorkerSecondary(this);
+                Loader.Worker = new WorkerPrimary(this);
+                Loader.Worker2 = new WorkerSecondary(this);
                 ZScreen_ConfigGUI();
 
-                Program.Worker2.PerformOnlineTasks();
-                Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Program.Worker.ScreenshotUsingHotkeys);
-                if (Program.conf.CheckUpdates) Program.Worker2.CheckUpdates();
+                Loader.Worker2.PerformOnlineTasks();
+                Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+                if (Program.conf.CheckUpdates) Loader.Worker2.CheckUpdates();
             }
         }
 
@@ -246,7 +245,7 @@ namespace ZScreenLib
             if (Program.conf.ActionsToolbarMode)
             {
                 this.Hide();
-                Program.Worker.ShowActionsToolbar(false);
+                Loader.Worker.ShowActionsToolbar(false);
             }
             else
             {
@@ -261,7 +260,7 @@ namespace ZScreenLib
                 }
             }
 
-            Program.Worker2.CleanCache();
+            Loader.Worker2.CleanCache();
             StartDebug();
 
             FillClipboardCopyMenu();
@@ -823,11 +822,11 @@ namespace ZScreenLib
             if (mGuiIsReady)
             {
                 nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
-                Program.Worker.UpdateGuiControlsHistory();
+                Loader.Worker.UpdateGuiControlsHistory();
             }
             else
             {
-                Program.Worker2.LoadHistoryItems();
+                Loader.Worker2.LoadHistoryItems();
             }
 
             CheckFormSettings();
@@ -891,7 +890,7 @@ namespace ZScreenLib
 
         private void tsmQuickOptions_Click(object sender, EventArgs e)
         {
-            Program.Worker.ShowQuickOptions();
+            Loader.Worker.ShowQuickOptions();
         }
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
@@ -962,7 +961,7 @@ namespace ZScreenLib
             }
 
             Program.conf.Write();
-            Program.Worker.SaveHistoryItems();
+            Loader.Worker.SaveHistoryItems();
 
             FileSystem.AppendDebug("Settings written to file.");
         }
@@ -1342,12 +1341,12 @@ namespace ZScreenLib
 
         private void clipboardUpload_Click(object sender, EventArgs e)
         {
-            Program.Worker.UploadUsingClipboard();
+            Loader.Worker.UploadUsingClipboard();
         }
 
         private void selWindow_Click(object sender, EventArgs e)
         {
-            Program.Worker.StartBW_SelectedWindow();
+            Loader.Worker.StartBW_SelectedWindow();
         }
 
         private void tsmAboutMain_Click(object sender, EventArgs e)
@@ -1588,7 +1587,7 @@ namespace ZScreenLib
 
         private void cropShot_Click(object sender, EventArgs e)
         {
-            Program.Worker.StartBW_CropShot();
+            Loader.Worker.StartBW_CropShot();
         }
 
         private void ShowMainWindow()
@@ -1807,7 +1806,7 @@ namespace ZScreenLib
             if (lbUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
-                Program.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CUSTOM_UPLOADER_TEST);
+                Loader.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CUSTOM_UPLOADER_TEST);
             }
         }
 
@@ -1912,12 +1911,12 @@ namespace ZScreenLib
                 return;
             }
 
-            Program.Worker.mSetHotkeys = true;
-            Program.Worker.mHKSelectedRow = e.RowIndex;
+            Loader.Worker.mSetHotkeys = true;
+            Loader.Worker.mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
 
-            dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = Program.Worker.GetSelectedHotkeySpecialString() + " <Set Keys>";
+            dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = Loader.Worker.GetSelectedHotkeySpecialString() + " <Set Keys>";
         }
 
         private void UpdateHotkeysDGV()
@@ -1990,17 +1989,17 @@ namespace ZScreenLib
 
         private void dgvHotkeys_Leave(object sender, EventArgs e)
         {
-            Program.Worker.QuitSettingHotkeys();
+            Loader.Worker.QuitSettingHotkeys();
         }
 
         private void ZScreen_Leave(object sender, EventArgs e)
         {
-            Program.Worker.QuitSettingHotkeys();
+            Loader.Worker.QuitSettingHotkeys();
         }
 
         private void dgvHotkeys_MouseLeave(object sender, EventArgs e)
         {
-            Program.Worker.QuitSettingHotkeys();
+            Loader.Worker.QuitSettingHotkeys();
         }
 
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
@@ -2340,45 +2339,45 @@ namespace ZScreenLib
         private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Program.Worker.StartBW_EntireScreen();
+            Loader.Worker.StartBW_EntireScreen();
         }
 
         private void selectedWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Program.Worker.StartBW_SelectedWindow();
+            Loader.Worker.StartBW_SelectedWindow();
         }
 
         private void rectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Program.Worker.StartBW_CropShot();
+            Loader.Worker.StartBW_CropShot();
         }
 
         private void lastRectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Program.Worker.StartBW_LastCropShot();
+            Loader.Worker.StartBW_LastCropShot();
         }
 
         private void tsmDropWindow_Click(object sender, EventArgs e)
         {
-            Program.Worker.ShowDropWindow();
+            Loader.Worker.ShowDropWindow();
         }
 
         private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
         {
-            Program.Worker.UploadUsingClipboard();
+            Loader.Worker.UploadUsingClipboard();
         }
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.Worker.StartWorkerTranslator();
+            Loader.Worker.StartWorkerTranslator();
         }
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.Worker.ScreenColorPicker();
+            Loader.Worker.ScreenColorPicker();
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
@@ -2617,7 +2616,7 @@ namespace ZScreenLib
 
         private void btnTranslateMethod()
         {
-            Program.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
+            Loader.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
                 GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
                 GoogleTranslate.FindLanguage(Program.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
         }
@@ -2676,7 +2675,7 @@ namespace ZScreenLib
 
         private void cmsRetryUpload_Click(object sender, EventArgs e)
         {
-            Program.Worker.HistoryRetryUpload((HistoryItem)lbHistory.SelectedItem);
+            Loader.Worker.HistoryRetryUpload((HistoryItem)lbHistory.SelectedItem);
         }
 
         private void pbHistoryThumb_Click(object sender, EventArgs e)
@@ -2874,7 +2873,7 @@ namespace ZScreenLib
 
         private void FTPAccountTestButton_Click(object sender, EventArgs e)
         {
-            Program.Worker2.TestFTPAccountAsync(GetSelectedFTP());
+            Loader.Worker2.TestFTPAccountAsync(GetSelectedFTP());
         }
 
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
@@ -2912,7 +2911,7 @@ namespace ZScreenLib
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
-            Program.Worker2.CheckUpdates();
+            Loader.Worker2.CheckUpdates();
         }
 
         private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
@@ -2979,8 +2978,8 @@ namespace ZScreenLib
             Program.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
             if (mGuiIsReady)
             {
-                Program.Worker.CheckHistoryItems();
-                Program.Worker.SaveHistoryItems();
+                Loader.Worker.CheckHistoryItems();
+                Loader.Worker.SaveHistoryItems();
             }
         }
 
@@ -2995,14 +2994,14 @@ namespace ZScreenLib
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 lbHistory.Items.Clear();
-                Program.Worker.CheckHistoryItems();
-                Program.Worker.SaveHistoryItems();
+                Loader.Worker.CheckHistoryItems();
+                Loader.Worker.SaveHistoryItems();
             }
         }
 
         private void tsmQuickActions_Click(object sender, EventArgs e)
         {
-            Program.Worker.ShowActionsToolbar(true);
+            Loader.Worker.ShowActionsToolbar(true);
         }
 
 
@@ -3324,7 +3323,7 @@ namespace ZScreenLib
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.Worker.ShowAutoCapture();
+            Loader.Worker.ShowAutoCapture();
         }
 
         private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
@@ -3363,7 +3362,7 @@ namespace ZScreenLib
 
         private void btnTranslateTo1_Click(object sender, EventArgs e)
         {
-            Program.Worker.TranslateTo1();
+            Loader.Worker.TranslateTo1();
         }
 
         private void cbLockFormSize_CheckedChanged(object sender, EventArgs e)
@@ -3379,7 +3378,7 @@ namespace ZScreenLib
         /// <param name="e"></param>
         private void tmrApp_Tick(object sender, EventArgs e)
         {
-            Program.Worker2.PerformOnlineTasks();
+            Loader.Worker2.PerformOnlineTasks();
         }
 
         private void confApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -3427,7 +3426,7 @@ namespace ZScreenLib
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    WorkerTask task = Program.Worker.GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask task = Loader.Worker.GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
                     task.MyText = TextInfo.FromString(testString);
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;
@@ -3732,7 +3731,7 @@ namespace ZScreenLib
 
         private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Program.Worker.mSetHotkeys)
+            if (Loader.Worker.mSetHotkeys)
             {
                 if (e.KeyValue == (int)Keys.Up || e.KeyValue == (int)Keys.Down || e.KeyValue == (int)Keys.Left || e.KeyValue == (int)Keys.Right)
                 {
@@ -3948,7 +3947,7 @@ namespace ZScreenLib
             if (pbWebPageImage.Image != null)
             {
                 Bitmap bmp = new Bitmap(pbWebPageImage.Image);
-                Program.Worker.StartWorkerPictures(WorkerTask.Jobs.UPLOAD_IMAGE, bmp);
+                Loader.Worker.StartWorkerPictures(WorkerTask.Jobs.UPLOAD_IMAGE, bmp);
             }
         }
 

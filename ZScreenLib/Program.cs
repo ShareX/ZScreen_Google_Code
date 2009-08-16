@@ -22,15 +22,12 @@
 #endregion
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using Microsoft.WindowsAPICodePack;
-using ZSS.Properties;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
@@ -38,6 +35,12 @@ namespace ZScreenLib
 {
     public static class Program
     {
+        // App Info
+        private static string mProductName = Application.ProductName;
+        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(mProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
+        public static bool Portable { get; private set; }
+        public static bool MultipleInstance { get; private set; }
+
         internal static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
         public static AppSettings appSettings = AppSettings.Read();
 
@@ -45,9 +48,9 @@ namespace ZScreenLib
         private static readonly string HistoryFileName = "History.xml";
         private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
-        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        public static bool Portable { get; private set; }
 
+        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
+        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
         public static string RootAppFolder { get; set; }
         public static string RootImagesDir { get; private set; }
 
@@ -75,9 +78,7 @@ namespace ZScreenLib
 
         private static string[] AppDirs;
 
-        internal static string DefaultXMLFilePath;
-
-        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string DefaultXMLFilePath { get; private set; }
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_PROJECTPAGE = "http://code.google.com/p/zscreen";
@@ -97,13 +98,86 @@ namespace ZScreenLib
         public static string[] zTextFileTypes = { "txt", "log" };
         public static string[] zWebpageFileTypes = { "html", "htm" };
 
-        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(Application.ProductName,
-            Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
-        public static bool MultipleInstance { get; private set; }
-        private static string mProductName = Application.ProductName;
-
         public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
+
+        public static void Load()
+        {
+            FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
+            FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
+
+            ConfigWizard cw = null;
+
+            if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
+            {
+                Portable = true;
+                RootAppFolder = PortableRootFolder;
+                mProductName += " Portable";
+                mAppInfo.AppName = mProductName;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Program.appSettings.RootDir))
+                {
+                    cw = new ConfigWizard(DefaultRootAppFolder);
+                    cw.ShowDialog();
+                    Program.appSettings.RootDir = cw.RootFolder;
+                }
+                RootAppFolder = Program.appSettings.RootDir;
+            }
+
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
+            RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
+
+            FileSystem.AppendDebug("Initializing Default folder paths...");
+            Program.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
+            // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
+            FileSystem.AppendDebug("Reading " + Path.GetFileName(Program.XMLSettingsFile));
+            Program.conf = XMLSettings.Read();
+
+            Program.InitializeFiles();
+
+            // Use Configuration Wizard Settings if applied
+            if (cw != null)
+            {
+                Program.conf.ScreenshotDestMode = cw.ImageDestinationType;
+            }
+
+            bool bGrantedOwnership;
+            try
+            {
+                Guid assemblyGuid = Guid.Empty;
+                object[] assemblyObjects = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), true);
+                if (assemblyObjects.Length > 0)
+                {
+                    assemblyGuid = new Guid(((System.Runtime.InteropServices.GuidAttribute)assemblyObjects[0]).Value);
+                }
+                Program.mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                bGrantedOwnership = false;
+            }
+
+            if (!bGrantedOwnership)
+            {
+                MultipleInstance = true;
+                mProductName += "*";
+                mAppInfo.AppName = mProductName;
+            }
+
+            ZScreenKeyboardHook = new KeyboardHook();
+        }
+
+        public static void Unload()
+        {
+            FileSystem.WriteDebugFile();
+            if (!Portable)
+            {
+                appSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+            }
+            ZScreenKeyboardHook.Dispose();
+        }
 
         public static void SetRootFolder(string dp)
         {
@@ -285,96 +359,9 @@ namespace ZScreenLib
         public static Rectangle LastRegion = Rectangle.Empty;
         public static Rectangle LastCapture = Rectangle.Empty;
 
-        public static WorkerPrimary Worker;
-        public static WorkerSecondary Worker2;
-
         public static Mutex mAppMutex;
 
         public static KeyboardHook ZScreenKeyboardHook;
 
-        internal static void RunZScreen()
-        {
-            FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
-            FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
-
-            ConfigWizard cw = null;
-
-            if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
-            {
-                Portable = true;
-                RootAppFolder = PortableRootFolder;
-                mProductName += " Portable";
-                mAppInfo.AppName = mProductName;
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(appSettings.RootDir))
-                {
-                    cw = new ConfigWizard(DefaultRootAppFolder);
-                    cw.ShowDialog();
-                    appSettings.RootDir = cw.RootFolder;
-                }
-                RootAppFolder = appSettings.RootDir;
-            }
-
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", Program.RootAppFolder));
-            RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
-
-            FileSystem.AppendDebug("Initializing Default folder paths...");
-            InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
-            // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-            FileSystem.AppendDebug("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-            conf = XMLSettings.Read();
-
-            InitializeFiles();
-
-            // Use Configuration Wizard Settings if applied
-            if (cw != null)
-            {
-                conf.ScreenshotDestMode = cw.ImageDestinationType;
-            }
-
-            bool bGrantedOwnership;
-            try
-            {
-                Guid assemblyGuid = Guid.Empty;
-                object[] assemblyObjects = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), true);
-                if (assemblyObjects.Length > 0)
-                {
-                    assemblyGuid = new Guid(((System.Runtime.InteropServices.GuidAttribute)assemblyObjects[0]).Value);
-                }
-                mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                bGrantedOwnership = false;
-            }
-
-            if (!bGrantedOwnership)
-            {
-                MultipleInstance = true;
-                mProductName += "*";
-                mAppInfo.AppName = mProductName;
-            }
-
-            try
-            {
-                ZScreenKeyboardHook = new KeyboardHook();
-                Application.Run(new ZScreen());
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex);
-            }
-            finally
-            {
-                FileSystem.WriteDebugFile();
-                if (!Portable)
-                {
-                    appSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
-                }
-                ZScreenKeyboardHook.Dispose();
-            }
-        }
     }
 }

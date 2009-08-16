@@ -26,7 +26,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using ZSS;
-using ZSS.ImageUploadersLib;
+using UploadersLib;
 
 namespace ZScreenLib
 {
