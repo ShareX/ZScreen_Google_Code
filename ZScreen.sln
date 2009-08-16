@@ -18,6 +18,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EE237035-DB9F-4AE5-B3C6-6BA48A96A958}"
 	ProjectSection(SolutionItems) = preProject
 		Tools\sgen.exe = Tools\sgen.exe
+		Tools\SharpSvn-DB44-20-Win32.dll = Tools\SharpSvn-DB44-20-Win32.dll
+		Tools\SharpSvn-SASL21-22-Win32.dll = Tools\SharpSvn-SASL21-22-Win32.dll
+		Tools\SharpSvn.dll = Tools\SharpSvn.dll
+		Tools\SVNRevToAssemblyInfo.exe = Tools\SVNRevToAssemblyInfo.exe
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-3588-4A1D-926E-22C8692D345F}"
