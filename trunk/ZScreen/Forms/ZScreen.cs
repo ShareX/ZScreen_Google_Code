@@ -227,21 +227,6 @@ namespace ZScreenLib
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-            SetToolTip(nudtScreenshotDelay);
-
-            if (this.WindowState != FormWindowState.Maximized)
-            {
-                Rectangle screenRect = GraphicsMgr.GetScreenBounds();
-                screenRect.Inflate(-100, -100);
-                if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
-                {
-                    this.Size = Program.conf.WindowSize;
-                    this.Location = Program.conf.WindowLocation;
-                }
-            }
-
-            Adapter.AddToClipboardByDoubleClick(tpHistory);
-
             if (Program.conf.ActionsToolbarMode)
             {
                 this.Hide();
@@ -260,9 +245,23 @@ namespace ZScreenLib
                 }
             }
 
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                Rectangle screenRect = GraphicsMgr.GetScreenBounds();
+                screenRect.Inflate(-100, -100);
+                if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
+                {
+                    this.Size = Program.conf.WindowSize;
+                    this.Location = Program.conf.WindowLocation;
+                }
+            }
+
+            Adapter.AddToClipboardByDoubleClick(tpHistory);
+
             Loader.Worker2.CleanCache();
             StartDebug();
 
+            SetToolTip(nudtScreenshotDelay);
             FillClipboardCopyMenu();
             FillClipboardMenu();
 
@@ -274,6 +273,7 @@ namespace ZScreenLib
             turnLogo.ImageTurned += new ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
 
             niTray.Visible = true;
+            FileSystem.AppendDebug("Loaded ZScreen GUI...");
         }
 
         private void ZScreen_ConfigGUI()

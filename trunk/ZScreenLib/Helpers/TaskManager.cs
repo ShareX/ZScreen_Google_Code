@@ -28,12 +28,12 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using ZSS;
-using ZSS.Properties;
-using UploadersLib.FileUploaders;
 using UploadersLib;
-using UploadersLib.ImageUploaders;
+using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
+using ZSS;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
