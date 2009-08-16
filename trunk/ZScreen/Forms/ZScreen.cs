@@ -1341,7 +1341,7 @@ namespace ZScreenLib
 
             ZScreen_Windows7onlyTasks();
             // Loader.Splash.Close();
-            if (Program.conf.ShowInTaskbar && !this.ShowInTaskbar)
+            if (Program.conf.ShowInTaskbar)
             {
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = true;
