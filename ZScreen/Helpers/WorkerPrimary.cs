@@ -90,6 +90,7 @@ namespace ZScreenLib
                 }
             }
 
+            FileSystem.AppendDebug("."); // add a gap to distinguish between jobs
             FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
 
             switch (task.JobCategory)

@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ZScreen")]
-[assembly: AssemblyDescription("Advanced image/text uploading utility")]
+[assembly: AssemblyDescription("Advanced image/text/file uploading utility")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BrandonZ.net")]
 [assembly: AssemblyProduct("ZScreen")]
