@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using ZScreenLib;
-using ZScreenLib.Helpers;
 
 namespace ZScreenCLI
 {
@@ -11,7 +10,7 @@ namespace ZScreenCLI
         public Form1()
         {
             InitializeComponent();
-            ZScreenLib.Loader.Load();
+            ZScreenLib.Program.Load();
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
@@ -22,12 +21,12 @@ namespace ZScreenCLI
                     if (args[1].ToLower() == "crop_shot")
                     {
                         // Crop Shot
-                        CropShot(MainAppTask.Jobs.TAKE_SCREENSHOT_CROPPED);
+                        CropShot(WorkerTask.Jobs.TAKE_SCREENSHOT_CROPPED);
                     }
                     else if (args[1].ToLower() == "selected_window")
                     {
                         // Selected Window
-                        CropShot(MainAppTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
+                        CropShot(WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_SELECTED);
                     }
                     else if (args[1].ToLower() == "clipboard_upload")
                     {
@@ -46,14 +45,14 @@ namespace ZScreenCLI
             }
         }
 
-        private void CropShot(MainAppTask.Jobs job)
+        private void CropShot(WorkerTask.Jobs job)
         {
             Worker worker = new Worker();
             // TODO: replace temp by null. Get Worker to check for null before using BackgroundWorker
             BackgroundWorker temp = new BackgroundWorker();
             temp.WorkerReportsProgress = true;
-            MainAppTask task = new MainAppTask(temp, job);
-            task.ImageDestCategory = ZScreenLib.Loader.conf.ScreenshotDestMode;
+            WorkerTask task = new WorkerTask(temp, job);
+            task.MyImageUploader = ZScreenLib.Program.conf.ScreenshotDestMode;
             worker.CaptureRegionOrWindow(ref task);
             new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
             UploadManager.SetClipboardText(task);
@@ -76,7 +75,7 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (ZScreenLib.Loader.conf.BalloonTipOpenLink)
+            if (ZScreenLib.Program.conf.BalloonTipOpenLink)
             {
                 NotifyIcon ni = (NotifyIcon)sender;
                 new BalloonTipHelper(ni).ClickBalloonTip();
