@@ -30,7 +30,7 @@ using UploadersLib;
 
 namespace UploadersLib.FileUploaders
 {
-    public class RapidShareUploaderOptions
+    public class RapidShareOptions
     {
         public RapidShareAcctType AccountType = RapidShareAcctType.Free;
         public string PremiumUsername { get; set; }
@@ -39,17 +39,17 @@ namespace UploadersLib.FileUploaders
         public bool CheckFileSize, CheckFileMD5;
     }
 
-    public class RapidShareUploader : FileUploader
+    public class RapidShare : FileUploader
     {
         private string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
-        private RapidShareUploaderOptions Options { get; set; }
+        private RapidShareOptions Options { get; set; }
 
         public override string Name
         {
             get { return "RapidShare"; }
         }
 
-        public RapidShareUploader(RapidShareUploaderOptions options)
+        public RapidShare(RapidShareOptions options)
         {
             this.Options = options;
         }
