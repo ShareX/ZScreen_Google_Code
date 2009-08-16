@@ -227,6 +227,17 @@ namespace ZScreenLib
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                Rectangle screenRect = GraphicsMgr.GetScreenBounds();
+                screenRect.Inflate(-100, -100);
+                if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
+                {
+                    this.Size = Program.conf.WindowSize;
+                    this.Location = Program.conf.WindowLocation;
+                }
+            }
+
             if (Program.conf.ActionsToolbarMode)
             {
                 this.Hide();
@@ -239,20 +250,13 @@ namespace ZScreenLib
                     this.WindowState = Program.conf.WindowState;
                     ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
+                if (Program.conf.ShowInTaskbar)
+                {
+                    ShowInTaskbar = true;
+                }
                 else
                 {
                     Hide();
-                }
-            }
-
-            if (this.WindowState == FormWindowState.Normal)
-            {
-                Rectangle screenRect = GraphicsMgr.GetScreenBounds();
-                screenRect.Inflate(-100, -100);
-                if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
-                {
-                    this.Size = Program.conf.WindowSize;
-                    this.Location = Program.conf.WindowLocation;
                 }
             }
 
@@ -1337,6 +1341,11 @@ namespace ZScreenLib
 
             ZScreen_Windows7onlyTasks();
             // Loader.Splash.Close();
+            if (Program.conf.ShowInTaskbar && !this.ShowInTaskbar)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = true;
+            }
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
