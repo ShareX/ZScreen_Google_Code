@@ -86,7 +86,7 @@ namespace ZSS
             if (!string.IsNullOrEmpty(HttpPath))
             {
                 fileName = fileName.Replace(" ", "%20");
-                string path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), fileName);
+                string path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), Path, fileName);
                 if (!path.StartsWith("http://")) path = "http://" + path;
                 return path;
             }

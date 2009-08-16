@@ -142,7 +142,6 @@ namespace ZScreenLib
 
                     Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
                     //Program.zJumpList.Refresh();
-
                 }
                 catch (Exception ex)
                 {

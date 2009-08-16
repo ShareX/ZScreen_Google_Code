@@ -120,7 +120,7 @@ namespace ZScreenLib
             catch (WebException e)
             {
                 string status = ((FtpWebResponse)e.Response).StatusDescription;
-                if (status.StartsWith("550 Failed to change directory.") && acc.AutoCreateFolder)
+                if (status.StartsWith("550") && acc.AutoCreateFolder)
                 {
                     try
                     {
