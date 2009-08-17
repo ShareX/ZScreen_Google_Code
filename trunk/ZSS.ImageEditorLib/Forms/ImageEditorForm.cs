@@ -78,11 +78,6 @@ namespace Greenshot
             surface.MovingElementChanged += new SurfaceElementEventHandler(surfaceMovingElementChanged);
             panel1.Controls.Add(surface);
 
-            if (conf.Editor_WindowSize != null)
-            {
-                this.Size = (Size)conf.Editor_WindowSize;
-            }
-
             this.colorDialog.RecentColors = conf.Editor_RecentColors;
 
             UpdateFormControls();
@@ -114,6 +109,16 @@ namespace Greenshot
         public void SetImage(Image img)
         {
             surface.Image = img;
+
+            int gap = 150;
+            if (Screen.PrimaryScreen.Bounds.Width - img.Width > gap || Screen.PrimaryScreen.Bounds.Height - img.Height > gap)
+            {
+                this.Size = new Size(img.Width + gap, img.Height + gap);
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
         }
 
         public void SetImagePath(string fullpath)

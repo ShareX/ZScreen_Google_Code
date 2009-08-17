@@ -74,7 +74,7 @@ namespace ZScreenLib
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+            DoJob(this, WorkerTask.Jobs.UploadFromClipboard);
         }
 
         private void tsbDragDropWindow_Click(object sender, EventArgs e)
