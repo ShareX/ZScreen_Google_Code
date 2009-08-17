@@ -157,14 +157,15 @@ namespace ZScreenLib
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
 
-            if (Program.conf.WindowLocation.IsEmpty)
-            {
-                Program.conf.WindowLocation = this.Location;
-            }
-
-            if (Program.conf.WindowSize.IsEmpty)
-            {
-                Program.conf.WindowSize = this.Size;
+            if (this.WindowState == FormWindowState.Normal) {
+	            if (Program.conf.WindowLocation.IsEmpty)
+	            {
+	                Program.conf.WindowLocation = this.Location;
+	            }	
+	            if (Program.conf.WindowSize.IsEmpty)
+	            {
+	                Program.conf.WindowSize = this.Size;
+	            }           	
             }
 
             // Accounts - FTP
@@ -249,10 +250,11 @@ namespace ZScreenLib
                     this.WindowState = Program.conf.WindowState;
                     ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
-                if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
-                {
-                    ShowInTaskbar = true;
-                }
+//              else if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
+//              {
+//                	this.WindowState = FormWindowState.Minimized;
+//                  ShowInTaskbar = true;
+//              }
                 else
                 {
                     Hide();
@@ -926,7 +928,6 @@ namespace ZScreenLib
                     this.ShowInTaskbar = Program.conf.ShowInTaskbar;
                     this.Refresh();
                 }
-                Program.conf.WindowState = this.WindowState;
             }
         }
 
@@ -957,11 +958,12 @@ namespace ZScreenLib
 
         private void WriteSettings()
         {
-            if (mGuiIsReady && Program.conf.SaveFormSizePosition)
+            if (mGuiIsReady && Program.conf.SaveFormSizePosition && this.WindowState == FormWindowState.Normal)
             {
                 Program.conf.WindowLocation = this.Location;
                 Program.conf.WindowSize = this.Size;
             }
+            Program.conf.WindowState = this.WindowState;
 
             Program.conf.Write();
             Loader.Worker.SaveHistoryItems();
@@ -1337,13 +1339,15 @@ namespace ZScreenLib
             {
                 FileSystem.BackupAppSettings();
             }
-
-            ZScreen_Windows7onlyTasks();
+            
             // Loader.Splash.Close();
-            if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
+            if (Adapter.Windows7TaskbarIntegrationEnabled())
             {
-                this.WindowState = FormWindowState.Minimized;
-                this.ShowInTaskbar = true;
+            	ZScreen_Windows7onlyTasks();
+            	if (!Program.conf.OpenMainWindow) {
+            		this.WindowState = FormWindowState.Minimized;
+                	this.ShowInTaskbar = true;            		
+            	}
             }
         }
 
