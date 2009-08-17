@@ -46,7 +46,7 @@ namespace ZScreenLib
     public class WorkerPrimary
     {
         private ZScreen mZScreen;
-        internal bool mSetHotkeys, mTakingScreenShot, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
+        internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
         internal int mHKSelectedRow = -1;
 
         public WorkerPrimary(ZScreen myZScreen)
@@ -54,7 +54,7 @@ namespace ZScreenLib
             this.mZScreen = myZScreen;
         }
 
-        private BackgroundWorker CreateWorker()
+        public BackgroundWorker CreateWorker()
         {
             BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
             bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(BwApp_DoWork);
@@ -63,7 +63,7 @@ namespace ZScreenLib
             return bwApp;
         }
 
-        #region "Background Worker"
+        #region Worker Events
 
         private void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -96,32 +96,32 @@ namespace ZScreenLib
             switch (task.JobCategory)
             {
                 case JobCategoryType.PICTURES:
-                    PublishImage(ref task);
+                    new TaskManager(ref task).PublishImage();
                     break;
                 case JobCategoryType.SCREENSHOTS:
                     switch (task.Job)
                     {
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
-                            CaptureScreen(ref task);
+                            new TaskManager(ref task).CaptureScreen();
                             break;
                         case WorkerTask.Jobs.TakeScreenshotWindowSelected:
                         case WorkerTask.Jobs.TakeScreenshotCropped:
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                            CaptureRegionOrWindow(ref task);
+                            new TaskManager(ref task).CaptureRegionOrWindow();
                             break;
-                        case WorkerTask.Jobs.CUSTOM_UPLOADER_TEST:
+                        case WorkerTask.Jobs.CustomUploaderTest:
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                            CaptureActiveWindow(ref task);
+                            new TaskManager(ref task).CaptureActiveWindow();
                             break;
                         case WorkerTask.Jobs.UPLOAD_IMAGE:
-                            PublishImage(ref task);
+                            new TaskManager(ref task).PublishImage();
                             break;
                     }
                     break;
                 case JobCategoryType.TEXT:
                     switch (task.Job)
                     {
-                        case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                        case WorkerTask.Jobs.UploadFromClipboard:
                             PublishText(ref task);
                             break;
                         case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
@@ -132,7 +132,7 @@ namespace ZScreenLib
                 case JobCategoryType.BINARY:
                     switch (task.Job)
                     {
-                        case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                        case WorkerTask.Jobs.UploadFromClipboard:
                             if (Program.conf.AutoSwitchFTP)
                             {
                                 task.MyImageUploader = ImageDestType.FTP;
@@ -156,113 +156,6 @@ namespace ZScreenLib
             e.Result = task;
         }
 
-        #region Worker Tasks
-
-        public static void PrintImage(Image img)
-        {
-            if (img != null)
-            {
-                PrintHelper ph = new PrintHelper(img);
-                PrinterSettings ps = ph.PrintWithDialog();
-            }
-        }
-
-        public static void CopyImageToClipboard(Image img)
-        {
-            if (img != null)
-            {
-                try
-                {
-                    ImageOutput.PrepareClipboardObject();
-                    ImageOutput.CopyToClipboard(img);
-                }
-                catch (Exception ex)
-                {
-                    FileSystem.AppendDebug(ex.Message);
-                }
-            }
-        }
-
-        public static void CopyImageToClipboard(string f)
-        {
-            if (File.Exists(f))
-            {
-                SaveImageToClipboard(f);
-                FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
-            }
-        }
-
-        public static void FlashNotifyIcon(NotifyIcon ni, Icon ico)
-        {
-            if (ni != null && ico != null)
-            {
-                ni.Icon = ico;
-            }
-        }
-
-        public static void SetNotifyIconStatus(WorkerTask task, NotifyIcon ni, Icon ico)
-        {
-            if (task != null && ni != null && ico != null)
-            {
-                ni.Icon = ico;
-                ni.Text = task.Job.GetDescription();
-            }
-        }
-
-        public static void SetNotifyIconBalloonTip(NotifyIcon ni, string title, string msg, ToolTipIcon ico)
-        {
-            if (ni != null && !string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(msg))
-            {
-                ni.ShowBalloonTip(5000, title, msg, ico);
-            }
-        }
-
-        public static void UpdateNotifyIconProgress(NotifyIcon ni, int progress)
-        {
-            if (ni != null)
-            {
-                Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
-                ni.Icon = Icon.FromHandle(img.GetHicon());
-            }
-
-        }
-        public static void SaveImage(Image img)
-        {
-            if (img != null)
-            {
-                ImageOutput.SaveWithDialog(img);
-            }
-        }
-
-        public void CaptureWebpage(WorkerTask task)
-        {
-            if (task != null && FileSystem.IsValidLink(task.MyText.LocalString))
-            {
-                WebPageCapture webPageCapture;
-                if (Program.conf.WebPageUseCustomSize)
-                {
-                    webPageCapture = new WebPageCapture(Program.conf.WebPageWidth, Program.conf.WebPageHeight);
-                }
-                else
-                {
-                    webPageCapture = new WebPageCapture();
-                }
-
-                webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
-                webPageCapture.DownloadPage(task.MyText.LocalString);
-            }
-        }
-        private void webPageCapture_DownloadCompleted(Image img)
-        {
-            if (img != null)
-            {
-                Bitmap bmp = new Bitmap(img);
-
-            }
-        }
-
-        #endregion
-
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (mZScreen == null) return;
@@ -270,13 +163,13 @@ namespace ZScreenLib
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
                 case (WorkerTask.ProgressType)101:
-                    PrintImage(e.UserState as Image);
+                    Adapter.PrintImage(e.UserState as Image);
                     break;
                 case (WorkerTask.ProgressType)102:
-                    CopyImageToClipboard(e.UserState as Image);
+                    Adapter.CopyImageToClipboard(e.UserState as Image);
                     break;
                 case (WorkerTask.ProgressType)103:
-                    SaveImage(e.UserState as Image);
+                    Adapter.SaveImage(e.UserState as Image);
                     break;
                 case WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem(e.UserState as HistoryItem);
@@ -284,11 +177,11 @@ namespace ZScreenLib
                 case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
                     if (e.UserState.GetType() == typeof(string))
                     {
-                        CopyImageToClipboard(e.UserState as string);
+                        Adapter.CopyImageToClipboard(e.UserState as string);
                     }
                     else if (e.UserState.GetType() == typeof(Bitmap))
                     {
-                        CopyImageToClipboard(e.UserState as Image);
+                        Adapter.CopyImageToClipboard(e.UserState as Image);
                     }
                     break;
                 case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL:
@@ -299,21 +192,21 @@ namespace ZScreenLib
                     }
                     break;
                 case WorkerTask.ProgressType.FLASH_ICON:
-                    FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
+                    Adapter.FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
                     break;
                 case WorkerTask.ProgressType.SET_ICON_BUSY:
-                    SetNotifyIconStatus(e.UserState as WorkerTask, mZScreen.niTray, Resources.zss_busy);
+                    Adapter.SetNotifyIconStatus(e.UserState as WorkerTask, mZScreen.niTray, Resources.zss_busy);
                     break;
                 case WorkerTask.ProgressType.UpdateCropMode:
                     mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
                     break;
                 case WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
                     mZScreen.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-                    SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Program.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
+                    Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Program.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
-                    UpdateNotifyIconProgress(mZScreen.niTray, progress);
+                    Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
                     mZScreen.Text = string.Format("{0}% - {1}", progress, Program.GetProductName());
                     break;
@@ -323,7 +216,7 @@ namespace ZScreenLib
                     break;
                 case WorkerTask.ProgressType.SHOW_TRAY_MESSAGE:
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
-                    SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
+                    Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;
             }
         }
@@ -344,7 +237,7 @@ namespace ZScreenLib
                         case JobCategoryType.BINARY:
                             switch (task.Job)
                             {
-                                case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                case WorkerTask.Jobs.UploadFromClipboard:
                                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
                                     {
                                         Clipboard.SetText(task.RemoteFilePath);
@@ -374,7 +267,7 @@ namespace ZScreenLib
                                     }
 
                                     break;
-                                case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                                case WorkerTask.Jobs.UploadFromClipboard:
                                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
                                     {
                                         Clipboard.SetText(task.RemoteFilePath);
@@ -385,7 +278,7 @@ namespace ZScreenLib
                         case JobCategoryType.SCREENSHOTS:
                             switch (task.Job)
                             {
-                                case WorkerTask.Jobs.CUSTOM_UPLOADER_TEST:
+                                case WorkerTask.Jobs.CustomUploaderTest:
                                     if (task.ImageManager != null && task.ImageManager.ImageFileList.Count > 0)
                                     {
                                         if (task.ImageManager.GetFullImageUrl() != "")
@@ -469,11 +362,11 @@ namespace ZScreenLib
 
         #endregion
 
-        internal WorkerTask CreateTask(WorkerTask.Jobs job)
+        public WorkerTask CreateTask(WorkerTask.Jobs job)
         {
             BackgroundWorker bwApp = CreateWorker();
             WorkerTask task = new WorkerTask(bwApp, job);
-            if (task.Job != WorkerTask.Jobs.CUSTOM_UPLOADER_TEST)
+            if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
             {
                 task.MyImageUploader = Program.conf.ScreenshotDestMode;
                 task.MyFileUploader = Program.conf.FileDestMode;
@@ -520,6 +413,33 @@ namespace ZScreenLib
             return t;
         }
 
+        public void CaptureWebpage(WorkerTask task)
+        {
+            if (task != null && FileSystem.IsValidLink(task.MyText.LocalString))
+            {
+                WebPageCapture webPageCapture;
+                if (Program.conf.WebPageUseCustomSize)
+                {
+                    webPageCapture = new WebPageCapture(Program.conf.WebPageWidth, Program.conf.WebPageHeight);
+                }
+                else
+                {
+                    webPageCapture = new WebPageCapture();
+                }
+
+                webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
+                webPageCapture.DownloadPage(task.MyText.LocalString);
+            }
+        }
+        private void webPageCapture_DownloadCompleted(Image img)
+        {
+            if (img != null)
+            {
+                Bitmap bmp = new Bitmap(img);
+
+            }
+        }
+
         public void HistoryRetryUpload(HistoryItem hi)
         {
             if (hi != null && File.Exists(hi.LocalPath))
@@ -555,7 +475,7 @@ namespace ZScreenLib
                 case WorkerTask.Jobs.AUTO_CAPTURE:
                     ShowAutoCapture();
                     break;
-                case WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD:
+                case WorkerTask.Jobs.UploadFromClipboard:
                     UploadUsingClipboard();
                     break;
                 case WorkerTask.Jobs.PROCESS_DRAG_N_DROP:
@@ -569,109 +489,6 @@ namespace ZScreenLib
                     break;
             }
         }
-
-        #region "Capture Method"
-
-        private void CaptureActiveWindow(ref WorkerTask task)
-        {
-            try
-            {
-                task.CaptureActiveWindow();
-                WriteImage(ref task);
-                PublishImage(ref task);
-            }
-            catch (ArgumentOutOfRangeException aor)
-            {
-                task.Errors.Add("Invalid FTP Account Selection");
-                FileSystem.AppendDebug(aor.ToString());
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-                if (Program.conf.CaptureEntireScreenOnError)
-                {
-                    CaptureRegionOrWindow(ref task);
-                }
-            }
-        }
-
-        private string CaptureRegionOrWindow(ref WorkerTask task)
-        {
-            mTakingScreenShot = true;
-            string filePath = "";
-
-            try
-            {
-                using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
-                {
-                    if (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
-                    {
-                        task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
-                    }
-                    else
-                    {
-                        using (Crop c = new Crop(imgSS, task.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected))
-                        {
-                            if (c.ShowDialog() == DialogResult.OK)
-                            {
-                                if (task.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Program.LastRegion.IsEmpty)
-                                {
-                                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
-                                }
-                                else if (task.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Program.LastCapture.IsEmpty)
-                                {
-                                    task.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
-                                }
-                            }
-                        }
-                    }
-                }
-
-                mTakingScreenShot = false;
-
-                if (task.MyImage != null)
-                {
-                    WriteImage(ref task);
-                    PublishImage(ref task);
-                }
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
-                task.Errors.Add(ex.Message);
-                if (Program.conf.CaptureEntireScreenOnError)
-                {
-                    CaptureScreen(ref task);
-                }
-            }
-            finally
-            {
-                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
-                mTakingScreenShot = false;
-            }
-
-            return filePath;
-        }
-
-        public void CaptureScreen(ref WorkerTask task)
-        {
-            task.CaptureScreen();
-            WriteImage(ref task);
-            PublishImage(ref task);
-        }
-
-        private static void SaveImageToClipboard(string fullFile)
-        {
-            if (File.Exists(fullFile))
-            {
-                Image img = Image.FromFile(fullFile);
-                Clipboard.SetImage(img);
-
-                img.Dispose();
-            }
-        }
-
-        #endregion
 
         public void LanguageTranslator(ref WorkerTask t)
         {
@@ -693,9 +510,8 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the image</param>
-        public void StartWorkerPictures(WorkerTask.Jobs job, string localFilePath)
+        public void StartWorkerPictures(WorkerTask t, string localFilePath)
         {
-            WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(localFilePath);
@@ -709,7 +525,7 @@ namespace ZScreenLib
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
-            WriteImage(ref t);
+            new TaskManager(ref t).WriteImage();
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -747,25 +563,6 @@ namespace ZScreenLib
             task.EndTime = DateTime.Now;
         }
 
-        /// <summary>
-        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        private void PublishImage(ref WorkerTask task)
-        {
-            TaskManager tm = new TaskManager(ref task);
-
-            if (task.MyImage != null && Adapter.ImageSoftwareEnabled() && task.Job != WorkerTask.Jobs.UPLOAD_IMAGE)
-            {
-                tm.ImageEdit();
-            }
-
-            if (task.SafeToUpload())
-            {
-                FileSystem.AppendDebug("File for HDD: " + task.LocalFilePath);
-                tm.UploadImage();
-            }
-        }
 
         /// <summary>
         /// Function to edit Text in a Text Editor and Upload
@@ -779,7 +576,7 @@ namespace ZScreenLib
 
         private void ScreenshotUsingDragDrop(string fp)
         {
-            StartWorkerPictures(WorkerTask.Jobs.PROCESS_DRAG_N_DROP, fp);
+            StartWorkerPictures(CreateTask(WorkerTask.Jobs.PROCESS_DRAG_N_DROP), fp);
         }
 
         private void ScreenshotUsingDragDrop(string[] paths)
@@ -961,18 +758,18 @@ namespace ZScreenLib
             {
                 if (GraphicsMgr.IsValidImage(fp))
                 {
-                    StartWorkerPictures(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                    StartWorkerPictures(CreateTask(WorkerTask.Jobs.UploadFromClipboard), fp);
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
                     temp.SetLocalFilePath(fp);
                     temp.MyText = TextInfo.FromFile(fp);
                     textWorkers.Add(temp);
                 }
                 else
                 {
-                    StartWorkerBinary(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                    StartWorkerBinary(WorkerTask.Jobs.UploadFromClipboard, fp);
                 }
             }
 
@@ -995,11 +792,11 @@ namespace ZScreenLib
                     Image cImage = Clipboard.GetImage();
                     string fp = FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), false);
                     fp = FileSystem.SaveImage(cImage, fp);
-                    StartWorkerPictures(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD, fp);
+                    StartWorkerPictures(CreateTask(WorkerTask.Jobs.UploadFromClipboard), fp);
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
                     string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                     File.WriteAllText(fp, Clipboard.GetText());
@@ -1088,30 +885,6 @@ namespace ZScreenLib
             return false;
         }
 
-        /// <summary>
-        /// Writes MyImage object in a WorkerTask into a file
-        /// </summary>
-        /// <param name="t">WorkerTask</param>
-        public void WriteImage(ref WorkerTask t)
-        {
-            if (t.MyImage != null)
-            {
-                NameParserType type;
-                if (t.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
-                {
-                    type = NameParserType.ActiveWindow;
-                }
-                else
-                {
-                    type = NameParserType.EntireScreen;
-                }
-
-                string filePath = FileSystem.GetFilePath(NameParser.Convert(type), Program.conf.ManualNaming);
-
-                t.SetLocalFilePath(FileSystem.SaveImage(t.MyImage, filePath));
-            }
-        }
-
         public void AddHistoryItem(HistoryItem hi)
         {
             mZScreen.lbHistory.Items.Insert(0, hi);
@@ -1128,7 +901,7 @@ namespace ZScreenLib
             }
         }
 
-        #region "Start Workers"
+        #region Start Workers
 
         public void StartBW_LanguageTranslator(GoogleTranslate.TranslationInfo translationInfo)
         {
@@ -1155,7 +928,7 @@ namespace ZScreenLib
 
         public void StartBW_SelectedWindow()
         {
-            if (!mTakingScreenShot)
+            if (!TaskManager.mTakingScreenShot)
             {
                 StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotWindowSelected);
             }
@@ -1163,7 +936,7 @@ namespace ZScreenLib
 
         public void StartBW_CropShot()
         {
-            if (!mTakingScreenShot)
+            if (!TaskManager.mTakingScreenShot)
             {
                 StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotCropped);
             }
@@ -1173,6 +946,8 @@ namespace ZScreenLib
         {
             StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
         }
+
+        #endregion
 
         #region Quick Actions
 
@@ -1291,8 +1066,6 @@ namespace ZScreenLib
             DialogColor dialogColor = new DialogColor { ScreenPicker = true };
             dialogColor.Show();
         }
-
-        #endregion
 
         #region "Translate"
 

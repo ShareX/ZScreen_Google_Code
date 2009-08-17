@@ -147,7 +147,7 @@ namespace Greenshot
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(760, 441);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(752, 441);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             // 
             // toolStripContainer1.LeftToolStripPanel
@@ -189,7 +189,7 @@ namespace Greenshot
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(760, 441);
+            this.panel1.Size = new System.Drawing.Size(752, 441);
             this.panel1.TabIndex = 2;
             // 
             // toolStrip2
@@ -203,7 +203,7 @@ namespace Greenshot
             this.btnText});
             this.toolStrip2.Location = new System.Drawing.Point(0, 3);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(24, 126);
+            this.toolStrip2.Size = new System.Drawing.Size(32, 145);
             this.toolStrip2.TabIndex = 0;
             // 
             // btnCursor
@@ -215,7 +215,7 @@ namespace Greenshot
             this.btnCursor.Image = global::ZSS.ImageEditorLib.Properties.Resources.cursor;
             this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(22, 20);
+            this.btnCursor.Size = new System.Drawing.Size(30, 20);
             this.btnCursor.Text = "Selection tool";
             this.btnCursor.Click += new System.EventHandler(this.BtnCursorClick);
             // 
@@ -226,7 +226,7 @@ namespace Greenshot
             this.btnRect.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape;
             this.btnRect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRect.Name = "btnRect";
-            this.btnRect.Size = new System.Drawing.Size(22, 20);
+            this.btnRect.Size = new System.Drawing.Size(30, 20);
             this.btnRect.Text = "Draw rectangle";
             this.btnRect.Click += new System.EventHandler(this.BtnRectClick);
             // 
@@ -237,7 +237,7 @@ namespace Greenshot
             this.btnEllipse.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_ellipse;
             this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnEllipse.Name = "btnEllipse";
-            this.btnEllipse.Size = new System.Drawing.Size(22, 20);
+            this.btnEllipse.Size = new System.Drawing.Size(30, 20);
             this.btnEllipse.Text = "Draw ellipse";
             this.btnEllipse.Click += new System.EventHandler(this.BtnEllipseClick);
             // 
@@ -248,7 +248,7 @@ namespace Greenshot
             this.btnLine.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_line;
             this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLine.Name = "btnLine";
-            this.btnLine.Size = new System.Drawing.Size(22, 20);
+            this.btnLine.Size = new System.Drawing.Size(30, 20);
             this.btnLine.Text = "Draw line";
             this.btnLine.Click += new System.EventHandler(this.BtnLineClick);
             // 
@@ -259,7 +259,7 @@ namespace Greenshot
             this.btnText.Image = global::ZSS.ImageEditorLib.Properties.Resources.layer_shape_text;
             this.btnText.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(22, 20);
+            this.btnText.Size = new System.Drawing.Size(30, 20);
             this.btnText.Text = "Add text";
             this.btnText.Click += new System.EventHandler(this.BtnTextClick);
             // 

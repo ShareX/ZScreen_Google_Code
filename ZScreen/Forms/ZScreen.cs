@@ -1818,7 +1818,7 @@ namespace ZScreenLib
             if (lbUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
-                Loader.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CUSTOM_UPLOADER_TEST);
+                Loader.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CustomUploaderTest);
             }
         }
 
@@ -3438,7 +3438,7 @@ namespace ZScreenLib
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    WorkerTask task = Loader.Worker.GetWorkerText(WorkerTask.Jobs.UPLOAD_FROM_CLIPBOARD);
+                    WorkerTask task = Loader.Worker.GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
                     task.MyText = TextInfo.FromString(testString);
                     task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
                     task.MyTextUploader = uploader;

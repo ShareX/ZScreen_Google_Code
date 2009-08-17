@@ -35,6 +35,9 @@ using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZSS;
+using System.Drawing.Printing;
+using Greenshot.Helpers;
+using System.Drawing;
 
 namespace ZScreenLib
 {
@@ -43,10 +46,93 @@ namespace ZScreenLib
     /// </summary>
     public static class Adapter
     {
-    	public static bool Windows7TaskbarIntegrationEnabled(){
-    		return Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose;
-    	}
-    	
+        #region Worker Tasks
+
+        public static void PrintImage(Image img)
+        {
+            if (img != null)
+            {
+                PrintHelper ph = new PrintHelper(img);
+                PrinterSettings ps = ph.PrintWithDialog();
+            }
+        }
+
+        public static void CopyImageToClipboard(Image img)
+        {
+            if (img != null)
+            {
+                try
+                {
+                    ImageOutput.PrepareClipboardObject();
+                    ImageOutput.CopyToClipboard(img);
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.Message);
+                }
+            }
+        }
+
+        public static void CopyImageToClipboard(string f)
+        {
+            if (File.Exists(f))
+            {
+                Image img = Image.FromFile(f);
+                Clipboard.SetImage(img);
+                img.Dispose();
+                FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
+            }
+        }
+
+        public static void FlashNotifyIcon(NotifyIcon ni, Icon ico)
+        {
+            if (ni != null && ico != null)
+            {
+                ni.Icon = ico;
+            }
+        }
+
+        public static void SetNotifyIconStatus(WorkerTask task, NotifyIcon ni, Icon ico)
+        {
+            if (task != null && ni != null && ico != null)
+            {
+                ni.Icon = ico;
+                ni.Text = task.Job.GetDescription();
+            }
+        }
+
+        public static void SetNotifyIconBalloonTip(NotifyIcon ni, string title, string msg, ToolTipIcon ico)
+        {
+            if (ni != null && !string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(msg))
+            {
+                ni.ShowBalloonTip(5000, title, msg, ico);
+            }
+        }
+
+        public static void UpdateNotifyIconProgress(NotifyIcon ni, int progress)
+        {
+            if (ni != null)
+            {
+                Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
+                ni.Icon = Icon.FromHandle(img.GetHicon());
+            }
+
+        }
+        public static void SaveImage(Image img)
+        {
+            if (img != null)
+            {
+                ImageOutput.SaveWithDialog(img);
+            }
+        }
+
+        #endregion
+
+        public static bool Windows7TaskbarIntegrationEnabled()
+        {
+            return Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose;
+        }
+
         public static void AddToClipboardByDoubleClick(Control tp)
         {
             Control ctl = tp.GetNextControl(tp, true);
@@ -69,45 +155,7 @@ namespace ZScreenLib
             }
         }
 
-        public static string GetTinyPicShuk()
-        {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = Resources.zss_main };
-            ub.ShowDialog();
-            if (ub.DialogResult == DialogResult.OK)
-            {
-                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                tpu.ProxySettings = Adapter.GetProxySettings();
-                if (Program.conf.RememberTinyPicUserPass)
-                {
-                    Program.conf.TinyPicUserName = ub.UserName;
-                    Program.conf.TinyPicPassword = ub.Password;
-                }
-                return tpu.UserAuth(ub.UserName, ub.Password);
-            }
-            return string.Empty;
-        }
-
-        #region ImageBam Methods
-
-        public static string CreateImageBamGallery()
-        {
-            ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret));
-            string galleryId = ibu.CreateGalleryID();
-            Program.conf.ImageBamGallery.Add(galleryId);
-            return galleryId;
-        }
-
-        public static string GetImageBamGalleryActive()
-        {
-            string galleryId = string.Empty;
-            if (CheckImageBamGallery())
-            {
-                galleryId = Program.conf.ImageBamGallery[Program.conf.ImageBamGalleryActive];
-            }
-            return galleryId;
-        }
-
-        #endregion
+        #region FTP Methods
 
         public static void TestFTPAccount(FTPAccount acc)
         {
@@ -155,21 +203,6 @@ namespace ZScreenLib
             return string.Format("Status description:\n{0}\nException message:\n{1}", status, e.Message);
         }
 
-        public static bool CheckList<T>(List<T> list, int selected)
-        {
-            return list.Count > 0 && selected >= 0 && list.Count > selected;
-        }
-
-        public static bool CheckTextUploaders()
-        {
-            return CheckList(Program.conf.TextUploadersList, Program.conf.TextUploaderSelected);
-        }
-
-        public static bool CheckURLShorteners()
-        {
-            return CheckList(Program.conf.UrlShortenersList, Program.conf.UrlShortenerSelected);
-        }
-
         public static bool CheckFTPAccounts()
         {
             return CheckList(Program.conf.FTPAccountList, Program.conf.FTPSelected);
@@ -181,6 +214,139 @@ namespace ZScreenLib
             if (!result) task.Errors.Add("An FTP account does not exist or not selected properly.");
             return result;
         }
+
+        #endregion
+
+        #region TinyPic Methods
+
+        public static string GetTinyPicShuk()
+        {
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = Resources.zss_main };
+            ub.ShowDialog();
+            if (ub.DialogResult == DialogResult.OK)
+            {
+                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                tpu.ProxySettings = Adapter.GetProxySettings();
+                if (Program.conf.RememberTinyPicUserPass)
+                {
+                    Program.conf.TinyPicUserName = ub.UserName;
+                    Program.conf.TinyPicPassword = ub.Password;
+                }
+                return tpu.UserAuth(ub.UserName, ub.Password);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Method to update TinyPic Shuk; Run periodically
+        /// </summary>
+        public static void UpdateTinyPicShuk()
+        {
+            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) &&
+                !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
+            {
+                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
+                tpu.ProxySettings = Adapter.GetProxySettings();
+                string shuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
+                if (!string.IsNullOrEmpty(shuk))
+                {
+                    if (Program.conf.TinyPicShuk != shuk)
+                    {
+                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Program.conf.TinyPicShuk, shuk));
+                    }
+                    Program.conf.TinyPicShuk = shuk;
+                }
+            }
+        }
+
+        #endregion
+
+        #region ImageBam Methods
+
+        public static string CreateImageBamGallery()
+        {
+            ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret));
+            string galleryId = ibu.CreateGalleryID();
+            Program.conf.ImageBamGallery.Add(galleryId);
+            return galleryId;
+        }
+
+        public static string GetImageBamGalleryActive()
+        {
+            string galleryId = string.Empty;
+            if (CheckImageBamGallery())
+            {
+                galleryId = Program.conf.ImageBamGallery[Program.conf.ImageBamGalleryActive];
+            }
+            return galleryId;
+        }
+
+        #endregion
+
+        #region URL Shortener Methods
+
+        public static TextUploader FindUrlShortener(string name)
+        {
+            switch (name)
+            {
+                case BitlyUploader.Hostname:
+                    return new BitlyUploader();
+                case IsgdUploader.Hostname:
+                    return new IsgdUploader();
+                case TinyURLUploader.Hostname:
+                    return new TinyURLUploader();
+                case ThreelyUploader.Hostname:
+                    return new ThreelyUploader();
+                case KlamUploader.Hostname:
+                    return new KlamUploader();
+            }
+            return null;
+        }
+
+        public static string TryShortenURL(string url)
+        {
+            if (!string.IsNullOrEmpty(url) && (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
+                Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
+            {
+                TextUploader tu = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                tu.ProxySettings = Adapter.GetProxySettings();
+                if (tu != null)
+                {
+                    string temp = tu.UploadText(TextInfo.FromString(url));
+                    if (!string.IsNullOrEmpty(temp))
+                    {
+                        url = temp;
+                    }
+                }
+            }
+            return url;
+        }
+
+        public static bool CheckURLShorteners()
+        {
+            return CheckList(Program.conf.UrlShortenersList, Program.conf.UrlShortenerSelected);
+        }
+
+        public static bool MakeTinyURL()
+        {
+            // LimitLongURL = 0 means make tinyURL always
+            return Program.conf.MakeTinyURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+        }
+
+        #endregion
+
+
+
+        public static bool CheckList<T>(List<T> list, int selected)
+        {
+            return list.Count > 0 && selected >= 0 && list.Count > selected;
+        }
+
+        public static bool CheckTextUploaders()
+        {
+            return CheckList(Program.conf.TextUploadersList, Program.conf.TextUploaderSelected);
+        }
+
 
         public static bool CheckDekiWikiAccounts()
         {
@@ -219,6 +385,7 @@ namespace ZScreenLib
             }
         }
 
+        #region Proxy Methods
         /// <summary>
         /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns default system proxy otherwise
         /// </summary>
@@ -258,51 +425,7 @@ namespace ZScreenLib
             }
         }
 
-        /// <summary>
-        /// Quick Method to shorten a URL
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static string TryShortenURL(string url)
-        {
-            if (!string.IsNullOrEmpty(url) && (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
-                Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
-            {
-                TextUploader tu = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
-                tu.ProxySettings = Adapter.GetProxySettings();
-                if (tu != null)
-                {
-                    string temp = tu.UploadText(TextInfo.FromString(url));
-                    if (!string.IsNullOrEmpty(temp))
-                    {
-                        url = temp;
-                    }
-                }
-            }
-            return url;
-        }
-
-        /// <summary>
-        /// Method to update TinyPic Shuk; Run periodically
-        /// </summary>
-        public static void UpdateTinyPicShuk()
-        {
-            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) &&
-                !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
-            {
-                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                tpu.ProxySettings = Adapter.GetProxySettings();
-                string shuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
-                if (!string.IsNullOrEmpty(shuk))
-                {
-                    if (Program.conf.TinyPicShuk != shuk)
-                    {
-                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Program.conf.TinyPicShuk, shuk));
-                    }
-                    Program.conf.TinyPicShuk = shuk;
-                }
-            }
-        }
+        #endregion 
 
         public static UserPassBox SendSpaceRegister()
         {
@@ -318,12 +441,6 @@ namespace ZScreenLib
                 }
             }
             return upb;
-        }
-
-        public static bool MakeTinyURL()
-        {
-            // LimitLongURL = 0 means make tinyURL always
-            return Program.conf.MakeTinyURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
         }
 
         public static TextUploader FindTextUploader(string name)
@@ -366,24 +483,6 @@ namespace ZScreenLib
                         return new UploadersLib.FTPUploader(acc);
                     }
                 }
-            }
-            return null;
-        }
-
-        public static TextUploader FindUrlShortener(string name)
-        {
-            switch (name)
-            {
-                case BitlyUploader.Hostname:
-                    return new BitlyUploader();
-                case IsgdUploader.Hostname:
-                    return new IsgdUploader();
-                case TinyURLUploader.Hostname:
-                    return new TinyURLUploader();
-                case ThreelyUploader.Hostname:
-                    return new ThreelyUploader();
-                case KlamUploader.Hostname:
-                    return new KlamUploader();
             }
             return null;
         }

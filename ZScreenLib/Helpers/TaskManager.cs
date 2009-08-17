@@ -40,11 +40,147 @@ namespace ZScreenLib
     public class TaskManager
     {
         private WorkerTask mTask;
+        public static bool mSetHotkeys, mTakingScreenShot, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
 
         public TaskManager(ref WorkerTask task)
         {
             this.mTask = task;
         }
+
+        #region Image Tasks Manager
+
+        public void CaptureActiveWindow()
+        {
+            try
+            {
+                mTask.CaptureActiveWindow();
+                WriteImage();
+                PublishImage();
+            }
+            catch (ArgumentOutOfRangeException aor)
+            {
+                mTask.Errors.Add("Invalid FTP Account Selection");
+                FileSystem.AppendDebug(aor.ToString());
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex.ToString());
+                if (Program.conf.CaptureEntireScreenOnError)
+                {
+                    CaptureRegionOrWindow();
+                }
+            }
+        }
+
+        public string CaptureRegionOrWindow()
+        {
+            mTakingScreenShot = true;
+            string filePath = "";
+
+            try
+            {
+                using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
+                {
+                    if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
+                    {
+                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                    }
+                    else
+                    {
+                        using (Crop c = new Crop(imgSS, mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected))
+                        {
+                            if (c.ShowDialog() == DialogResult.OK)
+                            {
+                                if (mTask.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Program.LastRegion.IsEmpty)
+                                {
+                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                                }
+                                else if (mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Program.LastCapture.IsEmpty)
+                                {
+                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                mTakingScreenShot = false;
+
+                if (mTask.MyImage != null)
+                {
+                    WriteImage();
+                    PublishImage();
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex.ToString());
+                mTask.Errors.Add(ex.Message);
+                if (Program.conf.CaptureEntireScreenOnError)
+                {
+                    CaptureScreen();
+                }
+            }
+            finally
+            {
+                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
+                mTakingScreenShot = false;
+            }
+
+            return filePath;
+        }
+
+        public void CaptureScreen()
+        {
+            mTask.CaptureScreen();
+            WriteImage();
+            PublishImage();
+        }
+
+
+        /// <summary>
+        /// Writes MyImage object in a WorkerTask into a file
+        /// </summary>
+        /// <param name="t">WorkerTask</param>
+        public void WriteImage()
+        {
+            if (mTask.MyImage != null)
+            {
+                NameParserType type;
+                if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
+                {
+                    type = NameParserType.ActiveWindow;
+                }
+                else
+                {
+                    type = NameParserType.EntireScreen;
+                }
+
+                string filePath = FileSystem.GetFilePath(NameParser.Convert(type), Program.conf.ManualNaming);
+
+                mTask.SetLocalFilePath(FileSystem.SaveImage(mTask.MyImage, filePath));
+            }
+        }
+
+        /// <summary>
+        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
+        /// </summary>
+        /// <param name="task"></param>
+        public void PublishImage()
+        {
+            if (mTask.MyImage != null && Adapter.ImageSoftwareEnabled() && mTask.Job != WorkerTask.Jobs.UPLOAD_IMAGE)
+            {
+                ImageEdit();
+            }
+
+            if (mTask.SafeToUpload())
+            {
+                FileSystem.AppendDebug("File for HDD: " + mTask.LocalFilePath);
+                UploadImage();
+            }
+        }
+
+        #endregion
 
         public void UploadFile()
         {

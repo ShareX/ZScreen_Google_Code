@@ -54,7 +54,7 @@ namespace ZScreenLib
             [Description("Auto Capture")]
             AUTO_CAPTURE,
             [Description("Clipboard Upload")]
-            UPLOAD_FROM_CLIPBOARD,
+            UploadFromClipboard,
             [Description("Drag & Drop Window")]
             PROCESS_DRAG_N_DROP,
             [Description("Language Translator")]
@@ -64,7 +64,7 @@ namespace ZScreenLib
             [Description("Upload Image")]
             UPLOAD_IMAGE,
             [Description("Custom Uploader Test")]
-            CUSTOM_UPLOADER_TEST,
+            CustomUploaderTest,
             [Description("Webpage Capture")]
             WEBPAGE_CAPTURE
         }
@@ -215,7 +215,7 @@ namespace ZScreenLib
 
         public bool SafeToUpload()
         {
-            bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UPLOAD_FROM_CLIPBOARD)
+            bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UploadFromClipboard)
                 && this.MyImageUploader == ImageDestType.FTP) || this.MyImage != null;
             if (!safe)
             {
