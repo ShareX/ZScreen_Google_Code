@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
@@ -239,6 +240,42 @@ Global
 		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Win32.ActiveCfg = Release|Any CPU
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Debug|Win32.Build.0 = Debug|Win32
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Inno|Win32.Build.0 = Inno|Win32
+		{2CB31685-9F2D-4017-9A98-C4EF1B92C928}.Release|Win32.Build.0 = Release|Win32
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Debug|Win32.Build.0 = Debug|Win32
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Inno|Win32.Build.0 = Inno|Win32
+		{D91D7F12-8976-41D9-9524-827EE9B02CCD}.Release|Win32.Build.0 = Release|Win32
+		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.Debug|Win32.Build.0 = Debug|Win32
+		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.Inno|Win32.Build.0 = Inno|Win32
+		{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}.Release|Win32.Build.0 = Release|Win32
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Win32.Build.0 = Debug|Win32
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Inno|Win32.Build.0 = Inno|Win32
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Win32.Build.0 = Release|Win32
+		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Debug|Win32.Build.0 = Debug|Win32
+		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Inno|Win32.Build.0 = Inno|Win32
+		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Release|Win32.Build.0 = Release|Win32
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Win32.Build.0 = Debug|Win32
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Inno|Win32.Build.0 = Inno|Win32
+		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Win32.Build.0 = Release|Win32
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Debug|Win32.Build.0 = Debug|Win32
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Inno|Win32.Build.0 = Inno|Win32
+		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Win32.Build.0 = Release|Win32
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Debug|Win32.Build.0 = Debug|Win32
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Inno|Win32.Build.0 = Inno|Win32
+		{9F44B572-4A09-42D9-9DB7-2587F621B462}.Release|Win32.Build.0 = Release|Win32
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Debug|Win32.Build.0 = Debug|Win32
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Inno|Win32.Build.0 = Inno|Win32
+		{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
