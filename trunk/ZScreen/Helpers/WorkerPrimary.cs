@@ -1124,16 +1124,7 @@ namespace ZScreenLib
             }
             if (CoreHelpers.RunningOnWin7 && File.Exists(hi.LocalPath))
             {
-                try
-                {
-                    Program.zJumpList.AddToRecent(hi.LocalPath);
-                    Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
-                    Program.zJumpList.Refresh();
-                }
-                catch (Exception ex)
-                {
-                    FileSystem.AppendDebug(ex);
-                }
+                Adapter.AddRecentItem(hi.LocalPath);
             }
         }
 

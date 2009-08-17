@@ -250,11 +250,11 @@ namespace ZScreenLib
                     this.WindowState = Program.conf.WindowState;
                     ShowInTaskbar = Program.conf.ShowInTaskbar;
                 }
-//              else if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
-//              {
-//                	this.WindowState = FormWindowState.Minimized;
-//                  ShowInTaskbar = true;
-//              }
+                else if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                    ShowInTaskbar = true;
+                }
                 else
                 {
                     Hide();
