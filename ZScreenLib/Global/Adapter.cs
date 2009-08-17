@@ -421,6 +421,23 @@ namespace ZScreenLib
             }
         }
 
+        public static void AddRecentItem(string filePath)
+        {
+            if (Program.zJumpList != null)
+            {
+                try
+                {
+                    Program.zJumpList.AddToRecent(filePath);
+                    Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
+                    Program.zJumpList.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex);
+                }
+            }
+        }
+
         #endregion
 
     }

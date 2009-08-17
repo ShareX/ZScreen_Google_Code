@@ -50,7 +50,7 @@ namespace ZScreenLib
         {
             if (LicenseWindow == null || LicenseWindow.IsDisposed)
             {
-                LicenseWindow = FillTextViewer(LicenseWindow, "License", "License.txt");
+                LicenseWindow = FillTextViewer(LicenseWindow, "License", "license.txt");
             }
             if (LicenseWindow != null)
             {
