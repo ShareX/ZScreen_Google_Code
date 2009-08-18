@@ -112,36 +112,42 @@ namespace ZScreenLib
                     // DO NOT REMOVE
                     //*****************************************************************
 
-                    //JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Crop Shot");
-                    //jlCropShot.Arguments = "crop_shot";
-                    //jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
-                    //Program.zJumpList.AddUserTasks(jlCropShot);
+                    JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Crop Shot");
+                    jlCropShot.Arguments = "crop_shot";
+                    jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
+                    Program.zJumpList.AddUserTasks(jlCropShot);
 
-                    //JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Selected Window");
-                    //jlSelectedWindow.Arguments = "selected_window";
-                    //jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
-                    //Program.zJumpList.AddUserTasks(jlSelectedWindow);
+                    JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Selected Window");
+                    jlSelectedWindow.Arguments = "selected_window";
+                    jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
+                    Program.zJumpList.AddUserTasks(jlSelectedWindow);
 
+                    // Custom Categories
                     JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
 
                     JumpListLink imagesJumpListLink = new JumpListLink(FileSystem.GetImagesDir(), "Images");
                     imagesJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+
                     JumpListLink settingsJumpListLink = new JumpListLink(Program.SettingsDir, "Settings");
                     settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
                     paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink);
-
                     Program.zJumpList.AddCustomCategories(paths);
 
-                    ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
-                    cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
-                    ThumbnailToolbarButton selWindow = new ThumbnailToolbarButton(Resources.application_double_ico, "Selected Window");
-                    selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
-                    ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
-                    clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
+                    // User Tasks
+                    if (!Program.conf.UserTasksAdded)
+                    {
+                        ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
+                        cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
+                        ThumbnailToolbarButton selWindow = new ThumbnailToolbarButton(Resources.application_double_ico, "Selected Window");
+                        selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
+                        ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
+                        clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-                    //Program.zJumpList.Refresh();
+                        Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                        Program.zJumpList.Refresh();
+                        Program.conf.UserTasksAdded = true;
+                    }
                 }
                 catch (Exception ex)
                 {
