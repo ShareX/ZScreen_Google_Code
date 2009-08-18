@@ -191,16 +191,28 @@ namespace ZScreenLib
         public byte[] MyFile { get; set; }
         #endregion
 
+        private WorkerTask()
+        {
+            this.Errors = new List<string>();
+        }
+
+        public WorkerTask(Jobs job)
+            :this()
+        {
+            this.MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
+            this.Job = job;            
+        }
+
         /// <summary>
         /// Constructor taking Worker and Job
         /// </summary>
         /// <param name="worker"></param>
         /// <param name="job"></param>
         public WorkerTask(BackgroundWorker worker, Jobs job)
+            :this()
         {
             this.MyWorker = worker;
             this.Job = job;
-            this.Errors = new List<string>();
         }
 
         public void SetImage(Image img)
