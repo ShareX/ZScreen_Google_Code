@@ -459,6 +459,8 @@ namespace ZScreenLib
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
+        [Category("Options / Windows 7 Taskbar"), DefaultValue(false), Description("Determine whether Windows 7 Taskbar was refreshed once")]
+        public bool UserTasksAdded { get; set; }
 
         // Options / History Settings
 
