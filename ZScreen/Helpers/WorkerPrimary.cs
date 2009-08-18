@@ -304,7 +304,7 @@ namespace ZScreenLib
 
                     if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
                     {
-                        UploadManager.SetClipboardText(task);
+                        UploadManager.SetClipboardText(task, false);
                     }
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))

@@ -45,7 +45,7 @@ namespace ZSS
         {
             try
             {
-                Program.Load();
+                Program.Load(true);
                 Application.Run(new ZScreen());
             }
             catch (Exception ex)
