@@ -101,7 +101,7 @@ namespace ZScreenLib
         public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
 
-        public static void Load()
+        public static void Load(bool keyBoardHook)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
             FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
@@ -166,7 +166,10 @@ namespace ZScreenLib
                 mAppInfo.AppName = mProductName;
             }
 
-            ZScreenKeyboardHook = new KeyboardHook();
+            if (keyBoardHook)
+            {
+                ZScreenKeyboardHook = new KeyboardHook();
+            }
         }
 
         public static void Unload()
