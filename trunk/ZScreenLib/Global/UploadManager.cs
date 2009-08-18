@@ -90,17 +90,17 @@ namespace ZScreenLib
         /// Sets Clipboard text and returns the content
         /// </summary>
         /// <returns></returns>
-        public static string SetClipboardText(WorkerTask task)
+        public static string SetClipboardText(WorkerTask task, bool showDialog)
         {
             ScreenshotsHistory = task.ImageManager;
 
             if (ScreenshotsHistory != null)
             {
-                if (Program.conf.ShowClipboardModeChooser)
+                if (Program.conf.ShowClipboardModeChooser || showDialog)
                 {
                     ClipboardModePicker cmp = new ClipboardModePicker(task);
                     cmp.Icon = Resources.zss_main;
-                    cmp.Show();
+                    if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
                 }
 
                 string url = ScreenshotsHistory.GetUrlByType(Program.conf.ClipboardUriMode).ToString().Trim();
