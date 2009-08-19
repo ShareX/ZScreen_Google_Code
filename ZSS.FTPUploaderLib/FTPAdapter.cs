@@ -350,6 +350,7 @@ namespace ZSS
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.Credentials = new NetworkCredential(this.Options.Account.Username, this.Options.Account.Password);
             request.KeepAlive = false;
+            request.Timeout = 10000;
             request.UsePassive = !this.Options.Account.IsActive;
 
             using (WebResponse response = request.GetResponse())

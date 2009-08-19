@@ -91,7 +91,7 @@ namespace ZScreenLib
 
                     //*****************************************************************
                     // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
-                    // DO NOT REMOVE
+                    // DO NOT REMOVE <-- Remove what? - Jaex
                     //*****************************************************************
 
                     JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Crop Shot");
@@ -145,15 +145,16 @@ namespace ZScreenLib
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
 
-            if (this.WindowState == FormWindowState.Normal) {
-	            if (Program.conf.WindowLocation.IsEmpty)
-	            {
-	                Program.conf.WindowLocation = this.Location;
-	            }	
-	            if (Program.conf.WindowSize.IsEmpty)
-	            {
-	                Program.conf.WindowSize = this.Size;
-	            }           	
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                if (Program.conf.WindowLocation.IsEmpty)
+                {
+                    Program.conf.WindowLocation = this.Location;
+                }
+                if (Program.conf.WindowSize.IsEmpty)
+                {
+                    Program.conf.WindowSize = this.Size;
+                }
             }
 
             // Accounts - FTP
@@ -534,11 +535,7 @@ namespace ZScreenLib
 
             #endregion
 
-            #region "FTP Settings"
-
-            ///////////////////////////////////
-            // FTP Settings
-            ///////////////////////////////////
+            #region FTP Settings
 
             if (Program.conf.FTPAccountList == null || Program.conf.FTPAccountList.Count == 0)
             {
@@ -553,11 +550,13 @@ namespace ZScreenLib
                 }
             }
             chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
-            cbAutoSwitchFTP.Checked = Program.conf.AutoSwitchFTP;
+            txtFTPThumbWidth.Text = Program.conf.FTPThumbnailWidth.ToString();
+            txtFTPThumbHeight.Text = Program.conf.FTPThumbnailHeight.ToString();
+            cbFTPThumbnailCheckSize.Checked = Program.conf.FTPThumbnailCheckSize;
 
             #endregion
 
-            #region "MindTouch Settings"
+            #region MindTouch Settings
 
             ///////////////////////////////////
             // MindTouch Deki Wiki Settings
@@ -579,7 +578,7 @@ namespace ZScreenLib
 
             #endregion
 
-            #region "Image Uploaders"
+            #region Image Uploaders
 
             ///////////////////////////////////
             // Image Uploader Settings
@@ -633,9 +632,10 @@ namespace ZScreenLib
             {
                 lbImageBamGalleries.SelectedIndex = 0;
             }
+
             #endregion
 
-            #region "File Uploaders"
+            #region File Uploaders
 
             if (cboFileUploaders.Items.Count == 0)
             {
@@ -665,6 +665,7 @@ namespace ZScreenLib
 
             // Others
 
+            cbAutoSwitchFileUploader.Checked = Program.conf.AutoSwitchFileUploader;
             nudErrorRetry.Value = Program.conf.ErrorRetryCount;
             cboImageUploadRetryOnTimeout.Checked = Program.conf.ImageUploadRetryOnTimeout;
             nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
@@ -848,17 +849,10 @@ namespace ZScreenLib
             txtSettingsDir.Text = Program.SettingsDir;
         }
 
-        #region "GUI Methods"
-
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.CloseQuickActions = cbCloseQuickActions.Checked;
         }
-
-
-        #endregion
-
-        #region "Event Handlers"
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -941,8 +935,6 @@ namespace ZScreenLib
                 }
             }
         }
-
-        #endregion
 
         private void WriteSettings()
         {
@@ -1327,15 +1319,16 @@ namespace ZScreenLib
             {
                 FileSystem.BackupAppSettings();
             }
-            
+
             // Loader.Splash.Close();
             if (Adapter.Windows7TaskbarIntegrationEnabled())
             {
-            	ZScreen_Windows7onlyTasks();
-            	if (!Program.conf.OpenMainWindow) {
-            		this.WindowState = FormWindowState.Minimized;
-                	this.ShowInTaskbar = true;            		
-            	}
+                ZScreen_Windows7onlyTasks();
+                if (!Program.conf.OpenMainWindow)
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                    this.ShowInTaskbar = true;
+                }
             }
         }
 
@@ -2889,7 +2882,7 @@ namespace ZScreenLib
 
         private void chkAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoSwitchFTP = cbAutoSwitchFTP.Checked;
+            Program.conf.AutoSwitchFileUploader = cbAutoSwitchFileUploader.Checked;
         }
 
         #endregion
@@ -4062,6 +4055,29 @@ namespace ZScreenLib
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.FileDestMode = (FileUploaderType)cboFileUploaders.SelectedIndex;
+        }
+
+        private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
+        {
+            int width;
+            if (int.TryParse(txtFTPThumbWidth.Text, out width))
+            {
+                Program.conf.FTPThumbnailWidth = width;
+            }
+        }
+
+        private void txtFTPThumbHeight_TextChanged(object sender, EventArgs e)
+        {
+            int height;
+            if (int.TryParse(txtFTPThumbHeight.Text, out height))
+            {
+                Program.conf.FTPThumbnailHeight = height;
+            }
+        }
+
+        private void cbFTPThumbnailCheckSize_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.conf.FTPThumbnailCheckSize = cbFTPThumbnailCheckSize.Checked;
         }
     }
 }

@@ -133,7 +133,7 @@ namespace ZScreenLib
                     switch (task.Job)
                     {
                         case WorkerTask.Jobs.UploadFromClipboard:
-                            if (Program.conf.AutoSwitchFTP)
+                            if (Program.conf.AutoSwitchFileUploader)
                             {
                                 task.MyImageUploader = ImageDestType.FTP;
                                 PublishBinary(ref task);

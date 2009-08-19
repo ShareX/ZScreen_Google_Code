@@ -412,6 +412,7 @@ namespace ZScreenLib
                     UploadersLib.ImageUploaders.FTPUploader fu = new UploadersLib.ImageUploaders.FTPUploader(acc)
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
+                        ThumbnailSize = new Size(Program.conf.FTPThumbnailWidth, Program.conf.FTPThumbnailHeight),
                         WorkingDir = Program.CacheDir
                     };
 
