@@ -35,6 +35,13 @@ namespace ZSS
                     Process.Start(filePath);
                 }
             }
+            else if (args.Length > 1 && !string.IsNullOrEmpty(args[1])) {
+            	Process p = new Process();
+            	ProcessStartInfo  psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"));
+            	psi.Arguments = args[1];
+            	p.StartInfo = psi; 
+            	p.Start();
+            }
             else
             {
                 RunZScreen();

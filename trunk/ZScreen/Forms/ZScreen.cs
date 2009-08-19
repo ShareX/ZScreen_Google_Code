@@ -65,33 +65,15 @@ namespace ZScreenLib
 
         public ZScreen()
         {
-            string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
-            {
-                this.ShowInTaskbar = false;
-                this.WindowState = FormWindowState.Minimized;
-                Loader.Worker = new WorkerPrimary(null);
-                if (args[1] == "crop_shot")
-                {
-                    Loader.Worker.StartBW_CropShot();
-                }
-                else if (args[1] == "selected_window")
-                {
-                    Loader.Worker.StartBW_SelectedWindow();
-                }
-            }
-            else
-            {
-                InitializeComponent();
-                ZScreen_SetFormSettings();
-                Loader.Worker = new WorkerPrimary(this);
-                Loader.Worker2 = new WorkerSecondary(this);
-                ZScreen_ConfigGUI();
+            InitializeComponent();
+            ZScreen_SetFormSettings();
+            Loader.Worker = new WorkerPrimary(this);
+            Loader.Worker2 = new WorkerSecondary(this);
+            ZScreen_ConfigGUI();
 
-                Loader.Worker2.PerformOnlineTasks();
-                Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
-                if (Program.conf.CheckUpdates) Loader.Worker2.CheckUpdates();
-            }
+            Loader.Worker2.PerformOnlineTasks();
+            Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+            if (Program.conf.CheckUpdates) Loader.Worker2.CheckUpdates();
         }
 
         internal void ZScreen_Windows7onlyTasks()
@@ -2152,7 +2134,7 @@ namespace ZScreenLib
                     bool checkBinary = !checkImage && !checkText && !checkWebpage;
 
                     historyBrowser.Visible = checkWebpage;
-                    pbPreview.Visible = checkImage || (!checkText && checkRemote) && !checkWebpage;
+                    pbPreview.Visible = checkImage || (!checkText && checkRemote) && !checkWebpage || checkBinary;
                     txtPreview.Visible = checkText && !checkWebpage;
 
                     tsmCopyCbHistory.Enabled = checkRemote;

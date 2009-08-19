@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
@@ -299,6 +300,10 @@ Global
 		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.CodeAnalysisDebug|Win32.Build.0 = CodeAnalysisDebug|Win32
+		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Debug|Win32.Build.0 = Debug|Win32
+		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Inno|Win32.Build.0 = Inno|Win32
+		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
