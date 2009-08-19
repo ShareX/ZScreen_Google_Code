@@ -172,7 +172,7 @@ namespace ZScreenLib
             catch (WebException e)
             {
                 string status = ((FtpWebResponse)e.Response).StatusDescription;
-                if (status.StartsWith("550") && acc.AutoCreateFolder)
+                if (status != null && status.StartsWith("550") && acc.AutoCreateFolder)
                 {
                     try
                     {

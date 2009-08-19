@@ -55,6 +55,8 @@ namespace UploadersLib.ImageUploaders
 
         public bool Resume { get; set; }
         public bool EnableThumbnail { get; set; }
+        public Size ThumbnailSize { get; set; }
+        public bool CheckThumbnailSize { get; set; }
         public string WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         /// <summary>
@@ -83,10 +85,10 @@ namespace UploadersLib.ImageUploaders
                 try
                 {
                     Image img = LoadBitmap(localFilePath);
-                    if (img != null)
+                    if (img != null && (!this.CheckThumbnailSize ||
+                        (this.CheckThumbnailSize && (img.Width > this.ThumbnailSize.Width || img.Height > this.ThumbnailSize.Height))))
                     {
-                        double sf = 128.0 / img.Width;
-                        img = ResizeBitmap(img, (int)(img.Width * sf), (int)(img.Height * sf));
+                        img = ResizeBitmap(img, ThumbnailSize);
                         StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
                         sb.Append(".th");
                         sb.Append(Path.GetExtension(fName));
@@ -140,6 +142,11 @@ namespace UploadersLib.ImageUploaders
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
             return bmp;
+        }
+
+        public static Image ResizeBitmap(Image img, Size size)
+        {
+            return ResizeBitmap(img, size.Width, size.Height);
         }
 
         public string ToErrorString()

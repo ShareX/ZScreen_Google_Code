@@ -240,7 +240,9 @@ namespace ZScreenLib
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
         public int FTPSelected = 0;
         public bool FTPCreateThumbnail = false;
-        public bool AutoSwitchFTP = true;
+        public int FTPThumbnailWidth = 150;
+        public int FTPThumbnailHeight = 125;
+        public bool FTPThumbnailCheckSize = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  DekiWiki
@@ -257,6 +259,7 @@ namespace ZScreenLib
         // Image Uploaders
 
         public UploadMode UploadMode = UploadMode.API;
+        public bool AutoSwitchFileUploader = true;
         public decimal ErrorRetryCount = 3;
         public bool ImageUploadRetryOnFail = true;
         public bool AddFailedScreenshot = false;

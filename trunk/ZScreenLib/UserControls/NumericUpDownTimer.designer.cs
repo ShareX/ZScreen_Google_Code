@@ -44,6 +44,7 @@
             this.nudDelay.Name = "nudDelay";
             this.nudDelay.Size = new System.Drawing.Size(68, 20);
             this.nudDelay.TabIndex = 1;
+            this.nudDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             // 
             // cbDelay
