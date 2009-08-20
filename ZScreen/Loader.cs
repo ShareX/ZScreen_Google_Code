@@ -15,6 +15,7 @@ namespace ZSS
         // internal static ZSS.Forms.SplashScreen Splash = null;
         public static WorkerPrimary Worker;
         public static WorkerSecondary Worker2;
+        public const string ZScreenCLI = "ZScreenCLI.exe";
 
         [STAThread]
         static void Main()

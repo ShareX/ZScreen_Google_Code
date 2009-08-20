@@ -262,7 +262,7 @@ namespace ZScreenLib
         public bool AutoSwitchFileUploader = true;
         public decimal ErrorRetryCount = 3;
         public bool ImageUploadRetryOnFail = true;
-        public bool AddFailedScreenshot = false;
+        public bool AddFailedScreenshot = true;
         public bool ImageUploadRetryOnTimeout = false;
         public decimal UploadDurationLimit = 15000;
 
@@ -370,67 +370,70 @@ namespace ZScreenLib
 
         public XMLSettings()
         {
-            // Accounts / FTP
 
-            BackupFTPSettings = true;
+            ApplyDefaultValues(this);
 
-            // Options / Actions Toolbar
+            //// Accounts / FTP
 
-            ActionsToolbarMode = false;
-            ActionToolbarLocation = Point.Empty;
+            //BackupFTPSettings = true;
 
-            // Options / General
+            //// Options / Actions Toolbar
 
-            ShowTrayUploadProgress = true;
-            WriteDebugFile = true;
+            //ActionsToolbarMode = false;
+            //ActionToolbarLocation = Point.Empty;
 
-            // Options / History Settings
+            //// Options / General
 
-            PreferBrowserForImages = false;
-            PreferBrowserForText = false;
+            //ShowTrayUploadProgress = true;
+            //WriteDebugFile = true;
 
-            // Options / Interaction
+            //// Options / History Settings
 
-            AutoShortenURL = true;
-            LimitLongURL = 100;
-            MakeTinyURL = false;
-            MinimizeOnClose = false;
+            //PreferBrowserForImages = false;
+            //PreferBrowserForText = false;
 
-            // Options / Paths
+            //// Options / Interaction
 
-            BackupApplicationSettings = true;
-            CustomImagesDir = String.Empty;
-            UseCustomImagesDir = false;
+            //AutoShortenURL = true;
+            //LimitLongURL = 100;
+            //MakeTinyURL = false;
+            //MinimizeOnClose = false;
 
-            // Options / Watch Folder
+            //// Options / Paths
 
-            FolderMonitoring = false;
-            FolderMonitorPath = String.Empty;
+            //BackupApplicationSettings = true;
+            //CustomImagesDir = String.Empty;
+            //UseCustomImagesDir = false;
 
-            // Screenshots / Bevel
+            //// Options / Watch Folder
 
-            BevelEffect = false;
-            BevelEffectOffset = 15;
-            BevelFilterType = FilterType.Brightness;
+            //FolderMonitoring = false;
+            //FolderMonitorPath = String.Empty;
 
-            // Screenshots / General
+            //// Screenshots / Bevel
 
-            AutoIncrement = 0;
-            BackgroundRegionBrightnessValue = -10;
-            BackgroundRegionTransparentValue = 100;
-            CopyImageUntilURL = false;
-            PromptForUpload = false;
-            RegionBrightnessValue = 15;
-            RegionTransparentValue = 75;
+            //BevelEffect = false;
+            //BevelEffectOffset = 15;
+            //BevelFilterType = FilterType.Brightness;
 
-            // Screenshots / Reflection
+            //// Screenshots / General
 
-            DrawReflection = false;
-            ReflectionOffset = 0;
-            ReflectionPercentage = 20;
-            ReflectionSkew = true;
-            ReflectionSkewSize = 25;
-            ReflectionTransparency = 255;
+            //AutoIncrement = 0;
+            //BackgroundRegionBrightnessValue = -10;
+            //BackgroundRegionTransparentValue = 100;
+            //CopyImageUntilURL = false;
+            //PromptForUpload = false;
+            //RegionBrightnessValue = 15;
+            //RegionTransparentValue = 75;
+
+            //// Screenshots / Reflection
+
+            //DrawReflection = false;
+            //ReflectionOffset = 0;
+            //ReflectionPercentage = 20;
+            //ReflectionSkew = true;
+            //ReflectionSkewSize = 25;
+            //ReflectionTransparency = 255;
         }
 
         #endregion
@@ -442,10 +445,10 @@ namespace ZScreenLib
         [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
 
-        // Destinations / Twitter
+        // Destinations / Twitter / Yfrog
 
         [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]
-        public YfrogUploadType YfrogUploadMode { get; set; }
+        public YfrogUploadType YfrogUploadMode = YfrogUploadType.UPLOAD_IMAGE_ONLY;
 
         // Options / Actions Toolbar
 
@@ -730,6 +733,17 @@ namespace ZScreenLib
 
             return new XMLSettings();
         }
+
+        static public void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
+
 
         #endregion
 

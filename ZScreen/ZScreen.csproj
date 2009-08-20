@@ -54,6 +54,7 @@
     </DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -311,9 +312,6 @@
     <None Include="Resources\dekiwiki_logo.png" />
     <None Include="Resources\nav-home.png" />
     <None Include="Resources\nav-user.png" />
-    <None Include="Resources\tr.png" />
-    <None Include="Resources\au.png" />
-    <None Include="Resources\us.png" />
     <None Include="Resources\ajax-loader.gif" />
     <None Include="Resources\shape_square.ico" />
     <None Include="Resources\application_double_ico.ico" />
@@ -321,7 +319,6 @@
     <None Include="RegistrationHelper.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\explorer 001.png" />
     <None Include="Resources\explorer.png" />
     <Content Include="Resources\zss-main.ico" />
     <Content Include="Setup\zscreen-beta-setup.iss" />

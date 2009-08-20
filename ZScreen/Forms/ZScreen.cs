@@ -89,20 +89,22 @@ namespace ZScreenLib
 
                     Program.zJumpList = JumpList.CreateJumpList();
 
-                    //*****************************************************************
-                    // Commented until ZScreenLib and ZScreenCLI are finalized - McoreD
-                    // DO NOT REMOVE <-- Remove what? - Jaex
-                    //*****************************************************************
+                    // User Tasks - these are only added once
+                    if (!Program.conf.UseCustomImagesDir)
+                    {
+                        JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
+                        jlCropShot.Arguments = "crop_shot";
+                        jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
+                        Program.zJumpList.AddUserTasks(jlCropShot);
 
-                    JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Crop Shot");
-                    jlCropShot.Arguments = "crop_shot";
-                    jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
-                    Program.zJumpList.AddUserTasks(jlCropShot);
+                        JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Selected Window");
+                        jlSelectedWindow.Arguments = "selected_window";
+                        jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
+                        Program.zJumpList.AddUserTasks(jlSelectedWindow);
 
-                    JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"), "Selected Window");
-                    jlSelectedWindow.Arguments = "selected_window";
-                    jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
-                    Program.zJumpList.AddUserTasks(jlSelectedWindow);
+                        Program.zJumpList.Refresh();
+                        Program.conf.UserTasksAdded = true;
+                    }
 
                     // Custom Categories
                     JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
@@ -116,20 +118,17 @@ namespace ZScreenLib
                     paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink);
                     Program.zJumpList.AddCustomCategories(paths);
 
-                    // User Tasks
-                    if (!Program.conf.UserTasksAdded)
-                    {
-                        ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
-                        cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
-                        ThumbnailToolbarButton selWindow = new ThumbnailToolbarButton(Resources.application_double_ico, "Selected Window");
-                        selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
-                        ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
-                        clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
+                    // Taskbar Buttons
+                    ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
+                    cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
 
-                        Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-                        Program.zJumpList.Refresh();
-                        Program.conf.UserTasksAdded = true;
-                    }
+                    ThumbnailToolbarButton selWindow = new ThumbnailToolbarButton(Resources.application_double_ico, "Selected Window");
+                    selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
+
+                    ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
+                    clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
+
+                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
                 }
                 catch (Exception ex)
                 {
@@ -605,11 +604,18 @@ namespace ZScreenLib
             }
             cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Program.conf.TwitPicShowFull;
-            if (cbTwitPicThumbnailMode.Items.Count == 0)
+            if (cboTwitPicThumbnailMode.Items.Count == 0)
             {
-                cbTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
+                cboTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
             }
-            cbTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
+            cboTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
+
+            // yFrog
+            if (cboYfrogUploadMode.Items.Count == 0)
+            {
+                cboYfrogUploadMode.Items.AddRange(typeof(YfrogUploadType).GetDescriptions());
+            }
+            cboYfrogUploadMode.SelectedIndex = (int)Program.conf.YfrogUploadMode;
 
             // ImageBam
 
@@ -3770,7 +3776,7 @@ namespace ZScreenLib
 
         private void cbTwitPicThumbnailMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cbTwitPicThumbnailMode.SelectedIndex;
+            Program.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cboTwitPicThumbnailMode.SelectedIndex;
         }
 
         private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
@@ -4078,6 +4084,11 @@ namespace ZScreenLib
         private void cbFTPThumbnailCheckSize_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.FTPThumbnailCheckSize = cbFTPThumbnailCheckSize.Checked;
+        }
+
+        private void cboYfrogUploadMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
         }
     }
 }
