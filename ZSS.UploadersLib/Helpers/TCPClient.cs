@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
@@ -35,11 +34,11 @@ namespace UploadersLib.Helpers
 {
     public class TCPClient
     {
-        private TcpClient client;
+        private readonly TcpClient client;
         private Uri url;
         private string boundary, header, footer;
         private byte[] postMethod, headerBytes, request, requestEnd;
-        private ImageUploader uploader;
+        private readonly ImageUploader uploader;
 
         public TCPClient(ImageUploader imageUploader)
         {
@@ -62,7 +61,7 @@ namespace UploadersLib.Helpers
             headerBytes = headers.ToByteArray();
         }
 
-        private string GetMimeType(ImageFormat format)
+        private static string GetMimeType(ImageFormat format)
         {
             foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
             {
@@ -73,27 +72,21 @@ namespace UploadersLib.Helpers
 
         private void BuildRequests(string fileFormName, string fileName, string fileMimeType, Dictionary<string, string> arguments)
         {
-            MemoryStream stream = new MemoryStream();
+            using (MemoryStream stream = new MemoryStream()){
+                
+                StringBuilder stringRequest = new StringBuilder();
 
-            byte[] bytes;
+                foreach (KeyValuePair<string, string> argument in arguments){
+                    stringRequest.Append(MakeInputContent(argument.Key, argument.Value));
+                }
 
-            StringBuilder stringRequest = new StringBuilder();
+                byte[] bytes = Encoding.Default.GetBytes(stringRequest.ToString());
 
-            foreach (KeyValuePair<string, string> argument in arguments)
-            {
-                stringRequest.Append(MakeInputContent(argument.Key, argument.Value));
+                stream.Write(bytes, 0, bytes.Length);
+                bytes = MakeFileInputContent(fileFormName, fileName, fileMimeType);
+                stream.Write(bytes, 0, bytes.Length);
+                request = stream.ToArray();
             }
-
-            bytes = Encoding.Default.GetBytes(stringRequest.ToString());
-
-            stream.Write(bytes, 0, bytes.Length);
-
-            bytes = MakeFileInputContent(fileFormName, fileName, fileMimeType);
-
-            stream.Write(bytes, 0, bytes.Length);
-
-            request = stream.ToArray();
-
             requestEnd = Encoding.Default.GetBytes("\r\n" + footer + "\r\n");
         }
 
@@ -107,12 +100,13 @@ namespace UploadersLib.Helpers
             string format = string.Format("{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                 header, name, filename, contentType);
 
-            MemoryStream stream = new MemoryStream();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                byte[] bytes = Encoding.Default.GetBytes(format);
+                stream.Write(bytes, 0, bytes.Length);
 
-            byte[] bytes = Encoding.Default.GetBytes(format);
-            stream.Write(bytes, 0, bytes.Length);
-
-            return stream.ToArray();
+                return stream.ToArray();
+            }
         }
 
         public string UploadImage(Image image, string link, string fileFormName, string fileName, Dictionary<string, string> arguments)
@@ -166,10 +160,8 @@ namespace UploadersLib.Helpers
 
                 networkStream.Write(requestEnd, 0, requestEnd.Length);
 
-                StreamReader reader = new StreamReader(networkStream);
-                string response = reader.ReadToEnd();
-
-                return response;
+                using (StreamReader reader = new StreamReader(networkStream))
+                    return reader.ReadToEnd();
             }
         }
 
