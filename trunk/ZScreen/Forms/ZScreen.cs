@@ -2505,19 +2505,34 @@ namespace ZScreenLib
 
             if (lbHistory.SelectedIndex != -1)
             {
+                StringBuilder sbFiles = new StringBuilder();
                 List<HistoryItem> temp = new List<HistoryItem>();
                 foreach (HistoryItem hi in lbHistory.SelectedItems)
                 {
                     temp.Add(hi);
+                    sbFiles.AppendLine(hi.LocalPath);
                 }
+                string msg = "Are you sure you want to delete ";
+                if (temp.Count > 10)
+                {
+                    msg += temp.Count + " files?";
+                }
+                else
+                {
+                    msg += "the following files:\n\n" + sbFiles.ToString();
+                }
+                DialogResult strAns = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 foreach (HistoryItem hi in temp)
                 {
                     lbHistory.Items.Remove(hi);
-                    Adapter.DeleteFile(hi.LocalPath);
+                    if (strAns == DialogResult.Yes)
+                    {
+                        Adapter.DeleteFile(hi.LocalPath);
+                    }
                 }
                 if (lbHistory.Items.Count > 0)
                 {
-                    lbHistory.SelectedItem = 0;
+                    lbHistory.SelectedIndex = 0;
                 }
             }
         }
