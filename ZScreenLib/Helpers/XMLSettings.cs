@@ -630,7 +630,7 @@ namespace ZScreenLib
                 }
             }
 
-            if (settingsFile != Program.appSettings.GetSettingsFilePath())
+            if (File.Exists(settingsFile) && settingsFile != Program.appSettings.GetSettingsFilePath())
             {
                 // Update AppSettings.xml
                 File.Copy(settingsFile, Program.appSettings.GetSettingsFilePath());
