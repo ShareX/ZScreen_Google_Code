@@ -1,5 +1,6 @@
 Version 3.2 - 20091015
 
+3.02.1.0 PropertyGrid options to prefer active File Uploader for uploading images/text {McoreD}
 3.02.0.0 ZScreen Command Line Interface supporting "crop_shot" and "selected_window" {McoreD}
 3.01.0.1 Bug fixes to run Portable mode better {McoreD}
 3.01.0.0 Added SendSpace File Uploader support {Jaex}

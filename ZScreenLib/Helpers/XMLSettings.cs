@@ -370,81 +370,25 @@ namespace ZScreenLib
 
         public XMLSettings()
         {
-
             ApplyDefaultValues(this);
-
-            //// Accounts / FTP
-
-            //BackupFTPSettings = true;
-
-            //// Options / Actions Toolbar
-
-            //ActionsToolbarMode = false;
-            //ActionToolbarLocation = Point.Empty;
-
-            //// Options / General
-
-            //ShowTrayUploadProgress = true;
-            //WriteDebugFile = true;
-
-            //// Options / History Settings
-
-            //PreferBrowserForImages = false;
-            //PreferBrowserForText = false;
-
-            //// Options / Interaction
-
-            //AutoShortenURL = true;
-            //LimitLongURL = 100;
-            //MakeTinyURL = false;
-            //MinimizeOnClose = false;
-
-            //// Options / Paths
-
-            //BackupApplicationSettings = true;
-            //CustomImagesDir = String.Empty;
-            //UseCustomImagesDir = false;
-
-            //// Options / Watch Folder
-
-            //FolderMonitoring = false;
-            //FolderMonitorPath = String.Empty;
-
-            //// Screenshots / Bevel
-
-            //BevelEffect = false;
-            //BevelEffectOffset = 15;
-            //BevelFilterType = FilterType.Brightness;
-
-            //// Screenshots / General
-
-            //AutoIncrement = 0;
-            //BackgroundRegionBrightnessValue = -10;
-            //BackgroundRegionTransparentValue = 100;
-            //CopyImageUntilURL = false;
-            //PromptForUpload = false;
-            //RegionBrightnessValue = 15;
-            //RegionTransparentValue = 75;
-
-            //// Screenshots / Reflection
-
-            //DrawReflection = false;
-            //ReflectionOffset = 0;
-            //ReflectionPercentage = 20;
-            //ReflectionSkew = true;
-            //ReflectionSkewSize = 25;
-            //ReflectionTransparency = 255;
         }
 
         #endregion
 
-        #region Properties
+        #region Properties for PropertyGrid
 
-        // Accounts / FTP
+        // Destinations / General
 
-        [Category("Accounts / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
+        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Image Uploader for uploading Images")]
+        public bool PreferFileUploaderForImages { get; set; }
+        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Text Uploader for uploading Text")]
+        public bool PreferFileUploaderForText { get; set; }
+
+        // Destinations / FTP
+
+        [Category("Destinations / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
-
+        
         // Destinations / Twitter / Yfrog
 
         [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]

@@ -173,7 +173,11 @@ namespace ZScreenLib
                 ImageEdit();
             }
 
-            if (mTask.SafeToUpload())
+            if (Program.conf.PreferFileUploaderForImages)
+            {
+                UploadFile();
+            }
+            else if (mTask.SafeToUpload())
             {
                 FileSystem.AppendDebug("File for HDD: " + mTask.LocalFilePath);
                 UploadImage();
@@ -491,24 +495,31 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
-            textUploader.ProxySettings = Adapter.GetProxySettings();
-            string url = "";
-            if (mTask.MyText != null)
+            if (Program.conf.PreferFileUploaderForText)
             {
-                url = textUploader.UploadText(mTask.MyText);
+                UploadFile();
             }
             else
             {
-                url = textUploader.UploadTextFromFile(mTask.LocalFilePath);
-            }
-            if (mTask.MakeTinyURL)
-            {
-                url = Adapter.TryShortenURL(url);
-            }
-            mTask.RemoteFilePath = url;
+                TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
+                textUploader.ProxySettings = Adapter.GetProxySettings();
+                string url = "";
+                if (mTask.MyText != null)
+                {
+                    url = textUploader.UploadText(mTask.MyText);
+                }
+                else
+                {
+                    url = textUploader.UploadTextFromFile(mTask.LocalFilePath);
+                }
+                if (mTask.MakeTinyURL)
+                {
+                    url = Adapter.TryShortenURL(url);
+                }
+                mTask.RemoteFilePath = url;
 
-            mTask.EndTime = DateTime.Now;
+                mTask.EndTime = DateTime.Now;
+            }
         }
 
         public void TextEdit()
