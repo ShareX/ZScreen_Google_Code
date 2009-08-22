@@ -78,7 +78,13 @@ namespace ZScreenLib
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (Program.conf.ShowInTaskbar && CoreHelpers.RunningOnWin7)
+            if (Program.conf.Windows7TaskbarIntegration)
+            {
+                this.ShowInTaskbar = true;
+                Program.conf.MinimizeOnClose = true;
+            }
+
+            if (CoreHelpers.RunningOnWin7)
             {
                 try
                 {
@@ -143,6 +149,7 @@ namespace ZScreenLib
             this.Text = Program.GetProductName();
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
+            chkWindows7TaskbarIntegration.Enabled = CoreHelpers.RunningOnWin7;
 
             if (this.WindowState == FormWindowState.Normal)
             {
@@ -746,17 +753,21 @@ namespace ZScreenLib
 
             #endregion
 
-            ///////////////////////////////////
-            // Advanced Settings
-            ///////////////////////////////////
+            #region Options
 
-            cbStartWin.Checked = RegistryMgr.CheckStartWithWindows();
-            cbOpenMainWindow.Checked = Program.conf.OpenMainWindow;
-            cbShowTaskbar.Checked = Program.conf.ShowInTaskbar;
+            chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
+            chkOpenMainWindow.Checked = Program.conf.OpenMainWindow;
+            chkShowTaskbar.Checked = Program.conf.ShowInTaskbar;
+            chkShowTaskbar.Enabled = !Program.conf.Windows7TaskbarIntegration;
             cbShowHelpBalloonTips.Checked = Program.conf.ShowHelpBalloonTips;
             cbSaveFormSizePosition.Checked = Program.conf.SaveFormSizePosition;
             cbLockFormSize.Checked = Program.conf.LockFormSize;
             cbAutoSaveSettings.Checked = Program.conf.AutoSaveSettings;
+            chkWindows7TaskbarIntegration.Checked = Program.conf.Windows7TaskbarIntegration;
+
+            #endregion
+
+
 
             chkProxyEnable.Checked = Program.conf.ProxyEnabled;
             ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
@@ -816,9 +827,7 @@ namespace ZScreenLib
                 }
             }
 
-            ///////////////////////////////////
-            // History
-            ///////////////////////////////////    
+            #region History
 
             if (mGuiIsReady)
             {
@@ -829,6 +838,8 @@ namespace ZScreenLib
             {
                 Loader.Worker2.LoadHistoryItems();
             }
+
+            #endregion
 
             CheckFormSettings();
         }
@@ -1328,7 +1339,7 @@ namespace ZScreenLib
             }
 
             // Loader.Splash.Close();
-            if (Adapter.Windows7TaskbarIntegrationEnabled())
+            if (Program.conf.Windows7TaskbarIntegration)
             {
                 ZScreen_Windows7onlyTasks();
                 if (!Program.conf.OpenMainWindow)
@@ -1356,7 +1367,7 @@ namespace ZScreenLib
 
         public void cbStartWin_CheckedChanged(object sender, EventArgs e)
         {
-            RegistryMgr.SetStartWithWindows(cbStartWin.Checked);
+            RegistryMgr.SetStartWithWindows(chkStartWin.Checked);
         }
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
@@ -2550,16 +2561,15 @@ namespace ZScreenLib
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.OpenMainWindow = cbOpenMainWindow.Checked;
+            Program.conf.OpenMainWindow = chkOpenMainWindow.Checked;
         }
 
         private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowInTaskbar = cbShowTaskbar.Checked;
+            Program.conf.ShowInTaskbar = chkShowTaskbar.Checked;
             if (mGuiIsReady)
             {
                 this.ShowInTaskbar = Program.conf.ShowInTaskbar;
-                this.ZScreen_Windows7onlyTasks();
             }
         }
 
@@ -4105,6 +4115,16 @@ namespace ZScreenLib
         private void cboYfrogUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
+        }
+
+        private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mGuiIsReady)
+            {
+                Program.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
+                chkShowTaskbar.Enabled = !Program.conf.Windows7TaskbarIntegration;
+                ZScreen_Windows7onlyTasks();
+            }
         }
     }
 }

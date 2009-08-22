@@ -54,6 +54,7 @@ namespace ZScreenLib
         public FormWindowState WindowState = FormWindowState.Normal;
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
+        public bool Windows7TaskbarIntegration = false;
         public static string XMLFileName = string.Format("{0}-{1}-Settings.xml", Application.ProductName, Application.ProductVersion);
 
         //~~~~~~~~~~~~~~~~~~~~~

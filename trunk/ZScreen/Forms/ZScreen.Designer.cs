@@ -30,9 +30,9 @@ namespace ZScreenLib
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -481,9 +481,9 @@ namespace ZScreenLib
             this.cbSaveFormSizePosition = new System.Windows.Forms.CheckBox();
             this.cbShowHelpBalloonTips = new System.Windows.Forms.CheckBox();
             this.cbLockFormSize = new System.Windows.Forms.CheckBox();
-            this.cbShowTaskbar = new System.Windows.Forms.CheckBox();
-            this.cbOpenMainWindow = new System.Windows.Forms.CheckBox();
-            this.cbStartWin = new System.Windows.Forms.CheckBox();
+            this.chkShowTaskbar = new System.Windows.Forms.CheckBox();
+            this.chkOpenMainWindow = new System.Windows.Forms.CheckBox();
+            this.chkStartWin = new System.Windows.Forms.CheckBox();
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.chkProxyEnable = new System.Windows.Forms.CheckBox();
@@ -546,6 +546,7 @@ namespace ZScreenLib
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -2271,38 +2272,38 @@ namespace ZScreenLib
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5629,7 +5630,7 @@ namespace ZScreenLib
             this.gbUpdates.Controls.Add(this.lblUpdateInfo);
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.cbCheckUpdates);
-            this.gbUpdates.Location = new System.Drawing.Point(8, 216);
+            this.gbUpdates.Location = new System.Drawing.Point(8, 248);
             this.gbUpdates.Name = "gbUpdates";
             this.gbUpdates.Size = new System.Drawing.Size(752, 96);
             this.gbUpdates.TabIndex = 8;
@@ -5681,16 +5682,17 @@ namespace ZScreenLib
             // gbMisc
             // 
             this.gbMisc.BackColor = System.Drawing.Color.Transparent;
+            this.gbMisc.Controls.Add(this.chkWindows7TaskbarIntegration);
             this.gbMisc.Controls.Add(this.cbAutoSaveSettings);
             this.gbMisc.Controls.Add(this.cbSaveFormSizePosition);
             this.gbMisc.Controls.Add(this.cbShowHelpBalloonTips);
             this.gbMisc.Controls.Add(this.cbLockFormSize);
-            this.gbMisc.Controls.Add(this.cbShowTaskbar);
-            this.gbMisc.Controls.Add(this.cbOpenMainWindow);
-            this.gbMisc.Controls.Add(this.cbStartWin);
+            this.gbMisc.Controls.Add(this.chkShowTaskbar);
+            this.gbMisc.Controls.Add(this.chkOpenMainWindow);
+            this.gbMisc.Controls.Add(this.chkStartWin);
             this.gbMisc.Location = new System.Drawing.Point(8, 8);
             this.gbMisc.Name = "gbMisc";
-            this.gbMisc.Size = new System.Drawing.Size(752, 200);
+            this.gbMisc.Size = new System.Drawing.Size(752, 224);
             this.gbMisc.TabIndex = 7;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
@@ -5742,37 +5744,37 @@ namespace ZScreenLib
             // 
             // cbShowTaskbar
             // 
-            this.cbShowTaskbar.AutoSize = true;
-            this.cbShowTaskbar.Location = new System.Drawing.Point(16, 72);
-            this.cbShowTaskbar.Name = "cbShowTaskbar";
-            this.cbShowTaskbar.Size = new System.Drawing.Size(166, 17);
-            this.cbShowTaskbar.TabIndex = 3;
-            this.cbShowTaskbar.Text = "Show main window in taskbar";
-            this.cbShowTaskbar.UseVisualStyleBackColor = true;
-            this.cbShowTaskbar.CheckedChanged += new System.EventHandler(this.cbShowTaskbar_CheckedChanged);
+            this.chkShowTaskbar.AutoSize = true;
+            this.chkShowTaskbar.Location = new System.Drawing.Point(16, 72);
+            this.chkShowTaskbar.Name = "cbShowTaskbar";
+            this.chkShowTaskbar.Size = new System.Drawing.Size(166, 17);
+            this.chkShowTaskbar.TabIndex = 3;
+            this.chkShowTaskbar.Text = "Show main window in taskbar";
+            this.chkShowTaskbar.UseVisualStyleBackColor = true;
+            this.chkShowTaskbar.CheckedChanged += new System.EventHandler(this.cbShowTaskbar_CheckedChanged);
             // 
             // cbOpenMainWindow
             // 
-            this.cbOpenMainWindow.AutoSize = true;
-            this.cbOpenMainWindow.Location = new System.Drawing.Point(16, 48);
-            this.cbOpenMainWindow.Name = "cbOpenMainWindow";
-            this.cbOpenMainWindow.Size = new System.Drawing.Size(154, 17);
-            this.cbOpenMainWindow.TabIndex = 2;
-            this.cbOpenMainWindow.Text = "Open main window on load";
-            this.cbOpenMainWindow.UseVisualStyleBackColor = true;
-            this.cbOpenMainWindow.CheckedChanged += new System.EventHandler(this.cbOpenMainWindow_CheckedChanged);
+            this.chkOpenMainWindow.AutoSize = true;
+            this.chkOpenMainWindow.Location = new System.Drawing.Point(16, 48);
+            this.chkOpenMainWindow.Name = "cbOpenMainWindow";
+            this.chkOpenMainWindow.Size = new System.Drawing.Size(154, 17);
+            this.chkOpenMainWindow.TabIndex = 2;
+            this.chkOpenMainWindow.Text = "Open main window on load";
+            this.chkOpenMainWindow.UseVisualStyleBackColor = true;
+            this.chkOpenMainWindow.CheckedChanged += new System.EventHandler(this.cbOpenMainWindow_CheckedChanged);
             // 
             // cbStartWin
             // 
-            this.cbStartWin.AutoSize = true;
-            this.cbStartWin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbStartWin.Location = new System.Drawing.Point(16, 24);
-            this.cbStartWin.Name = "cbStartWin";
-            this.cbStartWin.Size = new System.Drawing.Size(117, 17);
-            this.cbStartWin.TabIndex = 0;
-            this.cbStartWin.Text = "Start with Windows";
-            this.cbStartWin.UseVisualStyleBackColor = true;
-            this.cbStartWin.CheckedChanged += new System.EventHandler(this.cbStartWin_CheckedChanged);
+            this.chkStartWin.AutoSize = true;
+            this.chkStartWin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkStartWin.Location = new System.Drawing.Point(16, 24);
+            this.chkStartWin.Name = "cbStartWin";
+            this.chkStartWin.Size = new System.Drawing.Size(117, 17);
+            this.chkStartWin.TabIndex = 0;
+            this.chkStartWin.Text = "Start with Windows";
+            this.chkStartWin.UseVisualStyleBackColor = true;
+            this.chkStartWin.CheckedChanged += new System.EventHandler(this.cbStartWin_CheckedChanged);
             // 
             // tpProxy
             // 
@@ -6507,6 +6509,17 @@ namespace ZScreenLib
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // chkWindows7TaskbarIntegration
+            // 
+            this.chkWindows7TaskbarIntegration.AutoSize = true;
+            this.chkWindows7TaskbarIntegration.Location = new System.Drawing.Point(16, 192);
+            this.chkWindows7TaskbarIntegration.Name = "chkWindows7TaskbarIntegration";
+            this.chkWindows7TaskbarIntegration.Size = new System.Drawing.Size(174, 17);
+            this.chkWindows7TaskbarIntegration.TabIndex = 8;
+            this.chkWindows7TaskbarIntegration.Text = "Windows 7 &Taskbar Integration";
+            this.chkWindows7TaskbarIntegration.UseVisualStyleBackColor = true;
+            this.chkWindows7TaskbarIntegration.CheckedChanged += new System.EventHandler(this.chkWindows7TaskbarIntegration_CheckedChanged);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -7069,9 +7082,9 @@ namespace ZScreenLib
         internal System.Windows.Forms.CheckBox cbCheckUpdates;
         internal System.Windows.Forms.GroupBox gbMisc;
         internal System.Windows.Forms.CheckBox cbLockFormSize;
-        internal System.Windows.Forms.CheckBox cbShowTaskbar;
-        internal System.Windows.Forms.CheckBox cbOpenMainWindow;
-        internal System.Windows.Forms.CheckBox cbStartWin;
+        internal System.Windows.Forms.CheckBox chkShowTaskbar;
+        internal System.Windows.Forms.CheckBox chkOpenMainWindow;
+        internal System.Windows.Forms.CheckBox chkStartWin;
         internal System.Windows.Forms.TabPage tpAdvPaths;
         internal System.Windows.Forms.GroupBox gbRoot;
         internal System.Windows.Forms.Button btnViewRootDir;
@@ -7247,6 +7260,7 @@ namespace ZScreenLib
         private System.Windows.Forms.CheckBox cbFTPThumbnailCheckSize;
         internal System.Windows.Forms.ComboBox cboYfrogUploadMode;
         internal System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
 
     }
 }
