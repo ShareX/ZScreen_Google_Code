@@ -71,6 +71,13 @@ namespace ZScreenLib
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
+            if ((Program.conf.PreferFileUploaderForImages  && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
+                (Program.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT))
+            {
+                task.JobCategory = JobCategoryType.BINARY;
+                task.MyFileUploader = Program.conf.FileDestMode;
+            }
+
             if (Program.conf.PromptForUpload && task.MyImageUploader != ImageDestType.CLIPBOARD &
                 task.MyImageUploader != ImageDestType.FILE &&
                 (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
@@ -96,9 +103,8 @@ namespace ZScreenLib
             switch (task.JobCategory)
             {
                 case JobCategoryType.PICTURES:
-                    new TaskManager(ref task).PublishImage();
-                    break;
                 case JobCategoryType.SCREENSHOTS:
+                case JobCategoryType.BINARY:
                     switch (task.Job)
                     {
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
@@ -114,6 +120,7 @@ namespace ZScreenLib
                             new TaskManager(ref task).CaptureActiveWindow();
                             break;
                         case WorkerTask.Jobs.UPLOAD_IMAGE:
+                        case WorkerTask.Jobs.UploadFromClipboard:
                             new TaskManager(ref task).PublishImage();
                             break;
                     }
@@ -129,18 +136,18 @@ namespace ZScreenLib
                             break;
                     }
                     break;
-                case JobCategoryType.BINARY:
-                    switch (task.Job)
-                    {
-                        case WorkerTask.Jobs.UploadFromClipboard:
-                            if (Program.conf.AutoSwitchFileUploader)
-                            {
-                                task.MyImageUploader = ImageDestType.FTP;
-                                PublishBinary(ref task);
-                            }
-                            break;
-                    }
-                    break;
+                //case JobCategoryType.BINARY:
+                //    switch (task.Job)
+                //    {
+                //        case WorkerTask.Jobs.UploadFromClipboard:
+                //            if (Program.conf.AutoSwitchFileUploader)
+                //            {
+                //                task.MyImageUploader = ImageDestType.FTP;
+                //                PublishBinary(ref task);
+                //            }
+                //            break;
+                //    }
+                //    break;
             }
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
@@ -235,14 +242,9 @@ namespace ZScreenLib
                     switch (task.JobCategory)
                     {
                         case JobCategoryType.BINARY:
-                            switch (task.Job)
+                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
                             {
-                                case WorkerTask.Jobs.UploadFromClipboard:
-                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                    {
-                                        Clipboard.SetText(task.RemoteFilePath);
-                                    }
-                                    break;
+                                Clipboard.SetText(task.RemoteFilePath);
                             }
                             break;
                         case JobCategoryType.TEXT:
@@ -302,7 +304,7 @@ namespace ZScreenLib
                             break;
                     }
 
-                    if (task.JobCategory == JobCategoryType.SCREENSHOTS || task.JobCategory == JobCategoryType.PICTURES)
+                    if (task.JobCategory != JobCategoryType.TEXT)
                     {
                         UploadManager.SetClipboardText(task, false);
                     }
@@ -368,7 +370,7 @@ namespace ZScreenLib
             WorkerTask task = new WorkerTask(bwApp, job);
             if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
             {
-                task.MyImageUploader = Program.conf.ScreenshotDestMode;
+                task.MyImageUploader = Program.conf.ScreenshotDestMode;                
                 task.MyFileUploader = Program.conf.FileDestMode;
             }
             else
@@ -819,7 +821,7 @@ namespace ZScreenLib
             {
                 if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                 {
-                    task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                    task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];                    
                     task.RunWorker();
                 }
                 else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later

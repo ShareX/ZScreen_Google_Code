@@ -308,6 +308,9 @@ namespace ZScreenLib
             {
                 cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
+            cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            cboImageUploaders.Enabled = !Program.conf.PreferFileUploaderForImages;
+
             if (tsmImageDest.DropDownItems.Count == 0)
             {
                 foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
@@ -318,8 +321,7 @@ namespace ZScreenLib
                     tsmImageDest.DropDownItems.Add(tsmi);
                 }
             }
-
-            cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
@@ -479,7 +481,6 @@ namespace ZScreenLib
             {
                 Program.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
-
             ucTextUploaders.MyCollection.Items.Clear();
             cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.TextUploadersList)
@@ -490,12 +491,12 @@ namespace ZScreenLib
                     cboTextUploaders.Items.Add(textUploader);
                 }
             }
-
             if (Program.conf.TextUploaderSelected > -1 && Program.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Program.conf.TextUploaderSelected;
                 cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
             }
+            cboTextUploaders.Enabled = !Program.conf.PreferFileUploaderForText;
 
             ucTextUploaders.Templates.Items.Clear();
             ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
