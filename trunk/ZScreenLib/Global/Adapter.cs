@@ -517,13 +517,11 @@ namespace ZScreenLib
 
         public static void AddRecentItem(string filePath)
         {
-            if (Program.zJumpList != null)
+            if (TaskbarManager.IsPlatformSupported && File.Exists(filePath) && Program.zJumpList != null)
             {
                 try
                 {
                     Program.zJumpList.AddToRecent(filePath);
-                    Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
-                    Program.zJumpList.Refresh();
                 }
                 catch (Exception ex)
                 {

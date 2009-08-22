@@ -95,22 +95,19 @@ namespace ZScreenLib
 
                     Program.zJumpList = JumpList.CreateJumpList();
 
-                    // User Tasks - these are only added once
-                    if (!Program.conf.UserTasksAdded)
-                    {
-                        JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
-                        jlCropShot.Arguments = "crop_shot";
-                        jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
-                        Program.zJumpList.AddUserTasks(jlCropShot);
+                    // User Tasks
+                    JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
+                    jlCropShot.Arguments = "crop_shot";
+                    jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
+                    Program.zJumpList.AddUserTasks(jlCropShot);
 
-                        JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Selected Window");
-                        jlSelectedWindow.Arguments = "selected_window";
-                        jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
-                        Program.zJumpList.AddUserTasks(jlSelectedWindow);
-
-                        Program.zJumpList.Refresh();
-                        Program.conf.UserTasksAdded = true;
-                    }
+                    JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Selected Window");
+                    jlSelectedWindow.Arguments = "selected_window";
+                    jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
+                    Program.zJumpList.AddUserTasks(jlSelectedWindow);
+                    
+                    // Recent Items
+                    Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
 
                     // Custom Categories
                     JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
@@ -135,6 +132,7 @@ namespace ZScreenLib
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
                     Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                    Program.zJumpList.Refresh();
                 }
                 catch (Exception ex)
                 {

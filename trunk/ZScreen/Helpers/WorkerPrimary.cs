@@ -71,7 +71,7 @@ namespace ZScreenLib
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
-            if ((Program.conf.PreferFileUploaderForImages  && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
+            if ((Program.conf.PreferFileUploaderForImages && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
                 (Program.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT))
             {
                 task.JobCategory = JobCategoryType.BINARY;
@@ -370,7 +370,7 @@ namespace ZScreenLib
             WorkerTask task = new WorkerTask(bwApp, job);
             if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
             {
-                task.MyImageUploader = Program.conf.ScreenshotDestMode;                
+                task.MyImageUploader = Program.conf.ScreenshotDestMode;
                 task.MyFileUploader = Program.conf.FileDestMode;
             }
             else
@@ -821,7 +821,7 @@ namespace ZScreenLib
             {
                 if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                 {
-                    task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];                    
+                    task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
                     task.RunWorker();
                 }
                 else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
@@ -897,10 +897,7 @@ namespace ZScreenLib
                 mZScreen.lbHistory.ClearSelected();
                 mZScreen.lbHistory.SelectedIndex = 0;
             }
-            if (CoreHelpers.RunningOnWin7 && File.Exists(hi.LocalPath))
-            {
-                Adapter.AddRecentItem(hi.LocalPath);
-            }
+            Adapter.AddRecentItem(hi.LocalPath);
         }
 
         #region Start Workers
