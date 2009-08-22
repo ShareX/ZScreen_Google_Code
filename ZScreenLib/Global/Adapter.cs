@@ -128,11 +128,6 @@ namespace ZScreenLib
 
         #endregion
 
-        public static bool Windows7TaskbarIntegrationEnabled()
-        {
-            return Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose;
-        }
-
         public static void AddToClipboardByDoubleClick(Control tp)
         {
             Control ctl = tp.GetNextControl(tp, true);
