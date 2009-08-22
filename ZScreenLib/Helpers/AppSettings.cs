@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Threading;
+using UploadersLib;
 
 namespace ZScreenLib
 {
@@ -15,10 +16,11 @@ namespace ZScreenLib
 
         public string RootDir { get; set; }
         public string XMLSettingsFile { get; set; }
+        public ImageDestType ImageUploader { get; set; }
 
         public AppSettings()
         {
-            //RootDir = Program.DefaultRootAppFolder;
+            ImageUploader = ImageDestType.IMAGESHACK;
         }
 
         public static AppSettings Read()

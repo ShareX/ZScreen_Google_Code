@@ -55,7 +55,7 @@ namespace ZScreenLib
             {
                 mTask.CaptureActiveWindow();
                 WriteImage();
-                PublishImage();
+                PublishData();
             }
             catch (ArgumentOutOfRangeException aor)
             {
@@ -109,7 +109,7 @@ namespace ZScreenLib
                 if (mTask.MyImage != null)
                 {
                     WriteImage();
-                    PublishImage();
+                    PublishData();
                 }
             }
             catch (Exception ex)
@@ -134,9 +134,8 @@ namespace ZScreenLib
         {
             mTask.CaptureScreen();
             WriteImage();
-            PublishImage();
+            PublishData();
         }
-
 
         /// <summary>
         /// Writes MyImage object in a WorkerTask into a file
@@ -166,6 +165,20 @@ namespace ZScreenLib
         /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
         /// </summary>
         /// <param name="task"></param>
+        public void PublishData()
+        {
+            if (mTask.JobCategory == JobCategoryType.BINARY)
+            {
+                UploadFile();
+            }
+            else
+            {
+                PublishImage();
+            }
+        }
+
+        #endregion
+
         public void PublishImage()
         {
             if (mTask.MyImage != null && Adapter.ImageSoftwareEnabled() && mTask.Job != WorkerTask.Jobs.UPLOAD_IMAGE)
@@ -183,8 +196,6 @@ namespace ZScreenLib
                 UploadImage();
             }
         }
-
-        #endregion
 
         public void UploadFile()
         {

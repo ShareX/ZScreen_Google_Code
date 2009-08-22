@@ -121,7 +121,7 @@ namespace ZScreenLib
                             break;
                         case WorkerTask.Jobs.UPLOAD_IMAGE:
                         case WorkerTask.Jobs.UploadFromClipboard:
-                            new TaskManager(ref task).PublishImage();
+                            new TaskManager(ref task).PublishData();
                             break;
                     }
                     break;

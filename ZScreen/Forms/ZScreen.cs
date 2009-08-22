@@ -4069,6 +4069,8 @@ namespace ZScreenLib
         private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.conf.SendSpaceAccountType = (AcctType)cboSendSpaceAcctType.SelectedIndex;
+            txtSendSpacePassword.Enabled = Program.conf.SendSpaceAccountType == AcctType.User;
+            txtSendSpaceUserName.Enabled = Program.conf.SendSpaceAccountType == AcctType.User;
         }
 
         private void btnSendSpaceRegister_Click(object sender, EventArgs e)
