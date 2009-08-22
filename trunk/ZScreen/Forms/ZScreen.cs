@@ -90,7 +90,7 @@ namespace ZScreenLib
                     Program.zJumpList = JumpList.CreateJumpList();
 
                     // User Tasks - these are only added once
-                    if (!Program.conf.UseCustomImagesDir)
+                    if (!Program.conf.UserTasksAdded)
                     {
                         JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
                         jlCropShot.Arguments = "crop_shot";
