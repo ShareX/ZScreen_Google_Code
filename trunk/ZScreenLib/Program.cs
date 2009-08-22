@@ -100,13 +100,12 @@ namespace ZScreenLib
 
         public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
+        private static bool RunConfig = false;
 
         public static void Load(bool keyboardHook)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
             FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
-
-            ConfigWizard cw = null;
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
@@ -119,9 +118,11 @@ namespace ZScreenLib
             {
                 if (string.IsNullOrEmpty(Program.appSettings.RootDir))
                 {
-                    cw = new ConfigWizard(DefaultRootAppFolder);
+                    ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     cw.ShowDialog();
                     Program.appSettings.RootDir = cw.RootFolder;
+                    Program.appSettings.ImageUploader = cw.ImageDestinationType;
+                    RunConfig = true;
                 }
                 RootAppFolder = Program.appSettings.RootDir;
             }
@@ -138,9 +139,9 @@ namespace ZScreenLib
             Program.InitializeFiles();
 
             // Use Configuration Wizard Settings if applied
-            if (cw != null)
+            if (RunConfig)
             {
-                Program.conf.ScreenshotDestMode = cw.ImageDestinationType;
+                Program.conf.ScreenshotDestMode = Program.appSettings.ImageUploader;
             }
 
             bool bGrantedOwnership;
