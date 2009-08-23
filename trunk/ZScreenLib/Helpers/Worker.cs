@@ -5,10 +5,8 @@ using System.ComponentModel;
 
 namespace ZScreenLib
 {
-   public class Worker
+    public class Worker
     {
-       internal bool mSetHotkeys, mTakingScreenShot, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
-
 
     }
 }
