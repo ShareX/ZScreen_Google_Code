@@ -211,21 +211,21 @@ namespace UploadersLib
 
         #endregion
 
-        #region Public Static Methods
+        #region Protected Helper Methods
 
-        public static byte[] MakeInputContent(string boundary, string name, string value)
+        protected byte[] MakeInputContent(string boundary, string name, string value)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
 
             return Encoding.UTF8.GetBytes(format);
         }
 
-        public static byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content)
+        protected byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content)
         {
             return MakeFileInputContent(boundary, name, fileName, content, GetMimeType(fileName));
         }
 
-        public static byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, string contentType)
+        protected byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, string contentType)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                 boundary, name, fileName, contentType);
@@ -244,12 +244,12 @@ namespace UploadersLib
             return stream.ToArray();
         }
 
-        public static string GetXMLValue(string input, string tag)
+        protected string GetXMLValue(string input, string tag)
         {
             return Regex.Match(input, String.Format("(?<={0}>).+(?=</{0})", tag)).Value;
         }
 
-        public static string GetMimeType(string fileName)
+        protected string GetMimeType(string fileName)
         {
             string ext = Path.GetExtension(fileName).ToLower();
             RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(ext);
@@ -260,7 +260,7 @@ namespace UploadersLib
             return "application/octetstream";
         }
 
-        public static string GetMimeType(ImageFormat format)
+        protected string GetMimeType(ImageFormat format)
         {
             foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
             {
@@ -269,7 +269,7 @@ namespace UploadersLib
             return "image/unknown";
         }
 
-        public static string GetMD5(byte[] data)
+        protected string GetMD5(byte[] data)
         {
             byte[] bytes = new MD5CryptoServiceProvider().ComputeHash(data);
 
@@ -283,12 +283,12 @@ namespace UploadersLib
             return sb.ToString().ToLower();
         }
 
-        public static string GetMD5(string text)
+        protected string GetMD5(string text)
         {
             return GetMD5(Encoding.UTF8.GetBytes(text));
         }
 
-        public static string GetRandomAlphanumeric(int length)
+        protected string GetRandomAlphanumeric(int length)
         {
             Random random = new Random();
             string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
@@ -303,7 +303,7 @@ namespace UploadersLib
             return sb.ToString();
         }
 
-        public static string CombineURL(string url1, string url2)
+        protected string CombineURL(string url1, string url2)
         {
             if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
             {
@@ -331,7 +331,7 @@ namespace UploadersLib
             return url1 + "/" + url2;
         }
 
-        public static string CombineURL(params string[] urls)
+        protected string CombineURL(params string[] urls)
         {
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
         }

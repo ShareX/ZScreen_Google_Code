@@ -47,6 +47,7 @@ using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.Properties;
 using ZScreenLib;
+using System.Reflection;
 
 namespace ZScreenGUI
 {
@@ -106,7 +107,7 @@ namespace ZScreenGUI
                     jlSelectedWindow.Arguments = "selected_window";
                     jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
                     Program.zJumpList.AddUserTasks(jlSelectedWindow);
-                    
+
                     // Recent Items
                     Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
 
@@ -327,7 +328,7 @@ namespace ZScreenGUI
                     tsmImageDest.DropDownItems.Add(tsmi);
                 }
             }
-            
+
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
@@ -618,6 +619,7 @@ namespace ZScreenGUI
             cboTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
 
             // yFrog
+
             if (cboYfrogUploadMode.Items.Count == 0)
             {
                 cboYfrogUploadMode.Items.AddRange(typeof(YfrogUploadType).GetDescriptions());
@@ -645,6 +647,11 @@ namespace ZScreenGUI
             {
                 lbImageBamGalleries.SelectedIndex = 0;
             }
+
+            // Flickr
+
+            pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
+            pgFlickrSettings.SelectedObject = Program.conf.FlickrSettings;
 
             #endregion
 
@@ -765,8 +772,6 @@ namespace ZScreenGUI
             chkWindows7TaskbarIntegration.Checked = Program.conf.Windows7TaskbarIntegration;
 
             #endregion
-
-
 
             chkProxyEnable.Checked = Program.conf.ProxyEnabled;
             ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
@@ -4127,5 +4132,82 @@ namespace ZScreenGUI
                 ZScreen_Windows7onlyTasks();
             }
         }
+
+        #region Flickr
+
+        private void btnFlickrGetFrob_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FlickrUploader flickr = new FlickrUploader();
+                btnFlickrGetFrob.Tag = flickr.GetFrob();
+                string url = flickr.GetAuthLink(FlickrUploader.Permission.Write);
+                Process.Start(url);
+                btnFlickrGetToken.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void btnFlickrGetToken_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string token = btnFlickrGetFrob.Tag as string;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    FlickrUploader flickr = new FlickrUploader();
+                    Program.conf.FlickrAuthInfo = flickr.GetToken(token);
+                    pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
+
+                    MessageBox.Show("Success.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void btnFlickrCheckToken_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Program.conf.FlickrAuthInfo != null)
+                {
+                    string token = Program.conf.FlickrAuthInfo.Token;
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        FlickrUploader flickr = new FlickrUploader();
+                        Program.conf.FlickrAuthInfo = flickr.CheckToken(token);
+                        pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
+
+                        MessageBox.Show("Success.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void btnFlickrOpenImages_Click(object sender, EventArgs e)
+        {
+            if (Program.conf.FlickrAuthInfo != null)
+            {
+                string userID = Program.conf.FlickrAuthInfo.UserID;
+                if (!string.IsNullOrEmpty(userID))
+                {
+                    FlickrUploader flickr = new FlickrUploader();
+                    string url = flickr.GetPhotosLink(userID);
+                    Process.Start(url);
+                }
+            }
+        }
+
+        #endregion
     }
 }
