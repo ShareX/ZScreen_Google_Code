@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using UploadersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.ImageUploaders;
 
 namespace UploaderTester
 {
@@ -10,25 +13,17 @@ namespace UploaderTester
     {
         static void Main(string[] args)
         {
-            string url;
-            SendSpace sendSpace = new SendSpace();
+            FlickrUploader flickr = new FlickrUploader("72157622106795898-65be13742be74e79");
+            
+            /*
+            flickr.GetAuthFrob();
+            Process.Start(flickr.GetAuthLink());
+            Console.ReadLine();
+            flickr.GetAuthToken();
+            */
 
-            try
-            {
-                string token = sendSpace.AuthCreateToken();
-                SendSpace.LoginInfo loginInfo = sendSpace.AuthLogin(token, "Jaex", "pass");
-                sendSpace.CurrentUploadInfo = sendSpace.UploadGetInfo(loginInfo.SessionKey);
-                url = sendSpace.Upload(@"C:\Users\PC\Desktop\test.rar");
-                Console.WriteLine("Success: {0}", url);
-
-                sendSpace.CurrentUploadInfo = sendSpace.AnonymousUploadGetInfo();
-                url = sendSpace.Upload(@"C:\Users\PC\Desktop\test.rar");
-                Console.WriteLine("Success: {0}", url);
-            }
-            catch
-            {
-                Console.WriteLine(sendSpace.ToErrorString());
-            }
+            string url = flickr.UploadImage(@"C:\Users\PC\Desktop\main.png").URL;
+            Console.WriteLine(url);
 
             Console.ReadLine();
         }
