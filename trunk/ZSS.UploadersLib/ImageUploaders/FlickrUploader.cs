@@ -40,6 +40,8 @@ namespace UploadersLib.ImageUploaders
 
         public string Token;
         public string Frob;
+        public string UserID;
+        public FlickrSettings Settings = new FlickrSettings();
 
         public FlickrUploader() { }
 
@@ -59,8 +61,6 @@ namespace UploadersLib.ImageUploaders
         /// Returns the credentials attached to an authentication token.
         /// http://www.flickr.com/services/api/flickr.auth.checkToken.html
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
         public AuthInfo CheckToken(string token)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -80,7 +80,6 @@ namespace UploadersLib.ImageUploaders
         /// Returns a frob to be used during authentication.
         /// http://www.flickr.com/services/api/flickr.auth.getFrob.html
         /// </summary>
-        /// <returns>frob</returns>
         public string GetFrob()
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -99,8 +98,6 @@ namespace UploadersLib.ImageUploaders
         /// Get the full authentication token for a mini-token.
         /// http://www.flickr.com/services/api/flickr.auth.getFullToken.html
         /// </summary>
-        /// <param name="frob"></param>
-        /// <returns></returns>
         public AuthInfo GetFullToken(string frob)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -136,6 +133,11 @@ namespace UploadersLib.ImageUploaders
             this.Token = auth.Token;
 
             return auth;
+        }
+
+        public AuthInfo GetToken()
+        {
+            return GetToken(this.Frob);
         }
 
         public string GetAuthLink()
@@ -186,7 +188,7 @@ namespace UploadersLib.ImageUploaders
                             XElement err = xele.Element("err");
                             code = err.AttributeValue("code");
                             msg = err.AttributeValue("msg");
-                            throw new Exception(string.Format("Code: {0} - Message: {1}", code, msg));
+                            throw new Exception(string.Format("Code: {0}, Message: {1}", code, msg));
                     }
                 }
             }
@@ -201,13 +203,26 @@ namespace UploadersLib.ImageUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("api_key", API_Key);
             args.Add("auth_token", Token);
+
+            if (!string.IsNullOrEmpty(Settings.Title)) args.Add("title", Settings.Title);
+            if (!string.IsNullOrEmpty(Settings.Description)) args.Add("description", Settings.Description);
+            if (!string.IsNullOrEmpty(Settings.Tags)) args.Add("tags", Settings.Tags);
+            if (!string.IsNullOrEmpty(Settings.IsPublic)) args.Add("is_public", Settings.IsPublic);
+            if (!string.IsNullOrEmpty(Settings.IsFriend)) args.Add("is_friend", Settings.IsFriend);
+            if (!string.IsNullOrEmpty(Settings.IsFamily)) args.Add("is_family", Settings.IsFamily);
+            if (!string.IsNullOrEmpty(Settings.SafetyLevel)) args.Add("safety_level", Settings.SafetyLevel);
+            if (!string.IsNullOrEmpty(Settings.ContentType)) args.Add("content_type", Settings.ContentType);
+            if (!string.IsNullOrEmpty(Settings.Hidden)) args.Add("hidden", Settings.Hidden);
+
             args.Add("api_sig", GetAPISig(args));
 
             string response = UploadImage(image, fileName, API_Upload_URL, "photo", args);
 
             string photoid = ParseResponse(response, "photoid").Value;
 
-            throw new NotImplementedException();
+            string url = string.Format("http://www.flickr.com/photos/{0}/{1}", this.UserID, photoid);
+
+            return new ImageFileManager(url, response);
         }
 
         public class AuthInfo
@@ -227,6 +242,54 @@ namespace UploadersLib.ImageUploaders
                 Username = user.AttributeValue("username");
                 Fullname = user.AttributeValue("fullname");
             }
+        }
+
+        public class FlickrSettings
+        {
+            /// <summary>
+            /// The title of the photo.
+            /// </summary>
+            public string Title { get; set; }
+
+            /// <summary>
+            /// A description of the photo. May contain some limited HTML.
+            /// </summary>
+            public string Description { get; set; }
+
+            /// <summary>
+            /// A space-seperated list of tags to apply to the photo.
+            /// </summary>
+            public string Tags { get; set; }
+
+            /// <summary>
+            /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
+            /// </summary>
+            public string IsPublic { get; set; }
+
+            /// <summary>
+            /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
+            /// </summary>
+            public string IsFriend { get; set; }
+
+            /// <summary>
+            /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
+            /// </summary>
+            public string IsFamily { get; set; }
+
+            /// <summary>
+            /// Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.
+            /// </summary>
+            public string SafetyLevel { get; set; }
+
+            /// <summary>
+            /// Set to 1 for Photo, 2 for Screenshot, or 3 for Other.
+            /// </summary>
+            public string ContentType { get; set; }
+
+            /// <summary>
+            /// Set to 1 to keep the photo in global search results, 2 to hide from public searches.
+            /// </summary>
+            public string Hidden { get; set; }
         }
 
         public enum Permission

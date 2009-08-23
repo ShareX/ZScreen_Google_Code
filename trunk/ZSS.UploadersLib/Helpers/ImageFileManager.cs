@@ -31,7 +31,6 @@ namespace UploadersLib.Helpers
     public class ImageFileManager
     {
         public List<ImageFile> ImageFileList = new List<ImageFile>();
-        public string URL { get; set; }
         public string Source { get; set; }
 
         /// <summary>
@@ -41,13 +40,18 @@ namespace UploadersLib.Helpers
 
         public ImageFileManager() { }
 
+        public ImageFileManager(string url, string source)
+        {
+            this.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE));
+            this.Source = source;
+        }
+
         public ImageFileManager(List<ImageFile> list)
         {
             if (list != null && list.Count > 0)
             {
                 this.ImageFileList = list;
                 this.Source = list[0].Source;
-                this.URL = this.GetFullImageUrl();
             }
         }
 
