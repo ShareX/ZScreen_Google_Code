@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
+using System.ComponentModel;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -38,16 +39,16 @@ namespace UploadersLib.ImageUploaders
         private const string API_Auth_URL = "http://www.flickr.com/services/auth/";
         private const string API_Upload_URL = "http://api.flickr.com/services/upload/";
 
-        public string Token;
-        public string Frob;
-        public string UserID;
+        public AuthInfo Auth = new AuthInfo();
         public FlickrSettings Settings = new FlickrSettings();
+        public string Frob;
 
         public FlickrUploader() { }
 
-        public FlickrUploader(string token)
+        public FlickrUploader(AuthInfo auth, FlickrSettings settings)
         {
-            this.Token = token;
+            this.Auth = auth;
+            this.Settings = settings;
         }
 
         public override string Name
@@ -71,9 +72,9 @@ namespace UploadersLib.ImageUploaders
 
             string response = GetResponse(API_URL, args);
 
-            AuthInfo auth = new AuthInfo(ParseResponse(response, "auth"));
+            this.Auth = new AuthInfo(ParseResponse(response, "auth"));
 
-            return auth;
+            return this.Auth;
         }
 
         /// <summary>
@@ -108,9 +109,9 @@ namespace UploadersLib.ImageUploaders
 
             string response = GetResponse(API_URL, args);
 
-            AuthInfo auth = new AuthInfo(ParseResponse(response, "auth"));
+            this.Auth = new AuthInfo(ParseResponse(response, "auth"));
 
-            return auth;
+            return this.Auth;
         }
 
         /// <summary>
@@ -128,11 +129,9 @@ namespace UploadersLib.ImageUploaders
 
             string response = GetResponse(API_URL, args);
 
-            AuthInfo auth = new AuthInfo(ParseResponse(response, "auth"));
+            this.Auth = new AuthInfo(ParseResponse(response, "auth"));
 
-            this.Token = auth.Token;
-
-            return auth;
+            return this.Auth;
         }
 
         public AuthInfo GetToken()
@@ -159,6 +158,16 @@ namespace UploadersLib.ImageUploaders
             }
 
             return null;
+        }
+
+        public string GetPhotosLink(string userID)
+        {
+            return CombineURL("http://www.flickr.com/photos", userID);
+        }
+
+        public string GetPhotosLink()
+        {
+            return GetPhotosLink(this.Auth.UserID);
         }
 
         #endregion
@@ -202,7 +211,7 @@ namespace UploadersLib.ImageUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("api_key", API_Key);
-            args.Add("auth_token", Token);
+            args.Add("auth_token", this.Auth.Token);
 
             if (!string.IsNullOrEmpty(Settings.Title)) args.Add("title", Settings.Title);
             if (!string.IsNullOrEmpty(Settings.Description)) args.Add("description", Settings.Description);
@@ -220,7 +229,7 @@ namespace UploadersLib.ImageUploaders
 
             string photoid = ParseResponse(response, "photoid").Value;
 
-            string url = string.Format("http://www.flickr.com/photos/{0}/{1}", this.UserID, photoid);
+            string url = CombineURL(GetPhotosLink(), photoid);
 
             return new ImageFileManager(url, response);
         }
@@ -232,6 +241,8 @@ namespace UploadersLib.ImageUploaders
             public string UserID { get; set; }
             public string Username { get; set; }
             public string Fullname { get; set; }
+
+            public AuthInfo() { }
 
             public AuthInfo(XElement element)
             {
@@ -249,46 +260,55 @@ namespace UploadersLib.ImageUploaders
             /// <summary>
             /// The title of the photo.
             /// </summary>
+            [Description("The title of the photo.")]
             public string Title { get; set; }
 
             /// <summary>
             /// A description of the photo. May contain some limited HTML.
             /// </summary>
+            [Description("A description of the photo. May contain some limited HTML.")]
             public string Description { get; set; }
 
             /// <summary>
             /// A space-seperated list of tags to apply to the photo.
             /// </summary>
+            [Description("A space-seperated list of tags to apply to the photo.")]
             public string Tags { get; set; }
 
             /// <summary>
             /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
             /// </summary>
+            [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
             public string IsPublic { get; set; }
 
             /// <summary>
             /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
             /// </summary>
+            [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
             public string IsFriend { get; set; }
 
             /// <summary>
             /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
             /// </summary>
+            [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
             public string IsFamily { get; set; }
 
             /// <summary>
             /// Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.
             /// </summary>
+            [Description("Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.")]
             public string SafetyLevel { get; set; }
 
             /// <summary>
             /// Set to 1 for Photo, 2 for Screenshot, or 3 for Other.
             /// </summary>
+            [Description("Set to 1 for Photo, 2 for Screenshot, or 3 for Other.")]
             public string ContentType { get; set; }
 
             /// <summary>
             /// Set to 1 to keep the photo in global search results, 2 to hide from public searches.
             /// </summary>
+            [Description("Set to 1 to keep the photo in global search results, 2 to hide from public searches.")]
             public string Hidden { get; set; }
         }
 

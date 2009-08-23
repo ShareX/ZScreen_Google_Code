@@ -33,9 +33,9 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +87,7 @@ namespace ZScreenGUI
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new NumericUpDownTimer();
+            this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -109,7 +109,7 @@ namespace ZScreenGUI
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new AccountsControl();
+            this.ucFTPAccounts = new ZScreenGUI.UserControls.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbFTPThumbnailCheckSize = new System.Windows.Forms.CheckBox();
             this.lblFTPThumbHeight = new System.Windows.Forms.Label();
@@ -184,7 +184,14 @@ namespace ZScreenGUI
             this.tpMindTouch = new System.Windows.Forms.TabPage();
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
-            this.ucMindTouchAccounts = new AccountsControl();
+            this.ucMindTouchAccounts = new ZScreenGUI.UserControls.AccountsControl();
+            this.tpFlickr = new System.Windows.Forms.TabPage();
+            this.btnFlickrOpenImages = new System.Windows.Forms.Button();
+            this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
+            this.pgFlickrSettings = new System.Windows.Forms.PropertyGrid();
+            this.btnFlickrCheckToken = new System.Windows.Forms.Button();
+            this.btnFlickrGetToken = new System.Windows.Forms.Button();
+            this.btnFlickrGetFrob = new System.Windows.Forms.Button();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
@@ -421,9 +428,9 @@ namespace ZScreenGUI
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new UserControls.TextUploadersControl();
+            this.ucTextUploaders = new ZScreenGUI.UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new ZScreenGUI.UserControls.TextUploadersControl();
             this.tpTreeGUI = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpTranslator = new System.Windows.Forms.TabPage();
@@ -480,6 +487,7 @@ namespace ZScreenGUI
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
+            this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
             this.cbSaveFormSizePosition = new System.Windows.Forms.CheckBox();
             this.cbShowHelpBalloonTips = new System.Windows.Forms.CheckBox();
@@ -490,7 +498,7 @@ namespace ZScreenGUI
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.chkProxyEnable = new System.Windows.Forms.CheckBox();
-            this.ucProxyAccounts = new AccountsControl();
+            this.ucProxyAccounts = new ZScreenGUI.UserControls.AccountsControl();
             this.tpInteraction = new System.Windows.Forms.TabPage();
             this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
             this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
@@ -549,7 +557,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -578,6 +585,7 @@ namespace ZScreenGUI
             this.tpSendSpace.SuspendLayout();
             this.tpMindTouch.SuspendLayout();
             this.gbMindTouchOptions.SuspendLayout();
+            this.tpFlickr.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpScreenshots.SuspendLayout();
@@ -1402,6 +1410,7 @@ namespace ZScreenGUI
             this.tcAccounts.Controls.Add(this.tpRapidShare);
             this.tcAccounts.Controls.Add(this.tpSendSpace);
             this.tcAccounts.Controls.Add(this.tpMindTouch);
+            this.tcAccounts.Controls.Add(this.tpFlickr);
             this.tcAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcAccounts.ImageList = this.ilApp;
             this.tcAccounts.Location = new System.Drawing.Point(3, 3);
@@ -2240,6 +2249,87 @@ namespace ZScreenGUI
             this.ucMindTouchAccounts.Size = new System.Drawing.Size(785, 319);
             this.ucMindTouchAccounts.TabIndex = 0;
             // 
+            // tpFlickr
+            // 
+            this.tpFlickr.Controls.Add(this.btnFlickrOpenImages);
+            this.tpFlickr.Controls.Add(this.pgFlickrAuthInfo);
+            this.tpFlickr.Controls.Add(this.pgFlickrSettings);
+            this.tpFlickr.Controls.Add(this.btnFlickrCheckToken);
+            this.tpFlickr.Controls.Add(this.btnFlickrGetToken);
+            this.tpFlickr.Controls.Add(this.btnFlickrGetFrob);
+            this.tpFlickr.Location = new System.Drawing.Point(4, 23);
+            this.tpFlickr.Name = "tpFlickr";
+            this.tpFlickr.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFlickr.Size = new System.Drawing.Size(791, 409);
+            this.tpFlickr.TabIndex = 10;
+            this.tpFlickr.Text = "Flickr";
+            this.tpFlickr.UseVisualStyleBackColor = true;
+            // 
+            // btnFlickrOpenImages
+            // 
+            this.btnFlickrOpenImages.Location = new System.Drawing.Point(472, 16);
+            this.btnFlickrOpenImages.Name = "btnFlickrOpenImages";
+            this.btnFlickrOpenImages.Size = new System.Drawing.Size(128, 23);
+            this.btnFlickrOpenImages.TabIndex = 7;
+            this.btnFlickrOpenImages.Text = "Open images page";
+            this.btnFlickrOpenImages.UseVisualStyleBackColor = true;
+            this.btnFlickrOpenImages.Click += new System.EventHandler(this.btnFlickrOpenImages_Click);
+            // 
+            // pgFlickrAuthInfo
+            // 
+            this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
+            this.pgFlickrAuthInfo.HelpVisible = false;
+            this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 48);
+            this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
+            this.pgFlickrAuthInfo.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+            this.pgFlickrAuthInfo.Size = new System.Drawing.Size(584, 104);
+            this.pgFlickrAuthInfo.TabIndex = 6;
+            this.pgFlickrAuthInfo.ToolbarVisible = false;
+            // 
+            // pgFlickrSettings
+            // 
+            this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
+            this.pgFlickrSettings.Location = new System.Drawing.Point(16, 160);
+            this.pgFlickrSettings.Name = "pgFlickrSettings";
+            this.pgFlickrSettings.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+            this.pgFlickrSettings.Size = new System.Drawing.Size(584, 240);
+            this.pgFlickrSettings.TabIndex = 5;
+            this.pgFlickrSettings.ToolbarVisible = false;
+            // 
+            // btnFlickrCheckToken
+            // 
+            this.btnFlickrCheckToken.Location = new System.Drawing.Point(368, 16);
+            this.btnFlickrCheckToken.Name = "btnFlickrCheckToken";
+            this.btnFlickrCheckToken.Size = new System.Drawing.Size(96, 23);
+            this.btnFlickrCheckToken.TabIndex = 4;
+            this.btnFlickrCheckToken.Text = "Check token";
+            this.ttZScreen.SetToolTip(this.btnFlickrCheckToken, "Returns the credentials attached to an authentication token.");
+            this.btnFlickrCheckToken.UseVisualStyleBackColor = true;
+            this.btnFlickrCheckToken.Click += new System.EventHandler(this.btnFlickrCheckToken_Click);
+            // 
+            // btnFlickrGetToken
+            // 
+            this.btnFlickrGetToken.Enabled = false;
+            this.btnFlickrGetToken.Location = new System.Drawing.Point(192, 16);
+            this.btnFlickrGetToken.Name = "btnFlickrGetToken";
+            this.btnFlickrGetToken.Size = new System.Drawing.Size(168, 24);
+            this.btnFlickrGetToken.TabIndex = 1;
+            this.btnFlickrGetToken.Text = "Complete authentication";
+            this.ttZScreen.SetToolTip(this.btnFlickrGetToken, "Returns the auth token for the given frob, if one has been attached.");
+            this.btnFlickrGetToken.UseVisualStyleBackColor = true;
+            this.btnFlickrGetToken.Click += new System.EventHandler(this.btnFlickrGetToken_Click);
+            // 
+            // btnFlickrGetFrob
+            // 
+            this.btnFlickrGetFrob.Location = new System.Drawing.Point(16, 16);
+            this.btnFlickrGetFrob.Name = "btnFlickrGetFrob";
+            this.btnFlickrGetFrob.Size = new System.Drawing.Size(168, 23);
+            this.btnFlickrGetFrob.TabIndex = 0;
+            this.btnFlickrGetFrob.Text = "Open authentication page";
+            this.ttZScreen.SetToolTip(this.btnFlickrGetFrob, "Returns a frob to be used during authentication.");
+            this.btnFlickrGetFrob.UseVisualStyleBackColor = true;
+            this.btnFlickrGetFrob.Click += new System.EventHandler(this.btnFlickrGetFrob_Click);
+            // 
             // tpHotkeys
             // 
             this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
@@ -2275,38 +2365,38 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5700,6 +5790,17 @@ namespace ZScreenGUI
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
             // 
+            // chkWindows7TaskbarIntegration
+            // 
+            this.chkWindows7TaskbarIntegration.AutoSize = true;
+            this.chkWindows7TaskbarIntegration.Location = new System.Drawing.Point(16, 192);
+            this.chkWindows7TaskbarIntegration.Name = "chkWindows7TaskbarIntegration";
+            this.chkWindows7TaskbarIntegration.Size = new System.Drawing.Size(174, 17);
+            this.chkWindows7TaskbarIntegration.TabIndex = 8;
+            this.chkWindows7TaskbarIntegration.Text = "Windows 7 &Taskbar Integration";
+            this.chkWindows7TaskbarIntegration.UseVisualStyleBackColor = true;
+            this.chkWindows7TaskbarIntegration.CheckedChanged += new System.EventHandler(this.chkWindows7TaskbarIntegration_CheckedChanged);
+            // 
             // cbAutoSaveSettings
             // 
             this.cbAutoSaveSettings.AutoSize = true;
@@ -5745,34 +5846,34 @@ namespace ZScreenGUI
             this.cbLockFormSize.UseVisualStyleBackColor = true;
             this.cbLockFormSize.CheckedChanged += new System.EventHandler(this.cbLockFormSize_CheckedChanged);
             // 
-            // cbShowTaskbar
+            // chkShowTaskbar
             // 
             this.chkShowTaskbar.AutoSize = true;
             this.chkShowTaskbar.Location = new System.Drawing.Point(16, 72);
-            this.chkShowTaskbar.Name = "cbShowTaskbar";
+            this.chkShowTaskbar.Name = "chkShowTaskbar";
             this.chkShowTaskbar.Size = new System.Drawing.Size(166, 17);
             this.chkShowTaskbar.TabIndex = 3;
             this.chkShowTaskbar.Text = "Show main window in taskbar";
             this.chkShowTaskbar.UseVisualStyleBackColor = true;
             this.chkShowTaskbar.CheckedChanged += new System.EventHandler(this.cbShowTaskbar_CheckedChanged);
             // 
-            // cbOpenMainWindow
+            // chkOpenMainWindow
             // 
             this.chkOpenMainWindow.AutoSize = true;
             this.chkOpenMainWindow.Location = new System.Drawing.Point(16, 48);
-            this.chkOpenMainWindow.Name = "cbOpenMainWindow";
+            this.chkOpenMainWindow.Name = "chkOpenMainWindow";
             this.chkOpenMainWindow.Size = new System.Drawing.Size(154, 17);
             this.chkOpenMainWindow.TabIndex = 2;
             this.chkOpenMainWindow.Text = "Open main window on load";
             this.chkOpenMainWindow.UseVisualStyleBackColor = true;
             this.chkOpenMainWindow.CheckedChanged += new System.EventHandler(this.cbOpenMainWindow_CheckedChanged);
             // 
-            // cbStartWin
+            // chkStartWin
             // 
             this.chkStartWin.AutoSize = true;
             this.chkStartWin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chkStartWin.Location = new System.Drawing.Point(16, 24);
-            this.chkStartWin.Name = "cbStartWin";
+            this.chkStartWin.Name = "chkStartWin";
             this.chkStartWin.Size = new System.Drawing.Size(117, 17);
             this.chkStartWin.TabIndex = 0;
             this.chkStartWin.Text = "Start with Windows";
@@ -6512,17 +6613,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // chkWindows7TaskbarIntegration
-            // 
-            this.chkWindows7TaskbarIntegration.AutoSize = true;
-            this.chkWindows7TaskbarIntegration.Location = new System.Drawing.Point(16, 192);
-            this.chkWindows7TaskbarIntegration.Name = "chkWindows7TaskbarIntegration";
-            this.chkWindows7TaskbarIntegration.Size = new System.Drawing.Size(174, 17);
-            this.chkWindows7TaskbarIntegration.TabIndex = 8;
-            this.chkWindows7TaskbarIntegration.Text = "Windows 7 &Taskbar Integration";
-            this.chkWindows7TaskbarIntegration.UseVisualStyleBackColor = true;
-            this.chkWindows7TaskbarIntegration.CheckedChanged += new System.EventHandler(this.chkWindows7TaskbarIntegration_CheckedChanged);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6588,6 +6678,7 @@ namespace ZScreenGUI
             this.tpMindTouch.ResumeLayout(false);
             this.gbMindTouchOptions.ResumeLayout(false);
             this.gbMindTouchOptions.PerformLayout();
+            this.tpFlickr.ResumeLayout(false);
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -7264,6 +7355,13 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ComboBox cboYfrogUploadMode;
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
+        private System.Windows.Forms.TabPage tpFlickr;
+        private System.Windows.Forms.Button btnFlickrGetToken;
+        private System.Windows.Forms.Button btnFlickrGetFrob;
+        private System.Windows.Forms.Button btnFlickrCheckToken;
+        private System.Windows.Forms.PropertyGrid pgFlickrAuthInfo;
+        private System.Windows.Forms.PropertyGrid pgFlickrSettings;
+        private System.Windows.Forms.Button btnFlickrOpenImages;
 
     }
 }

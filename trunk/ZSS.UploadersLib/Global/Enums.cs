@@ -26,47 +26,6 @@ using System;
 
 namespace UploadersLib
 {
-    #region Text Uploaders
-
-    [Serializable]
-    public enum TextDestType
-    {
-        [Description("FTP Server")]
-        FTP,
-        [Description("pastebin - www.pastebin.com")]
-        PASTEBIN,
-        [Description("Paste2 - www.paste2.org")]
-        PASTE2,
-        //[Description("pastebin.ca")]
-        //PASTEBIN_CA,
-        [Description("Slexy 2.0 - www.slexy.org")]
-        SLEXY
-    }
-
-    [Serializable]
-    public enum UrlShortenerType
-    {
-        [Description("3.ly")]
-        THREELY,
-        [Description("bit.ly")]
-        BITLY,
-        [Description("is.gd")]
-        ISGD,
-        [Description("kl.am")]
-        KLAM,
-        [Description("tinyurl.com")]
-        TINYURL
-    }
-
-    [Serializable]
-    public enum Privacy
-    {
-        Public,
-        Private
-    }
-
-    #endregion
-
     #region Image Uploaders
 
     public enum UploadMode
@@ -109,6 +68,8 @@ namespace UploadersLib
         IMAGESHACK,
         [Description("TinyPic - www.tinypic.com")]
         TINYPIC,
+        [Description("Flickr - www.flickr.com")]
+        FLICKR,
         [Description("ImageBam - www.imagebam.com")]
         IMAGEBAM,
         [Description("TwitPic - www.twitpic.com")]
@@ -123,6 +84,47 @@ namespace UploadersLib
         DEKIWIKI,
         [Description("Printer")]
         PRINTER
+    }
+
+    #endregion
+
+    #region Text Uploaders
+
+    [Serializable]
+    public enum TextDestType
+    {
+        [Description("FTP Server")]
+        FTP,
+        [Description("pastebin - www.pastebin.com")]
+        PASTEBIN,
+        [Description("Paste2 - www.paste2.org")]
+        PASTE2,
+        //[Description("pastebin.ca")]
+        //PASTEBIN_CA,
+        [Description("Slexy 2.0 - www.slexy.org")]
+        SLEXY
+    }
+
+    [Serializable]
+    public enum UrlShortenerType
+    {
+        [Description("3.ly")]
+        THREELY,
+        [Description("bit.ly")]
+        BITLY,
+        [Description("is.gd")]
+        ISGD,
+        [Description("kl.am")]
+        KLAM,
+        [Description("tinyurl.com")]
+        TINYURL
+    }
+
+    [Serializable]
+    public enum Privacy
+    {
+        Public,
+        Private
     }
 
     #endregion

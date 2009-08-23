@@ -289,6 +289,11 @@ namespace ZScreenLib
         public bool TwitPicShowFull = true;
         public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
 
+        // Flickr
+
+        public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
+        public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
+
         // Indexer
 
         public IndexerConfig IndexerConfig = new IndexerConfig();
