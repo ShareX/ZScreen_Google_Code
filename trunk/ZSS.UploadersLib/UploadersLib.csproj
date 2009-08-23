@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileUploader.cs" />
+    <Compile Include="FileUploaders\FTP\FTPAccount.cs" />
+    <Compile Include="FileUploaders\FTP\FTPAccountManager.cs" />
+    <Compile Include="FileUploaders\FTP\FTPAdapter.cs" />
+    <Compile Include="FileUploaders\FTP\FTPHelpers.cs" />
     <Compile Include="FileUploaders\RapidShare.cs" />
     <Compile Include="FileUploaders\SendSpace.cs" />
     <Compile Include="Forms\TwitterMsg.cs">
@@ -104,12 +108,6 @@
       <DependentUpon>TwitterMsg.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
-      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
-      <Name>ZSS.FTPUploaderLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

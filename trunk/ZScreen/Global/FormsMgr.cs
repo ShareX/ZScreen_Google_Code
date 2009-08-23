@@ -23,8 +23,9 @@
 
 using System.IO;
 using System.Windows.Forms;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     public static class FormsMgr
     {
@@ -76,7 +77,7 @@ namespace ZScreenLib
         {
             if (AboutWindow == null || AboutWindow.IsDisposed)
             {
-                AboutWindow = new AboutBox();
+                AboutWindow = new AboutBox() { Assemblies = Loader.LibNames };
             }
             AboutWindow.Activate();
             AboutWindow.Show();

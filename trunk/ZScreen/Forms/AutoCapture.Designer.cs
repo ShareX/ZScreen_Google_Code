@@ -1,4 +1,6 @@
-﻿namespace ZScreenLib
+﻿
+using ZScreenLib;
+namespace ZScreenGUI
 {
     partial class AutoCapture
     {

@@ -44,7 +44,7 @@ namespace ZScreenLib
             return Math.Min(Math.Max(number, min), max);
         }
 
-        public static string GetDescription(this Enum value)
+        internal static string GetDescription(this Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);

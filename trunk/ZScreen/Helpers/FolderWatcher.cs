@@ -7,8 +7,9 @@ using System.Windows;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using ZSS;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     public class FolderWatcher
     {

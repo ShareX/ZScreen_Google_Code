@@ -39,7 +39,6 @@
             // 
             // tmrSplash
             // 
-            this.tmrSplash.Enabled = true;
             this.tmrSplash.Tick += new System.EventHandler(this.tmrSplash_Tick);
             // 
             // txtStatus

@@ -73,18 +73,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
-      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
-      <Name>ZSS.FTPUploaderLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="FTPClient.resx">
       <DependentUpon>FTPClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginDialog.resx">
       <DependentUpon>LoginDialog.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
+      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
+      <Name>UploadersLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

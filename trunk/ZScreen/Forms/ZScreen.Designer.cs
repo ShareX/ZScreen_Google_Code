@@ -1,4 +1,7 @@
-namespace ZScreenLib
+using ZScreenLib;
+using ZScreenGUI.UserControls;
+
+namespace ZScreenGUI
 {
     partial class ZScreen
     {
@@ -84,7 +87,7 @@ namespace ZScreenLib
             this.tpMain = new System.Windows.Forms.TabPage();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new ZScreenLib.NumericUpDownTimer();
+            this.nudtScreenshotDelay = new NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.cbShowCursor = new System.Windows.Forms.CheckBox();
@@ -106,7 +109,7 @@ namespace ZScreenLib
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcAccounts = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new ZScreenLib.UserControls.AccountsControl();
+            this.ucFTPAccounts = new AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbFTPThumbnailCheckSize = new System.Windows.Forms.CheckBox();
             this.lblFTPThumbHeight = new System.Windows.Forms.Label();
@@ -181,7 +184,7 @@ namespace ZScreenLib
             this.tpMindTouch = new System.Windows.Forms.TabPage();
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
-            this.ucMindTouchAccounts = new ZScreenLib.UserControls.AccountsControl();
+            this.ucMindTouchAccounts = new AccountsControl();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
             this.dgvHotkeys = new System.Windows.Forms.DataGridView();
@@ -418,9 +421,9 @@ namespace ZScreenLib
             this.tpTextServices = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.ucTextUploaders = new ZScreenLib.UserControls.TextUploadersControl();
+            this.ucTextUploaders = new UserControls.TextUploadersControl();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.ucUrlShorteners = new ZScreenLib.UserControls.TextUploadersControl();
+            this.ucUrlShorteners = new UserControls.TextUploadersControl();
             this.tpTreeGUI = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpTranslator = new System.Windows.Forms.TabPage();
@@ -487,7 +490,7 @@ namespace ZScreenLib
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.chkProxyEnable = new System.Windows.Forms.CheckBox();
-            this.ucProxyAccounts = new ZScreenLib.UserControls.AccountsControl();
+            this.ucProxyAccounts = new AccountsControl();
             this.tpInteraction = new System.Windows.Forms.TabPage();
             this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
             this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
@@ -7135,9 +7138,9 @@ namespace ZScreenLib
         internal System.Windows.Forms.TextBox txtAutoTranslate;
         internal System.Windows.Forms.CheckBox cbAutoTranslate;
         internal System.Windows.Forms.TabPage tpURLShorteners;
-        internal UserControls.TextUploadersControl ucUrlShorteners;
+        internal TextUploadersControl ucUrlShorteners;
         internal System.Windows.Forms.TabPage tpTextUploaders;
-        internal UserControls.TextUploadersControl ucTextUploaders;
+        internal TextUploadersControl ucTextUploaders;
         internal System.Windows.Forms.ToolTip ttZScreen;
         internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.TabPage tpMindTouch;

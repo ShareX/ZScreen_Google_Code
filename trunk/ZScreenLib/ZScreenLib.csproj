@@ -154,21 +154,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\NumericUpDownTimer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\NumericUpDownTimer.Designer.cs">
-      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
       <Name>ZSS.ColorsLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
-      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
-      <Name>ZSS.FTPUploaderLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
       <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
@@ -213,9 +203,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
-      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zss-green.ico" />
@@ -256,6 +243,9 @@
   <ItemGroup>
     <Content Include="Documents\TODO.txt" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

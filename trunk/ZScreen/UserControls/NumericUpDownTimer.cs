@@ -24,14 +24,10 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
-    public enum Times
-    {
-        Milliseconds, Seconds, Minutes, Hours
-    }
-
     [DefaultEvent("ValueChanged")]
     public partial class NumericUpDownTimer : UserControl
     {

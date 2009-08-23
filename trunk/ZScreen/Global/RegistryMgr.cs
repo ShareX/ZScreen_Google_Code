@@ -28,8 +28,9 @@ using System.Text;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     public static class RegistryMgr
     {
