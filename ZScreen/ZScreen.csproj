@@ -38,8 +38,6 @@
     <ApplicationVersion>1.2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\e80655\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <StartArguments>crop_shot</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -375,9 +373,6 @@
     <PostBuildEvent>cd  "$(ProjectDir)Setup\"
 $(inno) /cc zscreen-beta-setup.iss
 start explorer /n,"$(ProjectDir)"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <PreBuildEvent>"$(ProjectDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
     <PostBuildEvent>mkdir "$(TargetDir)ILMerge"

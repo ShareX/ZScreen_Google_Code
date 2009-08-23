@@ -256,6 +256,6 @@
   </Target>
   -->
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <PreBuildEvent>"$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(SolutionDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(ProjectDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
