@@ -476,6 +476,8 @@ namespace ZScreenLib
         public int RegionBrightnessValue { get; set; }
         [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
+        [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor insted.")]
+        public bool UseHardwareCursor { get; set; }
 
         // Screenshots / Reflection
 
