@@ -41,7 +41,7 @@ namespace UploadersLib
         public event ProgressEventHandler ProgressChanged;
         public delegate void ProgressEventHandler(int progress);
 
-        public void ReportProgress(int progress)
+        public void OnProgressChanged(int progress)
         {
             if (ProgressChanged != null)
             {

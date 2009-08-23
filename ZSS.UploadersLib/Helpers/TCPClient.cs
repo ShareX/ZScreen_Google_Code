@@ -152,7 +152,7 @@ namespace UploadersLib.Helpers
                     {
                         networkStream.Write(buffer, 0, bytesRead);
 
-                        if (progress.ChangeProgress(stream)) uploader.ReportProgress(progress.Progress);
+                        if (progress.ChangeProgress(stream)) uploader.OnProgressChanged(progress.Progress);
 
                         bytesRead = stream.Read(buffer, 0, buffer.Length);
                     }
