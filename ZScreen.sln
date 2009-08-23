@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 		Lib\taglib-sharp.dll = Lib\taglib-sharp.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersLib", "ZSS.UploadersLib\UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{D91D7F12-8976-41D9-9524-827EE9B02CCD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenLib", "ZScreenLib\ZScreenLib.csproj", "{2CB31685-9F2D-4017-9A98-C4EF1B92C928}"
 EndProject

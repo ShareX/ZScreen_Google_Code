@@ -356,9 +356,9 @@
       <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
       <Name>ZSS.UpdateCheckerLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
+    <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
-      <Name>UploadersLib</Name>
+      <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
