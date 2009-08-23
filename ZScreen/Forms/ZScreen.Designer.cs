@@ -1403,14 +1403,14 @@ namespace ZScreenGUI
             // tcAccounts
             // 
             this.tcAccounts.Controls.Add(this.tpFTP);
-            this.tcAccounts.Controls.Add(this.tpTinyPic);
-            this.tcAccounts.Controls.Add(this.tpImageShack);
-            this.tcAccounts.Controls.Add(this.tpTwitter);
-            this.tcAccounts.Controls.Add(this.tpImageBam);
             this.tcAccounts.Controls.Add(this.tpRapidShare);
             this.tcAccounts.Controls.Add(this.tpSendSpace);
-            this.tcAccounts.Controls.Add(this.tpMindTouch);
             this.tcAccounts.Controls.Add(this.tpFlickr);
+            this.tcAccounts.Controls.Add(this.tpImageShack);
+            this.tcAccounts.Controls.Add(this.tpTinyPic);
+            this.tcAccounts.Controls.Add(this.tpTwitter);
+            this.tcAccounts.Controls.Add(this.tpImageBam);
+            this.tcAccounts.Controls.Add(this.tpMindTouch);
             this.tcAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcAccounts.ImageList = this.ilApp;
             this.tcAccounts.Location = new System.Drawing.Point(3, 3);
