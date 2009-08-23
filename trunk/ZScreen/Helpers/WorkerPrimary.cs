@@ -149,7 +149,7 @@ namespace ZScreenGUI
                 //            break;
                 //    }
                 //    break;
-            }
+                            }
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
@@ -243,11 +243,11 @@ namespace ZScreenGUI
                     switch (task.JobCategory)
                     {
                         case JobCategoryType.BINARY:
-                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                            {
-                                Clipboard.SetText(task.RemoteFilePath);
-                            }
-                            break;
+                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                                    {
+                                        Clipboard.SetText(task.RemoteFilePath);
+                                    }
+                                    break;
                         case JobCategoryType.TEXT:
                             switch (task.Job)
                             {
@@ -300,7 +300,15 @@ namespace ZScreenGUI
                             }
                             if (task.MyImageUploader != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
-                                File.Delete(task.LocalFilePath);
+                                try
+                                {                                
+                                    File.Delete(task.LocalFilePath);
+                                }
+                                //sometimes file is still locked... ToDo: delte those files sometime
+                                catch (Exception ex)
+                                {
+                                    FileSystem.AppendDebug(ex.ToString());
+                                }
                             }
                             break;
                     }
