@@ -102,7 +102,10 @@ namespace ZScreenLib
             else
             {
                 myRectangle = new DynamicRectangle(CaptureType.CROP);
-                Cursor.Hide();
+                if (Program.conf.UseHardwareCursor == false)
+                    Cursor.Hide();
+                else
+                    this.Cursor = Cursors.Cross;
             }
 
             Graphics gBackground = Graphics.FromImage(bmpBackground);
@@ -313,7 +316,8 @@ namespace ZScreenLib
                         DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(20, 20), g);
                     }
                 }
-                crosshair.Draw(g, mousePos);
+                if (Program.conf.UseHardwareCursor == false)
+                    crosshair.Draw(g, mousePos);
             }
         }
 
