@@ -81,13 +81,22 @@ namespace ZSS
             return GetUriPath(fileName, false);
         }
 
+        Regex pathHasFolder = new Regex(@"[^/]/[^/]", RegexOptions.Compiled);
+
         public string GetUriPath(string fileName, bool customPath)
         {
             if (!string.IsNullOrEmpty(HttpPath))
             {
-                fileName = fileName.Replace(" ", "%20");
-                string path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), Path, fileName);
-                if (!path.StartsWith("http://")) path = "http://" + path;
+                fileName = fileName.Replace(" ", "%20"); //maybe use system.web encoding here...                
+                string path;
+
+                if (pathHasFolder.Match(this.HttpPath).Success)
+                    path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), fileName);
+                else
+                    path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), this.Path, fileName);
+                
+                if (!path.StartsWith("http://")) 
+                    path = "http://" + path;
                 return path;
             }
 
