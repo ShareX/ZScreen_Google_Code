@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using System.Collections.Generic;
 
 namespace ZScreenLib
 {

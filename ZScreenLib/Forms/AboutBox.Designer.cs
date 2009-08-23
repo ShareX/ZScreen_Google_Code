@@ -269,6 +269,7 @@
             this.Padding = new System.Windows.Forms.Padding(9);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAboutBox";
+            this.Load += new System.EventHandler(this.AboutBox_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.AboutBox_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagTR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagAU)).EndInit();

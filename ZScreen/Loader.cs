@@ -8,7 +8,7 @@ using ZScreenLib;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace ZSS
+namespace ZScreenGUI
 {
     public static class Loader
     {
@@ -16,15 +16,17 @@ namespace ZSS
         public static WorkerPrimary Worker;
         public static WorkerSecondary Worker2;
         public const string ZScreenCLI = "ZScreenCLI.exe";
+        public static Queue<string> AsmLoads = new Queue<string>();
+        public static List<string> LibNames = new List<string>();
 
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Splash = new ZSS.Forms.SplashScreen();
-            //AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
-            //Splash.Show();
+            // Splash = new ZSS.Forms.SplashScreen();
+            AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
+            // Splash.Show();
 
             string[] args = Environment.GetCommandLineArgs();
 
@@ -36,12 +38,13 @@ namespace ZSS
                     Process.Start(filePath);
                 }
             }
-            else if (args.Length > 1 && !string.IsNullOrEmpty(args[1])) {
-            	Process p = new Process();
-            	ProcessStartInfo  psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, "ZScreenCLI.exe"));
-            	psi.Arguments = args[1];
-            	p.StartInfo = psi; 
-            	p.Start();
+            else if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
+            {
+                Process p = new Process();
+                ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, ZScreenCLI));
+                psi.Arguments = args[1];
+                p.StartInfo = psi;
+                p.Start();
             }
             else
             {
@@ -66,9 +69,10 @@ namespace ZSS
             }
         }
 
-        //static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
-        //{
-        //    Splash.AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);
-        //}
+        static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        {
+            AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);
+            LibNames.Add(Path.GetFileName(args.LoadedAssembly.FullName));
+        }
     }
 }

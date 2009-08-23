@@ -181,6 +181,12 @@
       <DependentUpon>ZScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\NumericUpDownTimer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\NumericUpDownTimer.designer.cs">
+      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TextUploadersControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -298,6 +304,9 @@
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
+    <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
+      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TextUploadersControl.resx">
       <DependentUpon>TextUploadersControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -336,10 +345,6 @@
     <ProjectReference Include="..\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj">
       <Project>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</Project>
       <Name>ZSS.FTPClientLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
-      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
-      <Name>ZSS.FTPUploaderLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
       <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>

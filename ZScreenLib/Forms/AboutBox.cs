@@ -29,6 +29,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using ZScreenLib.Properties;
+using System.Collections.Generic;
 
 namespace ZScreenLib
 {
@@ -37,10 +38,12 @@ namespace ZScreenLib
         private int saturation = 200;
         private int step = 10;
         private int multiply = 1;
+        public List<string> Assemblies { get; set; }
 
         public AboutBox()
         {
             InitializeComponent();
+
             this.Icon = Resources.zss_main;
             Bitmap bmp = Resources.main;
             bmp = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
@@ -54,22 +57,6 @@ namespace ZScreenLib
             this.labelCopyright.Text = AssemblyCopyright;
             this.lblCompanyName.Text = AssemblyCompany;
             lblDevelopers.Text = string.Format("{0} is developed by:", AssemblyTitle);
-            StringBuilder sbDesc = new StringBuilder();
-            sbDesc.AppendLine("Acknowledgements:");
-            sbDesc.AppendLine();
-            sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
-            sbDesc.AppendLine();
-            sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009 and portions of Selected Window code are from Greenshot: https://sourceforge.net/projects/greenshot");
-            sbDesc.AppendLine();
-            sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net/");
-            sbDesc.AppendLine();
-            sbDesc.AppendLine("Running from:");
-            sbDesc.AppendLine(Application.ExecutablePath);
-            sbDesc.AppendLine();
-            sbDesc.AppendLine("Settings file:");
-            sbDesc.AppendLine(Program.DefaultXMLFilePath);
-            this.textBoxDescription.Text = sbDesc.ToString();
-
             Timer timer = new Timer { Interval = 100 };
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
@@ -229,6 +216,34 @@ namespace ZScreenLib
         private void pbLogo_Click(object sender, EventArgs e)
         {
             multiply = -multiply;
+        }
+
+        private void AboutBox_Load(object sender, EventArgs e)
+        {
+            StringBuilder sbDesc = new StringBuilder();
+            sbDesc.AppendLine("Acknowledgements:");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009 and portions of Selected Window code are from Greenshot: https://sourceforge.net/projects/greenshot");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net/");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Running from:");
+            sbDesc.AppendLine(Application.ExecutablePath);
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Settings file:");
+            sbDesc.AppendLine(Program.DefaultXMLFilePath);
+            if (Assemblies != null)
+            {
+                sbDesc.AppendLine();
+                sbDesc.AppendLine("Referenced assemblies:");
+                foreach (string dll in Assemblies)
+                {
+                    sbDesc.AppendLine(dll);
+                }
+            }
+            this.textBoxDescription.Text = sbDesc.ToString();
         }
     }
 }

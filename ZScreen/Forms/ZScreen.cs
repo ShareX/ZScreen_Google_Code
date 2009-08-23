@@ -46,8 +46,9 @@ using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.Properties;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
@@ -57,7 +58,7 @@ namespace ZScreenLib
         private int mHadFocusAt;
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
-        private Debug debug = null;
+        private ZScreenLib.Debug debug = null;
         private ImageEffects.TurnImage turnLogo;
         internal static GoogleTranslate mGTranslator = null;
 
@@ -3218,7 +3219,7 @@ namespace ZScreenLib
 
         private void StartDebug()
         {
-            debug = new Debug();
+            debug = new ZScreenLib.Debug();
             debug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
         }
 

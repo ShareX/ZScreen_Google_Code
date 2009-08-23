@@ -24,12 +24,13 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using ZSS.Properties;
-using ZSS;
 using UploadersLib.TextServices;
+using ZSS;
+using ZSS.Properties;
 using ZSS.UpdateCheckerLib;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     /// <summary>
     /// Class responsible for all other tasks except for Image Uploading

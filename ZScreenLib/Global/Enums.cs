@@ -27,6 +27,11 @@ using System.Reflection;
 
 namespace ZScreenLib
 {
+    public enum Times
+    {
+        Milliseconds, Seconds, Minutes, Hours
+    }
+
     /// <summary>
     /// Top level Capture Types for ZScreen. Pictures: Images that user created, Screenshots: Images that ZScreen created
     /// </summary>

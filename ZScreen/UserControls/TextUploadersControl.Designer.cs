@@ -1,4 +1,4 @@
-﻿namespace ZScreenLib.UserControls
+﻿namespace ZScreenGUI.UserControls
 {
     partial class TextUploadersControl
     {

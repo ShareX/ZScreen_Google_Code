@@ -40,8 +40,9 @@ using ZSS;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
 using ZSS.Properties;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     public class WorkerPrimary
     {
