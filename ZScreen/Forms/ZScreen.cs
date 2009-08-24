@@ -652,6 +652,7 @@ namespace ZScreenGUI
 
             pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
             pgFlickrSettings.SelectedObject = Program.conf.FlickrSettings;
+            btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Program.conf.FlickrAuthInfo.Username);
 
             #endregion
 
@@ -4163,7 +4164,7 @@ namespace ZScreenGUI
                     flickr.ProxySettings = Adapter.GetProxySettings();
                     Program.conf.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
-
+                    btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Program.conf.FlickrAuthInfo.Username);
                     MessageBox.Show("Success.");
                 }
             }
@@ -4183,6 +4184,7 @@ namespace ZScreenGUI
                     if (!string.IsNullOrEmpty(token))
                     {
                         FlickrUploader flickr = new FlickrUploader();
+                        flickr.ProxySettings = Adapter.GetProxySettings();
                         Program.conf.FlickrAuthInfo = flickr.CheckToken(token);
                         pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
 
