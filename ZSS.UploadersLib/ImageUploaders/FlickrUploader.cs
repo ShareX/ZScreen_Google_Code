@@ -231,20 +231,26 @@ namespace UploadersLib.ImageUploaders
 
             string url = CombineURL(GetPhotosLink(), photoid);
 
-            return new ImageFileManager(url, response);
+            string url2 = CombineURL(url, "sizes/o");
+
+            return new ImageFileManager(url2, response);
         }
 
         public class AuthInfo
         {
-        	[Description("Token String")]
+            [Description("Token string"), ReadOnly(true)]
             public string Token { get; set; }
-            [Description("Permission")]
+
+            [Description("Permission"), ReadOnly(true)]
             public string Permission { get; set; }
-            [Description("User ID that can be used in a URL")]            
+
+            [Description("User ID that can be used in a URL")]
             public string UserID { get; set; }
-            [Description("Your Flickr username")]
+
+            [Description("Your Flickr username"), ReadOnly(true)]
             public string Username { get; set; }
-            [Description("Full Name")]
+
+            [Description("Full name"), ReadOnly(true)]
             public string Fullname { get; set; }
 
             public AuthInfo() { }
