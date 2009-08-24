@@ -60,7 +60,7 @@ namespace ZScreenGUI
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private ZScreenLib.Debug debug = null;
-        private ImageEffects.TurnImage turnLogo;
+        private ZScreenLib.ImageEffects.TurnImage turnLogo;
         internal static GoogleTranslate mGTranslator = null;
 
         #endregion
@@ -4140,6 +4140,7 @@ namespace ZScreenGUI
             try
             {
                 FlickrUploader flickr = new FlickrUploader();
+                flickr.ProxySettings = Adapter.GetProxySettings();
                 btnFlickrGetFrob.Tag = flickr.GetFrob();
                 string url = flickr.GetAuthLink(FlickrUploader.Permission.Write);
                 Process.Start(url);
@@ -4159,6 +4160,7 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(token))
                 {
                     FlickrUploader flickr = new FlickrUploader();
+                    flickr.ProxySettings = Adapter.GetProxySettings();
                     Program.conf.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
 
