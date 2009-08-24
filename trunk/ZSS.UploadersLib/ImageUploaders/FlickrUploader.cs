@@ -236,10 +236,15 @@ namespace UploadersLib.ImageUploaders
 
         public class AuthInfo
         {
+        	[Description("Token String")]
             public string Token { get; set; }
+            [Description("Permission")]
             public string Permission { get; set; }
+            [Description("User ID that can be used in a URL")]            
             public string UserID { get; set; }
+            [Description("Your Flickr username")]
             public string Username { get; set; }
+            [Description("Full Name")]
             public string Fullname { get; set; }
 
             public AuthInfo() { }
