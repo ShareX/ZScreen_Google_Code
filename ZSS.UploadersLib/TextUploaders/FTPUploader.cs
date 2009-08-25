@@ -77,7 +77,7 @@ namespace UploadersLib
         {
             FTPOptions fopt = new FTPOptions();
             fopt.Account = this.FTPAccount;
-            fopt.ProxySettings = this.ProxySettings;
+            fopt.ProxySettings = Uploader.ProxySettings;
             FTPAdapter ftpClient = new FTPAdapter(fopt);
             string fileName = Path.GetFileName(text.LocalPath);
             string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fileName);

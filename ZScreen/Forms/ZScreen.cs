@@ -672,6 +672,7 @@ namespace ZScreenGUI
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
 
             // RapidShare
+
             if (cboRapidShareAcctType.Items.Count == 0)
             {
                 cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
@@ -682,6 +683,7 @@ namespace ZScreenGUI
             txtRapidSharePremiumUserName.Text = Program.conf.RapidSharePremiumUserName;
 
             // SendSpace
+
             if (cboSendSpaceAcctType.Items.Count == 0)
             {
                 cboSendSpaceAcctType.Items.AddRange(typeof(AcctType).GetDescriptions());
@@ -806,11 +808,14 @@ namespace ZScreenGUI
             txtImagesFolderPattern.Text = Program.conf.SaveFolderPattern;
 
             // Proxy Settings
+
             Proxyetup(Program.conf.ProxyList);
             if (ucProxyAccounts.AccountsList.Items.Count > 0)
             {
                 ucProxyAccounts.AccountsList.SelectedIndex = Program.conf.ProxySelected;
             }
+
+            Uploader.ProxySettings = Adapter.GetProxySettings();
 
             ///////////////////////////////////
             // Image Uploaders
@@ -3716,6 +3721,7 @@ namespace ZScreenGUI
         private void chkProxyEnable_CheckedChanged(object sender, EventArgs e)
         {
             Program.conf.ProxyEnabled = chkProxyEnable.Checked;
+            Uploader.ProxySettings = Adapter.GetProxySettings();
         }
 
         private void tsmFTPClient_Click(object sender, EventArgs e)
@@ -3756,6 +3762,7 @@ namespace ZScreenGUI
                 ucProxyAccounts.SettingsGrid.SelectedObject = acc;
                 Program.conf.ProxyActive = acc;
             }
+            Uploader.ProxySettings = Adapter.GetProxySettings();
         }
 
         private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
@@ -4148,7 +4155,6 @@ namespace ZScreenGUI
             try
             {
                 FlickrUploader flickr = new FlickrUploader();
-                flickr.ProxySettings = Adapter.GetProxySettings();
                 btnFlickrGetFrob.Tag = flickr.GetFrob();
                 string url = flickr.GetAuthLink(FlickrUploader.Permission.Write);
                 Process.Start(url);
@@ -4168,7 +4174,6 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(token))
                 {
                     FlickrUploader flickr = new FlickrUploader();
-                    flickr.ProxySettings = Adapter.GetProxySettings();
                     Program.conf.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
                     btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Program.conf.FlickrAuthInfo.Username);
@@ -4191,7 +4196,6 @@ namespace ZScreenGUI
                     if (!string.IsNullOrEmpty(token))
                     {
                         FlickrUploader flickr = new FlickrUploader();
-                        flickr.ProxySettings = Adapter.GetProxySettings();
                         Program.conf.FlickrAuthInfo = flickr.CheckToken(token);
                         pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
 

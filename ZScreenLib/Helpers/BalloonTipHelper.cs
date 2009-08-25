@@ -138,9 +138,14 @@ namespace ZScreenLib
                 }
             }
 
-            niTray.ShowBalloonTip(1000, Application.ProductName, sbMsg.ToString(), tti);
+            string message = sbMsg.ToString();
 
-            return sbMsg.ToString();
+            if (!string.IsNullOrEmpty(message))
+            {
+                niTray.ShowBalloonTip(1000, Application.ProductName, message, tti);
+            }
+
+            return message;
         }
 
         public void ClickBalloonTip()

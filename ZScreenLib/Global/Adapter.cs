@@ -221,7 +221,6 @@ namespace ZScreenLib
             if (ub.DialogResult == DialogResult.OK)
             {
                 TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                tpu.ProxySettings = Adapter.GetProxySettings();
                 if (Program.conf.RememberTinyPicUserPass)
                 {
                     Program.conf.TinyPicUserName = ub.UserName;
@@ -241,7 +240,6 @@ namespace ZScreenLib
                 !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
             {
                 TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                tpu.ProxySettings = Adapter.GetProxySettings();
                 string shuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
@@ -304,7 +302,6 @@ namespace ZScreenLib
                 Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
             {
                 TextUploader tu = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
-                tu.ProxySettings = Adapter.GetProxySettings();
                 if (tu != null)
                 {
                     string temp = tu.UploadText(TextInfo.FromString(url));
@@ -381,6 +378,7 @@ namespace ZScreenLib
         }
 
         #region Proxy Methods
+
         /// <summary>
         /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns default system proxy otherwise
         /// </summary>
@@ -420,7 +418,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion 
+        #endregion
 
         public static UserPassBox SendSpaceRegister()
         {
