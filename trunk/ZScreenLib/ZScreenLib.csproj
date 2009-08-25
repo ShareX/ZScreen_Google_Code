@@ -88,6 +88,9 @@
     <Compile Include="Forms\ConfigWizard.Designer.cs">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DestOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Crop.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +156,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DestSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DestSelector.Designer.cs">
+      <DependentUpon>DestSelector.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +252,12 @@
   <ItemGroup>
     <Content Include="Documents\TODO.txt" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
+    <EmbeddedResource Include="Forms\DestOptions.resx">
+      <DependentUpon>DestOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DestSelector.resx">
+      <DependentUpon>DestSelector.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

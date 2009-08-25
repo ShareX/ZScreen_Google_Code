@@ -801,9 +801,11 @@ namespace ZScreenGUI
                 if (Clipboard.ContainsImage())
                 {
                     Image cImage = Clipboard.GetImage();
-                    string fp = FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), false);
+                    WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
+                    task.Settings.ManualNaming = false;
+                    string fp = FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), task);
                     fp = FileSystem.SaveImage(cImage, fp);
-                    StartWorkerPictures(CreateTask(WorkerTask.Jobs.UploadFromClipboard), fp);
+                    StartWorkerPictures(task, fp);
                 }
                 else if (Clipboard.ContainsText())
                 {
