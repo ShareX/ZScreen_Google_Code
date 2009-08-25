@@ -179,6 +179,12 @@
       <DependentUpon>ZScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\DestSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DestSelector.Designer.cs">
+      <DependentUpon>DestSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\NumericUpDownTimer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -302,6 +308,9 @@
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lightning.png" />
+    <EmbeddedResource Include="UserControls\DestSelector.resx">
+      <DependentUpon>DestSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </EmbeddedResource>

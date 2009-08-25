@@ -182,14 +182,14 @@ namespace ZScreenGUI
             ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
 
             // Text Services - Text Uploaders
-            ucTextUploaders.MyComboBox = cboTextUploaders;
+            ucTextUploaders.MyComboBox = ucDestOptions.cboTextUploaders;
             ucTextUploaders.btnItemAdd.Click += new EventHandler(TextUploadersAddButton_Click);
             ucTextUploaders.btnItemRemove.Click += new EventHandler(TextUploadersRemoveButton_Click);
-            ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(TextUploaders_SelectedIndexChanged);
+            ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
 
             // Text Services - URL Shorteners
-            ucUrlShorteners.MyComboBox = cboURLShorteners;
+            ucUrlShorteners.MyComboBox = ucDestOptions.cboURLShorteners;
             ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
             ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
             ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
@@ -201,10 +201,17 @@ namespace ZScreenGUI
             codesMenu.Opacity = 0.8;
             codesMenu.ShowImageMargin = false;
 
+            // Dest Selectors
+            ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
+            ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
+            ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
+            ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
             DrawZScreenLabel(false);
         }
+
 
         private void SetToolTip(Control original)
         {
@@ -311,12 +318,12 @@ namespace ZScreenGUI
                 }
             }
 
-            if (cboImageUploaders.Items.Count == 0)
+            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
-                cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
-            cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            cboImageUploaders.Enabled = !Program.conf.PreferFileUploaderForImages;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            ucDestOptions.cboImageUploaders.Enabled = !Program.conf.PreferFileUploaderForImages;
 
             if (tsmImageDest.DropDownItems.Count == 0)
             {
@@ -489,21 +496,21 @@ namespace ZScreenGUI
                 Program.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
             ucTextUploaders.MyCollection.Items.Clear();
-            cboTextUploaders.Items.Clear();
+            ucDestOptions.cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
                     ucTextUploaders.MyCollection.Items.Add(textUploader);
-                    cboTextUploaders.Items.Add(textUploader);
+                    ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                 }
             }
             if (Program.conf.TextUploaderSelected > -1 && Program.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Program.conf.TextUploaderSelected;
-                cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
+                ucDestOptions.cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
             }
-            cboTextUploaders.Enabled = !Program.conf.PreferFileUploaderForText;
+            ucDestOptions.cboTextUploaders.Enabled = !Program.conf.PreferFileUploaderForText;
 
             ucTextUploaders.Templates.Items.Clear();
             ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
@@ -520,20 +527,20 @@ namespace ZScreenGUI
             }
 
             ucUrlShorteners.MyCollection.Items.Clear();
-            cboURLShorteners.Items.Clear();
+            ucDestOptions.cboURLShorteners.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.UrlShortenersList)
             {
                 if (textUploader != null)
                 {
                     ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                    cboURLShorteners.Items.Add(textUploader);
+                    ucDestOptions.cboURLShorteners.Items.Add(textUploader);
                 }
             }
 
             if (Program.conf.UrlShortenerSelected > -1 && Program.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
             {
                 ucUrlShorteners.MyCollection.SelectedIndex = Program.conf.UrlShortenerSelected;
-                cboURLShorteners.SelectedIndex = Program.conf.UrlShortenerSelected;
+                ucDestOptions.cboURLShorteners.SelectedIndex = Program.conf.UrlShortenerSelected;
             }
 
             ucUrlShorteners.Templates.Items.Clear();
@@ -658,11 +665,11 @@ namespace ZScreenGUI
 
             #region File Uploaders
 
-            if (cboFileUploaders.Items.Count == 0)
+            if (ucDestOptions.cboFileUploaders.Items.Count == 0)
             {
-                cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
+                ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
-            cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
 
             // RapidShare
             if (cboRapidShareAcctType.Items.Count == 0)
@@ -861,7 +868,7 @@ namespace ZScreenGUI
         private void tsmiDestImages_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            cboImageUploaders.SelectedIndex = (int)tsmi.Tag;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)tsmi.Tag;
         }
 
         private void UpdateGuiControlsPaths()
@@ -1463,9 +1470,9 @@ namespace ZScreenGUI
             return null;
         }
 
-        private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageDestType sdt = (ImageDestType)cboImageUploaders.SelectedIndex;
+            ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
             Program.conf.ScreenshotDestMode = sdt;
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
@@ -1484,8 +1491,8 @@ namespace ZScreenGUI
                 tsmi.Checked = tsmi == item;
             }
 
-            tsmCopytoClipboardMode.Enabled = cboImageUploaders.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
-                cboImageUploaders.SelectedIndex != (int)ImageDestType.FILE;
+            tsmCopytoClipboardMode.Enabled = ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
+                ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageDestType.FILE;
         }
 
         private void SetActiveImageSoftware()
@@ -3428,7 +3435,7 @@ namespace ZScreenGUI
                     {
                         Program.conf.TextUploadersList.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
-                        cboTextUploaders.Items.Add(textUploader);
+                        ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                     }
                     ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
@@ -3442,7 +3449,7 @@ namespace ZScreenGUI
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
                 Program.conf.TextUploadersList.RemoveAt(index);
                 ucTextUploaders.MyCollection.Items.RemoveAt(index);
-                cboTextUploaders.Items.RemoveAt(index);
+                ucDestOptions.cboTextUploaders.Items.RemoveAt(index);
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
             }
         }
@@ -3489,7 +3496,7 @@ namespace ZScreenGUI
             RewriteImageEditorsRightClickMenu();
         }
 
-        private void TextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
             {
@@ -3498,7 +3505,7 @@ namespace ZScreenGUI
                 if (mGuiIsReady)
                 {
                     Program.conf.TextUploaderSelected = ucTextUploaders.MyCollection.SelectedIndex;
-                    cboTextUploaders.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
+                    ucDestOptions.cboTextUploaders.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
                 }
 
                 bool hasOptions = textUploader != null;
@@ -3515,8 +3522,8 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
-                ucTextUploaders.MyCollection.SelectedIndex = cboTextUploaders.SelectedIndex;
-                Program.conf.TextUploaderSelected = cboTextUploaders.SelectedIndex;
+                ucTextUploaders.MyCollection.SelectedIndex = ucDestOptions.cboTextUploaders.SelectedIndex;
+                Program.conf.TextUploaderSelected = ucDestOptions.cboTextUploaders.SelectedIndex;
             }
         }
 
@@ -3524,8 +3531,8 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
-                ucUrlShorteners.MyCollection.SelectedIndex = cboURLShorteners.SelectedIndex;
-                Program.conf.UrlShortenerSelected = cboURLShorteners.SelectedIndex;
+                ucUrlShorteners.MyCollection.SelectedIndex = ucDestOptions.cboURLShorteners.SelectedIndex;
+                Program.conf.UrlShortenerSelected = ucDestOptions.cboURLShorteners.SelectedIndex;
             }
         }
 
@@ -3557,7 +3564,7 @@ namespace ZScreenGUI
                 if (mGuiIsReady)
                 {
                     Program.conf.UrlShortenerSelected = ucUrlShorteners.MyCollection.SelectedIndex;
-                    cboURLShorteners.SelectedIndex = ucUrlShorteners.MyCollection.SelectedIndex;
+                    ucDestOptions.cboURLShorteners.SelectedIndex = ucUrlShorteners.MyCollection.SelectedIndex;
                 }
 
                 bool hasOptions = textUploader != null;
@@ -3587,7 +3594,7 @@ namespace ZScreenGUI
                     {
                         Program.conf.UrlShortenersList.Add(textUploader);
                         ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                        cboURLShorteners.Items.Add(textUploader);
+                        ucDestOptions.cboURLShorteners.Items.Add(textUploader);
                     }
                     ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
                 }
@@ -3606,7 +3613,7 @@ namespace ZScreenGUI
                 int index = ucUrlShorteners.MyCollection.SelectedIndex;
                 Program.conf.UrlShortenersList.RemoveAt(index);
                 ucUrlShorteners.MyCollection.Items.RemoveAt(index);
-                cboURLShorteners.Items.RemoveAt(index);
+                ucDestOptions.cboURLShorteners.Items.RemoveAt(index);
                 ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
             }
         }
@@ -3639,7 +3646,7 @@ namespace ZScreenGUI
 
         private void ucTextUploaders_Load(object sender, EventArgs e)
         {
-            TextUploaders_SelectedIndexChanged(sender, e);
+            cboTextUploaders_SelectedIndexChanged(sender, e);
         }
 
         private void ucUrlShorteners_Load(object sender, EventArgs e)
@@ -4093,7 +4100,7 @@ namespace ZScreenGUI
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FileDestMode = (FileUploaderType)cboFileUploaders.SelectedIndex;
+            Program.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
