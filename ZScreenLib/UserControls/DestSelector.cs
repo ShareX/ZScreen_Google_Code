@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using UploadersLib;
 using ZScreenLib;
 
-namespace ZSS.UserControls
+namespace ZScreenLib
 {
     public partial class DestSelector : UserControl
     {

@@ -1,4 +1,4 @@
-﻿namespace ZSS.UserControls
+﻿namespace ZScreenLib
 {
     partial class DestSelector
     {

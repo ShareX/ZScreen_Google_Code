@@ -174,6 +174,8 @@ namespace ZScreenLib
 
         #endregion
 
+        public XMLSettings Settings { get; set; }
+
         #region "Properties for Category: Text"
         /// <summary>
         /// String object: Text captured from Clipboard
@@ -194,13 +196,14 @@ namespace ZScreenLib
         private WorkerTask()
         {
             this.Errors = new List<string>();
+            this.Settings = Program.conf;
         }
 
         public WorkerTask(Jobs job)
-            :this()
+            : this()
         {
             this.MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
-            this.Job = job;            
+            this.Job = job;
         }
 
         /// <summary>
@@ -209,7 +212,7 @@ namespace ZScreenLib
         /// <param name="worker"></param>
         /// <param name="job"></param>
         public WorkerTask(BackgroundWorker worker, Jobs job)
-            :this()
+            : this()
         {
             this.MyWorker = worker;
             this.Job = job;

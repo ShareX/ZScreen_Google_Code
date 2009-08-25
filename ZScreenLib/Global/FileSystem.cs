@@ -239,12 +239,11 @@ namespace ZScreenLib
         /// Gets a fully qualified unique File Path for a file name provided as a StringBuilder. WriteBF Location is set by the GUI. 
         /// </summary>
         /// <returns>Full qualitied File Path</returns>
-        public static string GetFilePath(string fileName, bool manualNaming)
+        public static string GetFilePath(string fileName, WorkerTask task)
         {
-            string filePath = GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." +
-                Program.zImageFileTypes[Program.conf.FileFormat]));
+            string filePath = GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." + Program.zImageFileTypes[Program.conf.FileFormat]));
 
-            if (manualNaming)
+            if (task.Settings.ManualNaming)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(Path.Combine(Path.GetDirectoryName(filePath), GetScreenshotName(Path.GetFileNameWithoutExtension(filePath))));
