@@ -230,7 +230,6 @@ namespace ZScreenLib
             if (fileHost != null)
             {
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-                fileHost.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = fileHost.Name;
                 fileHost.ProgressChanged += UploadProgressChanged;
                 string url = fileHost.Upload(mTask.LocalFilePath);
@@ -336,7 +335,6 @@ namespace ZScreenLib
             if (imageUploader != null)
             {
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-                imageUploader.ProxySettings = Adapter.GetProxySettings();
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
@@ -516,7 +514,6 @@ namespace ZScreenLib
             else
             {
                 TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
-                textUploader.ProxySettings = Adapter.GetProxySettings();
                 string url = "";
                 if (mTask.MyText != null)
                 {
