@@ -24,6 +24,7 @@
 using System.IO;
 using System.Windows.Forms;
 using ZScreenLib;
+using ZSS.Properties;
 
 namespace ZScreenGUI
 {
@@ -42,7 +43,7 @@ namespace ZScreenGUI
             }
             if (txt != string.Empty)
             {
-                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = ZScreenGUI.Properties.Resources.zss_main };
+                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = Resources.zss_main };
             }
             return viewer;
         }

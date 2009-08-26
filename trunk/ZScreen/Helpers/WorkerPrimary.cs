@@ -25,22 +25,18 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using Greenshot.Helpers;
-using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
-using ZSS;
+using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
-using ZScreenGUI.Properties;
-using ZScreenLib;
+using ZSS.Properties;
 
 namespace ZScreenGUI
 {

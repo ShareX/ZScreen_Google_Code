@@ -25,9 +25,9 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using UploadersLib.TextServices;
-using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS;
+using ZSS.Properties;
 using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
