@@ -47,7 +47,7 @@ using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZScreenLib;
 using System.Reflection;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
 {

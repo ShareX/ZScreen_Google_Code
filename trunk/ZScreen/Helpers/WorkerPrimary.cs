@@ -36,7 +36,7 @@ using UploadersLib.TextServices;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
 {

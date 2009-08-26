@@ -1,6 +1,6 @@
 using ZScreenLib;
 using ZScreenGUI.UserControls;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
 {

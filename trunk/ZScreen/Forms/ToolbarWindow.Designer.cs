@@ -1,5 +1,6 @@
-﻿using ZSS.Properties;
-namespace ZScreenLib
+﻿using ZScreenGUI.Properties;
+
+namespace ZScreenGUI
 {
     partial class ToolbarWindow
     {

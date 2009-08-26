@@ -1,4 +1,5 @@
-using ZSS.Properties;
+using ZScreenGUI.Properties;
+
 namespace ZScreenLib
 {
     partial class ViewRemote

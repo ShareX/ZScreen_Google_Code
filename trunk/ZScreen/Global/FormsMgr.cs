@@ -24,7 +24,7 @@
 using System.IO;
 using System.Windows.Forms;
 using ZScreenLib;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
 {
