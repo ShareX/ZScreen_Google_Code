@@ -42,7 +42,7 @@ namespace ZScreenGUI
             }
             if (txt != string.Empty)
             {
-                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = ZSS.Properties.Resources.zss_main };
+                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = ZScreenGUI.Properties.Resources.zss_main };
             }
             return viewer;
         }

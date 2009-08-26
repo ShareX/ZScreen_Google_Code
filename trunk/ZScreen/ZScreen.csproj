@@ -7,14 +7,15 @@
     <ProjectGuid>{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZSS</RootNamespace>
+    <RootNamespace>ZScreenGUI</RootNamespace>
     <AssemblyName>ZScreen</AssemblyName>
     <StartupObject>
     </StartupObject>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>Resources\zss-main.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -38,6 +39,7 @@
     <ApplicationVersion>1.2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <Win32Resource>C:\Users\Mihajlo\Documents\Visual Studio 2008\Projects\ZScreen\trunk\application.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -254,7 +256,6 @@
     <None Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Resources\zss-green.ico" />
     <None Include="Resources\picture_edit.png" />
     <None Include="Resources\application_edit.png" />

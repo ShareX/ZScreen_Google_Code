@@ -39,7 +39,7 @@ using UploadersLib.TextServices;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 using ZScreenLib;
 
 namespace ZScreenGUI
