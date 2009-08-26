@@ -236,55 +236,6 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Gets a fully qualified unique File Path for a file name provided as a StringBuilder. WriteBF Location is set by the GUI. 
-        /// </summary>
-        /// <returns>Full qualitied File Path</returns>
-        public static string GetFilePath(string fileName, WorkerTask task)
-        {
-            string filePath = GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." + Program.zImageFileTypes[Program.conf.FileFormat]));
-
-            if (task.Settings.ManualNaming)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(Path.Combine(Path.GetDirectoryName(filePath), GetScreenshotName(Path.GetFileNameWithoutExtension(filePath))));
-                sb.Append(Path.GetExtension(filePath));
-                filePath = sb.ToString();
-            }
-
-            return filePath;
-        }
-
-        /// <summary>
-        /// Function get 
-        /// </summary>
-        /// <param name="fName"></param>
-        /// <returns></returns>
-        private static string GetScreenshotName(string fName)
-        {
-            if (Program.conf.ManualNaming)
-            {
-                InputBox ib = new InputBox
-                {
-                    Title = "Specify a Screenshot Name...",
-                    InputText = fName,
-                    Icon = Resources.zss_main
-                };
-                ib.ShowDialog();
-                if (ib.DialogResult == DialogResult.OK)
-                {
-                    StringBuilder sb = new StringBuilder(ib.InputText);
-                    sb = NameParser.Normalize(sb);
-                    if (!fName.Equals(ib.InputText))
-                    {
-                        fName = sb.ToString();
-                    }
-                }
-            }
-
-            return fName;
-        }
-
-        /// <summary>
         /// Function to check if file is a valid Image file
         /// </summary>
         /// <param name="fp"></param>

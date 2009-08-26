@@ -155,9 +155,8 @@ namespace ZScreenLib
                     type = NameParserType.EntireScreen;
                 }
 
-                string filePath = FileSystem.GetFilePath(NameParser.Convert(type), mTask);
-
-                mTask.SetLocalFilePath(FileSystem.SaveImage(mTask.MyImage, filePath));
+                mTask.SetFilePath(NameParser.Convert(type));
+                FileSystem.SaveImage(mTask.MyImage, mTask.LocalFilePath);
             }
         }
 
