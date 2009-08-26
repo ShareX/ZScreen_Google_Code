@@ -27,7 +27,7 @@ using System.Windows.Forms;
 using UploadersLib.TextServices;
 using ZScreenLib;
 using ZSS;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI

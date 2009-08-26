@@ -7,7 +7,7 @@
     <ProjectGuid>{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZSS</RootNamespace>
+    <RootNamespace>ZScreenGUI</RootNamespace>
     <AssemblyName>ZScreen</AssemblyName>
     <StartupObject>
     </StartupObject>

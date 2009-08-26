@@ -25,7 +25,7 @@ using System;
 using System.Windows.Forms;
 using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
     public partial class ToolbarWindow : Form
     {
