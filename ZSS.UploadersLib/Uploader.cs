@@ -74,15 +74,15 @@ namespace UploadersLib
         {
             string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
 
-            byte[] data = MakeInputContent(boundary, arguments);
+            byte[] data = MakeInputContent(boundary, arguments, true);
 
-            using (WebResponse response = GetResponse(url, data, boundary))
+            using (HttpWebResponse response = GetResponse(url, data, boundary))
             {
                 return ResponseToString(response);
             }
         }
 
-        private WebResponse GetResponse(string url, byte[] data, string boundary)
+        private HttpWebResponse GetResponse(string url, byte[] data, string boundary)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -91,7 +91,7 @@ namespace UploadersLib
             }
         }
 
-        private WebResponse GetResponse(string url, Stream stream, string boundary)
+        private HttpWebResponse GetResponse(string url, Stream stream, string boundary)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace UploadersLib
                     }
                 }
 
-                return request.GetResponse();
+                return (HttpWebResponse)request.GetResponse();
             }
             catch (Exception e)
             {
@@ -133,9 +133,9 @@ namespace UploadersLib
         {
             string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
 
-            byte[] data = MakeInputContent(boundary, arguments);
+            byte[] data = MakeInputContent(boundary, arguments, true);
 
-            using (WebResponse response = GetResponse(url, data, boundary))
+            using (HttpWebResponse response = GetResponse(url, data, boundary))
             {
                 if (response != null) return response.ResponseUri.OriginalString;
             }
@@ -155,20 +155,17 @@ namespace UploadersLib
 
         protected string UploadData(byte[] data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
+            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+
             using (MemoryStream stream = new MemoryStream())
             {
-                string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
-
-                byte[] bytes = MakeInputContent(boundary, arguments);
+                byte[] bytes = MakeInputContent(boundary, arguments, false);
                 stream.Write(bytes, 0, bytes.Length);
 
-                bytes = MakeFileInputContent(boundary, fileFormName, fileName, data);
+                bytes = MakeFileInputContent(boundary, fileFormName, fileName, data, true);
                 stream.Write(bytes, 0, bytes.Length);
 
-                bytes = Encoding.UTF8.GetBytes(string.Format("--{0}--\r\n", boundary));
-                stream.Write(bytes, 0, bytes.Length);
-
-                using (WebResponse response = GetResponse(url, stream, boundary))
+                using (HttpWebResponse response = GetResponse(url, stream, boundary))
                 {
                     return ResponseToString(response);
                 }
@@ -183,14 +180,14 @@ namespace UploadersLib
             return Encoding.UTF8.GetBytes(format);
         }
 
-        private byte[] MakeInputContent(string boundary, Dictionary<string, string> contents)
+        private byte[] MakeInputContent(string boundary, Dictionary<string, string> contents, bool isFinal)
         {
             using (MemoryStream stream = new MemoryStream())
             {
+                byte[] bytes;
+
                 if (contents != null)
                 {
-                    byte[] bytes;
-
                     foreach (KeyValuePair<string, string> content in contents)
                     {
                         bytes = MakeInputContent(boundary, content.Key, content.Value);
@@ -198,16 +195,22 @@ namespace UploadersLib
                     }
                 }
 
+                if (isFinal)
+                {
+                    bytes = MakeFinalBoundary(boundary);
+                    stream.Write(bytes, 0, bytes.Length);
+                }
+
                 return stream.ToArray();
             }
         }
 
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content)
+        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, bool isFinal)
         {
-            return MakeFileInputContent(boundary, name, fileName, content, GetMimeType(fileName));
+            return MakeFileInputContent(boundary, name, fileName, content, GetMimeType(fileName), isFinal);
         }
 
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, string contentType)
+        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, string contentType, bool isFinal)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                 boundary, name, fileName, contentType);
@@ -223,7 +226,18 @@ namespace UploadersLib
             bytes = Encoding.UTF8.GetBytes("\r\n");
             stream.Write(bytes, 0, bytes.Length);
 
+            if (isFinal)
+            {
+                bytes = MakeFinalBoundary(boundary);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
             return stream.ToArray();
+        }
+
+        private byte[] MakeFinalBoundary(string boundary)
+        {
+            return Encoding.UTF8.GetBytes(string.Format("--{0}--\r\n", boundary));
         }
 
         private string ResponseToString(WebResponse response)
