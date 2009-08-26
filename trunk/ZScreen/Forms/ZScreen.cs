@@ -86,7 +86,7 @@ namespace ZScreenGUI
                 Program.conf.MinimizeOnClose = true;
             }
 
-            if (CoreHelpers.RunningOnWin7)
+            if (Loader.ZScreenHandle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
                 try
                 {
@@ -133,7 +133,7 @@ namespace ZScreenGUI
                     ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(Loader.ZScreenHandle, cropShot, selWindow, clipboardUpload);
                     Program.zJumpList.Refresh();
                 }
                 catch (Exception ex)
@@ -229,6 +229,7 @@ namespace ZScreenGUI
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
+        	Loader.ZScreenHandle = this.Handle;
             if (this.WindowState == FormWindowState.Normal)
             {
                 Rectangle screenRect = GraphicsMgr.GetScreenBounds();
@@ -779,7 +780,7 @@ namespace ZScreenGUI
             cbSaveFormSizePosition.Checked = Program.conf.SaveFormSizePosition;
             cbLockFormSize.Checked = Program.conf.LockFormSize;
             cbAutoSaveSettings.Checked = Program.conf.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = Program.conf.Windows7TaskbarIntegration;
+            chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Program.conf.Windows7TaskbarIntegration;
 
             #endregion
 
