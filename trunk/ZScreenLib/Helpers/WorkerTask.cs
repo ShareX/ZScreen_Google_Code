@@ -32,6 +32,8 @@ using ZSS;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
+using System.Windows.Forms;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -130,7 +132,7 @@ namespace ZScreenLib
         /// <summary>
         /// Name of the Image
         /// </summary>                
-        public StringBuilder FileName { get; set; }
+        public string FileName { get; set; }
         private string localFilePath;
         /// <summary>
         /// Local file path of the Image: Picture or Screenshot or Text file
@@ -244,10 +246,47 @@ namespace ZScreenLib
             this.MyImage = GraphicsMgr.GetImageSafely(fp);
         }
 
+        public void SetFilePath(string fileName)
+        {
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." + Program.zImageFileTypes[Program.conf.FileFormat]));
+
+            if (Program.conf.ManualNaming)
+            {
+                DestOptions ib = new DestOptions(this)
+                {
+                    Title = "Specify a Screenshot Name...",
+                    InputText = this.FileName,
+                    Icon = Resources.zss_main
+                };
+                ib.ShowDialog();
+                if (ib.DialogResult == DialogResult.OK)
+                {
+                    StringBuilder sb = new StringBuilder(ib.InputText);
+                    sb = NameParser.Normalize(sb);
+                    if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(ib.InputText))
+                    {
+                        this.FileName = sb.ToString();
+                    }
+                }
+            }
+
+            StringBuilder sbPath = new StringBuilder();
+            if (string.IsNullOrEmpty(this.FileName))
+            {
+                this.FileName = Path.GetFileNameWithoutExtension(filePath);
+            }
+            sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), this.FileName));
+            sbPath.Append(Path.GetExtension(filePath));
+            filePath = sbPath.ToString();
+
+            this.SetLocalFilePath(filePath);
+
+        }
+
         public void SetLocalFilePath(string fp)
         {
             this.LocalFilePath = fp;
-            this.FileName = new StringBuilder(Path.GetFileName(fp));
+            this.FileName = Path.GetFileName(fp);
         }
 
         public string GetDescription()

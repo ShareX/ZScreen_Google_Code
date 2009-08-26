@@ -149,7 +149,7 @@ namespace ZScreenGUI
                 //            break;
                 //    }
                 //    break;
-                            }
+            }
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
@@ -243,11 +243,11 @@ namespace ZScreenGUI
                     switch (task.JobCategory)
                     {
                         case JobCategoryType.BINARY:
-                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                    {
-                                        Clipboard.SetText(task.RemoteFilePath);
-                                    }
-                                    break;
+                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                            {
+                                Clipboard.SetText(task.RemoteFilePath);
+                            }
+                            break;
                         case JobCategoryType.TEXT:
                             switch (task.Job)
                             {
@@ -301,7 +301,7 @@ namespace ZScreenGUI
                             if (task.MyImageUploader != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
-                                {                                
+                                {
                                     File.Delete(task.LocalFilePath);
                                 }
                                 //sometimes file is still locked... ToDo: delte those files sometime
@@ -526,7 +526,6 @@ namespace ZScreenGUI
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(localFilePath);
-            t.SetLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -803,9 +802,9 @@ namespace ZScreenGUI
                     Image cImage = Clipboard.GetImage();
                     WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
                     task.Settings.ManualNaming = false;
-                    string fp = FileSystem.GetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)), task);
-                    fp = FileSystem.SaveImage(cImage, fp);
-                    StartWorkerPictures(task, fp);
+                    task.SetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
+                    FileSystem.SaveImage(cImage, task.LocalFilePath);
+                    StartWorkerPictures(task, task.LocalFilePath);
                 }
                 else if (Clipboard.ContainsText())
                 {
