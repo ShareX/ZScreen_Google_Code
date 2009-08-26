@@ -13,6 +13,7 @@ namespace ZScreenGUI
     public static class Loader
     {
         // internal static ZSS.Forms.SplashScreen Splash = null;
+        public static IntPtr ZScreenHandle = IntPtr.Zero;
         public static WorkerPrimary Worker;
         public static WorkerSecondary Worker2;
         public const string ZScreenCLI = "ZScreenCLI.exe";
