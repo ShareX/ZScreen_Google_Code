@@ -45,7 +45,7 @@ using UploadersLib.URLShorteners;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using ZSS.Properties;
+using ZScreenGUI.Properties;
 using ZScreenLib;
 using System.Reflection;
 
@@ -100,12 +100,12 @@ namespace ZScreenGUI
                     // User Tasks
                     JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
                     jlCropShot.Arguments = "crop_shot";
-                    jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 0);
+                    jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 1);
                     Program.zJumpList.AddUserTasks(jlCropShot);
 
                     JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Selected Window");
                     jlSelectedWindow.Arguments = "selected_window";
-                    jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 0);
+                    jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 2);
                     Program.zJumpList.AddUserTasks(jlSelectedWindow);
 
                     // Recent Items
@@ -229,7 +229,7 @@ namespace ZScreenGUI
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-        	Loader.ZScreenHandle = this.Handle;
+            Loader.ZScreenHandle = this.Handle;
             if (this.WindowState == FormWindowState.Normal)
             {
                 Rectangle screenRect = GraphicsMgr.GetScreenBounds();
