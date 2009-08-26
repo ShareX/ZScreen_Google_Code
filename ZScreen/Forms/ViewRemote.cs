@@ -22,12 +22,11 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 using ZSS;
-using ZScreenGUI.Properties;
+using ZSS.Properties;
 
 namespace ZScreenLib
 {

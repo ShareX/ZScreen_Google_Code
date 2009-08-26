@@ -1,3 +1,4 @@
+using ZSS.Properties;
 namespace ZScreenLib
 {
     partial class ViewRemote
@@ -173,7 +174,7 @@ namespace ZScreenLib
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripStatusLabel1.Image = global::ZScreenGUI.Properties.Resources.info;
+            this.toolStripStatusLabel1.Image = Resources.info;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusLabel1.Text = "Image";

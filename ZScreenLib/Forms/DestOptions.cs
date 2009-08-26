@@ -33,6 +33,8 @@ namespace ZScreenLib
         public string InputText { get; set; }
         public WorkerTask Task { get; set; }
 
+        public DestOptions() { }
+
         public DestOptions(WorkerTask task)
         {
             InitializeComponent();
@@ -142,7 +144,7 @@ namespace ZScreenLib
             this.Hide();
         }
 
-        private DestSelector ucDestOptions;
+        public DestSelector ucDestOptions;
         private GroupBox gbFileName;
 
         #region Windows Form Designer generated code

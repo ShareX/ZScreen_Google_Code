@@ -45,9 +45,9 @@ using UploadersLib.URLShorteners;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using ZScreenGUI.Properties;
 using ZScreenLib;
 using System.Reflection;
+using ZSS.Properties;
 
 namespace ZScreenGUI
 {

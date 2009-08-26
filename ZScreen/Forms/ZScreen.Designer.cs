@@ -1,5 +1,6 @@
 using ZScreenLib;
 using ZScreenGUI.UserControls;
+using ZSS.Properties;
 
 namespace ZScreenGUI
 {
@@ -723,7 +724,7 @@ namespace ZScreenGUI
             // tsmiTabs
             // 
             this.tsmiTabs.DoubleClickEnabled = true;
-            this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
+            this.tsmiTabs.Image = Resources.wrench;
             this.tsmiTabs.Name = "tsmiTabs";
             this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
             this.tsmiTabs.Text = "View Settings Menu...";
@@ -736,21 +737,21 @@ namespace ZScreenGUI
             // 
             // tsmImageDest
             // 
-            this.tsmImageDest.Image = global::ZScreenGUI.Properties.Resources.picture_go;
+            this.tsmImageDest.Image = Resources.picture_go;
             this.tsmImageDest.Name = "tsmImageDest";
             this.tsmImageDest.Size = new System.Drawing.Size(205, 22);
             this.tsmImageDest.Text = "Send Image To";
             // 
             // tsmEditinImageSoftware
             // 
-            this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
+            this.tsmEditinImageSoftware.Image = Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
             this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
             this.tsmEditinImageSoftware.Text = "Edit in Image Software";
             // 
             // tsmCopytoClipboardMode
             // 
-            this.tsmCopytoClipboardMode.Image = global::ZScreenGUI.Properties.Resources.page_copy;
+            this.tsmCopytoClipboardMode.Image = Resources.page_copy;
             this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
             this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(205, 22);
             this.tsmCopytoClipboardMode.Text = "Copy to Clipboard Mode";
@@ -762,7 +763,7 @@ namespace ZScreenGUI
             // 
             // tsmFTPClient
             // 
-            this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
+            this.tsmFTPClient.Image = Resources.server_edit;
             this.tsmFTPClient.Name = "tsmFTPClient";
             this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
             this.tsmFTPClient.Text = "FTP &Client...";
@@ -770,7 +771,7 @@ namespace ZScreenGUI
             // 
             // tsmViewRemoteDirectory
             // 
-            this.tsmViewRemoteDirectory.Image = global::ZScreenGUI.Properties.Resources.server;
+            this.tsmViewRemoteDirectory.Image = Resources.server;
             this.tsmViewRemoteDirectory.Name = "tsmViewRemoteDirectory";
             this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewRemoteDirectory.Text = "&FTP Viewer...";
@@ -778,7 +779,7 @@ namespace ZScreenGUI
             // 
             // tsmViewLocalDirectory
             // 
-            this.tsmViewLocalDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
+            this.tsmViewLocalDirectory.Image = Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
             this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
@@ -802,14 +803,14 @@ namespace ZScreenGUI
             this.tsmDragDropWindow,
             this.tsmLanguageTranslator,
             this.tsmScreenColorPicker});
-            this.tsmActions.Image = global::ZScreenGUI.Properties.Resources.lightning;
+            this.tsmActions.Image = Resources.lightning;
             this.tsmActions.Name = "tsmActions";
             this.tsmActions.Size = new System.Drawing.Size(205, 22);
             this.tsmActions.Text = "Quick &Actions";
             // 
             // tsmEntireScreen
             // 
-            this.tsmEntireScreen.Image = global::ZScreenGUI.Properties.Resources.monitor;
+            this.tsmEntireScreen.Image = Resources.monitor;
             this.tsmEntireScreen.Name = "tsmEntireScreen";
             this.tsmEntireScreen.Size = new System.Drawing.Size(197, 22);
             this.tsmEntireScreen.Text = "Entire Screen";
@@ -817,7 +818,7 @@ namespace ZScreenGUI
             // 
             // tsmSelectedWindow
             // 
-            this.tsmSelectedWindow.Image = global::ZScreenGUI.Properties.Resources.application_double;
+            this.tsmSelectedWindow.Image = Resources.application_double;
             this.tsmSelectedWindow.Name = "tsmSelectedWindow";
             this.tsmSelectedWindow.Size = new System.Drawing.Size(197, 22);
             this.tsmSelectedWindow.Text = "Selected Window...";
@@ -825,7 +826,7 @@ namespace ZScreenGUI
             // 
             // tsmCropShot
             // 
-            this.tsmCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square;
+            this.tsmCropShot.Image = Resources.shape_square;
             this.tsmCropShot.Name = "tsmCropShot";
             this.tsmCropShot.Size = new System.Drawing.Size(197, 22);
             this.tsmCropShot.Text = "Crop Shot...";
@@ -833,7 +834,7 @@ namespace ZScreenGUI
             // 
             // tsmLastCropShot
             // 
-            this.tsmLastCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_go;
+            this.tsmLastCropShot.Image = Resources.shape_square_go;
             this.tsmLastCropShot.Name = "tsmLastCropShot";
             this.tsmLastCropShot.Size = new System.Drawing.Size(197, 22);
             this.tsmLastCropShot.Text = "Last Crop Shot";
@@ -841,7 +842,7 @@ namespace ZScreenGUI
             // 
             // autoScreenshotsToolStripMenuItem
             // 
-            this.autoScreenshotsToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.images_stack;
+            this.autoScreenshotsToolStripMenuItem.Image = Resources.images_stack;
             this.autoScreenshotsToolStripMenuItem.Name = "autoScreenshotsToolStripMenuItem";
             this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.autoScreenshotsToolStripMenuItem.Text = "Auto Capture...";
@@ -854,7 +855,7 @@ namespace ZScreenGUI
             // 
             // tsmClipboardUpload
             // 
-            this.tsmClipboardUpload.Image = global::ZScreenGUI.Properties.Resources.images;
+            this.tsmClipboardUpload.Image = Resources.images;
             this.tsmClipboardUpload.Name = "tsmClipboardUpload";
             this.tsmClipboardUpload.Size = new System.Drawing.Size(197, 22);
             this.tsmClipboardUpload.Text = "Clipboard Upload";
@@ -862,7 +863,7 @@ namespace ZScreenGUI
             // 
             // tsmDragDropWindow
             // 
-            this.tsmDragDropWindow.Image = global::ZScreenGUI.Properties.Resources.shape_move_backwards;
+            this.tsmDragDropWindow.Image = Resources.shape_move_backwards;
             this.tsmDragDropWindow.Name = "tsmDragDropWindow";
             this.tsmDragDropWindow.Size = new System.Drawing.Size(197, 22);
             this.tsmDragDropWindow.Text = "Drag && Drop Window...";
@@ -870,7 +871,7 @@ namespace ZScreenGUI
             // 
             // tsmLanguageTranslator
             // 
-            this.tsmLanguageTranslator.Image = global::ZScreenGUI.Properties.Resources.comments;
+            this.tsmLanguageTranslator.Image = Resources.comments;
             this.tsmLanguageTranslator.Name = "tsmLanguageTranslator";
             this.tsmLanguageTranslator.Size = new System.Drawing.Size(197, 22);
             this.tsmLanguageTranslator.Text = "Language Translator";
@@ -878,7 +879,7 @@ namespace ZScreenGUI
             // 
             // tsmScreenColorPicker
             // 
-            this.tsmScreenColorPicker.Image = global::ZScreenGUI.Properties.Resources.color_wheel;
+            this.tsmScreenColorPicker.Image = Resources.color_wheel;
             this.tsmScreenColorPicker.Name = "tsmScreenColorPicker";
             this.tsmScreenColorPicker.Size = new System.Drawing.Size(197, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker...";
@@ -886,7 +887,7 @@ namespace ZScreenGUI
             // 
             // tsmQuickActions
             // 
-            this.tsmQuickActions.Image = global::ZScreenGUI.Properties.Resources.application_lightning;
+            this.tsmQuickActions.Image = Resources.application_lightning;
             this.tsmQuickActions.Name = "tsmQuickActions";
             this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickActions.Text = "Actions Toolbar...";
@@ -894,7 +895,7 @@ namespace ZScreenGUI
             // 
             // tsmQuickOptions
             // 
-            this.tsmQuickOptions.Image = global::ZScreenGUI.Properties.Resources.application_edit;
+            this.tsmQuickOptions.Image = Resources.application_edit;
             this.tsmQuickOptions.Name = "tsmQuickOptions";
             this.tsmQuickOptions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickOptions.Text = "&Quick Options...";
@@ -911,14 +912,14 @@ namespace ZScreenGUI
             this.tsmLicense,
             this.tsmVersionHistory,
             this.tsmAbout});
-            this.tsmHelp.Image = global::ZScreenGUI.Properties.Resources.help;
+            this.tsmHelp.Image = Resources.help;
             this.tsmHelp.Name = "tsmHelp";
             this.tsmHelp.Size = new System.Drawing.Size(205, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
             // 
-            this.tsmLicense.Image = global::ZScreenGUI.Properties.Resources.note_error;
+            this.tsmLicense.Image = Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
             this.tsmLicense.Size = new System.Drawing.Size(163, 22);
             this.tsmLicense.Text = "License...";
@@ -926,7 +927,7 @@ namespace ZScreenGUI
             // 
             // tsmVersionHistory
             // 
-            this.tsmVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
+            this.tsmVersionHistory.Image = Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
             this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
@@ -934,7 +935,7 @@ namespace ZScreenGUI
             // 
             // tsmAbout
             // 
-            this.tsmAbout.Image = global::ZScreenGUI.Properties.Resources.information;
+            this.tsmAbout.Image = Resources.information;
             this.tsmAbout.Name = "tsmAbout";
             this.tsmAbout.Size = new System.Drawing.Size(163, 22);
             this.tsmAbout.Text = "About...";
@@ -942,7 +943,7 @@ namespace ZScreenGUI
             // 
             // tsmExitZScreen
             // 
-            this.tsmExitZScreen.Image = global::ZScreenGUI.Properties.Resources.cross;
+            this.tsmExitZScreen.Image = Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
             this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
