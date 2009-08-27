@@ -88,7 +88,7 @@ namespace ZScreenGUI
                 Program.conf.MinimizeOnClose = true;
             }
 
-            if (Loader.ZScreenHandle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
+            if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
                 try
                 {
@@ -135,8 +135,9 @@ namespace ZScreenGUI
                     ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(Loader.ZScreenHandle, cropShot, selWindow, clipboardUpload);
+                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
                     Program.zJumpList.Refresh();
+                    FileSystem.AppendDebug("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)
                 {
@@ -231,7 +232,6 @@ namespace ZScreenGUI
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-            Loader.ZScreenHandle = this.Handle;
             if (this.WindowState == FormWindowState.Normal)
             {
                 Rectangle screenRect = GraphicsMgr.GetScreenBounds();
