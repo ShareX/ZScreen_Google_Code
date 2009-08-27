@@ -37,7 +37,7 @@ namespace UploadersLib
         #region ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
 
         public static List<Type> Types = new List<Type> { typeof(FTPUploader), typeof(Paste2Uploader), typeof(PastebinCaUploader),
-            typeof (PastebinUploader), typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader),
+            typeof(PastebinUploader), typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader),
             typeof(KlamUploader), typeof(IsgdUploader), typeof(BitlyUploader), typeof(TextUploader) };
 
         #endregion
@@ -78,7 +78,8 @@ namespace UploadersLib
                     return UploadTextFromFile(filePath);
                 }
             }
-            return "";
+
+            return string.Empty;
         }
 
         public string UploadTextFromFile(string filePath)
@@ -87,7 +88,8 @@ namespace UploadersLib
             {
                 return UploadText(TextInfo.FromFile(filePath));
             }
-            return "";
+
+            return string.Empty;
         }
     }
 

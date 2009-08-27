@@ -33,16 +33,17 @@ using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
+using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
-using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
 {
     public class WorkerPrimary
     {
         private ZScreen mZScreen;
+
         internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
         internal int mHKSelectedRow = -1;
 
@@ -90,11 +91,10 @@ namespace ZScreenGUI
             {
                 if (Program.conf.ScreenshotDelayTime != 0)
                 {
-                    Thread.Sleep((int)(Program.conf.ScreenshotDelayTime));
+                    Thread.Sleep((int)Program.conf.ScreenshotDelayTime);
                 }
             }
 
-            FileSystem.AppendDebug("."); // add a gap to distinguish between jobs
             FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
 
             switch (task.JobCategory)
@@ -121,6 +121,7 @@ namespace ZScreenGUI
                             new TaskManager(ref task).PublishData();
                             break;
                     }
+
                     break;
                 case JobCategoryType.TEXT:
                     switch (task.Job)
@@ -132,26 +133,26 @@ namespace ZScreenGUI
                             LanguageTranslator(ref task);
                             break;
                     }
+
                     break;
-                //case JobCategoryType.BINARY:
-                //    switch (task.Job)
-                //    {
-                //        case WorkerTask.Jobs.UploadFromClipboard:
-                //            if (Program.conf.AutoSwitchFileUploader)
-                //            {
-                //                task.MyImageUploader = ImageDestType.FTP;
-                //                PublishBinary(ref task);
-                //            }
-                //            break;
-                //    }
-                //    break;
+                /* case JobCategoryType.BINARY:
+                      switch (task.Job)
+                      {
+                          case WorkerTask.Jobs.UploadFromClipboard:
+                              if (Program.conf.AutoSwitchFileUploader)
+                              {
+                                  task.MyImageUploader = ImageDestType.FTP;
+                                  PublishBinary(ref task);
+                              }
+                              break;
+                      }
+                      break; */
             }
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
                 if (Program.conf.AddFailedScreenshot ||
-                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 ||
-                    task.JobCategory == JobCategoryType.TEXT))
+                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
                 {
                     task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
@@ -162,7 +163,10 @@ namespace ZScreenGUI
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (mZScreen == null) return;
+            if (mZScreen == null)
+            {
+                return;
+            }
 
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
@@ -187,6 +191,7 @@ namespace ZScreenGUI
                     {
                         Adapter.CopyImageToClipboard(e.UserState as Image);
                     }
+
                     break;
                 case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL:
                     string url = e.UserState as string;
@@ -194,6 +199,7 @@ namespace ZScreenGUI
                     {
                         Clipboard.SetText(url);
                     }
+
                     break;
                 case WorkerTask.ProgressType.FLASH_ICON:
                     Adapter.FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
@@ -243,6 +249,7 @@ namespace ZScreenGUI
                             {
                                 Clipboard.SetText(task.RemoteFilePath);
                             }
+
                             break;
                         case JobCategoryType.TEXT:
                             switch (task.Job)
@@ -255,10 +262,12 @@ namespace ZScreenGUI
                                         this.mZScreen.txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
                                         this.mZScreen.txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
                                     }
+
                                     if (Program.conf.ClipboardTranslate)
                                     {
                                         Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
                                     }
+
                                     if (mZScreen != null)
                                     {
                                         this.mZScreen.btnTranslate.Enabled = true;
@@ -271,8 +280,10 @@ namespace ZScreenGUI
                                     {
                                         Clipboard.SetText(task.RemoteFilePath);
                                     }
+
                                     break;
                             }
+
                             break;
                         case JobCategoryType.SCREENSHOTS:
                             switch (task.Job)
@@ -280,32 +291,35 @@ namespace ZScreenGUI
                                 case WorkerTask.Jobs.CustomUploaderTest:
                                     if (task.ImageManager != null && task.ImageManager.ImageFileList.Count > 0)
                                     {
-                                        if (task.ImageManager.GetFullImageUrl() != "")
+                                        if (!string.IsNullOrEmpty(task.ImageManager.GetFullImageUrl()))
                                         {
                                             this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " full image: " +
                                                 task.ImageManager.GetFullImageUrl() + "\r\n");
                                         }
-                                        if (task.ImageManager.GetThumbnailUrl() != "")
+
+                                        if (!string.IsNullOrEmpty(task.ImageManager.GetThumbnailUrl()))
                                         {
                                             this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
                                                 task.ImageManager.GetThumbnailUrl() + "\r\n");
                                         }
                                     }
+
                                     this.mZScreen.btnUploadersTest.Enabled = true;
                                     break;
                             }
+
                             if (task.MyImageUploader != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
                                     File.Delete(task.LocalFilePath);
                                 }
-                                //sometimes file is still locked... ToDo: delte those files sometime
-                                catch (Exception ex)
+                                catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
                                 {
                                     FileSystem.AppendDebug(ex.ToString());
                                 }
                             }
+
                             break;
                     }
 
@@ -337,6 +351,7 @@ namespace ZScreenGUI
                         {
                             System.Media.SystemSounds.Exclamation.Play();
                         }
+
                         if (Program.conf.ShowBalloonTip)
                         {
                             new BalloonTipHelper(this.mZScreen.niTray, task).ShowBalloonTip();
@@ -354,8 +369,10 @@ namespace ZScreenGUI
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
                 }
 
-
-                if (task.MyImage != null) task.MyImage.Dispose(); // For fix memory leak
+                if (task.MyImage != null)
+                {
+                    task.MyImage.Dispose(); // For fix memory leak
+                }
             }
             catch (Exception ex)
             {
@@ -382,12 +399,13 @@ namespace ZScreenGUI
             {
                 task.MyImageUploader = ImageDestType.CUSTOM_UPLOADER;
             }
+
             return task;
         }
 
         public WorkerTask GetWorkerText(WorkerTask.Jobs job)
         {
-            return GetWorkerText(job, "");
+            return GetWorkerText(job, string.Empty);
         }
 
         /// <summary>
@@ -415,8 +433,10 @@ namespace ZScreenGUI
                     {
                         mZScreen.btnTranslate.Enabled = true;
                     }
+
                     break;
             }
+
             return t;
         }
 
@@ -438,12 +458,12 @@ namespace ZScreenGUI
                 webPageCapture.DownloadPage(task.MyText.LocalString);
             }
         }
+
         private void webPageCapture_DownloadCompleted(Image img)
         {
             if (img != null)
             {
                 Bitmap bmp = new Bitmap(img);
-
             }
         }
 
@@ -569,7 +589,6 @@ namespace ZScreenGUI
             task.EndTime = DateTime.Now;
         }
 
-
         /// <summary>
         /// Function to edit Text in a Text Editor and Upload
         /// </summary>
@@ -589,8 +608,7 @@ namespace ZScreenGUI
         {
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
-                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(
-                    Program.ImagesDir, Path.GetFileName(filePath))), true);
+                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(filePath))), true);
                 ScreenshotUsingDragDrop(filePath);
             }
         }
@@ -622,66 +640,78 @@ namespace ZScreenGUI
 
         private bool CheckHotkeys(Keys key)
         {
-            if (Program.conf.HotkeyEntireScreen == key) //Entire Screen
+            if (Program.conf.HotkeyEntireScreen == key) // Entire Screen
             {
                 StartBW_EntireScreen();
                 return true;
             }
-            if (Program.conf.HotkeyActiveWindow == key) //Active Window
+
+            if (Program.conf.HotkeyActiveWindow == key) // Active Window
             {
                 StartBW_ActiveWindow();
                 return true;
             }
-            if (Program.conf.HotkeySelectedWindow == key) //Selected Window
+
+            if (Program.conf.HotkeySelectedWindow == key) // Selected Window
             {
                 StartBW_SelectedWindow();
                 return true;
             }
-            if (Program.conf.HotkeyCropShot == key) //Crop Shot
+
+            if (Program.conf.HotkeyCropShot == key) // Crop Shot
             {
                 StartBW_CropShot();
                 return true;
             }
-            if (Program.conf.HotkeyLastCropShot == key) //Last Crop Shot
+
+            if (Program.conf.HotkeyLastCropShot == key) // Last Crop Shot
             {
                 StartBW_LastCropShot();
                 return true;
             }
-            if (Program.conf.HotkeyAutoCapture == key) //Auto Capture
+
+            if (Program.conf.HotkeyAutoCapture == key) // Auto Capture
             {
                 ShowAutoCapture();
                 return true;
             }
-            if (Program.conf.HotkeyClipboardUpload == key) //Clipboard Upload
+
+            if (Program.conf.HotkeyClipboardUpload == key) // Clipboard Upload
             {
                 UploadUsingClipboard();
                 return true;
             }
-            if (Program.conf.HotkeyDropWindow == key) //Drag & Drop Window
+
+            if (Program.conf.HotkeyDropWindow == key) // Drag & Drop Window
             {
                 ShowDropWindow();
                 return true;
             }
-            if (Program.conf.HotkeyActionsToolbar == key) //Actions Toolbar
+
+            if (Program.conf.HotkeyActionsToolbar == key) // Actions Toolbar
             {
                 ShowActionsToolbar(true);
                 return true;
             }
-            if (Program.conf.HotkeyQuickOptions == key) //Quick Options
+
+            if (Program.conf.HotkeyQuickOptions == key) // Quick Options
             {
                 ShowQuickOptions();
                 return true;
             }
-            if (Program.conf.HotkeyLanguageTranslator == key) //Language Translator
+
+            if (Program.conf.HotkeyLanguageTranslator == key) // Language Translator
             {
                 StartWorkerTranslator();
                 return true;
             }
-            if (Program.conf.HotkeyScreenColorPicker == key) //Screen Color Picker
+
+            if (Program.conf.HotkeyScreenColorPicker == key) // Screen Color Picker
             {
                 ScreenColorPicker();
                 return true;
             }
+
             return false;
         }
 
@@ -707,7 +737,7 @@ namespace ZScreenGUI
 
         public string GetSelectedHotkeySpecialString()
         {
-            object obj = Program.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", ""));
+            object obj = Program.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", string.Empty));
             if (obj != null && obj.GetType() == typeof(Keys))
             {
                 return ((Keys)obj).ToSpecialString();
@@ -726,7 +756,7 @@ namespace ZScreenGUI
 
         private bool SetHotkey(string name, Keys key)
         {
-            return Program.conf.SetFieldValue("Hotkey" + name.Replace(" ", ""), key);
+            return Program.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
         }
 
         public bool UploadUsingFileSystem(List<string> fileList)
@@ -744,6 +774,7 @@ namespace ZScreenGUI
                         {
                             File.Copy(fp, cbFilePath, true);
                         }
+
                         strListFilePath.Add(cbFilePath);
                     }
                     else
@@ -850,6 +881,7 @@ namespace ZScreenGUI
                             indexer = new TreeNetIndexer(settings);
                             break;
                     }
+
                     if (indexer != null)
                     {
                         indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
@@ -882,6 +914,7 @@ namespace ZScreenGUI
                 {
                     task.MyImageUploader = ImageDestType.IMAGESHACK;
                 }
+
                 task.Retry = true;
 
                 string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", t.Errors.ToArray()),
@@ -890,6 +923,7 @@ namespace ZScreenGUI
                 task.MyWorker.RunWorkerAsync(task);
                 return true;
             }
+
             return false;
         }
 
@@ -903,6 +937,7 @@ namespace ZScreenGUI
                 mZScreen.lbHistory.ClearSelected();
                 mZScreen.lbHistory.SelectedIndex = 0;
             }
+
             Adapter.AddRecentItem(hi.LocalPath);
         }
 
@@ -1058,7 +1093,10 @@ namespace ZScreenGUI
 
         private void dw_Result(object sender, string[] strings)
         {
-            if (strings != null) ScreenshotUsingDragDrop(strings);
+            if (strings != null)
+            {
+                ScreenshotUsingDragDrop(strings);
+            }
         }
 
         private void dw_FormClosed(object sender, FormClosedEventArgs e)
@@ -1072,7 +1110,7 @@ namespace ZScreenGUI
             dialogColor.Show();
         }
 
-        #region "Translate"
+        #region Translate
 
         public void TranslateTo1()
         {
@@ -1093,7 +1131,7 @@ namespace ZScreenGUI
 
         #endregion
 
-        #region "ZScreen GUI"
+        #region ZScreen GUI
 
         public void CheckHistoryItems()
         {
@@ -1104,6 +1142,7 @@ namespace ZScreenGUI
                     mZScreen.lbHistory.Items.RemoveAt(i);
                 }
             }
+
             UpdateGuiControlsHistory();
         }
 
@@ -1116,6 +1155,7 @@ namespace ZScreenGUI
                 {
                     historyItems.Add(item);
                 }
+
                 HistoryManager hm = new HistoryManager(historyItems);
                 hm.Save();
             }

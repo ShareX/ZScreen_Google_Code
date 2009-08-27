@@ -40,7 +40,7 @@ namespace UploadersLib
                 return Upload(File.ReadAllBytes(filePath), Path.GetFileName(filePath));
             }
 
-            return "";
+            return string.Empty;
         }
     }
 }

@@ -137,7 +137,10 @@ namespace UploadersLib
 
             using (HttpWebResponse response = GetResponse(url, data, boundary))
             {
-                if (response != null) return response.ResponseUri.OriginalString;
+                if (response != null)
+                {
+                    return response.ResponseUri.OriginalString;
+                }
             }
 
             return null;
@@ -261,6 +264,7 @@ namespace UploadersLib
             {
                 return regKey.GetValue("Content Type").ToString();
             }
+
             return "application/octetstream";
         }
 
@@ -268,8 +272,12 @@ namespace UploadersLib
         {
             foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
             {
-                if (codec.FormatID == format.Guid) return codec.MimeType;
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec.MimeType;
+                }
             }
+
             return "image/unknown";
         }
 
@@ -324,19 +332,20 @@ namespace UploadersLib
                 {
                     return url2;
                 }
-                else
-                {
-                    return "";
-                }
+
+                return string.Empty;
             }
+
             if (url1.EndsWith("/"))
             {
                 url1 = url1.Substring(0, url1.Length - 1);
             }
+
             if (url2.StartsWith("/"))
             {
                 url2 = url2.Remove(0, 1);
             }
+
             return url1 + "/" + url2;
         }
 

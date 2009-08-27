@@ -22,7 +22,6 @@
 #endregion
 
 using System;
-using System.Text;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
@@ -59,7 +58,10 @@ namespace ZSS
         [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button"), DefaultValue(true)]
         public bool AutoCreateFolder { get; set; }
 
-        public string FTPAddress { get { return string.Format("ftp://{0}:{1}", Server, Port); } }
+        public string FTPAddress
+        {
+            get { return string.Format("ftp://{0}:{1}", Server, Port); }
+        }
 
         public FTPAccount()
         {
@@ -87,16 +89,23 @@ namespace ZSS
         {
             if (!string.IsNullOrEmpty(HttpPath))
             {
-                fileName = fileName.Replace(" ", "%20"); //maybe use system.web encoding here...                
+                fileName = fileName.Replace(" ", "%20"); //maybe use system.web encoding here...
                 string path;
 
                 if (pathHasFolder.Match(this.HttpPath).Success)
+                {
                     path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), fileName);
+                }
                 else
+                {
                     path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), this.Path, fileName);
-                
-                if (!path.StartsWith("http://")) 
+                }
+
+                if (!path.StartsWith("http://"))
+                {
                     path = "http://" + path;
+                }
+
                 return path;
             }
 

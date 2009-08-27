@@ -21,9 +21,9 @@
 */
 #endregion
 
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System;
 
 namespace ZScreenLib
 {
@@ -57,7 +57,10 @@ namespace ZScreenLib
         {
             this.FilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
             Result(this, FilePaths);
-            if (Program.conf.CloseDropBox) this.Close();
+            if (Program.conf.CloseDropBox)
+            {
+                this.Close();
+            }
         }
 
         private void DropWindow_Paint(object sender, PaintEventArgs e)
@@ -75,7 +78,7 @@ namespace ZScreenLib
             if (e.Button == MouseButtons.Left)
             {
                 User32.ReleaseCapture();
-                User32.SendMessage(Handle, (UInt32)User32.WM_NCLBUTTONDOWN, (IntPtr)User32.HT_CAPTION, IntPtr.Zero);
+                User32.SendMessage(Handle, (uint)User32.WM_NCLBUTTONDOWN, (IntPtr)User32.HT_CAPTION, IntPtr.Zero);
             }
             else
             {

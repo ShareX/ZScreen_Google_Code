@@ -33,9 +33,9 @@ namespace ZScreenLib
     /// If the cache dir is bigger than this size then the background worker will 
     /// remove the oldest files to keep the size down
     /// </summary>
-    class CacheCleanerTask
+    public class CacheCleanerTask
     {
-        private string mCacheDir = "";
+        private string mCacheDir = string.Empty;
         private decimal mCacheSize;
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace ZScreenLib
             {
                 List<ImageFile> files = new List<ImageFile>();
 
-                //include all supported file types
+                // include all supported file types
                 foreach (string s in Program.zImageFileTypes)
                 {
                     string[] tmpFiles = Directory.GetFiles(mCacheDir, "*." + s, SearchOption.AllDirectories);

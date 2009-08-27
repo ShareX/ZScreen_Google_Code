@@ -171,6 +171,5 @@ namespace ZSS.ColorsLib
         }
 
         #endregion
-
     }
 }

@@ -22,15 +22,14 @@
 #endregion
 
 using System;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms;
 using ZScreenLib;
 
 namespace ZScreenGUI
 {
     public partial class AutoCapture : Form
     {
-        public event JobsEventHandler EventJob;
         public bool IsRunning;
 
         private Timer timer = new Timer();
@@ -42,6 +41,8 @@ namespace ZScreenGUI
         private int timeleft;
         private int percentage;
         private Stopwatch stopwatch = new Stopwatch();
+
+        public event JobsEventHandler EventJob;
 
         public AutoCapture()
         {
@@ -109,8 +110,12 @@ namespace ZScreenGUI
                 timer.Interval = 1000;
                 mDelay = (int)Program.conf.AutoCaptureDelayTime;
                 waitUploads = Program.conf.AutoCaptureWaitUploads;
-                if (Program.conf.AutoCaptureAutoMinimize) this.WindowState = FormWindowState.Minimized;
+                if (Program.conf.AutoCaptureAutoMinimize)
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                }
             }
+
             timer.Enabled = IsRunning;
             statusTimer.Enabled = IsRunning;
         }

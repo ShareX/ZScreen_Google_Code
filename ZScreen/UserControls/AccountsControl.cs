@@ -24,8 +24,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -48,8 +48,10 @@ namespace ZScreenGUI.UserControls
                 {
                     this.AccountsList.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
                 }
+
                 return true;
             }
+
             return false;
         }
 

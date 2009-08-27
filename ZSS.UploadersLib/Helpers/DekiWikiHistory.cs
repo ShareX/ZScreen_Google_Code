@@ -36,7 +36,7 @@ namespace UploadersLib.Helpers
 
         public DekiWikiHistory()
         {
-            this.Path = "";
+            this.Path = string.Empty;
             this.Time = DateTime.Now;
         }
 

@@ -23,8 +23,8 @@
 
 using System.IO;
 using System.Windows.Forms;
-using ZScreenLib;
 using ZScreenGUI.Properties;
+using ZScreenLib;
 
 namespace ZScreenGUI
 {
@@ -34,26 +34,13 @@ namespace ZScreenGUI
         public static TextViewer VersionHistoryWindow = null;
         public static TextViewer LicenseWindow = null;
 
-        private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
-        {
-            string txt = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
-            if (txt == string.Empty)
-            {
-                txt = FileSystem.GetText(manifestFileName);
-            }
-            if (txt != string.Empty)
-            {
-                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = Resources.zss_main };
-            }
-            return viewer;
-        }
-
         public static void ShowLicense()
         {
             if (LicenseWindow == null || LicenseWindow.IsDisposed)
             {
                 LicenseWindow = FillTextViewer(LicenseWindow, "License", "license.txt");
             }
+
             if (LicenseWindow != null)
             {
                 LicenseWindow.Activate();
@@ -67,6 +54,7 @@ namespace ZScreenGUI
             {
                 VersionHistoryWindow = FillTextViewer(VersionHistoryWindow, "Version History", "VersionHistory.txt");
             }
+
             if (VersionHistoryWindow != null)
             {
                 VersionHistoryWindow.Activate();
@@ -80,8 +68,25 @@ namespace ZScreenGUI
             {
                 AboutWindow = new AboutBox() { Assemblies = Loader.LibNames };
             }
+
             AboutWindow.Activate();
             AboutWindow.Show();
+        }
+
+        private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
+        {
+            string txt = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
+            if (txt == string.Empty)
+            {
+                txt = FileSystem.GetText(manifestFileName);
+            }
+
+            if (txt != string.Empty)
+            {
+                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = Resources.zss_main };
+            }
+
+            return viewer;
         }
     }
 }

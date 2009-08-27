@@ -42,12 +42,11 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
+using ZScreenGUI.Properties;
+using ZScreenLib;
 using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using ZScreenLib;
-using System.Reflection;
-using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
 {
@@ -75,7 +74,10 @@ namespace ZScreenGUI
 
             Loader.Worker2.PerformOnlineTasks();
             Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
-            if (Program.conf.CheckUpdates) Loader.Worker2.CheckUpdates();
+            if (Program.conf.CheckUpdates)
+            {
+                Loader.Worker2.CheckUpdates();
+            }
         }
 
         internal void ZScreen_Windows7onlyTasks()
@@ -157,6 +159,7 @@ namespace ZScreenGUI
                 {
                     Program.conf.WindowLocation = this.Location;
                 }
+
                 if (Program.conf.WindowSize.IsEmpty)
                 {
                     Program.conf.WindowSize = this.Size;
@@ -211,7 +214,6 @@ namespace ZScreenGUI
 
             DrawZScreenLabel(false);
         }
-
 
         private void SetToolTip(Control original)
         {
@@ -323,6 +325,7 @@ namespace ZScreenGUI
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
+
             ucDestOptions.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
             ucDestOptions.cboImageUploaders.Enabled = !Program.conf.PreferFileUploaderForImages;
 
@@ -341,6 +344,7 @@ namespace ZScreenGUI
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
+
             cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Program.conf.ScreenshotDelayTimes;
             nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;
@@ -373,6 +377,7 @@ namespace ZScreenGUI
             {
                 cbCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
+
             cbCropStyle.SelectedIndex = (int)Program.conf.CropRegionStyles;
             cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
             cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
@@ -400,6 +405,7 @@ namespace ZScreenGUI
             {
                 cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
+
             cbSelectedWindowStyle.SelectedIndex = (int)Program.conf.SelectedWindowRegionStyles;
             cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
             cbSelectedWindowRuler.Checked = Program.conf.SelectedWindowRuler;
@@ -426,11 +432,13 @@ namespace ZScreenGUI
             {
                 cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
             }
+
             cboWatermarkType.SelectedIndex = (int)Program.conf.WatermarkMode;
             if (cbWatermarkPosition.Items.Count == 0)
             {
                 cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
             }
+
             cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
             nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
             cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
@@ -451,6 +459,7 @@ namespace ZScreenGUI
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
             }
+
             cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
 
             txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
@@ -461,11 +470,19 @@ namespace ZScreenGUI
 
             // Image Settings
 
-            if (cbFileFormat.Items.Count == 0) cbFileFormat.Items.AddRange(Program.zImageFileTypes);
+            if (cbFileFormat.Items.Count == 0)
+            {
+                cbFileFormat.Items.AddRange(Program.zImageFileTypes);
+            }
+
             cbFileFormat.SelectedIndex = Program.conf.FileFormat;
             nudImageQuality.Value = Program.conf.ImageQuality;
             nudSwitchAfter.Value = Program.conf.SwitchAfter;
-            if (cbSwitchFormat.Items.Count == 0) cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
+            if (cbSwitchFormat.Items.Count == 0)
+            {
+                cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
+            }
+
             cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
 
             switch (Program.conf.ImageSizeType)
@@ -480,6 +497,7 @@ namespace ZScreenGUI
                     rbImageSizeRatio.Checked = true;
                     break;
             }
+
             txtImageSizeFixedWidth.Text = Program.conf.ImageSizeFixedWidth.ToString();
             txtImageSizeFixedHeight.Text = Program.conf.ImageSizeFixedHeight.ToString();
             txtImageSizeRatio.Text = Program.conf.ImageSizeRatioPercentage.ToString();
@@ -496,6 +514,7 @@ namespace ZScreenGUI
             {
                 Program.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
+
             ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Program.conf.TextUploadersList)
@@ -506,11 +525,13 @@ namespace ZScreenGUI
                     ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                 }
             }
+
             if (Program.conf.TextUploaderSelected > -1 && Program.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Program.conf.TextUploaderSelected;
                 ucDestOptions.cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
             }
+
             ucDestOptions.cboTextUploaders.Enabled = !Program.conf.PreferFileUploaderForText;
 
             ucTextUploaders.Templates.Items.Clear();
@@ -564,6 +585,7 @@ namespace ZScreenGUI
                     ucFTPAccounts.AccountsList.SelectedIndex = Program.conf.FTPSelected;
                 }
             }
+
             chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
             txtFTPThumbWidth.Text = Program.conf.FTPThumbnailWidth.ToString();
             txtFTPThumbHeight.Text = Program.conf.FTPThumbnailHeight.ToString();
@@ -589,6 +611,7 @@ namespace ZScreenGUI
                     ucMindTouchAccounts.AccountsList.SelectedIndex = Program.conf.DekiWikiSelected;
                 }
             }
+
             chkDekiWikiForcePath.Checked = Program.conf.DekiWikiForcePath;
 
             #endregion
@@ -618,12 +641,14 @@ namespace ZScreenGUI
             {
                 cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
             }
+
             cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Program.conf.TwitPicShowFull;
             if (cboTwitPicThumbnailMode.Items.Count == 0)
             {
                 cboTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
             }
+
             cboTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
 
             // yFrog
@@ -632,6 +657,7 @@ namespace ZScreenGUI
             {
                 cboYfrogUploadMode.Items.AddRange(typeof(YfrogUploadType).GetDescriptions());
             }
+
             cboYfrogUploadMode.SelectedIndex = (int)Program.conf.YfrogUploadMode;
 
             // ImageBam
@@ -641,12 +667,14 @@ namespace ZScreenGUI
             chkImageBamContentNSFW.Checked = Program.conf.ImageBamContentNSFW;
             if (Program.conf.ImageBamGallery.Count == 0)
             {
-                Program.conf.ImageBamGallery.Add("");
+                Program.conf.ImageBamGallery.Add(string.Empty);
             }
+
             foreach (string id in Program.conf.ImageBamGallery)
             {
                 lbImageBamGalleries.Items.Add(id);
             }
+
             if (lbImageBamGalleries.Items.Count > Program.conf.ImageBamGalleryActive)
             {
                 lbImageBamGalleries.SelectedIndex = Program.conf.ImageBamGalleryActive;
@@ -670,6 +698,7 @@ namespace ZScreenGUI
             {
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
+
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
 
             // RapidShare
@@ -678,6 +707,7 @@ namespace ZScreenGUI
             {
                 cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
             }
+
             cboRapidShareAcctType.SelectedIndex = (int)Program.conf.RapidShareAccountType;
             txtRapidShareCollectorID.Text = Program.conf.RapidShareCollectorsID;
             txtRapidSharePassword.Text = Program.conf.RapidSharePassword;
@@ -689,6 +719,7 @@ namespace ZScreenGUI
             {
                 cboSendSpaceAcctType.Items.AddRange(typeof(AcctType).GetDescriptions());
             }
+
             cboSendSpaceAcctType.SelectedIndex = (int)Program.conf.SendSpaceAccountType;
             txtSendSpacePassword.Text = Program.conf.SendSpacePassword;
             txtSendSpaceUserName.Text = Program.conf.SendSpaceUserName;
@@ -705,6 +736,7 @@ namespace ZScreenGUI
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
             }
+
             cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
             chkImageUploadRetryOnFail.Checked = Program.conf.ImageUploadRetryOnFail;
             cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
@@ -726,16 +758,19 @@ namespace ZScreenGUI
             // Image Editors Settings
             ///////////////////////////////////
 
-            Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, "", true);
-            Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, "", true);
+            Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, string.Empty, true);
+            Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
             Software paint = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
 
-            Program.conf.ImageEditors.RemoveAll(x => x.Path == "" || x.Name == Program.DISABLED_IMAGE_EDITOR ||
+            Program.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Program.DISABLED_IMAGE_EDITOR ||
                 x.Name == Program.ZSCREEN_IMAGE_EDITOR || x.Name == "Paint" || !File.Exists(x.Path));
 
             Program.conf.ImageEditors.Insert(0, disabled);
             Program.conf.ImageEditors.Insert(1, editor);
-            if (File.Exists(paint.Path)) Program.conf.ImageEditors.Insert(2, paint);
+            if (File.Exists(paint.Path))
+            {
+                Program.conf.ImageEditors.Insert(2, paint);
+            }
 
             RegistryMgr.FindImageEditors();
 
@@ -835,10 +870,12 @@ namespace ZScreenGUI
                 {
                     lbUploader.Items.Add(iUploader.Name);
                 }
+
                 if (lbUploader.Items.Count > 0)
                 {
                     lbUploader.SelectedIndex = Program.conf.ImageUploaderSelected;
                 }
+
                 if (lbUploader.SelectedIndex != -1)
                 {
                     LoadImageUploaders(Program.conf.ImageUploadersList[lbUploader.SelectedIndex]);
@@ -937,9 +974,15 @@ namespace ZScreenGUI
             {
                 if (this.WindowState == FormWindowState.Minimized)
                 {
-                    if (!Program.conf.ShowInTaskbar) this.Hide();
+                    if (!Program.conf.ShowInTaskbar)
+                    {
+                        this.Hide();
+                    }
 
-                    if (Program.conf.AutoSaveSettings) WriteSettings();
+                    if (Program.conf.AutoSaveSettings)
+                    {
+                        WriteSettings();
+                    }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
                 {
@@ -979,6 +1022,7 @@ namespace ZScreenGUI
                 Program.conf.WindowLocation = this.Location;
                 Program.conf.WindowSize = this.Size;
             }
+
             Program.conf.WindowState = this.WindowState;
 
             Program.conf.Write();
@@ -1021,6 +1065,7 @@ namespace ZScreenGUI
                 {
                     CheckCorrectIsRightClickMenu(Program.DISABLED_IMAGE_EDITOR);
                 }
+
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
@@ -1050,8 +1095,9 @@ namespace ZScreenGUI
             Program.conf.ImageEditor = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
 
             if (lbImageSoftware.Items.IndexOf(tsm.Text) >= 0)
+            {
                 lbImageSoftware.SelectedItem = tsm.Text;
-
+            }
         }
 
         private void CheckCorrectIsRightClickMenu(string txt)
@@ -1251,7 +1297,6 @@ namespace ZScreenGUI
             }
 
             return temp;
-
         }
 
         private void tsmSettings_Click(object sender, EventArgs e)
@@ -1298,7 +1343,7 @@ namespace ZScreenGUI
 
             if (name.Contains(beginning))
             {
-                name = name.Replace(beginning, "");
+                name = name.Replace(beginning, string.Empty);
                 code = "%" + name.ToLower();
 
                 if (mHadFocus != null)
@@ -1473,6 +1518,7 @@ namespace ZScreenGUI
                     return tsmi;
                 }
             }
+
             return null;
         }
 
@@ -1539,11 +1585,11 @@ namespace ZScreenGUI
 
         private void UpdateClipboardTextTrayMenu()
         {
-
             foreach (ToolStripMenuItem tsmi in tsmCopytoClipboardMode.DropDownItems)
             {
                 tsmi.Checked = false;
             }
+
             CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
         }
 
@@ -1648,6 +1694,7 @@ namespace ZScreenGUI
                                 {
                                     Clipboard.SetText(cbString);
                                 }
+
                                 break;
                             default:
                                 switch (t.MyImageUploader)
@@ -1659,6 +1706,7 @@ namespace ZScreenGUI
                                         {
                                             Process.Start(cbString);
                                         }
+
                                         break;
                                     default:
                                         cbString = t.RemoteFilePath;
@@ -1666,8 +1714,10 @@ namespace ZScreenGUI
                                         {
                                             Process.Start(cbString);
                                         }
+
                                         break;
                                 }
+
                                 break;
                         }
                     }
@@ -1683,7 +1733,7 @@ namespace ZScreenGUI
 
         private void btnUploaderAdd_Click(object sender, EventArgs e)
         {
-            if (txtUploader.Text != "")
+            if (txtUploader.Text != string.Empty)
             {
                 ImageHostingService iUploader = GetUploaderFromFields();
                 Program.conf.ImageUploadersList.Add(iUploader);
@@ -1710,12 +1760,14 @@ namespace ZScreenGUI
             {
                 iUploader.Arguments.Add(new[] { lvItem.Text, lvItem.SubItems[1].Text });
             }
+
             iUploader.UploadURL = txtUploadURL.Text;
             iUploader.FileForm = txtFileForm.Text;
             foreach (ListViewItem lvItem in lvRegexps.Items)
             {
                 iUploader.RegexpList.Add(lvItem.Text);
             }
+
             iUploader.Fullimage = txtFullImage.Text;
             iUploader.Thumbnail = txtThumbnail.Text;
             return iUploader;
@@ -1723,18 +1775,18 @@ namespace ZScreenGUI
 
         private void btnArgAdd_Click(object sender, EventArgs e)
         {
-            if (txtArg1.Text != "")
+            if (txtArg1.Text != string.Empty)
             {
                 lvArguments.Items.Add(txtArg1.Text).SubItems.Add(txtArg2.Text);
-                txtArg1.Text = "";
-                txtArg2.Text = "";
+                txtArg1.Text = string.Empty;
+                txtArg2.Text = string.Empty;
                 txtArg1.Focus();
             }
         }
 
         private void btnArgEdit_Click(object sender, EventArgs e)
         {
-            if (lvArguments.SelectedItems.Count > 0 && txtArg1.Text != "")
+            if (lvArguments.SelectedItems.Count > 0 && txtArg1.Text != string.Empty)
             {
                 lvArguments.SelectedItems[0].Text = txtArg1.Text;
                 lvArguments.SelectedItems[0].SubItems[1].Text = txtArg2.Text;
@@ -1751,7 +1803,7 @@ namespace ZScreenGUI
 
         private void btnRegexpAdd_Click(object sender, EventArgs e)
         {
-            if (txtRegexp.Text != "")
+            if (txtRegexp.Text != string.Empty)
             {
                 if (txtRegexp.Text.StartsWith("!tag"))
                 {
@@ -1762,14 +1814,15 @@ namespace ZScreenGUI
                 {
                     lvRegexps.Items.Add(txtRegexp.Text);
                 }
-                txtRegexp.Text = "";
+
+                txtRegexp.Text = string.Empty;
                 txtRegexp.Focus();
             }
         }
 
         private void btnRegexpEdit_Click(object sender, EventArgs e)
         {
-            if (lvRegexps.SelectedItems.Count > 0 && txtRegexp.Text != "")
+            if (lvRegexps.SelectedItems.Count > 0 && txtRegexp.Text != string.Empty)
             {
                 lvRegexps.SelectedItems[0].Text = txtRegexp.Text;
             }
@@ -1795,21 +1848,23 @@ namespace ZScreenGUI
 
         private void LoadImageUploaders(ImageHostingService imageUploader)
         {
-            txtArg1.Text = "";
-            txtArg2.Text = "";
+            txtArg1.Text = string.Empty;
+            txtArg2.Text = string.Empty;
             lvArguments.Items.Clear();
             foreach (string[] args in imageUploader.Arguments)
             {
                 lvArguments.Items.Add(args[0]).SubItems.Add(args[1]);
             }
+
             txtUploadURL.Text = imageUploader.UploadURL;
             txtFileForm.Text = imageUploader.FileForm;
-            txtRegexp.Text = "";
+            txtRegexp.Text = string.Empty;
             lvRegexps.Items.Clear();
             foreach (string regexp in imageUploader.RegexpList)
             {
                 lvRegexps.Items.Add(regexp);
             }
+
             txtFullImage.Text = imageUploader.Fullimage;
             txtThumbnail.Text = imageUploader.Thumbnail;
         }
@@ -1822,6 +1877,7 @@ namespace ZScreenGUI
                 iUploader.Name = lbUploader.SelectedItem.ToString();
                 Program.conf.ImageUploadersList[lbUploader.SelectedIndex] = iUploader;
             }
+
             RewriteCustomUploaderRightClickMenu();
         }
 
@@ -1877,7 +1933,9 @@ namespace ZScreenGUI
         private void btnUploaderImport_Click(object sender, EventArgs e)
         {
             if (Program.conf.ImageUploadersList == null)
+            {
                 Program.conf.ImageUploadersList = new List<ImageHostingService>();
+            }
 
             OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_IMAGE_HOSTING_SERVICES };
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -1916,12 +1974,14 @@ namespace ZScreenGUI
                     Process.Start(path);
                     return true;
                 }
+
                 if (sType == ImageFileManager.SourceType.STRING)
                 {
                     Clipboard.SetText(path);
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -1970,7 +2030,7 @@ namespace ZScreenGUI
 
         private void AddHotkey(string name)
         {
-            object obj = Program.conf.GetFieldValue("Hotkey" + name.Replace(" ", ""));
+            object obj = Program.conf.GetFieldValue("Hotkey" + name.Replace(" ", string.Empty));
             if (obj != null && obj.GetType() == typeof(Keys))
             {
                 dgvHotkeys.Rows.Add(name, ((Keys)obj).ToSpecialString());
@@ -2110,17 +2170,20 @@ namespace ZScreenGUI
                         screenshots.Add(hi.ScreenshotManager.GetUrlByType(type));
                     }
                 }
+
                 if (screenshots.Count > 0)
                 {
                     if (Program.conf.HistoryReverseList)
                     {
                         screenshots.Reverse();
                     }
+
                     StringBuilder sb = new StringBuilder();
                     if (Program.conf.HistoryAddSpace)
                     {
                         sb.AppendLine();
                     }
+
                     for (int i = 0; i < screenshots.Count; i++)
                     {
                         sb.Append(screenshots[i]);
@@ -2129,6 +2192,7 @@ namespace ZScreenGUI
                             sb.AppendLine();
                         }
                     }
+
                     string result = sb.ToString();
                     if (!string.IsNullOrEmpty(result))
                     {
@@ -2143,7 +2207,10 @@ namespace ZScreenGUI
             if (lbHistory.SelectedIndex > -1)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath)) Process.Start(((HistoryItem)lbHistory.SelectedItem).RemotePath);
+                if (!string.IsNullOrEmpty(hi.RemotePath))
+                {
+                    Process.Start(((HistoryItem)lbHistory.SelectedItem).RemotePath);
+                }
             }
         }
 
@@ -2333,6 +2400,7 @@ namespace ZScreenGUI
                     pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
                     lblWatermarkFont.Text = FontToString();
                 }
+
                 TestWatermark();
             }
             catch (Exception ex)
@@ -2430,7 +2498,7 @@ namespace ZScreenGUI
         private void TestWatermark()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ZScreen));
-            using (Bitmap bmp = new Bitmap((Image)(resources.GetObject("pbLogo.Image"))).
+            using (Bitmap bmp = new Bitmap((Image)resources.GetObject("pbLogo.Image")).
                 Clone(new Rectangle(62, 33, 199, 140), PixelFormat.Format32bppArgb))
             {
                 Bitmap bmp2 = new Bitmap(pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height);
@@ -2532,7 +2600,6 @@ namespace ZScreenGUI
 
         private void DeleteHistoryFiles()
         {
-
             if (lbHistory.SelectedIndex != -1)
             {
                 StringBuilder sbFiles = new StringBuilder();
@@ -2542,6 +2609,7 @@ namespace ZScreenGUI
                     temp.Add(hi);
                     sbFiles.AppendLine(hi.LocalPath);
                 }
+
                 string msg = "Are you sure you want to delete ";
                 if (temp.Count > 10)
                 {
@@ -2551,6 +2619,7 @@ namespace ZScreenGUI
                 {
                     msg += "the following files:\n\n" + sbFiles.ToString();
                 }
+
                 DialogResult strAns = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 foreach (HistoryItem hi in temp)
                 {
@@ -2560,6 +2629,7 @@ namespace ZScreenGUI
                         Adapter.DeleteFile(hi.LocalPath);
                     }
                 }
+
                 if (lbHistory.Items.Count > 0)
                 {
                     lbHistory.SelectedIndex = 0;
@@ -2650,8 +2720,6 @@ namespace ZScreenGUI
 
         #region Language Translator
 
-
-
         private void btnTranslate_Click(object sender, EventArgs e)
         {
             btnTranslateMethod();
@@ -2663,7 +2731,6 @@ namespace ZScreenGUI
                 GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
                 GoogleTranslate.FindLanguage(Program.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
         }
-
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2891,6 +2958,7 @@ namespace ZScreenGUI
             {
                 acc = Program.conf.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
             }
+
             return acc;
         }
 
@@ -2901,6 +2969,7 @@ namespace ZScreenGUI
             {
                 acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
             }
+
             return acc;
         }
 
@@ -2911,6 +2980,7 @@ namespace ZScreenGUI
             {
                 acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
             }
+
             return acc;
         }
 
@@ -2922,7 +2992,10 @@ namespace ZScreenGUI
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
         {
             DekiWikiAccount acc = GetSelectedDekiWiki();
-            if (acc != null) Adapter.TestDekiWikiAccount(acc);
+            if (acc != null)
+            {
+                Adapter.TestDekiWikiAccount(acc);
+            }
         }
 
         private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
@@ -2979,10 +3052,12 @@ namespace ZScreenGUI
                 if (app != null && app.Name != null)
                 {
                     if (app.Name.Equals(name))
+                    {
                         return app;
+                    }
                 }
-
             }
+
             return null;
         }
 
@@ -3046,8 +3121,6 @@ namespace ZScreenGUI
         {
             Loader.Worker.ShowActionsToolbar(true);
         }
-
-
 
         private void chkRememberTinyPicUserPass_CheckedChanged(object sender, EventArgs e)
         {
@@ -3269,6 +3342,7 @@ namespace ZScreenGUI
             {
                 btnDebugStart.Text = "Pause";
             }
+
             debug.DebugTimer.Enabled = !debug.DebugTimer.Enabled;
         }
 
@@ -3303,6 +3377,7 @@ namespace ZScreenGUI
                 Program.SetRootFolder(dlg.SelectedPath);
                 txtRootFolder.Text = Program.appSettings.RootDir;
             }
+
             FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
             UpdateGuiControlsPaths();
             Program.conf = XMLSettings.Read();
@@ -3353,15 +3428,18 @@ namespace ZScreenGUI
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
-            if (turnLogo.IsTurning) return;
-            pbLogo.Image = ImageEffects.GetRandomLogo(Resources.main);
+            if (!turnLogo.IsTurning)
+            {
+                pbLogo.Image = ImageEffects.GetRandomLogo(Resources.main);
+            }
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
         {
-            if (turnLogo.IsTurning) return;
-
-            pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+            if (!turnLogo.IsTurning)
+            {
+                pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject("pbLogo.Image"));
+            }
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3443,6 +3521,7 @@ namespace ZScreenGUI
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
                         ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                     }
+
                     ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
                 }
             }
@@ -3565,7 +3644,7 @@ namespace ZScreenGUI
         {
             if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
             {
-                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem; ;
+                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
 
                 if (mGuiIsReady)
                 {
@@ -3602,6 +3681,7 @@ namespace ZScreenGUI
                         ucUrlShorteners.MyCollection.Items.Add(textUploader);
                         ucDestOptions.cboURLShorteners.Items.Add(textUploader);
                     }
+
                     ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
                 }
             }
@@ -3683,7 +3763,10 @@ namespace ZScreenGUI
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.conf.AutoSaveSettings) WriteSettings();
+            if (Program.conf.AutoSaveSettings)
+            {
+                WriteSettings();
+            }
         }
 
         private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
@@ -3763,6 +3846,7 @@ namespace ZScreenGUI
                 ucProxyAccounts.SettingsGrid.SelectedObject = acc;
                 Program.conf.ProxyActive = acc;
             }
+
             Uploader.ProxySettings = Adapter.GetProxySettings();
         }
 
@@ -3927,6 +4011,7 @@ namespace ZScreenGUI
                 {
                     capture = new IECapt(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, 1);
                 }
+
                 capture.ImageCaptured += new IECapt.ImageEventHandler(capture_ImageCaptured);
                 capture.CapturePage(txtWebPageURL.Text);
             }
