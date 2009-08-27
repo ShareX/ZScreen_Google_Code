@@ -224,7 +224,7 @@ namespace ZScreenGUI
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
                     Adapter.TaskbarSetProgressState(tbps);
                     break;
-                case WorkerTask.ProgressType.SHOW_TRAY_MESSAGE:
+                case WorkerTask.ProgressType.ShowTrayWarning:
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
                     Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;

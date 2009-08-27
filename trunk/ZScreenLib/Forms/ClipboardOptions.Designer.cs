@@ -1,6 +1,6 @@
 ﻿namespace ZScreenLib
 {
-    partial class ClipboardModePicker
+    partial class ClipboardOptions
     {
         /// <summary>
         /// Required designer variable.
