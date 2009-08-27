@@ -98,7 +98,7 @@ namespace ZScreenLib
             {
                 if (Program.conf.ShowClipboardModeChooser || showDialog)
                 {
-                    ClipboardModePicker cmp = new ClipboardModePicker(task);
+                    ClipboardOptions cmp = new ClipboardOptions(task);
                     cmp.Icon = Resources.zss_main;
                     if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
                 }

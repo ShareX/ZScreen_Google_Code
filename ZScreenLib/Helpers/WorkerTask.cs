@@ -85,7 +85,7 @@ namespace ZScreenLib
             UpdateCropMode,
             CHANGE_UPLOAD_DESTINATION,
             CHANGE_TRAY_ICON_PROGRESS,
-            SHOW_TRAY_MESSAGE
+            ShowTrayWarning
         }
 
         #endregion

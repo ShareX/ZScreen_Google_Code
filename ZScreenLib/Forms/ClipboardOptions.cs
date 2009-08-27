@@ -12,11 +12,11 @@ using UploadersLib;
 
 namespace ZScreenLib
 {
-    public partial class ClipboardModePicker : Form
+    public partial class ClipboardOptions : Form
     {
         private WorkerTask mTask = null;
 
-        public ClipboardModePicker(WorkerTask task)
+        public ClipboardOptions(WorkerTask task)
         {
             InitializeComponent();
 
@@ -24,7 +24,6 @@ namespace ZScreenLib
             {
                 this.mTask = task;
                 this.Text = task.FileName.ToString() + " - " + task.GetDescription();
-                Console.WriteLine(task.MyImage.Height);
                 this.pbPreview.LoadAsync(task.LocalFilePath);
 
                 int xGap = 10;
