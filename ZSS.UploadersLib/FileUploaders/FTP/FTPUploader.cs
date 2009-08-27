@@ -55,6 +55,8 @@ namespace UploadersLib.FileUploaders.FTP
         {
             if (ProgressChanged != null)
             {
+                Console.WriteLine("{0}/{1} - {2}% - {3} - {4}", e.TotalBytesTransferred / 1024, e.TotalBytes / 1024, e.Percentage,
+                    e.EstimatedCompleteTime.TotalMilliseconds, e.ElapsedTime.TotalMilliseconds);
                 ProgressChanged(e.Percentage);
             }
         }
