@@ -114,6 +114,7 @@ namespace ZSS.IndexersLib
             {
                 sb.AppendLine(IndexerAdapter.GetText("Default.css"));
             }
+
             sb.AppendLine("</style>");
 
             return sb.ToString();
@@ -186,12 +187,12 @@ namespace ZSS.IndexersLib
 
         public static string GetPara(string msg)
         {
-            return OpenPara("") + GetValidXhtmlLine(msg) + ClosePara();
+            return OpenPara(string.Empty) + GetValidXhtmlLine(msg) + ClosePara();
         }
 
         public static string GetBreak()
         {
-            return OpenPara("") + AddBreak() + ClosePara();
+            return OpenPara(string.Empty) + AddBreak() + ClosePara();
         }
 
         public static string OpenPara(string span)

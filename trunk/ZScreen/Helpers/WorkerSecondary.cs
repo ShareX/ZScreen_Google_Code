@@ -25,9 +25,9 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using UploadersLib.TextServices;
+using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS;
-using ZScreenGUI.Properties;
 using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
@@ -37,7 +37,6 @@ namespace ZScreenGUI
     /// </summary>
     public class WorkerSecondary
     {
-
         private ZScreen mZScreen;
 
         public WorkerSecondary(ZScreen myZScreen)
@@ -115,6 +114,7 @@ namespace ZScreenGUI
             {
                 mZScreen.cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
             }
+
             mZScreen.cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
             mZScreen.cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
             mZScreen.cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
@@ -180,10 +180,12 @@ namespace ZScreenGUI
                 {
                     mZScreen.cbFromLanguage.Items.Add(gtLang.Name);
                 }
+
                 foreach (GoogleTranslate.GTLanguage gtLang in ZScreen.mGTranslator.LanguageOptions.TargetLangList)
                 {
                     mZScreen.cbToLanguage.Items.Add(gtLang.Name);
                 }
+
                 SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
                 GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Program.conf.ToLanguage2,
                     ZScreen.mGTranslator.LanguageOptions.TargetLangList);
@@ -191,15 +193,23 @@ namespace ZScreenGUI
                 {
                     mZScreen.btnTranslateTo1.Text = "To " + secondLang.Name;
                 }
-                if (mZScreen.cbFromLanguage.Items.Count > 0) mZScreen.cbFromLanguage.Enabled = true;
-                if (mZScreen.cbToLanguage.Items.Count > 0) mZScreen.cbToLanguage.Enabled = true;
+
+                if (mZScreen.cbFromLanguage.Items.Count > 0)
+                {
+                    mZScreen.cbFromLanguage.Enabled = true;
+                }
+
+                if (mZScreen.cbToLanguage.Items.Count > 0)
+                {
+                    mZScreen.cbToLanguage.Enabled = true;
+                }
             }
+
             if (!string.IsNullOrEmpty(Program.conf.TinyPicShuk) && Program.conf.TinyPicShuk != mZScreen.txtTinyPicShuk.Text)
             {
                 mZScreen.txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
             }
         }
-
 
         public void SelectLanguage(string srcLangValue, string targetLangValue, string helpTargetLangValue)
         {
@@ -207,15 +217,23 @@ namespace ZScreenGUI
             {
                 if (ZScreen.mGTranslator.LanguageOptions.SourceLangList[i].Value == srcLangValue)
                 {
-                    if (mZScreen.cbFromLanguage.Items.Count > i) mZScreen.cbFromLanguage.SelectedIndex = i;
+                    if (mZScreen.cbFromLanguage.Items.Count > i)
+                    {
+                        mZScreen.cbFromLanguage.SelectedIndex = i;
+                    }
+
                     break;
                 }
             }
+
             for (int i = 0; i < ZScreen.mGTranslator.LanguageOptions.TargetLangList.Count; i++)
             {
                 if (ZScreen.mGTranslator.LanguageOptions.TargetLangList[i].Value == targetLangValue)
                 {
-                    if (mZScreen.cbToLanguage.Items.Count > i) mZScreen.cbToLanguage.SelectedIndex = i;
+                    if (mZScreen.cbToLanguage.Items.Count > i)
+                    {
+                        mZScreen.cbToLanguage.SelectedIndex = i;
+                    }
                 }
             }
         }
@@ -245,6 +263,5 @@ namespace ZScreenGUI
         }
 
         #endregion
-
     }
 }

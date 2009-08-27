@@ -44,7 +44,14 @@ using Greenshot.Drawing;
 
 namespace Greenshot.Configuration
 {
-    public enum ScreenshotDestinations { Editor = 1, FileDefault = 2, FileWithDialog = 4, Clipboard = 8, Printer = 16 }
+    public enum ScreenshotDestinations
+    {
+        Editor = 1,
+        FileDefault = 2,
+        FileWithDialog = 4,
+        Clipboard = 8,
+        Printer = 16
+    }
 
     /// <summary>
     /// AppConfig is used for loading and saving the configuration. All public fields

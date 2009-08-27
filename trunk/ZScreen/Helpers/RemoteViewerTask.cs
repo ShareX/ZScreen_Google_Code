@@ -48,6 +48,7 @@ namespace ZScreenLib
         }
 
         public string RemoteFile { get; set; }
+
         public Jobs Job { get; private set; }
     }
 }

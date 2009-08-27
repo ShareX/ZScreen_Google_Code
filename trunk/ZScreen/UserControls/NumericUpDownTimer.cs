@@ -33,6 +33,7 @@ namespace ZScreenGUI
     {
         public event EventHandler ValueChanged;
         public event EventHandler SelectedIndexChanged;
+
         public Times Time
         {
             get
@@ -112,7 +113,10 @@ namespace ZScreenGUI
 
         private void nudDelay_ValueChanged(object sender, EventArgs e)
         {
-            if (ValueChanged != null) ValueChanged(this, e);
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, e);
+            }
         }
 
         private void cbDelay_SelectedIndexChanged(object sender, EventArgs e)
@@ -126,8 +130,12 @@ namespace ZScreenGUI
             {
                 nudDelay.DecimalPlaces = 1;
             }
+
             this.Value = this.Value;
-            if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
+            if (SelectedIndexChanged != null)
+            {
+                SelectedIndexChanged(this, e);
+            }
         }
     }
 }

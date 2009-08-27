@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</ProjectGuid>
+    <ProjectGuid>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UploadersLib</RootNamespace>
@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Starksoft.Net.Ftp, Version=1.0.140.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Starksoft\Starksoft.Net.Ftp\src\bin\Release\Starksoft.Net.Ftp.dll</HintPath>
+    </Reference>
+    <Reference Include="Starksoft.Net.Proxy, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Starksoft\Starksoft.Net.Ftp\src\bin\Release\Starksoft.Net.Proxy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,6 +61,7 @@
     <Compile Include="FileUploaders\FTP\FTPAccountManager.cs" />
     <Compile Include="FileUploaders\FTP\FTPAdapter.cs" />
     <Compile Include="FileUploaders\FTP\FTPHelpers.cs" />
+    <Compile Include="FileUploaders\FTP\FTPUploader.cs" />
     <Compile Include="FileUploaders\RapidShare.cs" />
     <Compile Include="FileUploaders\SendSpace.cs" />
     <Compile Include="FileUploaders\SendSpaceManager.cs" />

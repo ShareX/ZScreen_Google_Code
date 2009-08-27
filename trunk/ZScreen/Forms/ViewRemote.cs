@@ -122,12 +122,15 @@ namespace ZScreenLib
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            if (lbFiles.Items.Count > 0) lbFiles.SelectedIndex = 0;
+            if (lbFiles.Items.Count > 0)
+            {
+                lbFiles.SelectedIndex = 0;
+            }
         }
 
         private void ViewRemote_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            pbViewer.ImageLocation = "";      
+            pbViewer.ImageLocation = "";
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)
@@ -187,8 +190,8 @@ namespace ZScreenLib
         {
             if (e.Button == MouseButtons.Left)
             {
-                pbViewer.Left += (e.X - mOldX);
-                pbViewer.Top += (e.Y - mOldY);
+                pbViewer.Left += e.X - mOldX;
+                pbViewer.Top += e.Y - mOldY;
             }
         }
 
@@ -206,7 +209,10 @@ namespace ZScreenLib
         private void sBwFetchlist()
         {
             if (Program.conf.FTPAccountList != null)
+            {
                 mAcc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+            }
+
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
                 string.Format("Fetching files from {0}", mAcc.Name));
 

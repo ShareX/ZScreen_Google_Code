@@ -24,7 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ZSS
@@ -122,7 +121,7 @@ namespace ZSS
         public static List<string> GetPaths(string path)
         {
             List<string> result = new List<string>();
-            string temp = "";
+            string temp = string.Empty;
             string[] dirs = path.Split('/');
             foreach (string dir in dirs)
             {
@@ -208,7 +207,7 @@ namespace ZSS
 
         public void SetDateTime(string year, string month, string day)
         {
-            string time = "";
+            string time = string.Empty;
 
             if (year.Contains(':'))
             {

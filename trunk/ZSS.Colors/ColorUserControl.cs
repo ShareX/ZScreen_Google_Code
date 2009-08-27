@@ -32,6 +32,7 @@ namespace ZSS.ColorsLib
         #region Variables
 
         public event ColorEventHandler ColorChanged;
+
         public bool drawCrosshair;
 
         protected Bitmap bmp;

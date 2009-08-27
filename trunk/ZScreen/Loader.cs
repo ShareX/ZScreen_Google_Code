@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Diagnostics;
-using ZScreenLib;
+using System.IO;
 using System.Windows.Forms;
-using System.Threading;
+using ZScreenLib;
 
 namespace ZScreenGUI
 {
@@ -70,7 +67,7 @@ namespace ZScreenGUI
             }
         }
 
-        static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);
             LibNames.Add(Path.GetFileName(args.LoadedAssembly.FullName));
