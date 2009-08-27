@@ -73,7 +73,7 @@ namespace UploadersLib.TextUploaders
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("codeSnippet", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("codeSnippet", text.LocalString);
                 arguments.Add("codeSnippetTitle", HostSettings.SnippetTitle);
                 arguments.Add("lang", HostSettings.TextFormat);
                 arguments.Add("private", HostSettings.Visibility == Privacy.Private ? "1" : "0");

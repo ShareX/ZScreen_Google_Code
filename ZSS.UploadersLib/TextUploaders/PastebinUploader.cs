@@ -79,7 +79,7 @@ namespace UploadersLib.TextUploaders
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("code2", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("code2", text.LocalString);
                 arguments.Add("expiry", ((char)HostSettings.ExpireTime).ToString());
                 arguments.Add("format", HostSettings.TextFormat);
                 arguments.Add("poster", HostSettings.Author);
