@@ -72,7 +72,7 @@ namespace UploadersLib.TextUploaders
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("code", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("code", text.LocalString);
                 arguments.Add("description", HostSettings.Description);
                 arguments.Add("lang", HostSettings.TextFormat);
                 arguments.Add("parent", "0");

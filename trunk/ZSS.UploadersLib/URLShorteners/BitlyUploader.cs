@@ -72,7 +72,7 @@ namespace UploadersLib.URLShorteners
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("version", "2.0.1");
-                arguments.Add("longUrl", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("longUrl", text.LocalString);
                 arguments.Add("login", APILogin);
                 arguments.Add("apiKey", APIKey);
                 arguments.Add("format", "xml");

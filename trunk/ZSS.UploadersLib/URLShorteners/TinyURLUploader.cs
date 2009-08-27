@@ -68,7 +68,7 @@ namespace UploadersLib.URLShorteners
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("url", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("url", text.LocalString);
                 return GetResponse(HostSettings.URL, arguments);
             }
             return "";

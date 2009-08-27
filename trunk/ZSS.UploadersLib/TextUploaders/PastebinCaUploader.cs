@@ -74,7 +74,7 @@ namespace UploadersLib.TextUploaders
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("api", APIKey);
-                arguments.Add("content", HttpUtility.UrlEncode(text.LocalString));
+                arguments.Add("content", text.LocalString);
                 arguments.Add("description", HostSettings.Description);
                 arguments.Add("expiry", HostSettings.ExpireTime);
                 arguments.Add("name", HostSettings.Author);
