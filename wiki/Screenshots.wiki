@@ -41,7 +41,7 @@
 
 == FTP == 
 
-[http://img528.imageshack.us/img528/5523/zscreen21051beta2009042h.png]
+[http://wmwiki.com/mcored/zscreen/ZScreen_3.3.1.0_Beta-2009.08.27-19.35.22.png]
 
 == HTTP == 
 === Image Uploaders ===
