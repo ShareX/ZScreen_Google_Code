@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPClientLib", "..\ZScreen\trunk\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTPClientTester", "FTPClientTester\FTPClientTester.csproj", "{44110604-C695-4BCA-9494-CB36E77ED19A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPUploaderLib", "..\ZScreen\trunk\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj", "{6856E9A8-E067-49EE-8F58-DA3985295F53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{E1C94415-3424-4517-A2A1-B2FDD1F59C67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPClientLib", "..\..\trunk\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -17,18 +17,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44110604-C695-4BCA-9494-CB36E77ED19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44110604-C695-4BCA-9494-CB36E77ED19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44110604-C695-4BCA-9494-CB36E77ED19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44110604-C695-4BCA-9494-CB36E77ED19A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6856E9A8-E067-49EE-8F58-DA3985295F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

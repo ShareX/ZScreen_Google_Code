@@ -14,10 +14,10 @@ namespace UploaderTester
         {
             FTPAccount account = new FTPAccount();
 
-            using (FTPUploader ftp = new FTPUploader(account))
+            using (FTP ftp = new FTP(account))
             {
-                //ftp.ProgressChanged += new FTPUploader.FTPProgressEventHandler(ftp_ProgressChanged);
-                ftp.UploadFile(@"C:\Users\PC\Desktop\xchat-2.8.7f.exe", "UploadTest.exe");
+                ftp.ProgressChanged += new FTP.FTPProgressEventHandler(ftp_ProgressChanged);
+                ftp.UploadFile(@"C:\Users\PC\Desktop\xchat-2.8.7f.exe", "/UploadTest.exe");
             }
 
             Console.ReadLine();

@@ -3813,7 +3813,7 @@ namespace ZScreenGUI
             {
                 FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
                 FTPOptions opt = new FTPOptions(acc, Adapter.GetProxySettings());
-                FTPClient ftpClient = new FTPClient(opt) { Icon = this.Icon };
+                FTPClient2 ftpClient = new FTPClient2(opt) { Icon = this.Icon };
                 ftpClient.Show();
             }
         }

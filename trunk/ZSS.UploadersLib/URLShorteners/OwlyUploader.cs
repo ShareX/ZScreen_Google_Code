@@ -23,13 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using UploadersLib;
-using UploadersLib.Helpers;
-using System.Xml.Linq;
 using System.Xml;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.URLShorteners
 {
@@ -82,7 +77,8 @@ namespace UploadersLib.URLShorteners
                 XmlNode xnode = xdoc.SelectSingleNode("bitly/results/nodeKeyVal/shortUrl");
                 if (xnode != null) return xnode.InnerText;
             }
-            return "";
+
+            return string.Empty;
         }
 
         [Serializable]

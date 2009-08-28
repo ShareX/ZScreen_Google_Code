@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using ZSS.FTPClientLib;
-using ZSS;
 using FTPClientTester.Properties;
-
+using ZSS;
+using ZSS.FTPClientLib;
 
 namespace FTPClientTester
 {
-    static class Program
+    public static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             LoginDialog dlg = null;
 
-            if (string.IsNullOrEmpty(Settings.Default.Server) || string.IsNullOrEmpty(Settings.Default.UserName) || string.IsNullOrEmpty(Settings.Default.Password))
+            if (string.IsNullOrEmpty(Settings.Default.Server) ||
+                string.IsNullOrEmpty(Settings.Default.UserName) ||
+                string.IsNullOrEmpty(Settings.Default.Password))
             {
                 dlg = new LoginDialog();
                 dlg.ShowDialog();
@@ -38,10 +34,10 @@ namespace FTPClientTester
             acc.Password = Settings.Default.Password;
             acc.Server = Settings.Default.Server;
 
-            FTPClientOptions ftpClientOptions = new FTPClientOptions();
+            FTPOptions ftpClientOptions = new FTPOptions();
             ftpClientOptions.Account = acc;
-            Application.Run(new ZSS.FTPClientLib.FTPClient(ftpClientOptions));
 
+            Application.Run(new FTPClient2(ftpClientOptions));
         }
     }
 }

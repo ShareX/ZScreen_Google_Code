@@ -71,13 +71,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ZScreen\trunk\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj">
+    <ProjectReference Include="..\..\..\trunk\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj">
       <Project>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</Project>
       <Name>ZSS.FTPClientLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ZScreen\trunk\ZSS.FTPUploaderLib\ZSS.FTPUploaderLib.csproj">
-      <Project>{6856E9A8-E067-49EE-8F58-DA3985295F53}</Project>
-      <Name>ZSS.FTPUploaderLib</Name>
+    <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
+      <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
+      <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
