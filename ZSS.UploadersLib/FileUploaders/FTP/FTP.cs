@@ -32,31 +32,36 @@ using ZSS;
 
 namespace UploadersLib.FileUploaders.FTP
 {
-    public sealed class FTPUploader : IDisposable
+    public sealed class FTP : IDisposable
     {
         public delegate void FTPProgressEventHandler(float percentage);
         public event FTPProgressEventHandler ProgressChanged;
 
-        private FTPAccount account;
+        public FTPAccount Account;
         private FtpClient client;
 
-        public FTPUploader(FTPAccount account)
+        public FTP(FTPAccount account)
         {
-            this.account = account;
+            this.Account = account;
             this.client = new FtpClient();
 
             client.Host = account.Server;
             client.Port = account.Port;
             client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
             client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
+
+#if DEBUG
+            client.ServerResponse += new EventHandler<FtpResponseEventArgs>(
+                (x, x2) => Console.WriteLine(DateTime.Now.ToLongTimeString() + " - " + x2.Response.Text));
+#endif
         }
 
         private void OnTransferProgressChanged(object sender, TransferProgressEventArgs e)
         {
             if (ProgressChanged != null)
             {
-                Console.WriteLine("{0}/{1} - {2}% - {3} - {4}", e.TotalBytesTransferred / 1024, e.TotalBytes / 1024, e.Percentage,
-                    e.EstimatedCompleteTime.TotalMilliseconds, e.ElapsedTime.TotalMilliseconds);
+                /*Console.WriteLine("{0}/{1} - {2}% - {3} - {4}", e.TotalBytesTransferred / 1024, e.TotalBytes / 1024, e.Percentage,
+                   e.EstimatedCompleteTime.TotalMilliseconds, e.ElapsedTime.TotalMilliseconds);*/
                 ProgressChanged(e.Percentage);
             }
         }
@@ -71,7 +76,7 @@ namespace UploadersLib.FileUploaders.FTP
 
         public void Connect()
         {
-            Connect(account.Username, account.Password);
+            Connect(Account.Username, Account.Password);
         }
 
         public void Disconnect()
@@ -110,6 +115,65 @@ namespace UploadersLib.FileUploaders.FTP
             {
                 return UploadData(stream, remotePath);
             }
+        }
+
+        public FtpItemCollection GetDirList(string remotePath)
+        {
+            Connect();
+
+            return client.GetDirList(remotePath);
+        }
+
+        public void DownloadFile(string remotePath, string localPath)
+        {
+            Connect();
+
+            client.GetFile(remotePath, localPath);
+        }
+
+        public void MakeDirectory(string remotePath)
+        {
+            Connect();
+
+            client.MakeDirectory(remotePath);
+        }
+
+        public void Rename(string fromRemotePath, string toRemotePath)
+        {
+            Connect();
+
+            client.Rename(fromRemotePath, toRemotePath);
+        }
+
+        public void DeleteFile(string remotePath)
+        {
+            Connect();
+
+            client.DeleteFile(remotePath);
+        }
+
+        public void DeleteDirectory(string remotePath)
+        {
+            Connect();
+
+            string filename = FTPHelpers.GetFileName(remotePath);
+            if (filename == "." || filename == "..") return;
+
+            FtpItemCollection files = GetDirList(remotePath);
+
+            foreach (FtpItem file in files)
+            {
+                if (file.ItemType == FtpItemType.Directory)
+                {
+                    DeleteDirectory(file.FullPath);
+                }
+                else
+                {
+                    DeleteFile(file.FullPath);
+                }
+            }
+
+            client.DeleteDirectory(remotePath);
         }
 
         public void Dispose()

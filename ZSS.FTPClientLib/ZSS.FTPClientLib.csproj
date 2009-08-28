@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Starksoft.Net.Ftp, Version=1.0.140.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ZSS.UploadersLib\Starksoft.Net.Ftp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -50,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FTPClient2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FTPClient2.Designer.cs">
+      <DependentUpon>FTPClient2.cs</DependentUpon>
+    </Compile>
     <Compile Include="InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,16 +83,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FTPClient.resx">
-      <DependentUpon>FTPClient.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoginDialog.resx">
       <DependentUpon>LoginDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
-      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
+      <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
