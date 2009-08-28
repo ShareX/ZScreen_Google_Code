@@ -378,7 +378,7 @@ namespace ZScreenGUI
             this.lblFullImage = new System.Windows.Forms.Label();
             this.lblThumbnail = new System.Windows.Forms.Label();
             this.gbImageUploaders = new System.Windows.Forms.GroupBox();
-            this.lbUploader = new System.Windows.Forms.ListBox();
+            this.lbImageUploader = new System.Windows.Forms.ListBox();
             this.btnUploadersClear = new System.Windows.Forms.Button();
             this.btnUploaderExport = new System.Windows.Forms.Button();
             this.btnUploaderRemove = new System.Windows.Forms.Button();
@@ -4555,7 +4555,7 @@ namespace ZScreenGUI
             // 
             // gbImageUploaders
             // 
-            this.gbImageUploaders.Controls.Add(this.lbUploader);
+            this.gbImageUploaders.Controls.Add(this.lbImageUploader);
             this.gbImageUploaders.Controls.Add(this.btnUploadersClear);
             this.gbImageUploaders.Controls.Add(this.btnUploaderExport);
             this.gbImageUploaders.Controls.Add(this.btnUploaderRemove);
@@ -4572,12 +4572,12 @@ namespace ZScreenGUI
             // 
             // lbUploader
             // 
-            this.lbUploader.FormattingEnabled = true;
-            this.lbUploader.Location = new System.Drawing.Point(8, 72);
-            this.lbUploader.Name = "lbUploader";
-            this.lbUploader.Size = new System.Drawing.Size(232, 147);
-            this.lbUploader.TabIndex = 3;
-            this.lbUploader.SelectedIndexChanged += new System.EventHandler(this.lbUploader_SelectedIndexChanged);
+            this.lbImageUploader.FormattingEnabled = true;
+            this.lbImageUploader.Location = new System.Drawing.Point(8, 72);
+            this.lbImageUploader.Name = "lbUploader";
+            this.lbImageUploader.Size = new System.Drawing.Size(232, 147);
+            this.lbImageUploader.TabIndex = 3;
+            this.lbImageUploader.SelectedIndexChanged += new System.EventHandler(this.lbImageUploader_SelectedIndexChanged);
             // 
             // btnUploadersClear
             // 
@@ -7003,7 +7003,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblFullImage;
         internal System.Windows.Forms.Label lblThumbnail;
         internal System.Windows.Forms.GroupBox gbImageUploaders;
-        internal System.Windows.Forms.ListBox lbUploader;
+        internal System.Windows.Forms.ListBox lbImageUploader;
         internal System.Windows.Forms.Button btnUploadersClear;
         internal System.Windows.Forms.Button btnUploaderExport;
         internal System.Windows.Forms.Button btnUploaderRemove;

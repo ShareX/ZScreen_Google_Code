@@ -857,7 +857,7 @@ namespace ZScreenGUI
             // Image Uploaders
             ///////////////////////////////////
 
-            lbUploader.Items.Clear();
+            lbImageUploader.Items.Clear();
             if (Program.conf.ImageUploadersList == null)
             {
                 Program.conf.ImageUploadersList = new List<ImageHostingService>();
@@ -868,17 +868,17 @@ namespace ZScreenGUI
                 List<ImageHostingService> iUploaders = Program.conf.ImageUploadersList;
                 foreach (ImageHostingService iUploader in iUploaders)
                 {
-                    lbUploader.Items.Add(iUploader.Name);
+                    lbImageUploader.Items.Add(iUploader.Name);
                 }
 
-                if (lbUploader.Items.Count > 0)
+                if (lbImageUploader.Items.Count > 0)
                 {
-                    lbUploader.SelectedIndex = Program.conf.ImageUploaderSelected;
+                    lbImageUploader.SelectedIndex = Program.conf.ImageUploaderSelected;
                 }
 
-                if (lbUploader.SelectedIndex != -1)
+                if (lbImageUploader.SelectedIndex != -1)
                 {
-                    LoadImageUploaders(Program.conf.ImageUploadersList[lbUploader.SelectedIndex]);
+                    LoadImageUploaders(Program.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
                 }
             }
 
@@ -1157,7 +1157,7 @@ namespace ZScreenGUI
         private void rightClickIHS_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            lbUploader.SelectedIndex = (int)tsm.Tag;
+            lbImageUploader.SelectedIndex = (int)tsm.Tag;
         }
 
         private void FillClipboardCopyMenu()
@@ -1737,18 +1737,18 @@ namespace ZScreenGUI
             {
                 ImageHostingService iUploader = GetUploaderFromFields();
                 Program.conf.ImageUploadersList.Add(iUploader);
-                lbUploader.Items.Add(iUploader.Name);
-                lbUploader.SelectedIndex = lbUploader.Items.Count - 1;
+                lbImageUploader.Items.Add(iUploader.Name);
+                lbImageUploader.SelectedIndex = lbImageUploader.Items.Count - 1;
             }
         }
 
         private void btnUploaderRemove_Click(object sender, EventArgs e)
         {
-            if (lbUploader.SelectedIndex != -1)
+            if (lbImageUploader.SelectedIndex != -1)
             {
-                int selected = lbUploader.SelectedIndex;
+                int selected = lbImageUploader.SelectedIndex;
                 Program.conf.ImageUploadersList.RemoveAt(selected);
-                lbUploader.Items.RemoveAt(selected);
+                lbImageUploader.Items.RemoveAt(selected);
                 LoadImageUploaders(new ImageHostingService());
             }
         }
@@ -1836,12 +1836,12 @@ namespace ZScreenGUI
             }
         }
 
-        private void lbUploader_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbImageUploader_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lbUploader.SelectedIndex != -1)
+            if (lbImageUploader.SelectedIndex != -1)
             {
-                LoadImageUploaders(Program.conf.ImageUploadersList[lbUploader.SelectedIndex]);
-                Program.conf.ImageUploaderSelected = lbUploader.SelectedIndex;
+                LoadImageUploaders(Program.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
+                Program.conf.ImageUploaderSelected = lbImageUploader.SelectedIndex;
                 RewriteCustomUploaderRightClickMenu();
             }
         }
@@ -1871,11 +1871,11 @@ namespace ZScreenGUI
 
         private void btnUploadersUpdate_Click(object sender, EventArgs e)
         {
-            if (lbUploader.SelectedIndex != -1)
+            if (lbImageUploader.SelectedIndex != -1)
             {
                 ImageHostingService iUploader = GetUploaderFromFields();
-                iUploader.Name = lbUploader.SelectedItem.ToString();
-                Program.conf.ImageUploadersList[lbUploader.SelectedIndex] = iUploader;
+                iUploader.Name = lbImageUploader.SelectedItem.ToString();
+                Program.conf.ImageUploadersList[lbImageUploader.SelectedIndex] = iUploader;
             }
 
             RewriteCustomUploaderRightClickMenu();
@@ -1888,7 +1888,7 @@ namespace ZScreenGUI
 
         private void btUploadersTest_Click(object sender, EventArgs e)
         {
-            if (lbUploader.SelectedIndex != -1)
+            if (lbImageUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
                 Loader.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CustomUploaderTest);
@@ -1920,12 +1920,12 @@ namespace ZScreenGUI
             ImageHostingServiceManager tmp = ImageHostingServiceManager.Read(fp);
             if (tmp != null)
             {
-                lbUploader.Items.Clear();
+                lbImageUploader.Items.Clear();
                 Program.conf.ImageUploadersList = new List<ImageHostingService>();
                 Program.conf.ImageUploadersList.AddRange(tmp.ImageHostingServices);
                 foreach (ImageHostingService iHostingService in Program.conf.ImageUploadersList)
                 {
-                    lbUploader.Items.Add(iHostingService.Name);
+                    lbImageUploader.Items.Add(iHostingService.Name);
                 }
             }
         }
@@ -3583,14 +3583,22 @@ namespace ZScreenGUI
 
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
+        	bool bComboBox = sender.GetType() == typeof(ComboBox);
+        	int sel = (bComboBox ? ucDestOptions.cboTextUploaders.SelectedIndex : ucTextUploaders.MyCollection.SelectedIndex);
+        	        	
             if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
             {
                 TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
 
                 if (mGuiIsReady)
                 {
-                    Program.conf.TextUploaderSelected = ucTextUploaders.MyCollection.SelectedIndex;
-                    ucDestOptions.cboTextUploaders.SelectedIndex = ucTextUploaders.MyCollection.SelectedIndex;
+                    Program.conf.TextUploaderSelected = sel;
+                    if (bComboBox) {
+						ucTextUploaders.MyCollection.SelectedIndex = sel;                    	
+                    }
+                    else {                    	
+                    	ucDestOptions.cboTextUploaders.SelectedIndex = sel;
+                    }                    
                 }
 
                 bool hasOptions = textUploader != null;
@@ -3600,15 +3608,6 @@ namespace ZScreenGUI
                 {
                     ucTextUploaders.SettingsGrid.SelectedObject = textUploader.Settings;
                 }
-            }
-        }
-
-        private void cboTextDest_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (mGuiIsReady)
-            {
-                ucTextUploaders.MyCollection.SelectedIndex = ucDestOptions.cboTextUploaders.SelectedIndex;
-                Program.conf.TextUploaderSelected = ucDestOptions.cboTextUploaders.SelectedIndex;
             }
         }
 
