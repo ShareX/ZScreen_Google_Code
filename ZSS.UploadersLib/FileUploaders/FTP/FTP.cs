@@ -22,14 +22,12 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
 using ZSS;
-using System.Net;
 
 namespace UploadersLib.FileUploaders.FTP
 {
@@ -42,26 +40,26 @@ namespace UploadersLib.FileUploaders.FTP
         public event FTPDebugEventHandler DebugMessage;
 
         public FTPAccount Account;
-        private FtpClient client;
+        public FtpClient Client;
 
         public FTP(FTPAccount account)
         {
             this.Account = account;
-            this.client = new FtpClient();
+            this.Client = new FtpClient();
 
-            client.Host = account.Server;
-            client.Port = account.Port;
-            client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
+            Client.Host = account.Server;
+            Client.Port = account.Port;
+            Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
             WebProxy proxy = Uploader.ProxySettings;
             if (proxy != null)
             {
-                client.Proxy = new HttpProxyClient(proxy.Address.Host, proxy.Address.Port);
+                Client.Proxy = new HttpProxyClient(proxy.Address.Host, proxy.Address.Port);
             }
 
-            client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
-            client.ClientRequest += new EventHandler<FtpRequestEventArgs>(client_ClientRequest);
-            client.ServerResponse += new EventHandler<FtpResponseEventArgs>(client_ServerResponse);
+            Client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
+            Client.ClientRequest += new EventHandler<FtpRequestEventArgs>(client_ClientRequest);
+            Client.ServerResponse += new EventHandler<FtpResponseEventArgs>(client_ServerResponse);
         }
 
         private void client_ServerResponse(object sender, FtpResponseEventArgs e)
@@ -94,9 +92,9 @@ namespace UploadersLib.FileUploaders.FTP
 
         public void Connect(string username, string password)
         {
-            if (!client.IsConnected)
+            if (!Client.IsConnected)
             {
-                client.Open(username, password);
+                Client.Open(username, password);
             }
         }
 
@@ -107,14 +105,14 @@ namespace UploadersLib.FileUploaders.FTP
 
         public void Disconnect()
         {
-            client.Close();
+            Client.Close();
         }
 
         public bool UploadData(Stream stream, string remotePath)
         {
             Connect();
 
-            client.PutFile(stream, remotePath, FileAction.Create);
+            Client.PutFile(stream, remotePath, FileAction.Create);
 
             return true;
         }
@@ -147,35 +145,35 @@ namespace UploadersLib.FileUploaders.FTP
         {
             Connect();
 
-            return client.GetDirList(remotePath);
+            return Client.GetDirList(remotePath);
         }
 
         public void DownloadFile(string remotePath, string localPath)
         {
             Connect();
 
-            client.GetFile(remotePath, localPath);
+            Client.GetFile(remotePath, localPath);
         }
 
         public void MakeDirectory(string remotePath)
         {
             Connect();
 
-            client.MakeDirectory(remotePath);
+            Client.MakeDirectory(remotePath);
         }
 
         public void Rename(string fromRemotePath, string toRemotePath)
         {
             Connect();
 
-            client.Rename(fromRemotePath, toRemotePath);
+            Client.Rename(fromRemotePath, toRemotePath);
         }
 
         public void DeleteFile(string remotePath)
         {
             Connect();
 
-            client.DeleteFile(remotePath);
+            Client.DeleteFile(remotePath);
         }
 
         public void DeleteDirectory(string remotePath)
@@ -199,13 +197,13 @@ namespace UploadersLib.FileUploaders.FTP
                 }
             }
 
-            client.DeleteDirectory(remotePath);
+            Client.DeleteDirectory(remotePath);
         }
 
         public void Dispose()
         {
             Disconnect();
-            client.Dispose();
+            Client.Dispose();
         }
     }
 }
