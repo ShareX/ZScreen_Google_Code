@@ -382,7 +382,7 @@ namespace ZScreenLib
         /// <summary>
         /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns default system proxy otherwise
         /// </summary>
-        public static WebProxy GetProxySettings()
+        public static IWebProxy GetProxySettings()
         {
             if (Program.conf.ProxyEnabled)
             {
@@ -393,8 +393,7 @@ namespace ZScreenLib
                     return new WebProxy(acc.GetAddress(), true, null, cred);
                 }
             }
-
-            return null;
+            return HttpWebRequest.DefaultWebProxy;
         }
 
         public static void TestProxyAccount(ProxyInfo acc)

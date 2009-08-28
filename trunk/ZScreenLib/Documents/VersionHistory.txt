@@ -1,5 +1,6 @@
 Version 3.3 - 20091015
 
+3.03.2.0 Much faster FTP Client performance using Starksoft Ftp Component for .NET / Mono {Jaex}
 3.03.1.0 PropertyGrid option to use the "Cross" Cursor instead of the crosshair to boost the perceived speed of the application {Hades32}
 3.03.0.0 Added Flickr Image Uploader support {Jaex}
 3.02.1.0 PropertyGrid options to prefer active File Uploader for uploading images/text {McoreD}

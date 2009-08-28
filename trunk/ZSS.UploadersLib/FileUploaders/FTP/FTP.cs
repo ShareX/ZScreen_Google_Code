@@ -51,10 +51,11 @@ namespace UploadersLib.FileUploaders.FTP
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
-            WebProxy proxy = Uploader.ProxySettings;
+            IWebProxy proxy = Uploader.ProxySettings;
+            
             if (proxy != null)
             {
-                Client.Proxy = new HttpProxyClient(proxy.Address.Host, proxy.Address.Port);
+               // Client.Proxy = new HttpProxyClient(proxy.Address.Host, proxy.Address.Port);
             }
 
             Client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
