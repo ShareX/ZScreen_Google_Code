@@ -255,7 +255,7 @@
     <None Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zss-green.ico" />
+    <EmbeddedResource Include="Resources\zss-green.ico" />
     <None Include="Resources\picture_edit.png" />
     <None Include="Resources\application_edit.png" />
     <None Include="Resources\wrench.png" />
