@@ -29,6 +29,7 @@ using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
 using ZSS;
+using System.Net;
 
 namespace UploadersLib.FileUploaders.FTP
 {
@@ -51,6 +52,13 @@ namespace UploadersLib.FileUploaders.FTP
             client.Host = account.Server;
             client.Port = account.Port;
             client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
+
+            WebProxy proxy = Uploader.ProxySettings;
+            if (proxy != null)
+            {
+                client.Proxy = new HttpProxyClient(proxy.Address.Host, proxy.Address.Port);
+            }
+
             client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
             client.ClientRequest += new EventHandler<FtpRequestEventArgs>(client_ClientRequest);
             client.ServerResponse += new EventHandler<FtpResponseEventArgs>(client_ServerResponse);

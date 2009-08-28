@@ -43,7 +43,7 @@ namespace UploadersLib
 
         public List<string> Errors { get; set; }
         [XmlIgnore]
-        public static IWebProxy ProxySettings { get; set; }
+        public static WebProxy ProxySettings { get; set; }
         public string UserAgent { get; set; }
 
         public Uploader()
