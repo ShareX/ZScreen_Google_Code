@@ -30,28 +30,33 @@ using System.Net;
 using System.Text;
 using System.Xml.Serialization;
 using UploadersLib.Helpers;
-using ZSS;
+using System.Windows.Forms;
 
-namespace UploadersLib.ImageUploaders
+namespace UploadersLib
 {
     [Serializable]
-    public sealed class FTPUploader : IUploader
+    public sealed class FTPUploader : TextUploader, IUploader
     {
         public FTPAccount FTPAccount;
-        private List<string> Errors { get; set; }
-        public string Name { get; private set; }
-        public const string Hostname = "FTP";
-        [XmlIgnore]
-        public WebProxy ProxySettings { get; set; }
+        public string Name { get; set; }
+        public static readonly string Hostname = TextDestType.FTP.GetDescription();
+
+        public FTPUploader()
+        {
+            this.Errors = new List<string>();
+            this.FTPAccount = new FTPAccount();
+        }
 
         public FTPUploader(FTPAccount acc)
+            : this()
         {
             this.FTPAccount = acc;
-            this.Errors = new List<string>();
             this.Name = FTPAccount.Name;
         }
 
         public event FTPAdapter.ProgressEventHandler UploadProgressChanged;
+
+        #region Image Uploader Methods
 
         public bool Resume { get; set; }
         public bool EnableThumbnail { get; set; }
@@ -69,7 +74,7 @@ namespace UploadersLib.ImageUploaders
         {
             List<ImageFile> ifl = new List<ImageFile>();
 
-            FTPOptions fopt = new FTPOptions { Account = this.FTPAccount, ProxySettings = this.ProxySettings };
+            FTPOptions fopt = new FTPOptions { Account = this.FTPAccount, ProxySettings = ProxySettings };
 
             FTPAdapter ftpClient = new FTPAdapter(fopt);
             ftpClient.ProgressChanged += new FTPAdapter.ProgressEventHandler(ftpClient_UploadProgressChanged);
@@ -112,11 +117,6 @@ namespace UploadersLib.ImageUploaders
             return ifm;
         }
 
-        private void ftpClient_UploadProgressChanged(int progress)
-        {
-            UploadProgressChanged(progress);
-        }
-
         public Bitmap LoadBitmap(string filepath)
         {
             try
@@ -149,6 +149,58 @@ namespace UploadersLib.ImageUploaders
             return ResizeBitmap(img, size.Width, size.Height);
         }
 
+        #endregion
+
+        #region Text Uploader Methods
+
+        public override string TesterString
+        {
+            get { return "Testing " + this.ToString(); }
+        }
+
+        public override object Settings
+        {
+            get
+            {
+                return this.FTPAccount;
+            }
+            set
+            {
+                this.FTPAccount = (FTPAccount)value;
+            }
+        }
+
+        /// <summary>
+        /// Uploads Text to the FTP. 
+        /// If the method fails, it will return a list of zero images
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>Returns a list of images.</returns>
+        public override string UploadText(TextInfo text)
+        {
+            FTPOptions fopt = new FTPOptions();
+            fopt.Account = this.FTPAccount;
+            fopt.ProxySettings = Uploader.ProxySettings;
+            FTPAdapter ftpClient = new FTPAdapter(fopt);
+            if (string.IsNullOrEmpty(text.LocalPath))
+            {
+                string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+                text.LocalPath = Path.Combine(LocalAppDataFolder, DateTime.Now.Ticks + ".txt");
+                File.WriteAllText(text.LocalPath, text.LocalString);
+            }
+            string fileName = Path.GetFileName(text.LocalPath);
+            string url = FTPHelpers.CombineURL(FTPAccount.FTPAddress, FTPAccount.Path, fileName);
+            ftpClient.UploadText(text.LocalString, url);
+            return this.FTPAccount.GetUriPath(fileName);
+        }
+
+        #endregion
+
+        private void ftpClient_UploadProgressChanged(int progress)
+        {
+            UploadProgressChanged(progress);
+        }
+
         public string ToErrorString()
         {
             StringBuilder sb = new StringBuilder();
@@ -167,5 +219,6 @@ namespace UploadersLib.ImageUploaders
         {
             return string.Format("FTP ({0})", this.Name);
         }
+
     }
 }

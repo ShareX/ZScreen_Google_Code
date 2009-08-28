@@ -25,8 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using ZSS;
 using ZScreenGUI.Properties;
+using UploadersLib;
 
 namespace ZScreenLib
 {

@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using IconHelper;
+using UploadersLib;
 
 namespace ZSS.FTPClientLib
 {

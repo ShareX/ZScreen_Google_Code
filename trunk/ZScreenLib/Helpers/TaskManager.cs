@@ -424,7 +424,7 @@ namespace ZScreenLib
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
-                    UploadersLib.ImageUploaders.FTPUploader fu = new UploadersLib.ImageUploaders.FTPUploader(acc)
+                    FTPUploader fu = new FTPUploader(acc)
                     {
                         EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
                         ThumbnailSize = new Size(Program.conf.FTPThumbnailWidth, Program.conf.FTPThumbnailHeight),
