@@ -223,11 +223,13 @@ namespace ZScreenLib
             StringBuilder sbDesc = new StringBuilder();
             sbDesc.AppendLine("Acknowledgements:");
             sbDesc.AppendLine();
+            sbDesc.AppendLine("Starksoft FTP Component, Starksoft SOCKS and HTTP Proxy Component by Benton Stark: http://www.starksoft.com");
+            sbDesc.AppendLine();
             sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009 and portions of Selected Window code are from Greenshot: https://sourceforge.net/projects/greenshot");
+            sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009: https://sourceforge.net/projects/greenshot");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net/");
+            sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");
             sbDesc.AppendLine(Application.ExecutablePath);

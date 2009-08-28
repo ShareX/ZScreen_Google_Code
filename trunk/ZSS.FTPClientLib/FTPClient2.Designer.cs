@@ -40,13 +40,15 @@
             this.txtRename = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cbDirectoryList = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lvFTPList = new ZSS.FTPClientLib.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
             this.chFiletype = new System.Windows.Forms.ColumnHeader();
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
-            this.chOwnerGroup = new System.Windows.Forms.ColumnHeader();
             this.tcFTP = new System.Windows.Forms.TabControl();
             this.tpMainTab = new System.Windows.Forms.TabPage();
             this.tpConsole = new System.Windows.Forms.TabPage();
@@ -55,6 +57,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tcFTP.SuspendLayout();
             this.tpMainTab.SuspendLayout();
             this.tpConsole.SuspendLayout();
@@ -144,6 +147,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Controls.Add(this.lvFTPList);
             this.splitContainer1.Size = new System.Drawing.Size(952, 557);
             this.splitContainer1.SplitterDistance = 23;
@@ -160,6 +164,37 @@
             this.cbDirectoryList.TabIndex = 3;
             this.cbDirectoryList.SelectedIndexChanged += new System.EventHandler(this.cbDirectoryList_SelectedIndexChanged);
             // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.progressBar1);
+            this.panel1.Location = new System.Drawing.Point(380, 208);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(5);
+            this.panel1.Size = new System.Drawing.Size(192, 64);
+            this.panel1.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(5, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(178, 26);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Connecting to FTP server...";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar1.Location = new System.Drawing.Point(5, 31);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(178, 24);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 0;
+            // 
             // lvFTPList
             // 
             this.lvFTPList.AllowColumnReorder = true;
@@ -169,8 +204,7 @@
             this.chFilesize,
             this.chFiletype,
             this.chLastModified,
-            this.chPermissions,
-            this.chOwnerGroup});
+            this.chPermissions});
             this.lvFTPList.ContextMenuStrip = this.cmsRightClickMenu;
             this.lvFTPList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvFTPList.DoubleClickActivation = false;
@@ -194,7 +228,7 @@
             // chFilename
             // 
             this.chFilename.Text = "Filename";
-            this.chFilename.Width = 300;
+            this.chFilename.Width = 350;
             // 
             // chFilesize
             // 
@@ -204,7 +238,7 @@
             // chFiletype
             // 
             this.chFiletype.Text = "Filetype";
-            this.chFiletype.Width = 167;
+            this.chFiletype.Width = 200;
             // 
             // chLastModified
             // 
@@ -215,11 +249,6 @@
             // 
             this.chPermissions.Text = "Permissions";
             this.chPermissions.Width = 100;
-            // 
-            // chOwnerGroup
-            // 
-            this.chOwnerGroup.Text = "Owner/Group";
-            this.chOwnerGroup.Width = 100;
             // 
             // tcFTP
             // 
@@ -274,12 +303,13 @@
             this.Controls.Add(this.txtRename);
             this.Name = "FTPClient2";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "FTP Client Beta";
+            this.Text = "FTP Client";
             this.Resize += new System.EventHandler(this.FTPClient_Resize);
             this.cmsRightClickMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.tcFTP.ResumeLayout(false);
             this.tpMainTab.ResumeLayout(false);
             this.tpConsole.ResumeLayout(false);
@@ -297,7 +327,6 @@
         private System.Windows.Forms.ColumnHeader chFiletype;
         private System.Windows.Forms.ColumnHeader chLastModified;
         private System.Windows.Forms.ColumnHeader chPermissions;
-        private System.Windows.Forms.ColumnHeader chOwnerGroup;
         private System.Windows.Forms.ContextMenuStrip cmsRightClickMenu;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
@@ -313,5 +342,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyURLsToClipboardToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

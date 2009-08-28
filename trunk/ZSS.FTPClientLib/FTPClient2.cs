@@ -37,6 +37,7 @@ namespace ZSS.FTPClientLib
     {
         public FTP FTPAdapter;
         public FTPOptions Options { get; set; }
+
         private string currentDirectory;
         private ListViewItem tempSelected;
 
@@ -47,10 +48,11 @@ namespace ZSS.FTPClientLib
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             this.Options = options;
+
             FTPAdapter = new FTP(options.Account);
             FTPAdapter.DebugMessage += new FTP.FTPDebugEventHandler(FTPAdapter_DebugMessage);
-
-            RefreshDirectory();
+            FTPAdapter.Client.OpenAsyncCompleted += new EventHandler<OpenAsyncCompletedEventArgs>(Client_OpenAsyncCompleted);
+            FTPAdapter.Client.OpenAsync(options.Account.Username, options.Account.Password);
         }
 
         #region Methods
@@ -104,11 +106,13 @@ namespace ZSS.FTPClientLib
 
                 ListViewItem lvi = new ListViewItem(file.Name);
 
-                lvi.SubItems.Add(file.Size.ToString());
-                lvi.SubItems.Add(IconReader.GetDisplayName(file.Name, file.ItemType == FtpItemType.Directory));
-                lvi.SubItems.Add(file.Modified.ToString());
-                lvi.SubItems.Add(file.Attributes);
-                //lvi.SubItems.Add(file.Owner + " " + file.Group);
+                if (file.ItemType != FtpItemType.Unknown)
+                {
+                    lvi.SubItems.Add(file.Size.ToString());
+                    lvi.SubItems.Add(IconReader.GetDisplayName(file.Name, file.ItemType == FtpItemType.Directory));
+                    lvi.SubItems.Add(file.Modified.ToLocalTime().ToString());
+                    lvi.SubItems.Add(file.Attributes);
+                }
 
                 lvi.Tag = file;
 
@@ -326,7 +330,7 @@ namespace ZSS.FTPClientLib
 
         #endregion
 
-        #region Form events
+        #region Events
 
         private void lvFTPList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -492,6 +496,11 @@ namespace ZSS.FTPClientLib
                 //refreshToolStripMenuItem.Enabled
                 //createDirectoryToolStripMenuItem.Enabled
             }
+            else
+            {
+                downloadToolStripMenuItem.Enabled = renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
+                  copyURLsToClipboardToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
@@ -547,8 +556,18 @@ namespace ZSS.FTPClientLib
             Console.Write(message);
 #endif
 
-            txtConsole.AppendText(message);
-            txtConsole.ScrollToCaret();
+            this.BeginInvoke(new MethodInvoker(delegate()
+            {
+                txtConsole.AppendText(message);
+                txtConsole.ScrollToCaret();
+            }));
+        }
+
+        private void Client_OpenAsyncCompleted(object sender, OpenAsyncCompletedEventArgs e)
+        {
+            panel1.Visible = false;
+            Refresh();
+            RefreshDirectory();
         }
 
         #endregion

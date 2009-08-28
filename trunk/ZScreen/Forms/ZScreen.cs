@@ -3583,9 +3583,9 @@ namespace ZScreenGUI
 
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-        	bool bComboBox = sender.GetType() == typeof(ComboBox);
-        	int sel = (bComboBox ? ucDestOptions.cboTextUploaders.SelectedIndex : ucTextUploaders.MyCollection.SelectedIndex);
-        	        	
+            bool bComboBox = sender.GetType() == typeof(ComboBox);
+            int sel = (bComboBox ? ucDestOptions.cboTextUploaders.SelectedIndex : ucTextUploaders.MyCollection.SelectedIndex);
+
             if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
             {
                 TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
@@ -3593,12 +3593,14 @@ namespace ZScreenGUI
                 if (mGuiIsReady)
                 {
                     Program.conf.TextUploaderSelected = sel;
-                    if (bComboBox) {
-						ucTextUploaders.MyCollection.SelectedIndex = sel;                    	
+                    if (bComboBox)
+                    {
+                        ucTextUploaders.MyCollection.SelectedIndex = sel;
                     }
-                    else {                    	
-                    	ucDestOptions.cboTextUploaders.SelectedIndex = sel;
-                    }                    
+                    else
+                    {
+                        ucDestOptions.cboTextUploaders.SelectedIndex = sel;
+                    }
                 }
 
                 bool hasOptions = textUploader != null;
@@ -3809,13 +3811,7 @@ namespace ZScreenGUI
 
         private void tsmFTPClient_Click(object sender, EventArgs e)
         {
-            if (Adapter.CheckFTPAccounts())
-            {
-                FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
-                FTPOptions opt = new FTPOptions(acc, Adapter.GetProxySettings());
-                FTPClient2 ftpClient = new FTPClient2(opt) { Icon = this.Icon };
-                ftpClient.Show();
-            }
+            OpenFTPClient();
         }
 
         private void ProxyAccountTestButton_Click(object sender, EventArgs e)
@@ -4233,6 +4229,17 @@ namespace ZScreenGUI
             }
         }
 
+        public void OpenFTPClient()
+        {
+            if (Adapter.CheckFTPAccounts())
+            {
+                FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                FTPOptions opt = new FTPOptions(acc, Adapter.GetProxySettings());
+                FTPClient2 ftpClient = new FTPClient2(opt) { Icon = this.Icon };
+                ftpClient.Show();
+            }
+        }
+
         #region Flickr
 
         private void btnFlickrGetFrob_Click(object sender, EventArgs e)
@@ -4309,5 +4316,10 @@ namespace ZScreenGUI
         }
 
         #endregion
+
+        private void btnFTPOpenClient_Click(object sender, EventArgs e)
+        {
+            OpenFTPClient();
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace ZScreenGUI
             this.mZScreen = myZScreen;
         }
 
-        #region "Check Updates"
+        #region Check Updates
 
         public void CheckUpdates()
         {
@@ -90,7 +90,7 @@ namespace ZScreenGUI
 
         #endregion
 
-        #region "Cache Cleaner Methods"
+        #region Cache Cleaner Methods
 
         public void CleanCache()
         {
@@ -238,7 +238,7 @@ namespace ZScreenGUI
             }
         }
 
-        #region "Test FTP Account asynchronously"
+        #region Test FTP Account asynchronously
 
         public void TestFTPAccountAsync(FTPAccount acc)
         {
