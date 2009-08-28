@@ -65,7 +65,7 @@ namespace ZScreenLib
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex.ToString());
-                if (Program.conf.CaptureEntireScreenOnError)
+                if (Engine.conf.CaptureEntireScreenOnError)
                 {
                     CaptureRegionOrWindow();
                 }
@@ -79,11 +79,11 @@ namespace ZScreenLib
 
             try
             {
-                using (Image imgSS = User32.CaptureScreen(Program.conf.ShowCursor))
+                using (Image imgSS = User32.CaptureScreen(Engine.conf.ShowCursor))
                 {
-                    if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Program.LastRegion.IsEmpty)
+                    if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)
                     {
-                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
                     }
                     else
                     {
@@ -91,13 +91,13 @@ namespace ZScreenLib
                         {
                             if (c.ShowDialog() == DialogResult.OK)
                             {
-                                if (mTask.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Program.LastRegion.IsEmpty)
+                                if (mTask.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Engine.LastRegion.IsEmpty)
                                 {
-                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastRegion));
+                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
                                 }
-                                else if (mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Program.LastCapture.IsEmpty)
+                                else if (mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Engine.LastCapture.IsEmpty)
                                 {
-                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Program.LastCapture));
+                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
                                 }
                             }
                         }
@@ -116,7 +116,7 @@ namespace ZScreenLib
             {
                 FileSystem.AppendDebug(ex.ToString());
                 mTask.Errors.Add(ex.Message);
-                if (Program.conf.CaptureEntireScreenOnError)
+                if (Engine.conf.CaptureEntireScreenOnError)
                 {
                     CaptureScreen();
                 }
@@ -185,7 +185,7 @@ namespace ZScreenLib
                 ImageEdit();
             }
 
-            if (Program.conf.PreferFileUploaderForImages)
+            if (Engine.conf.PreferFileUploaderForImages)
             {
                 UploadFile();
             }
@@ -206,23 +206,23 @@ namespace ZScreenLib
                     break;
                 case FileUploaderType.SendSpace:
                     fileHost = new SendSpace();
-                    switch (Program.conf.SendSpaceAccountType)
+                    switch (Engine.conf.SendSpaceAccountType)
                     {
                         case AcctType.Anonymous:
                             SendSpaceManager.PrepareUploadInfo(null, null);
                             break;
                         case AcctType.User:
-                            SendSpaceManager.PrepareUploadInfo(Program.conf.SendSpaceUserName, Program.conf.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
                             break;
                     }
                     break;
                 case FileUploaderType.RapidShare:
                     fileHost = new RapidShare(new RapidShareOptions()
                     {
-                        AccountType = Program.conf.RapidShareAccountType,
-                        PremiumUsername = Program.conf.RapidSharePremiumUserName,
-                        Password = Program.conf.RapidSharePassword,
-                        CollectorsID = Program.conf.RapidShareCollectorsID
+                        AccountType = Engine.conf.RapidShareAccountType,
+                        PremiumUsername = Engine.conf.RapidSharePremiumUserName,
+                        Password = Engine.conf.RapidSharePassword,
+                        CollectorsID = Engine.conf.RapidShareCollectorsID
                     });
                     break;
             }
@@ -246,7 +246,7 @@ namespace ZScreenLib
 
             ImageUploader imageUploader = null;
 
-            if (Program.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
+            if (Engine.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
@@ -261,9 +261,9 @@ namespace ZScreenLib
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:
-                    if (Program.conf.ImageUploadersList != null && Program.conf.ImageUploaderSelected != -1)
+                    if (Engine.conf.ImageUploadersList != null && Engine.conf.ImageUploaderSelected != -1)
                     {
-                        imageUploader = new CustomUploader(Program.conf.ImageUploadersList[Program.conf.ImageUploaderSelected]);
+                        imageUploader = new CustomUploader(Engine.conf.ImageUploadersList[Engine.conf.ImageUploaderSelected]);
                     }
                     break;
                 case ImageDestType.DEKIWIKI:
@@ -273,48 +273,48 @@ namespace ZScreenLib
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, mTask.LocalFilePath);
                     break;
                 case ImageDestType.FLICKR:
-                    imageUploader = new FlickrUploader(Program.conf.FlickrAuthInfo, Program.conf.FlickrSettings);
+                    imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
                 case ImageDestType.FTP:
                     UploadFtp();
                     break;
                 case ImageDestType.IMAGEBAM:
-                    ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret,
-                        Adapter.GetImageBamGalleryActive()) { NSFW = Program.conf.ImageBamContentNSFW };
+                    ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
+                        Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
                     imageUploader = new ImageBamUploader(imageBamOptions);
                     break;
                 case ImageDestType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(Program.IMAGESHACK_KEY, Program.conf.ImageShackRegistrationCode, Program.conf.UploadMode);
-                    ((ImageShackUploader)imageUploader).Public = Program.conf.ImageShackShowImagesInPublic;
+                    imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode, Engine.conf.UploadMode);
+                    ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
                 case ImageDestType.PRINTER:
                     mTask.MyWorker.ReportProgress(101, Greenshot.Drawing.Surface.GetImageForExport(mTask.MyImage));
                     break;
                 case ImageDestType.TINYPIC:
-                    imageUploader = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, Program.conf.UploadMode);
-                    ((TinyPicUploader)imageUploader).Shuk = Program.conf.TinyPicShuk;
+                    imageUploader = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, Engine.conf.UploadMode);
+                    ((TinyPicUploader)imageUploader).Shuk = Engine.conf.TinyPicShuk;
                     break;
                 case ImageDestType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.UserName = Program.conf.TwitterUserName;
-                    twitpicOpt.Password = Program.conf.TwitterPassword;
-                    twitpicOpt.TwitPicUploadType = Program.conf.TwitPicUploadMode;
-                    twitpicOpt.TwitPicThumbnailMode = Program.conf.TwitPicThumbnailMode;
-                    twitpicOpt.ShowFull = Program.conf.TwitPicShowFull;
+                    twitpicOpt.UserName = Engine.conf.TwitterUserName;
+                    twitpicOpt.Password = Engine.conf.TwitterPassword;
+                    twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageDestType.TWITSNAPS:
                     TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.UserName = Program.conf.TwitterUserName;
-                    twitsnapsOpt.Password = Program.conf.TwitterPassword;
+                    twitsnapsOpt.UserName = Engine.conf.TwitterUserName;
+                    twitsnapsOpt.Password = Engine.conf.TwitterPassword;
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
                 case ImageDestType.YFROG:
-                    YfrogOptions yfrogOp = new YfrogOptions(Program.IMAGESHACK_KEY);
-                    yfrogOp.UserName = Program.conf.TwitterUserName;
-                    yfrogOp.Password = Program.conf.TwitterPassword;
+                    YfrogOptions yfrogOp = new YfrogOptions(Engine.IMAGESHACK_KEY);
+                    yfrogOp.UserName = Engine.conf.TwitterUserName;
+                    yfrogOp.Password = Engine.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
-                    yfrogOp.UploadType = Program.conf.YfrogUploadMode;
+                    yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
@@ -338,7 +338,7 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 1; i <= (int)Program.conf.ErrorRetryCount && (mTask.ImageManager == null || 
+                    for (int i = 1; i <= (int)Engine.conf.ErrorRetryCount && (mTask.ImageManager == null || 
                         (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
@@ -367,15 +367,15 @@ namespace ZScreenLib
             this.SetRemoteFilePath();
             mTask.EndTime = DateTime.Now;
 
-            if (Program.conf.ImageUploadRetryOnTimeout && mTask.UploadDuration > (int)Program.conf.UploadDurationLimit)
+            if (Engine.conf.ImageUploadRetryOnTimeout && mTask.UploadDuration > (int)Engine.conf.UploadDurationLimit)
             {
                 if (mTask.MyImageUploader == ImageDestType.IMAGESHACK)
                 {
-                    Program.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
+                    Engine.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
                 }
                 else if (mTask.MyImageUploader == ImageDestType.TINYPIC)
                 {
-                    Program.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
+                    Engine.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }
@@ -404,7 +404,7 @@ namespace ZScreenLib
 
         private void FlashIcon(WorkerTask t)
         {
-            for (int i = 0; i < (int)Program.conf.FlashTrayCount; i++)
+            for (int i = 0; i < (int)Engine.conf.FlashTrayCount; i++)
             {
                 t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
                 Thread.Sleep(250);
@@ -426,16 +426,16 @@ namespace ZScreenLib
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
-                    FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                    FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
                     mTask.DestinationName = acc.Name;
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
                     FTPUploader fu = new FTPUploader(acc)
                     {
-                        EnableThumbnail = (Program.conf.ClipboardUriMode != ClipboardUriType.FULL) || Program.conf.FTPCreateThumbnail,
-                        ThumbnailSize = new Size(Program.conf.FTPThumbnailWidth, Program.conf.FTPThumbnailHeight),
-                        WorkingDir = Program.CacheDir
+                        EnableThumbnail = (Engine.conf.ClipboardUriMode != ClipboardUriType.FULL) || Engine.conf.FTPCreateThumbnail,
+                        ThumbnailSize = new Size(Engine.conf.FTPThumbnailWidth, Engine.conf.FTPThumbnailHeight),
+                        WorkingDir = Engine.CacheDir
                     };
 
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
@@ -455,7 +455,7 @@ namespace ZScreenLib
 
         private void UploadProgressChanged(int progress)
         {
-            if (Program.conf.ShowTrayUploadProgress)
+            if (Engine.conf.ShowTrayUploadProgress)
             {
                 UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress;
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
@@ -470,9 +470,9 @@ namespace ZScreenLib
 
                 if (Adapter.CheckDekiWikiAccounts(ref mTask) && File.Exists(fullFilePath))
                 {
-                    DekiWikiAccount acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
+                    DekiWikiAccount acc = Engine.conf.DekiWikiAccountList[Engine.conf.DekiWikiSelected];
 
-                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Program.conf.DekiWikiForcePath == true)
+                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Engine.conf.DekiWikiForcePath == true)
                     {
                         DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
                         diag.history = acc.History;
@@ -513,7 +513,7 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (Program.conf.PreferFileUploaderForText)
+            if (Engine.conf.PreferFileUploaderForText)
             {
                 UploadFile();
             }
@@ -544,7 +544,7 @@ namespace ZScreenLib
             if (File.Exists(mTask.LocalFilePath))
             {
                 Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Program.conf.TextEditorActive.Path)
+                ProcessStartInfo psi = new ProcessStartInfo(Engine.conf.TextEditorActive.Path)
                 {
                     Arguments = string.Format("{0}{1}{0}", "\"", mTask.LocalFilePath)
                 };
@@ -563,16 +563,16 @@ namespace ZScreenLib
             if (File.Exists(mTask.LocalFilePath))
             {
                 Process p = new Process();
-                Software app = Program.conf.ImageEditor;
+                Software app = Engine.conf.ImageEditor;
                 if (app != null)
                 {
-                    if (app.Name == Program.ZSCREEN_IMAGE_EDITOR)
+                    if (app.Name == Engine.ZSCREEN_IMAGE_EDITOR)
                     {
                         try
                         {
-                            Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Program.SettingsDir, "ImageEditor.bin");
+                            Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
                             Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                            editor.AutoSave = Program.conf.ImageEditorAutoSave;
+                            editor.AutoSave = Engine.conf.ImageEditorAutoSave;
                             editor.MyWorker = mTask.MyWorker;
                             editor.SetImage(mTask.MyImage);
                             editor.SetImagePath(mTask.LocalFilePath);

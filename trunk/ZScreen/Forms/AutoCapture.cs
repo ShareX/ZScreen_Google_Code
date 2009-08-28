@@ -55,11 +55,11 @@ namespace ZScreenGUI
         private void LoadSettings()
         {
             cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetDescriptions());
-            cbScreenshotTypes.SelectedIndex = (int)Program.conf.AutoCaptureScreenshotTypes;
-            nudDelay.Time = Program.conf.AutoCaptureDelayTimes;
-            nudDelay.Value = Program.conf.AutoCaptureDelayTime;
-            cbAutoMinimize.Checked = Program.conf.AutoCaptureAutoMinimize;
-            cbWaitUploads.Checked = Program.conf.AutoCaptureWaitUploads;
+            cbScreenshotTypes.SelectedIndex = (int)Engine.conf.AutoCaptureScreenshotTypes;
+            nudDelay.Time = Engine.conf.AutoCaptureDelayTimes;
+            nudDelay.Value = Engine.conf.AutoCaptureDelayTime;
+            cbAutoMinimize.Checked = Engine.conf.AutoCaptureAutoMinimize;
+            cbWaitUploads.Checked = Engine.conf.AutoCaptureWaitUploads;
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace ZScreenGUI
             {
                 IsRunning = true;
                 btnExecute.Text = "Stop";
-                switch (Program.conf.AutoCaptureScreenshotTypes)
+                switch (Engine.conf.AutoCaptureScreenshotTypes)
                 {
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
                         mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN;
@@ -108,9 +108,9 @@ namespace ZScreenGUI
                 }
 
                 timer.Interval = 1000;
-                mDelay = (int)Program.conf.AutoCaptureDelayTime;
-                waitUploads = Program.conf.AutoCaptureWaitUploads;
-                if (Program.conf.AutoCaptureAutoMinimize)
+                mDelay = (int)Engine.conf.AutoCaptureDelayTime;
+                waitUploads = Engine.conf.AutoCaptureWaitUploads;
+                if (Engine.conf.AutoCaptureAutoMinimize)
                 {
                     this.WindowState = FormWindowState.Minimized;
                 }
@@ -137,27 +137,27 @@ namespace ZScreenGUI
 
         private void cbScreenshotTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoCaptureScreenshotTypes = (AutoScreenshotterJobs)cbScreenshotTypes.SelectedIndex;
+            Engine.conf.AutoCaptureScreenshotTypes = (AutoScreenshotterJobs)cbScreenshotTypes.SelectedIndex;
         }
 
         private void cbAutoMinimize_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoCaptureAutoMinimize = cbAutoMinimize.Checked;
+            Engine.conf.AutoCaptureAutoMinimize = cbAutoMinimize.Checked;
         }
 
         private void cbWaitUploads_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoCaptureWaitUploads = cbWaitUploads.Checked;
+            Engine.conf.AutoCaptureWaitUploads = cbWaitUploads.Checked;
         }
 
         private void nudDelay_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoCaptureDelayTime = nudDelay.Value;
+            Engine.conf.AutoCaptureDelayTime = nudDelay.Value;
         }
 
         private void nudDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoCaptureDelayTimes = nudDelay.Time;
+            Engine.conf.AutoCaptureDelayTimes = nudDelay.Time;
         }
     }
 }

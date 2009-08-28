@@ -78,7 +78,7 @@ namespace ZScreenLib
 
         public override string ToString()
         {
-            switch (Program.conf.HistoryListFormat)
+            switch (Engine.conf.HistoryListFormat)
             {
                 case HistoryListFormat.NAME:
                     return FileName;

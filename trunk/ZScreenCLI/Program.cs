@@ -17,7 +17,7 @@ namespace ZScreenCLI
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                ZScreenLib.Program.Load(false);
+                ZScreenLib.Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { keyboardHook = false, showConfigWizard = false });
                 WorkerTask task = null;
                 // this.niTray.Icon = ResxMgr.BusyIcon;
                 try
@@ -49,7 +49,7 @@ namespace ZScreenCLI
         public static WorkerTask CropShot(WorkerTask.Jobs job)
         {
             WorkerTask task = new WorkerTask(job);
-            task.MyImageUploader = ZScreenLib.Program.conf.ScreenshotDestMode;
+            task.MyImageUploader = ZScreenLib.Engine.conf.ScreenshotDestMode;
             new TaskManager(ref task).CaptureRegionOrWindow();
             //   new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
             UploadManager.SetClipboardText(task, false);

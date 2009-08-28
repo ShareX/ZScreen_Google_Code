@@ -137,7 +137,7 @@ namespace ZScreenLib
         {
             string dir;
 
-            folderBrowseDialog.SelectedPath = Program.ImagesDir;
+            folderBrowseDialog.SelectedPath = Engine.ImagesDir;
             folderBrowseDialog.ShowNewFolderButton = true;
 
             if (folderBrowseDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dir = folderBrowseDialog.SelectedPath))
@@ -208,9 +208,9 @@ namespace ZScreenLib
 
         private void sBwFetchlist()
         {
-            if (Program.conf.FTPAccountList != null)
+            if (Engine.conf.FTPAccountList != null)
             {
-                mAcc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                mAcc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
             }
 
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,

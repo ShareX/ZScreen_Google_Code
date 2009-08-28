@@ -54,7 +54,7 @@ namespace ZScreenLib
 
         public static bool Exist(string sName)
         {
-            foreach (Software software in Program.conf.ImageEditors)
+            foreach (Software software in Engine.conf.ImageEditors)
             {
                 if (software.Name == sName) return true;
             }
@@ -65,11 +65,11 @@ namespace ZScreenLib
         {
             if (Exist(sName))
             {
-                foreach (Software software in Program.conf.ImageEditors)
+                foreach (Software software in Engine.conf.ImageEditors)
                 {
                     if (software.Name == sName)
                     {
-                        Program.conf.ImageEditors.Remove(software);
+                        Engine.conf.ImageEditors.Remove(software);
                         return true;
                     }
                 }

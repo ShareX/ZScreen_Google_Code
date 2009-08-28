@@ -200,7 +200,7 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts()
         {
-            return CheckList(Program.conf.FTPAccountList, Program.conf.FTPSelected);
+            return CheckList(Engine.conf.FTPAccountList, Engine.conf.FTPSelected);
         }
 
         public static bool CheckFTPAccounts(ref WorkerTask task)
@@ -216,15 +216,15 @@ namespace ZScreenLib
 
         public static string GetTinyPicShuk()
         {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Program.conf.TinyPicUserName) ? "someone@gmail.com" : Program.conf.TinyPicUserName, Program.conf.TinyPicPassword) { Icon = Resources.zss_main };
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Engine.conf.TinyPicUserName) ? "someone@gmail.com" : Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword) { Icon = Resources.zss_main };
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
-                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                if (Program.conf.RememberTinyPicUserPass)
+                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, UploadMode.API);
+                if (Engine.conf.RememberTinyPicUserPass)
                 {
-                    Program.conf.TinyPicUserName = ub.UserName;
-                    Program.conf.TinyPicPassword = ub.Password;
+                    Engine.conf.TinyPicUserName = ub.UserName;
+                    Engine.conf.TinyPicPassword = ub.Password;
                 }
                 return tpu.UserAuth(ub.UserName, ub.Password);
             }
@@ -236,18 +236,18 @@ namespace ZScreenLib
         /// </summary>
         public static void UpdateTinyPicShuk()
         {
-            if (Program.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Program.conf.TinyPicUserName) &&
-                !string.IsNullOrEmpty(Program.conf.TinyPicPassword))
+            if (Engine.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Engine.conf.TinyPicUserName) &&
+                !string.IsNullOrEmpty(Engine.conf.TinyPicPassword))
             {
-                TinyPicUploader tpu = new TinyPicUploader(Program.TINYPIC_ID, Program.TINYPIC_KEY, UploadMode.API);
-                string shuk = tpu.UserAuth(Program.conf.TinyPicUserName, Program.conf.TinyPicPassword);
+                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, UploadMode.API);
+                string shuk = tpu.UserAuth(Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
-                    if (Program.conf.TinyPicShuk != shuk)
+                    if (Engine.conf.TinyPicShuk != shuk)
                     {
-                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Program.conf.TinyPicShuk, shuk));
+                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.conf.TinyPicShuk, shuk));
                     }
-                    Program.conf.TinyPicShuk = shuk;
+                    Engine.conf.TinyPicShuk = shuk;
                 }
             }
         }
@@ -258,9 +258,9 @@ namespace ZScreenLib
 
         public static string CreateImageBamGallery()
         {
-            ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Program.conf.ImageBamApiKey, Program.conf.ImageBamSecret));
+            ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret));
             string galleryId = ibu.CreateGalleryID();
-            Program.conf.ImageBamGallery.Add(galleryId);
+            Engine.conf.ImageBamGallery.Add(galleryId);
             return galleryId;
         }
 
@@ -269,7 +269,7 @@ namespace ZScreenLib
             string galleryId = string.Empty;
             if (CheckImageBamGallery())
             {
-                galleryId = Program.conf.ImageBamGallery[Program.conf.ImageBamGalleryActive];
+                galleryId = Engine.conf.ImageBamGallery[Engine.conf.ImageBamGalleryActive];
             }
             return galleryId;
         }
@@ -298,10 +298,10 @@ namespace ZScreenLib
 
         public static string TryShortenURL(string url)
         {
-            if (!string.IsNullOrEmpty(url) && (Program.conf.LimitLongURL == 0 || Program.conf.LimitLongURL > 0 && url.Length > Program.conf.LimitLongURL ||
-                Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
+            if (!string.IsNullOrEmpty(url) && (Engine.conf.LimitLongURL == 0 || Engine.conf.LimitLongURL > 0 && url.Length > Engine.conf.LimitLongURL ||
+                Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
             {
-                TextUploader tu = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
                 if (tu != null)
                 {
                     string temp = tu.UploadText(TextInfo.FromString(url));
@@ -316,13 +316,13 @@ namespace ZScreenLib
 
         public static bool CheckURLShorteners()
         {
-            return CheckList(Program.conf.UrlShortenersList, Program.conf.UrlShortenerSelected);
+            return CheckList(Engine.conf.UrlShortenersList, Engine.conf.UrlShortenerSelected);
         }
 
         public static bool MakeTinyURL()
         {
             // LimitLongURL = 0 means make tinyURL always
-            return Program.conf.MakeTinyURL || Program.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+            return Engine.conf.MakeTinyURL || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
         }
 
         #endregion
@@ -336,13 +336,13 @@ namespace ZScreenLib
 
         public static bool CheckTextUploaders()
         {
-            return CheckList(Program.conf.TextUploadersList, Program.conf.TextUploaderSelected);
+            return CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected);
         }
 
 
         public static bool CheckDekiWikiAccounts()
         {
-            return CheckList(Program.conf.DekiWikiAccountList, Program.conf.DekiWikiSelected);
+            return CheckList(Engine.conf.DekiWikiAccountList, Engine.conf.DekiWikiSelected);
         }
 
         public static bool CheckDekiWikiAccounts(ref WorkerTask task)
@@ -354,7 +354,7 @@ namespace ZScreenLib
 
         public static bool CheckImageBamGallery()
         {
-            return CheckList(Program.conf.ImageBamGallery, Program.conf.ImageBamGallerySelected);
+            return CheckList(Engine.conf.ImageBamGallery, Engine.conf.ImageBamGallerySelected);
         }
 
         public static void TestDekiWikiAccount(DekiWikiAccount acc)
@@ -384,9 +384,9 @@ namespace ZScreenLib
         /// </summary>
         public static IWebProxy GetProxySettings()
         {
-            if (Program.conf.ProxyEnabled)
+            if (Engine.conf.ProxyEnabled)
             {
-                ProxyInfo acc = Program.conf.ProxyActive;
+                ProxyInfo acc = Engine.conf.ProxyActive;
                 if (acc != null)
                 {
                     NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
@@ -466,16 +466,16 @@ namespace ZScreenLib
             {
                 if (name == UploadersLib.FTPUploader.Hostname)
                 {
-                    if (Program.conf.FTPAccountList.Count > 0)
+                    if (Engine.conf.FTPAccountList.Count > 0)
                     {
                         FTPAccount acc = new FTPAccount();
-                        if (Program.conf.FTPSelected >= 0)
+                        if (Engine.conf.FTPSelected >= 0)
                         {
-                            acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                            acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
                         }
                         else
                         {
-                            acc = Program.conf.FTPAccountList[0];
+                            acc = Engine.conf.FTPAccountList[0];
                         }
                         return new UploadersLib.FTPUploader(acc);
                     }
@@ -486,8 +486,8 @@ namespace ZScreenLib
 
         public static bool ImageSoftwareEnabled()
         {
-            if (Program.conf.ImageEditor == null) return false;
-            return Program.DISABLED_IMAGE_EDITOR != Program.conf.ImageEditor.Name;
+            if (Engine.conf.ImageEditor == null) return false;
+            return Engine.DISABLED_IMAGE_EDITOR != Engine.conf.ImageEditor.Name;
         }
 
         public static void DeleteFile(string fp)
@@ -503,27 +503,27 @@ namespace ZScreenLib
 
         public static void TaskbarSetProgressState(TaskbarProgressBarState tbps)
         {
-            if (TaskbarManager.IsPlatformSupported && Program.zWindowsTaskbar != null)
+            if (TaskbarManager.IsPlatformSupported && Engine.zWindowsTaskbar != null)
             {
-                Program.zWindowsTaskbar.SetProgressState(tbps);
+                Engine.zWindowsTaskbar.SetProgressState(tbps);
             }
         }
 
         public static void TaskbarSetProgressValue(int progress)
         {
-            if (TaskbarManager.IsPlatformSupported && Program.zWindowsTaskbar != null)
+            if (TaskbarManager.IsPlatformSupported && Engine.zWindowsTaskbar != null)
             {
-                Program.zWindowsTaskbar.SetProgressValue(progress, 100);
+                Engine.zWindowsTaskbar.SetProgressValue(progress, 100);
             }
         }
 
         public static void AddRecentItem(string filePath)
         {
-            if (TaskbarManager.IsPlatformSupported && File.Exists(filePath) && Program.zJumpList != null)
+            if (TaskbarManager.IsPlatformSupported && File.Exists(filePath) && Engine.zJumpList != null)
             {
                 try
                 {
-                    Program.zJumpList.AddToRecent(filePath);
+                    Engine.zJumpList.AddToRecent(filePath);
                 }
                 catch (Exception ex)
                 {

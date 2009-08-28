@@ -75,7 +75,7 @@ namespace ZScreenGUI
 
             UpdateCheckerOptions uco = new UpdateCheckerOptions
             {
-                CheckBeta = Program.conf.CheckUpdatesBeta,
+                CheckBeta = Engine.conf.CheckUpdatesBeta,
                 MyNewVersionWindowOptions = nvwo
             };
             uco.ProxySettings = Adapter.GetProxySettings();
@@ -102,7 +102,7 @@ namespace ZScreenGUI
 
         private void BwCache_DoWork(object sender, DoWorkEventArgs e)
         {
-            CacheCleanerTask t = new CacheCleanerTask(Program.CacheDir, Program.conf.ScreenshotCacheSize);
+            CacheCleanerTask t = new CacheCleanerTask(Engine.CacheDir, Engine.conf.ScreenshotCacheSize);
             t.CleanCache();
         }
 
@@ -110,16 +110,16 @@ namespace ZScreenGUI
 
         public void LoadHistoryItems()
         {
-            mZScreen.cbHistorySave.Checked = Program.conf.HistorySave;
+            mZScreen.cbHistorySave.Checked = Engine.conf.HistorySave;
             if (mZScreen.cbHistoryListFormat.Items.Count == 0)
             {
                 mZScreen.cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
             }
 
-            mZScreen.cbHistoryListFormat.SelectedIndex = (int)Program.conf.HistoryListFormat;
-            mZScreen.cbShowHistoryTooltip.Checked = Program.conf.HistoryShowTooltips;
-            mZScreen.cbHistoryAddSpace.Checked = Program.conf.HistoryAddSpace;
-            mZScreen.cbHistoryReverseList.Checked = Program.conf.HistoryReverseList;
+            mZScreen.cbHistoryListFormat.SelectedIndex = (int)Engine.conf.HistoryListFormat;
+            mZScreen.cbShowHistoryTooltip.Checked = Engine.conf.HistoryShowTooltips;
+            mZScreen.cbHistoryAddSpace.Checked = Engine.conf.HistoryAddSpace;
+            mZScreen.cbHistoryReverseList.Checked = Engine.conf.HistoryReverseList;
 
             BackgroundWorker bwHistoryReader = new BackgroundWorker();
             bwHistoryReader.DoWork += new DoWorkEventHandler(bwHistoryReader_DoWork);
@@ -133,7 +133,7 @@ namespace ZScreenGUI
 
             mZScreen.lbHistory.Items.Clear();
 
-            for (int i = 0; i < history.HistoryItems.Count && i < Program.conf.HistoryMaxNumber; i++)
+            for (int i = 0; i < history.HistoryItems.Count && i < Engine.conf.HistoryMaxNumber; i++)
             {
                 mZScreen.lbHistory.Items.Add(history.HistoryItems[i]);
             }
@@ -187,8 +187,8 @@ namespace ZScreenGUI
                     mZScreen.cbToLanguage.Items.Add(gtLang.Name);
                 }
 
-                SelectLanguage(Program.conf.FromLanguage, Program.conf.ToLanguage, Program.conf.HelpToLanguage);
-                GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Program.conf.ToLanguage2,
+                SelectLanguage(Engine.conf.FromLanguage, Engine.conf.ToLanguage, Engine.conf.HelpToLanguage);
+                GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Engine.conf.ToLanguage2,
                     ZScreen.mGTranslator.LanguageOptions.TargetLangList);
                 if (secondLang != null)
                 {
@@ -206,9 +206,9 @@ namespace ZScreenGUI
                 }
             }
 
-            if (!string.IsNullOrEmpty(Program.conf.TinyPicShuk) && Program.conf.TinyPicShuk != mZScreen.txtTinyPicShuk.Text)
+            if (!string.IsNullOrEmpty(Engine.conf.TinyPicShuk) && Engine.conf.TinyPicShuk != mZScreen.txtTinyPicShuk.Text)
             {
-                mZScreen.txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
+                mZScreen.txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
             }
         }
 

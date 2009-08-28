@@ -235,7 +235,7 @@ namespace ZScreenLib
             sbDesc.AppendLine(Application.ExecutablePath);
             sbDesc.AppendLine();
             sbDesc.AppendLine("Settings file:");
-            sbDesc.AppendLine(Program.DefaultXMLFilePath);
+            sbDesc.AppendLine(Engine.DefaultXMLFilePath);
             if (Assemblies != null)
             {
                 sbDesc.AppendLine();

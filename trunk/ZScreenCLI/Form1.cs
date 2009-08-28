@@ -25,7 +25,7 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (ZScreenLib.Program.conf.BalloonTipOpenLink)
+            if (ZScreenLib.Engine.conf.BalloonTipOpenLink)
             {
                 NotifyIcon ni = (NotifyIcon)sender;
                 new BalloonTipHelper(ni).ClickBalloonTip();

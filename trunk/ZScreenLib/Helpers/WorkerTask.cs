@@ -198,7 +198,7 @@ namespace ZScreenLib
         private WorkerTask()
         {
             this.Errors = new List<string>();
-            this.Settings = Program.conf;
+            this.Settings = Engine.conf;
         }
 
         public WorkerTask(Jobs job)
@@ -223,7 +223,7 @@ namespace ZScreenLib
         public void SetImage(Image img)
         {
             this.MyImage = img;
-            if (Program.conf.CopyImageUntilURL)
+            if (Engine.conf.CopyImageUntilURL)
             {
                 // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
@@ -248,9 +248,9 @@ namespace ZScreenLib
 
         public void SetFilePath(string fileName)
         {
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, fileName + "." + Program.zImageFileTypes[Program.conf.FileFormat]));
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
 
-            if (Program.conf.ManualNaming)
+            if (Engine.conf.ManualNaming)
             {
                 DestOptions ib = new DestOptions(this)
                 {
@@ -303,7 +303,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureWindow(User32.GetWindowHandle(), Program.conf.ShowCursor));
+                this.SetImage(User32.CaptureWindow(User32.GetWindowHandle(), Engine.conf.ShowCursor));
             }
         }
 
@@ -314,7 +314,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureScreen(Program.conf.ShowCursor));
+                this.SetImage(User32.CaptureScreen(Engine.conf.ShowCursor));
             }
         }
 

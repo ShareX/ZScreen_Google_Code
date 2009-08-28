@@ -56,7 +56,7 @@ namespace ZScreenLib
                 List<ImageFile> files = new List<ImageFile>();
 
                 // include all supported file types
-                foreach (string s in Program.zImageFileTypes)
+                foreach (string s in Engine.zImageFileTypes)
                 {
                     string[] tmpFiles = Directory.GetFiles(mCacheDir, "*." + s, SearchOption.AllDirectories);
                     foreach (string f in tmpFiles)
