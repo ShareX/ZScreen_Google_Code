@@ -338,8 +338,8 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 1; i <= (int)Program.conf.ErrorRetryCount &&
-                        (mTask.ImageManager == null || (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
+                    for (int i = 1; i <= (int)Program.conf.ErrorRetryCount && (mTask.ImageManager == null || 
+                        (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
@@ -351,8 +351,15 @@ namespace ZScreenLib
                         }
                         mTask.Errors = imageUploader.Errors;
 
-                        if (Program.conf.ImageUploadRetryOnFail && (mTask.MyImageUploader == ImageDestType.IMAGESHACK ||
-                            mTask.MyImageUploader == ImageDestType.TINYPIC)) break;
+                        if (mTask.ImageManager.ImageFileList.Count == 0)
+                        {
+                            mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, 
+                                string.Format("Retrying {0}... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
             }
