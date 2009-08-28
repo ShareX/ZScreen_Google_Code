@@ -541,7 +541,13 @@ namespace ZSS.FTPClientLib
 
         private void FTPAdapter_DebugMessage(string text)
         {
-            txtConsole.AppendText(string.Format("{0} - {1}\r\n", DateTime.Now.ToLongTimeString(), text));
+            string message = string.Format("{0} - {1}\r\n", DateTime.Now.ToLongTimeString(), text);
+
+#if DEBUG
+            Console.Write(message);
+#endif
+
+            txtConsole.AppendText(message);
             txtConsole.ScrollToCaret();
         }
 
