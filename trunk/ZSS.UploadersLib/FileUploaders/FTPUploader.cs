@@ -26,11 +26,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using System.Net;
 using System.Text;
-using System.Xml.Serialization;
-using UploadersLib.Helpers;
 using System.Windows.Forms;
+using UploadersLib.Helpers;
 
 namespace UploadersLib
 {
@@ -184,8 +182,7 @@ namespace UploadersLib
             FTPAdapter ftpClient = new FTPAdapter(fopt);
             if (string.IsNullOrEmpty(text.LocalPath))
             {
-                string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
-                text.LocalPath = Path.Combine(LocalAppDataFolder, DateTime.Now.Ticks + ".txt");
+                text.LocalPath = Path.Combine(WorkingDir, DateTime.Now.Ticks + ".txt");
                 File.WriteAllText(text.LocalPath, text.LocalString);
             }
             string fileName = Path.GetFileName(text.LocalPath);
