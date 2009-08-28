@@ -27,7 +27,6 @@ using System.Net;
 using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
-using ZSS;
 
 namespace UploadersLib.FileUploaders.FTP
 {
@@ -51,11 +50,19 @@ namespace UploadersLib.FileUploaders.FTP
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
+            // commented until resolution from http://www.vbforums.com/showthread.php?t=582151
             IWebProxy proxy = Uploader.ProxySettings;
-            
             if (proxy != null)
             {
-               // Client.Proxy = new HttpProxyClient(proxy.Address.Host, proxy.Address.Port);
+                try
+                {
+                    string testUrl = "http://google.com";
+                    Client.Proxy = new HttpProxyClient(proxy.GetProxy(new Uri(testUrl)).Host, proxy.GetProxy(new Uri(testUrl)).Port);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
 
             Client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);

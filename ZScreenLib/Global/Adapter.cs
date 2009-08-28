@@ -392,8 +392,12 @@ namespace ZScreenLib
                     NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
                     return new WebProxy(acc.GetAddress(), true, null, cred);
                 }
+                else
+                {
+                    return HttpWebRequest.DefaultWebProxy;
+                }
             }
-            return HttpWebRequest.DefaultWebProxy;
+            return null;
         }
 
         public static void TestProxyAccount(ProxyInfo acc)

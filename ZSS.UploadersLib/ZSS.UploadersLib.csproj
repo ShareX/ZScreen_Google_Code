@@ -90,7 +90,7 @@
     <Compile Include="ImageUploaders\CustomUploader.cs" />
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />
     <Compile Include="ImageUploaders\FlickrUploader.cs" />
-    <Compile Include="ImageUploaders\FTPUploader.cs" />
+    <Compile Include="FileUploaders\FTPUploader.cs" />
     <Compile Include="ImageUploaders\ImageBamUploader.cs" />
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
@@ -100,7 +100,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextServices\GoogleTranslate.cs" />
     <Compile Include="TextUploader.cs" />
-    <Compile Include="TextUploaders\FTPUploader.cs" />
     <Compile Include="TextUploaders\Paste2Uploader.cs" />
     <Compile Include="TextUploaders\PastebinCaUploader.cs" />
     <Compile Include="TextUploaders\PastebinUploader.cs" />

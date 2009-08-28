@@ -25,7 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
-namespace ZSS
+namespace UploadersLib
 {
     [Serializable]
     public class FTPAccount

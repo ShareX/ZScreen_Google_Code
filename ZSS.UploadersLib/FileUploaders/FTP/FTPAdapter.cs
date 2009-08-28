@@ -28,7 +28,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace ZSS
+namespace UploadersLib
 {
     public class FTPOptions
     {

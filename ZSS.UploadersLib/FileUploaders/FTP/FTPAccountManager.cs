@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ZSS
+namespace UploadersLib
 {
     [Serializable]
     public class FTPAccountManager
