@@ -3,10 +3,12 @@
 
 = Version 3 - XXXX-XX-XX =
 
+ * Hades32 joined the development of ZScreen
  * Established foundation for supporting File uploading services like RapidShare
 
 = Version 2 - 2009-02-28 =
 
+ * Support for URL Shorteners
  * Multi-monitor support was properly implemented thanks to Isaac
  * Support Watermarks
  * Development was moved to Google Code
