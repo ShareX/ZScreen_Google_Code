@@ -40,6 +40,10 @@
             this.txtRename = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cbDirectoryList = new System.Windows.Forms.ComboBox();
+            this.tcFTP = new System.Windows.Forms.TabControl();
+            this.tpMainTab = new System.Windows.Forms.TabPage();
+            this.tpConsole = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.lvFTPList = new ZSS.FTPClientLib.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
@@ -47,10 +51,6 @@
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
             this.chOwnerGroup = new System.Windows.Forms.ColumnHeader();
-            this.tcFTP = new System.Windows.Forms.TabControl();
-            this.tpMainTab = new System.Windows.Forms.TabPage();
-            this.tpConsole = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -160,6 +160,50 @@
             this.cbDirectoryList.TabIndex = 3;
             this.cbDirectoryList.SelectedIndexChanged += new System.EventHandler(this.cbDirectoryList_SelectedIndexChanged);
             // 
+            // tcFTP
+            // 
+            this.tcFTP.Controls.Add(this.tpMainTab);
+            this.tcFTP.Controls.Add(this.tpConsole);
+            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcFTP.Location = new System.Drawing.Point(3, 3);
+            this.tcFTP.Name = "tcFTP";
+            this.tcFTP.SelectedIndex = 0;
+            this.tcFTP.Size = new System.Drawing.Size(966, 589);
+            this.tcFTP.TabIndex = 3;
+            // 
+            // tpMainTab
+            // 
+            this.tpMainTab.Controls.Add(this.splitContainer1);
+            this.tpMainTab.Location = new System.Drawing.Point(4, 22);
+            this.tpMainTab.Name = "tpMainTab";
+            this.tpMainTab.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMainTab.Size = new System.Drawing.Size(958, 563);
+            this.tpMainTab.TabIndex = 0;
+            this.tpMainTab.Text = "FTP Client";
+            this.tpMainTab.UseVisualStyleBackColor = true;
+            // 
+            // tpConsole
+            // 
+            this.tpConsole.Controls.Add(this.txtConsole);
+            this.tpConsole.Location = new System.Drawing.Point(4, 22);
+            this.tpConsole.Name = "tpConsole";
+            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
+            this.tpConsole.Size = new System.Drawing.Size(958, 563);
+            this.tpConsole.TabIndex = 1;
+            this.tpConsole.Text = "Console";
+            this.tpConsole.UseVisualStyleBackColor = true;
+            // 
+            // txtConsole
+            // 
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtConsole.Location = new System.Drawing.Point(3, 3);
+            this.txtConsole.Multiline = true;
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtConsole.Size = new System.Drawing.Size(952, 557);
+            this.txtConsole.TabIndex = 0;
+            // 
             // lvFTPList
             // 
             this.lvFTPList.AllowColumnReorder = true;
@@ -221,58 +265,14 @@
             this.chOwnerGroup.Text = "Owner/Group";
             this.chOwnerGroup.Width = 100;
             // 
-            // tcFTP
-            // 
-            this.tcFTP.Controls.Add(this.tpMainTab);
-            this.tcFTP.Controls.Add(this.tpConsole);
-            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcFTP.Location = new System.Drawing.Point(3, 3);
-            this.tcFTP.Name = "tcFTP";
-            this.tcFTP.SelectedIndex = 0;
-            this.tcFTP.Size = new System.Drawing.Size(966, 589);
-            this.tcFTP.TabIndex = 3;
-            // 
-            // tpMainTab
-            // 
-            this.tpMainTab.Controls.Add(this.splitContainer1);
-            this.tpMainTab.Location = new System.Drawing.Point(4, 22);
-            this.tpMainTab.Name = "tpMainTab";
-            this.tpMainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainTab.Size = new System.Drawing.Size(958, 563);
-            this.tpMainTab.TabIndex = 0;
-            this.tpMainTab.Text = "FTP Client";
-            this.tpMainTab.UseVisualStyleBackColor = true;
-            // 
-            // tpConsole
-            // 
-            this.tpConsole.Controls.Add(this.txtConsole);
-            this.tpConsole.Location = new System.Drawing.Point(4, 22);
-            this.tpConsole.Name = "tpConsole";
-            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConsole.Size = new System.Drawing.Size(958, 563);
-            this.tpConsole.TabIndex = 1;
-            this.tpConsole.Text = "Console";
-            this.tpConsole.UseVisualStyleBackColor = true;
-            // 
-            // txtConsole
-            // 
-            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConsole.Location = new System.Drawing.Point(3, 3);
-            this.txtConsole.Multiline = true;
-            this.txtConsole.Name = "txtConsole";
-            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtConsole.Size = new System.Drawing.Size(952, 557);
-            this.txtConsole.TabIndex = 0;
-            // 
-            // FTPClient
+            // FTPClient2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 595);
             this.Controls.Add(this.tcFTP);
             this.Controls.Add(this.txtRename);
-            this.Name = "FTPClient";
+            this.Name = "FTPClient2";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "FTP Client Beta";
             this.Resize += new System.EventHandler(this.FTPClient_Resize);

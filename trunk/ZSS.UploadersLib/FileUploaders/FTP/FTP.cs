@@ -37,6 +37,9 @@ namespace UploadersLib.FileUploaders.FTP
         public delegate void FTPProgressEventHandler(float percentage);
         public event FTPProgressEventHandler ProgressChanged;
 
+        public delegate void FTPDebugEventHandler(string text);
+        public event FTPDebugEventHandler DebugMessage;
+
         public FTPAccount Account;
         private FtpClient client;
 
@@ -49,11 +52,26 @@ namespace UploadersLib.FileUploaders.FTP
             client.Port = account.Port;
             client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
             client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
+            client.ClientRequest += new EventHandler<FtpRequestEventArgs>(client_ClientRequest);
+            client.ServerResponse += new EventHandler<FtpResponseEventArgs>(client_ServerResponse);
+        }
 
-#if DEBUG
-            client.ServerResponse += new EventHandler<FtpResponseEventArgs>(
-                (x, x2) => Console.WriteLine(DateTime.Now.ToLongTimeString() + " - " + x2.Response.Text));
-#endif
+        private void client_ServerResponse(object sender, FtpResponseEventArgs e)
+        {
+            OnDebugMessage("Server: " + e.Response.RawText);
+        }
+
+        private void client_ClientRequest(object sender, FtpRequestEventArgs e)
+        {
+            OnDebugMessage("Client: " + e.Request.Text);
+        }
+
+        private void OnDebugMessage(string text)
+        {
+            if (DebugMessage != null)
+            {
+                DebugMessage(text);
+            }
         }
 
         private void OnTransferProgressChanged(object sender, TransferProgressEventArgs e)
