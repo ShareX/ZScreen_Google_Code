@@ -51,8 +51,8 @@ namespace ZScreenLib
             System.Threading.Thread.Sleep(100);
             User32.ActivateWindow(this.Handle);
             lbDest.Focus();
-            lbDest.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            lbClipboardMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
+            lbDest.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+            lbClipboardMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
         }
 
         private void lbDest_KeyDown(object sender, KeyEventArgs e)
@@ -81,9 +81,9 @@ namespace ZScreenLib
         private void ApplyOptions()
         {
             if (lbDest.SelectedIndex > -1)
-                Program.conf.ScreenshotDestMode = (ImageDestType)lbDest.SelectedIndex;
+                Engine.conf.ScreenshotDestMode = (ImageDestType)lbDest.SelectedIndex;
             if (lbClipboardMode.SelectedIndex > -1)
-                Program.conf.ClipboardUriMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
+                Engine.conf.ClipboardUriMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
             ApplySettings(this, EventArgs.Empty);
         }
 

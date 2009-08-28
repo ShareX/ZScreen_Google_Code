@@ -73,8 +73,8 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI();
 
             Loader.Worker2.PerformOnlineTasks();
-            Program.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
-            if (Program.conf.CheckUpdates)
+            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+            if (Engine.conf.CheckUpdates)
             {
                 Loader.Worker2.CheckUpdates();
             }
@@ -82,36 +82,36 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (Program.conf.Windows7TaskbarIntegration)
+            if (Engine.conf.Windows7TaskbarIntegration)
             {
                 this.ShowInTaskbar = true;
-                Program.conf.MinimizeOnClose = true;
+                Engine.conf.MinimizeOnClose = true;
             }
 
             if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
                 try
                 {
-                    Program.CheckFileRegistration();
+                    Engine.CheckFileRegistration();
 
-                    Program.zWindowsTaskbar = TaskbarManager.Instance;
-                    Program.zWindowsTaskbar.ApplicationId = Program.appId;
+                    Engine.zWindowsTaskbar = TaskbarManager.Instance;
+                    Engine.zWindowsTaskbar.ApplicationId = Engine.appId;
 
-                    Program.zJumpList = JumpList.CreateJumpList();
+                    Engine.zJumpList = JumpList.CreateJumpList();
 
                     // User Tasks
                     JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
                     jlCropShot.Arguments = "crop_shot";
                     jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 1);
-                    Program.zJumpList.AddUserTasks(jlCropShot);
+                    Engine.zJumpList.AddUserTasks(jlCropShot);
 
                     JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Selected Window");
                     jlSelectedWindow.Arguments = "selected_window";
                     jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 2);
-                    Program.zJumpList.AddUserTasks(jlSelectedWindow);
+                    Engine.zJumpList.AddUserTasks(jlSelectedWindow);
 
                     // Recent Items
-                    Program.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
+                    Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
 
                     // Custom Categories
                     JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
@@ -119,11 +119,11 @@ namespace ZScreenGUI
                     JumpListLink imagesJumpListLink = new JumpListLink(FileSystem.GetImagesDir(), "Images");
                     imagesJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
-                    JumpListLink settingsJumpListLink = new JumpListLink(Program.SettingsDir, "Settings");
+                    JumpListLink settingsJumpListLink = new JumpListLink(Engine.SettingsDir, "Settings");
                     settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
                     paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink);
-                    Program.zJumpList.AddCustomCategories(paths);
+                    Engine.zJumpList.AddCustomCategories(paths);
 
                     // Taskbar Buttons
                     ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
@@ -135,8 +135,8 @@ namespace ZScreenGUI
                     ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Program.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-                    Program.zJumpList.Refresh();
+                    Engine.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                    Engine.zJumpList.Refresh();
                     FileSystem.AppendDebug("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)
@@ -149,21 +149,21 @@ namespace ZScreenGUI
         private void ZScreen_SetFormSettings()
         {
             this.Icon = Resources.zss_main;
-            this.Text = Program.GetProductName();
+            this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
             chkWindows7TaskbarIntegration.Enabled = CoreHelpers.RunningOnWin7;
 
             if (this.WindowState == FormWindowState.Normal)
             {
-                if (Program.conf.WindowLocation.IsEmpty)
+                if (Engine.conf.WindowLocation.IsEmpty)
                 {
-                    Program.conf.WindowLocation = this.Location;
+                    Engine.conf.WindowLocation = this.Location;
                 }
 
-                if (Program.conf.WindowSize.IsEmpty)
+                if (Engine.conf.WindowSize.IsEmpty)
                 {
-                    Program.conf.WindowSize = this.Size;
+                    Engine.conf.WindowSize = this.Size;
                 }
             }
 
@@ -236,26 +236,26 @@ namespace ZScreenGUI
             {
                 Rectangle screenRect = GraphicsMgr.GetScreenBounds();
                 screenRect.Inflate(-100, -100);
-                if (screenRect.IntersectsWith(new Rectangle(Program.conf.WindowLocation, Program.conf.WindowSize)))
+                if (screenRect.IntersectsWith(new Rectangle(Engine.conf.WindowLocation, Engine.conf.WindowSize)))
                 {
-                    this.Size = Program.conf.WindowSize;
-                    this.Location = Program.conf.WindowLocation;
+                    this.Size = Engine.conf.WindowSize;
+                    this.Location = Engine.conf.WindowLocation;
                 }
             }
 
-            if (Program.conf.ActionsToolbarMode)
+            if (Engine.conf.ActionsToolbarMode)
             {
                 this.Hide();
                 Loader.Worker.ShowActionsToolbar(false);
             }
             else
             {
-                if (Program.conf.OpenMainWindow)
+                if (Engine.conf.OpenMainWindow)
                 {
-                    this.WindowState = Program.conf.WindowState;
-                    ShowInTaskbar = Program.conf.ShowInTaskbar;
+                    this.WindowState = Engine.conf.WindowState;
+                    ShowInTaskbar = Engine.conf.ShowInTaskbar;
                 }
-                else if (Program.conf.ShowInTaskbar && Program.conf.MinimizeOnClose)
+                else if (Engine.conf.ShowInTaskbar && Engine.conf.MinimizeOnClose)
                 {
                     this.WindowState = FormWindowState.Minimized;
                     ShowInTaskbar = true;
@@ -296,9 +296,9 @@ namespace ZScreenGUI
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
 
-            pgApp.SelectedObject = Program.conf;
-            pgIndexer.SelectedObject = Program.conf.IndexerConfig;
-            txtRootFolder.Text = Program.RootAppFolder;
+            pgApp.SelectedObject = Engine.conf;
+            pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
+            txtRootFolder.Text = Engine.RootAppFolder;
             UpdateGuiControlsPaths();
 
             #endregion
@@ -326,8 +326,8 @@ namespace ZScreenGUI
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
 
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            ucDestOptions.cboImageUploaders.Enabled = !Program.conf.PreferFileUploaderForImages;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+            ucDestOptions.cboImageUploaders.Enabled = !Engine.conf.PreferFileUploaderForImages;
 
             if (tsmImageDest.DropDownItems.Count == 0)
             {
@@ -345,14 +345,14 @@ namespace ZScreenGUI
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
 
-            cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
-            nudtScreenshotDelay.Time = Program.conf.ScreenshotDelayTimes;
-            nudtScreenshotDelay.Value = Program.conf.ScreenshotDelayTime;
-            chkManualNaming.Checked = Program.conf.ManualNaming;
-            cbShowCursor.Checked = Program.conf.ShowCursor;
-            cboCropGridMode.Checked = Program.conf.CropGridToggle;
-            nudCropGridWidth.Value = Program.conf.CropGridSize.Width;
-            nudCropGridHeight.Value = Program.conf.CropGridSize.Height;
+            cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
+            nudtScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
+            nudtScreenshotDelay.Value = Engine.conf.ScreenshotDelayTime;
+            chkManualNaming.Checked = Engine.conf.ManualNaming;
+            cbShowCursor.Checked = Engine.conf.ShowCursor;
+            cboCropGridMode.Checked = Engine.conf.CropGridToggle;
+            nudCropGridWidth.Value = Engine.conf.CropGridSize.Width;
+            nudCropGridHeight.Value = Engine.conf.CropGridSize.Height;
 
             #endregion
 
@@ -378,27 +378,27 @@ namespace ZScreenGUI
                 cbCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
 
-            cbCropStyle.SelectedIndex = (int)Program.conf.CropRegionStyles;
-            cbRegionRectangleInfo.Checked = Program.conf.CropRegionRectangleInfo;
-            cbRegionHotkeyInfo.Checked = Program.conf.CropRegionHotkeyInfo;
+            cbCropStyle.SelectedIndex = (int)Engine.conf.CropRegionStyles;
+            cbRegionRectangleInfo.Checked = Engine.conf.CropRegionRectangleInfo;
+            cbRegionHotkeyInfo.Checked = Engine.conf.CropRegionHotkeyInfo;
 
-            cbCropDynamicCrosshair.Checked = Program.conf.CropDynamicCrosshair;
-            nudCropCrosshairInterval.Value = Program.conf.CropInterval;
-            nudCropCrosshairStep.Value = Program.conf.CropStep;
-            nudCrosshairLineCount.Value = Program.conf.CrosshairLineCount;
-            nudCrosshairLineSize.Value = Program.conf.CrosshairLineSize;
-            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropCrosshairColor);
-            cbCropShowBigCross.Checked = Program.conf.CropShowBigCross;
-            cbCropShowMagnifyingGlass.Checked = Program.conf.CropShowMagnifyingGlass;
+            cbCropDynamicCrosshair.Checked = Engine.conf.CropDynamicCrosshair;
+            nudCropCrosshairInterval.Value = Engine.conf.CropInterval;
+            nudCropCrosshairStep.Value = Engine.conf.CropStep;
+            nudCrosshairLineCount.Value = Engine.conf.CrosshairLineCount;
+            nudCrosshairLineSize.Value = Engine.conf.CrosshairLineSize;
+            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropCrosshairColor);
+            cbCropShowBigCross.Checked = Engine.conf.CropShowBigCross;
+            cbCropShowMagnifyingGlass.Checked = Engine.conf.CropShowMagnifyingGlass;
 
-            cbShowCropRuler.Checked = Program.conf.CropShowRuler;
-            cbCropDynamicBorderColor.Checked = Program.conf.CropDynamicBorderColor;
-            nudCropRegionInterval.Value = Program.conf.CropRegionInterval;
-            nudCropRegionStep.Value = Program.conf.CropRegionStep;
-            nudCropHueRange.Value = Program.conf.CropHueRange;
-            pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.CropBorderColor);
-            nudCropBorderSize.Value = Program.conf.CropBorderSize;
-            cbCropShowGrids.Checked = Program.conf.CropShowGrids;
+            cbShowCropRuler.Checked = Engine.conf.CropShowRuler;
+            cbCropDynamicBorderColor.Checked = Engine.conf.CropDynamicBorderColor;
+            nudCropRegionInterval.Value = Engine.conf.CropRegionInterval;
+            nudCropRegionStep.Value = Engine.conf.CropRegionStep;
+            nudCropHueRange.Value = Engine.conf.CropHueRange;
+            pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropBorderColor);
+            nudCropBorderSize.Value = Engine.conf.CropBorderSize;
+            cbCropShowGrids.Checked = Engine.conf.CropShowGrids;
 
             // Selected Window
             if (cbSelectedWindowStyle.Items.Count == 0)
@@ -406,26 +406,26 @@ namespace ZScreenGUI
                 cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
 
-            cbSelectedWindowStyle.SelectedIndex = (int)Program.conf.SelectedWindowRegionStyles;
-            cbSelectedWindowRectangleInfo.Checked = Program.conf.SelectedWindowRectangleInfo;
-            cbSelectedWindowRuler.Checked = Program.conf.SelectedWindowRuler;
-            pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.SelectedWindowBorderColor);
-            nudSelectedWindowBorderSize.Value = Program.conf.SelectedWindowBorderSize;
-            cbSelectedWindowDynamicBorderColor.Checked = Program.conf.SelectedWindowDynamicBorderColor;
-            nudSelectedWindowRegionInterval.Value = Program.conf.SelectedWindowRegionInterval;
-            nudSelectedWindowRegionStep.Value = Program.conf.SelectedWindowRegionStep;
-            nudSelectedWindowHueRange.Value = Program.conf.SelectedWindowHueRange;
-            cbSelectedWindowCaptureObjects.Checked = Program.conf.SelectedWindowCaptureObjects;
+            cbSelectedWindowStyle.SelectedIndex = (int)Engine.conf.SelectedWindowRegionStyles;
+            cbSelectedWindowRectangleInfo.Checked = Engine.conf.SelectedWindowRectangleInfo;
+            cbSelectedWindowRuler.Checked = Engine.conf.SelectedWindowRuler;
+            pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.SelectedWindowBorderColor);
+            nudSelectedWindowBorderSize.Value = Engine.conf.SelectedWindowBorderSize;
+            cbSelectedWindowDynamicBorderColor.Checked = Engine.conf.SelectedWindowDynamicBorderColor;
+            nudSelectedWindowRegionInterval.Value = Engine.conf.SelectedWindowRegionInterval;
+            nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
+            nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
+            cbSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
             // Interaction
-            nudFlashIconCount.Value = Program.conf.FlashTrayCount;
-            chkCaptureFallback.Checked = Program.conf.CaptureEntireScreenOnError;
-            cbShowPopup.Checked = Program.conf.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Program.conf.BalloonTipOpenLink;
-            cbShowUploadDuration.Checked = Program.conf.ShowUploadDuration;
-            cbCompleteSound.Checked = Program.conf.CompleteSound;
-            cbCloseDropBox.Checked = Program.conf.CloseDropBox;
-            cbCloseQuickActions.Checked = Program.conf.CloseQuickActions;
+            nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
+            chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
+            cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
+            chkBalloonTipOpenLink.Checked = Engine.conf.BalloonTipOpenLink;
+            cbShowUploadDuration.Checked = Engine.conf.ShowUploadDuration;
+            cbCompleteSound.Checked = Engine.conf.CompleteSound;
+            cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
+            cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
 
             // Watermark
             if (cboWatermarkType.Items.Count == 0)
@@ -433,38 +433,38 @@ namespace ZScreenGUI
                 cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
             }
 
-            cboWatermarkType.SelectedIndex = (int)Program.conf.WatermarkMode;
+            cboWatermarkType.SelectedIndex = (int)Engine.conf.WatermarkMode;
             if (cbWatermarkPosition.Items.Count == 0)
             {
                 cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
             }
 
-            cbWatermarkPosition.SelectedIndex = (int)Program.conf.WatermarkPositionMode;
-            nudWatermarkOffset.Value = Program.conf.WatermarkOffset;
-            cbWatermarkAddReflection.Checked = Program.conf.WatermarkAddReflection;
-            cbWatermarkAutoHide.Checked = Program.conf.WatermarkAutoHide;
+            cbWatermarkPosition.SelectedIndex = (int)Engine.conf.WatermarkPositionMode;
+            nudWatermarkOffset.Value = Engine.conf.WatermarkOffset;
+            cbWatermarkAddReflection.Checked = Engine.conf.WatermarkAddReflection;
+            cbWatermarkAutoHide.Checked = Engine.conf.WatermarkAutoHide;
 
-            txtWatermarkText.Text = Program.conf.WatermarkText;
-            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
+            txtWatermarkText.Text = Engine.conf.WatermarkText;
+            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
             lblWatermarkFont.Text = FontToString();
-            nudWatermarkFontTrans.Value = Program.conf.WatermarkFontTrans;
-            trackWatermarkFontTrans.Value = (int)Program.conf.WatermarkFontTrans;
-            nudWatermarkCornerRadius.Value = Program.conf.WatermarkCornerRadius;
-            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient1);
-            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkGradient2);
-            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkBorderColor);
-            nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
-            trackWatermarkBackgroundTrans.Value = (int)Program.conf.WatermarkBackTrans;
+            nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
+            trackWatermarkFontTrans.Value = (int)Engine.conf.WatermarkFontTrans;
+            nudWatermarkCornerRadius.Value = Engine.conf.WatermarkCornerRadius;
+            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1);
+            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2);
+            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkBorderColor);
+            nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
+            trackWatermarkBackgroundTrans.Value = (int)Engine.conf.WatermarkBackTrans;
             if (cbWatermarkGradientType.Items.Count == 0)
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
             }
 
-            cbWatermarkGradientType.SelectedIndex = (int)Program.conf.WatermarkGradientType;
+            cbWatermarkGradientType.SelectedIndex = (int)Engine.conf.WatermarkGradientType;
 
-            txtWatermarkImageLocation.Text = Program.conf.WatermarkImageLocation;
-            cbWatermarkUseBorder.Checked = Program.conf.WatermarkUseBorder;
-            nudWatermarkImageScale.Value = Program.conf.WatermarkImageScale;
+            txtWatermarkImageLocation.Text = Engine.conf.WatermarkImageLocation;
+            cbWatermarkUseBorder.Checked = Engine.conf.WatermarkUseBorder;
+            nudWatermarkImageScale.Value = Engine.conf.WatermarkImageScale;
 
             TestWatermark();
 
@@ -472,20 +472,20 @@ namespace ZScreenGUI
 
             if (cbFileFormat.Items.Count == 0)
             {
-                cbFileFormat.Items.AddRange(Program.zImageFileTypes);
+                cbFileFormat.Items.AddRange(Engine.zImageFileTypes);
             }
 
-            cbFileFormat.SelectedIndex = Program.conf.FileFormat;
-            nudImageQuality.Value = Program.conf.ImageQuality;
-            nudSwitchAfter.Value = Program.conf.SwitchAfter;
+            cbFileFormat.SelectedIndex = Engine.conf.FileFormat;
+            nudImageQuality.Value = Engine.conf.ImageQuality;
+            nudSwitchAfter.Value = Engine.conf.SwitchAfter;
             if (cbSwitchFormat.Items.Count == 0)
             {
-                cbSwitchFormat.Items.AddRange(Program.zImageFileTypes);
+                cbSwitchFormat.Items.AddRange(Engine.zImageFileTypes);
             }
 
-            cbSwitchFormat.SelectedIndex = Program.conf.SwitchFormat;
+            cbSwitchFormat.SelectedIndex = Engine.conf.SwitchFormat;
 
-            switch (Program.conf.ImageSizeType)
+            switch (Engine.conf.ImageSizeType)
             {
                 case ImageSizeType.DEFAULT:
                     rbImageSizeDefault.Checked = true;
@@ -498,9 +498,9 @@ namespace ZScreenGUI
                     break;
             }
 
-            txtImageSizeFixedWidth.Text = Program.conf.ImageSizeFixedWidth.ToString();
-            txtImageSizeFixedHeight.Text = Program.conf.ImageSizeFixedHeight.ToString();
-            txtImageSizeRatio.Text = Program.conf.ImageSizeRatioPercentage.ToString();
+            txtImageSizeFixedWidth.Text = Engine.conf.ImageSizeFixedWidth.ToString();
+            txtImageSizeFixedHeight.Text = Engine.conf.ImageSizeFixedHeight.ToString();
+            txtImageSizeRatio.Text = Engine.conf.ImageSizeRatioPercentage.ToString();
 
             #endregion
 
@@ -510,14 +510,14 @@ namespace ZScreenGUI
             // Text Uploader Settings
             ///////////////////////////////////
 
-            if (Program.conf.TextUploadersList.Count == 0)
+            if (Engine.conf.TextUploadersList.Count == 0)
             {
-                Program.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
 
             ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
-            foreach (TextUploader textUploader in Program.conf.TextUploadersList)
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
@@ -526,13 +526,13 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Program.conf.TextUploaderSelected > -1 && Program.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
+            if (Engine.conf.TextUploaderSelected > -1 && Engine.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
             {
-                ucTextUploaders.MyCollection.SelectedIndex = Program.conf.TextUploaderSelected;
-                ucDestOptions.cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
+                ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
+                ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
             }
 
-            ucDestOptions.cboTextUploaders.Enabled = !Program.conf.PreferFileUploaderForText;
+            ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
 
             ucTextUploaders.Templates.Items.Clear();
             ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
@@ -542,15 +542,15 @@ namespace ZScreenGUI
             // URL Shorteners Settings
             ///////////////////////////////////
 
-            if (Program.conf.UrlShortenersList.Count == 0)
+            if (Engine.conf.UrlShortenersList.Count == 0)
             {
-                Program.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
+                Engine.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
                     new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
             }
 
             ucUrlShorteners.MyCollection.Items.Clear();
             ucDestOptions.cboURLShorteners.Items.Clear();
-            foreach (TextUploader textUploader in Program.conf.UrlShortenersList)
+            foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
             {
                 if (textUploader != null)
                 {
@@ -559,10 +559,10 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Program.conf.UrlShortenerSelected > -1 && Program.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
+            if (Engine.conf.UrlShortenerSelected > -1 && Engine.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
             {
-                ucUrlShorteners.MyCollection.SelectedIndex = Program.conf.UrlShortenerSelected;
-                ucDestOptions.cboURLShorteners.SelectedIndex = Program.conf.UrlShortenerSelected;
+                ucUrlShorteners.MyCollection.SelectedIndex = Engine.conf.UrlShortenerSelected;
+                ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.UrlShortenerSelected;
             }
 
             ucUrlShorteners.Templates.Items.Clear();
@@ -573,23 +573,23 @@ namespace ZScreenGUI
 
             #region FTP Settings
 
-            if (Program.conf.FTPAccountList == null || Program.conf.FTPAccountList.Count == 0)
+            if (Engine.conf.FTPAccountList == null || Engine.conf.FTPAccountList.Count == 0)
             {
                 FTPSetup(new List<FTPAccount>());
             }
             else
             {
-                FTPSetup(Program.conf.FTPAccountList);
+                FTPSetup(Engine.conf.FTPAccountList);
                 if (ucFTPAccounts.AccountsList.Items.Count > 0)
                 {
-                    ucFTPAccounts.AccountsList.SelectedIndex = Program.conf.FTPSelected;
+                    ucFTPAccounts.AccountsList.SelectedIndex = Engine.conf.FTPSelected;
                 }
             }
 
-            chkEnableThumbnail.Checked = Program.conf.FTPCreateThumbnail;
-            txtFTPThumbWidth.Text = Program.conf.FTPThumbnailWidth.ToString();
-            txtFTPThumbHeight.Text = Program.conf.FTPThumbnailHeight.ToString();
-            cbFTPThumbnailCheckSize.Checked = Program.conf.FTPThumbnailCheckSize;
+            chkEnableThumbnail.Checked = Engine.conf.FTPCreateThumbnail;
+            txtFTPThumbWidth.Text = Engine.conf.FTPThumbnailWidth.ToString();
+            txtFTPThumbHeight.Text = Engine.conf.FTPThumbnailHeight.ToString();
+            cbFTPThumbnailCheckSize.Checked = Engine.conf.FTPThumbnailCheckSize;
 
             #endregion
 
@@ -599,20 +599,20 @@ namespace ZScreenGUI
             // MindTouch Deki Wiki Settings
             ///////////////////////////////////
 
-            if (Program.conf.DekiWikiAccountList == null || Program.conf.DekiWikiAccountList.Count == 0)
+            if (Engine.conf.DekiWikiAccountList == null || Engine.conf.DekiWikiAccountList.Count == 0)
             {
                 DekiWikiSetup(new List<DekiWikiAccount>());
             }
             else
             {
-                DekiWikiSetup(Program.conf.DekiWikiAccountList);
+                DekiWikiSetup(Engine.conf.DekiWikiAccountList);
                 if (ucMindTouchAccounts.AccountsList.Items.Count > 0)
                 {
-                    ucMindTouchAccounts.AccountsList.SelectedIndex = Program.conf.DekiWikiSelected;
+                    ucMindTouchAccounts.AccountsList.SelectedIndex = Engine.conf.DekiWikiSelected;
                 }
             }
 
-            chkDekiWikiForcePath.Checked = Program.conf.DekiWikiForcePath;
+            chkDekiWikiForcePath.Checked = Engine.conf.DekiWikiForcePath;
 
             #endregion
 
@@ -624,32 +624,32 @@ namespace ZScreenGUI
 
             // TinyPic
 
-            txtTinyPicShuk.Text = Program.conf.TinyPicShuk;
-            chkRememberTinyPicUserPass.Checked = Program.conf.RememberTinyPicUserPass;
+            txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
+            chkRememberTinyPicUserPass.Checked = Engine.conf.RememberTinyPicUserPass;
 
             // ImageShack
 
-            txtImageShackRegistrationCode.Text = Program.conf.ImageShackRegistrationCode;
-            txtUserNameImageShack.Text = Program.conf.ImageShackUserName;
-            chkPublicImageShack.Checked = Program.conf.ImageShackShowImagesInPublic;
+            txtImageShackRegistrationCode.Text = Engine.conf.ImageShackRegistrationCode;
+            txtUserNameImageShack.Text = Engine.conf.ImageShackUserName;
+            chkPublicImageShack.Checked = Engine.conf.ImageShackShowImagesInPublic;
 
             // TwitPic
 
-            txtTwitPicUserName.Text = Program.conf.TwitterUserName;
-            txtTwitPicPassword.Text = Program.conf.TwitterPassword;
+            txtTwitPicUserName.Text = Engine.conf.TwitterUserName;
+            txtTwitPicPassword.Text = Engine.conf.TwitterPassword;
             if (cboTwitPicUploadMode.Items.Count == 0)
             {
                 cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
             }
 
-            cboTwitPicUploadMode.SelectedIndex = (int)Program.conf.TwitPicUploadMode;
-            cbTwitPicShowFull.Checked = Program.conf.TwitPicShowFull;
+            cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
+            cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
             if (cboTwitPicThumbnailMode.Items.Count == 0)
             {
                 cboTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
             }
 
-            cboTwitPicThumbnailMode.SelectedIndex = (int)Program.conf.TwitPicThumbnailMode;
+            cboTwitPicThumbnailMode.SelectedIndex = (int)Engine.conf.TwitPicThumbnailMode;
 
             // yFrog
 
@@ -658,26 +658,26 @@ namespace ZScreenGUI
                 cboYfrogUploadMode.Items.AddRange(typeof(YfrogUploadType).GetDescriptions());
             }
 
-            cboYfrogUploadMode.SelectedIndex = (int)Program.conf.YfrogUploadMode;
+            cboYfrogUploadMode.SelectedIndex = (int)Engine.conf.YfrogUploadMode;
 
             // ImageBam
 
-            txtImageBamApiKey.Text = Program.conf.ImageBamApiKey;
-            txtImageBamSecret.Text = Program.conf.ImageBamSecret;
-            chkImageBamContentNSFW.Checked = Program.conf.ImageBamContentNSFW;
-            if (Program.conf.ImageBamGallery.Count == 0)
+            txtImageBamApiKey.Text = Engine.conf.ImageBamApiKey;
+            txtImageBamSecret.Text = Engine.conf.ImageBamSecret;
+            chkImageBamContentNSFW.Checked = Engine.conf.ImageBamContentNSFW;
+            if (Engine.conf.ImageBamGallery.Count == 0)
             {
-                Program.conf.ImageBamGallery.Add(string.Empty);
+                Engine.conf.ImageBamGallery.Add(string.Empty);
             }
 
-            foreach (string id in Program.conf.ImageBamGallery)
+            foreach (string id in Engine.conf.ImageBamGallery)
             {
                 lbImageBamGalleries.Items.Add(id);
             }
 
-            if (lbImageBamGalleries.Items.Count > Program.conf.ImageBamGalleryActive)
+            if (lbImageBamGalleries.Items.Count > Engine.conf.ImageBamGalleryActive)
             {
-                lbImageBamGalleries.SelectedIndex = Program.conf.ImageBamGalleryActive;
+                lbImageBamGalleries.SelectedIndex = Engine.conf.ImageBamGalleryActive;
             }
             else
             {
@@ -686,9 +686,9 @@ namespace ZScreenGUI
 
             // Flickr
 
-            pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
-            pgFlickrSettings.SelectedObject = Program.conf.FlickrSettings;
-            btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Program.conf.FlickrAuthInfo.Username);
+            pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
+            pgFlickrSettings.SelectedObject = Engine.conf.FlickrSettings;
+            btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
 
             #endregion
 
@@ -699,7 +699,7 @@ namespace ZScreenGUI
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
 
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileDestMode;
 
             // RapidShare
 
@@ -708,10 +708,10 @@ namespace ZScreenGUI
                 cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
             }
 
-            cboRapidShareAcctType.SelectedIndex = (int)Program.conf.RapidShareAccountType;
-            txtRapidShareCollectorID.Text = Program.conf.RapidShareCollectorsID;
-            txtRapidSharePassword.Text = Program.conf.RapidSharePassword;
-            txtRapidSharePremiumUserName.Text = Program.conf.RapidSharePremiumUserName;
+            cboRapidShareAcctType.SelectedIndex = (int)Engine.conf.RapidShareAccountType;
+            txtRapidShareCollectorID.Text = Engine.conf.RapidShareCollectorsID;
+            txtRapidSharePassword.Text = Engine.conf.RapidSharePassword;
+            txtRapidSharePremiumUserName.Text = Engine.conf.RapidSharePremiumUserName;
 
             // SendSpace
 
@@ -720,37 +720,37 @@ namespace ZScreenGUI
                 cboSendSpaceAcctType.Items.AddRange(typeof(AcctType).GetDescriptions());
             }
 
-            cboSendSpaceAcctType.SelectedIndex = (int)Program.conf.SendSpaceAccountType;
-            txtSendSpacePassword.Text = Program.conf.SendSpacePassword;
-            txtSendSpaceUserName.Text = Program.conf.SendSpaceUserName;
+            cboSendSpaceAcctType.SelectedIndex = (int)Engine.conf.SendSpaceAccountType;
+            txtSendSpacePassword.Text = Engine.conf.SendSpacePassword;
+            txtSendSpaceUserName.Text = Engine.conf.SendSpaceUserName;
             #endregion
 
             // Others
 
-            cbAutoSwitchFileUploader.Checked = Program.conf.AutoSwitchFileUploader;
-            nudErrorRetry.Value = Program.conf.ErrorRetryCount;
-            cboImageUploadRetryOnTimeout.Checked = Program.conf.ImageUploadRetryOnTimeout;
-            nudUploadDurationLimit.Value = Program.conf.UploadDurationLimit;
+            cbAutoSwitchFileUploader.Checked = Engine.conf.AutoSwitchFileUploader;
+            nudErrorRetry.Value = Engine.conf.ErrorRetryCount;
+            cboImageUploadRetryOnTimeout.Checked = Engine.conf.ImageUploadRetryOnTimeout;
+            nudUploadDurationLimit.Value = Engine.conf.UploadDurationLimit;
 
             if (cboUploadMode.Items.Count == 0)
             {
                 cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
             }
 
-            cboUploadMode.SelectedIndex = (int)Program.conf.UploadMode;
-            chkImageUploadRetryOnFail.Checked = Program.conf.ImageUploadRetryOnFail;
-            cbClipboardTranslate.Checked = Program.conf.ClipboardTranslate;
-            cbAutoTranslate.Checked = Program.conf.AutoTranslate;
-            txtAutoTranslate.Text = Program.conf.AutoTranslateLength.ToString();
-            cbAddFailedScreenshot.Checked = Program.conf.AddFailedScreenshot;
-            cbTinyPicSizeCheck.Checked = Program.conf.TinyPicSizeCheck;
+            cboUploadMode.SelectedIndex = (int)Engine.conf.UploadMode;
+            chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
+            cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
+            cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
+            txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
+            cbAddFailedScreenshot.Checked = Engine.conf.AddFailedScreenshot;
+            cbTinyPicSizeCheck.Checked = Engine.conf.TinyPicSizeCheck;
 
             // Web Page Upload
 
-            cbWebPageUseCustomSize.Checked = Program.conf.WebPageUseCustomSize;
-            txtWebPageWidth.Text = Program.conf.WebPageWidth.ToString();
-            txtWebPageHeight.Text = Program.conf.WebPageHeight.ToString();
-            cbWebPageAutoUpload.Checked = Program.conf.WebPageAutoUpload;
+            cbWebPageUseCustomSize.Checked = Engine.conf.WebPageUseCustomSize;
+            txtWebPageWidth.Text = Engine.conf.WebPageWidth.ToString();
+            txtWebPageHeight.Text = Engine.conf.WebPageHeight.ToString();
+            cbWebPageAutoUpload.Checked = Engine.conf.WebPageAutoUpload;
 
             #region Image Editors
 
@@ -758,25 +758,25 @@ namespace ZScreenGUI
             // Image Editors Settings
             ///////////////////////////////////
 
-            Software disabled = new Software(Program.DISABLED_IMAGE_EDITOR, string.Empty, true);
-            Software editor = new Software(Program.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
+            Software disabled = new Software(Engine.DISABLED_IMAGE_EDITOR, string.Empty, true);
+            Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
             Software paint = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
 
-            Program.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Program.DISABLED_IMAGE_EDITOR ||
-                x.Name == Program.ZSCREEN_IMAGE_EDITOR || x.Name == "Paint" || !File.Exists(x.Path));
+            Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.DISABLED_IMAGE_EDITOR ||
+                x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == "Paint" || !File.Exists(x.Path));
 
-            Program.conf.ImageEditors.Insert(0, disabled);
-            Program.conf.ImageEditors.Insert(1, editor);
+            Engine.conf.ImageEditors.Insert(0, disabled);
+            Engine.conf.ImageEditors.Insert(1, editor);
             if (File.Exists(paint.Path))
             {
-                Program.conf.ImageEditors.Insert(2, paint);
+                Engine.conf.ImageEditors.Insert(2, paint);
             }
 
             RegistryMgr.FindImageEditors();
 
             lbImageSoftware.Items.Clear();
 
-            foreach (Software app in Program.conf.ImageEditors)
+            foreach (Software app in Engine.conf.ImageEditors)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {
@@ -785,7 +785,7 @@ namespace ZScreenGUI
             }
 
             int i;
-            if (Program.conf.ImageEditor != null && (i = lbImageSoftware.Items.IndexOf(Program.conf.ImageEditor.Name)) != -1)
+            if (Engine.conf.ImageEditor != null && (i = lbImageSoftware.Items.IndexOf(Engine.conf.ImageEditor.Name)) != -1)
             {
                 lbImageSoftware.SelectedIndex = i;
             }
@@ -794,13 +794,13 @@ namespace ZScreenGUI
                 lbImageSoftware.SelectedIndex = 0;
             }
 
-            chkImageEditorAutoSave.Checked = Program.conf.ImageEditorAutoSave;
+            chkImageEditorAutoSave.Checked = Engine.conf.ImageEditorAutoSave;
 
             // Text Editors
 
-            if (Program.conf.TextEditors.Count == 0)
+            if (Engine.conf.TextEditors.Count == 0)
             {
-                Program.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
+                Engine.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
             }
 
             #endregion
@@ -808,28 +808,28 @@ namespace ZScreenGUI
             #region Options
 
             chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
-            chkOpenMainWindow.Checked = Program.conf.OpenMainWindow;
-            chkShowTaskbar.Checked = Program.conf.ShowInTaskbar;
-            chkShowTaskbar.Enabled = !Program.conf.Windows7TaskbarIntegration;
-            cbShowHelpBalloonTips.Checked = Program.conf.ShowHelpBalloonTips;
-            cbSaveFormSizePosition.Checked = Program.conf.SaveFormSizePosition;
-            cbLockFormSize.Checked = Program.conf.LockFormSize;
-            cbAutoSaveSettings.Checked = Program.conf.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Program.conf.Windows7TaskbarIntegration;
+            chkOpenMainWindow.Checked = Engine.conf.OpenMainWindow;
+            chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
+            chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
+            cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
+            cbSaveFormSizePosition.Checked = Engine.conf.SaveFormSizePosition;
+            cbLockFormSize.Checked = Engine.conf.LockFormSize;
+            cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
+            chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
 
             #endregion
 
-            chkProxyEnable.Checked = Program.conf.ProxyEnabled;
-            ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
+            chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
+            ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
 
-            cbCheckUpdates.Checked = Program.conf.CheckUpdates;
-            cbCheckUpdatesBeta.Checked = Program.conf.CheckUpdatesBeta;
-            nudCacheSize.Value = Program.conf.ScreenshotCacheSize;
-            cbDeleteLocal.Checked = Program.conf.DeleteLocal;
+            cbCheckUpdates.Checked = Engine.conf.CheckUpdates;
+            cbCheckUpdatesBeta.Checked = Engine.conf.CheckUpdatesBeta;
+            nudCacheSize.Value = Engine.conf.ScreenshotCacheSize;
+            cbDeleteLocal.Checked = Engine.conf.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
-            zWatcher.FolderPath = Program.conf.FolderMonitorPath;
-            if (Program.conf.FolderMonitoring)
+            zWatcher.FolderPath = Engine.conf.FolderMonitorPath;
+            if (Engine.conf.FolderMonitoring)
             {
                 zWatcher.StartWatching();
             }
@@ -839,16 +839,16 @@ namespace ZScreenGUI
             }
 
             // Naming Conventions
-            txtActiveWindow.Text = Program.conf.ActiveWindowPattern;
-            txtEntireScreen.Text = Program.conf.EntireScreenPattern;
-            txtImagesFolderPattern.Text = Program.conf.SaveFolderPattern;
+            txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
+            txtEntireScreen.Text = Engine.conf.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Engine.conf.SaveFolderPattern;
 
             // Proxy Settings
 
-            Proxyetup(Program.conf.ProxyList);
+            Proxyetup(Engine.conf.ProxyList);
             if (ucProxyAccounts.AccountsList.Items.Count > 0)
             {
-                ucProxyAccounts.AccountsList.SelectedIndex = Program.conf.ProxySelected;
+                ucProxyAccounts.AccountsList.SelectedIndex = Engine.conf.ProxySelected;
             }
 
             Uploader.ProxySettings = Adapter.GetProxySettings();
@@ -858,14 +858,14 @@ namespace ZScreenGUI
             ///////////////////////////////////
 
             lbImageUploader.Items.Clear();
-            if (Program.conf.ImageUploadersList == null)
+            if (Engine.conf.ImageUploadersList == null)
             {
-                Program.conf.ImageUploadersList = new List<ImageHostingService>();
+                Engine.conf.ImageUploadersList = new List<ImageHostingService>();
                 LoadImageUploaders(new ImageHostingService());
             }
             else
             {
-                List<ImageHostingService> iUploaders = Program.conf.ImageUploadersList;
+                List<ImageHostingService> iUploaders = Engine.conf.ImageUploadersList;
                 foreach (ImageHostingService iUploader in iUploaders)
                 {
                     lbImageUploader.Items.Add(iUploader.Name);
@@ -873,12 +873,12 @@ namespace ZScreenGUI
 
                 if (lbImageUploader.Items.Count > 0)
                 {
-                    lbImageUploader.SelectedIndex = Program.conf.ImageUploaderSelected;
+                    lbImageUploader.SelectedIndex = Engine.conf.ImageUploaderSelected;
                 }
 
                 if (lbImageUploader.SelectedIndex != -1)
                 {
-                    LoadImageUploaders(Program.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
+                    LoadImageUploaders(Engine.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
                 }
             }
 
@@ -886,7 +886,7 @@ namespace ZScreenGUI
 
             if (mGuiIsReady)
             {
-                nudHistoryMaxItems.Value = Program.conf.HistoryMaxNumber;
+                nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
                 Loader.Worker.UpdateGuiControlsHistory();
             }
             else
@@ -916,15 +916,15 @@ namespace ZScreenGUI
 
         private void UpdateGuiControlsPaths()
         {
-            Program.InitializeDefaultFolderPaths();
-            txtImagesDir.Text = Program.ImagesDir;
-            txtCacheDir.Text = Program.CacheDir;
-            txtSettingsDir.Text = Program.SettingsDir;
+            Engine.InitializeDefaultFolderPaths();
+            txtImagesDir.Text = Engine.ImagesDir;
+            txtCacheDir.Text = Engine.CacheDir;
+            txtSettingsDir.Text = Engine.SettingsDir;
         }
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CloseQuickActions = cbCloseQuickActions.Checked;
+            Engine.conf.CloseQuickActions = cbCloseQuickActions.Checked;
         }
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -935,12 +935,12 @@ namespace ZScreenGUI
 
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropRegionRectangleInfo = cbRegionRectangleInfo.Checked;
+            Engine.conf.CropRegionRectangleInfo = cbRegionRectangleInfo.Checked;
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropRegionHotkeyInfo = cbRegionHotkeyInfo.Checked;
+            Engine.conf.CropRegionHotkeyInfo = cbRegionHotkeyInfo.Checked;
         }
 
         private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -960,7 +960,7 @@ namespace ZScreenGUI
 
         private void nErrorRetry_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ErrorRetryCount = nudErrorRetry.Value;
+            Engine.conf.ErrorRetryCount = nudErrorRetry.Value;
         }
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
@@ -974,19 +974,19 @@ namespace ZScreenGUI
             {
                 if (this.WindowState == FormWindowState.Minimized)
                 {
-                    if (!Program.conf.ShowInTaskbar)
+                    if (!Engine.conf.ShowInTaskbar)
                     {
                         this.Hide();
                     }
 
-                    if (Program.conf.AutoSaveSettings)
+                    if (Engine.conf.AutoSaveSettings)
                     {
                         WriteSettings();
                     }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
                 {
-                    this.ShowInTaskbar = Program.conf.ShowInTaskbar;
+                    this.ShowInTaskbar = Engine.conf.ShowInTaskbar;
                     this.Refresh();
                 }
             }
@@ -1004,7 +1004,7 @@ namespace ZScreenGUI
             if (!mClose)
             {
                 e.Cancel = true; // cancel the Close
-                if (Program.conf.MinimizeOnClose)
+                if (Engine.conf.MinimizeOnClose)
                 {
                     this.WindowState = FormWindowState.Minimized;
                 }
@@ -1017,15 +1017,15 @@ namespace ZScreenGUI
 
         private void WriteSettings()
         {
-            if (mGuiIsReady && Program.conf.SaveFormSizePosition && this.WindowState == FormWindowState.Normal)
+            if (mGuiIsReady && Engine.conf.SaveFormSizePosition && this.WindowState == FormWindowState.Normal)
             {
-                Program.conf.WindowLocation = this.Location;
-                Program.conf.WindowSize = this.Size;
+                Engine.conf.WindowLocation = this.Location;
+                Engine.conf.WindowSize = this.Size;
             }
 
-            Program.conf.WindowState = this.WindowState;
+            Engine.conf.WindowState = this.WindowState;
 
-            Program.conf.Write();
+            Engine.conf.Write();
             Loader.Worker.SaveHistoryItems();
 
             FileSystem.AppendDebug("Settings written to file.");
@@ -1033,13 +1033,13 @@ namespace ZScreenGUI
 
         private void RewriteImageEditorsRightClickMenu()
         {
-            if (Program.conf.ImageEditors != null)
+            if (Engine.conf.ImageEditors != null)
             {
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 tsmEditinImageSoftware.DropDownItems.Clear();
 
-                List<Software> imgs = Program.conf.ImageEditors;
+                List<Software> imgs = Engine.conf.ImageEditors;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1049,7 +1049,7 @@ namespace ZScreenGUI
                     ToolStripMenuItem tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
                     tsm.Click += new EventHandler(TrayImageEditorClick);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
-                    if (imgs[x].Name == Program.DISABLED_IMAGE_EDITOR)
+                    if (imgs[x].Name == Engine.DISABLED_IMAGE_EDITOR)
                     {
                         tsmEditinImageSoftware.DropDownItems.Add(new ToolStripSeparator());
                     }
@@ -1059,11 +1059,11 @@ namespace ZScreenGUI
 
                 if (Adapter.ImageSoftwareEnabled())
                 {
-                    CheckCorrectIsRightClickMenu(Program.conf.ImageEditor.Name);
+                    CheckCorrectIsRightClickMenu(Engine.conf.ImageEditor.Name);
                 }
                 else
                 {
-                    CheckCorrectIsRightClickMenu(Program.DISABLED_IMAGE_EDITOR);
+                    CheckCorrectIsRightClickMenu(Engine.DISABLED_IMAGE_EDITOR);
                 }
 
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1092,7 +1092,7 @@ namespace ZScreenGUI
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
-            Program.conf.ImageEditor = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
+            Engine.conf.ImageEditor = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
 
             if (lbImageSoftware.Items.IndexOf(tsm.Text) >= 0)
             {
@@ -1125,9 +1125,9 @@ namespace ZScreenGUI
 
         private void RewriteCustomUploaderRightClickMenu()
         {
-            if (Program.conf.ImageUploadersList != null)
+            if (Engine.conf.ImageUploadersList != null)
             {
-                List<ImageHostingService> lUploaders = Program.conf.ImageUploadersList;
+                List<ImageHostingService> lUploaders = Engine.conf.ImageUploadersList;
 
                 ToolStripMenuItem tsmDestCustomHTTP = GetImageDestMenuItem(ImageDestType.CUSTOM_UPLOADER);
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1141,7 +1141,7 @@ namespace ZScreenGUI
                     tsmDestCustomHTTP.DropDownItems.Add(tsm);
                 }
 
-                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Program.conf.ImageUploaderSelected);
+                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Engine.conf.ImageUploaderSelected);
 
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
@@ -1195,26 +1195,26 @@ namespace ZScreenGUI
                 tsmCopytoClipboardMode.DropDownItems.Add(tsm);
             }
 
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Engine.conf.ClipboardUriMode);
             tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
         }
 
         private void ClipboardModeClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            Program.conf.ClipboardUriMode = (ClipboardUriType)tsm.Tag;
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
-            cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
+            Engine.conf.ClipboardUriMode = (ClipboardUriType)tsm.Tag;
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Engine.conf.ClipboardUriMode);
+            cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
         }
 
         private void RewriteFTPRightClickMenu()
         {
-            if (Program.conf.FTPAccountList != null)
+            if (Engine.conf.FTPAccountList != null)
             {
                 ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmDestFTP.DropDownItems.Clear();
-                List<FTPAccount> accs = Program.conf.FTPAccountList;
+                List<FTPAccount> accs = Engine.conf.FTPAccountList;
                 ToolStripMenuItem tsm;
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1227,7 +1227,7 @@ namespace ZScreenGUI
                 }
 
                 //check the active ftpUpload account
-                CheckCorrectMenuItemClicked(ref tsmDestFTP, Program.conf.FTPSelected);
+                CheckCorrectMenuItemClicked(ref tsmDestFTP, Engine.conf.FTPSelected);
                 tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
                 //show drop down menu in the correct place if menu is selected
@@ -1272,7 +1272,7 @@ namespace ZScreenGUI
                 if (temp != null)
                 {
                     lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-                    Program.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
+                    Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
                     ShowImageEditorsSettings();
                 }
             }
@@ -1316,7 +1316,7 @@ namespace ZScreenGUI
 
         private void tsmViewRemote_Click(object sender, EventArgs e)
         {
-            if (Program.conf.FTPAccountList.Count > 0)
+            if (Engine.conf.FTPAccountList.Count > 0)
             {
                 new ViewRemote().Show();
             }
@@ -1365,7 +1365,7 @@ namespace ZScreenGUI
 
         private void btnBrowseConfig_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.SettingsDir);
+            ShowDirectory(Engine.SettingsDir);
         }
 
         private void tsmLic_Click(object sender, EventArgs e)
@@ -1375,37 +1375,37 @@ namespace ZScreenGUI
 
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ManualNaming = chkManualNaming.Checked;
+            Engine.conf.ManualNaming = chkManualNaming.Checked;
         }
 
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
 
-            if (!Program.conf.RunOnce)
+            if (!Engine.conf.RunOnce)
             {
                 Show();
                 WindowState = FormWindowState.Normal;
                 this.Activate();
                 this.BringToFront();
-                Program.conf.RunOnce = true;
+                Engine.conf.RunOnce = true;
             }
 
-            if (Program.conf.BackupFTPSettings)
+            if (Engine.conf.BackupFTPSettings)
             {
                 FileSystem.BackupFTPSettings();
             }
 
-            if (Program.conf.BackupApplicationSettings)
+            if (Engine.conf.BackupApplicationSettings)
             {
                 FileSystem.BackupAppSettings();
             }
 
             // Loader.Splash.Close();
-            if (Program.conf.Windows7TaskbarIntegration)
+            if (Engine.conf.Windows7TaskbarIntegration)
             {
                 ZScreen_Windows7onlyTasks();
-                if (!Program.conf.OpenMainWindow)
+                if (!Engine.conf.OpenMainWindow)
                 {
                     this.WindowState = FormWindowState.Minimized;
                     this.ShowInTaskbar = true;
@@ -1435,37 +1435,37 @@ namespace ZScreenGUI
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.FlashTrayCount = nudFlashIconCount.Value;
+            Engine.conf.FlashTrayCount = nudFlashIconCount.Value;
         }
 
         private void nudCacheSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ScreenshotCacheSize = nudCacheSize.Value;
+            Engine.conf.ScreenshotCacheSize = nudCacheSize.Value;
         }
 
         private void txtCacheDir_TextChanged(object sender, EventArgs e)
         {
-            Program.CacheDir = txtCacheDir.Text;
+            Engine.CacheDir = txtCacheDir.Text;
         }
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = Program.FILTER_SETTINGS };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_SETTINGS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Program.conf.Write(dlg.FileName);
+                Engine.conf.Write(dlg.FileName);
             }
         }
 
         private void btnSettingsImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
                 if (temp.RunOnce)
                 {
-                    Program.conf = temp;
+                    Engine.conf = temp;
                     ZScreen_ConfigGUI();
                 }
             }
@@ -1475,7 +1475,7 @@ namespace ZScreenGUI
         {
             if (temp != null)
             {
-                Program.conf.ImageEditors.Add(temp);
+                Engine.conf.ImageEditors.Add(temp);
                 lbImageSoftware.Items.Add(temp);
                 lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
             }
@@ -1496,7 +1496,7 @@ namespace ZScreenGUI
 
             if (sel != -1)
             {
-                Program.conf.ImageEditors.RemoveAt(sel);
+                Engine.conf.ImageEditors.RemoveAt(sel);
 
                 lbImageSoftware.Items.RemoveAt(sel);
 
@@ -1525,7 +1525,7 @@ namespace ZScreenGUI
         private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            Program.conf.ScreenshotDestMode = sdt;
+            Engine.conf.ScreenshotDestMode = sdt;
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
             CheckSendToMenu(GetImageDestMenuItem(sdt));
@@ -1549,7 +1549,7 @@ namespace ZScreenGUI
 
         private void SetActiveImageSoftware()
         {
-            Program.conf.ImageEditor = Program.conf.ImageEditors[lbImageSoftware.SelectedIndex];
+            Engine.conf.ImageEditor = Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex];
             RewriteImageEditorsRightClickMenu();
         }
 
@@ -1565,7 +1565,7 @@ namespace ZScreenGUI
                     pgEditorsImage.Enabled = !app.Protected;
                     btnRemoveImageEditor.Enabled = !app.Protected;
 
-                    gbImageEditorSettings.Visible = app.Name == Program.ZSCREEN_IMAGE_EDITOR;
+                    gbImageEditorSettings.Visible = app.Name == Engine.ZSCREEN_IMAGE_EDITOR;
 
                     SetActiveImageSoftware();
                 }
@@ -1579,7 +1579,7 @@ namespace ZScreenGUI
 
         private void cboClipboardTextMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.ClipboardUriMode = (ClipboardUriType)cboClipboardTextMode.SelectedIndex;
+            Engine.conf.ClipboardUriMode = (ClipboardUriType)cboClipboardTextMode.SelectedIndex;
             UpdateClipboardTextTrayMenu();
         }
 
@@ -1590,65 +1590,65 @@ namespace ZScreenGUI
                 tsmi.Checked = false;
             }
 
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Program.conf.ClipboardUriMode);
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Engine.conf.ClipboardUriMode);
         }
 
         private void txtFileDirectory_TextChanged(object sender, EventArgs e)
         {
-            Program.ImagesDir = txtImagesDir.Text;
+            Engine.ImagesDir = txtImagesDir.Text;
         }
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.DeleteLocal = cbDeleteLocal.Checked;
+            Engine.conf.DeleteLocal = cbDeleteLocal.Checked;
         }
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ActiveWindowPattern = txtActiveWindow.Text;
+            Engine.conf.ActiveWindowPattern = txtActiveWindow.Text;
             lblActiveWindowPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.ActiveWindow) { IsPreview = true });
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.EntireScreenPattern = txtEntireScreen.Text;
+            Engine.conf.EntireScreenPattern = txtEntireScreen.Text;
             lblEntireScreenPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true });
         }
 
         private void cmbFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FileFormat = cbFileFormat.SelectedIndex;
+            Engine.conf.FileFormat = cbFileFormat.SelectedIndex;
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageQuality = nudImageQuality.Value;
+            Engine.conf.ImageQuality = nudImageQuality.Value;
         }
 
         private void cmbSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.SwitchFormat = cbSwitchFormat.SelectedIndex;
+            Engine.conf.SwitchFormat = cbSwitchFormat.SelectedIndex;
         }
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
         {
             if (mGuiIsReady)
             {
-                Program.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
+                Engine.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
             }
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowBalloonTip = cbShowPopup.Checked;
+            Engine.conf.ShowBalloonTip = cbShowPopup.Checked;
         }
 
         private void LoadSettingsDefault()
         {
-            Program.conf = new XMLSettings();
+            Engine.conf = new XMLSettings();
             ZScreen_ConfigGUI();
-            Program.conf.RunOnce = true;
-            Program.conf.Write();
+            Engine.conf.RunOnce = true;
+            Engine.conf.Write();
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
@@ -1677,7 +1677,7 @@ namespace ZScreenGUI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (Program.conf.BalloonTipOpenLink)
+            if (Engine.conf.BalloonTipOpenLink)
             {
                 try
                 {
@@ -1736,7 +1736,7 @@ namespace ZScreenGUI
             if (txtUploader.Text != string.Empty)
             {
                 ImageHostingService iUploader = GetUploaderFromFields();
-                Program.conf.ImageUploadersList.Add(iUploader);
+                Engine.conf.ImageUploadersList.Add(iUploader);
                 lbImageUploader.Items.Add(iUploader.Name);
                 lbImageUploader.SelectedIndex = lbImageUploader.Items.Count - 1;
             }
@@ -1747,7 +1747,7 @@ namespace ZScreenGUI
             if (lbImageUploader.SelectedIndex != -1)
             {
                 int selected = lbImageUploader.SelectedIndex;
-                Program.conf.ImageUploadersList.RemoveAt(selected);
+                Engine.conf.ImageUploadersList.RemoveAt(selected);
                 lbImageUploader.Items.RemoveAt(selected);
                 LoadImageUploaders(new ImageHostingService());
             }
@@ -1840,8 +1840,8 @@ namespace ZScreenGUI
         {
             if (lbImageUploader.SelectedIndex != -1)
             {
-                LoadImageUploaders(Program.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
-                Program.conf.ImageUploaderSelected = lbImageUploader.SelectedIndex;
+                LoadImageUploaders(Engine.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
+                Engine.conf.ImageUploaderSelected = lbImageUploader.SelectedIndex;
                 RewriteCustomUploaderRightClickMenu();
             }
         }
@@ -1875,7 +1875,7 @@ namespace ZScreenGUI
             {
                 ImageHostingService iUploader = GetUploaderFromFields();
                 iUploader.Name = lbImageUploader.SelectedItem.ToString();
-                Program.conf.ImageUploadersList[lbImageUploader.SelectedIndex] = iUploader;
+                Engine.conf.ImageUploadersList[lbImageUploader.SelectedIndex] = iUploader;
             }
 
             RewriteCustomUploaderRightClickMenu();
@@ -1897,18 +1897,18 @@ namespace ZScreenGUI
 
         private void btnUploaderExport_Click(object sender, EventArgs e)
         {
-            if (Program.conf.ImageUploadersList != null)
+            if (Engine.conf.ImageUploadersList != null)
             {
                 SaveFileDialog dlg = new SaveFileDialog
                 {
                     FileName = string.Format("{0}-{1}-uploaders", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
-                    Filter = Program.FILTER_IMAGE_HOSTING_SERVICES
+                    Filter = Engine.FILTER_IMAGE_HOSTING_SERVICES
                 };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     ImageHostingServiceManager ihsm = new ImageHostingServiceManager
                     {
-                        ImageHostingServices = Program.conf.ImageUploadersList
+                        ImageHostingServices = Engine.conf.ImageUploadersList
                     };
                     ihsm.Save(dlg.FileName);
                 }
@@ -1921,9 +1921,9 @@ namespace ZScreenGUI
             if (tmp != null)
             {
                 lbImageUploader.Items.Clear();
-                Program.conf.ImageUploadersList = new List<ImageHostingService>();
-                Program.conf.ImageUploadersList.AddRange(tmp.ImageHostingServices);
-                foreach (ImageHostingService iHostingService in Program.conf.ImageUploadersList)
+                Engine.conf.ImageUploadersList = new List<ImageHostingService>();
+                Engine.conf.ImageUploadersList.AddRange(tmp.ImageHostingServices);
+                foreach (ImageHostingService iHostingService in Engine.conf.ImageUploadersList)
                 {
                     lbImageUploader.Items.Add(iHostingService.Name);
                 }
@@ -1932,12 +1932,12 @@ namespace ZScreenGUI
 
         private void btnUploaderImport_Click(object sender, EventArgs e)
         {
-            if (Program.conf.ImageUploadersList == null)
+            if (Engine.conf.ImageUploadersList == null)
             {
-                Program.conf.ImageUploadersList = new List<ImageHostingService>();
+                Engine.conf.ImageUploadersList = new List<ImageHostingService>();
             }
 
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_IMAGE_HOSTING_SERVICES };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_IMAGE_HOSTING_SERVICES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 ImportImageUploaders(dlg.FileName);
@@ -1966,7 +1966,7 @@ namespace ZScreenGUI
 
         private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
         {
-            string path = ifm.GetSource(Program.TempDir, sType);
+            string path = ifm.GetSource(Engine.TempDir, sType);
             if (!string.IsNullOrEmpty(path))
             {
                 if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
@@ -2030,7 +2030,7 @@ namespace ZScreenGUI
 
         private void AddHotkey(string name)
         {
-            object obj = Program.conf.GetFieldValue("Hotkey" + name.Replace(" ", string.Empty));
+            object obj = Engine.conf.GetFieldValue("Hotkey" + name.Replace(" ", string.Empty));
             if (obj != null && obj.GetType() == typeof(Keys))
             {
                 dgvHotkeys.Rows.Add(name, ((Keys)obj).ToSpecialString());
@@ -2099,12 +2099,12 @@ namespace ZScreenGUI
 
         private void txtTinyPicShuk_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.TinyPicShuk = txtTinyPicShuk.Text;
+            Engine.conf.TinyPicShuk = txtTinyPicShuk.Text;
         }
 
         private void CheckFormSettings()
         {
-            if (Program.conf.LockFormSize)
+            if (Engine.conf.LockFormSize)
             {
                 if (this.FormBorderStyle != FormBorderStyle.FixedSingle)
                 {
@@ -2124,32 +2124,32 @@ namespace ZScreenGUI
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.CropRegionStyles = (RegionStyles)cbCropStyle.SelectedIndex;
+            Engine.conf.CropRegionStyles = (RegionStyles)cbCropStyle.SelectedIndex;
         }
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.CropBorderColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.CropBorderColor);
         }
 
         private void nudCropBorderSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropBorderSize = nudCropBorderSize.Value;
+            Engine.conf.CropBorderSize = nudCropBorderSize.Value;
         }
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Program.URL_ISSUES);
+            Process.Start(Engine.URL_ISSUES);
         }
 
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CompleteSound = cbCompleteSound.Checked;
+            Engine.conf.CompleteSound = cbCompleteSound.Checked;
         }
 
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CheckUpdates = cbCheckUpdates.Checked;
+            Engine.conf.CheckUpdates = cbCheckUpdates.Checked;
         }
 
         private void txtActiveHelp_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -2173,13 +2173,13 @@ namespace ZScreenGUI
 
                 if (screenshots.Count > 0)
                 {
-                    if (Program.conf.HistoryReverseList)
+                    if (Engine.conf.HistoryReverseList)
                     {
                         screenshots.Reverse();
                     }
 
                     StringBuilder sb = new StringBuilder();
-                    if (Program.conf.HistoryAddSpace)
+                    if (Engine.conf.HistoryAddSpace)
                     {
                         sb.AppendLine();
                     }
@@ -2226,7 +2226,7 @@ namespace ZScreenGUI
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
                     bool checkImage = GraphicsMgr.IsValidImage(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
-                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Program.conf.PreferBrowserForImages) || (checkText && Program.conf.PreferBrowserForText);
+                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Engine.conf.PreferBrowserForImages) || (checkText && Engine.conf.PreferBrowserForText);
                     bool checkBinary = !checkImage && !checkText && !checkWebpage;
 
                     historyBrowser.Visible = checkWebpage;
@@ -2277,7 +2277,7 @@ namespace ZScreenGUI
                     lblHistoryScreenshot.Text = hi.Description;
                 }
 
-                if (Program.conf.HistoryShowTooltips && hi != null)
+                if (Engine.conf.HistoryShowTooltips && hi != null)
                 {
                     ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
                     ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
@@ -2329,7 +2329,7 @@ namespace ZScreenGUI
 
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkText = txtWatermarkText.Text;
+            Engine.conf.WatermarkText = txtWatermarkText.Text;
             TestWatermark();
         }
 
@@ -2380,7 +2380,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowCursor = cbShowCursor.Checked;
+            Engine.conf.ShowCursor = cbShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
@@ -2390,14 +2390,14 @@ namespace ZScreenGUI
                 FontDialog fDialog = new FontDialog
                 {
                     ShowColor = true,
-                    Font = XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
-                    Color = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor)
+                    Font = XMLSettings.DeserializeFont(Engine.conf.WatermarkFont),
+                    Color = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor)
                 };
                 if (fDialog.ShowDialog() == DialogResult.OK)
                 {
-                    Program.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
-                    Program.conf.WatermarkFontColor = XMLSettings.SerializeColor(fDialog.Color);
-                    pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor);
+                    Engine.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
+                    Engine.conf.WatermarkFontColor = XMLSettings.SerializeColor(fDialog.Color);
+                    pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
                     lblWatermarkFont.Text = FontToString();
                 }
 
@@ -2411,8 +2411,8 @@ namespace ZScreenGUI
 
         private string FontToString()
         {
-            return FontToString(XMLSettings.DeserializeFont(Program.conf.WatermarkFont),
-                 XMLSettings.DeserializeColor(Program.conf.WatermarkFontColor));
+            return FontToString(XMLSettings.DeserializeFont(Engine.conf.WatermarkFont),
+                 XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor));
         }
 
         private string FontToString(Font font, Color color)
@@ -2423,13 +2423,13 @@ namespace ZScreenGUI
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkOffset = nudWatermarkOffset.Value;
+            Engine.conf.WatermarkOffset = nudWatermarkOffset.Value;
             TestWatermark();
         }
 
         private void nudWatermarkBackTrans_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkBackTrans = nudWatermarkBackTrans.Value;
+            Engine.conf.WatermarkBackTrans = nudWatermarkBackTrans.Value;
             trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value;
         }
 
@@ -2479,19 +2479,19 @@ namespace ZScreenGUI
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.WatermarkGradient1);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient1);
             TestWatermark();
         }
 
         private void pbWatermarkGradient2_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.WatermarkGradient2);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient2);
             TestWatermark();
         }
 
         private void pbWatermarkBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.WatermarkBorderColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkBorderColor);
             TestWatermark();
         }
 
@@ -2519,7 +2519,7 @@ namespace ZScreenGUI
 
         private void pbWatermarkFontColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.WatermarkFontColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkFontColor);
             lblWatermarkFont.Text = FontToString();
             TestWatermark();
         }
@@ -2536,25 +2536,25 @@ namespace ZScreenGUI
 
         private void cbWatermarkPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkPositionMode = (WatermarkPositionType)cbWatermarkPosition.SelectedIndex;
+            Engine.conf.WatermarkPositionMode = (WatermarkPositionType)cbWatermarkPosition.SelectedIndex;
             TestWatermark();
         }
 
         private void nudWatermarkFontTrans_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkFontTrans = nudWatermarkFontTrans.Value;
+            Engine.conf.WatermarkFontTrans = nudWatermarkFontTrans.Value;
             trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;
         }
 
         private void nudWatermarkCornerRadius_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkCornerRadius = nudWatermarkCornerRadius.Value;
+            Engine.conf.WatermarkCornerRadius = nudWatermarkCornerRadius.Value;
             TestWatermark();
         }
 
         private void cbWatermarkGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
+            Engine.conf.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
             TestWatermark();
         }
 
@@ -2644,31 +2644,31 @@ namespace ZScreenGUI
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Program.CacheDir);
+            ShowDirectory(Engine.CacheDir);
         }
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.OpenMainWindow = chkOpenMainWindow.Checked;
+            Engine.conf.OpenMainWindow = chkOpenMainWindow.Checked;
         }
 
         private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowInTaskbar = chkShowTaskbar.Checked;
+            Engine.conf.ShowInTaskbar = chkShowTaskbar.Checked;
             if (mGuiIsReady)
             {
-                this.ShowInTaskbar = Program.conf.ShowInTaskbar;
+                this.ShowInTaskbar = Engine.conf.ShowInTaskbar;
             }
         }
 
         private void llWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Program.URL_WEBSITE);
+            Process.Start(Engine.URL_WEBSITE);
         }
 
         private void llProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Program.URL_PROJECTPAGE);
+            Process.Start(Engine.URL_PROJECTPAGE);
         }
 
         private void ZScreen_Deactivate(object sender, EventArgs e)
@@ -2710,7 +2710,7 @@ namespace ZScreenGUI
 
         private void chkBalloonTipOpenLink_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
+            Engine.conf.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
         }
 
         private void cmVersionHistory_Click(object sender, EventArgs e)
@@ -2728,23 +2728,23 @@ namespace ZScreenGUI
         private void btnTranslateMethod()
         {
             Loader.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
-                GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                GoogleTranslate.FindLanguage(Program.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
+                GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                GoogleTranslate.FindLanguage(Engine.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
         }
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FromLanguage = ZScreen.mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
+            Engine.conf.FromLanguage = ZScreen.mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
         }
 
         private void cbToLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.ToLanguage = ZScreen.mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
+            Engine.conf.ToLanguage = ZScreen.mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
         }
 
         private void cbClipboardTranslate_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ClipboardTranslate = cbClipboardTranslate.Checked;
+            Engine.conf.ClipboardTranslate = cbClipboardTranslate.Checked;
         }
 
         private void txtTranslateText_KeyDown(object sender, KeyEventArgs e)
@@ -2760,9 +2760,9 @@ namespace ZScreenGUI
 
         private void cboUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.UploadMode = (UploadMode)cboUploadMode.SelectedIndex;
-            gbImageShack.Enabled = Program.conf.UploadMode == UploadMode.API;
-            gbTinyPic.Enabled = Program.conf.UploadMode == UploadMode.API;
+            Engine.conf.UploadMode = (UploadMode)cboUploadMode.SelectedIndex;
+            gbImageShack.Enabled = Engine.conf.UploadMode == UploadMode.API;
+            gbTinyPic.Enabled = Engine.conf.UploadMode == UploadMode.API;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2819,7 +2819,7 @@ namespace ZScreenGUI
 
         private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageUploadRetryOnFail = chkImageUploadRetryOnFail.Checked;
+            Engine.conf.ImageUploadRetryOnFail = chkImageUploadRetryOnFail.Checked;
         }
 
         private void DekiWikiSetup(IEnumerable<DekiWikiAccount> accs)
@@ -2827,9 +2827,9 @@ namespace ZScreenGUI
             if (accs != null)
             {
                 ucMindTouchAccounts.AccountsList.Items.Clear();
-                Program.conf.DekiWikiAccountList = new List<DekiWikiAccount>();
-                Program.conf.DekiWikiAccountList.AddRange(accs);
-                foreach (DekiWikiAccount acc in Program.conf.DekiWikiAccountList)
+                Engine.conf.DekiWikiAccountList = new List<DekiWikiAccount>();
+                Engine.conf.DekiWikiAccountList.AddRange(accs);
+                foreach (DekiWikiAccount acc in Engine.conf.DekiWikiAccountList)
                 {
                     ucMindTouchAccounts.AccountsList.Items.Add(acc);
                 }
@@ -2841,9 +2841,9 @@ namespace ZScreenGUI
             if (accs != null)
             {
                 ucProxyAccounts.AccountsList.Items.Clear();
-                Program.conf.ProxyList = new List<ProxyInfo>();
-                Program.conf.ProxyList.AddRange(accs);
-                foreach (ProxyInfo acc in Program.conf.ProxyList)
+                Engine.conf.ProxyList = new List<ProxyInfo>();
+                Engine.conf.ProxyList.AddRange(accs);
+                foreach (ProxyInfo acc in Engine.conf.ProxyList)
                 {
                     ucProxyAccounts.AccountsList.Items.Add(acc);
                 }
@@ -2857,9 +2857,9 @@ namespace ZScreenGUI
             if (accs != null)
             {
                 ucFTPAccounts.AccountsList.Items.Clear();
-                Program.conf.FTPAccountList = new List<FTPAccount>();
-                Program.conf.FTPAccountList.AddRange(accs);
-                foreach (FTPAccount acc in Program.conf.FTPAccountList)
+                Engine.conf.FTPAccountList = new List<FTPAccount>();
+                Engine.conf.FTPAccountList.AddRange(accs);
+                foreach (FTPAccount acc in Engine.conf.FTPAccountList)
                 {
                     ucFTPAccounts.AccountsList.Items.Add(acc);
                 }
@@ -2871,7 +2871,7 @@ namespace ZScreenGUI
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
             if (ucFTPAccounts.RemoveItem(sel) == true)
             {
-                Program.conf.FTPAccountList.RemoveAt(sel);
+                Engine.conf.FTPAccountList.RemoveAt(sel);
             }
         }
 
@@ -2880,17 +2880,17 @@ namespace ZScreenGUI
             int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
             if (ucMindTouchAccounts.RemoveItem(sel) == true)
             {
-                Program.conf.DekiWikiAccountList.RemoveAt(sel);
+                Engine.conf.DekiWikiAccountList.RemoveAt(sel);
             }
         }
 
         private void FTPAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
-            Program.conf.FTPSelected = sel;
-            if (Program.conf.FTPAccountList != null && sel != -1 && sel < Program.conf.FTPAccountList.Count && Program.conf.FTPAccountList[sel] != null)
+            Engine.conf.FTPSelected = sel;
+            if (Engine.conf.FTPAccountList != null && sel != -1 && sel < Engine.conf.FTPAccountList.Count && Engine.conf.FTPAccountList[sel] != null)
             {
-                FTPAccount acc = Program.conf.FTPAccountList[sel];
+                FTPAccount acc = Engine.conf.FTPAccountList[sel];
                 ucFTPAccounts.SettingsGrid.SelectedObject = acc;
                 RewriteFTPRightClickMenu();
             }
@@ -2899,10 +2899,10 @@ namespace ZScreenGUI
         private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
-            Program.conf.DekiWikiSelected = sel;
-            if (Program.conf.DekiWikiAccountList != null && sel != -1 && sel < Program.conf.DekiWikiAccountList.Count && Program.conf.DekiWikiAccountList[sel] != null)
+            Engine.conf.DekiWikiSelected = sel;
+            if (Engine.conf.DekiWikiAccountList != null && sel != -1 && sel < Engine.conf.DekiWikiAccountList.Count && Engine.conf.DekiWikiAccountList[sel] != null)
             {
-                DekiWikiAccount acc = Program.conf.DekiWikiAccountList[sel];
+                DekiWikiAccount acc = Engine.conf.DekiWikiAccountList[sel];
                 ucMindTouchAccounts.SettingsGrid.SelectedObject = acc;
                 // RewriteFTPRightClickMenu();
             }
@@ -2911,7 +2911,7 @@ namespace ZScreenGUI
         private void FTPAccountAddButton_Click(object sender, EventArgs e)
         {
             FTPAccount acc = new FTPAccount("New Account");
-            Program.conf.FTPAccountList.Add(acc);
+            Engine.conf.FTPAccountList.Add(acc);
             ucFTPAccounts.AccountsList.Items.Add(acc);
             ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
         }
@@ -2919,23 +2919,23 @@ namespace ZScreenGUI
         private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
         {
             DekiWikiAccount acc = new DekiWikiAccount("New Account");
-            Program.conf.DekiWikiAccountList.Add(acc);
+            Engine.conf.DekiWikiAccountList.Add(acc);
             ucMindTouchAccounts.AccountsList.Items.Add(acc);
             ucMindTouchAccounts.AccountsList.SelectedIndex = ucMindTouchAccounts.AccountsList.Items.Count - 1;
         }
 
         private void btnExportAccounts_Click(object sender, EventArgs e)
         {
-            if (Program.conf.FTPAccountList != null)
+            if (Engine.conf.FTPAccountList != null)
             {
                 SaveFileDialog dlg = new SaveFileDialog
                 {
                     FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
-                    Filter = Program.FILTER_ACCOUNTS
+                    Filter = Engine.FILTER_ACCOUNTS
                 };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Program.conf.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.conf.FTPAccountList);
                     fam.Save(dlg.FileName);
                 }
             }
@@ -2943,7 +2943,7 @@ namespace ZScreenGUI
 
         private void btnAccsImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_ACCOUNTS };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_ACCOUNTS };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
@@ -2954,9 +2954,9 @@ namespace ZScreenGUI
         private ProxyInfo GetSelectedProxy()
         {
             ProxyInfo acc = null;
-            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 && Program.conf.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
+            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 && Engine.conf.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
             {
-                acc = Program.conf.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
+                acc = Engine.conf.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
             }
 
             return acc;
@@ -2967,7 +2967,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
             }
 
             return acc;
@@ -2978,7 +2978,7 @@ namespace ZScreenGUI
             DekiWikiAccount acc = null;
             if (Adapter.CheckDekiWikiAccounts())
             {
-                acc = Program.conf.DekiWikiAccountList[Program.conf.DekiWikiSelected];
+                acc = Engine.conf.DekiWikiAccountList[Engine.conf.DekiWikiSelected];
             }
 
             return acc;
@@ -3000,29 +3000,29 @@ namespace ZScreenGUI
 
         private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.FTPCreateThumbnail = chkEnableThumbnail.Checked;
+            Engine.conf.FTPCreateThumbnail = chkEnableThumbnail.Checked;
         }
 
         private void chkAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoSwitchFileUploader = cbAutoSwitchFileUploader.Checked;
+            Engine.conf.AutoSwitchFileUploader = cbAutoSwitchFileUploader.Checked;
         }
 
         #endregion
 
         private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
+            Engine.conf.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
         }
 
         private void pbSelectedWindowBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.SelectedWindowBorderColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.SelectedWindowBorderColor);
         }
 
         private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowBorderSize = nudSelectedWindowBorderSize.Value;
+            Engine.conf.SelectedWindowBorderSize = nudSelectedWindowBorderSize.Value;
         }
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
@@ -3032,12 +3032,12 @@ namespace ZScreenGUI
 
         private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
+            Engine.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
         }
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowUploadDuration = cbShowUploadDuration.Checked;
+            Engine.conf.ShowUploadDuration = cbShowUploadDuration.Checked;
         }
 
         /// <summary>
@@ -3047,7 +3047,7 @@ namespace ZScreenGUI
         /// <returns></returns>
         private static Software GetImageSoftware(string name)
         {
-            foreach (Software app in Program.conf.ImageEditors)
+            foreach (Software app in Engine.conf.ImageEditors)
             {
                 if (app != null && app.Name != null)
                 {
@@ -3063,37 +3063,37 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowRegionStyles = (RegionStyles)cbSelectedWindowStyle.SelectedIndex;
+            Engine.conf.SelectedWindowRegionStyles = (RegionStyles)cbSelectedWindowStyle.SelectedIndex;
         }
 
         private void nudCropGridSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropGridSize.Width = (int)nudCropGridWidth.Value;
+            Engine.conf.CropGridSize.Width = (int)nudCropGridWidth.Value;
         }
 
         private void nudCropGridHeight_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropGridSize.Height = (int)nudCropGridHeight.Value;
+            Engine.conf.CropGridSize.Height = (int)nudCropGridHeight.Value;
         }
 
         private void cbCropShowGrids_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropShowGrids = cbCropShowGrids.Checked;
+            Engine.conf.CropShowGrids = cbCropShowGrids.Checked;
         }
 
         private void cbAddSpace_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.HistoryAddSpace = cbHistoryAddSpace.Checked;
+            Engine.conf.HistoryAddSpace = cbHistoryAddSpace.Checked;
         }
 
         private void cbReverse_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.HistoryReverseList = cbHistoryReverseList.Checked;
+            Engine.conf.HistoryReverseList = cbHistoryReverseList.Checked;
         }
 
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
+            Engine.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
             if (mGuiIsReady)
             {
                 Loader.Worker.CheckHistoryItems();
@@ -3103,7 +3103,7 @@ namespace ZScreenGUI
 
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CloseDropBox = cbCloseDropBox.Checked;
+            Engine.conf.CloseDropBox = cbCloseDropBox.Checked;
         }
 
         private void btnHistoryClear_Click(object sender, EventArgs e)
@@ -3124,12 +3124,12 @@ namespace ZScreenGUI
 
         private void chkRememberTinyPicUserPass_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.RememberTinyPicUserPass = chkRememberTinyPicUserPass.Checked;
+            Engine.conf.RememberTinyPicUserPass = chkRememberTinyPicUserPass.Checked;
         }
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Program.conf.AutoIncrement = 0;
+            Engine.conf.AutoIncrement = 0;
         }
 
         private void btnImageCopy_Click(object sender, EventArgs e)
@@ -3159,130 +3159,130 @@ namespace ZScreenGUI
 
         private void cbHistoryListFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
+            Engine.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
             // LoadHistoryItems();
         }
 
         private void cbShowHistoryTooltip_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.HistoryShowTooltips = cbShowHistoryTooltip.Checked;
+            Engine.conf.HistoryShowTooltips = cbShowHistoryTooltip.Checked;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.HistorySave = cbHistorySave.Checked;
+            Engine.conf.HistorySave = cbHistorySave.Checked;
         }
 
         private void pbCropCrosshairColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Program.conf.CropCrosshairColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.CropCrosshairColor);
         }
 
         private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
+            Engine.conf.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
         }
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.SwitchAfter = nudSwitchAfter.Value;
+            Engine.conf.SwitchAfter = nudSwitchAfter.Value;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropDynamicCrosshair = cbCropDynamicCrosshair.Checked;
+            Engine.conf.CropDynamicCrosshair = cbCropDynamicCrosshair.Checked;
         }
 
         private void nudCrosshairLineCount_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CrosshairLineCount = (int)nudCrosshairLineCount.Value;
+            Engine.conf.CrosshairLineCount = (int)nudCrosshairLineCount.Value;
         }
 
         private void nudCrosshairLineSize_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
+            Engine.conf.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
         }
 
         private void nudCropInterval_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropInterval = (int)nudCropCrosshairInterval.Value;
+            Engine.conf.CropInterval = (int)nudCropCrosshairInterval.Value;
         }
 
         private void nudCropStep_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropStep = (int)nudCropCrosshairStep.Value;
+            Engine.conf.CropStep = (int)nudCropCrosshairStep.Value;
         }
 
         private void cbCropShowBigCross_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropShowBigCross = cbCropShowBigCross.Checked;
+            Engine.conf.CropShowBigCross = cbCropShowBigCross.Checked;
         }
 
         private void cbShowCropRuler_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropShowRuler = cbShowCropRuler.Checked;
+            Engine.conf.CropShowRuler = cbShowCropRuler.Checked;
         }
 
         private void cbSelectedWindowRuler_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowRuler = cbSelectedWindowRuler.Checked;
+            Engine.conf.SelectedWindowRuler = cbSelectedWindowRuler.Checked;
         }
 
         private void cbCropDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropDynamicBorderColor = cbCropDynamicBorderColor.Checked;
+            Engine.conf.CropDynamicBorderColor = cbCropDynamicBorderColor.Checked;
         }
 
         private void nudCropRegionInterval_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropRegionInterval = nudCropRegionInterval.Value;
+            Engine.conf.CropRegionInterval = nudCropRegionInterval.Value;
         }
 
         private void nudCropRegionStep_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropRegionStep = nudCropRegionStep.Value;
+            Engine.conf.CropRegionStep = nudCropRegionStep.Value;
         }
 
         private void nudCropHueRange_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.CropHueRange = nudCropHueRange.Value;
+            Engine.conf.CropHueRange = nudCropHueRange.Value;
         }
 
         private void cbSelectedWindowDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowDynamicBorderColor = cbSelectedWindowDynamicBorderColor.Checked;
+            Engine.conf.SelectedWindowDynamicBorderColor = cbSelectedWindowDynamicBorderColor.Checked;
         }
 
         private void nudSelectedWindowRegionInterval_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowRegionInterval = nudSelectedWindowRegionInterval.Value;
+            Engine.conf.SelectedWindowRegionInterval = nudSelectedWindowRegionInterval.Value;
         }
 
         private void nudSelectedWindowRegionStep_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowRegionStep = nudSelectedWindowRegionStep.Value;
+            Engine.conf.SelectedWindowRegionStep = nudSelectedWindowRegionStep.Value;
         }
 
         private void nudSelectedWindowHueRange_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowHueRange = nudSelectedWindowHueRange.Value;
+            Engine.conf.SelectedWindowHueRange = nudSelectedWindowHueRange.Value;
         }
 
         private void cbCropGridMode_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropGridToggle = cboCropGridMode.Checked;
+            Engine.conf.CropGridToggle = cboCropGridMode.Checked;
         }
 
         private void cbTinyPicSizeCheck_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.TinyPicSizeCheck = cbTinyPicSizeCheck.Checked;
+            Engine.conf.TinyPicSizeCheck = cbTinyPicSizeCheck.Checked;
         }
 
         private void txtWatermarkImageLocation_TextChanged(object sender, EventArgs e)
         {
             if (File.Exists(txtWatermarkImageLocation.Text))
             {
-                Program.conf.WatermarkImageLocation = txtWatermarkImageLocation.Text;
+                Engine.conf.WatermarkImageLocation = txtWatermarkImageLocation.Text;
                 TestWatermark();
             }
         }
@@ -3301,12 +3301,12 @@ namespace ZScreenGUI
 
         private void cbAutoChangeUploadDestination_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageUploadRetryOnTimeout = cboImageUploadRetryOnTimeout.Checked;
+            Engine.conf.ImageUploadRetryOnTimeout = cboImageUploadRetryOnTimeout.Checked;
         }
 
         private void nudUploadDurationLimit_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.UploadDurationLimit = nudUploadDurationLimit.Value;
+            Engine.conf.UploadDurationLimit = nudUploadDurationLimit.Value;
         }
 
         private void StartDebug()
@@ -3358,13 +3358,13 @@ namespace ZScreenGUI
 
         private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
+            Engine.conf.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
             TestWatermark();
         }
 
         private void cbWatermarkAddReflection_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
+            Engine.conf.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
             TestWatermark();
         }
 
@@ -3374,13 +3374,13 @@ namespace ZScreenGUI
             FolderBrowserDialog dlg = new FolderBrowserDialog { ShowNewFolderButton = true };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Program.SetRootFolder(dlg.SelectedPath);
-                txtRootFolder.Text = Program.appSettings.RootDir;
+                Engine.SetRootFolder(dlg.SelectedPath);
+                txtRootFolder.Text = Engine.appSettings.RootDir;
             }
 
             FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
             UpdateGuiControlsPaths();
-            Program.conf = XMLSettings.Read();
+            Engine.conf = XMLSettings.Read();
             ZScreen_ConfigGUI();
         }
 
@@ -3391,39 +3391,39 @@ namespace ZScreenGUI
 
         private void nudWatermarkImageScale_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkImageScale = nudWatermarkImageScale.Value;
+            Engine.conf.WatermarkImageScale = nudWatermarkImageScale.Value;
             TestWatermark();
         }
 
         private void trackWatermarkFontTrans_Scroll(object sender, EventArgs e)
         {
-            Program.conf.WatermarkFontTrans = trackWatermarkFontTrans.Value;
-            nudWatermarkFontTrans.Value = Program.conf.WatermarkFontTrans;
+            Engine.conf.WatermarkFontTrans = trackWatermarkFontTrans.Value;
+            nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
             TestWatermark();
         }
 
         private void trackWatermarkBackgroundTrans_Scroll(object sender, EventArgs e)
         {
-            Program.conf.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
-            nudWatermarkBackTrans.Value = Program.conf.WatermarkBackTrans;
+            Engine.conf.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
+            nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
             TestWatermark();
         }
 
         private void cbWatermarkAutoHide_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
+            Engine.conf.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
             TestWatermark();
         }
 
         private void cboWatermarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
+            Engine.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             TestWatermark();
         }
 
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CropShowMagnifyingGlass = cbCropShowMagnifyingGlass.Checked;
+            Engine.conf.CropShowMagnifyingGlass = cbCropShowMagnifyingGlass.Checked;
         }
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
@@ -3449,19 +3449,19 @@ namespace ZScreenGUI
 
         private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
         {
-            Program.conf.ScreenshotDelayTime = nudtScreenshotDelay.Value;
+            Engine.conf.ScreenshotDelayTime = nudtScreenshotDelay.Value;
         }
 
         private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.ScreenshotDelayTimes = nudtScreenshotDelay.Time;
+            Engine.conf.ScreenshotDelayTimes = nudtScreenshotDelay.Time;
         }
 
         private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
         {
             if (cbToLanguage.SelectedIndex > -1)
             {
-                cbToLanguage.DoDragDrop(Program.conf.ToLanguage, DragDropEffects.Move);
+                cbToLanguage.DoDragDrop(Engine.conf.ToLanguage, DragDropEffects.Move);
             }
         }
 
@@ -3477,7 +3477,7 @@ namespace ZScreenGUI
         {
             GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
                ZScreen.mGTranslator.LanguageOptions.TargetLangList);
-            Program.conf.ToLanguage2 = lang.Value;
+            Engine.conf.ToLanguage2 = lang.Value;
             btnTranslateTo1.Text = "To " + lang.Name;
         }
 
@@ -3488,7 +3488,7 @@ namespace ZScreenGUI
 
         private void cbLockFormSize_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.LockFormSize = cbLockFormSize.Checked;
+            Engine.conf.LockFormSize = cbLockFormSize.Checked;
             CheckFormSettings();
         }
 
@@ -3517,7 +3517,7 @@ namespace ZScreenGUI
                     TextUploader textUploader = Adapter.FindTextUploader(name);
                     if (textUploader != null)
                     {
-                        Program.conf.TextUploadersList.Add(textUploader);
+                        Engine.conf.TextUploadersList.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
                         ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                     }
@@ -3532,7 +3532,7 @@ namespace ZScreenGUI
             if (ucTextUploaders.MyCollection.Items.Count > 0)
             {
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
-                Program.conf.TextUploadersList.RemoveAt(index);
+                Engine.conf.TextUploadersList.RemoveAt(index);
                 ucTextUploaders.MyCollection.Items.RemoveAt(index);
                 ucDestOptions.cboTextUploaders.Items.RemoveAt(index);
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
@@ -3574,9 +3574,9 @@ namespace ZScreenGUI
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Program.conf.ImageEditors[lbImageSoftware.SelectedIndex];
+            Software temp = Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex];
             lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Program.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
+            Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
         }
@@ -3592,7 +3592,7 @@ namespace ZScreenGUI
 
                 if (mGuiIsReady)
                 {
-                    Program.conf.TextUploaderSelected = sel;
+                    Engine.conf.TextUploaderSelected = sel;
                     if (bComboBox)
                     {
                         ucTextUploaders.MyCollection.SelectedIndex = sel;
@@ -3618,13 +3618,13 @@ namespace ZScreenGUI
             if (mGuiIsReady)
             {
                 ucUrlShorteners.MyCollection.SelectedIndex = ucDestOptions.cboURLShorteners.SelectedIndex;
-                Program.conf.UrlShortenerSelected = ucDestOptions.cboURLShorteners.SelectedIndex;
+                Engine.conf.UrlShortenerSelected = ucDestOptions.cboURLShorteners.SelectedIndex;
             }
         }
 
         private void cbAutoTranslate_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoTranslate = cbAutoTranslate.Checked;
+            Engine.conf.AutoTranslate = cbAutoTranslate.Checked;
         }
 
         private void txtAutoTranslate_TextChanged(object sender, EventArgs e)
@@ -3632,7 +3632,7 @@ namespace ZScreenGUI
             int number;
             if (int.TryParse(txtAutoTranslate.Text, out number))
             {
-                Program.conf.AutoTranslateLength = number;
+                Engine.conf.AutoTranslateLength = number;
             }
         }
 
@@ -3649,7 +3649,7 @@ namespace ZScreenGUI
 
                 if (mGuiIsReady)
                 {
-                    Program.conf.UrlShortenerSelected = ucUrlShorteners.MyCollection.SelectedIndex;
+                    Engine.conf.UrlShortenerSelected = ucUrlShorteners.MyCollection.SelectedIndex;
                     ucDestOptions.cboURLShorteners.SelectedIndex = ucUrlShorteners.MyCollection.SelectedIndex;
                 }
 
@@ -3678,7 +3678,7 @@ namespace ZScreenGUI
                     TextUploader textUploader = Adapter.FindUrlShortener(name);
                     if (textUploader != null)
                     {
-                        Program.conf.UrlShortenersList.Add(textUploader);
+                        Engine.conf.UrlShortenersList.Add(textUploader);
                         ucUrlShorteners.MyCollection.Items.Add(textUploader);
                         ucDestOptions.cboURLShorteners.Items.Add(textUploader);
                     }
@@ -3698,7 +3698,7 @@ namespace ZScreenGUI
             if (ucUrlShorteners.MyCollection.Items.Count > 0)
             {
                 int index = ucUrlShorteners.MyCollection.SelectedIndex;
-                Program.conf.UrlShortenersList.RemoveAt(index);
+                Engine.conf.UrlShortenersList.RemoveAt(index);
                 ucUrlShorteners.MyCollection.Items.RemoveAt(index);
                 ucDestOptions.cboURLShorteners.Items.RemoveAt(index);
                 ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
@@ -3707,13 +3707,13 @@ namespace ZScreenGUI
 
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
-            ttZScreen.Active = Program.conf.ShowHelpBalloonTips;
+            Engine.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
+            ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
         }
 
         private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
+            Engine.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
         }
 
         private void btnImageShackProfile_Click(object sender, EventArgs e)
@@ -3723,12 +3723,12 @@ namespace ZScreenGUI
 
         private void chkPublicImageShack_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageShackShowImagesInPublic = chkPublicImageShack.Checked;
+            Engine.conf.ImageShackShowImagesInPublic = chkPublicImageShack.Checked;
         }
 
         private void txtUserNameImageShack_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageShackUserName = txtUserNameImageShack.Text;
+            Engine.conf.ImageShackUserName = txtUserNameImageShack.Text;
         }
 
         private void ucTextUploaders_Load(object sender, EventArgs e)
@@ -3745,7 +3745,7 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
-                Program.conf.TwitterUserName = txtTwitPicUserName.Text;
+                Engine.conf.TwitterUserName = txtTwitPicUserName.Text;
             }
         }
 
@@ -3753,18 +3753,18 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
-                Program.conf.TwitterPassword = txtTwitPicPassword.Text;
+                Engine.conf.TwitterPassword = txtTwitPicPassword.Text;
             }
         }
 
         private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
+            Engine.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.conf.AutoSaveSettings)
+            if (Engine.conf.AutoSaveSettings)
             {
                 WriteSettings();
             }
@@ -3772,7 +3772,7 @@ namespace ZScreenGUI
 
         private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
+            Engine.conf.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
         }
 
         private void lblLogo_Click(object sender, EventArgs e)
@@ -3805,7 +3805,7 @@ namespace ZScreenGUI
 
         private void chkProxyEnable_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ProxyEnabled = chkProxyEnable.Checked;
+            Engine.conf.ProxyEnabled = chkProxyEnable.Checked;
             Uploader.ProxySettings = Adapter.GetProxySettings();
         }
 
@@ -3828,18 +3828,18 @@ namespace ZScreenGUI
             int sel = ucProxyAccounts.AccountsList.SelectedIndex;
             if (ucProxyAccounts.RemoveItem(sel) == true)
             {
-                Program.conf.ProxyList.RemoveAt(sel);
+                Engine.conf.ProxyList.RemoveAt(sel);
             }
         }
 
         private void ProxyAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucProxyAccounts.AccountsList.SelectedIndex;
-            if (Program.conf.ProxyList != null && sel != -1 && sel < Program.conf.ProxyList.Count && Program.conf.ProxyList[sel] != null)
+            if (Engine.conf.ProxyList != null && sel != -1 && sel < Engine.conf.ProxyList.Count && Engine.conf.ProxyList[sel] != null)
             {
-                ProxyInfo acc = Program.conf.ProxyList[sel];
+                ProxyInfo acc = Engine.conf.ProxyList[sel];
                 ucProxyAccounts.SettingsGrid.SelectedObject = acc;
-                Program.conf.ProxyActive = acc;
+                Engine.conf.ProxyActive = acc;
             }
 
             Uploader.ProxySettings = Adapter.GetProxySettings();
@@ -3848,7 +3848,7 @@ namespace ZScreenGUI
         private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
         {
             ProxyInfo acc = new ProxyInfo("userName", "password", "domain", 8080);
-            Program.conf.ProxyList.Add(acc);
+            Engine.conf.ProxyList.Add(acc);
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
@@ -3867,41 +3867,41 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.SelectedWindowCaptureObjects = cbSelectedWindowCaptureObjects.Checked;
+            Engine.conf.SelectedWindowCaptureObjects = cbSelectedWindowCaptureObjects.Checked;
         }
 
         private void cbSaveFormSizePosition_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.SaveFormSizePosition = cbSaveFormSizePosition.Checked;
+            Engine.conf.SaveFormSizePosition = cbSaveFormSizePosition.Checked;
 
             if (mGuiIsReady)
             {
-                if (Program.conf.SaveFormSizePosition)
+                if (Engine.conf.SaveFormSizePosition)
                 {
-                    Program.conf.WindowLocation = this.Location;
-                    Program.conf.WindowSize = this.Size;
+                    Engine.conf.WindowLocation = this.Location;
+                    Engine.conf.WindowSize = this.Size;
                 }
                 else
                 {
-                    Program.conf.WindowLocation = Point.Empty;
-                    Program.conf.WindowSize = Size.Empty;
+                    Engine.conf.WindowLocation = Point.Empty;
+                    Engine.conf.WindowSize = Size.Empty;
                 }
             }
         }
 
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
+            Engine.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
         }
 
         private void cbTwitPicShowFull_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.TwitPicShowFull = cbTwitPicShowFull.Checked;
+            Engine.conf.TwitPicShowFull = cbTwitPicShowFull.Checked;
         }
 
         private void cbTwitPicThumbnailMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cboTwitPicThumbnailMode.SelectedIndex;
+            Engine.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cboTwitPicThumbnailMode.SelectedIndex;
         }
 
         private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
@@ -3911,9 +3911,9 @@ namespace ZScreenGUI
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
+            Engine.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
             lblImagesFolderPatternPreview.Text = NameParser.Convert(NameParserType.SaveFolder);
-            txtImagesDir.Text = Program.ImagesDir;
+            txtImagesDir.Text = Engine.ImagesDir;
         }
 
         private void txtWatermarkText_KeyDown(object sender, KeyEventArgs e)
@@ -3928,7 +3928,7 @@ namespace ZScreenGUI
         {
             try
             {
-                if (FileSystem.ManageImageFolders(Program.RootImagesDir))
+                if (FileSystem.ManageImageFolders(Engine.RootImagesDir))
                 {
                     MessageBox.Show("Files successfully moved to save folders.");
                 }
@@ -3942,22 +3942,22 @@ namespace ZScreenGUI
 
         private void cbCheckUpdatesBeta_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.CheckUpdatesBeta = cbCheckUpdatesBeta.Checked;
+            Engine.conf.CheckUpdatesBeta = cbCheckUpdatesBeta.Checked;
         }
 
         private void rbImageSize_CheckedChanged(object sender, EventArgs e)
         {
             if (rbImageSizeDefault.Checked)
             {
-                Program.conf.ImageSizeType = ImageSizeType.DEFAULT;
+                Engine.conf.ImageSizeType = ImageSizeType.DEFAULT;
             }
             else if (rbImageSizeFixed.Checked)
             {
-                Program.conf.ImageSizeType = ImageSizeType.FIXED;
+                Engine.conf.ImageSizeType = ImageSizeType.FIXED;
             }
             else if (rbImageSizeRatio.Checked)
             {
-                Program.conf.ImageSizeType = ImageSizeType.RATIO;
+                Engine.conf.ImageSizeType = ImageSizeType.RATIO;
             }
         }
 
@@ -3966,7 +3966,7 @@ namespace ZScreenGUI
             int width;
             if (int.TryParse(txtImageSizeFixedWidth.Text, out width))
             {
-                Program.conf.ImageSizeFixedWidth = width;
+                Engine.conf.ImageSizeFixedWidth = width;
             }
         }
 
@@ -3975,7 +3975,7 @@ namespace ZScreenGUI
             int height;
             if (int.TryParse(txtImageSizeFixedHeight.Text, out height))
             {
-                Program.conf.ImageSizeFixedHeight = height;
+                Engine.conf.ImageSizeFixedHeight = height;
             }
         }
 
@@ -3984,7 +3984,7 @@ namespace ZScreenGUI
             float percentage;
             if (float.TryParse(txtImageSizeRatio.Text, out percentage))
             {
-                Program.conf.ImageSizeRatioPercentage = percentage;
+                Engine.conf.ImageSizeRatioPercentage = percentage;
             }
         }
 
@@ -3998,9 +3998,9 @@ namespace ZScreenGUI
                 btnWebPageCaptureImage.Enabled = false;
 
                 IECapt capture;
-                if (Program.conf.WebPageUseCustomSize)
+                if (Engine.conf.WebPageUseCustomSize)
                 {
-                    capture = new IECapt(Program.conf.WebPageWidth, Program.conf.WebPageHeight, 1);
+                    capture = new IECapt(Engine.conf.WebPageWidth, Engine.conf.WebPageHeight, 1);
                 }
                 else
                 {
@@ -4033,7 +4033,7 @@ namespace ZScreenGUI
             btnWebPageCaptureImage.Enabled = true;
             btnWebPageImageUpload.Enabled = img != null;
 
-            if (Program.conf.WebPageAutoUpload)
+            if (Engine.conf.WebPageAutoUpload)
             {
                 WebPageUpload();
             }
@@ -4041,7 +4041,7 @@ namespace ZScreenGUI
 
         private void cbWebPageUseCustomSize_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WebPageUseCustomSize = cbWebPageUseCustomSize.Checked;
+            Engine.conf.WebPageUseCustomSize = cbWebPageUseCustomSize.Checked;
         }
 
         private void txtWebPageWidth_TextChanged(object sender, EventArgs e)
@@ -4049,7 +4049,7 @@ namespace ZScreenGUI
             int width;
             if (int.TryParse(txtWebPageWidth.Text, out width))
             {
-                Program.conf.WebPageWidth = width;
+                Engine.conf.WebPageWidth = width;
             }
         }
 
@@ -4058,7 +4058,7 @@ namespace ZScreenGUI
             int height;
             if (int.TryParse(txtWebPageHeight.Text, out height))
             {
-                Program.conf.WebPageHeight = height;
+                Engine.conf.WebPageHeight = height;
             }
         }
 
@@ -4078,7 +4078,7 @@ namespace ZScreenGUI
 
         private void cbWebPageAutoUpload_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
+            Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
 
         private void pbLogo_MouseClick(object sender, MouseEventArgs e)
@@ -4088,12 +4088,12 @@ namespace ZScreenGUI
 
         private void txtImageBamApiKey_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageBamApiKey = txtImageBamApiKey.Text;
+            Engine.conf.ImageBamApiKey = txtImageBamApiKey.Text;
         }
 
         private void txtImageBamSecret_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageBamSecret = txtImageBamSecret.Text;
+            Engine.conf.ImageBamSecret = txtImageBamSecret.Text;
         }
 
         private void btnImageBamApiKeysUrl_Click(object sender, EventArgs e)
@@ -4113,7 +4113,7 @@ namespace ZScreenGUI
 
         private void lbImageBamGalleries_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageBamGalleryActive = lbImageBamGalleries.SelectedIndex;
+            Engine.conf.ImageBamGalleryActive = lbImageBamGalleries.SelectedIndex;
         }
 
         private void btnImageBamRemoveGallery_Click(object sender, EventArgs e)
@@ -4123,54 +4123,54 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(Adapter.GetImageBamGalleryActive()))
                 {
                     lbImageBamGalleries.Items.RemoveAt(lbImageBamGalleries.SelectedIndex);
-                    Program.conf.ImageBamGallery.RemoveAt(lbImageBamGalleries.SelectedIndex);
+                    Engine.conf.ImageBamGallery.RemoveAt(lbImageBamGalleries.SelectedIndex);
                 }
             }
         }
 
         private void chkImageBamContentNSFW_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.ImageBamContentNSFW = chkImageBamContentNSFW.Checked;
+            Engine.conf.ImageBamContentNSFW = chkImageBamContentNSFW.Checked;
         }
 
         private void cboRapidShareAcctType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
-            txtRapidSharePremiumUserName.Enabled = Program.conf.RapidShareAccountType == RapidShareAcctType.Premium;
-            txtRapidShareCollectorID.Enabled = Program.conf.RapidShareAccountType != RapidShareAcctType.Free && !txtRapidSharePremiumUserName.Enabled;
-            txtRapidSharePassword.Enabled = Program.conf.RapidShareAccountType != RapidShareAcctType.Free;
+            Engine.conf.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
+            txtRapidSharePremiumUserName.Enabled = Engine.conf.RapidShareAccountType == RapidShareAcctType.Premium;
+            txtRapidShareCollectorID.Enabled = Engine.conf.RapidShareAccountType != RapidShareAcctType.Free && !txtRapidSharePremiumUserName.Enabled;
+            txtRapidSharePassword.Enabled = Engine.conf.RapidShareAccountType != RapidShareAcctType.Free;
         }
 
         private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.RapidShareCollectorsID = txtRapidShareCollectorID.Text;
+            Engine.conf.RapidShareCollectorsID = txtRapidShareCollectorID.Text;
         }
 
         private void txtRapidSharePremiumUserName_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text;
+            Engine.conf.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text;
         }
 
         private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.RapidSharePassword = txtRapidSharePassword.Text;
+            Engine.conf.RapidSharePassword = txtRapidSharePassword.Text;
         }
 
         private void txtSendSpaceUserName_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.SendSpaceUserName = txtSendSpaceUserName.Text;
+            Engine.conf.SendSpaceUserName = txtSendSpaceUserName.Text;
         }
 
         private void txtSendSpacePassword_TextChanged(object sender, EventArgs e)
         {
-            Program.conf.SendSpacePassword = txtSendSpacePassword.Text;
+            Engine.conf.SendSpacePassword = txtSendSpacePassword.Text;
         }
 
         private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.SendSpaceAccountType = (AcctType)cboSendSpaceAcctType.SelectedIndex;
-            txtSendSpacePassword.Enabled = Program.conf.SendSpaceAccountType == AcctType.User;
-            txtSendSpaceUserName.Enabled = Program.conf.SendSpaceAccountType == AcctType.User;
+            Engine.conf.SendSpaceAccountType = (AcctType)cboSendSpaceAcctType.SelectedIndex;
+            txtSendSpacePassword.Enabled = Engine.conf.SendSpaceAccountType == AcctType.User;
+            txtSendSpaceUserName.Enabled = Engine.conf.SendSpaceAccountType == AcctType.User;
         }
 
         private void btnSendSpaceRegister_Click(object sender, EventArgs e)
@@ -4188,7 +4188,7 @@ namespace ZScreenGUI
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+            Engine.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
@@ -4196,7 +4196,7 @@ namespace ZScreenGUI
             int width;
             if (int.TryParse(txtFTPThumbWidth.Text, out width))
             {
-                Program.conf.FTPThumbnailWidth = width;
+                Engine.conf.FTPThumbnailWidth = width;
             }
         }
 
@@ -4205,26 +4205,26 @@ namespace ZScreenGUI
             int height;
             if (int.TryParse(txtFTPThumbHeight.Text, out height))
             {
-                Program.conf.FTPThumbnailHeight = height;
+                Engine.conf.FTPThumbnailHeight = height;
             }
         }
 
         private void cbFTPThumbnailCheckSize_CheckedChanged(object sender, EventArgs e)
         {
-            Program.conf.FTPThumbnailCheckSize = cbFTPThumbnailCheckSize.Checked;
+            Engine.conf.FTPThumbnailCheckSize = cbFTPThumbnailCheckSize.Checked;
         }
 
         private void cboYfrogUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
+            Engine.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
         }
 
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
             if (mGuiIsReady)
             {
-                Program.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
-                chkShowTaskbar.Enabled = !Program.conf.Windows7TaskbarIntegration;
+                Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
+                chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
                 ZScreen_Windows7onlyTasks();
             }
         }
@@ -4233,7 +4233,7 @@ namespace ZScreenGUI
         {
             if (Adapter.CheckFTPAccounts())
             {
-                FTPAccount acc = Program.conf.FTPAccountList[Program.conf.FTPSelected];
+                FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
                 FTPOptions opt = new FTPOptions(acc, Adapter.GetProxySettings());
                 FTPClient2 ftpClient = new FTPClient2(opt) { Icon = this.Icon };
                 ftpClient.Show();
@@ -4266,9 +4266,9 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(token))
                 {
                     FlickrUploader flickr = new FlickrUploader();
-                    Program.conf.FlickrAuthInfo = flickr.GetToken(token);
-                    pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
-                    btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Program.conf.FlickrAuthInfo.Username);
+                    Engine.conf.FlickrAuthInfo = flickr.GetToken(token);
+                    pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
+                    btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
                     MessageBox.Show("Success.");
                 }
             }
@@ -4282,14 +4282,14 @@ namespace ZScreenGUI
         {
             try
             {
-                if (Program.conf.FlickrAuthInfo != null)
+                if (Engine.conf.FlickrAuthInfo != null)
                 {
-                    string token = Program.conf.FlickrAuthInfo.Token;
+                    string token = Engine.conf.FlickrAuthInfo.Token;
                     if (!string.IsNullOrEmpty(token))
                     {
                         FlickrUploader flickr = new FlickrUploader();
-                        Program.conf.FlickrAuthInfo = flickr.CheckToken(token);
-                        pgFlickrAuthInfo.SelectedObject = Program.conf.FlickrAuthInfo;
+                        Engine.conf.FlickrAuthInfo = flickr.CheckToken(token);
+                        pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
 
                         MessageBox.Show("Success.");
                     }
@@ -4303,9 +4303,9 @@ namespace ZScreenGUI
 
         private void btnFlickrOpenImages_Click(object sender, EventArgs e)
         {
-            if (Program.conf.FlickrAuthInfo != null)
+            if (Engine.conf.FlickrAuthInfo != null)
             {
-                string userID = Program.conf.FlickrAuthInfo.UserID;
+                string userID = Engine.conf.FlickrAuthInfo.UserID;
                 if (!string.IsNullOrEmpty(userID))
                 {
                     FlickrUploader flickr = new FlickrUploader();

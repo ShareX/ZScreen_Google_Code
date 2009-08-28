@@ -69,14 +69,14 @@ namespace ZScreenGUI
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
-            if ((Program.conf.PreferFileUploaderForImages && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
-                (Program.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT))
+            if ((Engine.conf.PreferFileUploaderForImages && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
+                (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT))
             {
                 task.JobCategory = JobCategoryType.BINARY;
-                task.MyFileUploader = Program.conf.FileDestMode;
+                task.MyFileUploader = Engine.conf.FileDestMode;
             }
 
-            if (Program.conf.PromptForUpload && task.MyImageUploader != ImageDestType.CLIPBOARD &
+            if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageDestType.CLIPBOARD &
                 task.MyImageUploader != ImageDestType.FILE &&
                 (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
                 task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
@@ -89,12 +89,13 @@ namespace ZScreenGUI
 
             if (task.JobCategory == JobCategoryType.SCREENSHOTS)
             {
-                if (Program.conf.ScreenshotDelayTime != 0)
+                if (Engine.conf.ScreenshotDelayTime != 0)
                 {
-                    Thread.Sleep((int)Program.conf.ScreenshotDelayTime);
+                    Thread.Sleep((int)Engine.conf.ScreenshotDelayTime);
                 }
             }
 
+            FileSystem.AppendDebug(".");
             FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
 
             switch (task.JobCategory)
@@ -151,8 +152,8 @@ namespace ZScreenGUI
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
-                if (Program.conf.AddFailedScreenshot ||
-                    (!Program.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
+                if (Engine.conf.AddFailedScreenshot ||
+                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
                 {
                     task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
@@ -208,17 +209,17 @@ namespace ZScreenGUI
                     Adapter.SetNotifyIconStatus(e.UserState as WorkerTask, mZScreen.niTray, Resources.zss_busy);
                     break;
                 case WorkerTask.ProgressType.UpdateCropMode:
-                    mZScreen.cboCropGridMode.Checked = Program.conf.CropGridToggle;
+                    mZScreen.cboCropGridMode.Checked = Engine.conf.CropGridToggle;
                     break;
                 case WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
-                    mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-                    Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Program.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
+                    mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+                    Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Engine.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
-                    mZScreen.Text = string.Format("{0}% - {1}", progress, Program.GetProductName());
+                    mZScreen.Text = string.Format("{0}% - {1}", progress, Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
@@ -234,7 +235,7 @@ namespace ZScreenGUI
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Result;
-            mZScreen.Text = Program.GetProductName();
+            mZScreen.Text = Engine.GetProductName();
 
             try
             {
@@ -263,7 +264,7 @@ namespace ZScreenGUI
                                         this.mZScreen.txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
                                     }
 
-                                    if (Program.conf.ClipboardTranslate)
+                                    if (Engine.conf.ClipboardTranslate)
                                     {
                                         Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
                                     }
@@ -308,7 +309,7 @@ namespace ZScreenGUI
                                     break;
                             }
 
-                            if (task.MyImageUploader != ImageDestType.FILE && Program.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (task.MyImageUploader != ImageDestType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
@@ -347,12 +348,12 @@ namespace ZScreenGUI
 
                     if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
                     {
-                        if (Program.conf.CompleteSound)
+                        if (Engine.conf.CompleteSound)
                         {
                             System.Media.SystemSounds.Exclamation.Play();
                         }
 
-                        if (Program.conf.ShowBalloonTip)
+                        if (Engine.conf.ShowBalloonTip)
                         {
                             new BalloonTipHelper(this.mZScreen.niTray, task).ShowBalloonTip();
                         }
@@ -392,8 +393,8 @@ namespace ZScreenGUI
             WorkerTask task = new WorkerTask(bwApp, job);
             if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
             {
-                task.MyImageUploader = Program.conf.ScreenshotDestMode;
-                task.MyFileUploader = Program.conf.FileDestMode;
+                task.MyImageUploader = Engine.conf.ScreenshotDestMode;
+                task.MyFileUploader = Engine.conf.FileDestMode;
             }
             else
             {
@@ -445,9 +446,9 @@ namespace ZScreenGUI
             if (task != null && FileSystem.IsValidLink(task.MyText.LocalString))
             {
                 WebPageCapture webPageCapture;
-                if (Program.conf.WebPageUseCustomSize)
+                if (Engine.conf.WebPageUseCustomSize)
                 {
-                    webPageCapture = new WebPageCapture(Program.conf.WebPageWidth, Program.conf.WebPageHeight);
+                    webPageCapture = new WebPageCapture(Engine.conf.WebPageWidth, Engine.conf.WebPageHeight);
                 }
                 else
                 {
@@ -527,8 +528,8 @@ namespace ZScreenGUI
             if (Clipboard.ContainsText())
             {
                 StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(Clipboard.GetText(),
-                    GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                    GoogleTranslate.FindLanguage(Program.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
+                    GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                    GoogleTranslate.FindLanguage(Engine.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
             }
         }
 
@@ -608,7 +609,7 @@ namespace ZScreenGUI
         {
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
-                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(filePath))), true);
+                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
                 ScreenshotUsingDragDrop(filePath);
             }
         }
@@ -640,73 +641,73 @@ namespace ZScreenGUI
 
         private bool CheckHotkeys(Keys key)
         {
-            if (Program.conf.HotkeyEntireScreen == key) // Entire Screen
+            if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
             {
                 StartBW_EntireScreen();
                 return true;
             }
 
-            if (Program.conf.HotkeyActiveWindow == key) // Active Window
+            if (Engine.conf.HotkeyActiveWindow == key) // Active Window
             {
                 StartBW_ActiveWindow();
                 return true;
             }
 
-            if (Program.conf.HotkeySelectedWindow == key) // Selected Window
+            if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
             {
                 StartBW_SelectedWindow();
                 return true;
             }
 
-            if (Program.conf.HotkeyCropShot == key) // Crop Shot
+            if (Engine.conf.HotkeyCropShot == key) // Crop Shot
             {
                 StartBW_CropShot();
                 return true;
             }
 
-            if (Program.conf.HotkeyLastCropShot == key) // Last Crop Shot
+            if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
             {
                 StartBW_LastCropShot();
                 return true;
             }
 
-            if (Program.conf.HotkeyAutoCapture == key) // Auto Capture
+            if (Engine.conf.HotkeyAutoCapture == key) // Auto Capture
             {
                 ShowAutoCapture();
                 return true;
             }
 
-            if (Program.conf.HotkeyClipboardUpload == key) // Clipboard Upload
+            if (Engine.conf.HotkeyClipboardUpload == key) // Clipboard Upload
             {
                 UploadUsingClipboard();
                 return true;
             }
 
-            if (Program.conf.HotkeyDropWindow == key) // Drag & Drop Window
+            if (Engine.conf.HotkeyDropWindow == key) // Drag & Drop Window
             {
                 ShowDropWindow();
                 return true;
             }
 
-            if (Program.conf.HotkeyActionsToolbar == key) // Actions Toolbar
+            if (Engine.conf.HotkeyActionsToolbar == key) // Actions Toolbar
             {
                 ShowActionsToolbar(true);
                 return true;
             }
 
-            if (Program.conf.HotkeyQuickOptions == key) // Quick Options
+            if (Engine.conf.HotkeyQuickOptions == key) // Quick Options
             {
                 ShowQuickOptions();
                 return true;
             }
 
-            if (Program.conf.HotkeyLanguageTranslator == key) // Language Translator
+            if (Engine.conf.HotkeyLanguageTranslator == key) // Language Translator
             {
                 StartWorkerTranslator();
                 return true;
             }
 
-            if (Program.conf.HotkeyScreenColorPicker == key) // Screen Color Picker
+            if (Engine.conf.HotkeyScreenColorPicker == key) // Screen Color Picker
             {
                 ScreenColorPicker();
                 return true;
@@ -737,7 +738,7 @@ namespace ZScreenGUI
 
         public string GetSelectedHotkeySpecialString()
         {
-            object obj = Program.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", string.Empty));
+            object obj = Engine.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", string.Empty));
             if (obj != null && obj.GetType() == typeof(Keys))
             {
                 return ((Keys)obj).ToSpecialString();
@@ -756,7 +757,7 @@ namespace ZScreenGUI
 
         private bool SetHotkey(string name, Keys key)
         {
-            return Program.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
+            return Engine.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
         }
 
         public bool UploadUsingFileSystem(List<string> fileList)
@@ -769,7 +770,7 @@ namespace ZScreenGUI
                 {
                     if (GraphicsMgr.IsValidImage(fp))
                     {
-                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Program.ImagesDir, Path.GetFileName(fp)));
+                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
                         if (fp != cbFilePath)
                         {
                             File.Copy(fp, cbFilePath, true);
@@ -816,7 +817,7 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboard()
         {
-            if (Clipboard.ContainsText() && Program.conf.AutoTranslate && Clipboard.GetText().Length <= Program.conf.AutoTranslateLength)
+            if (Clipboard.ContainsText() && Engine.conf.AutoTranslate && Clipboard.GetText().Length <= Engine.conf.AutoTranslateLength)
             {
                 StartWorkerTranslator();
             }
@@ -836,7 +837,7 @@ namespace ZScreenGUI
                 else if (Clipboard.ContainsText())
                 {
                     WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                    string fp = FileSystem.GetUniqueFilePath(Path.Combine(Program.TextDir,
+                    string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
                         NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                     File.WriteAllText(fp, Clipboard.GetText());
                     temp.SetLocalFilePath(fp);
@@ -856,19 +857,19 @@ namespace ZScreenGUI
         {
             foreach (WorkerTask task in textWorkers)
             {
-                if (FileSystem.IsValidLink(task.MyText.LocalString) && Program.conf.AutoShortenURL && Adapter.CheckURLShorteners())
+                if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.AutoShortenURL && Adapter.CheckURLShorteners())
                 {
-                    task.MyTextUploader = Program.conf.UrlShortenersList[Program.conf.UrlShortenerSelected];
+                    task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
                     task.RunWorker();
                 }
                 else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
                 {
                     IndexerAdapter settings = new IndexerAdapter();
-                    settings.LoadConfig(Program.conf.IndexerConfig);
-                    Program.conf.IndexerConfig.FolderList.Clear();
+                    settings.LoadConfig(Engine.conf.IndexerConfig);
+                    Engine.conf.IndexerConfig.FolderList.Clear();
                     string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
                     string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
-                    settings.GetConfig().SetSingleIndexPath(Path.Combine(Program.TextDir, fileName));
+                    settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
                     settings.GetConfig().FolderList.Add(task.MyText.LocalString);
 
                     Indexer indexer = null;
@@ -899,7 +900,7 @@ namespace ZScreenGUI
 
         private bool RetryUpload(WorkerTask t)
         {
-            if (Program.conf.ImageUploadRetryOnFail && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
+            if (Engine.conf.ImageUploadRetryOnFail && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
                 (t.MyImageUploader == ImageDestType.IMAGESHACK || t.MyImageUploader == ImageDestType.TINYPIC))
             {
                 WorkerTask task = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
@@ -1001,7 +1002,7 @@ namespace ZScreenGUI
             {
                 bQuickActionsOpened = true;
                 ToolbarWindow actionsToolbar = new ToolbarWindow { Icon = Resources.zss_main };
-                actionsToolbar.Location = Program.conf.ActionToolbarLocation;
+                actionsToolbar.Location = Engine.conf.ActionToolbarLocation;
                 actionsToolbar.EventJob += new JobsEventHandler(EventJobs);
                 actionsToolbar.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
                 actionsToolbar.Show();
@@ -1041,8 +1042,8 @@ namespace ZScreenGUI
 
         private void QuickOptionsApplySettings(object sender, EventArgs e)
         {
-            mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
-            mZScreen.cboClipboardTextMode.SelectedIndex = (int)Program.conf.ClipboardUriMode;
+            mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+            mZScreen.cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
         }
 
         private void QuickOptionsFormClosed(object sender, FormClosedEventArgs e)
@@ -1079,14 +1080,14 @@ namespace ZScreenGUI
                 dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
                 dw.Show();
                 Rectangle taskbar = User32.GetTaskbarRectangle();
-                if (Program.conf.LastDropBoxPosition == Point.Empty)
+                if (Engine.conf.LastDropBoxPosition == Point.Empty)
                 {
                     dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,
                         SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - dw.Height - 10);
                 }
                 else
                 {
-                    dw.Location = Program.conf.LastDropBoxPosition;
+                    dw.Location = Engine.conf.LastDropBoxPosition;
                 }
             }
         }
@@ -1114,7 +1115,7 @@ namespace ZScreenGUI
 
         public void TranslateTo1()
         {
-            if (Program.conf.ToLanguage2 == "?")
+            if (Engine.conf.ToLanguage2 == "?")
             {
                 mZScreen.lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
                 MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", mZScreen.Text,
@@ -1124,8 +1125,8 @@ namespace ZScreenGUI
             else
             {
                 StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text,
-                     GoogleTranslate.FindLanguage(Program.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                     GoogleTranslate.FindLanguage(Program.conf.ToLanguage2, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
+                     GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                     GoogleTranslate.FindLanguage(Engine.conf.ToLanguage2, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
             }
         }
 
@@ -1135,9 +1136,9 @@ namespace ZScreenGUI
 
         public void CheckHistoryItems()
         {
-            if (mZScreen.lbHistory.Items.Count > Program.conf.HistoryMaxNumber)
+            if (mZScreen.lbHistory.Items.Count > Engine.conf.HistoryMaxNumber)
             {
-                for (int i = mZScreen.lbHistory.Items.Count - 1; i >= Program.conf.HistoryMaxNumber; i--)
+                for (int i = mZScreen.lbHistory.Items.Count - 1; i >= Engine.conf.HistoryMaxNumber; i--)
                 {
                     mZScreen.lbHistory.Items.RemoveAt(i);
                 }
@@ -1148,7 +1149,7 @@ namespace ZScreenGUI
 
         public void SaveHistoryItems()
         {
-            if (Program.conf.HistorySave)
+            if (Engine.conf.HistorySave)
             {
                 List<HistoryItem> historyItems = new List<HistoryItem>();
                 foreach (HistoryItem item in mZScreen.lbHistory.Items)
@@ -1163,7 +1164,7 @@ namespace ZScreenGUI
 
         public void UpdateGuiControlsHistory()
         {
-            mZScreen.tpHistoryList.Text = string.Format("History List ({0}/{1})", mZScreen.lbHistory.Items.Count, Program.conf.HistoryMaxNumber);
+            mZScreen.tpHistoryList.Text = string.Format("History List ({0}/{1})", mZScreen.lbHistory.Items.Count, Engine.conf.HistoryMaxNumber);
         }
 
         #endregion

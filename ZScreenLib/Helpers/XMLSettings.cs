@@ -587,7 +587,7 @@ namespace ZScreenLib
 
         public void Write()
         {
-            new Thread(SaveThread).Start(Program.appSettings.GetSettingsFilePath());
+            new Thread(SaveThread).Start(Engine.appSettings.GetSettingsFilePath());
         }
 
         public void SaveThread(object filePath)
@@ -622,29 +622,29 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            string settingsFile = Program.appSettings.GetSettingsFilePath();
+            string settingsFile = Engine.appSettings.GetSettingsFilePath();
             if (!File.Exists(settingsFile))
             {
-                if (File.Exists(Program.appSettings.XMLSettingsFile))
+                if (File.Exists(Engine.appSettings.XMLSettingsFile))
                 {
                     // Step 2 - Attempt to read previous Application Version specific Settings file
-                    settingsFile = Program.appSettings.XMLSettingsFile;
+                    settingsFile = Engine.appSettings.XMLSettingsFile;
                 }
                 else
                 {
                     // Step 3 - Attempt to read conventional Settings file
-                    settingsFile = Program.XMLSettingsFile;
+                    settingsFile = Engine.XMLSettingsFile;
                 }
             }
 
-            if (File.Exists(settingsFile) && settingsFile != Program.appSettings.GetSettingsFilePath())
+            if (File.Exists(settingsFile) && settingsFile != Engine.appSettings.GetSettingsFilePath())
             {
                 // Update AppSettings.xml
-                File.Copy(settingsFile, Program.appSettings.GetSettingsFilePath());
+                File.Copy(settingsFile, Engine.appSettings.GetSettingsFilePath());
             }
 
-            Program.appSettings.XMLSettingsFile = Program.appSettings.GetSettingsFilePath();
-            return Read(Program.appSettings.XMLSettingsFile);
+            Engine.appSettings.XMLSettingsFile = Engine.appSettings.GetSettingsFilePath();
+            return Read(Engine.appSettings.XMLSettingsFile);
 
         }
 
@@ -672,9 +672,9 @@ namespace ZScreenLib
                         // We dont need a MessageBox when we rename enumerations
                         // Renaming enums tend to break parts of serialization
                         FileSystem.AppendDebug(ex.ToString());
-                        OpenFileDialog dlg = new OpenFileDialog { Filter = Program.FILTER_SETTINGS };
+                        OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS };
                         dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                        dlg.InitialDirectory = Program.appSettings.RootDir;
+                        dlg.InitialDirectory = Engine.appSettings.RootDir;
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             return XMLSettings.Read(dlg.FileName);

@@ -29,7 +29,6 @@ using System.Linq;
 using System.Windows.Forms;
 using IconHelper;
 using Starksoft.Net.Ftp;
-using UploadersLib.FileUploaders.FTP;
 using UploadersLib;
 
 namespace ZSS.FTPClientLib

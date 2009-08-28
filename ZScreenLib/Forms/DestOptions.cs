@@ -51,40 +51,40 @@ namespace ZScreenLib
             {
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Program.conf.FileDestMode;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileDestMode;
 
             // Image Uploaders
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Program.conf.ScreenshotDestMode;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
 
             // Text Uploaders
-            foreach (TextUploader textUploader in Program.conf.TextUploadersList)
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
                     ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                 }
             }
-            if (Adapter.CheckList(Program.conf.TextUploadersList, Program.conf.TextUploaderSelected))
+            if (Adapter.CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected))
             {
-                ucDestOptions.cboTextUploaders.SelectedIndex = Program.conf.TextUploaderSelected;
+                ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
             }
-            ucDestOptions.cboTextUploaders.Enabled = !Program.conf.PreferFileUploaderForText;
+            ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
 
             // URL Shorteners
-            foreach (TextUploader textUploader in Program.conf.UrlShortenersList)
+            foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
             {
                 if (textUploader != null)
                 {
                     ucDestOptions.cboURLShorteners.Items.Add(textUploader);
                 }
             }
-            if (Adapter.CheckList(Program.conf.UrlShortenersList, Program.conf.UrlShortenerSelected))
+            if (Adapter.CheckList(Engine.conf.UrlShortenersList, Engine.conf.UrlShortenerSelected))
             {
-                ucDestOptions.cboURLShorteners.SelectedIndex = Program.conf.UrlShortenerSelected;
+                ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.UrlShortenerSelected;
             }
 
             // Dest Selector Events
@@ -96,17 +96,17 @@ namespace ZScreenLib
 
         void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Adapter.CheckList(Program.conf.UrlShortenersList, ucDestOptions.cboURLShorteners.SelectedIndex))
+            if (Adapter.CheckList(Engine.conf.UrlShortenersList, ucDestOptions.cboURLShorteners.SelectedIndex))
             {
-                Task.MyTextUploader = Program.conf.UrlShortenersList[ucDestOptions.cboURLShorteners.SelectedIndex];
+                Task.MyTextUploader = Engine.conf.UrlShortenersList[ucDestOptions.cboURLShorteners.SelectedIndex];
             }
         }
 
         void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Adapter.CheckList(Program.conf.TextUploadersList, ucDestOptions.cboTextUploaders.SelectedIndex))
+            if (Adapter.CheckList(Engine.conf.TextUploadersList, ucDestOptions.cboTextUploaders.SelectedIndex))
             {
-                Task.MyTextUploader = Program.conf.TextUploadersList[ucDestOptions.cboTextUploaders.SelectedIndex];
+                Task.MyTextUploader = Engine.conf.TextUploadersList[ucDestOptions.cboTextUploaders.SelectedIndex];
             }
         }
 

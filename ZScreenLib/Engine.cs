@@ -34,7 +34,7 @@ using System.Collections.Generic;
 
 namespace ZScreenLib
 {
-    public static class Program
+    public static class Engine
     {
         // App Info
         private static string mProductName = Application.ProductName;
@@ -63,7 +63,7 @@ namespace ZScreenLib
             {
                 if (conf != null && conf.UseCustomImagesDir && !String.IsNullOrEmpty(conf.CustomImagesDir))
                 {
-                    return Program.ImagesDir = conf.CustomImagesDir;
+                    return Engine.ImagesDir = conf.CustomImagesDir;
                 }
                 else
                 {
@@ -103,7 +103,13 @@ namespace ZScreenLib
         public static TaskbarManager zWindowsTaskbar;
         private static bool RunConfig = false;
 
-        public static void Load(bool keyboardHook)
+        public class EngineOptions
+        {
+           public bool keyboardHook {get; set;}
+           public bool showConfigWizard { get; set; }
+        }
+
+        public static void TurnOn(EngineOptions options)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
             FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
@@ -117,32 +123,32 @@ namespace ZScreenLib
             }
             else
             {
-                if (string.IsNullOrEmpty(Program.appSettings.RootDir))
+                if (options.showConfigWizard && string.IsNullOrEmpty(Engine.appSettings.RootDir))
                 {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     cw.ShowDialog();
-                    Program.appSettings.RootDir = cw.RootFolder;
-                    Program.appSettings.ImageUploader = cw.ImageDestinationType;
+                    Engine.appSettings.RootDir = cw.RootFolder;
+                    Engine.appSettings.ImageUploader = cw.ImageDestinationType;
                     RunConfig = true;
                 }
-                RootAppFolder = Program.appSettings.RootDir;
+                RootAppFolder = Engine.appSettings.RootDir;
             }
 
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
             RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
 
             FileSystem.AppendDebug("Initializing Default folder paths...");
-            Program.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
+            Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
             // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-            FileSystem.AppendDebug("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-            Program.conf = XMLSettings.Read();
+            FileSystem.AppendDebug("Reading " + Path.GetFileName(Engine.XMLSettingsFile));
+            Engine.conf = XMLSettings.Read();
 
-            Program.InitializeFiles();
+            Engine.InitializeFiles();
 
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Program.conf.ScreenshotDestMode = Program.appSettings.ImageUploader;
+                Engine.conf.ScreenshotDestMode = Engine.appSettings.ImageUploader;
             }
 
             bool bGrantedOwnership;
@@ -154,7 +160,7 @@ namespace ZScreenLib
                 {
                     assemblyGuid = new Guid(((System.Runtime.InteropServices.GuidAttribute)assemblyObjects[0]).Value);
                 }
-                Program.mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
+                Engine.mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
             }
             catch (UnauthorizedAccessException)
             {
@@ -168,14 +174,14 @@ namespace ZScreenLib
                 mAppInfo.AppName = mProductName;
             }
 
-            if (keyboardHook)
+            if (options.keyboardHook)
             {
                 ZScreenKeyboardHook = new KeyboardHook();
                 FileSystem.AppendDebug("Keyboard Hook initiated");
             }
         }
 
-        public static void Unload()
+        public static void TurnOff()
         {
             if (!Portable)
             {
@@ -200,7 +206,7 @@ namespace ZScreenLib
         private static string GetDefaultImagesDir()
         {
             string saveFolderPath = string.Empty;
-            if (Program.conf != null)
+            if (Engine.conf != null)
             {
                 saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
             }

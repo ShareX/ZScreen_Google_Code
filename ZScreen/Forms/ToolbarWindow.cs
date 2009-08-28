@@ -41,7 +41,7 @@ namespace ZScreenGUI
         private void DoJob(object sender, WorkerTask.Jobs e)
         {
             EventJob(sender, e);
-            if (Program.conf.CloseQuickActions)
+            if (Engine.conf.CloseQuickActions)
             {
                 this.Close();
             }
@@ -101,7 +101,7 @@ namespace ZScreenGUI
         {
             if (mGuiReady)
             {
-                Program.conf.ActionToolbarLocation = this.Location;
+                Engine.conf.ActionToolbarLocation = this.Location;
             }
         }
 

@@ -45,7 +45,7 @@ namespace ZScreenLib
 
         public void Save()
         {
-            Save(Program.HistoryFile);
+            Save(Engine.HistoryFile);
         }
 
         public void Save(string filePath)
@@ -69,7 +69,7 @@ namespace ZScreenLib
 
         public static HistoryManager Read()
         {
-            return Read(Program.HistoryFile);
+            return Read(Engine.HistoryFile);
         }
 
         public static HistoryManager Read(string filePath)
