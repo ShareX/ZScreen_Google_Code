@@ -48,7 +48,7 @@ namespace ZSS.FTPClientLib
 
             this.Options = options;
             FTPAdapter = new FTP(options.Account);
-            //FTPAdapter.FTPOutput += new FTPAdapter.StringEventHandler(FTPAdapter_FTPOutput);
+            FTPAdapter.DebugMessage += new FTP.FTPDebugEventHandler(FTPAdapter_DebugMessage);
 
             RefreshDirectory();
         }
@@ -519,10 +519,9 @@ namespace ZSS.FTPClientLib
             foreach (ListViewItem lvi in lvFTPList.SelectedItems)
             {
                 FtpItem file = lvi.Tag as FtpItem;
-                if (true)
+                if (file.ItemType == FtpItemType.File)
                 {
-                    path = currentDirectory.Remove(0, FTPAdapter.Account.FTPAddress.Length);
-                    path = FTPAdapter.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name), true);
+                    path = FTPAdapter.Account.GetUriPath(file.FullPath, true);
                     list.Add(path);
                 }
             }
@@ -540,9 +539,9 @@ namespace ZSS.FTPClientLib
             this.Refresh();
         }
 
-        private void FTPAdapter_FTPOutput(string text)
+        private void FTPAdapter_DebugMessage(string text)
         {
-            txtConsole.AppendText(text + "\r\n");
+            txtConsole.AppendText(string.Format("{0} - {1}\r\n", DateTime.Now.ToLongTimeString(), text));
             txtConsole.ScrollToCaret();
         }
 
