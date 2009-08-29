@@ -50,7 +50,6 @@ namespace UploadersLib
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
-            // commented until resolution from http://www.vbforums.com/showthread.php?t=582151
             IWebProxy proxy = Uploader.ProxySettings;
             if (proxy != null)
             {

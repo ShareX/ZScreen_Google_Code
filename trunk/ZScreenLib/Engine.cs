@@ -128,16 +128,16 @@ namespace ZScreenLib
             }
             else
             {
-                if (options.ShowConfigWizard)
+                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.appSettings.RootDir))
                 {
-                    if (string.IsNullOrEmpty(Engine.appSettings.RootDir))
-                    {
-                        ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
-                        cw.ShowDialog();
-                        Engine.appSettings.RootDir = cw.RootFolder;
-                        Engine.appSettings.ImageUploader = cw.ImageDestinationType;
-                        RunConfig = true;
-                    }
+                    ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
+                    cw.ShowDialog();
+                    Engine.appSettings.RootDir = cw.RootFolder;
+                    Engine.appSettings.ImageUploader = cw.ImageDestinationType;
+                    RunConfig = true;
+                }
+                if (!string.IsNullOrEmpty(Engine.appSettings.RootDir))
+                {
                     RootAppFolder = Engine.appSettings.RootDir;
                 }
                 else

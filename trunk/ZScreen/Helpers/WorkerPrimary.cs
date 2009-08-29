@@ -40,7 +40,7 @@ using ZSS.IndexersLib;
 
 namespace ZScreenGUI
 {
-    public class WorkerPrimary
+    public class WorkerPrimary : Worker
     {
         private ZScreen mZScreen;
 
@@ -52,7 +52,7 @@ namespace ZScreenGUI
             this.mZScreen = myZScreen;
         }
 
-        public BackgroundWorker CreateWorker()
+        public override BackgroundWorker CreateWorker()
         {
             BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
             bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(BwApp_DoWork);
@@ -63,7 +63,7 @@ namespace ZScreenGUI
 
         #region Worker Events
 
-        private void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
@@ -136,18 +136,6 @@ namespace ZScreenGUI
                     }
 
                     break;
-                /* case JobCategoryType.BINARY:
-                      switch (task.Job)
-                      {
-                          case WorkerTask.Jobs.UploadFromClipboard:
-                              if (Program.conf.AutoSwitchFileUploader)
-                              {
-                                  task.MyImageUploader = ImageDestType.FTP;
-                                  PublishBinary(ref task);
-                              }
-                              break;
-                      }
-                      break; */
             }
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
@@ -387,23 +375,6 @@ namespace ZScreenGUI
 
         #endregion
 
-        public WorkerTask CreateTask(WorkerTask.Jobs job)
-        {
-            BackgroundWorker bwApp = CreateWorker();
-            WorkerTask task = new WorkerTask(bwApp, job);
-            if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
-            {
-                task.MyImageUploader = Engine.conf.ScreenshotDestMode;
-                task.MyFileUploader = Engine.conf.FileDestMode;
-            }
-            else
-            {
-                task.MyImageUploader = ImageDestType.CUSTOM_UPLOADER;
-            }
-
-            return task;
-        }
-
         public WorkerTask GetWorkerText(WorkerTask.Jobs job)
         {
             return GetWorkerText(job, string.Empty);
@@ -530,88 +501,6 @@ namespace ZScreenGUI
                 StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(Clipboard.GetText(),
                     GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
                     GoogleTranslate.FindLanguage(Engine.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
-            }
-        }
-
-        /// <summary>
-        /// Worker for Images: Drag n Drop, Image from Clipboard, Custom Uploader
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the image</param>
-        public void StartWorkerPictures(WorkerTask task, string localFilePath)
-        {
-            task.JobCategory = JobCategoryType.PICTURES;
-            task.MakeTinyURL = Adapter.MakeTinyURL();
-            task.SetLocalFilePath(localFilePath);
-            task.SetImage(localFilePath);
-            task.MyWorker.RunWorkerAsync(task);
-        }
-
-        public void StartWorkerPictures(WorkerTask.Jobs job, Image img)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.PICTURES;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.SetImage(img);
-            new TaskManager(ref t).WriteImage();
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        /// <summary>
-        /// Worker for Screenshots: Active Window, Crop, Entire Screen
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        public void StartWorkerScreenshots(WorkerTask.Jobs job)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.SCREENSHOTS;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        /// <summary>
-        /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the file</param>
-        private void StartWorkerBinary(WorkerTask.Jobs job, string localFilePath)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.BINARY;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.SetLocalFilePath(localFilePath);
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        private void PublishBinary(ref WorkerTask task)
-        {
-            task.StartTime = DateTime.Now;
-            TaskManager tm = new TaskManager(ref task);
-            tm.UploadFile();
-            task.EndTime = DateTime.Now;
-        }
-
-        /// <summary>
-        /// Function to edit Text in a Text Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        private void PublishText(ref WorkerTask task)
-        {
-            TaskManager tm = new TaskManager(ref task);
-            tm.UploadText();
-        }
-
-        private void ScreenshotUsingDragDrop(string fp)
-        {
-            StartWorkerPictures(CreateTask(WorkerTask.Jobs.PROCESS_DRAG_N_DROP), fp);
-        }
-
-        private void ScreenshotUsingDragDrop(string[] paths)
-        {
-            foreach (string filePath in FileSystem.GetExplorerFileList(paths))
-            {
-                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
-                ScreenshotUsingDragDrop(filePath);
             }
         }
 

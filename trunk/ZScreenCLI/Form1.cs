@@ -2,16 +2,87 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using ZScreenLib;
+using System.IO;
 
 namespace ZScreenCLI
 {
-    public partial class Form1 : GenericMain
+    public partial class Form1 : GenericMainWindow
     {
-        public Form1(WorkerTask task)
+        public Form1()
         {
             InitializeComponent();
-            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
+            ProcessArgs();
         }
+
+        public void ProcessArgs()
+        {
+            string[] args = Environment.GetCommandLineArgs();
+            WorkerTask task = null;
+
+            if (args.Length > 1)
+            {
+                this.niTray.Icon = ResxMgr.BusyIcon;
+                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
+                Engine.LoadSettings();
+
+                try
+                {
+                    if (args[1].ToLower() == "crop_shot")
+                    {
+                        // Crop Shot
+                        task = CropShot(WorkerTask.Jobs.TakeScreenshotCropped);
+                    }
+                    else if (args[1].ToLower() == "selected_window")
+                    {
+                        // Selected Window
+                        task = CropShot(WorkerTask.Jobs.TakeScreenshotWindowSelected);
+                    }
+                    else if (args[1].ToLower() == "clipboard_upload")
+                    {
+                        // Clipboard Upload
+                    }
+                    else if (args[1].ToLower() == "upload" && args.Length > 2 && !string.IsNullOrEmpty(args[2]))
+                    {
+                        FileUpload(args[2]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.ToString());
+                }
+
+                this.niTray.Icon = ResxMgr.ReadyIcon;
+            }
+        }
+
+        #region Command Line Arguments
+
+        public WorkerTask CropShot(WorkerTask.Jobs job)
+        {
+            WorkerTask task = new Worker(this).CreateTask(job);
+            task.MyImageUploader = Engine.conf.ScreenshotDestMode;
+            new TaskManager(ref task).CaptureRegionOrWindow();
+            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
+            UploadManager.SetClipboardText(task, false);
+            return task;
+        }
+
+        public void ClipboardUpload()
+        {
+
+        }
+
+        public void FileUpload(string fp)
+        {
+            if (File.Exists(fp) || Directory.Exists(fp))
+            {
+
+            }
+        }
+
+        #endregion
+
+        #region Tray Events
 
         private void niTray_Click(object sender, EventArgs e)
         {
@@ -20,7 +91,7 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
-            this.Close();
+           // this.Close();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
@@ -31,32 +102,6 @@ namespace ZScreenCLI
                 new BalloonTipHelper(ni).ClickBalloonTip();
             }
             this.Close();
-        }
-
-        #region Worker
-
-        public BackgroundWorker CreateWorker()
-        {
-            BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
-            bwApp.DoWork += new DoWorkEventHandler(bwApp_DoWork);
-            bwApp.ProgressChanged += new ProgressChangedEventHandler(bwApp_ProgressChanged);
-            bwApp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwApp_RunWorkerCompleted);
-            return bwApp;
-        }
-
-        void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void bwApp_DoWork(object sender, DoWorkEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
