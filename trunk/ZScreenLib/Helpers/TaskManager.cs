@@ -35,6 +35,7 @@ using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
 using ZSS;
 using System.Text;
+using System.Collections.Generic;
 
 namespace ZScreenLib
 {
@@ -354,8 +355,7 @@ namespace ZScreenLib
 
                         if (mTask.ImageManager.ImageFileList.Count == 0)
                         {
-                            mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning,
-                                string.Format("Retrying {0}... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
+                            mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
                         }
                         else
                         {
@@ -443,6 +443,7 @@ namespace ZScreenLib
                     fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
+                    FileSystem.AppendDebug("URL: " + mTask.RemoteFilePath);
                     return true;
                 }
             }

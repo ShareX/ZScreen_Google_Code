@@ -899,30 +899,53 @@ namespace ZScreenGUI
             }
         }
 
-        private bool RetryUpload(WorkerTask t)
+        private bool RetryUpload(WorkerTask task)
         {
-            if (Engine.conf.ImageUploadRetryOnFail && t.IsImage && t.Errors.Count > 0 && !t.Retry &&
-                (t.MyImageUploader == ImageDestType.IMAGESHACK || t.MyImageUploader == ImageDestType.TINYPIC))
+            if (Engine.conf.ImageUploadRetryOnFail && (task.Errors.Count > 0 || task.ImageManager.ImageFileList.Count == 0) && !task.Retry &&
+                (task.MyImageUploader == ImageDestType.IMAGESHACK || task.MyImageUploader == ImageDestType.TINYPIC))
             {
-                WorkerTask task = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
-                task.JobCategory = t.JobCategory;
-                task.SetImage(t.LocalFilePath);
-                task.SetLocalFilePath(t.LocalFilePath);
-                if (t.MyImageUploader == ImageDestType.IMAGESHACK)
+                WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
+                task2.JobCategory = task.JobCategory;
+                task2.SetImage(task.LocalFilePath);
+                task2.SetLocalFilePath(task.LocalFilePath);
+
+                if (Engine.conf.ImageUploadRandomRetryOnFail)
                 {
-                    task.MyImageUploader = ImageDestType.TINYPIC;
+                    List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
+                    if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
+                    {
+                        randomDest.Add(ImageDestType.IMAGEBAM);
+                    }
+                    if (null != Engine.conf.FlickrAuthInfo)
+                    {
+                        randomDest.Add(ImageDestType.FLICKR);
+                    }
+                    Random rand = new Random();
+                    int r = rand.Next(3, 3 + randomDest.Count - 1);
+                    while (r == (int)task2.MyImageUploader)
+                    {
+                        r = rand.Next(3, 3 + randomDest.Count - 1);
+                    }
+                    task2.MyImageUploader = (ImageDestType)r;
                 }
                 else
                 {
-                    task.MyImageUploader = ImageDestType.IMAGESHACK;
+                    if (task.MyImageUploader == ImageDestType.IMAGESHACK)
+                    {
+                        task2.MyImageUploader = ImageDestType.TINYPIC;
+                    }
+                    else
+                    {
+                        task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                    }
                 }
 
-                task.Retry = true;
+                task2.Retry = true;
 
-                string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", t.Errors.ToArray()),
-                    task.MyImageUploader.GetDescription());
+                string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()),
+                    task2.MyImageUploader.GetDescription());
                 mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
-                task.MyWorker.RunWorkerAsync(task);
+                task2.MyWorker.RunWorkerAsync(task2);
                 return true;
             }
 

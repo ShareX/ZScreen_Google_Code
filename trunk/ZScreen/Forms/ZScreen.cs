@@ -688,7 +688,7 @@ namespace ZScreenGUI
 
             pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
             pgFlickrSettings.SelectedObject = Engine.conf.FlickrSettings;
-            btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
+           // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
 
             #endregion
 
@@ -4268,7 +4268,7 @@ namespace ZScreenGUI
                     FlickrUploader flickr = new FlickrUploader();
                     Engine.conf.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
-                    btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
+                    // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
                     MessageBox.Show("Success.");
                 }
             }

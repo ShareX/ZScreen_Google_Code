@@ -238,7 +238,7 @@ namespace UploadersLib.ImageUploaders
 
         public class AuthInfo
         {
-            [Description("Token string"), ReadOnly(true)]
+            [Description("Token string"), ReadOnly(true), PasswordPropertyText(true)]
             public string Token { get; set; }
 
             [Description("Permission"), ReadOnly(true)]

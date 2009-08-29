@@ -261,8 +261,9 @@ namespace ZScreenLib
 
         public UploadMode UploadMode = UploadMode.API;
         public bool AutoSwitchFileUploader = true;
-        public decimal ErrorRetryCount = 3;
+        public decimal ErrorRetryCount = 2;
         public bool ImageUploadRetryOnFail = true;
+        public bool ImageUploadRandomRetryOnFail = true;
         public bool AddFailedScreenshot = true;
         public bool ImageUploadRetryOnTimeout = false;
         public decimal UploadDurationLimit = 15000;
@@ -394,7 +395,7 @@ namespace ZScreenLib
 
         [Category("Destinations / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
-        
+
         // Destinations / Twitter / Yfrog
 
         [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]

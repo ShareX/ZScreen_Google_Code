@@ -109,6 +109,11 @@ namespace ZScreenLib
             public bool ShowConfigWizard { get; set; }
         }
 
+        public static void TurnOn()
+        {
+            TurnOn(new EngineOptions());
+        }
+
         public static void TurnOn(EngineOptions options)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
@@ -147,17 +152,7 @@ namespace ZScreenLib
             FileSystem.AppendDebug("Initializing Default folder paths...");
             Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
             // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-            FileSystem.AppendDebug("Reading " + Path.GetFileName(Engine.XMLSettingsFile));
-            Engine.conf = XMLSettings.Read();
-
-            Engine.InitializeFiles();
-
-            // Use Configuration Wizard Settings if applied
-            if (RunConfig)
-            {
-                Engine.conf.ScreenshotDestMode = Engine.appSettings.ImageUploader;
-            }
-
+          
             bool bGrantedOwnership;
             try
             {
@@ -185,6 +180,32 @@ namespace ZScreenLib
             {
                 ZScreenKeyboardHook = new KeyboardHook();
                 FileSystem.AppendDebug("Keyboard Hook initiated");
+            }
+        }
+
+        public static void LoadSettings()
+        {
+            LoadSettings(string.Empty);
+        }
+
+        public static void LoadSettings(string fp)
+        {
+            if (string.IsNullOrEmpty(fp))
+            {
+                FileSystem.AppendDebug("Reading " + Path.GetFileName(Engine.XMLSettingsFile));
+                Engine.conf = XMLSettings.Read();
+            }
+            else
+            {
+                FileSystem.AppendDebug("Reading " + Path.GetFileName(fp));
+                Engine.conf = XMLSettings.Read(fp);
+            }
+            Engine.InitializeFiles();
+
+            // Use Configuration Wizard Settings if applied
+            if (RunConfig)
+            {
+                Engine.conf.ScreenshotDestMode = Engine.appSettings.ImageUploader;
             }
         }
 
