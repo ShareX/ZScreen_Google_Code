@@ -335,6 +335,7 @@ namespace ZScreenLib
 
             if (imageUploader != null)
             {
+                FileSystem.AppendDebug("Initialized " + imageUploader.Name);
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
@@ -399,6 +400,7 @@ namespace ZScreenLib
                 }
 
                 mTask.RemoteFilePath = url;
+                FileSystem.AppendDebug("URL: " + mTask.RemoteFilePath);
                 mTask.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
             }
         }
@@ -443,7 +445,6 @@ namespace ZScreenLib
                     fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
-                    FileSystem.AppendDebug("URL: " + mTask.RemoteFilePath);
                     return true;
                 }
             }
