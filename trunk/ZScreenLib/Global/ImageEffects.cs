@@ -42,8 +42,6 @@ namespace ZScreenLib
         public static Bitmap GetRandomLogo(Bitmap logo)
         {
             Bitmap bmp = new Bitmap(logo);
-            Random rand = new Random();
-
             if (mLogoRandomList.Count == 0)
             {
                 List<int> numbers = Enumerable.Range(1, 7).ToList();
@@ -52,7 +50,7 @@ namespace ZScreenLib
 
                 for (int x = 0; x < count; x++)
                 {
-                    int r = rand.Next(0, numbers.Count - 1);
+                    int r = Adapter.RandomNumber(0, numbers.Count - 1);
                     mLogoRandomList.Add(numbers[r]);
                     numbers.RemoveAt(r);
                 }
@@ -72,17 +70,17 @@ namespace ZScreenLib
                     break;
                 case 4:
                     logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(100, 300)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(100, 300)));
                     break;
                 case 5:
                     logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -100)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(-300, -100)));
                     break;
                 case 6:
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(150, 300)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(150, 300)));
                     break;
                 case 7:
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(rand.Next(-300, -150)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(-300, -150)));
                     break;
             }
 

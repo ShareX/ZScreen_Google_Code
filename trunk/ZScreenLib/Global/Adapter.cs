@@ -38,6 +38,7 @@ using ZSS;
 using System.Drawing.Printing;
 using Greenshot.Helpers;
 using System.Drawing;
+using System.Web;
 
 namespace ZScreenLib
 {
@@ -497,6 +498,12 @@ namespace ZScreenLib
                 Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(fp, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
                                                                    Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
             }
+        }
+
+        public static int RandomNumber(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max);
         }
 
         #region "Windows 7 only"
