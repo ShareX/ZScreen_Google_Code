@@ -74,6 +74,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZScreenLib\ZSS.ZScreenLib.csproj">

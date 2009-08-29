@@ -215,7 +215,10 @@ namespace ZScreenLib
             {
                 appSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
             }
-            ZScreenKeyboardHook.Dispose();
+            if (null != ZScreenKeyboardHook)
+            {
+                ZScreenKeyboardHook.Dispose();
+            }
             FileSystem.AppendDebug("Keyboard Hook terminated");
             FileSystem.WriteDebugFile();
         }

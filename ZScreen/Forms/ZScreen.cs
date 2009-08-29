@@ -2795,7 +2795,7 @@ namespace ZScreenGUI
             {
                 if (hi.ScreenshotManager != null)
                 {
-                    if (FileSystem.IsValidImageFile(hi.LocalPath))
+                    if (FileSystem.IsValidImage(hi.LocalPath))
                     {
                         ShowScreenshot sc = new ShowScreenshot();
                         if (hi.ScreenshotManager.GetImage() != null)
