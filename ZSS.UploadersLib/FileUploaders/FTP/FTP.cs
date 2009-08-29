@@ -28,7 +28,7 @@ using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
 
-namespace UploadersLib.FileUploaders.FTP
+namespace UploadersLib
 {
     public sealed class FTP : IDisposable
     {

@@ -17,7 +17,7 @@ namespace ZScreenCLI
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                ZScreenLib.Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
+                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
                 WorkerTask task = null;
                 // this.niTray.Icon = ResxMgr.BusyIcon;
                 try

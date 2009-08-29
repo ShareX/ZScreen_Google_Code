@@ -54,6 +54,7 @@ namespace ZScreenGUI
             try
             {
                 Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
+                Engine.LoadSettings();
                 Application.Run(new ZScreen());
             }
             catch (Exception ex)
