@@ -5,7 +5,7 @@ using ZScreenLib;
 
 namespace ZScreenCLI
 {
-    public partial class Form1 : Form
+    public partial class Form1 : GenericMain
     {
         public Form1(WorkerTask task)
         {

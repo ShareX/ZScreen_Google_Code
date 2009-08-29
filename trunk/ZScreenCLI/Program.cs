@@ -18,6 +18,7 @@ namespace ZScreenCLI
             if (args.Length > 1)
             {
                 Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
+                Engine.LoadSettings();
                 WorkerTask task = null;
                 // this.niTray.Icon = ResxMgr.BusyIcon;
                 try
@@ -54,6 +55,11 @@ namespace ZScreenCLI
             //   new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
             UploadManager.SetClipboardText(task, false);
             return task;
+        }
+
+        public static void ClipboardUpload()
+        {
+
         }
     }
 }

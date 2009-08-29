@@ -824,34 +824,38 @@ namespace ZScreenGUI
             }
             else
             {
-                List<WorkerTask> textWorkers = new List<WorkerTask>();
-
-                if (Clipboard.ContainsImage())
-                {
-                    Image cImage = Clipboard.GetImage();
-                    WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
-                    task.Settings.ManualNaming = false;
-                    task.SetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
-                    FileSystem.SaveImage(cImage, task.LocalFilePath);
-                    StartWorkerPictures(task, task.LocalFilePath);
-                }
-                else if (Clipboard.ContainsText())
-                {
-                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                    string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
-                        NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
-                    File.WriteAllText(fp, Clipboard.GetText());
-                    temp.SetLocalFilePath(fp);
-                    temp.MyText = TextInfo.FromFile(fp);
-                    textWorkers.Add(temp);
-                }
-                else if (Clipboard.ContainsFileDropList())
-                {
-                    this.UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
-                }
-
-                this.StartTextWorkers(textWorkers);
+                UploadUsingClipboard2(CreateTask(WorkerTask.Jobs.UploadFromClipboard));
             }
+        }
+
+        public void UploadUsingClipboard2(WorkerTask task)
+        {
+            List<WorkerTask> textWorkers = new List<WorkerTask>();
+
+            if (Clipboard.ContainsImage())
+            {
+                Image cImage = Clipboard.GetImage();
+                task.Settings.ManualNaming = false;
+                task.SetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
+                FileSystem.SaveImage(cImage, task.LocalFilePath);
+                StartWorkerPictures(task, task.LocalFilePath);
+            }
+            else if (Clipboard.ContainsText())
+            {
+                WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
+                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
+                    NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
+                File.WriteAllText(fp, Clipboard.GetText());
+                temp.SetLocalFilePath(fp);
+                temp.MyText = TextInfo.FromFile(fp);
+                textWorkers.Add(temp);
+            }
+            else if (Clipboard.ContainsFileDropList())
+            {
+                UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
+            }
+
+            StartTextWorkers(textWorkers);
         }
 
         private void StartTextWorkers(List<WorkerTask> textWorkers)

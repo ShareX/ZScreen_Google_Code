@@ -241,9 +241,14 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="fp"></param>
         /// <returns></returns>
-        public static bool IsValidImageFile(string fp)
+        public static bool IsValidImage(string fp)
         {
             return GraphicsMgr.IsValidImage(fp);
+        }
+
+        public static Image ImageFromFile(string fp)
+        {
+            return GraphicsMgr.GetImageSafely(fp);
         }
 
         /// <summary>

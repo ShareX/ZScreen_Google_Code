@@ -289,6 +289,10 @@ namespace ZScreenLib
         {
             this.LocalFilePath = fp;
             this.FileName = Path.GetFileName(fp);
+            if (FileSystem.IsValidImage(fp) && this.MyImage == null)
+            {
+                this.MyImage = FileSystem.ImageFromFile(fp);
+            }
             Debug.Assert(File.Exists(fp), "File does not exist");
         }
 
