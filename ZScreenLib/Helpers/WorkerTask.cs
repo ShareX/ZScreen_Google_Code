@@ -247,9 +247,9 @@ namespace ZScreenLib
             this.MyImage = GraphicsMgr.GetImageSafely(fp);
         }
 
-        public void SetFilePath(string fp)
+        public void SetFilePath(string fileName)
         {
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fp + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
 
             if (Engine.conf.ManualNaming)
             {
@@ -280,7 +280,8 @@ namespace ZScreenLib
             sbPath.Append(Path.GetExtension(filePath));
             filePath = sbPath.ToString();
 
-            this.SetLocalFilePath(filePath);
+            this.LocalFilePath = filePath;
+            this.FileName = Path.GetFileName(filePath);
 
         }
 
@@ -331,7 +332,7 @@ namespace ZScreenLib
         {
             StringBuilder sbDebug = new StringBuilder();
             sbDebug.AppendLine(string.Format("Image Uploader: {0}", MyImageUploader));
-           // sbDebug.AppendLine(string.Format(" Text Uploader: {0}", MyTextUploader));
+            // sbDebug.AppendLine(string.Format(" Text Uploader: {0}", MyTextUploader));
             sbDebug.AppendLine(string.Format(" File Uploader: {0}", MyFileUploader.GetDescription()));
             return sbDebug.ToString();
         }
