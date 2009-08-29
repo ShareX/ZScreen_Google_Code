@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using ZScreenLib;
+using System.IO;
 
 namespace ZScreenCLI
 {
@@ -14,52 +15,7 @@ namespace ZScreenCLI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
-            {
-                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
-                Engine.LoadSettings();
-                WorkerTask task = null;
-                // this.niTray.Icon = ResxMgr.BusyIcon;
-                try
-                {
-                    if (args[1].ToLower() == "crop_shot")
-                    {
-                        // Crop Shot
-                        task = CropShot(WorkerTask.Jobs.TakeScreenshotCropped);
-                    }
-                    else if (args[1].ToLower() == "selected_window")
-                    {
-                        // Selected Window
-                        task = CropShot(WorkerTask.Jobs.TakeScreenshotWindowSelected);
-                    }
-                    else if (args[1].ToLower() == "clipboard_upload")
-                    {
-                        // Clipboard Upload
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex.ToString());
-                }
-                // this.niTray.Icon = ResxMgr.ReadyIcon;
-                Application.Run(new Form1(task));
-            }
-        }
-
-        public static WorkerTask CropShot(WorkerTask.Jobs job)
-        {
-            WorkerTask task = new WorkerTask(job);
-            task.MyImageUploader = ZScreenLib.Engine.conf.ScreenshotDestMode;
-            new TaskManager(ref task).CaptureRegionOrWindow();
-            //   new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
-            UploadManager.SetClipboardText(task, false);
-            return task;
-        }
-
-        public static void ClipboardUpload()
-        {
-
+            Application.Run(new Form1());
         }
     }
 }

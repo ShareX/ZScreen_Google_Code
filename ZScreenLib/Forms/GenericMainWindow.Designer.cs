@@ -1,6 +1,6 @@
 ﻿namespace ZScreenLib
 {
-    public partial class GenericMain
+    public partial class GenericMainWindow
     {
         /// <summary>
         /// Required designer variable.

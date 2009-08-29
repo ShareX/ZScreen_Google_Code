@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace ZScreenLib
 {
-    public partial class GenericMain : Form
+    public partial class GenericMainWindow : Form
     {
-        public GenericMain()
+        public GenericMainWindow()
         {
             InitializeComponent();
         }

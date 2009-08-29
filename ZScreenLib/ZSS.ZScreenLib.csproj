@@ -101,11 +101,11 @@
     <Compile Include="Forms\DekiWikiPath.designer.cs">
       <DependentUpon>DekiWikiPath.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GenericMain.cs">
+    <Compile Include="Forms\GenericMainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\GenericMain.Designer.cs">
-      <DependentUpon>GenericMain.cs</DependentUpon>
+    <Compile Include="Forms\GenericMainWindow.Designer.cs">
+      <DependentUpon>GenericMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\InputBox.cs">
       <SubType>Form</SubType>
@@ -154,6 +154,7 @@
     <Compile Include="Helpers\RoundedRectangle.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
     <Compile Include="Helpers\WebPageCapture.cs" />
+    <Compile Include="Helpers\Worker.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Engine.cs" />
