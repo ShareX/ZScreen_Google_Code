@@ -11,13 +11,12 @@ namespace UploaderTester
 {
     class Tester
     {
-        private static string testSettings = @"C:\Users\Mihajlo\Documents\Applications\ZScreen\Settings\ZScreen-3.3.2.0-Settings.xml";
         private static string testFile = @"C:\Users\Mihajlo\Pictures\lion_250px.jpg";
 
         private static void Main(string[] args)
         {
             Engine.TurnOn();
-            Engine.LoadSettings(testSettings);
+            Engine.LoadSettings();
 
             #region Image Uploaders
             foreach (ImageDestType uploader in Enum.GetValues(typeof(UploadersLib.ImageDestType)))
