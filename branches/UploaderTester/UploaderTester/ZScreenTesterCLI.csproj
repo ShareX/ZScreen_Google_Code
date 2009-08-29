@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\trunk\ZScreenLib\ZSS.ZScreenLib.csproj">
+      <Project>{2CB31685-9F2D-4017-9A98-C4EF1B92C928}</Project>
+      <Name>ZSS.ZScreenLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
