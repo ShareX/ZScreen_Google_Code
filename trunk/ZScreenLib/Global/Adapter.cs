@@ -328,8 +328,6 @@ namespace ZScreenLib
 
         #endregion
 
-
-
         public static bool CheckList<T>(List<T> list, int selected)
         {
             return list.Count > 0 && selected >= 0 && list.Count > selected;
@@ -339,7 +337,6 @@ namespace ZScreenLib
         {
             return CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected);
         }
-
 
         public static bool CheckDekiWikiAccounts()
         {

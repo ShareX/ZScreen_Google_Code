@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UploaderTester</RootNamespace>
-    <AssemblyName>UploaderTester</AssemblyName>
+    <RootNamespace>ZScreenTesterGUI</RootNamespace>
+    <AssemblyName>ZScreenTesterGUI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,15 +42,27 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="TesterGUI.resx">
+      <DependentUpon>TesterGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="TesterGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TesterGUI.Designer.cs">
+      <DependentUpon>TesterGUI.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\trunk\ZScreenLib\ZSS.ZScreenLib.csproj">
-      <Project>{2CB31685-9F2D-4017-9A98-C4EF1B92C928}</Project>
+      <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
       <Name>ZSS.ZScreenLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">

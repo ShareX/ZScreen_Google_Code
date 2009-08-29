@@ -290,7 +290,10 @@ namespace ZScreenLib
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
                 case ImageDestType.PRINTER:
-                    mTask.MyWorker.ReportProgress(101, Greenshot.Drawing.Surface.GetImageForExport(mTask.MyImage));
+                    if (mTask.MyImage != null)
+                    {
+                        mTask.MyWorker.ReportProgress(101, (Image)mTask.MyImage.Clone());
+                    }
                     break;
                 case ImageDestType.TINYPIC:
                     imageUploader = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, Engine.conf.UploadMode);

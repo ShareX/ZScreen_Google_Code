@@ -23,12 +23,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net.Sockets;
-using System.Net;
-using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
 namespace UploadersLib.Helpers
 {
@@ -72,11 +72,13 @@ namespace UploadersLib.Helpers
 
         private void BuildRequests(string fileFormName, string fileName, string fileMimeType, Dictionary<string, string> arguments)
         {
-            using (MemoryStream stream = new MemoryStream()){
-                
+            using (MemoryStream stream = new MemoryStream())
+            {
+
                 StringBuilder stringRequest = new StringBuilder();
 
-                foreach (KeyValuePair<string, string> argument in arguments){
+                foreach (KeyValuePair<string, string> argument in arguments)
+                {
                     stringRequest.Append(MakeInputContent(argument.Key, argument.Value));
                 }
 
