@@ -324,17 +324,7 @@ namespace ZScreenLib
                     break;
             }
 
-            switch (mTask.MyImageUploader)
-            {
-                case ImageDestType.CUSTOM_UPLOADER:
-                case ImageDestType.IMAGESHACK:
-                case ImageDestType.TINYPIC:
-                case ImageDestType.TWITPIC:
-                case ImageDestType.TWITSNAPS:
-                case ImageDestType.YFROG:
-                    imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
-                    break;
-            }
+            //imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
 
             if (imageUploader != null)
             {

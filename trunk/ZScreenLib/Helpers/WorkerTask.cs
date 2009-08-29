@@ -340,5 +340,10 @@ namespace ZScreenLib
             sbDebug.AppendLine(string.Format(" File Uploader: {0}", MyFileUploader.GetDescription()));
             return sbDebug.ToString();
         }
+
+        public string ToErrorString()
+        {
+            return string.Join("\r\n", Errors.ToArray());
+        }
     }
 }
