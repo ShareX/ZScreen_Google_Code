@@ -34,6 +34,7 @@ using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
 using ZSS;
+using System.Text;
 
 namespace ZScreenLib
 {
@@ -261,7 +262,7 @@ namespace ZScreenLib
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:
-                    if (Engine.conf.ImageUploadersList != null && Engine.conf.ImageUploaderSelected != -1)
+                    if (Adapter.CheckList(Engine.conf.ImageUploadersList, Engine.conf.ImageUploaderSelected))
                     {
                         imageUploader = new CustomUploader(Engine.conf.ImageUploadersList[Engine.conf.ImageUploaderSelected]);
                     }
@@ -338,7 +339,7 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 1; i <= (int)Engine.conf.ErrorRetryCount && (mTask.ImageManager == null || 
+                    for (int i = 1; i <= (int)Engine.conf.ErrorRetryCount && (mTask.ImageManager == null ||
                         (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
@@ -353,7 +354,7 @@ namespace ZScreenLib
 
                         if (mTask.ImageManager.ImageFileList.Count == 0)
                         {
-                            mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, 
+                            mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning,
                                 string.Format("Retrying {0}... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
                         }
                         else
@@ -595,6 +596,13 @@ namespace ZScreenLib
                     }
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sbDebug = new StringBuilder();
+            sbDebug.AppendLine(string.Format("Image Uploader: {0", mTask.MyImageUploader));
+            return sbDebug.ToString();
         }
     }
 }

@@ -53,7 +53,7 @@ namespace ZScreenGUI
         {
             try
             {
-                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { keyboardHook = true, showConfigWizard = true });
+                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
                 Application.Run(new ZScreen());
             }
             catch (Exception ex)

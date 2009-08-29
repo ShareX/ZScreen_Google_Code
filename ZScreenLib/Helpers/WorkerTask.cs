@@ -34,6 +34,7 @@ using UploadersLib.Helpers;
 using UploadersLib.TextServices;
 using System.Windows.Forms;
 using ZScreenLib.Properties;
+using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -246,9 +247,9 @@ namespace ZScreenLib
             this.MyImage = GraphicsMgr.GetImageSafely(fp);
         }
 
-        public void SetFilePath(string fileName)
+        public void SetFilePath(string fp)
         {
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fp + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
 
             if (Engine.conf.ManualNaming)
             {
@@ -287,6 +288,7 @@ namespace ZScreenLib
         {
             this.LocalFilePath = fp;
             this.FileName = Path.GetFileName(fp);
+            Debug.Assert(File.Exists(fp), "File does not exist");
         }
 
         public string GetDescription()
@@ -324,5 +326,14 @@ namespace ZScreenLib
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            StringBuilder sbDebug = new StringBuilder();
+            sbDebug.AppendLine(string.Format("Image Uploader: {0}", MyImageUploader));
+           // sbDebug.AppendLine(string.Format(" Text Uploader: {0}", MyTextUploader));
+            sbDebug.AppendLine(string.Format(" File Uploader: {0}", MyFileUploader.GetDescription()));
+            return sbDebug.ToString();
+        }
     }
 }

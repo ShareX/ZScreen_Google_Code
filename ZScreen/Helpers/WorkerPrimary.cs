@@ -538,12 +538,13 @@ namespace ZScreenGUI
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the image</param>
-        public void StartWorkerPictures(WorkerTask t, string localFilePath)
+        public void StartWorkerPictures(WorkerTask task, string localFilePath)
         {
-            t.JobCategory = JobCategoryType.PICTURES;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.SetImage(localFilePath);
-            t.MyWorker.RunWorkerAsync(t);
+            task.JobCategory = JobCategoryType.PICTURES;
+            task.MakeTinyURL = Adapter.MakeTinyURL();
+            task.SetLocalFilePath(localFilePath);
+            task.SetImage(localFilePath);
+            task.MyWorker.RunWorkerAsync(task);
         }
 
         public void StartWorkerPictures(WorkerTask.Jobs job, Image img)

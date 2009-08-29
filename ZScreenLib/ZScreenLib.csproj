@@ -134,7 +134,7 @@
     <Compile Include="Helpers\AppInfo.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
-    <Compile Include="Helpers\Debug.cs" />
+    <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Global\GraphicsCore.cs" />
     <Compile Include="Helpers\HistoryItem.cs" />
     <Compile Include="Helpers\HistoryManager.cs" />
