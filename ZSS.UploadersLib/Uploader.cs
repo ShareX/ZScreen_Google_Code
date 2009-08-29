@@ -264,7 +264,7 @@ namespace UploadersLib
             {
                 return regKey.GetValue("Content Type").ToString();
             }
-
+            
             return "application/octetstream";
         }
 

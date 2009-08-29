@@ -301,7 +301,7 @@ namespace ZScreenLib
             return string.Format("{0} ({1})", this.Job.GetDescription(), this.DestinationName);
         }
 
-        #region "Functions"
+        #region Functions
 
         /// <summary>
         /// Function to Capture Active Window

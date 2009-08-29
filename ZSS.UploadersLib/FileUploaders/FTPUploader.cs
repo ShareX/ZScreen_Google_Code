@@ -216,6 +216,5 @@ namespace UploadersLib
         {
             return string.Format("FTP ({0})", this.Name);
         }
-
     }
 }
