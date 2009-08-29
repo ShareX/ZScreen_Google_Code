@@ -58,7 +58,7 @@ namespace ZScreenGUI
         private int mHadFocusAt;
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
-        private ZScreenLib.Debug debug = null;
+        private DebugHelper debug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
         internal static GoogleTranslate mGTranslator = null;
 
@@ -3311,7 +3311,7 @@ namespace ZScreenGUI
 
         private void StartDebug()
         {
-            debug = new ZScreenLib.Debug();
+            debug = new DebugHelper();
             debug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
         }
 

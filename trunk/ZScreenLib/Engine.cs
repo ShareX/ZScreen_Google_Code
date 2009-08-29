@@ -105,8 +105,8 @@ namespace ZScreenLib
 
         public class EngineOptions
         {
-           public bool keyboardHook {get; set;}
-           public bool showConfigWizard { get; set; }
+            public bool KeyboardHook { get; set; }
+            public bool ShowConfigWizard { get; set; }
         }
 
         public static void TurnOn(EngineOptions options)
@@ -123,15 +123,22 @@ namespace ZScreenLib
             }
             else
             {
-                if (options.showConfigWizard && string.IsNullOrEmpty(Engine.appSettings.RootDir))
+                if (options.ShowConfigWizard)
                 {
-                    ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
-                    cw.ShowDialog();
-                    Engine.appSettings.RootDir = cw.RootFolder;
-                    Engine.appSettings.ImageUploader = cw.ImageDestinationType;
-                    RunConfig = true;
+                    if (string.IsNullOrEmpty(Engine.appSettings.RootDir))
+                    {
+                        ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
+                        cw.ShowDialog();
+                        Engine.appSettings.RootDir = cw.RootFolder;
+                        Engine.appSettings.ImageUploader = cw.ImageDestinationType;
+                        RunConfig = true;
+                    }
+                    RootAppFolder = Engine.appSettings.RootDir;
                 }
-                RootAppFolder = Engine.appSettings.RootDir;
+                else
+                {
+                    RootAppFolder = DefaultRootAppFolder;
+                }
             }
 
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
@@ -174,7 +181,7 @@ namespace ZScreenLib
                 mAppInfo.AppName = mProductName;
             }
 
-            if (options.keyboardHook)
+            if (options.KeyboardHook)
             {
                 ZScreenKeyboardHook = new KeyboardHook();
                 FileSystem.AppendDebug("Keyboard Hook initiated");
