@@ -94,7 +94,7 @@ namespace ZScreenLib
         {
             ScreenshotsHistory = task.ImageManager;
 
-            if (ScreenshotsHistory != null)
+            if (ScreenshotsHistory != null && GraphicsMgr.IsValidImage(task.LocalFilePath))
             {
                 if (Engine.conf.ShowClipboardModeChooser || showDialog)
                 {

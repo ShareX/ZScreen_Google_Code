@@ -110,6 +110,11 @@ namespace ZScreenGUI
                     jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 2);
                     Engine.zJumpList.AddUserTasks(jlSelectedWindow);
 
+                    JumpListLink jlClipboardUpload = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Clipboard Upload");
+                    jlClipboardUpload.Arguments = "clipboard_upload";
+                    jlClipboardUpload.IconReference = new IconReference(Application.ExecutablePath, 3);
+                    Engine.zJumpList.AddUserTasks(jlClipboardUpload);
+
                     // Recent Items
                     Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
 

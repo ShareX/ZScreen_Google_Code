@@ -40,6 +40,7 @@ namespace ZScreenCLI
                     else if (args[1].ToLower() == "clipboard_upload")
                     {
                         // Clipboard Upload
+                        ClipboardUpload();
                     }
                     else if (args[1].ToLower() == "upload" && args.Length > 2 && !string.IsNullOrEmpty(args[2]))
                     {
@@ -69,7 +70,8 @@ namespace ZScreenCLI
 
         public void ClipboardUpload()
         {
-
+            Worker cu = new Worker(this);
+            cu.UploadUsingClipboard2(cu.CreateTask(WorkerTask.Jobs.UploadFromClipboard));
         }
 
         public void FileUpload(string fp)
@@ -91,7 +93,7 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
-           // this.Close();
+            this.Close();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)

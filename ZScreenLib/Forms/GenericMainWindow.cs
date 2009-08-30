@@ -15,5 +15,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
         }
+
+        public NotifyIcon niTray = new NotifyIcon();
     }
 }

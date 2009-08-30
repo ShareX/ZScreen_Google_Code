@@ -328,6 +328,20 @@ namespace ZScreenLib
 
         #endregion
 
+        #region Text Uploader Methods
+
+        public static TextUploader GetTextUploaderActive()
+        {
+            TextUploader uploader = null;
+            if (CheckTextUploaders())
+            {
+                uploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
+            }
+            return uploader;
+        }
+
+        #endregion
+
         public static bool CheckList<T>(List<T> list, int selected)
         {
             return list.Count > 0 && selected >= 0 && list.Count > selected;

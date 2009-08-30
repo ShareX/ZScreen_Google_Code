@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // niTray
@@ -58,7 +57,6 @@
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon niTray;
     }
 }
 
