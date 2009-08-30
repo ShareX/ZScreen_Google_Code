@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -164,6 +165,13 @@ namespace UploadersLib
             return Client.GetDirList(remotePath);
         }
 
+        public void Test(string remotePath)
+        {
+            Connect();
+            remotePath = FTPHelpers.AddSlash(remotePath, FTPHelpers.SlashType.Prefix);
+            Client.ChangeDirectory(remotePath);
+        }
+
         public void DownloadFile(string remotePath, string localPath)
         {
             Connect();
@@ -174,6 +182,23 @@ namespace UploadersLib
         {
             Connect();
             Client.MakeDirectory(remotePath);
+        }
+
+        public void MakeMultiDirectory(string remotePath)
+        {
+            List<string> paths = FTPHelpers.GetPaths(remotePath);
+
+            foreach (string path in paths)
+            {
+                try
+                {
+                    MakeDirectory(path);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+            }
         }
 
         public void Rename(string fromRemotePath, string toRemotePath)

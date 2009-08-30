@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using IconHelper;
 using Starksoft.Net.Ftp;
 using UploadersLib;
+using System.Diagnostics;
 
 namespace ZSS.FTPClientLib
 {
@@ -487,20 +488,20 @@ namespace ZSS.FTPClientLib
 
         private void lvFTPList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            bool enabled = false;
+
             if (lvFTPList.SelectedItems.Count > 0)
             {
                 FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
 
-                downloadToolStripMenuItem.Enabled = renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
-                    copyURLsToClipboardToolStripMenuItem.Enabled = file.ItemType != FtpItemType.Unknown;
-                //refreshToolStripMenuItem.Enabled
-                //createDirectoryToolStripMenuItem.Enabled
+                if (file != null)
+                {
+                    enabled = file.ItemType != FtpItemType.Unknown;
+                }
             }
-            else
-            {
-                downloadToolStripMenuItem.Enabled = renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
-                  copyURLsToClipboardToolStripMenuItem.Enabled = false;
-            }
+
+            downloadToolStripMenuItem.Enabled = renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
+                copyURLsToClipboardToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled = enabled;
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
@@ -528,7 +529,7 @@ namespace ZSS.FTPClientLib
             foreach (ListViewItem lvi in lvFTPList.SelectedItems)
             {
                 FtpItem file = lvi.Tag as FtpItem;
-                if (file.ItemType == FtpItemType.File)
+                if (file != null && file.ItemType == FtpItemType.File)
                 {
                     path = FTPAdapter.Account.GetUriPath(file.FullPath, true);
                     list.Add(path);
@@ -540,6 +541,18 @@ namespace ZSS.FTPClientLib
             if (!string.IsNullOrEmpty(clipboard))
             {
                 Clipboard.SetText(clipboard);
+            }
+        }
+
+        private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0)
+            {
+                FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
+                if (file != null && file.ItemType == FtpItemType.File)
+                {
+                    Process.Start(FTPAdapter.Account.GetUriPath(file.FullPath, true));
+                }
             }
         }
 

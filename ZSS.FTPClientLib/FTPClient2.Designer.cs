@@ -53,6 +53,7 @@
             this.tpMainTab = new System.Windows.Forms.TabPage();
             this.tpConsole = new System.Windows.Forms.TabPage();
             this.txtConsole = new System.Windows.Forms.TextBox();
+            this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -72,9 +73,10 @@
             this.toolStripSeparator1,
             this.refreshToolStripMenuItem,
             this.createDirectoryToolStripMenuItem,
+            this.openURLToolStripMenuItem,
             this.copyURLsToClipboardToolStripMenuItem});
             this.cmsRightClickMenu.Name = "cmsRightClickMenu";
-            this.cmsRightClickMenu.Size = new System.Drawing.Size(207, 142);
+            this.cmsRightClickMenu.Size = new System.Drawing.Size(207, 186);
             // 
             // downloadToolStripMenuItem
             // 
@@ -294,6 +296,13 @@
             this.txtConsole.Size = new System.Drawing.Size(952, 557);
             this.txtConsole.TabIndex = 0;
             // 
+            // openURLToolStripMenuItem
+            // 
+            this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.openURLToolStripMenuItem.Text = "Open URL";
+            this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
+            // 
             // FTPClient2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,5 +354,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
     }
 }

@@ -35,7 +35,9 @@ namespace UploadersLib
     public sealed class FTPUploader : TextUploader, IUploader
     {
         public FTPAccount FTPAccount;
+
         public string Name { get; set; }
+
         public static readonly string Hostname = TextDestType.FTP.GetDescription();
 
         public FTPUploader()
