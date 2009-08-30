@@ -417,7 +417,7 @@ namespace ZScreenLib
 
                 if (task.JobCategory != JobCategoryType.TEXT)
                 {
-                    UploadManager.SetClipboardText(task, true);
+                    UploadManager.SetClipboardText(task, false);
                 }
 
                 this.GUI.niTray.Text = this.GUI.Text;

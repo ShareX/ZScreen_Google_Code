@@ -101,12 +101,14 @@ namespace ZScreenGUI
             return false;
         }
 
-        private const string ShellExtPath = @"SOFTWARE\Classes\Folder\shell\Upload using ZScreen\command";
+        private const string ShellExtMenu = @"SOFTWARE\Classes\Folder\shell\ZScreen\";
+        private const string ShellExtMenuCmd = ShellExtMenu + @"\command";
+        private const string ShellExtDesc = "Upload using ZScreen";
 
         public static bool CheckShellExt()
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(ShellExtPath);
-            if (regkey != null && (string)regkey.GetValue("",  "null", RegistryValueOptions.None) != "null")
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(ShellExtMenuCmd);
+            if (regkey != null && (string)regkey.GetValue("", "null", RegistryValueOptions.None) != "null")
             {
                 Registry.CurrentUser.Flush();
                 return true;
@@ -118,18 +120,51 @@ namespace ZScreenGUI
 
         public static void ShellExtRegister()
         {
-            using (RegistryKey key1 = Registry.CurrentUser.CreateSubKey(ShellExtPath))
+            RegistryKey regmenu = null;
+            RegistryKey regcmd = null;
+            try
             {
-                key1.SetValue("", Adapter.ZScreenCliPath() + " \"%1\"");
-                key1.Close();
+                regmenu = Registry.CurrentUser.CreateSubKey(ShellExtMenu);
+                if (regmenu != null)
+                    regmenu.SetValue("", ShellExtDesc);
+                regcmd = Registry.CurrentUser.CreateSubKey(ShellExtMenuCmd);
+                if (regcmd != null)
+                    regcmd.SetValue("", Adapter.ZScreenCliPath() + " upload \"%1\"");
             }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
+            }
+            finally
+            {
+                if (regmenu != null)
+                    regmenu.Close();
+                if (regcmd != null)
+                    regcmd.Close();
+            }
+
         }
 
         public static void ShellExtUnregister()
         {
-            using (RegistryKey key1 = Registry.CurrentUser.OpenSubKey(ShellExtPath))
+            try
             {
-                // key1.DeleteSubKey(ShellExtPath);
+                RegistryKey reg = Registry.CurrentUser.OpenSubKey(ShellExtMenuCmd);
+                if (reg != null)
+                {
+                    reg.Close();
+                    Registry.CurrentUser.DeleteSubKey(ShellExtMenuCmd);
+                }
+                reg = Registry.CurrentUser.OpenSubKey(ShellExtMenu);
+                if (reg != null)
+                {
+                    reg.Close();
+                    Registry.CurrentUser.DeleteSubKey(ShellExtMenu);
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
             }
         }
 
