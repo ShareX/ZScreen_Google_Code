@@ -39,6 +39,7 @@ namespace ZScreenLib
         void bwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
+            task.UniqueNumber = UploadManager.Queue();
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
 
             switch (task.JobCategory)
