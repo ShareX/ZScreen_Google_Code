@@ -119,88 +119,72 @@ namespace UploadersLib
             Client.Close();
         }
 
-        public bool UploadData(Stream stream, string remotePath)
+        public void UploadData(Stream stream, string remotePath)
         {
             Connect();
-
-            try
-            {
-                Client.PutFile(stream, remotePath, FileAction.Create);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-
-            return true;
+            Client.PutFile(stream, remotePath, FileAction.Create);
         }
 
-        public bool UploadData(byte[] data, string remotePath)
+        public void UploadData(byte[] data, string remotePath)
         {
             using (MemoryStream stream = new MemoryStream(data, false))
             {
-                return UploadData(stream, remotePath);
+                UploadData(stream, remotePath);
             }
         }
 
-        public bool UploadFile(string localPath, string remotePath)
+        public void UploadFile(string localPath, string remotePath)
         {
             using (FileStream stream = new FileStream(localPath, FileMode.Open))
             {
-                return UploadData(stream, remotePath);
+                UploadData(stream, remotePath);
             }
         }
 
-        public bool UploadImage(Image image, string remotePath)
+        public void UploadImage(Image image, string remotePath)
         {
             using (MemoryStream stream = new MemoryStream())
             {
                 image.Save(stream, image.RawFormat);
-                return UploadData(stream, remotePath);
+                UploadData(stream, remotePath);
             }
         }
 
-        public bool UploadText(string text, string remotePath)
+        public void UploadText(string text, string remotePath)
         {
             using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(text), false))
             {
-                return UploadData(stream, remotePath);
+                UploadData(stream, remotePath);
             }
         }
 
         public FtpItemCollection GetDirList(string remotePath)
         {
             Connect();
-
             return Client.GetDirList(remotePath);
         }
 
         public void DownloadFile(string remotePath, string localPath)
         {
             Connect();
-
             Client.GetFile(remotePath, localPath);
         }
 
         public void MakeDirectory(string remotePath)
         {
             Connect();
-
             Client.MakeDirectory(remotePath);
         }
 
         public void Rename(string fromRemotePath, string toRemotePath)
         {
             Connect();
-
             Client.Rename(fromRemotePath, toRemotePath);
         }
 
         public void DeleteFile(string remotePath)
         {
             Connect();
-
             Client.DeleteFile(remotePath);
         }
 

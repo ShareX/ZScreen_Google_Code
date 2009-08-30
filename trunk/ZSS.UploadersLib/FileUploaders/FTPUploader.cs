@@ -80,7 +80,16 @@ namespace UploadersLib
 
             string fName = Path.GetFileName(localFilePath);
             string path = FTPHelpers.CombineURL(FTPAccount.Path, fName);
-            ftpClient.UploadFile(localFilePath, path);
+
+            try
+            {
+                ftpClient.UploadFile(localFilePath, path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                this.Errors.Add(e.Message);
+            }
 
             if (this.Errors.Count == 0)
             {
@@ -101,12 +110,20 @@ namespace UploadersLib
                         if (File.Exists(thPath))
                         {
                             string url = FTPHelpers.CombineURL(FTPAccount.Path, Path.GetFileName(thPath));
-                            ftpClient.UploadFile(thPath, url);
-                        }
+                            try
+                            {
+                                ftpClient.UploadFile(thPath, url);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                                this.Errors.Add(e.Message);
+                            }
 
-                        if (this.Errors.Count == 0)
-                        {
-                            ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
+                            if (this.Errors.Count == 0)
+                            {
+                                ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
+                            }
                         }
                     }
                 }
