@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using UploadersLib;
-using System.Linq;
 using ZScreenLib;
-using System.Drawing;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.IO;
-using System.Diagnostics;
 
 namespace ZScreenTesterGUI
 {
@@ -38,14 +37,14 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(uploader.GetDescription()).SubItems.Add("");
             }
 
-            if (!File.Exists(Tester.TestFile))
+            if (!File.Exists(Tester.TestFilePicture))
             {
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.Title = "Browse for a test file...";
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Tester.TestFile = dlg.FileName;
+                    Tester.TestFilePicture = dlg.FileName;
                 }
             }
 
@@ -76,7 +75,7 @@ namespace ZScreenTesterGUI
             {
                 WorkerTask task = new WorkerTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task.MyImageUploader = uploader;
-                task.SetLocalFilePath(Tester.TestFile);
+                task.SetLocalFilePath(Tester.TestFilePicture);
                 new TaskManager(ref task).UploadImage();
                 bw.ReportProgress(index++, task);
             }

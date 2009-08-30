@@ -8,7 +8,9 @@ namespace ZScreenTesterGUI
 {
     class Tester
     {
-        public static string TestFile = @"..\..\..\test.jpg";
+        public static string TestFilePicture = @"..\..\..\test.jpg";
+        public static string TestFileText = @"..\..\..\test.txt";
+        public static string TestFileBinary = @"..\..\..\test.pdf";
 
         [STAThread]
         public static void Main()
