@@ -647,7 +647,7 @@ namespace ZScreenGUI
             }
             else
             {
-                UploadUsingClipboard2(CreateTask(WorkerTask.Jobs.UploadFromClipboard));
+                UploadUsingClipboard2();
             }
         }
         

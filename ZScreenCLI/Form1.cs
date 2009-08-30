@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using ZScreenLib;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ZScreenCLI
 {
@@ -71,14 +72,15 @@ namespace ZScreenCLI
         public void ClipboardUpload()
         {
             Worker cu = new Worker(this);
-            cu.UploadUsingClipboard2(cu.CreateTask(WorkerTask.Jobs.UploadFromClipboard));
+            cu.UploadUsingClipboard2();
         }
 
         public void FileUpload(string fp)
         {
             if (File.Exists(fp) || Directory.Exists(fp))
             {
-
+                Worker fu = new Worker(this);
+                fu.UploadUsingFileSystem(new List<string>() { fp });
             }
         }
 
