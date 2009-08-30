@@ -34,6 +34,8 @@ namespace ZScreenGUI
 {
     public static class RegistryMgr
     {
+        #region Start with Windows
+
         public static bool CheckStartWithWindows()
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
@@ -64,6 +66,8 @@ namespace ZScreenGUI
                 Registry.CurrentUser.Flush();
             }
         }
+
+        #endregion
 
         public static void FindImageEditors()
         {
@@ -101,13 +105,17 @@ namespace ZScreenGUI
             return false;
         }
 
-        private const string ShellExtMenu = @"SOFTWARE\Classes\Folder\shell\ZScreen\";
-        private const string ShellExtMenuCmd = ShellExtMenu + @"\command";
+        #region Shell Context Menu extension"
+
+        private const string ShellExtMenuFolders = @"SOFTWARE\Classes\Folder\shell\ZScreen\";
+        private const string ShellExtMenuFoldersCmd = ShellExtMenuFolders + @"\command";
+        private const string ShellExtMenuFiles = @"SOFTWARE\Classes\*\shell\ZScreen\";
+        private const string ShellExtMenuFilesCmd = ShellExtMenuFiles + @"\command";
         private const string ShellExtDesc = "Upload using ZScreen";
 
         public static bool CheckShellExt()
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(ShellExtMenuCmd);
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(ShellExtMenuFoldersCmd);
             if (regkey != null && (string)regkey.GetValue("", "null", RegistryValueOptions.None) != "null")
             {
                 Registry.CurrentUser.Flush();
@@ -120,14 +128,21 @@ namespace ZScreenGUI
 
         public static void ShellExtRegister()
         {
+            ShellExtSetValue(ShellExtMenuFolders, ShellExtMenuFoldersCmd);
+            ShellExtSetValue(ShellExtMenuFiles, ShellExtMenuFilesCmd);
+        }
+
+        private static void ShellExtSetValue(string menuPath, string cmdPath)
+        {
             RegistryKey regmenu = null;
             RegistryKey regcmd = null;
             try
             {
-                regmenu = Registry.CurrentUser.CreateSubKey(ShellExtMenu);
+                regmenu = Registry.CurrentUser.CreateSubKey(menuPath);
                 if (regmenu != null)
                     regmenu.SetValue("", ShellExtDesc);
-                regcmd = Registry.CurrentUser.CreateSubKey(ShellExtMenuCmd);
+
+                regcmd = Registry.CurrentUser.CreateSubKey(cmdPath);
                 if (regcmd != null)
                     regcmd.SetValue("", Adapter.ZScreenCliPath() + " upload \"%1\"");
             }
@@ -142,24 +157,29 @@ namespace ZScreenGUI
                 if (regcmd != null)
                     regcmd.Close();
             }
-
         }
 
         public static void ShellExtUnregister()
         {
+            ShellExtClearValue(ShellExtMenuFolders, ShellExtMenuFoldersCmd);
+            ShellExtClearValue(ShellExtMenuFiles, ShellExtMenuFilesCmd);
+        }
+
+        private static void ShellExtClearValue(string menuPath, string cmdPath)
+        {
             try
             {
-                RegistryKey reg = Registry.CurrentUser.OpenSubKey(ShellExtMenuCmd);
+                RegistryKey reg = Registry.CurrentUser.OpenSubKey(cmdPath);
                 if (reg != null)
                 {
                     reg.Close();
-                    Registry.CurrentUser.DeleteSubKey(ShellExtMenuCmd);
+                    Registry.CurrentUser.DeleteSubKey(cmdPath);
                 }
-                reg = Registry.CurrentUser.OpenSubKey(ShellExtMenu);
+                reg = Registry.CurrentUser.OpenSubKey(menuPath);
                 if (reg != null)
                 {
                     reg.Close();
-                    Registry.CurrentUser.DeleteSubKey(ShellExtMenu);
+                    Registry.CurrentUser.DeleteSubKey(menuPath);
                 }
             }
             catch (Exception ex)
@@ -167,6 +187,8 @@ namespace ZScreenGUI
                 FileSystem.AppendDebug(ex);
             }
         }
+
+        #endregion
 
     }
 }
