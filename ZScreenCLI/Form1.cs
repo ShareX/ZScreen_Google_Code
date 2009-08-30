@@ -95,12 +95,14 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
+            this.niTray.Visible = false;
             this.Close();
+            Application.Exit();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (ZScreenLib.Engine.conf.BalloonTipOpenLink)
+            if (Engine.conf.BalloonTipOpenLink)
             {
                 NotifyIcon ni = (NotifyIcon)sender;
                 new BalloonTipHelper(ni).ClickBalloonTip();

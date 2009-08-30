@@ -25,277 +25,7 @@ namespace ZScreenLib
             this.GUI = gui;
         }
 
-        #region Create Tasks
-
-        public void UploadUsingClipboard2()
-        {
-            WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
-
-            List<WorkerTask> textWorkers = new List<WorkerTask>();
-
-            if (Clipboard.ContainsImage())
-            {
-                Image cImage = Clipboard.GetImage();
-                task.Settings.ManualNaming = false;
-                task.SetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
-                FileSystem.SaveImage(cImage, task.LocalFilePath);
-                StartWorkerPictures(task, task.LocalFilePath);
-            }
-            else if (Clipboard.ContainsText())
-            {
-                WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
-                    NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
-                File.WriteAllText(fp, Clipboard.GetText());
-                temp.SetLocalFilePath(fp);
-                temp.MyText = TextInfo.FromFile(fp);
-                textWorkers.Add(temp);
-            }
-            else if (Clipboard.ContainsFileDropList())
-            {
-                UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
-            }
-
-            StartTextWorkers(textWorkers);
-        }
-
-        protected void ScreenshotUsingDragDrop(string fp)
-        {
-            StartWorkerPictures(CreateTask(WorkerTask.Jobs.PROCESS_DRAG_N_DROP), fp);
-        }
-
-        protected void ScreenshotUsingDragDrop(string[] paths)
-        {
-            foreach (string filePath in FileSystem.GetExplorerFileList(paths))
-            {
-                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
-                ScreenshotUsingDragDrop(filePath);
-            }
-        }
-
-        #endregion
-
-        #region Public Start Worker Methods
-
-        public bool UploadUsingFileSystem(List<string> fileList)
-        {
-            List<string> strListFilePath = new List<string>();
-            bool succ = true;
-            foreach (string fp in fileList)
-            {
-                try
-                {
-                    if (GraphicsMgr.IsValidImage(fp))
-                    {
-                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
-                        if (fp != cbFilePath)
-                        {
-                            File.Copy(fp, cbFilePath, true);
-                        }
-
-                        strListFilePath.Add(cbFilePath);
-                    }
-                    else
-                    {
-                        strListFilePath.Add(fp); // yes we use the orignal file path
-                    }
-                }
-                catch (Exception ex)
-                {
-                    FileSystem.AppendDebug(ex.ToString());
-                    succ = false;
-                }
-            }
-
-            List<WorkerTask> textWorkers = new List<WorkerTask>();
-
-            foreach (string fp in strListFilePath)
-            {
-                if (GraphicsMgr.IsValidImage(fp))
-                {
-                    StartWorkerPictures(CreateTask(WorkerTask.Jobs.UploadFromClipboard), fp);
-                }
-                else if (FileSystem.IsValidTextFile(fp))
-                {
-                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                    temp.SetLocalFilePath(fp);
-                    temp.MyText = TextInfo.FromFile(fp);
-                    textWorkers.Add(temp);
-                }
-                else
-                {
-                    StartWorkerBinary(WorkerTask.Jobs.UploadFromClipboard, fp);
-                }
-            }
-
-            StartTextWorkers(textWorkers);
-            return succ;
-        }
-
-
-        /// <summary>
-        /// Worker for Screenshots: Active Window, Crop, Entire Screen
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        public void StartWorkerScreenshots(WorkerTask.Jobs job)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.SCREENSHOTS;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        /// <summary>
-        /// Worker for Images: Drag n Drop, Image from Clipboard, Custom Uploader
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the image</param>
-        public void StartWorkerPictures(WorkerTask task, string localFilePath)
-        {
-            task.JobCategory = JobCategoryType.PICTURES;
-            task.MakeTinyURL = Adapter.MakeTinyURL();
-            task.SetLocalFilePath(localFilePath);
-            task.SetImage(localFilePath);
-            task.MyWorker.RunWorkerAsync(task);
-        }
-
-        public void StartWorkerPictures(WorkerTask.Jobs job, Image img)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.PICTURES;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.SetImage(img);
-            new TaskManager(ref t).WriteImage();
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        protected void StartTextWorkers(List<WorkerTask> textWorkers)
-        {
-            foreach (WorkerTask task in textWorkers)
-            {
-                if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.AutoShortenURL && Adapter.CheckURLShorteners())
-                {
-                    task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
-                    task.RunWorker();
-                }
-                else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
-                {
-                    IndexerAdapter settings = new IndexerAdapter();
-                    settings.LoadConfig(Engine.conf.IndexerConfig);
-                    Engine.conf.IndexerConfig.FolderList.Clear();
-                    string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
-                    string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
-                    settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
-                    settings.GetConfig().FolderList.Add(task.MyText.LocalString);
-
-                    Indexer indexer = null;
-                    switch (settings.GetConfig().IndexingEngineType)
-                    {
-                        case IndexingEngine.TreeLib:
-                            indexer = new TreeWalkIndexer(settings);
-                            break;
-                        case IndexingEngine.TreeNetLib:
-                            indexer = new TreeNetIndexer(settings);
-                            break;
-                    }
-
-                    if (indexer != null)
-                    {
-                        indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
-                        task.MyText = null; // force to upload from file
-                        task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
-                        task.RunWorker();
-                    }
-                }
-                else if (Adapter.CheckTextUploaders())
-                {
-                    task.RunWorker();
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the file</param>
-        protected void StartWorkerBinary(WorkerTask.Jobs job, string localFilePath)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.BINARY;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.SetLocalFilePath(localFilePath);
-            t.MyWorker.RunWorkerAsync(t);
-        }
-
-        #endregion
-
-        #region Publish Workers
-
-        /// <summary>
-        /// Function to edit Text in a Text Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        protected void PublishText(ref WorkerTask task)
-        {
-            TaskManager tm = new TaskManager(ref task);
-            tm.UploadText();
-        }
-
-        protected void PublishBinary(ref WorkerTask task)
-        {
-            task.StartTime = DateTime.Now;
-            TaskManager tm = new TaskManager(ref task);
-            tm.UploadFile();
-            task.EndTime = DateTime.Now;
-        }
-
-        #endregion
-
-        public WorkerTask CreateTask(WorkerTask.Jobs job)
-        {
-            BackgroundWorker bwApp = CreateWorker();
-            WorkerTask task = new WorkerTask(bwApp, job);
-            if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
-            {
-                task.MyImageUploader = Engine.conf.ScreenshotDestMode;
-                if (Adapter.CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected))
-                {
-                    task.MyTextUploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
-                }
-                task.MyFileUploader = Engine.conf.FileDestMode;
-            }
-            else
-            {
-                task.MyImageUploader = ImageDestType.CUSTOM_UPLOADER;
-            }
-
-            return task;
-        }
-
-        public WorkerTask GetWorkerText(WorkerTask.Jobs job)
-        {
-            return GetWorkerText(job, string.Empty);
-        }
-
-        /// <summary>
-        /// Worker for Text: Paste2, Pastebin
-        /// </summary>
-        /// <returns></returns>
-        public virtual WorkerTask GetWorkerText(WorkerTask.Jobs job, string localFilePath)
-        {
-            WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.TEXT;
-            // t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyTextUploader = Adapter.GetTextUploaderActive();
-            if (!string.IsNullOrEmpty(localFilePath))
-            {
-                t.SetLocalFilePath(localFilePath);
-            }
-
-            return t;
-        }
+        #region Background Worker
 
         public virtual BackgroundWorker CreateWorker()
         {
@@ -462,5 +192,280 @@ namespace ZScreenLib
                 UploadManager.Commit(task.UniqueNumber);
             }
         }
+
+        #endregion
+
+        #region Create Tasks
+
+        public WorkerTask CreateTask(WorkerTask.Jobs job)
+        {
+            BackgroundWorker bwApp = CreateWorker();
+            WorkerTask task = new WorkerTask(bwApp, job);
+            if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
+            {
+                task.MyImageUploader = Engine.conf.ScreenshotDestMode;
+                if (Adapter.CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected))
+                {
+                    task.MyTextUploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
+                }
+                task.MyFileUploader = Engine.conf.FileDestMode;
+            }
+            else
+            {
+                task.MyImageUploader = ImageDestType.CUSTOM_UPLOADER;
+            }
+
+            return task;
+        }
+
+        public WorkerTask GetWorkerText(WorkerTask.Jobs job)
+        {
+            return GetWorkerText(job, string.Empty);
+        }
+
+        /// <summary>
+        /// Worker for Text: Paste2, Pastebin
+        /// </summary>
+        /// <returns></returns>
+        public virtual WorkerTask GetWorkerText(WorkerTask.Jobs job, string localFilePath)
+        {
+            WorkerTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.TEXT;
+            // t.MakeTinyURL = Program.MakeTinyURL();
+            t.MyTextUploader = Adapter.GetTextUploaderActive();
+            if (!string.IsNullOrEmpty(localFilePath))
+            {
+                t.SetLocalFilePath(localFilePath);
+            }
+
+            return t;
+        }
+
+        #endregion 
+
+        #region User Tasks
+
+        public void UploadUsingClipboard2()
+        {
+            WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
+
+            List<WorkerTask> textWorkers = new List<WorkerTask>();
+
+            if (Clipboard.ContainsImage())
+            {
+                Image cImage = Clipboard.GetImage();
+                task.Settings.ManualNaming = false;
+                task.SetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
+                FileSystem.SaveImage(cImage, task.LocalFilePath);
+                StartWorkerPictures(task, task.LocalFilePath);
+            }
+            else if (Clipboard.ContainsText())
+            {
+                WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
+                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
+                    NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
+                File.WriteAllText(fp, Clipboard.GetText());
+                temp.SetLocalFilePath(fp);
+                temp.MyText = TextInfo.FromFile(fp);
+                textWorkers.Add(temp);
+            }
+            else if (Clipboard.ContainsFileDropList())
+            {
+                UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
+            }
+
+            StartTextWorkers(textWorkers);
+        }
+
+        protected void ScreenshotUsingDragDrop(string fp)
+        {
+            StartWorkerPictures(CreateTask(WorkerTask.Jobs.PROCESS_DRAG_N_DROP), fp);
+        }
+
+        protected void ScreenshotUsingDragDrop(string[] paths)
+        {
+            foreach (string filePath in FileSystem.GetExplorerFileList(paths))
+            {
+                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
+                ScreenshotUsingDragDrop(filePath);
+            }
+        }
+
+        public bool UploadUsingFileSystem(List<string> fileList)
+        {
+            List<string> strListFilePath = new List<string>();
+            bool succ = true;
+            foreach (string fp in fileList)
+            {
+                try
+                {
+                    if (GraphicsMgr.IsValidImage(fp))
+                    {
+                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
+                        if (fp != cbFilePath)
+                        {
+                            File.Copy(fp, cbFilePath, true);
+                        }
+
+                        strListFilePath.Add(cbFilePath);
+                    }
+                    else
+                    {
+                        strListFilePath.Add(fp); // yes we use the orignal file path
+                    }
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.ToString());
+                    succ = false;
+                }
+            }
+
+            List<WorkerTask> textWorkers = new List<WorkerTask>();
+
+            foreach (string fp in strListFilePath)
+            {
+                if (GraphicsMgr.IsValidImage(fp))
+                {
+                    StartWorkerPictures(CreateTask(WorkerTask.Jobs.UploadFromClipboard), fp);
+                }
+                else if (FileSystem.IsValidTextFile(fp))
+                {
+                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
+                    temp.SetLocalFilePath(fp);
+                    temp.MyText = TextInfo.FromFile(fp);
+                    textWorkers.Add(temp);
+                }
+                else
+                {
+                    StartWorkerBinary(WorkerTask.Jobs.UploadFromClipboard, fp);
+                }
+            }
+
+            StartTextWorkers(textWorkers);
+            return succ;
+        }
+
+        /// <summary>
+        /// Worker for Screenshots: Active Window, Crop, Entire Screen
+        /// </summary>
+        /// <param name="job">Job Type</param>
+        public void StartWorkerScreenshots(WorkerTask.Jobs job)
+        {
+            WorkerTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.SCREENSHOTS;
+            t.MakeTinyURL = Adapter.MakeTinyURL();
+            t.MyWorker.RunWorkerAsync(t);
+        }
+
+        /// <summary>
+        /// Worker for Images: Drag n Drop, Image from Clipboard, Custom Uploader
+        /// </summary>
+        /// <param name="job">Job Type</param>
+        /// <param name="localFilePath">Local file path of the image</param>
+        public void StartWorkerPictures(WorkerTask task, string localFilePath)
+        {
+            task.JobCategory = JobCategoryType.PICTURES;
+            task.MakeTinyURL = Adapter.MakeTinyURL();
+            task.SetLocalFilePath(localFilePath);
+            task.SetImage(localFilePath);
+            task.MyWorker.RunWorkerAsync(task);
+        }
+
+        public void StartWorkerPictures(WorkerTask.Jobs job, Image img)
+        {
+            WorkerTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.PICTURES;
+            t.MakeTinyURL = Adapter.MakeTinyURL();
+            t.SetImage(img);
+            new TaskManager(ref t).WriteImage();
+            t.MyWorker.RunWorkerAsync(t);
+        }
+
+        protected void StartTextWorkers(List<WorkerTask> textWorkers)
+        {
+            foreach (WorkerTask task in textWorkers)
+            {
+                if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.AutoShortenURL && Adapter.CheckURLShorteners())
+                {
+                    task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
+                    task.RunWorker();
+                }
+                else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
+                {
+                    IndexerAdapter settings = new IndexerAdapter();
+                    settings.LoadConfig(Engine.conf.IndexerConfig);
+                    Engine.conf.IndexerConfig.FolderList.Clear();
+                    string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
+                    string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
+                    settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
+                    settings.GetConfig().FolderList.Add(task.MyText.LocalString);
+
+                    Indexer indexer = null;
+                    switch (settings.GetConfig().IndexingEngineType)
+                    {
+                        case IndexingEngine.TreeLib:
+                            indexer = new TreeWalkIndexer(settings);
+                            break;
+                        case IndexingEngine.TreeNetLib:
+                            indexer = new TreeNetIndexer(settings);
+                            break;
+                    }
+
+                    if (indexer != null)
+                    {
+                        indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
+                        task.MyText = null; // force to upload from file
+                        task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
+                        task.RunWorker();
+                    }
+                }
+                else if (Adapter.CheckTextUploaders())
+                {
+                    task.RunWorker();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
+        /// </summary>
+        /// <param name="job">Job Type</param>
+        /// <param name="localFilePath">Local file path of the file</param>
+        protected void StartWorkerBinary(WorkerTask.Jobs job, string localFilePath)
+        {
+            WorkerTask t = CreateTask(job);
+            t.JobCategory = JobCategoryType.BINARY;
+            t.MakeTinyURL = Adapter.MakeTinyURL();
+            t.SetLocalFilePath(localFilePath);
+            t.MyWorker.RunWorkerAsync(t);
+        }
+
+        #endregion
+
+        #region Publish Workers
+
+        /// <summary>
+        /// Function to edit Text in a Text Editor and Upload
+        /// </summary>
+        /// <param name="task"></param>
+        protected void PublishText(ref WorkerTask task)
+        {
+            TaskManager tm = new TaskManager(ref task);
+            tm.UploadText();
+        }
+
+        protected void PublishBinary(ref WorkerTask task)
+        {
+            task.StartTime = DateTime.Now;
+            TaskManager tm = new TaskManager(ref task);
+            tm.UploadFile();
+            task.EndTime = DateTime.Now;
+        }
+
+        #endregion
+
+
     }
 }
