@@ -15,7 +15,21 @@ namespace ZScreenCLI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            try
+            {
+                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
+                Engine.LoadSettingsLatest();
+                Application.Run(new MainWindow());
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
+            }
+            finally
+            {
+                Engine.TurnOff();
+                Application.Exit();
+            }
         }
     }
 }

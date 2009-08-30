@@ -96,7 +96,18 @@ namespace ZScreenLib
 
         void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //  throw new NotImplementedException();
+            switch ((WorkerTask.ProgressType)e.ProgressPercentage)
+            {
+                case WorkerTask.ProgressType.SET_ICON_BUSY:
+                    Adapter.SetNotifyIconStatus(e.UserState as WorkerTask, GUI.niTray, Resources.zss_busy);
+                    break;
+                case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
+                    int progress = (int)e.UserState;
+                    Adapter.UpdateNotifyIconProgress(GUI.niTray, progress);
+                    Adapter.TaskbarSetProgressValue(progress);
+                    GUI.Text = string.Format("{0}% - {1}", progress, Engine.GetProductName());
+                    break;
+            }
         }
 
         void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -241,11 +252,27 @@ namespace ZScreenLib
             return t;
         }
 
-        #endregion 
+        #endregion
 
         #region User Tasks
 
-        public void UploadUsingClipboard2()
+        public void StartBw_SelectedWindow()
+        {
+            if (!TaskManager.mTakingScreenShot)
+            {
+                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotWindowSelected);
+            }
+        }
+
+        public void StartBw_CropShot()
+        {
+            if (!TaskManager.mTakingScreenShot)
+            {
+                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotCropped);
+            }
+        }
+
+        public void StartBw_ClipboardUpload()
         {
             WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
 

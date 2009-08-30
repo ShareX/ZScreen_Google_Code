@@ -1426,7 +1426,7 @@ namespace ZScreenGUI
 
         private void selWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBW_SelectedWindow();
+            Loader.Worker.StartBw_SelectedWindow();
         }
 
         private void tsmAboutMain_Click(object sender, EventArgs e)
@@ -1668,7 +1668,7 @@ namespace ZScreenGUI
 
         private void cropShot_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBW_CropShot();
+            Loader.Worker.StartBw_CropShot();
         }
 
         private void ShowMainWindow()
@@ -2448,13 +2448,13 @@ namespace ZScreenGUI
         private void selectedWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBW_SelectedWindow();
+            Loader.Worker.StartBw_SelectedWindow();
         }
 
         private void rectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBW_CropShot();
+            Loader.Worker.StartBw_CropShot();
         }
 
         private void lastRectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)

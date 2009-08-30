@@ -7,12 +7,11 @@ using System.Collections.Generic;
 
 namespace ZScreenCLI
 {
-    public partial class Form1 : GenericMainWindow
+    public partial class MainWindow : GenericMainWindow
     {
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
-            ProcessArgs();
         }
 
         public void ProcessArgs()
@@ -23,15 +22,14 @@ namespace ZScreenCLI
             if (args.Length > 1)
             {
                 this.niTray.Icon = ResxMgr.BusyIcon;
-                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
-                Engine.LoadSettingsLatest();
 
                 try
                 {
                     if (args[1].ToLower() == "crop_shot")
                     {
                         // Crop Shot
-                        task = CropShot(WorkerTask.Jobs.TakeScreenshotCropped);
+                        Worker cs = new Worker(this);
+                        cs.StartBw_CropShot();
                     }
                     else if (args[1].ToLower() == "selected_window")
                     {
@@ -61,6 +59,9 @@ namespace ZScreenCLI
 
         public WorkerTask CropShot(WorkerTask.Jobs job)
         {
+            Worker cs = new Worker(this);
+            cs.StartBw_CropShot();
+            
             WorkerTask task = new Worker(this).CreateTask(job);
             task.MyImageUploader = Engine.conf.ScreenshotDestMode;
             new TaskManager(ref task).CaptureRegionOrWindow();
@@ -72,7 +73,7 @@ namespace ZScreenCLI
         public void ClipboardUpload()
         {
             Worker cu = new Worker(this);
-            cu.UploadUsingClipboard2();
+            cu.StartBw_ClipboardUpload();
         }
 
         public void FileUpload(string fp)
@@ -111,5 +112,10 @@ namespace ZScreenCLI
         }
 
         #endregion
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            ProcessArgs();
+        }
     }
 }
