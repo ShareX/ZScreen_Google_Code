@@ -27,8 +27,10 @@ namespace ZScreenLib
 
         #region Create Tasks
 
-        public void UploadUsingClipboard2(WorkerTask task)
+        public void UploadUsingClipboard2()
         {
+            WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
+
             List<WorkerTask> textWorkers = new List<WorkerTask>();
 
             if (Clipboard.ContainsImage())
