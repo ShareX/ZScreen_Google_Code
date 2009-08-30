@@ -130,6 +130,8 @@ namespace ZScreenLib
 
         #endregion
 
+        public static string ResourcePath = Path.Combine(Application.StartupPath, "ZSS.ResourcesLib.dll");
+
         public static void AddToClipboardByDoubleClick(Control tp)
         {
             Control ctl = tp.GetNextControl(tp, true);

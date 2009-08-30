@@ -102,17 +102,17 @@ namespace ZScreenGUI
                     // User Tasks
                     JumpListLink jlCropShot = new JumpListLink(Adapter.ZScreenCliPath(), "Crop Shot");
                     jlCropShot.Arguments = "crop_shot";
-                    jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 1);
+                    jlCropShot.IconReference = new IconReference(Adapter.ResourcePath, 1);
                     Engine.zJumpList.AddUserTasks(jlCropShot);
 
                     JumpListLink jlSelectedWindow = new JumpListLink(Adapter.ZScreenCliPath(), "Selected Window");
                     jlSelectedWindow.Arguments = "selected_window";
-                    jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 2);
+                    jlSelectedWindow.IconReference = new IconReference(Adapter.ResourcePath, 2);
                     Engine.zJumpList.AddUserTasks(jlSelectedWindow);
 
                     JumpListLink jlClipboardUpload = new JumpListLink(Adapter.ZScreenCliPath(), "Clipboard Upload");
                     jlClipboardUpload.Arguments = "clipboard_upload";
-                    jlClipboardUpload.IconReference = new IconReference(Application.ExecutablePath, 3);
+                    jlClipboardUpload.IconReference = new IconReference(Adapter.ResourcePath, 3);
                     Engine.zJumpList.AddUserTasks(jlClipboardUpload);
 
                     // Recent Items
