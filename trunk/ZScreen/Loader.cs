@@ -11,8 +11,7 @@ namespace ZScreenGUI
     {
         // internal static ZSS.Forms.SplashScreen Splash = null;
         public static WorkerPrimary Worker;
-        public static WorkerSecondary Worker2;
-        public const string ZScreenCLI = "ZScreenCLI.exe";
+        public static WorkerSecondary Worker2;        
         public static Queue<string> AsmLoads = new Queue<string>();
         public static List<string> LibNames = new List<string>();
 
@@ -38,7 +37,7 @@ namespace ZScreenGUI
             else if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
             {
                 Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, ZScreenCLI));
+                ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, Engine.ZScreenCLI));
                 psi.Arguments = args[1];
                 p.StartInfo = psi;
                 p.Start();

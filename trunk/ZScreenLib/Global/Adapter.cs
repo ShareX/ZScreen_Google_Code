@@ -39,6 +39,7 @@ using System.Drawing.Printing;
 using Greenshot.Helpers;
 using System.Drawing;
 using System.Web;
+using Microsoft.Win32;
 
 namespace ZScreenLib
 {
@@ -515,6 +516,11 @@ namespace ZScreenLib
         {
             Random random = new Random();
             return random.Next(min, max);
+        }
+
+        public static string ZScreenCliPath()
+        {
+            return Path.Combine(Application.StartupPath, Engine.ZScreenCLI);
         }
 
         #region "Windows 7 only"
