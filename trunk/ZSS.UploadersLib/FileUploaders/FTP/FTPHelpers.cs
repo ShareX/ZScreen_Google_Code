@@ -42,19 +42,20 @@ namespace UploadersLib
                 {
                     return url2;
                 }
-                else
-                {
-                    return "";
-                }
+
+                return string.Empty;
             }
+
             if (url1.EndsWith("/"))
             {
                 url1 = url1.Substring(0, url1.Length - 1);
             }
+
             if (url2.StartsWith("/"))
             {
                 url2 = url2.Remove(0, 1);
             }
+
             return url1 + "/" + url2;
         }
 
@@ -81,6 +82,7 @@ namespace UploadersLib
                 {
                     url = url.Remove(0, 1);
                 }
+
                 for (int i = 0; i < count; i++)
                 {
                     url = "/" + url;
@@ -92,11 +94,13 @@ namespace UploadersLib
                 {
                     url = url.Substring(0, url.Length - 1);
                 }
+
                 for (int i = 0; i < count; i++)
                 {
                     url += "/";
                 }
             }
+
             return url;
         }
 
@@ -106,6 +110,7 @@ namespace UploadersLib
             {
                 path = path.Remove(0, path.LastIndexOf('/') + 1);
             }
+
             return path;
         }
 
@@ -115,6 +120,7 @@ namespace UploadersLib
             {
                 path = path.Substring(0, path.LastIndexOf('/'));
             }
+
             return path;
         }
 
@@ -131,6 +137,7 @@ namespace UploadersLib
                     result.Add(temp);
                 }
             }
+
             return result;
         }
     }
@@ -170,7 +177,12 @@ namespace UploadersLib
             result.IsDirectory = matchGroups["Directory"].Value.Equals(dirMatch, StringComparison.InvariantCultureIgnoreCase);
             result.Permissions = matchGroups["Permissions"].Value;
             result.Name = matchGroups["Name"].Value;
-            if (!result.IsDirectory) result.SetSize(matchGroups["Size"].Value);
+
+            if (!result.IsDirectory)
+            {
+                result.SetSize(matchGroups["Size"].Value);
+            }
+
             result.Owner = matchGroups["Owner"].Value;
             result.Group = matchGroups["Group"].Value;
             result.SetDateTime(matchGroups["Year"].Value, matchGroups["Month"].Value, matchGroups["Day"].Value);

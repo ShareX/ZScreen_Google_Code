@@ -156,37 +156,35 @@ namespace ZScreenLib
 
         #region FTP Methods
 
-        public static void TestFTPAccount(FTPAccount acc)
+        public static void TestFTPAccount(FTPAccount account)
         {
-            string msg, path = FTPHelpers.CombineURL(acc.FTPAddress, acc.Path);
+            string msg;
 
-            FTPOptions options = new FTPOptions { Account = acc, ProxySettings = GetProxySettings() };
-            FTPAdapter ftpClient = new FTPAdapter(options);
+            FTP ftpClient = new FTP(account);
 
             try
             {
-                ftpClient.ListDirectory(path);
+                ftpClient.Test(account.Path);
                 msg = "Success!";
             }
-            catch (WebException e)
+            catch (Exception e)
             {
-                string status = ((FtpWebResponse)e.Response).StatusDescription;
-                if (status != null && status.StartsWith("550") && acc.AutoCreateFolder)
+                if (e.Message.StartsWith("Could not change working directory to") && account.AutoCreateFolder)
                 {
                     try
                     {
-                        ftpClient.MakeMultiDirectory(acc.Path);
-                        ftpClient.ListDirectory(path);
-                        msg = "Success!\nAuto created folders: " + acc.Path;
+                        ftpClient.MakeMultiDirectory(account.Path);
+                        ftpClient.Test(account.Path);
+                        msg = "Success!\nAuto created folders: " + account.Path;
                     }
-                    catch (WebException e2)
+                    catch (Exception e2)
                     {
-                        msg = GetWebExceptionMessage(e2);
+                        msg = e2.Message;
                     }
                 }
                 else
                 {
-                    msg = GetWebExceptionMessage(e);
+                    msg = e.Message;
                 }
             }
 
@@ -194,12 +192,6 @@ namespace ZScreenLib
             {
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private static string GetWebExceptionMessage(WebException e)
-        {
-            string status = ((FtpWebResponse)e.Response).StatusDescription;
-            return string.Format("Status description:\n{0}\nException message:\n{1}", status, e.Message);
         }
 
         public static bool CheckFTPAccounts()

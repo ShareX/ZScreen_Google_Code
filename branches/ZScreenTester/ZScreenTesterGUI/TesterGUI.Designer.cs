@@ -32,16 +32,16 @@
             this.lvUploaders = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.cmsUploaders = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcTesters = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnTest = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cmsUploaders = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsUploaders.SuspendLayout();
             this.tcTesters.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.cmsUploaders.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvUploaders
@@ -69,6 +69,28 @@
             // 
             this.columnHeader2.Text = "Status";
             this.columnHeader2.Width = 415;
+            // 
+            // cmsUploaders
+            // 
+            this.cmsUploaders.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openURLToolStripMenuItem,
+            this.copyToolStripMenuItem});
+            this.cmsUploaders.Name = "cmsUploaders";
+            this.cmsUploaders.Size = new System.Drawing.Size(207, 48);
+            // 
+            // openURLToolStripMenuItem
+            // 
+            this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.openURLToolStripMenuItem.Text = "Open URL";
+            this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.copyToolStripMenuItem.Text = "Copy URL(s) to clipboard";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // tcTesters
             // 
@@ -113,28 +135,6 @@
             this.tabPage2.Text = "Console";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // cmsUploaders
-            // 
-            this.cmsUploaders.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openURLToolStripMenuItem,
-            this.copyToolStripMenuItem});
-            this.cmsUploaders.Name = "cmsUploaders";
-            this.cmsUploaders.Size = new System.Drawing.Size(207, 48);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.copyToolStripMenuItem.Text = "Copy URL(s) to clipboard";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // openURLToolStripMenuItem
-            // 
-            this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.openURLToolStripMenuItem.Text = "Open URL";
-            this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
-            // 
             // TesterGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -143,9 +143,9 @@
             this.Controls.Add(this.tcTesters);
             this.Name = "TesterGUI";
             this.Text = "TesterGUI";
+            this.cmsUploaders.ResumeLayout(false);
             this.tcTesters.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.cmsUploaders.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
