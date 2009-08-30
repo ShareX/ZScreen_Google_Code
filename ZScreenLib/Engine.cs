@@ -210,6 +210,7 @@ namespace ZScreenLib
                 FileSystem.AppendDebug("Reading " + Path.GetFileName(fp));
                 Engine.conf = XMLSettings.Read(fp);
             }
+
             Engine.InitializeFiles();
 
             // Use Configuration Wizard Settings if applied

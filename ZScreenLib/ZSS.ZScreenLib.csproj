@@ -189,7 +189,7 @@
       <Name>ZSS.UpdateCheckerLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
-      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
+      <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>

@@ -239,6 +239,7 @@ namespace ZScreenLib
             {
                 this.Errors.Add("Not a valid image.");
             }
+
             return safe;
         }
 
@@ -276,6 +277,7 @@ namespace ZScreenLib
             {
                 this.FileName = Path.GetFileNameWithoutExtension(filePath);
             }
+
             sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), this.FileName));
             sbPath.Append(Path.GetExtension(filePath));
             filePath = sbPath.ToString();
@@ -293,6 +295,7 @@ namespace ZScreenLib
             {
                 this.MyImage = FileSystem.ImageFromFile(fp);
             }
+
             Debug.Assert(File.Exists(fp), "File does not exist");
         }
 
