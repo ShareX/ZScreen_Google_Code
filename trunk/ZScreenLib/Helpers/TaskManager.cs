@@ -435,7 +435,7 @@ namespace ZScreenLib
                     };
 
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
-                    fu.UploadProgressChanged += new FTPAdapter.ProgressEventHandler(UploadProgressChanged);
+                    fu.UploadProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
                     mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
                     return true;
@@ -453,8 +453,12 @@ namespace ZScreenLib
         {
             if (Engine.conf.ShowTrayUploadProgress)
             {
-                UploadManager.GetInfo(mTask.UniqueNumber).UploadPercentage = progress;
-                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
+                UploadInfo uploadInfo = UploadManager.GetInfo(mTask.UniqueNumber);
+                if (uploadInfo != null)
+                {
+                    uploadInfo.UploadPercentage = (int)progress;
+                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
+                }
             }
         }
 

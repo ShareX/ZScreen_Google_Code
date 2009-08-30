@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using FTPClientTester.Properties;
-using ZSS;
+using UploadersLib;
 using ZSS.FTPClientLib;
 
 namespace FTPClientTester

@@ -646,7 +646,6 @@ namespace ZScreenLib
 
             Engine.appSettings.XMLSettingsFile = Engine.appSettings.GetSettingsFilePath();
             return Read(Engine.appSettings.XMLSettingsFile);
-
         }
 
         public static XMLSettings Read(string filePath)
@@ -658,6 +657,7 @@ namespace ZScreenLib
                 {
                     Directory.CreateDirectory(settingsDir);
                 }
+
                 if (File.Exists(filePath))
                 {
                     try

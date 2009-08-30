@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -33,13 +34,16 @@ namespace UploadersLib
     public sealed class FTP : IDisposable
     {
         public delegate void FTPProgressEventHandler(float percentage);
-        public event FTPProgressEventHandler ProgressChanged;
 
         public delegate void FTPDebugEventHandler(string text);
+
+        public event FTPProgressEventHandler ProgressChanged;
+
         public event FTPDebugEventHandler DebugMessage;
 
-        public FTPAccount Account;
-        public FtpClient Client;
+        public FTPAccount Account { get; set; }
+
+        public FtpClient Client { get; set; }
 
         public FTP(FTPAccount account)
         {
@@ -65,16 +69,16 @@ namespace UploadersLib
             }
 
             Client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
-            Client.ClientRequest += new EventHandler<FtpRequestEventArgs>(client_ClientRequest);
-            Client.ServerResponse += new EventHandler<FtpResponseEventArgs>(client_ServerResponse);
+            Client.ClientRequest += new EventHandler<FtpRequestEventArgs>(Client_ClientRequest);
+            Client.ServerResponse += new EventHandler<FtpResponseEventArgs>(Client_ServerResponse);
         }
 
-        private void client_ServerResponse(object sender, FtpResponseEventArgs e)
+        private void Client_ServerResponse(object sender, FtpResponseEventArgs e)
         {
             OnDebugMessage("Server: " + e.Response.RawText);
         }
 
-        private void client_ClientRequest(object sender, FtpRequestEventArgs e)
+        private void Client_ClientRequest(object sender, FtpRequestEventArgs e)
         {
             OnDebugMessage("Client: " + e.Request.Text);
         }
@@ -119,7 +123,15 @@ namespace UploadersLib
         {
             Connect();
 
-            Client.PutFile(stream, remotePath, FileAction.Create);
+            try
+            {
+                Client.PutFile(stream, remotePath, FileAction.Create);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
 
             return true;
         }
@@ -136,6 +148,15 @@ namespace UploadersLib
         {
             using (FileStream stream = new FileStream(localPath, FileMode.Open))
             {
+                return UploadData(stream, remotePath);
+            }
+        }
+
+        public bool UploadImage(Image image, string remotePath)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, image.RawFormat);
                 return UploadData(stream, remotePath);
             }
         }
@@ -188,7 +209,10 @@ namespace UploadersLib
             Connect();
 
             string filename = FTPHelpers.GetFileName(remotePath);
-            if (filename == "." || filename == "..") return;
+            if (filename == "." || filename == "..")
+            {
+                return;
+            }
 
             FtpItemCollection files = GetDirList(remotePath);
 
