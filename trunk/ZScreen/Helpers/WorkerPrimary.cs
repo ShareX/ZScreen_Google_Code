@@ -451,10 +451,10 @@ namespace ZScreenGUI
                     StartBW_ActiveWindow();
                     break;
                 case WorkerTask.Jobs.TakeScreenshotWindowSelected:
-                    StartBW_SelectedWindow();
+                    StartBw_SelectedWindow();
                     break;
                 case WorkerTask.Jobs.TakeScreenshotCropped:
-                    StartBW_CropShot();
+                    StartBw_CropShot();
                     break;
                 case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
                     StartBW_LastCropShot();
@@ -533,13 +533,13 @@ namespace ZScreenGUI
 
             if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
             {
-                StartBW_SelectedWindow();
+                StartBw_SelectedWindow();
                 return true;
             }
 
             if (Engine.conf.HotkeyCropShot == key) // Crop Shot
             {
-                StartBW_CropShot();
+                StartBw_CropShot();
                 return true;
             }
 
@@ -647,7 +647,7 @@ namespace ZScreenGUI
             }
             else
             {
-                UploadUsingClipboard2();
+                StartBw_ClipboardUpload();
             }
         }
         
@@ -741,22 +741,6 @@ namespace ZScreenGUI
         public void StartBW_ActiveWindow()
         {
             StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
-        }
-
-        public void StartBW_SelectedWindow()
-        {
-            if (!TaskManager.mTakingScreenShot)
-            {
-                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotWindowSelected);
-            }
-        }
-
-        public void StartBW_CropShot()
-        {
-            if (!TaskManager.mTakingScreenShot)
-            {
-                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotCropped);
-            }
         }
 
         public void StartBW_LastCropShot()
