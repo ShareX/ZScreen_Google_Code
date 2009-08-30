@@ -6,6 +6,7 @@ using ZScreenLib;
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ZScreenTesterGUI
 {
@@ -38,6 +39,17 @@ namespace ZScreenTesterGUI
                 lvi.BackColor = Color.LightYellow;
                 lvi.Tag = uploader;
                 lvUploaders.Items.Add(lvi);
+            }
+
+            if (!File.Exists(Tester.TestFile))
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Title = "Browse for a test file...";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Tester.TestFile = dlg.FileName;
+                }
             }
 
             StartTest();

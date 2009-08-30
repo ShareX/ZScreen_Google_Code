@@ -17,7 +17,7 @@ namespace ZScreenTesterGUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             Engine.TurnOn();
-            Engine.LoadSettings();
+            Engine.LoadSettingsLatest();
 
             Application.Run(new TesterGUI());
 
