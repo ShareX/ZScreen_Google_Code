@@ -14,8 +14,7 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\zss-main.ico</ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -39,7 +38,8 @@
     <ApplicationVersion>1.2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <Win32Resource>..\application.res</Win32Resource>
+    <Win32Resource>
+    </Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -351,6 +351,10 @@
     <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
       <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
       <Name>ZSS.IndexersLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.ResourcesLib\ZSS.ResourcesLib.csproj">
+      <Project>{1D8C78B8-96D0-474A-96DA-84732D52C87A}</Project>
+      <Name>ZSS.ResourcesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
       <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
