@@ -235,8 +235,8 @@ namespace ZScreenLib
             if (null != ZScreenKeyboardHook)
             {
                 ZScreenKeyboardHook.Dispose();
+                FileSystem.AppendDebug("Keyboard Hook terminated");
             }
-            FileSystem.AppendDebug("Keyboard Hook terminated");
             FileSystem.WriteDebugFile();
         }
 
