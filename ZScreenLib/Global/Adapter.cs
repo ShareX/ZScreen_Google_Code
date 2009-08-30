@@ -118,7 +118,6 @@ namespace ZScreenLib
                 Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                 ni.Icon = Icon.FromHandle(img.GetHicon());
             }
-
         }
         public static void SaveImage(Image img)
         {
