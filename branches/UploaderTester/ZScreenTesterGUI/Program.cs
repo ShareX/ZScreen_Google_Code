@@ -8,7 +8,7 @@ namespace ZScreenTesterGUI
 {
     class Tester
     {
-        public static string TestFile = @"C:\Users\PC\Desktop\test.jpg";
+        public static string TestFile = @"..\..\..\test.jpg";
 
         [STAThread]
         public static void Main()
