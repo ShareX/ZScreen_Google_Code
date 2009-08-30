@@ -188,6 +188,16 @@ namespace ZScreenLib
             LoadSettings(string.Empty);
         }
 
+        public static void LoadSettingsLatest()
+        {
+            string fp = string.Empty;
+            string settingsDir = Path.GetDirectoryName(Engine.appSettings.XMLSettingsFile);
+
+            string[] files = Directory.GetFiles(settingsDir, "ZScreen-*-Settings.xml");            
+            fp = files[files.Length - 1];
+            LoadSettings(fp);
+        }
+
         public static void LoadSettings(string fp)
         {
             if (string.IsNullOrEmpty(fp))
