@@ -22,7 +22,7 @@ namespace ZScreenCLI
             if (args.Length > 1)
             {
                 this.niTray.Icon = ResxMgr.BusyIcon;
-
+                FileSystem.AppendDebug("Command Line: " + Environment.CommandLine);
                 try
                 {
                     if (args[1].ToLower() == "crop_shot")
@@ -34,7 +34,8 @@ namespace ZScreenCLI
                     else if (args[1].ToLower() == "selected_window")
                     {
                         // Selected Window
-                        task = CropShot(WorkerTask.Jobs.TakeScreenshotWindowSelected);
+                        Worker cs = new Worker(this);
+                        cs.StartBw_SelectedWindow();
                     }
                     else if (args[1].ToLower() == "clipboard_upload")
                     {
@@ -96,9 +97,8 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
-            this.niTray.Visible = false;
             this.Close();
-            Application.Exit();
+            base.Close();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
