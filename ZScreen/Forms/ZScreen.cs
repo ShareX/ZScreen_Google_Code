@@ -100,17 +100,17 @@ namespace ZScreenGUI
                     Engine.zJumpList = JumpList.CreateJumpList();
 
                     // User Tasks
-                    JumpListLink jlCropShot = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Crop Shot");
+                    JumpListLink jlCropShot = new JumpListLink(Adapter.ZScreenCliPath(), "Crop Shot");
                     jlCropShot.Arguments = "crop_shot";
                     jlCropShot.IconReference = new IconReference(Application.ExecutablePath, 1);
                     Engine.zJumpList.AddUserTasks(jlCropShot);
 
-                    JumpListLink jlSelectedWindow = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Selected Window");
+                    JumpListLink jlSelectedWindow = new JumpListLink(Adapter.ZScreenCliPath(), "Selected Window");
                     jlSelectedWindow.Arguments = "selected_window";
                     jlSelectedWindow.IconReference = new IconReference(Application.ExecutablePath, 2);
                     Engine.zJumpList.AddUserTasks(jlSelectedWindow);
 
-                    JumpListLink jlClipboardUpload = new JumpListLink(Path.Combine(Application.StartupPath, Loader.ZScreenCLI), "Clipboard Upload");
+                    JumpListLink jlClipboardUpload = new JumpListLink(Adapter.ZScreenCliPath(), "Clipboard Upload");
                     jlClipboardUpload.Arguments = "clipboard_upload";
                     jlClipboardUpload.IconReference = new IconReference(Application.ExecutablePath, 3);
                     Engine.zJumpList.AddUserTasks(jlClipboardUpload);
@@ -813,6 +813,7 @@ namespace ZScreenGUI
             #region Options
 
             chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
+            chkShellExt.Checked = RegistryMgr.CheckShellExt();
             chkOpenMainWindow.Checked = Engine.conf.OpenMainWindow;
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
             chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
@@ -4325,6 +4326,18 @@ namespace ZScreenGUI
         private void btnFTPOpenClient_Click(object sender, EventArgs e)
         {
             OpenFTPClient();
+        }
+
+        private void chkShellExt_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkShellExt.Checked)
+            {
+                RegistryMgr.ShellExtRegister();
+            }
+            else
+            {
+                RegistryMgr.ShellExtUnregister();
+            }
         }
     }
 }

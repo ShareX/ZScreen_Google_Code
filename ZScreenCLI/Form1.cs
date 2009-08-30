@@ -24,7 +24,7 @@ namespace ZScreenCLI
             {
                 this.niTray.Icon = ResxMgr.BusyIcon;
                 Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
-                Engine.LoadSettings();
+                Engine.LoadSettingsLatest();
 
                 try
                 {
@@ -80,7 +80,7 @@ namespace ZScreenCLI
             if (File.Exists(fp) || Directory.Exists(fp))
             {
                 Worker fu = new Worker(this);
-                fu.UploadUsingFileSystem(new List<string>() { fp });
+                fu.UploadUsingFileSystem(FileSystem.GetExplorerFileList(new string[] { fp }));
             }
         }
 

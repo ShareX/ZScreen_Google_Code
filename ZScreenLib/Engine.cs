@@ -38,6 +38,7 @@ namespace ZScreenLib
     {
         // App Info
         private static string mProductName = Application.ProductName;
+        public const string ZScreenCLI = "ZScreenCLI.exe";
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(mProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         public static bool Portable { get; private set; }
         public static bool MultipleInstance { get; private set; }
@@ -192,9 +193,14 @@ namespace ZScreenLib
         {
             string fp = string.Empty;
             string settingsDir = Path.GetDirectoryName(Engine.appSettings.XMLSettingsFile);
-
-            string[] files = Directory.GetFiles(settingsDir, "ZScreen-*-Settings.xml");            
-            fp = files[files.Length - 1];
+            if (!string.IsNullOrEmpty(settingsDir))
+            {
+                string[] files = Directory.GetFiles(settingsDir, "ZScreen-*-Settings.xml");
+                if (files.Length > 0)
+                {
+                    fp = files[files.Length - 1];
+                }
+            }
             LoadSettings(fp);
         }
 

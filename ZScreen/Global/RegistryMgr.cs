@@ -100,5 +100,38 @@ namespace ZScreenGUI
 
             return false;
         }
+
+        private const string ShellExtPath = @"SOFTWARE\Classes\Folder\shell\Upload using ZScreen\command";
+
+        public static bool CheckShellExt()
+        {
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(ShellExtPath);
+            if (regkey != null && (string)regkey.GetValue("",  "null", RegistryValueOptions.None) != "null")
+            {
+                Registry.CurrentUser.Flush();
+                return true;
+            }
+
+            Registry.CurrentUser.Flush();
+            return false;
+        }
+
+        public static void ShellExtRegister()
+        {
+            using (RegistryKey key1 = Registry.CurrentUser.CreateSubKey(ShellExtPath))
+            {
+                key1.SetValue("", Adapter.ZScreenCliPath() + " \"%1\"");
+                key1.Close();
+            }
+        }
+
+        public static void ShellExtUnregister()
+        {
+            using (RegistryKey key1 = Registry.CurrentUser.OpenSubKey(ShellExtPath))
+            {
+                // key1.DeleteSubKey(ShellExtPath);
+            }
+        }
+
     }
 }
