@@ -46,6 +46,7 @@ namespace ZSS.FTPClientLib
         {
             InitializeComponent();
 
+            toolStripStatusLabel1.Text = "";
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             this.Options = options;
@@ -107,15 +108,19 @@ namespace ZSS.FTPClientLib
 
                 ListViewItem lvi = new ListViewItem(file.Name);
 
+                lvi.Tag = file;
+
                 if (file.ItemType != FtpItemType.Unknown)
                 {
-                    lvi.SubItems.Add(file.Size.ToString());
+                    if (file.ItemType == FtpItemType.File)
+                    {
+                        lvi.SubItems.Add(file.Size.ToString("N0"));
+                    }
+
                     lvi.SubItems.Add(IconReader.GetDisplayName(file.Name, file.ItemType == FtpItemType.Directory));
                     lvi.SubItems.Add(file.Modified.ToLocalTime().ToString());
                     lvi.SubItems.Add(file.Attributes);
                 }
-
-                lvi.Tag = file;
 
                 string ext;
                 if (file.ItemType == FtpItemType.Directory || file.ItemType == FtpItemType.Unknown)
@@ -156,6 +161,45 @@ namespace ZSS.FTPClientLib
 
                 lvFTPList.Items.Add(lvi);
             }
+
+            CheckFiles(false);
+        }
+
+        private void CheckFiles(bool selected)
+        {
+            ListViewItem[] list;
+
+            if (selected)
+            {
+                list = lvFTPList.SelectedItems.Cast<ListViewItem>().ToArray();
+            }
+            else
+            {
+                list = lvFTPList.Items.Cast<ListViewItem>().ToArray();
+            }
+
+            List<FtpItem> items = new List<FtpItem>();
+            FtpItem item;
+
+            foreach (ListViewItem lvi in list)
+            {
+                item = lvi.Tag as FtpItem;
+
+                if (item != null)
+                {
+                    items.Add(item);
+                }
+            }
+
+            string isSelected = selected ? "Selected " : string.Empty;
+            int filesCount = items.Count(x => x.ItemType == FtpItemType.File);
+            string file = filesCount > 1 ? "files" : "file";
+            int directoriesCount = items.Count(x => x.ItemType == FtpItemType.Directory);
+            string directory = directoriesCount > 1 ? "directories" : "directory";
+            string totalSize = items.Where(x => x.ItemType == FtpItemType.File).Sum(x => x.Size).ToString("N0");
+
+            toolStripStatusLabel1.Text = string.Format("{0}{1} {2} and {3} {4}. Total size: {5} bytes",
+                isSelected, filesCount, file, directoriesCount, directory, totalSize);
         }
 
         private void FTPDownload(bool openDirectory)
@@ -502,6 +546,8 @@ namespace ZSS.FTPClientLib
 
             downloadToolStripMenuItem.Enabled = renameToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled =
                 copyURLsToClipboardToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled = enabled;
+
+            CheckFiles(lvFTPList.SelectedItems.Count > 0);
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
