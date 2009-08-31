@@ -140,6 +140,31 @@ namespace UploadersLib
             }
         }
 
+        public void UploadFiles(string[] localPaths, string remotePath)
+        {
+            string filename;
+            foreach (string file in localPaths)
+            {
+                if (!string.IsNullOrEmpty(file))
+                {
+                    filename = Path.GetFileName(file);
+                    if (File.Exists(file))
+                    {
+                        UploadFile(file, FTPHelpers.CombineURL(remotePath, filename));
+                    }
+                    else if (Directory.Exists(file))
+                    {
+                        List<string> filesList = new List<string>();
+                        filesList.AddRange(Directory.GetFiles(file));
+                        filesList.AddRange(Directory.GetDirectories(file));
+                        string path = FTPHelpers.CombineURL(remotePath, filename);
+                        MakeDirectory(path);
+                        UploadFiles(filesList.ToArray(), path);
+                    }
+                }
+            }
+        }
+
         public void DownloadFile(string remotePath, string localPath)
         {
             Connect();
@@ -150,6 +175,32 @@ namespace UploadersLib
         {
             Connect();
             Client.GetFile(remotePath, outStream, false);
+        }
+
+        public void DownloadFiles(FtpItemCollection files, string localPath)
+        {
+            string directoryPath;
+            foreach (FtpItem file in files)
+            {
+                if (file != null && !string.IsNullOrEmpty(file.Name))
+                {
+                    if (file.ItemType == FtpItemType.Directory)
+                    {
+                        FtpItemCollection newFiles = GetDirList(file.FullPath);
+                        directoryPath = Path.Combine(localPath, file.Name);
+                        if (!Directory.Exists(directoryPath))
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
+
+                        DownloadFiles(newFiles, directoryPath);
+                    }
+                    else if (file.ItemType == FtpItemType.File)
+                    {
+                        DownloadFile(file.FullPath, Path.Combine(localPath, file.Name));
+                    }
+                }
+            }
         }
 
         public FtpItemCollection GetDirList(string remotePath)
@@ -168,7 +219,15 @@ namespace UploadersLib
         public void MakeDirectory(string remotePath)
         {
             Connect();
-            Client.MakeDirectory(remotePath);
+
+            try
+            {
+                Client.MakeDirectory(remotePath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void MakeMultiDirectory(string remotePath)
@@ -177,14 +236,7 @@ namespace UploadersLib
 
             foreach (string path in paths)
             {
-                try
-                {
-                    MakeDirectory(path);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
+                MakeDirectory(path);
             }
         }
 
