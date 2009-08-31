@@ -27,21 +27,25 @@ using System.Windows.Forms;
 
 namespace ZScreenLib
 {
-    public partial class ShowScreenshot : Form
+    public class ShowScreenshot : Form
     {
-        public ShowScreenshot()
+        private Image screenshot;
+
+        public ShowScreenshot(Image image)
         {
+            this.screenshot = (Image)image.Clone();
             this.BackColor = Color.Black;
             this.Cursor = Cursors.Hand;
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
             this.Bounds = GraphicsMgr.GetScreenBounds();
+            this.BackgroundImage = screenshot;
         }
 
         private void ShowScreenshot_Load(object sender, EventArgs e)
         {
-            if ((this.Bounds.Width > this.BackgroundImage.Width) && (this.Bounds.Height > this.BackgroundImage.Height))
+            if (this.Bounds.Width > this.BackgroundImage.Width && this.Bounds.Height > this.BackgroundImage.Height)
             {
                 this.BackgroundImageLayout = ImageLayout.Center;
             }
@@ -69,5 +73,52 @@ namespace ZScreenLib
                 this.Close();
             }
         }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            screenshot.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ShowScreenshot
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 264);
+            this.Name = "ShowScreenshot";
+            this.Text = "ShowScreenshot";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.ShowScreenshot_Load);
+            this.Shown += new System.EventHandler(this.ShowScreenshot_Shown);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowScreenshot_MouseDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ShowScreenshot_KeyDown);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
     }
 }

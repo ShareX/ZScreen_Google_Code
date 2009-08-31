@@ -472,9 +472,11 @@ namespace ZScreenLib
                 {
                     DekiWikiAccount acc = Engine.conf.DekiWikiAccountList[Engine.conf.DekiWikiSelected];
 
+                    System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
+
                     if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Engine.conf.DekiWikiForcePath == true)
                     {
-                        DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
+                        DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, proxy));
                         diag.history = acc.History;
                         diag.ShowDialog();
 
@@ -490,11 +492,11 @@ namespace ZScreenLib
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
 
-                    DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
+                    DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
                     mTask.ImageManager = uploader.UploadImage(mTask.LocalFilePath);
                     mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
 
-                    DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, Adapter.GetProxySettings()));
+                    DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));
                     connector.UpdateHistory();
 
                     return true;

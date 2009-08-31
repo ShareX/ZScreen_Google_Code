@@ -58,6 +58,7 @@ namespace UploadersLib
         [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button"), DefaultValue(true)]
         public bool AutoCreateFolder { get; set; }
 
+        [Category("FTP"), Description("ftp://Server:Port")]
         public string FTPAddress
         {
             get { return string.Format("ftp://{0}:{1}", Server, Port); }

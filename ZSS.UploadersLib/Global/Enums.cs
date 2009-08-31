@@ -26,6 +26,29 @@ using System;
 
 namespace UploadersLib
 {
+    public enum Proxy
+    {
+        /// <summary>
+        /// HTTP Proxy
+        /// </summary>
+        HTTP,
+
+        /// <summary>
+        /// SOCKS v4 Proxy
+        /// </summary>
+        SOCKS4,
+
+        /// <summary>
+        /// SOCKS v4a Proxy
+        /// </summary>
+        SOCKS4a,
+
+        /// <summary>
+        /// SOCKS v5 Proxy
+        /// </summary>
+        SOCKS5
+    }
+
     #region Image Uploaders
 
     public enum UploadMode

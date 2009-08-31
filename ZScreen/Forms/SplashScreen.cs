@@ -18,6 +18,7 @@ namespace ZSS.Forms
             {
                 txtStatus.Text += Loader.AsmLoads.Dequeue() + "\r\n";
             }
+
             txtStatus.ScrollToCaret();
         }
 
