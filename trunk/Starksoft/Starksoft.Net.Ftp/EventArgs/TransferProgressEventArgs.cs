@@ -29,22 +29,27 @@ namespace Starksoft.Net.Ftp
     /// </summary>
     public class TransferProgressEventArgs : EventArgs
     {
-
         private int _bytesTransferred;
+        private long _totalBytesTransferred;
         private int _bytesPerSecond;
         private TimeSpan _elapsedTime;
+        private long _totalBytes;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
+        /// <param name="totalBytesTransferred">Total number of bytes transferred.</param>
         /// <param name="bytesPerSecond">The data transfer speed in bytes per second.</param>
         /// <param name="elapsedTime">The time that has elapsed since the data transfer started.</param>
-        public TransferProgressEventArgs(int bytesTransferred, int bytesPerSecond, TimeSpan elapsedTime)
+        /// <param name="totalBytes">Total bytes of data.</param>
+        public TransferProgressEventArgs(int bytesTransferred, long totalBytesTransferred, int bytesPerSecond, TimeSpan elapsedTime, long totalBytes)
         {
             _bytesTransferred = bytesTransferred;
+            _totalBytesTransferred = totalBytesTransferred;
             _bytesPerSecond = bytesPerSecond;
             _elapsedTime = elapsedTime;
+            _totalBytes = totalBytes;
         }
 
         /// <summary>
@@ -53,6 +58,22 @@ namespace Starksoft.Net.Ftp
         public int BytesTransferred
         {
             get { return _bytesTransferred; }
+        }
+
+        /// <summary>
+        /// Total number of bytes transferred.
+        /// </summary>
+        public long TotalBytesTransferred
+        {
+            get { return _totalBytesTransferred; }
+        }
+
+        /// <summary>
+        /// Total bytes of data.
+        /// </summary>
+        public long TotalBytes
+        {
+            get { return _totalBytes; }
         }
 
         /// <summary>
@@ -79,6 +100,22 @@ namespace Starksoft.Net.Ftp
             get { return _elapsedTime; }
         }
 
+        /// <summary>
+        /// Transferred data percentage.
+        /// </summary>
+        public float Percentage
+        {
+            get { return (float)_totalBytesTransferred / _totalBytes * 100; }
+        }
 
+        public TimeSpan EstimatedCompleteTime
+        {
+            get
+            {
+                double elapsed = _elapsedTime.TotalMilliseconds;
+                double totalTime = (double)_totalBytes / _totalBytesTransferred * elapsed;
+                return TimeSpan.FromMilliseconds(totalTime - elapsed);
+            }
+        }
     }
 }

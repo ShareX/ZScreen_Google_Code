@@ -252,8 +252,13 @@ namespace Starksoft.Net.Ftp
         public List<string> Arguments
         {
             get 
-            {  
-                return new List<string>(_arguments); 
+            {
+                if (_arguments != null)
+                {
+                    return new List<string>(_arguments);
+                }
+
+                return new List<string>();
             }
         }
 
