@@ -55,11 +55,12 @@ namespace ZSS.FTPClientLib
             FTPAdapter.Client.ClientRequest += new EventHandler<FtpRequestEventArgs>(Client_ClientRequest);
             FTPAdapter.Client.ServerResponse += new EventHandler<FtpResponseEventArgs>(Client_ServerResponse);
             FTPAdapter.Client.OpenAsyncCompleted += new EventHandler<OpenAsyncCompletedEventArgs>(Client_OpenAsyncCompleted);
-            FTPAdapter.Client.OpenAsync(account.Username, account.Password);
 
             pgAccount.SelectedObject = FTPAdapter.Account;
             this.Text = "FTP Client - " + account.Name;
             lblConnecting.Text = "Connecting to " + account.FTPAddress;
+
+            FTPAdapter.Client.OpenAsync(account.Username, account.Password);
         }
 
         #region Methods
@@ -221,16 +222,9 @@ namespace ZSS.FTPClientLib
 
                 if (openDirectory && checkDirectory != null)
                 {
-                    if (checkDirectory.ItemType == FtpItemType.Unknown)
+                    if (checkDirectory.ItemType == FtpItemType.Unknown && checkDirectory.Name == ".")
                     {
-                        if (checkDirectory.Name == ".")
-                        {
-                            LoadDirectory("/");
-                        }
-                        else if (checkDirectory.Name == "..")
-                        {
-                            FTPNavigateBack();
-                        }
+                        LoadDirectory("/");
 
                         return;
                     }
@@ -257,38 +251,7 @@ namespace ZSS.FTPClientLib
                         }
                     }
 
-                    DownloadFiles(list, fbd.SelectedPath);
-                }
-            }
-        }
-
-        private void DownloadFiles(FtpItemCollection files, string downloadPath)
-        {
-            DownloadFiles(files, string.Empty, downloadPath);
-        }
-
-        private void DownloadFiles(FtpItemCollection files, string directory, string downloadPath)
-        {
-            string path, savePath, directoryPath;
-            foreach (FtpItem file in files)
-            {
-                if (!string.IsNullOrEmpty(file.Name))
-                {
-                    if (file.ItemType == FtpItemType.Directory)
-                    {
-                        FtpItemCollection newFiles = FTPAdapter.GetDirList(FTPHelpers.CombineURL(currentDirectory, directory, file.Name));
-                        directoryPath = Path.Combine(Path.Combine(downloadPath, directory), file.Name);
-                        Directory.CreateDirectory(directoryPath);
-                        savePath = FTPHelpers.CombineURL(directory, file.Name);
-                        DownloadFiles(newFiles, savePath, downloadPath);
-                    }
-                    else
-                    {
-                        path = FTPHelpers.CombineURL(currentDirectory, directory, file.Name);
-                        savePath = Path.Combine(Path.Combine(downloadPath, directory), file.Name);
-                        savePath = savePath.Replace('/', '\\');
-                        FTPAdapter.DownloadFile(path, savePath);
-                    }
+                    FTPAdapter.DownloadFiles(list, fbd.SelectedPath);
                 }
             }
         }
@@ -304,19 +267,6 @@ namespace ZSS.FTPClientLib
                     int offset = 23;
                     txtRename.Left += offset;
                     txtRename.Width -= offset;
-                }
-            }
-        }
-
-        private void lvFTPList_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e)
-        {
-            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel && !string.IsNullOrEmpty(e.DisplayText))
-            {
-                FtpItem file = (FtpItem)lvFTPList.SelectedItems[0].Tag;
-                if (file.Name != e.DisplayText)
-                {
-                    FTPAdapter.Rename(file.FullPath, FTPHelpers.CombineURL(currentDirectory, e.DisplayText));
-                    RefreshDirectory();
                 }
             }
         }
@@ -351,28 +301,6 @@ namespace ZSS.FTPClientLib
             {
                 FTPAdapter.MakeDirectory(FTPHelpers.CombineURL(currentDirectory, ib.InputText));
                 RefreshDirectory();
-            }
-        }
-
-        private void FTPUploadFiles(string uploadDirectory, string[] files)
-        {
-            string filename;
-            foreach (string file in files)
-            {
-                filename = Path.GetFileName(file);
-                if (filename.Contains('.'))
-                {
-                    FTPAdapter.UploadFile(file, FTPHelpers.CombineURL(uploadDirectory, filename));
-                }
-                else
-                {
-                    List<string> filesList = new List<string>();
-                    filesList.AddRange(Directory.GetFiles(file));
-                    filesList.AddRange(Directory.GetDirectories(file));
-                    string path = FTPHelpers.CombineURL(uploadDirectory, filename);
-                    FTPAdapter.MakeDirectory(path);
-                    FTPUploadFiles(path, filesList.ToArray());
-                }
             }
         }
 
@@ -548,7 +476,20 @@ namespace ZSS.FTPClientLib
                 string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (files != null)
                 {
-                    FTPUploadFiles(currentDirectory, files);
+                    FTPAdapter.UploadFiles(files, currentDirectory);
+                    RefreshDirectory();
+                }
+            }
+        }
+
+        private void lvFTPList_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e)
+        {
+            if (lvFTPList.SelectedItems.Count > 0 && !e.Cancel && !string.IsNullOrEmpty(e.DisplayText))
+            {
+                FtpItem file = (FtpItem)lvFTPList.SelectedItems[0].Tag;
+                if (file.Name != e.DisplayText)
+                {
+                    FTPAdapter.Rename(file.FullPath, FTPHelpers.CombineURL(currentDirectory, e.DisplayText));
                     RefreshDirectory();
                 }
             }
@@ -633,7 +574,7 @@ namespace ZSS.FTPClientLib
 
         private void Client_OpenAsyncCompleted(object sender, OpenAsyncCompletedEventArgs e)
         {
-            panel1.Visible = false;
+            pConnecting.Visible = false;
             Refresh();
             RefreshDirectory();
         }
