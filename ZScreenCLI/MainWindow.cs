@@ -17,7 +17,6 @@ namespace ZScreenCLI
         public void ProcessArgs()
         {
             string[] args = Environment.GetCommandLineArgs();
-            WorkerTask task = null;
 
             if (args.Length > 1)
             {
