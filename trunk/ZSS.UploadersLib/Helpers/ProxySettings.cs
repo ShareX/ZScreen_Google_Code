@@ -21,7 +21,7 @@ namespace UploadersLib.Helpers
                 {
                     if (ProxyActive != null)
                     {
-                        NetworkCredential credential = new NetworkCredential(ProxyActive.Username, ProxyActive.Password);
+                        NetworkCredential credential = new NetworkCredential(ProxyActive.UserName, ProxyActive.Password);
                         return new WebProxy(ProxyActive.GetAddress(), true, null, credential);
                     }
                     else
@@ -63,7 +63,7 @@ namespace UploadersLib.Helpers
 
                     ProxyClientFactory proxy = new ProxyClientFactory();
 
-                    return proxy.CreateProxyClient(proxyType, ProxyActive.Host, ProxyActive.Port, ProxyActive.Username, ProxyActive.Password);
+                    return proxy.CreateProxyClient(proxyType, ProxyActive.Host, ProxyActive.Port, ProxyActive.UserName, ProxyActive.Password);
                 }
 
                 return null;
