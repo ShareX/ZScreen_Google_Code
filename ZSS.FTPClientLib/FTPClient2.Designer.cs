@@ -50,18 +50,20 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tcFTP = new System.Windows.Forms.TabControl();
+            this.tpMain = new System.Windows.Forms.TabPage();
+            this.tpAccount = new System.Windows.Forms.TabPage();
+            this.pgAccount = new System.Windows.Forms.PropertyGrid();
+            this.tpConsole = new System.Windows.Forms.TabPage();
+            this.rtbConsole = new System.Windows.Forms.RichTextBox();
+            this.scConsole = new System.Windows.Forms.SplitContainer();
+            this.txtConsoleWrite = new System.Windows.Forms.TextBox();
             this.lvFTPList = new ZSS.FTPClientLib.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
             this.chFiletype = new System.Windows.Forms.ColumnHeader();
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
-            this.tcFTP = new System.Windows.Forms.TabControl();
-            this.tpMain = new System.Windows.Forms.TabPage();
-            this.tpAccount = new System.Windows.Forms.TabPage();
-            this.pgAccount = new System.Windows.Forms.PropertyGrid();
-            this.tpConsole = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -75,6 +77,9 @@
             this.tpMain.SuspendLayout();
             this.tpAccount.SuspendLayout();
             this.tpConsole.SuspendLayout();
+            this.scConsole.Panel1.SuspendLayout();
+            this.scConsole.Panel2.SuspendLayout();
+            this.scConsole.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmsRightClickMenu
@@ -275,6 +280,106 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(38, 17);
             this.toolStripStatusLabel1.Text = "status";
             // 
+            // tcFTP
+            // 
+            this.tcFTP.Controls.Add(this.tpMain);
+            this.tcFTP.Controls.Add(this.tpAccount);
+            this.tcFTP.Controls.Add(this.tpConsole);
+            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcFTP.Location = new System.Drawing.Point(3, 3);
+            this.tcFTP.Name = "tcFTP";
+            this.tcFTP.SelectedIndex = 0;
+            this.tcFTP.Size = new System.Drawing.Size(966, 589);
+            this.tcFTP.TabIndex = 3;
+            // 
+            // tpMain
+            // 
+            this.tpMain.Controls.Add(this.splitContainer1);
+            this.tpMain.Location = new System.Drawing.Point(4, 22);
+            this.tpMain.Name = "tpMain";
+            this.tpMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMain.Size = new System.Drawing.Size(958, 563);
+            this.tpMain.TabIndex = 0;
+            this.tpMain.Text = "FTP Client";
+            this.tpMain.UseVisualStyleBackColor = true;
+            // 
+            // tpAccount
+            // 
+            this.tpAccount.Controls.Add(this.pgAccount);
+            this.tpAccount.Location = new System.Drawing.Point(4, 22);
+            this.tpAccount.Name = "tpAccount";
+            this.tpAccount.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAccount.Size = new System.Drawing.Size(958, 563);
+            this.tpAccount.TabIndex = 2;
+            this.tpAccount.Text = "Account";
+            this.tpAccount.UseVisualStyleBackColor = true;
+            // 
+            // pgAccount
+            // 
+            this.pgAccount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgAccount.Location = new System.Drawing.Point(3, 3);
+            this.pgAccount.Name = "pgAccount";
+            this.pgAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgAccount.Size = new System.Drawing.Size(952, 557);
+            this.pgAccount.TabIndex = 0;
+            this.pgAccount.ToolbarVisible = false;
+            // 
+            // tpConsole
+            // 
+            this.tpConsole.Controls.Add(this.scConsole);
+            this.tpConsole.Location = new System.Drawing.Point(4, 22);
+            this.tpConsole.Name = "tpConsole";
+            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
+            this.tpConsole.Size = new System.Drawing.Size(958, 563);
+            this.tpConsole.TabIndex = 1;
+            this.tpConsole.Text = "Console";
+            this.tpConsole.UseVisualStyleBackColor = true;
+            // 
+            // rtbConsole
+            // 
+            this.rtbConsole.BackColor = System.Drawing.Color.White;
+            this.rtbConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbConsole.EnableAutoDragDrop = true;
+            this.rtbConsole.Location = new System.Drawing.Point(0, 0);
+            this.rtbConsole.Name = "rtbConsole";
+            this.rtbConsole.ReadOnly = true;
+            this.rtbConsole.Size = new System.Drawing.Size(952, 535);
+            this.rtbConsole.TabIndex = 0;
+            this.rtbConsole.Text = "";
+            this.rtbConsole.WordWrap = false;
+            // 
+            // scConsole
+            // 
+            this.scConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scConsole.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.scConsole.IsSplitterFixed = true;
+            this.scConsole.Location = new System.Drawing.Point(3, 3);
+            this.scConsole.Name = "scConsole";
+            this.scConsole.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // scConsole.Panel1
+            // 
+            this.scConsole.Panel1.Controls.Add(this.rtbConsole);
+            // 
+            // scConsole.Panel2
+            // 
+            this.scConsole.Panel2.Controls.Add(this.txtConsoleWrite);
+            this.scConsole.Panel2MinSize = 20;
+            this.scConsole.Size = new System.Drawing.Size(952, 557);
+            this.scConsole.SplitterDistance = 535;
+            this.scConsole.SplitterWidth = 1;
+            this.scConsole.TabIndex = 1;
+            // 
+            // txtConsoleWrite
+            // 
+            this.txtConsoleWrite.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtConsoleWrite.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtConsoleWrite.Location = new System.Drawing.Point(0, 1);
+            this.txtConsoleWrite.Name = "txtConsoleWrite";
+            this.txtConsoleWrite.Size = new System.Drawing.Size(952, 20);
+            this.txtConsoleWrite.TabIndex = 0;
+            this.txtConsoleWrite.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtConsoleWrite_KeyDown);
+            // 
             // lvFTPList
             // 
             this.lvFTPList.AllowColumnReorder = true;
@@ -330,71 +435,6 @@
             this.chPermissions.Text = "Permissions";
             this.chPermissions.Width = 100;
             // 
-            // tcFTP
-            // 
-            this.tcFTP.Controls.Add(this.tpMain);
-            this.tcFTP.Controls.Add(this.tpAccount);
-            this.tcFTP.Controls.Add(this.tpConsole);
-            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcFTP.Location = new System.Drawing.Point(3, 3);
-            this.tcFTP.Name = "tcFTP";
-            this.tcFTP.SelectedIndex = 0;
-            this.tcFTP.Size = new System.Drawing.Size(966, 589);
-            this.tcFTP.TabIndex = 3;
-            // 
-            // tpMain
-            // 
-            this.tpMain.Controls.Add(this.splitContainer1);
-            this.tpMain.Location = new System.Drawing.Point(4, 22);
-            this.tpMain.Name = "tpMain";
-            this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(958, 563);
-            this.tpMain.TabIndex = 0;
-            this.tpMain.Text = "FTP Client";
-            this.tpMain.UseVisualStyleBackColor = true;
-            // 
-            // tpAccount
-            // 
-            this.tpAccount.Controls.Add(this.pgAccount);
-            this.tpAccount.Location = new System.Drawing.Point(4, 22);
-            this.tpAccount.Name = "tpAccount";
-            this.tpAccount.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAccount.Size = new System.Drawing.Size(958, 563);
-            this.tpAccount.TabIndex = 2;
-            this.tpAccount.Text = "Account";
-            this.tpAccount.UseVisualStyleBackColor = true;
-            // 
-            // pgAccount
-            // 
-            this.pgAccount.Location = new System.Drawing.Point(8, 8);
-            this.pgAccount.Name = "pgAccount";
-            this.pgAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgAccount.Size = new System.Drawing.Size(504, 424);
-            this.pgAccount.TabIndex = 0;
-            this.pgAccount.ToolbarVisible = false;
-            // 
-            // tpConsole
-            // 
-            this.tpConsole.Controls.Add(this.txtConsole);
-            this.tpConsole.Location = new System.Drawing.Point(4, 22);
-            this.tpConsole.Name = "tpConsole";
-            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConsole.Size = new System.Drawing.Size(958, 563);
-            this.tpConsole.TabIndex = 1;
-            this.tpConsole.Text = "Console";
-            this.tpConsole.UseVisualStyleBackColor = true;
-            // 
-            // txtConsole
-            // 
-            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConsole.Location = new System.Drawing.Point(3, 3);
-            this.txtConsole.Multiline = true;
-            this.txtConsole.Name = "txtConsole";
-            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtConsole.Size = new System.Drawing.Size(952, 557);
-            this.txtConsole.TabIndex = 0;
-            // 
             // FTPClient2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -422,7 +462,10 @@
             this.tpMain.ResumeLayout(false);
             this.tpAccount.ResumeLayout(false);
             this.tpConsole.ResumeLayout(false);
-            this.tpConsole.PerformLayout();
+            this.scConsole.Panel1.ResumeLayout(false);
+            this.scConsole.Panel2.ResumeLayout(false);
+            this.scConsole.Panel2.PerformLayout();
+            this.scConsole.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,7 +488,6 @@
         private System.Windows.Forms.TabControl tcFTP;
         private System.Windows.Forms.TabPage tpMain;
         private System.Windows.Forms.TabPage tpConsole;
-        private System.Windows.Forms.TextBox txtConsole;
         private System.Windows.Forms.ToolStripMenuItem createDirectoryToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbDirectoryList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -463,5 +505,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.TabPage tpAccount;
         private System.Windows.Forms.PropertyGrid pgAccount;
+        private System.Windows.Forms.RichTextBox rtbConsole;
+        private System.Windows.Forms.SplitContainer scConsole;
+        private System.Windows.Forms.TextBox txtConsoleWrite;
     }
 }

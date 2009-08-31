@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -30,8 +31,6 @@ using System.Windows.Forms;
 using IconHelper;
 using Starksoft.Net.Ftp;
 using UploadersLib;
-using System.Diagnostics;
-using System.Drawing.Imaging;
 
 namespace ZSS.FTPClientLib
 {
@@ -53,7 +52,8 @@ namespace ZSS.FTPClientLib
             this.Account = account;
 
             FTPAdapter = new FTP(account);
-            FTPAdapter.DebugMessage += new FTP.FTPDebugEventHandler(FTPAdapter_DebugMessage);
+            FTPAdapter.Client.ClientRequest += new EventHandler<FtpRequestEventArgs>(Client_ClientRequest);
+            FTPAdapter.Client.ServerResponse += new EventHandler<FtpResponseEventArgs>(Client_ServerResponse);
             FTPAdapter.Client.OpenAsyncCompleted += new EventHandler<OpenAsyncCompletedEventArgs>(Client_OpenAsyncCompleted);
             FTPAdapter.Client.OpenAsync(account.Username, account.Password);
 
@@ -384,6 +384,19 @@ namespace ZSS.FTPClientLib
             }
         }
 
+        private void AddConsoleMessage(string text, Color color)
+        {
+            this.Invoke(new MethodInvoker(delegate
+            {
+                text = string.Format("{0} - {1}\r\n", DateTime.Now.ToLongTimeString(), text);
+                rtbConsole.AppendText(text);
+                rtbConsole.SelectionStart = rtbConsole.TextLength - text.Length + 1;
+                rtbConsole.SelectionLength = text.Length;
+                rtbConsole.SelectionColor = color;
+                rtbConsole.ScrollToCaret();
+            }));
+        }
+
         #endregion
 
         #region Events
@@ -618,21 +631,6 @@ namespace ZSS.FTPClientLib
             this.Refresh();
         }
 
-        private void FTPAdapter_DebugMessage(string text)
-        {
-            string message = string.Format("{0} - {1}\r\n", DateTime.Now.ToLongTimeString(), text);
-
-#if DEBUG
-            Console.Write(message);
-#endif
-
-            this.BeginInvoke(new MethodInvoker(delegate()
-            {
-                txtConsole.AppendText(message);
-                txtConsole.ScrollToCaret();
-            }));
-        }
-
         private void Client_OpenAsyncCompleted(object sender, OpenAsyncCompletedEventArgs e)
         {
             panel1.Visible = false;
@@ -649,6 +647,25 @@ namespace ZSS.FTPClientLib
         {
             FTPAdapter.Disconnect();
             lvFTPList.Items.Clear();
+        }
+
+        private void Client_ClientRequest(object sender, FtpRequestEventArgs e)
+        {
+            AddConsoleMessage(e.Request.Text, Color.Blue);
+        }
+
+        private void Client_ServerResponse(object sender, FtpResponseEventArgs e)
+        {
+            AddConsoleMessage(e.Response.RawText, Color.DarkGreen);
+        }
+
+        private void txtConsoleWrite_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                FTPAdapter.SendCommand(txtConsoleWrite.Text);
+                txtConsoleWrite.Clear();
+            }
         }
 
         #endregion

@@ -25,7 +25,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Net;
 using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
@@ -36,15 +35,13 @@ namespace UploadersLib
     {
         public delegate void FTPProgressEventHandler(float percentage);
 
-        public delegate void FTPDebugEventHandler(string text);
-
         public event FTPProgressEventHandler ProgressChanged;
-
-        public event FTPDebugEventHandler DebugMessage;
 
         public FTPAccount Account { get; set; }
 
         public FtpClient Client { get; set; }
+
+        public bool AutoReconnect { get; set; }
 
         public FTP(FTPAccount account)
         {
@@ -65,26 +62,7 @@ namespace UploadersLib
             }
 
             Client.TransferProgress += new EventHandler<TransferProgressEventArgs>(OnTransferProgressChanged);
-            Client.ClientRequest += new EventHandler<FtpRequestEventArgs>(Client_ClientRequest);
-            Client.ServerResponse += new EventHandler<FtpResponseEventArgs>(Client_ServerResponse);
-        }
-
-        private void Client_ServerResponse(object sender, FtpResponseEventArgs e)
-        {
-            OnDebugMessage("Server: " + e.Response.RawText);
-        }
-
-        private void Client_ClientRequest(object sender, FtpRequestEventArgs e)
-        {
-            OnDebugMessage("Client: " + e.Request.Text);
-        }
-
-        private void OnDebugMessage(string text)
-        {
-            if (DebugMessage != null)
-            {
-                DebugMessage(text);
-            }
+            Client.ConnectionClosed += new EventHandler<ConnectionClosedEventArgs>(Client_ConnectionClosed);
         }
 
         private void OnTransferProgressChanged(object sender, TransferProgressEventArgs e)
@@ -94,6 +72,14 @@ namespace UploadersLib
                 /*Console.WriteLine("{0}/{1} - {2}% - {3} - {4}", e.TotalBytesTransferred / 1024, e.TotalBytes / 1024, e.Percentage,
                    e.EstimatedCompleteTime.TotalMilliseconds, e.ElapsedTime.TotalMilliseconds);*/
                 ProgressChanged(e.Percentage);
+            }
+        }
+
+        private void Client_ConnectionClosed(object sender, ConnectionClosedEventArgs e)
+        {
+            if (AutoReconnect)
+            {
+                Connect();
             }
         }
 
@@ -239,6 +225,19 @@ namespace UploadersLib
             }
 
             Client.DeleteDirectory(remotePath);
+        }
+
+        public bool SendCommand(string command)
+        {
+            try
+            {
+                Client.Quote(command);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Dispose()
