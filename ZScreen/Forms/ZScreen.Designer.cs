@@ -545,12 +545,12 @@ namespace ZScreenGUI
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
             this.ucDestOptions = new ZScreenLib.DestSelector();
-            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenGUI.UserControls.AccountsControl();
             this.ucMindTouchAccounts = new ZScreenGUI.UserControls.AccountsControl();
             this.ucTextUploaders = new ZScreenGUI.UserControls.TextUploadersControl();
             this.ucUrlShorteners = new ZScreenGUI.UserControls.TextUploadersControl();
+            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenGUI.UserControls.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
@@ -5393,6 +5393,7 @@ namespace ZScreenGUI
             // 
             // lbHistory
             // 
+            this.lbHistory.AllowDrop = true;
             this.lbHistory.ContextMenuStrip = this.cmsHistory;
             this.lbHistory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHistory.FormattingEnabled = true;
@@ -5405,7 +5406,9 @@ namespace ZScreenGUI
             this.lbHistory.Size = new System.Drawing.Size(304, 387);
             this.lbHistory.TabIndex = 2;
             this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
+            this.lbHistory.DragDrop += new System.Windows.Forms.DragEventHandler(this.lbHistory_DragDrop);
             this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
+            this.lbHistory.DragEnter += new System.Windows.Forms.DragEventHandler(this.lbHistory_DragEnter);
             this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
             // 
             // tpHistorySettings
@@ -5648,9 +5651,9 @@ namespace ZScreenGUI
             this.chkShellExt.AutoSize = true;
             this.chkShellExt.Location = new System.Drawing.Point(424, 72);
             this.chkShellExt.Name = "chkShellExt";
-            this.chkShellExt.Size = new System.Drawing.Size(275, 17);
+            this.chkShellExt.Size = new System.Drawing.Size(278, 17);
             this.chkShellExt.TabIndex = 9;
-            this.chkShellExt.Text = "Show \"Upload using ZScreen\" in Shell Contex Menu";
+            this.chkShellExt.Text = "Show \"Upload using ZScreen\" in Shell Context Menu";
             this.chkShellExt.UseVisualStyleBackColor = true;
             this.chkShellExt.CheckedChanged += new System.EventHandler(this.chkShellExt_CheckedChanged);
             // 
@@ -6476,15 +6479,6 @@ namespace ZScreenGUI
             this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
             this.ucDestOptions.TabIndex = 124;
             // 
-            // historyBrowser
-            // 
-            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
-            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.historyBrowser.Name = "historyBrowser";
-            this.historyBrowser.Size = new System.Drawing.Size(455, 231);
-            this.historyBrowser.TabIndex = 15;
-            // 
             // nudtScreenshotDelay
             // 
             this.nudtScreenshotDelay.Location = new System.Drawing.Point(112, 18);
@@ -6535,6 +6529,15 @@ namespace ZScreenGUI
             this.ucUrlShorteners.Name = "ucUrlShorteners";
             this.ucUrlShorteners.Size = new System.Drawing.Size(777, 393);
             this.ucUrlShorteners.TabIndex = 0;
+            // 
+            // historyBrowser
+            // 
+            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
+            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.historyBrowser.Name = "historyBrowser";
+            this.historyBrowser.Size = new System.Drawing.Size(455, 231);
+            this.historyBrowser.TabIndex = 15;
             // 
             // ucProxyAccounts
             // 

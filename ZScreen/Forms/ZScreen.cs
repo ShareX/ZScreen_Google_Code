@@ -4336,5 +4336,25 @@ namespace ZScreenGUI
                 RegistryMgr.ShellExtUnregister();
             }
         }
+
+        private void lbHistory_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] FilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            List<string> files = new List<string>();
+            files.AddRange(FilePaths);
+            Loader.Worker.UploadUsingFileSystem(files);
+        }
+
+        private void lbHistory_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
     }
 }
