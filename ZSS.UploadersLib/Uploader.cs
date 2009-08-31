@@ -55,6 +55,7 @@ namespace UploadersLib
         {
             this.Errors = new List<string>();
             this.UserAgent = "ZScreen";
+            ProxySettings = new ProxySettings();
         }
 
         protected void OnProgressChanged(int progress)
