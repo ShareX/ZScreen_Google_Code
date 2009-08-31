@@ -1,5 +1,6 @@
 Version 3.4 - 20091015
 
+3.04.1.0 Extended support for SOCKS4, SOCKS4a and SOCKS5 proxy types {Jaex}
 3.04.0.0 Added support for Shell Extension "Upload using ZScreen" {McoreD}
 3.03.3.0 ZScreen Command Line Interface supports "clipboard_upload" argument {McoreD}
 3.03.2.0 Much faster FTP Client performance using Starksoft Ftp Component for .NET / Mono {Jaex}

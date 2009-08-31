@@ -34,7 +34,7 @@ namespace UploadersLib.Helpers
     [Serializable]
     public class ProxyInfo
     {
-        public string Username { get; set; }
+        public string UserName { get; set; }
         [PasswordPropertyText(true)]
         public string Password { get; set; }
         public string Host { get; set; }
@@ -45,7 +45,7 @@ namespace UploadersLib.Helpers
 
         public ProxyInfo(string username, string password, string host, int port)
         {
-            this.Username = username;
+            this.UserName = username;
             this.Password = password;
             this.Host = host;
             this.Port = port;
@@ -53,7 +53,7 @@ namespace UploadersLib.Helpers
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}:{2}", this.Username, this.Host, this.Port);
+            return string.Format("{0} - {1}:{2}", this.UserName, this.Host, this.Port);
         }
 
         public string GetAddress()

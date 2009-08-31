@@ -396,7 +396,7 @@ namespace ZScreenLib
 
             try
             {
-                NetworkCredential cred = new NetworkCredential(acc.Username, acc.Password);
+                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
                 WebProxy wp = new WebProxy(acc.GetAddress(), true, null, cred);
                 WebClient wc = new WebClient { Proxy = wp };
                 wc.DownloadString("http://www.google.com");
