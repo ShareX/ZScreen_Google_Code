@@ -14,7 +14,6 @@ namespace ZScreenTesterGUI
     public partial class TesterGUI : Form
     {
         List<ImageDestType> ImageUploaders = new List<ImageDestType>();
-        List<TextUploader> mTextUploaders = new List<TextUploader>();
 
         public TesterGUI()
         {
@@ -41,16 +40,12 @@ namespace ZScreenTesterGUI
 
             foreach (TextUploader uploader in Engine.conf.TextUploadersList)
             {
-                if (null != uploader)
-                {
-                    mTextUploaders.Add(uploader);
-
-                }
+                lvUploaders.Items.Add(uploader.ToString()).SubItems.Add("");
             }
 
-            foreach (TextUploader upload in mTextUploaders)
+            foreach (FileUploaderType uploader in Enum.GetValues(typeof(UploadersLib.FileUploaderType)))
             {
-                lvUploaders.Items.Add(upload.ToString()).SubItems.Add("");
+                lvUploaders.Items.Add(uploader.GetDescription()).SubItems.Add("");
             }
 
             if (!File.Exists(Tester.TestFilePicture))
@@ -99,14 +94,21 @@ namespace ZScreenTesterGUI
 
             foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
             {
-                if (null != textUploader)
-                {
-                    WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
-                    task.MyTextUploader = textUploader;
-                    task.MyText = TextInfo.FromString(textUploader.TesterString);
-                    new TaskManager(ref task).UploadText();
-                    bw.ReportProgress(index++, task);
-                }
+                WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
+                task.MyTextUploader = textUploader;
+                task.MyText = TextInfo.FromString(textUploader.TesterString);
+                new TaskManager(ref task).UploadText();
+                bw.ReportProgress(index++, task);
+            }
+
+            foreach (FileUploaderType uploader in Enum.GetValues(typeof(UploadersLib.FileUploaderType)))
+            {
+                WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
+                task.MyFileUploader = uploader;
+                task.SetLocalFilePath(Tester.TestFileBinary);
+                new TaskManager(ref task).UploadFile();
+                bw.ReportProgress(index++, task);
+
             }
         }
 
