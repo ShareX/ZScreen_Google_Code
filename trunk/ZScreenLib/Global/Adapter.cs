@@ -369,7 +369,7 @@ namespace ZScreenLib
 
             try
             {
-                DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, GetProxySettings()));
+                DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, CheckProxySettings().GetWebProxy));
                 connector.Login();
             }
             catch (Exception ex)
@@ -385,25 +385,9 @@ namespace ZScreenLib
 
         #region Proxy Methods
 
-        /// <summary>
-        /// Returns a WebProxy object based on active ProxyInfo and if Proxy is enabled, returns default system proxy otherwise
-        /// </summary>
-        public static IWebProxy GetProxySettings()
+        public static ProxySettings CheckProxySettings()
         {
-            if (Engine.conf.ProxyEnabled)
-            {
-                ProxyInfo acc = Engine.conf.ProxyActive;
-                if (acc != null)
-                {
-                    NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
-                    return new WebProxy(acc.GetAddress(), true, null, cred);
-                }
-                else
-                {
-                    return HttpWebRequest.DefaultWebProxy;
-                }
-            }
-            return null;
+            return new ProxySettings { ProxyEnabled = Engine.conf.ProxyEnabled, ProxyActive = Engine.conf.ProxyActive };
         }
 
         public static void TestProxyAccount(ProxyInfo acc)
@@ -412,7 +396,7 @@ namespace ZScreenLib
 
             try
             {
-                NetworkCredential cred = new NetworkCredential(acc.UserName, acc.Password);
+                NetworkCredential cred = new NetworkCredential(acc.Username, acc.Password);
                 WebProxy wp = new WebProxy(acc.GetAddress(), true, null, cred);
                 WebClient wc = new WebClient { Proxy = wp };
                 wc.DownloadString("http://www.google.com");

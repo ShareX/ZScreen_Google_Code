@@ -78,7 +78,7 @@ namespace ZScreenGUI
                 CheckBeta = Engine.conf.CheckUpdatesBeta,
                 MyNewVersionWindowOptions = nvwo
             };
-            uco.ProxySettings = Adapter.GetProxySettings();
+            uco.ProxySettings = Adapter.CheckProxySettings().GetWebProxy;
             UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
             worker.ReportProgress(1, updateChecker.StartCheckUpdate());
             updateChecker.ShowPrompt();
@@ -162,7 +162,7 @@ namespace ZScreenGUI
         {
             try
             {
-                ZScreen.mGTranslator = new GoogleTranslate(Adapter.GetProxySettings());
+                ZScreen.mGTranslator = new GoogleTranslate(Adapter.CheckProxySettings().GetWebProxy);
                 Adapter.UpdateTinyPicShuk();
             }
             catch (Exception ex)

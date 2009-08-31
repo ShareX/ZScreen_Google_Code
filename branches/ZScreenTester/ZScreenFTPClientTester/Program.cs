@@ -34,10 +34,7 @@ namespace ZScreenFTPClientTester
             acc.Password = Settings.Default.Password;
             acc.Server = Settings.Default.Server;
 
-            FTPOptions ftpClientOptions = new FTPOptions();
-            ftpClientOptions.Account = acc;
-
-            Application.Run(new FTPClient2(ftpClientOptions));
+            Application.Run(new FTPClient2(acc));
         }
     }
 }

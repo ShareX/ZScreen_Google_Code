@@ -31,30 +31,35 @@ using IconHelper;
 using Starksoft.Net.Ftp;
 using UploadersLib;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 namespace ZSS.FTPClientLib
 {
     public partial class FTPClient2 : Form
     {
-        public FTP FTPAdapter;
-        public FTPOptions Options { get; set; }
+        public FTP FTPAdapter { get; set; }
+        public FTPAccount Account { get; set; }
 
         private string currentDirectory;
         private ListViewItem tempSelected;
 
-        public FTPClient2(FTPOptions options)
+        public FTPClient2(FTPAccount account)
         {
             InitializeComponent();
 
             toolStripStatusLabel1.Text = "";
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
-            this.Options = options;
+            this.Account = account;
 
-            FTPAdapter = new FTP(options.Account);
+            FTPAdapter = new FTP(account);
             FTPAdapter.DebugMessage += new FTP.FTPDebugEventHandler(FTPAdapter_DebugMessage);
             FTPAdapter.Client.OpenAsyncCompleted += new EventHandler<OpenAsyncCompletedEventArgs>(Client_OpenAsyncCompleted);
-            FTPAdapter.Client.OpenAsync(options.Account.Username, options.Account.Password);
+            FTPAdapter.Client.OpenAsync(account.Username, account.Password);
+
+            pgAccount.SelectedObject = FTPAdapter.Account;
+            this.Text = "FTP Client - " + account.Name;
+            lblConnecting.Text = "Connecting to " + account.FTPAddress;
         }
 
         #region Methods
@@ -88,6 +93,8 @@ namespace ZSS.FTPClientLib
 
         private void LoadDirectory(string path)
         {
+            FTPAdapter.Connect();
+
             currentDirectory = path;
             FillDirectories(currentDirectory);
 
@@ -115,6 +122,10 @@ namespace ZSS.FTPClientLib
                     if (file.ItemType == FtpItemType.File)
                     {
                         lvi.SubItems.Add(file.Size.ToString("N0"));
+                    }
+                    else
+                    {
+                        lvi.SubItems.Add(string.Empty);
                     }
 
                     lvi.SubItems.Add(IconReader.GetDisplayName(file.Name, file.ItemType == FtpItemType.Directory));
@@ -627,6 +638,17 @@ namespace ZSS.FTPClientLib
             panel1.Visible = false;
             Refresh();
             RefreshDirectory();
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshDirectory();
+        }
+
+        private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FTPAdapter.Disconnect();
+            lvFTPList.Items.Clear();
         }
 
         #endregion

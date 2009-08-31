@@ -220,7 +220,7 @@ namespace ZScreenLib
             {
                 FTPOptions fopt = new FTPOptions();
                 fopt.Account = mAcc;
-                fopt.ProxySettings = Adapter.GetProxySettings();
+                fopt.ProxySettings = Adapter.CheckProxySettings().GetWebProxy;
                 mFTP = new FTPAdapter(fopt);
                 List<string> files = FetchList();
                 if (files.Count > 0)

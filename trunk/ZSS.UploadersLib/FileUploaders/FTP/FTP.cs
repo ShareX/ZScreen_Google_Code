@@ -55,17 +55,12 @@ namespace UploadersLib
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
-            IWebProxy proxy = Uploader.ProxySettings;
-            if (proxy != null)
+            if (Uploader.ProxySettings != null)
             {
-                try
+                IProxyClient proxy = Uploader.ProxySettings.GetProxyClient;
+                if (proxy != null)
                 {
-                    string testUrl = "http://google.com";
-                    Client.Proxy = new HttpProxyClient(proxy.GetProxy(new Uri(testUrl)).Host, proxy.GetProxy(new Uri(testUrl)).Port);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
+                    Client.Proxy = proxy;
                 }
             }
 
@@ -159,6 +154,18 @@ namespace UploadersLib
             }
         }
 
+        public void DownloadFile(string remotePath, string localPath)
+        {
+            Connect();
+            Client.GetFile(remotePath, localPath);
+        }
+
+        public void DownloadFile(string remotePath, Stream outStream)
+        {
+            Connect();
+            Client.GetFile(remotePath, outStream, false);
+        }
+
         public FtpItemCollection GetDirList(string remotePath)
         {
             Connect();
@@ -170,12 +177,6 @@ namespace UploadersLib
             Connect();
             remotePath = FTPHelpers.AddSlash(remotePath, FTPHelpers.SlashType.Prefix);
             Client.ChangeDirectory(remotePath);
-        }
-
-        public void DownloadFile(string remotePath, string localPath)
-        {
-            Connect();
-            Client.GetFile(remotePath, localPath);
         }
 
         public void MakeDirectory(string remotePath)

@@ -33,17 +33,22 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Microsoft.Win32;
+using Starksoft.Net.Proxy;
+using UploadersLib.Helpers;
 
 namespace UploadersLib
 {
     public class Uploader
     {
         public delegate void ProgressEventHandler(int progress);
+
         public event ProgressEventHandler ProgressChanged;
 
         public List<string> Errors { get; set; }
         [XmlIgnore]
-        public static IWebProxy ProxySettings { get; set; }
+
+        public static ProxySettings ProxySettings { get; set; }
+
         public string UserAgent { get; set; }
 
         public Uploader()
@@ -100,7 +105,7 @@ namespace UploadersLib
                 request.ContentLength = stream.Length;
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
                 request.Method = "POST";
-                request.Proxy = ProxySettings;
+                request.Proxy = ProxySettings.GetWebProxy;
                 request.UserAgent = UserAgent;
 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
@@ -264,7 +269,7 @@ namespace UploadersLib
             {
                 return regKey.GetValue("Content Type").ToString();
             }
-            
+
             return "application/octetstream";
         }
 

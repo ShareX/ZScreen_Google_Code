@@ -30,7 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.cmsRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -41,49 +45,73 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cbDirectoryList = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblConnecting = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.tcFTP = new System.Windows.Forms.TabControl();
-            this.tpMainTab = new System.Windows.Forms.TabPage();
-            this.tpConsole = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.TextBox();
-            this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lvFTPList = new ZSS.FTPClientLib.ListViewEx();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chFilesize = new System.Windows.Forms.ColumnHeader();
             this.chFiletype = new System.Windows.Forms.ColumnHeader();
             this.chLastModified = new System.Windows.Forms.ColumnHeader();
             this.chPermissions = new System.Windows.Forms.ColumnHeader();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tcFTP = new System.Windows.Forms.TabControl();
+            this.tpMain = new System.Windows.Forms.TabPage();
+            this.tpAccount = new System.Windows.Forms.TabPage();
+            this.pgAccount = new System.Windows.Forms.PropertyGrid();
+            this.tpConsole = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsRightClickMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tcFTP.SuspendLayout();
-            this.tpMainTab.SuspendLayout();
-            this.tpConsole.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tcFTP.SuspendLayout();
+            this.tpMain.SuspendLayout();
+            this.tpAccount.SuspendLayout();
+            this.tpConsole.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmsRightClickMenu
             // 
             this.cmsRightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToolStripMenuItem,
+            this.disconnectToolStripMenuItem,
+            this.toolStripSeparator2,
             this.downloadToolStripMenuItem,
+            this.openURLToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripSeparator1,
             this.refreshToolStripMenuItem,
             this.createDirectoryToolStripMenuItem,
-            this.openURLToolStripMenuItem,
             this.copyURLsToClipboardToolStripMenuItem});
             this.cmsRightClickMenu.Name = "cmsRightClickMenu";
-            this.cmsRightClickMenu.Size = new System.Drawing.Size(207, 164);
+            this.cmsRightClickMenu.Size = new System.Drawing.Size(207, 214);
+            // 
+            // connectToolStripMenuItem
+            // 
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.connectToolStripMenuItem.Text = "Connect";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // disconnectToolStripMenuItem
+            // 
+            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.disconnectToolStripMenuItem.Text = "Disconnect";
+            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
             // 
             // downloadToolStripMenuItem
             // 
@@ -91,6 +119,13 @@
             this.downloadToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.downloadToolStripMenuItem.Text = "Download";
             this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
+            // 
+            // openURLToolStripMenuItem
+            // 
+            this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.openURLToolStripMenuItem.Text = "Open URL";
+            this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
@@ -176,84 +211,69 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.lblConnecting);
             this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Location = new System.Drawing.Point(380, 208);
+            this.panel1.Location = new System.Drawing.Point(350, 208);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(192, 64);
+            this.panel1.Size = new System.Drawing.Size(252, 64);
             this.panel1.TabIndex = 1;
             // 
-            // label1
+            // lblConnecting
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(5, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(178, 26);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Connecting to FTP server...";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblConnecting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblConnecting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConnecting.Location = new System.Drawing.Point(5, 5);
+            this.lblConnecting.Name = "lblConnecting";
+            this.lblConnecting.Size = new System.Drawing.Size(238, 26);
+            this.lblConnecting.TabIndex = 1;
+            this.lblConnecting.Text = "Connecting to FTP server...";
+            this.lblConnecting.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // progressBar1
             // 
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar1.Location = new System.Drawing.Point(5, 31);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(178, 24);
+            this.progressBar1.Size = new System.Drawing.Size(238, 24);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 0;
             // 
-            // tcFTP
+            // toolStripContainer1
             // 
-            this.tcFTP.Controls.Add(this.tpMainTab);
-            this.tcFTP.Controls.Add(this.tpConsole);
-            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcFTP.Location = new System.Drawing.Point(3, 3);
-            this.tcFTP.Name = "tcFTP";
-            this.tcFTP.SelectedIndex = 0;
-            this.tcFTP.Size = new System.Drawing.Size(966, 589);
-            this.tcFTP.TabIndex = 3;
             // 
-            // tpMainTab
+            // toolStripContainer1.BottomToolStripPanel
             // 
-            this.tpMainTab.Controls.Add(this.splitContainer1);
-            this.tpMainTab.Location = new System.Drawing.Point(4, 22);
-            this.tpMainTab.Name = "tpMainTab";
-            this.tpMainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainTab.Size = new System.Drawing.Size(958, 563);
-            this.tpMainTab.TabIndex = 0;
-            this.tpMainTab.Text = "FTP Client";
-            this.tpMainTab.UseVisualStyleBackColor = true;
+            this.toolStripContainer1.BottomToolStripPanel.Controls.Add(this.statusStrip1);
             // 
-            // tpConsole
+            // toolStripContainer1.ContentPanel
             // 
-            this.tpConsole.Controls.Add(this.txtConsole);
-            this.tpConsole.Location = new System.Drawing.Point(4, 22);
-            this.tpConsole.Name = "tpConsole";
-            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConsole.Size = new System.Drawing.Size(958, 563);
-            this.tpConsole.TabIndex = 1;
-            this.tpConsole.Text = "Console";
-            this.tpConsole.UseVisualStyleBackColor = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.lvFTPList);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(952, 483);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(952, 530);
+            this.toolStripContainer1.TabIndex = 2;
+            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
-            // txtConsole
+            // statusStrip1
             // 
-            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConsole.Location = new System.Drawing.Point(3, 3);
-            this.txtConsole.Multiline = true;
-            this.txtConsole.Name = "txtConsole";
-            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtConsole.Size = new System.Drawing.Size(952, 557);
-            this.txtConsole.TabIndex = 0;
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.statusStrip1.Size = new System.Drawing.Size(952, 22);
+            this.statusStrip1.SizingGrip = false;
+            this.statusStrip1.TabIndex = 0;
             // 
-            // openURLToolStripMenuItem
+            // toolStripStatusLabel1
             // 
-            this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.openURLToolStripMenuItem.Text = "Open URL";
-            this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(38, 17);
+            this.toolStripStatusLabel1.Text = "status";
             // 
             // lvFTPList
             // 
@@ -275,7 +295,7 @@
             this.lvFTPList.HideSelection = false;
             this.lvFTPList.Location = new System.Drawing.Point(0, 0);
             this.lvFTPList.Name = "lvFTPList";
-            this.lvFTPList.Size = new System.Drawing.Size(952, 508);
+            this.lvFTPList.Size = new System.Drawing.Size(952, 483);
             this.lvFTPList.TabIndex = 0;
             this.lvFTPList.UseCompatibleStateImageBehavior = false;
             this.lvFTPList.View = System.Windows.Forms.View.Details;
@@ -310,41 +330,70 @@
             this.chPermissions.Text = "Permissions";
             this.chPermissions.Width = 100;
             // 
-            // toolStripContainer1
+            // tcFTP
             // 
+            this.tcFTP.Controls.Add(this.tpMain);
+            this.tcFTP.Controls.Add(this.tpAccount);
+            this.tcFTP.Controls.Add(this.tpConsole);
+            this.tcFTP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcFTP.Location = new System.Drawing.Point(3, 3);
+            this.tcFTP.Name = "tcFTP";
+            this.tcFTP.SelectedIndex = 0;
+            this.tcFTP.Size = new System.Drawing.Size(966, 589);
+            this.tcFTP.TabIndex = 3;
             // 
-            // toolStripContainer1.BottomToolStripPanel
+            // tpMain
             // 
-            this.toolStripContainer1.BottomToolStripPanel.Controls.Add(this.statusStrip1);
+            this.tpMain.Controls.Add(this.splitContainer1);
+            this.tpMain.Location = new System.Drawing.Point(4, 22);
+            this.tpMain.Name = "tpMain";
+            this.tpMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMain.Size = new System.Drawing.Size(958, 563);
+            this.tpMain.TabIndex = 0;
+            this.tpMain.Text = "FTP Client";
+            this.tpMain.UseVisualStyleBackColor = true;
             // 
-            // toolStripContainer1.ContentPanel
+            // tpAccount
             // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.lvFTPList);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(952, 508);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(952, 530);
-            this.toolStripContainer1.TabIndex = 2;
-            this.toolStripContainer1.Text = "toolStripContainer1";
+            this.tpAccount.Controls.Add(this.pgAccount);
+            this.tpAccount.Location = new System.Drawing.Point(4, 22);
+            this.tpAccount.Name = "tpAccount";
+            this.tpAccount.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAccount.Size = new System.Drawing.Size(958, 563);
+            this.tpAccount.TabIndex = 2;
+            this.tpAccount.Text = "Account";
+            this.tpAccount.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // pgAccount
             // 
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip1.Size = new System.Drawing.Size(952, 22);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 0;
+            this.pgAccount.Location = new System.Drawing.Point(8, 8);
+            this.pgAccount.Name = "pgAccount";
+            this.pgAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgAccount.Size = new System.Drawing.Size(504, 424);
+            this.pgAccount.TabIndex = 0;
+            this.pgAccount.ToolbarVisible = false;
             // 
-            // toolStripStatusLabel1
+            // tpConsole
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(38, 17);
-            this.toolStripStatusLabel1.Text = "status";
+            this.tpConsole.Controls.Add(this.txtConsole);
+            this.tpConsole.Location = new System.Drawing.Point(4, 22);
+            this.tpConsole.Name = "tpConsole";
+            this.tpConsole.Padding = new System.Windows.Forms.Padding(3);
+            this.tpConsole.Size = new System.Drawing.Size(958, 563);
+            this.tpConsole.TabIndex = 1;
+            this.tpConsole.Text = "Console";
+            this.tpConsole.UseVisualStyleBackColor = true;
+            // 
+            // txtConsole
+            // 
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtConsole.Location = new System.Drawing.Point(3, 3);
+            this.txtConsole.Multiline = true;
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtConsole.Size = new System.Drawing.Size(952, 557);
+            this.txtConsole.TabIndex = 0;
             // 
             // FTPClient2
             // 
@@ -362,10 +411,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.tcFTP.ResumeLayout(false);
-            this.tpMainTab.ResumeLayout(false);
-            this.tpConsole.ResumeLayout(false);
-            this.tpConsole.PerformLayout();
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -373,6 +418,11 @@
             this.toolStripContainer1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tcFTP.ResumeLayout(false);
+            this.tpMain.ResumeLayout(false);
+            this.tpAccount.ResumeLayout(false);
+            this.tpConsole.ResumeLayout(false);
+            this.tpConsole.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,7 +443,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
         private System.Windows.Forms.TabControl tcFTP;
-        private System.Windows.Forms.TabPage tpMainTab;
+        private System.Windows.Forms.TabPage tpMain;
         private System.Windows.Forms.TabPage tpConsole;
         private System.Windows.Forms.TextBox txtConsole;
         private System.Windows.Forms.ToolStripMenuItem createDirectoryToolStripMenuItem;
@@ -402,11 +452,16 @@
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyURLsToClipboardToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblConnecting;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.TabPage tpAccount;
+        private System.Windows.Forms.PropertyGrid pgAccount;
     }
 }

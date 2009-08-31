@@ -27,35 +27,38 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.ComponentModel;
+using UploadersLib;
 
-namespace ZScreenLib
+namespace UploadersLib.Helpers
 {
     [Serializable]
     public class ProxyInfo
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [PasswordPropertyText(true)]
         public string Password { get; set; }
-        public string Domain { get; set; }
+        public string Host { get; set; }
         public int Port { get; set; }
+        public Proxy ProxyType { get; set; }
+
         public ProxyInfo() { }
 
-        public ProxyInfo(string userName, string password, string domain, int port)
+        public ProxyInfo(string username, string password, string host, int port)
         {
-            this.UserName = userName;
+            this.Username = username;
             this.Password = password;
-            this.Domain = domain;
+            this.Host = host;
             this.Port = port;
         }
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}:{2}", this.UserName, this.Domain, this.Port);
+            return string.Format("{0} - {1}:{2}", this.Username, this.Host, this.Port);
         }
 
         public string GetAddress()
         {
-            return string.Format("{0}:{1}", this.Domain, this.Port);
+            return string.Format("{0}:{1}", this.Host, this.Port);
         }
     }
 }
