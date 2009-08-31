@@ -7,12 +7,14 @@ using System.IO;
 using System.Windows.Forms;
 using UploadersLib;
 using ZScreenLib;
+using UploadersLib.Helpers;
 
 namespace ZScreenTesterGUI
 {
     public partial class TesterGUI : Form
     {
-        List<ImageDestType> Uploaders = new List<ImageDestType>();
+        List<ImageDestType> ImageUploaders = new List<ImageDestType>();
+        List<TextUploader> mTextUploaders = new List<TextUploader>();
 
         public TesterGUI()
         {
@@ -29,12 +31,26 @@ namespace ZScreenTesterGUI
                         continue;
                 }
 
-                Uploaders.Add(uploader);
+                ImageUploaders.Add(uploader);
             }
 
-            foreach (ImageDestType uploader in Uploaders)
+            foreach (ImageDestType uploader in ImageUploaders)
             {
                 lvUploaders.Items.Add(uploader.GetDescription()).SubItems.Add("");
+            }
+
+            foreach (TextUploader uploader in Engine.conf.TextUploadersList)
+            {
+                if (null != uploader)
+                {
+                    mTextUploaders.Add(uploader);
+
+                }
+            }
+
+            foreach (TextUploader upload in mTextUploaders)
+            {
+                lvUploaders.Items.Add(upload.ToString()).SubItems.Add("");
             }
 
             if (!File.Exists(Tester.TestFilePicture))
@@ -64,6 +80,7 @@ namespace ZScreenTesterGUI
             bw.DoWork += new DoWorkEventHandler(bw_DoWork);
             bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
             bw.RunWorkerAsync(bw);
+
         }
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
@@ -71,13 +88,25 @@ namespace ZScreenTesterGUI
             BackgroundWorker bw = (BackgroundWorker)e.Argument;
             int index = 0;
 
-            foreach (ImageDestType uploader in Uploaders)
+            foreach (ImageDestType uploader in ImageUploaders)
             {
                 WorkerTask task = new WorkerTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task.MyImageUploader = uploader;
                 task.SetLocalFilePath(Tester.TestFilePicture);
                 new TaskManager(ref task).UploadImage();
                 bw.ReportProgress(index++, task);
+            }
+
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
+            {
+                if (null != textUploader)
+                {
+                    WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
+                    task.MyTextUploader = textUploader;
+                    task.MyText = TextInfo.FromString(textUploader.TesterString);
+                    new TaskManager(ref task).UploadText();
+                    bw.ReportProgress(index++, task);
+                }
             }
         }
 
