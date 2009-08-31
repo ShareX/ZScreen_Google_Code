@@ -197,7 +197,9 @@ namespace UploadersLib.ImageUploaders
                             XElement err = xele.Element("err");
                             code = err.AttributeValue("code");
                             msg = err.AttributeValue("msg");
-                            throw new Exception(string.Format("Code: {0}, Message: {1}", code, msg));
+                            // throw new Exception(string.Format("Code: {0}, Message: {1}", code, msg));
+                            this.Errors.Add(msg);
+                            break;
                     }
                 }
             }
@@ -227,12 +229,17 @@ namespace UploadersLib.ImageUploaders
 
             string response = UploadImage(image, fileName, API_Upload_URL, "photo", args);
 
-            string photoid = ParseResponse(response, "photoid").Value;
+            XElement xele = ParseResponse(response, "photoid");
+            string photoid = string.Empty;
+            string url2 = string.Empty;
 
-            string url = CombineURL(GetPhotosLink(), photoid);
-
-            string url2 = CombineURL(url, "sizes/o");
-
+            if (null != xele)
+            {
+                photoid = xele.Value;
+                string url = CombineURL(GetPhotosLink(), photoid);
+                url2 = CombineURL(url, "sizes/o");
+            }
+           
             return new ImageFileManager(url2, response);
         }
 
