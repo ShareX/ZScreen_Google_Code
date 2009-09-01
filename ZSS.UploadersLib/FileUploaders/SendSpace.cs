@@ -171,7 +171,7 @@ namespace UploadersLib.FileUploaders
             args.Add("email", email);
             args.Add("password", password);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             return !ParseResponse(response).Error;
         }
@@ -190,7 +190,7 @@ namespace UploadersLib.FileUploaders
             args.Add("app_version", AppVersion); // Application specific, formatting / style is up to you
             args.Add("response_format", "xml"); // Value must be: XML
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             ResponsePacket packet = ParseResponse(response);
 
@@ -218,7 +218,7 @@ namespace UploadersLib.FileUploaders
             args.Add("user_name", username);
             args.Add("tokened_password", GetMD5(token + GetMD5(password))); // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             ResponsePacket packet = ParseResponse(response);
 
@@ -243,7 +243,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.checkSession");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             ResponsePacket packet = ParseResponse(response);
 
@@ -272,7 +272,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.logout");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             return !ParseResponse(response).Error;
         }
@@ -294,7 +294,7 @@ namespace UploadersLib.FileUploaders
             args.Add("session_key", sessionKey);
             args.Add("speed_limit", SpeedLimit.ToString());
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             ResponsePacket packet = ParseResponse(response);
 
@@ -320,7 +320,7 @@ namespace UploadersLib.FileUploaders
             args.Add("api_version", SENDSPACE_API_VERSION);
             args.Add("app_version", AppVersion);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             ResponsePacket packet = ParseResponse(response);
 
@@ -390,7 +390,7 @@ namespace UploadersLib.FileUploaders
                 }
             }
 
-            return "";
+            return string.Empty;
         }
 
         public override string Upload(byte[] data, string fileName)

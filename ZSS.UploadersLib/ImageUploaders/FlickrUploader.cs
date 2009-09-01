@@ -21,13 +21,12 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
-using System.ComponentModel;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -239,7 +238,7 @@ namespace UploadersLib.ImageUploaders
                 string url = CombineURL(GetPhotosLink(), photoid);
                 url2 = CombineURL(url, "sizes/o");
             }
-           
+
             return new ImageFileManager(url2, response);
         }
 
