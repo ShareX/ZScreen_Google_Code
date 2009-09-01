@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using UploadersLib;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.URLShorteners
@@ -67,9 +66,10 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("format", "text");
                 arguments.Add("api_key", APIKey);
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetResponseString(HostSettings.URL, arguments);
             }
-            return "";
+
+            return string.Empty;
         }
 
         [Serializable]

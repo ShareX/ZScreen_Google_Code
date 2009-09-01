@@ -21,17 +21,13 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Net;
-using System.Web;
 using System.Text;
-using System.IO;
-using UploadersLib.Helpers;
-using System.Xml.Serialization;
-using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Web;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.TextUploaders
 {
@@ -89,7 +85,7 @@ namespace UploadersLib.TextUploaders
                 return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
-            return "";
+            return string.Empty;
         }
 
         public List<TextFormat> DownloadTextFormats()
@@ -116,6 +112,7 @@ namespace UploadersLib.TextUploaders
             {
                 Console.WriteLine(ex.ToString());
             }
+
             return textFormats;
         }
 
@@ -135,6 +132,7 @@ namespace UploadersLib.TextUploaders
             {
                 Console.WriteLine(ex.ToString());
             }
+
             return null;
         }
 

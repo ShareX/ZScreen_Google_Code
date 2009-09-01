@@ -21,16 +21,10 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Text;
-using System.IO;
-using UploadersLib.Helpers;
-using System.Xml.Serialization;
+using System.Collections.Generic;
 using System.ComponentModel;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.TextUploaders
 {
@@ -88,11 +82,11 @@ namespace UploadersLib.TextUploaders
                 return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
-            return "";
+            return string.Empty;
         }
 
         [Serializable]
-        public class SlexySettings : TextUploaderSettings 
+        public class SlexySettings : TextUploaderSettings
         {
             public override string Name { get; set; }
             public override string URL { get; set; }
