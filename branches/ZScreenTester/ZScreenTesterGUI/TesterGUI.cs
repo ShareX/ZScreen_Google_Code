@@ -31,9 +31,8 @@ namespace ZScreenTesterGUI
             public FileUploaderType FileUploader;
             public UrlShortenerType UrlShortener;
             public WorkerTask Task;
+            public int Index;
         }
-
-        public UploaderInfo[] Uploaders;
 
         public TesterGUI()
         {
@@ -82,8 +81,6 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(lvi);
             }
 
-            Uploaders = lvUploaders.Items.OfType<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
-
             if (!File.Exists(Tester.TestFilePicture))
             {
                 OpenFileDialog dlg = new OpenFileDialog();
@@ -92,6 +89,30 @@ namespace ZScreenTesterGUI
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     Tester.TestFilePicture = dlg.FileName;
+                }
+            }
+
+            PrepareListItems();
+        }
+
+        private void PrepareListItems()
+        {
+            for (int i = 0; i < lvUploaders.Items.Count; i++)
+            {
+                ListViewItem lvi = lvUploaders.Items[i];
+
+                if (lvi.SubItems.Count < 2)
+                {
+                    lvi.SubItems.Add("");
+                }
+
+                lvi.SubItems[1].Text = "Waiting";
+                lvi.BackColor = Color.LightYellow;
+
+                UploaderInfo uploadInfo = lvi.Tag as UploaderInfo;
+                if (uploadInfo != null)
+                {
+                    uploadInfo.Index = i;
                 }
             }
         }
@@ -104,55 +125,45 @@ namespace ZScreenTesterGUI
                 }));
         }
 
-        public void StartTest()
+        public void StartTest(UploaderInfo[] uploaders)
         {
-            foreach (ListViewItem lvi in lvUploaders.Items)
-            {
-                if (lvi.SubItems.Count < 2)
-                {
-                    lvi.SubItems.Add("");
-                }
-
-                lvi.SubItems[1].Text = "Waiting";
-                lvi.BackColor = Color.LightYellow;
-            }
-
             BackgroundWorker bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
             bw.DoWork += new DoWorkEventHandler(bw_DoWork);
             bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
-            bw.RunWorkerAsync(bw);
+            bw.RunWorkerAsync(uploaders);
         }
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker bw = (BackgroundWorker)e.Argument;
+            BackgroundWorker bw = (BackgroundWorker)sender;
+            UploaderInfo[] uploaders = (UploaderInfo[])e.Argument;
 
-            for (int i = 0; i < Uploaders.Length; i++)
+            foreach (UploaderInfo uploader in uploaders)
             {
-                if (Uploaders[i] != null)
+                if (uploader != null)
                 {
                     WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
 
-                    switch (Uploaders[i].UploaderType)
+                    switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            task.MyImageUploader = Uploaders[i].ImageUploader;
+                            task.MyImageUploader = uploader.ImageUploader;
                             task.SetLocalFilePath(Tester.TestFilePicture);
                             new TaskManager(ref task).UploadImage();
                             break;
                         case UploaderType.FileUploader:
-                            task.MyFileUploader = Uploaders[i].FileUploader;
+                            task.MyFileUploader = uploader.FileUploader;
                             task.SetLocalFilePath(Tester.TestFileBinary);
                             new TaskManager(ref task).UploadFile();
                             break;
                         case UploaderType.TextUploader:
-                            task.MyTextUploader = Adapter.FindTextUploader(Uploaders[i].TextUploader.GetDescription());
+                            task.MyTextUploader = Adapter.FindTextUploader(uploader.TextUploader.GetDescription());
                             task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
                             new TaskManager(ref task).UploadText();
                             break;
                         case UploaderType.UrlShortener:
-                            task.MyTextUploader = Adapter.FindUrlShortener(Uploaders[i].UrlShortener.GetDescription());
+                            task.MyTextUploader = Adapter.FindUrlShortener(uploader.UrlShortener.GetDescription());
                             task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
                             new TaskManager(ref task).UploadText();
                             break;
@@ -160,9 +171,9 @@ namespace ZScreenTesterGUI
                             throw new Exception("Unknown uploader.");
                     }
 
-                    Uploaders[i].Task = task;
+                    uploader.Task = task;
 
-                    bw.ReportProgress(i, Uploaders[i]);
+                    bw.ReportProgress(uploader.Index, uploader);
                 }
             }
         }
@@ -171,23 +182,24 @@ namespace ZScreenTesterGUI
         {
             UploaderInfo uploader = e.UserState as UploaderInfo;
 
-            lvUploaders.Items[e.ProgressPercentage].Tag = uploader;
+            lvUploaders.Items[uploader.Index].Tag = uploader;
 
             if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
             {
-                lvUploaders.Items[e.ProgressPercentage].BackColor = Color.LightGreen;
-                lvUploaders.Items[e.ProgressPercentage].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
+                lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
+                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
             }
             else
             {
-                lvUploaders.Items[e.ProgressPercentage].BackColor = Color.LightCoral;
-                lvUploaders.Items[e.ProgressPercentage].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
+                lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
+                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
             }
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            StartTest();
+            UploaderInfo[] uploaders = lvUploaders.Items.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
+            StartTest(uploaders);
         }
 
         private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -224,6 +236,12 @@ namespace ZScreenTesterGUI
                     Clipboard.SetText(string.Join("\r\n", urls.ToArray()));
                 }
             }
+        }
+
+        private void testSelectedUploadersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UploaderInfo[] uploaders = lvUploaders.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
+            StartTest(uploaders);
         }
     }
 }

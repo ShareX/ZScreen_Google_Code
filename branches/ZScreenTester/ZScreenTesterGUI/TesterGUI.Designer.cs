@@ -40,6 +40,7 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtConsole = new System.Windows.Forms.TextBox();
+            this.testSelectedUploadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploaders.SuspendLayout();
             this.tcTesters.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -75,10 +76,11 @@
             // cmsUploaders
             // 
             this.cmsUploaders.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testSelectedUploadersToolStripMenuItem,
             this.openURLToolStripMenuItem,
             this.copyToolStripMenuItem});
             this.cmsUploaders.Name = "cmsUploaders";
-            this.cmsUploaders.Size = new System.Drawing.Size(207, 48);
+            this.cmsUploaders.Size = new System.Drawing.Size(207, 70);
             // 
             // openURLToolStripMenuItem
             // 
@@ -119,12 +121,11 @@
             // 
             // btnTest
             // 
-            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(592, 312);
+            this.btnTest.Location = new System.Drawing.Point(512, 4);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(43, 23);
+            this.btnTest.Size = new System.Drawing.Size(79, 23);
             this.btnTest.TabIndex = 1;
-            this.btnTest.Text = "Test";
+            this.btnTest.Text = "Test all";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
@@ -147,6 +148,13 @@
             this.txtConsole.Name = "txtConsole";
             this.txtConsole.Size = new System.Drawing.Size(636, 336);
             this.txtConsole.TabIndex = 0;
+            // 
+            // testSelectedUploadersToolStripMenuItem
+            // 
+            this.testSelectedUploadersToolStripMenuItem.Name = "testSelectedUploadersToolStripMenuItem";
+            this.testSelectedUploadersToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.testSelectedUploadersToolStripMenuItem.Text = "Test selected uploaders";
+            this.testSelectedUploadersToolStripMenuItem.Click += new System.EventHandler(this.testSelectedUploadersToolStripMenuItem_Click);
             // 
             // TesterGUI
             // 
@@ -179,5 +187,6 @@
         private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.TextBox txtConsole;
+        private System.Windows.Forms.ToolStripMenuItem testSelectedUploadersToolStripMenuItem;
     }
 }
