@@ -41,7 +41,7 @@
 
 == FTP == 
 
-[http://wmwiki.com/mcored/zscreen/ZScreen_3.3.1.0_Beta-2009.08.27-19.35.22.png]
+[http://wmwiki.com/mcored/zscreen/ZScreen_3.2.1.0_Beta-2009.09.01-19.08.03.png]
 
 == HTTP == 
 === Image Uploaders ===
