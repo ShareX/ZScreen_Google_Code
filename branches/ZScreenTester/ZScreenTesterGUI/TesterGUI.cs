@@ -152,7 +152,10 @@ namespace ZScreenTesterGUI
                             new TaskManager(ref task).UploadText();
                             break;
                         case UploaderType.UrlShortener:
-                            throw new Exception("Not implemented.");
+                            task.MyTextUploader = Adapter.FindUrlShortener(Uploaders[i].UrlShortener.GetDescription());
+                            task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
+                            new TaskManager(ref task).UploadText();
+                            break;
                         default:
                             throw new Exception("Unknown uploader.");
                     }

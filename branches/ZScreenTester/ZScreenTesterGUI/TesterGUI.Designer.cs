@@ -119,6 +119,7 @@
             // 
             // btnTest
             // 
+            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnTest.Location = new System.Drawing.Point(592, 312);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(43, 23);
@@ -133,7 +134,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(648, 348);
+            this.tabPage2.Size = new System.Drawing.Size(642, 342);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Console";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -144,7 +145,7 @@
             this.txtConsole.Location = new System.Drawing.Point(3, 3);
             this.txtConsole.Multiline = true;
             this.txtConsole.Name = "txtConsole";
-            this.txtConsole.Size = new System.Drawing.Size(642, 342);
+            this.txtConsole.Size = new System.Drawing.Size(636, 336);
             this.txtConsole.TabIndex = 0;
             // 
             // TesterGUI
