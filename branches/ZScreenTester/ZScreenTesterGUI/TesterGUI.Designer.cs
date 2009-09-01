@@ -39,9 +39,11 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnTest = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.cmsUploaders.SuspendLayout();
             this.tcTesters.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvUploaders
@@ -55,7 +57,7 @@
             this.lvUploaders.GridLines = true;
             this.lvUploaders.Location = new System.Drawing.Point(3, 3);
             this.lvUploaders.Name = "lvUploaders";
-            this.lvUploaders.Size = new System.Drawing.Size(642, 342);
+            this.lvUploaders.Size = new System.Drawing.Size(636, 336);
             this.lvUploaders.TabIndex = 0;
             this.lvUploaders.UseCompatibleStateImageBehavior = false;
             this.lvUploaders.View = System.Windows.Forms.View.Details;
@@ -97,10 +99,10 @@
             this.tcTesters.Controls.Add(this.tabPage1);
             this.tcTesters.Controls.Add(this.tabPage2);
             this.tcTesters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcTesters.Location = new System.Drawing.Point(0, 0);
+            this.tcTesters.Location = new System.Drawing.Point(3, 3);
             this.tcTesters.Name = "tcTesters";
             this.tcTesters.SelectedIndex = 0;
-            this.tcTesters.Size = new System.Drawing.Size(656, 374);
+            this.tcTesters.Size = new System.Drawing.Size(650, 368);
             this.tcTesters.TabIndex = 1;
             // 
             // tabPage1
@@ -110,7 +112,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(648, 348);
+            this.tabPage1.Size = new System.Drawing.Size(642, 342);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Testers";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -127,6 +129,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.txtConsole);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -135,6 +138,15 @@
             this.tabPage2.Text = "Console";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // txtConsole
+            // 
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConsole.Location = new System.Drawing.Point(3, 3);
+            this.txtConsole.Multiline = true;
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.Size = new System.Drawing.Size(642, 342);
+            this.txtConsole.TabIndex = 0;
+            // 
             // TesterGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,10 +154,13 @@
             this.ClientSize = new System.Drawing.Size(656, 374);
             this.Controls.Add(this.tcTesters);
             this.Name = "TesterGUI";
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "TesterGUI";
             this.cmsUploaders.ResumeLayout(false);
             this.tcTesters.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -162,5 +177,6 @@
         private System.Windows.Forms.ContextMenuStrip cmsUploaders;
         private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.TextBox txtConsole;
     }
 }
