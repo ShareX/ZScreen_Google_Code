@@ -45,10 +45,10 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("FTP"), Description("FTP path: (ex: screenshots or /htdocs/screenshots)\nEmpty = Use main directory"), DefaultValue("")]
+        [Category("FTP"), Description("FTP path, e.g. screenshots (not /htdocs/screenshots)\nEmpty = Use FTP Web Root Path"), DefaultValue("")]
         public string Path { get; set; }
 
-        [Category("FTP"), Description("HTTP path: (ex: brandonz.net/screenshots or %/screenshots)\n" +
+        [Category("FTP"), Description("HTTP path: (e.g.: brandonz.net/screenshots or %/screenshots)\n" +
             "% = Server, Empty = Auto guess HTTP path (Server + FTP path)"), DefaultValue("")]
         public string HttpPath { get; set; }
 

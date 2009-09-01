@@ -238,6 +238,7 @@ namespace ZScreenLib
                 {
                     url = Adapter.TryShortenURL(url);
                 }
+                mTask.Errors = fileHost.Errors;
                 mTask.RemoteFilePath = url;
             }
         }
@@ -536,7 +537,7 @@ namespace ZScreenLib
                     url = Adapter.TryShortenURL(url);
                 }
                 mTask.RemoteFilePath = url;
-
+                mTask.Errors = textUploader.Errors;
                 mTask.EndTime = DateTime.Now;
             }
         }
