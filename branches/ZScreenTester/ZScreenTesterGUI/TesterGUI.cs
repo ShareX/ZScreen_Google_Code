@@ -137,11 +137,11 @@ namespace ZScreenTesterGUI
                             task.SetLocalFilePath(Tester.TestFilePicture);
                             break;
                         case UploaderType.TextUploader:
-                            //task.MyTextUploader = Uploaders[i].TextUploader;
-                            //task.MyText = TextInfo.FromString(textUploader.TesterString);
+                            task.MyTextUploader = Adapter.FindTextUploader(Uploaders[i].TextUploader.GetDescription());
+                            task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
                             break;
                         case UploaderType.UrlShortener:
-                            // ...
+                            // task.MakeTinyURL
                             break;
                         default:
                             throw new Exception("Unknown uploader.");
