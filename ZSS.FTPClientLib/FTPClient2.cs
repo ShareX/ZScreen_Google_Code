@@ -222,7 +222,7 @@ namespace ZSS.FTPClientLib
 
                 if (openDirectory && checkDirectory != null)
                 {
-                    if (checkDirectory.ItemType == FtpItemType.Unknown && checkDirectory.Name == ".")
+                    if (checkDirectory.ItemType == FtpItemType.Unknown && checkDirectory.Name == "..")
                     {
                         LoadDirectory("/");
 

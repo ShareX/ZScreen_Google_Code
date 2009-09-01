@@ -168,7 +168,7 @@ namespace UploadersLib
         public void DownloadFile(string remotePath, string localPath)
         {
             Connect();
-            Client.GetFile(remotePath, localPath);
+            Client.GetFile(remotePath, localPath, FileAction.Create);
         }
 
         public void DownloadFile(string remotePath, Stream outStream)

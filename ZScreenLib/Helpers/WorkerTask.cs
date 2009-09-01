@@ -124,7 +124,7 @@ namespace ZScreenLib
 
         #endregion
 
-        #region "Properties for Categories: Pictures and Screenshots"
+        #region Properties for Categories: Pictures and Screenshots
 
         /// <summary>
         /// Image object: Screenshot captured using User32 or Picture by User
@@ -179,7 +179,8 @@ namespace ZScreenLib
 
         public XMLSettings Settings { get; set; }
 
-        #region "Properties for Category: Text"
+        #region Properties for Category: Text
+
         /// <summary>
         /// String object: Text captured from Clipboard
         /// </summary>
@@ -189,11 +190,14 @@ namespace ZScreenLib
         /// MyTextUploader
         /// </summary>
         public TextUploader MyTextUploader { get; set; }
+
         #endregion
 
-        #region "Properties for Category: Binary"
+        #region Properties for Category: Binary
+
         public FileUploaderType MyFileUploader { get; set; }
         public byte[] MyFile { get; set; }
+
         #endregion
 
         private WorkerTask()
