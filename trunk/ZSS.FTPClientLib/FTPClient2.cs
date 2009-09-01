@@ -609,6 +609,14 @@ namespace ZSS.FTPClientLib
             }
         }
 
+        private void FTPClient2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (FTPAdapter != null)
+            {
+                FTPAdapter.Dispose();
+            }
+        }
+
         #endregion
     }
 }

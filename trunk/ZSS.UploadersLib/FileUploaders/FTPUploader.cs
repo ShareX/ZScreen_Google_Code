@@ -77,15 +77,16 @@ namespace UploadersLib
         {
             List<ImageFile> ifl = new List<ImageFile>();
 
-            FTP ftpClient = new FTP(this.FTPAccount);
-            ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(ftpClient_UploadProgressChanged);
-
             string fName = Path.GetFileName(localFilePath);
             string path = FTPHelpers.CombineURL(FTPAccount.Path, fName);
 
             try
             {
-                ftpClient.UploadFile(localFilePath, path);
+                using (FTP ftpClient = new FTP(this.FTPAccount))
+                {
+                    ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(ftpClient_UploadProgressChanged);
+                    ftpClient.UploadFile(localFilePath, path);
+                }
             }
             catch (Exception e)
             {
@@ -194,8 +195,6 @@ namespace UploadersLib
         /// </summary>
         public override string UploadText(TextInfo text)
         {
-            FTP ftpClient = new FTP(this.FTPAccount);
-
             if (string.IsNullOrEmpty(text.LocalPath))
             {
                 text.LocalPath = Path.Combine(WorkingDir, DateTime.Now.Ticks + ".txt");
@@ -204,7 +203,20 @@ namespace UploadersLib
 
             string fileName = Path.GetFileName(text.LocalPath);
             string url = FTPHelpers.CombineURL(FTPAccount.Path, fileName);
-            ftpClient.UploadText(text.LocalString, url);
+
+            try
+            {
+                using (FTP ftpClient = new FTP(this.FTPAccount))
+                {
+                    ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(ftpClient_UploadProgressChanged);
+                    ftpClient.UploadText(text.LocalString, url);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                this.Errors.Add(e.Message);
+            }
 
             if (this.Errors.Count == 0)
             {
