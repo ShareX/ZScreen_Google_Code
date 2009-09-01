@@ -33,6 +33,7 @@
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.cmsUploaders = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.testSelectedUploadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcTesters = new System.Windows.Forms.TabControl();
@@ -40,7 +41,6 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtConsole = new System.Windows.Forms.TextBox();
-            this.testSelectedUploadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploaders.SuspendLayout();
             this.tcTesters.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -58,7 +58,7 @@
             this.lvUploaders.GridLines = true;
             this.lvUploaders.Location = new System.Drawing.Point(3, 3);
             this.lvUploaders.Name = "lvUploaders";
-            this.lvUploaders.Size = new System.Drawing.Size(636, 336);
+            this.lvUploaders.Size = new System.Drawing.Size(629, 410);
             this.lvUploaders.TabIndex = 0;
             this.lvUploaders.UseCompatibleStateImageBehavior = false;
             this.lvUploaders.View = System.Windows.Forms.View.Details;
@@ -82,6 +82,13 @@
             this.cmsUploaders.Name = "cmsUploaders";
             this.cmsUploaders.Size = new System.Drawing.Size(207, 70);
             // 
+            // testSelectedUploadersToolStripMenuItem
+            // 
+            this.testSelectedUploadersToolStripMenuItem.Name = "testSelectedUploadersToolStripMenuItem";
+            this.testSelectedUploadersToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.testSelectedUploadersToolStripMenuItem.Text = "Test selected uploaders";
+            this.testSelectedUploadersToolStripMenuItem.Click += new System.EventHandler(this.testSelectedUploadersToolStripMenuItem_Click);
+            // 
             // openURLToolStripMenuItem
             // 
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
@@ -104,7 +111,7 @@
             this.tcTesters.Location = new System.Drawing.Point(3, 3);
             this.tcTesters.Name = "tcTesters";
             this.tcTesters.SelectedIndex = 0;
-            this.tcTesters.Size = new System.Drawing.Size(650, 368);
+            this.tcTesters.Size = new System.Drawing.Size(643, 442);
             this.tcTesters.TabIndex = 1;
             // 
             // tabPage1
@@ -114,7 +121,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(642, 342);
+            this.tabPage1.Size = new System.Drawing.Size(635, 416);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Testers";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -149,18 +156,11 @@
             this.txtConsole.Size = new System.Drawing.Size(636, 336);
             this.txtConsole.TabIndex = 0;
             // 
-            // testSelectedUploadersToolStripMenuItem
-            // 
-            this.testSelectedUploadersToolStripMenuItem.Name = "testSelectedUploadersToolStripMenuItem";
-            this.testSelectedUploadersToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.testSelectedUploadersToolStripMenuItem.Text = "Test selected uploaders";
-            this.testSelectedUploadersToolStripMenuItem.Click += new System.EventHandler(this.testSelectedUploadersToolStripMenuItem_Click);
-            // 
             // TesterGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(656, 374);
+            this.ClientSize = new System.Drawing.Size(649, 448);
             this.Controls.Add(this.tcTesters);
             this.Name = "TesterGUI";
             this.Padding = new System.Windows.Forms.Padding(3);

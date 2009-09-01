@@ -7,8 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
-using ZScreenLib;
 using UploadersLib.Helpers;
+using ZScreenLib;
 
 namespace ZScreenTesterGUI
 {
@@ -33,6 +33,19 @@ namespace ZScreenTesterGUI
             public WorkerTask Task;
             public int Index;
         }
+
+        public bool Testing
+        {
+            get { return testing; }
+            set
+            {
+                testing = value;
+                btnTest.Enabled = !value;
+                testSelectedUploadersToolStripMenuItem.Enabled = !value;
+            }
+        }
+
+        private bool testing;
 
         public TesterGUI()
         {
@@ -127,10 +140,13 @@ namespace ZScreenTesterGUI
 
         public void StartTest(UploaderInfo[] uploaders)
         {
+            Testing = true;
+
             BackgroundWorker bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
             bw.DoWork += new DoWorkEventHandler(bw_DoWork);
             bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
+            bw.RunWorkerCompleted += (x, x2) => Testing = false;
             bw.RunWorkerAsync(uploaders);
         }
 
@@ -227,7 +243,7 @@ namespace ZScreenTesterGUI
                     uploader = lvi.Tag as UploaderInfo;
                     if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
                     {
-                        urls.Add(string.Format("{0}: {1}", "TODO", uploader.Task.RemoteFilePath));
+                        urls.Add(string.Format("{0}: {1}", lvi.Text, uploader.Task.RemoteFilePath));
                     }
                 }
 
