@@ -353,11 +353,6 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (CoreHelpers.RunningOnWin7)
-                {
-                    Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
-                }
-
                 if (task.MyImage != null)
                 {
                     task.MyImage.Dispose(); // For fix memory leak
@@ -370,6 +365,10 @@ namespace ZScreenGUI
             finally
             {
                 UploadManager.Commit(task.UniqueNumber);
+                if (CoreHelpers.RunningOnWin7)
+                {
+                    Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
+                }
             }
         }
 
@@ -650,10 +649,10 @@ namespace ZScreenGUI
                 StartBw_ClipboardUpload();
             }
         }
-        
+
         public bool RetryUpload(WorkerTask task)
         {
-            if (Engine.conf.ImageUploadRetryOnFail && (task.Errors.Count > 0 || task.ImageManager.ImageFileList.Count == 0) && !task.Retry &&
+            if (Engine.conf.ImageUploadRetryOnFail && (task.Errors.Count > 0 || null != task.ImageManager && task.ImageManager.ImageFileList.Count == 0) && !task.Retry &&
                 (task.MyImageUploader == ImageDestType.IMAGESHACK || task.MyImageUploader == ImageDestType.TINYPIC))
             {
                 WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);

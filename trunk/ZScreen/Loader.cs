@@ -11,7 +11,7 @@ namespace ZScreenGUI
     {
         // internal static ZSS.Forms.SplashScreen Splash = null;
         public static WorkerPrimary Worker;
-        public static WorkerSecondary Worker2;        
+        public static WorkerSecondary Worker2;
         public static Queue<string> AsmLoads = new Queue<string>();
         public static List<string> LibNames = new List<string>();
 
