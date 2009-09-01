@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 
 namespace UploadersLib.FileUploaders
 {
@@ -35,7 +36,7 @@ namespace UploadersLib.FileUploaders
         public static string Password;
         public static SendSpace.UploadInfo UploadInfo;
 
-        public static bool PrepareUploadInfo(string username, string password)
+        public static List<string> PrepareUploadInfo(string username, string password)
         {
             SendSpace sendSpace = new SendSpace();
 
@@ -79,11 +80,9 @@ namespace UploadersLib.FileUploaders
                 {
                     Console.WriteLine(e.ToString());
                 }
-
-                return false;
             }
 
-            return true;
+            return sendSpace.Errors;
         }
     }
 }
