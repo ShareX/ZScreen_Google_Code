@@ -53,6 +53,10 @@ namespace ZScreenCLI
 
                 this.niTray.Icon = ResxMgr.ReadyIcon;
             }
+            else
+            {
+                this.Close();
+            }
         }
 
         #region Command Line Arguments
@@ -96,8 +100,8 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
-            this.Close();
             base.Close();
+            this.Close();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
