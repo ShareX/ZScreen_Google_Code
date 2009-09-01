@@ -40,7 +40,7 @@ namespace ZScreenTesterGUI
             InitializeComponent();
 
             MyConsole myConsole = new MyConsole();
-            myConsole.ConsoleWriteLine += x => txtConsole.AppendText(x);
+            myConsole.ConsoleWriteLine += new MyConsole.ConsoleEventHandler(myConsole_ConsoleWriteLine);
             Console.SetOut(myConsole);
 
             ListViewItem lvi;
@@ -94,6 +94,14 @@ namespace ZScreenTesterGUI
                     Tester.TestFilePicture = dlg.FileName;
                 }
             }
+        }
+
+        private void myConsole_ConsoleWriteLine(string value)
+        {
+            this.Invoke(new MethodInvoker(delegate
+                {
+                    txtConsole.AppendText(value);
+                }));
         }
 
         public void StartTest()
