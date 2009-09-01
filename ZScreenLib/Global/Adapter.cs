@@ -159,31 +159,32 @@ namespace ZScreenLib
         {
             string msg;
 
-            FTP ftpClient = new FTP(account);
-
-            try
+            using (FTP ftpClient = new FTP(account))
             {
-                ftpClient.Test(account.Path);
-                msg = "Success!";
-            }
-            catch (Exception e)
-            {
-                if (e.Message.StartsWith("Could not change working directory to") && account.AutoCreateFolder)
+                try
                 {
-                    try
-                    {
-                        ftpClient.MakeMultiDirectory(account.Path);
-                        ftpClient.Test(account.Path);
-                        msg = "Success!\nAuto created folders: " + account.Path;
-                    }
-                    catch (Exception e2)
-                    {
-                        msg = e2.Message;
-                    }
+                    ftpClient.Test(account.Path);
+                    msg = "Success!";
                 }
-                else
+                catch (Exception e)
                 {
-                    msg = e.Message;
+                    if (e.Message.StartsWith("Could not change working directory to") && account.AutoCreateFolder)
+                    {
+                        try
+                        {
+                            ftpClient.MakeMultiDirectory(account.Path);
+                            ftpClient.Test(account.Path);
+                            msg = "Success!\nAuto created folders: " + account.Path;
+                        }
+                        catch (Exception e2)
+                        {
+                            msg = e2.Message;
+                        }
+                    }
+                    else
+                    {
+                        msg = e.Message;
+                    }
                 }
             }
 

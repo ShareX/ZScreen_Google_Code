@@ -445,6 +445,7 @@
             this.Name = "FTPClient2";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "FTP Client";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FTPClient2_FormClosing);
             this.Resize += new System.EventHandler(this.FTPClient_Resize);
             this.cmsRightClickMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
