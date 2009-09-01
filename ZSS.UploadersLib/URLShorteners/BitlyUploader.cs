@@ -23,13 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using UploadersLib;
-using UploadersLib.Helpers;
-using System.Xml.Linq;
 using System.Xml;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.URLShorteners
 {
@@ -37,6 +32,7 @@ namespace UploadersLib.URLShorteners
     public sealed class BitlyUploader : TextUploader
     {
         public const string Hostname = "bit.ly";
+
         private const string APILogin = "mcored";
         private const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";
 
@@ -76,13 +72,19 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("login", APILogin);
                 arguments.Add("apiKey", APIKey);
                 arguments.Add("format", "xml");
-                string result = GetResponse(HostSettings.URL, arguments);
+
+                string result = GetResponseString(HostSettings.URL, arguments);
+
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.LoadXml(result);
                 XmlNode xnode = xdoc.SelectSingleNode("bitly/results/nodeKeyVal/shortUrl");
-                if (xnode != null) return xnode.InnerText;
+                if (xnode != null)
+                {
+                    return xnode.InnerText;
+                }
             }
-            return "";
+
+            return string.Empty;
         }
 
         [Serializable]

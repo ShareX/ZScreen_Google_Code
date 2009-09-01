@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using UploadersLib;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.URLShorteners
@@ -64,9 +63,10 @@ namespace UploadersLib.URLShorteners
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("longurl", text.LocalString);
 
-                return GetResponse(HostSettings.URL, arguments);
+                return GetResponseString(HostSettings.URL, arguments);
             }
-            return "";
+
+            return string.Empty;
         }
 
         [Serializable]

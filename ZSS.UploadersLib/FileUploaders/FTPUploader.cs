@@ -80,52 +80,53 @@ namespace UploadersLib
             string fName = Path.GetFileName(localFilePath);
             string path = FTPHelpers.CombineURL(FTPAccount.Path, fName);
 
-            try
+            using (FTP ftpClient = new FTP(this.FTPAccount))
             {
-                using (FTP ftpClient = new FTP(this.FTPAccount))
+                ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(ftpClient_UploadProgressChanged);
+
+                try
                 {
-                    ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(ftpClient_UploadProgressChanged);
                     ftpClient.UploadFile(localFilePath, path);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                this.Errors.Add(e.Message);
-            }
-
-            if (this.Errors.Count == 0)
-            {
-                ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(fName), ImageFile.ImageType.FULLIMAGE));
-
-                if (this.EnableThumbnail)
+                catch (Exception e)
                 {
-                    Image img = LoadBitmap(localFilePath);
-                    if (img != null && (!this.CheckThumbnailSize ||
-                        (this.CheckThumbnailSize && (img.Width > this.ThumbnailSize.Width || img.Height > this.ThumbnailSize.Height))))
-                    {
-                        img = ResizeBitmap(img, ThumbnailSize);
-                        StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
-                        sb.Append(".th");
-                        sb.Append(Path.GetExtension(fName));
-                        string thPath = Path.Combine(this.WorkingDir, sb.ToString());
-                        img.Save(thPath);
-                        if (File.Exists(thPath))
-                        {
-                            string url = FTPHelpers.CombineURL(FTPAccount.Path, Path.GetFileName(thPath));
-                            try
-                            {
-                                ftpClient.UploadFile(thPath, url);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.ToString());
-                                this.Errors.Add(e.Message);
-                            }
+                    Console.WriteLine(e.ToString());
+                    this.Errors.Add(e.Message);
+                }
 
-                            if (this.Errors.Count == 0)
+                if (this.Errors.Count == 0)
+                {
+                    ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(fName), ImageFile.ImageType.FULLIMAGE));
+
+                    if (this.EnableThumbnail)
+                    {
+                        Image img = LoadBitmap(localFilePath);
+                        if (img != null && (!this.CheckThumbnailSize ||
+                            (this.CheckThumbnailSize && (img.Width > this.ThumbnailSize.Width || img.Height > this.ThumbnailSize.Height))))
+                        {
+                            img = ResizeBitmap(img, ThumbnailSize);
+                            StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
+                            sb.Append(".th");
+                            sb.Append(Path.GetExtension(fName));
+                            string thPath = Path.Combine(this.WorkingDir, sb.ToString());
+                            img.Save(thPath);
+                            if (File.Exists(thPath))
                             {
-                                ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
+                                string url = FTPHelpers.CombineURL(FTPAccount.Path, Path.GetFileName(thPath));
+                                try
+                                {
+                                    ftpClient.UploadFile(thPath, url);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.ToString());
+                                    this.Errors.Add(e.Message);
+                                }
+
+                                if (this.Errors.Count == 0)
+                                {
+                                    ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
+                                }
                             }
                         }
                     }
@@ -230,7 +231,10 @@ namespace UploadersLib
 
         private void ftpClient_UploadProgressChanged(float progress)
         {
-            UploadProgressChanged((int)progress);
+            if (UploadProgressChanged != null)
+            {
+                UploadProgressChanged((int)progress);
+            }
         }
 
         /// <summary>

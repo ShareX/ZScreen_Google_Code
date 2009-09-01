@@ -71,11 +71,16 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("login", APILogin);
                 arguments.Add("apiKey", APIKey);
                 arguments.Add("format", "xml");
-                string result = GetResponse(HostSettings.URL, arguments);
+
+                string result = GetResponseString(HostSettings.URL, arguments);
+
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.LoadXml(result);
                 XmlNode xnode = xdoc.SelectSingleNode("bitly/results/nodeKeyVal/shortUrl");
-                if (xnode != null) return xnode.InnerText;
+                if (xnode != null)
+                {
+                    return xnode.InnerText;
+                }
             }
 
             return string.Empty;

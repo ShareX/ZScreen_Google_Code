@@ -21,16 +21,9 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Text;
-using System.IO;
+using System.Collections.Generic;
 using UploadersLib.Helpers;
-using System.Xml.Serialization;
-using System.ComponentModel;
 
 namespace UploadersLib.TextUploaders
 {
@@ -84,7 +77,7 @@ namespace UploadersLib.TextUploaders
                 return GetRedirectionURL(HostSettings.URL, arguments);
             }
 
-            return "";
+            return string.Empty;
         }
 
         [Serializable]
@@ -107,7 +100,7 @@ namespace UploadersLib.TextUploaders
             {
                 Name = Hostname;
                 TextFormat = "text";
-                SnippetTitle = "";
+                SnippetTitle = string.Empty;
                 Visibility = Privacy.Private;
                 LineNumbers = true;
                 Theme = "1";

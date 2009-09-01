@@ -31,9 +31,8 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.Serialization;
+using System.Web;
 using Microsoft.Win32;
-using Starksoft.Net.Proxy;
 using UploadersLib.Helpers;
 
 namespace UploadersLib
@@ -45,7 +44,6 @@ namespace UploadersLib
         public event ProgressEventHandler ProgressChanged;
 
         public List<string> Errors { get; set; }
-        [XmlIgnore]
 
         public static ProxySettings ProxySettings { get; set; }
 
@@ -71,31 +69,7 @@ namespace UploadersLib
             return string.Join("\r\n", Errors.ToArray());
         }
 
-        protected string GetResponse(string url)
-        {
-            return GetResponse(url, null);
-        }
-
-        protected string GetResponse(string url, Dictionary<string, string> arguments)
-        {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
-
-            byte[] data = MakeInputContent(boundary, arguments, true);
-
-            using (HttpWebResponse response = GetResponse(url, data, boundary))
-            {
-                return ResponseToString(response);
-            }
-        }
-
-        private HttpWebResponse GetResponse(string url, byte[] data, string boundary)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                stream.Write(data, 0, data.Length);
-                return GetResponse(url, stream, boundary);
-            }
-        }
+        #region Post methods
 
         private HttpWebResponse GetResponse(string url, Stream stream, string boundary)
         {
@@ -135,6 +109,32 @@ namespace UploadersLib
             return null;
         }
 
+        private HttpWebResponse GetResponse(string url, byte[] data, string boundary)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(data, 0, data.Length);
+                return GetResponse(url, stream, boundary);
+            }
+        }
+
+        protected string GetResponse(string url, Dictionary<string, string> arguments)
+        {
+            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+
+            byte[] data = MakeInputContent(boundary, arguments, true);
+
+            using (HttpWebResponse response = GetResponse(url, data, boundary))
+            {
+                return ResponseToString(response);
+            }
+        }
+
+        protected string GetResponse(string url)
+        {
+            return GetResponse(url, null);
+        }
+
         protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
         {
             string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
@@ -151,6 +151,45 @@ namespace UploadersLib
 
             return null;
         }
+
+        #endregion
+
+        #region Get methods
+
+        protected string GetResponseString(string url, Dictionary<string, string> arguments)
+        {
+            using (HttpWebResponse response = GetResponse2(url, arguments))
+            {
+                return ResponseToString(response);
+            }
+        }
+
+        private HttpWebResponse GetResponse2(string url, Dictionary<string, string> arguments)
+        {
+            try
+            {
+                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + HttpUtility.UrlEncode(x.Value)).ToArray());
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+                request.Method = "GET";
+                request.Proxy = ProxySettings.GetWebProxy;
+                request.UserAgent = UserAgent;
+
+                return (HttpWebResponse)request.GetResponse();
+            }
+            catch (Exception e)
+            {
+                this.Errors.Add(e.Message);
+                Console.WriteLine(e.ToString());
+            }
+
+            return null;
+        }
+
+        #endregion
+
+        #region Upload methods
 
         protected string UploadImage(Image image, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
@@ -181,7 +220,9 @@ namespace UploadersLib
             }
         }
 
-        #region Helper Methods
+        #endregion
+
+        #region Helper methods
 
         private byte[] MakeInputContent(string boundary, string name, string value)
         {

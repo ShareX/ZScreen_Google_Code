@@ -21,15 +21,9 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Text;
-using System.IO;
+using System.Collections.Generic;
 using UploadersLib.Helpers;
-using System.Xml.Serialization;
 
 namespace UploadersLib.TextUploaders
 {
@@ -84,7 +78,7 @@ namespace UploadersLib.TextUploaders
                 return GetResponse(HostSettings.URL, arguments);
             }
 
-            return "";
+            return string.Empty;
         }
 
         [Serializable]
@@ -106,8 +100,8 @@ namespace UploadersLib.TextUploaders
                 Name = Hostname;
                 TextFormat = "1";
                 ExpireTime = "1 month";
-                Description = "";
-                Author = "";
+                Description = string.Empty;
+                Author = string.Empty;
             }
         }
     }

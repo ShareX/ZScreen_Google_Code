@@ -27,7 +27,6 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using UploadersLib.Helpers;
 
 namespace UploadersLib.TextServices
 {
@@ -38,8 +37,8 @@ namespace UploadersLib.TextServices
 
         public GoogleTranslate(IWebProxy proxySettings)
         {
-        	this.ProxySettings = proxySettings;
-            this.LanguageOptions = this.GetLanguageOptions();            
+            this.ProxySettings = proxySettings;
+            this.LanguageOptions = this.GetLanguageOptions();
         }
 
         /// <summary>Gets "from country" and "to country" lists from google.</summary>
@@ -103,6 +102,7 @@ namespace UploadersLib.TextServices
                 {
                     sourceLanguage.Value = "auto";
                 }
+
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
                 WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
                 webClient.Proxy = this.ProxySettings;
@@ -117,6 +117,7 @@ namespace UploadersLib.TextServices
                 result.TranslationType = string.Format("{0} » {1}", sourceLanguage.Name, targetLanguage.Name);
                 result.TranslatedText = ex.Message;
             }
+
             return result;
         }
 
@@ -141,10 +142,12 @@ namespace UploadersLib.TextServices
                     {
                         result += "\r\n\r\n";
                     }
+
                     if (dictionary[x] != "")
                     {
                         result += dictionary[x] + ":\r\n";
                     }
+
                     MatchCollection matchesDictionary = Regex.Matches(matchDictionary, "(?<=<li>).+?(?=</li>)");
                     for (int i = 0; i < matchesDictionary.Count; i++)
                     {
@@ -154,9 +157,11 @@ namespace UploadersLib.TextServices
                             result += "\r\n";
                         }
                     }
+
                     foundWords++;
                 }
             }
+
             return HttpUtility.HtmlDecode(result);
         }
 
@@ -180,6 +185,7 @@ namespace UploadersLib.TextServices
                     return gtlanguage;
                 }
             }
+
             return null;
         }
 

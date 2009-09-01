@@ -23,10 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using UploadersLib;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.URLShorteners
@@ -68,9 +64,11 @@ namespace UploadersLib.URLShorteners
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("api", APIKey);
                 arguments.Add("u", text.LocalString);
-                return GetResponse(HostSettings.URL, arguments);
+
+                return GetResponseString(HostSettings.URL, arguments);
             }
-            return "";
+
+            return string.Empty;
         }
 
         [Serializable]

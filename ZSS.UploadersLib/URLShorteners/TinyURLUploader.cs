@@ -21,16 +21,9 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Text;
-using System.IO;
+using System.Collections.Generic;
 using UploadersLib.Helpers;
-using System.Xml.Serialization;
-using System.ComponentModel;
 
 namespace UploadersLib.URLShorteners
 {
@@ -69,9 +62,11 @@ namespace UploadersLib.URLShorteners
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("url", text.LocalString);
-                return GetResponse(HostSettings.URL, arguments);
+
+                return GetResponseString(HostSettings.URL, arguments);
             }
-            return "";
+
+            return string.Empty;
         }
 
         [Serializable]
