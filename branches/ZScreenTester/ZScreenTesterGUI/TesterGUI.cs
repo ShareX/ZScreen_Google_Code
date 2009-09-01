@@ -128,28 +128,29 @@ namespace ZScreenTesterGUI
 
                     switch (Uploaders[i].UploaderType)
                     {
-                        case UploaderType.FileUploader:
-                            task.MyFileUploader = Uploaders[i].FileUploader;
-                            task.SetLocalFilePath(Tester.TestFileBinary);
-                            break;
                         case UploaderType.ImageUploader:
                             task.MyImageUploader = Uploaders[i].ImageUploader;
                             task.SetLocalFilePath(Tester.TestFilePicture);
+                            new TaskManager(ref task).UploadImage();
+                            break;
+                        case UploaderType.FileUploader:
+                            task.MyFileUploader = Uploaders[i].FileUploader;
+                            task.SetLocalFilePath(Tester.TestFileBinary);
+                            new TaskManager(ref task).UploadFile();
                             break;
                         case UploaderType.TextUploader:
                             task.MyTextUploader = Adapter.FindTextUploader(Uploaders[i].TextUploader.GetDescription());
                             task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
+                            new TaskManager(ref task).UploadText();
                             break;
                         case UploaderType.UrlShortener:
-                            // task.MakeTinyURL
-                            break;
+                            throw new Exception("Not implemented.");
                         default:
                             throw new Exception("Unknown uploader.");
                     }
 
-                    new TaskManager(ref task).UploadFile();
-
                     Uploaders[i].Task = task;
+
                     bw.ReportProgress(i, Uploaders[i]);
                 }
             }
