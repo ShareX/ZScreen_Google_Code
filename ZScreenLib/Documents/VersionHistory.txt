@@ -2,7 +2,7 @@ Version 3.4 - 20091015
 
 3.04.4.0 FTP Client supports uploading multiple files/folders via Drag n Drop {Jaex}
 3.04.3.0 FTP Client can download/upload multiple files/folders {Jaex}
-3.04.2.0 Extended support for SOCKS4, SOCKS4a and SOCKS5 proxy types {Jaex}
+3.04.2.0 Extended FTP support for SOCKS4, SOCKS4a and SOCKS5 proxy types [Issue 32] {Jaex} 
 3.04.1.0 FTP Uploader uses Starksoft Ftp Component for .NET {Jaex}
 3.04.0.0 Added support for Shell Extension "Upload using ZScreen" {McoreD}
 3.03.3.0 ZScreen Command Line Interface supports "clipboard_upload" argument {McoreD}

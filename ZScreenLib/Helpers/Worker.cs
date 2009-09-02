@@ -486,10 +486,8 @@ namespace ZScreenLib
 
         protected void PublishBinary(ref WorkerTask task)
         {
-            task.StartTime = DateTime.Now;
             TaskManager tm = new TaskManager(ref task);
             tm.UploadFile();
-            task.EndTime = DateTime.Now;
         }
 
         #endregion
