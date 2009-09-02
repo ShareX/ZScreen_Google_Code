@@ -88,7 +88,6 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
-            base.Close();
             this.Close();
         }
 
@@ -113,9 +112,13 @@ namespace ZScreenCLI
         {
             if (0 == UploadManager.UploadInfoList.Count && 0 == Application.OpenForms.Count)
             {
-                niTray.Visible = false;
                 this.Close();
             }
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.niTray.Visible = false;
         }
     }
 }
