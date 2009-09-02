@@ -73,6 +73,7 @@ namespace ZScreenLib
             {
                 this.FileSize = new FileInfo(this.LocalPath).Length;
             }
+
             this.Description = task.GetDescription();
         }
 
@@ -104,11 +105,12 @@ namespace ZScreenLib
             {
                 this.FileSize = new FileInfo(this.LocalPath).Length;
             }
+
             if (this.FileSize > 0)
             {
-                sb.AppendLine(String.Format("File Size: {0} ({1} bytes)",
-                    FileSystem.GetFileSize(this.FileSize), this.FileSize.ToString("N0")));
+                sb.AppendLine(String.Format("File Size: {0} ({1} bytes)", FileSystem.GetFileSize(this.FileSize), this.FileSize.ToString("N0")));
             }
+
             sb.AppendLine(String.Format("Upload Duration: {0}", this.UploadDuration));
             return sb.ToString().TrimEnd();
         }
@@ -138,7 +140,8 @@ namespace ZScreenLib
                             return string.Format("{0}", t.MyImageUploader.GetDescription());
                     }
             }
-            return "";
+
+            return string.Empty;
         }
     }
 }

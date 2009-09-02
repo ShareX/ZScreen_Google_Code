@@ -46,7 +46,7 @@ namespace ZSS.FTPClientLib
         {
             InitializeComponent();
 
-            toolStripStatusLabel1.Text = "";
+            lblStatus.Text = "";
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             this.Account = account;
@@ -210,7 +210,7 @@ namespace ZSS.FTPClientLib
             string directory = directoriesCount > 1 ? "directories" : "directory";
             string totalSize = items.Where(x => x.ItemType == FtpItemType.File).Sum(x => x.Size).ToString("N0");
 
-            toolStripStatusLabel1.Text = string.Format("{0}{1} {2} and {3} {4}. Total size: {5} bytes",
+            lblStatus.Text = string.Format("{0}{1} {2} and {3} {4}. Total size: {5} bytes",
                 isSelected, filesCount, file, directoriesCount, directory, totalSize);
         }
 
