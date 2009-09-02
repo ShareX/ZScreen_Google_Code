@@ -1082,7 +1082,10 @@ namespace Starksoft.Net.Ftp
                 }
                 finally
                 {
-                    client.Blocking = blockingState;
+                    if (null != client)
+                    {
+                        client.Blocking = blockingState;
+                    }
                 }
 
                 return connected;

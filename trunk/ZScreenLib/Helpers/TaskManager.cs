@@ -200,6 +200,7 @@ namespace ZScreenLib
 
         public void UploadFile()
         {
+            mTask.StartTime = DateTime.Now;
             FileUploader fileHost = null;
             switch (mTask.MyFileUploader)
             {
@@ -241,6 +242,7 @@ namespace ZScreenLib
                 mTask.Errors = fileHost.Errors;
                 mTask.RemoteFilePath = url;
             }
+            mTask.EndTime = DateTime.Now;
         }
 
         public void UploadImage()
