@@ -62,6 +62,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\trunk\ZScreenLib\ZSS.ZScreenLib.csproj">
+      <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
+      <Name>ZSS.ZScreenLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\trunk\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj">
       <Project>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</Project>
       <Name>ZSS.FTPClientLib</Name>

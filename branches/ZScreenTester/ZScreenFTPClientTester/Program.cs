@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using UploadersLib;
 using ZScreenFTPClientTester.Properties;
 using ZSS.FTPClientLib;
+using ZScreenLib;
 
 namespace ZScreenFTPClientTester
 {
@@ -14,27 +15,19 @@ namespace ZScreenFTPClientTester
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            LoginDialog dlg = null;
+            Engine.TurnOn();
+            Engine.LoadSettingsLatest();
 
-            if (string.IsNullOrEmpty(Settings.Default.Server) ||
-                string.IsNullOrEmpty(Settings.Default.UserName) ||
-                string.IsNullOrEmpty(Settings.Default.Password))
+            if (Adapter.CheckFTPAccounts())
             {
-                dlg = new LoginDialog();
-                dlg.ShowDialog();
-
-                Settings.Default.UserName = dlg.txtUserName.Text;
-                Settings.Default.Password = dlg.txtPassword.Text;
-                Settings.Default.Server = dlg.txtServer.Text;
-                Settings.Default.Save();
+                Application.Run(new FTPClient2(Engine.conf.FTPAccountList[Engine.conf.FTPSelected]));
+            }
+            else
+            {
+                MessageBox.Show("An FTP account does not exist or not selected properly.");
             }
 
-            FTPAccount acc = new FTPAccount("Default");
-            acc.Username = Settings.Default.UserName;
-            acc.Password = Settings.Default.Password;
-            acc.Server = Settings.Default.Server;
-
-            Application.Run(new FTPClient2(acc));
+            Engine.TurnOff();
         }
     }
 }
