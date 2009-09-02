@@ -45,6 +45,7 @@ namespace ZScreenCLI
                     {
                         FileUpload(args[2]);
                     }
+                    tmrClose.Enabled = true;
                 }
                 catch (Exception ex)
                 {
@@ -60,19 +61,6 @@ namespace ZScreenCLI
         }
 
         #region Command Line Arguments
-
-        public WorkerTask CropShot(WorkerTask.Jobs job)
-        {
-            Worker cs = new Worker(this);
-            cs.StartBw_CropShot();
-            
-            WorkerTask task = new Worker(this).CreateTask(job);
-            task.MyImageUploader = Engine.conf.ScreenshotDestMode;
-            new TaskManager(ref task).CaptureRegionOrWindow();
-            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
-            UploadManager.SetClipboardText(task, false);
-            return task;
-        }
 
         public void ClipboardUpload()
         {
@@ -119,6 +107,15 @@ namespace ZScreenCLI
         private void MainWindow_Load(object sender, EventArgs e)
         {
             ProcessArgs();
+        }
+
+        private void tmrClose_Tick(object sender, EventArgs e)
+        {
+            if (0 == UploadManager.UploadInfoList.Count && 0 == Application.OpenForms.Count)
+            {
+                niTray.Visible = false;
+                this.Close();
+            }
         }
     }
 }

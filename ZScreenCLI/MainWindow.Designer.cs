@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            this.tmrClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // niTray
@@ -40,6 +42,11 @@
             this.niTray.BalloonTipClosed += new System.EventHandler(this.niTray_BalloonTipClosed);
             this.niTray.BalloonTipClicked += new System.EventHandler(this.niTray_BalloonTipClicked);
             this.niTray.Click += new System.EventHandler(this.niTray_Click);
+            // 
+            // tmrClose
+            // 
+            this.tmrClose.Interval = 1000;
+            this.tmrClose.Tick += new System.EventHandler(this.tmrClose_Tick);
             // 
             // MainWindow
             // 
@@ -56,6 +63,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrClose;
 
     }
 }
