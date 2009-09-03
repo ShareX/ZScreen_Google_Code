@@ -69,8 +69,6 @@ namespace UploadersLib
         {
             if (ProgressChanged != null)
             {
-                /*Console.WriteLine("{0}/{1} - {2}% - {3} - {4}", e.TotalBytesTransferred / 1024, e.TotalBytes / 1024, e.Percentage,
-                   e.EstimatedCompleteTime.TotalMilliseconds, e.ElapsedTime.TotalMilliseconds);*/
                 ProgressChanged(e.Percentage);
             }
         }
@@ -177,7 +175,7 @@ namespace UploadersLib
             Client.GetFile(remotePath, outStream, false);
         }
 
-        public void DownloadFiles(FtpItemCollection files, string localPath)
+        public void DownloadFiles(IEnumerable<FtpItem> files, string localPath)
         {
             string directoryPath;
             foreach (FtpItem file in files)
@@ -252,6 +250,24 @@ namespace UploadersLib
             Client.DeleteFile(remotePath);
         }
 
+        public void DeleteFiles(IEnumerable<FtpItem> files)
+        {
+            foreach (FtpItem file in files)
+            {
+                if (file != null && !string.IsNullOrEmpty(file.Name))
+                {
+                    if (file.ItemType == FtpItemType.Directory)
+                    {
+                        DeleteDirectory(file.FullPath);
+                    }
+                    else if (file.ItemType == FtpItemType.File)
+                    {
+                        DeleteFile(file.FullPath);
+                    }
+                }
+            }
+        }
+
         public void DeleteDirectory(string remotePath)
         {
             Connect();
@@ -281,6 +297,8 @@ namespace UploadersLib
 
         public bool SendCommand(string command)
         {
+            Connect();
+
             try
             {
                 Client.Quote(command);

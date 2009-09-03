@@ -36,17 +36,21 @@ namespace ZSS.FTPClientLib
 {
     public partial class FTPClient2 : Form
     {
+        private const string Root = "/";
+
         public FTP FTPAdapter { get; set; }
+
         public FTPAccount Account { get; set; }
 
         private string currentDirectory;
+
         private ListViewItem tempSelected;
 
         public FTPClient2(FTPAccount account)
         {
             InitializeComponent();
 
-            lblStatus.Text = "";
+            lblStatus.Text = string.Empty;
             lvFTPList.SubItemEndEditing += new SubItemEndEditingEventHandler(lvFTPList_SubItemEndEditing);
 
             this.Account = account;
@@ -69,7 +73,7 @@ namespace ZSS.FTPClientLib
         {
             if (string.IsNullOrEmpty(currentDirectory))
             {
-                currentDirectory = "/";
+                currentDirectory = Root;
             }
 
             LoadDirectory(currentDirectory);
@@ -94,8 +98,6 @@ namespace ZSS.FTPClientLib
 
         private void LoadDirectory(string path)
         {
-            FTPAdapter.Connect();
-
             currentDirectory = path;
             FillDirectories(currentDirectory);
 
@@ -224,14 +226,12 @@ namespace ZSS.FTPClientLib
                 {
                     if (checkDirectory.ItemType == FtpItemType.Unknown && checkDirectory.Name == "..")
                     {
-                        LoadDirectory("/");
-
+                        FTPNavigateBack();
                         return;
                     }
                     else if (checkDirectory.ItemType == FtpItemType.Directory)
                     {
                         LoadDirectory(checkDirectory.FullPath);
-
                         return;
                     }
                 }
@@ -260,8 +260,8 @@ namespace ZSS.FTPClientLib
         {
             if (lvFTPList.SelectedItems.Count > 0)
             {
-                FtpItem file = (FtpItem)lvFTPList.SelectedItems[0].Tag;
-                if (true)
+                FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
+                if (file != null && file.ItemType != FtpItemType.Unknown)
                 {
                     lvFTPList.StartEditing(txtRename, lvFTPList.SelectedItems[0], 0);
                     int offset = 23;
@@ -273,22 +273,10 @@ namespace ZSS.FTPClientLib
 
         private void FTPDelete()
         {
-            foreach (ListViewItem lvi in lvFTPList.SelectedItems)
+            if (lvFTPList.SelectedItems.Count > 0)
             {
-                FtpItem file = lvi.Tag as FtpItem;
-                if (file != null && !string.IsNullOrEmpty(file.Name))
-                {
-                    if (file.ItemType == FtpItemType.Directory)
-                    {
-                        FTPAdapter.DeleteDirectory(file.FullPath);
-                    }
-                    else
-                    {
-                        FTPAdapter.DeleteFile(file.FullPath);
-                    }
-
-                    lvFTPList.Items.Remove(lvi);
-                }
+                FTPAdapter.DeleteFiles(lvFTPList.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as FtpItem));
+                RefreshDirectory();
             }
         }
 
@@ -306,7 +294,7 @@ namespace ZSS.FTPClientLib
 
         private void FTPNavigateBack()
         {
-            if (!string.IsNullOrEmpty(currentDirectory) && currentDirectory.Contains('/'))
+            if (currentDirectory != Root && currentDirectory.Contains('/'))
             {
                 LoadDirectory(currentDirectory.Substring(0, currentDirectory.LastIndexOf('/')));
             }
