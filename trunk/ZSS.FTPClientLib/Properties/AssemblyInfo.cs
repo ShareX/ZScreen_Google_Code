@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ZScreen FTP Client")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -25,6 +25,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -33,9 +34,6 @@ using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
-using ZSS;
-using System.Text;
-using System.Collections.Generic;
 
 namespace ZScreenLib
 {
@@ -440,7 +438,7 @@ namespace ZScreenLib
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     fu.UploadProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
                     mTask.ImageManager = fu.UploadImage(fullFilePath);
-                    mTask.RemoteFilePath = acc.GetUriPath(Path.GetFileName(mTask.LocalFilePath));
+                    mTask.RemoteFilePath = mTask.ImageManager.GetFullImageUrl();
                     return true;
                 }
             }
