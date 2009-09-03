@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.chkTextUploaderEnabled = new System.Windows.Forms.CheckBox();
+            this.chkImageUploaderEnabled = new System.Windows.Forms.CheckBox();
             this.cboFileUploaders = new System.Windows.Forms.ComboBox();
             this.lblFileUploader = new System.Windows.Forms.Label();
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
@@ -37,16 +39,14 @@
             this.lblTextUploader = new System.Windows.Forms.Label();
             this.cboImageUploaders = new System.Windows.Forms.ComboBox();
             this.cboTextUploaders = new System.Windows.Forms.ComboBox();
-            this.cbImageUploaderUseFile = new System.Windows.Forms.CheckBox();
-            this.cbTextUploaderUseFile = new System.Windows.Forms.CheckBox();
             this.gbMainOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbMainOptions
             // 
             this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-            this.gbMainOptions.Controls.Add(this.cbTextUploaderUseFile);
-            this.gbMainOptions.Controls.Add(this.cbImageUploaderUseFile);
+            this.gbMainOptions.Controls.Add(this.chkTextUploaderEnabled);
+            this.gbMainOptions.Controls.Add(this.chkImageUploaderEnabled);
             this.gbMainOptions.Controls.Add(this.cboFileUploaders);
             this.gbMainOptions.Controls.Add(this.lblFileUploader);
             this.gbMainOptions.Controls.Add(this.cboURLShorteners);
@@ -61,6 +61,30 @@
             this.gbMainOptions.TabIndex = 80;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Upload Destinations";
+            // 
+            // chkTextUploaderEnabled
+            // 
+            this.chkTextUploaderEnabled.AutoSize = true;
+            this.chkTextUploaderEnabled.Checked = true;
+            this.chkTextUploaderEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTextUploaderEnabled.Location = new System.Drawing.Point(348, 50);
+            this.chkTextUploaderEnabled.Name = "chkTextUploaderEnabled";
+            this.chkTextUploaderEnabled.Size = new System.Drawing.Size(15, 14);
+            this.chkTextUploaderEnabled.TabIndex = 128;
+            this.chkTextUploaderEnabled.UseVisualStyleBackColor = true;
+            this.chkTextUploaderEnabled.CheckedChanged += new System.EventHandler(this.cbTextUploaderUseFile_CheckedChanged);
+            // 
+            // chkImageUploaderEnabled
+            // 
+            this.chkImageUploaderEnabled.AutoSize = true;
+            this.chkImageUploaderEnabled.Checked = true;
+            this.chkImageUploaderEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkImageUploaderEnabled.Location = new System.Drawing.Point(348, 26);
+            this.chkImageUploaderEnabled.Name = "chkImageUploaderEnabled";
+            this.chkImageUploaderEnabled.Size = new System.Drawing.Size(15, 14);
+            this.chkImageUploaderEnabled.TabIndex = 127;
+            this.chkImageUploaderEnabled.UseVisualStyleBackColor = true;
+            this.chkImageUploaderEnabled.CheckedChanged += new System.EventHandler(this.cbImageUploaderUseFile_CheckedChanged);
             // 
             // cboFileUploaders
             // 
@@ -134,26 +158,6 @@
             this.cboTextUploaders.Size = new System.Drawing.Size(232, 21);
             this.cboTextUploaders.TabIndex = 121;
             // 
-            // cbImageUploaderUseFile
-            // 
-            this.cbImageUploaderUseFile.AutoSize = true;
-            this.cbImageUploaderUseFile.Location = new System.Drawing.Point(348, 26);
-            this.cbImageUploaderUseFile.Name = "cbImageUploaderUseFile";
-            this.cbImageUploaderUseFile.Size = new System.Drawing.Size(15, 14);
-            this.cbImageUploaderUseFile.TabIndex = 127;
-            this.cbImageUploaderUseFile.UseVisualStyleBackColor = true;
-            this.cbImageUploaderUseFile.CheckedChanged += new System.EventHandler(this.cbImageUploaderUseFile_CheckedChanged);
-            // 
-            // cbTextUploaderUseFile
-            // 
-            this.cbTextUploaderUseFile.AutoSize = true;
-            this.cbTextUploaderUseFile.Location = new System.Drawing.Point(348, 50);
-            this.cbTextUploaderUseFile.Name = "cbTextUploaderUseFile";
-            this.cbTextUploaderUseFile.Size = new System.Drawing.Size(15, 14);
-            this.cbTextUploaderUseFile.TabIndex = 128;
-            this.cbTextUploaderUseFile.UseVisualStyleBackColor = true;
-            this.cbTextUploaderUseFile.CheckedChanged += new System.EventHandler(this.cbTextUploaderUseFile_CheckedChanged);
-            // 
             // DestSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,7 +183,7 @@
         internal System.Windows.Forms.Label lblTextUploader;
         public System.Windows.Forms.ComboBox cboImageUploaders;
         public System.Windows.Forms.ComboBox cboTextUploaders;
-        public System.Windows.Forms.CheckBox cbTextUploaderUseFile;
-        public System.Windows.Forms.CheckBox cbImageUploaderUseFile;
+        public System.Windows.Forms.CheckBox chkTextUploaderEnabled;
+        public System.Windows.Forms.CheckBox chkImageUploaderEnabled;
     }
 }

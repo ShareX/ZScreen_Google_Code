@@ -20,12 +20,12 @@ namespace ZScreenLib
 
         private void cbImageUploaderUseFile_CheckedChanged(object sender, EventArgs e)
         {
-            cboImageUploaders.Enabled = !cbImageUploaderUseFile.Checked;
+            cboImageUploaders.Enabled = chkImageUploaderEnabled.Checked;
         }
 
         private void cbTextUploaderUseFile_CheckedChanged(object sender, EventArgs e)
         {
-            cboTextUploaders.Enabled = !cbTextUploaderUseFile.Checked;
+            cboTextUploaders.Enabled = chkTextUploaderEnabled.Checked;
         }
     }
 }

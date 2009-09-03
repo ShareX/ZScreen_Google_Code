@@ -58,17 +58,17 @@ namespace ZScreenLib
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
 
             // Text Uploaders
-            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList2)
             {
                 if (textUploader != null)
                 {
                     ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                 }
             }
-            if (Adapter.CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected))
+            if (Adapter.CheckList(Engine.conf.TextUploadersList2, Engine.conf.TextUploaderSelected))
             {
                 ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
             }
@@ -104,9 +104,9 @@ namespace ZScreenLib
 
         void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Adapter.CheckList(Engine.conf.TextUploadersList, ucDestOptions.cboTextUploaders.SelectedIndex))
+            if (Adapter.CheckList(Engine.conf.TextUploadersList2, ucDestOptions.cboTextUploaders.SelectedIndex))
             {
-                Task.MyTextUploader = Engine.conf.TextUploadersList[ucDestOptions.cboTextUploaders.SelectedIndex];
+                Task.MyTextUploader = Engine.conf.TextUploadersList2[ucDestOptions.cboTextUploaders.SelectedIndex];
             }
         }
 

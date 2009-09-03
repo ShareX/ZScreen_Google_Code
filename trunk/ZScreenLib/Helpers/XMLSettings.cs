@@ -61,9 +61,9 @@ namespace ZScreenLib
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
+        public ImageDestType ImageUploaderType = ImageDestType.IMAGESHACK;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
-        public TextDestType TextDestMode = TextDestType.PASTE2;
+        public TextDestType TextUploaderType = TextDestType.PASTE2;
         public FileUploaderType FileDestMode = FileUploaderType.FTP;
         public bool PreferFileUploaderForImages = false;
         public bool PreferFileUploaderForText = false;
@@ -250,7 +250,7 @@ namespace ZScreenLib
         //  Text Uploaders & URL Shorteners
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public List<TextUploader> TextUploadersList = new List<TextUploader>();
+        public List<TextUploader> TextUploadersList2 = new List<TextUploader>();
         public int TextUploaderSelected = 0;
 
         public List<TextUploader> UrlShortenersList = new List<TextUploader>();

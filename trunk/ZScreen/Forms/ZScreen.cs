@@ -215,8 +215,8 @@ namespace ZScreenGUI
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
             ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
-            ucDestOptions.cbImageUploaderUseFile.CheckedChanged += new EventHandler(cbImageUploaderUseFile_CheckedChanged);
-            ucDestOptions.cbTextUploaderUseFile.CheckedChanged += new EventHandler(cbTextUploaderUseFile_CheckedChanged);
+            ucDestOptions.chkImageUploaderEnabled.CheckedChanged += new EventHandler(cbImageUploaderUseFile_CheckedChanged);
+            ucDestOptions.chkTextUploaderEnabled.CheckedChanged += new EventHandler(cbTextUploaderUseFile_CheckedChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
@@ -333,7 +333,7 @@ namespace ZScreenGUI
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             }
 
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
             ucDestOptions.cboImageUploaders.Enabled = !Engine.conf.PreferFileUploaderForImages;
 
             if (tsmImageDest.DropDownItems.Count == 0)
@@ -352,8 +352,8 @@ namespace ZScreenGUI
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
 
-            ucDestOptions.cbImageUploaderUseFile.Checked = Engine.conf.PreferFileUploaderForImages;
-            ucDestOptions.cbTextUploaderUseFile.Checked = Engine.conf.PreferFileUploaderForText;
+            ucDestOptions.chkImageUploaderEnabled.Checked = Engine.conf.PreferFileUploaderForImages;
+            ucDestOptions.chkTextUploaderEnabled.Checked = Engine.conf.PreferFileUploaderForText;
 
             cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
@@ -520,14 +520,14 @@ namespace ZScreenGUI
             // Text Uploader Settings
             ///////////////////////////////////
 
-            if (Engine.conf.TextUploadersList.Count == 0)
+            if (Engine.conf.TextUploadersList2.Count == 0)
             {
-                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+                Engine.conf.TextUploadersList2 = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
 
             ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
-            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList2)
             {
                 if (textUploader != null)
                 {
@@ -536,10 +536,15 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Engine.conf.TextUploaderSelected > -1 && Engine.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
+            if (Adapter.CheckTextUploaders())
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
                 ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
+            }
+            else
+            {
+                ucTextUploaders.MyCollection.SelectedIndex = 0;
+                ucDestOptions.cboTextUploaders.SelectedIndex = 0;
             }
 
             ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
@@ -1538,7 +1543,7 @@ namespace ZScreenGUI
         private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            Engine.conf.ScreenshotDestMode = sdt;
+            Engine.conf.ImageUploaderType = sdt;
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
             CheckSendToMenu(GetImageDestMenuItem(sdt));
@@ -3528,7 +3533,7 @@ namespace ZScreenGUI
                     TextUploader textUploader = Adapter.FindTextUploader(name);
                     if (textUploader != null)
                     {
-                        Engine.conf.TextUploadersList.Add(textUploader);
+                        Engine.conf.TextUploadersList2.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
                         ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                     }
@@ -3543,7 +3548,7 @@ namespace ZScreenGUI
             if (ucTextUploaders.MyCollection.Items.Count > 0)
             {
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
-                Engine.conf.TextUploadersList.RemoveAt(index);
+                Engine.conf.TextUploadersList2.RemoveAt(index);
                 ucTextUploaders.MyCollection.Items.RemoveAt(index);
                 ucDestOptions.cboTextUploaders.Items.RemoveAt(index);
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
@@ -4204,12 +4209,12 @@ namespace ZScreenGUI
 
         private void cbTextUploaderUseFile_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.PreferFileUploaderForText = ucDestOptions.cbTextUploaderUseFile.Checked;
+            Engine.conf.PreferFileUploaderForText = !ucDestOptions.chkTextUploaderEnabled.Checked;
         }
 
         private void cbImageUploaderUseFile_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.PreferFileUploaderForImages = ucDestOptions.cbImageUploaderUseFile.Checked;
+            Engine.conf.PreferFileUploaderForImages = !ucDestOptions.chkImageUploaderEnabled.Checked;
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
