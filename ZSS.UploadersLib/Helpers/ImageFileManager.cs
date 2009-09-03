@@ -55,6 +55,11 @@ namespace UploadersLib.Helpers
             }
         }
 
+        public void Add(string url, ImageFile.ImageType type)
+        {
+            ImageFileList.Add(new ImageFile(url, type));
+        }
+
         /// <summary>
         /// Get an Image object of the Image File. Returns null if an error occurs.
         /// </summary>

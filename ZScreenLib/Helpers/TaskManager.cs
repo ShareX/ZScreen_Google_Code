@@ -424,24 +424,59 @@ namespace ZScreenLib
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
-                    FTPUploader fu = new FTPUploader(acc)
-                    {
-                        EnableThumbnail = (Engine.conf.ClipboardUriMode != ClipboardUriType.FULL) || Engine.conf.FTPCreateThumbnail,
-                        ThumbnailSize = new Size(Engine.conf.FTPThumbnailWidth, Engine.conf.FTPThumbnailHeight)
-                    };
+                    FTPUploader fu = new FTPUploader(acc);
+                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
 
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
-                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
-                    mTask.RemoteFilePath = fu.Upload(mTask.LocalFilePath);
-                    return true;
+
+                    string url = fu.Upload(mTask.LocalFilePath);
+
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        mTask.RemoteFilePath = url;
+                        mTask.ImageManager = new ImageFileManager();
+                        mTask.ImageManager.Add(url, ImageFile.ImageType.FULLIMAGE);
+
+                        if (IsThumbnail())
+                        {
+                            using (Image img = GraphicsMgr.ChangeImageSize(mTask.MyImage, Engine.conf.FTPThumbnailWidth, Engine.conf.FTPThumbnailHeight))
+                            {
+                                StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(mTask.LocalFilePath));
+                                sb.Append(".th");
+                                sb.Append(Path.GetExtension(mTask.LocalFilePath));
+                                string thPath = Path.Combine(Path.GetDirectoryName(mTask.LocalFilePath), sb.ToString());
+                                img.Save(thPath);
+                                if (File.Exists(thPath))
+                                {
+                                    string thumb = fu.Upload(thPath);
+
+                                    if (!string.IsNullOrEmpty(thumb))
+                                    {
+                                        mTask.ImageManager.Add(thumb, ImageFile.ImageType.THUMBNAIL);
+                                    }
+                                }
+                            }
+                        }
+
+                        return true;
+                    }
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 mTask.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
             return false;
+        }
+
+        private bool IsThumbnail()
+        {
+            return GraphicsMgr.IsValidImage(mTask.LocalFilePath) && mTask.MyImage != null &&
+                (Engine.conf.ClipboardUriMode != ClipboardUriType.FULL || Engine.conf.FTPCreateThumbnail) &&
+                (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth ||
+                mTask.MyImage.Height > Engine.conf.FTPThumbnailHeight)));
         }
 
         private void UploadProgressChanged(int progress)
