@@ -9,9 +9,12 @@ namespace ZScreenCLI
 {
     public partial class MainWindow : GenericMainWindow
     {
+        private Worker mWorker = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            mWorker = new Worker(this);
         }
 
         public void ProcessArgs()
@@ -27,14 +30,12 @@ namespace ZScreenCLI
                     if (args[1].ToLower() == "crop_shot")
                     {
                         // Crop Shot
-                        Worker cs = new Worker(this);
-                        cs.StartBw_CropShot();
+                        mWorker.StartBw_CropShot();
                     }
                     else if (args[1].ToLower() == "selected_window")
                     {
                         // Selected Window
-                        Worker cs = new Worker(this);
-                        cs.StartBw_SelectedWindow();
+                        mWorker.StartBw_SelectedWindow();
                     }
                     else if (args[1].ToLower() == "clipboard_upload")
                     {
@@ -64,16 +65,14 @@ namespace ZScreenCLI
 
         public void ClipboardUpload()
         {
-            Worker cu = new Worker(this);
-            cu.StartBw_ClipboardUpload();
+            mWorker.StartBw_ClipboardUpload();
         }
 
         public void FileUpload(string fp)
         {
             if (File.Exists(fp) || Directory.Exists(fp))
             {
-                Worker fu = new Worker(this);
-                fu.UploadUsingFileSystem(FileSystem.GetExplorerFileList(new string[] { fp }));
+                mWorker.UploadUsingFileSystem(FileSystem.GetExplorerFileList(new string[] { fp }));
             }
         }
 
@@ -88,7 +87,10 @@ namespace ZScreenCLI
 
         private void niTray_BalloonTipClosed(object sender, EventArgs e)
         {
-            this.Close();
+            if (0 == Application.OpenForms.Count)
+            {
+                this.Close();
+            }
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
@@ -110,7 +112,14 @@ namespace ZScreenCLI
 
         private void tmrClose_Tick(object sender, EventArgs e)
         {
-            if (0 == UploadManager.UploadInfoList.Count && 0 == Application.OpenForms.Count)
+            Console.WriteLine("UploadInfoList: " + UploadManager.UploadInfoList.Count);
+            Console.WriteLine("OpenForms: " + Application.OpenForms.Count);
+            if (null != mWorker)
+            {
+                Console.WriteLine("WorkerIsBusy: " + mWorker.IsBusy);
+            }
+
+            if (0 == UploadManager.UploadInfoList.Count && 1 == Application.OpenForms.Count && null != mWorker && !mWorker.IsBusy)
             {
                 this.Close();
             }
