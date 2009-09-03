@@ -17,12 +17,13 @@ namespace ZScreenLib
     public class Worker
     {
         private GenericMainWindow GUI = null;
-
+        public bool IsBusy { get; private set; }
         public Worker() { }
 
         public Worker(GenericMainWindow gui)
         {
             this.GUI = gui;
+            this.IsBusy = true;
         }
 
         #region Background Worker
@@ -202,6 +203,7 @@ namespace ZScreenLib
             finally
             {
                 UploadManager.Commit(task.UniqueNumber);
+                this.IsBusy = false;
             }
         }
 
