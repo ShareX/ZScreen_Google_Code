@@ -215,6 +215,8 @@ namespace ZScreenGUI
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
             ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+            ucDestOptions.cbImageUploaderUseFile.CheckedChanged += new EventHandler(cbImageUploaderUseFile_CheckedChanged);
+            ucDestOptions.cbTextUploaderUseFile.CheckedChanged += new EventHandler(cbTextUploaderUseFile_CheckedChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
@@ -349,6 +351,9 @@ namespace ZScreenGUI
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
+
+            ucDestOptions.cbImageUploaderUseFile.Checked = Engine.conf.PreferFileUploaderForImages;
+            ucDestOptions.cbTextUploaderUseFile.Checked = Engine.conf.PreferFileUploaderForText;
 
             cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
@@ -1215,6 +1220,7 @@ namespace ZScreenGUI
 
         private void RewriteFTPRightClickMenu()
         {
+            /*
             if (Engine.conf.FTPAccountList != null)
             {
                 ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
@@ -1243,6 +1249,7 @@ namespace ZScreenGUI
                     tsmDestFTP.DropDown.Show();
                 }
             }
+            */
         }
 
         private void rightClickFTPItem_Click(object sender, EventArgs e)
@@ -4193,6 +4200,16 @@ namespace ZScreenGUI
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+        }
+
+        private void cbTextUploaderUseFile_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.PreferFileUploaderForText = ucDestOptions.cbTextUploaderUseFile.Checked;
+        }
+
+        private void cbImageUploaderUseFile_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.PreferFileUploaderForImages = ucDestOptions.cbImageUploaderUseFile.Checked;
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)

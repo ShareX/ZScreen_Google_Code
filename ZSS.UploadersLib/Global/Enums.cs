@@ -28,24 +28,13 @@ namespace UploadersLib
 {
     public enum Proxy
     {
-        /// <summary>
-        /// HTTP Proxy
-        /// </summary>
+        [Description("HTTP Proxy")]
         HTTP,
-
-        /// <summary>
-        /// SOCKS v4 Proxy
-        /// </summary>
+        [Description("SOCKS v4 Proxy")]
         SOCKS4,
-
-        /// <summary>
-        /// SOCKS v4a Proxy
-        /// </summary>
+        [Description("SOCKS v4a Proxy")]
         SOCKS4a,
-
-        /// <summary>
-        /// SOCKS v5 Proxy
-        /// </summary>
+        [Description("SOCKS v5 Proxy")]
         SOCKS5
     }
 
@@ -85,8 +74,6 @@ namespace UploadersLib
         CLIPBOARD,
         [Description("File")]
         FILE,
-        [Description("FTP Server")]
-        FTP,
         [Description("ImageShack - www.imageshack.us")]
         IMAGESHACK,
         [Description("TinyPic - www.tinypic.com")]
@@ -116,8 +103,6 @@ namespace UploadersLib
     [Serializable]
     public enum TextDestType
     {
-        [Description("FTP Server")]
-        FTP,
         [Description("pastebin - www.pastebin.com")]
         PASTEBIN,
         [Description("Paste2 - www.paste2.org")]

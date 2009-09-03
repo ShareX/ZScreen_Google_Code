@@ -453,31 +453,17 @@ namespace ZScreenLib
             {
                 return new SniptUploader();
             }
-            else
-            {
-                if (name == UploadersLib.FTPUploader.Hostname)
-                {
-                    if (Engine.conf.FTPAccountList.Count > 0)
-                    {
-                        FTPAccount acc = new FTPAccount();
-                        if (Engine.conf.FTPSelected >= 0)
-                        {
-                            acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
-                        }
-                        else
-                        {
-                            acc = Engine.conf.FTPAccountList[0];
-                        }
-                        return new UploadersLib.FTPUploader(acc);
-                    }
-                }
-            }
+
             return null;
         }
 
         public static bool ImageSoftwareEnabled()
         {
-            if (Engine.conf.ImageEditor == null) return false;
+            if (Engine.conf.ImageEditor == null)
+            {
+                return false;
+            }
+
             return Engine.DISABLED_IMAGE_EDITOR != Engine.conf.ImageEditor.Name;
         }
 

@@ -189,7 +189,7 @@ namespace ZScreenLib
             {
                 UploadFile();
             }
-            else if (mTask.SafeToUpload())
+            else if (true) // ? mTask.SafeToUpload())
             {
                 FileSystem.AppendDebug("File for HDD: " + mTask.LocalFilePath);
                 UploadImage();
@@ -203,7 +203,7 @@ namespace ZScreenLib
             switch (mTask.MyFileUploader)
             {
                 case FileUploaderType.FTP:
-                    UploadFtp();
+                    UploadFTP();
                     break;
                 case FileUploaderType.SendSpace:
                     fileHost = new SendSpace();
@@ -277,9 +277,6 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.FLICKR:
                     imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
-                    break;
-                case ImageDestType.FTP:
-                    UploadFtp();
                     break;
                 case ImageDestType.IMAGEBAM:
                     ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
@@ -414,14 +411,13 @@ namespace ZScreenLib
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public bool UploadFtp()
+        public bool UploadFTP()
         {
             try
             {
-                string fullFilePath = mTask.LocalFilePath;
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-                if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(fullFilePath))
+                if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(mTask.LocalFilePath))
                 {
                     FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
                     mTask.DestinationName = acc.Name;
@@ -431,14 +427,12 @@ namespace ZScreenLib
                     FTPUploader fu = new FTPUploader(acc)
                     {
                         EnableThumbnail = (Engine.conf.ClipboardUriMode != ClipboardUriType.FULL) || Engine.conf.FTPCreateThumbnail,
-                        ThumbnailSize = new Size(Engine.conf.FTPThumbnailWidth, Engine.conf.FTPThumbnailHeight),
-                        WorkingDir = Engine.CacheDir
+                        ThumbnailSize = new Size(Engine.conf.FTPThumbnailWidth, Engine.conf.FTPThumbnailHeight)
                     };
 
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
-                    fu.UploadProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
-                    mTask.ImageManager = fu.UploadImage(fullFilePath);
-                    mTask.RemoteFilePath = mTask.ImageManager.GetFullImageUrl();
+                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
+                    mTask.RemoteFilePath = fu.Upload(mTask.LocalFilePath);
                     return true;
                 }
             }
