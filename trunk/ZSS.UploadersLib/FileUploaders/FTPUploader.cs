@@ -40,15 +40,6 @@ namespace UploadersLib.FileUploaders
             get { return "FTP Uploader"; }
         }
 
-        public bool EnableThumbnail { get; set; }
-
-        public Size ThumbnailSize { get; set; }
-
-        /// <summary>
-        /// If image size smaller than thumbnail size then not make thumbnail
-        /// </summary>
-        public bool CheckThumbnailSize { get; set; }
-
         public FTPUploader(FTPAccount acc)
         {
             this.FTPAccount = acc;
@@ -60,11 +51,11 @@ namespace UploadersLib.FileUploaders
             using (FTP ftpClient = new FTP(this.FTPAccount))
             {
                 ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(x => OnProgressChanged((int)x));
-                string path = FTPHelpers.CombineURL(FTPAccount.Path, fileName);
+                string remotePath = FTPHelpers.CombineURL(FTPAccount.Path, fileName);
 
                 try
                 {
-                    ftpClient.UploadData(data, path);
+                    ftpClient.UploadData(data, remotePath);
                 }
                 catch (Exception e)
                 {

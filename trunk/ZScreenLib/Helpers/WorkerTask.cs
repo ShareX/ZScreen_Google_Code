@@ -40,7 +40,7 @@ namespace ZScreenLib
 {
     public class WorkerTask
     {
-        #region "Enums"
+        #region Enums
 
         public enum Jobs
         {
@@ -91,7 +91,7 @@ namespace ZScreenLib
 
         #endregion
 
-        #region "Common Properties for All Categories"
+        #region Common Properties for All Categories
 
         public BackgroundWorker MyWorker { get; private set; }
         public JobCategoryType JobCategory { get; set; }
@@ -158,13 +158,15 @@ namespace ZScreenLib
         /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
         public string RemoteFilePath { get; set; }
-        /// <summary>
+        
+        /*/// <summary>
         /// Tiny URL of RemoteFilePath
         /// </summary>
-        //public string TinyURL { get; set; }
-        ///// <summary>
-        ///// FTP Account Name, TinyPic, ImageShack
-        ///// </summary>
+        public string TinyURL { get; set; }*/
+
+        /// <summary>
+        /// FTP Account Name, TinyPic, ImageShack
+        /// </summary>
         public string DestinationName = "File";
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
@@ -290,7 +292,6 @@ namespace ZScreenLib
 
             this.LocalFilePath = filePath;
             this.FileName = Path.GetFileName(filePath);
-
         }
 
         public void SetLocalFilePath(string fp)
