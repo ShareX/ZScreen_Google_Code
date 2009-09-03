@@ -222,7 +222,7 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.ScreenshotDestMode = Engine.appSettings.ImageUploader;
+                Engine.conf.ImageUploaderType = Engine.appSettings.ImageUploader;
             }
         }
 

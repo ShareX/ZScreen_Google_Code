@@ -200,8 +200,8 @@ namespace ZScreenGUI
                     mZScreen.cboCropGridMode.Checked = Engine.conf.CropGridToggle;
                     break;
                 case WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
-                    mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
-                    Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Engine.conf.ScreenshotDestMode.GetDescription()), ToolTipIcon.Warning);
+                    mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
+                    Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Engine.conf.ImageUploaderType.GetDescription()), ToolTipIcon.Warning);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)e.UserState;
@@ -801,7 +801,7 @@ namespace ZScreenGUI
 
         private void QuickOptionsApplySettings(object sender, EventArgs e)
         {
-            mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ScreenshotDestMode;
+            mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
             mZScreen.cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
         }
 

@@ -330,7 +330,7 @@ namespace ZScreenLib
             TextUploader uploader = null;
             if (CheckTextUploaders())
             {
-                uploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
+                uploader = Engine.conf.TextUploadersList2[Engine.conf.TextUploaderSelected];
             }
             return uploader;
         }
@@ -344,7 +344,7 @@ namespace ZScreenLib
 
         public static bool CheckTextUploaders()
         {
-            return CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected);
+            return CheckList(Engine.conf.TextUploadersList2, Engine.conf.TextUploaderSelected);
         }
 
         public static bool CheckDekiWikiAccounts()

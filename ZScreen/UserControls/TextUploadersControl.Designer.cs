@@ -44,7 +44,7 @@
             this.MyCollection.FormattingEnabled = true;
             this.MyCollection.Location = new System.Drawing.Point(3, 3);
             this.MyCollection.Name = "MyCollection";
-            this.MyCollection.Size = new System.Drawing.Size(217, 329);
+            this.MyCollection.Size = new System.Drawing.Size(217, 290);
             this.MyCollection.TabIndex = 14;
             // 
             // btnItemTest
@@ -82,7 +82,7 @@
             this.SettingsGrid.Location = new System.Drawing.Point(226, 3);
             this.SettingsGrid.Name = "SettingsGrid";
             this.SettingsGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.SettingsGrid.Size = new System.Drawing.Size(515, 333);
+            this.SettingsGrid.Size = new System.Drawing.Size(515, 293);
             this.SettingsGrid.TabIndex = 9;
             this.SettingsGrid.ToolbarVisible = false;
             this.SettingsGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.SettingsGrid_PropertyValueChanged);
@@ -110,7 +110,7 @@
             this.TextUploadersPanel.Name = "TextUploadersPanel";
             this.TextUploadersPanel.RowCount = 1;
             this.TextUploadersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TextUploadersPanel.Size = new System.Drawing.Size(744, 339);
+            this.TextUploadersPanel.Size = new System.Drawing.Size(744, 299);
             this.TextUploadersPanel.TabIndex = 15;
             // 
             // TextUploadersControl
@@ -123,7 +123,7 @@
             this.Controls.Add(this.btnItemAdd);
             this.Controls.Add(this.Templates);
             this.Name = "TextUploadersControl";
-            this.Size = new System.Drawing.Size(760, 393);
+            this.Size = new System.Drawing.Size(760, 353);
             this.TextUploadersPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

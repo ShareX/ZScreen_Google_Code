@@ -364,11 +364,11 @@ namespace ZScreenLib
             {
                 if (mTask.MyImageUploader == ImageDestType.IMAGESHACK)
                 {
-                    Engine.conf.ScreenshotDestMode = ImageDestType.TINYPIC;
+                    Engine.conf.ImageUploaderType = ImageDestType.TINYPIC;
                 }
                 else if (mTask.MyImageUploader == ImageDestType.TINYPIC)
                 {
-                    Engine.conf.ScreenshotDestMode = ImageDestType.IMAGESHACK;
+                    Engine.conf.ImageUploaderType = ImageDestType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }
