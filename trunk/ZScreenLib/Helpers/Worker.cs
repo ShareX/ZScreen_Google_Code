@@ -426,7 +426,7 @@ namespace ZScreenLib
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
-                    string ext = (task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
+                    string ext = ".log"; //(task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
                     string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
                     settings.GetConfig().FolderList.Add(task.MyText.LocalString);

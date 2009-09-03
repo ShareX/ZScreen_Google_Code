@@ -63,8 +63,10 @@ namespace ZScreenLib
 
         public ImageDestType ScreenshotDestMode = ImageDestType.IMAGESHACK;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
-        public TextDestType TextDestMode = TextDestType.FTP;
-        public FileUploaderType FileDestMode = FileUploaderType.RapidShare;
+        public TextDestType TextDestMode = TextDestType.PASTE2;
+        public FileUploaderType FileDestMode = FileUploaderType.FTP;
+        public bool PreferFileUploaderForImages = false;
+        public bool PreferFileUploaderForText = false;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
@@ -99,6 +101,37 @@ namespace ZScreenLib
         public AcctType SendSpaceAccountType = AcctType.Anonymous;
         public string SendSpaceUserName = string.Empty;
         public string SendSpacePassword = string.Empty;
+
+        // ImageShack
+
+        public string ImageShackRegistrationCode = "";
+        public string ImageShackUserName = "";
+        public bool ImageShackShowImagesInPublic = false;
+
+        // TinyPic
+
+        public string TinyPicShuk = "";
+        public string TinyPicUserName = "";
+        public string TinyPicPassword = "";
+        public bool RememberTinyPicUserPass = false;
+        public bool TinyPicSizeCheck = true;
+
+        // TwitPic
+
+        public string TwitterUserName = "";
+        public string TwitterPassword = "";
+        public TwitPicUploadType TwitPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
+        public bool TwitPicShowFull = true;
+        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
+
+        // YFrog
+
+        public YfrogUploadType YfrogUploadMode = YfrogUploadType.UPLOAD_IMAGE_ONLY;
+
+        // Flickr
+
+        public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
+        public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
@@ -268,33 +301,6 @@ namespace ZScreenLib
         public bool ImageUploadRetryOnTimeout = false;
         public decimal UploadDurationLimit = 15000;
 
-        // ImageShack
-
-        public string ImageShackRegistrationCode = "";
-        public string ImageShackUserName = "";
-        public bool ImageShackShowImagesInPublic = false;
-
-        // TinyPic
-
-        public string TinyPicShuk = "";
-        public string TinyPicUserName = "";
-        public string TinyPicPassword = "";
-        public bool RememberTinyPicUserPass = false;
-        public bool TinyPicSizeCheck = true;
-
-        // TwitPic
-
-        public string TwitterUserName = "";
-        public string TwitterPassword = "";
-        public TwitPicUploadType TwitPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
-        public bool TwitPicShowFull = true;
-        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-
-        // Flickr
-
-        public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
-        public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
-
         // Indexer
 
         public IndexerConfig IndexerConfig = new IndexerConfig();
@@ -373,33 +379,17 @@ namespace ZScreenLib
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
 
-        #region Default Values
+        #region Properties for PropertyGrid
 
         public XMLSettings()
         {
             ApplyDefaultValues(this);
         }
 
-        #endregion
-
-        #region Properties for PropertyGrid
-
-        // Destinations / General
-
-        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Image Uploader for uploading Images")]
-        public bool PreferFileUploaderForImages { get; set; }
-        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Text Uploader for uploading Text")]
-        public bool PreferFileUploaderForText { get; set; }
-
         // Destinations / FTP
 
         [Category("Destinations / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
-
-        // Destinations / Twitter / Yfrog
-
-        [Category("Destinations / Twitter"), DefaultValue(YfrogUploadType.UPLOAD_IMAGE_ONLY), Description("Upload Image only")]
-        public YfrogUploadType YfrogUploadMode = YfrogUploadType.UPLOAD_IMAGE_ONLY;
 
         // Options / Actions Toolbar
 
@@ -687,7 +677,7 @@ namespace ZScreenLib
             return new XMLSettings();
         }
 
-        static public void ApplyDefaultValues(object self)
+        public static void ApplyDefaultValues(object self)
         {
             foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
             {
@@ -696,7 +686,6 @@ namespace ZScreenLib
                 prop.SetValue(self, attr.Value);
             }
         }
-
 
         #endregion
 

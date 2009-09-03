@@ -30,7 +30,7 @@ using System.Xml.Linq;
 
 namespace UploadersLib.FileUploaders
 {
-    public class SendSpace : FileUploader
+    public sealed class SendSpace : FileUploader
     {
         private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
         private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";

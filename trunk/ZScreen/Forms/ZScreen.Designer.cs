@@ -1126,9 +1126,9 @@ namespace ZScreenGUI
             this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
             this.gbImageSettings.Controls.Add(this.cbShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
-            this.gbImageSettings.Location = new System.Drawing.Point(48, 200);
+            this.gbImageSettings.Location = new System.Drawing.Point(40, 192);
             this.gbImageSettings.Name = "gbImageSettings";
-            this.gbImageSettings.Size = new System.Drawing.Size(360, 144);
+            this.gbImageSettings.Size = new System.Drawing.Size(376, 144);
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
@@ -6476,7 +6476,7 @@ namespace ZScreenGUI
             this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
             this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 136);
             this.ucDestOptions.TabIndex = 124;
             // 
             // nudtScreenshotDelay

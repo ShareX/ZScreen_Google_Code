@@ -71,9 +71,6 @@ namespace ZScreenLib
                     case JobCategoryType.PICTURES:
                         switch (task.MyImageUploader)
                         {
-                            case ImageDestType.FTP:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.MyImageUploader.GetDescription(), task.DestinationName));
-                                break;
                             case ImageDestType.CUSTOM_UPLOADER:
                                 sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.MyImageUploader.GetDescription(), task.DestinationName));
                                 break;

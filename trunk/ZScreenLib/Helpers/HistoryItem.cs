@@ -123,7 +123,6 @@ namespace ZScreenLib
                 case JobCategoryType.SCREENSHOTS:
                     switch (t.MyImageUploader)
                     {
-                        case ImageDestType.FTP:
                         case ImageDestType.CUSTOM_UPLOADER:
                             return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
                         default:
@@ -132,9 +131,9 @@ namespace ZScreenLib
                 case JobCategoryType.TEXT:
                     return string.Format("{0}", t.MyTextUploader.ToString());
                 case JobCategoryType.BINARY:
-                    switch (t.MyImageUploader)
+                    switch (t.MyFileUploader)
                     {
-                        case ImageDestType.FTP:
+                        case FileUploaderType.FTP:
                             return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
                         default:
                             return string.Format("{0}", t.MyImageUploader.GetDescription());

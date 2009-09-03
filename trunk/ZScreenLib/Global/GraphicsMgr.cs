@@ -62,8 +62,6 @@ namespace ZScreenLib
         /// <summary>
         /// Function to get Image without memory errors
         /// </summary>
-        /// <param name="fp"></param>
-        /// <returns></returns>
         public static Image GetImageSafely(string fp)
         {
             Bitmap bmp = null;
@@ -268,13 +266,6 @@ namespace ZScreenLib
             return bmp;
         }
 
-        public static Image ChangeImageSize(Image img, float percentage)
-        {
-            int width = (int)(percentage / 100 * img.Width);
-            int height = (int)(percentage / 100 * img.Height);
-            return ChangeImageSize(img, width, height);
-        }
-
         public static Image ChangeImageSize(Image img, int width, int height)
         {
             Image bmp = new Bitmap(width, height);
@@ -284,6 +275,18 @@ namespace ZScreenLib
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
             return bmp;
+        }
+
+        public static Image ChangeImageSize(Image img, Size size)
+        {
+            return ChangeImageSize(img, size.Width, size.Height);
+        }
+
+        public static Image ChangeImageSize(Image img, float percentage)
+        {
+            int width = (int)(percentage / 100 * img.Width);
+            int height = (int)(percentage / 100 * img.Height);
+            return ChangeImageSize(img, width, height);
         }
 
         public static Image DrawProgressIcon(int percentage)

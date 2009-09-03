@@ -235,6 +235,7 @@ namespace ZScreenLib
             }
         }
 
+        /*
         public bool SafeToUpload()
         {
             bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UploadFromClipboard)
@@ -246,6 +247,7 @@ namespace ZScreenLib
 
             return safe;
         }
+        */
 
         public void SetImage(string fp)
         {
