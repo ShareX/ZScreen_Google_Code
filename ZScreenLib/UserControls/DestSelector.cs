@@ -17,15 +17,5 @@ namespace ZScreenLib
         {
             InitializeComponent();
         }
-
-        private void cbImageUploaderUseFile_CheckedChanged(object sender, EventArgs e)
-        {
-            cboImageUploaders.Enabled = chkImageUploaderEnabled.Checked;
-        }
-
-        private void cbTextUploaderUseFile_CheckedChanged(object sender, EventArgs e)
-        {
-            cboTextUploaders.Enabled = chkTextUploaderEnabled.Checked;
-        }
     }
 }
