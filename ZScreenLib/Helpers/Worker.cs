@@ -421,12 +421,12 @@ namespace ZScreenLib
                     task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
                     task.RunWorker();
                 }
-                else if (Directory.Exists(task.MyText.LocalString)) // McoreD: can make this an option later
+                else if (Directory.Exists(task.MyText.LocalString))
                 {
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
-                    string ext = ".log"; //(task.MyTextUploader.GetType() == typeof(FTPUploader)) ? ".html" : ".log";
+                    string ext = (task.MyFileUploader == FileUploaderType.FTP && Engine.conf.PreferFileUploaderForText ? ".html" : ".log");
                     string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
                     settings.GetConfig().FolderList.Add(task.MyText.LocalString);
