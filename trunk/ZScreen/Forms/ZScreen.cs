@@ -215,8 +215,6 @@ namespace ZScreenGUI
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
             ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
-            ucDestOptions.chkImageUploaderEnabled.CheckedChanged += new EventHandler(cbImageUploaderUseFile_CheckedChanged);
-            ucDestOptions.chkTextUploaderEnabled.CheckedChanged += new EventHandler(cbTextUploaderUseFile_CheckedChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
@@ -351,9 +349,6 @@ namespace ZScreenGUI
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
-
-            ucDestOptions.chkImageUploaderEnabled.Checked = !Engine.conf.PreferFileUploaderForImages;
-            ucDestOptions.chkTextUploaderEnabled.Checked = !Engine.conf.PreferFileUploaderForText;
 
             cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
@@ -536,14 +531,10 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Adapter.CheckTextUploaders())
+            if (Engine.conf.TextUploaderSelected > -1 && Engine.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
                 ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
-            }
-            else{
-            	ucTextUploaders.MyCollection.SelectedIndex = 0;
-                ucDestOptions.cboTextUploaders.SelectedIndex = 0;         	
             }
 
             ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
@@ -1226,7 +1217,7 @@ namespace ZScreenGUI
         {
             if (Engine.conf.FTPAccountList != null)
             {
-                //ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FILE);
+                //ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
                 //tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 //tsmDestFTP.DropDownItems.Clear();
                 //List<FTPAccount> accs = Engine.conf.FTPAccountList;
@@ -4202,16 +4193,6 @@ namespace ZScreenGUI
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
-        }
-
-        private void cbTextUploaderUseFile_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.PreferFileUploaderForText = !ucDestOptions.chkTextUploaderEnabled.Checked;
-        }
-
-        private void cbImageUploaderUseFile_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.PreferFileUploaderForImages = !ucDestOptions.chkImageUploaderEnabled.Checked;
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)

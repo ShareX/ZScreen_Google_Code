@@ -1724,7 +1724,7 @@ namespace ZScreenGUI
             // 
             this.txtUserNameImageShack.Location = new System.Drawing.Point(120, 52);
             this.txtUserNameImageShack.Name = "txtUserNameImageShack";
-            this.txtUserNameImageShack.Size = new System.Drawing.Size(336, 20);
+            this.txtUserNameImageShack.Size = new System.Drawing.Size(344, 20);
             this.txtUserNameImageShack.TabIndex = 4;
             this.txtUserNameImageShack.TextChanged += new System.EventHandler(this.txtUserNameImageShack_TextChanged);
             // 
@@ -5894,9 +5894,9 @@ namespace ZScreenGUI
             this.chkBalloonTipOpenLink.AutoSize = true;
             this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 104);
             this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
-            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(252, 17);
+            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(250, 17);
             this.chkBalloonTipOpenLink.TabIndex = 6;
-            this.chkBalloonTipOpenLink.Text = "Open Screenshot URL/File on Balloon Tip Click";
+            this.chkBalloonTipOpenLink.Text = "Open screenshot URL/File on Balloon Tip Click";
             this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
             this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
             // 
