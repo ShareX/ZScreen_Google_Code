@@ -352,8 +352,8 @@ namespace ZScreenGUI
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
             }
 
-            ucDestOptions.chkImageUploaderEnabled.Checked = Engine.conf.PreferFileUploaderForImages;
-            ucDestOptions.chkTextUploaderEnabled.Checked = Engine.conf.PreferFileUploaderForText;
+            ucDestOptions.chkImageUploaderEnabled.Checked = !Engine.conf.PreferFileUploaderForImages;
+            ucDestOptions.chkTextUploaderEnabled.Checked = !Engine.conf.PreferFileUploaderForText;
 
             cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
             nudtScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
