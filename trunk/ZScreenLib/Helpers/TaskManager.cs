@@ -189,10 +189,9 @@ namespace ZScreenLib
             {
                 UploadFile();
             }
-            else if (true) // ? mTask.SafeToUpload())
-            {
-                FileSystem.AppendDebug("File for HDD: " + mTask.LocalFilePath);
-                UploadImage();
+            else {
+	            FileSystem.AppendDebug("File for HDD: " + mTask.LocalFilePath);
+	            UploadImage();            
             }
         }
 
@@ -560,6 +559,7 @@ namespace ZScreenLib
                 else
                 {
                     url = textUploader.UploadTextFromFile(mTask.LocalFilePath);
+                    mTask.MyText = TextInfo.FromFile(mTask.LocalFilePath);
                 }
                 if (mTask.MakeTinyURL)
                 {
