@@ -32,7 +32,7 @@ using System.Windows.Forms;
 using ZSS;
 using UploadersLib;
 
-namespace ZScreenGUI.UserControls
+namespace ZScreenGUI
 {
     public partial class TextUploadersControl : UserControl
     {

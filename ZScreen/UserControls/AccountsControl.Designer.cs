@@ -1,4 +1,4 @@
-﻿namespace ZScreenGUI.UserControls
+﻿namespace ZScreenGUI
 {
     partial class AccountsControl
     {
