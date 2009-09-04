@@ -250,29 +250,12 @@ namespace ZScreenGUI
                                         this.mZScreen.txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
                                         this.mZScreen.txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
                                         this.mZScreen.txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
-                                    }
 
-                                    if (Engine.conf.ClipboardTranslate)
-                                    {
-                                        Clipboard.SetText(task.TranslationInfo.Result.TranslatedText);
-                                    }
-
-                                    if (mZScreen != null)
-                                    {
                                         this.mZScreen.btnTranslate.Enabled = true;
                                         this.mZScreen.btnTranslateTo1.Enabled = true;
                                     }
-
-                                    break;
-                                case WorkerTask.Jobs.UploadFromClipboard:
-                                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                    {
-                                        Clipboard.SetText(task.RemoteFilePath);
-                                    }
-
                                     break;
                             }
-
                             break;
                         case JobCategoryType.SCREENSHOTS:
                             switch (task.Job)
@@ -308,14 +291,10 @@ namespace ZScreenGUI
                                     FileSystem.AppendDebug(ex.ToString());
                                 }
                             }
-
                             break;
                     }
 
-                    if (task.JobCategory != JobCategoryType.TEXT)
-                    {
-                        UploadManager.SetClipboardText(task, false);
-                    }
+                    UploadManager.SetClipboardText(task, false);
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
                     {
