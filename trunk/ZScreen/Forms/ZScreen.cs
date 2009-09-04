@@ -541,10 +541,9 @@ namespace ZScreenGUI
                 ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
                 ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
             }
-            else
-            {
-                ucTextUploaders.MyCollection.SelectedIndex = 0;
-                ucDestOptions.cboTextUploaders.SelectedIndex = 0;
+            else{
+            	ucTextUploaders.MyCollection.SelectedIndex = 0;
+                ucDestOptions.cboTextUploaders.SelectedIndex = 0;         	
             }
 
             ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
