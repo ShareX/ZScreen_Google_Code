@@ -1,5 +1,4 @@
 using ZScreenLib;
-using ZScreenGUI.UserControls;
 using ZScreenGUI.Properties;
 
 namespace ZScreenGUI
@@ -546,12 +545,12 @@ namespace ZScreenGUI
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
             this.ucDestOptions = new ZScreenLib.DestSelector();
             this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.ucFTPAccounts = new ZScreenGUI.UserControls.AccountsControl();
-            this.ucMindTouchAccounts = new ZScreenGUI.UserControls.AccountsControl();
-            this.ucTextUploaders = new ZScreenGUI.UserControls.TextUploadersControl();
-            this.ucUrlShorteners = new ZScreenGUI.UserControls.TextUploadersControl();
+            this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
+            this.ucMindTouchAccounts = new ZScreenGUI.AccountsControl();
+            this.ucTextUploaders = new ZScreenGUI.TextUploadersControl();
+            this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
             this.historyBrowser = new System.Windows.Forms.WebBrowser();
-            this.ucProxyAccounts = new ZScreenGUI.UserControls.AccountsControl();
+            this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -7164,11 +7163,11 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolTip ttZScreen;
         internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.TabPage tpMindTouch;
-        internal UserControls.AccountsControl ucMindTouchAccounts;
+        internal AccountsControl ucMindTouchAccounts;
         internal System.Windows.Forms.GroupBox gbImageEditorSettings;
         internal System.Windows.Forms.CheckBox chkImageEditorAutoSave;
         internal System.Windows.Forms.TabPage tpFTP;
-        internal UserControls.AccountsControl ucFTPAccounts;
+        internal AccountsControl ucFTPAccounts;
         internal System.Windows.Forms.CheckBox chkPublicImageShack;
         internal System.Windows.Forms.Button btnImageShackProfile;
         internal System.Windows.Forms.Label lblImageShackUsername;
@@ -7189,7 +7188,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.GroupBox gbMindTouchOptions;
         internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
         private System.Windows.Forms.TabPage tpProxy;
-        private UserControls.AccountsControl ucProxyAccounts;
+        private AccountsControl ucProxyAccounts;
         internal System.Windows.Forms.GroupBox gpProxySettings;
         internal System.Windows.Forms.CheckBox chkProxyEnable;
         private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;

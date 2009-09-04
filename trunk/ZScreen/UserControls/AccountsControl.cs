@@ -30,7 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ZScreenGUI.UserControls
+namespace ZScreenGUI
 {
     public partial class AccountsControl : UserControl
     {
