@@ -95,6 +95,13 @@ namespace ZScreenGUI.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_go {
+            get {
+                object obj = ResourceManager.GetObject("application_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_lightning {
             get {
                 object obj = ResourceManager.GetObject("application_lightning", resourceCulture);
