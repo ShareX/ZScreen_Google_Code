@@ -39,11 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "ZSS.Upl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenCLI", "ZScreenCLI\ZScreenCLI.csproj", "{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74503543-F966-4E64-AC7A-76EFB2436B6E}"
-	ProjectSection(SolutionItems) = preProject
-		application.res = application.res
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ZScreenLib", "ZScreenLib\ZSS.ZScreenLib.csproj", "{037FBAAE-819B-46E6-99FA-5CD8BD17E320}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ResourcesLib", "ZSS.ResourcesLib\ZSS.ResourcesLib.csproj", "{1D8C78B8-96D0-474A-96DA-84732D52C87A}"

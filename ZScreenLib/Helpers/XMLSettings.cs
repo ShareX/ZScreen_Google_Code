@@ -252,7 +252,7 @@ namespace ZScreenLib
         //  Text Uploaders & URL Shorteners
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public List<TextUploader> TextUploadersList2 = new List<TextUploader>();
+        public List<TextUploader> TextUploadersList = new List<TextUploader>();
         public int TextUploaderSelected = 0;
 
         public List<TextUploader> UrlShortenersList = new List<TextUploader>();

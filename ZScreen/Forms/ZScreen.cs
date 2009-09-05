@@ -332,7 +332,6 @@ namespace ZScreenGUI
             }
 
             ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
-            // ucDestOptions.cboImageUploaders.Enabled = !Engine.conf.PreferFileUploaderForImages;
 
             if (tsmImageDest.DropDownItems.Count == 0)
             {
@@ -515,14 +514,14 @@ namespace ZScreenGUI
             // Text Uploader Settings
             ///////////////////////////////////
 
-            if (Engine.conf.TextUploadersList2.Count == 0)
+            if (Engine.conf.TextUploadersList.Count == 0)
             {
-                Engine.conf.TextUploadersList2 = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
             }
 
             ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
-            foreach (TextUploader textUploader in Engine.conf.TextUploadersList2)
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
@@ -531,10 +530,15 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Engine.conf.TextUploaderSelected > -1 && Engine.conf.TextUploaderSelected < ucTextUploaders.MyCollection.Items.Count)
+            if (Adapter.CheckTextUploaders())
             {
                 ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
                 ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
+            }
+            else
+            {
+                ucTextUploaders.MyCollection.SelectedIndex = 0;
+                ucDestOptions.cboTextUploaders.SelectedIndex = 0;
             }
 
             ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
@@ -3522,7 +3526,7 @@ namespace ZScreenGUI
                     TextUploader textUploader = Adapter.FindTextUploader(name);
                     if (textUploader != null)
                     {
-                        Engine.conf.TextUploadersList2.Add(textUploader);
+                        Engine.conf.TextUploadersList.Add(textUploader);
                         ucTextUploaders.MyCollection.Items.Add(textUploader);
                         ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                     }
@@ -3537,7 +3541,7 @@ namespace ZScreenGUI
             if (ucTextUploaders.MyCollection.Items.Count > 0)
             {
                 int index = ucTextUploaders.MyCollection.SelectedIndex;
-                Engine.conf.TextUploadersList2.RemoveAt(index);
+                Engine.conf.TextUploadersList.RemoveAt(index);
                 ucTextUploaders.MyCollection.Items.RemoveAt(index);
                 ucDestOptions.cboTextUploaders.Items.RemoveAt(index);
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
