@@ -85,6 +85,7 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
@@ -453,6 +454,7 @@ namespace ZScreenGUI
             this.panelPreview = new System.Windows.Forms.Panel();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.txtPreview = new System.Windows.Forms.TextBox();
+            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
@@ -543,13 +545,12 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.ucDestOptions = new ZScreenLib.DestSelector();
+            this.tsmFileDest = new System.Windows.Forms.ToolStripMenuItem();
             this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
             this.ucMindTouchAccounts = new ZScreenGUI.AccountsControl();
             this.ucTextUploaders = new ZScreenGUI.TextUploadersControl();
             this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
-            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
@@ -706,6 +707,7 @@ namespace ZScreenGUI
             this.tsmiTabs,
             this.toolStripSeparator4,
             this.tsmImageDest,
+            this.tsmFileDest,
             this.tsmEditinImageSoftware,
             this.tsmCopytoClipboardMode,
             this.toolStripSeparator3,
@@ -720,7 +722,7 @@ namespace ZScreenGUI
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 336);
             // 
             // tsmiTabs
             // 
@@ -1116,6 +1118,14 @@ namespace ZScreenGUI
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
+            // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
+            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.TabIndex = 124;
             // 
             // gbImageSettings
             // 
@@ -5390,6 +5400,15 @@ namespace ZScreenGUI
             this.txtPreview.Size = new System.Drawing.Size(455, 231);
             this.txtPreview.TabIndex = 14;
             // 
+            // historyBrowser
+            // 
+            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
+            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.historyBrowser.Name = "historyBrowser";
+            this.historyBrowser.Size = new System.Drawing.Size(455, 231);
+            this.historyBrowser.TabIndex = 15;
+            // 
             // lbHistory
             // 
             this.lbHistory.AllowDrop = true;
@@ -6470,13 +6489,12 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // ucDestOptions
+            // tsmFileDest
             // 
-            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.TabIndex = 124;
+            this.tsmFileDest.Image = global::ZScreenGUI.Properties.Resources.application_go;
+            this.tsmFileDest.Name = "tsmFileDest";
+            this.tsmFileDest.Size = new System.Drawing.Size(205, 22);
+            this.tsmFileDest.Text = "Send File To";
             // 
             // nudtScreenshotDelay
             // 
@@ -6528,15 +6546,6 @@ namespace ZScreenGUI
             this.ucUrlShorteners.Name = "ucUrlShorteners";
             this.ucUrlShorteners.Size = new System.Drawing.Size(777, 393);
             this.ucUrlShorteners.TabIndex = 0;
-            // 
-            // historyBrowser
-            // 
-            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
-            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.historyBrowser.Name = "historyBrowser";
-            this.historyBrowser.Size = new System.Drawing.Size(455, 231);
-            this.historyBrowser.TabIndex = 15;
             // 
             // ucProxyAccounts
             // 
@@ -7289,6 +7298,7 @@ namespace ZScreenGUI
         internal DestSelector ucDestOptions;
         private System.Windows.Forms.Button btnFTPOpenClient;
         private System.Windows.Forms.CheckBox chkShellExt;
+        private System.Windows.Forms.ToolStripMenuItem tsmFileDest;
 
     }
 }

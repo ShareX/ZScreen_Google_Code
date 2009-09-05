@@ -344,6 +344,17 @@ namespace ZScreenGUI
                 }
             }
 
+            if (tsmFileDest.DropDownItems.Count == 0)
+            {
+                foreach (FileUploaderType fileUploader in Enum.GetValues(typeof(FileUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(fileUploader.GetDescription());
+                    tsmi.Click += new EventHandler(tsmiDestFiles_Click);
+                    tsmi.Tag = fileUploader;
+                    tsmFileDest.DropDownItems.Add(tsmi);
+                }
+            }
+
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
@@ -924,6 +935,12 @@ namespace ZScreenGUI
             ucDestOptions.cboImageUploaders.SelectedIndex = (int)tsmi.Tag;
         }
 
+        private void tsmiDestFiles_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)tsmi.Tag;
+        }
+
         private void UpdateGuiControlsPaths()
         {
             Engine.InitializeDefaultFolderPaths();
@@ -1221,30 +1238,36 @@ namespace ZScreenGUI
         {
             if (Engine.conf.FTPAccountList != null)
             {
-                ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
-                tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
-                tsmDestFTP.DropDownItems.Clear();
-                List<FTPAccount> accs = Engine.conf.FTPAccountList;
-                ToolStripMenuItem tsm;
-                //tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
+                List<ToolStripMenuItem> tsmList = new List<ToolStripMenuItem>();
+                tsmList.Add(GetImageDestMenuItem(ImageDestType.FTP));
+                tsmList.Add(GetFileDestMenuItem(FileUploaderType.FTP));
 
-                for (int x = 0; x < accs.Count; x++)
+                foreach (ToolStripMenuItem tsmi in tsmList)
                 {
-                    tsm = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
-                    tsm.Click += rightClickFTPItem_Click;
-                    tsmDestFTP.DropDownItems.Add(tsm);
-                }
+                    tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
+                    tsmi.DropDownItems.Clear();
+                    List<FTPAccount> accs = Engine.conf.FTPAccountList;
+                    ToolStripMenuItem temp;
 
-                //check the active ftpUpload account
-                CheckCorrectMenuItemClicked(ref tsmDestFTP, Engine.conf.FTPSelected);
-                tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
+                    for (int x = 0; x < accs.Count; x++)
+                    {
+                        temp = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
+                        temp.Click += rightClickFTPItem_Click;
+                        tsmi.DropDownItems.Add(temp);
+                    }
 
-                //show drop down menu in the correct place if menu is selected
-                if (tsmDestFTP.Selected)
-                {
-                    tsmDestFTP.DropDown.Hide();
-                    tsmDestFTP.DropDown.Show();
+                    temp = tsmi;
+
+                    // Check the active ftpUpload account
+                    CheckCorrectMenuItemClicked(ref temp, Engine.conf.FTPSelected);
+                    tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
+
+                    // Show drop down menu in the correct place if menu is selected
+                    if (tsmi.Selected)
+                    {
+                        tsmi.DropDown.Hide();
+                        tsmi.DropDown.Show();
+                    }
                 }
             }
         }
@@ -1524,6 +1547,19 @@ namespace ZScreenGUI
             foreach (ToolStripMenuItem tsmi in tsmImageDest.DropDownItems)
             {
                 if ((ImageDestType)tsmi.Tag == idt)
+                {
+                    return tsmi;
+                }
+            }
+
+            return null;
+        }
+
+        private ToolStripMenuItem GetFileDestMenuItem(FileUploaderType fut)
+        {
+            foreach (ToolStripMenuItem tsmi in tsmFileDest.DropDownItems)
+            {
+                if ((FileUploaderType)tsmi.Tag == fut)
                 {
                     return tsmi;
                 }
