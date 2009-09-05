@@ -218,9 +218,9 @@ namespace ZScreenLib
             if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
             {
                 task.MyImageUploader = Engine.conf.ImageUploaderType;
-                if (Adapter.CheckList(Engine.conf.TextUploadersList2, Engine.conf.TextUploaderSelected))
+                if (Adapter.CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected))
                 {
-                    task.MyTextUploader = Engine.conf.TextUploadersList2[Engine.conf.TextUploaderSelected];
+                    task.MyTextUploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
                 }
                 task.MyFileUploader = Engine.conf.FileDestMode;
             }
