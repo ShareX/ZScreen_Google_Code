@@ -70,6 +70,8 @@ namespace UploadersLib
 
     public enum ImageDestType
     {
+        [Description("FTP Server / File Hosting Service")]
+        FTP,
         [Description("Clipboard")]
         CLIPBOARD,
         [Description("File")]

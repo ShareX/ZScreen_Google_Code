@@ -332,7 +332,7 @@ namespace ZScreenGUI
             }
 
             ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
-            ucDestOptions.cboImageUploaders.Enabled = !Engine.conf.PreferFileUploaderForImages;
+            // ucDestOptions.cboImageUploaders.Enabled = !Engine.conf.PreferFileUploaderForImages;
 
             if (tsmImageDest.DropDownItems.Count == 0)
             {
@@ -1217,31 +1217,31 @@ namespace ZScreenGUI
         {
             if (Engine.conf.FTPAccountList != null)
             {
-                //ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
-                //tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
-                //tsmDestFTP.DropDownItems.Clear();
-                //List<FTPAccount> accs = Engine.conf.FTPAccountList;
-                //ToolStripMenuItem tsm;
-                ////tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                //tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
+                ToolStripMenuItem tsmDestFTP = GetImageDestMenuItem(ImageDestType.FTP);
+                tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
+                tsmDestFTP.DropDownItems.Clear();
+                List<FTPAccount> accs = Engine.conf.FTPAccountList;
+                ToolStripMenuItem tsm;
+                //tsm.TextDirection = ToolStripTextDirection.Horizontal;
+                tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
-                //for (int x = 0; x < accs.Count; x++)
-                //{
-                //    tsm = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
-                //    tsm.Click += rightClickFTPItem_Click;
-                //    tsmDestFTP.DropDownItems.Add(tsm);
-                //}
+                for (int x = 0; x < accs.Count; x++)
+                {
+                    tsm = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
+                    tsm.Click += rightClickFTPItem_Click;
+                    tsmDestFTP.DropDownItems.Add(tsm);
+                }
 
-                ////check the active ftpUpload account
-                //CheckCorrectMenuItemClicked(ref tsmDestFTP, Engine.conf.FTPSelected);
-                //tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
+                //check the active ftpUpload account
+                CheckCorrectMenuItemClicked(ref tsmDestFTP, Engine.conf.FTPSelected);
+                tsmDestFTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
-                ////show drop down menu in the correct place if menu is selected
-                //if (tsmDestFTP.Selected)
-                //{
-                //    tsmDestFTP.DropDown.Hide();
-                //    tsmDestFTP.DropDown.Show();
-                //}
+                //show drop down menu in the correct place if menu is selected
+                if (tsmDestFTP.Selected)
+                {
+                    tsmDestFTP.DropDown.Hide();
+                    tsmDestFTP.DropDown.Show();
+                }
             }
         }
 
@@ -1532,6 +1532,7 @@ namespace ZScreenGUI
         {
             ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
             Engine.conf.ImageUploaderType = sdt;
+            Engine.conf.PreferFileUploaderForImages = (sdt == ImageDestType.FTP);
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
             CheckSendToMenu(GetImageDestMenuItem(sdt));
