@@ -96,7 +96,8 @@ namespace ZScreenLib
         	
         	switch (task.JobCategory) {
         		case JobCategoryType.PICTURES:
-        		case JobCategoryType.SCREENSHOTS:     
+        		case JobCategoryType.SCREENSHOTS:    
+                case JobCategoryType.BINARY:
         			ScreenshotsHistory = task.ImageManager;
         			if (ScreenshotsHistory != null && GraphicsMgr.IsValidImage(task.LocalFilePath))
 		            {
@@ -140,11 +141,6 @@ namespace ZScreenLib
         					}
         					break;
         			}     			        		
-        			break;
-        		case JobCategoryType.BINARY:   
-        			if (!string.IsNullOrEmpty(task.RemoteFilePath)) {
-        				clipboardText = task.RemoteFilePath;
-        			}
         			break;
         	}
         	
