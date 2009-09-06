@@ -177,11 +177,10 @@ namespace ZScreenLib
                 mAppInfo.AppName = mProductName;
             }
 
-            if (options.KeyboardHook)
-            {
-                ZScreenKeyboardHook = new KeyboardHook();
-                FileSystem.AppendDebug("Keyboard Hook initiated");
-            }
+            //if (options.KeyboardHook)
+            //{
+
+            //}
         }
 
         public static void LoadSettings()

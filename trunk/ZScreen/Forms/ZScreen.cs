@@ -73,7 +73,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI();
 
             Loader.Worker2.PerformOnlineTasks();
-            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
             if (Engine.conf.CheckUpdates)
             {
                 Loader.Worker2.CheckUpdates();
@@ -1413,6 +1412,10 @@ namespace ZScreenGUI
 
         private void ZScreen_Shown(object sender, EventArgs e)
         {
+            Engine.ZScreenKeyboardHook = new KeyboardHook();
+            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+            FileSystem.AppendDebug("Keyboard Hook initiated");
+
             mGuiIsReady = true;
 
             if (!Engine.conf.RunOnce)
@@ -4395,6 +4398,22 @@ namespace ZScreenGUI
             else
             {
                 e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void chkHotkeys_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mGuiIsReady)
+            {
+                if (chkHotkeys.Checked)
+                {
+                    Engine.ZScreenKeyboardHook = new KeyboardHook();
+                    Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+                }
+                else
+                {
+                    Engine.ZScreenKeyboardHook.Dispose();
+                }
             }
         }
     }
