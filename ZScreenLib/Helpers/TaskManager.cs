@@ -283,6 +283,9 @@ namespace ZScreenLib
                 case ImageDestType.FLICKR:
                     imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
+                case ImageDestType.FTP:
+                    UploadFTP();
+                    break;
                 case ImageDestType.IMAGEBAM:
                     ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
                         Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
