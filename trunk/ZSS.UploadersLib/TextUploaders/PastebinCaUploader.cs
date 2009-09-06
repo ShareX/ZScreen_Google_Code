@@ -30,7 +30,7 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class PastebinCaUploader : TextUploader
     {
-        public const string Hostname = "pastebin.ca";
+        public static readonly string Hostname = TextDestType.PASTEBIN_CA.GetDescription();
         public const string APIKey = "qrsjom2g8qDYcy8P+GeNnxSZowY89gKr";
 
         public override object Settings

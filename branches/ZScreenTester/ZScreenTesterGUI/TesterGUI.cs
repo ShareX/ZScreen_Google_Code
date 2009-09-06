@@ -65,6 +65,7 @@ namespace ZScreenTesterGUI
                     case ImageDestType.FILE:
                     case ImageDestType.PRINTER:
                     case ImageDestType.TWITSNAPS: // Not possible to upload without post Twitter
+                    case ImageDestType.FileUploader: // We are going to test this in File Uploader tests
                         continue;
                 }
 

@@ -111,8 +111,8 @@ namespace UploadersLib
         PASTEBIN,
         [Description("Paste2 - www.paste2.org")]
         PASTE2,
-        //[Description("pastebin.ca")]
-        //PASTEBIN_CA,
+        [Description("pastebin.ca - www.pastebin.ca")]
+        PASTEBIN_CA,
         [Description("Slexy 2.0 - www.slexy.org")]
         SLEXY
     }
