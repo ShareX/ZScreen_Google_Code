@@ -157,6 +157,10 @@ namespace ZScreenLib
 
                 mTask.SetFilePath(NameParser.Convert(type));
                 FileSystem.SaveImage(mTask.MyImage, mTask.LocalFilePath);
+                if (!File.Exists(mTask.LocalFilePath))
+                {
+                    mTask.Errors.Add(string.Format("{0} does not exist", mTask.LocalFilePath));
+                }
             }
         }
 
@@ -189,15 +193,16 @@ namespace ZScreenLib
             {
                 UploadFile();
             }
-            else {
-	            FileSystem.AppendDebug("File for HDD: " + mTask.LocalFilePath);
-	            UploadImage();            
+            else
+            {                
+                UploadImage();
             }
         }
 
         public void UploadFile()
         {
             mTask.StartTime = DateTime.Now;
+            FileSystem.AppendDebug("Uploading File: " + mTask.LocalFilePath);
             FileUploader fileHost = null;
             switch (mTask.MyFileUploader)
             {
@@ -245,6 +250,7 @@ namespace ZScreenLib
         public void UploadImage()
         {
             mTask.StartTime = DateTime.Now;
+            FileSystem.AppendDebug("Uploading Image: " + mTask.LocalFilePath);
 
             ImageUploader imageUploader = null;
 
@@ -420,7 +426,6 @@ namespace ZScreenLib
                 {
                     FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
                     mTask.DestinationName = acc.Name;
-
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
                     FTPUploader fu = new FTPUploader(acc);
