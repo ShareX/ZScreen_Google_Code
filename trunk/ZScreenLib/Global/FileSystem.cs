@@ -115,15 +115,15 @@ namespace ZScreenLib
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     }
 
-                    using (FileStream fi = File.Create(filePath))
+                    int retry = 3;
+                    while (retry > 0 && !File.Exists(filePath))
                     {
-                        int retry = 3;
-                        while (retry > 0 && File.Exists(filePath))
+                        using (FileStream fi = File.Create(filePath))
                         {
                             if (retry < 3) { System.Threading.Thread.Sleep(1000); }
                             FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
                             ms.WriteTo(fi);
-                            retry--;                            
+                            retry--;
                         }
                     }
                 }
