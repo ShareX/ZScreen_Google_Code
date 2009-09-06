@@ -44,7 +44,6 @@ using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZScreenGUI.Properties;
 using ZScreenLib;
-using ZSS;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 
@@ -343,6 +342,8 @@ namespace ZScreenGUI
                 }
             }
 
+            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(Engine.conf.ImageUploaderType));
+
             if (tsmFileDest.DropDownItems.Count == 0)
             {
                 foreach (FileUploaderType fileUploader in Enum.GetValues(typeof(FileUploaderType)))
@@ -353,6 +354,8 @@ namespace ZScreenGUI
                     tsmFileDest.DropDownItems.Add(tsmi);
                 }
             }
+
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileDestMode));
 
             if (cboClipboardTextMode.Items.Count == 0)
             {
@@ -1578,12 +1581,7 @@ namespace ZScreenGUI
             Engine.conf.PreferFileUploaderForImages = (sdt == ImageDestType.FTP);
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
-            CheckSendToMenu(GetImageDestMenuItem(sdt));
-        }
-
-        private void CheckSendToMenu(ToolStripMenuItem item)
-        {
-            CheckToolStripMenuItem(tsmImageDest, item);
+            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(sdt));
         }
 
         private void CheckToolStripMenuItem(ToolStripDropDownItem parent, ToolStripMenuItem item)
@@ -4237,6 +4235,8 @@ namespace ZScreenGUI
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileDestMode));
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
