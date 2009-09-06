@@ -158,7 +158,7 @@ namespace ZScreenLib
         /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
         public string RemoteFilePath { get; set; }
-        
+
         /*/// <summary>
         /// Tiny URL of RemoteFilePath
         /// </summary>
@@ -303,7 +303,7 @@ namespace ZScreenLib
                 this.MyImage = FileSystem.ImageFromFile(fp);
             }
 
-            Debug.Assert(File.Exists(fp), "File does not exist");
+            // Debug.Assert(File.Exists(fp), "File does not exist");
         }
 
         public string GetDescription()
