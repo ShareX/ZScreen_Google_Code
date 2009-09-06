@@ -1578,7 +1578,7 @@ namespace ZScreenGUI
         {
             ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
             Engine.conf.ImageUploaderType = sdt;
-            Engine.conf.PreferFileUploaderForImages = (sdt == ImageDestType.FTP);
+            Engine.conf.PreferFileUploaderForImages = (sdt == ImageDestType.FileUploader);
             cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD && sdt != ImageDestType.FILE;
 
             CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(sdt));
