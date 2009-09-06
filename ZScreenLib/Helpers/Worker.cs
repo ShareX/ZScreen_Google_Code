@@ -336,7 +336,10 @@ namespace ZScreenLib
                         {
                             File.Copy(fp, cbFilePath, true);
                         }
-
+                        if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
+                        {
+                            File.Delete(fp);
+                        }
                         strListFilePath.Add(cbFilePath);
                     }
                     else

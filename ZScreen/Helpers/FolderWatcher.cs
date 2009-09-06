@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using ZScreenLib;
 using ZSS;
+using System.Threading;
 
 namespace ZScreenGUI
 {
@@ -47,16 +48,27 @@ namespace ZScreenGUI
         [STAThread]
         private void Watcher_Created(object sender, FileSystemEventArgs e)
         {
-            FileSystem.AppendDebug(string.Format("Added {0}", e.FullPath));
-            if (Loader.Worker.UploadUsingFileSystem(new List<string>() { e.FullPath }))
+            string filePath = e.FullPath;
+            int retry = 5;
+            while (retry > 0)
             {
                 try
                 {
-                    File.Delete(e.FullPath);
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        // check if the file is complete
+                    }
+                    FileSystem.AppendDebug(string.Format("Created {0}", filePath));
+                    Loader.Worker.UploadUsingFileSystem(new List<string>() { filePath });
+                    break;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    FileSystem.AppendDebug(ex);
+                    if (--retry == 0)
+                    {
+                        FileSystem.AppendDebug("Unable to open file '" + filePath + "'");
+                    }
+                    Thread.Sleep(500);
                 }
             }
         }
