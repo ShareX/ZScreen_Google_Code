@@ -229,7 +229,7 @@ namespace ZScreenLib
 
         public void SetImage(Image img)
         {
-            FileSystem.AppendDebug(string.Format("Setting Image {0}x{1}", img.Width, img.Height));
+            FileSystem.AppendDebug(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
             this.MyImage = img;
             if (Engine.conf.CopyImageUntilURL)
             {
