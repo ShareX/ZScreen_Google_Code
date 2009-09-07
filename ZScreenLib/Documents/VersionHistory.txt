@@ -1,5 +1,7 @@
 Version 3.4 - 20091015
 
+3.04.5.2 Large images no longer upload when enabling "change to JPG after X KiB" [Issue 130] {McoreD}
+3.04.5.1 Windows 7 hotkeys sometimes did not trigger the action [Issue 100] {McoreD}
 3.04.5.0 FTP Server destination was removed from both Images/Text in favor of File Uploader {Jaex}
 3.04.4.0 FTP Client supports uploading multiple files/folders via Drag n Drop {Jaex}
 3.04.3.0 FTP Client can download/upload multiple files/folders {Jaex}

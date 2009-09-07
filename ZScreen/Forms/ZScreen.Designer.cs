@@ -33,9 +33,9 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -481,6 +481,7 @@ namespace ZScreenGUI
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
+            this.chkHotkeys = new System.Windows.Forms.CheckBox();
             this.chkShellExt = new System.Windows.Forms.CheckBox();
             this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
@@ -552,7 +553,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.chkHotkeys = new System.Windows.Forms.CheckBox();
+            this.chkTwitterEnable = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -2294,38 +2295,38 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -5724,6 +5725,19 @@ namespace ZScreenGUI
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
             // 
+            // chkHotkeys
+            // 
+            this.chkHotkeys.AutoSize = true;
+            this.chkHotkeys.Checked = true;
+            this.chkHotkeys.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHotkeys.Location = new System.Drawing.Point(424, 96);
+            this.chkHotkeys.Name = "chkHotkeys";
+            this.chkHotkeys.Size = new System.Drawing.Size(165, 17);
+            this.chkHotkeys.TabIndex = 9;
+            this.chkHotkeys.Text = "Keyboard Hotkeys integration";
+            this.chkHotkeys.UseVisualStyleBackColor = true;
+            this.chkHotkeys.CheckedChanged += new System.EventHandler(this.chkHotkeys_CheckedChanged);
+            // 
             // chkShellExt
             // 
             this.chkShellExt.AutoSize = true;
@@ -5889,7 +5903,7 @@ namespace ZScreenGUI
             // gbActionsToolbarSettings
             // 
             this.gbActionsToolbarSettings.Controls.Add(this.cbCloseQuickActions);
-            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 264);
+            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 224);
             this.gbActionsToolbarSettings.Name = "gbActionsToolbarSettings";
             this.gbActionsToolbarSettings.Size = new System.Drawing.Size(752, 56);
             this.gbActionsToolbarSettings.TabIndex = 7;
@@ -5910,7 +5924,7 @@ namespace ZScreenGUI
             // gbDropBox
             // 
             this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 200);
+            this.gbDropBox.Location = new System.Drawing.Point(8, 160);
             this.gbDropBox.Name = "gbDropBox";
             this.gbDropBox.Size = new System.Drawing.Size(752, 56);
             this.gbDropBox.TabIndex = 6;
@@ -5931,6 +5945,7 @@ namespace ZScreenGUI
             // gbAppearance
             // 
             this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
+            this.gbAppearance.Controls.Add(this.chkTwitterEnable);
             this.gbAppearance.Controls.Add(this.cbCompleteSound);
             this.gbAppearance.Controls.Add(this.chkCaptureFallback);
             this.gbAppearance.Controls.Add(this.cbShowUploadDuration);
@@ -5940,7 +5955,7 @@ namespace ZScreenGUI
             this.gbAppearance.Controls.Add(this.nudFlashIconCount);
             this.gbAppearance.Location = new System.Drawing.Point(8, 8);
             this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(752, 184);
+            this.gbAppearance.Size = new System.Drawing.Size(752, 144);
             this.gbAppearance.TabIndex = 5;
             this.gbAppearance.TabStop = false;
             this.gbAppearance.Text = "After completing a task";
@@ -5948,7 +5963,7 @@ namespace ZScreenGUI
             // cbCompleteSound
             // 
             this.cbCompleteSound.AutoSize = true;
-            this.cbCompleteSound.Location = new System.Drawing.Point(16, 152);
+            this.cbCompleteSound.Location = new System.Drawing.Point(16, 104);
             this.cbCompleteSound.Name = "cbCompleteSound";
             this.cbCompleteSound.Size = new System.Drawing.Size(228, 17);
             this.cbCompleteSound.TabIndex = 5;
@@ -5959,18 +5974,18 @@ namespace ZScreenGUI
             // chkCaptureFallback
             // 
             this.chkCaptureFallback.AutoSize = true;
-            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 56);
+            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 80);
             this.chkCaptureFallback.Name = "chkCaptureFallback";
-            this.chkCaptureFallback.Size = new System.Drawing.Size(302, 17);
+            this.chkCaptureFallback.Size = new System.Drawing.Size(332, 17);
             this.chkCaptureFallback.TabIndex = 7;
-            this.chkCaptureFallback.Text = "Capture entire screen if active window capture or crop fails";
+            this.chkCaptureFallback.Text = "Capture entire screen if Active Window capture or Crop Shot fails";
             this.chkCaptureFallback.UseVisualStyleBackColor = true;
             this.chkCaptureFallback.CheckedChanged += new System.EventHandler(this.chkCaptureFallback_CheckedChanged);
             // 
             // cbShowUploadDuration
             // 
             this.cbShowUploadDuration.AutoSize = true;
-            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 128);
+            this.cbShowUploadDuration.Location = new System.Drawing.Point(440, 104);
             this.cbShowUploadDuration.Name = "cbShowUploadDuration";
             this.cbShowUploadDuration.Size = new System.Drawing.Size(196, 17);
             this.cbShowUploadDuration.TabIndex = 8;
@@ -5981,18 +5996,18 @@ namespace ZScreenGUI
             // chkBalloonTipOpenLink
             // 
             this.chkBalloonTipOpenLink.AutoSize = true;
-            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 104);
+            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(440, 80);
             this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
-            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(250, 17);
+            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(195, 17);
             this.chkBalloonTipOpenLink.TabIndex = 6;
-            this.chkBalloonTipOpenLink.Text = "Open screenshot URL/File on Balloon Tip Click";
+            this.chkBalloonTipOpenLink.Text = "Open URL/File on Balloon Tip Click";
             this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
             this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
             // 
             // cbShowPopup
             // 
             this.cbShowPopup.AutoSize = true;
-            this.cbShowPopup.Location = new System.Drawing.Point(16, 80);
+            this.cbShowPopup.Location = new System.Drawing.Point(440, 56);
             this.cbShowPopup.Name = "cbShowPopup";
             this.cbShowPopup.Size = new System.Drawing.Size(230, 17);
             this.cbShowPopup.TabIndex = 5;
@@ -6559,18 +6574,16 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // chkHotkeys
+            // chkTwitterEnable
             // 
-            this.chkHotkeys.AutoSize = true;
-            this.chkHotkeys.Checked = true;
-            this.chkHotkeys.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHotkeys.Location = new System.Drawing.Point(424, 96);
-            this.chkHotkeys.Name = "chkHotkeys";
-            this.chkHotkeys.Size = new System.Drawing.Size(165, 17);
-            this.chkHotkeys.TabIndex = 9;
-            this.chkHotkeys.Text = "Keyboard Hotkeys integration";
-            this.chkHotkeys.UseVisualStyleBackColor = true;
-            this.chkHotkeys.CheckedChanged += new System.EventHandler(this.chkHotkeys_CheckedChanged);
+            this.chkTwitterEnable.AutoSize = true;
+            this.chkTwitterEnable.Location = new System.Drawing.Point(16, 56);
+            this.chkTwitterEnable.Name = "chkTwitterEnable";
+            this.chkTwitterEnable.Size = new System.Drawing.Size(209, 17);
+            this.chkTwitterEnable.TabIndex = 9;
+            this.chkTwitterEnable.Text = "Send URL with a Message to &Twitter...";
+            this.chkTwitterEnable.UseVisualStyleBackColor = true;
+            this.chkTwitterEnable.CheckedChanged += new System.EventHandler(this.chkTwitterEnable_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -7315,6 +7328,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkShellExt;
         private System.Windows.Forms.ToolStripMenuItem tsmFileDest;
         private System.Windows.Forms.CheckBox chkHotkeys;
+        private System.Windows.Forms.CheckBox chkTwitterEnable;
 
     }
 }

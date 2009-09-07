@@ -118,6 +118,10 @@ namespace ZScreenLib
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = true;
 
+        // Twitter 
+        public TwitterAuthInfo TwitterAuthInfo = new TwitterAuthInfo();
+        public bool TwitterEnabled = false;
+
         // TwitPic
 
         public string TwitterUserName = "";
