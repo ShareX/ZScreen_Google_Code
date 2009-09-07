@@ -839,6 +839,7 @@ namespace ZScreenGUI
             cbLockFormSize.Checked = Engine.conf.LockFormSize;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
+            chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
             #endregion
 
@@ -4414,6 +4415,34 @@ namespace ZScreenGUI
                 {
                     Engine.ZScreenKeyboardHook.Dispose();
                 }
+            }
+        }
+
+        private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token))
+            {
+                // authorize ZScreen to twitter
+                oAuthTwitter oAuth = new oAuthTwitter();
+                oAuth.ConsumerKey = Engine.TWITTER_CONSUMER_KEY;
+                oAuth.ConsumerSecret = Engine.TWITTER_CONSUMER_SECRET;
+                string authLink = oAuth.AuthorizationLinkGet();
+                if (!string.IsNullOrEmpty(authLink))
+                {
+                    System.Diagnostics.Process.Start(authLink);
+                }
+
+                ZScreenLib.InputBox ib = new ZScreenLib.InputBox();
+                ib.Title = "Enter PIN";
+                if (ib.ShowDialog() == DialogResult.OK)
+                {
+                    Engine.conf.TwitterAuthInfo = oAuth.AccessTokenGet(oAuth.AuthInfo.OAuthToken, ib.InputText);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token))
+            {
+                Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
             }
         }
     }

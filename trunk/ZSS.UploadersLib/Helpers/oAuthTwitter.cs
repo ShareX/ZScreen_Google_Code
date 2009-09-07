@@ -2,17 +2,20 @@ using System;
 using System.Data;
 using System.Configuration;
 using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Net;
 using System.IO;
 using System.Collections.Specialized;
 
 namespace UploadersLib.Helpers
 {
+    public class TwitterAuthInfo
+    {
+        public string OAuthToken { get; set; }
+        public string Token { get; set; }
+        public string PIN { get; set; }
+        public string TokenSecret { get; set; }
+    }
+
     public class oAuthTwitter : OAuthBase
     {
         public enum Method { GET, POST };
@@ -20,12 +23,20 @@ namespace UploadersLib.Helpers
         public const string AUTHORIZE = "http://twitter.com/oauth/authorize";
         public const string ACCESS_TOKEN = "http://twitter.com/oauth/access_token";
 
-        #region Properties
         public string ConsumerKey { get; set; }
         public string ConsumerSecret { get; set; }
-        public string Token { get; set; }
-        public string TokenSecret { get; set; }
-        #endregion
+
+        public TwitterAuthInfo AuthInfo { get; set; }
+
+        public oAuthTwitter()
+        {
+            this.AuthInfo = new TwitterAuthInfo();
+        }
+
+        public oAuthTwitter(TwitterAuthInfo authInfo)
+        {
+            this.AuthInfo = authInfo;
+        }
 
         /// <summary>
         /// Get the link to Twitter's authorization page for this application.
@@ -35,6 +46,7 @@ namespace UploadersLib.Helpers
         {
             string ret = null;
 
+            // First let's get a REQUEST token.
             string response = oAuthWebRequest(Method.GET, REQUEST_TOKEN, String.Empty);
             if (response.Length > 0)
             {
@@ -42,7 +54,8 @@ namespace UploadersLib.Helpers
                 NameValueCollection qs = HttpUtility.ParseQueryString(response);
                 if (qs["oauth_token"] != null)
                 {
-                    ret = AUTHORIZE + "?oauth_token=" + qs["oauth_token"];
+                    AuthInfo.OAuthToken = qs["oauth_token"]; // tuck this away for later
+                    ret = AUTHORIZE + "?oauth_token=" + qs["oauth_token"];// +"&oauth_callback=oob";
                 }
             }
             return ret;
@@ -52,9 +65,10 @@ namespace UploadersLib.Helpers
         /// Exchange the request token for an access token.
         /// </summary>
         /// <param name="authToken">The oauth_token is supplied by Twitter's authorization page following the callback.</param>
-        public void AccessTokenGet(string authToken)
+        public TwitterAuthInfo AccessTokenGet(string authToken, string pin)
         {
-            this.Token = authToken;
+            this.AuthInfo.Token = authToken;
+            this.AuthInfo.PIN = pin; // JDevlin
 
             string response = oAuthWebRequest(Method.GET, ACCESS_TOKEN, String.Empty);
 
@@ -64,13 +78,15 @@ namespace UploadersLib.Helpers
                 NameValueCollection qs = HttpUtility.ParseQueryString(response);
                 if (qs["oauth_token"] != null)
                 {
-                    this.Token = qs["oauth_token"];
+                    this.AuthInfo.Token = qs["oauth_token"];
                 }
                 if (qs["oauth_token_secret"] != null)
                 {
-                    this.TokenSecret = qs["oauth_token_secret"];
+                    this.AuthInfo.TokenSecret = qs["oauth_token_secret"];
                 }
             }
+
+            return this.AuthInfo;
         }
 
         /// <summary>
@@ -118,6 +134,10 @@ namespace UploadersLib.Helpers
                     url += postData;
                 }
             }
+            else if (method == Method.GET && !String.IsNullOrEmpty(postData))
+            {
+                url += "?" + postData;
+            }
 
             Uri uri = new Uri(url);
 
@@ -128,11 +148,12 @@ namespace UploadersLib.Helpers
             string sig = this.GenerateSignature(uri,
                 this.ConsumerKey,
                 this.ConsumerSecret,
-                this.Token,
-                this.TokenSecret,
+                this.AuthInfo.Token,
+                this.AuthInfo.TokenSecret,
                 method.ToString(),
                 timeStamp,
                 nonce,
+                this.AuthInfo.PIN,
                 out outUrl,
                 out querystring);
 
@@ -230,6 +251,12 @@ namespace UploadersLib.Helpers
             }
 
             return responseData;
+        }
+
+        public void Reset()
+        {
+            ConsumerKey = ConsumerSecret = String.Empty;
+            this.AuthInfo = new TwitterAuthInfo();
         }
     }
 }
