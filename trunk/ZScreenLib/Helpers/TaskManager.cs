@@ -155,8 +155,8 @@ namespace ZScreenLib
                     type = NameParserType.EntireScreen;
                 }
 
-                mTask.SetFilePath(NameParser.Convert(type));
-                FileSystem.SaveImage(mTask.MyImage, mTask.LocalFilePath);
+                mTask.SetFilePathFromPattern(NameParser.Convert(type));
+                mTask.UpdateLocalFilePath(FileSystem.SaveImage(mTask.MyImage, mTask.LocalFilePath));
                 if (!File.Exists(mTask.LocalFilePath))
                 {
                     mTask.Errors.Add(string.Format("{0} does not exist", mTask.LocalFilePath));

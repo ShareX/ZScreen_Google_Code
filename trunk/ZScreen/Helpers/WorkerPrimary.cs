@@ -412,7 +412,7 @@ namespace ZScreenGUI
                 WorkerTask task = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task.JobCategory = hi.JobCategory;
                 task.SetImage(hi.LocalPath);
-                task.SetLocalFilePath(hi.LocalPath);
+                task.UpdateLocalFilePath(hi.LocalPath);
                 task.MyImageUploader = hi.ImageDestCategory;
                 task.MyWorker.RunWorkerAsync(task);
             }
@@ -637,7 +637,7 @@ namespace ZScreenGUI
                 WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task2.JobCategory = task.JobCategory;
                 task2.SetImage(task.LocalFilePath);
-                task2.SetLocalFilePath(task.LocalFilePath);
+                task2.UpdateLocalFilePath(task.LocalFilePath);
 
                 if (Engine.conf.ImageUploadRandomRetryOnFail)
                 {

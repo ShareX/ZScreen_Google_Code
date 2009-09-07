@@ -249,7 +249,7 @@ namespace ZScreenLib
             t.MyTextUploader = Adapter.GetTextUploaderActive();
             if (!string.IsNullOrEmpty(localFilePath))
             {
-                t.SetLocalFilePath(localFilePath);
+                t.UpdateLocalFilePath(localFilePath);
             }
 
             return t;
@@ -285,7 +285,7 @@ namespace ZScreenLib
             {
                 Image cImage = Clipboard.GetImage();
                 task.Settings.ManualNaming = false;
-                task.SetFilePath(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
+                task.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
                 FileSystem.SaveImage(cImage, task.LocalFilePath);
                 StartWorkerPictures(task, task.LocalFilePath);
             }
@@ -295,7 +295,7 @@ namespace ZScreenLib
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
                     NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                 File.WriteAllText(fp, Clipboard.GetText());
-                temp.SetLocalFilePath(fp);
+                temp.UpdateLocalFilePath(fp);
                 temp.MyText = TextInfo.FromFile(fp);
                 textWorkers.Add(temp);
             }
@@ -365,7 +365,7 @@ namespace ZScreenLib
                 else if (FileSystem.IsValidTextFile(fp))
                 {
                     WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                    temp.SetLocalFilePath(fp);
+                    temp.UpdateLocalFilePath(fp);
                     temp.MyText = TextInfo.FromFile(fp);
                     textWorkers.Add(temp);
                 }
@@ -400,7 +400,7 @@ namespace ZScreenLib
         {
             task.JobCategory = JobCategoryType.PICTURES;
             task.MakeTinyURL = Adapter.MakeTinyURL();
-            task.SetLocalFilePath(localFilePath);
+            task.UpdateLocalFilePath(localFilePath);
             task.SetImage(localFilePath);
             task.MyWorker.RunWorkerAsync(task);
         }
@@ -449,7 +449,7 @@ namespace ZScreenLib
                     {
                         indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
                         task.MyText = null; // force to upload from file
-                        task.SetLocalFilePath(settings.GetConfig().GetIndexFilePath());
+                        task.UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
                         task.RunWorker();
                     }
                 }
@@ -471,7 +471,7 @@ namespace ZScreenLib
             WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.BINARY;
             t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.SetLocalFilePath(localFilePath);
+            t.UpdateLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
         }
 

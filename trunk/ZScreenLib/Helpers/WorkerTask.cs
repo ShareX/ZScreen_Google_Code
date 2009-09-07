@@ -257,7 +257,7 @@ namespace ZScreenLib
             this.MyImage = GraphicsMgr.GetImageSafely(fp);
         }
 
-        public void SetFilePath(string fileName)
+        public void SetFilePathFromPattern(string fileName)
         {
             string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
 
@@ -290,21 +290,19 @@ namespace ZScreenLib
             sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), this.FileName));
             sbPath.Append(Path.GetExtension(filePath));
             filePath = sbPath.ToString();
-
-            this.LocalFilePath = filePath;
-            this.FileName = Path.GetFileName(filePath);
+            
+            UpdateLocalFilePath(filePath);
         }
 
-        public void SetLocalFilePath(string fp)
+        public void UpdateLocalFilePath(string fp)
         {
             this.LocalFilePath = fp;
             this.FileName = Path.GetFileName(fp);
+            
             if (FileSystem.IsValidImage(fp) && this.MyImage == null)
             {
                 this.MyImage = FileSystem.ImageFromFile(fp);
             }
-
-            // Debug.Assert(File.Exists(fp), "File does not exist");
         }
 
         public string GetDescription()
