@@ -2322,7 +2322,6 @@ namespace ZScreenGUI
 
                     txtHistoryLocalPath.Text = hi.LocalPath;
                     txtHistoryRemotePath.Text = hi.RemotePath;
-
                     lblHistoryScreenshot.Text = hi.Description;
                 }
 
@@ -2840,21 +2839,11 @@ namespace ZScreenGUI
         private void pbHistoryThumb_Click(object sender, EventArgs e)
         {
             HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            if (hi != null && File.Exists(hi.LocalPath))
+            if (hi != null && File.Exists(hi.LocalPath) && FileSystem.IsValidImage(hi.LocalPath))
             {
-                if (hi.ScreenshotManager != null)
+                using (ShowScreenshot sc = new ShowScreenshot(Image.FromFile(hi.LocalPath)))
                 {
-                    if (FileSystem.IsValidImage(hi.LocalPath) && hi.ScreenshotManager.GetImage() != null)
-                    {
-                        using (ShowScreenshot sc = new ShowScreenshot(Image.FromFile(hi.LocalPath)))
-                        {
-                            sc.ShowDialog();
-                        }
-                    }
-                }
-                else
-                {
-                    Process.Start(hi.LocalPath);
+                    sc.ShowDialog();
                 }
             }
         }
