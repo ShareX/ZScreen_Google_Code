@@ -1,4 +1,5 @@
 ﻿Move MakeTinyURL to before AddToListBox
+	Need to share bw_DoWork in Worker and WorkerPrimary first
 
 Hotkey for Indexer
 		

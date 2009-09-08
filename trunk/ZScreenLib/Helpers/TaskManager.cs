@@ -194,7 +194,7 @@ namespace ZScreenLib
                 UploadFile();
             }
             else
-            {                
+            {
                 UploadImage();
             }
         }
@@ -237,10 +237,6 @@ namespace ZScreenLib
                 mTask.DestinationName = fileHost.Name;
                 fileHost.ProgressChanged += UploadProgressChanged;
                 string url = fileHost.Upload(mTask.LocalFilePath);
-                if (!string.IsNullOrEmpty(url) && mTask.MakeTinyURL)
-                {
-                    url = Adapter.TryShortenURL(url);
-                }
                 mTask.Errors = fileHost.Errors;
                 mTask.RemoteFilePath = url;
             }
@@ -392,15 +388,8 @@ namespace ZScreenLib
             if (mTask.ImageManager != null)
             {
                 string url = mTask.ImageManager.GetFullImageUrl();
-
-                if (mTask.MakeTinyURL)
-                {
-                    url = Adapter.TryShortenURL(url);
-                }
-
                 mTask.RemoteFilePath = url;
                 FileSystem.AppendDebug("URL: " + mTask.RemoteFilePath);
-                mTask.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
             }
         }
 
@@ -568,10 +557,6 @@ namespace ZScreenLib
                 {
                     url = textUploader.UploadTextFromFile(mTask.LocalFilePath);
                     mTask.MyText = TextInfo.FromFile(mTask.LocalFilePath);
-                }
-                if (mTask.MakeTinyURL)
-                {
-                    url = Adapter.TryShortenURL(url);
                 }
                 mTask.RemoteFilePath = url;
                 mTask.Errors = textUploader.Errors;

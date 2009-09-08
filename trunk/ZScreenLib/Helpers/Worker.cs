@@ -31,13 +31,13 @@ namespace ZScreenLib
         public virtual BackgroundWorker CreateWorker()
         {
             BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
-            bwApp.DoWork += new DoWorkEventHandler(bwApp_DoWork);
+            bwApp.DoWork += new DoWorkEventHandler(BwApp_DoWork);
             bwApp.ProgressChanged += new ProgressChangedEventHandler(bwApp_ProgressChanged);
             bwApp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwApp_RunWorkerCompleted);
             return bwApp;
         }
 
-        void bwApp_DoWork(object sender, DoWorkEventArgs e)
+        public virtual void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
             task.UniqueNumber = UploadManager.Queue();
