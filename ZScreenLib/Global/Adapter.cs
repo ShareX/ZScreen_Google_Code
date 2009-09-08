@@ -318,7 +318,7 @@ namespace ZScreenLib
         public static bool MakeTinyURL()
         {
             // LimitLongURL = 0 means make tinyURL always
-            return Engine.conf.MakeTinyURL || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+            return Engine.conf.TwitterEnabled || Engine.conf.MakeTinyURL || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
         }
 
         #endregion

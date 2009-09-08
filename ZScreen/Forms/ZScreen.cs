@@ -4423,9 +4423,7 @@ namespace ZScreenGUI
             if (string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token))
             {
                 // authorize ZScreen to twitter
-                oAuthTwitter oAuth = new oAuthTwitter();
-                oAuth.ConsumerKey = Engine.TWITTER_CONSUMER_KEY;
-                oAuth.ConsumerSecret = Engine.TWITTER_CONSUMER_SECRET;
+                oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
                 string authLink = oAuth.AuthorizationLinkGet();
                 if (!string.IsNullOrEmpty(authLink))
                 {

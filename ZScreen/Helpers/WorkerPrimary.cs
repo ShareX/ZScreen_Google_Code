@@ -37,6 +37,7 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
+using System.Web;
 
 namespace ZScreenGUI
 {
@@ -161,6 +162,22 @@ namespace ZScreenGUI
                 }
             }
 
+            if (Engine.conf.TwitterEnabled)
+            {
+                TwitterMsg msg = new TwitterMsg("Update Twitter Status...");
+                msg.txtTweet.Text = " " + task.RemoteFilePath;
+                if (msg.ShowDialog() == DialogResult.OK)
+                {
+                    if (!string.IsNullOrEmpty(msg.txtTweet.Text))
+                    {
+                        // URL-encode the tweet...
+                        string tweet = HttpUtility.UrlEncode(msg.txtTweet.Text);
+                        // And send it off...
+                        oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, Engine.conf.TwitterAuthInfo);
+                        string xml = oAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
+                    }
+                }
+            }
             e.Result = task;
         }
 

@@ -28,12 +28,15 @@ namespace UploadersLib.Helpers
 
         public TwitterAuthInfo AuthInfo { get; set; }
 
-        public oAuthTwitter()
+        public oAuthTwitter(string consumerKey, string consumerSecret)
         {
+            this.ConsumerKey = consumerKey;
+            this.ConsumerSecret = consumerSecret;
             this.AuthInfo = new TwitterAuthInfo();
         }
 
-        public oAuthTwitter(TwitterAuthInfo authInfo)
+        public oAuthTwitter(string consumerKey, string consumerSecret, TwitterAuthInfo authInfo)
+            : this(consumerKey, consumerSecret)
         {
             this.AuthInfo = authInfo;
         }

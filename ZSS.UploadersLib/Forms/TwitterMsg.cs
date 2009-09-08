@@ -39,16 +39,13 @@ namespace UploadersLib.Helpers
         public TwitterMsg()
         {
             InitializeComponent();
-
-            btnOK.Text = "OK";
-            btnCancel.Text = "Cancel";
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtMsg.Text))
+            if (!string.IsNullOrEmpty(txtTweet.Text))
             {
-                this.Message = txtMsg.Text;
+                this.Message = txtTweet.Text;
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
             }
@@ -63,8 +60,14 @@ namespace UploadersLib.Helpers
 
         private void InputBox_Shown(object sender, EventArgs e)
         {
-            txtMsg.Focus();
-            txtMsg.SelectionLength = txtMsg.Text.Length;
+            txtTweet.Focus();
+            txtTweet.SelectionStart = 0;
+           // txtTweet.SelectionLength = txtTweet.Text.Length;
+        }
+
+        private void txtTweet_TextChanged(object sender, EventArgs e)
+        {
+            lblCount.Text = (140 - txtTweet.Text.Length).ToString();
         }
     }
 }
