@@ -62,6 +62,8 @@ namespace ZScreenLib
             {
                 this.UserName = txtUserName.Text;
                 this.Password = txtPassword.Text;
+                this.Email = txtEmail.Text;
+                this.FullName = txtFullName.Text;
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
                 this.Close();
@@ -79,26 +81,6 @@ namespace ZScreenLib
         {
             txtUserName.Focus();
             txtUserName.SelectionLength = txtUserName.Text.Length;
-        }
-
-        private void UserPassBox_Load(object sender, EventArgs e)
-        {
-            Control ctl = this.GetNextControl(this, true);
-            while (ctl != null)
-            {
-                if (ctl.GetType() == typeof(TextBox))
-                {
-                    ctl.Click += new EventHandler(TextBox_Click);
-                }
-                ctl = this.GetNextControl(ctl, true);
-            }
-        }
-
-        void TextBox_Click(object sender, EventArgs e)
-        {
-            TextBox txtBox = sender as TextBox;
-            txtBox.SelectionStart = 0;
-            txtBox.SelectionLength = txtBox.Text.Length;
         }
     }
 }

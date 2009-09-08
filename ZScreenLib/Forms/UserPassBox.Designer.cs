@@ -150,7 +150,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User/Pass Box";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.UserPassBox_Load);
             this.Shown += new System.EventHandler(this.InputBox_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

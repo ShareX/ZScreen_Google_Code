@@ -231,6 +231,7 @@ namespace ZScreenLib
                     });
                     break;
             }
+
             if (fileHost != null)
             {
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
@@ -240,6 +241,7 @@ namespace ZScreenLib
                 mTask.Errors = fileHost.Errors;
                 mTask.RemoteFilePath = url;
             }
+
             mTask.EndTime = DateTime.Now;
         }
 
@@ -417,7 +419,7 @@ namespace ZScreenLib
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(mTask.LocalFilePath))
                 {
                     FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
-                    mTask.DestinationName = acc.Name;
+                    mTask.DestinationName = string.Format("FTP - {0}", acc.Name);
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
 
                     FTPUploader fu = new FTPUploader(acc);
@@ -512,8 +514,8 @@ namespace ZScreenLib
                         }
 
                         DekiWiki.savePath = diag.path;
-
                     }
+
                     mTask.DestinationName = acc.Name;
 
                     FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
