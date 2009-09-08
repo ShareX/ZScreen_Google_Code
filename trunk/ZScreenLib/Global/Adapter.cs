@@ -224,7 +224,7 @@ namespace ZScreenLib
                 }
                 return tpu.UserAuth(ub.UserName, ub.Password);
             }
-            return string.Empty;
+            return null;
         }
 
         /// <summary>

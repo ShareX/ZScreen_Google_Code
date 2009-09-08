@@ -2146,7 +2146,11 @@ namespace ZScreenGUI
 
         private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
         {
-            txtTinyPicShuk.Text = Adapter.GetTinyPicShuk();
+            string shuk = Adapter.GetTinyPicShuk();
+            if (null != shuk)
+            {
+                txtTinyPicShuk.Text = shuk;
+            }
             this.BringToFront();
         }
 
