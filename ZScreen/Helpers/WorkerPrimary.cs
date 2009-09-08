@@ -63,7 +63,7 @@ namespace ZScreenGUI
 
         #region Worker Events
 
-        public void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        public override void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
@@ -144,6 +144,20 @@ namespace ZScreenGUI
                     (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
                 {
                     task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
+                }
+            }
+
+            if (task.MakeTinyURL)
+            {
+                string url = task.RemoteFilePath;
+                if (!string.IsNullOrEmpty(url))
+                {
+                    url = Adapter.TryShortenURL(url);
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        task.RemoteFilePath = url;
+                        task.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
+                    }
                 }
             }
 
