@@ -644,6 +644,10 @@ namespace ZScreenGUI
             // Image Uploader Settings
             ///////////////////////////////////
 
+            // Twitter 
+            txtTwitterPin.Text = Engine.conf.TwitterAuthInfo.PIN;
+            btnTwitterAuth.Enabled = string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token);
+
             // TinyPic
 
             txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
@@ -664,7 +668,7 @@ namespace ZScreenGUI
                 cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
             }
 
-            cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
+            // cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
             if (cboTwitPicThumbnailMode.Items.Count == 0)
             {
@@ -680,7 +684,7 @@ namespace ZScreenGUI
                 cboYfrogUploadMode.Items.AddRange(typeof(YfrogUploadType).GetDescriptions());
             }
 
-            cboYfrogUploadMode.SelectedIndex = (int)Engine.conf.YfrogUploadMode;
+            // cboYfrogUploadMode.SelectedIndex = (int)Engine.conf.YfrogUploadMode;
 
             // ImageBam
 
@@ -3795,7 +3799,7 @@ namespace ZScreenGUI
 
         private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
+            //  Engine.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
@@ -4254,7 +4258,7 @@ namespace ZScreenGUI
 
         private void cboYfrogUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
+            //  Engine.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
         }
 
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
@@ -4411,19 +4415,13 @@ namespace ZScreenGUI
         {
             if (string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token))
             {
-                // authorize ZScreen to twitter
-                oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
-                string authLink = oAuth.AuthorizationLinkGet();
-                if (!string.IsNullOrEmpty(authLink))
-                {
-                    System.Diagnostics.Process.Start(authLink);
-                }
+                Adapter.TwitterAuthGetPin();
 
                 ZScreenLib.InputBox ib = new ZScreenLib.InputBox();
                 ib.Title = "Enter PIN";
                 if (ib.ShowDialog() == DialogResult.OK)
                 {
-                    Engine.conf.TwitterAuthInfo = oAuth.AccessTokenGet(oAuth.AuthInfo.OAuthToken, ib.InputText);
+                    Adapter.TwitterAuthSetPin(ib.InputText);
                 }
             }
 
@@ -4431,6 +4429,24 @@ namespace ZScreenGUI
             {
                 Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
             }
+        }
+
+        private void btnTwitterPin_Click(object sender, EventArgs e)
+        {
+            Adapter.TwitterAuthGetPin();
+        }
+
+        private void btnTwitterAuth_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtTwitterPin.Text))
+            {
+                Adapter.TwitterAuthSetPin(txtTwitterPin.Text);
+            }
+        }
+
+        private void txtTwitterPin_TextChanged(object sender, EventArgs e)
+        {
+            btnTwitterAuth.Enabled = true;
         }
     }
 }

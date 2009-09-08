@@ -23,22 +23,30 @@
 
 using System;
 using System.Windows.Forms;
+using System.Web;
 
 namespace UploadersLib.Helpers
 {
     public partial class TwitterMsg : Form
     {
         public string Message { get; set; }
+        private oAuthTwitter moAuth { get; set; }
 
-        public TwitterMsg(string title)
-            :this()
+        public TwitterMsg(oAuthTwitter oAuth, string title)
+            :this(oAuth)
         {
             this.Text = title;
         }
 
-        public TwitterMsg()
+        public TwitterMsg(oAuthTwitter oAuth)
         {
             InitializeComponent();
+            this.moAuth = oAuth;
+        }
+
+        public TwitterMsg(string title)
+        {
+            this.Text = title;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -48,21 +56,20 @@ namespace UploadersLib.Helpers
                 this.Message = txtTweet.Text;
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
+                if (null != moAuth && !string.IsNullOrEmpty(txtTweet.Text))
+                {
+                    // URL-encode the tweet...
+                    string tweet = HttpUtility.UrlEncode(txtTweet.Text);
+                    // And send it off...
+                    string xml = moAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
+                }
             }
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Hide();
-        }
-
-        private void InputBox_Shown(object sender, EventArgs e)
-        {
-            txtTweet.Focus();
-            txtTweet.SelectionStart = 0;
-           // txtTweet.SelectionLength = txtTweet.Text.Length;
         }
 
         private void txtTweet_TextChanged(object sender, EventArgs e)

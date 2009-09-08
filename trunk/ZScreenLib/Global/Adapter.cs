@@ -476,6 +476,36 @@ namespace ZScreenLib
             }
         }
 
+        public static void TwitterAuthGetPin()
+        {
+            // authorize ZScreen to twitter
+            oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+            string authLink = oAuth.AuthorizationLinkGet();
+            if (!string.IsNullOrEmpty(authLink))
+            {
+                System.Diagnostics.Process.Start(authLink);
+            }
+        }
+
+        public static void TwitterAuthSetPin(string pin)
+        {
+            oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+            Engine.conf.TwitterAuthInfo = oAuth.AccessTokenGet(oAuth.AuthInfo.OAuthToken, pin);
+        }
+
+        public static void TwitterMsg(ref WorkerTask task)
+        {
+            TwitterMsg(task.RemoteFilePath);
+        }
+
+        public static void TwitterMsg(string url)
+        {
+            oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, Engine.conf.TwitterAuthInfo);
+            TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");
+            msg.txtTweet.Text = url;
+            msg.Show();
+        }
+
         public static int RandomNumber(int min, int max)
         {
             Random random = new Random();

@@ -208,9 +208,9 @@ namespace UploadersLib.Helpers
                 {
                     requestWriter.Write(postData);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    throw;
+                    Console.WriteLine(ex.ToString());
                 }
                 finally
                 {
@@ -242,9 +242,9 @@ namespace UploadersLib.Helpers
                 responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                 responseData = responseReader.ReadToEnd();
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                Console.WriteLine(ex.ToString());
             }
             finally
             {
