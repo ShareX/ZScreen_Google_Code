@@ -124,7 +124,6 @@ namespace UploadersLib.Helpers
                         qs[key] = HttpUtility.UrlDecode(qs[key]);
                         qs[key] = this.UrlEncode(qs[key]);
                         postData += key + "=" + qs[key];
-
                     }
                     if (url.IndexOf("?") > 0)
                     {
@@ -188,13 +187,14 @@ namespace UploadersLib.Helpers
         /// <returns>The web server response.</returns>
         public string WebRequest(Method method, string url, string postData)
         {
-            HttpWebRequest webRequest = null;
+            HttpWebRequest webRequest = null;            
             StreamWriter requestWriter = null;
             string responseData = "";
 
             webRequest = System.Net.WebRequest.Create(url) as HttpWebRequest;
             webRequest.Method = method.ToString();
             webRequest.ServicePoint.Expect100Continue = false;
+            webRequest.Proxy = Uploader.ProxySettings.GetWebProxy;
             //webRequest.UserAgent  = "Identify your application please.";
             //webRequest.Timeout = 20000;
 

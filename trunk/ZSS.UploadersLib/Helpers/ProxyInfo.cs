@@ -53,7 +53,7 @@ namespace UploadersLib.Helpers
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}:{2}", this.UserName, this.Host, this.Port);
+        	return string.Format("{0} - {1}:{2} ({3})", this.UserName, this.Host, this.Port, this.ProxyType.ToString());
         }
 
         public string GetAddress()
