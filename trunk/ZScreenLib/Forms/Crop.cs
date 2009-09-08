@@ -188,7 +188,6 @@ namespace ZScreenLib
                 forceCheck = false;
 
                 dragging = IsDragging(mousePos);
-                Console.Write(dragging.ToString());
 
                 if (selectedWindowMode)
                 {

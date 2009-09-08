@@ -171,9 +171,14 @@ namespace UploadersLib.FileUploaders
             args.Add("email", email);
             args.Add("password", password);
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return !ParseResponse(response).Error;
+            if (!string.IsNullOrEmpty(response))
+            {
+                return !ParseResponse(response).Error;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -190,13 +195,16 @@ namespace UploadersLib.FileUploaders
             args.Add("app_version", AppVersion); // Application specific, formatting / style is up to you
             args.Add("response_format", "xml"); // Value must be: XML
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            ResponsePacket packet = ParseResponse(response);
-
-            if (!packet.Error)
+            if (!string.IsNullOrEmpty(response))
             {
-                return packet.Result.ElementValue("token");
+                ResponsePacket packet = ParseResponse(response);
+
+                if (!packet.Error)
+                {
+                    return packet.Result.ElementValue("token");
+                }
             }
 
             return null;
@@ -218,14 +226,17 @@ namespace UploadersLib.FileUploaders
             args.Add("user_name", username);
             args.Add("tokened_password", GetMD5(token + GetMD5(password))); // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            ResponsePacket packet = ParseResponse(response);
-
-            if (!packet.Error)
+            if (!string.IsNullOrEmpty(response))
             {
-                LoginInfo loginInfo = new LoginInfo(packet.Result);
-                return loginInfo;
+                ResponsePacket packet = ParseResponse(response);
+
+                if (!packet.Error)
+                {
+                    LoginInfo loginInfo = new LoginInfo(packet.Result);
+                    return loginInfo;
+                }
             }
 
             return null;
@@ -243,17 +254,20 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.checkSession");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            ResponsePacket packet = ParseResponse(response);
-
-            if (!packet.Error)
+            if (!string.IsNullOrEmpty(response))
             {
-                string session = packet.Result.ElementValue("session");
+                ResponsePacket packet = ParseResponse(response);
 
-                if (!string.IsNullOrEmpty(session))
+                if (!packet.Error)
                 {
-                    return session == "ok";
+                    string session = packet.Result.ElementValue("session");
+
+                    if (!string.IsNullOrEmpty(session))
+                    {
+                        return session == "ok";
+                    }
                 }
             }
 
@@ -272,9 +286,14 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.logout");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            return !ParseResponse(response).Error;
+            if (!string.IsNullOrEmpty(response))
+            {
+                return !ParseResponse(response).Error;
+            }
+
+            return false;
         }
 
         #endregion
@@ -294,14 +313,17 @@ namespace UploadersLib.FileUploaders
             args.Add("session_key", sessionKey);
             args.Add("speed_limit", SpeedLimit.ToString());
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            ResponsePacket packet = ParseResponse(response);
-
-            if (!packet.Error)
+            if (!string.IsNullOrEmpty(response))
             {
-                UploadInfo uploadInfo = new UploadInfo(packet.Result);
-                return uploadInfo;
+                ResponsePacket packet = ParseResponse(response);
+
+                if (!packet.Error)
+                {
+                    UploadInfo uploadInfo = new UploadInfo(packet.Result);
+                    return uploadInfo;
+                }
             }
 
             return null;
@@ -320,14 +342,17 @@ namespace UploadersLib.FileUploaders
             args.Add("api_version", SENDSPACE_API_VERSION);
             args.Add("app_version", AppVersion);
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponse(SENDSPACE_API_URL, args);
 
-            ResponsePacket packet = ParseResponse(response);
-
-            if (!packet.Error)
+            if (!string.IsNullOrEmpty(response))
             {
-                UploadInfo uploadInfo = new UploadInfo(packet.Result);
-                return uploadInfo;
+                ResponsePacket packet = ParseResponse(response);
+
+                if (!packet.Error)
+                {
+                    UploadInfo uploadInfo = new UploadInfo(packet.Result);
+                    return uploadInfo;
+                }
             }
 
             return null;
