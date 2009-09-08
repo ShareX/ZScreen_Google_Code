@@ -162,22 +162,6 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Engine.conf.TwitterEnabled)
-            {
-                TwitterMsg msg = new TwitterMsg("Update Twitter Status...");
-                msg.txtTweet.Text = " " + task.RemoteFilePath;
-                if (msg.ShowDialog() == DialogResult.OK)
-                {
-                    if (!string.IsNullOrEmpty(msg.txtTweet.Text))
-                    {
-                        // URL-encode the tweet...
-                        string tweet = HttpUtility.UrlEncode(msg.txtTweet.Text);
-                        // And send it off...
-                        oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, Engine.conf.TwitterAuthInfo);
-                        string xml = oAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
-                    }
-                }
-            }
             e.Result = task;
         }
 
@@ -326,6 +310,11 @@ namespace ZScreenGUI
                     }
 
                     UploadManager.SetClipboardText(task, false);
+
+                    if (Engine.conf.TwitterEnabled)
+                    {
+                        Adapter.TwitterMsg(ref task);
+                    }
 
                     if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
                     {

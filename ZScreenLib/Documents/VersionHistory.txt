@@ -1,5 +1,6 @@
-Version 3.4 - 20091015
+Version 3.5 - 20091015
 
+3.05.0.0 Application wide support to update Twitter status upon completion of an upload {McoreD}
 3.04.5.2 Large images no longer upload when enabling "change to JPG after X KiB" [Issue 130] {McoreD}
 3.04.5.1 Windows 7 hotkeys sometimes did not trigger the action [Issue 100] {McoreD}
 3.04.5.0 FTP Server destination was removed from both Images/Text in favor of File Uploader {Jaex}

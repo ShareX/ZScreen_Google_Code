@@ -66,6 +66,7 @@
             this.txtTweet.Name = "txtTweet";
             this.txtTweet.Size = new System.Drawing.Size(461, 120);
             this.txtTweet.TabIndex = 2;
+            this.txtTweet.TabStop = false;
             this.txtTweet.TextChanged += new System.EventHandler(this.txtTweet_TextChanged);
             // 
             // lblCount
@@ -95,7 +96,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Description";
             this.TopMost = true;
-            this.Shown += new System.EventHandler(this.InputBox_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

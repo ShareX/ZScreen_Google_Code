@@ -307,7 +307,7 @@ namespace ZScreenLib
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
                     twitpicOpt.UserName = Engine.conf.TwitterUserName;
                     twitpicOpt.Password = Engine.conf.TwitterPassword;
-                    twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                   // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
                     twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
@@ -323,7 +323,7 @@ namespace ZScreenLib
                     yfrogOp.UserName = Engine.conf.TwitterUserName;
                     yfrogOp.Password = Engine.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
-                    yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
+                   // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
