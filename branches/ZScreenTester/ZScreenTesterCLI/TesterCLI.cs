@@ -15,7 +15,7 @@ namespace ZScreenTesterCLI
                 Console.WriteLine("Starting: " + uploader.GetDescription());
                 WorkerTask task = new WorkerTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task.MyImageUploader = uploader;
-                task.SetLocalFilePath(Tester.TestFile);
+                task.UpdateLocalFilePath(Tester.TestFile);
                 if (uploader != ImageDestType.TWITSNAPS)
                 {
                     new TaskManager(ref task).UploadImage();
