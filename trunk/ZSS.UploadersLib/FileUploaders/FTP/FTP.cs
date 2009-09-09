@@ -52,8 +52,9 @@ namespace UploadersLib
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
-            if (Uploader.ProxySettings != null)
+            if (null != Uploader.ProxySettings && null != account.MyProxyInfo)
             {
+            	Uploader.AppendDebug("Proxy Settings: " + account.MyProxyInfo.ToString());
             	IProxyClient proxy = Uploader.ProxySettings.GetProxyClient(account.MyProxyInfo);
                 if (proxy != null)
                 {

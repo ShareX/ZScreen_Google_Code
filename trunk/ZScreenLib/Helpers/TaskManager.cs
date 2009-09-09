@@ -257,6 +257,7 @@ namespace ZScreenLib
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
+                	FileSystem.AppendDebug("Changing from TinyPic to ImageShack to large image size");
                     mTask.MyImageUploader = ImageDestType.IMAGESHACK;
                 }
             }
