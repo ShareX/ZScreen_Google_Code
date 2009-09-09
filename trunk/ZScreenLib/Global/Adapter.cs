@@ -294,17 +294,21 @@ namespace ZScreenLib
 
         public static string TryShortenURL(string url)
         {
-        	FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.LimitLongURL));
-            if (!string.IsNullOrEmpty(url) && (Engine.conf.LimitLongURL == 0 || Engine.conf.LimitLongURL > 0 && url.Length > Engine.conf.LimitLongURL ||
-                Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
+            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.LimitLongURL));
+            if (!string.IsNullOrEmpty(url))
             {
-                TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
-                if (tu != null)
+                if (Engine.conf.LimitLongURL == 0 || Engine.conf.TwitterEnabled ||
+                    (Engine.conf.LimitLongURL > 0 && url.Length > Engine.conf.LimitLongURL) ||
+                    (Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
                 {
-                    string temp = tu.UploadText(TextInfo.FromString(url));
-                    if (!string.IsNullOrEmpty(temp))
+                    TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
+                    if (tu != null)
                     {
-                        url = temp;
+                        string temp = tu.UploadText(TextInfo.FromString(url));
+                        if (!string.IsNullOrEmpty(temp))
+                        {
+                            url = temp;
+                        }
                     }
                 }
             }
@@ -389,7 +393,7 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-        	FileSystem.AppendDebug("Proxy Enabled: " + Engine.conf.ProxyEnabled.ToString());
+            FileSystem.AppendDebug("Proxy Enabled: " + Engine.conf.ProxyEnabled.ToString());
             return new ProxySettings { ProxyEnabled = Engine.conf.ProxyEnabled, ProxyActive = Engine.conf.ProxyActive };
         }
 
@@ -483,16 +487,27 @@ namespace ZScreenLib
             // authorize ZScreen to twitter
             oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
             string authLink = oAuth.AuthorizationLinkGet();
+            Engine.conf.TwitterAuthInfo = oAuth.AuthInfo;
             if (!string.IsNullOrEmpty(authLink))
             {
                 System.Diagnostics.Process.Start(authLink);
             }
         }
 
-        public static void TwitterAuthSetPin(string pin)
+        public static bool TwitterAuthSetPin(string pin)
         {
-            oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
-            Engine.conf.TwitterAuthInfo = oAuth.AccessTokenGet(oAuth.AuthInfo.OAuthToken, pin);
+            bool succ = true;
+            try
+            {
+                oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+                Engine.conf.TwitterAuthInfo = oAuth.AccessTokenGet(Engine.conf.TwitterAuthInfo.OAuthToken, pin);
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug(ex);
+                succ = false;
+            }
+            return succ;
         }
 
         public static void TwitterMsg(ref WorkerTask task)
