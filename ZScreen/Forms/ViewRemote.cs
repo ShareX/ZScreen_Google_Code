@@ -169,7 +169,7 @@ namespace ZScreenLib
                     bwRemoteViewer.RunWorkerAsync(rvt);
                 }
 
-                if (FileSystem.IsValidImage(fp))
+                if (GraphicsMgr.IsValidImage(fp))
                 {
                     pbViewer.Left = 0;
                     pbViewer.Top = 0;
@@ -329,7 +329,7 @@ namespace ZScreenLib
                 case RemoteViewerTask.ProgressType.VIEWING_FILE:
                     fp = (string)e.UserState;
                     FileSystem.AppendDebug(string.Format("Viewing file: {0}", fp));
-                    if (FileSystem.IsValidImage(fp))
+                    if (GraphicsMgr.IsValidImage(fp))
                     {
                         pbViewer.Visible = true;
                         txtViewer.Visible = false;

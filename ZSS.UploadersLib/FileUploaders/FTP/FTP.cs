@@ -52,13 +52,16 @@ namespace UploadersLib
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
-            if (null != Uploader.ProxySettings && null != account.MyProxyInfo)
+            if (null != Uploader.ProxySettings)
             {
-            	Uploader.AppendDebug("Proxy Settings: " + account.MyProxyInfo.ToString());
-            	IProxyClient proxy = Uploader.ProxySettings.GetProxyClient(account.MyProxyInfo);
-                if (proxy != null)
+                if (Uploader.ProxySettings.ProxyEnabled && null != account.MyProxyInfo)
                 {
-                    Client.Proxy = proxy;
+                    Uploader.AppendDebug("Proxy Settings: " + account.MyProxyInfo.ToString());
+                    IProxyClient proxy = Uploader.ProxySettings.GetProxyClient(account.MyProxyInfo);
+                    if (proxy != null)
+                    {
+                        Client.Proxy = proxy;
+                    }
                 }
             }
 

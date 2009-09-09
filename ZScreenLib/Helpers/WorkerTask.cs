@@ -238,20 +238,6 @@ namespace ZScreenLib
             }
         }
 
-        /*
-        public bool SafeToUpload()
-        {
-            bool safe = ((this.Job == Jobs.PROCESS_DRAG_N_DROP || this.Job == Jobs.UploadFromClipboard)
-                && this.MyImageUploader == ImageDestType.FTP) || this.MyImage != null;
-            if (!safe)
-            {
-                this.Errors.Add("Not a valid image.");
-            }
-
-            return safe;
-        }
-        */
-
         public void SetImage(string fp)
         {
             this.MyImage = GraphicsMgr.GetImageSafely(fp);
@@ -298,8 +284,8 @@ namespace ZScreenLib
         {
             this.LocalFilePath = fp;
             this.FileName = Path.GetFileName(fp);
-            
-            if (FileSystem.IsValidImage(fp) && this.MyImage == null)
+
+            if (GraphicsMgr.IsValidImage(fp) && this.MyImage == null)
             {
                 this.MyImage = FileSystem.ImageFromFile(fp);
             }

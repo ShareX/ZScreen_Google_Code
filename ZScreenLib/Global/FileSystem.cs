@@ -243,16 +243,6 @@ namespace ZScreenLib
             return text;
         }
 
-        /// <summary>
-        /// Function to check if file is a valid Image file
-        /// </summary>
-        /// <param name="fp"></param>
-        /// <returns></returns>
-        public static bool IsValidImage(string fp)
-        {
-            return GraphicsMgr.IsValidImage(fp);
-        }
-
         public static Image ImageFromFile(string fp)
         {
             return GraphicsMgr.GetImageSafely(fp);
