@@ -54,7 +54,7 @@ namespace UploadersLib
 
             if (Uploader.ProxySettings != null)
             {
-                IProxyClient proxy = Uploader.ProxySettings.GetProxyClient;
+            	IProxyClient proxy = Uploader.ProxySettings.GetProxyClient(account.MyProxyInfo);
                 if (proxy != null)
                 {
                     Client.Proxy = proxy;

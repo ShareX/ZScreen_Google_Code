@@ -240,6 +240,8 @@ namespace ZScreenLib
                 ZScreenKeyboardHook.Dispose();
                 FileSystem.AppendDebug("Keyboard Hook terminated");
             }
+            Engine.conf.Write();
+            FileSystem.AppendDebug("Settings written to file.");
             FileSystem.WriteDebugFile();
         }
 

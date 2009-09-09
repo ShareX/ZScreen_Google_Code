@@ -14,7 +14,7 @@ namespace UploadersLib.Helpers
         public ProxyInfo ProxyActive { get; set; }
 
         public IWebProxy GetWebProxy
-        {
+        {        	
             get
             {
                 if (ProxyEnabled)
@@ -33,16 +33,14 @@ namespace UploadersLib.Helpers
                 return null;
             }
         }
-
-        public IProxyClient GetProxyClient
-        {
-            get
-            {
-                if (ProxyEnabled && ProxyActive != null)
+        
+        public IProxyClient GetProxyClient(ProxyInfo myProxyInfo){
+        	
+        	if (myProxyInfo != null)
                 {
                     ProxyType proxyType;
 
-                    switch (ProxyActive.ProxyType)
+                    switch (myProxyInfo.ProxyType)
                     {
                         case Proxy.HTTP:
                             proxyType = ProxyType.Http;
@@ -63,11 +61,20 @@ namespace UploadersLib.Helpers
 
                     ProxyClientFactory proxy = new ProxyClientFactory();
 
-                    return proxy.CreateProxyClient(proxyType, ProxyActive.Host, ProxyActive.Port, ProxyActive.UserName, ProxyActive.Password);
+                    return proxy.CreateProxyClient(proxyType, myProxyInfo.Host, myProxyInfo.Port, myProxyInfo.UserName, myProxyInfo.Password);
                 }
+        	
+                return null;	        	
+        }
 
-                return null;
+        public IProxyClient GetProxyClient()
+        {
+            if (ProxyEnabled && ProxyActive != null)
+            {
+            	return GetProxyClient(ProxyActive);
             }
+
+            return null;
         }
     }
 }

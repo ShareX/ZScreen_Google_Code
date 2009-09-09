@@ -44,6 +44,7 @@ namespace UploadersLib
         public event ProgressEventHandler ProgressChanged;
 
         public List<string> Errors { get; set; }
+        public static StringBuilder mDebug = new StringBuilder();
 
         public static ProxySettings ProxySettings { get; set; }
 
@@ -53,7 +54,7 @@ namespace UploadersLib
         {
             this.Errors = new List<string>();
             this.UserAgent = "ZScreen";
-            ProxySettings = new ProxySettings();
+           // ProxySettings = new ProxySettings(); 
         }
 
         protected void OnProgressChanged(int progress)
@@ -82,7 +83,11 @@ namespace UploadersLib
                 request.Method = "POST";
                 request.Proxy = ProxySettings.GetWebProxy;
                 request.UserAgent = UserAgent;
-
+                
+                if (null != request.Proxy && null != ProxySettings.ProxyActive) {
+                	AppendDebug("Using Proxy Settings " + ProxySettings.ProxyActive.ToString());                	
+                }               
+                
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
 
                 stream.Position = 0;
@@ -399,6 +404,19 @@ namespace UploadersLib
         protected string CombineURL(params string[] urls)
         {
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
+        }
+        
+        protected static void AppendDebug(Exception ex)
+        {
+            AppendDebug(ex.ToString());
+        }
+
+        protected static void AppendDebug(string msg)
+        {
+            // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
+            string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
+            Console.WriteLine(line);
+            mDebug.AppendLine(line);
         }
 
         #endregion
