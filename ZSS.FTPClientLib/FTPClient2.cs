@@ -530,7 +530,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvi.Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    path = FTPAdapter.Account.GetUriPath(file.FullPath, true);
+                    path = FTPHelpers.CombineURL(Account.HttpPath, file.FullPath);
                     list.Add(path);
                 }
             }
@@ -550,7 +550,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    Process.Start(FTPAdapter.Account.GetUriPath(file.FullPath, true));
+                    Process.Start(FTPHelpers.CombineURL(Account.HttpPath, file.FullPath));
                 }
             }
         }
