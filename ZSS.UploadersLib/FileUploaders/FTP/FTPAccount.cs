@@ -57,8 +57,8 @@ namespace UploadersLib
 
         [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button"), DefaultValue(true)]
         public bool AutoCreateFolder { get; set; }
-        
-		[Category("FTP"), Description("Proxy Settings used for this FTP Account")]
+
+        [Category("FTP"), Description("Proxy Settings used for this FTP Account")]
         public UploadersLib.Helpers.ProxyInfo MyProxyInfo { get; set; }
 
         [Category("FTP"), Description("ftp://Server:Port")]
@@ -70,8 +70,8 @@ namespace UploadersLib
         public FTPAccount()
         {
             Port = 21;
-            Path = "";
-            HttpPath = "";
+            Path = string.Empty;
+            HttpPath = string.Empty;
             IsActive = false;
             AutoCreateFolder = true;
         }
@@ -87,47 +87,41 @@ namespace UploadersLib
             return GetUriPath(fileName, false);
         }
 
-        Regex pathHasFolder = new Regex(@"[^/]/[^/]", RegexOptions.Compiled);
-
         public string GetUriPath(string fileName, bool customPath)
         {
-            if (!string.IsNullOrEmpty(HttpPath))
-            {
-                fileName = fileName.Replace(" ", "%20"); //maybe use system.web encoding here...
-                string path;
+            string path = string.Empty;
 
-                if (pathHasFolder.Match(this.HttpPath).Success)
+            if (string.IsNullOrEmpty(HttpPath))
+            {
+                path = FTPHelpers.CombineURL(Server, customPath ? string.Empty : this.Path, fileName);
+            }
+            else
+            {
+                fileName = fileName.Replace(" ", "%20");
+
+                string httppath = this.HttpPath.Replace("%", this.Server);
+
+                if (this.HttpPath.StartsWith("@"))
                 {
-                    path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), fileName);
+                    path = FTPHelpers.CombineURL(httppath, fileName);
                 }
                 else
                 {
-                    path = FTPHelpers.CombineURL(HttpPath.Replace("%", Server), this.Path, fileName);
+                    path = FTPHelpers.CombineURL(httppath, this.Path, fileName);
                 }
-
-                if (!path.StartsWith("http://"))
-                {
-                    path = "http://" + path;
-                }
-
-                return path;
             }
 
-            return AutoGuessPath(fileName, customPath);
-        }
+            if (!path.StartsWith("http://"))
+            {
+                path = "http://" + path;
+            }
 
-        private string AutoGuessPath(string fileName, bool customPath)
-        {
-            string path = "";
-            if (!customPath) path = Path;
-            fileName = FTPHelpers.CombineURL(Server, path, fileName);
-            if (!fileName.StartsWith("http://")) fileName = "http://" + fileName;
-            return fileName;
+            return path;
         }
 
         public override string ToString()
         {
-            return this.Name + " - " + this.Server + ":" + this.Port;
+            return string.Format("{0} - {1}:{2}", this.Name, this.Server, this.Port);
         }
     }
 }
