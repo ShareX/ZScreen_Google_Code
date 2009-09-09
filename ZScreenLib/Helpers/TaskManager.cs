@@ -422,7 +422,7 @@ namespace ZScreenLib
                 {
                     FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
                     mTask.DestinationName = string.Format("FTP - {0}", acc.Name);
-                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Server));
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Host));
 
                     FTPUploader fu = new FTPUploader(acc);
                     fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);

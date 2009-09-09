@@ -64,7 +64,7 @@ namespace ZSS.FTPClientLib
             this.Text = "FTP Client - " + account.Name;
             lblConnecting.Text = "Connecting to " + account.FTPAddress;
 
-            FTPAdapter.Client.OpenAsync(account.Username, account.Password);
+            FTPAdapter.Client.OpenAsync(account.UserName, account.Password);
         }
 
         #region Methods
@@ -530,7 +530,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvi.Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    path = FTPHelpers.CombineURL(Account.HttpPath, file.FullPath);
+                    path = FTPHelpers.CombineURL(Account.HttpHomePath, file.FullPath);
                     list.Add(path);
                 }
             }
@@ -550,7 +550,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    Process.Start(FTPHelpers.CombineURL(Account.HttpPath, file.FullPath));
+                    Process.Start(FTPHelpers.CombineURL(Account.HttpHomePath, file.FullPath));
                 }
             }
         }

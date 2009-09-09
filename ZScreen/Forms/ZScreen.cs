@@ -4467,16 +4467,5 @@ namespace ZScreenGUI
         {
             btnTwitterAuth.Enabled = true;
         }
-
-        void BtnFTPSetProxyClick(object sender, EventArgs e)
-        {
-            ProxySettings proxySettings = Adapter.CheckProxySettings();
-            int sel = ucFTPAccounts.AccountsList.SelectedIndex;
-            if (Adapter.CheckFTPAccounts())
-            {
-                FTPAccount acc = Engine.conf.FTPAccountList[sel];
-                acc.MyProxyInfo = proxySettings.ProxyActive;
-            }
-        }
     }
 }

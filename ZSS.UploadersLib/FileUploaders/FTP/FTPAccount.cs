@@ -33,47 +33,57 @@ namespace UploadersLib
         [Category("FTP"), Description("In list will be visible like this: Name - Server:Port")]
         public string Name { get; set; }
 
-        [Category("FTP"), Description("Host")]
-        public string Server { get; set; }
+        [Category("FTP"), Description("Host, e.g. brandonz.net")]
+        private string _host;
+        public string Host
+        {
+            get
+            {
+                if (!_host.StartsWith("ftp."))
+                {
+                    _host = "ftp." + _host;
+                }
+                return _host;
+            }
+            set
+            {
+                _host = value;
+            }
+        }
 
-        [Category("FTP"), Description("Port number"), DefaultValue(21)]
+        [Category("FTP"), Description("Port Number"), DefaultValue(21)]
         public int Port { get; set; }
 
         [Category("FTP")]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("FTP"), Description("FTP path, e.g. screenshots (not /htdocs/screenshots)\nEmpty = Use FTP Web Root Path"), DefaultValue("")]
-        public string Path { get; set; }
+        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots (not /htdocs/screenshots). Path will not be added if HttpHomePath starts with @ otherwise at all times URL = HttpHomePath + SubFolderPath + FileName"), DefaultValue("")]
+        public string SubFolderPath { get; set; }
 
-        [Category("FTP"), Description("HTTP path: (e.g.: brandonz.net/screenshots or %/screenshots)\n" +
-            "% = Server, Empty = Auto guess HTTP path (Server + FTP path)"), DefaultValue("")]
-        public string HttpPath { get; set; }
+        [Category("FTP"), Description("HTTP Home Path, e.g. brandonz.net\n% = Host, @ = ignore SubFolderPath when generating URL"), DefaultValue("")]
+        public string HttpHomePath { get; set; }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get; set; }
 
-        [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button"), DefaultValue(true)]
-        public bool AutoCreateFolder { get; set; }
-
-        [Category("FTP"), Description("Proxy Settings used for this FTP Account")]
-        public UploadersLib.Helpers.ProxyInfo MyProxyInfo { get; set; }
-
-        [Category("FTP"), Description("ftp://Server:Port")]
+        [Category("FTP"), Description("ftp://Host:Port"), Browsable(false)]
         public string FTPAddress
         {
-            get { return string.Format("ftp://{0}:{1}", Server, Port); }
+            get
+            {
+                return string.Format("ftp://{0}:{1}", Host, Port);
+            }
         }
 
         public FTPAccount()
         {
             Port = 21;
-            Path = string.Empty;
-            HttpPath = string.Empty;
+            SubFolderPath = string.Empty;
+            HttpHomePath = string.Empty;
             IsActive = false;
-            AutoCreateFolder = true;
         }
 
         public FTPAccount(string name)
@@ -84,30 +94,25 @@ namespace UploadersLib
 
         public string GetUriPath(string fileName)
         {
-            return GetUriPath(fileName, false);
-        }
-
-        public string GetUriPath(string fileName, bool customPath)
-        {
             string path = string.Empty;
 
-            if (string.IsNullOrEmpty(HttpPath))
+            if (string.IsNullOrEmpty(HttpHomePath))
             {
-                path = FTPHelpers.CombineURL(Server, customPath ? string.Empty : this.Path, fileName);
+                path = FTPHelpers.CombineURL(Host, this.SubFolderPath, fileName);
             }
             else
             {
                 fileName = fileName.Replace(" ", "%20");
 
-                string httppath = this.HttpPath.Replace("%", this.Server);
+                string httppath = this.HttpHomePath.Replace("%", this.Host.Replace("ftp.", ""));
 
-                if (this.HttpPath.StartsWith("@"))
+                if (this.HttpHomePath.StartsWith("@"))
                 {
                     path = FTPHelpers.CombineURL(httppath, fileName);
                 }
                 else
                 {
-                    path = FTPHelpers.CombineURL(httppath, this.Path, fileName);
+                    path = FTPHelpers.CombineURL(httppath, this.SubFolderPath, fileName);
                 }
             }
 
@@ -121,7 +126,7 @@ namespace UploadersLib
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}:{2}", this.Name, this.Server, this.Port);
+            return string.Format("{0} - {1}:{2}", this.Name, this.Host, this.Port);
         }
     }
 }
