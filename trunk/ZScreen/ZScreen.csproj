@@ -229,6 +229,10 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <ProjectReference Include="..\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj">
+      <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
+      <Name>Starksoft.Net.Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\ViewRemote.resx">

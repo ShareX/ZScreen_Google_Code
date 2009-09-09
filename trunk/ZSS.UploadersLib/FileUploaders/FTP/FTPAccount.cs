@@ -57,6 +57,9 @@ namespace UploadersLib
 
         [Category("FTP"), Description("If the folder does not exist it will be created automatically when you press the Test button"), DefaultValue(true)]
         public bool AutoCreateFolder { get; set; }
+        
+		[Category("FTP"), Description("Proxy Settings used for this FTP Account")]
+        public UploadersLib.Helpers.ProxyInfo MyProxyInfo { get; set; }
 
         [Category("FTP"), Description("ftp://Server:Port")]
         public string FTPAddress
