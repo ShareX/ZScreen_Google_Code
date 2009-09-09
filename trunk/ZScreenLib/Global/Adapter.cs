@@ -294,6 +294,7 @@ namespace ZScreenLib
 
         public static string TryShortenURL(string url)
         {
+        	FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.LimitLongURL));
             if (!string.IsNullOrEmpty(url) && (Engine.conf.LimitLongURL == 0 || Engine.conf.LimitLongURL > 0 && url.Length > Engine.conf.LimitLongURL ||
                 Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
             {
