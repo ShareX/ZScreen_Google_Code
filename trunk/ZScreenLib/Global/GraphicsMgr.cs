@@ -65,16 +65,19 @@ namespace ZScreenLib
         public static Image GetImageSafely(string fp)
         {
             Bitmap bmp = null;
-            try
+            if (IsValidImage(fp))
             {
-                using (Image img = Image.FromFile(fp))
+                try
                 {
-                    bmp = new Bitmap(img);
+                    using (Image img = Image.FromFile(fp))
+                    {
+                        bmp = new Bitmap(img);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug(ex.ToString());
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.ToString());
+                }
             }
             return bmp;
         }

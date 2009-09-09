@@ -125,7 +125,10 @@ namespace ZScreenGUI
                     JumpListLink settingsJumpListLink = new JumpListLink(Engine.SettingsDir, "Settings");
                     settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
-                    paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink);
+                    JumpListLink logsJumpListLink = new JumpListLink(Engine.LogsDir, "Logs");
+                    logsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+
+                    paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink, logsJumpListLink);
                     Engine.zJumpList.AddCustomCategories(paths);
 
                     // Taskbar Buttons
@@ -2849,7 +2852,7 @@ namespace ZScreenGUI
         private void pbHistoryThumb_Click(object sender, EventArgs e)
         {
             HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            if (hi != null && File.Exists(hi.LocalPath) && FileSystem.IsValidImage(hi.LocalPath))
+            if (hi != null && File.Exists(hi.LocalPath) && GraphicsMgr.IsValidImage(hi.LocalPath))
             {
                 using (ShowScreenshot sc = new ShowScreenshot(Image.FromFile(hi.LocalPath)))
                 {
