@@ -52,7 +52,7 @@ namespace ZScreenLib
 
             try
             {
-                string[] splode, str = mFTP.ListDirectory(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path));
+                string[] splode, str = mFTP.ListDirectory(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath));
                 string goodFile;
 
                 bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_PROGRESS_MAX, str.Length);
@@ -111,7 +111,7 @@ namespace ZScreenLib
                 {
                     if (!string.IsNullOrEmpty(obj))
                     {
-                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path, obj));
+                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath, obj));
                         lbFiles.Items.Remove(obj);
                     }
                 }
@@ -146,7 +146,7 @@ namespace ZScreenLib
                 {
                     foreach (string str in lbFiles.SelectedItems)
                     {
-                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path, str), Path.Combine(dir, Path.GetFileName(str)));
+                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath, str), Path.Combine(dir, Path.GetFileName(str)));
                     }
                 }
                 catch
@@ -216,7 +216,7 @@ namespace ZScreenLib
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,
                 string.Format("Fetching files from {0}", mAcc.Name));
 
-            if (mAcc != null && !string.IsNullOrEmpty(mAcc.Server))
+            if (mAcc != null && !string.IsNullOrEmpty(mAcc.Host))
             {
                 FTPOptions fopt = new FTPOptions();
                 fopt.Account = mAcc;
@@ -245,7 +245,7 @@ namespace ZScreenLib
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.Path, file), localfile);
+                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath, file), localfile);
                 }
                 catch (System.Exception ex)
                 {

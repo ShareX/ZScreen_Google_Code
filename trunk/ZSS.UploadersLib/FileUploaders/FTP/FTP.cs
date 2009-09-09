@@ -48,16 +48,14 @@ namespace UploadersLib
             this.Account = account;
             this.Client = new FtpClient();
 
-            Client.Host = account.Server;
+            Client.Host = account.Host;
             Client.Port = account.Port;
             Client.DataTransferMode = account.IsActive ? TransferMode.Active : TransferMode.Passive;
 
             if (null != Uploader.ProxySettings)
             {
-                if (Uploader.ProxySettings.ProxyEnabled && null != account.MyProxyInfo)
+                IProxyClient proxy = Uploader.ProxySettings.GetProxyClient();
                 {
-                    Uploader.AppendDebug("Proxy Settings: " + account.MyProxyInfo.ToString());
-                    IProxyClient proxy = Uploader.ProxySettings.GetProxyClient(account.MyProxyInfo);
                     if (proxy != null)
                     {
                         Client.Proxy = proxy;
@@ -95,7 +93,7 @@ namespace UploadersLib
 
         public void Connect()
         {
-            Connect(Account.Username, Account.Password);
+            Connect(Account.UserName, Account.Password);
         }
 
         public void Disconnect()

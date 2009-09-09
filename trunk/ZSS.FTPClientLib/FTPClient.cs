@@ -524,7 +524,7 @@ namespace ZSS.FTPClientLib
                 if (!file.IsSpecial)
                 {
                     path = currentDirectory.Remove(0, FTPAdapter.Options.Account.FTPAddress.Length);
-                    path = FTPAdapter.Options.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name), true);
+                    path = FTPAdapter.Options.Account.GetUriPath(FTPHelpers.CombineURL(path, file.Name));
                     list.Add(path);
                 }
             }
