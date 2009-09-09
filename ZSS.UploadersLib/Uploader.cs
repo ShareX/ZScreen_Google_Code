@@ -72,7 +72,7 @@ namespace UploadersLib
 
         #region Post methods
 
-        private HttpWebResponse GetResponse(string url, Stream stream, string boundary)
+        private HttpWebResponse GetResponseUsingPost(string url, Stream stream, string boundary)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace UploadersLib
             using (MemoryStream stream = new MemoryStream())
             {
                 stream.Write(data, 0, data.Length);
-                return GetResponse(url, stream, boundary);
+                return GetResponseUsingPost(url, stream, boundary);
             }
         }
 
@@ -163,13 +163,13 @@ namespace UploadersLib
 
         protected string GetResponseString(string url, Dictionary<string, string> arguments)
         {
-            using (HttpWebResponse response = GetResponse2(url, arguments))
+            using (HttpWebResponse response = GetResponseUsingGet(url, arguments))
             {
                 return ResponseToString(response);
             }
         }
 
-        private HttpWebResponse GetResponse2(string url, Dictionary<string, string> arguments)
+        private HttpWebResponse GetResponseUsingGet(string url, Dictionary<string, string> arguments)
         {
             try
             {
@@ -218,7 +218,7 @@ namespace UploadersLib
                 bytes = MakeFileInputContent(boundary, fileFormName, fileName, data, true);
                 stream.Write(bytes, 0, bytes.Length);
 
-                using (HttpWebResponse response = GetResponse(url, stream, boundary))
+                using (HttpWebResponse response = GetResponseUsingPost(url, stream, boundary))
                 {
                     return ResponseToString(response);
                 }
@@ -406,12 +406,12 @@ namespace UploadersLib
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
         }
         
-        protected static void AppendDebug(Exception ex)
+        public static void AppendDebug(Exception ex)
         {
             AppendDebug(ex.ToString());
         }
 
-        protected static void AppendDebug(string msg)
+        public static void AppendDebug(string msg)
         {
             // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
             string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
