@@ -85,7 +85,7 @@ namespace UploadersLib
                 request.UserAgent = UserAgent;
                 
                 if (null != request.Proxy && null != ProxySettings.ProxyActive) {
-                	AppendDebug("Using Proxy Settings " + ProxySettings.ProxyActive.ToString());                	
+                	AppendDebug("Proxy Settings called by " + new System.Diagnostics.StackFrame(1).GetMethod().Name);                	
                 }               
                 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
