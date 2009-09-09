@@ -156,6 +156,7 @@ namespace ZScreenGUI
                     url = Adapter.TryShortenURL(url);
                     if (!string.IsNullOrEmpty(url))
                     {
+                        FileSystem.AppendDebug("Shortened URL" + url);
                         task.RemoteFilePath = url;
                         task.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
                     }

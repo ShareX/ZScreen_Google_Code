@@ -878,7 +878,7 @@ namespace ZScreenGUI
             {
                 ucProxyAccounts.AccountsList.SelectedIndex = Engine.conf.ProxySelected;
             }
-           
+
             ///////////////////////////////////
             // Image Uploaders
             ///////////////////////////////////
@@ -1422,11 +1422,12 @@ namespace ZScreenGUI
 
             mGuiIsReady = true;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
-            
-            if (Engine.conf.ProxyEnabled) {
-            	FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());            
-            }            
-            
+
+            if (Engine.conf.ProxyEnabled)
+            {
+                FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
+            }
+
             if (!Engine.conf.RunOnce)
             {
                 Show();
@@ -2933,7 +2934,7 @@ namespace ZScreenGUI
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
             Engine.conf.FTPSelected = sel;
-            
+
             if (Adapter.CheckFTPAccounts())
             {
                 FTPAccount acc = Engine.conf.FTPAccountList[sel];
@@ -3852,9 +3853,10 @@ namespace ZScreenGUI
         private void chkProxyEnable_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ProxyEnabled = chkProxyEnable.Checked;
-            if (mGuiIsReady) {
-				Uploader.ProxySettings = Adapter.CheckProxySettings();            	
-            }            
+            if (mGuiIsReady)
+            {
+                Uploader.ProxySettings = Adapter.CheckProxySettings();
+            }
         }
 
         private void tsmFTPClient_Click(object sender, EventArgs e)
@@ -3890,9 +3892,10 @@ namespace ZScreenGUI
                 Engine.conf.ProxyActive = acc;
                 Engine.conf.ProxySelected = ucProxyAccounts.AccountsList.SelectedIndex;
             }
-            if (mGuiIsReady) {
-            	Uploader.ProxySettings = Adapter.CheckProxySettings();	            	
-            }            
+            if (mGuiIsReady)
+            {
+                Uploader.ProxySettings = Adapter.CheckProxySettings();
+            }
         }
 
         private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
@@ -4450,7 +4453,10 @@ namespace ZScreenGUI
         {
             if (!string.IsNullOrEmpty(txtTwitterPin.Text))
             {
-                Adapter.TwitterAuthSetPin(txtTwitterPin.Text);
+                if (Adapter.TwitterAuthSetPin(txtTwitterPin.Text))
+                {
+                    btnTwitterAuth.Enabled = false;
+                }
             }
         }
 
@@ -4458,16 +4464,16 @@ namespace ZScreenGUI
         {
             btnTwitterAuth.Enabled = true;
         }
-        
+
         void BtnFTPSetProxyClick(object sender, EventArgs e)
         {
-        	ProxySettings proxySettings = Adapter.CheckProxySettings();
-            int sel = ucFTPAccounts.AccountsList.SelectedIndex;          
+            ProxySettings proxySettings = Adapter.CheckProxySettings();
+            int sel = ucFTPAccounts.AccountsList.SelectedIndex;
             if (Adapter.CheckFTPAccounts())
             {
                 FTPAccount acc = Engine.conf.FTPAccountList[sel];
-				acc.MyProxyInfo = proxySettings.ProxyActive;
-            }       	
+                acc.MyProxyInfo = proxySettings.ProxyActive;
+            }
         }
     }
 }
