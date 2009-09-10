@@ -30,16 +30,16 @@ namespace UploadersLib
     [Serializable]
     public class FTPAccount
     {
-        [Category("FTP"), Description("In list will be visible like this: Name - Server:Port")]
+        [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]
         public string Name { get; set; }
 
-        [Category("FTP"), Description("Host, e.g. brandonz.net")]
         private string _host;
+        [Category("FTP"), Description("Host, e.g. brandonz.net")]
         public string Host
         {
             get
             {
-                if (!_host.StartsWith("ftp."))
+                if (!string.IsNullOrEmpty(_host) && !_host.StartsWith("ftp."))
                 {
                     _host = "ftp." + _host;
                 }
@@ -60,7 +60,7 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots (not /htdocs/screenshots). Path will not be added if HttpHomePath starts with @ otherwise at all times URL = HttpHomePath + SubFolderPath + FileName"), DefaultValue("")]
+        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots (not /htdocs/screenshots). SubFolderPath will be ignored if HttpHomePath starts with @ otherwise at all times URL = HttpHomePath + SubFolderPath + FileName"), DefaultValue("")]
         public string SubFolderPath { get; set; }
 
         [Category("FTP"), Description("HTTP Home Path, e.g. brandonz.net\n% = Host, @ = ignore SubFolderPath when generating URL"), DefaultValue("")]
