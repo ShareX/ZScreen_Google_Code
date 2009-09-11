@@ -100,6 +100,10 @@ namespace ZScreenLib
                                     mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
                                 }
                             }
+                            else
+                            {
+                                mTask.Retry = false;
+                            }
                         }
                     }
                 }
