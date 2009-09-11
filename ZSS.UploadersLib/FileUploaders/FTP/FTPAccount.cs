@@ -79,26 +79,30 @@ namespace UploadersLib
 
         public string GetUriPath(string fileName)
         {
-            string path = string.Empty;
+            return GetUriPath(fileName, false);
+        }
 
-            if (string.IsNullOrEmpty(HttpHomePath))
+        public string GetUriPath(string fileName, bool customPath)
+        {
+            string path = string.Empty;
+            string folderPath = this.SubFolderPath;
+
+            if (this.HttpHomePath.StartsWith("@") || customPath)
             {
-                path = FTPHelpers.CombineURL(Host, this.SubFolderPath, fileName);
+                folderPath = string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(this.HttpHomePath))
+            {
+                path = FTPHelpers.CombineURL(this.Host, folderPath, fileName);
             }
             else
             {
                 fileName = fileName.Replace(" ", "%20");
 
-                string httppath = this.HttpHomePath.Replace("%", this.Host.Replace("ftp.", ""));
+                string httppath = this.HttpHomePath.Replace("%", this.Host);
 
-                if (this.HttpHomePath.StartsWith("@"))
-                {
-                    path = FTPHelpers.CombineURL(httppath, fileName);
-                }
-                else
-                {
-                    path = FTPHelpers.CombineURL(httppath, this.SubFolderPath, fileName);
-                }
+                path = FTPHelpers.CombineURL(httppath, folderPath, fileName);
             }
 
             if (!path.StartsWith("http://"))

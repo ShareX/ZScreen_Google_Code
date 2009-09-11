@@ -411,7 +411,17 @@ namespace UploadersLib.FileUploaders
 
                 if (!string.IsNullOrEmpty(response))
                 {
-                    return "http://www.sendspace.com/file/" + Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
+                    string fileid = Regex.Match(response, @"<file_id>(\w+)</file_id>").Groups[1].Value; // Anonymous
+
+                    if (string.IsNullOrEmpty(fileid))
+                    {
+                        fileid = fileid = Regex.Match(response, @"file_id=(\w+)").Groups[1].Value; // User
+                    }
+
+                    if (!string.IsNullOrEmpty(fileid))
+                    {
+                        return "http://www.sendspace.com/file/" + fileid;
+                    }
                 }
             }
 

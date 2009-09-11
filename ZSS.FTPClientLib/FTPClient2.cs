@@ -550,7 +550,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    Process.Start(FTPHelpers.CombineURL(Account.HttpHomePath, file.FullPath));
+                    Process.Start(this.Account.GetUriPath(file.FullPath, true));
                 }
             }
         }
