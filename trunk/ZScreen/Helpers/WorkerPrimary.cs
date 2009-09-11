@@ -655,7 +655,8 @@ namespace ZScreenGUI
 
         public bool RetryUpload(WorkerTask task)
         {
-        	if (string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Retry)
+            if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
+                string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Retry)
             {
                 WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task2.JobCategory = task.JobCategory;
