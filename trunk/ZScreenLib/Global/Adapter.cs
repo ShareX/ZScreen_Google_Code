@@ -512,7 +512,10 @@ namespace ZScreenLib
 
         public static void TwitterMsg(ref WorkerTask task)
         {
-            TwitterMsg(task.RemoteFilePath);
+            if (!string.IsNullOrEmpty(task.RemoteFilePath))
+            {
+                TwitterMsg(task.RemoteFilePath);
+            }
         }
 
         public static void TwitterMsg(string url)

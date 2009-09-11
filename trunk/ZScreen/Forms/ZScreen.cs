@@ -1059,9 +1059,9 @@ namespace ZScreenGUI
             }
 
             Engine.conf.WindowState = this.WindowState;
-
+            Engine.conf.Write();
+            FileSystem.AppendDebug("Settings written to file.");
             Loader.Worker.SaveHistoryItems();
-
         }
 
         private void RewriteImageEditorsRightClickMenu()
