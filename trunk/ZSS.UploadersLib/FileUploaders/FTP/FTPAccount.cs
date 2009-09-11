@@ -33,23 +33,8 @@ namespace UploadersLib
         [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]
         public string Name { get; set; }
 
-        private string _host;
         [Category("FTP"), Description("Host, e.g. brandonz.net")]
-        public string Host
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(_host) && !_host.StartsWith("ftp."))
-                {
-                    _host = "ftp." + _host;
-                }
-                return _host;
-            }
-            set
-            {
-                _host = value;
-            }
-        }
+        public string Host { get; set; }
 
         [Category("FTP"), Description("Port Number"), DefaultValue(21)]
         public int Port { get; set; }

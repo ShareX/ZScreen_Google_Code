@@ -2024,19 +2024,22 @@ namespace ZScreenGUI
 
         private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
         {
-            string path = ifm.GetSource(Engine.TempDir, sType);
-            if (!string.IsNullOrEmpty(path))
+            if (ifm != null)
             {
-                if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
+                string path = ifm.GetSource(Engine.TempDir, sType);
+                if (!string.IsNullOrEmpty(path))
                 {
-                    Process.Start(path);
-                    return true;
-                }
+                    if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
+                    {
+                        Process.Start(path);
+                        return true;
+                    }
 
-                if (sType == ImageFileManager.SourceType.STRING)
-                {
-                    Clipboard.SetText(path);
-                    return true;
+                    if (sType == ImageFileManager.SourceType.STRING)
+                    {
+                        Clipboard.SetText(path);
+                        return true;
+                    }
                 }
             }
 
@@ -2297,7 +2300,11 @@ namespace ZScreenGUI
 
                     tsmCopyCbHistory.Enabled = checkRemote;
                     cmsHistory.Enabled = checkLocal;
-                    browseURLToolStripMenuItem.Enabled = checkRemote;
+
+                    tsmCopyCbHistory.Enabled = browseURLToolStripMenuItem.Enabled = checkRemote;
+                    copyImageToolStripMenuItem.Enabled = openLocalFileToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled = checkLocal;
+                    openSourceToolStripMenuItem.Enabled = hi.ScreenshotManager != null;
+
                     btnHistoryCopyLink.Enabled = checkRemote;
                     btnHistoryBrowseURL.Enabled = checkRemote;
                     btnHistoryOpenLocalFile.Enabled = checkLocal;
@@ -2828,20 +2835,38 @@ namespace ZScreenGUI
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.TEXT);
+            if (lbHistory.SelectedItems.Count > 0)
+            {
+                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
+                if (hi != null)
+                {
+                    OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.TEXT);
+                }
+            }
         }
 
         private void openSourceInDefaultWebBrowserHTMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.HTML);
+            if (lbHistory.SelectedItems.Count > 0)
+            {
+                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
+                if (hi != null)
+                {
+                    OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.HTML);
+                }
+            }
         }
 
         private void copySourceToClipboardStringToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.STRING);
+            if (lbHistory.SelectedItems.Count > 0)
+            {
+                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
+                if (hi != null)
+                {
+                    OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.STRING);
+                }
+            }
         }
 
         private void cmsRetryUpload_Click(object sender, EventArgs e)
