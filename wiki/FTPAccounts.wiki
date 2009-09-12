@@ -5,7 +5,7 @@
 
 FTP Accounts tab provides a powerful interface to configure your FTP Account settings: 
 
-[http://i31.tinypic.com/2gvvn2u.png]
+[http://wmwiki.com/mcored/zscreen/ZScreen_3.5.2.0_Beta-2009.09.12-18.44.54.png]
 
 = Automatic folder creation = 
 
