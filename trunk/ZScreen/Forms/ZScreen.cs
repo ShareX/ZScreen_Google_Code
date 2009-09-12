@@ -4504,5 +4504,10 @@ namespace ZScreenGUI
                 }
             }
         }
+
+        private void btnFtpHelp_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/p/zscreen/wiki/FTPAccounts");
+        }
     }
 }
