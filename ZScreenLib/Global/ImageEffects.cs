@@ -209,7 +209,25 @@ namespace ZScreenLib
             {
                 img = DrawReflection(img);
             }
+            if (Engine.conf.BorderEffect)
+            {
+            	img = DrawBorder(img, Engine.conf.BorderEffectColor, Engine.conf.BorderEffectSize);
+            }
             return img;
+        }
+        
+        private static Image DrawBorder(Image img, Color color, int size)
+        {
+        	Image result = new Bitmap(img.Size.Width + (size*2), img.Size.Height + (size*2));
+        	Graphics g = Graphics.FromImage(result);
+        	
+        	using (Pen p = new Pen(color,size))
+        	{
+        		g.DrawRectangle(p, 1, 1, result.Size.Width - size, result.Size.Height - size);
+        	}
+        	g.DrawImage(img, size, size);
+        	
+        	return result;
         }
 
         private static Image DrawReflection(Image bmp)
