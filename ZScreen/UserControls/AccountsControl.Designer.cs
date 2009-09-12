@@ -40,10 +40,10 @@
             // SettingsGrid
             // 
             this.SettingsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SettingsGrid.Location = new System.Drawing.Point(300, 3);
+            this.SettingsGrid.Location = new System.Drawing.Point(259, 3);
             this.SettingsGrid.Name = "SettingsGrid";
             this.SettingsGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.SettingsGrid.Size = new System.Drawing.Size(441, 338);
+            this.SettingsGrid.Size = new System.Drawing.Size(482, 338);
             this.SettingsGrid.TabIndex = 121;
             this.SettingsGrid.ToolbarVisible = false;
             this.SettingsGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.SettingsGrid_PropertyValueChanged);
@@ -55,7 +55,7 @@
             this.AccountsList.IntegralHeight = false;
             this.AccountsList.Location = new System.Drawing.Point(3, 3);
             this.AccountsList.Name = "AccountsList";
-            this.AccountsList.Size = new System.Drawing.Size(291, 338);
+            this.AccountsList.Size = new System.Drawing.Size(250, 338);
             this.AccountsList.TabIndex = 120;
             // 
             // btnAdd
@@ -96,8 +96,8 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.AccountsLayout.ColumnCount = 2;
-            this.AccountsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.AccountsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.AccountsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.4086F));
+            this.AccountsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.5914F));
             this.AccountsLayout.Controls.Add(this.SettingsGrid, 1, 0);
             this.AccountsLayout.Controls.Add(this.AccountsList, -1, 0);
             this.AccountsLayout.Location = new System.Drawing.Point(8, 40);
