@@ -4492,5 +4492,17 @@ namespace ZScreenGUI
         {
             btnTwitterAuth.Enabled = true;
         }
+
+        private void tsmiTwitter_Click(object sender, EventArgs e)
+        {
+            if (lbHistory.SelectedItem != null)
+            {
+                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
+                if (!string.IsNullOrEmpty(hi.RemotePath))
+                {
+                    Adapter.TwitterMsg(hi.RemotePath);
+                }
+            }
+        }
     }
 }

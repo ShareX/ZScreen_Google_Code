@@ -45,10 +45,10 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots (not /htdocs/screenshots). SubFolderPath will be ignored if HttpHomePath starts with @ otherwise at all times URL = HttpHomePath + SubFolderPath + FileName"), DefaultValue("")]
+        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
 
-        [Category("FTP"), Description("HTTP Home Path, e.g. brandonz.net\n% = Host, @ = ignore SubFolderPath when generating URL"), DefaultValue("")]
+        [Category("FTP"), Description("HTTP Home Path, % = Host e.g. brandonz.net or %\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]

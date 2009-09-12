@@ -293,6 +293,11 @@ namespace ZScreenLib
             return null;
         }
 
+        /// <summary>
+        /// Attempt to shorten a URL
+        /// </summary>
+        /// <param name="url">Full URL</param>
+        /// <returns>Shortens URL or Empty String if request failed</returns>
         public static string TryShortenURL(string url)
         {
             FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.LimitLongURL));
@@ -313,7 +318,7 @@ namespace ZScreenLib
                     }
                 }
             }
-            return url;
+            return string.Empty;
         }
 
         public static bool CheckURLShorteners()

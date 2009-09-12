@@ -1,5 +1,7 @@
 Version 3.5 - 20091015
 
+3.05.2.0 Share on Twitter... right click menu item in History tab {McoreD}
+3.05.1.0 Changes in FTP Accounts require reconfiguring settings {McoreD/Jaex}
 3.05.0.0 Application wide support to update Twitter status upon completion of an upload {McoreD}
 3.04.5.2 Large images no longer upload when enabling "change to JPG after X KiB" [Issue 130] {McoreD}
 3.04.5.1 Windows 7 hotkeys sometimes did not trigger the action [Issue 100] {McoreD}
