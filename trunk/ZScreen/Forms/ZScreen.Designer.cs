@@ -1357,7 +1357,7 @@ namespace ZScreenGUI
             // 
             // btnFtpHelp
             // 
-            this.btnFtpHelp.Location = new System.Drawing.Point(364, 11);
+            this.btnFtpHelp.Location = new System.Drawing.Point(226, 11);
             this.btnFtpHelp.Name = "btnFtpHelp";
             this.btnFtpHelp.Size = new System.Drawing.Size(64, 24);
             this.btnFtpHelp.TabIndex = 75;
@@ -1368,7 +1368,7 @@ namespace ZScreenGUI
             // btnFTPOpenClient
             // 
             this.btnFTPOpenClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFTPOpenClient.Location = new System.Drawing.Point(228, 11);
+            this.btnFTPOpenClient.Location = new System.Drawing.Point(648, 11);
             this.btnFTPOpenClient.Name = "btnFTPOpenClient";
             this.btnFTPOpenClient.Size = new System.Drawing.Size(128, 24);
             this.btnFTPOpenClient.TabIndex = 116;
