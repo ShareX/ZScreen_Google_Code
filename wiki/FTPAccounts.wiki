@@ -9,9 +9,9 @@ FTP Accounts tab provides a powerful interface to configure your FTP Account set
 
 = FTP Account Syntax =
 
-FileName: screenshot.jpg
+File Name: screenshot.jpg
 
-== Standard == 
+== Standard Usage == 
 {{{
 Host: ftp.zscreen.net
 SubFolderPath: ZScreen
