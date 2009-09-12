@@ -53,7 +53,7 @@ namespace ZScreenLib
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", Application.ProductVersion);
             this.lblRev.Location = new Point(this.labelVersion.Left + this.labelVersion.Width + 10, this.labelVersion.Top);
-            this.lblRev.Text = string.Format("Rev. {0}", this.Revision);
+            this.lblRev.Text = string.Format("Rev. {0}", Adapter.AppRevision);
             this.labelCopyright.Text = AssemblyCopyright;
             this.lblCompanyName.Text = AssemblyCompany;
             lblDevelopers.Text = string.Format("{0} is developed by:", AssemblyTitle);
@@ -97,34 +97,6 @@ namespace ZScreenLib
                     }
                 }
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
-
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
-
-        public string Revision
-        {
-            get
-            {
-                return AssemblyVersion.Split('.')[3];
-            }
-        }
-        public string AssemblyDescription
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
 
@@ -190,7 +162,7 @@ namespace ZScreenLib
 
         private void lblRev_Click_1(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen/source/detail?r=" + this.Revision);
+            Process.Start("http://code.google.com/p/zscreen/source/detail?r=" + Adapter.AppRevision);
         }
 
         private void btnOK_Click(object sender, EventArgs e)

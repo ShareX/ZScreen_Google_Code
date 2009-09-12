@@ -40,6 +40,7 @@ using Greenshot.Helpers;
 using System.Drawing;
 using System.Web;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace ZScreenLib
 {
@@ -535,6 +536,35 @@ namespace ZScreenLib
         public static string ZScreenCliPath()
         {
             return Path.Combine(Application.StartupPath, Engine.ZScreenCLI);
+        }
+
+        public static string AssemblyDescription
+        {
+            get
+            {
+                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                if (attributes.Length == 0)
+                {
+                    return "";
+                }
+                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+            }
+        }
+
+        public static string AppRevision
+        {
+            get
+            {
+                return AssemblyVersion.Split('.')[3];
+            }
+        }
+
+        public static string AssemblyVersion
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
         }
 
         #region "Windows 7 only"

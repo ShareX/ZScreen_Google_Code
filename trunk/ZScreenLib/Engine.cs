@@ -122,7 +122,7 @@ namespace ZScreenLib
         public static void TurnOn(EngineOptions options)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
-            FileSystem.AppendDebug("Product Version: " + mAppInfo.GetApplicationTitleFull());
+            FileSystem.AppendDebug(string.Format("Product Version: {0}, Rev {1}", mAppInfo.GetApplicationTitleFull(), Adapter.AppRevision));
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
@@ -157,7 +157,7 @@ namespace ZScreenLib
             FileSystem.AppendDebug("Initializing Default folder paths...");
             Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
             // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-          
+
             bool bGrantedOwnership;
             try
             {
