@@ -9,12 +9,12 @@ FTP Accounts tab provides a powerful interface to configure your FTP Account set
 
 = Automatic folder creation = 
 
-ZScreen can automatically create sub-folders in your FTP Server based on the SubFolderPath settings. FTP Path pattern:
+ZScreen can automatically create sub-folders in your FTP Server based on the SubFolderPath settings. FTP Path of a file is shown below:
 {{{
 URL = ftp:// + Host + : + Port + SubFolderPath + FileName
 }}}
 
-= FTP Account syntax =
+= URL creation based on FTP Account settings =
 
 The usual URL creation procedure is as follows:
 {{{
