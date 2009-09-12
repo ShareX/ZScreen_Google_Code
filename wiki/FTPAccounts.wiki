@@ -1,6 +1,6 @@
 #summary Configuring FTP Accounts
 #labels Phase-Support
-
+<wiki:toc max_depth="3" />
 = Introduction =
 
 FTP Accounts tab provides a powerful interface to configure your FTP Account settings: 
@@ -9,39 +9,84 @@ FTP Accounts tab provides a powerful interface to configure your FTP Account set
 
 = FTP Account Syntax =
 
-File Name: screenshot.jpg
-
-== Standard Usage == 
+The usual URL creation procedure is as follows:
 {{{
-Host: ftp.zscreen.net
-SubFolderPath: ZScreen
-HttpHomePath: google.com
-URL: http://google.com/ZScreen/screenshot.jpg
+URL = HttpHomePath + SubFolderPath + FileName
 }}}
 
+This default behavior can be customized. 
+
+If HttpHomePath starts with the @ char then, 
+{{{
+URL = HttpHomePath + FileName
+}}}
+If HttpHomePath is empty then,
+{{{
+URL = Host + SubFolderPath + FileName
+}}}
+
+Notes:
+
+If URL not starts with http:// then will be added automatically.
+Also / chars will be handled automatically you don't need to add / char to beginning or end of paths.
+If Host starts with ftp. then will be automatically removed while making URL. (For empty HttpHomePath or using % in HttpHomePath)
+
+File Name: screenshot.jpg
+
+Examples:
+== Standard usage ==
+=== Using IP address ===
+{{{
+Host: 80.123.456.78
+SubFolderPath: ZScreen
+HttpHomePath: zscreen.net/jaex
+URL: http://zscreen.net/jaex/ZScreen/screenshot.jpg
+}}}
+=== Using domain ==
+{{{
+Host: ftp.zscreen.net
+SubFolderPath:
+HttpHomePath:
+URL: http://zscreen.net/screenshot.jpg
+}}}
+=== Using subdomain ===
+{{{
+Host: jaex.zscreen.net
+SubFolderPath: ZScreen/Screenshots
+HttpHomePath: www.zscreen.net/jaex
+URL: http://www.zscreen.net/jaex/ZScreen/Screenshots/screenshot.jpg
+}}}
 == Empty HttpHomePath ==
-=== Using main domain ===
+=== Using domain ==
 {{{
 Host: ftp.zscreen.net
 SubFolderPath: ZScreen
 HttpHomePath:
 URL: http://zscreen.net/ZScreen/screenshot.jpg
 }}}
-
-=== Using Subdomain ===
-
+=== Using subdomain ===
 {{{
 Host: jaex.zscreen.net
-SubFolderPath: ZScreen
+SubFolderPath: Screenshots/ZScreen
 HttpHomePath:
-URL: http://jaex.zscreen.net/ZScreen/screenshot.jpg
+URL: http://jaex.zscreen.net/Screenshots/ZScreen/screenshot.jpg
 }}}
 
-== Using % to use Host ==
-Note that this can only work, for instance, if you FTP Host supports accessing the server without prepending "ftp." to "zscreen.net". 
+== Using % in HttpHomePath ==
+
+% char will be automatically replaced with Host. Note that this can only work, for instance, if you FTP Host supports accessing the server without prepending "ftp." to "zscreen.net". 
+
+=== Using domain ===
 {{{
 Host: zscreen.net
 SubFolderPath: ZScreen
 HttpHomePath: %/jaex
 URL: http://zscreen.net/jaex/ZScreen/screenshot.jpg
+}}}
+=== Using subdomain ===
+{{{
+Host: jaex.zscreen.net
+SubFolderPath: ZScreen
+HttpHomePath: %
+URL: http://jaex.zscreen.net/ZScreen/screenshot.jpg
 }}}
