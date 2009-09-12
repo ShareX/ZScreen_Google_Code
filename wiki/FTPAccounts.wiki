@@ -25,15 +25,14 @@ If HttpHomePath is empty then,
 URL = Host + SubFolderPath + FileName
 }}}
 
-Notes:
+== Notes ==
 
-If URL not starts with http:// then will be added automatically.
-Also / chars will be handled automatically you don't need to add / char to beginning or end of paths.
-If Host starts with ftp. then will be automatically removed while making URL. (For empty HttpHomePath or using % in HttpHomePath)
+If URL does not start with * http:// * then it will be added automatically. The */* char will be handled automatically; you don't need to add */* char to the beginning or end of paths.
+
+If Host starts with *ftp.* then it will be automatically removed while making URL (when using empty HttpHomePath or when using % in HttpHomePath). 
 
 File Name: screenshot.jpg
 
-Examples:
 == Standard usage ==
 === Using IP address ===
 {{{
@@ -56,7 +55,7 @@ SubFolderPath: ZScreen/Screenshots
 HttpHomePath: www.zscreen.net/jaex
 URL: http://www.zscreen.net/jaex/ZScreen/Screenshots/screenshot.jpg
 }}}
-== Empty HttpHomePath ==
+== Using empty !HttpHomePath ==
 === Using domain ==
 {{{
 Host: ftp.zscreen.net
