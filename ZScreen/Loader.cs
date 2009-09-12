@@ -50,27 +50,22 @@ namespace ZScreenGUI
 
         private static void RunZScreen()
         {
-#if Release
             try
             {
-#endif
-            Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
-            Engine.LoadSettings();
-            Application.Run(new ZScreen());
-#if Release
+                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
+                Engine.LoadSettings();
+                Application.Run(new ZScreen());
             }
             catch (Exception ex)
             {
+
                 FileSystem.AppendDebug(ex);
                 Engine.conf.Write();
             }
             finally
             {
-#endif
-            Engine.TurnOff();
-#if Release
+                Engine.TurnOff();
             }
-#endif
         }
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
