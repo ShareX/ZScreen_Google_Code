@@ -63,6 +63,26 @@ namespace UploadersLib
             }
         }
 
+        private string exampleFilename = "screenshot.jpg";
+
+        [Category("FTP"), Description("Preview of the FTP Path based on the settings above")]
+        public string PreviewFtpPath
+        {
+            get
+            {
+                return FTPHelpers.CombineURL(this.FTPAddress, this.SubFolderPath, exampleFilename);
+            }
+        }
+
+        [Category("FTP"), Description("Preview of the HTTP Path based on the settings above")]
+        public string PreviewHttpPath
+        {
+            get
+            {
+                return GetUriPath(exampleFilename);
+            }
+        }
+
         public FTPAccount()
         {
             Port = 21;
