@@ -656,7 +656,7 @@ namespace ZScreenGUI
         public bool RetryUpload(WorkerTask task)
         {
             if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
-                string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Retry)
+                string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Completed)
             {
                 WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                 task2.JobCategory = task.JobCategory;
@@ -694,7 +694,7 @@ namespace ZScreenGUI
                     }
                 }
 
-                task2.Retry = true;
+                task2.Completed = true;
 
                 string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()),
                     task2.MyImageUploader.GetDescription());

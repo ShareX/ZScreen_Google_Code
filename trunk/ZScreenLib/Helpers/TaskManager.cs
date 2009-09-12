@@ -102,7 +102,7 @@ namespace ZScreenLib
                             }
                             else
                             {
-                                mTask.Retry = false;
+                                mTask.Completed = true;
                             }
                         }
                     }

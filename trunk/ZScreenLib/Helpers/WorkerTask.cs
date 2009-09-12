@@ -103,7 +103,7 @@ namespace ZScreenLib
         /// List of Errors the Worker had during its operation
         /// </summary>
         public List<string> Errors { get; set; }
-        public bool Retry { get; set; }
+        public bool Completed { get; set; }
         public DateTime StartTime { get; set; }
         private DateTime mEndTime;
         public DateTime EndTime
