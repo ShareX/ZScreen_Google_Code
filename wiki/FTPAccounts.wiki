@@ -1,0 +1,46 @@
+#summary Configuring FTP Accounts
+#labels Phase-Support
+
+= Introduction =
+
+FTP Accounts tab provides a powerful interface to configure your FTP Account settings: 
+
+[http://i31.tinypic.com/2gvvn2u.png]
+
+= FTP Account Syntax =
+
+FileName: screenshot.jpg
+
+== Standard == 
+{{{
+Host: ftp.zscreen.net
+SubFolderPath: ZScreen
+HttpHomePath: google.com
+URL: http://google.com/ZScreen/screenshot.jpg
+}}}
+
+== Empty HttpHomePath ==
+=== Using main domain ===
+{{{
+Host: ftp.zscreen.net
+SubFolderPath: ZScreen
+HttpHomePath:
+URL: http://zscreen.net/ZScreen/screenshot.jpg
+}}}
+
+=== Using Subdomain ===
+
+{{{
+Host: jaex.zscreen.net
+SubFolderPath: ZScreen
+HttpHomePath:
+URL: http://jaex.zscreen.net/ZScreen/screenshot.jpg
+}}}
+
+== Using % to use Host ==
+{{{
+Host: zscreen.net
+SubFolderPath: ZScreen
+HttpHomePath: %/jaex
+URL: http://zscreen.net/jaex/ZScreen/screenshot.jpg
+}}}
