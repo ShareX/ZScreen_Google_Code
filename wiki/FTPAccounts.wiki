@@ -38,6 +38,7 @@ URL: http://jaex.zscreen.net/ZScreen/screenshot.jpg
 }}}
 
 == Using % to use Host ==
+Note that this can only work, for instance, if you FTP Host supports accessing the server without prepending "ftp." to "zscreen.net". 
 {{{
 Host: zscreen.net
 SubFolderPath: ZScreen
