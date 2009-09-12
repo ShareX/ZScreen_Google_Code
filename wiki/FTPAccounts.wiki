@@ -71,9 +71,9 @@ HttpHomePath:
 URL: http://jaex.zscreen.net/Screenshots/ZScreen/screenshot.jpg
 }}}
 
-== Using % in HttpHomePath ==
+== Using % in !HttpHomePath ==
 
-% char will be automatically replaced with Host. Note that this can only work, for instance, if you FTP Host supports accessing the server without prepending "ftp." to "zscreen.net". 
+% char will be automatically replaced with Host. Note that this can only work, for instance, if your FTP Host supports accessing the server without prepending "ftp." to "zscreen.net". 
 
 === Using domain ===
 {{{
