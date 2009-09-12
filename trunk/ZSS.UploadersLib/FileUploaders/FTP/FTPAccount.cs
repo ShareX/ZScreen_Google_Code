@@ -128,7 +128,8 @@ namespace UploadersLib
 
                 string httppath = this.HttpHomePath.Replace("%", host);
 
-                path = FTPHelpers.CombineURL(httppath, folderPath, fileName);
+                path = FTPHelpers.CombineURL(httppath.StartsWith("@") ? httppath.Substring(1) : httppath,
+                                              folderPath, fileName);
             }
 
             if (!path.StartsWith("http://"))

@@ -412,6 +412,9 @@ namespace ZScreenLib
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
+        [Category("Options / General"), DefaultValue(false), Description("When holding shift when finishing cropping show advanced options")]
+        public bool ShowAdvancedOptionsAfterCrop { get; set; }
+        
         [Category("Options / Windows 7 Taskbar"), DefaultValue(false), Description("Determine whether Windows 7 Taskbar was refreshed once")]
         public bool UserTasksAdded { get; set; }
 
@@ -461,6 +464,32 @@ namespace ZScreenLib
         public int BevelEffectOffset { get; set; }
         [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
         public FilterType BevelFilterType { get; set; }
+
+
+        //Screenshots / Border
+        
+        [Category("Screenshots / Border"), DefaultValue(false), Description("Add border to screenshots.")]
+        public bool BorderEffect { get; set; }
+        [Category("Screenshots / Border"), DefaultValue(1), Description("Border size in px.")]
+        public int BorderEffectSize { get; set; }
+        
+        [XmlIgnore(),Category("Screenshots / Border"), Description("Border Color.")]
+        public Color BorderEffectColor { get; set; }
+        
+        //XmlSerializer can't handle Colors so whe do it
+        //TODO hide this in property grid
+        [XmlElement("BorderEffectColor")]
+        public string pseudo_BorderEffectColor
+        {
+        	get
+        	{
+        		return SerializeColor(this.BorderEffectColor);
+        	}
+        	set
+        	{
+        		this.BorderEffectColor = DeserializeColor(value);
+        	}
+        }
 
         // Screenshots / General
 
