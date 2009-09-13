@@ -46,6 +46,7 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
+using ZScreenTesterGUI;
 
 namespace ZScreenGUI
 {
@@ -4519,6 +4520,18 @@ namespace ZScreenGUI
         private void btnFtpHelp_Click(object sender, EventArgs e)
         {
             Process.Start("http://code.google.com/p/zscreen/wiki/FTPAccounts");
+        }
+
+        private void btnOpenZScreenTester_Click(object sender, EventArgs e)
+        {
+            TesterGUI testerGUI = new TesterGUI
+            { // TODO
+                TestFileBinaryPath = "",
+                TestFilePicturePath = "",
+                TestFileTextPath = ""
+            };
+
+            testerGUI.Show();
         }
     }
 }
