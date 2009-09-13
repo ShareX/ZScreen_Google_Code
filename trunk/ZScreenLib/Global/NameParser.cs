@@ -75,7 +75,7 @@ namespace ZScreenLib
 
     public class NameParserInfo
     {
-        public string Pattern;
+        public string Pattern { get; set; }
 
         private NameParserType type;
         public NameParserType Type
@@ -102,9 +102,10 @@ namespace ZScreenLib
             }
         }
 
-        public bool IsPreview;
-        public Image Picture;
-        public DateTime CustomDate;
+        public bool IsPreview { get; set; }
+        public Image Picture { get; set; }
+        public DateTime CustomDate { get; set; }
+        public int MaxNameLength { get; set; }
 
         public NameParserInfo(string pattern)
         {
@@ -123,7 +124,7 @@ namespace ZScreenLib
 
         public static string Convert(NameParserType nameParserType)
         {
-            return Convert(new NameParserInfo(nameParserType));
+            return Convert(new NameParserInfo(nameParserType) { MaxNameLength = Engine.conf.MaxNameLength });
         }
 
         public static string Convert(NameParserInfo nameParser)
@@ -225,7 +226,15 @@ namespace ZScreenLib
                 sb = Normalize(sb, nameParser.Type != NameParserType.SaveFolder);
             }
 
-            return sb.ToString();
+            string result = sb.ToString();
+
+            if (nameParser.MaxNameLength > 0 && (nameParser.Type == NameParserType.ActiveWindow ||
+                nameParser.Type == NameParserType.EntireScreen) && result.Length > nameParser.MaxNameLength)
+            {
+                result = result.Substring(0, nameParser.MaxNameLength);
+            }
+
+            return result;
         }
 
         private static string AddZeroes(int number)

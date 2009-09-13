@@ -231,7 +231,7 @@ namespace ZScreenGUI
             DrawZScreenLabel(false);
         }
 
-        void TwitterAccountAuthButton_Click(object sender, EventArgs e)
+        private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
         {
             if (Adapter.CheckTwitterAccounts())
             {
@@ -247,7 +247,7 @@ namespace ZScreenGUI
             }
         }
 
-        void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
+        private void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
             if (ucTwitterAccounts.RemoveItem(sel) == true)
@@ -256,7 +256,7 @@ namespace ZScreenGUI
             }
         }
 
-        void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
+        private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
             Engine.conf.TwitterAcctSelected = sel;
@@ -268,7 +268,7 @@ namespace ZScreenGUI
             }
         }
 
-        void TwitterAccountAddButton_Click(object sender, EventArgs e)
+        private void TwitterAccountAddButton_Click(object sender, EventArgs e)
         {
             TwitterAuthInfo acc = new TwitterAuthInfo();
             Engine.conf.TwitterAccountsList.Add(acc);
@@ -925,9 +925,9 @@ namespace ZScreenGUI
             txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
             txtEntireScreen.Text = Engine.conf.EntireScreenPattern;
             txtImagesFolderPattern.Text = Engine.conf.SaveFolderPattern;
+            nudMaxNameLength.Value = Engine.conf.MaxNameLength;
 
             // Proxy Settings
-
             ProxySetup(Engine.conf.ProxyList);
             if (ucProxyAccounts.AccountsList.Items.Count > 0)
             {
@@ -1716,13 +1716,15 @@ namespace ZScreenGUI
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowPattern = txtActiveWindow.Text;
-            lblActiveWindowPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.ActiveWindow) { IsPreview = true });
+            lblActiveWindowPreview.Text = NameParser.Convert(
+                new NameParserInfo(NameParserType.ActiveWindow) { IsPreview = true, MaxNameLength = Engine.conf.MaxNameLength });
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.EntireScreenPattern = txtEntireScreen.Text;
-            lblEntireScreenPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true });
+            lblEntireScreenPreview.Text = NameParser.Convert(
+                new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true, MaxNameLength = Engine.conf.MaxNameLength });
         }
 
         private void cmbFileFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -4532,6 +4534,11 @@ namespace ZScreenGUI
             };
 
             testerGUI.Show();
+        }
+
+        private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
+        {
+            Engine.conf.MaxNameLength = (int)nudMaxNameLength.Value;
         }
     }
 }

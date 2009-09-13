@@ -217,6 +217,7 @@ namespace ZScreenLib
         public string ActiveWindowPattern = "%t-%y.%mo.%d-%h.%mi.%s";
         public string EntireScreenPattern = "SS-%y.%mo.%d-%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
+        public int MaxNameLength = 100;
 
         // Image Settings
 

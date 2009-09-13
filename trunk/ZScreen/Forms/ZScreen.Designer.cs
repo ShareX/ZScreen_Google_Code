@@ -474,6 +474,7 @@ namespace ZScreenGUI
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.btnOpenZScreenTester = new System.Windows.Forms.Button();
             this.gbUpdates = new System.Windows.Forms.GroupBox();
             this.cbCheckUpdatesBeta = new System.Windows.Forms.CheckBox();
             this.lblUpdateInfo = new System.Windows.Forms.Label();
@@ -553,7 +554,8 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.btnOpenZScreenTester = new System.Windows.Forms.Button();
+            this.nudMaxNameLength = new System.Windows.Forms.NumericUpDown();
+            this.lblMaxNameLength = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -694,6 +696,7 @@ namespace ZScreenGUI
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxNameLength)).BeginInit();
             this.SuspendLayout();
             // 
             // niTray
@@ -3588,6 +3591,8 @@ namespace ZScreenGUI
             // 
             // tpFileNaming
             // 
+            this.tpFileNaming.Controls.Add(this.lblMaxNameLength);
+            this.tpFileNaming.Controls.Add(this.nudMaxNameLength);
             this.tpFileNaming.Controls.Add(this.btnResetIncrement);
             this.tpFileNaming.Controls.Add(this.gbOthersNaming);
             this.tpFileNaming.Controls.Add(this.gbCodeTitle);
@@ -3601,7 +3606,7 @@ namespace ZScreenGUI
             // 
             // btnResetIncrement
             // 
-            this.btnResetIncrement.Location = new System.Drawing.Point(240, 184);
+            this.btnResetIncrement.Location = new System.Drawing.Point(8, 280);
             this.btnResetIncrement.Name = "btnResetIncrement";
             this.btnResetIncrement.Size = new System.Drawing.Size(184, 23);
             this.btnResetIncrement.TabIndex = 116;
@@ -5639,6 +5644,16 @@ namespace ZScreenGUI
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
             // 
+            // btnOpenZScreenTester
+            // 
+            this.btnOpenZScreenTester.Location = new System.Drawing.Point(16, 304);
+            this.btnOpenZScreenTester.Name = "btnOpenZScreenTester";
+            this.btnOpenZScreenTester.Size = new System.Drawing.Size(160, 23);
+            this.btnOpenZScreenTester.TabIndex = 9;
+            this.btnOpenZScreenTester.Text = "Open ZScreen Tester...";
+            this.btnOpenZScreenTester.UseVisualStyleBackColor = true;
+            this.btnOpenZScreenTester.Click += new System.EventHandler(this.btnOpenZScreenTester_Click);
+            // 
             // gbUpdates
             // 
             this.gbUpdates.Controls.Add(this.cbCheckUpdatesBeta);
@@ -6574,15 +6589,22 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // btnOpenZScreenTester
+            // nudMaxNameLength
             // 
-            this.btnOpenZScreenTester.Location = new System.Drawing.Point(16, 304);
-            this.btnOpenZScreenTester.Name = "btnOpenZScreenTester";
-            this.btnOpenZScreenTester.Size = new System.Drawing.Size(160, 23);
-            this.btnOpenZScreenTester.TabIndex = 9;
-            this.btnOpenZScreenTester.Text = "Open ZScreen Tester...";
-            this.btnOpenZScreenTester.UseVisualStyleBackColor = true;
-            this.btnOpenZScreenTester.Click += new System.EventHandler(this.btnOpenZScreenTester_Click);
+            this.nudMaxNameLength.Location = new System.Drawing.Point(432, 189);
+            this.nudMaxNameLength.Name = "nudMaxNameLength";
+            this.nudMaxNameLength.Size = new System.Drawing.Size(56, 20);
+            this.nudMaxNameLength.TabIndex = 117;
+            this.nudMaxNameLength.ValueChanged += new System.EventHandler(this.nudMaxNameLength_ValueChanged);
+            // 
+            // lblMaxNameLength
+            // 
+            this.lblMaxNameLength.AutoSize = true;
+            this.lblMaxNameLength.Location = new System.Drawing.Point(248, 192);
+            this.lblMaxNameLength.Name = "lblMaxNameLength";
+            this.lblMaxNameLength.Size = new System.Drawing.Size(179, 13);
+            this.lblMaxNameLength.TabIndex = 118;
+            this.lblMaxNameLength.Text = "Maximum name length (0 = No limit) :";
             // 
             // ZScreen
             // 
@@ -6707,6 +6729,7 @@ namespace ZScreenGUI
             this.tpWatermarkImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudWatermarkImageScale)).EndInit();
             this.tpFileNaming.ResumeLayout(false);
+            this.tpFileNaming.PerformLayout();
             this.gbOthersNaming.ResumeLayout(false);
             this.gbOthersNaming.PerformLayout();
             this.gbCodeTitle.ResumeLayout(false);
@@ -6802,6 +6825,7 @@ namespace ZScreenGUI
             this.gbStatistics.PerformLayout();
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxNameLength)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -7326,6 +7350,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnFtpHelp;
         private AccountsControl ucTwitterAccounts;
         private System.Windows.Forms.Button btnOpenZScreenTester;
+        private System.Windows.Forms.Label lblMaxNameLength;
+        private System.Windows.Forms.NumericUpDown nudMaxNameLength;
 
     }
 }
