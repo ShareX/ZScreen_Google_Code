@@ -3,6 +3,7 @@
 
 = Version 3 - XXXX-XX-XX =
 
+ * Acquired the domain www.zscreen.net on 2009-09-12
  * Hades32 joined the development of ZScreen on 2009-08-23
  * Established foundation for supporting File uploading services like RapidShare
 
