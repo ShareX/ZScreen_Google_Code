@@ -74,7 +74,10 @@ namespace ZScreenGUI
                 (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT))
             {
                 task.JobCategory = JobCategoryType.BINARY;
-                task.MyFileUploader = Engine.conf.FileDestMode;
+                if (!Engine.conf.PreferFtpServerForIndex)
+                {
+                    task.MyFileUploader = Engine.conf.FileDestMode;
+                }
             }
 
             if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageDestType.CLIPBOARD &
@@ -247,9 +250,12 @@ namespace ZScreenGUI
             try
             {
                 FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
-
-                if (!RetryUpload(task))
+                WorkerTask checkTask = RetryUpload(task);
+                if (!checkTask.Completed)
                 {
+                    string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.MyImageUploader.GetDescription());
+                    mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
+
                     switch (task.JobCategory)
                     {
                         case JobCategoryType.BINARY:
@@ -651,59 +657,6 @@ namespace ZScreenGUI
             {
                 StartBw_ClipboardUpload();
             }
-        }
-
-        public bool RetryUpload(WorkerTask task)
-        {
-            if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
-                string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Completed)
-            {
-                WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
-                task2.JobCategory = task.JobCategory;
-                task2.SetImage(task.LocalFilePath);
-                task2.UpdateLocalFilePath(task.LocalFilePath);
-
-                if (Engine.conf.ImageUploadRandomRetryOnFail)
-                {
-                    List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
-                    if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
-                    {
-                        randomDest.Add(ImageDestType.IMAGEBAM);
-                    }
-                    if (null != Engine.conf.FlickrAuthInfo)
-                    {
-                        randomDest.Add(ImageDestType.FLICKR);
-                    }
-
-                    int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                    while (r == (int)task2.MyImageUploader)
-                    {
-                        r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                    }
-                    task2.MyImageUploader = (ImageDestType)r;
-                }
-                else
-                {
-                    if (task.MyImageUploader == ImageDestType.IMAGESHACK)
-                    {
-                        task2.MyImageUploader = ImageDestType.TINYPIC;
-                    }
-                    else
-                    {
-                        task2.MyImageUploader = ImageDestType.IMAGESHACK;
-                    }
-                }
-
-                task2.Completed = true;
-
-                string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()),
-                    task2.MyImageUploader.GetDescription());
-                mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
-                task2.MyWorker.RunWorkerAsync(task2);
-                return true;
-            }
-
-            return false;
         }
 
         public void AddHistoryItem(HistoryItem hi)

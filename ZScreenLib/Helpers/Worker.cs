@@ -119,6 +119,7 @@ namespace ZScreenLib
             try
             {
                 FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
+                WorkerTask checkTask = RetryUpload(task);
 
                 switch (task.JobCategory)
                 {
@@ -429,7 +430,18 @@ namespace ZScreenLib
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
-                    string ext = (task.MyFileUploader == FileUploaderType.FTP && Engine.conf.PreferFileUploaderForText ? ".html" : ".log");
+                    string ext = ".log";
+                    if (Engine.conf.PreferFileUploaderForText)
+                    {
+                        if (Engine.conf.PreferFtpServerForIndex)
+                        {
+                            task.MyFileUploader = FileUploaderType.FTP;
+                        }
+                        if (task.MyFileUploader == FileUploaderType.FTP)
+                        {
+                            ext = ".html";
+                        }
+                    }
                     string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
                     settings.GetConfig().FolderList.Add(task.MyText.LocalString);
@@ -497,6 +509,52 @@ namespace ZScreenLib
 
         #endregion
 
+        public WorkerTask RetryUpload(WorkerTask task)
+        {
+            if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
+                string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Completed)
+            {
+                WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
+                task2.JobCategory = task.JobCategory;
+                task2.SetImage(task.LocalFilePath);
+                task2.UpdateLocalFilePath(task.LocalFilePath);
+                task2.Completed = true; // we do not retry again
 
+                if (Engine.conf.ImageUploadRandomRetryOnFail)
+                {
+                    List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
+                    if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
+                    {
+                        randomDest.Add(ImageDestType.IMAGEBAM);
+                    }
+                    if (null != Engine.conf.FlickrAuthInfo)
+                    {
+                        randomDest.Add(ImageDestType.FLICKR);
+                    }
+
+                    int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
+                    while ((ImageDestType)r == task2.MyImageUploader)
+                    {
+                        r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
+                    }
+                    task2.MyImageUploader = (ImageDestType)r;
+                }
+                else
+                {
+                    if (task.MyImageUploader == ImageDestType.IMAGESHACK)
+                    {
+                        task2.MyImageUploader = ImageDestType.TINYPIC;
+                    }
+                    else
+                    {
+                        task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                    }
+                }
+
+                task2.MyWorker.RunWorkerAsync(task2);
+                return task2;
+            }
+            return task;
+        }
     }
 }
