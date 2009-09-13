@@ -189,7 +189,7 @@ namespace ZScreenGUI
             ucTwitterAccounts.btnAdd.Text = "Add...";
             ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
-            ucTwitterAccounts.btnTest.Text = "Authorize...";
+            ucTwitterAccounts.btnTest.Text = "Authorize";
             ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
             ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
 
