@@ -174,30 +174,30 @@ namespace ZScreenLib
         /// <param name="task"></param>
         public void PublishData()
         {
-        	if (Engine.conf.ShowAdvancedOptionsAfterCrop)
-        	{
-        		//TODO: Implement Dialog to choose action
-        		
-        		if (mTask.JobCategory == JobCategoryType.BINARY)
-	            {
-	                UploadFile();
-	            }
-	            else
-	            {
-	                PublishImage();
-	            }
-        	}
-        	else
-        	{
-	            if (mTask.JobCategory == JobCategoryType.BINARY)
-	            {
-	                UploadFile();
-	            }
-	            else
-	            {
-	                PublishImage();
-	            }
-        	}
+            if (Engine.conf.ShowAdvancedOptionsAfterCrop)
+            {
+                //TODO: Implement Dialog to choose action
+
+                if (mTask.JobCategory == JobCategoryType.BINARY)
+                {
+                    UploadFile();
+                }
+                else
+                {
+                    PublishImage();
+                }
+            }
+            else
+            {
+                if (mTask.JobCategory == JobCategoryType.BINARY)
+                {
+                    UploadFile();
+                }
+                else
+                {
+                    PublishImage();
+                }
+            }
         }
 
         #endregion
@@ -277,7 +277,7 @@ namespace ZScreenLib
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
-                	FileSystem.AppendDebug("Changing from TinyPic to ImageShack due to large image size");
+                    FileSystem.AppendDebug("Changing from TinyPic to ImageShack due to large image size");
                     mTask.MyImageUploader = ImageDestType.IMAGESHACK;
                 }
             }
@@ -328,7 +328,7 @@ namespace ZScreenLib
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
                     twitpicOpt.UserName = Engine.conf.TwitterUserName;
                     twitpicOpt.Password = Engine.conf.TwitterPassword;
-                   // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                    // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
                     twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
@@ -344,7 +344,7 @@ namespace ZScreenLib
                     yfrogOp.UserName = Engine.conf.TwitterUserName;
                     yfrogOp.Password = Engine.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
-                   // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
+                    // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
@@ -382,7 +382,7 @@ namespace ZScreenLib
                             break;
                         }
                     }
-                }                
+                }
             }
 
             this.SetRemoteFilePath();

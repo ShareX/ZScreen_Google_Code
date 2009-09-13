@@ -181,6 +181,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(Engine.LogsDir))
             {
+                AppendDebug("Writing Debug file");
                 string fpDebug = Path.Combine(Engine.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
                 if (Engine.conf.WriteDebugFile)
                 {

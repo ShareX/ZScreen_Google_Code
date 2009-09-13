@@ -40,10 +40,10 @@
             // SettingsGrid
             // 
             this.SettingsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SettingsGrid.Location = new System.Drawing.Point(259, 3);
+            this.SettingsGrid.Location = new System.Drawing.Point(258, 3);
             this.SettingsGrid.Name = "SettingsGrid";
             this.SettingsGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.SettingsGrid.Size = new System.Drawing.Size(482, 338);
+            this.SettingsGrid.Size = new System.Drawing.Size(483, 338);
             this.SettingsGrid.TabIndex = 121;
             this.SettingsGrid.ToolbarVisible = false;
             this.SettingsGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.SettingsGrid_PropertyValueChanged);
@@ -55,7 +55,7 @@
             this.AccountsList.IntegralHeight = false;
             this.AccountsList.Location = new System.Drawing.Point(3, 3);
             this.AccountsList.Name = "AccountsList";
-            this.AccountsList.Size = new System.Drawing.Size(250, 338);
+            this.AccountsList.Size = new System.Drawing.Size(249, 338);
             this.AccountsList.TabIndex = 120;
             // 
             // btnAdd
