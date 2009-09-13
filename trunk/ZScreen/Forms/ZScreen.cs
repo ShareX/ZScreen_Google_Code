@@ -186,10 +186,11 @@ namespace ZScreenGUI
             ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
             // Accounts - Twitter
+            ucTwitterAccounts.btnAdd.Text = "Add...";
             ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
-            ucTwitterAccounts.btnTest.Text = "Get &PIN...";
-            ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountGetPinButton_Click);
+            ucTwitterAccounts.btnTest.Text = "Authorize...";
+            ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
             ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
 
             // Options - Proxy
@@ -229,11 +230,19 @@ namespace ZScreenGUI
             DrawZScreenLabel(false);
         }
 
-        void TwitterAccountGetPinButton_Click(object sender, EventArgs e)
+        void TwitterAccountAuthButton_Click(object sender, EventArgs e)
         {
             if (Adapter.CheckTwitterAccounts())
             {
-                ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
+                TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
+                if (null != acc && !string.IsNullOrEmpty(acc.PIN))
+                {
+                    acc = Adapter.TwitterAuthSetPin(ref acc);
+                    if (null != acc)
+                    {
+                        ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+                    }
+                }
             }
         }
 
@@ -264,6 +273,10 @@ namespace ZScreenGUI
             Engine.conf.TwitterAccountsList.Add(acc);
             ucTwitterAccounts.AccountsList.Items.Add(acc);
             ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
+            if (Adapter.CheckTwitterAccounts())
+            {
+                ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
+            }
         }
 
         private void SetToolTip(Control original)
@@ -4489,22 +4502,6 @@ namespace ZScreenGUI
                 tcDestinations.SelectedTab = tpTwitter;
             }
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
-        }
-
-        private void btnTwitterAuth_Click(object sender, EventArgs e)
-        {
-            if (Adapter.CheckTwitterAccounts())
-            {
-                TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
-                if (null != acc && !string.IsNullOrEmpty(acc.PIN))
-                {
-                    acc = Adapter.TwitterAuthSetPin(ref acc);
-                    if (null != acc)
-                    {
-                        ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-                    }
-                }
-            }
         }
 
         private void tsmiTwitter_Click(object sender, EventArgs e)

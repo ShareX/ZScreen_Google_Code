@@ -161,7 +161,6 @@ namespace ZScreenGUI
             this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
             this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.tpYfrog = new System.Windows.Forms.TabPage();
-            this.btnTwitterAuth = new System.Windows.Forms.Button();
             this.ucTwitterAccounts = new ZScreenGUI.AccountsControl();
             this.gbTwitterAccount = new System.Windows.Forms.GroupBox();
             this.lblTwitterPassword = new System.Windows.Forms.Label();
@@ -1315,7 +1314,7 @@ namespace ZScreenGUI
             this.tpDestinations.Text = "Destinations";
             this.tpDestinations.UseVisualStyleBackColor = true;
             // 
-            // tcAccounts
+            // tcDestinations
             // 
             this.tcDestinations.Controls.Add(this.tpFTP);
             this.tcDestinations.Controls.Add(this.tpRapidShare);
@@ -1329,7 +1328,7 @@ namespace ZScreenGUI
             this.tcDestinations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcDestinations.ImageList = this.ilApp;
             this.tcDestinations.Location = new System.Drawing.Point(3, 3);
-            this.tcDestinations.Name = "tcAccounts";
+            this.tcDestinations.Name = "tcDestinations";
             this.tcDestinations.SelectedIndex = 0;
             this.tcDestinations.Size = new System.Drawing.Size(799, 429);
             this.tcDestinations.TabIndex = 0;
@@ -1914,7 +1913,6 @@ namespace ZScreenGUI
             // tpTwitter
             // 
             this.tpTwitter.Controls.Add(this.tcTwitter);
-            this.tpTwitter.Controls.Add(this.btnTwitterAuth);
             this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
             this.tpTwitter.Controls.Add(this.gbTwitterAccount);
             this.tpTwitter.ImageKey = "Twitter.ico";
@@ -1988,20 +1986,10 @@ namespace ZScreenGUI
             this.tpYfrog.Location = new System.Drawing.Point(4, 22);
             this.tpYfrog.Name = "tpYfrog";
             this.tpYfrog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpYfrog.Size = new System.Drawing.Size(336, 85);
+            this.tpYfrog.Size = new System.Drawing.Size(416, 61);
             this.tpYfrog.TabIndex = 2;
             this.tpYfrog.Text = "yFrog";
             this.tpYfrog.UseVisualStyleBackColor = true;
-            // 
-            // btnTwitterAuth
-            // 
-            this.btnTwitterAuth.Location = new System.Drawing.Point(226, 11);
-            this.btnTwitterAuth.Name = "btnTwitterAuth";
-            this.btnTwitterAuth.Size = new System.Drawing.Size(75, 24);
-            this.btnTwitterAuth.TabIndex = 20;
-            this.btnTwitterAuth.Text = "&Authorize";
-            this.btnTwitterAuth.UseVisualStyleBackColor = true;
-            this.btnTwitterAuth.Click += new System.EventHandler(this.btnTwitterAuth_Click);
             // 
             // ucTwitterAccounts
             // 
@@ -7322,7 +7310,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripMenuItem tsmFileDest;
         private System.Windows.Forms.CheckBox chkHotkeys;
         private System.Windows.Forms.CheckBox chkTwitterEnable;
-        private System.Windows.Forms.Button btnTwitterAuth;
         private System.Windows.Forms.ToolStripMenuItem tsmiTwitter;
         private System.Windows.Forms.Button btnFtpHelp;
         private AccountsControl ucTwitterAccounts;
