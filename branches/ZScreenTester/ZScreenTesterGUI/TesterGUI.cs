@@ -36,10 +36,10 @@ namespace ZScreenTesterGUI
 
         public bool Testing
         {
-            get { return testing; }
+            get { return isTesting; }
             set
             {
-                testing = value;
+                isTesting = value;
                 btnTest.Enabled = !value;
                 testSelectedUploadersToolStripMenuItem.Enabled = !value;
             }
@@ -49,7 +49,8 @@ namespace ZScreenTesterGUI
         public string TestFilePicturePath { get; set; }
         public string TestFileTextPath { get; set; }
 
-        private bool testing;
+        private bool isTesting = false;
+        private bool isOpen = true;
 
         public TesterGUI()
         {
@@ -146,10 +147,13 @@ namespace ZScreenTesterGUI
 
         private void myConsole_ConsoleWriteLine(string value)
         {
-            this.Invoke(new MethodInvoker(delegate
-                {
-                    txtConsole.AppendText(value);
-                }));
+            if (isOpen)
+            {
+                this.Invoke(new MethodInvoker(delegate
+                    {
+                        txtConsole.AppendText(value);
+                    }));
+            }
         }
 
         public void StartTest(UploaderInfo[] uploaders)
@@ -171,6 +175,11 @@ namespace ZScreenTesterGUI
 
             foreach (UploaderInfo uploader in uploaders)
             {
+                if (!isTesting || !isOpen)
+                {
+                    break;
+                }
+
                 if (uploader != null)
                 {
                     WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
@@ -210,19 +219,22 @@ namespace ZScreenTesterGUI
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            UploaderInfo uploader = e.UserState as UploaderInfo;
-
-            lvUploaders.Items[uploader.Index].Tag = uploader;
-
-            if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
+            if (isOpen)
             {
-                lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
-                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
-            }
-            else
-            {
-                lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
-                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
+                UploaderInfo uploader = e.UserState as UploaderInfo;
+
+                lvUploaders.Items[uploader.Index].Tag = uploader;
+
+                if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
+                {
+                    lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
+                    lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
+                }
+                else
+                {
+                    lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
+                    lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
+                }
             }
         }
 
@@ -272,6 +284,11 @@ namespace ZScreenTesterGUI
         {
             UploaderInfo[] uploaders = lvUploaders.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
             StartTest(uploaders);
+        }
+
+        private void TesterGUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            isOpen = isTesting = false;
         }
     }
 }

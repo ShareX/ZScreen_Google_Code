@@ -166,6 +166,7 @@
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "ZScreen Tester";
             this.Load += new System.EventHandler(this.TesterGUI_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TesterGUI_FormClosing);
             this.cmsUploaders.ResumeLayout(false);
             this.tcTesters.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
