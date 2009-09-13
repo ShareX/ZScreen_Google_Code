@@ -15,11 +15,11 @@ namespace UploadersLib.Helpers
         public string AccountName { get; set; }
         [Category("Twitter"), Description("Token used for the Authorization Page")]
         public string OAuthToken { get; set; }
-        [Category("Twitter"), Browsable(false)]
+        [Category("Twitter"), Browsable(false), PasswordPropertyText(true)]
         public string Token { get; set; }
         [Category("Twitter"), Description("Enter PIN here from the Authorization Page that you get after pressing Add button")]
         public string PIN { get; set; }
-        [Category("Twitter"), Browsable(false)]
+        [Category("Twitter"), Description("TokenSecret is automatically retrieved when you press the Authorize button"), PasswordPropertyText(true)]
         public string TokenSecret { get; set; }
 
         public TwitterAuthInfo()
