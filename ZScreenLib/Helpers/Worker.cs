@@ -286,7 +286,7 @@ namespace ZScreenLib
             {
                 Image cImage = Clipboard.GetImage();
                 task.Settings.ManualNaming = false;
-                task.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen)));
+                task.SetFilePathFromPattern(NameParser.Convert(NameParserType.EntireScreen));
                 FileSystem.SaveImage(cImage, task.LocalFilePath);
                 StartWorkerPictures(task, task.LocalFilePath);
             }
