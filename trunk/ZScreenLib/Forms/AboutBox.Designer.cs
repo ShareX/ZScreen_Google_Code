@@ -29,7 +29,6 @@
         {
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
-            this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.labelVersion = new System.Windows.Forms.Label();
             this.pbFlagTR = new System.Windows.Forms.PictureBox();
             this.lblBerk = new System.Windows.Forms.Label();
@@ -42,6 +41,7 @@
             this.lblCompanyName = new System.Windows.Forms.Label();
             this.lblRev = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
+            this.textBoxDescription = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagTR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagAU)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagUS)).BeginInit();
@@ -76,19 +76,6 @@
             this.labelCopyright.TabIndex = 21;
             this.labelCopyright.Text = "Copyright";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // textBoxDescription
-            // 
-            this.textBoxDescription.Location = new System.Drawing.Point(224, 160);
-            this.textBoxDescription.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            this.textBoxDescription.Multiline = true;
-            this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.ReadOnly = true;
-            this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxDescription.Size = new System.Drawing.Size(272, 112);
-            this.textBoxDescription.TabIndex = 23;
-            this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Description";
             // 
             // labelVersion
             // 
@@ -241,12 +228,24 @@
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // textBoxDescription
+            // 
+            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxDescription.Location = new System.Drawing.Point(224, 160);
+            this.textBoxDescription.Name = "textBoxDescription";
+            this.textBoxDescription.Size = new System.Drawing.Size(272, 112);
+            this.textBoxDescription.TabIndex = 96;
+            this.textBoxDescription.Text = "Description";
+            // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(512, 320);
+            this.Controls.Add(this.textBoxDescription);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblRev);
             this.Controls.Add(this.lblCompanyName);
@@ -261,12 +260,12 @@
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.labelProductName);
             this.Controls.Add(this.labelCopyright);
-            this.Controls.Add(this.textBoxDescription);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(528, 358);
             this.Name = "AboutBox";
             this.Padding = new System.Windows.Forms.Padding(9);
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAboutBox";
             this.Load += new System.EventHandler(this.AboutBox_Load);
@@ -283,8 +282,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelProductName;
-        private System.Windows.Forms.Label labelCopyright;
-        private System.Windows.Forms.TextBox textBoxDescription;                
+        private System.Windows.Forms.Label labelCopyright;                
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.PictureBox pbFlagTR;
         private System.Windows.Forms.Label lblBerk;
@@ -297,5 +295,6 @@
         private System.Windows.Forms.Label lblCompanyName;
         private System.Windows.Forms.Label lblRev;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.RichTextBox textBoxDescription;
     }
 }
