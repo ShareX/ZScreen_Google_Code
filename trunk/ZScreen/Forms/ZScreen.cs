@@ -185,6 +185,13 @@ namespace ZScreenGUI
             ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
             ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
+            // Accounts - Twitter
+            ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
+            ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
+            ucTwitterAccounts.btnTest.Text = "Get &PIN...";
+            ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountGetPinButton_Click);
+            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
+
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
             ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
@@ -220,6 +227,43 @@ namespace ZScreenGUI
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
             DrawZScreenLabel(false);
+        }
+
+        void TwitterAccountGetPinButton_Click(object sender, EventArgs e)
+        {
+            if (Adapter.CheckTwitterAccounts())
+            {
+                ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
+            }
+        }
+
+        void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
+            if (ucTwitterAccounts.RemoveItem(sel) == true)
+            {
+                Engine.conf.TwitterAccountsList.RemoveAt(sel);
+            }
+        }
+
+        void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
+            Engine.conf.TwitterAcctSelected = sel;
+
+            if (Adapter.CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected))
+            {
+                TwitterAuthInfo acc = Engine.conf.TwitterAccountsList[sel];
+                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+            }
+        }
+
+        void TwitterAccountAddButton_Click(object sender, EventArgs e)
+        {
+            TwitterAuthInfo acc = new TwitterAuthInfo();
+            Engine.conf.TwitterAccountsList.Add(acc);
+            ucTwitterAccounts.AccountsList.Items.Add(acc);
+            ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
         }
 
         private void SetToolTip(Control original)
@@ -648,8 +692,15 @@ namespace ZScreenGUI
             ///////////////////////////////////
 
             // Twitter 
-            txtTwitterPin.Text = Engine.conf.TwitterAuthInfo.PIN;
-            btnTwitterAuth.Enabled = string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token);
+            ucTwitterAccounts.AccountsList.Items.Clear();
+            foreach (TwitterAuthInfo acc in Engine.conf.TwitterAccountsList)
+            {
+                ucTwitterAccounts.AccountsList.Items.Add(acc);
+            }
+            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
+            {
+                ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
+            }
 
             // TinyPic
 
@@ -666,10 +717,6 @@ namespace ZScreenGUI
 
             txtTwitPicUserName.Text = Engine.conf.TwitterUserName;
             txtTwitPicPassword.Text = Engine.conf.TwitterPassword;
-            if (cboTwitPicUploadMode.Items.Count == 0)
-            {
-                cboTwitPicUploadMode.Items.AddRange(typeof(TwitPicUploadType).GetDescriptions());
-            }
 
             // cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
@@ -679,15 +726,6 @@ namespace ZScreenGUI
             }
 
             cboTwitPicThumbnailMode.SelectedIndex = (int)Engine.conf.TwitPicThumbnailMode;
-
-            // yFrog
-
-            if (cboYfrogUploadMode.Items.Count == 0)
-            {
-                cboYfrogUploadMode.Items.AddRange(typeof(YfrogUploadType).GetDescriptions());
-            }
-
-            // cboYfrogUploadMode.SelectedIndex = (int)Engine.conf.YfrogUploadMode;
 
             // ImageBam
 
@@ -3832,11 +3870,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void cboTwitPicUploadMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //  Engine.conf.TwitPicUploadMode = (TwitPicUploadType)cboTwitPicUploadMode.SelectedIndex;
-        }
-
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Engine.conf.AutoSaveSettings)
@@ -4297,11 +4330,6 @@ namespace ZScreenGUI
             Engine.conf.FTPThumbnailCheckSize = cbFTPThumbnailCheckSize.Checked;
         }
 
-        private void cboYfrogUploadMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //  Engine.conf.YfrogUploadMode = (YfrogUploadType)cboYfrogUploadMode.SelectedIndex;
-        }
-
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
             if (mGuiIsReady)
@@ -4454,43 +4482,29 @@ namespace ZScreenGUI
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token))
+            if (!Adapter.CheckTwitterAccounts())
             {
-                Adapter.TwitterAuthGetPin();
-
-                ZScreenLib.InputBox ib = new ZScreenLib.InputBox();
-                ib.Title = "Enter PIN";
-                if (ib.ShowDialog() == DialogResult.OK)
-                {
-                    Adapter.TwitterAuthSetPin(ib.InputText);
-                }
+                MessageBox.Show("Configure your Twitter accounts in Destinations tab", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tcApp.SelectedTab = tpDestinations;
+                tcDestinations.SelectedTab = tpTwitter;
             }
-
-            if (!string.IsNullOrEmpty(Engine.conf.TwitterAuthInfo.Token))
-            {
-                Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
-            }
-        }
-
-        private void btnTwitterPin_Click(object sender, EventArgs e)
-        {
-            Adapter.TwitterAuthGetPin();
+            Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
         private void btnTwitterAuth_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtTwitterPin.Text))
+            if (Adapter.CheckTwitterAccounts())
             {
-                if (Adapter.TwitterAuthSetPin(txtTwitterPin.Text))
+                TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
+                if (null != acc && !string.IsNullOrEmpty(acc.PIN))
                 {
-                    btnTwitterAuth.Enabled = false;
+                    acc = Adapter.TwitterAuthSetPin(ref acc);
+                    if (null != acc)
+                    {
+                        ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+                    }
                 }
             }
-        }
-
-        private void txtTwitterPin_TextChanged(object sender, EventArgs e)
-        {
-            btnTwitterAuth.Enabled = true;
         }
 
         private void tsmiTwitter_Click(object sender, EventArgs e)

@@ -5,15 +5,29 @@ using System.Web;
 using System.Net;
 using System.IO;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace UploadersLib.Helpers
 {
     public class TwitterAuthInfo
     {
+        public string AccountName { get; set; }
         public string OAuthToken { get; set; }
+        [Category("Twitter"), PasswordPropertyText(true)]
         public string Token { get; set; }
+        [Category("Twitter"), PasswordPropertyText(true)]
         public string PIN { get; set; }
+        [Category("Twitter"), PasswordPropertyText(true)]
         public string TokenSecret { get; set; }
+
+        public TwitterAuthInfo()
+        {
+            this.AccountName = "New Account";
+        }
+        public override string ToString()
+        {
+            return this.AccountName;
+        }
     }
 
     public class oAuthTwitter : OAuthBase
@@ -68,11 +82,10 @@ namespace UploadersLib.Helpers
         /// Exchange the request token for an access token.
         /// </summary>
         /// <param name="authToken">The oauth_token is supplied by Twitter's authorization page following the callback.</param>
-        public TwitterAuthInfo AccessTokenGet(string authToken, string pin)
+        public TwitterAuthInfo AccessTokenGet(ref TwitterAuthInfo acc)
         {
-            this.AuthInfo.Token = authToken;
-            this.AuthInfo.PIN = pin; // JDevlin
-
+            this.AuthInfo = acc;
+            this.AuthInfo.Token = acc.OAuthToken;
             string response = oAuthWebRequest(Method.GET, ACCESS_TOKEN, String.Empty);
 
             if (response.Length > 0)
@@ -187,7 +200,7 @@ namespace UploadersLib.Helpers
         /// <returns>The web server response.</returns>
         public string WebRequest(Method method, string url, string postData)
         {
-            HttpWebRequest webRequest = null;            
+            HttpWebRequest webRequest = null;
             StreamWriter requestWriter = null;
             string responseData = "";
 
@@ -242,7 +255,7 @@ namespace UploadersLib.Helpers
                 responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                 responseData = responseReader.ReadToEnd();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }

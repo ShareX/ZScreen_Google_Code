@@ -1,4 +1,8 @@
-﻿Move MakeTinyURL to before AddToListBox
+﻿Joined Date to be filled in Milestones.wiki 
+
+URGENT: Need RetryUpload code gone to Workers.cs so that ZScreenCLI can benefit from it
+
+Move MakeTinyURL to before AddToListBox
 	Need to share bw_DoWork in Worker and WorkerPrimary first
 
 Hotkey for Indexer

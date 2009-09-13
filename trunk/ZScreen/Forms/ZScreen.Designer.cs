@@ -101,7 +101,7 @@ namespace ZScreenGUI
             this.lblLogo = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.tpDestinations = new System.Windows.Forms.TabPage();
-            this.tcAccounts = new System.Windows.Forms.TabControl();
+            this.tcDestinations = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.btnFtpHelp = new System.Windows.Forms.Button();
             this.btnFTPOpenClient = new System.Windows.Forms.Button();
@@ -157,21 +157,15 @@ namespace ZScreenGUI
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.tcTwitter = new System.Windows.Forms.TabControl();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
-            this.cboTwitPicUploadMode = new System.Windows.Forms.ComboBox();
             this.lblTwitPicThumbnailMode = new System.Windows.Forms.Label();
-            this.lblTwitPicUploadMode = new System.Windows.Forms.Label();
             this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
             this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.tpYfrog = new System.Windows.Forms.TabPage();
-            this.cboYfrogUploadMode = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.gbTwitterAccount = new System.Windows.Forms.GroupBox();
-            this.btnTwitterGetPin = new System.Windows.Forms.Button();
             this.btnTwitterAuth = new System.Windows.Forms.Button();
-            this.lblTwitterPin = new System.Windows.Forms.Label();
+            this.ucTwitterAccounts = new ZScreenGUI.AccountsControl();
+            this.gbTwitterAccount = new System.Windows.Forms.GroupBox();
             this.lblTwitterPassword = new System.Windows.Forms.Label();
             this.txtTwitPicPassword = new System.Windows.Forms.TextBox();
-            this.txtTwitterPin = new System.Windows.Forms.TextBox();
             this.lblTwitterUsername = new System.Windows.Forms.Label();
             this.txtTwitPicUserName = new System.Windows.Forms.TextBox();
             this.tpImageBam = new System.Windows.Forms.TabPage();
@@ -567,7 +561,7 @@ namespace ZScreenGUI
             this.gbImageSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.tpDestinations.SuspendLayout();
-            this.tcAccounts.SuspendLayout();
+            this.tcDestinations.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
             this.tpRapidShare.SuspendLayout();
@@ -580,7 +574,6 @@ namespace ZScreenGUI
             this.tpTwitter.SuspendLayout();
             this.tcTwitter.SuspendLayout();
             this.tpTwitPic.SuspendLayout();
-            this.tpYfrog.SuspendLayout();
             this.gbTwitterAccount.SuspendLayout();
             this.tpImageBam.SuspendLayout();
             this.gbImageBamGalleries.SuspendLayout();
@@ -1312,7 +1305,7 @@ namespace ZScreenGUI
             // 
             // tpDestinations
             // 
-            this.tpDestinations.Controls.Add(this.tcAccounts);
+            this.tpDestinations.Controls.Add(this.tcDestinations);
             this.tpDestinations.ImageKey = "server.png";
             this.tpDestinations.Location = new System.Drawing.Point(4, 23);
             this.tpDestinations.Name = "tpDestinations";
@@ -1324,22 +1317,22 @@ namespace ZScreenGUI
             // 
             // tcAccounts
             // 
-            this.tcAccounts.Controls.Add(this.tpFTP);
-            this.tcAccounts.Controls.Add(this.tpRapidShare);
-            this.tcAccounts.Controls.Add(this.tpSendSpace);
-            this.tcAccounts.Controls.Add(this.tpFlickr);
-            this.tcAccounts.Controls.Add(this.tpImageShack);
-            this.tcAccounts.Controls.Add(this.tpTinyPic);
-            this.tcAccounts.Controls.Add(this.tpTwitter);
-            this.tcAccounts.Controls.Add(this.tpImageBam);
-            this.tcAccounts.Controls.Add(this.tpMindTouch);
-            this.tcAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcAccounts.ImageList = this.ilApp;
-            this.tcAccounts.Location = new System.Drawing.Point(3, 3);
-            this.tcAccounts.Name = "tcAccounts";
-            this.tcAccounts.SelectedIndex = 0;
-            this.tcAccounts.Size = new System.Drawing.Size(799, 429);
-            this.tcAccounts.TabIndex = 0;
+            this.tcDestinations.Controls.Add(this.tpFTP);
+            this.tcDestinations.Controls.Add(this.tpRapidShare);
+            this.tcDestinations.Controls.Add(this.tpSendSpace);
+            this.tcDestinations.Controls.Add(this.tpFlickr);
+            this.tcDestinations.Controls.Add(this.tpImageShack);
+            this.tcDestinations.Controls.Add(this.tpTinyPic);
+            this.tcDestinations.Controls.Add(this.tpTwitter);
+            this.tcDestinations.Controls.Add(this.tpImageBam);
+            this.tcDestinations.Controls.Add(this.tpMindTouch);
+            this.tcDestinations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcDestinations.ImageList = this.ilApp;
+            this.tcDestinations.Location = new System.Drawing.Point(3, 3);
+            this.tcDestinations.Name = "tcAccounts";
+            this.tcDestinations.SelectedIndex = 0;
+            this.tcDestinations.Size = new System.Drawing.Size(799, 429);
+            this.tcDestinations.TabIndex = 0;
             // 
             // tpFTP
             // 
@@ -1921,6 +1914,8 @@ namespace ZScreenGUI
             // tpTwitter
             // 
             this.tpTwitter.Controls.Add(this.tcTwitter);
+            this.tpTwitter.Controls.Add(this.btnTwitterAuth);
+            this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
             this.tpTwitter.Controls.Add(this.gbTwitterAccount);
             this.tpTwitter.ImageKey = "Twitter.ico";
             this.tpTwitter.Location = new System.Drawing.Point(4, 23);
@@ -1938,62 +1933,39 @@ namespace ZScreenGUI
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tcTwitter.Controls.Add(this.tpTwitPic);
             this.tcTwitter.Controls.Add(this.tpYfrog);
-            this.tcTwitter.Location = new System.Drawing.Point(8, 128);
+            this.tcTwitter.Location = new System.Drawing.Point(352, 304);
             this.tcTwitter.Name = "tcTwitter";
             this.tcTwitter.SelectedIndex = 0;
-            this.tcTwitter.Size = new System.Drawing.Size(776, 271);
+            this.tcTwitter.Size = new System.Drawing.Size(424, 87);
             this.tcTwitter.TabIndex = 16;
             // 
             // tpTwitPic
             // 
-            this.tpTwitPic.Controls.Add(this.cboTwitPicUploadMode);
             this.tpTwitPic.Controls.Add(this.lblTwitPicThumbnailMode);
-            this.tpTwitPic.Controls.Add(this.lblTwitPicUploadMode);
             this.tpTwitPic.Controls.Add(this.cboTwitPicThumbnailMode);
             this.tpTwitPic.Controls.Add(this.cbTwitPicShowFull);
             this.tpTwitPic.Location = new System.Drawing.Point(4, 22);
             this.tpTwitPic.Name = "tpTwitPic";
             this.tpTwitPic.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitPic.Size = new System.Drawing.Size(768, 245);
+            this.tpTwitPic.Size = new System.Drawing.Size(416, 61);
             this.tpTwitPic.TabIndex = 0;
             this.tpTwitPic.Text = "TwitPic";
             this.tpTwitPic.UseVisualStyleBackColor = true;
             // 
-            // cboTwitPicUploadMode
-            // 
-            this.cboTwitPicUploadMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTwitPicUploadMode.FormattingEnabled = true;
-            this.cboTwitPicUploadMode.Location = new System.Drawing.Point(112, 136);
-            this.cboTwitPicUploadMode.Name = "cboTwitPicUploadMode";
-            this.cboTwitPicUploadMode.Size = new System.Drawing.Size(312, 21);
-            this.cboTwitPicUploadMode.TabIndex = 11;
-            this.cboTwitPicUploadMode.Visible = false;
-            this.cboTwitPicUploadMode.SelectedIndexChanged += new System.EventHandler(this.cboTwitPicUploadMode_SelectedIndexChanged);
-            // 
             // lblTwitPicThumbnailMode
             // 
             this.lblTwitPicThumbnailMode.AutoSize = true;
-            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 48);
+            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(160, 21);
             this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
             this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(89, 13);
             this.lblTwitPicThumbnailMode.TabIndex = 15;
             this.lblTwitPicThumbnailMode.Text = "Thumbnail Mode:";
             // 
-            // lblTwitPicUploadMode
-            // 
-            this.lblTwitPicUploadMode.AutoSize = true;
-            this.lblTwitPicUploadMode.Location = new System.Drawing.Point(16, 141);
-            this.lblTwitPicUploadMode.Name = "lblTwitPicUploadMode";
-            this.lblTwitPicUploadMode.Size = new System.Drawing.Size(80, 13);
-            this.lblTwitPicUploadMode.TabIndex = 12;
-            this.lblTwitPicUploadMode.Text = "Upload Method";
-            this.lblTwitPicUploadMode.Visible = false;
-            // 
             // cboTwitPicThumbnailMode
             // 
             this.cboTwitPicThumbnailMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTwitPicThumbnailMode.FormattingEnabled = true;
-            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 43);
+            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(256, 16);
             this.cboTwitPicThumbnailMode.Name = "cboTwitPicThumbnailMode";
             this.cboTwitPicThumbnailMode.Size = new System.Drawing.Size(144, 21);
             this.cboTwitPicThumbnailMode.TabIndex = 14;
@@ -2013,82 +1985,46 @@ namespace ZScreenGUI
             // 
             // tpYfrog
             // 
-            this.tpYfrog.Controls.Add(this.cboYfrogUploadMode);
-            this.tpYfrog.Controls.Add(this.label1);
             this.tpYfrog.Location = new System.Drawing.Point(4, 22);
             this.tpYfrog.Name = "tpYfrog";
             this.tpYfrog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpYfrog.Size = new System.Drawing.Size(768, 245);
+            this.tpYfrog.Size = new System.Drawing.Size(336, 85);
             this.tpYfrog.TabIndex = 2;
             this.tpYfrog.Text = "yFrog";
             this.tpYfrog.UseVisualStyleBackColor = true;
             // 
-            // cboYfrogUploadMode
-            // 
-            this.cboYfrogUploadMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboYfrogUploadMode.FormattingEnabled = true;
-            this.cboYfrogUploadMode.Location = new System.Drawing.Point(112, 16);
-            this.cboYfrogUploadMode.Name = "cboYfrogUploadMode";
-            this.cboYfrogUploadMode.Size = new System.Drawing.Size(312, 21);
-            this.cboYfrogUploadMode.TabIndex = 13;
-            this.cboYfrogUploadMode.Visible = false;
-            this.cboYfrogUploadMode.SelectedIndexChanged += new System.EventHandler(this.cboYfrogUploadMode_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Upload Method";
-            this.label1.Visible = false;
-            // 
-            // gbTwitterAccount
-            // 
-            this.gbTwitterAccount.Controls.Add(this.btnTwitterGetPin);
-            this.gbTwitterAccount.Controls.Add(this.btnTwitterAuth);
-            this.gbTwitterAccount.Controls.Add(this.lblTwitterPin);
-            this.gbTwitterAccount.Controls.Add(this.lblTwitterPassword);
-            this.gbTwitterAccount.Controls.Add(this.txtTwitPicPassword);
-            this.gbTwitterAccount.Controls.Add(this.txtTwitterPin);
-            this.gbTwitterAccount.Controls.Add(this.lblTwitterUsername);
-            this.gbTwitterAccount.Controls.Add(this.txtTwitPicUserName);
-            this.gbTwitterAccount.Location = new System.Drawing.Point(8, 8);
-            this.gbTwitterAccount.Name = "gbTwitterAccount";
-            this.gbTwitterAccount.Size = new System.Drawing.Size(416, 112);
-            this.gbTwitterAccount.TabIndex = 10;
-            this.gbTwitterAccount.TabStop = false;
-            this.gbTwitterAccount.Text = "Twitter Account";
-            // 
-            // btnTwitterGetPin
-            // 
-            this.btnTwitterGetPin.Location = new System.Drawing.Point(248, 72);
-            this.btnTwitterGetPin.Name = "btnTwitterGetPin";
-            this.btnTwitterGetPin.Size = new System.Drawing.Size(75, 23);
-            this.btnTwitterGetPin.TabIndex = 22;
-            this.btnTwitterGetPin.Text = "Get &PIN...";
-            this.btnTwitterGetPin.UseVisualStyleBackColor = true;
-            this.btnTwitterGetPin.Click += new System.EventHandler(this.btnTwitterPin_Click);
-            // 
             // btnTwitterAuth
             // 
-            this.btnTwitterAuth.Location = new System.Drawing.Point(328, 72);
+            this.btnTwitterAuth.Location = new System.Drawing.Point(226, 11);
             this.btnTwitterAuth.Name = "btnTwitterAuth";
-            this.btnTwitterAuth.Size = new System.Drawing.Size(75, 23);
+            this.btnTwitterAuth.Size = new System.Drawing.Size(75, 24);
             this.btnTwitterAuth.TabIndex = 20;
             this.btnTwitterAuth.Text = "&Authorize";
             this.btnTwitterAuth.UseVisualStyleBackColor = true;
             this.btnTwitterAuth.Click += new System.EventHandler(this.btnTwitterAuth_Click);
             // 
-            // lblTwitterPin
+            // ucTwitterAccounts
             // 
-            this.lblTwitterPin.AutoSize = true;
-            this.lblTwitterPin.Location = new System.Drawing.Point(56, 75);
-            this.lblTwitterPin.Name = "lblTwitterPin";
-            this.lblTwitterPin.Size = new System.Drawing.Size(28, 13);
-            this.lblTwitterPin.TabIndex = 21;
-            this.lblTwitterPin.Text = "PIN:";
+            this.ucTwitterAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
+            this.ucTwitterAccounts.Size = new System.Drawing.Size(785, 293);
+            this.ucTwitterAccounts.TabIndex = 17;
+            // 
+            // gbTwitterAccount
+            // 
+            this.gbTwitterAccount.Controls.Add(this.lblTwitterPassword);
+            this.gbTwitterAccount.Controls.Add(this.txtTwitPicPassword);
+            this.gbTwitterAccount.Controls.Add(this.lblTwitterUsername);
+            this.gbTwitterAccount.Controls.Add(this.txtTwitPicUserName);
+            this.gbTwitterAccount.Location = new System.Drawing.Point(8, 304);
+            this.gbTwitterAccount.Name = "gbTwitterAccount";
+            this.gbTwitterAccount.Size = new System.Drawing.Size(328, 88);
+            this.gbTwitterAccount.TabIndex = 10;
+            this.gbTwitterAccount.TabStop = false;
+            this.gbTwitterAccount.Text = "Twitter Account";
             // 
             // lblTwitterPassword
             // 
@@ -2104,17 +2040,9 @@ namespace ZScreenGUI
             this.txtTwitPicPassword.Location = new System.Drawing.Point(88, 48);
             this.txtTwitPicPassword.Name = "txtTwitPicPassword";
             this.txtTwitPicPassword.PasswordChar = '*';
-            this.txtTwitPicPassword.Size = new System.Drawing.Size(312, 20);
+            this.txtTwitPicPassword.Size = new System.Drawing.Size(216, 20);
             this.txtTwitPicPassword.TabIndex = 8;
             this.txtTwitPicPassword.TextChanged += new System.EventHandler(this.txtTwitPicPassword_TextChanged);
-            // 
-            // txtTwitterPin
-            // 
-            this.txtTwitterPin.Location = new System.Drawing.Point(88, 72);
-            this.txtTwitterPin.Name = "txtTwitterPin";
-            this.txtTwitterPin.Size = new System.Drawing.Size(152, 20);
-            this.txtTwitterPin.TabIndex = 19;
-            this.txtTwitterPin.TextChanged += new System.EventHandler(this.txtTwitterPin_TextChanged);
             // 
             // lblTwitterUsername
             // 
@@ -2129,7 +2057,7 @@ namespace ZScreenGUI
             // 
             this.txtTwitPicUserName.Location = new System.Drawing.Point(88, 24);
             this.txtTwitPicUserName.Name = "txtTwitPicUserName";
-            this.txtTwitPicUserName.Size = new System.Drawing.Size(312, 20);
+            this.txtTwitPicUserName.Size = new System.Drawing.Size(216, 20);
             this.txtTwitPicUserName.TabIndex = 6;
             this.txtTwitPicUserName.TextChanged += new System.EventHandler(this.txtTwitPicUserName_TextChanged);
             // 
@@ -6686,7 +6614,7 @@ namespace ZScreenGUI
             this.gbImageSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.tpDestinations.ResumeLayout(false);
-            this.tcAccounts.ResumeLayout(false);
+            this.tcDestinations.ResumeLayout(false);
             this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
@@ -6707,8 +6635,6 @@ namespace ZScreenGUI
             this.tcTwitter.ResumeLayout(false);
             this.tpTwitPic.ResumeLayout(false);
             this.tpTwitPic.PerformLayout();
-            this.tpYfrog.ResumeLayout(false);
-            this.tpYfrog.PerformLayout();
             this.gbTwitterAccount.ResumeLayout(false);
             this.gbTwitterAccount.PerformLayout();
             this.tpImageBam.ResumeLayout(false);
@@ -7255,7 +7181,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnUploadTextClipboardFile;
         internal System.Windows.Forms.PropertyGrid pgEditorsImage;
         internal System.Windows.Forms.TabPage tpDestinations;
-        internal System.Windows.Forms.TabControl tcAccounts;
+        internal System.Windows.Forms.TabControl tcDestinations;
         internal System.Windows.Forms.TabPage tpTinyPic;
         internal System.Windows.Forms.TabPage tpImageShack;
         internal System.Windows.Forms.TabPage tpTextServices;
@@ -7291,8 +7217,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblTwitterUsername;
         internal System.Windows.Forms.TextBox txtTwitPicUserName;
         internal System.Windows.Forms.GroupBox gbTwitterAccount;
-        internal System.Windows.Forms.Label lblTwitPicUploadMode;
-        internal System.Windows.Forms.ComboBox cboTwitPicUploadMode;
         internal System.Windows.Forms.GroupBox gbMindTouchOptions;
         internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
         private System.Windows.Forms.TabPage tpProxy;
@@ -7384,8 +7308,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.TextBox txtFTPThumbWidth;
         private System.Windows.Forms.TextBox txtFTPThumbHeight;
         private System.Windows.Forms.CheckBox cbFTPThumbnailCheckSize;
-        internal System.Windows.Forms.ComboBox cboYfrogUploadMode;
-        internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
         private System.Windows.Forms.TabPage tpFlickr;
         private System.Windows.Forms.Button btnFlickrGetToken;
@@ -7400,12 +7322,10 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripMenuItem tsmFileDest;
         private System.Windows.Forms.CheckBox chkHotkeys;
         private System.Windows.Forms.CheckBox chkTwitterEnable;
-        private System.Windows.Forms.TextBox txtTwitterPin;
         private System.Windows.Forms.Button btnTwitterAuth;
-        private System.Windows.Forms.Label lblTwitterPin;
-        private System.Windows.Forms.Button btnTwitterGetPin;
         private System.Windows.Forms.ToolStripMenuItem tsmiTwitter;
         private System.Windows.Forms.Button btnFtpHelp;
+        private AccountsControl ucTwitterAccounts;
 
     }
 }

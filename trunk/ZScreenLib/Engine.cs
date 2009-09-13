@@ -180,11 +180,6 @@ namespace ZScreenLib
                 mProductName += "*";
                 mAppInfo.AppName = mProductName;
             }
-
-            //if (options.KeyboardHook)
-            //{
-
-            //}
         }
 
         public static void LoadSettings()

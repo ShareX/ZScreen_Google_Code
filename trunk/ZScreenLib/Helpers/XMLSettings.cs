@@ -119,7 +119,8 @@ namespace ZScreenLib
         public bool TinyPicSizeCheck = true;
 
         // Twitter 
-        public TwitterAuthInfo TwitterAuthInfo = new TwitterAuthInfo();
+        public List<TwitterAuthInfo> TwitterAccountsList = new List<TwitterAuthInfo>();
+        public int TwitterAcctSelected = 0;
         public bool TwitterEnabled = false;
 
         // TwitPic

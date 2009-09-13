@@ -1,5 +1,8 @@
 Version 3.5 - 20091015
 
+3.05.4.0 Support for multiple Twitter accounts {McoreD}
+3.05.3.0 PropertyGrid options for adding border effects to images {Hades32}
+3.05.2.1 Fixed handling of FTP/HTTP path when using the "@" [Issue 136] {Hades32}
 3.05.2.0 Share on Twitter... right click menu item in History tab {McoreD}
 3.05.1.0 Changes in FTP Accounts require reconfiguring settings {McoreD/Jaex}
 3.05.0.0 Application wide support to update Twitter status upon completion of an upload {McoreD}

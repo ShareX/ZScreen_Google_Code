@@ -202,6 +202,11 @@ namespace ZScreenLib
             return CheckList(Engine.conf.FTPAccountList, Engine.conf.FTPSelected);
         }
 
+        public static bool CheckTwitterAccounts()
+        {
+            return CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected);
+        }
+
         public static bool CheckFTPAccounts(ref WorkerTask task)
         {
             bool result = CheckFTPAccounts();
@@ -490,32 +495,54 @@ namespace ZScreenLib
             }
         }
 
-        public static void TwitterAuthGetPin()
+        #region Twitter Methods
+
+        public static TwitterAuthInfo TwitterGetActiveAcct()
+        {
+            TwitterAuthInfo acc = null;
+            if (CheckTwitterAccounts())
+            {
+                acc = Engine.conf.TwitterAccountsList[Engine.conf.TwitterAcctSelected];
+            }
+            return acc;
+        }
+
+        public static TwitterAuthInfo TwitterAuthGetPin()
         {
             // authorize ZScreen to twitter
             oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+            TwitterAuthInfo acc = TwitterGetActiveAcct();
             string authLink = oAuth.AuthorizationLinkGet();
-            Engine.conf.TwitterAuthInfo = oAuth.AuthInfo;
+            if (null != acc)
+            {
+                oAuth.AuthInfo.AccountName = acc.AccountName;
+            }
+            if (CheckTwitterAccounts())
+            {
+                Engine.conf.TwitterAccountsList[Engine.conf.TwitterAcctSelected] = oAuth.AuthInfo;
+            }
             if (!string.IsNullOrEmpty(authLink))
             {
                 System.Diagnostics.Process.Start(authLink);
             }
+            return oAuth.AuthInfo;
         }
 
-        public static bool TwitterAuthSetPin(string pin)
+        public static TwitterAuthInfo TwitterAuthSetPin(ref TwitterAuthInfo acc)
         {
-            bool succ = true;
             try
             {
-                oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
-                Engine.conf.TwitterAuthInfo = oAuth.AccessTokenGet(Engine.conf.TwitterAuthInfo.OAuthToken, pin);
+                if (null != acc)
+                {
+                    oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+                    acc = oAuth.AccessTokenGet(ref acc);
+                }
             }
             catch (Exception ex)
             {
                 FileSystem.AppendDebug(ex);
-                succ = false;
             }
-            return succ;
+            return acc;
         }
 
         public static void TwitterMsg(ref WorkerTask task)
@@ -528,11 +555,17 @@ namespace ZScreenLib
 
         public static void TwitterMsg(string url)
         {
-            oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, Engine.conf.TwitterAuthInfo);
-            TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");
-            msg.txtTweet.Text = url;
-            msg.Show();
+            TwitterAuthInfo acc = TwitterGetActiveAcct();
+            if (null != acc)
+            {
+                oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, acc);
+                TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");
+                msg.txtTweet.Text = url;
+                msg.Show();
+            }
         }
+
+        #endregion
 
         public static int RandomNumber(int min, int max)
         {
