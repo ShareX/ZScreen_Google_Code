@@ -45,6 +45,10 @@ namespace ZScreenTesterGUI
             }
         }
 
+        public string TestFileBinaryPath { get; set; }
+        public string TestFilePicturePath { get; set; }
+        public string TestFileTextPath { get; set; }
+
         private bool testing;
 
         public TesterGUI()
@@ -95,18 +99,27 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(lvi);
             }
 
-            if (!File.Exists(Tester.TestFilePicture))
+            PrepareListItems();
+        }
+
+        private void TesterGUI_Load(object sender, EventArgs e)
+        {
+            CheckPaths();
+        }
+
+        private void CheckPaths()
+        {
+            if (!File.Exists(this.TestFilePicturePath))
             {
                 OpenFileDialog dlg = new OpenFileDialog();
-                dlg.Title = "Browse for a test file...";
+                dlg.Filter = "Image Files (*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+                dlg.Title = "Browse for a test image file...";
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Tester.TestFilePicture = dlg.FileName;
+                    this.TestFileBinaryPath = this.TestFilePicturePath = dlg.FileName;
                 }
             }
-
-            PrepareListItems();
         }
 
         private void PrepareListItems()
@@ -166,12 +179,12 @@ namespace ZScreenTesterGUI
                     {
                         case UploaderType.ImageUploader:
                             task.MyImageUploader = uploader.ImageUploader;
-                            task.UpdateLocalFilePath(Tester.TestFilePicture);
+                            task.UpdateLocalFilePath(this.TestFilePicturePath);
                             new TaskManager(ref task).UploadImage();
                             break;
                         case UploaderType.FileUploader:
                             task.MyFileUploader = uploader.FileUploader;
-                            task.UpdateLocalFilePath(Tester.TestFileBinary);
+                            task.UpdateLocalFilePath(this.TestFileBinaryPath);
                             new TaskManager(ref task).UploadFile();
                             break;
                         case UploaderType.TextUploader:

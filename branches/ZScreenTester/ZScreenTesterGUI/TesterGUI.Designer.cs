@@ -142,7 +142,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(642, 342);
+            this.tabPage2.Size = new System.Drawing.Size(635, 416);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Console";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@
             this.txtConsole.Location = new System.Drawing.Point(3, 3);
             this.txtConsole.Multiline = true;
             this.txtConsole.Name = "txtConsole";
-            this.txtConsole.Size = new System.Drawing.Size(636, 336);
+            this.txtConsole.Size = new System.Drawing.Size(629, 410);
             this.txtConsole.TabIndex = 0;
             // 
             // TesterGUI
@@ -164,7 +164,8 @@
             this.Controls.Add(this.tcTesters);
             this.Name = "TesterGUI";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "TesterGUI";
+            this.Text = "ZScreen Tester";
+            this.Load += new System.EventHandler(this.TesterGUI_Load);
             this.cmsUploaders.ResumeLayout(false);
             this.tcTesters.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

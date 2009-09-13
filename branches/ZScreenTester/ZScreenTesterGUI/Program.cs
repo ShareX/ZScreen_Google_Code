@@ -4,11 +4,11 @@ using ZScreenLib;
 
 namespace ZScreenTesterGUI
 {
-    class Tester
+    public class Tester
     {
-        public static string TestFilePicture = @"..\..\..\test.jpg";
-        public static string TestFileText = @"..\..\..\test.txt";
-        public static string TestFileBinary = @"..\..\..\test.pdf";
+        private static string TestFilePicture = @"..\..\..\test.jpg";
+        private static string TestFileText = @"..\..\..\test.txt";
+        private static string TestFileBinary = @"..\..\..\test.pdf";
 
         [STAThread]
         public static void Main()
@@ -19,7 +19,14 @@ namespace ZScreenTesterGUI
             Engine.TurnOn();
             Engine.LoadSettingsLatest();
 
-            Application.Run(new TesterGUI());
+            TesterGUI testerGUI = new TesterGUI
+            {
+                TestFileBinaryPath = TestFileBinary,
+                TestFilePicturePath = TestFilePicture,
+                TestFileTextPath = TestFileText
+            };
+
+            Application.Run(testerGUI);
 
             Engine.TurnOff();
         }
