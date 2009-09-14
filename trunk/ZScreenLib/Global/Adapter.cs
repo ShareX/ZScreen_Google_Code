@@ -497,9 +497,13 @@ namespace ZScreenLib
 
         #region Twitter Methods
 
+        /// <summary>
+        /// Returns the active TwitterAuthInfo object; if nothing is active then a new TwitterAuthInfo object is returned
+        /// </summary>
+        /// <returns></returns>
         public static TwitterAuthInfo TwitterGetActiveAcct()
         {
-            TwitterAuthInfo acc = null;
+        	TwitterAuthInfo acc = new TwitterAuthInfo();
             if (CheckTwitterAccounts())
             {
                 acc = Engine.conf.TwitterAccountsList[Engine.conf.TwitterAcctSelected];
@@ -513,7 +517,7 @@ namespace ZScreenLib
             oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
             TwitterAuthInfo acc = TwitterGetActiveAcct();
             string authLink = oAuth.AuthorizationLinkGet();
-            if (null != acc)
+            if (!string.IsNullOrEmpty(acc.AccountName))
             {
                 oAuth.AuthInfo.AccountName = acc.AccountName;
             }
@@ -556,7 +560,7 @@ namespace ZScreenLib
         public static void TwitterMsg(string url)
         {
             TwitterAuthInfo acc = TwitterGetActiveAcct();
-            if (null != acc)
+			if (!string.IsNullOrEmpty(acc.TokenSecret))
             {
                 oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, acc);
                 TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");

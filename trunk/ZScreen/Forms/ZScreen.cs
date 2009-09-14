@@ -192,6 +192,7 @@ namespace ZScreenGUI
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
             ucTwitterAccounts.btnTest.Text = "Authorize";
             ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
+            ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.Categorized;
             ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
 
             // Options - Proxy
@@ -236,7 +237,7 @@ namespace ZScreenGUI
             if (Adapter.CheckTwitterAccounts())
             {
                 TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
-                if (null != acc && !string.IsNullOrEmpty(acc.PIN))
+                if (!string.IsNullOrEmpty(acc.PIN))
                 {
                     acc = Adapter.TwitterAuthSetPin(ref acc);
                     if (null != acc)
@@ -726,11 +727,6 @@ namespace ZScreenGUI
             txtImageShackRegistrationCode.Text = Engine.conf.ImageShackRegistrationCode;
             txtUserNameImageShack.Text = Engine.conf.ImageShackUserName;
             chkPublicImageShack.Checked = Engine.conf.ImageShackShowImagesInPublic;
-
-            // TwitPic
-
-            txtTwitPicUserName.Text = Engine.conf.TwitterUserName;
-            txtTwitPicPassword.Text = Engine.conf.TwitterPassword;
 
             // cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
@@ -3868,22 +3864,6 @@ namespace ZScreenGUI
         private void ucUrlShorteners_Load(object sender, EventArgs e)
         {
             UrlShorteners_SelectedIndexChanged(sender, e);
-        }
-
-        private void txtTwitPicUserName_TextChanged(object sender, EventArgs e)
-        {
-            if (mGuiIsReady)
-            {
-                Engine.conf.TwitterUserName = txtTwitPicUserName.Text;
-            }
-        }
-
-        private void txtTwitPicPassword_TextChanged(object sender, EventArgs e)
-        {
-            if (mGuiIsReady)
-            {
-                Engine.conf.TwitterPassword = txtTwitPicPassword.Text;
-            }
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
