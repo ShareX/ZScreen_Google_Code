@@ -1,5 +1,8 @@
 Version 3.5 - 20091015
 
+3.05.6.0 Added Maximum Name Length setting to limit file name length {Jaex}
+3.05.5.0 PreferFtpServerForIndex setting to automatically choose the active FTP Server for indexing a folder to HTML instead of text {McoreD}
+
 3.05.4.0 Support for multiple Twitter accounts {McoreD}
 3.05.3.0 PropertyGrid options for adding border effects to images {Hades32}
 3.05.2.1 Fixed handling of FTP/HTTP path when using the "@" [Issue 136] {Hades32}
