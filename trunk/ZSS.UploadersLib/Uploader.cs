@@ -186,7 +186,10 @@ namespace UploadersLib
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Method = "GET";
-                request.Proxy = ProxySettings.GetWebProxy;
+                if (ProxyActive)
+                {
+                    request.Proxy = ProxySettings.GetWebProxy;
+                }
                 request.UserAgent = UserAgent;
 
                 return (HttpWebResponse)request.GetResponse();
