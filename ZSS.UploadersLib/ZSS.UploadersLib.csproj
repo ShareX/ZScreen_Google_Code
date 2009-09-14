@@ -107,7 +107,7 @@
     <Compile Include="URLShorteners\OwlyUploader.cs" />
     <Compile Include="URLShorteners\ThreelyUploader.cs" />
     <Compile Include="URLShorteners\TinyURLUploader.cs" />
-    <Compile Include="URLShorteners\TURLUploader.cs" />
+    <Compile Include="URLShorteners\Turl.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TwitterMsg.resx">
