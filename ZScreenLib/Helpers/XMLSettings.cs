@@ -127,15 +127,8 @@ namespace ZScreenLib
 
         // TwitPic
 
-        public string TwitterUserName = "";
-        public string TwitterPassword = "";
-       // public TwitPicUploadType TwitPicUploadMode = TwitPicUploadType.UPLOAD_IMAGE_ONLY;
         public bool TwitPicShowFull = true;
         public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-
-        // YFrog
-
-       // public YfrogUploadType YfrogUploadMode = YfrogUploadType.UPLOAD_IMAGE_ONLY;
 
         // Flickr
 

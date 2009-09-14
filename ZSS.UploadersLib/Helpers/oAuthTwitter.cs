@@ -11,16 +11,20 @@ namespace UploadersLib.Helpers
 {
     public class TwitterAuthInfo
     {
-        [Category("Twitter"), Description("Description of your Twitter Account")]
+        [Category("Twitter OAuth Settings for Tweeting"), Description("Description of your Twitter Account")]
         public string AccountName { get; set; }
-        [Category("Twitter"), Description("Token used for the Authorization Page")]
+        [Category("Twitter OAuth Settings for Tweeting"), Description("Token used for the Authorization Page")]
         public string OAuthToken { get; set; }
-        [Category("Twitter"), Browsable(false), PasswordPropertyText(true)]
+        [Category("Twitter OAuth Settings for Tweeting"), Browsable(false), PasswordPropertyText(true)]
         public string Token { get; set; }
-        [Category("Twitter"), Description("Enter PIN here from the Authorization Page that you get after pressing Add button")]
+        [Category("Twitter OAuth Settings for Tweeting"), Description("Enter PIN here from the Authorization Page that you get after pressing Add button")]
         public string PIN { get; set; }
-        [Category("Twitter"), Description("TokenSecret is automatically retrieved when you press the Authorize button"), PasswordPropertyText(true)]
+        [Category("Twitter OAuth Settings for Tweeting"), Description("TokenSecret is automatically retrieved when you press the Authorize button"), PasswordPropertyText(true)]
         public string TokenSecret { get; set; }
+        [Category("Twitter Account settings for Twitter based Image Uploaders"), Description("Twitter Username")]
+        public string UserName { get; set; }
+        [Category("Twitter Account settings for Twitter based Image Uploaders"), Description("Twitter Password"), PasswordPropertyText(true)]
+        public string Password { get; set; }
 
         public TwitterAuthInfo()
         {
