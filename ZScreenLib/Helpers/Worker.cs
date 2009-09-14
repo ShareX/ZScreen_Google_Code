@@ -511,48 +511,51 @@ namespace ZScreenLib
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
-                string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Completed)
+            if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
             {
-                WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
-                task2.JobCategory = task.JobCategory;
-                task2.SetImage(task.LocalFilePath);
-                task2.UpdateLocalFilePath(task.LocalFilePath);
-                task2.Completed = true; // we do not retry again
-
-                if (Engine.conf.ImageUploadRandomRetryOnFail)
+                if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
+                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Completed)
                 {
-                    List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
-                    if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
-                    {
-                        randomDest.Add(ImageDestType.IMAGEBAM);
-                    }
-                    if (null != Engine.conf.FlickrAuthInfo)
-                    {
-                        randomDest.Add(ImageDestType.FLICKR);
-                    }
+                    WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
+                    task2.JobCategory = task.JobCategory;
+                    task2.SetImage(task.LocalFilePath);
+                    task2.UpdateLocalFilePath(task.LocalFilePath);
+                    task2.Completed = true; // we do not retry again
 
-                    int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                    while ((ImageDestType)r == task2.MyImageUploader)
+                    if (Engine.conf.ImageUploadRandomRetryOnFail)
                     {
-                        r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                    }
-                    task2.MyImageUploader = (ImageDestType)r;
-                }
-                else
-                {
-                    if (task.MyImageUploader == ImageDestType.IMAGESHACK)
-                    {
-                        task2.MyImageUploader = ImageDestType.TINYPIC;
+                        List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
+                        if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
+                        {
+                            randomDest.Add(ImageDestType.IMAGEBAM);
+                        }
+                        if (null != Engine.conf.FlickrAuthInfo)
+                        {
+                            randomDest.Add(ImageDestType.FLICKR);
+                        }
+
+                        int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
+                        while ((ImageDestType)r == task2.MyImageUploader)
+                        {
+                            r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
+                        }
+                        task2.MyImageUploader = (ImageDestType)r;
                     }
                     else
                     {
-                        task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                        if (task.MyImageUploader == ImageDestType.IMAGESHACK)
+                        {
+                            task2.MyImageUploader = ImageDestType.TINYPIC;
+                        }
+                        else
+                        {
+                            task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                        }
                     }
-                }
 
-                task2.MyWorker.RunWorkerAsync(task2);
-                return task2;
+                    task2.MyWorker.RunWorkerAsync(task2);
+                    return task2;
+                }
             }
             return task;
         }
