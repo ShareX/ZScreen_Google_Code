@@ -94,19 +94,18 @@ namespace ZScreenLib
                 img = ImageEffects.ApplyWatermark(img);
 
                 long size = (long)Engine.conf.SwitchAfter * 1024;
-
+				ImageFormat imgFormat = mImageFormats[Engine.conf.FileFormat];
+				
                 MemoryStream ms = new MemoryStream();
                 try
                 {
-                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Engine.conf.FileFormat]);
+                    GraphicsMgr.SaveImageToMemoryStream(img, ms, imgFormat);
 
                     // Change PNG to JPG (Lossy) if file size is large
-
                     if (ms.Length > size && size != 0)
                     {
                         ms = new MemoryStream();
                         GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Engine.conf.SwitchFormat]);
-
                         filePath = Path.ChangeExtension(filePath, Engine.zImageFileTypes[Engine.conf.SwitchFormat]);
                     }
 
@@ -115,17 +114,25 @@ namespace ZScreenLib
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     }
 
-                    int retry = 3;
-                    while (retry > 0 && !File.Exists(filePath))
-                    {
-                        using (FileStream fi = File.Create(filePath))
-                        {
-                            if (retry < 3) { System.Threading.Thread.Sleep(1000); }
-                            FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
-                            ms.WriteTo(fi);
-                            retry--;
-                        }
+                    if (imgFormat == ImageFormat.Gif) {
+                    	GraphicsMgr.SaveGIFWithNewColorTable(img, filePath, 256, false);
                     }
+                    else {
+	                    int retry = 3;
+	                    while (retry > 0 && !File.Exists(filePath))
+	                    {
+	                        using (FileStream fi = File.Create(filePath))
+	                        {
+	                            if (retry < 3) { System.Threading.Thread.Sleep(1000); }
+	                            FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
+	                            ms.WriteTo(fi);
+	                            retry--;
+	                        }
+	                    }
+                    }
+                }
+                catch(Exception ex){
+                	FileSystem.AppendDebug(ex.ToString());
                 }
                 finally
                 {
