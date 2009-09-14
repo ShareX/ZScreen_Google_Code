@@ -1,5 +1,6 @@
 Version 3.7 - 20091015
 
+3.07.0.0 Added Imagebin Image Uploader support {Jaex}
 3.06.0.0 Added turl.ca URL Shortener support {Jaex} 
 3.05.6.0 Added Maximum Name Length setting to limit file name length {Jaex}
 3.05.5.0 PreferFtpServerForIndex setting to automatically choose the active FTP Server for indexing a folder to HTML instead of text {McoreD}

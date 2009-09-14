@@ -124,19 +124,19 @@ namespace UploadersLib
     [Serializable]
     public enum UrlShortenerType
     {
-        [Description("bit.ly")]
-        BITLY,
-        [Description("is.gd")]
-        ISGD,
-        [Description("kl.am")]
-        KLAM,
-        //[Description("ow.ly")]
-        //OWLY,
-        [Description("tinyurl.com")]
-        TINYURL,
-        [Description("3.ly")]
+        [Description("Threely - www.3.ly")]
         THREELY,
-        [Description("turl.ca")]
+        [Description("bit.ly - www. bit.ly")]
+        BITLY,
+        [Description("is.gd - www. is.gd")]
+        ISGD,
+        [Description("kl.am - www.kl.am")]
+        KLAM,
+        //[Description("Ow.ly - www.ow.ly")]
+        //OWLY,
+        [Description("TinyURL - www.tinyurl.com")]
+        TINYURL,
+        [Description("TURL - www.turl.ca")]
         TURL
     }
 
