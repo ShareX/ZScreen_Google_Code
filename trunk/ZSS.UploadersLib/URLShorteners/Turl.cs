@@ -28,7 +28,7 @@ using UploadersLib.Helpers;
 namespace UploadersLib.URLShorteners
 {
     [Serializable]
-    public sealed class TURLUploader : TextUploader
+    public sealed class TurlUploader : TextUploader
     {
         public static readonly string Hostname = UrlShortenerType.TURL.GetDescription();
 
@@ -46,7 +46,7 @@ namespace UploadersLib.URLShorteners
 
         public TURLSettings HostSettings = new TURLSettings();
 
-        public TURLUploader()
+        public TurlUploader()
         {
             HostSettings.URL = "http://turl.ca/api.php";
         }

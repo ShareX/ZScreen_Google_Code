@@ -308,9 +308,9 @@ namespace ZScreenLib
             {
                 return new ThreelyUploader();
             }
-            else if (name.Equals(TURLUploader.Hostname))
+            else if (name.Equals(TurlUploader.Hostname))
             {
-                return new TURLUploader();
+                return new TurlUploader();
             }
 
             return null;
