@@ -310,6 +310,9 @@ namespace ZScreenLib
                         Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
                     imageUploader = new ImageBamUploader(imageBamOptions);
                     break;
+                case ImageDestType.IMAGEBIN:
+                    imageUploader = new ImageBin();
+                    break;
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode, Engine.conf.UploadMode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
