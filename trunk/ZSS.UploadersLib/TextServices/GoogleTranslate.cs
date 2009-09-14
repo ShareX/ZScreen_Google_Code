@@ -106,7 +106,7 @@ namespace UploadersLib.TextServices
 
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
                 WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
-                if (null != Uploader.ProxySettings)
+                if (null != Uploader.ProxyActive)
                 {
                     webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
                 }

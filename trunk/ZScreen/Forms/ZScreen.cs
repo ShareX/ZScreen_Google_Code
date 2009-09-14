@@ -1468,7 +1468,7 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             Engine.ZScreenKeyboardHook = new KeyboardHook();
-            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
             FileSystem.AppendDebug("Keyboard Hook initiated");
 
             mGuiIsReady = true;
@@ -4467,7 +4467,7 @@ namespace ZScreenGUI
                 if (chkHotkeys.Checked)
                 {
                     Engine.ZScreenKeyboardHook = new KeyboardHook();
-                    Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.ScreenshotUsingHotkeys);
+                    Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
                 }
                 else
                 {

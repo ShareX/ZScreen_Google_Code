@@ -71,7 +71,7 @@ namespace ZScreenGUI
             task.UniqueNumber = UploadManager.Queue();
 
             if ((Engine.conf.PreferFileUploaderForImages && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
-                (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT))
+                (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT && task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR))
             {
                 task.JobCategory = JobCategoryType.BINARY;
                 if (!Engine.conf.PreferFtpServerForIndex)
@@ -485,9 +485,10 @@ namespace ZScreenGUI
             }
         }
 
-        public void LanguageTranslator(ref WorkerTask t)
+        public void LanguageTranslator(ref WorkerTask task)
         {
-            t.TranslationInfo.Result = ZScreen.mGTranslator.TranslateText(t.TranslationInfo);
+            task.TranslationInfo.Result = ZScreen.mGTranslator.TranslateText(task.TranslationInfo);
+            task.MyText = TextInfo.FromString(task.TranslationInfo.Result.TranslatedText);
         }
 
         public void StartWorkerTranslator()
@@ -500,7 +501,7 @@ namespace ZScreenGUI
             }
         }
 
-        public void ScreenshotUsingHotkeys(object sender, KeyEventArgs e)
+        public void CheckHotkeys(object sender, KeyEventArgs e)
         {
             if (mSetHotkeys)
             {
@@ -521,11 +522,11 @@ namespace ZScreenGUI
             }
             else
             {
-                e.Handled = CheckHotkeys(e.KeyData);
+                e.Handled = UploadUsingHotkeys(e.KeyData);
             }
         }
 
-        private bool CheckHotkeys(Keys key)
+        private bool UploadUsingHotkeys(Keys key)
         {
             if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
             {

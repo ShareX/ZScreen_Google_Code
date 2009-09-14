@@ -54,7 +54,14 @@ namespace UploadersLib
         {
             this.Errors = new List<string>();
             this.UserAgent = "ZScreen";
-           // ProxySettings = new ProxySettings(); 
+        }
+
+        public static bool ProxyActive
+        {
+            get
+            {
+                return null != ProxySettings && ProxySettings.ProxyEnabled;
+            }
         }
 
         protected void OnProgressChanged(int progress)
@@ -83,11 +90,12 @@ namespace UploadersLib
                 request.Method = "POST";
                 request.Proxy = ProxySettings.GetWebProxy;
                 request.UserAgent = UserAgent;
-                
-                if (null != request.Proxy && null != ProxySettings.ProxyActive) {
-                	AppendDebug("Proxy Settings called by " + new System.Diagnostics.StackFrame(1).GetMethod().Name);                	
-                }               
-                
+
+                if (null != request.Proxy && null != ProxySettings.ProxyActive)
+                {
+                    AppendDebug("Proxy Settings called by " + new System.Diagnostics.StackFrame(1).GetMethod().Name);
+                }
+
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
 
                 stream.Position = 0;
@@ -405,7 +413,7 @@ namespace UploadersLib
         {
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
         }
-        
+
         public static void AppendDebug(Exception ex)
         {
             AppendDebug(ex.ToString());

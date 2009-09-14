@@ -92,63 +92,67 @@ namespace ZScreenLib
         /// <returns></returns>
         public static string SetClipboardText(WorkerTask task, bool showDialog)
         {
-        	string clipboardText = "";
-        	
-        	switch (task.JobCategory) {
-        		case JobCategoryType.PICTURES:
-        		case JobCategoryType.SCREENSHOTS:    
+            string clipboardText = "";
+
+            switch (task.JobCategory)
+            {
+                case JobCategoryType.PICTURES:
+                case JobCategoryType.SCREENSHOTS:
                 case JobCategoryType.BINARY:
-        			ScreenshotsHistory = task.ImageManager;
-        			if (ScreenshotsHistory != null && GraphicsMgr.IsValidImage(task.LocalFilePath))
-		            {
-		                if (Engine.conf.ShowClipboardModeChooser || showDialog)
-		                {
-		                    ClipboardOptions cmp = new ClipboardOptions(task);
-		                    cmp.Icon = Resources.zss_main;
-		                    if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
-		                }
-		
-		                clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-		
-		                if (task.MakeTinyURL)
-		                {
-		                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-		                    if (!string.IsNullOrEmpty(tinyUrl))
-		                    {
-		                        clipboardText = tinyUrl.Trim();
-		                    }
-		                }			
-		            }
-        			break;
-        		case JobCategoryType.TEXT:
-        			switch (task.Job)
+                    ScreenshotsHistory = task.ImageManager;
+                    if (ScreenshotsHistory != null && GraphicsMgr.IsValidImage(task.LocalFilePath))
                     {
-                    	case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
-        					if (Engine.conf.ClipboardTranslate)
-							{
-                            	clipboardText = task.TranslationInfo.Result.TranslatedText;
+                        if (Engine.conf.ShowClipboardModeChooser || showDialog)
+                        {
+                            ClipboardOptions cmp = new ClipboardOptions(task);
+                            cmp.Icon = Resources.zss_main;
+                            if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                        }
+
+                        clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
+
+                        if (task.MakeTinyURL)
+                        {
+                            string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                            if (!string.IsNullOrEmpty(tinyUrl))
+                            {
+                                clipboardText = tinyUrl.Trim();
                             }
-        					break;
-        				default:
-		          			if (!string.IsNullOrEmpty(task.RemoteFilePath)) {
-		        				clipboardText = task.RemoteFilePath;
-		        			}
-		        			else if (null != task.MyText) {
-		        				clipboardText = task.MyText.LocalString;
-		        			}
-        					else{
-        						clipboardText = task.LocalFilePath;
-        					}
-        					break;
-        			}     			        		
-        			break;
-        	}
-        	
-        	if (!string.IsNullOrEmpty(clipboardText))
-		    {
-		    	Clipboard.SetText(clipboardText);
-        	}
-        			                
+                        }
+                    }
+                    break;
+                case JobCategoryType.TEXT:
+                    switch (task.Job)
+                    {
+                        case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                            if (null != task.TranslationInfo)
+                            {
+                                clipboardText = task.TranslationInfo.Result.TranslatedText;
+                            }
+                            break;
+                        default:
+                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                            {
+                                clipboardText = task.RemoteFilePath;
+                            }
+                            else if (null != task.MyText)
+                            {
+                                clipboardText = task.MyText.LocalString;
+                            }
+                            else
+                            {
+                                clipboardText = task.LocalFilePath;
+                            }
+                            break;
+                    }
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(clipboardText))
+            {
+                Clipboard.SetText(clipboardText);
+            }
+
             return clipboardText;
         }
     }
