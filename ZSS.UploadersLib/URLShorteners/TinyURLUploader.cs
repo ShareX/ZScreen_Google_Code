@@ -30,7 +30,7 @@ namespace UploadersLib.URLShorteners
     [Serializable]
     public sealed class TinyURLUploader : TextUploader
     {
-        public const string Hostname = "tinyurl.com";
+        public static readonly string Hostname = UrlShortenerType.TINYURL.GetDescription();
 
         public override object Settings
         {

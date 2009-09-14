@@ -106,10 +106,11 @@ namespace UploadersLib.TextServices
 
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
                 WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
-                if (null != Uploader.ProxyActive)
+                if (Uploader.ProxyActive)
                 {
                     webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
                 }
+
                 string wc = webClient.DownloadString(url);
                 result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=:</span> ).+?(?=</td>)").NextMatch().Value);
                 result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value);

@@ -284,19 +284,35 @@ namespace ZScreenLib
 
         public static TextUploader FindUrlShortener(string name)
         {
-            switch (name)
+            if (name.Equals(BitlyUploader.Hostname))
             {
-                case BitlyUploader.Hostname:
-                    return new BitlyUploader();
-                case IsgdUploader.Hostname:
-                    return new IsgdUploader();
-                case TinyURLUploader.Hostname:
-                    return new TinyURLUploader();
-                case ThreelyUploader.Hostname:
-                    return new ThreelyUploader();
-                case KlamUploader.Hostname:
-                    return new KlamUploader();
+                return new BitlyUploader();
             }
+            else if (name.Equals(IsgdUploader.Hostname))
+            {
+                return new IsgdUploader();
+            }
+            else if (name.Equals(KlamUploader.Hostname))
+            {
+                return new KlamUploader();
+            }
+            else if (name.Equals(OwlyUploader.Hostname))
+            {
+                return new OwlyUploader();
+            }
+            else if (name.Equals(TinyURLUploader.Hostname))
+            {
+                return new TinyURLUploader();
+            }
+            else if (name.Equals(ThreelyUploader.Hostname))
+            {
+                return new ThreelyUploader();
+            }
+            else if (name.Equals(TURLUploader.Hostname))
+            {
+                return new TURLUploader();
+            }
+
             return null;
         }
 
@@ -503,7 +519,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static TwitterAuthInfo TwitterGetActiveAcct()
         {
-        	TwitterAuthInfo acc = new TwitterAuthInfo();
+            TwitterAuthInfo acc = new TwitterAuthInfo();
             if (CheckTwitterAccounts())
             {
                 acc = Engine.conf.TwitterAccountsList[Engine.conf.TwitterAcctSelected];
@@ -560,7 +576,7 @@ namespace ZScreenLib
         public static void TwitterMsg(string url)
         {
             TwitterAuthInfo acc = TwitterGetActiveAcct();
-			if (!string.IsNullOrEmpty(acc.TokenSecret))
+            if (!string.IsNullOrEmpty(acc.TokenSecret))
             {
                 oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, acc);
                 TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");

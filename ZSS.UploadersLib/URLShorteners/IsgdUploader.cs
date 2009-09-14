@@ -30,7 +30,7 @@ namespace UploadersLib.URLShorteners
     [Serializable]
     public sealed class IsgdUploader : TextUploader
     {
-        public const string Hostname = "is.gd";
+        public static readonly string Hostname = UrlShortenerType.ISGD.GetDescription();
 
         public override object Settings
         {

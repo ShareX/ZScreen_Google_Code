@@ -31,7 +31,7 @@ namespace UploadersLib.URLShorteners
     [Serializable]
     public sealed class BitlyUploader : TextUploader
     {
-        public const string Hostname = "bit.ly";
+        public static readonly string Hostname = UrlShortenerType.BITLY.GetDescription();
 
         private const string APILogin = "mcored";
         private const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";

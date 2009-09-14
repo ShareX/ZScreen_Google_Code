@@ -102,34 +102,40 @@ namespace UploadersLib
 
     #endregion
 
-    #region Text Uploaders
+    #region Text Uploaders & URL Shorteners
 
     [Serializable]
     public enum TextDestType
     {
-        [Description("pastebin - www.pastebin.com")]
+        [Description("pastebin.com")]
         PASTEBIN,
-        [Description("Paste2 - www.paste2.org")]
-        PASTE2,
-        [Description("pastebin.ca - www.pastebin.ca")]
+        [Description("pastebin.ca")]
         PASTEBIN_CA,
-        [Description("Slexy 2.0 - www.slexy.org")]
-        SLEXY
+        [Description("paste2.org")]
+        PASTE2,
+        [Description("slexy.org")]
+        SLEXY,
+        [Description("snipt.org")]
+        SNIPT
     }
 
     [Serializable]
     public enum UrlShortenerType
     {
-        [Description("3.ly")]
-        THREELY,
         [Description("bit.ly")]
         BITLY,
         [Description("is.gd")]
         ISGD,
         [Description("kl.am")]
         KLAM,
+        [Description("ow.ly")]
+        OWLY,
         [Description("tinyurl.com")]
-        TINYURL
+        TINYURL,
+        [Description("3.ly")]
+        THREELY,
+        [Description("turl.ca")]
+        TURL
     }
 
     [Serializable]
