@@ -162,10 +162,11 @@ namespace ZScreenGUI
         {
             try
             {
-            	if (null != Uploader.ProxySettings) {
-	                ZScreen.mGTranslator = new GoogleTranslate(Uploader.ProxySettings.GetWebProxy);   
-	                Adapter.UpdateTinyPicShuk();            		
-            	}
+                ZScreen.mGTranslator = new GoogleTranslate();
+                if (null != Uploader.ProxySettings)
+                {
+                    Adapter.UpdateTinyPicShuk();
+                }
             }
             catch (Exception ex)
             {

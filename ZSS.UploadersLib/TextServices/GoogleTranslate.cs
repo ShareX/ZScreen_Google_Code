@@ -33,11 +33,9 @@ namespace UploadersLib.TextServices
     public class GoogleTranslate
     {
         public Options LanguageOptions { get; private set; }
-        public IWebProxy ProxySettings { get; set; }
 
-        public GoogleTranslate(IWebProxy proxySettings)
+        public GoogleTranslate()
         {
-            this.ProxySettings = proxySettings;
             this.LanguageOptions = this.GetLanguageOptions();
         }
 
@@ -50,7 +48,10 @@ namespace UploadersLib.TextServices
             try
             {
                 WebClient webClient = new WebClient();
-                webClient.Proxy = this.ProxySettings;
+                if (null != Uploader.ProxySettings)
+                {
+                    webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
+                }
                 string source = webClient.DownloadString("http://translate.google.com/translate_t");
                 string[] selectName = new[] { "sl", "tl" };
 
@@ -105,7 +106,10 @@ namespace UploadersLib.TextServices
 
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
                 WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
-                webClient.Proxy = this.ProxySettings;
+                if (null != Uploader.ProxySettings)
+                {
+                    webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
+                }
                 string wc = webClient.DownloadString(url);
                 result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=:</span> ).+?(?=</td>)").NextMatch().Value);
                 result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value);
