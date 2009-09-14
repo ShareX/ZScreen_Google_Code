@@ -43,10 +43,9 @@ namespace UploadersLib
 
         public event ProgressEventHandler ProgressChanged;
 
-        public List<string> Errors { get; set; }
-        public static StringBuilder mDebug = new StringBuilder();
+        public static ProxySettings ProxySettings = new ProxySettings();
 
-        public static ProxySettings ProxySettings { get; set; }
+        public List<string> Errors { get; set; }
 
         public string UserAgent { get; set; }
 
@@ -54,14 +53,6 @@ namespace UploadersLib
         {
             this.Errors = new List<string>();
             this.UserAgent = "ZScreen";
-        }
-
-        public static bool ProxyActive
-        {
-            get
-            {
-                return null != ProxySettings && ProxySettings.ProxyEnabled;
-            }
         }
 
         protected void OnProgressChanged(int progress)
@@ -90,11 +81,6 @@ namespace UploadersLib
                 request.Method = "POST";
                 request.Proxy = ProxySettings.GetWebProxy;
                 request.UserAgent = UserAgent;
-
-                if (null != request.Proxy && null != ProxySettings.ProxyActive)
-                {
-                    AppendDebug("Proxy Settings called by " + new System.Diagnostics.StackFrame(1).GetMethod().Name);
-                }
 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
 
@@ -186,10 +172,7 @@ namespace UploadersLib
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Method = "GET";
-                if (ProxyActive)
-                {
-                    request.Proxy = ProxySettings.GetWebProxy;
-                }
+                request.Proxy = ProxySettings.GetWebProxy;
                 request.UserAgent = UserAgent;
 
                 return (HttpWebResponse)request.GetResponse();
@@ -415,19 +398,6 @@ namespace UploadersLib
         protected string CombineURL(params string[] urls)
         {
             return urls.Aggregate((current, arg) => CombineURL(current, arg));
-        }
-
-        public static void AppendDebug(Exception ex)
-        {
-            AppendDebug(ex.ToString());
-        }
-
-        public static void AppendDebug(string msg)
-        {
-            // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
-            string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
-            Console.WriteLine(line);
-            mDebug.AppendLine(line);
         }
 
         #endregion

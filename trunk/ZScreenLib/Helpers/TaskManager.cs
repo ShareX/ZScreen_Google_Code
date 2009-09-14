@@ -354,7 +354,6 @@ namespace ZScreenLib
             if (imageUploader != null)
             {
                 FileSystem.AppendDebug("Initialized " + imageUploader.Name);
-                Uploader.mDebug = FileSystem.mDebug;
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 mTask.DestinationName = imageUploader.Name;
                 string fullFilePath = mTask.LocalFilePath;
