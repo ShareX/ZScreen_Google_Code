@@ -64,7 +64,19 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("url", text.LocalString);
                 arguments.Add("tag", HostSettings.Tag);
 
-                return GetResponseString(HostSettings.URL, arguments);
+                string response = GetResponseString(HostSettings.URL, arguments);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    if (response.StartsWith("SUCCESS:"))
+                    {
+                        return "http://turl.ca/" + response.Substring(8);
+                    }
+                    else if (response.StartsWith("ERROR:"))
+                    {
+                        this.Errors.Add(response.Substring(6));
+                    }
+                }
             }
 
             return string.Empty;
