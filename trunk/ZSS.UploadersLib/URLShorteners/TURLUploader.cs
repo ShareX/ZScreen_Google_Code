@@ -25,30 +25,30 @@ using System;
 using System.Collections.Generic;
 using UploadersLib.Helpers;
 
-namespace UploadersLib.TextUploaders
+namespace UploadersLib.URLShorteners
 {
     [Serializable]
-    public sealed class SniptUploader : TextUploader
+    public sealed class TURLUploader : TextUploader
     {
-        public static readonly string Hostname = TextDestType.SNIPT.GetDescription();
+        public static readonly string Hostname = UrlShortenerType.TURL.GetDescription();
 
         public override object Settings
         {
             get
             {
-                return HostSettings;
+                return (object)HostSettings;
             }
             set
             {
-                HostSettings = (SniptSettings)value;
+                HostSettings = (TURLSettings)value;
             }
         }
 
-        public SniptSettings HostSettings = new SniptSettings();
+        public TURLSettings HostSettings = new TURLSettings();
 
-        public SniptUploader()
+        public TURLUploader()
         {
-            HostSettings.URL = "http://snipt.org/snip";
+            HostSettings.URL = "http://turl.ca/api.php";
         }
 
         public override string ToString()
@@ -56,54 +56,30 @@ namespace UploadersLib.TextUploaders
             return HostSettings.Name;
         }
 
-        public override string TesterString
-        {
-            get { return "Testing " + Hostname; }
-        }
-
         public override string UploadText(TextInfo text)
         {
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("codeSnippet", text.LocalString);
-                arguments.Add("codeSnippetTitle", HostSettings.SnippetTitle);
-                arguments.Add("lang", HostSettings.TextFormat);
-                arguments.Add("private", HostSettings.Visibility == Privacy.Private ? "1" : "0");
-                arguments.Add("shownums", HostSettings.LineNumbers ? "1" : "0");
-                arguments.Add("snipAction", "");
-                arguments.Add("theme", HostSettings.Theme);
+                arguments.Add("url", text.LocalString);
+                arguments.Add("tag", HostSettings.Tag);
 
-                return GetRedirectionURL(HostSettings.URL, arguments);
+                return GetResponseString(HostSettings.URL, arguments);
             }
 
             return string.Empty;
         }
 
         [Serializable]
-        public class SniptSettings : TextUploaderSettings
+        public class TURLSettings : TextUploaderSettings
         {
             public override string Name { get; set; }
             public override string URL { get; set; }
-            /// <summary>lang</summary>
-            public string TextFormat { get; set; }
-            /// <summary>codeSnippetTitle</summary>
-            public string SnippetTitle { get; set; }
-            /// <summary>private</summary>
-            public Privacy Visibility { get; set; }
-            /// <summary>shownums</summary>
-            public bool LineNumbers { get; set; }
-            /// <summary>theme</summary>
-            public string Theme { get; set; }
+            public string Tag { get; set; }
 
-            public SniptSettings()
+            public TURLSettings()
             {
                 Name = Hostname;
-                TextFormat = "text";
-                SnippetTitle = string.Empty;
-                Visibility = Privacy.Private;
-                LineNumbers = true;
-                Theme = "1";
             }
         }
     }

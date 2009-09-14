@@ -30,7 +30,7 @@ namespace UploadersLib.URLShorteners
     [Serializable]
     public sealed class KlamUploader : TextUploader
     {
-        public const string Hostname = "kl.am";
+        public static readonly string Hostname = UrlShortenerType.KLAM.GetDescription();
         public const string APIKey = "a4e5a8de710d80db774a8264f4588ffb";
 
         public override object Settings

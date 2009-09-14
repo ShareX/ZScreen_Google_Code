@@ -62,6 +62,12 @@ namespace ZScreenTesterGUI
 
             ListViewItem lvi;
 
+            ListViewGroup imageUploadersGroup = new ListViewGroup("Image Uploaders", HorizontalAlignment.Left);
+            ListViewGroup textUploadersGroup = new ListViewGroup("Text Uploaders", HorizontalAlignment.Left);
+            ListViewGroup fileUploadersGroup = new ListViewGroup("File Uploaders", HorizontalAlignment.Left);
+            ListViewGroup urlShortenersGroup = new ListViewGroup("URL Shorteners", HorizontalAlignment.Left);
+            lvUploaders.Groups.AddRange(new[] { imageUploadersGroup, textUploadersGroup, fileUploadersGroup, urlShortenersGroup });
+
             foreach (ImageDestType uploader in Enum.GetValues(typeof(ImageDestType)))
             {
                 switch (uploader)
@@ -76,6 +82,7 @@ namespace ZScreenTesterGUI
 
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.ImageUploader, ImageUploader = uploader };
+                lvi.Group = imageUploadersGroup;
                 lvUploaders.Items.Add(lvi);
             }
 
@@ -83,6 +90,7 @@ namespace ZScreenTesterGUI
             {
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.TextUploader, TextUploader = uploader };
+                lvi.Group = textUploadersGroup;
                 lvUploaders.Items.Add(lvi);
             }
 
@@ -90,6 +98,7 @@ namespace ZScreenTesterGUI
             {
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.FileUploader, FileUploader = uploader };
+                lvi.Group = fileUploadersGroup;
                 lvUploaders.Items.Add(lvi);
             }
 
@@ -97,6 +106,7 @@ namespace ZScreenTesterGUI
             {
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.UrlShortener, UrlShortener = uploader };
+                lvi.Group = urlShortenersGroup;
                 lvUploaders.Items.Add(lvi);
             }
 

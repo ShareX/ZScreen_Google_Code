@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenTesterCLI", "ZScreenTesterCLI\ZScreenTesterCLI.csproj", "{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{E1C94415-3424-4517-A2A1-B2FDD1F59C67}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ZScreenLib", "..\..\trunk\ZScreenLib\ZSS.ZScreenLib.csproj", "{037FBAAE-819B-46E6-99FA-5CD8BD17E320}"
@@ -42,10 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76C23482-5F9E-4B01-A7EC-CC7BF6EC3F76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1C94415-3424-4517-A2A1-B2FDD1F59C67}.Release|Any CPU.ActiveCfg = Release|Any CPU

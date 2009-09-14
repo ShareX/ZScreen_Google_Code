@@ -31,7 +31,7 @@ namespace UploadersLib.URLShorteners
     [Serializable]
     public sealed class OwlyUploader : TextUploader
     {
-        public const string Hostname = "ow.ly";
+        public static readonly string Hostname = UrlShortenerType.OWLY.GetDescription();
         private const string APILogin = "mcored";
         private const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";
 
@@ -51,7 +51,7 @@ namespace UploadersLib.URLShorteners
 
         public OwlyUploader()
         {
-            HostSettings.URL = "http://api.bit.ly/shorten";
+            HostSettings.URL = "http://ow.ly/url/shorten-url";
         }
 
         public override string ToString()
