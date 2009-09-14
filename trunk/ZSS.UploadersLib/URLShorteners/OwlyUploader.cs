@@ -31,7 +31,7 @@ namespace UploadersLib.URLShorteners
     [Serializable]
     public sealed class OwlyUploader : TextUploader
     {
-        public static readonly string Hostname = UrlShortenerType.OWLY.GetDescription();
+        public static readonly string Hostname = "TODO";//UrlShortenerType.OWLY.GetDescription();
         private const string APILogin = "mcored";
         private const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";
 

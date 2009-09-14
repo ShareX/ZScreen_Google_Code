@@ -30,8 +30,9 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class PastebinCaUploader : TextUploader
     {
-        public static readonly string Hostname = TextDestType.PASTEBIN_CA.GetDescription();
-        public const string APIKey = "qrsjom2g8qDYcy8P+GeNnxSZowY89gKr";
+        public static readonly string Hostname = "TODO";//TextDestType.PASTEBIN_CA.GetDescription();
+
+        public const string APIKey = "KxTofLKQThSBZ63Gpa7hYLlMdyQlMD6u";
 
         public override object Settings
         {
@@ -70,9 +71,11 @@ namespace UploadersLib.TextUploaders
                 arguments.Add("api", APIKey);
                 arguments.Add("content", text.LocalString);
                 arguments.Add("description", HostSettings.Description);
+                arguments.Add("encryptpw", string.Empty);
                 arguments.Add("expiry", HostSettings.ExpireTime);
                 arguments.Add("name", HostSettings.Author);
                 arguments.Add("s", "Submit Post");
+                arguments.Add("tags", string.Empty);
                 arguments.Add("type", HostSettings.TextFormat);
 
                 return GetResponse(HostSettings.URL, arguments);

@@ -84,6 +84,8 @@ namespace UploadersLib
         TINYPIC,
         [Description("Flickr - www.flickr.com")]
         FLICKR,
+        [Description("ImageBin - www.imagebin.ca")]
+        IMAGEBIN,
         [Description("ImageBam - www.imagebam.com")]
         IMAGEBAM,
         [Description("TwitPic - www.twitpic.com")]
@@ -107,16 +109,16 @@ namespace UploadersLib
     [Serializable]
     public enum TextDestType
     {
-        [Description("pastebin - www.pastebin.com")]
+        [Description("Pastebin - www.pastebin.com")]
         PASTEBIN,
         [Description("Paste2 - www.paste2.org")]
         PASTE2,
-        [Description("pastebin.ca - www.pastebin.ca")]
-        PASTEBIN_CA,
+        //[Description("pastebin.ca - www.pastebin.ca")]
+        //PASTEBIN_CA,
         [Description("Slexy 2.0 - www.slexy.org")]
-        SLEXY,
-        [Description("Snipt - www.snipt.org")]
-        SNIPT
+        SLEXY
+        //[Description("Snipt - www.snipt.org")]
+        //SNIPT
     }
 
     [Serializable]
@@ -128,8 +130,8 @@ namespace UploadersLib
         ISGD,
         [Description("kl.am")]
         KLAM,
-        [Description("ow.ly")]
-        OWLY,
+        //[Description("ow.ly")]
+        //OWLY,
         [Description("tinyurl.com")]
         TINYURL,
         [Description("3.ly")]

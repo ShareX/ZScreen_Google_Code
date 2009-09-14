@@ -30,7 +30,7 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class SniptUploader : TextUploader
     {
-        public static readonly string Hostname = TextDestType.SNIPT.GetDescription();
+        public static readonly string Hostname = "TODO";//TextDestType.SNIPT.GetDescription();
 
         public override object Settings
         {
