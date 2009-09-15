@@ -109,7 +109,7 @@ namespace UploadersLib
     [Serializable]
     public enum TextDestType
     {
- 		[Description("Pastebin.com - www.pastebin.com")]
+        [Description("Pastebin.com - www.pastebin.com")]
         PASTEBIN,
         [Description("Pastebin.ca - www.pastebin.ca")]
         PASTEBIN_CA,
@@ -126,9 +126,9 @@ namespace UploadersLib
     {
         [Description("Threely - www.3.ly")]
         THREELY,
-        [Description("bit.ly - www. bit.ly")]
+        [Description("bit.ly - www.bit.ly")]
         BITLY,
-        [Description("is.gd - www. is.gd")]
+        [Description("is.gd - www.is.gd")]
         ISGD,
         [Description("kl.am - www.kl.am")]
         KLAM,
@@ -158,7 +158,9 @@ namespace UploadersLib
         [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]
-        SendSpace
+        SendSpace,
+        [Description("FileBin - www.filebin.ca")]
+        FileBin
     }
 
     public enum RapidShareAcctType
