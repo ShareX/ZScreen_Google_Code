@@ -24,21 +24,30 @@
 using System;
 using System.Windows.Forms;
 using System.Web;
+using System.Xml.Linq;
 
 namespace UploadersLib.Helpers
 {
+    public class TwitterResp
+    {
+        public string Addressee { get; set; }
+    }
+
     public partial class TwitterMsg : Form
     {
+
         public string Message { get; set; }
         private oAuthTwitter moAuth { get; set; }
+        public TwitterResp TwitterResponse { get; set; }
 
         public TwitterMsg(oAuthTwitter oAuth, string title)
-            :this(oAuth)
+            : this(oAuth)
         {
             this.Text = title;
         }
 
         public TwitterMsg(oAuthTwitter oAuth)
+            : this("Update Twitter Status...")
         {
             InitializeComponent();
             this.moAuth = oAuth;
@@ -47,6 +56,7 @@ namespace UploadersLib.Helpers
         public TwitterMsg(string title)
         {
             this.Text = title;
+            this.TwitterResponse = new TwitterResp();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -62,7 +72,18 @@ namespace UploadersLib.Helpers
                     string tweet = HttpUtility.UrlEncode(txtTweet.Text);
                     // And send it off...
                     string xml = moAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
+                    FillResponseUser(xml);
                 }
+            }
+        }
+
+        private void FillResponseUser(string xml)
+        {
+            XDocument xdoc = XDocument.Parse(xml);
+            XElement xele = xdoc.Element("status");
+            if (null != xele)
+            {
+                this.TwitterResponse.Addressee = xele.ElementValue("in_reply_to_screen_name");
             }
         }
 
