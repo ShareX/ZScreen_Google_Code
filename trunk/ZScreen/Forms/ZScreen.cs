@@ -589,11 +589,19 @@ namespace ZScreenGUI
             // Text Uploader Settings
             ///////////////////////////////////
 
-            if (Engine.conf.TextUploadersList.Count == 0)
-            {
-                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-            }
-
+//            if (Engine.conf.TextUploadersList.Count == 0)
+//            {
+//                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+//            }
+            foreach(TextDestType etu in Enum.GetValues(typeof(TextDestType))){
+            	TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
+            	if (null != tu) {
+            		if (!Adapter.FindItemInList(Engine.conf.TextUploadersList, tu.ToString())) {
+            			Engine.conf.TextUploadersList.Add(tu);
+            		}
+            	}
+            }  
+            
             ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
@@ -626,12 +634,20 @@ namespace ZScreenGUI
             // URL Shorteners Settings
             ///////////////////////////////////
 
-            if (Engine.conf.UrlShortenersList.Count == 0)
-            {
-                Engine.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
-                    new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
-            }
-
+//            if (Engine.conf.UrlShortenersList.Count == 0)
+//            {
+//                Engine.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
+//                    new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
+//            }
+            foreach(UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType))){
+            	TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
+            	if (null != tu) {
+            		if (!Adapter.FindItemInList(Engine.conf.UrlShortenersList, tu.ToString())) {
+            			Engine.conf.UrlShortenersList.Add(tu);
+            		}
+            	}
+            } 
+            
             ucUrlShorteners.MyCollection.Items.Clear();
             ucDestOptions.cboURLShorteners.Items.Clear();
             foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
