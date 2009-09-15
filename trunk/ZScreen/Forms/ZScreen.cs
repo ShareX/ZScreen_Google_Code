@@ -589,19 +589,22 @@ namespace ZScreenGUI
             // Text Uploader Settings
             ///////////////////////////////////
 
-//            if (Engine.conf.TextUploadersList.Count == 0)
-//            {
-//                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-//            }
-            foreach(TextDestType etu in Enum.GetValues(typeof(TextDestType))){
-            	TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
-            	if (null != tu) {
-            		if (!Adapter.FindItemInList(Engine.conf.TextUploadersList, tu.ToString())) {
-            			Engine.conf.TextUploadersList.Add(tu);
-            		}
-            	}
-            }  
-            
+            //            if (Engine.conf.TextUploadersList.Count == 0)
+            //            {
+            //                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+            //            }
+            foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
+            {
+                TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
+                if (null != tu)
+                {
+                    if (!Adapter.FindItemInList(Engine.conf.TextUploadersList, tu.ToString()))
+                    {
+                        Engine.conf.TextUploadersList.Add(tu);
+                    }
+                }
+            }
+
             ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
@@ -634,20 +637,23 @@ namespace ZScreenGUI
             // URL Shorteners Settings
             ///////////////////////////////////
 
-//            if (Engine.conf.UrlShortenersList.Count == 0)
-//            {
-//                Engine.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
-//                    new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
-//            }
-            foreach(UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType))){
-            	TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
-            	if (null != tu) {
-            		if (!Adapter.FindItemInList(Engine.conf.UrlShortenersList, tu.ToString())) {
-            			Engine.conf.UrlShortenersList.Add(tu);
-            		}
-            	}
-            } 
-            
+            //            if (Engine.conf.UrlShortenersList.Count == 0)
+            //            {
+            //                Engine.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
+            //                    new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
+            //            }
+            foreach (UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType)))
+            {
+                TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
+                if (null != tu)
+                {
+                    if (!Adapter.FindItemInList(Engine.conf.UrlShortenersList, tu.ToString()))
+                    {
+                        Engine.conf.UrlShortenersList.Add(tu);
+                    }
+                }
+            }
+
             ucUrlShorteners.MyCollection.Items.Clear();
             ucDestOptions.cboURLShorteners.Items.Clear();
             foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
@@ -3672,10 +3678,17 @@ namespace ZScreenGUI
         {
             if (ucTextUploaders.MyCollection.Items.Count > 0)
             {
-                int index = ucTextUploaders.MyCollection.SelectedIndex;
-                Engine.conf.TextUploadersList.RemoveAt(index);
-                ucTextUploaders.MyCollection.Items.RemoveAt(index);
-                ucDestOptions.cboTextUploaders.Items.RemoveAt(index);
+                List<TextUploader> selectedUploaders = new List<TextUploader>();
+                foreach (TextUploader uploader in ucTextUploaders.MyCollection.SelectedItems)
+                {
+                    selectedUploaders.Add(uploader);
+                }
+                foreach (TextUploader uploader in selectedUploaders)
+                {
+                    Engine.conf.TextUploadersList.Remove(uploader);
+                    ucTextUploaders.MyCollection.Items.Remove(uploader);
+                    ucDestOptions.cboTextUploaders.Items.Remove(uploader);
+                }
                 ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
             }
         }
@@ -3838,10 +3851,17 @@ namespace ZScreenGUI
         {
             if (ucUrlShorteners.MyCollection.Items.Count > 0)
             {
-                int index = ucUrlShorteners.MyCollection.SelectedIndex;
-                Engine.conf.UrlShortenersList.RemoveAt(index);
-                ucUrlShorteners.MyCollection.Items.RemoveAt(index);
-                ucDestOptions.cboURLShorteners.Items.RemoveAt(index);
+                List<TextUploader> selectedUploaders = new List<TextUploader>();
+                foreach (TextUploader uploader in ucUrlShorteners.MyCollection.SelectedItems)
+                {
+                    selectedUploaders.Add(uploader);
+                }
+                foreach (TextUploader uploader in selectedUploaders)
+                {
+                    Engine.conf.UrlShortenersList.Remove(uploader);
+                    ucUrlShorteners.MyCollection.Items.Remove(uploader);
+                    ucDestOptions.cboURLShorteners.Items.Remove(uploader);
+                }
                 ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
             }
         }
