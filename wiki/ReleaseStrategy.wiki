@@ -1,13 +1,15 @@
 #summary Release Strategy of new ZScreen builds
 #labels Phase-Deploy
-
+= Beta =
 New ZScreen releases are uploaded as "Beta"
 
-The new upload remains as "Beta" until any one of the following occurs first without a major issue being reported
+The new upload remains as "Beta" until at least one of the following occurs first without a major issue being reported
 
  * 2 weeks passes 
  * 500 download count reaches
 
-If one of the above happens without a major issue, the upload is tagged as "Featured". 
+= Featured = 
+If one of the above conditions satisfy without a major issue, the upload is tagged as "Featured". 
 
+= Depreciated =
 If the Beta release is known to have major issues before one of the above happens, the release will be tagged as "Depreciated" and a new build that fixes the issue, will be uploaded as "Beta" in due time. 
