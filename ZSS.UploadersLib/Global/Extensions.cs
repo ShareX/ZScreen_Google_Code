@@ -22,12 +22,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using System.ComponentModel;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace UploadersLib
 {
@@ -42,26 +39,30 @@ namespace UploadersLib
 
         public static string ElementValue(this XElement xe, string name)
         {
-            if (xe == null) return "";
-
-            XElement xeItem = xe.Element(name);
-            if (xeItem != null)
+            if (xe != null)
             {
-                return xeItem.Value;
+                XElement xeItem = xe.Element(name);
+                if (xeItem != null)
+                {
+                    return xeItem.Value;
+                }
             }
 
-            return "";
+            return string.Empty;
         }
 
         public static string AttributeValue(this XElement xe, string name)
         {
-            XAttribute xeItem = xe.Attribute(name);
-            if (xeItem != null)
+            if (xe != null)
             {
-                return xeItem.Value;
+                XAttribute xeItem = xe.Attribute(name);
+                if (xeItem != null)
+                {
+                    return xeItem.Value;
+                }
             }
 
-            return "";
+            return string.Empty;
         }
 
         public static string AttributeFirstValue(this XElement xe, params string[] names)
@@ -70,9 +71,13 @@ namespace UploadersLib
             foreach (string name in names)
             {
                 value = xe.AttributeValue(name);
-                if (!string.IsNullOrEmpty(value)) return value;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    return value;
+                }
             }
-            return "";
+
+            return string.Empty;
         }
     }
 }

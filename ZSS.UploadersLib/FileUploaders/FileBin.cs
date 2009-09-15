@@ -39,24 +39,14 @@ namespace UploadersLib.FileUploaders
 
         public override string Upload(byte[] file, string fileName)
         {
-            string identifier = GetRandomAlphanumeric(15);
-
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("MAX_FILE_SIZE", "82428800");
-            args.Add("UPLOAD_IDENTIFIER", identifier);
 
             string response = UploadData(file, fileName, "http://filebin.ca/upload.php", "file", args);
 
             if (!string.IsNullOrEmpty(response))
             {
-                args = new Dictionary<string, string>();
-                args.Add("id", identifier);
-                response = GetResponse("http://filebin.ca/complete.php", args);
-
-                if (!string.IsNullOrEmpty(response))
-                {
-
-                }
+                return response.Substring(response.LastIndexOf(' ') + 1).Trim();
             }
 
             return null;

@@ -40,7 +40,8 @@ namespace ZScreenTesterGUI
             set
             {
                 isTesting = value;
-                btnTest.Enabled = !value;
+                btnTestAll.Enabled = !value;
+                btnTestSelected.Enabled = !value;
                 testSelectedUploadersToolStripMenuItem.Enabled = !value;
             }
         }
@@ -248,12 +249,6 @@ namespace ZScreenTesterGUI
             }
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            UploaderInfo[] uploaders = lvUploaders.Items.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
-            StartTest(uploaders);
-        }
-
         private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lvUploaders.SelectedItems.Count > 0)
@@ -290,15 +285,21 @@ namespace ZScreenTesterGUI
             }
         }
 
-        private void testSelectedUploadersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UploaderInfo[] uploaders = lvUploaders.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
-            StartTest(uploaders);
-        }
-
         private void TesterGUI_FormClosing(object sender, FormClosingEventArgs e)
         {
             isOpen = isTesting = false;
+        }
+
+        private void btnTestAll_Click(object sender, EventArgs e)
+        {
+            UploaderInfo[] uploaders = lvUploaders.Items.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
+            StartTest(uploaders);
+        }
+
+        private void btnTestSelected_Click(object sender, EventArgs e)
+        {
+            UploaderInfo[] uploaders = lvUploaders.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as UploaderInfo).ToArray();
+            StartTest(uploaders);
         }
     }
 }
