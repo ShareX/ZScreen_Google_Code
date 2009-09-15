@@ -5,6 +5,7 @@ using System.Text;
 using UploadersLib.Helpers;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -37,7 +38,7 @@ namespace UploadersLib.ImageUploaders
                 if (match != null)
                 {
                     //string url = string.Format("http://imagebin.ca/view/{0}.html", match.Value);
-                    string url = "http://imagebin.ca/img/" + match.Value;
+                    string url = "http://imagebin.ca/img/" + match.Value + Path.GetExtension(fileName);
                     ifm.Add(url, ImageFile.ImageType.FULLIMAGE);
                 }
             }

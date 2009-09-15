@@ -250,6 +250,9 @@ namespace ZScreenLib
                         CollectorsID = Engine.conf.RapidShareCollectorsID
                     });
                     break;
+                case FileUploaderType.FileBin:
+                    fileHost = new FileBin();
+                    break;
             }
 
             if (fileHost != null)

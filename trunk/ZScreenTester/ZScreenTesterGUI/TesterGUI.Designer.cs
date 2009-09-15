@@ -58,7 +58,7 @@
             this.lvUploaders.GridLines = true;
             this.lvUploaders.Location = new System.Drawing.Point(3, 3);
             this.lvUploaders.Name = "lvUploaders";
-            this.lvUploaders.Size = new System.Drawing.Size(604, 574);
+            this.lvUploaders.Size = new System.Drawing.Size(621, 584);
             this.lvUploaders.TabIndex = 0;
             this.lvUploaders.UseCompatibleStateImageBehavior = false;
             this.lvUploaders.View = System.Windows.Forms.View.Details;
@@ -71,7 +71,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Status";
-            this.columnHeader2.Width = 415;
+            this.columnHeader2.Width = 423;
             // 
             // cmsUploaders
             // 
@@ -111,7 +111,7 @@
             this.tcTesters.Location = new System.Drawing.Point(3, 3);
             this.tcTesters.Name = "tcTesters";
             this.tcTesters.SelectedIndex = 0;
-            this.tcTesters.Size = new System.Drawing.Size(618, 606);
+            this.tcTesters.Size = new System.Drawing.Size(635, 616);
             this.tcTesters.TabIndex = 1;
             // 
             // tabPage1
@@ -121,7 +121,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(610, 580);
+            this.tabPage1.Size = new System.Drawing.Size(627, 590);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Testers";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -142,7 +142,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(635, 416);
+            this.tabPage2.Size = new System.Drawing.Size(618, 580);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Console";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -153,14 +153,14 @@
             this.txtConsole.Location = new System.Drawing.Point(3, 3);
             this.txtConsole.Multiline = true;
             this.txtConsole.Name = "txtConsole";
-            this.txtConsole.Size = new System.Drawing.Size(629, 410);
+            this.txtConsole.Size = new System.Drawing.Size(612, 574);
             this.txtConsole.TabIndex = 0;
             // 
             // TesterGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 612);
+            this.ClientSize = new System.Drawing.Size(641, 622);
             this.Controls.Add(this.tcTesters);
             this.Name = "TesterGUI";
             this.Padding = new System.Windows.Forms.Padding(3);
