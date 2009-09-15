@@ -234,6 +234,10 @@
       <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
       <Name>Starksoft.Net.Proxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj">
+      <Project>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</Project>
+      <Name>ZScreenTesterGUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\ViewRemote.resx">
@@ -329,10 +333,6 @@
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\branches\ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj">
-      <Project>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</Project>
-      <Name>ZScreenTesterGUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZScreenLib\ZSS.ZScreenLib.csproj">
       <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
       <Name>ZSS.ZScreenLib</Name>
