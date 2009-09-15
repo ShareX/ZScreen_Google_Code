@@ -1,5 +1,6 @@
-Version 3.7 - 20091015
+Version 3.8 - 20091015
 
+3.08.0.0 Added Pastebin.ca Text Uploader support {Jaex}
 3.07.0.0 Added Imagebin Image Uploader support {Jaex}
 3.06.0.0 Added turl.ca URL Shortener support {Jaex} 
 3.05.6.0 Added Maximum Name Length setting to limit file name length {Jaex}

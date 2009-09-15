@@ -375,6 +375,15 @@ namespace ZScreenLib
         {
             return list.Count > 0 && selected >= 0 && list.Count > selected;
         }
+        
+        public static bool FindItemInList<T>(List<T> list, string name){
+        	foreach(T item in list){
+        		if (item.ToString() == name) {
+        			return true;
+        		}
+        	}
+        	return false;
+        }
 
         public static bool CheckTextUploaders()
         {
