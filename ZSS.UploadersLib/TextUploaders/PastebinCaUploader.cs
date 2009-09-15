@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.TextUploaders
@@ -30,7 +31,7 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class PastebinCaUploader : TextUploader
     {
-        public static readonly string Hostname = "TODO";//TextDestType.PASTEBIN_CA.GetDescription();
+        public static readonly string Hostname = TextDestType.PASTEBIN_CA.GetDescription();
 
         public const string APIKey = "KxTofLKQThSBZ63Gpa7hYLlMdyQlMD6u";
 
@@ -71,14 +72,32 @@ namespace UploadersLib.TextUploaders
                 arguments.Add("api", APIKey);
                 arguments.Add("content", text.LocalString);
                 arguments.Add("description", HostSettings.Description);
-                arguments.Add("encryptpw", string.Empty);
+
+                if (HostSettings.Encrypt)
+                {
+                    arguments.Add("encrypt", "true");
+                }
+
+                arguments.Add("encryptpw", HostSettings.EncryptPassword);
                 arguments.Add("expiry", HostSettings.ExpireTime);
                 arguments.Add("name", HostSettings.Author);
                 arguments.Add("s", "Submit Post");
-                arguments.Add("tags", string.Empty);
+                arguments.Add("tags", HostSettings.Tags);
                 arguments.Add("type", HostSettings.TextFormat);
 
-                return GetResponse(HostSettings.URL, arguments);
+                string response = GetResponse(HostSettings.URL, arguments);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    if (response.StartsWith("SUCCESS:"))
+                    {
+                        return "http://pastebin.ca/" + response.Substring(8);
+                    }
+                    else if (response.StartsWith("FAIL:"))
+                    {
+                        this.Errors.Add(response.Substring(5));
+                    }
+                }
             }
 
             return string.Empty;
@@ -89,22 +108,44 @@ namespace UploadersLib.TextUploaders
         {
             public override string Name { get; set; }
             public override string URL { get; set; }
+
+            /// <summary>name</summary>
+            [Description("Name / Title")]
+            public string Author { get; set; }
+
+            /// <summary>description</summary>
+            [Description("Description / Question")]
+            public string Description { get; set; }
+
+            /// <summary>tags</summary>
+            [Description("Tags (space separated, optional)")]
+            public string Tags { get; set; }
+
+            [Description("Content Type"), DefaultValue("1")]
             /// <summary>type</summary>
             public string TextFormat { get; set; }
+
             /// <summary>expiry</summary>
+            [Description("Expire this post in ..."), DefaultValue("1 month")]
             public string ExpireTime { get; set; }
-            /// <summary>description</summary>
-            public string Description { get; set; }
-            /// <summary>name</summary>
-            public string Author { get; set; }
+
+            /// <summary>encrypt</summary>
+            [Description("Encrypt this paste")]
+            public bool Encrypt { get; set; }
+
+            /// <summary>encryptpw</summary>
+            public string EncryptPassword { get; set; }
 
             public PastebinCaSettings()
             {
                 Name = Hostname;
+                Author = string.Empty;
+                Description = string.Empty;
+                Tags = string.Empty;
                 TextFormat = "1";
                 ExpireTime = "1 month";
-                Description = string.Empty;
-                Author = string.Empty;
+                Encrypt = false;
+                EncryptPassword = string.Empty;
             }
         }
     }
