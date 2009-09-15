@@ -51,7 +51,6 @@ namespace ZScreenTesterGUI
         public string TestFileTextPath { get; set; }
 
         private bool isTesting = false;
-        private bool isOpen = true;
 
         public TesterGUI()
         {
@@ -158,7 +157,7 @@ namespace ZScreenTesterGUI
 
         private void myConsole_ConsoleWriteLine(string value)
         {
-            if (isOpen)
+            if (!this.IsDisposed)
             {
                 this.Invoke(new MethodInvoker(delegate
                     {
@@ -186,7 +185,7 @@ namespace ZScreenTesterGUI
 
             foreach (UploaderInfo uploader in uploaders)
             {
-                if (!isTesting || !isOpen)
+                if (this.IsDisposed || !isTesting)
                 {
                     break;
                 }
@@ -230,7 +229,7 @@ namespace ZScreenTesterGUI
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (isOpen)
+            if (!this.IsDisposed)
             {
                 UploaderInfo uploader = e.UserState as UploaderInfo;
 
@@ -287,7 +286,7 @@ namespace ZScreenTesterGUI
 
         private void TesterGUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-            isOpen = isTesting = false;
+            isTesting = false;
         }
 
         private void btnTestAll_Click(object sender, EventArgs e)
