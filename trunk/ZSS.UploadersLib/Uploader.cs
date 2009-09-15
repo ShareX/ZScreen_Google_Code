@@ -74,6 +74,8 @@ namespace UploadersLib
         {
             try
             {
+                ServicePointManager.Expect100Continue = false;
+
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.ContentLength = stream.Length;
