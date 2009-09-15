@@ -1,5 +1,6 @@
-Version 3.8 - 20091015
+Version 3.9 - 20091015
 
+3.09.0.0 Added filebin.ca File Uploader support {Jaex}
 3.08.0.0 Added pastebin.ca Text Uploader support {Jaex}
 3.07.0.0 Added imagebin.ca Image Uploader support {Jaex}
 3.06.0.0 Added turl.ca URL Shortener support {Jaex} 
