@@ -174,6 +174,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZScreenTester\GradientTester\GradientMaker.csproj">
+      <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>
+      <Name>GradientMaker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
       <Name>ZSS.ColorsLib</Name>

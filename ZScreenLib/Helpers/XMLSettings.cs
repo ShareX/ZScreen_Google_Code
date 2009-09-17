@@ -38,6 +38,7 @@ using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZSS;
 using ZSS.IndexersLib;
+using System.Drawing.Drawing2D;
 
 namespace ZScreenLib
 {
@@ -244,7 +245,11 @@ namespace ZScreenLib
         public string WatermarkGradient2 = SerializeColor(Color.Black);
         public string WatermarkBorderColor = SerializeColor(Color.Black);
         public decimal WatermarkBackTrans = 225;
-        public System.Drawing.Drawing2D.LinearGradientMode WatermarkGradientType = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+        public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
+        public bool WatermarkUseCustomGradient = false;
+        public string WatermarkGradientBrushData = "White\t0\nRed\t0.5\nBlack\t1";
+        public PointF WatermarkGradientBrushStartPoint = new PointF(0.5f, 0);
+        public PointF WatermarkGradientBrushEndPoint = new PointF(0.5f, 1);
 
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
@@ -412,7 +417,7 @@ namespace ZScreenLib
         public bool WriteDebugFile { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("When holding shift when finishing cropping show advanced options")]
         public bool ShowAdvancedOptionsAfterCrop { get; set; }
-        
+
         [Category("Options / Windows 7 Taskbar"), DefaultValue(false), Description("Determine whether Windows 7 Taskbar was refreshed once")]
         public bool UserTasksAdded { get; set; }
 
@@ -465,28 +470,28 @@ namespace ZScreenLib
 
 
         //Screenshots / Border
-        
+
         [Category("Screenshots / Border"), DefaultValue(false), Description("Add border to screenshots.")]
         public bool BorderEffect { get; set; }
         [Category("Screenshots / Border"), DefaultValue(1), Description("Border size in px.")]
         public int BorderEffectSize { get; set; }
-        
-        [XmlIgnore(),Category("Screenshots / Border"), Description("Border Color.")]
+
+        [XmlIgnore(), Category("Screenshots / Border"), Description("Border Color.")]
         public Color BorderEffectColor { get; set; }
-        
+
         //XmlSerializer can't handle Colors so whe do it
         //TODO hide this in property grid
         [XmlElement("BorderEffectColor")]
         public string pseudo_BorderEffectColor
         {
-        	get
-        	{
-        		return SerializeColor(this.BorderEffectColor);
-        	}
-        	set
-        	{
-        		this.BorderEffectColor = DeserializeColor(value);
-        	}
+            get
+            {
+                return SerializeColor(this.BorderEffectColor);
+            }
+            set
+            {
+                this.BorderEffectColor = DeserializeColor(value);
+            }
         }
 
         // Screenshots / General
