@@ -23,6 +23,7 @@
 
 using System;
 using System.Drawing;
+using System.Linq;
 
 namespace ZSS.ColorsLib
 {
@@ -567,6 +568,29 @@ namespace ZSS.ColorsLib
 
     public static class MyColors
     {
+        public static Color ParseColor(string color)
+        {
+            if (color.StartsWith("#"))
+            {
+                return MyColors.HexToColor(color);
+            }
+            else if (color.Contains(','))
+            {
+                int[] colors = color.Split(',').Select(x => int.Parse(x)).ToArray();
+
+                if (colors.Length == 3)
+                {
+                    return Color.FromArgb(colors[0], colors[1], colors[2]);
+                }
+                if (colors.Length == 4)
+                {
+                    return Color.FromArgb(colors[0], colors[1], colors[2], colors[3]);
+                }
+            }
+
+            return Color.FromName(color);
+        }
+
         public static string ColorToHex(Color color)
         {
             return string.Format("{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
@@ -579,13 +603,31 @@ namespace ZSS.ColorsLib
 
         public static Color HexToColor(string hex)
         {
-            if (hex.StartsWith("#")) hex.Remove(0, 1);
+            if (hex.StartsWith("#"))
+            {
+                hex = hex.Substring(1);
+            }
+
+            string a = string.Empty;
+
+            if (hex.Length == 8)
+            {
+                a = hex.Substring(0, 2);
+                hex = hex.Substring(2);
+            }
 
             string r = hex.Substring(0, 2);
             string g = hex.Substring(2, 2);
             string b = hex.Substring(4, 2);
 
-            return Color.FromArgb(HexToDecimal(r), HexToDecimal(g), HexToDecimal(b));
+            if (string.IsNullOrEmpty(a))
+            {
+                return Color.FromArgb(HexToDecimal(r), HexToDecimal(g), HexToDecimal(b));
+            }
+            else
+            {
+                return Color.FromArgb(HexToDecimal(a), HexToDecimal(r), HexToDecimal(g), HexToDecimal(b));
+            }
         }
 
         public static int HexToDecimal(string hex)
