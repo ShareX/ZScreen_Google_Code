@@ -47,6 +47,7 @@ using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZScreenTesterGUI;
+using GradientTester;
 
 namespace ZScreenGUI
 {
@@ -230,69 +231,6 @@ namespace ZScreenGUI
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
             DrawZScreenLabel(false);
-        }
-
-        private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
-        {
-            if (Adapter.CheckTwitterAccounts())
-            {
-                TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
-                if (!string.IsNullOrEmpty(acc.PIN))
-                {
-                    acc = Adapter.TwitterAuthSetPin(ref acc);
-                    if (null != acc)
-                    {
-                        ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-                    }
-                }
-            }
-        }
-
-        private void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
-            if (ucTwitterAccounts.RemoveItem(sel) == true)
-            {
-                Engine.conf.TwitterAccountsList.RemoveAt(sel);
-            }
-        }
-
-        private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
-            Engine.conf.TwitterAcctSelected = sel;
-
-            if (Adapter.CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected))
-            {
-                TwitterAuthInfo acc = Engine.conf.TwitterAccountsList[sel];
-                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-            }
-        }
-
-        private void TwitterAccountAddButton_Click(object sender, EventArgs e)
-        {
-            TwitterAuthInfo acc = new TwitterAuthInfo();
-            Engine.conf.TwitterAccountsList.Add(acc);
-            ucTwitterAccounts.AccountsList.Items.Add(acc);
-            ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
-            if (Adapter.CheckTwitterAccounts())
-            {
-                ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
-            }
-        }
-
-        private void SetToolTip(Control original)
-        {
-            SetToolTip(original, original);
-        }
-
-        private void SetToolTip(Control original, Control next)
-        {
-            ttZScreen.SetToolTip(next, ttZScreen.GetToolTip(original));
-            foreach (Control c in next.Controls)
-            {
-                SetToolTip(original, c);
-            }
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -540,6 +478,7 @@ namespace ZScreenGUI
             }
 
             cbWatermarkGradientType.SelectedIndex = (int)Engine.conf.WatermarkGradientType;
+            cbUseCustomGradient.Checked = Engine.conf.WatermarkUseCustomGradient;
 
             txtWatermarkImageLocation.Text = Engine.conf.WatermarkImageLocation;
             cbWatermarkUseBorder.Checked = Engine.conf.WatermarkUseBorder;
@@ -4555,6 +4494,90 @@ namespace ZScreenGUI
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
             Engine.conf.MaxNameLength = (int)nudMaxNameLength.Value;
+        }
+
+        private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
+        {
+            if (Adapter.CheckTwitterAccounts())
+            {
+                TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
+                if (!string.IsNullOrEmpty(acc.PIN))
+                {
+                    acc = Adapter.TwitterAuthSetPin(ref acc);
+                    if (null != acc)
+                    {
+                        ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+                    }
+                }
+            }
+        }
+
+        private void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
+            if (ucTwitterAccounts.RemoveItem(sel) == true)
+            {
+                Engine.conf.TwitterAccountsList.RemoveAt(sel);
+            }
+        }
+
+        private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
+            Engine.conf.TwitterAcctSelected = sel;
+
+            if (Adapter.CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected))
+            {
+                TwitterAuthInfo acc = Engine.conf.TwitterAccountsList[sel];
+                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+            }
+        }
+
+        private void TwitterAccountAddButton_Click(object sender, EventArgs e)
+        {
+            TwitterAuthInfo acc = new TwitterAuthInfo();
+            Engine.conf.TwitterAccountsList.Add(acc);
+            ucTwitterAccounts.AccountsList.Items.Add(acc);
+            ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
+            if (Adapter.CheckTwitterAccounts())
+            {
+                ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
+            }
+        }
+
+        private void SetToolTip(Control original)
+        {
+            SetToolTip(original, original);
+        }
+
+        private void SetToolTip(Control original, Control next)
+        {
+            ttZScreen.SetToolTip(next, ttZScreen.GetToolTip(original));
+            foreach (Control c in next.Controls)
+            {
+                SetToolTip(original, c);
+            }
+        }
+
+        private void btnSelectGradient_Click(object sender, EventArgs e)
+        {
+            using (GradientMaker gradient = new GradientMaker(Engine.conf.WatermarkGradientBrushData,
+                Engine.conf.WatermarkGradientBrushStartPoint, Engine.conf.WatermarkGradientBrushEndPoint))
+            {
+                if (gradient.ShowDialog() == DialogResult.OK)
+                {
+                    Engine.conf.WatermarkGradientBrushData = gradient.BrushData;
+                    Engine.conf.WatermarkGradientBrushStartPoint = gradient.StartPoint;
+                    Engine.conf.WatermarkGradientBrushEndPoint = gradient.EndPoint;
+                    TestWatermark();
+                }
+            }
+        }
+
+        private void cbUseCustomGradient_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.WatermarkUseCustomGradient = cbUseCustomGradient.Checked;
+            TestWatermark();
         }
     }
 }

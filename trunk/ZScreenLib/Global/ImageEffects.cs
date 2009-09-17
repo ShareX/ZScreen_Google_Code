@@ -32,6 +32,7 @@ using ZSS;
 using System.Collections.Generic;
 using System.Linq;
 using Greenshot.Drawing;
+using GradientTester;
 
 namespace ZScreenLib
 {
@@ -138,8 +139,18 @@ namespace ZScreenLib
                     Graphics g = Graphics.FromImage(bmp);
                     g.SmoothingMode = SmoothingMode.HighQuality;
                     g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                    g.FillPath(new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1)),
-                        Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2)), Engine.conf.WatermarkGradientType), gPath);
+                    LinearGradientBrush brush;
+                    if (Engine.conf.WatermarkUseCustomGradient)
+                    {
+                        brush = GradientMaker.CreateGradientBrush(labelRectangle.Size, Engine.conf.WatermarkGradientBrushStartPoint,
+                            Engine.conf.WatermarkGradientBrushEndPoint, Engine.conf.WatermarkGradientBrushData);
+                    }
+                    else
+                    {
+                        brush = new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1)),
+                            Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2)), Engine.conf.WatermarkGradientType);
+                    }
+                    g.FillPath(brush, gPath);
                     g.DrawPath(new Pen(Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkBorderColor))), gPath);
                     StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
                     g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), bmp.Width / 2, bmp.Height / 2, sf);
@@ -211,23 +222,23 @@ namespace ZScreenLib
             }
             if (Engine.conf.BorderEffect)
             {
-            	img = DrawBorder(img, Engine.conf.BorderEffectColor, Engine.conf.BorderEffectSize);
+                img = DrawBorder(img, Engine.conf.BorderEffectColor, Engine.conf.BorderEffectSize);
             }
             return img;
         }
-        
+
         private static Image DrawBorder(Image img, Color color, int size)
         {
-        	Image result = new Bitmap(img.Size.Width + (size*2), img.Size.Height + (size*2));
-        	Graphics g = Graphics.FromImage(result);
-        	
-        	using (Pen p = new Pen(color,size))
-        	{
-        		g.DrawRectangle(p, 1, 1, result.Size.Width - size, result.Size.Height - size);
-        	}
-        	g.DrawImage(img, size, size);
-        	
-        	return result;
+            Image result = new Bitmap(img.Size.Width + (size * 2), img.Size.Height + (size * 2));
+            Graphics g = Graphics.FromImage(result);
+
+            using (Pen p = new Pen(color, size))
+            {
+                g.DrawRectangle(p, 1, 1, result.Size.Width - size, result.Size.Height - size);
+            }
+            g.DrawImage(img, size, size);
+
+            return result;
         }
 
         private static Image DrawReflection(Image bmp)

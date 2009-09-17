@@ -1,7 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
@@ -49,6 +48,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj", "{56EB350E-089E-40BB-97CB-F2745A4251AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenTesterGUI", "ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj", "{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradientMaker", "ZScreenTester\GradientTester\GradientMaker.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -108,10 +109,14 @@ Global
 		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
