@@ -153,6 +153,7 @@ namespace ZScreenLib
         public Keys HotkeyQuickOptions = Keys.None;
         public Keys HotkeyLanguageTranslator = Keys.None;
         public Keys HotkeyScreenColorPicker = Keys.None;
+        public Keys HotkeyTwitterClient = Keys.None;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Capture

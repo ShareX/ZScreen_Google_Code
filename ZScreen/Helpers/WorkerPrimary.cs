@@ -600,6 +600,12 @@ namespace ZScreenGUI
                 return true;
             }
 
+            if (Engine.conf.HotkeyTwitterClient == key)
+            {
+                Adapter.TwitterMsg("");
+                return true;
+            }
+
             return false;
         }
 

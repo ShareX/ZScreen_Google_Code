@@ -159,7 +159,7 @@ namespace UploadersLib.Helpers
         {
             if (!string.IsNullOrEmpty(user) && !this.Addressees.Contains(user))
             {
-                Console.WriteLine("Added new user to the user list" + user);
+                Console.WriteLine("Added new user to the user list: " + user);
                 this.Addressees.Add(user);
             }
         }
