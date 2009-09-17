@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{E1C94415-3424-4517-A2A1-B2FDD1F59C67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "..\ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{E1C94415-3424-4517-A2A1-B2FDD1F59C67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ZScreenLib", "..\..\trunk\ZScreenLib\ZSS.ZScreenLib.csproj", "{037FBAAE-819B-46E6-99FA-5CD8BD17E320}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ZScreenLib", "..\ZScreenLib\ZSS.ZScreenLib.csproj", "{037FBAAE-819B-46E6-99FA-5CD8BD17E320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.IndexersLib", "..\..\trunk\ZSS.IndexersLib\ZSS.IndexersLib.csproj", "{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.IndexersLib", "..\ZSS.IndexersLib\ZSS.IndexersLib.csproj", "{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "..\..\trunk\ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "..\ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageEditorLib", "..\..\trunk\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj", "{8DB88F86-C03B-45DF-ADAF-C068A407E36A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageEditorLib", "..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj", "{8DB88F86-C03B-45DF-ADAF-C068A407E36A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UpdateCheckerLib", "..\..\trunk\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj", "{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UpdateCheckerLib", "..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj", "{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenTesterGUI", "ZScreenTesterGUI\ZScreenTesterGUI.csproj", "{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}"
 EndProject
@@ -24,11 +24,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenFTPClientTester", "ZScreenFTPClientTester\ZScreenFTPClientTester.csproj", "{44110604-C695-4BCA-9494-CB36E77ED19A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPClientLib", "..\..\trunk\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPClientLib", "..\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "..\..\trunk\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj", "{56EB350E-089E-40BB-97CB-F2745A4251AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "..\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj", "{56EB350E-089E-40BB-97CB-F2745A4251AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Ftp", "..\..\trunk\Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj", "{5F228FCD-54F1-491D-93CE-3D768655FADC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Ftp", "..\Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj", "{5F228FCD-54F1-491D-93CE-3D768655FADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradientTester", "GradientTester\GradientTester.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -84,6 +86,10 @@ Global
 		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
