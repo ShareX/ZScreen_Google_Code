@@ -25,20 +25,17 @@ using System;
 using System.Windows.Forms;
 using System.Web;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace UploadersLib.Helpers
 {
-    public class TwitterResp
-    {
-        public string Addressee { get; set; }
-    }
 
     public partial class TwitterMsg : Form
     {
 
         public string Message { get; set; }
         private oAuthTwitter moAuth { get; set; }
-        public TwitterResp TwitterResponse { get; set; }
+        public TwitterClientSettings Config { get; set; }
 
         public TwitterMsg(oAuthTwitter oAuth, string title)
             : this(oAuth)
@@ -56,7 +53,7 @@ namespace UploadersLib.Helpers
         public TwitterMsg(string title)
         {
             this.Text = title;
-            this.TwitterResponse = new TwitterResp();
+            this.Config = new TwitterClientSettings();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -80,10 +77,12 @@ namespace UploadersLib.Helpers
         private void FillResponseUser(string xml)
         {
             XDocument xdoc = XDocument.Parse(xml);
+            Console.WriteLine("Twitter API Response:");
+            Console.WriteLine(xml);
             XElement xele = xdoc.Element("status");
             if (null != xele)
             {
-                this.TwitterResponse.Addressee = xele.ElementValue("in_reply_to_screen_name");
+                this.Config.AddUser(xele.ElementValue("in_reply_to_screen_name"));
             }
         }
 
@@ -97,5 +96,73 @@ namespace UploadersLib.Helpers
         {
             lblCount.Text = (140 - txtTweet.Text.Length).ToString();
         }
+
+        private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (null != lbUsers.SelectedItem)
+            {
+                txtTweet.Text = txtTweet.Text.Insert(txtTweet.SelectionStart, "@" + lbUsers.SelectedItem.ToString() + " ");
+            }
+        }
+
+        private void TwitterMsg_Load(object sender, EventArgs e)
+        {
+            foreach (string user in this.Config.Addressees)
+            {
+                lbUsers.Items.Add(user);
+            }
+        }
+
+        private void lbUsers_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                for (int i = lbUsers.Items.Count - 1; i >= 0; i--)
+                {
+                    lbUsers.SetSelected(i, true);
+                }
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                if (lbUsers.SelectedIndex != -1)
+                {
+                    List<string> temp = new List<string>();
+                    foreach (string hi in lbUsers.SelectedItems)
+                    {
+                        temp.Add(hi);
+                    }
+
+                    foreach (string hi in temp)
+                    {
+                        lbUsers.Items.Remove(hi);
+                    }
+
+                    if (lbUsers.Items.Count > 0)
+                    {
+                        lbUsers.SelectedIndex = 0;
+                    }
+                }
+            }
+        }
     }
+
+    public class TwitterClientSettings
+    {
+        public List<string> Addressees { get; set; }
+
+        public TwitterClientSettings()
+        {
+            this.Addressees = new List<string>();
+        }
+
+        public void AddUser(string user)
+        {
+            if (!string.IsNullOrEmpty(user) && !this.Addressees.Contains(user))
+            {
+                Console.WriteLine("Added new user to the user list" + user);
+                this.Addressees.Add(user);
+            }
+        }
+    }
+
 }
