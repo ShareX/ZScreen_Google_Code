@@ -592,6 +592,7 @@ namespace ZScreenLib
             {
                 oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, acc);
                 TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");
+                msg.Config = Engine.conf.TwitterClientConfig;
                 msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
                 msg.txtTweet.Text = url;
                 msg.Show();
@@ -601,10 +602,7 @@ namespace ZScreenLib
         static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
         {
             TwitterMsg msg = sender as TwitterMsg;
-            if (!Engine.conf.TwitterUserList.Contains(msg.TwitterResponse.Addressee))
-            {
-                Engine.conf.TwitterUserList.Add(msg.TwitterResponse.Addressee);
-            }
+            Engine.conf.TwitterClientConfig = msg.Config;
         }
 
         #endregion

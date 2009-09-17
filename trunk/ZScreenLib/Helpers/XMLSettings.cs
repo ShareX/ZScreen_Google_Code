@@ -125,7 +125,7 @@ namespace ZScreenLib
         public List<TwitterAuthInfo> TwitterAccountsList = new List<TwitterAuthInfo>();
         public int TwitterAcctSelected = 0;
         public bool TwitterEnabled = false;
-        public List<string> TwitterUserList = new List<string>();
+        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
 
         // TwitPic
 
