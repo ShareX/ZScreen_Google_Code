@@ -2096,7 +2096,7 @@ namespace ZScreenGUI
             AddHotkey("Drop Window");
             AddHotkey("Language Translator");
             AddHotkey("Screen Color Picker");
-
+            AddHotkey("Twitter Client");
             dgvHotkeys.Refresh();
         }
 
