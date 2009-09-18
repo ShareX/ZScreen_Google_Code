@@ -18,6 +18,9 @@ namespace GradientTester
         public PointF StartPoint;
         public PointF EndPoint;
 
+        private bool isEditable;
+        private bool isEditing;
+
         public GradientMaker()
         {
             InitializeComponent();
@@ -65,19 +68,22 @@ namespace GradientTester
             try
             {
                 GradientStop[] gradient = ParseGradientData(rtbCodes.Text);
-                PointF startPoint = new PointF(float.Parse(txtStartPointX.Text, CultureInfo.InvariantCulture),
-                    float.Parse(txtStartPointY.Text, CultureInfo.InvariantCulture));
-                PointF endPoint = new PointF(float.Parse(txtEndPointX.Text, CultureInfo.InvariantCulture),
-                    float.Parse(txtEndPointY.Text, CultureInfo.InvariantCulture));
-                using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, startPoint, endPoint, gradient))
+                if (gradient.Length > 1)
                 {
-                    Bitmap bmp = new Bitmap(pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    PointF startPoint = new PointF(float.Parse(txtStartPointX.Text, CultureInfo.InvariantCulture),
+                        float.Parse(txtStartPointY.Text, CultureInfo.InvariantCulture));
+                    PointF endPoint = new PointF(float.Parse(txtEndPointX.Text, CultureInfo.InvariantCulture),
+                        float.Parse(txtEndPointY.Text, CultureInfo.InvariantCulture));
+                    using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, startPoint, endPoint, gradient))
                     {
-                        g.FillRectangle(brush, 0, 0, pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
-                    }
+                        Bitmap bmp = new Bitmap(pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
+                        using (Graphics g = Graphics.FromImage(bmp))
+                        {
+                            g.FillRectangle(brush, 0, 0, pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
+                        }
 
-                    pbPreview.Image = bmp;
+                        pbPreview.Image = bmp;
+                    }
                 }
             }
             catch (Exception e)
@@ -126,20 +132,26 @@ namespace GradientTester
 
         private void AddGradientStop(string color, string offset)
         {
-            try
-            {
-                rtbCodes.SelectedText = string.Format("{0}\t{1}\n", color, offset);
-                UpdatePreview();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            rtbCodes.SelectedText = string.Format("{0}\t{1}", color, offset);
+            UpdatePreview();
         }
 
         private void btnAddColor_Click(object sender, EventArgs e)
         {
+            isEditing = true;
+            if (isEditable)
+            {
+                int firstcharindex = rtbCodes.GetFirstCharIndexOfCurrentLine();
+                int currentline = rtbCodes.GetLineFromCharIndex(firstcharindex);
+                if (rtbCodes.Lines.Length > currentline)
+                {
+                    rtbCodes.SelectionStart = firstcharindex;
+                    rtbCodes.SelectionLength = rtbCodes.Lines[currentline].Length;
+                }
+            }
+
             AddGradientStop(txtColor.Text, txtOffset.Text);
+            isEditing = false;
         }
 
         private void btnBrowseColor_Click(object sender, EventArgs e)
@@ -161,19 +173,23 @@ namespace GradientTester
 
         private void rtbCodes_SelectionChanged(object sender, EventArgs e)
         {
-            int firstcharindex = rtbCodes.GetFirstCharIndexOfCurrentLine();
-            int currentline = rtbCodes.GetLineFromCharIndex(firstcharindex);
-            if (rtbCodes.Lines.Length > currentline)
+            if (!isEditing)
             {
-                string line = rtbCodes.Lines[currentline];
-                if (line.Contains('\t'))
+                isEditable = false;
+                int firstcharindex = rtbCodes.GetFirstCharIndexOfCurrentLine();
+                int currentline = rtbCodes.GetLineFromCharIndex(firstcharindex);
+                if (rtbCodes.Lines.Length > currentline)
                 {
-                    txtColor.Text = line.Substring(0, line.IndexOf('\t'));
-                    txtOffset.Text = line.Remove(0, line.IndexOf('\t') + 1);
+                    string line = rtbCodes.Lines[currentline];
+                    if (line.Contains('\t'))
+                    {
+                        txtColor.Text = line.Substring(0, line.IndexOf('\t'));
+                        txtOffset.Text = line.Remove(0, line.IndexOf('\t') + 1);
+                        isEditable = true;
+                        UpdatePreview();
+                    }
                 }
             }
-
-            UpdatePreview();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
