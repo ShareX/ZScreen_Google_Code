@@ -46,21 +46,24 @@ File Name: screenshot.jpg
 Host: 80.123.456.78
 SubFolderPath: ZScreen
 HttpHomePath: zscreen.net/jaex
-URL: http://zscreen.net/jaex/ZScreen/screenshot.jpg
+PreviewFtpPath: ftp://80.123.456.78:21/ZScreen/screenshot.jpg
+PreviewHttpPath: http://zscreen.net/jaex/ZScreen/screenshot.jpg
 }}}
 === Using domain ==
 {{{
 Host: ftp.zscreen.net
 SubFolderPath:
 HttpHomePath:
-URL: http://zscreen.net/screenshot.jpg
+PreviewFtpPath: ftp://ftp.zscreen.net:21/screenshot.jpg
+PreviewHttpPath: http://zscreen.net/screenshot.jpg
 }}}
 === Using subdomain ===
 {{{
 Host: jaex.zscreen.net
 SubFolderPath: ZScreen/Screenshots
 HttpHomePath: www.zscreen.net/jaex
-URL: http://www.zscreen.net/jaex/ZScreen/Screenshots/screenshot.jpg
+PreviewFtpPath: ftp://jaex.zscreen.net:21/ZScreen/Screenshots/screenshot.jpg
+PreviewHttpPath: http://www.zscreen.net/jaex/ZScreen/Screenshots/screenshot.jpg
 }}}
 == Using empty !HttpHomePath ==
 === Using domain ==
@@ -68,14 +71,16 @@ URL: http://www.zscreen.net/jaex/ZScreen/Screenshots/screenshot.jpg
 Host: ftp.zscreen.net
 SubFolderPath: ZScreen
 HttpHomePath:
-URL: http://zscreen.net/ZScreen/screenshot.jpg
+PreviewFtpPath: ftp://ftp.zscreen.net:21/ZScreen/screenshot.jpg
+PreviewHttpPath: http://zscreen.net/ZScreen/screenshot.jpg
 }}}
 === Using subdomain ===
 {{{
 Host: jaex.zscreen.net
 SubFolderPath: Screenshots/ZScreen
 HttpHomePath:
-URL: http://jaex.zscreen.net/Screenshots/ZScreen/screenshot.jpg
+PreviewFtpPath: ftp://jaex.zscreen.net:21/Screenshots/ZScreen/screenshot.jpg
+PreviewHttpPath: http://jaex.zscreen.net/Screenshots/ZScreen/screenshot.jpg
 }}}
 
 == Using % in !HttpHomePath ==
@@ -87,12 +92,24 @@ URL: http://jaex.zscreen.net/Screenshots/ZScreen/screenshot.jpg
 Host: zscreen.net
 SubFolderPath: ZScreen
 HttpHomePath: %/jaex
-URL: http://zscreen.net/jaex/ZScreen/screenshot.jpg
+PreviewFtpPath: ftp://ftp.zscreen.net:21/jaex/ZScreen/screenshot.jpg
+PreviewHttpPath: http://zscreen.net/jaex/ZScreen/screenshot.jpg
 }}}
 === Using subdomain ===
 {{{
 Host: jaex.zscreen.net
 SubFolderPath: ZScreen
 HttpHomePath: %
-URL: http://jaex.zscreen.net/ZScreen/screenshot.jpg
+PreviewFtpPath: ftp://jaex.zscreen.net:21/ZScreen/screenshot.jpg
+PreviewHttpPath: http://jaex.zscreen.net/ZScreen/screenshot.jpg
+}}}
+
+== Using @ in HttpHomePath ==
+=== Using subdomain ===
+{{{
+Host: ftp.powweb.com
+SubFolderPath: zscreen
+HttpHomePath: @mcored.zscreen.net
+PreviewFtpPath: ftp://ftp.powweb.com:21/zscreen/screenshot.jpg
+PreviewHttpPath: http://mcored.zscreen.net/screenshot.jpg
 }}}
