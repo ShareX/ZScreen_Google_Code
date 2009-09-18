@@ -115,11 +115,11 @@
             // 
             // btnAddColor
             // 
-            this.btnAddColor.Location = new System.Drawing.Point(320, 368);
+            this.btnAddColor.Location = new System.Drawing.Point(296, 368);
             this.btnAddColor.Name = "btnAddColor";
-            this.btnAddColor.Size = new System.Drawing.Size(75, 23);
+            this.btnAddColor.Size = new System.Drawing.Size(99, 23);
             this.btnAddColor.TabIndex = 9;
-            this.btnAddColor.Text = "Add";
+            this.btnAddColor.Text = "Add / Update";
             this.btnAddColor.UseVisualStyleBackColor = true;
             this.btnAddColor.Click += new System.EventHandler(this.btnAddColor_Click);
             // 
@@ -152,7 +152,7 @@
             // 
             this.txtOffset.Location = new System.Drawing.Point(248, 368);
             this.txtOffset.Name = "txtOffset";
-            this.txtOffset.Size = new System.Drawing.Size(60, 20);
+            this.txtOffset.Size = new System.Drawing.Size(40, 20);
             this.txtOffset.TabIndex = 13;
             // 
             // btnBrowseColor

@@ -28,7 +28,15 @@ namespace GradientTester
                 throw new Exception("Color is unknown.");
             }
 
-            this.Offset = float.Parse(offset, CultureInfo.InvariantCulture);
+            float offset2;
+            if (float.TryParse(offset, NumberStyles.Any, CultureInfo.InvariantCulture, out offset2))
+            {
+                this.Offset = offset2;
+            }
+            else
+            {
+                this.Offset = 0;
+            }
         }
     }
 }
