@@ -69,7 +69,7 @@ namespace UploadersLib.FileUploaders
             }
             else if (Options.AccountType == RapidShareAcctType.Premium && !string.IsNullOrEmpty(Options.PremiumUsername) && !string.IsNullOrEmpty(Options.Password))
             {
-                args.Add("login", Options.CollectorsID);
+                args.Add("login", Options.PremiumUsername);
                 args.Add("password", Options.Password);
             }
 
@@ -130,7 +130,8 @@ namespace UploadersLib.FileUploaders
                 {
                     return regex.Groups[1].Value;
                 }
-                return "";
+
+                return string.Empty;
             }
         }
 
@@ -146,7 +147,7 @@ namespace UploadersLib.FileUploaders
                 return string.Format("http://rs{0}l3.rapidshare.com/cgi-bin/upload.cgi", response);
             }
 
-            return "";
+            return string.Empty;
         }
     }
 }
