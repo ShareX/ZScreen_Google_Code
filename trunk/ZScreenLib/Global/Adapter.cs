@@ -202,6 +202,16 @@ namespace ZScreenLib
             return CheckList(Engine.conf.FTPAccountList, Engine.conf.FTPSelected);
         }
 
+        public static FTPAccount GetFtpAcctActive()
+        {
+            FTPAccount acc = null;
+            if (CheckFTPAccounts())
+            {
+                acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
+            }
+            return acc;
+        }
+
         public static bool CheckTwitterAccounts()
         {
             return CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected);
