@@ -249,13 +249,15 @@ namespace ZScreenGUI
 
             try
             {
-                FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
                 WorkerTask checkTask = RetryUpload(task);
-                if (!checkTask.Completed)
+                if (checkTask.RetryPending)
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.MyImageUploader.GetDescription());
                     mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
-
+                }
+                else
+                {
+                    FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
                     switch (task.JobCategory)
                     {
                         case JobCategoryType.BINARY:

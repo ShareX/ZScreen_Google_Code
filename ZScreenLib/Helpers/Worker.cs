@@ -514,17 +514,17 @@ namespace ZScreenLib
             if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
             {
                 if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
-                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.Completed)
+                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending)
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                     task2.JobCategory = task.JobCategory;
                     task2.SetImage(task.LocalFilePath);
                     task2.UpdateLocalFilePath(task.LocalFilePath);
-                    task2.Completed = true; // we do not retry again
+                    task2.RetryPending = true; // we do not retry again
 
                     if (Engine.conf.ImageUploadRandomRetryOnFail)
                     {
-                        List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
+                        List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC, ImageDestType.IMAGEBIN };
                         if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
                         {
                             randomDest.Add(ImageDestType.IMAGEBAM);
@@ -533,9 +533,12 @@ namespace ZScreenLib
                         {
                             randomDest.Add(ImageDestType.FLICKR);
                         }
-
+                        if (Adapter.CheckFTPAccounts() && null != Adapter.GetFtpAcctActive())
+                        {
+                            randomDest.Add(ImageDestType.FTP);
+                        }
                         int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                        while ((ImageDestType)r == task2.MyImageUploader)
+                        while ((ImageDestType)r == task2.MyImageUploader || (ImageDestType)r == ImageDestType.FILE || (ImageDestType)r == ImageDestType.CLIPBOARD)
                         {
                             r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                         }
@@ -557,6 +560,7 @@ namespace ZScreenLib
                     return task2;
                 }
             }
+            task.RetryPending = false;
             return task;
         }
     }
