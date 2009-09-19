@@ -219,6 +219,7 @@
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.BackColor = System.Drawing.SystemColors.Control;
             this.btnOK.Location = new System.Drawing.Point(424, 280);
             this.btnOK.Name = "btnOK";
