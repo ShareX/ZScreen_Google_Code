@@ -59,6 +59,11 @@ namespace UploadersLib
         {
             get
             {
+                if (string.IsNullOrEmpty(this.Host))
+                {
+                    return string.Empty;
+                }
+
                 return string.Format("ftp://{0}:{1}", Host, Port);
             }
         }
@@ -70,7 +75,7 @@ namespace UploadersLib
         {
             get
             {
-                return FTPHelpers.CombineURL(this.FTPAddress, this.SubFolderPath, exampleFilename);
+                return GetFtpPath(exampleFilename);
             }
         }
 
@@ -104,6 +109,11 @@ namespace UploadersLib
 
         public string GetUriPath(string fileName, bool customPath)
         {
+            if (string.IsNullOrEmpty(this.Host))
+            {
+                return string.Empty;
+            }
+
             string path = string.Empty;
             string host = this.Host;
             string folderPath = this.SubFolderPath;
@@ -126,10 +136,9 @@ namespace UploadersLib
             {
                 fileName = fileName.Replace(" ", "%20");
 
-                string httppath = this.HttpHomePath.Replace("%", host);
+                string httppath = this.HttpHomePath.Replace("%", host).TrimStart('@');
 
-                path = FTPHelpers.CombineURL(httppath.StartsWith("@") ? httppath.Substring(1) : httppath,
-                                              folderPath, fileName);
+                path = FTPHelpers.CombineURL(httppath, folderPath, fileName);
             }
 
             if (!path.StartsWith("http://"))
@@ -138,6 +147,18 @@ namespace UploadersLib
             }
 
             return path;
+        }
+
+        public string GetFtpPath(string fileName)
+        {
+            string ftpAddress = this.FTPAddress;
+
+            if (string.IsNullOrEmpty(ftpAddress))
+            {
+                return string.Empty;
+            }
+
+            return FTPHelpers.CombineURL(ftpAddress, this.SubFolderPath, fileName);
         }
 
         public override string ToString()
