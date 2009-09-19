@@ -105,7 +105,6 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: {#ExePath}; DestDir: "{app}"; Flags: ignoreversion
-;Source: "..\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#ExeName}"; Filename: "{app}\ZScreen.exe"

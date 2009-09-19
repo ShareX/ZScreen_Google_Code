@@ -104,9 +104,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: {#ExePath}; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Debug\ZScreenCLI.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Debug\RegistrationHelper.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Debug\*.exe"; Excludes: "*.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Debug\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
