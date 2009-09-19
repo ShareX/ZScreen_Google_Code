@@ -107,6 +107,7 @@
             this.Text = "Description";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.TwitterMsg_Load);
+            this.Shown += new System.EventHandler(this.TwitterMsg_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

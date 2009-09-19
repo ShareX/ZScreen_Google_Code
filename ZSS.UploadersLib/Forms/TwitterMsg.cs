@@ -102,6 +102,8 @@ namespace UploadersLib.Helpers
             if (null != lbUsers.SelectedItem)
             {
                 txtTweet.Text = txtTweet.Text.Insert(txtTweet.SelectionStart, "@" + lbUsers.SelectedItem.ToString() + " ");
+                txtTweet.SelectionStart = txtTweet.Text.Length;
+                txtTweet.Focus();
             }
         }
 
@@ -143,6 +145,11 @@ namespace UploadersLib.Helpers
                     }
                 }
             }
+        }
+
+        private void TwitterMsg_Shown(object sender, EventArgs e)
+        {
+            txtTweet.Focus();
         }
     }
 
