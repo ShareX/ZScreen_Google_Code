@@ -522,37 +522,40 @@ namespace ZScreenLib
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.RetryPending = true; // we do not retry again
 
-                    if (Engine.conf.ImageUploadRandomRetryOnFail)
+                    if (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)
                     {
-                        List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC, ImageDestType.IMAGEBIN };
-                        if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
+                        if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {
-                            randomDest.Add(ImageDestType.IMAGEBAM);
-                        }
-                        if (null != Engine.conf.FlickrAuthInfo)
-                        {
-                            randomDest.Add(ImageDestType.FLICKR);
-                        }
-                        if (Adapter.CheckFTPAccounts() && null != Adapter.GetFtpAcctActive())
-                        {
-                            randomDest.Add(ImageDestType.FTP);
-                        }
-                        int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                        while ((ImageDestType)r == task2.MyImageUploader || (ImageDestType)r == ImageDestType.FILE || (ImageDestType)r == ImageDestType.CLIPBOARD)
-                        {
-                            r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                        }
-                        task2.MyImageUploader = (ImageDestType)r;
-                    }
-                    else
-                    {
-                        if (task.MyImageUploader == ImageDestType.IMAGESHACK)
-                        {
-                            task2.MyImageUploader = ImageDestType.TINYPIC;
+                            List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC, ImageDestType.IMAGEBIN };
+                            if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
+                            {
+                                randomDest.Add(ImageDestType.IMAGEBAM);
+                            }
+                            if (null != Engine.conf.FlickrAuthInfo)
+                            {
+                                randomDest.Add(ImageDestType.FLICKR);
+                            }
+                            if (Adapter.CheckFTPAccounts() && null != Adapter.GetFtpAcctActive())
+                            {
+                                randomDest.Add(ImageDestType.FTP);
+                            }
+                            int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
+                            while ((ImageDestType)r == task2.MyImageUploader || (ImageDestType)r == ImageDestType.FILE || (ImageDestType)r == ImageDestType.CLIPBOARD)
+                            {
+                                r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
+                            }
+                            task2.MyImageUploader = (ImageDestType)r;
                         }
                         else
                         {
-                            task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                            if (task.MyImageUploader == ImageDestType.IMAGESHACK)
+                            {
+                                task2.MyImageUploader = ImageDestType.TINYPIC;
+                            }
+                            else
+                            {
+                                task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                            }
                         }
                     }
 
