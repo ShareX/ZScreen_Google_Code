@@ -15,8 +15,8 @@ namespace GradientTester
 {
     public partial class GradientMaker : Form
     {
-        public BrushData BrushInfo;
-
+        public GradientMakerSettings Options;
+        public BrushData mActiveBrushData;
         private bool isEditable;
         private bool isEditing;
         private string lastData;
@@ -24,23 +24,33 @@ namespace GradientTester
         public GradientMaker()
         {
             InitializeComponent();
-            cbGradientDirection.SelectedIndex = 0;
+            cboGradientDirection.SelectedIndex = 0;
         }
 
-        public GradientMaker(BrushData brushData)
+        public GradientMaker(GradientMakerSettings options)
         {
             InitializeComponent();
-            this.BrushInfo = brushData;
-            rtbCodes.Text = this.BrushInfo.Data;
-            cbGradientDirection.SelectedIndex = (int)this.BrushInfo.Direction;
+            this.Options = options;
+            foreach (BrushData bd in options.BrushDataList)
+            {
+                lbBrushData.Items.Add(bd);
+            }
+            this.mActiveBrushData = options.GetBrushDataActive();
+            UpdateGUI(this.mActiveBrushData);
             UpdatePreview();
+        }
+
+        private void UpdateGUI(BrushData bd)
+        {
+            rtbCodes.Text = bd.Data;
+            cboGradientDirection.SelectedIndex = (int)bd.Direction;
         }
 
         private void UpdatePreview()
         {
             try
             {
-                using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, this.BrushInfo))
+                using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, this.mActiveBrushData))
                 {
                     Bitmap bmp = new Bitmap(pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
                     using (Graphics g = Graphics.FromImage(bmp))
@@ -168,16 +178,22 @@ namespace GradientTester
 
         private void rtbCodes_TextChanged(object sender, EventArgs e)
         {
-            this.BrushInfo.Data = rtbCodes.Text;
+            this.mActiveBrushData.Data = rtbCodes.Text;
             UpdatePreview();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.BrushInfo = new BrushData(rtbCodes.Text, BrushData.GradientDirection.Vertical);
-
+            UpdateBrushData();
+            this.Options.BrushDataSelected = lbBrushData.SelectedIndex;
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void UpdateBrushData()
+        {
+            this.mActiveBrushData = new BrushData(rtbCodes.Text, BrushData.GradientDirection.Vertical);
+            this.mActiveBrushData.Name = txtName.Text;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -191,21 +207,81 @@ namespace GradientTester
             Process.Start("http://code.google.com/p/zscreen/wiki/Watermark");
         }
 
-        private void cbGradientDirection_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboGradientDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.BrushInfo.Direction = (BrushData.GradientDirection)cbGradientDirection.SelectedIndex;
+            this.mActiveBrushData.Direction = (BrushData.GradientDirection)cboGradientDirection.SelectedIndex;
             UpdatePreview();
         }
 
         #endregion
+
+        private void GradientMaker_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbBrushData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbBrushData.SelectedIndex != -1)
+            {
+                this.Options.BrushDataSelected = lbBrushData.SelectedIndex;
+                this.mActiveBrushData = (BrushData)lbBrushData.SelectedItem;
+                UpdateGUI(this.mActiveBrushData);
+                UpdatePreview();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            UpdateBrushData();
+            lbBrushData.Items.Add(mActiveBrushData);
+            this.Options.BrushDataList.Add(mActiveBrushData);
+        }
+
+        private void lbBrushData_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (lbBrushData.SelectedIndex > -1)
+            {
+                if (e.KeyCode == Keys.Delete && lbBrushData.Items.Count > 1)
+                {
+                    int sel = lbBrushData.SelectedIndex;
+                    lbBrushData.Items.RemoveAt(sel);
+                    this.Options.BrushDataList.RemoveAt(sel);
+                }
+            }
+        }
+    }
+
+    public class GradientMakerSettings
+    {
+        public List<BrushData> BrushDataList { get; set; }
+        public int BrushDataSelected { get; set; }
+
+        public GradientMakerSettings()
+        {
+            this.BrushDataList = new List<BrushData>();
+            this.BrushDataList.Add(new BrushData());
+            this.BrushDataSelected = 0;
+        }
+
+        public BrushData GetBrushDataActive()
+        {
+            return this.BrushDataList[this.BrushDataSelected];
+        }
     }
 
     public class BrushData
     {
+        public string Name { get; set; }
         public string Data { get; set; }
         public GradientDirection Direction { get; set; }
 
-        public BrushData() { }
+        public BrushData()
+        {
+            this.Name = "Gradient 1";
+            this.Data = "255,68,120,194\t0\n255,13,58,122\t0.5\n255,6,36,78\t0.5\n255,12,76,159\t1";
+            this.Direction = BrushData.GradientDirection.Vertical;
+        }
 
         public BrushData(string data, GradientDirection direction)
         {
@@ -223,6 +299,11 @@ namespace GradientTester
             /// Specifies a gradient from top to bottom.
             /// </summary>
             Vertical
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
     }
 }
