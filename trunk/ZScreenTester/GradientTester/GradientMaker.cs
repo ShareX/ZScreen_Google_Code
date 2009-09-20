@@ -16,7 +16,6 @@ namespace GradientTester
     public partial class GradientMaker : Form
     {
         public GradientMakerSettings Options;
-        public BrushData mActiveBrushData;
         private bool isEditable;
         private bool isEditing;
         private string lastData;
@@ -35,9 +34,9 @@ namespace GradientTester
             {
                 lbBrushData.Items.Add(bd);
             }
-            this.mActiveBrushData = options.GetBrushDataActive();
-            UpdateGUI(this.mActiveBrushData);
-            UpdatePreview();
+            lbBrushData.SelectedIndex = options.BrushDataSelected;
+            UpdateGUI(options.GetBrushDataActive());
+            UpdatePreview(options.GetBrushDataActive());
         }
 
         private void UpdateGUI(BrushData bd)
@@ -46,11 +45,11 @@ namespace GradientTester
             cboGradientDirection.SelectedIndex = (int)bd.Direction;
         }
 
-        private void UpdatePreview()
+        private void UpdatePreview(BrushData bd)
         {
             try
             {
-                using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, this.mActiveBrushData))
+                using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, bd))
                 {
                     Bitmap bmp = new Bitmap(pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
                     using (Graphics g = Graphics.FromImage(bmp))
@@ -168,7 +167,7 @@ namespace GradientTester
                         isEditable = true;
                         if (rtbCodes.Text != lastData)
                         {
-                            UpdatePreview();
+                            UpdatePreview(Options.GetBrushDataActive());
                             lastData = rtbCodes.Text;
                         }
                     }
@@ -178,8 +177,7 @@ namespace GradientTester
 
         private void rtbCodes_TextChanged(object sender, EventArgs e)
         {
-            this.mActiveBrushData.Data = rtbCodes.Text;
-            UpdatePreview();
+            UpdatePreview(GetNewBrushData());
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -192,8 +190,14 @@ namespace GradientTester
 
         private void UpdateBrushData()
         {
-            this.mActiveBrushData = new BrushData(rtbCodes.Text, BrushData.GradientDirection.Vertical);
-            this.mActiveBrushData.Name = txtName.Text;
+            this.Options.BrushDataList[lbBrushData.SelectedIndex] = GetNewBrushData();
+        }
+
+        private BrushData GetNewBrushData()
+        {
+            BrushData bd = new BrushData(rtbCodes.Text, (BrushData.GradientDirection)cboGradientDirection.SelectedIndex);
+            bd.Name = txtName.Text;
+            return bd;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -209,8 +213,7 @@ namespace GradientTester
 
         private void cboGradientDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.mActiveBrushData.Direction = (BrushData.GradientDirection)cboGradientDirection.SelectedIndex;
-            UpdatePreview();
+            UpdatePreview(GetNewBrushData());
         }
 
         #endregion
@@ -225,17 +228,14 @@ namespace GradientTester
             if (lbBrushData.SelectedIndex != -1)
             {
                 this.Options.BrushDataSelected = lbBrushData.SelectedIndex;
-                this.mActiveBrushData = (BrushData)lbBrushData.SelectedItem;
-                UpdateGUI(this.mActiveBrushData);
-                UpdatePreview();
+                UpdateGUI(Options.BrushDataList[lbBrushData.SelectedIndex]);
+                UpdatePreview(Options.BrushDataList[lbBrushData.SelectedIndex]);
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             UpdateBrushData();
-            lbBrushData.Items.Add(mActiveBrushData);
-            this.Options.BrushDataList.Add(mActiveBrushData);
         }
 
         private void lbBrushData_KeyDown(object sender, KeyEventArgs e)
@@ -249,6 +249,15 @@ namespace GradientTester
                     this.Options.BrushDataList.RemoveAt(sel);
                 }
             }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            BrushData bd = new BrushData();
+            bd.Name = txtName.Text;
+            lbBrushData.Items.Add(bd);
+            this.Options.BrushDataList.Add(bd);
+            lbBrushData.SelectedIndex = lbBrushData.Items.Count - 1;
         }
     }
 
