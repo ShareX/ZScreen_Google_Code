@@ -421,6 +421,5 @@ namespace ZScreenLib
         public static Mutex mAppMutex;
 
         public static KeyboardHook ZScreenKeyboardHook;
-
     }
 }

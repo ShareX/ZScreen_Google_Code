@@ -15,52 +15,24 @@ namespace GradientTester
 {
     public partial class GradientMaker : Form
     {
-        public string BrushData;
-        public PointF StartPoint;
-        public PointF EndPoint;
+        public BrushData BrushInfo;
 
         private bool isEditable;
         private bool isEditing;
+        private string lastData;
 
         public GradientMaker()
         {
             InitializeComponent();
+            cbGradientDirection.SelectedIndex = 0;
         }
 
-        public GradientMaker(string brushData, PointF startPoint, PointF endPoint)
+        public GradientMaker(BrushData brushData)
         {
             InitializeComponent();
-            this.BrushData = brushData;
-            this.StartPoint = startPoint;
-            this.EndPoint = endPoint;
-            txtStartPointX.Text = startPoint.X.ToString(CultureInfo.InvariantCulture);
-            txtStartPointY.Text = startPoint.Y.ToString(CultureInfo.InvariantCulture);
-            txtEndPointX.Text = endPoint.X.ToString(CultureInfo.InvariantCulture);
-            txtEndPointY.Text = endPoint.Y.ToString(CultureInfo.InvariantCulture);
-            rtbCodes.Text = brushData;
-            UpdatePreview();
-        }
-
-        private void TestColors()
-        {
-            txtStartPointX.Text = txtEndPointX.Text = "0.5";
-            txtStartPointY.Text = "0";
-            txtEndPointY.Text = "1";
-            rtbCodes.Text = "#FF3A6EB7\t0\n#FF0D3A7A\t0.5\n#FF041F47\t0.5\n#FF233853\t1";
-            UpdatePreview();
-
-            /*
-                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="#FF3A6EB7" Offset="0"/>
-                    <GradientStop Color="#FF0D3A7A" Offset="0.5"/>
-                    <GradientStop Color="#FF041F47" Offset="0.5"/>
-                    <GradientStop Color="#FF233853" Offset="1"/>
-                </LinearGradientBrush>
-            */
-        }
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
+            this.BrushInfo = brushData;
+            rtbCodes.Text = this.BrushInfo.Data;
+            cbGradientDirection.SelectedIndex = (int)this.BrushInfo.Direction;
             UpdatePreview();
         }
 
@@ -68,23 +40,15 @@ namespace GradientTester
         {
             try
             {
-                GradientStop[] gradient = ParseGradientData(rtbCodes.Text);
-                if (gradient.Length > 1)
+                using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, this.BrushInfo))
                 {
-                    PointF startPoint = new PointF(float.Parse(txtStartPointX.Text, CultureInfo.InvariantCulture),
-                        float.Parse(txtStartPointY.Text, CultureInfo.InvariantCulture));
-                    PointF endPoint = new PointF(float.Parse(txtEndPointX.Text, CultureInfo.InvariantCulture),
-                        float.Parse(txtEndPointY.Text, CultureInfo.InvariantCulture));
-                    using (LinearGradientBrush brush = CreateGradientBrush(pbPreview.ClientSize, startPoint, endPoint, gradient))
+                    Bitmap bmp = new Bitmap(pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
+                    using (Graphics g = Graphics.FromImage(bmp))
                     {
-                        Bitmap bmp = new Bitmap(pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
-                        using (Graphics g = Graphics.FromImage(bmp))
-                        {
-                            g.FillRectangle(brush, 0, 0, pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
-                        }
-
-                        pbPreview.Image = bmp;
+                        g.FillRectangle(brush, 0, 0, pbPreview.ClientSize.Width, pbPreview.ClientSize.Height);
                     }
+
+                    pbPreview.Image = bmp;
                 }
             }
             catch (Exception e)
@@ -113,8 +77,22 @@ namespace GradientTester
             return new GradientStop(line.Substring(0, line.IndexOf('\t')), line.Remove(0, line.IndexOf('\t') + 1));
         }
 
-        public static LinearGradientBrush CreateGradientBrush(Size size, PointF startPoint, PointF endPoint, IEnumerable<GradientStop> gradient)
+        public static LinearGradientBrush CreateGradientBrush(Size size, BrushData gradientData)
         {
+            IEnumerable<GradientStop> gradient = ParseGradientData(gradientData.Data);
+
+            PointF startPoint = new PointF(0, 0);
+            PointF endPoint = PointF.Empty;
+            switch (gradientData.Direction)
+            {
+                case BrushData.GradientDirection.Horizontal:
+                    endPoint = new PointF(1, 0);
+                    break;
+                case BrushData.GradientDirection.Vertical:
+                    endPoint = new PointF(0, 1);
+                    break;
+            }
+
             Point start = new Point((int)(size.Width * startPoint.X), (int)(size.Height * startPoint.Y));
             Point end = new Point((int)(size.Width * endPoint.X), (int)(size.Height * endPoint.Y));
             LinearGradientBrush brush = new LinearGradientBrush(start, end, Color.Black, Color.Black);
@@ -126,16 +104,7 @@ namespace GradientTester
             return brush;
         }
 
-        public static LinearGradientBrush CreateGradientBrush(Size size, PointF startPoint, PointF endPoint, string gradientData)
-        {
-            return CreateGradientBrush(size, startPoint, endPoint, ParseGradientData(gradientData));
-        }
-
-        private void AddGradientStop(string color, string offset)
-        {
-            rtbCodes.SelectedText = string.Format("{0}\t{1}", color, offset);
-            UpdatePreview();
-        }
+        #region Form events
 
         private void btnAddColor_Click(object sender, EventArgs e)
         {
@@ -151,7 +120,7 @@ namespace GradientTester
                 }
             }
 
-            AddGradientStop(txtColor.Text, txtOffset.Text);
+            rtbCodes.SelectedText = string.Format("{0}\t{1}", txtColor.Text, txtOffset.Text);
             isEditing = false;
         }
 
@@ -187,21 +156,25 @@ namespace GradientTester
                         txtColor.Text = line.Substring(0, line.IndexOf('\t'));
                         txtOffset.Text = line.Remove(0, line.IndexOf('\t') + 1);
                         isEditable = true;
-                        UpdatePreview();
+                        if (rtbCodes.Text != lastData)
+                        {
+                            UpdatePreview();
+                            lastData = rtbCodes.Text;
+                        }
                     }
                 }
             }
         }
 
+        private void rtbCodes_TextChanged(object sender, EventArgs e)
+        {
+            this.BrushInfo.Data = rtbCodes.Text;
+            UpdatePreview();
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
-            PointF startPoint = new PointF(float.Parse(txtStartPointX.Text, CultureInfo.InvariantCulture),
-                   float.Parse(txtStartPointY.Text, CultureInfo.InvariantCulture));
-            PointF endPoint = new PointF(float.Parse(txtEndPointX.Text, CultureInfo.InvariantCulture),
-                float.Parse(txtEndPointY.Text, CultureInfo.InvariantCulture));
-            this.StartPoint = startPoint;
-            this.EndPoint = endPoint;
-            this.BrushData = rtbCodes.Text;
+            this.BrushInfo = new BrushData(rtbCodes.Text, BrushData.GradientDirection.Vertical);
 
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -216,6 +189,40 @@ namespace GradientTester
         private void btnHelp_Click(object sender, EventArgs e)
         {
             Process.Start("http://code.google.com/p/zscreen/wiki/Watermark");
+        }
+
+        private void cbGradientDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.BrushInfo.Direction = (BrushData.GradientDirection)cbGradientDirection.SelectedIndex;
+            UpdatePreview();
+        }
+
+        #endregion
+    }
+
+    public class BrushData
+    {
+        public string Data { get; set; }
+        public GradientDirection Direction { get; set; }
+
+        public BrushData() { }
+
+        public BrushData(string data, GradientDirection direction)
+        {
+            this.Data = data;
+            this.Direction = direction;
+        }
+
+        public enum GradientDirection
+        {
+            /// <summary>
+            /// Specifies a gradient from left to right.
+            /// </summary>
+            Horizontal,
+            /// <summary>
+            /// Specifies a gradient from top to bottom.
+            /// </summary>
+            Vertical
         }
     }
 }
