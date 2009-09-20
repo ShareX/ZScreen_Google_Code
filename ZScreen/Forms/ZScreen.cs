@@ -4561,14 +4561,11 @@ namespace ZScreenGUI
 
         private void btnSelectGradient_Click(object sender, EventArgs e)
         {
-            using (GradientMaker gradient = new GradientMaker(Engine.conf.WatermarkGradientBrushData,
-                Engine.conf.WatermarkGradientBrushStartPoint, Engine.conf.WatermarkGradientBrushEndPoint))
+            using (GradientMaker gradient = new GradientMaker(Engine.conf.WatermarkBrushData))
             {
                 if (gradient.ShowDialog() == DialogResult.OK)
                 {
-                    Engine.conf.WatermarkGradientBrushData = gradient.BrushData;
-                    Engine.conf.WatermarkGradientBrushStartPoint = gradient.StartPoint;
-                    Engine.conf.WatermarkGradientBrushEndPoint = gradient.EndPoint;
+                    Engine.conf.WatermarkBrushData = gradient.BrushInfo;
                     TestWatermark();
                 }
             }
