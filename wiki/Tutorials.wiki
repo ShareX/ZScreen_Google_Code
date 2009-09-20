@@ -5,11 +5,15 @@
 = Main Window =
 == Main == 
 == Destinations == 
+=== FTP ===
+Main Article: [FTPAccounts]
 == Hotkeys == 
 === Clipboard Upload ===
 Main Article: [ClipboardUpload]
 
 == Screenshots == 
+=== Watermark ===
+Main Article: [Watermark]
 == Image Hosting == 
 == Text Services == 
 == Translator == 
