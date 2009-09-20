@@ -249,8 +249,7 @@ namespace ZScreenLib
         public decimal WatermarkBackTrans = 225;
         public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
         public bool WatermarkUseCustomGradient = false;
-        public BrushData WatermarkBrushData = new BrushData("255,68,120,194\t0\n255,13,58,122\t0.5\n255,6,36,78\t0.5\n255,12,76,159\t1",
-            BrushData.GradientDirection.Vertical);
+        public GradientMakerSettings GradientMakerConfig = new GradientMakerSettings();
 
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;

@@ -39,15 +39,18 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.cbGradientDirection = new System.Windows.Forms.ComboBox();
+            this.cboGradientDirection = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.lbBrushData = new System.Windows.Forms.ListBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.txtName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // pbPreview
             // 
             this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbPreview.Location = new System.Drawing.Point(144, 8);
+            this.pbPreview.Location = new System.Drawing.Point(144, 6);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(248, 48);
             this.pbPreview.TabIndex = 2;
@@ -147,18 +150,18 @@
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
-            // cbGradientDirection
+            // cboGradientDirection
             // 
-            this.cbGradientDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGradientDirection.FormattingEnabled = true;
-            this.cbGradientDirection.Items.AddRange(new object[] {
+            this.cboGradientDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGradientDirection.FormattingEnabled = true;
+            this.cboGradientDirection.Items.AddRange(new object[] {
             "Horizontal",
             "Vertical"});
-            this.cbGradientDirection.Location = new System.Drawing.Point(8, 32);
-            this.cbGradientDirection.Name = "cbGradientDirection";
-            this.cbGradientDirection.Size = new System.Drawing.Size(120, 21);
-            this.cbGradientDirection.TabIndex = 19;
-            this.cbGradientDirection.SelectedIndexChanged += new System.EventHandler(this.cbGradientDirection_SelectedIndexChanged);
+            this.cboGradientDirection.Location = new System.Drawing.Point(8, 32);
+            this.cboGradientDirection.Name = "cboGradientDirection";
+            this.cboGradientDirection.Size = new System.Drawing.Size(120, 21);
+            this.cboGradientDirection.TabIndex = 19;
+            this.cboGradientDirection.SelectedIndexChanged += new System.EventHandler(this.cboGradientDirection_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -169,13 +172,44 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "Gradient direction:";
             // 
+            // lbBrushData
+            // 
+            this.lbBrushData.FormattingEnabled = true;
+            this.lbBrushData.Location = new System.Drawing.Point(400, 64);
+            this.lbBrushData.Name = "lbBrushData";
+            this.lbBrushData.Size = new System.Drawing.Size(152, 277);
+            this.lbBrushData.TabIndex = 21;
+            this.lbBrushData.SelectedIndexChanged += new System.EventHandler(this.lbBrushData_SelectedIndexChanged);
+            this.lbBrushData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbBrushData_KeyDown);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(400, 8);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(152, 23);
+            this.btnSave.TabIndex = 22;
+            this.btnSave.Text = "&Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(400, 34);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(152, 20);
+            this.txtName.TabIndex = 23;
+            this.txtName.Text = "Gradient 1";
+            // 
             // GradientMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 432);
+            this.ClientSize = new System.Drawing.Size(563, 432);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.lbBrushData);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.cbGradientDirection);
+            this.Controls.Add(this.cboGradientDirection);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -190,6 +224,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "GradientMaker";
             this.Text = "Gradient Maker";
+            this.Load += new System.EventHandler(this.GradientMaker_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -209,8 +244,11 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnHelp;
-        private System.Windows.Forms.ComboBox cbGradientDirection;
+        private System.Windows.Forms.ComboBox cboGradientDirection;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox lbBrushData;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox txtName;
     }
 }
 

@@ -142,7 +142,7 @@ namespace ZScreenLib
                     LinearGradientBrush brush;
                     if (Engine.conf.WatermarkUseCustomGradient)
                     {
-                        brush = GradientMaker.CreateGradientBrush(labelRectangle.Size, Engine.conf.WatermarkBrushData);
+                        brush = GradientMaker.CreateGradientBrush(labelRectangle.Size, Engine.conf.GradientMakerConfig.GetBrushDataActive());
                     }
                     else
                     {
