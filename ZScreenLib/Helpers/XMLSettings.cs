@@ -248,7 +248,7 @@ namespace ZScreenLib
         public decimal WatermarkBackTrans = 225;
         public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
         public bool WatermarkUseCustomGradient = false;
-        public string WatermarkGradientBrushData = "White\t0\nRed\t0.5\nBlack\t1";
+        public string WatermarkGradientBrushData = "255,68,120,194\t0\n255,13,58,122\t0.5\n255,6,36,78\t0.5\n255,12,76,159\t1";
         public PointF WatermarkGradientBrushStartPoint = new PointF(0.5f, 0);
         public PointF WatermarkGradientBrushEndPoint = new PointF(0.5f, 1);
 
