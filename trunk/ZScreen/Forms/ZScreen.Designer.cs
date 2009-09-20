@@ -262,6 +262,8 @@ namespace ZScreenGUI
             this.tcWatermark = new System.Windows.Forms.TabControl();
             this.tpWatermarkText = new System.Windows.Forms.TabPage();
             this.gbWatermarkBackground = new System.Windows.Forms.GroupBox();
+            this.btnSelectGradient = new System.Windows.Forms.Button();
+            this.cboUseCustomGradient = new System.Windows.Forms.CheckBox();
             this.trackWatermarkBackgroundTrans = new System.Windows.Forms.TrackBar();
             this.cbWatermarkGradientType = new System.Windows.Forms.ComboBox();
             this.lblWatermarkGradientType = new System.Windows.Forms.Label();
@@ -551,8 +553,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.cbUseCustomGradient = new System.Windows.Forms.CheckBox();
-            this.btnSelectGradient = new System.Windows.Forms.Button();
+            this.gbGradientMakerBasic = new System.Windows.Forms.GroupBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -693,6 +694,7 @@ namespace ZScreenGUI
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            this.gbGradientMakerBasic.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -3165,7 +3167,7 @@ namespace ZScreenGUI
             this.tcWatermark.Location = new System.Drawing.Point(288, 4);
             this.tcWatermark.Name = "tcWatermark";
             this.tcWatermark.SelectedIndex = 0;
-            this.tcWatermark.Size = new System.Drawing.Size(485, 376);
+            this.tcWatermark.Size = new System.Drawing.Size(485, 388);
             this.tcWatermark.TabIndex = 29;
             // 
             // tpWatermarkText
@@ -3176,7 +3178,7 @@ namespace ZScreenGUI
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 23);
             this.tpWatermarkText.Name = "tpWatermarkText";
             this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(477, 349);
+            this.tpWatermarkText.Size = new System.Drawing.Size(477, 361);
             this.tpWatermarkText.TabIndex = 0;
             this.tpWatermarkText.Text = "Text";
             this.tpWatermarkText.UseVisualStyleBackColor = true;
@@ -3185,33 +3187,42 @@ namespace ZScreenGUI
             // 
             this.gbWatermarkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbWatermarkBackground.Controls.Add(this.gbGradientMakerBasic);
             this.gbWatermarkBackground.Controls.Add(this.btnSelectGradient);
-            this.gbWatermarkBackground.Controls.Add(this.cbUseCustomGradient);
-            this.gbWatermarkBackground.Controls.Add(this.trackWatermarkBackgroundTrans);
-            this.gbWatermarkBackground.Controls.Add(this.cbWatermarkGradientType);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkGradientType);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkCornerRadiusTip);
-            this.gbWatermarkBackground.Controls.Add(this.nudWatermarkBackTrans);
-            this.gbWatermarkBackground.Controls.Add(this.nudWatermarkCornerRadius);
-            this.gbWatermarkBackground.Controls.Add(this.lblRectangleCornerRadius);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColorsTip);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackTrans);
-            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient1);
-            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkBorderColor);
-            this.gbWatermarkBackground.Controls.Add(this.pbWatermarkGradient2);
-            this.gbWatermarkBackground.Controls.Add(this.lblWatermarkBackColors);
+            this.gbWatermarkBackground.Controls.Add(this.cboUseCustomGradient);
             this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 136);
             this.gbWatermarkBackground.Name = "gbWatermarkBackground";
-            this.gbWatermarkBackground.Size = new System.Drawing.Size(456, 200);
+            this.gbWatermarkBackground.Size = new System.Drawing.Size(456, 216);
             this.gbWatermarkBackground.TabIndex = 25;
             this.gbWatermarkBackground.TabStop = false;
             this.gbWatermarkBackground.Text = "Text Background Settings";
+            // 
+            // btnSelectGradient
+            // 
+            this.btnSelectGradient.Location = new System.Drawing.Point(200, 24);
+            this.btnSelectGradient.Name = "btnSelectGradient";
+            this.btnSelectGradient.Size = new System.Drawing.Size(112, 23);
+            this.btnSelectGradient.TabIndex = 33;
+            this.btnSelectGradient.Text = "Gradient Maker...";
+            this.btnSelectGradient.UseVisualStyleBackColor = true;
+            this.btnSelectGradient.Click += new System.EventHandler(this.btnSelectGradient_Click);
+            // 
+            // cbUseCustomGradient
+            // 
+            this.cboUseCustomGradient.AutoSize = true;
+            this.cboUseCustomGradient.Location = new System.Drawing.Point(16, 28);
+            this.cboUseCustomGradient.Name = "cbUseCustomGradient";
+            this.cboUseCustomGradient.Size = new System.Drawing.Size(179, 17);
+            this.cboUseCustomGradient.TabIndex = 32;
+            this.cboUseCustomGradient.Text = "Use Gradient Maker (Advanced)";
+            this.cboUseCustomGradient.UseVisualStyleBackColor = true;
+            this.cboUseCustomGradient.CheckedChanged += new System.EventHandler(this.cbUseCustomGradient_CheckedChanged);
             // 
             // trackWatermarkBackgroundTrans
             // 
             this.trackWatermarkBackgroundTrans.AutoSize = false;
             this.trackWatermarkBackgroundTrans.BackColor = System.Drawing.SystemColors.Window;
-            this.trackWatermarkBackgroundTrans.Location = new System.Drawing.Point(152, 85);
+            this.trackWatermarkBackgroundTrans.Location = new System.Drawing.Point(160, 85);
             this.trackWatermarkBackgroundTrans.Maximum = 255;
             this.trackWatermarkBackgroundTrans.Name = "trackWatermarkBackgroundTrans";
             this.trackWatermarkBackgroundTrans.Size = new System.Drawing.Size(200, 24);
@@ -3225,7 +3236,7 @@ namespace ZScreenGUI
             // 
             this.cbWatermarkGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWatermarkGradientType.FormattingEnabled = true;
-            this.cbWatermarkGradientType.Location = new System.Drawing.Point(88, 120);
+            this.cbWatermarkGradientType.Location = new System.Drawing.Point(96, 120);
             this.cbWatermarkGradientType.Name = "cbWatermarkGradientType";
             this.cbWatermarkGradientType.Size = new System.Drawing.Size(121, 21);
             this.cbWatermarkGradientType.TabIndex = 25;
@@ -3234,16 +3245,16 @@ namespace ZScreenGUI
             // lblWatermarkGradientType
             // 
             this.lblWatermarkGradientType.AutoSize = true;
-            this.lblWatermarkGradientType.Location = new System.Drawing.Point(8, 125);
+            this.lblWatermarkGradientType.Location = new System.Drawing.Point(16, 125);
             this.lblWatermarkGradientType.Name = "lblWatermarkGradientType";
-            this.lblWatermarkGradientType.Size = new System.Drawing.Size(73, 13);
+            this.lblWatermarkGradientType.Size = new System.Drawing.Size(77, 13);
             this.lblWatermarkGradientType.TabIndex = 24;
-            this.lblWatermarkGradientType.Text = "Gradient type:";
+            this.lblWatermarkGradientType.Text = "Gradient Type:";
             // 
             // lblWatermarkCornerRadiusTip
             // 
             this.lblWatermarkCornerRadiusTip.AutoSize = true;
-            this.lblWatermarkCornerRadiusTip.Location = new System.Drawing.Point(200, 24);
+            this.lblWatermarkCornerRadiusTip.Location = new System.Drawing.Point(208, 24);
             this.lblWatermarkCornerRadiusTip.Name = "lblWatermarkCornerRadiusTip";
             this.lblWatermarkCornerRadiusTip.Size = new System.Drawing.Size(146, 13);
             this.lblWatermarkCornerRadiusTip.TabIndex = 23;
@@ -3267,7 +3278,7 @@ namespace ZScreenGUI
             // 
             // nudWatermarkCornerRadius
             // 
-            this.nudWatermarkCornerRadius.Location = new System.Drawing.Point(144, 19);
+            this.nudWatermarkCornerRadius.Location = new System.Drawing.Point(152, 19);
             this.nudWatermarkCornerRadius.Maximum = new decimal(new int[] {
             15,
             0,
@@ -3282,16 +3293,16 @@ namespace ZScreenGUI
             // lblRectangleCornerRadius
             // 
             this.lblRectangleCornerRadius.AutoSize = true;
-            this.lblRectangleCornerRadius.Location = new System.Drawing.Point(8, 24);
+            this.lblRectangleCornerRadius.Location = new System.Drawing.Point(16, 24);
             this.lblRectangleCornerRadius.Name = "lblRectangleCornerRadius";
-            this.lblRectangleCornerRadius.Size = new System.Drawing.Size(123, 13);
+            this.lblRectangleCornerRadius.Size = new System.Drawing.Size(128, 13);
             this.lblRectangleCornerRadius.TabIndex = 21;
-            this.lblRectangleCornerRadius.Text = "Rectangle corner radius:";
+            this.lblRectangleCornerRadius.Text = "Rectangle corner Radius:";
             // 
             // lblWatermarkBackColorsTip
             // 
             this.lblWatermarkBackColorsTip.AutoSize = true;
-            this.lblWatermarkBackColorsTip.Location = new System.Drawing.Point(208, 56);
+            this.lblWatermarkBackColorsTip.Location = new System.Drawing.Point(216, 56);
             this.lblWatermarkBackColorsTip.Name = "lblWatermarkBackColorsTip";
             this.lblWatermarkBackColorsTip.Size = new System.Drawing.Size(195, 13);
             this.lblWatermarkBackColorsTip.TabIndex = 20;
@@ -3300,7 +3311,7 @@ namespace ZScreenGUI
             // lblWatermarkBackTrans
             // 
             this.lblWatermarkBackTrans.AutoSize = true;
-            this.lblWatermarkBackTrans.Location = new System.Drawing.Point(8, 88);
+            this.lblWatermarkBackTrans.Location = new System.Drawing.Point(16, 88);
             this.lblWatermarkBackTrans.Name = "lblWatermarkBackTrans";
             this.lblWatermarkBackTrans.Size = new System.Drawing.Size(136, 13);
             this.lblWatermarkBackTrans.TabIndex = 7;
@@ -3311,7 +3322,7 @@ namespace ZScreenGUI
             this.pbWatermarkGradient1.BackColor = System.Drawing.Color.White;
             this.pbWatermarkGradient1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbWatermarkGradient1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkGradient1.Location = new System.Drawing.Point(112, 51);
+            this.pbWatermarkGradient1.Location = new System.Drawing.Point(120, 51);
             this.pbWatermarkGradient1.Name = "pbWatermarkGradient1";
             this.pbWatermarkGradient1.Size = new System.Drawing.Size(24, 24);
             this.pbWatermarkGradient1.TabIndex = 10;
@@ -3323,7 +3334,7 @@ namespace ZScreenGUI
             this.pbWatermarkBorderColor.BackColor = System.Drawing.Color.Black;
             this.pbWatermarkBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbWatermarkBorderColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkBorderColor.Location = new System.Drawing.Point(176, 51);
+            this.pbWatermarkBorderColor.Location = new System.Drawing.Point(184, 51);
             this.pbWatermarkBorderColor.Name = "pbWatermarkBorderColor";
             this.pbWatermarkBorderColor.Size = new System.Drawing.Size(24, 24);
             this.pbWatermarkBorderColor.TabIndex = 14;
@@ -3335,7 +3346,7 @@ namespace ZScreenGUI
             this.pbWatermarkGradient2.BackColor = System.Drawing.Color.Gray;
             this.pbWatermarkGradient2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbWatermarkGradient2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbWatermarkGradient2.Location = new System.Drawing.Point(144, 51);
+            this.pbWatermarkGradient2.Location = new System.Drawing.Point(152, 51);
             this.pbWatermarkGradient2.Name = "pbWatermarkGradient2";
             this.pbWatermarkGradient2.Size = new System.Drawing.Size(24, 24);
             this.pbWatermarkGradient2.TabIndex = 11;
@@ -3345,11 +3356,11 @@ namespace ZScreenGUI
             // lblWatermarkBackColors
             // 
             this.lblWatermarkBackColors.AutoSize = true;
-            this.lblWatermarkBackColors.Location = new System.Drawing.Point(8, 56);
+            this.lblWatermarkBackColors.Location = new System.Drawing.Point(16, 56);
             this.lblWatermarkBackColors.Name = "lblWatermarkBackColors";
-            this.lblWatermarkBackColors.Size = new System.Drawing.Size(99, 13);
+            this.lblWatermarkBackColors.Size = new System.Drawing.Size(100, 13);
             this.lblWatermarkBackColors.TabIndex = 12;
-            this.lblWatermarkBackColors.Text = "Background colors:";
+            this.lblWatermarkBackColors.Text = "Background Colors:";
             // 
             // gbWatermarkText
             // 
@@ -6554,26 +6565,27 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // cbUseCustomGradient
+            // gbGradientMakerBasic
             // 
-            this.cbUseCustomGradient.AutoSize = true;
-            this.cbUseCustomGradient.Location = new System.Drawing.Point(16, 156);
-            this.cbUseCustomGradient.Name = "cbUseCustomGradient";
-            this.cbUseCustomGradient.Size = new System.Drawing.Size(123, 17);
-            this.cbUseCustomGradient.TabIndex = 32;
-            this.cbUseCustomGradient.Text = "Use custom gradient";
-            this.cbUseCustomGradient.UseVisualStyleBackColor = true;
-            this.cbUseCustomGradient.CheckedChanged += new System.EventHandler(this.cbUseCustomGradient_CheckedChanged);
-            // 
-            // btnSelectGradient
-            // 
-            this.btnSelectGradient.Location = new System.Drawing.Point(144, 152);
-            this.btnSelectGradient.Name = "btnSelectGradient";
-            this.btnSelectGradient.Size = new System.Drawing.Size(104, 23);
-            this.btnSelectGradient.TabIndex = 33;
-            this.btnSelectGradient.Text = "Select gradient";
-            this.btnSelectGradient.UseVisualStyleBackColor = true;
-            this.btnSelectGradient.Click += new System.EventHandler(this.btnSelectGradient_Click);
+            this.gbGradientMakerBasic.Controls.Add(this.lblRectangleCornerRadius);
+            this.gbGradientMakerBasic.Controls.Add(this.lblWatermarkBackColors);
+            this.gbGradientMakerBasic.Controls.Add(this.trackWatermarkBackgroundTrans);
+            this.gbGradientMakerBasic.Controls.Add(this.pbWatermarkGradient2);
+            this.gbGradientMakerBasic.Controls.Add(this.cbWatermarkGradientType);
+            this.gbGradientMakerBasic.Controls.Add(this.pbWatermarkBorderColor);
+            this.gbGradientMakerBasic.Controls.Add(this.lblWatermarkGradientType);
+            this.gbGradientMakerBasic.Controls.Add(this.pbWatermarkGradient1);
+            this.gbGradientMakerBasic.Controls.Add(this.lblWatermarkCornerRadiusTip);
+            this.gbGradientMakerBasic.Controls.Add(this.lblWatermarkBackTrans);
+            this.gbGradientMakerBasic.Controls.Add(this.nudWatermarkBackTrans);
+            this.gbGradientMakerBasic.Controls.Add(this.lblWatermarkBackColorsTip);
+            this.gbGradientMakerBasic.Controls.Add(this.nudWatermarkCornerRadius);
+            this.gbGradientMakerBasic.Location = new System.Drawing.Point(8, 56);
+            this.gbGradientMakerBasic.Name = "gbGradientMakerBasic";
+            this.gbGradientMakerBasic.Size = new System.Drawing.Size(440, 152);
+            this.gbGradientMakerBasic.TabIndex = 34;
+            this.gbGradientMakerBasic.TabStop = false;
+            this.gbGradientMakerBasic.Text = "Gradient Maker (Basic)";
             // 
             // ZScreen
             // 
@@ -6793,6 +6805,8 @@ namespace ZScreenGUI
             this.gbStatistics.PerformLayout();
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            this.gbGradientMakerBasic.ResumeLayout(false);
+            this.gbGradientMakerBasic.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -7315,7 +7329,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblMaxNameLength;
         private System.Windows.Forms.NumericUpDown nudMaxNameLength;
         private System.Windows.Forms.Button btnSelectGradient;
-        private System.Windows.Forms.CheckBox cbUseCustomGradient;
+        private System.Windows.Forms.CheckBox cboUseCustomGradient;
+        private System.Windows.Forms.GroupBox gbGradientMakerBasic;
 
     }
 }

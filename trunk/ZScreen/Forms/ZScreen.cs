@@ -478,7 +478,7 @@ namespace ZScreenGUI
             }
 
             cbWatermarkGradientType.SelectedIndex = (int)Engine.conf.WatermarkGradientType;
-            cbUseCustomGradient.Checked = Engine.conf.WatermarkUseCustomGradient;
+            cboUseCustomGradient.Checked = Engine.conf.WatermarkUseCustomGradient;
 
             txtWatermarkImageLocation.Text = Engine.conf.WatermarkImageLocation;
             cbWatermarkUseBorder.Checked = Engine.conf.WatermarkUseBorder;
@@ -4563,6 +4563,7 @@ namespace ZScreenGUI
         {
             using (GradientMaker gradient = new GradientMaker(Engine.conf.WatermarkBrushData))
             {
+                gradient.Icon = this.Icon;
                 if (gradient.ShowDialog() == DialogResult.OK)
                 {
                     Engine.conf.WatermarkBrushData = gradient.BrushInfo;
@@ -4573,7 +4574,8 @@ namespace ZScreenGUI
 
         private void cbUseCustomGradient_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkUseCustomGradient = cbUseCustomGradient.Checked;
+            Engine.conf.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
+            gbGradientMakerBasic.Enabled = !cboUseCustomGradient.Checked;
             TestWatermark();
         }
     }

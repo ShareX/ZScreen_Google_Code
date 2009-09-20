@@ -2,7 +2,7 @@ Version 3.11 - 20091015
 
 3.11.0.1 File Upload using RapidShare Premium account was not working {Jaex}
 3.11.0.0 Update Twitter Status using a Hotkey {McoreD}
-3.10.0.0 Support for setting custom gradient in Watermarks {Jaex}
+3.10.0.0 Support for configuring advanced gradient settings in Watermarks using a Gradient Maker {Jaex}
 3.09.0.0 Added filebin.ca File Uploader support {Jaex}
 3.08.0.0 Added pastebin.ca Text Uploader support {Jaex}
 3.07.0.0 Added imagebin.ca Image Uploader support {Jaex}
