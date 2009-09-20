@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using ZSS.ColorsLib;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace GradientTester
 {
@@ -210,6 +211,11 @@ namespace GradientTester
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://code.google.com/p/zscreen/wiki/Watermark");
         }
     }
 }
