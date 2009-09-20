@@ -108,6 +108,7 @@
             // rtbCodes
             // 
             this.rtbCodes.AcceptsTab = true;
+            this.rtbCodes.Font = new System.Drawing.Font("Lucida Console", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbCodes.Location = new System.Drawing.Point(8, 64);
             this.rtbCodes.Name = "rtbCodes";
             this.rtbCodes.Size = new System.Drawing.Size(384, 296);
@@ -188,7 +189,7 @@
             this.Controls.Add(this.pbPreview);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "GradientMaker";
-            this.Text = "Gradient maker";
+            this.Text = "Gradient Maker";
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
