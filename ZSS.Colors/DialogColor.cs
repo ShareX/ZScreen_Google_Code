@@ -39,22 +39,15 @@ namespace ZSS.ColorsLib
 
         public DialogColor()
         {
-            Initialize();
+            Initialize(Color.Empty);
         }
 
         public DialogColor(Color currentColor)
         {
-            SetCurrentColor(currentColor);
-            Initialize();
+            Initialize(currentColor);
         }
 
-        public void SetCurrentColor(Color currentColor)
-        {
-            oldColorExist = true;
-            colorPicker.Color = NewColor = OldColor = currentColor;
-        }
-
-        private void Initialize()
+        private void Initialize(Color currentColor)
         {
             InitializeComponent();
             foreach (Control cntrl in this.Controls)
@@ -64,7 +57,23 @@ namespace ZSS.ColorsLib
                     cntrl.DoubleClick += new EventHandler(CopyToClipboard);
                 }
             }
+
+            if (currentColor.IsEmpty)
+            {
+                colorPicker.DrawCrosshair = lblOld.Visible = oldColorExist;
+                DrawColors();
+            }
+            else
+            {
+                SetCurrentColor(currentColor);
+            }
+        }
+
+        public void SetCurrentColor(Color currentColor)
+        {
+            oldColorExist = true;
             colorPicker.DrawCrosshair = lblOld.Visible = oldColorExist;
+            colorPicker.Color = NewColor = OldColor = currentColor;
             DrawColors();
         }
 
