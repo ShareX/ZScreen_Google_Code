@@ -103,6 +103,7 @@ namespace ZScreenLib
 
         public void Dispose()
         {
+            FileSystem.AppendDebug("KeyboardHook disposed");
             UnhookWindowsHookEx(keyboardHookHandle);
         }
     }
