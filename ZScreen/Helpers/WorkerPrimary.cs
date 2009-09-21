@@ -380,6 +380,7 @@ namespace ZScreenGUI
                 {
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
                 }
+                Engine.ZScreenKeyboardHook = new KeyboardHook();
             }
         }
 
