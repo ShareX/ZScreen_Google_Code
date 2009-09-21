@@ -301,13 +301,13 @@ namespace GradientTester
         public enum GradientDirection
         {
             /// <summary>
-            /// Specifies a gradient from left to right.
-            /// </summary>
-            Horizontal,
-            /// <summary>
             /// Specifies a gradient from top to bottom.
             /// </summary>
-            Vertical
+            Vertical,
+            /// <summary>
+            /// Specifies a gradient from left to right.
+            /// </summary>
+            Horizontal
         }
 
         public override string ToString()

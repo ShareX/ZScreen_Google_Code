@@ -156,8 +156,8 @@
             this.cboGradientDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboGradientDirection.FormattingEnabled = true;
             this.cboGradientDirection.Items.AddRange(new object[] {
-            "Horizontal",
-            "Vertical"});
+            "Vertical",
+            "Horizontal"});
             this.cboGradientDirection.Location = new System.Drawing.Point(8, 32);
             this.cboGradientDirection.Name = "cboGradientDirection";
             this.cboGradientDirection.Size = new System.Drawing.Size(120, 21);
