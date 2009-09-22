@@ -178,10 +178,17 @@ namespace Greenshot.Configuration
         /// </summary>
         public void Save()
         {
-            Stream s = File.Open(ConfigPath, FileMode.Create);
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(s, this);
-            s.Close();
+            try
+            {
+                Stream s = File.Open(ConfigPath, FileMode.Create);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(s, this);
+                s.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Image Editor: " + ex.Message);
+            }
         }
 
         /// <summary>

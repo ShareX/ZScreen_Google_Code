@@ -48,6 +48,19 @@ namespace ZScreenGUI
             }
         }
 
+        public static void KeyboardHookConfig()
+        {
+            if (null != Engine.ZScreenKeyboardHook && !Engine.ZScreenKeyboardHook.Hooked || null == Engine.ZScreenKeyboardHook)
+            {
+                if (null == Engine.ZScreenKeyboardHook)
+                {
+                    Engine.ZScreenKeyboardHook = new KeyboardHook();
+                }
+                Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Worker.CheckHotkeys);
+                FileSystem.AppendDebug("Keyboard Hook initiated");
+            }
+        }
+
         private static void RunZScreen()
         {
             try
