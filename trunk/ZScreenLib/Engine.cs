@@ -31,6 +31,7 @@ using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using System.Collections.Generic;
+using UploadersLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -193,12 +194,19 @@ namespace ZScreenLib
             string settingsDir = Path.GetDirectoryName(Engine.appSettings.XMLSettingsFile);
             if (!string.IsNullOrEmpty(settingsDir))
             {
+                List<ImageFile> imgFiles = new List<ImageFile>();
                 string[] files = Directory.GetFiles(settingsDir, "ZScreen-*-Settings.xml");
                 if (files.Length > 0)
                 {
-                    fp = files[files.Length - 1];
+                    foreach (string f in files)
+                    {
+                        imgFiles.Add(new ImageFile(f));
+                    }
+                    imgFiles.Sort();
+                    fp = imgFiles[imgFiles.Count - 1].LocalFilePath;
                 }
             }
+            XMLSettings.XMLFileName = Path.GetFileName(fp);
             LoadSettings(fp);
         }
 
