@@ -641,7 +641,8 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(acc.TokenSecret))
             {
                 oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, acc);
-                TwitterMsg msg = new TwitterMsg(oAuth, "Update Twitter Status...");
+                TwitterMsg msg = new TwitterMsg(oAuth, string.Format("{0} - Update Twitter Status...", acc.AccountName));
+                msg.Icon = Resources.zss_main;
                 msg.Config = Engine.conf.TwitterClientConfig;
                 msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
                 msg.txtTweet.Text = url;
