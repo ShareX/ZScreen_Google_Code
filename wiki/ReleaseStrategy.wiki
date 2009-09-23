@@ -6,7 +6,7 @@ New ZScreen releases are uploaded as "Beta"
 The new upload remains as "Beta" until at least one of the following occurs first without a major issue being reported
 
  * 2 weeks passes 
- * 500 download count reaches
+ * 1000 download count reaches
 
 = Featured = 
 If one of the above conditions satisfy without a major issue, the upload is tagged as "Featured". 
