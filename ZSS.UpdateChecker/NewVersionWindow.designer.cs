@@ -30,7 +30,7 @@
         {
             this.btnYes = new System.Windows.Forms.Button();
             this.btnNo = new System.Windows.Forms.Button();
-            this.txtVer = new System.Windows.Forms.TextBox();
+            this.txtVer = new System.Windows.Forms.RichTextBox();
             this.lblVer = new System.Windows.Forms.Label();
             this.pbApp = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).BeginInit();
@@ -38,6 +38,7 @@
             // 
             // btnYes
             // 
+            this.btnYes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnYes.Location = new System.Drawing.Point(312, 80);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(83, 24);
@@ -48,6 +49,7 @@
             // 
             // btnNo
             // 
+            this.btnNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNo.Location = new System.Drawing.Point(400, 80);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(83, 24);
@@ -58,19 +60,23 @@
             // 
             // txtVer
             // 
+            this.txtVer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVer.Location = new System.Drawing.Point(8, 112);
-            this.txtVer.Multiline = true;
             this.txtVer.Name = "txtVer";
             this.txtVer.ReadOnly = true;
-            this.txtVer.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtVer.Size = new System.Drawing.Size(476, 184);
             this.txtVer.TabIndex = 2;
             this.txtVer.TabStop = false;
+            this.txtVer.Text = "";
             this.txtVer.WordWrap = false;
             // 
             // lblVer
             // 
+            this.lblVer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVer.BackColor = System.Drawing.Color.Transparent;
             this.lblVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVer.Location = new System.Drawing.Point(136, 8);
@@ -100,15 +106,13 @@
             this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnYes);
             this.Controls.Add(this.lblVer);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(509, 343);
             this.Name = "NewVersionWindow";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "A New Version is Available";
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -116,7 +120,7 @@
 
         private System.Windows.Forms.Button btnYes;
         private System.Windows.Forms.Button btnNo;
-        private System.Windows.Forms.TextBox txtVer;
+        private System.Windows.Forms.RichTextBox txtVer;
         private System.Windows.Forms.Label lblVer;
         private System.Windows.Forms.PictureBox pbApp;
     }
