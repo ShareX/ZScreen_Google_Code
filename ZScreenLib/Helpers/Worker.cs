@@ -284,10 +284,10 @@ namespace ZScreenLib
 
             if (Clipboard.ContainsImage())
             {
-                Image cImage = Clipboard.GetImage();
+            	task.SetImage(Clipboard.GetImage());
                 task.Settings.ManualNaming = false;
                 task.SetFilePathFromPattern(NameParser.Convert(NameParserType.EntireScreen));
-                FileSystem.SaveImage(cImage, task.LocalFilePath);
+                FileSystem.SaveImage(ref task);
                 StartWorkerPictures(task, task.LocalFilePath);
             }
             else if (Clipboard.ContainsText())

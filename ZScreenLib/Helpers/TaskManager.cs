@@ -160,7 +160,7 @@ namespace ZScreenLib
                 }
 
                 mTask.SetFilePathFromPattern(NameParser.Convert(type));
-                mTask.UpdateLocalFilePath(FileSystem.SaveImage(mTask.MyImage, mTask.LocalFilePath));
+                FileSystem.SaveImage(ref mTask);
                 if (!File.Exists(mTask.LocalFilePath))
                 {
                     mTask.Errors.Add(string.Format("{0} does not exist", mTask.LocalFilePath));
