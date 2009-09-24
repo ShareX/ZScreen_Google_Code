@@ -85,8 +85,11 @@ namespace ZScreenLib
         /// <param name="img">The actual image</param>
         /// <param name="filePath">The path to where the image will be saved</param>
         /// <returns>Returns the file path to a screenshot</returns>
-        public static string SaveImage(Image img, string filePath)
+        public static string SaveImage(ref WorkerTask task)
         {
+        	Image img = task.MyImage;
+        	string filePath = task.LocalFilePath;
+        	
             if (!string.IsNullOrEmpty(filePath))
             {
                 img = ImageEffects.ApplySizeChanges(img);
@@ -138,8 +141,8 @@ namespace ZScreenLib
                 {
                     if (ms != null) ((IDisposable)ms).Dispose();
                 }
-            }
-
+            }            
+            task.UpdateLocalFilePath(filePath);
             return filePath;
         }
 
