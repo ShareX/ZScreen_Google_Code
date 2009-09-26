@@ -2095,17 +2095,18 @@ namespace ZScreenGUI
             AddHotkey("Language Translator");
             AddHotkey("Screen Color Picker");
             AddHotkey("Twitter Client");
+
             dgvHotkeys.Refresh();
         }
 
-        private void AddHotkey(string name)
+        private void AddHotkey(string descr)
         {
-            object userHotKey = Engine.conf.GetFieldValue("Hotkey" + name.Replace(" ", string.Empty));
-            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + name.Replace(" ", string.Empty));
+            object userHotKey = Engine.conf.GetFieldValue("Hotkey" + descr.Replace(" ", string.Empty));
+            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + descr.Replace(" ", string.Empty));
 
             if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
             {
-                dgvHotkeys.Rows.Add(name, ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
+                dgvHotkeys.Rows.Add(descr, ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
             }
         }
 
