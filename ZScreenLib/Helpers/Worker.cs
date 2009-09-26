@@ -152,7 +152,7 @@ namespace ZScreenLib
                             }
                             catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
                             {
-                                FileSystem.AppendDebug(ex.ToString());
+                                FileSystem.AppendDebug("Error while finalizing job", ex);
                             }
                         }
 
@@ -199,7 +199,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while finalizing Worker job", ex);
             }
             finally
             {
@@ -284,7 +284,7 @@ namespace ZScreenLib
 
             if (Clipboard.ContainsImage())
             {
-            	task.SetImage(Clipboard.GetImage());
+                task.SetImage(Clipboard.GetImage());
                 task.Settings.ManualNaming = false;
                 task.SetFilePathFromPattern(NameParser.Convert(NameParserType.EntireScreen));
                 FileSystem.SaveImage(ref task);
@@ -350,7 +350,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.ToString());
+                    FileSystem.AppendDebug("Error while uploading using file system", ex);
                     succ = false;
                 }
             }

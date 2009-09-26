@@ -50,7 +50,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.ToString());
+                    FileSystem.AppendDebug("Error while reading appSettings", ex);
                 }
             }
 
@@ -85,7 +85,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while writing appSettings", ex);
             }
         }
     }

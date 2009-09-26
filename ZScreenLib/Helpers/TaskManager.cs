@@ -64,7 +64,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while capturing active window", ex);
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
                     CaptureRegionOrWindow();
@@ -118,7 +118,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while capturing region", ex);
                 mTask.Errors.Add(ex.Message);
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
@@ -489,7 +489,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                FileSystem.AppendDebug("Error while uploading to FTP Server", ex);
                 mTask.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
@@ -634,7 +634,7 @@ namespace ZScreenLib
                         }
                         catch (Exception ex)
                         {
-                            FileSystem.AppendDebug(ex.ToString());
+                            FileSystem.AppendDebug("ImageEdit", ex);
                         }
                     }
                     else if (File.Exists(app.Path))

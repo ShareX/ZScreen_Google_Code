@@ -118,7 +118,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while deleting file in View Remote", ex);
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -249,7 +249,7 @@ namespace ZScreenLib
                 }
                 catch (System.Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.Message);
+                    FileSystem.AppendDebug("Error while viewing file in View Remote", ex);
                     // bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.VIEWING_FILE, "");
                 }
             }

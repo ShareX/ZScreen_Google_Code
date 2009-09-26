@@ -265,7 +265,6 @@ namespace ZScreenGUI
                             {
                                 Clipboard.SetText(task.RemoteFilePath);
                             }
-
                             break;
                         case JobCategoryType.TEXT:
                             switch (task.Job)
@@ -315,7 +314,7 @@ namespace ZScreenGUI
                                 }
                                 catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
                                 {
-                                    FileSystem.AppendDebug(ex.ToString());
+                                    FileSystem.AppendDebug("Error while finalizing job", ex);
                                 }
                             }
                             break;
@@ -371,7 +370,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Job Completed with errors: ", ex);
             }
             finally
             {

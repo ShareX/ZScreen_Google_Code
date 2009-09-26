@@ -89,7 +89,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.ToString());
+                    FileSystem.AppendDebug("Error while reading History", ex);
                 }
             }
 

@@ -87,9 +87,9 @@ namespace ZScreenLib
         /// <returns>Returns the file path to a screenshot</returns>
         public static string SaveImage(ref WorkerTask task)
         {
-        	Image img = task.MyImage;
-        	string filePath = task.LocalFilePath;
-        	
+            Image img = task.MyImage;
+            string filePath = task.LocalFilePath;
+
             if (!string.IsNullOrEmpty(filePath))
             {
                 img = ImageEffects.ApplySizeChanges(img);
@@ -97,8 +97,8 @@ namespace ZScreenLib
                 img = ImageEffects.ApplyWatermark(img);
 
                 long size = (long)Engine.conf.SwitchAfter * 1024;
-				ImageFormat imgFormat = mImageFormats[Engine.conf.FileFormat];
-				
+                ImageFormat imgFormat = mImageFormats[Engine.conf.FileFormat];
+
                 MemoryStream ms = new MemoryStream();
                 try
                 {
@@ -117,31 +117,34 @@ namespace ZScreenLib
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     }
 
-                    if (imgFormat == ImageFormat.Gif) {
-                    	GraphicsMgr.SaveGIFWithNewColorTable(img, filePath, 256, false);
+                    if (imgFormat == ImageFormat.Gif)
+                    {
+                        GraphicsMgr.SaveGIFWithNewColorTable(img, filePath, 256, false);
                     }
-                    else {
-	                    int retry = 3;
-	                    while (retry > 0 && !File.Exists(filePath))
-	                    {
-	                        using (FileStream fi = File.Create(filePath))
-	                        {
-	                            if (retry < 3) { System.Threading.Thread.Sleep(1000); }
-	                            FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
-	                            ms.WriteTo(fi);
-	                            retry--;
-	                        }
-	                    }
+                    else
+                    {
+                        int retry = 3;
+                        while (retry > 0 && !File.Exists(filePath))
+                        {
+                            using (FileStream fi = File.Create(filePath))
+                            {
+                                if (retry < 3) { System.Threading.Thread.Sleep(1000); }
+                                FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
+                                ms.WriteTo(fi);
+                                retry--;
+                            }
+                        }
                     }
                 }
-                catch(Exception ex){
-                	FileSystem.AppendDebug(ex.ToString());
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug("Error while saving image", ex);
                 }
                 finally
                 {
                     if (ms != null) ((IDisposable)ms).Dispose();
                 }
-            }            
+            }
             task.UpdateLocalFilePath(filePath);
             return filePath;
         }
@@ -174,9 +177,9 @@ namespace ZScreenLib
             return Path.Combine(dir, fileName);
         }
 
-        public static void AppendDebug(Exception ex)
+        public static void AppendDebug(string descr, Exception ex)
         {
-            AppendDebug(ex.ToString());
+            AppendDebug(descr + " " + ex.ToString());
         }
 
         public static void AppendDebug(string msg)
@@ -219,7 +222,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while exporting text", ex);
                 succ = false;
             }
 
@@ -248,7 +251,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.Message);
+                FileSystem.AppendDebug("Error while getting text from resource", ex);
             }
 
             return text;
