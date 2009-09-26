@@ -142,19 +142,33 @@ namespace ZScreenLib
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public Keys HotkeyEntireScreen = Keys.PrintScreen;
-        public Keys HotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
-        public Keys HotkeyCropShot = Keys.Control | Keys.PrintScreen;
-        public Keys HotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
-        public Keys HotkeyClipboardUpload = Keys.Control | Keys.PageUp;
-        public Keys HotkeyLastCropShot = Keys.None;
-        public Keys HotkeyAutoCapture = Keys.None;
-        public Keys HotkeyDropWindow = Keys.None;
-        public Keys HotkeyActionsToolbar = Keys.None;
-        public Keys HotkeyQuickOptions = Keys.None;
-        public Keys HotkeyLanguageTranslator = Keys.None;
-        public Keys HotkeyScreenColorPicker = Keys.None;
-        public Keys HotkeyTwitterClient = Keys.None;
+        public const Keys DefaultHotkeyEntireScreen = Keys.PrintScreen;
+        public const Keys DefaultHotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
+        public const Keys DefaultHotkeyCropShot = Keys.Control | Keys.PrintScreen;
+        public const Keys DefaultHotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
+        public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.F6;
+        public const Keys DefaultHotkeyLastCropShot = Keys.None;
+        public const Keys DefaultHotkeyAutoCapture = Keys.None;
+        public const Keys DefaultHotkeyDropWindow = Keys.None;
+        public const Keys DefaultHotkeyActionsToolbar = Keys.None;
+        public const Keys DefaultHotkeyQuickOptions = Keys.None;
+        public const Keys DefaultHotkeyLanguageTranslator = Keys.None;
+        public const Keys DefaultHotkeyScreenColorPicker = Keys.None;
+        public const Keys DefaultHotkeyTwitterClient = Keys.None;
+
+        public Keys HotkeyEntireScreen = DefaultHotkeyEntireScreen;
+        public Keys HotkeyActiveWindow = DefaultHotkeyActiveWindow;
+        public Keys HotkeyCropShot = DefaultHotkeyCropShot;
+        public Keys HotkeySelectedWindow = DefaultHotkeySelectedWindow;
+        public Keys HotkeyClipboardUpload = DefaultHotkeyClipboardUpload;
+        public Keys HotkeyLastCropShot = DefaultHotkeyLastCropShot;
+        public Keys HotkeyAutoCapture = DefaultHotkeyAutoCapture;
+        public Keys HotkeyDropWindow = DefaultHotkeyDropWindow;
+        public Keys HotkeyActionsToolbar = DefaultHotkeyActionsToolbar;
+        public Keys HotkeyQuickOptions = DefaultHotkeyQuickOptions;
+        public Keys HotkeyLanguageTranslator = DefaultHotkeyLanguageTranslator;
+        public Keys HotkeyScreenColorPicker = DefaultHotkeyScreenColorPicker;
+        public Keys HotkeyTwitterClient = DefaultHotkeyTwitterClient;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Capture
