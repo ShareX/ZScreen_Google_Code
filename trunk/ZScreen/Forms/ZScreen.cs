@@ -149,7 +149,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex);
+                    FileSystem.AppendDebug("Error while configuring Windows 7 Taskbar", ex);
                 }
             }
         }
@@ -1429,7 +1429,7 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             Loader.KeyboardHookConfig();
-            
+
             mGuiIsReady = true;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
 
@@ -1791,7 +1791,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.ToString());
+                    FileSystem.AppendDebug("Error while clicking Balloon Tip", ex);
                 }
             }
         }
@@ -2482,7 +2482,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while setting Watermark Font", ex);
             }
         }
 
@@ -4018,7 +4018,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex);
+                FileSystem.AppendDebug("Error while moving image files", ex);
                 MessageBox.Show(ex.Message);
             }
         }

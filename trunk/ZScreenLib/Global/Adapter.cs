@@ -74,7 +74,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.Message);
+                    FileSystem.AppendDebug("Error while copying image to clipboard", ex);
                 }
             }
         }
@@ -622,7 +622,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex);
+                FileSystem.AppendDebug("Error while setting Twitter PIN", ex);
             }
             return acc;
         }
@@ -726,7 +726,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex);
+                    FileSystem.AppendDebug("Error while adding Recent Item to Windows 7 Taskbar", ex);
                 }
             }
         }

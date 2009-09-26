@@ -170,7 +170,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while performing Online Tasks", ex);
             }
         }
 

@@ -72,7 +72,7 @@ namespace ZScreenGUI
             catch (Exception ex)
             {
 
-                FileSystem.AppendDebug(ex);
+                FileSystem.AppendDebug("Running ZScreen", ex);
                 Engine.conf.Write();
             }
             finally

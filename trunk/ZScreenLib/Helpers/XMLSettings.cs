@@ -644,7 +644,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex.ToString());
+                FileSystem.AppendDebug("Error while writing settings", ex);
                 MessageBox.Show(ex.Message);
             }
         }
@@ -700,7 +700,7 @@ namespace ZScreenLib
                     {
                         // We dont need a MessageBox when we rename enumerations
                         // Renaming enums tend to break parts of serialization
-                        FileSystem.AppendDebug(ex.ToString());
+                        FileSystem.AppendDebug("Error while reading settings", ex);
                         OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS };
                         dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
                         dlg.InitialDirectory = Engine.appSettings.RootDir;
