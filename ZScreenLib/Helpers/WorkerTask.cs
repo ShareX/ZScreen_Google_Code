@@ -167,7 +167,7 @@ namespace ZScreenLib
         /// <summary>
         /// FTP Account Name, TinyPic, ImageShack
         /// </summary>
-        public string DestinationName = "File";
+        public string DestinationName = string.Empty;
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
@@ -276,7 +276,7 @@ namespace ZScreenLib
             sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), this.FileName));
             sbPath.Append(Path.GetExtension(filePath));
             filePath = sbPath.ToString();
-            
+
             UpdateLocalFilePath(filePath);
         }
 
@@ -291,9 +291,31 @@ namespace ZScreenLib
             }
         }
 
+        public string GetDestinationName()
+        {
+            string destName = this.DestinationName;
+            if (string.IsNullOrEmpty(destName))
+            {
+                switch (JobCategory)
+                {
+                    case JobCategoryType.PICTURES:
+                    case JobCategoryType.SCREENSHOTS:
+                        destName = this.MyImageUploader.GetDescription();
+                        break;
+                    case JobCategoryType.TEXT:
+                        destName = this.MyTextUploader.ToString();
+                        break;
+                    case JobCategoryType.BINARY:
+                        destName = this.MyFileUploader.GetDescription();
+                        break;
+                }
+            }
+            return destName;
+        }
+
         public string GetDescription()
         {
-            return string.Format("{0} ({1})", this.Job.GetDescription(), this.DestinationName);
+            return string.Format("{0} ({1})", this.Job.GetDescription(), this.GetDestinationName());
         }
 
         #region Functions

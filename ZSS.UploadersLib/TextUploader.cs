@@ -38,7 +38,7 @@ namespace UploadersLib
 
         public static List<Type> Types = new List<Type> { typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof(PastebinUploader),
             typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(KlamUploader),
-            typeof(IsgdUploader), typeof(BitlyUploader), typeof(TurlUploader), typeof(TextUploader) };
+            typeof(IsgdUploader), typeof(JmpUploader), typeof(BitlyUploader), typeof(TurlUploader), typeof(TextUploader) };
 
         #endregion
 

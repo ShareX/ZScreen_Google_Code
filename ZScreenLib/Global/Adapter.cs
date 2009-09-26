@@ -342,6 +342,10 @@ namespace ZScreenLib
             {
                 return new IsgdUploader();
             }
+            else if (name.Equals(JmpUploader.Hostname))
+            {
+                return new JmpUploader();
+            }
             else if (name.Equals(KlamUploader.Hostname))
             {
                 return new KlamUploader();
@@ -380,18 +384,32 @@ namespace ZScreenLib
                     (Engine.conf.LimitLongURL > 0 && url.Length > Engine.conf.LimitLongURL) ||
                     (Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
                 {
-                    TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
-                    if (tu != null)
-                    {
-                        string temp = tu.UploadText(TextInfo.FromString(url));
-                        if (!string.IsNullOrEmpty(temp))
-                        {
-                            url = temp;
-                        }
-                    }
+                    return ShortenURL(url);
                 }
             }
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Method to shorten a URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string ShortenURL(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
+                if (tu != null)
+                {
+                    string temp = tu.UploadText(TextInfo.FromString(url));
+                    if (!string.IsNullOrEmpty(temp))
+                    {
+                        url = temp;
+                    }
+                }
+            }
+            return url;
         }
 
         public static bool CheckURLShorteners()
