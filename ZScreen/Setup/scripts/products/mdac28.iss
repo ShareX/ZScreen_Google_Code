@@ -1,12 +1,9 @@
 [CustomMessages]
-mdac28_title=MDAC 2.8
+mdac28_title=Microsoft Data Access Components 2.8
 
 en.mdac28_size=5.4 MB
 de.mdac28_size=5,4 MB
 
-
-[Run]
-Filename: "{ini:{tmp}{\}dep.ini,install,mdac28}"; Description: "{cm:mdac28_title}"; StatusMsg: "{cm:depinstall_status,{cm:mdac28_title}}"; Parameters: "/q:a /c:""install /q /l"""; Flags: skipifdoesntexist
 
 [Code]
 const
@@ -16,8 +13,12 @@ procedure mdac28(MinVersion: string);
 var
 	version: string;
 begin
-	// Check for required MDAC installation
+	//check for MDAC installation
 	RegQueryStringValue(HKLM, 'Software\Microsoft\DataAccess', 'FullInstallVer', version);
-	if (version < MinVersion) then
-	   InstallPackage('mdac28', 'mdac28.exe', CustomMessage('mdac28_title'), CustomMessage('mdac28_size'), mdac28_url);
+	if version < MinVersion then
+		AddProduct('mdac28.exe',
+			'/q:a /c:"install /qb /l"',
+			CustomMessage('mdac28_title'),
+			CustomMessage('mdac28_size'),
+			mdac28_url);
 end;

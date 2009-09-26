@@ -5,12 +5,9 @@
 [CustomMessages]
 dotnetfx11sp1_title=.NET Framework 1.1 Service Pack 1
 
-en.dotnetfx11sp1_size=10.2 MB
-de.dotnetfx11sp1_size=10,2 MB
+en.dotnetfx11sp1_size=10.5 MB
+de.dotnetfx11sp1_size=10,5 MB
 
-
-[Run]
-Filename: "{ini:{tmp}{\}dep.ini,install,dotnetfx11sp1}"; Description: "{cm:dotnetfx11sp1_title}"; StatusMsg: "{cm:depinstall_status,{cm:dotnetfx11sp1_title}}"; Parameters: "/q"; Flags: skipifdoesntexist
 
 [Code]	
 const
@@ -21,6 +18,10 @@ var
 	version: cardinal;
 begin
 	RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v1.1.4322', 'SP', version);
-	if IntToStr(version) < '1' then
-		InstallPackage('dotnetfx11sp1', 'dotnetfx11sp1.exe', CustomMessage('dotnetfx11sp1_title'), CustomMessage('dotnetfx11sp1_size'), dotnetfx11sp1_url);
+	if version < 1 then
+		AddProduct('dotnetfx11sp1.exe', 
+			'/q',
+			CustomMessage('dotnetfx11sp1_title'),
+			CustomMessage('dotnetfx11sp1_size'),
+			dotnetfx11sp1_url);
 end;
