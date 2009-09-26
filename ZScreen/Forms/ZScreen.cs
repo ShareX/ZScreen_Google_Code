@@ -2100,10 +2100,12 @@ namespace ZScreenGUI
 
         private void AddHotkey(string name)
         {
-            object obj = Engine.conf.GetFieldValue("Hotkey" + name.Replace(" ", string.Empty));
-            if (obj != null && obj.GetType() == typeof(Keys))
+            object userHotKey = Engine.conf.GetFieldValue("Hotkey" + name.Replace(" ", string.Empty));
+            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + name.Replace(" ", string.Empty));
+
+            if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
             {
-                dgvHotkeys.Rows.Add(name, ((Keys)obj).ToSpecialString());
+                dgvHotkeys.Rows.Add(name, ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
             }
         }
 
