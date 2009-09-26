@@ -2235,21 +2235,34 @@ namespace ZScreenGUI
         {
             if (lbHistory.SelectedIndex != -1)
             {
-                List<string> screenshots = new List<string>();
+                List<string> listUrls = new List<string>();
                 for (int i = 0; i < lbHistory.SelectedItems.Count; i++)
                 {
                     HistoryItem hi = (HistoryItem)lbHistory.SelectedItems[i];
+                    string url = string.Empty;
                     if (hi.ScreenshotManager != null)
                     {
-                        screenshots.Add(hi.ScreenshotManager.GetUrlByType(type));
+                        url = hi.ScreenshotManager.GetUrlByType(type);
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            listUrls.Add(url);
+                        }
+                    }
+                    if (0 == listUrls.Count && type == ClipboardUriType.FULL_TINYURL)
+                    {
+                        url = Adapter.ShortenURL(hi.RemotePath);
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            listUrls.Add(url);
+                        }
                     }
                 }
 
-                if (screenshots.Count > 0)
+                if (listUrls.Count > 0)
                 {
                     if (Engine.conf.HistoryReverseList)
                     {
-                        screenshots.Reverse();
+                        listUrls.Reverse();
                     }
 
                     StringBuilder sb = new StringBuilder();
@@ -2258,9 +2271,9 @@ namespace ZScreenGUI
                         sb.AppendLine();
                     }
 
-                    for (int i = 0; i < screenshots.Count; i++)
+                    for (int i = 0; i < listUrls.Count; i++)
                     {
-                        sb.Append(screenshots[i]);
+                        sb.Append(listUrls[i]);
                         if (i < lbHistory.SelectedItems.Count - 1)
                         {
                             sb.AppendLine();

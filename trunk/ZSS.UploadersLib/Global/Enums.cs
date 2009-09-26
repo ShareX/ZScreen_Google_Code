@@ -128,6 +128,8 @@ namespace UploadersLib
         THREELY,
         [Description("bit.ly - www.bit.ly")]
         BITLY,
+        [Description("j.mp - www.j.mp")]
+        Jmp,
         [Description("is.gd - www.is.gd")]
         ISGD,
         [Description("kl.am - www.kl.am")]

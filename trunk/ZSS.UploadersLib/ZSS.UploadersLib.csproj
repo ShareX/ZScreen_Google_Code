@@ -105,6 +105,7 @@
     <Compile Include="Uploader.cs" />
     <Compile Include="URLShorteners\BitlyUploader.cs" />
     <Compile Include="URLShorteners\IsgdUploader.cs" />
+    <Compile Include="URLShorteners\JmpUploader.cs" />
     <Compile Include="URLShorteners\KlamUploader.cs" />
     <Compile Include="URLShorteners\OwlyUploader.cs" />
     <Compile Include="URLShorteners\ThreelyUploader.cs" />
