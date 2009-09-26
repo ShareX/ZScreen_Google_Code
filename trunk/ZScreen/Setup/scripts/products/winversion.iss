@@ -2,47 +2,46 @@
 var
 	WindowsVersion: TWindowsVersion;
 	
-function minwinversion(MajorVersion, MinorVersion: integer): boolean;
+procedure initwinversion();
 begin
-	Result := (WindowsVersion.Major >= MajorVersion) and (WindowsVersion.Minor >= MinorVersion)
-end;
-
-function maxwinversion(MajorVersion, MinorVersion: integer): boolean;
-begin
-	Result := (WindowsVersion.Major <= MajorVersion) and (WindowsVersion.Minor <= MinorVersion)
+	GetWindowsVersionEx(WindowsVersion);
 end;
 
 function exactwinversion(MajorVersion, MinorVersion: integer): boolean;
 begin
-	Result := (WindowsVersion.Major = MajorVersion) and (WindowsVersion.Minor = MinorVersion)
+	Result := (WindowsVersion.Major = MajorVersion) and (WindowsVersion.Minor = MinorVersion);
 end;
 
-function minspversion(MajorVersion, MinorVersion, SpVersion: integer): boolean;
+function minwinversion(MajorVersion, MinorVersion: integer): boolean;
 begin
-	if (exactwinversion(MajorVersion, MinorVersion)) then
-	   Result := (WindowsVersion.ServicePackMajor >= SpVersion)
+	Result := (WindowsVersion.Major > MajorVersion) or ((WindowsVersion.Major = MajorVersion) and (WindowsVersion.Minor >= MinorVersion));
+end;
+
+function maxwinversion(MajorVersion, MinorVersion: integer): boolean;
+begin
+	Result := (WindowsVersion.Major < MajorVersion) or ((WindowsVersion.Major = MajorVersion) and (WindowsVersion.Minor <= MinorVersion));
+end;
+
+function exactwinspversion(MajorVersion, MinorVersion, SpVersion: integer): boolean;
+begin
+	if exactwinversion(MajorVersion, MinorVersion) then
+		Result := WindowsVersion.ServicePackMajor = SpVersion
 	else
-	   Result := true;
+		Result := true;
 end;
 
-function maxspversion(MajorVersion, MinorVersion, SpVersion: integer): boolean;
+function minwinspversion(MajorVersion, MinorVersion, SpVersion: integer): boolean;
 begin
-	if (exactwinversion(MajorVersion, MinorVersion)) then
-	   Result := (WindowsVersion.ServicePackMajor <= SpVersion)
+	if exactwinversion(MajorVersion, MinorVersion) then
+		Result := WindowsVersion.ServicePackMajor >= SpVersion
 	else
-	   Result := true;
+		Result := true;
 end;
 
-function exactspversion(MajorVersion, MinorVersion, SpVersion: integer): boolean;
+function maxwinspversion(MajorVersion, MinorVersion, SpVersion: integer): boolean;
 begin
-	if (exactwinversion(MajorVersion, MinorVersion)) then
-	   Result := (WindowsVersion.ServicePackMajor = SpVersion)
+	if exactwinversion(MajorVersion, MinorVersion) then
+		Result := WindowsVersion.ServicePackMajor <= SpVersion
 	else
-	   Result := true;
-end;
-
-
-procedure initwinversion();
-begin
-	GetWindowsVersionEx(WindowsVersion);
+		Result := true;
 end;
