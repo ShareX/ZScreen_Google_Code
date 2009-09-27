@@ -44,7 +44,6 @@
             this.MyCollection.FormattingEnabled = true;
             this.MyCollection.Location = new System.Drawing.Point(3, 3);
             this.MyCollection.Name = "MyCollection";
-            this.MyCollection.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.MyCollection.Size = new System.Drawing.Size(217, 329);
             this.MyCollection.TabIndex = 14;
             // 

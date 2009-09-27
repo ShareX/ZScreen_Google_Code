@@ -134,10 +134,7 @@ namespace UploadersLib
             }
             else
             {
-                fileName = fileName.Replace(" ", "%20");
-
                 string httppath = this.HttpHomePath.Replace("%", host).TrimStart('@');
-
                 path = FTPHelpers.CombineURL(httppath, folderPath, fileName);
             }
 
@@ -146,6 +143,7 @@ namespace UploadersLib
                 path = "http://" + path;
             }
 
+            path = path.Replace(" ", "%20");
             return path;
         }
 
