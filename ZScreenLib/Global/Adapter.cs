@@ -658,8 +658,13 @@ namespace ZScreenLib
             TwitterAuthInfo acc = TwitterGetActiveAcct();
             if (!string.IsNullOrEmpty(acc.TokenSecret))
             {
-                oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, acc);
-                TwitterMsg msg = new TwitterMsg(oAuth, string.Format("{0} - Update Twitter Status...", acc.AccountName));
+                List<oAuthTwitter> oAccList = new List<oAuthTwitter>();
+                foreach (TwitterAuthInfo oAuth in Engine.conf.TwitterAccountsList)
+                {
+                    oAccList.Add(new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
+                }
+                TwitterMsg msg = new TwitterMsg(oAccList, string.Format("{0} - Update Twitter Status...", acc.AccountName));
+                msg.ActiveAccountName = acc.AccountName;
                 msg.Icon = Resources.zss_main;
                 msg.Config = Engine.conf.TwitterClientConfig;
                 msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
