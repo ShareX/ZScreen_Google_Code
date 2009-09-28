@@ -46,6 +46,7 @@ namespace UploadersLib.Helpers
         public string ConsumerKey { get; set; }
         public string ConsumerSecret { get; set; }
 
+        public bool Enabled { get; set; }
         public TwitterAuthInfo AuthInfo { get; set; }
 
         public oAuthTwitter(string consumerKey, string consumerSecret)
@@ -59,6 +60,11 @@ namespace UploadersLib.Helpers
             : this(consumerKey, consumerSecret)
         {
             this.AuthInfo = authInfo;
+        }
+
+        public override string ToString()
+        {
+            return AuthInfo.AccountName;
         }
 
         /// <summary>

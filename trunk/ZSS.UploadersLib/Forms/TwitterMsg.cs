@@ -32,18 +32,18 @@ namespace UploadersLib.Helpers
 
     public partial class TwitterMsg : Form
     {
-
+        public string ActiveAccountName { get; set; }
         public string Message { get; set; }
-        private oAuthTwitter moAuth { get; set; }
+        private List<oAuthTwitter> moAuth { get; set; }
         public TwitterClientSettings Config { get; set; }
 
-        public TwitterMsg(oAuthTwitter oAuth, string title)
+        public TwitterMsg(List<oAuthTwitter> oAuth, string title)
             : this(oAuth)
         {
             this.Text = title;
         }
 
-        public TwitterMsg(oAuthTwitter oAuth)
+        public TwitterMsg(List<oAuthTwitter> oAuth)
             : this("Update Twitter Status...")
         {
             InitializeComponent();
@@ -62,15 +62,19 @@ namespace UploadersLib.Helpers
             {
                 this.Message = txtTweet.Text;
                 this.DialogResult = DialogResult.OK;
-                this.Hide();
                 if (null != moAuth && !string.IsNullOrEmpty(txtTweet.Text))
                 {
-                    // URL-encode the tweet...
-                    string tweet = HttpUtility.UrlEncode(txtTweet.Text);
-                    // And send it off...
-                    string xml = moAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
-                    FillResponseUser(xml);
+                    this.Hide();
+                    foreach (oAuthTwitter oAuth in clbAccounts.CheckedItems)
+                    {
+                        // URL-encode the tweet...
+                        string tweet = HttpUtility.UrlEncode(txtTweet.Text);
+                        // And send it off...
+                        string xml = oAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
+                        FillResponseUser(xml);
+                    }
                 }
+                this.Close();
             }
         }
 
@@ -89,7 +93,7 @@ namespace UploadersLib.Helpers
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            this.Close();
         }
 
         private void txtTweet_TextChanged(object sender, EventArgs e)
@@ -112,6 +116,11 @@ namespace UploadersLib.Helpers
             foreach (string user in this.Config.Addressees)
             {
                 lbUsers.Items.Add(user);
+            }
+            clbAccounts.Height = 134;
+            foreach (oAuthTwitter oAuth in moAuth)
+            {
+                clbAccounts.Items.Add(oAuth, oAuth.Enabled);
             }
         }
 
