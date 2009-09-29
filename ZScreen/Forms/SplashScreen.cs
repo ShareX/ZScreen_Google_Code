@@ -9,22 +9,6 @@ namespace ZSS.Forms
         public SplashScreen()
         {
             InitializeComponent();
-            tmrApp.Enabled = true;
-        }
-
-        private void tmrSplash_Tick(object sender, EventArgs e)
-        {
-            while (Loader.AsmLoads.Count > 0)
-            {
-                txtStatus.Text += Loader.AsmLoads.Dequeue() + "\r\n";
-            }
-
-            txtStatus.ScrollToCaret();
-        }
-
-        private void tmrApp_Tick(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

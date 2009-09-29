@@ -1,5 +1,6 @@
 Version 3.12 - 20091015
 
+3.12.3.0 ZScreen shows a Splash Screen to improve perceived startup time {McoreD}
 3.12.2.0 Twitter Client can update multiple Twitter accounts simultaneously {McoreD}
 3.12.1.1 URL from FTP Server was not replacing spaces by %20 at all times {McoreD}
 3.12.1.0 Copy Link : Full Image for Twitter will automatically generate shortened URLs on the fly if not present already {McoreD}

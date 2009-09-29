@@ -286,6 +286,8 @@ namespace ZScreenGUI
             turnLogo.ImageTurned += new ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
 
             niTray.Visible = true;
+            Loader.Splash.Close();
+            FileSystem.AppendDebug("Closed Splash Screen");
             FileSystem.AppendDebug("Loaded ZScreen GUI...");
         }
 
