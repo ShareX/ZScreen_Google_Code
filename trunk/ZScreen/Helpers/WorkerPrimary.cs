@@ -379,7 +379,9 @@ namespace ZScreenGUI
                 {
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
                 }
-                Loader.KeyboardHookConfig();
+                Engine.ZScreenKeyboardHook.Dispose();
+                Engine.ZScreenKeyboardHook = new KeyboardHook();
+                Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
             }
         }
 

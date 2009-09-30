@@ -60,8 +60,7 @@ namespace ZScreenLib
         private const int WM_SYSKEYDOWN = 0x0104;
         private const int WM_SYSKEYUP = 0x105;
 
-        private IntPtr keyboardHookHandle = IntPtr.Zero;
-        public bool Hooked { get; private set; }
+        private IntPtr keyboardHookHandle = IntPtr.Zero;        
 
         public KeyboardHook()
         {
@@ -73,8 +72,7 @@ namespace ZScreenLib
             HookProcedure = hookProc;
             using (Process currentProcess = Process.GetCurrentProcess())
             using (ProcessModule currentModule = currentProcess.MainModule)
-            {
-                Hooked = true;
+            {                
                 return SetWindowsHookEx(WH_KEYBOARD_LL, HookProcedure, GetModuleHandle(currentModule.ModuleName), 0);
             }
         }
@@ -103,8 +101,6 @@ namespace ZScreenLib
 
         public void Dispose()
         {
-            Hooked = false;
-            FileSystem.AppendDebug("Keyboard Hook disposed");
             UnhookWindowsHookEx(keyboardHookHandle);
         }
     }
