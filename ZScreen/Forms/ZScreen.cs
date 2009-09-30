@@ -1430,8 +1430,6 @@ namespace ZScreenGUI
 
         private void ZScreen_Shown(object sender, EventArgs e)
         {
-            Loader.KeyboardHookConfig();
-
             mGuiIsReady = true;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
 
@@ -1469,6 +1467,9 @@ namespace ZScreenGUI
                     this.ShowInTaskbar = true;
                 }
             }
+            Engine.ZScreenKeyboardHook = new KeyboardHook();
+            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+            FileSystem.AppendDebug("Keyboard Hook initiated");
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
