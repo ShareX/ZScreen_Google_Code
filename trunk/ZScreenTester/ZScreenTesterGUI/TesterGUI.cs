@@ -178,6 +178,12 @@ namespace ZScreenTesterGUI
             bw.RunWorkerAsync(uploaders);
         }
 
+        public enum UploadStatus
+        {
+            Uploading,
+            Uploaded
+        }
+
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = (BackgroundWorker)sender;
@@ -185,45 +191,44 @@ namespace ZScreenTesterGUI
 
             foreach (UploaderInfo uploader in uploaders)
             {
-                if (this.IsDisposed || !isTesting)
+                if (this.IsDisposed || !isTesting || uploader == null)
                 {
                     break;
                 }
 
-                if (uploader != null)
+                WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
+
+                bw.ReportProgress((int)UploadStatus.Uploading, uploader);
+
+                switch (uploader.UploaderType)
                 {
-                    WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
-
-                    switch (uploader.UploaderType)
-                    {
-                        case UploaderType.ImageUploader:
-                            task.MyImageUploader = uploader.ImageUploader;
-                            task.UpdateLocalFilePath(this.TestFilePicturePath);
-                            new TaskManager(ref task).UploadImage();
-                            break;
-                        case UploaderType.FileUploader:
-                            task.MyFileUploader = uploader.FileUploader;
-                            task.UpdateLocalFilePath(this.TestFileBinaryPath);
-                            new TaskManager(ref task).UploadFile();
-                            break;
-                        case UploaderType.TextUploader:
-                            task.MyTextUploader = Adapter.FindTextUploader(uploader.TextUploader.GetDescription());
-                            task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
-                            new TaskManager(ref task).UploadText();
-                            break;
-                        case UploaderType.UrlShortener:
-                            task.MyTextUploader = Adapter.FindUrlShortener(uploader.UrlShortener.GetDescription());
-                            task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
-                            new TaskManager(ref task).UploadText();
-                            break;
-                        default:
-                            throw new Exception("Unknown uploader.");
-                    }
-
-                    uploader.Task = task;
-
-                    bw.ReportProgress(uploader.Index, uploader);
+                    case UploaderType.ImageUploader:
+                        task.MyImageUploader = uploader.ImageUploader;
+                        task.UpdateLocalFilePath(this.TestFilePicturePath);
+                        new TaskManager(ref task).UploadImage();
+                        break;
+                    case UploaderType.FileUploader:
+                        task.MyFileUploader = uploader.FileUploader;
+                        task.UpdateLocalFilePath(this.TestFileBinaryPath);
+                        new TaskManager(ref task).UploadFile();
+                        break;
+                    case UploaderType.TextUploader:
+                        task.MyTextUploader = Adapter.FindTextUploader(uploader.TextUploader.GetDescription());
+                        task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
+                        new TaskManager(ref task).UploadText();
+                        break;
+                    case UploaderType.UrlShortener:
+                        task.MyTextUploader = Adapter.FindUrlShortener(uploader.UrlShortener.GetDescription());
+                        task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
+                        new TaskManager(ref task).UploadText();
+                        break;
+                    default:
+                        throw new Exception("Unknown uploader.");
                 }
+
+                uploader.Task = task;
+
+                bw.ReportProgress((int)UploadStatus.Uploaded, uploader);
             }
         }
 
@@ -233,17 +238,30 @@ namespace ZScreenTesterGUI
             {
                 UploaderInfo uploader = e.UserState as UploaderInfo;
 
-                lvUploaders.Items[uploader.Index].Tag = uploader;
+                if (uploader != null)
+                {
+                    lvUploaders.Items[uploader.Index].Tag = uploader;
 
-                if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
-                {
-                    lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
-                    lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
-                }
-                else
-                {
-                    lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
-                    lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
+                    switch ((UploadStatus)e.ProgressPercentage)
+                    {
+                        case UploadStatus.Uploading:
+                            lvUploaders.Items[uploader.Index].BackColor = Color.Gold;
+                            lvUploaders.Items[uploader.Index].SubItems[1].Text = "Uploading...";
+                            break;
+                        case UploadStatus.Uploaded:
+                            if (uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
+                            {
+                                lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
+                                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
+                            }
+                            else
+                            {
+                                lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
+                                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
+                            }
+
+                            break;
+                    }
                 }
             }
         }
