@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "..\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Ftp", "..\Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj", "{5F228FCD-54F1-491D-93CE-3D768655FADC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradientTester", "GradientTester\GradientTester.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradientMaker", "GradientTester\GradientMaker.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
