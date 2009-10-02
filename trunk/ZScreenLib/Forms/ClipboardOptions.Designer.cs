@@ -42,6 +42,9 @@
             // 
             // pbPreview
             // 
+            this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPreview.Location = new System.Drawing.Point(44, 16);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(512, 200);
@@ -49,16 +52,14 @@
             this.pbPreview.TabIndex = 0;
             this.pbPreview.TabStop = false;
             // 
-            // ClipboardModePicker
+            // ClipboardOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 452);
             this.Controls.Add(this.pbPreview);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "ClipboardModePicker";
+            this.MinimumSize = new System.Drawing.Size(616, 490);
+            this.Name = "ClipboardOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clipboard Copy Mode";
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
