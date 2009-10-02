@@ -63,7 +63,7 @@ namespace ZScreenLib
                     }
                 }
 
-                int yBottomControl = yMargin + count * yGap + yOffset * 2;
+                int yBottomControl = yMargin + count * yGap + yOffset * 2 - 12;
 
                 Button btnCopyImage = new Button();
                 btnCopyImage.Text = "Copy &Image";
@@ -103,6 +103,22 @@ namespace ZScreenLib
                 this.Height = yBottomControl + btnOpenLocal.Size.Height + yOffset * 2;
                 Adapter.AddToClipboardByDoubleClick(this);
                 ResetTimer();
+
+                foreach (Control ctl in this.Controls)
+                {
+                    if (ctl.GetType() == typeof(Button))
+                    {
+                        ctl.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+                    }
+                    if (ctl.GetType() == typeof(Label))
+                    {
+                        ctl.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+                    }
+                    if (ctl.GetType() == typeof(TextBox))
+                    {
+                        ctl.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                    }
+                }
             }
         }
 
