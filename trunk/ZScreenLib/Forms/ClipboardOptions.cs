@@ -63,7 +63,7 @@ namespace ZScreenLib
                     }
                 }
 
-                int yBottomControl = yMargin + count * yGap + yOffset * 2 - 12;
+                int yBottomControl = yMargin + count * yGap + yOffset * 2;
 
                 Button btnCopyImage = new Button();
                 btnCopyImage.Text = "Copy &Image";
@@ -71,6 +71,9 @@ namespace ZScreenLib
                 btnCopyImage.AutoSize = true;
                 btnCopyImage.Click += new EventHandler(btnCopyImage_Click);
                 this.Controls.Add(btnCopyImage);
+
+                this.Height = yBottomControl + btnCopyImage.Size.Height + yOffset * 2+10;
+                this.MinimumSize = new Size(this.Width, this.Height);
 
                 Button btnOpenLocal = new Button();
                 btnOpenLocal.Text = "Open &Local file";
@@ -100,9 +103,10 @@ namespace ZScreenLib
                 btnClose.Click += new EventHandler(btnClose_Click);
                 this.Controls.Add(btnClose);
 
-                this.Height = yBottomControl + btnOpenLocal.Size.Height + yOffset * 2;
+                this.pbPreview.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+
                 Adapter.AddToClipboardByDoubleClick(this);
-                ResetTimer();
+                this.AddResetTimerToButtons();
 
                 foreach (Control ctl in this.Controls)
                 {
@@ -172,7 +176,7 @@ namespace ZScreenLib
             this.Close();
         }
 
-        private void ResetTimer()
+        private void AddResetTimerToButtons()
         {
             Control ctl = this.GetNextControl(this, true);
             while (ctl != null)
@@ -186,6 +190,16 @@ namespace ZScreenLib
         }
 
         void Button_Click(object sender, EventArgs e)
+        {
+            ResetTimer();
+        }
+
+        private void ClipboardOptions_Resize(object sender, EventArgs e)
+        {
+            ResetTimer();
+        }
+
+        private void ResetTimer()
         {
             tmrClose.Stop();
             tmrClose.Start();
