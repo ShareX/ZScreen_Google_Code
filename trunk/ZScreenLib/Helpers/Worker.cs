@@ -431,11 +431,12 @@ namespace ZScreenLib
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
                     string ext = ".log";
-                    if (Engine.conf.PreferFileUploaderForText)
+                    if (Engine.conf.PreferFileUploaderForText || Adapter.CheckFTPAccounts())
                     {
                         if (Engine.conf.PreferFtpServerForIndex)
                         {
                             task.MyFileUploader = FileUploaderType.FTP;
+                            task.JobCategory = JobCategoryType.BINARY;
                         }
                         if (task.MyFileUploader == FileUploaderType.FTP)
                         {
