@@ -1,0 +1,32 @@
+#summary Instructions for running ZScreen from source
+#labels Phase-Support
+
+= Requirements =
+
+ * [http://www.microsoft.com/express/vcsharp/#webInstall Microsoft Visual C# Express] or Microsoft Visual Studio with C# 
+ * TortoiseSVN or AnkhSVN
+
+= Check out Code = 
+== TortoiseSVN ==
+ * Create a new folder called "ZScreen" in your Projects folder
+ * Right click and click "SVN Checkout"
+
+[http://i35.tinypic.com/2q21gsk.png]
+
+ * Check out the following URL
+  * for read-only access
+{{{
+http://zscreen.googlecode.com/svn
+}}}
+  * for read/write access if you are Project Member
+{{{
+https://zscreen.googlecode.com/svn
+}}}
+
+[http://i34.tinypic.com/255u8oo.png]
+
+ * Press OK
+
+= Running from Source == 
+ * Double click the ZScreen.sln to open the solution Visual C# Express or Visual Studio 
+ * Press F5 to run
