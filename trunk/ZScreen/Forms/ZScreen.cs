@@ -68,6 +68,7 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
+            Uploader.ProxySettings = Adapter.CheckProxySettings();
             ZScreen_SetFormSettings();
             Loader.Worker = new WorkerPrimary(this);
             Loader.Worker2 = new WorkerSecondary(this);
@@ -1431,8 +1432,7 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
-            Uploader.ProxySettings = Adapter.CheckProxySettings();
-
+            
             if (Engine.conf.ProxyEnabled)
             {
                 FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
