@@ -115,6 +115,10 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(drawText))
             {
+                if (0 == Engine.conf.WatermarkFont.Size)
+                {
+                    Adapter.ShowFontDialog();
+                }
                 try
                 {
                     int offset = (int)Engine.conf.WatermarkOffset;

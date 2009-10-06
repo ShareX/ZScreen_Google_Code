@@ -33,27 +33,27 @@
 //#include "scripts\products\jet4sp8.iss"
 //#include "scripts\products\sql2005express.iss"
 
-#define SimpleVersion(str S) \
-	Local[0] = Pos (".0.0.", S), \
-	/* (4) and (5) */ \
-	(Local[0] > 0) ? Copy (S, 1, 3) : \
-	( \
-		Local[0] = Pos (".0.0", S), \
-		/* (3) */ \
-		(Local[0] > 0) ? Copy (S, 1, 3) : \
-		( \
-			Local[0] = Pos (".0", S), \
-			/* (2) */ \
-			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) : \
-			( \
-				Local[0] = Pos (".0.", S), \
-				/* (6) */ \
-				(Local[0] > 0) ? Copy (S, 1, 3) : \
-				( \
-					Copy (S, 1, 5) \
-				) \
-			) \
-		) \
+#define SimpleVersion(str S);; \
+	Local[0] = Pos (".0.0.", S),;; \
+	/* (4) and (5) */;; \
+	(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+	(;; \
+		Local[0] = Pos (".0.0", S),;; \
+		/* (3) */;; \
+		(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+		(;; \
+			Local[0] = Pos (".0", S),;; \
+			/* (2) */;; \
+			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) :;; \
+			(;; \
+				Local[0] = Pos (".0.", S),;; \
+				/* (6) */;; \
+				(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+				(;; \
+					Copy (S, 1, 5);; \
+				);; \
+			);; \
+		);; \
 	);
 
 #define ExeName "ZScreen"
@@ -66,7 +66,7 @@ winxpsp2_title=Windows XP Service Pack 2
 
 
 [Setup]
-AllowNoIcons=yes
+AllowNoIcons=true
 AppMutex=Global\0167D1A0-6054-42f5-BA2A-243648899A6B
 AppName={#ExeName}
 AppPublisher=ZScreen
@@ -77,7 +77,7 @@ AppVerName={#ExeName} {#MyAppVersion}
 AppVersion={#MyAppVersion}
 ArchitecturesAllowed=x86 x64 ia64
 ArchitecturesInstallIn64BitMode=x64 ia64
-Compression=lzma/fast
+Compression=lzma/ultra64
 CreateAppDir=true
 DefaultDirName={pf}\ZScreen
 DefaultGroupName={#ExeName}
@@ -86,54 +86,57 @@ InfoAfterFile=..\..\ZScreenLib\Documents\license.txt
 InfoBeforeFile=..\..\ZScreenLib\Documents\VersionHistory.txt
 InternalCompressLevel=ultra64
 LanguageDetectionMethod=uilanguage
-OutputBaseFilename={#ExeName}-{#MyAppVersion}-setup
+OutputBaseFilename={#ExeName}-{#MyAppVersion}-debug-setup
 OutputDir=..\..\..\Output\
 ;SetupIconFile=..\Resources\zss-main.ico
-ShowUndisplayableLanguages=no
-SolidCompression=yes
+ShowUndisplayableLanguages=false
+SignedUninstaller=false
+SolidCompression=true
+Uninstallable=true
 UninstallDisplayIcon={app}\ZScreen.exe
-UsePreviousAppDir=yes
-UsePreviousGroup=yes
+UsePreviousAppDir=true
+UsePreviousGroup=true
 VersionInfoCompany={#ExeName}
 VersionInfoDescription={#ExeName}
 VersionInfoTextVersion={#MyAppVersion}
 VersionInfoVersion={#MyAppVersion}
 
 ;required by products
-MinVersion=4.1,5.0
+MinVersion=4.90.3000,5.0.2195sp3
 PrivilegesRequired=admin
+AppID=ZScreen
 
 [Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl"
-Name: "de"; MessagesFile: "compiler:Languages\German.isl"
+Name: en; MessagesFile: compiler:Default.isl
+Name: de; MessagesFile: compiler:Languages\German.isl
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: "..\bin\Debug\*.exe"; Excludes: "*.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Debug\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: ..\bin\Debug\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\bin\Debug\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: "{group}\{#ExeName}"; Filename: "{app}\ZScreen.exe"; AppUserModelID: "ZScreen"
+Name: {group}\{#ExeName}; Filename: {app}\ZScreen.exe; AppUserModelID: ZScreen
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
-Name: "{userdesktop}\{#ExeName}"; Filename: "{app}\ZScreen.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\ZScreen"; Filename: "{app}\ZScreen.exe."; Tasks: quicklaunchicon
+Name: {userdesktop}\{#ExeName}; Filename: {app}\ZScreen.exe; Tasks: desktopicon
+Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\ZScreen; Filename: {app}\ZScreen.exe.; Tasks: quicklaunchicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: "{app}\ZScreen.exe."; Description: "{cm:LaunchProgram,ZScreen}"; Flags: nowait postinstall skipifsilent
+Filename: {app}\ZScreen.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
 ;Filename: "{app}\ZScreen-manual.pdf"; Description: "{cm:LaunchProgram,ZScreen Manual}"; Flags: nowait unchecked postinstall shellexec skipifsilent
 
 [InstallDelete]
-Type: filesandordirs; Name: "{app}\ru"
-Type: filesandordirs; Name: "{app}\en"
-Type: filesandordirs; Name: "{app}\nl"
-Type: files; Name: "{app}\ZSS.ImageUploader.dll"
-Type: files; Name: "{app}\ZSS.TextUploader.dll"
-Type: files; Name: "{app}\ImageUploader.dll"
-Type: files; Name: "{app}\ZSS.Colors.dll"
+Type: filesandordirs; Name: {app}\ru
+Type: filesandordirs; Name: {app}\en
+Type: filesandordirs; Name: {app}\nl
+Type: files; Name: {app}\ZSS.ImageUploader.dll
+Type: files; Name: {app}\ZSS.TextUploader.dll
+Type: files; Name: {app}\ImageUploader.dll
+Type: files; Name: {app}\ZSS.Colors.dll
 
 [Code]
 function InitializeSetup(): Boolean;
@@ -200,5 +203,7 @@ dotnetfx35sp1();
 
 	Result := true;
 end;
+
+
 
 
