@@ -253,7 +253,7 @@ namespace ZScreenLib
         public bool WatermarkAutoHide = true;
 
         public string WatermarkText = "%h:%mi";
-        public XmlFont WatermarkFont = SerializeFont(new Font("Arial", 8));
+        public XmlFont WatermarkFont = new XmlFont();
         public string WatermarkFontColor = SerializeColor(Color.White);
         public decimal WatermarkFontTrans = 255;
         public decimal WatermarkCornerRadius = 4;

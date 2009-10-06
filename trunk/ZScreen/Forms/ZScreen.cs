@@ -1432,7 +1432,7 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
-            
+
             if (Engine.conf.ProxyEnabled)
             {
                 FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
@@ -2481,27 +2481,12 @@ namespace ZScreenGUI
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
         {
-            try
+            DialogResult result = Adapter.ShowFontDialog();
+            if (result == DialogResult.OK)
             {
-                FontDialog fDialog = new FontDialog
-                {
-                    ShowColor = true,
-                    Font = XMLSettings.DeserializeFont(Engine.conf.WatermarkFont),
-                    Color = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor)
-                };
-                if (fDialog.ShowDialog() == DialogResult.OK)
-                {
-                    Engine.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
-                    Engine.conf.WatermarkFontColor = XMLSettings.SerializeColor(fDialog.Color);
-                    pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
-                    lblWatermarkFont.Text = FontToString();
-                }
-
+                pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
+                lblWatermarkFont.Text = FontToString();
                 TestWatermark();
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug("Error while setting Watermark Font", ex);
             }
         }
 

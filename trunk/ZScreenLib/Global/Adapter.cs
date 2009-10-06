@@ -721,6 +721,39 @@ namespace ZScreenLib
             }
         }
 
+        public static DialogResult ShowFontDialog()
+        {
+            DialogResult result = DialogResult.Cancel;
+            try
+            {
+                FontDialog fDialog = new FontDialog
+                {
+                    ShowColor = true
+                };
+                try
+                {
+                    fDialog.Color = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
+                    fDialog.Font = XMLSettings.DeserializeFont(Engine.conf.WatermarkFont);                    
+                }
+                catch (Exception err)
+                {
+                    FileSystem.AppendDebug("Error while initializing Font and Color", err);
+                }
+
+                result = fDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Engine.conf.WatermarkFont = XMLSettings.SerializeFont(fDialog.Font);
+                    Engine.conf.WatermarkFontColor = XMLSettings.SerializeColor(fDialog.Color);
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug("Error while setting Watermark Font", ex);
+            }
+            return result;
+        }
+
         #region "Windows 7 only"
 
         public static void TaskbarSetProgressState(TaskbarProgressBarState tbps)
