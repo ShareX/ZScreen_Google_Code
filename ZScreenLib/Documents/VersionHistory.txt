@@ -1,3 +1,5 @@
+3.12.3.1 Google Translator language options were not loaded under proxy {McoreD}
+
 Version 3.12 - 20091015
 
 3.12.3.0 ZScreen shows a Splash Screen to improve perceived startup time {McoreD}

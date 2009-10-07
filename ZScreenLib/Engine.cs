@@ -57,7 +57,7 @@ namespace ZScreenLib
         public static string RootAppFolder { get; set; }
         public static string RootImagesDir { get; private set; }
 
-        public static string CacheDir { get; set; }
+        public static readonly string CacheDir = Path.Combine(LocalAppDataFolder, "Cache");
         public static string FilesDir { get; set; }
         public static string ImagesDir
         {
@@ -271,8 +271,7 @@ namespace ZScreenLib
         /// Function to update Default Folder Paths based on Root folder
         /// </summary>
         public static void InitializeDefaultFolderPaths()
-        {
-            CacheDir = Path.Combine(RootAppFolder, "Cache");
+        {            
             FilesDir = Path.Combine(RootAppFolder, "Files");
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");

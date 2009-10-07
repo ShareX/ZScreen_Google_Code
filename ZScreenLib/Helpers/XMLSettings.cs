@@ -407,6 +407,11 @@ namespace ZScreenLib
         public XMLSettings()
         {
             ApplyDefaultValues(this);
+            try {
+            	this.WatermarkFont = new XmlFont(new Font("Arial", 8));
+            } catch (Exception ex) {
+            	Console.WriteLine(ex.ToString());
+            }
         }
 
         // Destinations / FTP
