@@ -6382,7 +6382,6 @@ namespace ZScreenGUI
             this.txtCacheDir.ReadOnly = true;
             this.txtCacheDir.Size = new System.Drawing.Size(621, 20);
             this.txtCacheDir.TabIndex = 0;
-            this.txtCacheDir.TextChanged += new System.EventHandler(this.txtCacheDir_TextChanged);
             // 
             // tpAdvDebug
             // 

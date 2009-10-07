@@ -1502,11 +1502,6 @@ namespace ZScreenGUI
             Engine.conf.ScreenshotCacheSize = nudCacheSize.Value;
         }
 
-        private void txtCacheDir_TextChanged(object sender, EventArgs e)
-        {
-            Engine.CacheDir = txtCacheDir.Text;
-        }
-
         private void btnSettingsExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_SETTINGS };
