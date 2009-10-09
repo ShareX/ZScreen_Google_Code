@@ -263,7 +263,7 @@ namespace ZScreenLib
         public decimal WatermarkBackTrans = 225;
         public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
         public bool WatermarkUseCustomGradient = false;
-        public GradientMakerSettings GradientMakerConfig = new GradientMakerSettings();
+        public GradientMakerSettings GradientMakerOptions = new GradientMakerSettings();
 
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
@@ -407,10 +407,13 @@ namespace ZScreenLib
         public XMLSettings()
         {
             ApplyDefaultValues(this);
-            try {
-            	this.WatermarkFont = new XmlFont(new Font("Arial", 8));
-            } catch (Exception ex) {
-            	Console.WriteLine(ex.ToString());
+            try
+            {
+                this.WatermarkFont = new XmlFont(new Font("Arial", 8));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
