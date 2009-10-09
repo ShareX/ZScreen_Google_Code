@@ -4558,12 +4558,12 @@ namespace ZScreenGUI
 
         private void btnSelectGradient_Click(object sender, EventArgs e)
         {
-            using (GradientMaker gradient = new GradientMaker(Engine.conf.GradientMakerConfig))
+            using (GradientMaker gradient = new GradientMaker(Engine.conf.GradientMakerOptions))
             {
                 gradient.Icon = this.Icon;
                 if (gradient.ShowDialog() == DialogResult.OK)
                 {
-                    Engine.conf.GradientMakerConfig = gradient.Options;
+                    Engine.conf.GradientMakerOptions = gradient.Options;
                     TestWatermark();
                 }
             }

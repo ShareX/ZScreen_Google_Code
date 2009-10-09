@@ -30,13 +30,20 @@ namespace GradientTester
         {
             InitializeComponent();
             this.Options = options;
+            if (0 == this.Options.BrushDataList.Count)
+            {
+                this.Options.BrushDataList.Add(new BrushData());
+            }
             foreach (BrushData bd in options.BrushDataList)
             {
                 lbBrushData.Items.Add(bd);
             }
-            lbBrushData.SelectedIndex = options.BrushDataSelected;
-            UpdateGUI(options.GetBrushDataActive());
-            UpdatePreview(options.GetBrushDataActive());
+            if (options.BrushDataSelected < lbBrushData.Items.Count)
+            {
+                lbBrushData.SelectedIndex = options.BrushDataSelected;
+                UpdateGUI(options.GetBrushDataActive());
+                UpdatePreview(options.GetBrushDataActive());
+            }            
         }
 
         private void UpdateGUI(BrushData bd)
@@ -255,9 +262,28 @@ namespace GradientTester
         {
             BrushData bd = new BrushData();
             bd.Name = txtName.Text;
-            lbBrushData.Items.Add(bd);
-            this.Options.BrushDataList.Add(bd);
+            if (!ExistsBrushData(bd))
+            {
+                lbBrushData.Items.Add(bd);
+                this.Options.BrushDataList.Add(bd);
+            }
+            else
+            {
+                MessageBox.Show("Brush data with the same name already exists.\n\nPlease change the name and try saving again.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             lbBrushData.SelectedIndex = lbBrushData.Items.Count - 1;
+        }
+
+        private bool ExistsBrushData(BrushData bd)
+        {
+            foreach (BrushData oBd in this.Options.BrushDataList)
+            {
+                if (bd.Name == oBd.Name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -268,8 +294,7 @@ namespace GradientTester
 
         public GradientMakerSettings()
         {
-            this.BrushDataList = new List<BrushData>();
-            this.BrushDataList.Add(new BrushData());
+            this.BrushDataList = new List<BrushData>();            
             this.BrushDataSelected = 0;
         }
 
