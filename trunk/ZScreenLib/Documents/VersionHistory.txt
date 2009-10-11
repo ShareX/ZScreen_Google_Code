@@ -1,3 +1,5 @@
+3.12.4.0 Randomly selecting a valid Image Uploader destination is now an option {McoreD}
+3.12.3.2 Dragging anything to the dropbox to uploading it to FTP did not work [Issue 151] {Jaex}
 3.12.3.1 Google Translator language options were not loaded under proxy {McoreD}
 
 Version 3.12 - 20091015

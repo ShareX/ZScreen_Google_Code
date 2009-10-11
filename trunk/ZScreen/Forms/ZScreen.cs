@@ -780,6 +780,7 @@ namespace ZScreenGUI
 
             cboUploadMode.SelectedIndex = (int)Engine.conf.UploadMode;
             chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
+            chkImageUploadRandomRetryOnFail.Checked = Engine.conf.ImageUploadRandomRetryOnFail;
             cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
             cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
             txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
@@ -4574,6 +4575,11 @@ namespace ZScreenGUI
             Engine.conf.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
             gbGradientMakerBasic.Enabled = !cboUseCustomGradient.Checked;
             TestWatermark();
+        }
+
+        private void chkImageUploadRandomRetryOnFail_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ImageUploadRandomRetryOnFail = chkImageUploadRandomRetryOnFail.Checked;
         }
     }
 }
