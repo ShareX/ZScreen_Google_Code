@@ -317,7 +317,7 @@ namespace ZScreenLib
         {
             foreach (string filePath in FileSystem.GetExplorerFileList(paths))
             {
-                File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
+                //File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
                 ScreenshotUsingDragDrop(filePath);
             }
         }

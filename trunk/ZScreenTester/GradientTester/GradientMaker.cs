@@ -43,7 +43,7 @@ namespace GradientTester
                 lbBrushData.SelectedIndex = options.BrushDataSelected;
                 UpdateGUI(options.GetBrushDataActive());
                 UpdatePreview(options.GetBrushDataActive());
-            }            
+            }
         }
 
         private void UpdateGUI(BrushData bd)
@@ -294,13 +294,18 @@ namespace GradientTester
 
         public GradientMakerSettings()
         {
-            this.BrushDataList = new List<BrushData>();            
+            this.BrushDataList = new List<BrushData>();
             this.BrushDataSelected = 0;
         }
 
         public BrushData GetBrushDataActive()
         {
-            return this.BrushDataList[this.BrushDataSelected];
+            if (BrushDataList.Count > 0)
+            {
+                return this.BrushDataList[this.BrushDataSelected];
+            }
+
+            return new BrushData();
         }
     }
 

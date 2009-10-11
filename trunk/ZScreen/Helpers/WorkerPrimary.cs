@@ -123,6 +123,7 @@ namespace ZScreenGUI
                             break;
                         case WorkerTask.Jobs.UPLOAD_IMAGE:
                         case WorkerTask.Jobs.UploadFromClipboard:
+                        case WorkerTask.Jobs.PROCESS_DRAG_N_DROP:
                             new TaskManager(ref task).PublishData();
                             break;
                     }
