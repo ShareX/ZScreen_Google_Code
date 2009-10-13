@@ -4467,7 +4467,8 @@ namespace ZScreenGUI
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
                 if (!string.IsNullOrEmpty(hi.RemotePath))
                 {
-                    Adapter.TwitterMsg(hi.RemotePath);
+                    string url = Adapter.ShortenURL(hi.RemotePath);
+                    Adapter.TwitterMsg(string.IsNullOrEmpty(url) ? hi.RemotePath : url);
                 }
             }
         }
