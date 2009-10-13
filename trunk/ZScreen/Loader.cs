@@ -43,6 +43,10 @@ namespace ZScreenGUI
                 p.StartInfo = psi;
                 p.Start();
             }
+            else if (Engine.mAppInfo.ApplicationState == McoreSystem.AppInfo.SoftwareCycle.Beta)
+            {
+                RunZScreenBeta();
+            }
             else
             {
                 RunZScreen();
@@ -59,14 +63,24 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-
                 FileSystem.AppendDebug("Running ZScreen", ex);
                 Engine.conf.Write();
+                throw ex;
             }
             finally
             {
                 Engine.TurnOff();
             }
+        }
+
+        private static void RunZScreenBeta()
+        {
+            Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
+            Engine.LoadSettings();
+            Application.Run(new ZScreen());
+
+            Engine.conf.Write();
+            Engine.TurnOff();
         }
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
