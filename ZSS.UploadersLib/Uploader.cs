@@ -90,12 +90,11 @@ namespace UploadersLib
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    int bytesRead;
 
-                    while (bytesRead > 0)
+                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
                         requestStream.Write(buffer, 0, bytesRead);
-                        bytesRead = stream.Read(buffer, 0, buffer.Length);
                     }
                 }
 
