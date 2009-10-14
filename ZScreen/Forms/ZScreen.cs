@@ -48,6 +48,7 @@ using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZScreenTesterGUI;
 using GradientTester;
+using ZScreenLib.Helpers;
 
 namespace ZScreenGUI
 {
@@ -60,7 +61,8 @@ namespace ZScreenGUI
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private DebugHelper debug = null;
-        private ZScreenLib.ImageEffects.TurnImage turnLogo;
+        private ImageEffects.TurnImage turnLogo;
+        private ThumbnailCacher thumbnailCacher;
         internal static GoogleTranslate mGTranslator = null;
 
         #endregion
@@ -285,6 +287,11 @@ namespace ZScreenGUI
 
             turnLogo = new ImageEffects.TurnImage((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             turnLogo.ImageTurned += new ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
+
+            thumbnailCacher = new ThumbnailCacher(pbPreview, new Size(450, 230), 10)
+            {
+                LoadingImage = Resources.ajax_loader
+            };
 
             niTray.Visible = true;
             Loader.Splash.Close();
@@ -2313,9 +2320,10 @@ namespace ZScreenGUI
                 {
                     bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
                     bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
-                    bool checkImage = GraphicsMgr.IsValidImage(hi.LocalPath);
+                    bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath); //GraphicsMgr.IsValidImage(hi.LocalPath);
                     bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
-                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Engine.conf.PreferBrowserForImages) || (checkText && Engine.conf.PreferBrowserForText);
+                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Engine.conf.PreferBrowserForImages) ||
+                        (checkText && Engine.conf.PreferBrowserForText);
                     bool checkBinary = !checkImage && !checkText && !checkWebpage;
 
                     historyBrowser.Visible = checkWebpage;
@@ -2344,15 +2352,11 @@ namespace ZScreenGUI
                     {
                         if (checkLocal)
                         {
-                            pbPreview.LoadAsync(hi.LocalPath);
-                            pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
+                            thumbnailCacher.LoadImage(hi.LocalPath);
                         }
                         else if (checkRemote)
                         {
-                            pbPreview.Image = Resources.ajax_loader;
-                            pbPreview.SizeMode = PictureBoxSizeMode.CenterImage;
-                            pbPreview.LoadAsync(hi.RemotePath);
-                            pbPreview.LoadCompleted += new AsyncCompletedEventHandler(pbPreview_LoadCompleted);
+                            thumbnailCacher.LoadImage(hi.RemotePath);
                         }
                     }
                     else if (checkText)
@@ -2374,14 +2378,6 @@ namespace ZScreenGUI
                     ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
                     ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
                 }
-            }
-        }
-
-        private void pbPreview_LoadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            if (!e.Cancelled && e.Error == null)
-            {
-                pbPreview.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
 
