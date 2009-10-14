@@ -63,6 +63,8 @@ namespace ZScreenLib.Helpers
 
         public void LoadImage(string path)
         {
+            StopWorker(1000);
+
             Thumbnail thumb = thumbnails.FirstOrDefault(x => x.Path == path);
 
             if (thumb != null && thumb.Image != null)
@@ -74,12 +76,6 @@ namespace ZScreenLib.Helpers
                 if (LoadingImage != null)
                 {
                     SetImage(LoadingImage);
-                }
-
-                while (worker.IsBusy)
-                {
-                    worker.CancelAsync();
-                    Thread.Sleep(1);
                 }
 
                 worker.RunWorkerAsync(new Thumbnail(path));
@@ -227,6 +223,21 @@ namespace ZScreenLib.Helpers
             if (ProgressChanged != null)
             {
                 ProgressChanged((int)((double)position / length * 100), position, length);
+            }
+        }
+
+        private void StopWorker(int timeout)
+        {
+            for (int i = 0; i < timeout; i++)
+            {
+                if (!worker.IsBusy)
+                {
+                    break;
+                }
+
+                worker.CancelAsync();
+                Application.DoEvents();
+                Thread.Sleep(1);
             }
         }
 
