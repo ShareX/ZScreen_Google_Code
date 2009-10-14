@@ -291,7 +291,6 @@ namespace ZScreenLib
             // The same applies to bitmap.
             BmpCopy.Dispose();
             bitmap.Dispose();
-
         }
 
         private static ImageCodecInfo GetEncoderInfo(string mimeType)
@@ -446,22 +445,28 @@ namespace ZScreenLib
         public static Image CropImage(Image img, Rectangle rect)
         {
             Image bmp = new Bitmap(rect.Width, rect.Height);
-            Graphics g = Graphics.FromImage(bmp);
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
+            }
+
             return bmp;
         }
 
         public static Image ChangeImageSize(Image img, int width, int height)
         {
             Image bmp = new Bitmap(width, height);
-            Graphics g = Graphics.FromImage(bmp);
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            }
+
             return bmp;
         }
 
