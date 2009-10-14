@@ -456,8 +456,14 @@ namespace ZScreenLib
             return bmp;
         }
 
-        public static Image ChangeImageSize(Image img, int width, int height)
+        public static Image ChangeImageSize(Image img, int width, int height, bool preserveSize)
         {
+            if (preserveSize)
+            {
+                width = Math.Min(img.Width, width);
+                height = Math.Min(img.Height, height);
+            }
+
             Image bmp = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(bmp))
             {
@@ -470,16 +476,26 @@ namespace ZScreenLib
             return bmp;
         }
 
+        public static Image ChangeImageSize(Image img, int width, int height)
+        {
+            return ChangeImageSize(img, width, height, false);
+        }
+
+        public static Image ChangeImageSize(Image img, Size size, bool preserveSize)
+        {
+            return ChangeImageSize(img, size.Width, size.Height, preserveSize);
+        }
+
         public static Image ChangeImageSize(Image img, Size size)
         {
-            return ChangeImageSize(img, size.Width, size.Height);
+            return ChangeImageSize(img, size.Width, size.Height, false);
         }
 
         public static Image ChangeImageSize(Image img, float percentage)
         {
             int width = (int)(percentage / 100 * img.Width);
             int height = (int)(percentage / 100 * img.Height);
-            return ChangeImageSize(img, width, height);
+            return ChangeImageSize(img, width, height, false);
         }
 
         public static Image DrawProgressIcon(int percentage)

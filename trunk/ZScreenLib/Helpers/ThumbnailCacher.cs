@@ -35,6 +35,7 @@ namespace ZScreenLib.Helpers
     public class ThumbnailCacher
     {
         public Size ThumbnailSize { get; set; }
+        public Image LoadingImage { get; set; }
 
         private Queue<Thumbnail> thumbnails;
         private PictureBox pictureBox;
@@ -48,18 +49,21 @@ namespace ZScreenLib.Helpers
         public ThumbnailCacher(PictureBox pictureBox, Size thumbnailSize, int capacity)
         {
             this.pictureBox = pictureBox;
+            pictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
             this.ThumbnailSize = thumbnailSize;
             this.capacity = capacity;
             thumbnails = new Queue<Thumbnail>(capacity);
             worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(worker_ProgressChanged);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
         }
 
         public void LoadImage(string path)
         {
-            Thumbnail thumb = thumbnails.First(x => x.Path == path);
+            Thumbnail thumb = thumbnails.FirstOrDefault(x => x.Path == path);
 
             if (thumb != null && thumb.Image != null)
             {
@@ -67,6 +71,11 @@ namespace ZScreenLib.Helpers
             }
             else
             {
+                if (LoadingImage != null)
+                {
+                    SetImage(LoadingImage);
+                }
+
                 while (worker.IsBusy)
                 {
                     worker.CancelAsync();
@@ -87,23 +96,43 @@ namespace ZScreenLib.Helpers
             {
                 MemoryStream stream = null;
 
-                if (thumb.Path.StartsWith("http://") || thumb.Path.StartsWith("www."))
+                try
                 {
-                    stream = DownloadFile(thumb.Path);
-                }
-                else if (File.Exists(thumb.Path))
-                {
-                    stream = LoadFile(thumb.Path);
-                }
-
-                if (stream != null && stream.Length > 0)
-                {
-                    using (Image image = Image.FromStream(stream))
+                    if (thumb.Path.StartsWith("http://") || thumb.Path.StartsWith("www."))
                     {
-                        thumb.Image = GraphicsMgr.ChangeImageSize(image, ThumbnailSize);
-                        e.Result = thumb;
+                        stream = DownloadFile(thumb.Path);
+                    }
+                    else if (File.Exists(thumb.Path))
+                    {
+                        stream = LoadFile(thumb.Path);
+                    }
+
+                    if (stream != null && stream.Length > 0)
+                    {
+                        using (Image image = Image.FromStream(stream))
+                        {
+                            thumb.Image = GraphicsMgr.ChangeImageSize(image, ThumbnailSize, true);
+                            e.Result = thumb;
+                        }
                     }
                 }
+                finally
+                {
+                    if (stream != null)
+                    {
+                        stream.Dispose();
+                    }
+                }
+            }
+        }
+
+        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressInfo progress = e.UserState as ProgressInfo;
+
+            if (progress != null)
+            {
+                OnProgressChanged(progress.Position, progress.Length);
             }
         }
 
@@ -136,7 +165,8 @@ namespace ZScreenLib.Helpers
 
             if (length > 0)
             {
-                using (Stream stream = new WebClient().OpenRead(path))
+                using (WebClient webClient = new WebClient())
+                using (Stream stream = webClient.OpenRead(path))
                 {
                     return LoadStream(stream, length);
                 }
@@ -160,7 +190,7 @@ namespace ZScreenLib.Helpers
 
                 memoryStream.Write(buffer, 0, bytesRead);
 
-                OnProgressChanged(memoryStream.Position, memoryStream.Length);
+                worker.ReportProgress(0, new ProgressInfo(memoryStream.Position, memoryStream.Length));
             }
 
             return memoryStream;
@@ -180,6 +210,7 @@ namespace ZScreenLib.Helpers
             {
                 HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
                 webRequest.Credentials = CredentialCache.DefaultCredentials;
+                webRequest.Timeout = 3000;
                 using (HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse())
                 {
                     return webResponse.ContentLength;
@@ -204,12 +235,24 @@ namespace ZScreenLib.Helpers
 
     public class Thumbnail
     {
-        public Image Image;
-        public string Path;
+        public Image Image { get; set; }
+        public string Path { get; set; }
 
         public Thumbnail(string path)
         {
             Path = path;
+        }
+    }
+
+    public class ProgressInfo
+    {
+        public long Position { get; set; }
+        public long Length { get; set; }
+
+        public ProgressInfo(long position, long length)
+        {
+            Position = position;
+            Length = length;
         }
     }
 }
