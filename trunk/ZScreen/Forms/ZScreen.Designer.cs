@@ -88,6 +88,7 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
@@ -355,6 +356,7 @@ namespace ZScreenGUI
             this.tcImages = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.gbImageUploadRetry = new System.Windows.Forms.GroupBox();
+            this.chkImageUploadRandomRetryOnFail = new System.Windows.Forms.CheckBox();
             this.lblErrorRetry = new System.Windows.Forms.Label();
             this.lblUploadDurationLimit = new System.Windows.Forms.Label();
             this.chkImageUploadRetryOnFail = new System.Windows.Forms.CheckBox();
@@ -454,6 +456,7 @@ namespace ZScreenGUI
             this.panelPreview = new System.Windows.Forms.Panel();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.txtPreview = new System.Windows.Forms.TextBox();
+            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
@@ -547,15 +550,12 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.chkImageUploadRandomRetryOnFail = new System.Windows.Forms.CheckBox();
-            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
             this.ucTwitterAccounts = new ZScreenGUI.AccountsControl();
             this.ucMindTouchAccounts = new ZScreenGUI.AccountsControl();
             this.ucTextUploaders = new ZScreenGUI.TextUploadersControl();
             this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
-            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
@@ -1138,6 +1138,14 @@ namespace ZScreenGUI
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
+            // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
+            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.TabIndex = 124;
             // 
             // gbImageSettings
             // 
@@ -4317,6 +4325,17 @@ namespace ZScreenGUI
             this.gbImageUploadRetry.TabStop = false;
             this.gbImageUploadRetry.Text = "Retry Options";
             // 
+            // chkImageUploadRandomRetryOnFail
+            // 
+            this.chkImageUploadRandomRetryOnFail.AutoSize = true;
+            this.chkImageUploadRandomRetryOnFail.Location = new System.Drawing.Point(32, 72);
+            this.chkImageUploadRandomRetryOnFail.Name = "chkImageUploadRandomRetryOnFail";
+            this.chkImageUploadRandomRetryOnFail.Size = new System.Drawing.Size(192, 17);
+            this.chkImageUploadRandomRetryOnFail.TabIndex = 12;
+            this.chkImageUploadRandomRetryOnFail.Text = "Randomly select a valid destination";
+            this.chkImageUploadRandomRetryOnFail.UseVisualStyleBackColor = true;
+            this.chkImageUploadRandomRetryOnFail.CheckedChanged += new System.EventHandler(this.chkImageUploadRandomRetryOnFail_CheckedChanged);
+            // 
             // lblErrorRetry
             // 
             this.lblErrorRetry.AutoSize = true;
@@ -5256,6 +5275,8 @@ namespace ZScreenGUI
             // 
             // panelControls
             // 
+            this.panelControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelControls.Controls.Add(this.btnHistoryOpenLocalFile);
             this.panelControls.Controls.Add(this.txtHistoryLocalPath);
             this.panelControls.Controls.Add(this.btnHistoryCopyLink);
@@ -5266,15 +5287,15 @@ namespace ZScreenGUI
             this.panelControls.Controls.Add(this.lblHistoryLocalPath);
             this.panelControls.Location = new System.Drawing.Point(3, 264);
             this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(455, 123);
+            this.panelControls.Size = new System.Drawing.Size(459, 123);
             this.panelControls.TabIndex = 15;
             // 
             // btnHistoryOpenLocalFile
             // 
-            this.btnHistoryOpenLocalFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHistoryOpenLocalFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHistoryOpenLocalFile.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnHistoryOpenLocalFile.Enabled = false;
-            this.btnHistoryOpenLocalFile.Location = new System.Drawing.Point(312, 8);
+            this.btnHistoryOpenLocalFile.Location = new System.Drawing.Point(316, 8);
             this.btnHistoryOpenLocalFile.Name = "btnHistoryOpenLocalFile";
             this.btnHistoryOpenLocalFile.Size = new System.Drawing.Size(96, 24);
             this.btnHistoryOpenLocalFile.TabIndex = 9;
@@ -5290,14 +5311,14 @@ namespace ZScreenGUI
             this.txtHistoryLocalPath.Location = new System.Drawing.Point(8, 56);
             this.txtHistoryLocalPath.Name = "txtHistoryLocalPath";
             this.txtHistoryLocalPath.ReadOnly = true;
-            this.txtHistoryLocalPath.Size = new System.Drawing.Size(440, 20);
+            this.txtHistoryLocalPath.Size = new System.Drawing.Size(444, 20);
             this.txtHistoryLocalPath.TabIndex = 7;
             // 
             // btnHistoryCopyLink
             // 
-            this.btnHistoryCopyLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHistoryCopyLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHistoryCopyLink.Enabled = false;
-            this.btnHistoryCopyLink.Location = new System.Drawing.Point(48, 8);
+            this.btnHistoryCopyLink.Location = new System.Drawing.Point(52, 8);
             this.btnHistoryCopyLink.Name = "btnHistoryCopyLink";
             this.btnHistoryCopyLink.Size = new System.Drawing.Size(80, 24);
             this.btnHistoryCopyLink.TabIndex = 12;
@@ -5309,7 +5330,7 @@ namespace ZScreenGUI
             // 
             this.lblHistoryRemotePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHistoryRemotePath.AutoSize = true;
-            this.lblHistoryRemotePath.Location = new System.Drawing.Point(8, 79);
+            this.lblHistoryRemotePath.Location = new System.Drawing.Point(12, 79);
             this.lblHistoryRemotePath.Name = "lblHistoryRemotePath";
             this.lblHistoryRemotePath.Size = new System.Drawing.Size(69, 13);
             this.lblHistoryRemotePath.TabIndex = 6;
@@ -5317,9 +5338,9 @@ namespace ZScreenGUI
             // 
             // btnHistoryCopyImage
             // 
-            this.btnHistoryCopyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHistoryCopyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHistoryCopyImage.Enabled = false;
-            this.btnHistoryCopyImage.Location = new System.Drawing.Point(136, 8);
+            this.btnHistoryCopyImage.Location = new System.Drawing.Point(140, 8);
             this.btnHistoryCopyImage.Name = "btnHistoryCopyImage";
             this.btnHistoryCopyImage.Size = new System.Drawing.Size(80, 24);
             this.btnHistoryCopyImage.TabIndex = 11;
@@ -5335,15 +5356,15 @@ namespace ZScreenGUI
             this.txtHistoryRemotePath.Location = new System.Drawing.Point(8, 96);
             this.txtHistoryRemotePath.Name = "txtHistoryRemotePath";
             this.txtHistoryRemotePath.ReadOnly = true;
-            this.txtHistoryRemotePath.Size = new System.Drawing.Size(440, 20);
+            this.txtHistoryRemotePath.Size = new System.Drawing.Size(444, 20);
             this.txtHistoryRemotePath.TabIndex = 8;
             // 
             // btnHistoryBrowseURL
             // 
-            this.btnHistoryBrowseURL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHistoryBrowseURL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHistoryBrowseURL.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnHistoryBrowseURL.Enabled = false;
-            this.btnHistoryBrowseURL.Location = new System.Drawing.Point(224, 8);
+            this.btnHistoryBrowseURL.Location = new System.Drawing.Point(228, 8);
             this.btnHistoryBrowseURL.Name = "btnHistoryBrowseURL";
             this.btnHistoryBrowseURL.Size = new System.Drawing.Size(80, 24);
             this.btnHistoryBrowseURL.TabIndex = 10;
@@ -5355,7 +5376,7 @@ namespace ZScreenGUI
             // 
             this.lblHistoryLocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHistoryLocalPath.AutoSize = true;
-            this.lblHistoryLocalPath.Location = new System.Drawing.Point(8, 39);
+            this.lblHistoryLocalPath.Location = new System.Drawing.Point(12, 39);
             this.lblHistoryLocalPath.Name = "lblHistoryLocalPath";
             this.lblHistoryLocalPath.Size = new System.Drawing.Size(58, 13);
             this.lblHistoryLocalPath.TabIndex = 5;
@@ -5397,6 +5418,15 @@ namespace ZScreenGUI
             this.txtPreview.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtPreview.Size = new System.Drawing.Size(459, 235);
             this.txtPreview.TabIndex = 14;
+            // 
+            // historyBrowser
+            // 
+            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
+            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.historyBrowser.Name = "historyBrowser";
+            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
+            this.historyBrowser.TabIndex = 15;
             // 
             // lbHistory
             // 
@@ -6514,25 +6544,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // chkImageUploadRandomRetryOnFail
-            // 
-            this.chkImageUploadRandomRetryOnFail.AutoSize = true;
-            this.chkImageUploadRandomRetryOnFail.Location = new System.Drawing.Point(32, 72);
-            this.chkImageUploadRandomRetryOnFail.Name = "chkImageUploadRandomRetryOnFail";
-            this.chkImageUploadRandomRetryOnFail.Size = new System.Drawing.Size(192, 17);
-            this.chkImageUploadRandomRetryOnFail.TabIndex = 12;
-            this.chkImageUploadRandomRetryOnFail.Text = "Randomly select a valid destination";
-            this.chkImageUploadRandomRetryOnFail.UseVisualStyleBackColor = true;
-            this.chkImageUploadRandomRetryOnFail.CheckedChanged += new System.EventHandler(this.chkImageUploadRandomRetryOnFail_CheckedChanged);
-            // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.TabIndex = 124;
-            // 
             // nudtScreenshotDelay
             // 
             this.nudtScreenshotDelay.Location = new System.Drawing.Point(112, 18);
@@ -6593,15 +6604,6 @@ namespace ZScreenGUI
             this.ucUrlShorteners.Name = "ucUrlShorteners";
             this.ucUrlShorteners.Size = new System.Drawing.Size(785, 397);
             this.ucUrlShorteners.TabIndex = 0;
-            // 
-            // historyBrowser
-            // 
-            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
-            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.historyBrowser.Name = "historyBrowser";
-            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
-            this.historyBrowser.TabIndex = 15;
             // 
             // ucProxyAccounts
             // 
