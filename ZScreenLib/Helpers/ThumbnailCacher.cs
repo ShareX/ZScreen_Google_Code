@@ -49,7 +49,7 @@ namespace ZScreenLib.Helpers
         public ThumbnailCacher(PictureBox pictureBox, Size thumbnailSize, int capacity)
         {
             this.pictureBox = pictureBox;
-            pictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             this.ThumbnailSize = thumbnailSize;
             this.capacity = capacity;
             thumbnails = new Queue<Thumbnail>(capacity);

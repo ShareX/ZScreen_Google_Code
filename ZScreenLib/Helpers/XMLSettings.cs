@@ -63,7 +63,7 @@ namespace ZScreenLib
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public ImageDestType ImageUploaderType = ImageDestType.IMAGESHACK;
+        public ImageDestType ImageUploaderType = ImageDestType.CLIPBOARD;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextUploaderType = TextDestType.PASTE2;
         public FileUploaderType FileDestMode = FileUploaderType.FTP;

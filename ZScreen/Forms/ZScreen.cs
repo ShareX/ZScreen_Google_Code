@@ -61,7 +61,7 @@ namespace ZScreenGUI
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private DebugHelper debug = null;
-        private ImageEffects.TurnImage turnLogo;
+        private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ThumbnailCacher thumbnailCacher;
         internal static GoogleTranslate mGTranslator = null;
 

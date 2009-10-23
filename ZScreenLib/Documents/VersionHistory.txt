@@ -1,3 +1,4 @@
+3.12.6.0 Users can drag n drop files to the History list box to upload {McoreD}
 3.12.5.0 Share on Twitter... in History tab will automatically shorten the URL {McoreD}
 3.12.4.0 Randomly selecting a valid Image Uploader destination is now an option {McoreD}
 3.12.3.2 Dragging anything to the dropbox to uploading it to FTP did not work [Issue 151] {Jaex}
