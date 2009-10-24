@@ -1,22 +1,31 @@
 #summary How to help ZScreen by becoming a Project Member
 #labels Featured,Phase-QA
+<wiki:toc max_depth="3" />
 
 = Introduction =
 
 You have decided to contribute code to ZScreen? Great! Here are the steps that will get you easily started. 
 
-= Requirements = 
+= Requirements =
  # Visual Studio 2008 or above
- # AnkhSVN 2.0 or above for SVN access
+ # TortoiseSVN or AnkhSVN for SVN access
  # Google Code Password
 
 = Getting Started =
 
  # Send an email to zscreen@googlegroups.com just to say that you would like to join. This is only needed so we can add you as a Project Member. 
- # Download AnkhSVN from http://ankhsvn.open.collab.net/servlets/ProjectProcess?pageID=3794
+ # Download your preferred SVN Client
+  * TortoiseSVN from http://tortoisesvn.net/downloads
+  * AnkhSVN from http://ankhsvn.open.collab.net/servlets/ProjectProcess?pageID=3794
  # Retrieve your Google Code password from http://code.google.com/hosting/settings
- 
-== Visual Studio 2008 == 
+
+= Using TortoiseSVN =
+
+Please follow RunningFromSource
+
+= Using AnkhSVN =
+
+== Visual Studio 2008 ==
 Once you have installed AnkhSVN, you will see a new menu item in File > Open menu:
 
 [http://img5.imageshack.us/img5/7508/ss20090402112721.png]
