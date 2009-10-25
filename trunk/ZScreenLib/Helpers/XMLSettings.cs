@@ -210,6 +210,8 @@ namespace ZScreenLib
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
         public bool SelectedWindowCaptureObjects = true;
+        public bool SelectedWindowCleanBackground = true;
+        public bool SelectedWindowCleanTransparentCorners = true;
 
         // Interaction
 

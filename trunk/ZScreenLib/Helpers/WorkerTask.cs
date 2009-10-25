@@ -35,6 +35,9 @@ using UploadersLib.TextServices;
 using System.Windows.Forms;
 using ZScreenLib.Properties;
 using System.Diagnostics;
+using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Threading;
 
 namespace ZScreenLib
 {
@@ -327,9 +330,144 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureWindow(User32.GetWindowHandle(), Engine.conf.ShowCursor));
+                IntPtr handle = User32.GetWindowHandle();
+                Rectangle windowRect = User32.GetWindowRectangle(handle);
+                Form form = null;
+
+                if (Engine.conf.SelectedWindowCleanBackground)
+                {
+                    // create white form behind the window to clean the dirty background for aero
+                    form = new Form();
+
+                    form.BackColor = Color.White;
+                    form.FormBorderStyle = FormBorderStyle.None;
+                    form.Show();
+                    User32.ActivateWindow(handle);
+
+                    form.Refresh();
+                    User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                    Application.DoEvents();
+                }
+
+                Bitmap windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+
+                if (Engine.conf.SelectedWindowCleanTransparentCorners)
+                {
+                    if (form == null)
+                    {
+                        form = new Form();
+                        form.BackColor = Color.White;
+                        form.FormBorderStyle = FormBorderStyle.None;
+                        form.Show();
+                        User32.ActivateWindow(handle);
+                    }
+
+                    // paints red corners behind the form, so that they can be recognized and removed
+                    form.Paint += new PaintEventHandler(formPaintRedCorners);
+                    form.Refresh();
+                    User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                    Application.DoEvents();
+                    Bitmap redCornersImage = User32.CaptureWindow(handle, false) as Bitmap;
+
+                    Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
+                    Graphics g = Graphics.FromImage(result);
+                    g.Clear(Color.Transparent);
+
+                    // remove the transparent pixels in the four corners
+                    RemoveCorner(redCornersImage, g, 0, 0, 5, Corner.TopLeft);
+                    RemoveCorner(redCornersImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
+                    RemoveCorner(redCornersImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
+                    RemoveCorner(redCornersImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
+                    g.DrawImage(windowImage, 0, 0);
+
+                    g.Dispose();
+                    this.SetImage(result);
+                }
+                else
+                {
+                    this.SetImage(windowImage);
+                }
+
+                if (form != null)
+                {
+                    form.Close();
+                }
             }
         }
+
+        #region Clean window corners
+
+        /// <summary>
+        /// Paints 5 pixel wide red corners behind the form from which the event originates.
+        /// </summary>
+        void formPaintRedCorners(object sender, PaintEventArgs e)
+        {
+            const int cornerSize = 5;
+            int width = (sender as Form).Width;
+            int height = (sender as Form).Height;
+            e.Graphics.FillRectangle(Brushes.Red, 0, 0, cornerSize, cornerSize);
+            e.Graphics.FillRectangle(Brushes.Red, width - 5, 0, cornerSize, cornerSize);
+            e.Graphics.FillRectangle(Brushes.Red, 0, height - 5, cornerSize, cornerSize);
+            e.Graphics.FillRectangle(Brushes.Red, width - 5, height - 5, cornerSize, cornerSize);
+        }
+
+        enum Corner { TopLeft, TopRight, BottomLeft, BottomRight };
+
+        /// <summary>
+        /// Removes a corner from the clipping region of the given graphics object.
+        /// </summary>
+        /// <param name="bmp">The bitmap with the form corners masked in red</param>
+        private void RemoveCorner(Bitmap bmp, Graphics g, int minx, int miny, int maxx, Corner corner)
+        {
+            int[] shape;
+            if (corner == Corner.TopLeft || corner == Corner.TopRight)
+            {
+                shape = new int[5] { 5, 3, 2, 1, 1 };
+            }
+            else
+            {
+                shape = new int[5] { 1, 1, 2, 3, 5 };
+            }
+
+            int maxy = miny + 5;
+            if (corner == Corner.TopLeft || corner == Corner.BottomLeft)
+            {
+                for (int y = miny; y < maxy; y++)
+                {
+                    for (int x = minx; x < minx + shape[y - miny]; x++)
+                    {
+                        RemoveCornerPixel(bmp, g, y, x);
+                    }
+                }
+            }
+            else
+            {
+                for (int y = miny; y < maxy; y++)
+                {
+                    for (int x = maxx - 1; x >= maxx - shape[y - miny]; x--)
+                    {
+                        RemoveCornerPixel(bmp, g, y, x);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes a pixel from the clipping region of the given graphics object, if
+        /// the bitmap is red at the coordinates of the pixel.
+        /// </summary>
+        /// <param name="bmp">The bitmap with the form corners masked in red</param>
+        private static void RemoveCornerPixel(Bitmap bmp, Graphics g, int y, int x)
+        {
+            var color = bmp.GetPixel(x, y);
+            // detect a shade of red (the color is darker because of the window's shadow)
+            if (color.R > 64 && color.G == 0 && color.B == 0)
+            {
+                Region region = new Region(new Rectangle(x, y, 1, 1));
+                g.SetClip(region, System.Drawing.Drawing2D.CombineMode.Exclude);
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Function to Capture Entire Screen

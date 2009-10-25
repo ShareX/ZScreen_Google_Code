@@ -557,6 +557,8 @@ namespace ZScreenGUI
         	this.btnUploadTextClipboard = new System.Windows.Forms.Button();
         	this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
         	this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+        	this.cbSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
+        	this.cbSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
         	this.cmTray.SuspendLayout();
         	this.cmsHistory.SuspendLayout();
         	this.tcApp.SuspendLayout();
@@ -2840,6 +2842,8 @@ namespace ZScreenGUI
         	// 
         	// tpSelectedWindow
         	// 
+        	this.tpSelectedWindow.Controls.Add(this.cbSelectedWindowCleanTransparentCorners);
+        	this.tpSelectedWindow.Controls.Add(this.cbSelectedWindowCleanBackground);
         	this.tpSelectedWindow.Controls.Add(this.cbSelectedWindowCaptureObjects);
         	this.tpSelectedWindow.Controls.Add(this.nudSelectedWindowHueRange);
         	this.tpSelectedWindow.Controls.Add(this.lblSelectedWindowHueRange);
@@ -6617,6 +6621,28 @@ namespace ZScreenGUI
         	this.ttZScreen.ReshowDelay = 200;
         	this.ttZScreen.ShowAlways = true;
         	// 
+        	// cbSelectedWindowCleanBackground
+        	// 
+        	this.cbSelectedWindowCleanBackground.AutoSize = true;
+        	this.cbSelectedWindowCleanBackground.Location = new System.Drawing.Point(16, 310);
+        	this.cbSelectedWindowCleanBackground.Name = "cbSelectedWindowCleanBackground";
+        	this.cbSelectedWindowCleanBackground.Size = new System.Drawing.Size(113, 17);
+        	this.cbSelectedWindowCleanBackground.TabIndex = 43;
+        	this.cbSelectedWindowCleanBackground.Text = "Clean background";
+        	this.cbSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
+        	this.cbSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
+        	// 
+        	// cbSelectedWindowCleanTransparentCorners
+        	// 
+        	this.cbSelectedWindowCleanTransparentCorners.AutoSize = true;
+        	this.cbSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 334);
+        	this.cbSelectedWindowCleanTransparentCorners.Name = "cbSelectedWindowCleanTransparentCorners";
+        	this.cbSelectedWindowCleanTransparentCorners.Size = new System.Drawing.Size(147, 17);
+        	this.cbSelectedWindowCleanTransparentCorners.TabIndex = 44;
+        	this.cbSelectedWindowCleanTransparentCorners.Text = "Clean transparent corners";
+        	this.cbSelectedWindowCleanTransparentCorners.UseVisualStyleBackColor = true;
+        	this.cbSelectedWindowCleanTransparentCorners.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanTransparentCorners_CheckedChanged);
+        	// 
         	// ZScreen
         	// 
         	this.AllowDrop = true;
@@ -7362,6 +7388,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
         private System.Windows.Forms.DataGridViewTextBoxColumn DefaultKeys;
         private System.Windows.Forms.CheckBox chkImageUploadRandomRetryOnFail;
+        private System.Windows.Forms.CheckBox cbSelectedWindowCleanBackground;
+        private System.Windows.Forms.CheckBox cbSelectedWindowCleanTransparentCorners;
 
     }
 }
