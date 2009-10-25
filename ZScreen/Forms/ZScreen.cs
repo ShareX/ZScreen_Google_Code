@@ -443,6 +443,8 @@ namespace ZScreenGUI
             nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             cbSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
+            cbSelectedWindowCleanBackground.Checked = Engine.conf.SelectedWindowCleanBackground;
+            cbSelectedWindowCleanTransparentCorners.Checked = Engine.conf.SelectedWindowCleanTransparentCorners;
 
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
@@ -3947,6 +3949,16 @@ namespace ZScreenGUI
         private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.SelectedWindowCaptureObjects = cbSelectedWindowCaptureObjects.Checked;
+        }
+
+        private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.SelectedWindowCleanBackground = cbSelectedWindowCleanBackground.Checked;
+        }
+
+        private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.SelectedWindowCleanTransparentCorners = cbSelectedWindowCleanTransparentCorners.Checked;
         }
 
         private void cbSaveFormSizePosition_CheckedChanged(object sender, EventArgs e)
