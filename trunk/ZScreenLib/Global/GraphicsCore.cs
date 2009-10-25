@@ -136,8 +136,8 @@ namespace ZScreenLib
 
                                     // These two operation will result in a black cursor over a white background.
                                     // Later in the code, a call to MakeTransparent() will get rid of the white background.
-                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, GDI.TernaryRasterOperations.SRCCOPY);
-                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, GDI.TernaryRasterOperations.SRCINVERT);
+                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, CopyPixelOperation.SourceCopy);
+                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, CopyPixelOperation.SourceInvert);
 
                                     resultGraphics.ReleaseHdc(resultHdc);
                                 }
@@ -213,7 +213,7 @@ namespace ZScreenLib
             // select the bitmap object
             IntPtr hOld = GDI.SelectObject(hdcDest, hBitmap);
             // bitblt over
-            GDI.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, GDI.TernaryRasterOperations.SRCCOPY);
+            GDI.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
             // restore selection
             GDI.SelectObject(hdcDest, hOld);
             // clean up
