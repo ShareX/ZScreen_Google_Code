@@ -25,19 +25,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
-using System.Runtime.InteropServices;
-using ZSS;
+using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
-using System.Windows.Forms;
 using ZScreenLib.Properties;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
-using System.Threading;
 
 namespace ZScreenLib
 {
