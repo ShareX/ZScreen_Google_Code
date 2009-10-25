@@ -21,15 +21,14 @@
 */
 #endregion
 
-using Microsoft.WindowsAPICodePack;
 using System;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Diagnostics;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
@@ -85,7 +84,7 @@ namespace ZScreenLib
             {
                 return sb.ToString();
             }
-            return "";
+            return string.Empty;
         }
 
         public static IntPtr GetWindowHandle()
@@ -388,6 +387,259 @@ namespace ZScreenLib
             SetForegroundWindow(handle);
             SetActiveWindow(handle);
         }
+
+        /// <summary>
+        /// Function to Capture Active Window
+        /// </summary>
+        public static Image CaptureActiveWindow()
+        {
+            IntPtr handle = User32.GetWindowHandle();
+            Rectangle windowRect = User32.GetWindowRectangle(handle);
+            Form form = null;
+
+            Bitmap windowImage = null;
+
+            if (Engine.conf.SelectedWindowCleanBackground)
+            {
+                // create form behind the window to remove the dirty Aero background
+                form = new Form();
+
+                form.BackColor = Color.Black;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Show();
+                ActivateWindow(handle);
+                form.Refresh();
+                User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                Application.DoEvents();
+
+                // capture the window with a black background
+                Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
+
+                form.BackColor = Color.White;
+                form.Refresh();
+                ActivateWindowRepeat(handle, 500);
+                Application.DoEvents();
+
+                // capture the window again with a white background this time
+                Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
+
+                // compute the real window image by difference between the two previous images
+                windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
+            }
+            else
+            {
+                windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+            }
+
+            if (Engine.conf.SelectedWindowCleanTransparentCorners)
+            {
+                if (form == null)
+                {
+                    form = new Form();
+                    form.BackColor = Color.White;
+                    form.FormBorderStyle = FormBorderStyle.None;
+                    form.Show();
+                    User32.ActivateWindowRepeat(handle, 500);
+                }
+
+                // paints red corners behind the form, so that they can be recognized and removed
+                form.Paint += new PaintEventHandler(FormPaintRedCorners);
+                form.Refresh();
+                User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                Application.DoEvents();
+                Bitmap redCornersImage = User32.CaptureWindow(handle, false) as Bitmap;
+
+                using (Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb))
+                {
+                    using (Graphics g = Graphics.FromImage(result))
+                    {
+                        g.Clear(Color.Transparent);
+
+                        // remove the transparent pixels in the four corners
+                        RemoveCorner(redCornersImage, g, 0, 0, 5, Corner.TopLeft);
+                        RemoveCorner(redCornersImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
+                        RemoveCorner(redCornersImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
+                        RemoveCorner(redCornersImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
+                        g.DrawImage(windowImage, 0, 0);
+                    }
+
+                    windowImage = (Bitmap)result.Clone();
+                }
+            }
+
+            if (form != null)
+            {
+                form.Close();
+            }
+
+            return windowImage;
+        }
+
+        private static void ActivateWindowRepeat(IntPtr handle, int count)
+        {
+            User32.ActivateWindow(handle);
+            for (int i = 0; User32.GetForegroundWindow() != handle && i < count; i++)
+            {
+                Thread.Sleep(10);
+            }
+        }
+
+        /// <summary>
+        /// Compute the original window image from the difference between the two given images
+        /// </summary>
+        /// <param name="whiteBGImage">the window with a white background</param>
+        /// <param name="blackBGImage">the window with a black background</param>
+        /// <returns>the original window image, with restored alpha channel</returns>
+        private static Bitmap ComputeOriginal(Bitmap whiteBGImage, Bitmap blackBGImage)
+        {
+            int width = whiteBGImage.Size.Width;
+            int height = whiteBGImage.Size.Height;
+
+            Bitmap resultImage = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+            Rectangle rect = new Rectangle(new Point(0, 0), blackBGImage.Size);
+
+            // access the image data directly for faster image processing
+            BitmapData blackImageData = blackBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData whiteImageData = whiteBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData resultImageData = resultImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            IntPtr pBlackImage = blackImageData.Scan0;
+            IntPtr pWhiteImage = whiteImageData.Scan0;
+            IntPtr pResultImage = resultImageData.Scan0;
+
+            int bytes = blackImageData.Stride * blackImageData.Height;
+            byte[] blackBGImageRGB = new byte[bytes];
+            byte[] whiteBGImageRGB = new byte[bytes];
+            byte[] resultImageRGB = new byte[bytes];
+
+            Marshal.Copy(pBlackImage, blackBGImageRGB, 0, bytes);
+            Marshal.Copy(pWhiteImage, whiteBGImageRGB, 0, bytes);
+
+            int offset = 0;
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // ARGB is in fact BGRA (little endian)
+                    int r0 = blackBGImageRGB[offset + 2];
+                    int g0 = blackBGImageRGB[offset + 1];
+                    int b0 = blackBGImageRGB[offset + 0];
+                    int r1 = whiteBGImageRGB[offset + 2];
+                    int alpha = r0 - r1 + 255;
+
+                    int resultR, resultG, resultB;
+                    if (alpha != 0)
+                    {
+                        resultR = r0 * 255 / alpha;
+                        resultG = g0 * 255 / alpha;
+                        resultB = b0 * 255 / alpha;
+                    }
+                    else
+                    {
+                        resultR = 0;
+                        resultG = 0;
+                        resultB = 0;
+                    }
+
+                    resultImageRGB[offset + 3] = (byte)alpha;
+                    resultImageRGB[offset + 2] = (byte)resultR;
+                    resultImageRGB[offset + 1] = (byte)resultG;
+                    resultImageRGB[offset + 0] = (byte)resultB;
+
+                    offset += 4;
+                }
+            }
+
+            Marshal.Copy(resultImageRGB, 0, pResultImage, bytes);
+
+            blackBGImage.UnlockBits(blackImageData);
+            whiteBGImage.UnlockBits(whiteImageData);
+            resultImage.UnlockBits(resultImageData);
+
+            return resultImage;
+        }
+
+        #region Clean window corners
+
+        /// <summary>
+        /// Paints 5 pixel wide red corners behind the form from which the event originates.
+        /// </summary>
+        private static void FormPaintRedCorners(object sender, PaintEventArgs e)
+        {
+            const int cornerSize = 5;
+            Form form = sender as Form;
+            if (form != null)
+            {
+                int width = form.Width;
+                int height = form.Height;
+                e.Graphics.FillRectangle(Brushes.Red, 0, 0, cornerSize, cornerSize);
+                e.Graphics.FillRectangle(Brushes.Red, width - 5, 0, cornerSize, cornerSize);
+                e.Graphics.FillRectangle(Brushes.Red, 0, height - 5, cornerSize, cornerSize);
+                e.Graphics.FillRectangle(Brushes.Red, width - 5, height - 5, cornerSize, cornerSize);
+            }
+        }
+
+        public enum Corner { TopLeft, TopRight, BottomLeft, BottomRight };
+
+        /// <summary>
+        /// Removes a corner from the clipping region of the given graphics object.
+        /// </summary>
+        /// <param name="bmp">The bitmap with the form corners masked in red</param>
+        private static void RemoveCorner(Bitmap bmp, Graphics g, int minx, int miny, int maxx, Corner corner)
+        {
+            int[] shape;
+            if (corner == Corner.TopLeft || corner == Corner.TopRight)
+            {
+                shape = new int[5] { 5, 3, 2, 1, 1 };
+            }
+            else
+            {
+                shape = new int[5] { 1, 1, 2, 3, 5 };
+            }
+
+            int maxy = miny + 5;
+            if (corner == Corner.TopLeft || corner == Corner.BottomLeft)
+            {
+                for (int y = miny; y < maxy; y++)
+                {
+                    for (int x = minx; x < minx + shape[y - miny]; x++)
+                    {
+                        RemoveCornerPixel(bmp, g, y, x);
+                    }
+                }
+            }
+            else
+            {
+                for (int y = miny; y < maxy; y++)
+                {
+                    for (int x = maxx - 1; x >= maxx - shape[y - miny]; x--)
+                    {
+                        RemoveCornerPixel(bmp, g, y, x);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes a pixel from the clipping region of the given graphics object, if
+        /// the bitmap is red at the coordinates of the pixel.
+        /// </summary>
+        /// <param name="bmp">The bitmap with the form corners masked in red</param>
+        private static void RemoveCornerPixel(Bitmap bmp, Graphics g, int y, int x)
+        {
+            var color = bmp.GetPixel(x, y);
+            // detect a shade of red (the color is darker because of the window's shadow)
+            if (color.R > 64 && color.G == 0 && color.B == 0)
+            {
+                Region region = new Region(new Rectangle(x, y, 1, 1));
+                g.SetClip(region, CombineMode.Exclude);
+            }
+        }
+
+        #endregion
 
         #region Taskbar
 
