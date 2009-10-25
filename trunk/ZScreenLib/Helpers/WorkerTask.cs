@@ -27,7 +27,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.Helpers;
@@ -329,22 +331,41 @@ namespace ZScreenLib
                 Rectangle windowRect = User32.GetWindowRectangle(handle);
                 Form form = null;
 
+                Bitmap windowImage = null;
+
                 if (Engine.conf.SelectedWindowCleanBackground)
                 {
-                    // create white form behind the window to clean the dirty background for aero
+                    // create form behind the window to remove the dirty Aero background
                     form = new Form();
 
-                    form.BackColor = Color.White;
+                    form.BackColor = Color.Black;
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.Show();
-                    User32.ActivateWindow(handle);
-
+                    activateWindow(handle);
                     form.Refresh();
                     User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
                     Application.DoEvents();
-                }
 
-                Bitmap windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                    // capture the window with a black background
+                    Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                    //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
+                   
+                    form.BackColor = Color.White;
+                    form.Refresh();
+                    activateWindow(handle);
+                    Application.DoEvents();
+
+                    // capture the window again with a white background this time
+                    Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                    //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
+
+                    // compute the real window image by difference between the two previous images
+                    windowImage = computeOriginal(whiteBGImage, blackBGImage);
+                }
+                else
+                {
+                    windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                }
 
                 if (Engine.conf.SelectedWindowCleanTransparentCorners)
                 {
@@ -388,6 +409,96 @@ namespace ZScreenLib
                     form.Close();
                 }
             }
+        }
+
+        private static void activateWindow(IntPtr handle)
+        {
+            User32.ActivateWindow(handle);
+            int count = 500;
+            while (User32.GetForegroundWindow() != handle && count > 0)
+            {
+                Thread.Sleep(10);
+                count--;
+            }
+        }
+
+        /// <summary>
+        /// compute the original window image from the difference between the two given images
+        /// </summary>
+        /// <param name="whiteBGImage">the window with a white background</param>
+        /// <param name="blackBGImage">the window with a black background</param>
+        /// <returns>the original window image, with restored alpha channel</returns>
+        private Bitmap computeOriginal(Bitmap whiteBGImage, Bitmap blackBGImage)
+        {
+            int width = whiteBGImage.Size.Width;
+            int height = whiteBGImage.Size.Height;
+
+            Bitmap resultImage = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+            var rect = new Rectangle(new Point(0, 0), blackBGImage.Size);
+
+            // access the image data directly for faster image processing
+            BitmapData blackImageData = blackBGImage.LockBits(rect, ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
+            BitmapData whiteImageData = whiteBGImage.LockBits(rect, ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
+            BitmapData resultImageData = resultImage.LockBits(rect, ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
+
+            IntPtr pBlackImage = blackImageData.Scan0;
+            IntPtr pWhiteImage = whiteImageData.Scan0;
+            IntPtr pResultImage = resultImageData.Scan0;
+
+            int bytes = blackImageData.Stride * blackImageData.Height;
+            byte[] blackBGImageRGB = new byte[bytes];
+            byte[] whiteBGImageRGB = new byte[bytes];
+            byte[] resultImageRGB = new byte[bytes];
+
+            Marshal.Copy(pBlackImage, blackBGImageRGB, 0, bytes);
+            Marshal.Copy(pWhiteImage, whiteBGImageRGB, 0, bytes);
+
+            int offset = 0;
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // ARGB is in fact BGRA (little endian)
+                    int r0 = blackBGImageRGB[offset + 2];
+                    int g0 = blackBGImageRGB[offset + 1];
+                    int b0 = blackBGImageRGB[offset + 0];
+                    int r1 = whiteBGImageRGB[offset + 2];
+                    int alpha = r0 - r1 + 255;
+
+                    int resultR, resultG, resultB;
+                    if (alpha != 0)
+                    {
+                        resultR = r0 * 255 / alpha;
+                        resultG = g0 * 255 / alpha;
+                        resultB = b0 * 255 / alpha;
+                    }
+                    else
+                    {
+                        resultR = 0;
+                        resultG = 0;
+                        resultB = 0;
+                    }
+
+                    resultImageRGB[offset + 3] = (byte)alpha;
+                    resultImageRGB[offset + 2] = (byte)resultR;
+                    resultImageRGB[offset + 1] = (byte)resultG;
+                    resultImageRGB[offset + 0] = (byte)resultB;
+
+                    offset += 4;
+                }
+            }
+
+            Marshal.Copy(resultImageRGB, 0, pResultImage, bytes);
+
+            blackBGImage.UnlockBits(blackImageData);
+            whiteBGImage.UnlockBits(whiteImageData);
+            resultImage.UnlockBits(resultImageData);
+
+            return resultImage;
         }
 
         #region Clean window corners
