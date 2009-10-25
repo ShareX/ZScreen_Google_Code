@@ -1,3 +1,5 @@
+3.14.0.0 Option to clear the window background under Aero Glass {theone256}
+3.13.0.0 Option to capture rounded corners under Windows XP/Vista/7 {theone256}
 3.12.6.0 Users can drag n drop files to the History list box to upload {McoreD}
 3.12.5.0 Share on Twitter... in History tab will automatically shorten the URL {McoreD}
 3.12.4.0 Randomly selecting a valid Image Uploader destination is now an option {McoreD}
