@@ -421,6 +421,36 @@ namespace ZScreenLib
             return img;
         }
 
+        public static Image DrawCheckers(Image img, Color color1, Color color2, int boxSize)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                SolidBrush brush;
+                for (int y = 0; y < img.Height / boxSize; y++)
+                {
+                    for (int x = 0; x < img.Width / boxSize; x++)
+                    {
+                        if ((x + y) % 2 == 0)
+                        {
+                            brush = new SolidBrush(color1);
+                        }
+                        else
+                        {
+                            brush = new SolidBrush(color2);
+                        }
+
+                        g.FillRectangle(brush, x * boxSize, y * boxSize, boxSize, boxSize);
+                    }
+                }
+
+                g.DrawImage(img, Point.Empty);
+            }
+
+            return bmp;
+        }
+
         public class TurnImage
         {
             public event ImageEventHandler ImageTurned;

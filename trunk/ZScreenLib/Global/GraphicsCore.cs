@@ -397,7 +397,7 @@ namespace ZScreenLib
             Rectangle windowRect = User32.GetWindowRectangle(handle);
             Form form = null;
 
-            Bitmap windowImage = null;
+            Image windowImage = null;
 
             if (Engine.conf.SelectedWindowCleanBackground)
             {
@@ -407,7 +407,7 @@ namespace ZScreenLib
                 form.BackColor = Color.Black;
                 form.FormBorderStyle = FormBorderStyle.None;
                 form.Show();
-                ActivateWindow(handle);
+                User32.ActivateWindowRepeat(handle, 500);
                 form.Refresh();
                 User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
                 Application.DoEvents();
@@ -418,7 +418,7 @@ namespace ZScreenLib
 
                 form.BackColor = Color.White;
                 form.Refresh();
-                ActivateWindowRepeat(handle, 500);
+                User32.ActivateWindowRepeat(handle, 500);
                 Application.DoEvents();
 
                 // capture the window again with a white background this time
@@ -427,6 +427,10 @@ namespace ZScreenLib
 
                 // compute the real window image by difference between the two previous images
                 windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
+
+#if DEBUG
+                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
+#endif
             }
             else
             {
@@ -465,7 +469,7 @@ namespace ZScreenLib
                         g.DrawImage(windowImage, 0, 0);
                     }
 
-                    windowImage = (Bitmap)result.Clone();
+                    windowImage = (Image)result.Clone();
                 }
             }
 
