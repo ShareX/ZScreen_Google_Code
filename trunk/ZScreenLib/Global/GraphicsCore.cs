@@ -419,8 +419,8 @@ namespace ZScreenLib
                         //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
                         form.BackColor = Color.White;
-                        User32.ActivateWindowRepeat(handle, 250);
                         form.Refresh();
+                        User32.ActivateWindowRepeat(handle, 250);
                         Application.DoEvents();
 
                         // capture the window again with a white background this time

@@ -26,6 +26,7 @@ using System.Text;
 using System.Drawing;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
@@ -61,6 +62,8 @@ namespace ZScreenLib
         width,
         [Description("Gets image height")]
         height,
+        [Description("ZScreen version")]
+        ver,
         [Description("New line")]
         n
     }
@@ -215,6 +218,8 @@ namespace ZScreenLib
             }
 
             #endregion
+
+            sb = sb.Replace(ToString(ReplacementVariables.ver), Application.ProductVersion);
 
             if (nameParser.Type == NameParserType.Watermark)
             {
