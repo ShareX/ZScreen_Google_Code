@@ -321,7 +321,7 @@ namespace ZScreenLib
         public bool AutoSwitchFileUploader = true;
         public decimal ErrorRetryCount = 2;
         public bool ImageUploadRetryOnFail = true;
-        public bool ImageUploadRandomRetryOnFail = true;
+        public bool ImageUploadRandomRetryOnFail = false;
         public bool AddFailedScreenshot = true;
         public bool ImageUploadRetryOnTimeout = false;
         public decimal UploadDurationLimit = 15000;

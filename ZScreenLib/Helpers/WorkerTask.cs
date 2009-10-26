@@ -35,6 +35,7 @@ using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
 using ZScreenLib.Properties;
+using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -325,7 +326,10 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureActiveWindow());
+                using (MyTimer timer = new MyTimer("CaptureActiveWindow", false))
+                {
+                    this.SetImage(User32.CaptureActiveWindow());
+                }
             }
         }
 

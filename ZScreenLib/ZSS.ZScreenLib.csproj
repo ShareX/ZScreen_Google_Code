@@ -149,6 +149,7 @@
     <Compile Include="Helpers\HistoryItem.cs" />
     <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\IECapt.cs" />
+    <Compile Include="Helpers\MyTimer.cs" />
     <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
