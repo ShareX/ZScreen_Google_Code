@@ -38,7 +38,7 @@ namespace ZScreenLib.Helpers
         public Image LoadingImage { get; set; }
 
         private Queue<Thumbnail> thumbnails;
-        private PictureBox pictureBox;
+        private PictureBox mPictureBox;
         private int capacity;
         private BackgroundWorker worker;
         private int bufferSize = 2048;
@@ -48,8 +48,8 @@ namespace ZScreenLib.Helpers
 
         public ThumbnailCacher(PictureBox pictureBox, Size thumbnailSize, int capacity)
         {
-            this.pictureBox = pictureBox;
-            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            this.mPictureBox = pictureBox;
+            mPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             this.ThumbnailSize = thumbnailSize;
             this.capacity = capacity;
             thumbnails = new Queue<Thumbnail>(capacity);
@@ -107,7 +107,8 @@ namespace ZScreenLib.Helpers
                     {
                         using (Image image = Image.FromStream(stream))
                         {
-                            thumb.Image = GraphicsMgr.ChangeImageSize(image, ThumbnailSize, true);
+                        	float perc = ThumbnailSize.Width *100 / image.Width;
+                            thumb.Image = GraphicsMgr.ChangeImageSize(image, perc);
                             e.Result = thumb;
                         }
                     }
@@ -194,9 +195,9 @@ namespace ZScreenLib.Helpers
 
         private void SetImage(Image image)
         {
-            if (pictureBox != null)
+            if (mPictureBox != null)
             {
-                pictureBox.Image = image;
+                mPictureBox.Image = image;
             }
         }
 
