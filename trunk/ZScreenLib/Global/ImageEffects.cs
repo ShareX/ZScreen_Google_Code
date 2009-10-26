@@ -428,9 +428,9 @@ namespace ZScreenLib
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 SolidBrush brush;
-                for (int y = 0; y < img.Height / boxSize; y++)
+                for (int y = 0; y <= img.Height / boxSize; y++)
                 {
-                    for (int x = 0; x < img.Width / boxSize; x++)
+                    for (int x = 0; x <= img.Width / boxSize; x++)
                     {
                         if ((x + y) % 2 == 0)
                         {
