@@ -443,8 +443,11 @@ namespace ZScreenGUI
             nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             cbSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
+
             cbSelectedWindowCleanBackground.Checked = Engine.conf.SelectedWindowCleanBackground;
             cbSelectedWindowCleanTransparentCorners.Checked = Engine.conf.SelectedWindowCleanTransparentCorners;
+            cbSelectedWindowIncludeShadow.Checked = Engine.conf.SelectedWindowIncludeShadows;
+            cbSelectedWindowShowCheckers.Checked = Engine.conf.SelectedWindowShowCheckers;
 
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
@@ -4589,6 +4592,16 @@ namespace ZScreenGUI
         private void chkImageUploadRandomRetryOnFail_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageUploadRandomRetryOnFail = chkImageUploadRandomRetryOnFail.Checked;
+        }
+
+        private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.SelectedWindowIncludeShadows = cbSelectedWindowIncludeShadow.Checked;
+        }
+
+        private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.SelectedWindowShowCheckers = cbSelectedWindowShowCheckers.Checked;
         }
     }
 }

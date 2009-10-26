@@ -189,7 +189,14 @@ namespace ZScreenLib
 
         public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
+            return CaptureWindow(handle, showCursor, 0);
+        }
+
+        public static Image CaptureWindow(IntPtr handle, bool showCursor, int offset)
+        {
             Rectangle windowRect = GetWindowRectangle(handle);
+            if (offset > 0) windowRect = RectangleAddOffset(windowRect, offset);
+
             Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(img);
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
@@ -199,6 +206,15 @@ namespace ZScreenLib
             img = MakeBackgroundTransparent(handle, img);
 
             return img;
+        }
+
+        public static Rectangle RectangleAddOffset(Rectangle rect, int offset)
+        {
+            rect.X -= offset;
+            rect.Y -= offset;
+            rect.Width += offset * 2;
+            rect.Height += offset * 2;
+            return rect;
         }
 
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
@@ -400,6 +416,11 @@ namespace ZScreenLib
             {
                 Rectangle windowRect = User32.GetWindowRectangle(handle);
 
+                if (Engine.conf.SelectedWindowIncludeShadows)
+                {
+                    windowRect = RectangleAddOffset(windowRect, 15);
+                }
+
                 using (Form form = new Form())
                 {
                     form.FormBorderStyle = FormBorderStyle.None;
@@ -417,7 +438,7 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window with a black background
-                        Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                        Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, 15) as Bitmap;
                         //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
                         form.BackColor = Color.White;
@@ -427,18 +448,19 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window again with a white background this time
-                        Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                        Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, 15) as Bitmap;
                         //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
 
                         // compute the real window image by difference between the two previous images
                         windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
 
-#if DEBUG
-                        windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
-#endif
+                        if (Engine.conf.SelectedWindowShowCheckers)
+                        {
+                            windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
+                        }
                     }
 
-                    if (Engine.conf.SelectedWindowCleanTransparentCorners)
+                    if (Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
                     {
                         form.BackColor = Color.White;
                         form.Show();

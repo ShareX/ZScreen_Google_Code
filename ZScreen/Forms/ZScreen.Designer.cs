@@ -228,8 +228,6 @@ namespace ZScreenGUI
             this.lblGridSizeHeight = new System.Windows.Forms.Label();
             this.nudCropGridWidth = new System.Windows.Forms.NumericUpDown();
             this.tpSelectedWindow = new System.Windows.Forms.TabPage();
-            this.cbSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
-            this.cbSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
             this.cbSelectedWindowCaptureObjects = new System.Windows.Forms.CheckBox();
             this.nudSelectedWindowHueRange = new System.Windows.Forms.NumericUpDown();
             this.lblSelectedWindowHueRange = new System.Windows.Forms.Label();
@@ -322,6 +320,9 @@ namespace ZScreenGUI
             this.lblActiveWindowPreview = new System.Windows.Forms.Label();
             this.txtActiveWindow = new System.Windows.Forms.TextBox();
             this.tpCaptureQuality = new System.Windows.Forms.TabPage();
+            this.gbActiveWindow = new System.Windows.Forms.GroupBox();
+            this.cbSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
+            this.cbSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
             this.gbImageSize = new System.Windows.Forms.GroupBox();
             this.rbImageSizeDefault = new System.Windows.Forms.RadioButton();
             this.lblImageSizeFixedHeight = new System.Windows.Forms.Label();
@@ -559,7 +560,8 @@ namespace ZScreenGUI
             this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
             this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
-            this.gbActiveWindow = new System.Windows.Forms.GroupBox();
+            this.cbSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
+            this.cbSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -641,6 +643,7 @@ namespace ZScreenGUI
             this.gbCodeTitle.SuspendLayout();
             this.gbActiveWindowNaming.SuspendLayout();
             this.tpCaptureQuality.SuspendLayout();
+            this.gbActiveWindow.SuspendLayout();
             this.gbImageSize.SuspendLayout();
             this.gbPictureQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
@@ -701,7 +704,6 @@ namespace ZScreenGUI
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.gbActiveWindow.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -2815,28 +2817,6 @@ namespace ZScreenGUI
             this.tpSelectedWindow.Text = "Selected Window";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
             // 
-            // cbSelectedWindowCleanTransparentCorners
-            // 
-            this.cbSelectedWindowCleanTransparentCorners.AutoSize = true;
-            this.cbSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 48);
-            this.cbSelectedWindowCleanTransparentCorners.Name = "cbSelectedWindowCleanTransparentCorners";
-            this.cbSelectedWindowCleanTransparentCorners.Size = new System.Drawing.Size(147, 17);
-            this.cbSelectedWindowCleanTransparentCorners.TabIndex = 44;
-            this.cbSelectedWindowCleanTransparentCorners.Text = "Clean transparent corners";
-            this.cbSelectedWindowCleanTransparentCorners.UseVisualStyleBackColor = true;
-            this.cbSelectedWindowCleanTransparentCorners.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanTransparentCorners_CheckedChanged);
-            // 
-            // cbSelectedWindowCleanBackground
-            // 
-            this.cbSelectedWindowCleanBackground.AutoSize = true;
-            this.cbSelectedWindowCleanBackground.Location = new System.Drawing.Point(16, 24);
-            this.cbSelectedWindowCleanBackground.Name = "cbSelectedWindowCleanBackground";
-            this.cbSelectedWindowCleanBackground.Size = new System.Drawing.Size(113, 17);
-            this.cbSelectedWindowCleanBackground.TabIndex = 43;
-            this.cbSelectedWindowCleanBackground.Text = "Clean background";
-            this.cbSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
-            this.cbSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
-            // 
             // cbSelectedWindowCaptureObjects
             // 
             this.cbSelectedWindowCaptureObjects.AutoSize = true;
@@ -3922,6 +3902,41 @@ namespace ZScreenGUI
             this.tpCaptureQuality.TabIndex = 0;
             this.tpCaptureQuality.Text = "Image Settings";
             this.tpCaptureQuality.UseVisualStyleBackColor = true;
+            // 
+            // gbActiveWindow
+            // 
+            this.gbActiveWindow.Controls.Add(this.cbSelectedWindowShowCheckers);
+            this.gbActiveWindow.Controls.Add(this.cbSelectedWindowIncludeShadow);
+            this.gbActiveWindow.Controls.Add(this.cbSelectedWindowCleanBackground);
+            this.gbActiveWindow.Controls.Add(this.cbSelectedWindowCleanTransparentCorners);
+            this.gbActiveWindow.Location = new System.Drawing.Point(8, 288);
+            this.gbActiveWindow.Name = "gbActiveWindow";
+            this.gbActiveWindow.Size = new System.Drawing.Size(768, 104);
+            this.gbActiveWindow.TabIndex = 125;
+            this.gbActiveWindow.TabStop = false;
+            this.gbActiveWindow.Text = "Active Window";
+            // 
+            // cbSelectedWindowCleanBackground
+            // 
+            this.cbSelectedWindowCleanBackground.AutoSize = true;
+            this.cbSelectedWindowCleanBackground.Location = new System.Drawing.Point(16, 24);
+            this.cbSelectedWindowCleanBackground.Name = "cbSelectedWindowCleanBackground";
+            this.cbSelectedWindowCleanBackground.Size = new System.Drawing.Size(113, 17);
+            this.cbSelectedWindowCleanBackground.TabIndex = 43;
+            this.cbSelectedWindowCleanBackground.Text = "Clean background";
+            this.cbSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
+            // 
+            // cbSelectedWindowCleanTransparentCorners
+            // 
+            this.cbSelectedWindowCleanTransparentCorners.AutoSize = true;
+            this.cbSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 48);
+            this.cbSelectedWindowCleanTransparentCorners.Name = "cbSelectedWindowCleanTransparentCorners";
+            this.cbSelectedWindowCleanTransparentCorners.Size = new System.Drawing.Size(147, 17);
+            this.cbSelectedWindowCleanTransparentCorners.TabIndex = 44;
+            this.cbSelectedWindowCleanTransparentCorners.Text = "Clean transparent corners";
+            this.cbSelectedWindowCleanTransparentCorners.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowCleanTransparentCorners.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanTransparentCorners_CheckedChanged);
             // 
             // gbImageSize
             // 
@@ -6644,16 +6659,27 @@ namespace ZScreenGUI
             this.ucProxyAccounts.Size = new System.Drawing.Size(785, 313);
             this.ucProxyAccounts.TabIndex = 0;
             // 
-            // gbActiveWindow
+            // cbSelectedWindowIncludeShadow
             // 
-            this.gbActiveWindow.Controls.Add(this.cbSelectedWindowCleanBackground);
-            this.gbActiveWindow.Controls.Add(this.cbSelectedWindowCleanTransparentCorners);
-            this.gbActiveWindow.Location = new System.Drawing.Point(8, 288);
-            this.gbActiveWindow.Name = "gbActiveWindow";
-            this.gbActiveWindow.Size = new System.Drawing.Size(768, 104);
-            this.gbActiveWindow.TabIndex = 125;
-            this.gbActiveWindow.TabStop = false;
-            this.gbActiveWindow.Text = "Active Window";
+            this.cbSelectedWindowIncludeShadow.AutoSize = true;
+            this.cbSelectedWindowIncludeShadow.Location = new System.Drawing.Point(136, 24);
+            this.cbSelectedWindowIncludeShadow.Name = "cbSelectedWindowIncludeShadow";
+            this.cbSelectedWindowIncludeShadow.Size = new System.Drawing.Size(101, 17);
+            this.cbSelectedWindowIncludeShadow.TabIndex = 45;
+            this.cbSelectedWindowIncludeShadow.Text = "Include shadow";
+            this.cbSelectedWindowIncludeShadow.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowIncludeShadow.CheckedChanged += new System.EventHandler(this.cbSelectedWindowIncludeShadow_CheckedChanged);
+            // 
+            // cbSelectedWindowShowCheckers
+            // 
+            this.cbSelectedWindowShowCheckers.AutoSize = true;
+            this.cbSelectedWindowShowCheckers.Location = new System.Drawing.Point(240, 24);
+            this.cbSelectedWindowShowCheckers.Name = "cbSelectedWindowShowCheckers";
+            this.cbSelectedWindowShowCheckers.Size = new System.Drawing.Size(197, 17);
+            this.cbSelectedWindowShowCheckers.TabIndex = 46;
+            this.cbSelectedWindowShowCheckers.Text = "Show checker pattern behind image";
+            this.cbSelectedWindowShowCheckers.UseVisualStyleBackColor = true;
+            this.cbSelectedWindowShowCheckers.CheckedChanged += new System.EventHandler(this.cbSelectedWindowShowCheckers_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -6787,6 +6813,8 @@ namespace ZScreenGUI
             this.gbActiveWindowNaming.ResumeLayout(false);
             this.gbActiveWindowNaming.PerformLayout();
             this.tpCaptureQuality.ResumeLayout(false);
+            this.gbActiveWindow.ResumeLayout(false);
+            this.gbActiveWindow.PerformLayout();
             this.gbImageSize.ResumeLayout(false);
             this.gbImageSize.PerformLayout();
             this.gbPictureQuality.ResumeLayout(false);
@@ -6875,8 +6903,6 @@ namespace ZScreenGUI
             this.gbStatistics.PerformLayout();
             this.gbLastSource.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.gbActiveWindow.ResumeLayout(false);
-            this.gbActiveWindow.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -7406,6 +7432,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbSelectedWindowCleanBackground;
         private System.Windows.Forms.CheckBox cbSelectedWindowCleanTransparentCorners;
         private System.Windows.Forms.GroupBox gbActiveWindow;
+        private System.Windows.Forms.CheckBox cbSelectedWindowShowCheckers;
+        private System.Windows.Forms.CheckBox cbSelectedWindowIncludeShadow;
 
     }
 }
