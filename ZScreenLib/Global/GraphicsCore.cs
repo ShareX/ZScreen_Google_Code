@@ -403,6 +403,7 @@ namespace ZScreenLib
                 using (Form form = new Form())
                 {
                     form.FormBorderStyle = FormBorderStyle.None;
+                    form.ShowInTaskbar = false;
 
                     if (Engine.conf.SelectedWindowCleanBackground)
                     {
@@ -412,6 +413,7 @@ namespace ZScreenLib
                         User32.ActivateWindowRepeat(handle, 250);
                         form.Refresh();
                         User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                        Thread.Sleep(1);
                         Application.DoEvents();
 
                         // capture the window with a black background
@@ -421,6 +423,7 @@ namespace ZScreenLib
                         form.BackColor = Color.White;
                         form.Refresh();
                         User32.ActivateWindowRepeat(handle, 250);
+                        Thread.Sleep(1);
                         Application.DoEvents();
 
                         // capture the window again with a white background this time
@@ -445,6 +448,7 @@ namespace ZScreenLib
                         form.Paint += new PaintEventHandler(FormPaintRedCorners);
                         form.Refresh();
                         User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                        Thread.Sleep(1);
                         Application.DoEvents();
                         Bitmap redCornersImage = User32.CaptureWindow(handle, false) as Bitmap;
 
@@ -465,11 +469,11 @@ namespace ZScreenLib
                             windowImage = (Image)result.Clone();
                         }
                     }
+                }
 
-                    if (windowImage == null)
-                    {
-                        windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor);
-                    }
+                if (windowImage == null)
+                {
+                    windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor);
                 }
             }
 
