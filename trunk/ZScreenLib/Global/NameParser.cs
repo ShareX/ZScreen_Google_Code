@@ -27,6 +27,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ZScreenLib
 {
@@ -64,6 +65,8 @@ namespace ZScreenLib
         height,
         [Description("ZScreen version")]
         ver,
+        [Description("Product information")]
+        app,
         [Description("New line")]
         n
     }
@@ -158,7 +161,7 @@ namespace ZScreenLib
                 string activeWindow = User32.GetWindowLabel();
                 if (string.IsNullOrEmpty(activeWindow))
                 {
-                    activeWindow = "ZScreen";
+                    activeWindow = Application.ProductName;
                 }
                 sb = sb.Replace(ToString(ReplacementVariables.t), activeWindow);
             }
@@ -220,6 +223,7 @@ namespace ZScreenLib
             #endregion
 
             sb = sb.Replace(ToString(ReplacementVariables.ver), Application.ProductVersion);
+            sb = sb.Replace(ToString(ReplacementVariables.app), Engine.GetProductName());
 
             if (nameParser.Type == NameParserType.Watermark)
             {
@@ -263,16 +267,28 @@ namespace ZScreenLib
         /// </summary>
         public static StringBuilder Normalize(StringBuilder sb, bool convertSpace)
         {
-            StringBuilder temp = new StringBuilder("");
+            char[] unCharsFile = Path.GetInvalidFileNameChars();
+            char[] unCharsPath = Path.GetInvalidPathChars();
 
-            foreach (char c in sb.ToString())
+            string fName = sb.ToString();
+
+            foreach (char c in unCharsFile)
             {
-                if (char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_' || (c == ' ' && !convertSpace)) temp.Append(c);
-
-                if (c == ' ' && convertSpace) temp.Append('_');
+                fName = fName.Replace(c, '_');
             }
-
-            return temp;
+            foreach (char c in unCharsPath)
+            {
+                fName = fName.Replace(c, '_');
+            }
+            while (fName.StartsWith("."))
+            {
+                fName = fName.Remove(0, 1);
+            }
+            if (convertSpace)
+            {
+                fName = fName.Replace(" ", "_");
+            }
+            return new StringBuilder(fName);
         }
 
         private static string ToString(ReplacementVariables replacement)
