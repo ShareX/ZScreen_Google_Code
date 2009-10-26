@@ -393,89 +393,84 @@ namespace ZScreenLib
         /// </summary>
         public static Image CaptureActiveWindow()
         {
-            IntPtr handle = User32.GetWindowHandle();
-            Rectangle windowRect = User32.GetWindowRectangle(handle);
-            Form form = null;
-
             Image windowImage = null;
+            IntPtr handle = User32.GetForegroundWindow();
 
-            if (Engine.conf.SelectedWindowCleanBackground)
+            if (handle.ToInt32() > 0)
             {
-                // create form behind the window to remove the dirty Aero background
-                form = new Form();
+                Rectangle windowRect = User32.GetWindowRectangle(handle);
 
-                form.BackColor = Color.Black;
-                form.FormBorderStyle = FormBorderStyle.None;
-                form.Show();
-                User32.ActivateWindowRepeat(handle, 500);
-                form.Refresh();
-                User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                Application.DoEvents();
+                using (Form form = new Form())
+                {
+                    form.FormBorderStyle = FormBorderStyle.None;
 
-                // capture the window with a black background
-                Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
-                //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
+                    if (Engine.conf.SelectedWindowCleanBackground)
+                    {
+                        // create form behind the window to remove the dirty Aero background
+                        form.BackColor = Color.Black;
+                        form.Show();
+                        User32.ActivateWindowRepeat(handle, 250);
+                        form.Refresh();
+                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                        Application.DoEvents();
 
-                form.BackColor = Color.White;
-                form.Refresh();
-                User32.ActivateWindowRepeat(handle, 500);
-                Application.DoEvents();
+                        // capture the window with a black background
+                        Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                        //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
-                // capture the window again with a white background this time
-                Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
-                //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
+                        form.BackColor = Color.White;
+                        User32.ActivateWindowRepeat(handle, 250);
+                        form.Refresh();
+                        Application.DoEvents();
 
-                // compute the real window image by difference between the two previous images
-                windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
+                        // capture the window again with a white background this time
+                        Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
+                        //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
+
+                        // compute the real window image by difference between the two previous images
+                        windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
 
 #if DEBUG
-                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
+                        windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
 #endif
-            }
-            else
-            {
-                windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor) as Bitmap;
-            }
-
-            if (Engine.conf.SelectedWindowCleanTransparentCorners)
-            {
-                if (form == null)
-                {
-                    form = new Form();
-                    form.BackColor = Color.White;
-                    form.FormBorderStyle = FormBorderStyle.None;
-                    form.Show();
-                    User32.ActivateWindowRepeat(handle, 500);
-                }
-
-                // paints red corners behind the form, so that they can be recognized and removed
-                form.Paint += new PaintEventHandler(FormPaintRedCorners);
-                form.Refresh();
-                User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                Application.DoEvents();
-                Bitmap redCornersImage = User32.CaptureWindow(handle, false) as Bitmap;
-
-                using (Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb))
-                {
-                    using (Graphics g = Graphics.FromImage(result))
-                    {
-                        g.Clear(Color.Transparent);
-
-                        // remove the transparent pixels in the four corners
-                        RemoveCorner(redCornersImage, g, 0, 0, 5, Corner.TopLeft);
-                        RemoveCorner(redCornersImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
-                        RemoveCorner(redCornersImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
-                        RemoveCorner(redCornersImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
-                        g.DrawImage(windowImage, 0, 0);
                     }
 
-                    windowImage = (Image)result.Clone();
-                }
-            }
+                    if (Engine.conf.SelectedWindowCleanTransparentCorners)
+                    {
+                        form.BackColor = Color.White;
+                        form.Show();
+                        User32.ActivateWindowRepeat(handle, 250);
 
-            if (form != null)
-            {
-                form.Close();
+                        // paints red corners behind the form, so that they can be recognized and removed
+                        form.Paint += new PaintEventHandler(FormPaintRedCorners);
+                        form.Refresh();
+                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                        Application.DoEvents();
+                        Bitmap redCornersImage = User32.CaptureWindow(handle, false) as Bitmap;
+
+                        using (Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb))
+                        {
+                            using (Graphics g = Graphics.FromImage(result))
+                            {
+                                g.Clear(Color.Transparent);
+
+                                // remove the transparent pixels in the four corners
+                                RemoveCorner(redCornersImage, g, 0, 0, 5, Corner.TopLeft);
+                                RemoveCorner(redCornersImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
+                                RemoveCorner(redCornersImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
+                                RemoveCorner(redCornersImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
+                                g.DrawImage(windowImage, 0, 0);
+                            }
+
+                            windowImage = (Image)result.Clone();
+                        }
+                    }
+
+                    if (windowImage == null)
+                    {
+                        windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor);
+                    }
+                }
             }
 
             return windowImage;
@@ -508,7 +503,7 @@ namespace ZScreenLib
             // access the image data directly for faster image processing
             BitmapData blackImageData = blackBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             BitmapData whiteImageData = whiteBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            BitmapData resultImageData = resultImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData resultImageData = resultImage.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
             IntPtr pBlackImage = blackImageData.Scan0;
             IntPtr pWhiteImage = whiteImageData.Scan0;
