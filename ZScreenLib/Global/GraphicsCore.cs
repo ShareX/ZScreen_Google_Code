@@ -29,6 +29,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using MS.WindowsAPICodePack.Internal;
 
 namespace ZScreenLib
 {
@@ -414,9 +415,9 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-                Rectangle windowRect = User32.GetWindowRectangle(handle);
+            	Rectangle windowRect = User32.GetWindowRectangle(handle);
 
-                if (Engine.conf.SelectedWindowIncludeShadows)
+                if (!CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowIncludeShadows)
                 {
                     windowRect = RectangleAddOffset(windowRect, 15);
                 }
@@ -426,7 +427,7 @@ namespace ZScreenLib
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.ShowInTaskbar = false;
 
-                    if (Engine.conf.SelectedWindowCleanBackground)
+                    if (!CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowCleanBackground)
                     {
                         // create form behind the window to remove the dirty Aero background
                         form.BackColor = Color.Black;
@@ -438,7 +439,8 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window with a black background
-                        Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, 15) as Bitmap;
+                        int offset = !CoreHelpers.RunningOnXP &&  Engine.conf.SelectedWindowIncludeShadows ? 15 : 0;
+                        Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
                         //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
                         form.BackColor = Color.White;
@@ -448,7 +450,7 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window again with a white background this time
-                        Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, 15) as Bitmap;
+                        Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
                         //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
 
                         // compute the real window image by difference between the two previous images
