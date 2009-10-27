@@ -456,6 +456,49 @@ namespace ZScreenLib
             return bmp;
         }
 
+        public static Image AutoCropImage(Bitmap bmp)
+        {
+            int x = 0, y = 0, width = bmp.Width, height = bmp.Height;
+
+            for (int i = 0; i < bmp.Width; i++)
+            {
+                if (bmp.GetPixel(i, bmp.Height / 2).A > 0)
+                {
+                    x = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < bmp.Height; i++)
+            {
+                if (bmp.GetPixel(bmp.Width / 2, i).A > 0)
+                {
+                    y = i;
+                    break;
+                }
+            }
+
+            for (int i = bmp.Width - 1; i > x; i--)
+            {
+                if (bmp.GetPixel(i, bmp.Height / 2).A > 0)
+                {
+                    width = i - x + 1;
+                    break;
+                }
+            }
+
+            for (int i = bmp.Height - 1; i > y; i--)
+            {
+                if (bmp.GetPixel(bmp.Width / 2, i).A > 0)
+                {
+                    height = i - y + 1;
+                    break;
+                }
+            }
+
+            return GraphicsMgr.CropImage(bmp, new Rectangle(x, y, width, height));
+        }
+
         public static Image ChangeImageSize(Image img, int width, int height, bool preserveSize)
         {
             if (preserveSize)
