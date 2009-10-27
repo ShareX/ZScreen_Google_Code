@@ -117,22 +117,15 @@ namespace ZScreenLib
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     }
 
-                    if (imgFormat == ImageFormat.Gif)
+                    int retry = 3;
+                    while (retry > 0 && !File.Exists(filePath))
                     {
-                        GraphicsMgr.SaveGIFWithNewColorTable(img, filePath, 256, false);
-                    }
-                    else
-                    {
-                        int retry = 3;
-                        while (retry > 0 && !File.Exists(filePath))
+                        using (FileStream fi = File.Create(filePath))
                         {
-                            using (FileStream fi = File.Create(filePath))
-                            {
-                                if (retry < 3) { System.Threading.Thread.Sleep(1000); }
-                                FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
-                                ms.WriteTo(fi);
-                                retry--;
-                            }
+                            if (retry < 3) { System.Threading.Thread.Sleep(1000); }
+                            FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
+                            ms.WriteTo(fi);
+                            retry--;
                         }
                     }
                 }
