@@ -211,10 +211,14 @@ namespace ZScreenLib
 
         public static Rectangle RectangleAddOffset(Rectangle rect, int offset)
         {
-            rect.X -= offset;
-            rect.Y -= offset;
-            rect.Width += offset * 2;
-            rect.Height += offset * 2;
+            if (offset > 0)
+            {
+                rect.X -= offset;
+                rect.Y -= offset;
+                rect.Width += offset * 2;
+                rect.Height += offset * 2;
+            }
+
             return rect;
         }
 
@@ -417,11 +421,6 @@ namespace ZScreenLib
             {
                 Rectangle windowRect = User32.GetWindowRectangle(handle);
 
-                if (Engine.HasAero && Engine.conf.SelectedWindowIncludeShadows)
-                {
-                    windowRect = RectangleAddOffset(windowRect, 15);
-                }
-
                 using (Form form = new Form())
                 {
                     form.FormBorderStyle = FormBorderStyle.None;
@@ -429,6 +428,10 @@ namespace ZScreenLib
 
                     if (Engine.HasAero && Engine.conf.SelectedWindowCleanBackground)
                     {
+                        int offset = Engine.conf.SelectedWindowIncludeShadows ? 20 : 0;
+
+                        windowRect = RectangleAddOffset(windowRect, offset);
+
                         // create form behind the window to remove the dirty Aero background
                         form.BackColor = Color.Black;
                         form.Show();
@@ -439,7 +442,6 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window with a black background
-                        int offset = Engine.HasAero && Engine.conf.SelectedWindowIncludeShadows ? 15 : 0;
                         Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
                         //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
@@ -455,6 +457,11 @@ namespace ZScreenLib
 
                         // compute the real window image by difference between the two previous images
                         windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
+
+                        if (offset > 0)
+                        {
+                            windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
+                        }
 
                         if (Engine.conf.SelectedWindowShowCheckers)
                         {
