@@ -271,7 +271,7 @@ namespace ZScreenLib
         /// Function to update Default Folder Paths based on Root folder
         /// </summary>
         public static void InitializeDefaultFolderPaths()
-        {            
+        {
             FilesDir = Path.Combine(RootAppFolder, "Files");
             LogsDir = Path.Combine(RootAppFolder, "Logs");
             SettingsDir = Path.Combine(RootAppFolder, "Settings");
@@ -352,6 +352,18 @@ namespace ZScreenLib
                                Application.ExecutablePath + " /doc %1",
                                GetExtensionsToRegister());
                 }
+            }
+        }
+
+        /// <summary>
+        /// Method to return if Windows Vista or Windows 7 or above
+        /// </summary>
+        /// <returns></returns>
+        public static bool HasAero
+        {
+            get
+            {
+                return Environment.OSVersion.Version.Major >= 6;
             }
         }
 
