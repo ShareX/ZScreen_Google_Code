@@ -415,7 +415,7 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-            	Rectangle windowRect = User32.GetWindowRectangle(handle);
+                Rectangle windowRect = User32.GetWindowRectangle(handle);
 
                 if (!CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowIncludeShadows)
                 {
@@ -439,7 +439,7 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window with a black background
-                        int offset = !CoreHelpers.RunningOnXP &&  Engine.conf.SelectedWindowIncludeShadows ? 15 : 0;
+                        int offset = !CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowIncludeShadows ? 15 : 0;
                         Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
                         //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
