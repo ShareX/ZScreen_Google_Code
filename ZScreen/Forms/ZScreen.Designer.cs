@@ -6677,7 +6677,7 @@ namespace ZScreenGUI
             this.cbSelectedWindowShowCheckers.Name = "cbSelectedWindowShowCheckers";
             this.cbSelectedWindowShowCheckers.Size = new System.Drawing.Size(197, 17);
             this.cbSelectedWindowShowCheckers.TabIndex = 46;
-            this.cbSelectedWindowShowCheckers.Text = "Show checker pattern behind image";
+            this.cbSelectedWindowShowCheckers.Text = "Show checkerboard pattern behind the image";
             this.cbSelectedWindowShowCheckers.UseVisualStyleBackColor = true;
             this.cbSelectedWindowShowCheckers.CheckedChanged += new System.EventHandler(this.cbSelectedWindowShowCheckers_CheckedChanged);
             // 

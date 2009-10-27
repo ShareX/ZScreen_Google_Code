@@ -34,7 +34,7 @@ namespace ZScreenLib
         public ShowScreenshot(Image image)
         {
             this.screenshot = (Image)image.Clone();
-            this.BackColor = Color.Black;
+            this.BackColor = Color.FloralWhite;
             this.Cursor = Cursors.Hand;
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
