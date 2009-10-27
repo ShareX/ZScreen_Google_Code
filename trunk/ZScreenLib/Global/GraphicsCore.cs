@@ -196,7 +196,7 @@ namespace ZScreenLib
         public static Image CaptureWindow(IntPtr handle, bool showCursor, int offset)
         {
             Rectangle windowRect = GetWindowRectangle(handle);
-            if (offset > 0) windowRect = RectangleAddOffset(windowRect, offset);
+            windowRect = RectangleAddOffset(windowRect, offset);
 
             Image img = new Bitmap(windowRect.Width, windowRect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(img);
@@ -204,21 +204,17 @@ namespace ZScreenLib
             if (showCursor) DrawCursor(img, windowRect.Location);
 
             //img = PrintWindow(handle);
-            img = MakeBackgroundTransparent(handle, img);
+            //img = MakeBackgroundTransparent(handle, img);
 
             return img;
         }
 
         public static Rectangle RectangleAddOffset(Rectangle rect, int offset)
         {
-            if (offset > 0)
-            {
-                rect.X -= offset;
-                rect.Y -= offset;
-                rect.Width += offset * 2;
-                rect.Height += offset * 2;
-            }
-
+            rect.X -= offset;
+            rect.Y -= offset;
+            rect.Width += offset * 2;
+            rect.Height += offset * 2;
             return rect;
         }
 
