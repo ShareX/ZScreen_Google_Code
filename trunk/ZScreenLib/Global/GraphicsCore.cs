@@ -417,7 +417,7 @@ namespace ZScreenLib
             {
                 Rectangle windowRect = User32.GetWindowRectangle(handle);
 
-                if (!CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowIncludeShadows)
+                if (Engine.HasAero && Engine.conf.SelectedWindowIncludeShadows)
                 {
                     windowRect = RectangleAddOffset(windowRect, 15);
                 }
@@ -427,7 +427,7 @@ namespace ZScreenLib
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.ShowInTaskbar = false;
 
-                    if (!CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowCleanBackground)
+                    if (Engine.HasAero && Engine.conf.SelectedWindowCleanBackground)
                     {
                         // create form behind the window to remove the dirty Aero background
                         form.BackColor = Color.Black;
@@ -439,7 +439,7 @@ namespace ZScreenLib
                         Application.DoEvents();
 
                         // capture the window with a black background
-                        int offset = !CoreHelpers.RunningOnXP && Engine.conf.SelectedWindowIncludeShadows ? 15 : 0;
+                        int offset = Engine.HasAero && Engine.conf.SelectedWindowIncludeShadows ? 15 : 0;
                         Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
                         //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
 
