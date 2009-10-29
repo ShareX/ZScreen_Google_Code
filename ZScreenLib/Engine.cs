@@ -135,7 +135,7 @@ namespace ZScreenLib
             else
             {
                 if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.appSettings.RootDir))
-                {
+                {                	
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     cw.ShowDialog();
                     Engine.appSettings.RootDir = cw.RootFolder;
@@ -152,6 +152,7 @@ namespace ZScreenLib
                 }
             }
 
+            FileSystem.AppendDebug("Config file: " + AppSettings.AppSettingsFile);
             FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
             RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
 
@@ -214,12 +215,12 @@ namespace ZScreenLib
         {
             if (string.IsNullOrEmpty(fp))
             {
-                FileSystem.AppendDebug("Reading " + Path.GetFileName(Engine.XMLSettingsFile));
+                FileSystem.AppendDebug("Reading " + Engine.XMLSettingsFile);
                 Engine.conf = XMLSettings.Read();
             }
             else
             {
-                FileSystem.AppendDebug("Reading " + Path.GetFileName(fp));
+                FileSystem.AppendDebug("Reading " + fp);
                 Engine.conf = XMLSettings.Read(fp);
             }
 
