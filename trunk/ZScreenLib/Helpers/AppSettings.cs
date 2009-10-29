@@ -12,7 +12,7 @@ namespace ZScreenLib
     [Serializable]
     public class AppSettings
     {
-        private static string AppSettingsFile = Path.Combine(Engine.LocalAppDataFolder, "AppSettings.xml");
+        public readonly static string AppSettingsFile = Path.Combine(Engine.LocalAppDataFolder, "AppSettings.xml");
 
         public string RootDir { get; set; }
         public string XMLSettingsFile { get; set; }
