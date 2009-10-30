@@ -465,7 +465,7 @@ namespace ZScreenLib
                         }
                     }
 
-                    if (Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
+                    if (windowImage != null && Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
                     {
                         form.BackColor = Color.White;
                         form.Show();

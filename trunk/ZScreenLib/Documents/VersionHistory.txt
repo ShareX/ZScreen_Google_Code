@@ -1,9 +1,11 @@
+Version 3.16 - 20091107
+
 3.16.0.0 Option to show checkerboard pattern as part of cleaning the window background {Jaex}
 3.15.0.0 Option to include shadow effect as part of cleaning the window background {Jaex}
 3.14.2.0 Cleaning the window background captures transparency {theone256}
 3.14.1.0 Extended support to capture layered windows {Jaex}
-3.14.0.0 Option to Clean Aero background under Vista/7 under Image Settings tab [Issue 157] {theone256}
-3.13.0.0 Option to capture rounded corners under Windows XP/Vista/7 [Issue 156] {theone256}
+3.14.0.0 Option to capture rounded corners under Windows XP/Vista/7 [Issue 156] {theone256}
+3.13.0.0 Option to Clean Aero background under Vista/7 under Image Settings tab [Issue 157] {theone256}
 3.12.7.0 Images in History tab will cache thumbnails to preview faster {Jaex}
 3.12.6.0 Users can drag n drop files to the History list box to upload {McoreD}
 3.12.5.0 Share on Twitter... in History tab will automatically shorten the URL {McoreD}

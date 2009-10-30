@@ -442,12 +442,12 @@ namespace ZScreenGUI
             nudSelectedWindowRegionInterval.Value = Engine.conf.SelectedWindowRegionInterval;
             nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
-            cbSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
+            chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
-            cbSelectedWindowCleanBackground.Checked = Engine.conf.SelectedWindowCleanBackground;
-            cbSelectedWindowCleanTransparentCorners.Checked = Engine.conf.SelectedWindowCleanTransparentCorners;
-            cbSelectedWindowIncludeShadow.Checked = Engine.conf.SelectedWindowIncludeShadows;
-            cbSelectedWindowShowCheckers.Checked = Engine.conf.SelectedWindowShowCheckers;
+            chkSelectedWindowCleanBackground.Checked = Engine.conf.SelectedWindowCleanBackground;
+            chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.SelectedWindowCleanTransparentCorners;
+            chkSelectedWindowIncludeShadow.Checked = Engine.conf.SelectedWindowIncludeShadows;
+            chkSelectedWindowShowCheckers.Checked = Engine.conf.SelectedWindowShowCheckers;
 
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
@@ -867,7 +867,7 @@ namespace ZScreenGUI
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
             chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
-            cbSaveFormSizePosition.Checked = Engine.conf.SaveFormSizePosition;
+            chkSaveFormSizePosition.Checked = Engine.conf.SaveFormSizePosition;
             cbLockFormSize.Checked = Engine.conf.LockFormSize;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
@@ -3951,22 +3951,48 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowCaptureObjects = cbSelectedWindowCaptureObjects.Checked;
+            Engine.conf.SelectedWindowCaptureObjects = chkSelectedWindowCaptureObjects.Checked;
         }
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowCleanBackground = cbSelectedWindowCleanBackground.Checked;
+            Engine.conf.SelectedWindowCleanBackground = chkSelectedWindowCleanBackground.Checked;
+            AeroGlassConfigUpdate();
+        }
+
+        private void AeroGlassConfigUpdate()
+        {
+            // Disable Clean Transparent Corners option of Clean Background is disabled
+            if (!chkSelectedWindowCleanBackground.Checked)
+            {
+                chkSelectedWindowCleanTransparentCorners.Checked = false;
+                chkSelectedWindowShowCheckers.Checked = false;
+            }
+
+            chkSelectedWindowCleanTransparentCorners.Enabled = chkSelectedWindowCleanBackground.Checked;
+            chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked;
+
+            if (chkSelectedWindowIncludeShadow.Checked)
+            {
+                chkSelectedWindowCleanTransparentCorners.Checked = false;                
+            }
+            else if (chkSelectedWindowCleanTransparentCorners.Checked)
+            {
+                chkSelectedWindowIncludeShadow.Checked = false;
+            }
+            chkSelectedWindowCleanTransparentCorners.Enabled = !chkSelectedWindowIncludeShadow.Checked;
+            chkSelectedWindowIncludeShadow.Enabled = !chkSelectedWindowCleanTransparentCorners.Checked;
         }
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowCleanTransparentCorners = cbSelectedWindowCleanTransparentCorners.Checked;
+            Engine.conf.SelectedWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
+            AeroGlassConfigUpdate();
         }
 
         private void cbSaveFormSizePosition_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SaveFormSizePosition = cbSaveFormSizePosition.Checked;
+            Engine.conf.SaveFormSizePosition = chkSaveFormSizePosition.Checked;
 
             if (mGuiIsReady)
             {
@@ -4596,12 +4622,13 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowIncludeShadows = cbSelectedWindowIncludeShadow.Checked;
+            Engine.conf.SelectedWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
+            AeroGlassConfigUpdate();
         }
 
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowShowCheckers = cbSelectedWindowShowCheckers.Checked;
+            Engine.conf.SelectedWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
         }
     }
 }
