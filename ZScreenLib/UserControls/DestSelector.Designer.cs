@@ -28,119 +28,120 @@
         /// </summary>
         private void InitializeComponent()
         {
-        	this.gbMainOptions = new System.Windows.Forms.GroupBox();
-        	this.cboFileUploaders = new System.Windows.Forms.ComboBox();
-        	this.lblFileUploader = new System.Windows.Forms.Label();
-        	this.cboURLShorteners = new System.Windows.Forms.ComboBox();
-        	this.lblURLShortener = new System.Windows.Forms.Label();
-        	this.lblImageUploader = new System.Windows.Forms.Label();
-        	this.lblTextUploader = new System.Windows.Forms.Label();
-        	this.cboImageUploaders = new System.Windows.Forms.ComboBox();
-        	this.cboTextUploaders = new System.Windows.Forms.ComboBox();
-        	this.gbMainOptions.SuspendLayout();
-        	this.SuspendLayout();
-        	// 
-        	// gbMainOptions
-        	// 
-        	this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-        	this.gbMainOptions.Controls.Add(this.cboFileUploaders);
-        	this.gbMainOptions.Controls.Add(this.lblFileUploader);
-        	this.gbMainOptions.Controls.Add(this.cboURLShorteners);
-        	this.gbMainOptions.Controls.Add(this.lblURLShortener);
-        	this.gbMainOptions.Controls.Add(this.lblImageUploader);
-        	this.gbMainOptions.Controls.Add(this.lblTextUploader);
-        	this.gbMainOptions.Controls.Add(this.cboImageUploaders);
-        	this.gbMainOptions.Controls.Add(this.cboTextUploaders);
-        	this.gbMainOptions.Location = new System.Drawing.Point(8, 8);
-        	this.gbMainOptions.Name = "gbMainOptions";
-        	this.gbMainOptions.Size = new System.Drawing.Size(360, 128);
-        	this.gbMainOptions.TabIndex = 80;
-        	this.gbMainOptions.TabStop = false;
-        	this.gbMainOptions.Text = "Destinations";
-        	// 
-        	// cboFileUploaders
-        	// 
-        	this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-        	this.cboFileUploaders.FormattingEnabled = true;
-        	this.cboFileUploaders.Location = new System.Drawing.Point(109, 70);
-        	this.cboFileUploaders.Name = "cboFileUploaders";
-        	this.cboFileUploaders.Size = new System.Drawing.Size(232, 21);
-        	this.cboFileUploaders.TabIndex = 126;
-        	// 
-        	// lblFileUploader
-        	// 
-        	this.lblFileUploader.AutoSize = true;
-        	this.lblFileUploader.Location = new System.Drawing.Point(69, 74);
-        	this.lblFileUploader.Name = "lblFileUploader";
-        	this.lblFileUploader.Size = new System.Drawing.Size(31, 13);
-        	this.lblFileUploader.TabIndex = 125;
-        	this.lblFileUploader.Text = "Files:";
-        	// 
-        	// cboURLShorteners
-        	// 
-        	this.cboURLShorteners.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-        	this.cboURLShorteners.FormattingEnabled = true;
-        	this.cboURLShorteners.Location = new System.Drawing.Point(109, 94);
-        	this.cboURLShorteners.Name = "cboURLShorteners";
-        	this.cboURLShorteners.Size = new System.Drawing.Size(232, 21);
-        	this.cboURLShorteners.TabIndex = 124;
-        	// 
-        	// lblURLShortener
-        	// 
-        	this.lblURLShortener.AutoSize = true;
-        	this.lblURLShortener.Location = new System.Drawing.Point(20, 97);
-        	this.lblURLShortener.Name = "lblURLShortener";
-        	this.lblURLShortener.Size = new System.Drawing.Size(81, 13);
-        	this.lblURLShortener.TabIndex = 123;
-        	this.lblURLShortener.Text = "URL Shortener:";
-        	// 
-        	// lblImageUploader
-        	// 
-        	this.lblImageUploader.AutoSize = true;
-        	this.lblImageUploader.Location = new System.Drawing.Point(56, 24);
-        	this.lblImageUploader.Name = "lblImageUploader";
-        	this.lblImageUploader.Size = new System.Drawing.Size(44, 13);
-        	this.lblImageUploader.TabIndex = 1;
-        	this.lblImageUploader.Text = "Images:";
-        	// 
-        	// lblTextUploader
-        	// 
-        	this.lblTextUploader.AutoSize = true;
-        	this.lblTextUploader.Location = new System.Drawing.Point(69, 49);
-        	this.lblTextUploader.Name = "lblTextUploader";
-        	this.lblTextUploader.Size = new System.Drawing.Size(31, 13);
-        	this.lblTextUploader.TabIndex = 122;
-        	this.lblTextUploader.Text = "Text:";
-        	// 
-        	// cboImageUploaders
-        	// 
-        	this.cboImageUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-        	this.cboImageUploaders.FormattingEnabled = true;
-        	this.cboImageUploaders.Location = new System.Drawing.Point(109, 22);
-        	this.cboImageUploaders.Name = "cboImageUploaders";
-        	this.cboImageUploaders.Size = new System.Drawing.Size(232, 21);
-        	this.cboImageUploaders.TabIndex = 0;
-        	// 
-        	// cboTextUploaders
-        	// 
-        	this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-        	this.cboTextUploaders.FormattingEnabled = true;
-        	this.cboTextUploaders.Location = new System.Drawing.Point(109, 46);
-        	this.cboTextUploaders.Name = "cboTextUploaders";
-        	this.cboTextUploaders.Size = new System.Drawing.Size(232, 21);
-        	this.cboTextUploaders.TabIndex = 121;
-        	// 
-        	// DestSelector
-        	// 
-        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.Controls.Add(this.gbMainOptions);
-        	this.MaximumSize = new System.Drawing.Size(378, 145);
-        	this.Name = "DestSelector";
-        	this.Size = new System.Drawing.Size(378, 145);
-        	this.gbMainOptions.ResumeLayout(false);
-        	this.gbMainOptions.PerformLayout();
-        	this.ResumeLayout(false);
+            this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
+            this.lblFileUploader = new System.Windows.Forms.Label();
+            this.cboURLShorteners = new System.Windows.Forms.ComboBox();
+            this.lblURLShortener = new System.Windows.Forms.Label();
+            this.lblImageUploader = new System.Windows.Forms.Label();
+            this.lblTextUploader = new System.Windows.Forms.Label();
+            this.cboImageUploaders = new System.Windows.Forms.ComboBox();
+            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
+            this.gbMainOptions.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // gbMainOptions
+            // 
+            this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
+            this.gbMainOptions.Controls.Add(this.cboFileUploaders);
+            this.gbMainOptions.Controls.Add(this.lblFileUploader);
+            this.gbMainOptions.Controls.Add(this.cboURLShorteners);
+            this.gbMainOptions.Controls.Add(this.lblURLShortener);
+            this.gbMainOptions.Controls.Add(this.lblImageUploader);
+            this.gbMainOptions.Controls.Add(this.lblTextUploader);
+            this.gbMainOptions.Controls.Add(this.cboImageUploaders);
+            this.gbMainOptions.Controls.Add(this.cboTextUploaders);
+            this.gbMainOptions.Location = new System.Drawing.Point(8, 8);
+            this.gbMainOptions.Name = "gbMainOptions";
+            this.gbMainOptions.Size = new System.Drawing.Size(360, 128);
+            this.gbMainOptions.TabIndex = 80;
+            this.gbMainOptions.TabStop = false;
+            this.gbMainOptions.Text = "Destinations";
+            // 
+            // cboFileUploaders
+            // 
+            this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFileUploaders.FormattingEnabled = true;
+            this.cboFileUploaders.Location = new System.Drawing.Point(109, 70);
+            this.cboFileUploaders.Name = "cboFileUploaders";
+            this.cboFileUploaders.Size = new System.Drawing.Size(232, 21);
+            this.cboFileUploaders.TabIndex = 126;
+            // 
+            // lblFileUploader
+            // 
+            this.lblFileUploader.AutoSize = true;
+            this.lblFileUploader.Location = new System.Drawing.Point(69, 74);
+            this.lblFileUploader.Name = "lblFileUploader";
+            this.lblFileUploader.Size = new System.Drawing.Size(31, 13);
+            this.lblFileUploader.TabIndex = 125;
+            this.lblFileUploader.Text = "Files:";
+            // 
+            // cboURLShorteners
+            // 
+            this.cboURLShorteners.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboURLShorteners.FormattingEnabled = true;
+            this.cboURLShorteners.Location = new System.Drawing.Point(109, 94);
+            this.cboURLShorteners.Name = "cboURLShorteners";
+            this.cboURLShorteners.Size = new System.Drawing.Size(232, 21);
+            this.cboURLShorteners.TabIndex = 124;
+            // 
+            // lblURLShortener
+            // 
+            this.lblURLShortener.AutoSize = true;
+            this.lblURLShortener.Location = new System.Drawing.Point(64, 97);
+            this.lblURLShortener.Name = "lblURLShortener";
+            this.lblURLShortener.Size = new System.Drawing.Size(37, 13);
+            this.lblURLShortener.TabIndex = 123;
+            this.lblURLShortener.Text = "URLs:";
+            // 
+            // lblImageUploader
+            // 
+            this.lblImageUploader.AutoSize = true;
+            this.lblImageUploader.Location = new System.Drawing.Point(56, 24);
+            this.lblImageUploader.Name = "lblImageUploader";
+            this.lblImageUploader.Size = new System.Drawing.Size(44, 13);
+            this.lblImageUploader.TabIndex = 1;
+            this.lblImageUploader.Text = "Images:";
+            // 
+            // lblTextUploader
+            // 
+            this.lblTextUploader.AutoSize = true;
+            this.lblTextUploader.Location = new System.Drawing.Point(69, 49);
+            this.lblTextUploader.Name = "lblTextUploader";
+            this.lblTextUploader.Size = new System.Drawing.Size(31, 13);
+            this.lblTextUploader.TabIndex = 122;
+            this.lblTextUploader.Text = "Text:";
+            // 
+            // cboImageUploaders
+            // 
+            this.cboImageUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboImageUploaders.FormattingEnabled = true;
+            this.cboImageUploaders.Location = new System.Drawing.Point(109, 22);
+            this.cboImageUploaders.Name = "cboImageUploaders";
+            this.cboImageUploaders.Size = new System.Drawing.Size(232, 21);
+            this.cboImageUploaders.TabIndex = 0;
+            // 
+            // cboTextUploaders
+            // 
+            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTextUploaders.FormattingEnabled = true;
+            this.cboTextUploaders.Location = new System.Drawing.Point(109, 46);
+            this.cboTextUploaders.Name = "cboTextUploaders";
+            this.cboTextUploaders.Size = new System.Drawing.Size(232, 21);
+            this.cboTextUploaders.TabIndex = 121;
+            // 
+            // DestSelector
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gbMainOptions);
+            this.MaximumSize = new System.Drawing.Size(378, 145);
+            this.Name = "DestSelector";
+            this.Size = new System.Drawing.Size(378, 145);
+            this.gbMainOptions.ResumeLayout(false);
+            this.gbMainOptions.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -79,7 +79,7 @@ ArchitecturesAllowed=x86 x64 ia64
 ArchitecturesInstallIn64BitMode=x64 ia64
 Compression=lzma/ultra64
 CreateAppDir=true
-DefaultDirName={pf}\ZScreen
+DefaultDirName={localappdata}\ZScreen
 DefaultGroupName={#ExeName}
 DirExistsWarning=no
 InfoAfterFile=..\..\ZScreenLib\Documents\license.txt
@@ -103,7 +103,7 @@ VersionInfoVersion={#MyAppVersion}
 
 ;required by products
 MinVersion=4.90.3000,5.0.2195sp3
-PrivilegesRequired=admin
+PrivilegesRequired=none
 AppID=ZScreen
 
 [Languages]
