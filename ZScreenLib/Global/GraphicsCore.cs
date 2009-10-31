@@ -485,12 +485,13 @@ namespace ZScreenLib
         public static Image CaptureActiveWindow()
         {
             Image windowImage = null;
+            Bitmap redBGImage = null;
             IntPtr handle = User32.GetForegroundWindow();
 
             if (handle.ToInt32() > 0)
             {
                 Rectangle windowRect = User32.GetWindowRectangle(handle);
-                
+
                 if (Engine.HasAero)
                 {
                     Console.WriteLine("Has Aero");
@@ -607,6 +608,15 @@ namespace ZScreenLib
                                 User32.ActivateWindowRepeat(handle, 250);
                                 Bitmap whiteBGImage2 = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor, offset) as Bitmap;
 
+                                if (Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
+                                {
+                                    form.BackColor = Color.Red;
+                                    form.Refresh();
+                                    User32.ActivateWindowRepeat(handle, 250);
+                                    redBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor, offset) as Bitmap;
+                                }
+
+
                                 // Don't do transparency calculation if an animated picture is detected
                                 if (AreBitmapsEqual(whiteBGImage, whiteBGImage2))
                                 {
@@ -669,43 +679,48 @@ namespace ZScreenLib
                 if (Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
                 {
                     Console.WriteLine("Clean transparent corners");
-                    using (Form form = new Form())
+
+                    if (redBGImage == null)
                     {
-                        form.FormBorderStyle = FormBorderStyle.None;
-                        form.ShowInTaskbar = false;
-                        form.BackColor = Color.White;
-                        form.Show();
-
-                        // disables aero, to avoid the shadow in the corners
-                        //SetDWMWindowAttributeNCRenderingPolicy(handle, DwmNCRenderingPolicy.Disabled);
-
-                        // paints red corners behind the form, so that they can be recognized and removed
-                        form.Paint += new PaintEventHandler(FormPaintRedCorners);
-                        form.Refresh();
-                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                        Thread.Sleep(1);
-                        Application.DoEvents();
-                        User32.ActivateWindowRepeat(handle, 250);
-
-                        Bitmap redCornersImage = User32.CaptureWindow(handle, false) as Bitmap;
-                        //redCornersImage.Save(@"c:\users\nicolas\documents\redCornersImage.png");
-
-                        //SetDWMWindowAttributeNCRenderingPolicy(handle, DwmNCRenderingPolicy.UseWindowStyle);
-
-                        Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
-                        using (Graphics g = Graphics.FromImage(result))
+                        using (Form form = new Form())
                         {
-                            g.Clear(Color.Transparent);
-                            //RemoveTransparentPixelsFromRegion(redCornersImage, g);
-                            // remove the transparent pixels in the four corners
-                            RemoveCorner(redCornersImage, g, 0, 0, 5, Corner.TopLeft);
-                            RemoveCorner(redCornersImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
-                            RemoveCorner(redCornersImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
-                            RemoveCorner(redCornersImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
-                            g.DrawImage(windowImage, 0, 0);
+                            form.FormBorderStyle = FormBorderStyle.None;
+                            form.ShowInTaskbar = false;
+                            form.BackColor = Color.White;
+                            form.Show();
+
+                            // disables aero, to avoid the shadow in the corners
+                            //SetDWMWindowAttributeNCRenderingPolicy(handle, DwmNCRenderingPolicy.Disabled);
+
+                            // paints red corners behind the form, so that they can be recognized and removed
+                            form.Paint += new PaintEventHandler(FormPaintRedCorners);
+                            form.Refresh();
+                            User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                            Thread.Sleep(1);
+                            Application.DoEvents();
+                            User32.ActivateWindowRepeat(handle, 250);
+
+                            redBGImage = User32.CaptureWindow(handle, false) as Bitmap;
                         }
-                        windowImage = result;
                     }
+                    //redBGImage.Save(@"c:\users\nicolas\documents\redCornersImage.png");
+
+                    //SetDWMWindowAttributeNCRenderingPolicy(handle, DwmNCRenderingPolicy.UseWindowStyle);
+
+                    Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
+                    using (Graphics g = Graphics.FromImage(result))
+                    {
+                        g.Clear(Color.Transparent);
+                        //RemoveTransparentPixelsFromRegion(redCornersImage, g);
+                        // remove the transparent pixels in the four corners
+                        RemoveCorner(redBGImage, g, 0, 0, 5, Corner.TopLeft);
+                        RemoveCorner(redBGImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
+                        RemoveCorner(redBGImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
+                        RemoveCorner(redBGImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
+                        g.DrawImage(windowImage, 0, 0);
+                    }
+                    windowImage = result;
+
                 }
             }
 
@@ -982,7 +997,7 @@ namespace ZScreenLib
         {
             var color = bmp.GetPixel(x, y);
             // detect a shade of red (the color is darker because of the window's shadow)
-            if (color.R > 64 && color.G == 0 && color.B == 0)
+            if (color.R > 0 && color.G == 0 && color.B == 0)
             {
                 Region region = new Region(new Rectangle(x, y, 1, 1));
                 g.SetClip(region, CombineMode.Exclude);

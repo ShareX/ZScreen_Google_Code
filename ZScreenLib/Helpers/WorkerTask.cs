@@ -326,7 +326,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                using (MyTimer timer = new MyTimer("CaptureActiveWindow", false))
+                using (new MyTimer("CaptureActiveWindow", false))
                 {
                     this.SetImage(User32.CaptureActiveWindow());
                 }
