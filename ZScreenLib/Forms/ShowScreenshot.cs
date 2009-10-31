@@ -111,8 +111,10 @@ namespace ZScreenLib
             this.Name = "ShowScreenshot";
             this.Text = "ShowScreenshot";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Deactivate += new System.EventHandler(this.ShowScreenshot_Deactivate);
             this.Load += new System.EventHandler(this.ShowScreenshot_Load);
             this.Shown += new System.EventHandler(this.ShowScreenshot_Shown);
+            this.Leave += new System.EventHandler(this.ShowScreenshot_Leave);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowScreenshot_MouseDown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ShowScreenshot_KeyDown);
             this.ResumeLayout(false);
@@ -120,5 +122,15 @@ namespace ZScreenLib
         }
 
         #endregion
+
+        private void ShowScreenshot_Deactivate(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ShowScreenshot_Leave(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
