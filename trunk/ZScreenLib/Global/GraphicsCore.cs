@@ -794,7 +794,7 @@ namespace ZScreenLib
                         int alphaB = b0 - b1 + 255;
 
                         int resultR, resultG, resultB;
-                        if (alphaR != 0)
+                        if (alphaG != 0)
                         {
                             resultR = r0 * 255 / alphaG;
                             resultG = g0 * 255 / alphaG;
