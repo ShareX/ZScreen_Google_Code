@@ -1082,9 +1082,16 @@ namespace Starksoft.Net.Ftp
                 }
                 finally
                 {
-                    if (null != client)
+                    try
                     {
-                        client.Blocking = blockingState;
+                        if (null != client)
+                        {
+                            client.Blocking = blockingState;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
                     }
                 }
 

@@ -273,6 +273,9 @@
     <EmbeddedResource Include="Forms\GenericMainWindow.resx">
       <DependentUpon>GenericMainWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowScreenshot.resx">
+      <DependentUpon>ShowScreenshot.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DestSelector.resx">
       <DependentUpon>DestSelector.cs</DependentUpon>
     </EmbeddedResource>
