@@ -30,6 +30,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using MS.WindowsAPICodePack.Internal;
+using System.IO;
+using System.Reflection;
 
 namespace ZScreenLib
 {
@@ -438,7 +440,7 @@ namespace ZScreenLib
             bool enabled;
             int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingEnabled,
                 out enabled, sizeof(bool));
-            if (result < 0) throw new Exception("Error: DWMWA_NCRENDERING_ENABLED");
+            //if (result < 0) throw new Exception("Error: DWMWA_NCRENDERING_ENABLED");
             return enabled;
         }
 
@@ -488,195 +490,26 @@ namespace ZScreenLib
             Bitmap redBGImage = null;
             IntPtr handle = User32.GetForegroundWindow();
 
+            bool doCleanCorners = Engine.conf.SelectedWindowCleanTransparentCorners /*|| Engine.conf.SelectedWindowIncludeShadows*/;
+            const int cornerSize = 5;
+
             if (handle.ToInt32() > 0)
             {
                 Rectangle windowRect = User32.GetWindowRectangle(handle);
 
-                if (Engine.HasAero)
+                if (Engine.HasAero && Engine.conf.SelectedWindowCleanBackground)
                 {
-                    Console.WriteLine("Has Aero");
-                    if (Engine.conf.SelectedWindowCleanBackground)
-                    {
-                        Console.WriteLine("Clean background");
-                        if (Engine.conf.SelectedWindowIncludeShadows)
-                        {
-                            Console.WriteLine("Include shadows");
-                            using (Form form = new Form())
-                            {
-                                form.FormBorderStyle = FormBorderStyle.None;
-                                form.ShowInTaskbar = false;
-
-                                int offset = Engine.conf.SelectedWindowIncludeShadows ? 20 : 0;
-
-                                windowRect = RectangleAddOffset(windowRect, offset);
-
-                                // create form behind the window to remove the dirty Aero background
-                                form.BackColor = Color.Black;
-                                form.Show();
-                                form.Refresh();
-                                User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                                Thread.Sleep(1);
-                                Application.DoEvents();
-                                User32.ActivateWindowRepeat(handle, 250);
-
-                                // capture the window with a black background
-                                Bitmap blackBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
-                                //blackBGImage.Save(@"c:\users\nicolas\documents\blackBGImage.png");
-
-                                form.BackColor = Color.White;
-                                form.Refresh();
-                                Thread.Sleep(1);
-                                Application.DoEvents();
-                                User32.ActivateWindowRepeat(handle, 250);
-
-                                // capture the window again with a white background this time
-                                Bitmap whiteBGImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor, offset) as Bitmap;
-                                //whiteBGImage.Save(@"c:\users\nicolas\documents\whiteBGImage.png");
-
-                                // compute the real window image by difference between the two previous images
-                                windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
-
-                                if (offset > 0)
-                                {
-                                    windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
-                                }
-
-                                if (Engine.conf.SelectedWindowShowCheckers)
-                                {
-                                    windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("thumbnail method");
-                            // Make a full-size thumbnail of the captured window on a new topmost form, and capture 
-                            // this new form with a black and then white background. Then compute the transparency by
-                            // difference between the black and white versions.
-                            // This method has several advantages: 
-                            // - the Aero shadow does not hinder the transparency calculation for the corners
-                            // - the full form is captured even if it is obscured on the Windows desktop
-                            // - there is no problem with unpredictable Z-order anymore (the background and 
-                            //   the window to capture are drawn on the same window)
-                            // - it is possible to determine whether the form is animated and avoid a corrupted image
-                            using (Form form = new Form())
-                            {
-                                int offset = Engine.conf.SelectedWindowIncludeShadows ? 20 : 0;
-                                Rectangle resultRect = RectangleAddOffset(windowRect, offset);
-
-                                //Form form = new Form();
-                                form.FormBorderStyle = FormBorderStyle.None;
-                                form.ShowInTaskbar = false;
-                                form.BackColor = Color.Black;
-                                form.TopMost = true;
-                                form.Bounds = windowRect;
-
-                                IntPtr thumb;
-                                DwmRegisterThumbnail(form.Handle, handle, out thumb);
-                                PSIZE size;
-                                DwmQueryThumbnailSourceSize(thumb, out size);
-                                form.Location = new Point(windowRect.X, windowRect.Y);
-                                form.Size = new Size(size.x, size.y);
-
-                                form.Show();
-
-                                DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
-                                props.dwFlags = DWM_TNP_VISIBLE | DWM_TNP_RECTDESTINATION | DWM_TNP_OPACITY;
-                                props.fVisible = true;
-                                props.opacity = (byte)255;
-
-                                props.rcDestination = new Rect(0, 0, size.x, size.y);
-                                DwmUpdateThumbnailProperties(thumb, ref props);
-
-                                //DwmSetDxFrameDuration(thumb, 1000000);
-
-                                //windowImage = new Bitmap(form.Width, form.Height);
-
-                                //form.DrawToBitmap((Bitmap)windowImage, new Rectangle(new Point(), form.Size));
-
-                                User32.ActivateWindowRepeat(handle, 250);
-                                Bitmap blackBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor, offset) as Bitmap;
-                                //blackBGImage.Save(@"c:\users\nicolas\documents\imageBlack.png");
-
-                                form.BackColor = Color.White;
-                                form.Refresh();
-                                User32.ActivateWindowRepeat(handle, 250);
-                                Bitmap whiteBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor, offset) as Bitmap;
-                                //whiteBGImage.Save(@"c:\users\nicolas\documents\imageWhite.png");
-
-                                Thread.Sleep(10);
-                                User32.ActivateWindowRepeat(handle, 250);
-                                Bitmap whiteBGImage2 = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor, offset) as Bitmap;
-
-                                if (Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
-                                {
-                                    form.BackColor = Color.Red;
-                                    form.Refresh();
-                                    User32.ActivateWindowRepeat(handle, 250);
-                                    redBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor, offset) as Bitmap;
-                                }
-
-
-                                // Don't do transparency calculation if an animated picture is detected
-                                if (AreBitmapsEqual(whiteBGImage, whiteBGImage2))
-                                {
-                                    windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
-                                    //windowImage.Save(@"c:\users\nicolas\documents\imageZResult.png");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Detected animated image => cannot compute transparency");
-                                    form.Close();
-                                    Application.DoEvents();
-                                    Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);
-                                    using (Graphics g = Graphics.FromImage(result))
-                                    {
-                                        // redraw the image on a black background to avoid transparent pixels artifacts
-                                        g.Clear(Color.Black);
-                                        g.DrawImage(whiteBGImage, 0, 0);
-                                    }
-                                    windowImage = result;
-                                }
-
-                                if (offset > 0)
-                                {
-                                    windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
-                                }
-
-                                if (Engine.conf.SelectedWindowShowCheckers)
-                                {
-                                    windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
-                                }
-
-                                //windowImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor);
-
-                                DwmUnregisterThumbnail(thumb);
-                                blackBGImage.Dispose();
-                                whiteBGImage.Dispose();
-                                whiteBGImage2.Dispose();
-                            }
-
-                            if (Engine.conf.SelectedWindowShowCheckers)
-                            {
-                                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
-                            }
-
-                            // TODO: draw shadow manually to be able to use the "thumbnail" method with shadows
-                            //if (Engine.conf.SelectedWindowIncludeShadows)
-                            //{
-                            //    AddBorderShadow((Bitmap)windowImage);
-                            //}
-                        }
-                    }
+                    windowImage = CaptureWindowWithTransparency(handle, windowRect, out redBGImage, doCleanCorners);
                 }
 
                 if (windowImage == null)
                 {
-                    Console.WriteLine("null image => standard capture");
+                    Console.WriteLine("standard capture (no transparency)");
                     windowImage = User32.CaptureWindow(handle, Engine.conf.ShowCursor);
                 }
 
-                if (Engine.conf.SelectedWindowCleanTransparentCorners && !Engine.conf.SelectedWindowIncludeShadows)
+
+                if (doCleanCorners && windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
                 {
                     Console.WriteLine("Clean transparent corners");
 
@@ -686,18 +519,9 @@ namespace ZScreenLib
                         {
                             form.FormBorderStyle = FormBorderStyle.None;
                             form.ShowInTaskbar = false;
-                            form.BackColor = Color.White;
-                            form.Show();
-
-                            // disables aero, to avoid the shadow in the corners
-                            //SetDWMWindowAttributeNCRenderingPolicy(handle, DwmNCRenderingPolicy.Disabled);
-
-                            // paints red corners behind the form, so that they can be recognized and removed
-                            form.Paint += new PaintEventHandler(FormPaintRedCorners);
-                            form.Refresh();
+                            form.BackColor = Color.Red;
                             User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                            Thread.Sleep(1);
-                            Application.DoEvents();
+                            form.Show();
                             User32.ActivateWindowRepeat(handle, 250);
 
                             redBGImage = User32.CaptureWindow(handle, false) as Bitmap;
@@ -705,32 +529,196 @@ namespace ZScreenLib
                     }
                     //redBGImage.Save(@"c:\users\nicolas\documents\redCornersImage.png");
 
-                    //SetDWMWindowAttributeNCRenderingPolicy(handle, DwmNCRenderingPolicy.UseWindowStyle);
-
                     Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
                     using (Graphics g = Graphics.FromImage(result))
                     {
                         g.Clear(Color.Transparent);
-                        //RemoveTransparentPixelsFromRegion(redCornersImage, g);
                         // remove the transparent pixels in the four corners
-                        RemoveCorner(redBGImage, g, 0, 0, 5, Corner.TopLeft);
-                        RemoveCorner(redBGImage, g, windowImage.Width - 5, 0, windowImage.Width, Corner.TopRight);
-                        RemoveCorner(redBGImage, g, 0, windowImage.Height - 5, 5, Corner.BottomLeft);
-                        RemoveCorner(redBGImage, g, windowImage.Width - 5, windowImage.Height - 5, windowImage.Width, Corner.BottomRight);
+                        RemoveCorner(redBGImage, g, 0, 0, cornerSize, Corner.TopLeft);
+                        RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, 0, windowImage.Width, Corner.TopRight);
+                        RemoveCorner(redBGImage, g, 0, windowImage.Height - cornerSize, cornerSize, Corner.BottomLeft);
+                        RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, windowImage.Height - cornerSize, windowImage.Width, Corner.BottomRight);
                         g.DrawImage(windowImage, 0, 0);
                     }
                     windowImage = result;
+                }
 
+                if (Engine.conf.SelectedWindowIncludeShadows)
+                {
+                    // draw shadow manually to be able to have shadows in every case
+                    windowImage = AddBorderShadow((Bitmap)windowImage);
                 }
             }
 
             return windowImage;
         }
 
-        /*private static void AddBorderShadow(Bitmap input)
+
+
+        /// <summary>
+        /// Make a full-size thumbnail of the captured window on a new topmost form, and capture 
+        /// this new form with a black and then white background. Then compute the transparency by
+        /// difference between the black and white versions.
+        /// This method has several advantages: 
+        /// - the full form is captured even if it is obscured on the Windows desktop
+        /// - there is no problem with unpredictable Z-order anymore (the background and 
+        ///   the window to capture are drawn on the same window)
+        /// - it is possible to determine whether the form is animated and avoid a corrupted image
+        /// </summary>
+        /// <param name="handle">handle of the window to capture</param>
+        /// <param name="windowRect">the bounds of the window</param>
+        /// <param name="redBGImage">the window captured with a red background</param>
+        /// <param name="captureRedBGImage">whether to do the capture of the window with a red background</param>
+        /// <returns>the captured window image</returns>
+        private static Image CaptureWindowWithTransparency(IntPtr handle, Rectangle windowRect, out Bitmap redBGImage, bool captureRedBGImage)
         {
-            windowRect = RectangleAddOffset(windowRect, offset);
-        }*/
+            Image windowImage = null;
+            redBGImage = null;
+
+            using (Form form = new Form())
+            {
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.ShowInTaskbar = false;
+                form.BackColor = Color.White;
+                form.TopMost = true;
+                form.Bounds = windowRect;
+
+                IntPtr thumb;
+                DwmRegisterThumbnail(form.Handle, handle, out thumb);
+                PSIZE size;
+                DwmQueryThumbnailSourceSize(thumb, out size);
+
+                if (size.x <= 0 || size.y <= 0)
+                {
+                    return null;
+                }
+
+                form.Location = new Point(windowRect.X, windowRect.Y);
+                form.Size = new Size(size.x, size.y);
+
+                form.Show();
+
+                DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
+                props.dwFlags = DWM_TNP_VISIBLE | DWM_TNP_RECTDESTINATION | DWM_TNP_OPACITY;
+                props.fVisible = true;
+                props.opacity = (byte)255;
+
+                props.rcDestination = new Rect(0, 0, size.x, size.y);
+                DwmUpdateThumbnailProperties(thumb, ref props);
+
+                User32.ActivateWindowRepeat(handle, 250);
+                Bitmap whiteBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
+                //whiteBGImage.Save(@"c:\users\nicolas\documents\imageWhite.png");
+
+                form.BackColor = Color.Black;
+                form.Refresh();
+                User32.ActivateWindowRepeat(handle, 250);
+                Bitmap blackBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
+                //blackBGImage.Save(@"c:\users\nicolas\documents\imageBlack.png");
+
+                if (captureRedBGImage)
+                {
+                    form.BackColor = Color.Red;
+                    form.Refresh();
+                    User32.ActivateWindowRepeat(handle, 250);
+                    redBGImage = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
+                }
+
+                form.BackColor = Color.White;
+                form.Refresh();
+                User32.ActivateWindowRepeat(handle, 250);
+                Bitmap whiteBGImage2 = User32.CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
+
+                // Don't do transparency calculation if an animated picture is detected
+                if (AreBitmapsEqual(whiteBGImage, whiteBGImage2))
+                {
+                    windowImage = ComputeOriginal(whiteBGImage, blackBGImage);
+                    //windowImage.Save(@"c:\users\nicolas\documents\imageZResult.png");
+                }
+                else
+                {
+                    Console.WriteLine("Detected animated image => cannot compute transparency");
+                    form.Close();
+                    Application.DoEvents();
+                    Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);
+                    using (Graphics g = Graphics.FromImage(result))
+                    {
+                        // redraw the image on a black background to avoid transparent pixels artifacts
+                        g.Clear(Color.Black);
+                        g.DrawImage(whiteBGImage, 0, 0);
+                    }
+                    windowImage = result;
+                }
+
+                DwmUnregisterThumbnail(thumb);
+                blackBGImage.Dispose();
+                whiteBGImage.Dispose();
+                whiteBGImage2.Dispose();
+            }
+
+            if (Engine.conf.SelectedWindowShowCheckers)
+            {
+                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
+            }
+
+            return windowImage;
+        }
+
+        private static Bitmap AddBorderShadow(Bitmap input)
+        {
+            Bitmap leftShadow = ZScreenLib.Properties.Resources.leftShadow;
+            Bitmap rightShadow = ZScreenLib.Properties.Resources.rightShadow;
+            Bitmap topShadow = ZScreenLib.Properties.Resources.topShadow;
+            Bitmap bottomShadow = ZScreenLib.Properties.Resources.bottomShadow;
+            Bitmap topLeftShadow = ZScreenLib.Properties.Resources.topLeftShadow;
+            Bitmap topRightShadow = ZScreenLib.Properties.Resources.topRightShadow;
+            Bitmap bottomLeftShadow = ZScreenLib.Properties.Resources.bottomLeftShadow;
+            Bitmap bottomRightShadow = ZScreenLib.Properties.Resources.bottomRightShadow;
+
+            int leftMargin = leftShadow.Width;
+            int rightMargin = rightShadow.Width;
+            int topMargin = topShadow.Height;
+            int bottomMargin = bottomShadow.Height;
+
+            int width = input.Width;
+            int height = input.Height;
+
+            int resultWidth = leftMargin + width + rightMargin;
+            int resultHeight = topMargin + height + bottomMargin;
+
+            Bitmap bmpResult = new Bitmap(resultWidth, resultHeight, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(bmpResult))
+            {
+                g.DrawImage(topLeftShadow, 0, 0);
+                g.DrawImage(topRightShadow, resultWidth - topRightShadow.Width, 0);
+                g.DrawImage(bottomLeftShadow, 0, resultHeight - bottomLeftShadow.Height);
+                g.DrawImage(bottomRightShadow, resultWidth - bottomRightShadow.Width, resultHeight - bottomRightShadow.Height);
+
+                g.DrawShadow(leftShadow, 0, topLeftShadow.Height, leftShadow.Width, resultHeight - topLeftShadow.Height - bottomLeftShadow.Height);
+                g.DrawShadow(rightShadow, resultWidth - rightShadow.Width, topRightShadow.Height, rightShadow.Width, resultHeight - topRightShadow.Height - bottomRightShadow.Height);
+                g.DrawShadow(topShadow, topLeftShadow.Width, 0, resultWidth - topLeftShadow.Width - topRightShadow.Width, topShadow.Height);
+                g.DrawShadow(bottomShadow, bottomLeftShadow.Width, resultHeight - bottomShadow.Height, resultWidth - bottomLeftShadow.Width - bottomRightShadow.Width, bottomShadow.Height);
+
+                g.DrawImage(input, leftMargin, topMargin);
+            }
+
+            return bmpResult;
+        }
+
+        private static void DrawShadow(this Graphics g, Bitmap shadowBitmap, int x, int y, int width, int height)
+        {
+            Brush brush = new TextureBrush(shadowBitmap);
+            Bitmap bmpTemp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            // draw on a temp bitmap with (0,0) offset, because the texture starts at (0,0)
+            Graphics gTemp = Graphics.FromImage(bmpTemp);
+            gTemp.FillRectangle(brush, 0, 0, width, height);
+            g.DrawImage(bmpTemp, x, y);
+
+            gTemp.Dispose();
+            bmpTemp.Dispose();
+            brush.Dispose();
+        }
 
         private static void ActivateWindowRepeat(IntPtr handle, int count)
         {
@@ -891,7 +879,7 @@ namespace ZScreenLib
         /// removes the pixels that are transparent in the given image from the
         /// region of the given graphics object
         /// </summary>
-        private static void RemoveTransparentPixelsFromRegion(Bitmap image, Graphics g)
+        /*private static void RemoveTransparentPixelsFromRegion(Bitmap image, Graphics g)
         {
             int width = image.Size.Width;
             int height = image.Size.Height;
@@ -925,14 +913,14 @@ namespace ZScreenLib
             }
 
             image.UnlockBits(imageData);
-        }
+        }*/
 
         #region Clean window corners
 
         /// <summary>
         /// Paints 5 pixel wide red corners behind the form from which the event originates.
         /// </summary>
-        private static void FormPaintRedCorners(object sender, PaintEventArgs e)
+        /*private static void FormPaintRedCorners(object sender, PaintEventArgs e)
         {
             const int cornerSize = 5;
             Form form = sender as Form;
@@ -940,12 +928,13 @@ namespace ZScreenLib
             {
                 int width = form.Width;
                 int height = form.Height;
-                e.Graphics.FillRectangle(Brushes.Red, 0, 0, cornerSize, cornerSize);
-                e.Graphics.FillRectangle(Brushes.Red, width - 5, 0, cornerSize, cornerSize);
-                e.Graphics.FillRectangle(Brushes.Red, 0, height - 5, cornerSize, cornerSize);
-                e.Graphics.FillRectangle(Brushes.Red, width - 5, height - 5, cornerSize, cornerSize);
+
+                e.Graphics.FillRectangle(Brushes.Red, 0, 0, cornerSize, cornerSize); // top left
+                e.Graphics.FillRectangle(Brushes.Red, width - 5, 0, cornerSize, cornerSize); // top right
+                e.Graphics.FillRectangle(Brushes.Red, 0, height - 5, cornerSize, cornerSize); // bottom left
+                e.Graphics.FillRectangle(Brushes.Red, width - 5, height - 5, cornerSize, cornerSize); // bottom right
             }
-        }
+        }*/
 
         public enum Corner { TopLeft, TopRight, BottomLeft, BottomRight };
 
