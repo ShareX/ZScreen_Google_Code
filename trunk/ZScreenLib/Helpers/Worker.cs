@@ -420,7 +420,7 @@ namespace ZScreenLib
         {
             foreach (WorkerTask task in textWorkers)
             {
-                if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.AutoShortenURL && Adapter.CheckURLShorteners())
+                if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.ShortenUrlUsingClipboardUpload && Adapter.CheckURLShorteners())
                 {
                     task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
                     task.RunWorker();

@@ -377,11 +377,11 @@ namespace ZScreenLib
         /// <returns>Shortens URL or Empty String if request failed</returns>
         public static string TryShortenURL(string url)
         {
-            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.LimitLongURL));
+            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlUsingClipboardUploadAfter));
             if (!string.IsNullOrEmpty(url))
             {
-                if (Engine.conf.LimitLongURL == 0 || Engine.conf.TwitterEnabled ||
-                    (Engine.conf.LimitLongURL > 0 && url.Length > Engine.conf.LimitLongURL) ||
+                if (Engine.conf.ShortenUrlUsingClipboardUploadAfter == 0 || Engine.conf.TwitterEnabled ||
+                    (Engine.conf.ShortenUrlUsingClipboardUploadAfter > 0 && url.Length > Engine.conf.ShortenUrlUsingClipboardUploadAfter) ||
                     (Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
                 {
                     return ShortenURL(url);
@@ -420,7 +420,7 @@ namespace ZScreenLib
         public static bool MakeTinyURL()
         {
             // LimitLongURL = 0 means make tinyURL always
-            return Engine.conf.TwitterEnabled || Engine.conf.MakeTinyURL || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+            return Engine.conf.TwitterEnabled || Engine.conf.ShortenUrlAfterUpload || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
         }
 
         #endregion
