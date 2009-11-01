@@ -266,6 +266,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documents\TODO.txt" />
+    <None Include="Resources\topRightShadow.png" />
+    <None Include="Resources\topLeftShadow.png" />
+    <None Include="Resources\bottomRightShadow.png" />
+    <None Include="Resources\bottomLeftShadow.png" />
+    <None Include="Resources\topShadow.png" />
+    <None Include="Resources\rightShadow.png" />
+    <None Include="Resources\leftShadow.png" />
+    <None Include="Resources\bottomShadow.png" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
     <EmbeddedResource Include="Forms\DestOptions.resx">
       <DependentUpon>DestOptions.cs</DependentUpon>

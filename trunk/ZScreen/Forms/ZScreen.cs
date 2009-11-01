@@ -3969,17 +3969,17 @@ namespace ZScreenGUI
 
         private void AeroGlassConfigUpdate()
         {
-            // Disable Clean Transparent Corners option of Clean Background is disabled
+            // Disable Show Checkers option if Clean Background is disabled
             if (!chkSelectedWindowCleanBackground.Checked)
             {
-                chkSelectedWindowCleanTransparentCorners.Checked = false;
+                //chkSelectedWindowCleanTransparentCorners.Checked = false;
                 chkSelectedWindowShowCheckers.Checked = false;
             }
 
-            chkSelectedWindowCleanTransparentCorners.Enabled = chkSelectedWindowCleanBackground.Checked;
+            //chkSelectedWindowCleanTransparentCorners.Enabled = chkSelectedWindowCleanBackground.Checked;
             chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked;
 
-            if (chkSelectedWindowIncludeShadow.Checked)
+            /*if (chkSelectedWindowIncludeShadow.Checked)
             {
                 chkSelectedWindowCleanTransparentCorners.Checked = false;
             }
@@ -3989,6 +3989,7 @@ namespace ZScreenGUI
             }
             chkSelectedWindowCleanTransparentCorners.Enabled = !chkSelectedWindowIncludeShadow.Checked;
             chkSelectedWindowIncludeShadow.Enabled = !chkSelectedWindowCleanTransparentCorners.Checked;
+            */
         }
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
