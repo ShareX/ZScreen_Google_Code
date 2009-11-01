@@ -873,6 +873,13 @@ namespace ZScreenGUI
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
+            // Monitor Clipboard
+
+            chkMonImages.Checked = Engine.conf.MonitorImages;
+            chkMonText.Checked = Engine.conf.MonitorText;
+            chkMonFiles.Checked = Engine.conf.MonitorFiles;
+            chkMonUrls.Checked = Engine.conf.MonitorUrls;
+
             #endregion
 
             chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
@@ -3974,7 +3981,7 @@ namespace ZScreenGUI
 
             if (chkSelectedWindowIncludeShadow.Checked)
             {
-                chkSelectedWindowCleanTransparentCorners.Checked = false;                
+                chkSelectedWindowCleanTransparentCorners.Checked = false;
             }
             else if (chkSelectedWindowCleanTransparentCorners.Checked)
             {
@@ -4629,6 +4636,61 @@ namespace ZScreenGUI
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.SelectedWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
+        }
+
+        private void tmrSecond_Tick(object sender, EventArgs e)
+        {
+            MonitorClipboard();
+        }
+
+        private string mClipboardText = string.Empty;
+
+        public void MonitorClipboard()
+        {
+            try
+            {
+                if (Engine.conf.MonitorUrls)
+                {
+                    string url = Clipboard.GetText();                    
+                    if (mClipboardText != url)
+                    {
+                        if (FileSystem.IsValidLink(url))
+                        {
+                            url = Adapter.ShortenURL(url);
+                            if (!string.IsNullOrEmpty(url))
+                            {
+                                Clipboard.SetText(url);
+                                mClipboardText = url;
+                                FileSystem.AppendDebug("Shortened URL by monitoring clipboard: " + url);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug("Error while monitoring clipboard", ex);
+            }
+        }
+
+        private void chkMonImages_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.MonitorImages = chkMonImages.Checked;
+        }
+
+        private void chkMonText_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.MonitorText = chkMonText.Checked;
+        }
+
+        private void chkMonFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.MonitorFiles = chkMonFiles.Checked;
+        }
+
+        private void chkMonUrls_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.MonitorUrls = chkMonUrls.Checked;
         }
     }
 }

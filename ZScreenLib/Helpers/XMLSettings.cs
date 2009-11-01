@@ -382,19 +382,30 @@ namespace ZScreenLib
         public bool LockFormSize = false;
         public bool AutoSaveSettings = true;
 
+        // General - Monitor Clipboard
+
+        public bool MonitorImages = false;
+        public bool MonitorText = false;
+        public bool MonitorFiles = false;
+        public bool MonitorUrls = false;
+
         // General - Check Updates
 
         public bool CheckUpdates = true;
         public bool CheckUpdatesBeta = false;
 
+        //~~~~~~~~~~~~~~~
         // Proxy Settings
+        //~~~~~~~~~~~~~~~
 
         public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
         public int ProxySelected = 0;
         public ProxyInfo ProxyActive = null;
         public bool ProxyEnabled = false;
 
+        //~~~~~~~~~
         // Paths
+        //~~~~~~~~~
 
         public bool DeleteLocal = false;
         public decimal ScreenshotCacheSize = 50;

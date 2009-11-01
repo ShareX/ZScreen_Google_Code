@@ -211,7 +211,6 @@ namespace ZScreenGUI
                     {
                         Clipboard.SetText(url);
                     }
-
                     break;
                 case WorkerTask.ProgressType.FLASH_ICON:
                     Adapter.FlashNotifyIcon(mZScreen.niTray, e.UserState as Icon);
@@ -237,6 +236,7 @@ namespace ZScreenGUI
                     Adapter.TaskbarSetProgressState(tbps);
                     break;
                 case WorkerTask.ProgressType.ShowTrayWarning:
+                    Adapter.TaskbarSetProgressValue(33);
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
                     Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;
