@@ -472,12 +472,12 @@ namespace ZScreenLib
 
         [Category("Options / Interaction"), DefaultValue(true),
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
-        public bool AutoShortenURL { get; set; }
+        public bool ShortenUrlUsingClipboardUpload { get; set; }
         [Category("Options / Interaction"), DefaultValue(100),
         Description("URL Shortening will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
-        public int LimitLongURL { get; set; }
+        public int ShortenUrlUsingClipboardUploadAfter { get; set; }
         [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
-        public bool MakeTinyURL { get; set; }
+        public bool ShortenUrlAfterUpload { get; set; }
         [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to taskbar on close.")]
         public bool MinimizeOnClose { get; set; }
 

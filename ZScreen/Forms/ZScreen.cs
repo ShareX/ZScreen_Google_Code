@@ -4656,7 +4656,7 @@ namespace ZScreenGUI
                     {
                         if (FileSystem.IsValidLink(url))
                         {
-                            url = Adapter.ShortenURL(url);
+                            url = Adapter.TryShortenURL(url);
                             if (!string.IsNullOrEmpty(url))
                             {
                                 Clipboard.SetText(url);
