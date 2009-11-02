@@ -21,9 +21,9 @@
 */
 #endregion
 
-using System.Runtime.InteropServices;
-using System.Drawing;
 using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace ZScreenLib
 {
@@ -79,5 +79,12 @@ namespace ZScreenLib
         }
 
         #endregion
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PSIZE
+    {
+        public int x;
+        public int y;
     }
 }

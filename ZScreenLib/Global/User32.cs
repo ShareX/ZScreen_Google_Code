@@ -22,10 +22,11 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
@@ -1053,6 +1054,405 @@ namespace ZScreenLib
             /// WM_SYSTIMER is a well-known yet still undocumented message. Windows uses WM_SYSTIMER for internal actions like scrolling.
             /// </summary>
             SYSTIMER = 0x118
+        }
+
+        #endregion
+
+        public const int SM_CXSCREEN = 0;
+        public const int SM_CYSCREEN = 1;
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        public const int CURSOR_SHOWING = 0x00000001;
+        public const int GWL_STYLE = -16;
+        public const ulong WS_VISIBLE = 0x10000000L;
+        public const ulong WS_BORDER = 0x00800000L;
+        public const ulong TARGETWINDOW = WS_BORDER | WS_VISIBLE;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct IconInfo
+        {
+            public bool fIcon;         // Specifies whether this structure defines an icon or a cursor. A value of TRUE specifies 
+            public Int32 xHotspot;     // Specifies the x-coordinate of a cursor's hot spot. If this structure defines an icon, the hot 
+            public Int32 yHotspot;     // Specifies the y-coordinate of the cursor's hot spot. If this structure defines an icon, the hot 
+            public IntPtr hbmMask;     // (HBITMAP) Specifies the icon bitmask bitmap. If this structure defines a black and white icon, 
+            public IntPtr hbmColor;    // (HBITMAP) Handle to the icon color bitmap. This member can be optional if this 
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CursorInfo
+        {
+            public Int32 cbSize;        // Specifies the size, in bytes, of the structure. 
+            public Int32 flags;         // Specifies the cursor state. This parameter can be one of the following values:
+            public IntPtr hCursor;      // Handle to the cursor. 
+            public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor. 
+        }
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern uint SHAppBarMessage(int dwMessage, out APPBARDATA pData);
+
+        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+        public static string GetWindowLabel()
+        {
+            const int numOfChars = 256;
+            IntPtr handle = GetForegroundWindow();
+            StringBuilder sb = new StringBuilder(numOfChars);
+
+            if (GetWindowText(handle, sb, numOfChars) > 0)
+            {
+                return sb.ToString();
+            }
+            return string.Empty;
+        }
+
+        public static IntPtr GetWindowHandle()
+        {
+            const int numOfChars = 256;
+            IntPtr handle = GetForegroundWindow();
+            StringBuilder sb = new StringBuilder(numOfChars);
+
+            if (GetWindowText(handle, sb, numOfChars) > 0)
+            {
+                return handle;
+            }
+            return IntPtr.Zero;
+        }
+
+        public static MyCursor CaptureCursor()
+        {
+            CursorInfo cursorInfo = new CursorInfo();
+            cursorInfo.cbSize = Marshal.SizeOf(cursorInfo);
+            if (GetCursorInfo(out cursorInfo) && cursorInfo.flags == CURSOR_SHOWING)
+            {
+                IntPtr hicon = CopyIcon(cursorInfo.hCursor);
+                if (hicon != IntPtr.Zero)
+                {
+                    IconInfo iconInfo;
+                    if (GetIconInfo(hicon, out iconInfo))
+                    {
+                        Point position = new Point(cursorInfo.ptScreenPos.X - iconInfo.xHotspot, cursorInfo.ptScreenPos.Y - iconInfo.yHotspot);
+
+                        using (Bitmap maskBitmap = Bitmap.FromHbitmap(iconInfo.hbmMask))
+                        {
+                            Bitmap resultBitmap;
+
+                            // Is this a monochrome cursor?
+                            if (maskBitmap.Height == maskBitmap.Width * 2)
+                            {
+                                resultBitmap = new Bitmap(maskBitmap.Width, maskBitmap.Width);
+
+                                Graphics desktopGraphics = Graphics.FromHwnd(GetDesktopWindow());
+                                IntPtr desktopHdc = desktopGraphics.GetHdc();
+
+                                IntPtr maskHdc = GDI.CreateCompatibleDC(desktopHdc);
+                                IntPtr oldPtr = GDI.SelectObject(maskHdc, maskBitmap.GetHbitmap());
+
+                                using (Graphics resultGraphics = Graphics.FromImage(resultBitmap))
+                                {
+                                    IntPtr resultHdc = resultGraphics.GetHdc();
+
+                                    // These two operation will result in a black cursor over a white background.
+                                    // Later in the code, a call to MakeTransparent() will get rid of the white background.
+                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 32, CopyPixelOperation.SourceCopy);
+                                    GDI.BitBlt(resultHdc, 0, 0, 32, 32, maskHdc, 0, 0, CopyPixelOperation.SourceInvert);
+
+                                    resultGraphics.ReleaseHdc(resultHdc);
+                                }
+
+                                IntPtr newPtr = GDI.SelectObject(maskHdc, oldPtr);
+                                GDI.DeleteDC(newPtr);
+                                GDI.DeleteDC(maskHdc);
+                                desktopGraphics.ReleaseHdc(desktopHdc);
+
+                                // Remove the white background from the BitBlt calls,
+                                // resulting in a black cursor over a transparent background.
+                                resultBitmap.MakeTransparent(Color.White);
+                            }
+                            else
+                            {
+                                resultBitmap = Icon.FromHandle(hicon).ToBitmap();
+                            }
+
+                            return new MyCursor(new Cursor(cursorInfo.hCursor), position, resultBitmap);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public static bool GetWindowRegion(IntPtr hWnd, out Region region)
+        {
+            IntPtr hRgn = GDI.CreateRectRgn(0, 0, 0, 0);
+            RegionType regionType = (RegionType)GetWindowRgn(hWnd, hRgn);
+            region = Region.FromHrgn(hRgn);
+            return regionType != RegionType.ERROR && regionType != RegionType.NULLREGION;
+        }
+
+        public class MyCursor
+        {
+            public Cursor Cursor;
+            public Point Position;
+            public Bitmap Bitmap;
+
+            public MyCursor()
+            {
+                this.Cursor = Cursor.Current;
+                this.Position = new Point(Cursor.Position.X - this.Cursor.HotSpot.X, Cursor.Position.Y - this.Cursor.HotSpot.Y);
+                this.Bitmap = Icon.FromHandle(this.Cursor.Handle).ToBitmap();
+            }
+
+            public MyCursor(Cursor cursor, Point position, Bitmap bitmap)
+            {
+                this.Cursor = cursor;
+                this.Position = position;
+                this.Bitmap = bitmap;
+            }
+        }
+
+        [Flags]
+        public enum DwmWindowAttribute
+        {
+            NCRenderingEnabled = 1,
+            NCRenderingPolicy,
+            TransitionsForceDisabled,
+            AllowNCPaint,
+            CaptionButtonBounds,
+            NonClientRtlLayout,
+            ForceIconicRepresentation,
+            Flip3DPolicy,
+            ExtendedFrameBounds,
+            HasIconicBitmap,
+            DisallowPeek,
+            ExcludedFromPeek,
+            Last
+        }
+
+        [Flags]
+        public enum DwmNCRenderingPolicy
+        {
+            UseWindowStyle,
+            Disabled,
+            Enabled,
+            Last
+        }
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmUnregisterThumbnail(IntPtr thumb);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmQueryThumbnailSourceSize(IntPtr thumb, out PSIZE size);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
+
+        public static readonly int DWM_TNP_RECTDESTINATION = 0x1;
+        public static readonly int DWM_TNP_OPACITY = 0x4;
+        public static readonly int DWM_TNP_VISIBLE = 0x8;
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetDxFrameDuration(IntPtr hwnd, uint cRefreshes);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct DWM_THUMBNAIL_PROPERTIES
+        {
+            public int dwFlags;
+            public RECT rcDestination;
+            public RECT rcSource;
+            public byte opacity;
+            public bool fVisible;
+            public bool fSourceClientAreaOnly;
+        }
+
+        public static bool DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle, out Rectangle rectangle)
+        {
+            RECT rect;
+            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds,
+                out rect, Marshal.SizeOf(typeof(RECT)));
+            rectangle = rect.ToRectangle();
+            return result >= 0;
+        }
+
+        public static bool DWMWA_NCRENDERING_ENABLED(IntPtr handle)
+        {
+            bool enabled;
+            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingEnabled,
+                out enabled, sizeof(bool));
+            //if (result < 0) throw new Exception("Error: DWMWA_NCRENDERING_ENABLED");
+            return enabled;
+        }
+
+        public static void SetDWMWindowAttributeNCRenderingPolicy(IntPtr handle, DwmNCRenderingPolicy renderingPolicy)
+        {
+            int renderPolicy = (int)renderingPolicy;
+            DwmSetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingPolicy, ref renderPolicy, sizeof(int));
+        }
+
+        public static Rectangle GetWindowRect(IntPtr handle)
+        {
+            RECT rect;
+            GetWindowRect(handle, out rect);
+            return rect.ToRectangle();
+        }
+
+        public static Rectangle GetWindowRectangle(IntPtr handle)
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return GetWindowRect(handle);
+            }
+
+            Rectangle rectangle;
+            if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
+            {
+                return rectangle;
+            }
+            else
+            {
+                return GetWindowRect(handle);
+            }
+        }
+
+        public static void ActivateWindow(IntPtr handle)
+        {
+            SetForegroundWindow(handle);
+            SetActiveWindow(handle);
+        }
+
+        public static void ActivateWindowRepeat(IntPtr handle, int count)
+        {
+            User32.ActivateWindow(handle);
+            for (int i = 0; User32.GetForegroundWindow() != handle && i < count; i++)
+            {
+                Thread.Sleep(10);
+            }
+            Application.DoEvents();
+        }
+
+        #region Taskbar
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct APPBARDATA
+        {
+            public int cbSize;
+            public IntPtr hWnd;
+            public int uCallbackMessage;
+            public int uEdge;
+            public RECT rc;
+            public IntPtr lParam;
+        }
+
+        public enum ABMsg
+        {
+            ABM_NEW = 0,
+            ABM_REMOVE = 1,
+            ABM_QUERYPOS = 2,
+            ABM_SETPOS = 3,
+            ABM_GETSTATE = 4,
+            ABM_GETTASKBARPOS = 5,
+            ABM_ACTIVATE = 6,
+            ABM_GETAUTOHIDEBAR = 7,
+            ABM_SETAUTOHIDEBAR = 8,
+            ABM_WINDOWPOSCHANGED = 9,
+            ABM_SETSTATE = 10
+        }
+
+        public enum ABEdge
+        {
+            ABE_LEFT = 0,
+            ABE_TOP,
+            ABE_RIGHT,
+            ABE_BOTTOM
+        }
+
+        public enum ABState
+        {
+            ABS_MANUAL = 0,
+            ABS_AUTOHIDE = 1,
+            ABS_ALWAYSONTOP = 2,
+            ABS_AUTOHIDEANDONTOP = 3,
+        }
+
+        public enum TaskBarEdge
+        {
+            Bottom,
+            Top,
+            Left,
+            Right
+        }
+
+        public static Rectangle GetTaskbarRectangle()
+        {
+            APPBARDATA abd = new APPBARDATA();
+            SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, out abd);
+            return abd.rc.ToRectangle();
+        }
+
+        /// <summary>
+        /// Method returns information about the Window's TaskBar.
+        /// </summary>
+        /// <param name="taskBarEdge">Location of the TaskBar(Top,Bottom,Left,Right).</param>
+        /// <param name="height">Height of the TaskBar.</param>
+        /// <param name="autoHide">AutoHide property of the TaskBar.</param>
+        private static void GetTaskBarInfo(out TaskBarEdge taskBarEdge, out int height, out bool autoHide)
+        {
+            APPBARDATA abd = new APPBARDATA();
+
+            height = 0;
+            taskBarEdge = TaskBarEdge.Bottom;
+            autoHide = false;
+
+            uint ret = SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, out abd);
+            switch (abd.uEdge)
+            {
+                case (int)ABEdge.ABE_BOTTOM:
+                    taskBarEdge = TaskBarEdge.Bottom;
+                    height = abd.rc.Height;
+                    break;
+                case (int)ABEdge.ABE_TOP:
+                    taskBarEdge = TaskBarEdge.Top;
+                    height = abd.rc.Bottom;
+                    break;
+                case (int)ABEdge.ABE_LEFT:
+                    taskBarEdge = TaskBarEdge.Left;
+                    height = abd.rc.Width;
+                    break;
+                case (int)ABEdge.ABE_RIGHT:
+                    taskBarEdge = TaskBarEdge.Right;
+                    height = abd.rc.Width;
+                    break;
+            }
+
+            abd = new APPBARDATA();
+            uint uState = SHAppBarMessage((int)ABMsg.ABM_GETSTATE, out abd);
+            switch (uState)
+            {
+                case (int)ABState.ABS_ALWAYSONTOP:
+                    autoHide = false;
+                    break;
+                case (int)ABState.ABS_AUTOHIDE:
+                    autoHide = true;
+                    break;
+                case (int)ABState.ABS_AUTOHIDEANDONTOP:
+                    autoHide = true;
+                    break;
+                case (int)ABState.ABS_MANUAL:
+                    autoHide = false;
+                    break;
+            }
         }
 
         #endregion

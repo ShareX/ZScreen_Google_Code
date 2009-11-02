@@ -22,13 +22,13 @@
 #endregion
 
 using System;
-using System.Drawing.Drawing2D;
 using System.Drawing;
-using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Drawing.Text;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
@@ -380,6 +380,200 @@ namespace ZScreenLib
             g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
             g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             return bmp;
+        }
+
+        /// <summary>
+        /// Compute the original window image from the difference between the two given images
+        /// </summary>
+        /// <param name="whiteBGImage">the window with a white background</param>
+        /// <param name="blackBGImage">the window with a black background</param>
+        /// <returns>the original window image, with restored alpha channel</returns>
+        public static Bitmap ComputeOriginal(Bitmap whiteBGImage, Bitmap blackBGImage)
+        {
+            int width = whiteBGImage.Size.Width;
+            int height = whiteBGImage.Size.Height;
+
+            Bitmap resultImage = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+            Rectangle rect = new Rectangle(new Point(0, 0), blackBGImage.Size);
+
+            // access the image data directly for faster image processing
+            BitmapData blackImageData = blackBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData whiteImageData = whiteBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData resultImageData = resultImage.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            try
+            {
+                IntPtr pBlackImage = blackImageData.Scan0;
+                IntPtr pWhiteImage = whiteImageData.Scan0;
+                IntPtr pResultImage = resultImageData.Scan0;
+
+                int bytes = blackImageData.Stride * blackImageData.Height;
+                byte[] blackBGImageRGB = new byte[bytes];
+                byte[] whiteBGImageRGB = new byte[bytes];
+                byte[] resultImageRGB = new byte[bytes];
+
+                Marshal.Copy(pBlackImage, blackBGImageRGB, 0, bytes);
+                Marshal.Copy(pWhiteImage, whiteBGImageRGB, 0, bytes);
+
+                int offset = 0;
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        // ARGB is in fact BGRA (little endian)
+                        int b0 = blackBGImageRGB[offset + 0];
+                        int g0 = blackBGImageRGB[offset + 1];
+                        int r0 = blackBGImageRGB[offset + 2];
+
+                        int b1 = whiteBGImageRGB[offset + 0];
+                        int g1 = whiteBGImageRGB[offset + 1];
+                        int r1 = whiteBGImageRGB[offset + 2];
+
+                        int alphaR = r0 - r1 + 255;
+                        int alphaG = g0 - g1 + 255;
+                        int alphaB = b0 - b1 + 255;
+
+                        int resultR, resultG, resultB;
+                        if (alphaG != 0)
+                        {
+                            resultR = r0 * 255 / alphaG;
+                            resultG = g0 * 255 / alphaG;
+                            resultB = b0 * 255 / alphaG;
+                        }
+                        else
+                        {
+                            // Could be any color since it is fully transparent.
+                            resultR = 255;
+                            resultG = 255;
+                            resultB = 255;
+                        }
+
+                        resultImageRGB[offset + 3] = (byte)alphaR;
+                        resultImageRGB[offset + 2] = (byte)resultR;
+                        resultImageRGB[offset + 1] = (byte)resultG;
+                        resultImageRGB[offset + 0] = (byte)resultB;
+
+                        offset += 4;
+                    }
+                }
+
+                Marshal.Copy(resultImageRGB, 0, pResultImage, bytes);
+            }
+            finally
+            {
+                blackBGImage.UnlockBits(blackImageData);
+                whiteBGImage.UnlockBits(whiteImageData);
+                resultImage.UnlockBits(resultImageData);
+            }
+
+            return resultImage;
+        }
+
+        /// <summary>
+        /// Removes the pixels that are transparent in the given image from the
+        /// region of the given graphics object
+        /// </summary>
+        public static void RemoveTransparentPixelsFromRegion(Bitmap image, Graphics g)
+        {
+            int width = image.Size.Width;
+            int height = image.Size.Height;
+
+            Rectangle rect = new Rectangle(new Point(0, 0), image.Size);
+
+            // Access the image data directly for faster image processing
+            BitmapData imageData = image.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            IntPtr pImage = imageData.Scan0;
+
+            int bytes = imageData.Stride * imageData.Height;
+            byte[] imageRGB = new byte[bytes];
+
+            Marshal.Copy(pImage, imageRGB, 0, bytes);
+
+            int offset = 0;
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int alpha = imageRGB[offset + 3];
+                    if (alpha == 0)
+                    {
+                        // removes the completely transparent pixel from the graphics region
+                        Region region = new Region(new Rectangle(x, y, 1, 1));
+                        g.SetClip(region, CombineMode.Exclude);
+                    }
+                    offset += 4;
+                }
+            }
+
+            image.UnlockBits(imageData);
+        }
+
+        public static Bitmap AddBorderShadow(Bitmap input)
+        {
+            Bitmap leftShadow = ZScreenLib.Properties.Resources.leftShadow;
+            Bitmap rightShadow = ZScreenLib.Properties.Resources.rightShadow;
+            Bitmap topShadow = ZScreenLib.Properties.Resources.topShadow;
+            Bitmap bottomShadow = ZScreenLib.Properties.Resources.bottomShadow;
+            Bitmap topLeftShadow = ZScreenLib.Properties.Resources.topLeftShadow;
+            Bitmap topRightShadow = ZScreenLib.Properties.Resources.topRightShadow;
+            Bitmap bottomLeftShadow = ZScreenLib.Properties.Resources.bottomLeftShadow;
+            Bitmap bottomRightShadow = ZScreenLib.Properties.Resources.bottomRightShadow;
+
+            int leftMargin = leftShadow.Width;
+            int rightMargin = rightShadow.Width;
+            int topMargin = topShadow.Height;
+            int bottomMargin = bottomShadow.Height;
+
+            int width = input.Width;
+            int height = input.Height;
+
+            int resultWidth = leftMargin + width + rightMargin;
+            int resultHeight = topMargin + height + bottomMargin;
+
+            Bitmap bmpResult = new Bitmap(resultWidth, resultHeight, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(bmpResult))
+            {
+                g.DrawImage(topLeftShadow, 0, 0);
+                g.DrawImage(topRightShadow, resultWidth - topRightShadow.Width, 0);
+                g.DrawImage(bottomLeftShadow, 0, resultHeight - bottomLeftShadow.Height);
+                g.DrawImage(bottomRightShadow, resultWidth - bottomRightShadow.Width, resultHeight - bottomRightShadow.Height);
+
+                g.DrawShadow(leftShadow, 0, topLeftShadow.Height, leftShadow.Width, resultHeight - topLeftShadow.Height - bottomLeftShadow.Height);
+                g.DrawShadow(rightShadow, resultWidth - rightShadow.Width, topRightShadow.Height,
+                    rightShadow.Width, resultHeight - topRightShadow.Height - bottomRightShadow.Height);
+                g.DrawShadow(topShadow, topLeftShadow.Width, 0, resultWidth - topLeftShadow.Width - topRightShadow.Width, topShadow.Height);
+                g.DrawShadow(bottomShadow, bottomLeftShadow.Width, resultHeight - bottomShadow.Height,
+                    resultWidth - bottomLeftShadow.Width - bottomRightShadow.Width, bottomShadow.Height);
+
+                g.DrawImage(input, leftMargin, topMargin);
+            }
+
+            return bmpResult;
+        }
+
+        public static Bitmap MakeBackgroundTransparent(IntPtr hWnd, Image image)
+        {
+            Region region;
+            if (User32.GetWindowRegion(hWnd, out region))
+            {
+                Bitmap result = new Bitmap(image.Width, image.Height);
+
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    if (!region.IsEmpty(g))
+                    {
+                        RectangleF bounds = region.GetBounds(g);
+                        g.Clip = region;
+                        g.DrawImage(image, new RectangleF(new PointF(0, 0), bounds.Size), bounds, GraphicsUnit.Pixel);
+
+                        return result;
+                    }
+                }
+            }
+
+            return (Bitmap)image;
         }
     }
 }
