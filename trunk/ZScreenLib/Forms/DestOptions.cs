@@ -39,6 +39,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
             this.Task = task;
+            
         }
 
         private void InputBox_Load(object sender, EventArgs e)

@@ -521,7 +521,7 @@ namespace ZScreenLib
             if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
             {
                 if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
-                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending)
+                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
                     task2.JobCategory = task.JobCategory;
