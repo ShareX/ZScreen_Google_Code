@@ -323,7 +323,7 @@ namespace ZScreenGUI
                             {
                                 if (cbText != Engine.zClipboardText)
                                 {
-                                    Engine.zClipboardHook.UnregisterClipboardViewer();
+                                    Engine.ClipboardUnhook();
                                     Loader.Worker.UploadUsingClipboard();
                                 }
                             }

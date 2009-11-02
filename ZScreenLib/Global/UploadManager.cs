@@ -150,7 +150,7 @@ namespace ZScreenLib
 
             if (!string.IsNullOrEmpty(clipboardText))
             {
-                Engine.zClipboardHook.UnregisterClipboardViewer();
+                Engine.ClipboardUnhook();
                 Clipboard.SetText(clipboardText);
                 Engine.zClipboardText = clipboardText;
                 Engine.zClipboardHook.RegisterClipboardViewer();

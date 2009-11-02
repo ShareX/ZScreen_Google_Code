@@ -431,6 +431,14 @@ namespace ZScreenLib
             }
         }
 
+        public static void ClipboardUnhook()
+        {
+            if (null != zClipboardHook)
+            {
+                zClipboardHook.UnregisterClipboardViewer();
+            }
+        }
+
         public static XMLSettings conf;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
