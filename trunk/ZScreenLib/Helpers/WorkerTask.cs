@@ -241,27 +241,38 @@ namespace ZScreenLib
             this.MyImage = GraphicsMgr.GetImageSafely(fp);
         }
 
-        public void SetFilePathFromPattern(string fileName)
+        /// <summary>
+        /// Sets the file to save the image to. 
+        /// If the user activated the "prompt for filename" option, then opens a dialog box.
+        /// </summary>
+        /// <param name="fileName">the base name</param>
+        /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
+        public bool SetFilePathFromPattern(string fileName)
         {
             string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
 
             if (Engine.conf.ManualNaming)
             {
-                DestOptions ib = new DestOptions(this)
+                DestOptions dialog = new DestOptions(this)
                 {
                     Title = "Specify a Screenshot Name...",
                     InputText = this.FileName,
                     Icon = Resources.zss_main
                 };
-                ib.ShowDialog();
-                if (ib.DialogResult == DialogResult.OK)
+                User32.SetForegroundWindow(dialog.Handle);
+                dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.OK)
                 {
-                    StringBuilder sb = new StringBuilder(ib.InputText);
+                    StringBuilder sb = new StringBuilder(dialog.InputText);
                     sb = NameParser.Normalize(sb);
-                    if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(ib.InputText))
+                    if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(dialog.InputText))
                     {
                         this.FileName = sb.ToString();
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
 
@@ -276,6 +287,7 @@ namespace ZScreenLib
             filePath = sbPath.ToString();
 
             UpdateLocalFilePath(filePath);
+            return true;
         }
 
         public void UpdateLocalFilePath(string fp)

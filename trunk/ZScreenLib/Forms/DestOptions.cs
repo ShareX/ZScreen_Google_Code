@@ -92,6 +92,17 @@ namespace ZScreenLib
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
             ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+
+            txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
+        }
+
+        void txtInputText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                // cancel with Escape
+                this.Close();
+            }
         }
 
         void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
