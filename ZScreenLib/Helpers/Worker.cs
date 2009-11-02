@@ -388,6 +388,7 @@ namespace ZScreenLib
         /// <param name="job">Job Type</param>
         public void StartWorkerScreenshots(WorkerTask.Jobs job)
         {
+            Engine.zClipboardHook.UnregisterClipboardViewer();
             WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.SCREENSHOTS;
             t.MakeTinyURL = Adapter.MakeTinyURL();
@@ -401,6 +402,7 @@ namespace ZScreenLib
         /// <param name="localFilePath">Local file path of the image</param>
         public void StartWorkerPictures(WorkerTask task, string localFilePath)
         {
+            Engine.zClipboardHook.UnregisterClipboardViewer();
             task.JobCategory = JobCategoryType.PICTURES;
             task.MakeTinyURL = Adapter.MakeTinyURL();
             task.UpdateLocalFilePath(localFilePath);
@@ -410,6 +412,7 @@ namespace ZScreenLib
 
         public void StartWorkerPictures(WorkerTask.Jobs job, Image img)
         {
+            Engine.zClipboardHook.UnregisterClipboardViewer();
             WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
@@ -420,6 +423,7 @@ namespace ZScreenLib
 
         protected void StartTextWorkers(List<WorkerTask> textWorkers)
         {
+            Engine.zClipboardHook.UnregisterClipboardViewer();
             foreach (WorkerTask task in textWorkers)
             {
                 if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.ShortenUrlUsingClipboardUpload && Adapter.CheckURLShorteners())

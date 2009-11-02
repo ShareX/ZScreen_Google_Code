@@ -299,6 +299,68 @@ namespace ZScreenGUI
             FileSystem.AppendDebug("Loaded ZScreen GUI...");
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            if (mGuiIsReady && Adapter.ClipboardMonitor)
+            {
+                if (null == Engine.zClipboardHook)
+                {
+                    Engine.zClipboardHook = new ClipboardHook(this.Handle);
+                    Engine.zClipboardHook.RegisterClipboardViewer();
+                    Debug.WriteLine("Monitoring clipboard...");
+                }
+                switch ((ClipboardHook.Msgs)m.Msg)
+                {
+                    case ClipboardHook.Msgs.WM_DRAWCLIPBOARD:
+                        try
+                        {
+                            string cbText = Clipboard.GetText();
+                            bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
+                            bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
+                            bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
+                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && Engine.conf.MonitorUrls;
+                            if (uploadImage || uploadText || uploadFile || Clipboard.ContainsText() && shortenUrl)
+                            {
+                                if (cbText != Engine.zClipboardText)
+                                {
+                                    Engine.zClipboardHook.UnregisterClipboardViewer();
+                                    Loader.Worker.UploadUsingClipboard();
+                                }
+                            }
+                        }
+                        catch (System.Runtime.InteropServices.ExternalException externEx)
+                        {
+                            // Copying a field definition in Access 2002 causes this sometimes?
+                            Debug.WriteLine("InteropServices.ExternalException: {0}", externEx.Message);
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            FileSystem.AppendDebug("Error monitoring clipboard", ex);
+                            return;
+                        }
+                        break;
+                    case ClipboardHook.Msgs.WM_CHANGECBCHAIN:
+                        if (m.WParam == ClipboardHook.mClipboardViewerNext)
+                        {
+                            ClipboardHook.mClipboardViewerNext = m.LParam;
+                        }
+                        else
+                        {
+                            ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
+                        }
+                        break;
+                    default:
+                        base.WndProc(ref m);
+                        break;
+                }
+            }
+            else
+            {
+                base.WndProc(ref m);
+            }
+        }
+
         private void ZScreen_ConfigGUI()
         {
             FileSystem.AppendDebug("Configuring ZScreen GUI..");
@@ -1477,7 +1539,6 @@ namespace ZScreenGUI
                 FileSystem.BackupAppSettings();
             }
 
-            // Loader.Splash.Close();
             if (Engine.conf.Windows7TaskbarIntegration)
             {
                 ZScreen_Windows7onlyTasks();
@@ -1487,6 +1548,7 @@ namespace ZScreenGUI
                     this.ShowInTaskbar = true;
                 }
             }
+
             Engine.ZScreenKeyboardHook = new KeyboardHook();
             Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
             FileSystem.AppendDebug("Keyboard Hook initiated");
@@ -4637,41 +4699,6 @@ namespace ZScreenGUI
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.SelectedWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
-        }
-
-        private void tmrSecond_Tick(object sender, EventArgs e)
-        {
-            MonitorClipboard();
-        }
-
-        private string mClipboardText = string.Empty;
-
-        public void MonitorClipboard()
-        {
-            try
-            {
-                if (Engine.conf.MonitorUrls)
-                {
-                    string url = Clipboard.GetText();                    
-                    if (mClipboardText != url)
-                    {
-                        if (FileSystem.IsValidLink(url))
-                        {
-                            url = Adapter.TryShortenURL(url);
-                            if (!string.IsNullOrEmpty(url))
-                            {
-                                Clipboard.SetText(url);
-                                mClipboardText = url;
-                                FileSystem.AppendDebug("Shortened URL by monitoring clipboard: " + url);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug("Error while monitoring clipboard", ex);
-            }
         }
 
         private void chkMonImages_CheckedChanged(object sender, EventArgs e)

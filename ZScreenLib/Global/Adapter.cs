@@ -789,5 +789,13 @@ namespace ZScreenLib
 
         #endregion
 
+        public static bool ClipboardMonitor
+        {
+            get
+            {
+                return Engine.conf.MonitorImages || Engine.conf.MonitorText || Engine.conf.MonitorFiles || Engine.conf.MonitorUrls;
+            }
+        }
+
     }
 }

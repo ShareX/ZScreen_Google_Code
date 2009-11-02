@@ -144,6 +144,8 @@ namespace UploadersLib
             }
 
             path = path.Replace(" ", "%20");
+            path = path.Replace("[", "");
+            path = path.Replace("]", "");
             return path;
         }
 
