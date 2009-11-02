@@ -256,7 +256,7 @@ namespace ZScreenLib
                 DestOptions dialog = new DestOptions(this)
                 {
                     Title = "Specify a Screenshot Name...",
-                    InputText = this.FileName,
+                    InputText = fileName,
                     Icon = Resources.zss_main
                 };
                 User32.SetForegroundWindow(dialog.Handle);
