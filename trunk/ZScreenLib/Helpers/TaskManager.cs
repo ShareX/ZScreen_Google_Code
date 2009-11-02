@@ -75,11 +75,11 @@ namespace ZScreenLib
         public string CaptureRegionOrWindow()
         {
             mTakingScreenShot = true;
-            string filePath = "";
+            string filePath = string.Empty;
 
             try
             {
-                using (Image imgSS = User32.CaptureScreen(Engine.conf.ShowCursor))
+                using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
                 {
                     if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)
                     {

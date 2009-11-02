@@ -126,6 +126,7 @@
       <DependentUpon>UserPassBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Adapter.cs" />
+    <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\EventHandlers.cs" />
@@ -145,7 +146,6 @@
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
-    <Compile Include="Global\GraphicsCore.cs" />
     <Compile Include="Helpers\HistoryItem.cs" />
     <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\IECapt.cs" />

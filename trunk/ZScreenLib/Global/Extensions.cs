@@ -22,12 +22,12 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ZScreenLib
@@ -87,6 +87,89 @@ namespace ZScreenLib
         {
             string[] split = key.ToString().Split(new[] { ", " }, StringSplitOptions.None).Reverse().ToArray();
             return string.Join(" + ", split);
+        }
+
+        public static Rectangle AddMargin(this Rectangle rect, int offset)
+        {
+            rect.X -= offset;
+            rect.Y -= offset;
+            rect.Width += offset * 2;
+            rect.Height += offset * 2;
+            return rect;
+        }
+
+        /// <summary>
+        /// Find out whether the two given bitmaps have the exact same image data.
+        /// </summary>
+        public static bool AreBitmapsEqual(this Bitmap first, Bitmap second)
+        {
+            if (first.Size != second.Size)
+            {
+                return false;
+            }
+
+            int width = first.Width;
+            int height = first.Height;
+
+            Rectangle rect = new Rectangle(new Point(0, 0), first.Size);
+
+            // Access the image data directly for faster image processing
+            BitmapData firstImageData = first.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData secondImageData = second.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
+            {
+                IntPtr pFirstImage = firstImageData.Scan0;
+                IntPtr pSecondImage = secondImageData.Scan0;
+
+                int bytes = firstImageData.Stride * firstImageData.Height;
+                byte[] firstImageRGB = new byte[bytes];
+                byte[] secondImageRGB = new byte[bytes];
+
+                Marshal.Copy(pFirstImage, firstImageRGB, 0, bytes);
+                Marshal.Copy(pSecondImage, secondImageRGB, 0, bytes);
+
+                int offset = 0;
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        int b0 = firstImageRGB[offset + 0];
+                        int g0 = firstImageRGB[offset + 1];
+                        int r0 = firstImageRGB[offset + 2];
+
+                        int b1 = secondImageRGB[offset + 0];
+                        int g1 = secondImageRGB[offset + 1];
+                        int r1 = secondImageRGB[offset + 2];
+
+                        if (r0 != r1 || g0 != g1 || b0 != b1)
+                        {
+                            return false;
+                        }
+
+                        offset += 4;
+                    }
+                }
+            }
+            finally
+            {
+                first.UnlockBits(firstImageData);
+                second.UnlockBits(secondImageData);
+            }
+
+            return true;
+        }
+
+        public static void DrawShadow(this Graphics g, Bitmap shadowBitmap, int x, int y, int width, int height)
+        {
+            using (Brush brush = new TextureBrush(shadowBitmap))
+            using (Bitmap bmpTemp = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+            using (Graphics gTemp = Graphics.FromImage(bmpTemp))
+            {
+                // Draw on a temp bitmap with (0,0) offset, because the texture starts at (0,0)
+                gTemp.FillRectangle(brush, 0, 0, width, height);
+                g.DrawImage(bmpTemp, x, y);
+            }
         }
     }
 }

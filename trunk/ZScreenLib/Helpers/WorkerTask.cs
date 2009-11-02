@@ -25,17 +25,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
-using ZScreenLib.Properties;
 using ZScreenLib.Helpers;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -328,7 +325,7 @@ namespace ZScreenLib
             {
                 using (new MyTimer("CaptureActiveWindow", false))
                 {
-                    this.SetImage(User32.CaptureActiveWindow());
+                    this.SetImage(Capture.CaptureActiveWindow());
                 }
             }
         }
@@ -340,7 +337,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                this.SetImage(User32.CaptureScreen(Engine.conf.ShowCursor));
+                this.SetImage(Capture.CaptureScreen(Engine.conf.ShowCursor));
             }
         }
 
