@@ -286,9 +286,11 @@ namespace ZScreenLib
             {
                 task.SetImage(Clipboard.GetImage());
                 task.Settings.ManualNaming = false;
-                task.SetFilePathFromPattern(NameParser.Convert(NameParserType.EntireScreen));
-                FileSystem.SaveImage(ref task);
-                StartWorkerPictures(task, task.LocalFilePath);
+                if (task.SetFilePathFromPattern(NameParser.Convert(NameParserType.EntireScreen)))
+                {
+                    FileSystem.SaveImage(ref task);
+                    StartWorkerPictures(task, task.LocalFilePath);
+                }
             }
             else if (Clipboard.ContainsText())
             {
