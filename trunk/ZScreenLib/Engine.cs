@@ -105,6 +105,9 @@ namespace ZScreenLib
         public static string[] zTextFileTypes = { "txt", "log" };
         public static string[] zWebpageFileTypes = { "html", "htm" };
 
+        public static ClipboardHook zClipboardHook = null;
+        public static string zClipboardText = string.Empty;
+
         public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
         private static bool RunConfig = false;

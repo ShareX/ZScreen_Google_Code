@@ -44,7 +44,6 @@ namespace ZScreenGUI
     public class WorkerPrimary : Worker
     {
         private ZScreen mZScreen;
-
         internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
         internal int mHKSelectedRow = -1;
 
@@ -65,7 +64,7 @@ namespace ZScreenGUI
         #region Worker Events
 
         public override void BwApp_DoWork(object sender, DoWorkEventArgs e)
-        {
+        {            
             WorkerTask task = (WorkerTask)e.Argument;
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
