@@ -1424,7 +1424,6 @@ namespace ZScreenLib
             {
                 Thread.Sleep(10);
             }
-            Application.DoEvents();
         }
 
         #region Taskbar
