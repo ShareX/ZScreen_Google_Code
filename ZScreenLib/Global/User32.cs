@@ -55,6 +55,9 @@ namespace ZScreenLib
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
         [DllImport("user32.dll")]
         public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
@@ -1196,6 +1199,7 @@ namespace ZScreenLib
             {
                 return sb.ToString();
             }
+
             return string.Empty;
         }
 
@@ -1209,7 +1213,21 @@ namespace ZScreenLib
             {
                 return handle;
             }
+
             return IntPtr.Zero;
+        }
+
+        public static string GetClassName(IntPtr handle)
+        {
+            const int numOfChars = 100;
+            StringBuilder sb = new StringBuilder(numOfChars);
+
+            if (GetClassName(handle, sb, numOfChars) > 0)
+            {
+                return sb.ToString();
+            }
+
+            return string.Empty;
         }
 
         public static MyCursor CaptureCursor()
@@ -1422,7 +1440,7 @@ namespace ZScreenLib
             User32.BringWindowToTop(handle);
             for (int i = 0; User32.GetForegroundWindow() != handle && i < count; i++)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(1);
             }
         }
 

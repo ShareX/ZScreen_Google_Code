@@ -302,37 +302,40 @@ namespace ZScreenLib
 
             if (Engine.conf.ActiveWindowCleanBackground)
             {
+                Bitmap whiteBGImage, blackBGImage;
+
                 using (Form form = new Form())
                 {
-                    form.BackColor = Color.Black;
+                    form.BackColor = Color.White;
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.ShowInTaskbar = false;
 
                     int offset = Engine.conf.ActiveWindowIncludeShadows ? 20 : 0;
 
                     windowRect = windowRect.AddMargin(offset);
+                    windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
-                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNoActivate);
                     User32.SetWindowPos(form.Handle, User32.HWND_TOP, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
-                    User32.BringWindowToTop(form.Handle);
+                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
+                    Thread.Sleep(250);
                     form.Refresh();
                     Application.DoEvents();
-                    User32.ActivateWindowRepeat(handle, 250);
+                    User32.ActivateWindowRepeat(handle, 2500);
                     Application.DoEvents();
 
                     // Capture the window with a black background
-                    Bitmap blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
-                    form.BackColor = Color.White;
+                    form.BackColor = Color.Black;
                     form.Refresh();
                     Application.DoEvents();
 
                     // Capture the window again with a white background this time
-                    Bitmap whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
-
-                    // Compute the real window image by difference between the two previous images
-                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                    blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
                 }
+
+                // Compute the real window image by difference between the two previous images
+                windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
 
                 if (windowImage != null)
                 {
