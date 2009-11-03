@@ -506,10 +506,10 @@ namespace ZScreenGUI
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
-            chkSelectedWindowCleanBackground.Checked = Engine.conf.SelectedWindowCleanBackground;
-            chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.SelectedWindowCleanTransparentCorners;
-            chkSelectedWindowIncludeShadow.Checked = Engine.conf.SelectedWindowIncludeShadows;
-            chkSelectedWindowShowCheckers.Checked = Engine.conf.SelectedWindowShowCheckers;
+            chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowCleanBackground;
+            chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
+            chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
+            chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
 
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
@@ -4025,7 +4025,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowCleanBackground = chkSelectedWindowCleanBackground.Checked;
+            Engine.conf.ActiveWindowCleanBackground = chkSelectedWindowCleanBackground.Checked;
             AeroGlassConfigUpdate();
         }
 
@@ -4056,7 +4056,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
+            Engine.conf.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
             AeroGlassConfigUpdate();
         }
 
@@ -4692,13 +4692,13 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
+            Engine.conf.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
             AeroGlassConfigUpdate();
         }
 
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
+            Engine.conf.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
         }
 
         private void chkMonImages_CheckedChanged(object sender, EventArgs e)

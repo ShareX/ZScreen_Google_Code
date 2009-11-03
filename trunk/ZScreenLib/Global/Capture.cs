@@ -27,6 +27,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -90,75 +91,99 @@ namespace ZScreenLib
             return img;
         }
 
+        public static Image CaptureWithDWM(IntPtr handle)
+        {
+            Image windowImage = null;
+            Bitmap redBGImage = null;
+
+            Rectangle windowRect = User32.GetWindowRectangle(handle);
+
+            if (Engine.HasAero && Engine.conf.ActiveWindowCleanBackground)
+            {
+                windowImage = CaptureWindowWithTransparency(handle, windowRect, out redBGImage, Engine.conf.ActiveWindowCleanTransparentCorners);
+            }
+
+            if (windowImage == null)
+            {
+                Console.WriteLine("Standard capture (no transparency)");
+                windowImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                if (Engine.conf.ShowCursor) DrawCursor(windowImage, windowRect.Location);
+            }
+
+            const int cornerSize = 5;
+
+            if (Engine.conf.ActiveWindowCleanTransparentCorners && windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
+            {
+                Console.WriteLine("Clean transparent corners");
+
+                if (redBGImage == null)
+                {
+                    using (Form form = new Form())
+                    {
+                        form.FormBorderStyle = FormBorderStyle.None;
+                        form.ShowInTaskbar = false;
+                        form.BackColor = Color.Red;
+                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                        form.Show();
+                        User32.ActivateWindowRepeat(handle, 250);
+
+                        redBGImage = CaptureWindow(handle, false) as Bitmap;
+                    }
+                }
+
+                Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    g.Clear(Color.Transparent);
+                    // Remove the transparent pixels in the four corners
+                    RemoveCorner(redBGImage, g, 0, 0, cornerSize, Corner.TopLeft);
+                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, 0, windowImage.Width, Corner.TopRight);
+                    RemoveCorner(redBGImage, g, 0, windowImage.Height - cornerSize, cornerSize, Corner.BottomLeft);
+                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, windowImage.Height - cornerSize, windowImage.Width, Corner.BottomRight);
+                    g.DrawImage(windowImage, 0, 0);
+                }
+                windowImage = result;
+            }
+
+            if (Engine.conf.ActiveWindowIncludeShadows)
+            {
+                // Draw shadow manually to be able to have shadows in every case
+                windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
+            }
+
+            return windowImage;
+        }
+
+        public static Image CaptureWithGDI(IntPtr handle)
+        {
+            Rectangle windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
+            Image windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
+
+            if (windowImage == null)
+            {
+                Console.WriteLine("Standard capture (no transparency)");
+                windowImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+            }
+
+            if (Engine.conf.ShowCursor) DrawCursor(windowImage, windowRect.Location);
+
+            return windowImage;
+        }
+
         /// <summary>
         /// Function to Capture Active Window
         /// </summary>
         public static Image CaptureActiveWindow()
         {
-            Image windowImage = null;
-            Bitmap redBGImage = null;
             IntPtr handle = User32.GetForegroundWindow();
-
-            bool doCleanCorners = Engine.conf.SelectedWindowCleanTransparentCorners /*|| Engine.conf.SelectedWindowIncludeShadows*/;
-            const int cornerSize = 5;
 
             if (handle.ToInt32() > 0)
             {
-                Rectangle windowRect = User32.GetWindowRectangle(handle);
-
-                if (Engine.HasAero && Engine.conf.SelectedWindowCleanBackground)
-                {
-                    windowImage = CaptureWindowWithTransparency(handle, windowRect, out redBGImage, doCleanCorners);
-                }
-
-                if (windowImage == null)
-                {
-                    Console.WriteLine("standard capture (no transparency)");
-                    windowImage = CaptureWindow(handle, Engine.conf.ShowCursor);
-                }
-
-                if (doCleanCorners && windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
-                {
-                    Console.WriteLine("Clean transparent corners");
-
-                    if (redBGImage == null)
-                    {
-                        using (Form form = new Form())
-                        {
-                            form.FormBorderStyle = FormBorderStyle.None;
-                            form.ShowInTaskbar = false;
-                            form.BackColor = Color.Red;
-                            User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                            form.Show();
-                            User32.ActivateWindowRepeat(handle, 250);
-
-                            redBGImage = CaptureWindow(handle, false) as Bitmap;
-                        }
-                    }
-                    //redBGImage.Save(@"c:\users\nicolas\documents\redCornersImage.png");
-
-                    Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
-                    using (Graphics g = Graphics.FromImage(result))
-                    {
-                        g.Clear(Color.Transparent);
-                        // remove the transparent pixels in the four corners
-                        RemoveCorner(redBGImage, g, 0, 0, cornerSize, Corner.TopLeft);
-                        RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, 0, windowImage.Width, Corner.TopRight);
-                        RemoveCorner(redBGImage, g, 0, windowImage.Height - cornerSize, cornerSize, Corner.BottomLeft);
-                        RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, windowImage.Height - cornerSize, windowImage.Width, Corner.BottomRight);
-                        g.DrawImage(windowImage, 0, 0);
-                    }
-                    windowImage = result;
-                }
-
-                if (Engine.conf.SelectedWindowIncludeShadows)
-                {
-                    // Draw shadow manually to be able to have shadows in every case
-                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
-                }
+                return CaptureWithGDI(handle);
+                //return CaptureWithDWM(handle);
             }
 
-            return windowImage;
+            return null;
         }
 
         /// <summary>
@@ -262,9 +287,58 @@ namespace ZScreenLib
                 whiteBGImage2.Dispose();
             }
 
-            if (Engine.conf.SelectedWindowShowCheckers)
+            if (Engine.conf.ActiveWindowShowCheckers)
             {
-                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 20);
+                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 12);
+            }
+
+            return windowImage;
+        }
+
+        private static Image CaptureWindowWithTransparencyGDI(IntPtr handle, Rectangle windowRect)
+        {
+            Image windowImage = null;
+
+            if (Engine.conf.ActiveWindowCleanBackground)
+            {
+                using (Form form = new Form())
+                {
+                    form.BackColor = Color.Black;
+                    form.FormBorderStyle = FormBorderStyle.None;
+                    form.ShowInTaskbar = false;
+
+                    int offset = Engine.conf.ActiveWindowIncludeShadows ? 20 : 0;
+
+                    windowRect = windowRect.AddMargin(offset);
+
+                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
+                    User32.SetWindowPos(form.Handle, User32.HWND_TOP, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
+                    form.Refresh();
+                    User32.ActivateWindowRepeat(handle, 250);
+
+                    // Capture the window with a black background
+                    Bitmap blackBGImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect) as Bitmap;
+
+                    form.BackColor = Color.White;
+                    form.Refresh();
+                    User32.ActivateWindowRepeat(handle, 250);
+
+                    // Capture the window again with a white background this time
+                    Bitmap whiteBGImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect) as Bitmap;
+
+                    // Compute the real window image by difference between the two previous images
+                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                }
+
+                if (windowImage != null)
+                {
+                    windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
+
+                    if (Engine.conf.ActiveWindowShowCheckers)
+                    {
+                        windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 12);
+                    }
+                }
             }
 
             return windowImage;

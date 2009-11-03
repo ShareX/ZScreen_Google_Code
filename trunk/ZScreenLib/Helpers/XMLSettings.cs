@@ -213,10 +213,10 @@ namespace ZScreenLib
 
         // Active Window
 
-        public bool SelectedWindowCleanBackground = true;
-        public bool SelectedWindowCleanTransparentCorners = true;
-        public bool SelectedWindowIncludeShadows = true;
-        public bool SelectedWindowShowCheckers = false;
+        public bool ActiveWindowCleanBackground = true;
+        public bool ActiveWindowCleanTransparentCorners = true;
+        public bool ActiveWindowIncludeShadows = true;
+        public bool ActiveWindowShowCheckers = false;
 
         // Interaction
 
