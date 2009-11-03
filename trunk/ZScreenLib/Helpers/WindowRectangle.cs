@@ -22,12 +22,10 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ZScreenLib.Helpers
@@ -55,12 +53,22 @@ namespace ZScreenLib.Helpers
 
                 User32.GetWindowThreadProcessId(handle, out processId);
 
-                User32.EnumWindowsProc ewpWindows = new User32.EnumWindowsProc(EvalWindows);
-                User32.EnumWindows(ewpWindows, IntPtr.Zero);
+                string processName = Process.GetProcessById((int)processId).ProcessName;
+                Console.WriteLine(processName);
+
+                if (processName == "explorer")
+                {
+                    windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(handle, rectangle));
+                }
+                else
+                {
+                    User32.EnumWindowsProc ewpWindows = new User32.EnumWindowsProc(EvalWindows);
+                    User32.EnumWindows(ewpWindows, IntPtr.Zero);
+                }
 
                 foreach (KeyValuePair<IntPtr, Rectangle> window in windows)
                 {
-                    rectangle = rectangle.Merge(window.Value);
+                    //rectangle = rectangle.Merge(window.Value);
                     User32.EnumWindowsProc ewpControls = new User32.EnumWindowsProc(EvalControls);
                     User32.EnumChildWindows(window.Key, ewpControls, IntPtr.Zero);
                 }
@@ -83,7 +91,6 @@ namespace ZScreenLib.Helpers
         private bool EvalWindows(IntPtr hWnd, IntPtr lParam)
         {
             if (!User32.IsWindowVisible(hWnd)) return true;
-            //if (handle == hWnd) return false;
 
             foreach (KeyValuePair<IntPtr, Rectangle> window in windows)
             {
@@ -108,7 +115,6 @@ namespace ZScreenLib.Helpers
         private bool EvalControls(IntPtr hWnd, IntPtr lParam)
         {
             if (!User32.IsWindowVisible(hWnd)) return true;
-            //if (handle == hWnd) return false;
 
             foreach (KeyValuePair<IntPtr, Rectangle> control in controls)
             {
