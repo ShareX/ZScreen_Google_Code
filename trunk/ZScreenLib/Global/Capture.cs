@@ -28,6 +28,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ZScreenLib.Helpers;
+using System.Threading;
 
 namespace ZScreenLib
 {
@@ -311,20 +312,23 @@ namespace ZScreenLib
 
                     windowRect = windowRect.AddMargin(offset);
 
-                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
+                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNoActivate);
                     User32.SetWindowPos(form.Handle, User32.HWND_TOP, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
+                    User32.BringWindowToTop(form.Handle);
                     form.Refresh();
+                    Application.DoEvents();
                     User32.ActivateWindowRepeat(handle, 250);
+                    Application.DoEvents();
 
                     // Capture the window with a black background
-                    Bitmap blackBGImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect) as Bitmap;
+                    Bitmap blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
                     form.BackColor = Color.White;
                     form.Refresh();
-                    User32.ActivateWindowRepeat(handle, 250);
+                    Application.DoEvents();
 
                     // Capture the window again with a white background this time
-                    Bitmap whiteBGImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect) as Bitmap;
+                    Bitmap whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
                     // Compute the real window image by difference between the two previous images
                     windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
