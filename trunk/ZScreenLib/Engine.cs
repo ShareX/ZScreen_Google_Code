@@ -430,6 +430,14 @@ namespace ZScreenLib
                 return Path.Combine(SettingsDir, HistoryFileName);
             }
         }
+        
+        public static void ClipboardHook()
+        {
+        	if (null != zClipboardHook) 
+        	{
+        		zClipboardHook.RegisterClipboardViewer();
+        	}
+        }
 
         public static void ClipboardUnhook()
         {

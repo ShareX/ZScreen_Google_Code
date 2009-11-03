@@ -306,8 +306,8 @@ namespace ZScreenGUI
                 if (null == Engine.zClipboardHook)
                 {
                     Engine.zClipboardHook = new ClipboardHook(this.Handle);
-                    Engine.zClipboardHook.RegisterClipboardViewer();
-                    Debug.WriteLine("Monitoring clipboard...");
+                    Engine.ClipboardHook();
+                    FileSystem.AppendDebug("Monitoring clipboard...");
                 }
                 switch ((ClipboardHook.Msgs)m.Msg)
                 {
@@ -319,7 +319,7 @@ namespace ZScreenGUI
                             bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
                             bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
                             bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && Engine.conf.MonitorUrls;
-                            if (uploadImage || uploadText || uploadFile || Clipboard.ContainsText() && shortenUrl)
+                            if (uploadImage || uploadText || uploadFile || shortenUrl)
                             {
                                 if (cbText != Engine.zClipboardText)
                                 {
@@ -2465,7 +2465,7 @@ namespace ZScreenGUI
             if (lbHistory.SelectedItem != null)
             {
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.LocalPath))
+                if (File.Exists(hi.LocalPath))
                 {
                     Process.Start(hi.LocalPath);
                 }
