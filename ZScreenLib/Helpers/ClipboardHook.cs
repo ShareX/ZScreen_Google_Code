@@ -255,7 +255,7 @@ namespace ZScreenLib
         /// <summary>
         /// Register this form as a Clipboard Viewer application
         /// </summary>
-        public void RegisterClipboardViewer()
+        internal void RegisterClipboardViewer()
         {
             if (Adapter.ClipboardMonitor)
             {
@@ -266,7 +266,7 @@ namespace ZScreenLib
         /// <summary>
         /// Remove this form from the Clipboard Viewer list
         /// </summary>
-        public void UnregisterClipboardViewer()
+        internal void UnregisterClipboardViewer()
         {
             ChangeClipboardChain(mHandle, mClipboardViewerNext);
         }

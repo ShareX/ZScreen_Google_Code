@@ -1,5 +1,6 @@
-Version 3.17 - 20091107
+Version 3.18 - 20091107
 
+3.18.0.0 Ability to capture menus, tooltips and other interactive effects in Active Window that applications may produce {Jaex}
 3.17.2.0 Clicking Cancel button or pressing Escape in Destination Options dialog will prevent ZScreen from uploading {theone256}
 3.17.1.0 Extended ability to add shadow effect even if Aero is disabled (including Windows XP) {theone256}
 3.17.0.0 Option to monitor clipboard and automatically upload Images, Text, Files and shorten URLs [Issue 154] {McoreD}
