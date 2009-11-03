@@ -153,7 +153,7 @@ namespace ZScreenLib
                 Engine.ClipboardUnhook();
                 Clipboard.SetText(clipboardText);
                 Engine.zClipboardText = clipboardText;
-                Engine.zClipboardHook.RegisterClipboardViewer();
+                //Engine.zClipboardHook.RegisterClipboardViewer();
             }
 
             return clipboardText;

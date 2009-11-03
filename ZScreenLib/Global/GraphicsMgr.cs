@@ -277,47 +277,100 @@ namespace ZScreenLib
             return bmp;
         }
 
+        public enum ColorType
+        {
+            B, G, R, A
+        }
+
+        public static int FindPosition(int x, int y, int stride, ColorType color)
+        {
+            return (stride * y) + (4 * x) + (int)color;
+        }
+
         public static Image AutoCropImage(Bitmap bmp)
         {
-            int x = 0, y = 0, width = bmp.Width, height = bmp.Height;
+            Rectangle result = new Rectangle();
 
-            for (int i = 0; i < bmp.Width; i++)
+            int width = bmp.Size.Width;
+            int height = bmp.Size.Height;
+
+            Rectangle rect = new Rectangle(new Point(0, 0), bmp.Size);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
             {
-                if (bmp.GetPixel(i, bmp.Height / 2).A > 0)
+                IntPtr pImage = bmpData.Scan0;
+                int bytes = bmpData.Stride * bmpData.Height;
+                byte[] colorData = new byte[bytes];
+
+                Marshal.Copy(pImage, colorData, 0, bytes);
+
+                bool stop = false;
+
+                // Find X
+                for (int x = 0; x < width && !stop; x++)
                 {
-                    x = i;
-                    break;
+                    for (int y = 0; y < height && !stop; y++)
+                    {
+                        if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
+                        {
+                            result.X = x;
+                            stop = true;
+                        }
+                    }
+                }
+
+                stop = false;
+
+                // Find Y
+                for (int y = 0; y < height && !stop; y++)
+                {
+                    for (int x = 0; x < width && !stop; x++)
+                    {
+                        if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
+                        {
+                            result.Y = y;
+                            stop = true;
+                        }
+                    }
+                }
+
+                stop = false;
+
+                // Find Width
+                for (int x = bmp.Width - 1; x > result.X && !stop; x--)
+                {
+                    for (int y = 0; y < height && !stop; y++)
+                    {
+                        if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
+                        {
+                            result.Width = x - result.X + 1;
+                            stop = true;
+                        }
+                    }
+                }
+
+                stop = false;
+
+                // Find Height
+                for (int y = bmp.Height - 1; y > result.Y && !stop; y--)
+                {
+                    for (int x = 0; x < width && !stop; x++)
+                    {
+                        if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
+                        {
+                            result.Height = y - result.Y + 1;
+                            stop = true;
+                        }
+                    }
                 }
             }
-
-            for (int i = 0; i < bmp.Height; i++)
+            finally
             {
-                if (bmp.GetPixel(bmp.Width / 2, i).A > 0)
-                {
-                    y = i;
-                    break;
-                }
+                bmp.UnlockBits(bmpData);
             }
 
-            for (int i = bmp.Width - 1; i > x; i--)
-            {
-                if (bmp.GetPixel(i, bmp.Height / 2).A > 0)
-                {
-                    width = i - x + 1;
-                    break;
-                }
-            }
-
-            for (int i = bmp.Height - 1; i > y; i--)
-            {
-                if (bmp.GetPixel(bmp.Width / 2, i).A > 0)
-                {
-                    height = i - y + 1;
-                    break;
-                }
-            }
-
-            return GraphicsMgr.CropImage(bmp, new Rectangle(x, y, width, height));
+            return GraphicsMgr.CropImage(bmp, result);
         }
 
         public static Image ChangeImageSize(Image img, int width, int height, bool preserveSize)
@@ -366,19 +419,21 @@ namespace ZScreenLib
         {
             if (percentage > 99) percentage = 99;
             Bitmap bmp = new Bitmap(16, 16);
-            Graphics g = Graphics.FromImage(bmp);
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            g.FillRectangle(Brushes.Black, 0, 0, 16, 16);
-            int width = (int)(0.16 * percentage);
-            if (width > 0)
+            using (Graphics g = Graphics.FromImage(bmp))
             {
-                Brush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 16), Color.SteelBlue, Color.MediumBlue, LinearGradientMode.Vertical);
-                g.FillRectangle(brush, 0, 0, width, 16);
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                g.FillRectangle(Brushes.Black, 0, 0, 16, 16);
+                int width = (int)(0.16 * percentage);
+                if (width > 0)
+                {
+                    Brush brush = new LinearGradientBrush(new Rectangle(0, 0, width, 16), Color.SteelBlue, Color.MediumBlue, LinearGradientMode.Vertical);
+                    g.FillRectangle(brush, 0, 0, width, 16);
+                }
+                StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+                g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             }
-            StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
-            g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             return bmp;
         }
 
@@ -397,10 +452,11 @@ namespace ZScreenLib
 
             Rectangle rect = new Rectangle(new Point(0, 0), blackBGImage.Size);
 
-            // access the image data directly for faster image processing
+            // Access the image data directly for faster image processing
             BitmapData blackImageData = blackBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             BitmapData whiteImageData = whiteBGImage.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             BitmapData resultImageData = resultImage.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
             try
             {
                 IntPtr pBlackImage = blackImageData.Scan0;
@@ -416,24 +472,26 @@ namespace ZScreenLib
                 Marshal.Copy(pWhiteImage, whiteBGImageRGB, 0, bytes);
 
                 int offset = 0;
+
+                int b0, g0, r0, b1, g1, r1, alphaR, alphaG, alphaB, resultR, resultG, resultB;
+
                 for (int y = 0; y < height; y++)
                 {
                     for (int x = 0; x < width; x++)
                     {
                         // ARGB is in fact BGRA (little endian)
-                        int b0 = blackBGImageRGB[offset + 0];
-                        int g0 = blackBGImageRGB[offset + 1];
-                        int r0 = blackBGImageRGB[offset + 2];
+                        b0 = blackBGImageRGB[offset + 0];
+                        g0 = blackBGImageRGB[offset + 1];
+                        r0 = blackBGImageRGB[offset + 2];
 
-                        int b1 = whiteBGImageRGB[offset + 0];
-                        int g1 = whiteBGImageRGB[offset + 1];
-                        int r1 = whiteBGImageRGB[offset + 2];
+                        b1 = whiteBGImageRGB[offset + 0];
+                        g1 = whiteBGImageRGB[offset + 1];
+                        r1 = whiteBGImageRGB[offset + 2];
 
-                        int alphaR = r0 - r1 + 255;
-                        int alphaG = g0 - g1 + 255;
-                        int alphaB = b0 - b1 + 255;
+                        alphaR = r0 - r1 + 255;
+                        alphaG = g0 - g1 + 255;
+                        alphaB = b0 - b1 + 255;
 
-                        int resultR, resultG, resultB;
                         if (alphaG != 0)
                         {
                             resultR = r0 * 255 / alphaG;

@@ -27,10 +27,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace ZScreenLib
 {
-    public static partial class User32
+    public static class User32
     {
         [DllImport("user32.dll")]
         public static extern bool BringWindowToTop(IntPtr hWnd);
@@ -91,6 +92,9 @@ namespace ZScreenLib
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int GetWindowText(IntPtr hWnd, [Out] StringBuilder lpString, int nMaxCount);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindowVisible(IntPtr hWnd);
@@ -118,6 +122,70 @@ namespace ZScreenLib
         [DllImport("user32.dll")]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        /// <summary>Enumeration of the different ways of showing a window using
+        /// ShowWindow</summary>
+        public enum WindowShowStyle : uint
+        {
+            /// <summary>Hides the window and activates another window.</summary>
+            /// <remarks>See SW_HIDE</remarks>
+            Hide = 0,
+            /// <summary>Activates and displays a window. If the window is minimized
+            /// or maximized, the system restores it to its original size and
+            /// position. An application should specify this flag when displaying
+            /// the window for the first time.</summary>
+            /// <remarks>See SW_SHOWNORMAL</remarks>
+            ShowNormal = 1,
+            /// <summary>Activates the window and displays it as a minimized window.</summary>
+            /// <remarks>See SW_SHOWMINIMIZED</remarks>
+            ShowMinimized = 2,
+            /// <summary>Activates the window and displays it as a maximized window.</summary>
+            /// <remarks>See SW_SHOWMAXIMIZED</remarks>
+            ShowMaximized = 3,
+            /// <summary>Maximizes the specified window.</summary>
+            /// <remarks>See SW_MAXIMIZE</remarks>
+            Maximize = 3,
+            /// <summary>Displays a window in its most recent size and position.
+            /// This value is similar to "ShowNormal", except the window is not
+            /// actived.</summary>
+            /// <remarks>See SW_SHOWNOACTIVATE</remarks>
+            ShowNormalNoActivate = 4,
+            /// <summary>Activates the window and displays it in its current size
+            /// and position.</summary>
+            /// <remarks>See SW_SHOW</remarks>
+            Show = 5,
+            /// <summary>Minimizes the specified window and activates the next
+            /// top-level window in the Z order.</summary>
+            /// <remarks>See SW_MINIMIZE</remarks>
+            Minimize = 6,
+            /// <summary>Displays the window as a minimized window. This value is
+            /// similar to "ShowMinimized", except the window is not activated.</summary>
+            /// <remarks>See SW_SHOWMINNOACTIVE</remarks>
+            ShowMinNoActivate = 7,
+            /// <summary>Displays the window in its current size and position. This
+            /// value is similar to "Show", except the window is not activated.</summary>
+            /// <remarks>See SW_SHOWNA</remarks>
+            ShowNoActivate = 8,
+            /// <summary>Activates and displays the window. If the window is
+            /// minimized or maximized, the system restores it to its original size
+            /// and position. An application should specify this flag when restoring
+            /// a minimized window.</summary>
+            /// <remarks>See SW_RESTORE</remarks>
+            Restore = 9,
+            /// <summary>Sets the show state based on the SW_ value specified in the
+            /// STARTUPINFO structure passed to the CreateProcess function by the
+            /// program that started the application.</summary>
+            /// <remarks>See SW_SHOWDEFAULT</remarks>
+            ShowDefault = 10,
+            /// <summary>Windows 2000/XP: Minimizes a window, even if the thread
+            /// that owns the window is hung. This flag should only be used when
+            /// minimizing windows from a different thread.</summary>
+            /// <remarks>See SW_FORCEMINIMIZE</remarks>
+            ForceMinimized = 11
+        }
+
         public enum RegionType
         {
             ERROR = 0,
@@ -135,6 +203,23 @@ namespace ZScreenLib
             CHILDREN = 0x10,
             OWNED = 0x20
         }
+
+        // From winuser.h
+        public const UInt32 SWP_NOSIZE = 0x0001;
+        public const UInt32 SWP_NOMOVE = 0x0002;
+        public const UInt32 SWP_NOZORDER = 0x0004;
+        public const UInt32 SWP_NOREDRAW = 0x0008;
+        public const UInt32 SWP_NOACTIVATE = 0x0010;
+        public const UInt32 SWP_FRAMECHANGED = 0x0020;  /* The frame changed: send WM_NCCALCSIZE */
+        public const UInt32 SWP_SHOWWINDOW = 0x0040;
+        public const UInt32 SWP_HIDEWINDOW = 0x0080;
+        public const UInt32 SWP_NOCOPYBITS = 0x0100;
+        public const UInt32 SWP_NOOWNERZORDER = 0x0200;  /* Don't do owner Z ordering */
+        public const UInt32 SWP_NOSENDCHANGING = 0x0400;  /* Don't send WM_WINDOWPOSCHANGING */
+
+        public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        public static readonly IntPtr HWND_TOP = new IntPtr(0);
 
         #region Windows Messages
 
@@ -1334,7 +1419,7 @@ namespace ZScreenLib
 
         public static void ActivateWindowRepeat(IntPtr handle, int count)
         {
-            User32.ActivateWindow(handle);
+            User32.BringWindowToTop(handle);
             for (int i = 0; User32.GetForegroundWindow() != handle && i < count; i++)
             {
                 Thread.Sleep(10);

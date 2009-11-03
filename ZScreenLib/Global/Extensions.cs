@@ -171,5 +171,14 @@ namespace ZScreenLib
                 g.DrawImage(bmpTemp, x, y);
             }
         }
+
+        public static Rectangle Merge(this Rectangle rect, Rectangle rect2)
+        {
+            if (rect.X > rect2.X) rect.X = rect2.X;
+            if (rect.Y > rect2.Y) rect.Y = rect2.Y;
+            if (rect.Right < rect2.Right) rect.Width += rect2.Right - rect.Right;
+            if (rect.Bottom < rect2.Bottom) rect.Height += rect2.Bottom - rect.Bottom;
+            return rect;
+        }
     }
 }
