@@ -357,10 +357,13 @@ namespace ZScreenLib
 
                 if (windowImage != null)
                 {
-                    windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
+                    Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
+                    windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
 
                     if (Engine.conf.ShowCursor)
                     {
+                        windowRect.X += windowRectCropped.X;
+                        windowRect.Y += windowRectCropped.Y;
                         DrawCursor(windowImage, windowRect.Location);
                     }
 
