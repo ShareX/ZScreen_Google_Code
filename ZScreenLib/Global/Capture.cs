@@ -174,7 +174,12 @@ namespace ZScreenLib
         public static Image CaptureWithGDI(IntPtr handle)
         {
             Rectangle windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
-            Image windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
+            Image windowImage = null;
+
+            if (Engine.conf.ActiveWindowCleanBackground)
+            {
+                windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
+            }
 
             if (windowImage == null)
             {
@@ -301,76 +306,74 @@ namespace ZScreenLib
         private static Image CaptureWindowWithTransparencyGDI(IntPtr handle, Rectangle windowRect)
         {
             Image windowImage = null;
+            Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
 
-            if (Engine.conf.ActiveWindowCleanTransparentCorners)
+            try
             {
-                Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
-
-                try
+                using (Form form = new Form())
                 {
-                    using (Form form = new Form())
-                    {
-                        form.BackColor = Color.White;
-                        form.FormBorderStyle = FormBorderStyle.None;
-                        form.ShowInTaskbar = false;
+                    form.BackColor = Color.White;
+                    form.FormBorderStyle = FormBorderStyle.None;
+                    form.ShowInTaskbar = false;
 
-                        int offset = Engine.conf.ActiveWindowIncludeShadows ? 20 : 0;
+                    User32.WINDOWPLACEMENT wp = new User32.WINDOWPLACEMENT();
+                    User32.GetWindowPlacement(handle, ref wp);
+                    int offset = Engine.conf.ActiveWindowIncludeShadows && wp.showCmd != (int)User32.SHOWWINDOW.SW_MAXIMIZE ? 13 : 0;
 
-                        windowRect = windowRect.AddMargin(offset);
-                        windowRect.Intersect(GraphicsMgr.GetScreenBounds());
+                    windowRect = windowRect.AddMargin(offset);
+                    windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
-                        User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
-                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
-                        User32.ActivateWindowRepeat(handle, 2500);
-                        Application.DoEvents();
+                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
+                    User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
+                    User32.ActivateWindowRepeat(handle, 2500);
+                    Application.DoEvents();
 
-                        whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
-                        form.BackColor = Color.Black;
-                        form.Refresh();
-                        Application.DoEvents();
+                    form.BackColor = Color.Black;
+                    form.Refresh();
+                    Application.DoEvents();
 
-                        blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
-                        form.BackColor = Color.White;
-                        form.Refresh();
-                        Application.DoEvents();
+                    form.BackColor = Color.White;
+                    form.Refresh();
+                    Application.DoEvents();
 
-                        white2BGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
-                    }
-
-                    if (whiteBGImage.AreBitmapsEqual(white2BGImage))
-                    {
-                        windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
-                    }
-                    else
-                    {
-                        windowImage = (Image)whiteBGImage.Clone();
-                    }
-                }
-                finally
-                {
-                    if (whiteBGImage != null) whiteBGImage.Dispose();
-                    if (blackBGImage != null) blackBGImage.Dispose();
-                    if (white2BGImage != null) white2BGImage.Dispose();
+                    white2BGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
                 }
 
-                if (windowImage != null)
+                if (whiteBGImage.AreBitmapsEqual(white2BGImage))
                 {
-                    Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
-                    windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
+                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                }
+                else
+                {
+                    windowImage = (Image)whiteBGImage.Clone();
+                }
+            }
+            finally
+            {
+                if (whiteBGImage != null) whiteBGImage.Dispose();
+                if (blackBGImage != null) blackBGImage.Dispose();
+                if (white2BGImage != null) white2BGImage.Dispose();
+            }
 
-                    if (Engine.conf.ShowCursor)
-                    {
-                        windowRect.X += windowRectCropped.X;
-                        windowRect.Y += windowRectCropped.Y;
-                        DrawCursor(windowImage, windowRect.Location);
-                    }
+            if (windowImage != null)
+            {
+                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
+                windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
 
-                    if (Engine.conf.ActiveWindowShowCheckers)
-                    {
-                        windowImage = ImageEffects.DrawCheckers(windowImage);
-                    }
+                if (Engine.conf.ShowCursor)
+                {
+                    windowRect.X += windowRectCropped.X;
+                    windowRect.Y += windowRectCropped.Y;
+                    DrawCursor(windowImage, windowRect.Location);
+                }
+
+                if (Engine.conf.ActiveWindowShowCheckers)
+                {
+                    windowImage = ImageEffects.DrawCheckers(windowImage);
                 }
             }
 
