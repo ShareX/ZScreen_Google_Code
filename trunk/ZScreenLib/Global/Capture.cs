@@ -101,7 +101,7 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-                if (Engine.conf.ActiveWindowPreferDWM)
+                if (Engine.conf.ActiveWindowPreferDWM || Engine.HasAero && !Engine.conf.ActiveWindowTryCaptureChilds)
                 {
                     return CaptureWithDWM(handle);
                 }
@@ -121,7 +121,7 @@ namespace ZScreenLib
 
             Rectangle windowRect = User32.GetWindowRectangle(handle);
 
-            if (Engine.HasAero && Engine.conf.ActiveWindowCleanBackground)
+            if (Engine.HasAero && Engine.conf.ActiveWindowClearBackground)
             {
                 windowImage = CaptureWindowWithTransparency(handle, windowRect, out redBGImage, Engine.conf.ActiveWindowCleanTransparentCorners);
             }
@@ -182,7 +182,7 @@ namespace ZScreenLib
             Rectangle windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
             Image windowImage = null;
 
-            if (Engine.conf.ActiveWindowCleanBackground)
+            if (Engine.conf.ActiveWindowClearBackground)
             {
                 windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
             }

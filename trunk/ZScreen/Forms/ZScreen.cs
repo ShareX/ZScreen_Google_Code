@@ -506,12 +506,11 @@ namespace ZScreenGUI
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
-            // Active Window
-            cbActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
-            chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowCleanBackground;
+            // Active Window            
+            chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
-            cbActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
+            chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
 
             // Interaction
@@ -4028,7 +4027,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowCleanBackground = chkSelectedWindowCleanBackground.Checked;
+            Engine.conf.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
             AeroGlassConfigUpdate();
         }
 
@@ -4724,14 +4723,15 @@ namespace ZScreenGUI
             Engine.conf.MonitorUrls = chkMonUrls.Checked;
         }
 
-        private void cbActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
+        private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowPreferDWM = cbActiveWindowPreferDWM.Checked;
+            Engine.conf.ActiveWindowTryCaptureChilds = chkActiveWindowTryCaptureChilds.Checked;
         }
 
-        private void cbActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
+        private void chkActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowTryCaptureChilds = cbActiveWindowTryCaptureChilds.Checked;
+            Engine.conf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
+            chkActiveWindowTryCaptureChilds.Enabled = !chkActiveWindowPreferDWM.Checked;
         }
     }
 }
