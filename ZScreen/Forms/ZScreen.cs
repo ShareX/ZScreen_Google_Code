@@ -506,13 +506,14 @@ namespace ZScreenGUI
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
-            // Active Window            
+            // Active Window        
+            chkActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
             chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
             chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
-
+            
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
             chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
