@@ -1326,9 +1326,9 @@ namespace ZScreenLib
 
         public class MyCursor : IDisposable
         {
-            public Cursor Cursor { get; set; }
-            public Point Position { get; set; }
-            public Bitmap Bitmap { get; set; }
+            public Cursor Cursor;
+            public Point Position;
+            public Bitmap Bitmap;
 
             public MyCursor()
             {

@@ -287,9 +287,9 @@ namespace ZScreenLib
             return (stride * y) + (4 * x) + (int)color;
         }
 
-        public static Image AutoCropImage(Bitmap bmp)
+        public static Rectangle GetCroppedArea(Bitmap bmp)
         {
-            Rectangle result = new Rectangle();
+            Rectangle rectangle = new Rectangle();
 
             int width = bmp.Size.Width;
             int height = bmp.Size.Height;
@@ -314,7 +314,7 @@ namespace ZScreenLib
                     {
                         if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
                         {
-                            result.X = x;
+                            rectangle.X = x;
                             stop = true;
                         }
                     }
@@ -329,7 +329,7 @@ namespace ZScreenLib
                     {
                         if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
                         {
-                            result.Y = y;
+                            rectangle.Y = y;
                             stop = true;
                         }
                     }
@@ -338,13 +338,13 @@ namespace ZScreenLib
                 stop = false;
 
                 // Find Width
-                for (int x = bmp.Width - 1; x > result.X && !stop; x--)
+                for (int x = bmp.Width - 1; x > rectangle.X && !stop; x--)
                 {
                     for (int y = 0; y < height && !stop; y++)
                     {
                         if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
                         {
-                            result.Width = x - result.X + 1;
+                            rectangle.Width = x - rectangle.X + 1;
                             stop = true;
                         }
                     }
@@ -353,13 +353,13 @@ namespace ZScreenLib
                 stop = false;
 
                 // Find Height
-                for (int y = bmp.Height - 1; y > result.Y && !stop; y--)
+                for (int y = bmp.Height - 1; y > rectangle.Y && !stop; y--)
                 {
                     for (int x = 0; x < width && !stop; x++)
                     {
                         if (colorData[FindPosition(x, y, bmpData.Stride, ColorType.A)] > 0)
                         {
-                            result.Height = y - result.Y + 1;
+                            rectangle.Height = y - rectangle.Y + 1;
                             stop = true;
                         }
                     }
@@ -370,7 +370,7 @@ namespace ZScreenLib
                 bmp.UnlockBits(bmpData);
             }
 
-            return GraphicsMgr.CropImage(bmp, result);
+            return rectangle;
         }
 
         public static Image ChangeImageSize(Image img, int width, int height, bool preserveSize)
