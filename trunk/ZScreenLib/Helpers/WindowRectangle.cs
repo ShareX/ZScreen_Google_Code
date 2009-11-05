@@ -68,7 +68,7 @@ namespace ZScreenLib.Helpers
 
                 foreach (KeyValuePair<IntPtr, Rectangle> window in windows)
                 {
-                    //rectangle = rectangle.Merge(window.Value);
+                    rectangle = rectangle.Merge(window.Value);
                     User32.EnumWindowsProc ewpControls = new User32.EnumWindowsProc(EvalControls);
                     User32.EnumChildWindows(window.Key, ewpControls, IntPtr.Zero);
                 }

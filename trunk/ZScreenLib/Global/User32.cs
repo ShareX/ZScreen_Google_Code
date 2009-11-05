@@ -76,6 +76,16 @@ namespace ZScreenLib
         [DllImport("user32.dll")]
         public static extern bool GetIconInfo(IntPtr hIcon, out IconInfo piconinfo);
 
+        /// <summary>
+        /// The GetNextWindow function retrieves a handle to the next or previous window in the Z-Order.
+        /// The next window is below the specified window; the previous window is above.
+        /// If the specified window is a topmost window, the function retrieves a handle to the next (or previous) topmost window.
+        /// If the specified window is a top-level window, the function retrieves a handle to the next (or previous) top-level window.
+        /// If the specified window is a child window, the function searches for a handle to the next (or previous) child window.
+        /// </summary>
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowConstants wCmd);
+
         [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(int smIndex);
 
@@ -127,6 +137,18 @@ namespace ZScreenLib
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        public enum GetWindowConstants : uint
+        {
+            GW_HWNDFIRST = 0,
+            GW_HWNDLAST = 1,
+            GW_HWNDNEXT = 2,
+            GW_HWNDPREV = 3,
+            GW_OWNER = 4,
+            GW_CHILD = 5,
+            GW_ENABLEDPOPUP = 6,
+            GW_MAX = 6
+        }
 
         /// <summary>Enumeration of the different ways of showing a window using
         /// ShowWindow</summary>
@@ -1249,7 +1271,7 @@ namespace ZScreenLib
                             Bitmap resultBitmap;
 
                             // Is this a monochrome cursor?
-                            if (maskBitmap.Height == maskBitmap.Width * 2)
+                            if (Engine.HasAero && maskBitmap.Height == maskBitmap.Width * 2)
                             {
                                 resultBitmap = new Bitmap(maskBitmap.Width, maskBitmap.Width);
 
@@ -1437,10 +1459,11 @@ namespace ZScreenLib
 
         public static void ActivateWindowRepeat(IntPtr handle, int count)
         {
-            User32.BringWindowToTop(handle);
             for (int i = 0; User32.GetForegroundWindow() != handle && i < count; i++)
             {
+                User32.BringWindowToTop(handle);
                 Thread.Sleep(1);
+                Application.DoEvents();
             }
         }
 
