@@ -421,6 +421,11 @@ namespace ZScreenLib
             return img;
         }
 
+        public static Image DrawCheckers(Image img)
+        {
+            return DrawCheckers(img, Color.White, Color.WhiteSmoke, 10);
+        }
+
         public static Image DrawCheckers(Image img, Color color1, Color color2, int boxSize)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height);

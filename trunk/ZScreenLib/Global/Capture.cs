@@ -304,50 +304,69 @@ namespace ZScreenLib
 
             if (Engine.conf.ActiveWindowCleanBackground)
             {
-                Bitmap whiteBGImage, blackBGImage;
+                Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
 
-                using (Form form = new Form())
+                try
                 {
-                    form.BackColor = Color.White;
-                    form.FormBorderStyle = FormBorderStyle.None;
-                    form.ShowInTaskbar = false;
+                    using (Form form = new Form())
+                    {
+                        form.BackColor = Color.White;
+                        form.FormBorderStyle = FormBorderStyle.None;
+                        form.ShowInTaskbar = false;
 
-                    int offset = Engine.conf.ActiveWindowIncludeShadows ? 20 : 0;
+                        int offset = Engine.conf.ActiveWindowIncludeShadows ? 20 : 0;
 
-                    windowRect = windowRect.AddMargin(offset);
-                    windowRect.Intersect(GraphicsMgr.GetScreenBounds());
+                        windowRect = windowRect.AddMargin(offset);
+                        windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
-                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
-                    User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
-                    User32.ActivateWindowRepeat(handle, 2500);
-                    Application.DoEvents();
+                        User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
+                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
+                        User32.ActivateWindowRepeat(handle, 2500);
+                        Application.DoEvents();
 
-                    // Capture the window with a black background
-                    whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                        whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
-                    form.BackColor = Color.Black;
-                    form.Refresh();
-                    Application.DoEvents();
+                        form.BackColor = Color.Black;
+                        form.Refresh();
+                        Application.DoEvents();
 
-                    // Capture the window again with a white background this time
-                    blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                        blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+
+                        form.BackColor = Color.White;
+                        form.Refresh();
+                        Application.DoEvents();
+
+                        white2BGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    }
+
+                    if (whiteBGImage.AreBitmapsEqual(white2BGImage))
+                    {
+                        windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                    }
+                    else
+                    {
+                        windowImage = (Image)whiteBGImage.Clone();
+                    }
                 }
-
-                // Compute the real window image by difference between the two previous images
-                windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                finally
+                {
+                    if (whiteBGImage != null) whiteBGImage.Dispose();
+                    if (blackBGImage != null) blackBGImage.Dispose();
+                    if (white2BGImage != null) white2BGImage.Dispose();
+                }
 
                 if (windowImage != null)
                 {
+                    windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
+
                     if (Engine.conf.ShowCursor)
                     {
                         DrawCursor(windowImage, windowRect.Location);
                     }
 
-                    windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
-
                     if (Engine.conf.ActiveWindowShowCheckers)
                     {
-                        windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 12);
+                        windowImage = ImageEffects.DrawCheckers(windowImage);
                     }
                 }
             }
@@ -408,12 +427,16 @@ namespace ZScreenLib
 
         private static Image DrawCursor(Image img, Point offset)
         {
-            User32.MyCursor cursor = User32.CaptureCursor();
-            if (cursor == null) cursor = new User32.MyCursor();
-            cursor.Position.Offset(-offset.X, -offset.Y);
-            Graphics g = Graphics.FromImage(img);
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(cursor.Bitmap, cursor.Position);
+            using (User32.MyCursor cursor = User32.CaptureCursor())
+            {
+                cursor.Position.Offset(-offset.X, -offset.Y);
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.DrawImage(cursor.Bitmap, cursor.Position);
+                }
+            }
+
             return img;
         }
 
