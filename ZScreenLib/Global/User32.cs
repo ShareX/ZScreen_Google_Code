@@ -1313,7 +1313,7 @@ namespace ZScreenLib
                 }
             }
 
-            return null;
+            return new MyCursor();
         }
 
         public static bool GetWindowRegion(IntPtr hWnd, out Region region)
@@ -1324,11 +1324,11 @@ namespace ZScreenLib
             return regionType != RegionType.ERROR && regionType != RegionType.NULLREGION;
         }
 
-        public class MyCursor
+        public class MyCursor : IDisposable
         {
-            public Cursor Cursor;
-            public Point Position;
-            public Bitmap Bitmap;
+            public Cursor Cursor { get; set; }
+            public Point Position { get; set; }
+            public Bitmap Bitmap { get; set; }
 
             public MyCursor()
             {
@@ -1342,6 +1342,12 @@ namespace ZScreenLib
                 this.Cursor = cursor;
                 this.Position = position;
                 this.Bitmap = bitmap;
+            }
+
+            public void Dispose()
+            {
+                Cursor.Dispose();
+                Bitmap.Dispose();
             }
         }
 

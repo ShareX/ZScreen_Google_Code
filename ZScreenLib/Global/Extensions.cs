@@ -129,18 +129,19 @@ namespace ZScreenLib
                 Marshal.Copy(pFirstImage, firstImageRGB, 0, bytes);
                 Marshal.Copy(pSecondImage, secondImageRGB, 0, bytes);
 
-                int offset = 0;
+                int offset = 0, b0, g0, r0, b1, g1, r1;
+
                 for (int y = 0; y < height; y++)
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        int b0 = firstImageRGB[offset + 0];
-                        int g0 = firstImageRGB[offset + 1];
-                        int r0 = firstImageRGB[offset + 2];
+                        b0 = firstImageRGB[offset + 0];
+                        g0 = firstImageRGB[offset + 1];
+                        r0 = firstImageRGB[offset + 2];
 
-                        int b1 = secondImageRGB[offset + 0];
-                        int g1 = secondImageRGB[offset + 1];
-                        int r1 = secondImageRGB[offset + 2];
+                        b1 = secondImageRGB[offset + 0];
+                        g1 = secondImageRGB[offset + 1];
+                        r1 = secondImageRGB[offset + 2];
 
                         if (r0 != r1 || g0 != g1 || b0 != b1)
                         {
