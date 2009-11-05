@@ -302,7 +302,7 @@ namespace ZScreenLib
         {
             Image windowImage = null;
 
-            if (Engine.conf.ActiveWindowCleanBackground)
+            if (Engine.conf.ActiveWindowCleanTransparentCorners)
             {
                 Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
 

@@ -1,12 +1,6 @@
-﻿Joined Date to be filled in Milestones.wiki 
-
-URGENT: Need RetryUpload code gone to Workers.cs so that ZScreenCLI can benefit from it
-
-Move MakeTinyURL to before AddToListBox
+﻿Move MakeTinyURL to before AddToListBox
 	Need to share bw_DoWork in Worker and WorkerPrimary first
 
-Hotkey for Indexer
-		
 Windwos.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser
 	
@@ -16,6 +10,3 @@ Clipboard Upload Wizard
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
-		
-ZScreen CLI		
-	JumpList - Selected Window
