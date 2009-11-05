@@ -218,6 +218,7 @@ namespace ZScreenLib
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
         public bool ActiveWindowTryCaptureChilds = false;
+        public bool ActiveWindowPreferDWM = false;
 
         // Interaction
 

@@ -101,8 +101,14 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-                return CaptureWithGDI(handle);
-                //return CaptureWithDWM(handle);
+                if (Engine.conf.ActiveWindowPreferDWM)
+                {
+                    return CaptureWithDWM(handle);
+                }
+                else
+                {
+                    return CaptureWithGDI(handle);
+                }
             }
 
             return null;
@@ -318,12 +324,13 @@ namespace ZScreenLib
 
                     User32.WINDOWPLACEMENT wp = new User32.WINDOWPLACEMENT();
                     User32.GetWindowPlacement(handle, ref wp);
-                    int offset = Engine.conf.ActiveWindowIncludeShadows && wp.showCmd != (int)User32.SHOWWINDOW.SW_MAXIMIZE ? 13 : 0;
+                    int offset = Engine.conf.ActiveWindowIncludeShadows && wp.showCmd != (int)User32.SHOWWINDOW.SW_MAXIMIZE ? 20 : 0;
 
                     windowRect = windowRect.AddMargin(offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
                     User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
+                    User32.BringWindowToTop(form.Handle);
                     User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
                     User32.ActivateWindowRepeat(handle, 2500);
                     Application.DoEvents();
