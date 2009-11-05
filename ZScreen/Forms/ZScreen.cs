@@ -506,9 +506,12 @@ namespace ZScreenGUI
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
+            // Active Window
+            cbActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
             chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowCleanBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
+            cbActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
 
             // Interaction
@@ -4719,6 +4722,16 @@ namespace ZScreenGUI
         private void chkMonUrls_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.MonitorUrls = chkMonUrls.Checked;
+        }
+
+        private void cbActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ActiveWindowPreferDWM = cbActiveWindowPreferDWM.Checked;
+        }
+
+        private void cbActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ActiveWindowTryCaptureChilds = cbActiveWindowTryCaptureChilds.Checked;
         }
     }
 }
