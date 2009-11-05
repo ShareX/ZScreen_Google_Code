@@ -290,6 +290,7 @@ namespace ZScreenLib
             switch (mTask.MyImageUploader)
             {
                 case ImageDestType.CLIPBOARD:
+                    if (string.IsNullOrEmpty(mTask.LocalFilePath)) return;
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
                 case ImageDestType.CUSTOM_UPLOADER:

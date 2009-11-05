@@ -92,6 +92,22 @@ namespace ZScreenLib
             return img;
         }
 
+        /// <summary>
+        /// Function to Capture Active Window
+        /// </summary>
+        public static Image CaptureActiveWindow()
+        {
+            IntPtr handle = User32.GetForegroundWindow();
+
+            if (handle.ToInt32() > 0)
+            {
+                return CaptureWithGDI(handle);
+                //return CaptureWithDWM(handle);
+            }
+
+            return null;
+        }
+
         public static Image CaptureWithDWM(IntPtr handle)
         {
             Image windowImage = null;
@@ -162,29 +178,15 @@ namespace ZScreenLib
 
             if (windowImage == null)
             {
-                Console.WriteLine("Standard capture (no transparency)");
                 windowImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect);
-            }
 
-            if (Engine.conf.ShowCursor) DrawCursor(windowImage, windowRect.Location);
+                if (Engine.conf.ShowCursor)
+                {
+                    DrawCursor(windowImage, windowRect.Location);
+                }
+            }
 
             return windowImage;
-        }
-
-        /// <summary>
-        /// Function to Capture Active Window
-        /// </summary>
-        public static Image CaptureActiveWindow()
-        {
-            IntPtr handle = User32.GetForegroundWindow();
-
-            if (handle.ToInt32() > 0)
-            {
-                return CaptureWithGDI(handle);
-                //return CaptureWithDWM(handle);
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -315,11 +317,8 @@ namespace ZScreenLib
                     windowRect = windowRect.AddMargin(offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
-                    User32.SetWindowPos(form.Handle, User32.HWND_TOP, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
                     User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
-                    Thread.Sleep(250);
-                    form.Refresh();
-                    Application.DoEvents();
+                    User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
                     User32.ActivateWindowRepeat(handle, 2500);
                     Application.DoEvents();
 
@@ -339,6 +338,11 @@ namespace ZScreenLib
 
                 if (windowImage != null)
                 {
+                    if (Engine.conf.ShowCursor)
+                    {
+                        DrawCursor(windowImage, windowRect.Location);
+                    }
+
                     windowImage = GraphicsMgr.AutoCropImage((Bitmap)windowImage);
 
                     if (Engine.conf.ActiveWindowShowCheckers)
