@@ -8,7 +8,7 @@
 
 [http://mcored.zscreen.net/iGoogle_-_Google_Chrome-2009.11.06-20.30.22.png]
 
-= WinSnap = 
+= !WinSnap = 
 == Alpha-Channel and PNG transparency support ==
 [http://mcored.zscreen.net/Minesweeper-2009.11.06-20.43.56.png]
 
