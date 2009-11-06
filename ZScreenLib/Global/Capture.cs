@@ -116,6 +116,7 @@ namespace ZScreenLib
 
         public static Image CaptureWithDWM(IntPtr handle)
         {
+            FileSystem.AppendDebug("Capturing with DWM");
             Image windowImage = null;
             Bitmap redBGImage = null;
 
@@ -179,10 +180,11 @@ namespace ZScreenLib
 
         public static Image CaptureWithGDI(IntPtr handle)
         {
+            FileSystem.AppendDebug("Capturing with GDI");
             Rectangle windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
             Image windowImage = null;
 
-            if (Engine.conf.ActiveWindowClearBackground)
+            if (Engine.conf.ActiveWindowCleanTransparentCorners)
             {
                 windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
             }
