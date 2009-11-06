@@ -219,6 +219,7 @@ namespace ZScreenLib
         public bool ActiveWindowShowCheckers = false;
         public bool ActiveWindowTryCaptureChilds = false;
         public bool ActiveWindowPreferDWM = false;
+        public bool ActiveWindowGDIFreezeWindow = false;
 
         // Interaction
 
