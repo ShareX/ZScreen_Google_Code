@@ -318,7 +318,7 @@ namespace ZScreenGUI
                             bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
                             bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
                             bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
-                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && Engine.conf.MonitorUrls;
+                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlUsingClipboardUploadAfter && Engine.conf.MonitorUrls;
                             if (uploadImage || uploadText || uploadFile || shortenUrl)
                             {
                                 if (cbText != Engine.zClipboardText)
@@ -513,7 +513,7 @@ namespace ZScreenGUI
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
             chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
-            
+
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
             chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
@@ -2970,7 +2970,10 @@ namespace ZScreenGUI
 
         private void btnCopyStats_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(txtDebugInfo.Text);
+            if (!string.IsNullOrEmpty(txtDebugInfo.Text))
+            {
+                Clipboard.SetText(txtDebugInfo.Text);
+            }
         }
 
         private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
