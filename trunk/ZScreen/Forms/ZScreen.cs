@@ -513,6 +513,7 @@ namespace ZScreenGUI
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
             chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
+            cbActiveWindowGDIFreezeWindow.Checked = Engine.conf.ActiveWindowGDIFreezeWindow;
 
             // Interaction
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
@@ -4736,6 +4737,11 @@ namespace ZScreenGUI
         {
             Engine.conf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
             chkActiveWindowTryCaptureChilds.Enabled = !chkActiveWindowPreferDWM.Checked;
+        }
+
+        private void cbActiveWindowGDIFreezeWindow_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ActiveWindowGDIFreezeWindow = cbActiveWindowGDIFreezeWindow.Checked;
         }
     }
 }

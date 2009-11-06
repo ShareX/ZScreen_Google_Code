@@ -101,7 +101,7 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-                if (Engine.conf.ActiveWindowPreferDWM || Engine.HasAero && !Engine.conf.ActiveWindowTryCaptureChilds)
+                if (Engine.conf.ActiveWindowPreferDWM && Engine.HasAero)
                 {
                     return CaptureWithDWM(handle);
                 }
@@ -184,7 +184,7 @@ namespace ZScreenLib
             Rectangle windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
             Image windowImage = null;
 
-            if (Engine.conf.ActiveWindowCleanTransparentCorners)
+            if (Engine.conf.ActiveWindowClearBackground)
             {
                 windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
             }
@@ -318,6 +318,7 @@ namespace ZScreenLib
 
             try
             {
+                using (new Freeze(handle))
                 using (Form form = new Form())
                 {
                     form.BackColor = Color.White;
@@ -332,27 +333,23 @@ namespace ZScreenLib
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
                     User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
-                    User32.BringWindowToTop(form.Handle);
                     User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
-                    User32.ActivateWindowRepeat(handle, 2500);
                     Application.DoEvents();
-
                     whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
                     form.BackColor = Color.Black;
-                    form.Refresh();
                     Application.DoEvents();
-
                     blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
 
-                    form.BackColor = Color.White;
-                    form.Refresh();
-                    Application.DoEvents();
-
-                    white2BGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    if (!Engine.conf.ActiveWindowGDIFreezeWindow)
+                    {
+                        form.BackColor = Color.White;
+                        Application.DoEvents();
+                        white2BGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    }
                 }
 
-                if (whiteBGImage.AreBitmapsEqual(white2BGImage))
+                if (Engine.conf.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
                 {
                     windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
                 }

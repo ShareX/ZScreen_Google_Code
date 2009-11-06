@@ -423,30 +423,21 @@ namespace ZScreenLib
 
         public static Image DrawCheckers(Image img)
         {
-            return DrawCheckers(img, Color.White, Color.WhiteSmoke, 10);
+            return DrawCheckers(img, Color.White, Color.LightGray, 10);
         }
 
         public static Image DrawCheckers(Image img, Color color1, Color color2, int boxSize)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height);
+            Brush[] brush = new Brush[2] { new SolidBrush(color1), new SolidBrush(color2) };
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                SolidBrush brush;
                 for (int y = 0; y <= img.Height / boxSize; y++)
                 {
                     for (int x = 0; x <= img.Width / boxSize; x++)
                     {
-                        if ((x + y) % 2 == 0)
-                        {
-                            brush = new SolidBrush(color1);
-                        }
-                        else
-                        {
-                            brush = new SolidBrush(color2);
-                        }
-
-                        g.FillRectangle(brush, x * boxSize, y * boxSize, boxSize, boxSize);
+                        g.FillRectangle(brush[(x + y) % 2], x * boxSize, y * boxSize, boxSize, boxSize);
                     }
                 }
 
