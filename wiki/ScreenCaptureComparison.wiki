@@ -1,0 +1,16 @@
+#summary Comparison with WindowClippins
+#labels Phase-Implementation
+<wiki:toc max_depth="2" />
+
+= Window Clippings =
+
+== ZScreen precisely captures the transparency (alpha channel) of a non-explorer window, including the shadow ==
+
+[http://mcored.zscreen.net/iGoogle_-_Google_Chrome-2009.11.06-20.30.22.png]
+
+= WinSnap = 
+== Capture rounded corners in Windows Vista/7 ==
+ * cleared dirty background
+ * captured shadow
+
+[http://mcored.zscreen.net/Calculator-2009.11.06-20.38.48.png]
