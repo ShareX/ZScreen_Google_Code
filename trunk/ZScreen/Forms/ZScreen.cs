@@ -4737,6 +4737,7 @@ namespace ZScreenGUI
         {
             Engine.conf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
             chkActiveWindowTryCaptureChilds.Enabled = !chkActiveWindowPreferDWM.Checked;
+            gbCaptureGdi.Enabled = !chkActiveWindowPreferDWM.Checked;
         }
 
         private void cbActiveWindowGDIFreezeWindow_CheckedChanged(object sender, EventArgs e)
