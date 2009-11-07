@@ -6,21 +6,35 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Threading;
 using UploadersLib;
+using System.ComponentModel;
 
 namespace ZScreenLib
 {
     [Serializable]
     public class AppSettings
     {
-        public readonly static string AppSettingsFile = Path.Combine(Engine.LocalAppDataFolder, "AppSettings.xml");
+        public readonly static string AppSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, "AppSettings.xml");
 
         public string RootDir { get; set; }
-        public string XMLSettingsFile { get; set; }
+        public string XMLSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, XMLSettings.XMLFileName);
+        [Category("Options / General"), DefaultValue(ImageDestType.CLIPBOARD), Description("Image Destination")]
         public ImageDestType ImageUploader { get; set; }
+        [Category("Options / General"), DefaultValue(true), Description("Prefer System Folders for all the data created by ZScreen")]
+        public bool PreferSystemFolders { get; set; }
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
 
         public AppSettings()
         {
-            ImageUploader = ImageDestType.IMAGESHACK;
+            ApplyDefaultValues(this);
         }
 
         public static AppSettings Read()

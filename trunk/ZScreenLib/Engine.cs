@@ -46,21 +46,22 @@ namespace ZScreenLib
         public static bool Portable { get; private set; }
         public static bool MultipleInstance { get; private set; }
 
-        internal static readonly string LocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
-        public static AppSettings appSettings = AppSettings.Read();
+        internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        internal static readonly string zPicturesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
+        public static AppSettings mAppSettings = AppSettings.Read();
 
-        private static readonly string XMLFileName = "Settings.xml";
+        private static readonly string XMLFileName = XMLSettings.XMLFileName;
         private static readonly string HistoryFileName = "History.xml";
-        private static readonly string OldXMLFilePath = Path.Combine(LocalAppDataFolder, XMLFileName);
+        private static readonly string OldXMLFilePath = Path.Combine(zLocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
 
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
         public static string RootAppFolder { get; set; }
-        public static string RootImagesDir { get; private set; }
+        public static string RootImagesDir = zPicturesFolder;
 
-        public static readonly string CacheDir = Path.Combine(LocalAppDataFolder, "Cache");
-        public static string FilesDir { get; set; }
+        public static readonly string CacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
+        public static string FilesDir = Path.Combine(zLocalAppDataFolder, "Files");
         public static string ImagesDir
         {
             get
@@ -76,10 +77,10 @@ namespace ZScreenLib
             }
             set { ; }
         }
-        public static string LogsDir { get; set; }
-        public static string SettingsDir { get; set; }
-        public static readonly string TempDir = Path.Combine(LocalAppDataFolder, "Temp");
-        public static string TextDir { get; set; }
+        public static string LogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
+        public static string SettingsDir = Path.Combine(zLocalAppDataFolder, "Settings");
+        public static readonly string TempDir = Path.Combine(zLocalAppDataFolder, "Temp");
+        public static string TextDir = Path.Combine(DefaultRootAppFolder, "Text");
 
         private static string[] AppDirs;
 
@@ -139,17 +140,18 @@ namespace ZScreenLib
             }
             else
             {
-                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.appSettings.RootDir))
+                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.mAppSettings.RootDir))
                 {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     cw.ShowDialog();
-                    Engine.appSettings.RootDir = cw.RootFolder;
-                    Engine.appSettings.ImageUploader = cw.ImageDestinationType;
+                    Engine.mAppSettings.RootDir = cw.RootFolder;
+                    Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
+                    Engine.mAppSettings.ImageUploader = cw.ImageDestinationType;
                     RunConfig = true;
                 }
-                if (!string.IsNullOrEmpty(Engine.appSettings.RootDir))
+                if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir))
                 {
-                    RootAppFolder = Engine.appSettings.RootDir;
+                    RootAppFolder = Engine.mAppSettings.RootDir;
                 }
                 else
                 {
@@ -158,8 +160,16 @@ namespace ZScreenLib
             }
 
             FileSystem.AppendDebug("Config file: " + AppSettings.AppSettingsFile);
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
-            RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
+            if (mAppSettings.PreferSystemFolders)
+            {
+                FileSystem.AppendDebug(string.Format("Root Folder: {0}", zLocalAppDataFolder));
+                RootImagesDir = zPicturesFolder;
+            }
+            else
+            {
+                FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
+                RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
+            }
 
             FileSystem.AppendDebug("Initializing Default folder paths...");
             Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
@@ -197,7 +207,7 @@ namespace ZScreenLib
         public static void LoadSettingsLatest()
         {
             string fp = string.Empty;
-            string settingsDir = Path.GetDirectoryName(Engine.appSettings.XMLSettingsFile);
+            string settingsDir = Path.GetDirectoryName(Engine.mAppSettings.XMLSettingsFile);
             if (!string.IsNullOrEmpty(settingsDir))
             {
                 List<ImageFile> imgFiles = new List<ImageFile>();
@@ -234,7 +244,7 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.ImageUploaderType = Engine.appSettings.ImageUploader;
+                Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
             }
         }
 
@@ -242,7 +252,7 @@ namespace ZScreenLib
         {
             if (!Portable)
             {
-                appSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+                mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
             }
             if (null != ZScreenKeyboardHook)
             {
@@ -254,7 +264,7 @@ namespace ZScreenLib
 
         public static void SetRootFolder(string dp)
         {
-            appSettings.RootDir = dp;
+            mAppSettings.RootDir = dp;
             RootAppFolder = dp;
         }
 
@@ -278,10 +288,13 @@ namespace ZScreenLib
         /// </summary>
         public static void InitializeDefaultFolderPaths()
         {
-            FilesDir = Path.Combine(RootAppFolder, "Files");
-            LogsDir = Path.Combine(RootAppFolder, "Logs");
-            SettingsDir = Path.Combine(RootAppFolder, "Settings");
-            TextDir = Path.Combine(RootAppFolder, "Text");
+            if (!mAppSettings.PreferSystemFolders)
+            {
+                FilesDir = Path.Combine(RootAppFolder, "Files");
+                LogsDir = Path.Combine(RootAppFolder, "Logs");
+                SettingsDir = Path.Combine(RootAppFolder, "Settings");
+                TextDir = Path.Combine(RootAppFolder, "Text");
+            }
 
             AppDirs = new[] { CacheDir, FilesDir, RootImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
 
@@ -448,7 +461,7 @@ namespace ZScreenLib
 
         public static void ClipboardUnhook()
         {
-            if (null != zClipboardHook)
+            if (null != zClipboardHook && Adapter.ClipboardMonitor)
             {
                 zClipboardHook.UnregisterClipboardViewer();
                 FileSystem.AppendDebug("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);

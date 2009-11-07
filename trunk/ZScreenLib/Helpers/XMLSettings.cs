@@ -23,23 +23,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
+using GradientTester;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
-using ZSS;
 using ZSS.IndexersLib;
-using System.Drawing.Drawing2D;
-using GradientTester;
 
 namespace ZScreenLib
 {
@@ -52,11 +50,11 @@ namespace ZScreenLib
         //  Misc Settings
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public bool RunOnce = false;
+        public bool FirstRun = true;
         public FormWindowState WindowState = FormWindowState.Normal;
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
-        public bool Windows7TaskbarIntegration = false;
+        public bool Windows7TaskbarIntegration = true;
         public static string XMLFileName = string.Format("{0}-{1}-Settings.xml", Application.ProductName, Application.ProductVersion);
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -378,12 +376,12 @@ namespace ZScreenLib
 
         // General - Program
 
-        public bool OpenMainWindow = true;
+        public bool ShowMainWindow = false;
         public bool ShowInTaskbar = true;
         public bool ShowHelpBalloonTips = true;
         public bool SaveFormSizePosition = true;
         public bool LockFormSize = false;
-        public bool AutoSaveSettings = true;
+        public bool AutoSaveSettings = false;
 
         // General - Monitor Clipboard
 
@@ -659,7 +657,7 @@ namespace ZScreenLib
 
         public void Write()
         {
-            new Thread(SaveThread).Start(Engine.appSettings.GetSettingsFilePath());
+            new Thread(SaveThread).Start(Engine.mAppSettings.GetSettingsFilePath());
         }
 
         public void SaveThread(object filePath)
@@ -694,13 +692,13 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            string settingsFile = Engine.appSettings.GetSettingsFilePath();
+            string settingsFile = Engine.mAppSettings.GetSettingsFilePath();
             if (!File.Exists(settingsFile))
             {
-                if (File.Exists(Engine.appSettings.XMLSettingsFile))
+                if (File.Exists(Engine.mAppSettings.XMLSettingsFile))
                 {
                     // Step 2 - Attempt to read previous Application Version specific Settings file
-                    settingsFile = Engine.appSettings.XMLSettingsFile;
+                    settingsFile = Engine.mAppSettings.XMLSettingsFile;
                 }
                 else
                 {
@@ -709,14 +707,14 @@ namespace ZScreenLib
                 }
             }
 
-            if (File.Exists(settingsFile) && settingsFile != Engine.appSettings.GetSettingsFilePath())
+            if (File.Exists(settingsFile) && settingsFile != Engine.mAppSettings.GetSettingsFilePath())
             {
                 // Update AppSettings.xml
-                File.Copy(settingsFile, Engine.appSettings.GetSettingsFilePath());
+                File.Copy(settingsFile, Engine.mAppSettings.GetSettingsFilePath());
             }
 
-            Engine.appSettings.XMLSettingsFile = Engine.appSettings.GetSettingsFilePath();
-            return Read(Engine.appSettings.XMLSettingsFile);
+            Engine.mAppSettings.XMLSettingsFile = Engine.mAppSettings.GetSettingsFilePath();
+            return Read(Engine.mAppSettings.XMLSettingsFile);
         }
 
         public static XMLSettings Read(string filePath)
@@ -746,7 +744,7 @@ namespace ZScreenLib
                         FileSystem.AppendDebug("Error while reading settings", ex);
                         OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS };
                         dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                        dlg.InitialDirectory = Engine.appSettings.RootDir;
+                        dlg.InitialDirectory = Engine.mAppSettings.RootDir;
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             return XMLSettings.Read(dlg.FileName);

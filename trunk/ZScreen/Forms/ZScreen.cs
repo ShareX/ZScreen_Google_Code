@@ -85,7 +85,7 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (Engine.conf.Windows7TaskbarIntegration)
+            if (Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7)
             {
                 this.ShowInTaskbar = true;
                 Engine.conf.MinimizeOnClose = true;
@@ -256,7 +256,7 @@ namespace ZScreenGUI
             }
             else
             {
-                if (Engine.conf.OpenMainWindow)
+                if (Engine.conf.ShowMainWindow)
                 {
                     this.WindowState = Engine.conf.WindowState;
                     ShowInTaskbar = Engine.conf.ShowInTaskbar;
@@ -317,7 +317,6 @@ namespace ZScreenGUI
                             {
                                 if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
                                 {
-                                    Engine.ClipboardUnhook();
                                     Loader.Worker.UploadUsingClipboard();
                                 }
                             }
@@ -923,7 +922,7 @@ namespace ZScreenGUI
 
             chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
             chkShellExt.Checked = RegistryMgr.CheckShellExt();
-            chkOpenMainWindow.Checked = Engine.conf.OpenMainWindow;
+            chkOpenMainWindow.Checked = Engine.conf.ShowMainWindow;
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
             chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
@@ -942,6 +941,7 @@ namespace ZScreenGUI
 
             #endregion
 
+            gbRoot.Enabled = !Engine.mAppSettings.PreferSystemFolders;
             chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
             ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
 
@@ -1520,13 +1520,12 @@ namespace ZScreenGUI
                 FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
 
-            if (!Engine.conf.RunOnce)
+            if (Engine.conf.FirstRun)
             {
-                Show();
-                WindowState = FormWindowState.Normal;
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
                 this.Activate();
                 this.BringToFront();
-                Engine.conf.RunOnce = true;
             }
 
             if (Engine.conf.BackupFTPSettings)
@@ -1542,7 +1541,7 @@ namespace ZScreenGUI
             if (Engine.conf.Windows7TaskbarIntegration)
             {
                 ZScreen_Windows7onlyTasks();
-                if (!Engine.conf.OpenMainWindow)
+                if (!Engine.conf.ShowMainWindow && !Engine.conf.FirstRun)
                 {
                     this.WindowState = FormWindowState.Minimized;
                     this.ShowInTaskbar = true;
@@ -1552,6 +1551,7 @@ namespace ZScreenGUI
             Engine.ZScreenKeyboardHook = new KeyboardHook();
             Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
             FileSystem.AppendDebug("Keyboard Hook initiated");
+            Engine.conf.FirstRun = false;
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
@@ -1599,7 +1599,7 @@ namespace ZScreenGUI
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
-                if (temp.RunOnce)
+                if (!temp.FirstRun)
                 {
                     Engine.conf = temp;
                     ZScreen_ConfigGUI();
@@ -1794,7 +1794,7 @@ namespace ZScreenGUI
         {
             Engine.conf = new XMLSettings();
             ZScreen_ConfigGUI();
-            Engine.conf.RunOnce = true;
+            Engine.conf.FirstRun = false;
             Engine.conf.Write();
         }
 
@@ -2796,7 +2796,7 @@ namespace ZScreenGUI
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.OpenMainWindow = chkOpenMainWindow.Checked;
+            Engine.conf.ShowMainWindow = chkOpenMainWindow.Checked;
         }
 
         private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
@@ -3532,7 +3532,7 @@ namespace ZScreenGUI
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Engine.SetRootFolder(dlg.SelectedPath);
-                txtRootFolder.Text = Engine.appSettings.RootDir;
+                txtRootFolder.Text = Engine.mAppSettings.RootDir;
             }
 
             FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);

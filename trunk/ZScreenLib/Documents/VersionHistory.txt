@@ -1,5 +1,6 @@
 Version 3.19 - 20091109
 
+3.19.1.0 Option to prefer System Folders for Settings and Data in Config Wizard [Issue 101] {McoreD}
 3.19.0.0 Ability to take screenshots of games and video by freezing the window during capture {Jaex}
 3.18.0.0 Ability to capture menus, tooltips and other interactive effects in Active Window that applications may produce {Jaex}
 3.17.2.0 Clicking Cancel button or pressing Escape in Destination Options dialog will prevent ZScreen from uploading {theone256}
