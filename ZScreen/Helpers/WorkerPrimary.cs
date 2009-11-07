@@ -342,6 +342,7 @@ namespace ZScreenGUI
                     else
                     {
                         this.mZScreen.niTray.Icon = Resources.zss_tray;
+                        Engine.ClipboardHook();
                     }
 
                     if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
