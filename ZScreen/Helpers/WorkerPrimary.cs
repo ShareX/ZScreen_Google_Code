@@ -342,7 +342,6 @@ namespace ZScreenGUI
                     else
                     {
                         this.mZScreen.niTray.Icon = Resources.zss_tray;
-                        Engine.ClipboardHook();
                     }
 
                     if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
@@ -661,6 +660,7 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboard()
         {
+            Engine.ClipboardUnhook();
             if (Clipboard.ContainsText() && Engine.conf.AutoTranslate && Clipboard.GetText().Length <= Engine.conf.AutoTranslateLength)
             {
                 StartWorkerTranslator();

@@ -45,6 +45,7 @@
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.lblWatermarkImage = new System.Windows.Forms.Label();
             this.gbWatermark = new System.Windows.Forms.GroupBox();
+            this.chkPreferSystemFolders = new System.Windows.Forms.CheckBox();
             this.gbRoot.SuspendLayout();
             this.gbPublishOptions.SuspendLayout();
             this.gbWatermark.SuspendLayout();
@@ -76,7 +77,7 @@
             this.gbRoot.Controls.Add(this.btnViewRootDir);
             this.gbRoot.Controls.Add(this.btnBrowseRootDir);
             this.gbRoot.Controls.Add(this.txtRootFolder);
-            this.gbRoot.Location = new System.Drawing.Point(8, 8);
+            this.gbRoot.Location = new System.Drawing.Point(8, 48);
             this.gbRoot.Name = "gbRoot";
             this.gbRoot.Size = new System.Drawing.Size(600, 64);
             this.gbRoot.TabIndex = 118;
@@ -121,7 +122,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(520, 160);
+            this.btnOK.Location = new System.Drawing.Point(520, 192);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 117;
@@ -133,9 +134,9 @@
             // 
             this.gbPublishOptions.Controls.Add(this.lblScreenshotDestination);
             this.gbPublishOptions.Controls.Add(this.cboScreenshotDest);
-            this.gbPublishOptions.Location = new System.Drawing.Point(8, 80);
+            this.gbPublishOptions.Location = new System.Drawing.Point(8, 120);
             this.gbPublishOptions.Name = "gbPublishOptions";
-            this.gbPublishOptions.Size = new System.Drawing.Size(600, 72);
+            this.gbPublishOptions.Size = new System.Drawing.Size(600, 64);
             this.gbPublishOptions.TabIndex = 120;
             this.gbPublishOptions.TabStop = false;
             this.gbPublishOptions.Text = "Publish Options";
@@ -219,11 +220,23 @@
             this.gbWatermark.TabStop = false;
             this.gbWatermark.Text = "Watermark Options";
             // 
+            // chkPreferSystemFolders
+            // 
+            this.chkPreferSystemFolders.AutoSize = true;
+            this.chkPreferSystemFolders.Location = new System.Drawing.Point(16, 16);
+            this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
+            this.chkPreferSystemFolders.Size = new System.Drawing.Size(231, 17);
+            this.chkPreferSystemFolders.TabIndex = 121;
+            this.chkPreferSystemFolders.Text = "&Prefer System Folders for Settings and Data";
+            this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
+            this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
+            // 
             // ConfigWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 195);
+            this.ClientSize = new System.Drawing.Size(624, 222);
+            this.Controls.Add(this.chkPreferSystemFolders);
             this.Controls.Add(this.gbPublishOptions);
             this.Controls.Add(this.gbWatermark);
             this.Controls.Add(this.btnOK);
@@ -241,6 +254,7 @@
             this.gbWatermark.ResumeLayout(false);
             this.gbWatermark.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -262,5 +276,6 @@
         private System.Windows.Forms.Button btwWatermarkBrowseImage;
         private System.Windows.Forms.Label lblWatermarkImage;
         private System.Windows.Forms.GroupBox gbWatermark;
+        private System.Windows.Forms.CheckBox chkPreferSystemFolders;
     }
 }

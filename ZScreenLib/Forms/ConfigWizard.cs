@@ -31,7 +31,7 @@ namespace ZScreenLib
 {
     public partial class ConfigWizard : Form
     {
-
+        public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
         public ImageDestType ImageDestinationType { get; private set; }
 
@@ -41,7 +41,7 @@ namespace ZScreenLib
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
             cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.IMAGESHACK;
+            cboScreenshotDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -73,6 +73,12 @@ namespace ZScreenLib
         private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
         {
             ImageDestinationType = (ImageDestType)cboScreenshotDest.SelectedIndex;
+        }
+
+        private void chkPreferSystemFolders_CheckedChanged(object sender, EventArgs e)
+        {
+            gbRoot.Enabled = !chkPreferSystemFolders.Checked;
+            this.PreferSystemFolders = chkPreferSystemFolders.Checked;
         }
     }
 }
