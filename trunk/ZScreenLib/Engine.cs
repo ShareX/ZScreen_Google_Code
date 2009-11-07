@@ -32,6 +32,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using System.Collections.Generic;
 using UploadersLib.Helpers;
+using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -39,6 +40,7 @@ namespace ZScreenLib
     {
         // App Info
         private static string mProductName = Application.ProductName;
+        public static IntPtr zHandle = IntPtr.Zero;
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(mProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
         public static bool Portable { get; private set; }
@@ -138,7 +140,7 @@ namespace ZScreenLib
             else
             {
                 if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.appSettings.RootDir))
-                {                	
+                {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     cw.ShowDialog();
                     Engine.appSettings.RootDir = cw.RootFolder;
@@ -430,13 +432,18 @@ namespace ZScreenLib
                 return Path.Combine(SettingsDir, HistoryFileName);
             }
         }
-        
+
         public static void ClipboardHook()
         {
-        	if (null != zClipboardHook) 
-        	{
-        		zClipboardHook.RegisterClipboardViewer();
-        	}
+            if (null == zClipboardHook && IntPtr.Zero != zHandle)
+            {
+                zClipboardHook = new ClipboardHook(zHandle);
+            }
+            if (null != zClipboardHook && Adapter.ClipboardMonitor)
+            {
+                zClipboardHook.RegisterClipboardViewer();
+                FileSystem.AppendDebug("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
+            }
         }
 
         public static void ClipboardUnhook()
@@ -444,6 +451,7 @@ namespace ZScreenLib
             if (null != zClipboardHook)
             {
                 zClipboardHook.UnregisterClipboardViewer();
+                FileSystem.AppendDebug("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
             }
         }
 

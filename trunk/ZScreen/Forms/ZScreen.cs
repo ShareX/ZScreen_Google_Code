@@ -301,14 +301,8 @@ namespace ZScreenGUI
 
         protected override void WndProc(ref Message m)
         {
-            if (mGuiIsReady && Adapter.ClipboardMonitor)
+            if (mGuiIsReady)
             {
-                if (null == Engine.zClipboardHook)
-                {
-                    Engine.zClipboardHook = new ClipboardHook(this.Handle);
-                    Engine.ClipboardHook();
-                    FileSystem.AppendDebug("Monitoring clipboard...");
-                }
                 switch ((ClipboardHook.Msgs)m.Msg)
                 {
                     case ClipboardHook.Msgs.WM_DRAWCLIPBOARD:
@@ -321,7 +315,7 @@ namespace ZScreenGUI
                             bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlUsingClipboardUploadAfter && Engine.conf.MonitorUrls;
                             if (uploadImage || uploadText || uploadFile || shortenUrl)
                             {
-                                if (cbText != Engine.zClipboardText)
+                                if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
                                 {
                                     Engine.ClipboardUnhook();
                                     Loader.Worker.UploadUsingClipboard();
@@ -1518,6 +1512,8 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             mGuiIsReady = true;
+            Engine.zHandle = this.Handle;
+            Engine.ClipboardHook();
 
             if (Engine.conf.ProxyEnabled)
             {
