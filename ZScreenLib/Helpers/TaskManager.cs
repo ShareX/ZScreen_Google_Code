@@ -432,7 +432,7 @@ namespace ZScreenLib
                 t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
                 Thread.Sleep(250);
                 t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_green);
-                Thread.Sleep(250);                
+                Thread.Sleep(250);
             }
             t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_tray);
         }
@@ -581,6 +581,7 @@ namespace ZScreenLib
             else
             {
                 TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
+                FileSystem.AppendDebug("Uploading to " + textUploader.ToString());
                 string url = "";
                 if (mTask.MyText != null)
                 {
