@@ -13,7 +13,7 @@ Version 3.19 - 20091109
 3.14.0.0 Option to capture rounded corners under Windows XP/Vista/7 [Issue 156] {theone256}
 3.13.0.0 Option to Clean Aero background under Vista/7 under Image Settings tab [Issue 157] {theone256}
 3.12.7.0 Images in History tab will cache thumbnails to preview faster {Jaex}
-3.12.6.0 Users can drag n drop files to the History list box to upload {McoreD}
+3.12.6.0 Users can drag n drop files to the History list   box to upload {McoreD}
 3.12.5.0 Share on Twitter... in History tab will automatically shorten the URL {McoreD}
 3.12.4.0 Randomly selecting a valid Image Uploader destination is now an option {McoreD}
 3.12.3.2 Dragging anything to the dropbox to uploading it to FTP did not work [Issue 151] {Jaex}
