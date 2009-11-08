@@ -1,4 +1,7 @@
-﻿Move MakeTinyURL to before AddToListBox
+﻿Run the following tasks before uploading
+	Image Editor
+	Command Line Tools 
+Move MakeTinyURL to before AddToListBox
 	Need to share bw_DoWork in Worker and WorkerPrimary first
 
 Windwos.Forms.WebBrowser			
