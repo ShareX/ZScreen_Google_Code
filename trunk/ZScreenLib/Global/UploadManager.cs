@@ -151,7 +151,7 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(clipboardText))
             {
                 Engine.ClipboardUnhook();
-                FileSystem.AppendDebug("Setting Clipboard with URL");
+                FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
                 Clipboard.SetText(clipboardText);
                 Engine.zClipboardText = clipboardText;
                 Engine.ClipboardHook();
