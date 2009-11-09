@@ -85,11 +85,8 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7)
-            {
-                this.ShowInTaskbar = true;
-                Engine.conf.MinimizeOnClose = true;
-            }
+            this.ShowInTaskbar = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
+            Engine.conf.MinimizeOnClose = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
 
             if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
