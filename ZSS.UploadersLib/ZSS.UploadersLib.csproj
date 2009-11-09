@@ -96,6 +96,7 @@
     <Compile Include="ImageUploaders\YfrogUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextServices\GoogleTranslate.cs" />
+    <Compile Include="TextServices\Lyricsfly.cs" />
     <Compile Include="TextUploader.cs" />
     <Compile Include="TextUploaders\Paste2Uploader.cs" />
     <Compile Include="TextUploaders\PastebinCaUploader.cs" />

@@ -158,18 +158,26 @@ namespace UploadersLib
 
         protected string GetResponseString(string url, Dictionary<string, string> arguments)
         {
-            using (HttpWebResponse response = GetResponseUsingGet(url, arguments))
+            if (arguments != null && arguments.Count > 0)
+            {
+                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + HttpUtility.UrlEncode(x.Value)).ToArray());
+            }
+
+            using (HttpWebResponse response = GetResponseUsingGet(url))
             {
                 return ResponseToString(response);
             }
         }
 
-        private HttpWebResponse GetResponseUsingGet(string url, Dictionary<string, string> arguments)
+        protected string GetResponseString(string url)
+        {
+            return GetResponseString(url, null);
+        }
+
+        private HttpWebResponse GetResponseUsingGet(string url)
         {
             try
             {
-                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + HttpUtility.UrlEncode(x.Value)).ToArray());
-
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Method = "GET";
