@@ -36,13 +36,10 @@ namespace ZScreenLib.Helpers
                         foreach (ProcessThread pT in pProc.Threads)
                         {
                             IntPtr ptrOpenThread = User32.OpenThread(User32.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
-
-                            if (ptrOpenThread == null)
+                            if (ptrOpenThread != null)
                             {
-                                break;
+                                User32.SuspendThread(ptrOpenThread);
                             }
-
-                            User32.SuspendThread(ptrOpenThread);
                         }
                     }
                 }
@@ -60,13 +57,10 @@ namespace ZScreenLib.Helpers
                     foreach (ProcessThread pT in pProc.Threads)
                     {
                         IntPtr ptrOpenThread = User32.OpenThread(User32.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
-
-                        if (ptrOpenThread == null)
+                        if (ptrOpenThread != null)
                         {
-                            break;
+                            User32.ResumeThread(ptrOpenThread);
                         }
-
-                        User32.ResumeThread(ptrOpenThread);
                     }
                 }
             }
