@@ -9,7 +9,7 @@ namespace ZScreenGUI
 {
     public static class Loader
     {
-        internal static ZSS.Forms.SplashScreen Splash = null;
+        // internal static ZSS.Forms.SplashScreen Splash = null;
         public static WorkerPrimary Worker;
         public static WorkerSecondary Worker2;
         public static Queue<string> AsmLoads = new Queue<string>();
@@ -21,8 +21,8 @@ namespace ZScreenGUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FileSystem.AppendDebug("Starting Splash Screen");
-            Splash = new ZSS.Forms.SplashScreen();
-            Splash.Show();
+            // Splash = new ZSS.Forms.SplashScreen();
+            // Splash.Show();
             AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
 
             string[] args = Environment.GetCommandLineArgs();

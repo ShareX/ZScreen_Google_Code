@@ -291,7 +291,7 @@ namespace ZScreenGUI
             };
 
             niTray.Visible = true;
-            Loader.Splash.Close();
+            // Loader.Splash.Close();
             FileSystem.AppendDebug("Closed Splash Screen");
             FileSystem.AppendDebug("Loaded ZScreen GUI...");
         }
