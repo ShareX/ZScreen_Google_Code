@@ -493,10 +493,10 @@ namespace ZScreenGUI
             this.chkMonImages = new System.Windows.Forms.CheckBox();
             this.chkMonText = new System.Windows.Forms.CheckBox();
             this.gbUpdates = new System.Windows.Forms.GroupBox();
-            this.cbCheckUpdatesBeta = new System.Windows.Forms.CheckBox();
+            this.chkCheckUpdatesBeta = new System.Windows.Forms.CheckBox();
             this.lblUpdateInfo = new System.Windows.Forms.Label();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
-            this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
+            this.chkCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
             this.chkHotkeys = new System.Windows.Forms.CheckBox();
             this.chkShellExt = new System.Windows.Forms.CheckBox();
@@ -536,7 +536,7 @@ namespace ZScreenGUI
             this.lblImagesFolderPattern = new System.Windows.Forms.Label();
             this.lblImagesFolderPatternPreview = new System.Windows.Forms.Label();
             this.txtImagesFolderPattern = new System.Windows.Forms.TextBox();
-            this.cbDeleteLocal = new System.Windows.Forms.CheckBox();
+            this.chkDeleteLocal = new System.Windows.Forms.CheckBox();
             this.btnViewImagesDir = new System.Windows.Forms.Button();
             this.txtImagesDir = new System.Windows.Forms.TextBox();
             this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
@@ -5871,10 +5871,10 @@ namespace ZScreenGUI
             // 
             // gbUpdates
             // 
-            this.gbUpdates.Controls.Add(this.cbCheckUpdatesBeta);
+            this.gbUpdates.Controls.Add(this.chkCheckUpdatesBeta);
             this.gbUpdates.Controls.Add(this.lblUpdateInfo);
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
-            this.gbUpdates.Controls.Add(this.cbCheckUpdates);
+            this.gbUpdates.Controls.Add(this.chkCheckUpdates);
             this.gbUpdates.Location = new System.Drawing.Point(8, 264);
             this.gbUpdates.Name = "gbUpdates";
             this.gbUpdates.Size = new System.Drawing.Size(752, 96);
@@ -5884,14 +5884,14 @@ namespace ZScreenGUI
             // 
             // cbCheckUpdatesBeta
             // 
-            this.cbCheckUpdatesBeta.AutoSize = true;
-            this.cbCheckUpdatesBeta.Location = new System.Drawing.Point(200, 24);
-            this.cbCheckUpdatesBeta.Name = "cbCheckUpdatesBeta";
-            this.cbCheckUpdatesBeta.Size = new System.Drawing.Size(126, 17);
-            this.cbCheckUpdatesBeta.TabIndex = 7;
-            this.cbCheckUpdatesBeta.Text = "Include beta updates";
-            this.cbCheckUpdatesBeta.UseVisualStyleBackColor = true;
-            this.cbCheckUpdatesBeta.CheckedChanged += new System.EventHandler(this.cbCheckUpdatesBeta_CheckedChanged);
+            this.chkCheckUpdatesBeta.AutoSize = true;
+            this.chkCheckUpdatesBeta.Location = new System.Drawing.Point(200, 24);
+            this.chkCheckUpdatesBeta.Name = "cbCheckUpdatesBeta";
+            this.chkCheckUpdatesBeta.Size = new System.Drawing.Size(126, 17);
+            this.chkCheckUpdatesBeta.TabIndex = 7;
+            this.chkCheckUpdatesBeta.Text = "Include beta updates";
+            this.chkCheckUpdatesBeta.UseVisualStyleBackColor = true;
+            this.chkCheckUpdatesBeta.CheckedChanged += new System.EventHandler(this.cbCheckUpdatesBeta_CheckedChanged);
             // 
             // lblUpdateInfo
             // 
@@ -5915,14 +5915,14 @@ namespace ZScreenGUI
             // 
             // cbCheckUpdates
             // 
-            this.cbCheckUpdates.AutoSize = true;
-            this.cbCheckUpdates.Location = new System.Drawing.Point(16, 24);
-            this.cbCheckUpdates.Name = "cbCheckUpdates";
-            this.cbCheckUpdates.Size = new System.Drawing.Size(162, 17);
-            this.cbCheckUpdates.TabIndex = 1;
-            this.cbCheckUpdates.Text = "Automatically check updates";
-            this.cbCheckUpdates.UseVisualStyleBackColor = true;
-            this.cbCheckUpdates.CheckedChanged += new System.EventHandler(this.cbCheckUpdates_CheckedChanged);
+            this.chkCheckUpdates.AutoSize = true;
+            this.chkCheckUpdates.Location = new System.Drawing.Point(16, 24);
+            this.chkCheckUpdates.Name = "cbCheckUpdates";
+            this.chkCheckUpdates.Size = new System.Drawing.Size(162, 17);
+            this.chkCheckUpdates.TabIndex = 1;
+            this.chkCheckUpdates.Text = "Automatically check updates";
+            this.chkCheckUpdates.UseVisualStyleBackColor = true;
+            this.chkCheckUpdates.CheckedChanged += new System.EventHandler(this.cbCheckUpdates_CheckedChanged);
             // 
             // gbMisc
             // 
@@ -6340,7 +6340,7 @@ namespace ZScreenGUI
             this.gbSaveLoc.Controls.Add(this.lblImagesFolderPattern);
             this.gbSaveLoc.Controls.Add(this.lblImagesFolderPatternPreview);
             this.gbSaveLoc.Controls.Add(this.txtImagesFolderPattern);
-            this.gbSaveLoc.Controls.Add(this.cbDeleteLocal);
+            this.gbSaveLoc.Controls.Add(this.chkDeleteLocal);
             this.gbSaveLoc.Controls.Add(this.btnViewImagesDir);
             this.gbSaveLoc.Controls.Add(this.txtImagesDir);
             this.gbSaveLoc.Location = new System.Drawing.Point(8, 80);
@@ -6389,15 +6389,15 @@ namespace ZScreenGUI
             // 
             // cbDeleteLocal
             // 
-            this.cbDeleteLocal.AutoSize = true;
-            this.cbDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbDeleteLocal.Location = new System.Drawing.Point(16, 88);
-            this.cbDeleteLocal.Name = "cbDeleteLocal";
-            this.cbDeleteLocal.Size = new System.Drawing.Size(283, 17);
-            this.cbDeleteLocal.TabIndex = 0;
-            this.cbDeleteLocal.Text = "Delete captured screenshots after upload is completed";
-            this.cbDeleteLocal.UseVisualStyleBackColor = true;
-            this.cbDeleteLocal.CheckedChanged += new System.EventHandler(this.cbDeleteLocal_CheckedChanged);
+            this.chkDeleteLocal.AutoSize = true;
+            this.chkDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkDeleteLocal.Location = new System.Drawing.Point(16, 88);
+            this.chkDeleteLocal.Name = "cbDeleteLocal";
+            this.chkDeleteLocal.Size = new System.Drawing.Size(283, 17);
+            this.chkDeleteLocal.TabIndex = 0;
+            this.chkDeleteLocal.Text = "Delete captured screenshots after upload is completed";
+            this.chkDeleteLocal.UseVisualStyleBackColor = true;
+            this.chkDeleteLocal.CheckedChanged += new System.EventHandler(this.cbDeleteLocal_CheckedChanged);
             // 
             // btnViewImagesDir
             // 
@@ -6765,7 +6765,7 @@ namespace ZScreenGUI
             this.pgApp.Name = "pgApp";
             this.pgApp.Size = new System.Drawing.Size(785, 397);
             this.pgApp.TabIndex = 0;
-            this.pgApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.confApp_PropertyValueChanged);
+            this.pgApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgApp_PropertyValueChanged);
             // 
             // tpUploadText
             // 
@@ -7379,7 +7379,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.GroupBox gbUpdates;
         internal System.Windows.Forms.Label lblUpdateInfo;
         internal System.Windows.Forms.Button btnCheckUpdate;
-        internal System.Windows.Forms.CheckBox cbCheckUpdates;
+        internal System.Windows.Forms.CheckBox chkCheckUpdates;
         internal System.Windows.Forms.GroupBox gbMisc;
         internal System.Windows.Forms.CheckBox cbLockFormSize;
         internal System.Windows.Forms.CheckBox chkShowTaskbar;
@@ -7391,7 +7391,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnBrowseRootDir;
         internal System.Windows.Forms.TextBox txtRootFolder;
         internal System.Windows.Forms.GroupBox gbSaveLoc;
-        internal System.Windows.Forms.CheckBox cbDeleteLocal;
+        internal System.Windows.Forms.CheckBox chkDeleteLocal;
         internal System.Windows.Forms.Button btnViewImagesDir;
         internal System.Windows.Forms.TextBox txtImagesDir;
         internal System.Windows.Forms.GroupBox gbSettingsExportImport;
@@ -7477,7 +7477,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblImagesFolderPatternPreview;
         private System.Windows.Forms.Label lblImagesFolderPattern;
         private System.Windows.Forms.Button btnMoveImageFiles;
-        private System.Windows.Forms.CheckBox cbCheckUpdatesBeta;
+        private System.Windows.Forms.CheckBox chkCheckUpdatesBeta;
         private System.Windows.Forms.RadioButton rbImageSizeFixed;
         private System.Windows.Forms.RadioButton rbImageSizeRatio;
         private System.Windows.Forms.TextBox txtImageSizeFixedHeight;

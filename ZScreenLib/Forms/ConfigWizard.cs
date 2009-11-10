@@ -38,8 +38,10 @@ namespace ZScreenLib
         public ConfigWizard(string rootDir)
         {
             InitializeComponent();
+            this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
+            chkPreferSystemFolders.Checked = true;
             cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             cboScreenshotDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
         }
