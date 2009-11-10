@@ -35,7 +35,7 @@ namespace UploadersLib.TextServices
         /// <summary>
         /// To search by artist and title combination
         /// </summary>
-        public Lyric SearchLyrics(string artist, string title)
+        public Lyrics SearchLyrics(string artist, string title)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("i", UserID);
@@ -48,7 +48,7 @@ namespace UploadersLib.TextServices
         /// <summary>
         /// To search by lyrics text string
         /// </summary>
-        public Lyric SearchLyrics(string text)
+        public Lyrics SearchLyrics(string text)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("i", UserID);
@@ -57,7 +57,20 @@ namespace UploadersLib.TextServices
             return ParseResponse(response);
         }
 
-        private Lyric ParseResponse(string response)
+        /// <summary>
+        /// Function to edit lyrics (incomplete)
+        /// </summary>
+        /// <param name="lyrics"></param>
+        public void EditLyrics(Lyrics lyrics)
+        {
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
+            arguments.Add("cs", lyrics.Checksum);
+            arguments.Add("id", lyrics.SongID);
+            string response = GetResponseString("http://lyricsfly.com/search/correction.php?", arguments);
+            ParseResponse(response);
+        }
+
+        private Lyrics ParseResponse(string response)
         {
             if (!string.IsNullOrEmpty(response))
             {
@@ -76,7 +89,7 @@ namespace UploadersLib.TextServices
                                 xele = xele.Element("sg");
                                 if (xele != null)
                                 {
-                                    Lyric lyric = new Lyric();
+                                    Lyrics lyric = new Lyrics();
                                     lyric.Checksum = xele.ElementValue("cs");
                                     lyric.SongID = xele.ElementValue("id");
                                     lyric.ArtistName = xele.ElementValue("ar");
@@ -127,7 +140,7 @@ namespace UploadersLib.TextServices
         }
     }
 
-    public class Lyric
+    public class Lyrics
     {
         /// <summary>
         /// cs - checksum (for original URL link back construction)
