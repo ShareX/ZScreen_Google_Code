@@ -58,9 +58,9 @@ namespace ZScreenLib
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
-        public static string RootImagesDir = mAppSettings.PreferSystemFolders ? zPicturesFolder : Path.Combine(RootAppFolder, "Images");
+        public static string RootImagesDir = zPicturesFolder;
 
-        public static readonly string CacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
+        public static string CacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
         public static string FilesDir = Path.Combine(zLocalAppDataFolder, "Files");
         public static string ImagesDir
         {
@@ -134,6 +134,7 @@ namespace ZScreenLib
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
                 Portable = true;
+                mAppSettings.PreferSystemFolders = false;
                 RootAppFolder = PortableRootFolder;
                 mProductName += " Portable";
                 mAppInfo.AppName = mProductName;
@@ -163,7 +164,6 @@ namespace ZScreenLib
             if (mAppSettings.PreferSystemFolders)
             {
                 FileSystem.AppendDebug(string.Format("Root Folder: {0}", zLocalAppDataFolder));
-                RootImagesDir = zPicturesFolder;
             }
             else
             {
@@ -246,6 +246,11 @@ namespace ZScreenLib
             {
                 Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
             }
+            // Portable then we don't need PreferSystemFolders to be true
+            if (Portable)
+            {
+                Engine.conf.PreferSystemFolders = false;
+            }
         }
 
         public static void TurnOff()
@@ -275,13 +280,14 @@ namespace ZScreenLib
 
         private static string GetDefaultImagesDir()
         {
-        	string imagesDir = RootImagesDir;
+            string imagesDir = RootImagesDir;
             string saveFolderPath = string.Empty;
             if (Engine.conf != null)
             {
                 saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
-                if (Engine.conf.PreferSystemFolders) {
-                	imagesDir = zPicturesFolder;
+                if (!Portable && Engine.conf.PreferSystemFolders)
+                {
+                    imagesDir = zPicturesFolder;
                 }
             }
             return Path.Combine(imagesDir, saveFolderPath);
@@ -294,6 +300,7 @@ namespace ZScreenLib
         {
             if (!mAppSettings.PreferSystemFolders)
             {
+                CacheDir = Path.Combine(RootAppFolder, "Cache");
                 FilesDir = Path.Combine(RootAppFolder, "Files");
                 LogsDir = Path.Combine(RootAppFolder, "Logs");
                 SettingsDir = Path.Combine(RootAppFolder, "Settings");
