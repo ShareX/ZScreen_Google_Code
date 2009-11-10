@@ -354,16 +354,16 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI()
         {
             FileSystem.AppendDebug("Configuring ZScreen GUI..");
+            pgApp.SelectedObject = Engine.conf;
+            pgIndexer.SelectedObject = Engine.conf.IndexerConfig;           
 
             #region Global
 
             //~~~~~~~~~~~~~~~~~~~~~
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
-
-            pgApp.SelectedObject = Engine.conf;
-            pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
-            txtRootFolder.Text = Engine.RootAppFolder;
+            Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
+            txtRootFolder.Text = Engine.RootAppFolder;            
             UpdateGuiControlsPaths();
 
             #endregion
@@ -942,10 +942,10 @@ namespace ZScreenGUI
             chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
             ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
 
-            cbCheckUpdates.Checked = Engine.conf.CheckUpdates;
-            cbCheckUpdatesBeta.Checked = Engine.conf.CheckUpdatesBeta;
+            chkCheckUpdates.Checked = Engine.conf.CheckUpdates;
+            chkCheckUpdatesBeta.Checked = Engine.conf.CheckUpdatesBeta;
             nudCacheSize.Value = Engine.conf.ScreenshotCacheSize;
-            cbDeleteLocal.Checked = Engine.conf.DeleteLocal;
+            chkDeleteLocal.Checked = Engine.conf.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
             zWatcher.FolderPath = Engine.conf.FolderMonitorPath;
@@ -1596,11 +1596,9 @@ namespace ZScreenGUI
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
-                if (!temp.FirstRun)
-                {
-                    Engine.conf = temp;
-                    ZScreen_ConfigGUI();
-                }
+                temp.FirstRun = false;
+                Engine.conf = temp;
+                ZScreen_ConfigGUI();
             }
         }
 
@@ -1742,7 +1740,7 @@ namespace ZScreenGUI
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.DeleteLocal = cbDeleteLocal.Checked;
+            Engine.conf.DeleteLocal = chkDeleteLocal.Checked;
         }
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
@@ -2303,7 +2301,7 @@ namespace ZScreenGUI
 
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CheckUpdates = cbCheckUpdates.Checked;
+            Engine.conf.CheckUpdates = chkCheckUpdates.Checked;
         }
 
         private void txtActiveHelp_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -3656,7 +3654,7 @@ namespace ZScreenGUI
             Loader.Worker2.PerformOnlineTasks();
         }
 
-        private void confApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void pgApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             ZScreen_ConfigGUI();
         }
@@ -4132,7 +4130,7 @@ namespace ZScreenGUI
 
         private void cbCheckUpdatesBeta_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CheckUpdatesBeta = cbCheckUpdatesBeta.Checked;
+            Engine.conf.CheckUpdatesBeta = chkCheckUpdatesBeta.Checked;
         }
 
         private void rbImageSize_CheckedChanged(object sender, EventArgs e)

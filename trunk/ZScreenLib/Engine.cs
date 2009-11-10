@@ -57,8 +57,8 @@ namespace ZScreenLib
 
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
-        public static string RootAppFolder { get; set; }
-        public static string RootImagesDir = zPicturesFolder;
+        public static string RootAppFolder = zLocalAppDataFolder;
+        public static string RootImagesDir = mAppSettings.PreferSystemFolders ? zPicturesFolder : Path.Combine(RootAppFolder, "Images");
 
         public static readonly string CacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
         public static string FilesDir = Path.Combine(zLocalAppDataFolder, "Files");
@@ -80,7 +80,7 @@ namespace ZScreenLib
         public static string LogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
         public static string SettingsDir = Path.Combine(zLocalAppDataFolder, "Settings");
         public static readonly string TempDir = Path.Combine(zLocalAppDataFolder, "Temp");
-        public static string TextDir = Path.Combine(DefaultRootAppFolder, "Text");
+        public static string TextDir = Path.Combine(zLocalAppDataFolder, "Text");
 
         private static string[] AppDirs;
 
@@ -275,12 +275,16 @@ namespace ZScreenLib
 
         private static string GetDefaultImagesDir()
         {
+        	string imagesDir = RootImagesDir;
             string saveFolderPath = string.Empty;
             if (Engine.conf != null)
             {
                 saveFolderPath = NameParser.Convert(NameParserType.SaveFolder);
+                if (Engine.conf.PreferSystemFolders) {
+                	imagesDir = zPicturesFolder;
+                }
             }
-            return Path.Combine(RootImagesDir, saveFolderPath);
+            return Path.Combine(imagesDir, saveFolderPath);
         }
 
         /// <summary>
