@@ -175,6 +175,11 @@ namespace ZScreenLib
                 windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
             }
 
+            if (Engine.conf.ActiveWindowShowCheckers)
+            {
+                windowImage = ImageEffects.DrawCheckers(windowImage);
+            }
+
             return windowImage;
         }
 
@@ -301,11 +306,6 @@ namespace ZScreenLib
                 blackBGImage.Dispose();
                 whiteBGImage.Dispose();
                 whiteBGImage2.Dispose();
-            }
-
-            if (Engine.conf.ActiveWindowShowCheckers)
-            {
-                windowImage = ImageEffects.DrawCheckers(windowImage, Color.White, Color.LightGray, 12);
             }
 
             return windowImage;

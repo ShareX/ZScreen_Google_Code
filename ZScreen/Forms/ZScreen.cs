@@ -4269,11 +4269,6 @@ namespace ZScreenGUI
             Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
 
-        private void pbLogo_MouseClick(object sender, MouseEventArgs e)
-        {
-            turnLogo.StartTurn();
-        }
-
         private void txtImageBamApiKey_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageBamApiKey = txtImageBamApiKey.Text;
