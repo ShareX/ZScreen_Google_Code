@@ -67,15 +67,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Inno|AnyCPU' ">
-    <OutputPath>bin\Inno\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <StartAction>Project</StartAction>
   </PropertyGroup>
@@ -371,20 +362,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
-    <PostBuildEvent>cd  "$(ProjectDir)Setup\"
-$(inno) /cc zscreen-beta-setup.iss
-start explorer /n,"$(ProjectDir)"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Inno' ">
-    <PostBuildEvent>mkdir "$(TargetDir)ILMerge"
-"$(ProjectDir)Tools\ILMerge.exe" /wildcards /allowMultiple /t:winexe /out:"$(TargetDir)ILMerge\ZScreen.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
-  </PropertyGroup>
 </Project>
