@@ -36,11 +36,14 @@ namespace ZScreenLib
 
         public static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix matrix)
         {
-            Graphics g = Graphics.FromImage(img);
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            ImageAttributes imgattr = new ImageAttributes();
-            imgattr.SetColorMatrix(matrix);
-            g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imgattr);
+            using (Graphics g = Graphics.FromImage(img))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                ImageAttributes imgattr = new ImageAttributes();
+                imgattr.SetColorMatrix(matrix);
+                g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imgattr);
+            }
+
             return img;
         }
 

@@ -244,6 +244,7 @@ namespace ZScreenLib
         public decimal ImageQuality = 90;
         public decimal SwitchAfter = 512;
         public int SwitchFormat = 1;
+        public bool MakeJPGBackgroundWhite = true;
 
         public ImageSizeType ImageSizeType = ImageSizeType.DEFAULT;
         public int ImageSizeFixedWidth = 500;

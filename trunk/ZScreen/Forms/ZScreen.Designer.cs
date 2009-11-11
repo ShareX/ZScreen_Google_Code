@@ -33,10 +33,10 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -250,15 +250,15 @@ namespace ZScreenGUI
             this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
             this.pbSelectedWindowBorderColor = new System.Windows.Forms.PictureBox();
             this.tpActivewindow = new System.Windows.Forms.TabPage();
+            this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.chkActiveWindowPreferDWM = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
-            this.chkSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
             this.gbCaptureGdi = new System.Windows.Forms.GroupBox();
             this.cbActiveWindowGDIFreezeWindow = new System.Windows.Forms.CheckBox();
             this.chkActiveWindowTryCaptureChilds = new System.Windows.Forms.CheckBox();
             this.gbCaptureDwm = new System.Windows.Forms.GroupBox();
-            this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
+            this.chkSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
             this.tpWatermark = new System.Windows.Forms.TabPage();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
@@ -1324,7 +1324,6 @@ namespace ZScreenGUI
             this.pbLogo.TabIndex = 72;
             this.pbLogo.TabStop = false;
             this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
-            this.pbLogo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbLogo_MouseClick);
             this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             // 
             // tpDestinations
@@ -2257,39 +2256,39 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys,
             this.DefaultKeys});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -2321,8 +2320,8 @@ namespace ZScreenGUI
             // DefaultKeys
             // 
             this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.DefaultKeys.HeaderText = "Default Hotkey";
             this.DefaultKeys.Name = "DefaultKeys";
             this.DefaultKeys.ReadOnly = true;
@@ -3073,6 +3072,17 @@ namespace ZScreenGUI
             this.tpActivewindow.Text = "Active Window";
             this.tpActivewindow.UseVisualStyleBackColor = true;
             // 
+            // chkSelectedWindowShowCheckers
+            // 
+            this.chkSelectedWindowShowCheckers.AutoSize = true;
+            this.chkSelectedWindowShowCheckers.Location = new System.Drawing.Point(16, 40);
+            this.chkSelectedWindowShowCheckers.Name = "chkSelectedWindowShowCheckers";
+            this.chkSelectedWindowShowCheckers.Size = new System.Drawing.Size(242, 17);
+            this.chkSelectedWindowShowCheckers.TabIndex = 46;
+            this.chkSelectedWindowShowCheckers.Text = "Show checkerboard pattern behind the image";
+            this.chkSelectedWindowShowCheckers.UseVisualStyleBackColor = true;
+            this.chkSelectedWindowShowCheckers.CheckedChanged += new System.EventHandler(this.cbSelectedWindowShowCheckers_CheckedChanged);
+            // 
             // chkActiveWindowPreferDWM
             // 
             this.chkActiveWindowPreferDWM.AutoSize = true;
@@ -3096,22 +3106,11 @@ namespace ZScreenGUI
             this.chkSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
             this.chkSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
             // 
-            // chkSelectedWindowIncludeShadow
-            // 
-            this.chkSelectedWindowIncludeShadow.AutoSize = true;
-            this.chkSelectedWindowIncludeShadow.Location = new System.Drawing.Point(16, 24);
-            this.chkSelectedWindowIncludeShadow.Name = "chkSelectedWindowIncludeShadow";
-            this.chkSelectedWindowIncludeShadow.Size = new System.Drawing.Size(131, 17);
-            this.chkSelectedWindowIncludeShadow.TabIndex = 45;
-            this.chkSelectedWindowIncludeShadow.Text = "Include shadow effect";
-            this.chkSelectedWindowIncludeShadow.UseVisualStyleBackColor = true;
-            this.chkSelectedWindowIncludeShadow.CheckedChanged += new System.EventHandler(this.cbSelectedWindowIncludeShadow_CheckedChanged);
-            // 
             // gbCaptureGdi
             // 
             this.gbCaptureGdi.Controls.Add(this.cbActiveWindowGDIFreezeWindow);
             this.gbCaptureGdi.Controls.Add(this.chkActiveWindowTryCaptureChilds);
-            this.gbCaptureGdi.Location = new System.Drawing.Point(16, 176);
+            this.gbCaptureGdi.Location = new System.Drawing.Point(16, 96);
             this.gbCaptureGdi.Name = "gbCaptureGdi";
             this.gbCaptureGdi.Size = new System.Drawing.Size(768, 80);
             this.gbCaptureGdi.TabIndex = 126;
@@ -3146,23 +3145,12 @@ namespace ZScreenGUI
             // 
             this.gbCaptureDwm.Controls.Add(this.chkSelectedWindowCleanTransparentCorners);
             this.gbCaptureDwm.Controls.Add(this.chkSelectedWindowIncludeShadow);
-            this.gbCaptureDwm.Location = new System.Drawing.Point(16, 96);
+            this.gbCaptureDwm.Location = new System.Drawing.Point(16, 184);
             this.gbCaptureDwm.Name = "gbCaptureDwm";
             this.gbCaptureDwm.Size = new System.Drawing.Size(768, 72);
             this.gbCaptureDwm.TabIndex = 125;
             this.gbCaptureDwm.TabStop = false;
             this.gbCaptureDwm.Text = "Capture using DWM";
-            // 
-            // chkSelectedWindowShowCheckers
-            // 
-            this.chkSelectedWindowShowCheckers.AutoSize = true;
-            this.chkSelectedWindowShowCheckers.Location = new System.Drawing.Point(16, 40);
-            this.chkSelectedWindowShowCheckers.Name = "chkSelectedWindowShowCheckers";
-            this.chkSelectedWindowShowCheckers.Size = new System.Drawing.Size(242, 17);
-            this.chkSelectedWindowShowCheckers.TabIndex = 46;
-            this.chkSelectedWindowShowCheckers.Text = "Show checkerboard pattern behind the image";
-            this.chkSelectedWindowShowCheckers.UseVisualStyleBackColor = true;
-            this.chkSelectedWindowShowCheckers.CheckedChanged += new System.EventHandler(this.cbSelectedWindowShowCheckers_CheckedChanged);
             // 
             // chkSelectedWindowCleanTransparentCorners
             // 
@@ -3174,6 +3162,17 @@ namespace ZScreenGUI
             this.chkSelectedWindowCleanTransparentCorners.Text = "Clean transparent corners";
             this.chkSelectedWindowCleanTransparentCorners.UseVisualStyleBackColor = true;
             this.chkSelectedWindowCleanTransparentCorners.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanTransparentCorners_CheckedChanged);
+            // 
+            // chkSelectedWindowIncludeShadow
+            // 
+            this.chkSelectedWindowIncludeShadow.AutoSize = true;
+            this.chkSelectedWindowIncludeShadow.Location = new System.Drawing.Point(16, 24);
+            this.chkSelectedWindowIncludeShadow.Name = "chkSelectedWindowIncludeShadow";
+            this.chkSelectedWindowIncludeShadow.Size = new System.Drawing.Size(131, 17);
+            this.chkSelectedWindowIncludeShadow.TabIndex = 45;
+            this.chkSelectedWindowIncludeShadow.Text = "Include shadow effect";
+            this.chkSelectedWindowIncludeShadow.UseVisualStyleBackColor = true;
+            this.chkSelectedWindowIncludeShadow.CheckedChanged += new System.EventHandler(this.cbSelectedWindowIncludeShadow_CheckedChanged);
             // 
             // tpWatermark
             // 
@@ -5882,11 +5881,11 @@ namespace ZScreenGUI
             this.gbUpdates.TabStop = false;
             this.gbUpdates.Text = "Check Updates";
             // 
-            // cbCheckUpdatesBeta
+            // chkCheckUpdatesBeta
             // 
             this.chkCheckUpdatesBeta.AutoSize = true;
             this.chkCheckUpdatesBeta.Location = new System.Drawing.Point(200, 24);
-            this.chkCheckUpdatesBeta.Name = "cbCheckUpdatesBeta";
+            this.chkCheckUpdatesBeta.Name = "chkCheckUpdatesBeta";
             this.chkCheckUpdatesBeta.Size = new System.Drawing.Size(126, 17);
             this.chkCheckUpdatesBeta.TabIndex = 7;
             this.chkCheckUpdatesBeta.Text = "Include beta updates";
@@ -5913,11 +5912,11 @@ namespace ZScreenGUI
             this.btnCheckUpdate.UseVisualStyleBackColor = true;
             this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
             // 
-            // cbCheckUpdates
+            // chkCheckUpdates
             // 
             this.chkCheckUpdates.AutoSize = true;
             this.chkCheckUpdates.Location = new System.Drawing.Point(16, 24);
-            this.chkCheckUpdates.Name = "cbCheckUpdates";
+            this.chkCheckUpdates.Name = "chkCheckUpdates";
             this.chkCheckUpdates.Size = new System.Drawing.Size(162, 17);
             this.chkCheckUpdates.TabIndex = 1;
             this.chkCheckUpdates.Text = "Automatically check updates";
@@ -6387,12 +6386,12 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.txtImagesFolderPattern, "%y = Year\r\n%mo = Month\r\n%mon = Month Name\r\n%d = Day");
             this.txtImagesFolderPattern.TextChanged += new System.EventHandler(this.txtImagesFolderPattern_TextChanged);
             // 
-            // cbDeleteLocal
+            // chkDeleteLocal
             // 
             this.chkDeleteLocal.AutoSize = true;
             this.chkDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chkDeleteLocal.Location = new System.Drawing.Point(16, 88);
-            this.chkDeleteLocal.Name = "cbDeleteLocal";
+            this.chkDeleteLocal.Name = "chkDeleteLocal";
             this.chkDeleteLocal.Size = new System.Drawing.Size(283, 17);
             this.chkDeleteLocal.TabIndex = 0;
             this.chkDeleteLocal.Text = "Delete captured screenshots after upload is completed";

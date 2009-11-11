@@ -97,16 +97,24 @@ namespace ZScreenLib
                 img = ImageEffects.ApplyWatermark(img);
 
                 long size = (long)Engine.conf.SwitchAfter * 1024;
-                ImageFormat imgFormat = mImageFormats[Engine.conf.FileFormat];
+
+                if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.FileFormat] == ImageFormat.Jpeg)
+                {
+                    img = ImageEffects.FillBackground(img, Color.White);
+                }
 
                 MemoryStream ms = new MemoryStream();
                 try
                 {
-                    GraphicsMgr.SaveImageToMemoryStream(img, ms, imgFormat);
+                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Engine.conf.FileFormat]);
 
-                    // Change PNG to JPG (Lossy) if file size is large
                     if (ms.Length > size && size != 0)
                     {
+                        if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.SwitchFormat] == ImageFormat.Jpeg)
+                        {
+                            img = ImageEffects.FillBackground(img, Color.White);
+                        }
+
                         ms = new MemoryStream();
                         GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Engine.conf.SwitchFormat]);
                         filePath = Path.ChangeExtension(filePath, Engine.zImageFileTypes[Engine.conf.SwitchFormat]);
