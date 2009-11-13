@@ -259,7 +259,7 @@ namespace ZScreenLib
                     InputText = fileName,
                     Icon = Resources.zss_main
                 };
-                User32.SetForegroundWindow(dialog.Handle);
+                NativeMethods.SetForegroundWindow(dialog.Handle);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {

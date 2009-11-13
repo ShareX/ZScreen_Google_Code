@@ -27,12 +27,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using System.Collections;
-using System.Diagnostics;
 
 namespace ZScreenLib
 {
-    public static class User32
+    public static class NativeMethods
     {
         [DllImport("user32.dll")]
         public static extern bool BringWindowToTop(IntPtr hWnd);
@@ -1254,15 +1252,6 @@ namespace ZScreenLib
             public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor. 
         }
 
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-
         [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern uint SHAppBarMessage(int dwMessage, out APPBARDATA pData);
 
@@ -1436,6 +1425,27 @@ namespace ZScreenLib
         }
 
         [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MARGINS
+        {
+            public int leftWidth;
+            public int rightWidth;
+            public int topHeight;
+            public int bottomHeight;
+        }
+
+        [DllImport("dwmapi.dll")]
         public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
 
         [DllImport("dwmapi.dll")]
@@ -1522,9 +1532,9 @@ namespace ZScreenLib
 
         public static void ActivateWindowRepeat(IntPtr handle, int count)
         {
-            for (int i = 0; User32.GetForegroundWindow() != handle && i < count; i++)
+            for (int i = 0; NativeMethods.GetForegroundWindow() != handle && i < count; i++)
             {
-                User32.BringWindowToTop(handle);
+                NativeMethods.BringWindowToTop(handle);
                 Thread.Sleep(1);
                 Application.DoEvents();
             }

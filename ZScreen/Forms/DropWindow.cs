@@ -77,8 +77,8 @@ namespace ZScreenLib
         {
             if (e.Button == MouseButtons.Left)
             {
-                User32.ReleaseCapture();
-                User32.SendMessage(Handle, (uint)User32.WM_NCLBUTTONDOWN, (IntPtr)User32.HT_CAPTION, IntPtr.Zero);
+                NativeMethods.ReleaseCapture();
+                NativeMethods.SendMessage(Handle, (uint)NativeMethods.WM_NCLBUTTONDOWN, (IntPtr)NativeMethods.HT_CAPTION, IntPtr.Zero);
             }
             else
             {

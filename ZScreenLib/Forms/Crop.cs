@@ -96,8 +96,8 @@ namespace ZScreenLib
             {
                 captureObjects = Engine.conf.SelectedWindowCaptureObjects;
                 myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
-                User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
-                User32.EnumWindows(ewp, IntPtr.Zero);
+                NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindow);
+                NativeMethods.EnumWindows(ewp, IntPtr.Zero);
             }
             else
             {
@@ -160,9 +160,9 @@ namespace ZScreenLib
 
         private void WindowCheckTick(object sender, EventArgs e)
         {
-            if (User32.GetForegroundWindow() != Handle)
+            if (NativeMethods.GetForegroundWindow() != Handle)
             {
-                User32.ActivateWindow(Handle);
+                NativeMethods.ActivateWindow(Handle);
             }
         }
 
@@ -221,7 +221,7 @@ namespace ZScreenLib
 
         private bool EvalWindow(IntPtr hWnd, IntPtr lParam)
         {
-            if (!User32.IsWindowVisible(hWnd)) return true;
+            if (!NativeMethods.IsWindowVisible(hWnd)) return true;
             if (Handle == hWnd) return false;
 
             foreach (KeyValuePair<IntPtr, Rectangle> pair in windows)
@@ -234,11 +234,11 @@ namespace ZScreenLib
 
             if (captureObjects)
             {
-                User32.EnumWindowsProc ewp = new User32.EnumWindowsProc(EvalWindow);
-                User32.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
+                NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindow);
+                NativeMethods.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
             }
 
-            Rectangle rect = User32.GetWindowRectangle(hWnd);
+            Rectangle rect = NativeMethods.GetWindowRectangle(hWnd);
             rect.Intersect(Bounds);
             windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
 

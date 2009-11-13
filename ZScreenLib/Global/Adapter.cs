@@ -122,7 +122,7 @@ namespace ZScreenLib
                 Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
                 IntPtr hicon = img.GetHicon();
                 ni.Icon = Icon.FromHandle(hicon);
-                User32.DestroyIcon(hicon);
+                NativeMethods.DestroyIcon(hicon);
             }
         }
         public static void SaveImage(Image img)

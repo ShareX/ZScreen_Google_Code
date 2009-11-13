@@ -614,7 +614,7 @@ namespace ZScreenLib
         public static Bitmap MakeBackgroundTransparent(IntPtr hWnd, Image image)
         {
             Region region;
-            if (User32.GetWindowRegion(hWnd, out region))
+            if (NativeMethods.GetWindowRegion(hWnd, out region))
             {
                 Bitmap result = new Bitmap(image.Width, image.Height);
 

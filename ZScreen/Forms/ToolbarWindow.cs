@@ -35,7 +35,7 @@ namespace ZScreenGUI
         public ToolbarWindow()
         {
             InitializeComponent();
-            User32.ActivateWindow(this.Handle);
+            NativeMethods.ActivateWindow(this.Handle);
         }
 
         private void DoJob(object sender, WorkerTask.Jobs e)
@@ -94,7 +94,7 @@ namespace ZScreenGUI
 
         private void tsQuickActions_MouseEnter(object sender, EventArgs e)
         {
-            User32.SetActiveWindow(this.Handle);
+            NativeMethods.SetActiveWindow(this.Handle);
         }
 
         private void ToolbarWindow_Move(object sender, EventArgs e)

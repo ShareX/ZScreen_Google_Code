@@ -158,7 +158,7 @@ namespace ZScreenLib
 
             if (nameParser.Type == NameParserType.ActiveWindow || nameParser.Type == NameParserType.Watermark)
             {
-                string activeWindow = User32.GetWindowLabel();
+                string activeWindow = NativeMethods.GetWindowLabel();
                 if (string.IsNullOrEmpty(activeWindow))
                 {
                     activeWindow = Application.ProductName;

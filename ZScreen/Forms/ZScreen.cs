@@ -355,7 +355,7 @@ namespace ZScreenGUI
         {
             FileSystem.AppendDebug("Configuring ZScreen GUI..");
             pgApp.SelectedObject = Engine.conf;
-            pgIndexer.SelectedObject = Engine.conf.IndexerConfig;           
+            pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
 
             #region Global
 
@@ -363,7 +363,7 @@ namespace ZScreenGUI
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
             Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
-            txtRootFolder.Text = Engine.RootAppFolder;            
+            txtRootFolder.Text = Engine.RootAppFolder;
             UpdateGuiControlsPaths();
 
             #endregion
@@ -1813,7 +1813,7 @@ namespace ZScreenGUI
             {
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
-                User32.ActivateWindow(this.Handle);
+                NativeMethods.ActivateWindow(this.Handle);
             }
         }
 

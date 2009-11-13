@@ -14,7 +14,7 @@ namespace ZScreenLib.Helpers
         {
             if (Engine.conf.ActiveWindowGDIFreezeWindow)
             {
-                User32.GetWindowThreadProcessId(windowHandle, out processId);
+                NativeMethods.GetWindowThreadProcessId(windowHandle, out processId);
                 FreezeThreads((int)processId);
             }
         }
@@ -29,17 +29,14 @@ namespace ZScreenLib.Helpers
             if (intPID != 0 && Process.GetCurrentProcess().Id != intPID)
             {
                 Process pProc = Process.GetProcessById(intPID);
-                if (pProc.ProcessName != "explorer")
+                if (!string.IsNullOrEmpty(pProc.ProcessName) && pProc.ProcessName != "explorer")
                 {
-                    if (!string.IsNullOrEmpty(pProc.ProcessName))
+                    foreach (ProcessThread pT in pProc.Threads)
                     {
-                        foreach (ProcessThread pT in pProc.Threads)
+                        IntPtr ptrOpenThread = NativeMethods.OpenThread(NativeMethods.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+                        if (ptrOpenThread != null)
                         {
-                            IntPtr ptrOpenThread = User32.OpenThread(User32.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
-                            if (ptrOpenThread != null)
-                            {
-                                User32.SuspendThread(ptrOpenThread);
-                            }
+                            NativeMethods.SuspendThread(ptrOpenThread);
                         }
                     }
                 }
@@ -51,15 +48,14 @@ namespace ZScreenLib.Helpers
             if (intPID != 0 && Process.GetCurrentProcess().Id != intPID)
             {
                 Process pProc = Process.GetProcessById(intPID);
-
                 if (!string.IsNullOrEmpty(pProc.ProcessName))
                 {
                     foreach (ProcessThread pT in pProc.Threads)
                     {
-                        IntPtr ptrOpenThread = User32.OpenThread(User32.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+                        IntPtr ptrOpenThread = NativeMethods.OpenThread(NativeMethods.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
                         if (ptrOpenThread != null)
                         {
-                            User32.ResumeThread(ptrOpenThread);
+                            NativeMethods.ResumeThread(ptrOpenThread);
                         }
                     }
                 }
