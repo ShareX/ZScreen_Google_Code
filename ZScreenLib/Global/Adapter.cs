@@ -579,7 +579,7 @@ namespace ZScreenLib
                 return false;
             }
 
-            return Engine.DISABLED_IMAGE_EDITOR != Engine.conf.ImageEditor.Name;
+            return Engine.conf.ImageEditorsEnabled;
         }
 
         public static void DeleteFile(string fp)
