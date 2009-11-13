@@ -36,7 +36,7 @@ namespace ZScreenLib
     {
         public static Image CaptureScreen(bool showCursor)
         {
-            Image img = CaptureRectangle(User32.GetDesktopWindow(), GraphicsMgr.GetScreenBounds());
+            Image img = CaptureRectangle(NativeMethods.GetDesktopWindow(), GraphicsMgr.GetScreenBounds());
             if (showCursor) DrawCursor(img);
             return img;
         }
@@ -48,7 +48,7 @@ namespace ZScreenLib
 
         public static Image CaptureWindow(IntPtr handle, bool showCursor, int margin)
         {
-            Rectangle windowRect = User32.GetWindowRectangle(handle);
+            Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
             windowRect = windowRect.AddMargin(margin);
 
             /*
@@ -57,7 +57,7 @@ namespace ZScreenLib
             g.CopyFromScreen(windowRect.Location, new Point(0, 0), windowRect.Size, CopyPixelOperation.SourceCopy);
             */
 
-            Image img = CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+            Image img = CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
             if (showCursor) DrawCursor(img, windowRect.Location);
 
             /*
@@ -71,7 +71,7 @@ namespace ZScreenLib
         public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
         {
             // Get the hDC of the target window
-            IntPtr hdcSrc = User32.GetWindowDC(handle);
+            IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
             // Create a device context we can copy to
             IntPtr hdcDest = GDI.CreateCompatibleDC(hdcSrc);
             // Create a bitmap we can copy it to
@@ -84,7 +84,7 @@ namespace ZScreenLib
             GDI.SelectObject(hdcDest, hOld);
             // Clean up
             GDI.DeleteDC(hdcDest);
-            User32.ReleaseDC(handle, hdcSrc);
+            NativeMethods.ReleaseDC(handle, hdcSrc);
             // Get a .NET image object for it
             Image img = Image.FromHbitmap(hBitmap);
             // Free up the Bitmap object
@@ -97,7 +97,7 @@ namespace ZScreenLib
         /// </summary>
         public static Image CaptureActiveWindow()
         {
-            IntPtr handle = User32.GetForegroundWindow();
+            IntPtr handle = NativeMethods.GetForegroundWindow();
 
             if (handle.ToInt32() > 0)
             {
@@ -120,7 +120,7 @@ namespace ZScreenLib
             Image windowImage = null;
             Bitmap redBGImage = null;
 
-            Rectangle windowRect = User32.GetWindowRectangle(handle);
+            Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
 
             if (Engine.HasAero && Engine.conf.ActiveWindowClearBackground)
             {
@@ -130,7 +130,7 @@ namespace ZScreenLib
             if (windowImage == null)
             {
                 Console.WriteLine("Standard capture (no transparency)");
-                windowImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                windowImage = CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
                 if (Engine.conf.ShowCursor) DrawCursor(windowImage, windowRect.Location);
             }
 
@@ -147,9 +147,9 @@ namespace ZScreenLib
                         form.FormBorderStyle = FormBorderStyle.None;
                         form.ShowInTaskbar = false;
                         form.BackColor = Color.Red;
-                        User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
+                        NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
                         form.Show();
-                        User32.ActivateWindowRepeat(handle, 250);
+                        NativeMethods.ActivateWindowRepeat(handle, 250);
 
                         redBGImage = CaptureWindow(handle, false) as Bitmap;
                     }
@@ -196,7 +196,7 @@ namespace ZScreenLib
 
             if (windowImage == null)
             {
-                windowImage = CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                windowImage = CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
 
                 if (Engine.conf.ShowCursor)
                 {
@@ -236,9 +236,9 @@ namespace ZScreenLib
                 form.Bounds = windowRect;
 
                 IntPtr thumb;
-                User32.DwmRegisterThumbnail(form.Handle, handle, out thumb);
+                NativeMethods.DwmRegisterThumbnail(form.Handle, handle, out thumb);
                 PSIZE size;
-                User32.DwmQueryThumbnailSourceSize(thumb, out size);
+                NativeMethods.DwmQueryThumbnailSourceSize(thumb, out size);
 
                 if (size.x <= 0 || size.y <= 0)
                 {
@@ -250,21 +250,21 @@ namespace ZScreenLib
 
                 form.Show();
 
-                User32.DWM_THUMBNAIL_PROPERTIES props = new User32.DWM_THUMBNAIL_PROPERTIES();
-                props.dwFlags = User32.DWM_TNP_VISIBLE | User32.DWM_TNP_RECTDESTINATION | User32.DWM_TNP_OPACITY;
+                NativeMethods.DWM_THUMBNAIL_PROPERTIES props = new NativeMethods.DWM_THUMBNAIL_PROPERTIES();
+                props.dwFlags = NativeMethods.DWM_TNP_VISIBLE | NativeMethods.DWM_TNP_RECTDESTINATION | NativeMethods.DWM_TNP_OPACITY;
                 props.fVisible = true;
                 props.opacity = (byte)255;
 
                 props.rcDestination = new RECT(0, 0, size.x, size.y);
-                User32.DwmUpdateThumbnailProperties(thumb, ref props);
+                NativeMethods.DwmUpdateThumbnailProperties(thumb, ref props);
 
-                User32.ActivateWindowRepeat(handle, 250);
+                NativeMethods.ActivateWindowRepeat(handle, 250);
                 Bitmap whiteBGImage = CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
                 //whiteBGImage.Save(@"c:\users\nicolas\documents\imageWhite.png");
 
                 form.BackColor = Color.Black;
                 form.Refresh();
-                User32.ActivateWindowRepeat(handle, 250);
+                NativeMethods.ActivateWindowRepeat(handle, 250);
                 Bitmap blackBGImage = CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
                 //blackBGImage.Save(@"c:\users\nicolas\documents\imageBlack.png");
 
@@ -272,13 +272,13 @@ namespace ZScreenLib
                 {
                     form.BackColor = Color.Red;
                     form.Refresh();
-                    User32.ActivateWindowRepeat(handle, 250);
+                    NativeMethods.ActivateWindowRepeat(handle, 250);
                     redBGImage = CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
                 }
 
                 form.BackColor = Color.White;
                 form.Refresh();
-                User32.ActivateWindowRepeat(handle, 250);
+                NativeMethods.ActivateWindowRepeat(handle, 250);
                 Bitmap whiteBGImage2 = CaptureWindow(form.Handle, Engine.conf.ShowCursor) as Bitmap;
 
                 // Don't do transparency calculation if an animated picture is detected
@@ -302,7 +302,7 @@ namespace ZScreenLib
                     windowImage = result;
                 }
 
-                User32.DwmUnregisterThumbnail(thumb);
+                NativeMethods.DwmUnregisterThumbnail(thumb);
                 blackBGImage.Dispose();
                 whiteBGImage.Dispose();
                 whiteBGImage2.Dispose();
@@ -325,27 +325,27 @@ namespace ZScreenLib
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.ShowInTaskbar = false;
 
-                    User32.WINDOWPLACEMENT wp = new User32.WINDOWPLACEMENT();
-                    User32.GetWindowPlacement(handle, ref wp);
-                    int offset = Engine.conf.ActiveWindowIncludeShadows && wp.showCmd != (int)User32.SHOWWINDOW.SW_MAXIMIZE ? 20 : 0;
+                    NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
+                    NativeMethods.GetWindowPlacement(handle, ref wp);
+                    int offset = Engine.conf.ActiveWindowIncludeShadows && wp.showCmd != (int)NativeMethods.SHOWWINDOW.SW_MAXIMIZE ? 20 : 0;
 
                     windowRect = windowRect.AddMargin(offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
-                    User32.ShowWindow(form.Handle, (int)User32.WindowShowStyle.ShowNormalNoActivate);
-                    User32.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, User32.SWP_NOACTIVATE);
+                    NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                    NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                     Application.DoEvents();
-                    whiteBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    whiteBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
 
                     form.BackColor = Color.Black;
                     Application.DoEvents();
-                    blackBGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                    blackBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
 
                     if (!Engine.conf.ActiveWindowGDIFreezeWindow)
                     {
                         form.BackColor = Color.White;
                         Application.DoEvents();
-                        white2BGImage = (Bitmap)CaptureRectangle(User32.GetDesktopWindow(), windowRect);
+                        white2BGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
                     }
                 }
 
@@ -389,19 +389,19 @@ namespace ZScreenLib
         public static Bitmap PrintWindow(IntPtr hwnd)
         {
             RECT rc;
-            User32.GetWindowRect(hwnd, out rc);
+            NativeMethods.GetWindowRect(hwnd, out rc);
 
             Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
-            bool succeeded = User32.PrintWindow(hwnd, hdcBitmap, 0);
+            bool succeeded = NativeMethods.PrintWindow(hwnd, hdcBitmap, 0);
             gfxBmp.ReleaseHdc(hdcBitmap);
             if (!succeeded)
             {
                 gfxBmp.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(Point.Empty, bmp.Size));
             }
             IntPtr hRgn = GDI.CreateRectRgn(0, 0, 0, 0);
-            User32.GetWindowRgn(hwnd, hRgn);
+            NativeMethods.GetWindowRgn(hwnd, hRgn);
             Region region = Region.FromHrgn(hRgn);
             if (!region.IsEmpty(gfxBmp))
             {
@@ -439,7 +439,7 @@ namespace ZScreenLib
 
         private static Image DrawCursor(Image img, Point offset)
         {
-            using (User32.MyCursor cursor = User32.CaptureCursor())
+            using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor())
             {
                 cursor.Position.Offset(-offset.X, -offset.Y);
                 using (Graphics g = Graphics.FromImage(img))

@@ -736,7 +736,7 @@ namespace ZScreenGUI
                 if (manual)
                 {
                     actionsToolbar.Show();
-                    Rectangle taskbar = User32.GetTaskbarRectangle();
+                    Rectangle taskbar = NativeMethods.GetTaskbarRectangle();
                     actionsToolbar.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - actionsToolbar.Width - 100,
                         SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - actionsToolbar.Height - 10);
                 }
@@ -761,7 +761,7 @@ namespace ZScreenGUI
                 quickOptions.FormClosed += new FormClosedEventHandler(QuickOptionsFormClosed);
                 quickOptions.ApplySettings += new EventHandler(QuickOptionsApplySettings);
                 quickOptions.Show();
-                Rectangle taskbar = User32.GetTaskbarRectangle();
+                Rectangle taskbar = NativeMethods.GetTaskbarRectangle();
                 quickOptions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickOptions.Width - 100,
                     SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - quickOptions.Height - 10);
             }
@@ -806,7 +806,7 @@ namespace ZScreenGUI
                 dw.Result += new StringsEventHandler(dw_Result);
                 dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
                 dw.Show();
-                Rectangle taskbar = User32.GetTaskbarRectangle();
+                Rectangle taskbar = NativeMethods.GetTaskbarRectangle();
                 if (Engine.conf.LastDropBoxPosition == Point.Empty)
                 {
                     dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,

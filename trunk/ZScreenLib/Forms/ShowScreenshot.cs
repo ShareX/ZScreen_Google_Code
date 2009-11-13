@@ -62,8 +62,8 @@ namespace ZScreenLib
 
         private void ShowScreenshot_Shown(object sender, EventArgs e)
         {
-            User32.SetForegroundWindow(this.Handle);
-            User32.SetActiveWindow(this.Handle);
+            NativeMethods.SetForegroundWindow(this.Handle);
+            NativeMethods.SetActiveWindow(this.Handle);
         }
 
         private void ShowScreenshot_KeyDown(object sender, KeyEventArgs e)

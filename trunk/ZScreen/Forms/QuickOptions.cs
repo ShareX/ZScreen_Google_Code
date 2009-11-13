@@ -49,7 +49,7 @@ namespace ZScreenLib
         private void QuickOptions_Shown(object sender, EventArgs e)
         {
             System.Threading.Thread.Sleep(100);
-            User32.ActivateWindow(this.Handle);
+            NativeMethods.ActivateWindow(this.Handle);
             lbDest.Focus();
             lbDest.SelectedIndex = (int)Engine.conf.ImageUploaderType;
             lbClipboardMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
