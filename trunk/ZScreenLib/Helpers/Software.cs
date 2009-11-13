@@ -21,13 +21,20 @@
 */
 #endregion
 
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Drawing.Design;
+
 namespace ZScreenLib
 {
     public class Software
     {
         public string Name { get; set; }
+        [EditorAttribute(typeof(ExeFileNameEditor), typeof(UITypeEditor))]
         public string Path { get; set; }
-
+        public string Args { get; set; } 
+        [Browsable(false)]
+        public bool Enabled { get; set; } 
         /// <summary>
         /// Built-in software are protected from being deleted
         /// </summary>
@@ -46,7 +53,13 @@ namespace ZScreenLib
         {
             this.Protected = bProtected;
         }
-
+        
+        public Software(string sName, string sPath, bool bProtected, bool bEnabled)
+            : this(sName, sPath, bProtected)
+        {
+            this.Enabled = bEnabled;
+        }
+        
         public override string ToString()
         {
             return this.Name;
@@ -75,6 +88,29 @@ namespace ZScreenLib
                 }
             }
             return false;
+        }
+        
+        /// <summary>
+        /// Method to run the Software with Arguments
+        /// </summary>
+        /// <param name="args">Arguments to be passed to the sofware</param>
+        public void RunWithArgs(string args)
+        {
+        	Process p = new Process();
+        	ProcessStartInfo psi = new ProcessStartInfo(this.Path); 
+        	psi.Arguments  = args;
+        	p.StartInfo = psi;
+            p.Start();
+            p.WaitForExit();        	        	
+        }
+        
+        /// <summary>
+        /// Method to open a file using the Software
+        /// </summary>
+        /// <param name="fp">File path to be opened</param>
+        public void OpenFile(string fp)
+        {
+        	RunWithArgs(string.Format("{0}{1}{0}", "\"", fp));
         }
     }
 }

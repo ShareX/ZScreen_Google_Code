@@ -146,6 +146,7 @@
     <Compile Include="Helpers\AppInfo.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
+    <Compile Include="Helpers\ExeFileNameEditor.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\Freeze.cs" />
     <Compile Include="Helpers\HistoryItem.cs" />

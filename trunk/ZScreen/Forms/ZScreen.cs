@@ -868,13 +868,18 @@ namespace ZScreenGUI
             // Image Editors Settings
             ///////////////////////////////////
 
+            chkEditorsEnabled.Checked = Engine.conf.ImageEditorsEnabled;
+            string mspaint = "Paint";
             Software disabled = new Software(Engine.DISABLED_IMAGE_EDITOR, string.Empty, true);
             Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
-            Software paint = new Software("Paint", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
+            Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
 
             Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.DISABLED_IMAGE_EDITOR ||
                 x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == "Paint" || !File.Exists(x.Path));
 
+            editor.Enabled = Engine.ZSCREEN_IMAGE_EDITOR == Engine.conf.ImageEditor.Name;
+            paint.Enabled = mspaint == Engine.conf.ImageEditor.Name;
+                        
             Engine.conf.ImageEditors.Insert(0, disabled);
             Engine.conf.ImageEditors.Insert(1, editor);
             if (File.Exists(paint.Path))
@@ -884,24 +889,24 @@ namespace ZScreenGUI
 
             RegistryMgr.FindImageEditors();
 
-            lbImageSoftware.Items.Clear();
+            lbSoftware.Items.Clear();
 
             foreach (Software app in Engine.conf.ImageEditors)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {
-                    lbImageSoftware.Items.Add(app.Name);
+                    lbSoftware.Items.Add(app.Name, app.Enabled);
                 }
             }
 
             int i;
-            if (Engine.conf.ImageEditor != null && (i = lbImageSoftware.Items.IndexOf(Engine.conf.ImageEditor.Name)) != -1)
+            if (Engine.conf.ImageEditor != null && (i = lbSoftware.Items.IndexOf(Engine.conf.ImageEditor.Name)) != -1)
             {
-                lbImageSoftware.SelectedIndex = i;
+                lbSoftware.SelectedIndex = i;
             }
-            else if (lbImageSoftware.Items.Count > 0)
+            else if (lbSoftware.Items.Count > 0)
             {
-                lbImageSoftware.SelectedIndex = 0;
+                lbSoftware.SelectedIndex = 0;
             }
 
             chkImageEditorAutoSave.Checked = Engine.conf.ImageEditorAutoSave;
@@ -1204,7 +1209,7 @@ namespace ZScreenGUI
             //cbRunImageSoftware.Checked = false;
 
             //select "Disabled"
-            lbImageSoftware.SelectedIndex = 0;
+            lbSoftware.SelectedIndex = 0;
 
             CheckCorrectIsRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text); //disabled
             //rewriteISRightClickMenu();
@@ -1216,9 +1221,9 @@ namespace ZScreenGUI
 
             Engine.conf.ImageEditor = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
 
-            if (lbImageSoftware.Items.IndexOf(tsm.Text) >= 0)
+            if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
             {
-                lbImageSoftware.SelectedItem = tsm.Text;
+                lbSoftware.SelectedItem = tsm.Text;
             }
         }
 
@@ -1394,13 +1399,13 @@ namespace ZScreenGUI
 
         private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
         {
-            if (lbImageSoftware.SelectedIndex > -1)
+            if (lbSoftware.SelectedIndex > -1)
             {
                 Software temp = BrowseImageSoftware();
                 if (temp != null)
                 {
-                    lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-                    Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
+                    lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
+                    Engine.conf.ImageEditors[lbSoftware.SelectedIndex] = temp;
                     ShowImageEditorsSettings();
                 }
             }
@@ -1607,8 +1612,8 @@ namespace ZScreenGUI
             if (temp != null)
             {
                 Engine.conf.ImageEditors.Add(temp);
-                lbImageSoftware.Items.Add(temp);
-                lbImageSoftware.SelectedIndex = lbImageSoftware.Items.Count - 1;
+                lbSoftware.Items.Add(temp);
+                lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
             }
         }
 
@@ -1623,17 +1628,17 @@ namespace ZScreenGUI
 
         private void btnDeleteImageSoftware_Click(object sender, EventArgs e)
         {
-            int sel = lbImageSoftware.SelectedIndex;
+            int sel = lbSoftware.SelectedIndex;
 
             if (sel != -1)
             {
                 Engine.conf.ImageEditors.RemoveAt(sel);
 
-                lbImageSoftware.Items.RemoveAt(sel);
+                lbSoftware.Items.RemoveAt(sel);
 
-                if (lbImageSoftware.Items.Count > 0)
+                if (lbSoftware.Items.Count > 0)
                 {
-                    lbImageSoftware.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
+                    lbSoftware.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
                 }
             }
 
@@ -1689,22 +1694,22 @@ namespace ZScreenGUI
 
         private void SetActiveImageSoftware()
         {
-            Engine.conf.ImageEditor = Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex];
+            Engine.conf.ImageEditor = Engine.conf.ImageEditors[lbSoftware.SelectedIndex];
             RewriteImageEditorsRightClickMenu();
         }
 
         private void ShowImageEditorsSettings()
         {
-            if (lbImageSoftware.SelectedItem != null)
+            if (lbSoftware.SelectedItem != null)
             {
-                Software app = GetImageSoftware(lbImageSoftware.SelectedItem.ToString());
+                Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
                 if (app != null)
-                {
-                    btnBrowseImageEditor.Enabled = !app.Protected;
+                {                
+                	Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                	btnBrowseImageEditor.Enabled = !app.Protected;
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
-                    btnRemoveImageEditor.Enabled = !app.Protected;
-
+                    btnRemoveImageEditor.Enabled = !app.Protected;                    
                     gbImageEditorSettings.Visible = app.Name == Engine.ZSCREEN_IMAGE_EDITOR;
 
                     SetActiveImageSoftware();
@@ -1712,7 +1717,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void lbImageSoftware_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbSoftware_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowImageEditorsSettings();
         }
@@ -3733,9 +3738,9 @@ namespace ZScreenGUI
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex];
-            lbImageSoftware.Items[lbImageSoftware.SelectedIndex] = temp;
-            Engine.conf.ImageEditors[lbImageSoftware.SelectedIndex] = temp;
+            Software temp = Engine.conf.ImageEditors[lbSoftware.SelectedIndex];
+            lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
+            Engine.conf.ImageEditors[lbSoftware.SelectedIndex] = temp;
             CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
         }
@@ -4726,9 +4731,14 @@ namespace ZScreenGUI
             gbCaptureGdi.Enabled = !chkActiveWindowPreferDWM.Checked;
         }
 
-        private void cbActiveWindowGDIFreezeWindow_CheckedChanged(object sender, EventArgs e)
+        private void chkActiveWindowGDIFreezeWindow_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowGDIFreezeWindow = cbActiveWindowGDIFreezeWindow.Checked;
+        }
+        
+        void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
+        {
+        	Engine.conf.ImageEditorsEnabled = chkEditorsEnabled.Checked;
         }
     }
 }

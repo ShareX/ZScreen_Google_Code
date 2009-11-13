@@ -620,8 +620,7 @@ namespace ZScreenLib
         public void ImageEdit()
         {
             if (File.Exists(mTask.LocalFilePath))
-            {
-                Process p = new Process();
+            {             
                 Software app = Engine.conf.ImageEditor;
                 if (app != null)
                 {
@@ -644,13 +643,7 @@ namespace ZScreenLib
                     }
                     else if (File.Exists(app.Path))
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo(app.Path)
-                        {
-                            Arguments = string.Format("{0}{1}{0}", "\"", mTask.LocalFilePath)
-                        };
-                        p.StartInfo = psi;
-                        p.Start();
-                        p.WaitForExit();
+                    	app.OpenFile(mTask.LocalFilePath);
                     }
                 }
             }
