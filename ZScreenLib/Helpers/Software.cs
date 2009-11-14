@@ -34,7 +34,7 @@ namespace ZScreenLib
         [EditorAttribute(typeof(ExeFileNameEditor), typeof(UITypeEditor))]
         [Category("Software"), DefaultValue(""), Description("Location of the Software")]
         public string Path { get; set; }
-        [Category("Software"), DefaultValue("%filepath%"), Description("Arguements passed to the application. Use %filepath% syntax to specify the file path of the image that is going to be processed.")]
+        [Category("Software"), DefaultValue(SyntaxParser.FilePath), Description("Arguments passed to the application. Use " + SyntaxParser.FilePath + " syntax to specify the file path of the image that is going to be processed.")]
         public string Args { get; set; }
         [Browsable(false)]
         public bool Enabled { get; set; }
@@ -107,7 +107,7 @@ namespace ZScreenLib
             }
             else
             {
-                psi.Arguments = this.Args.Replace("%filepath%", fp);
+                psi.Arguments = this.Args.Replace(SyntaxParser.FilePath, fp);
                 FileSystem.AppendDebug(string.Format("Running {0} with Arguments: {1}", Path, psi.Arguments));
             }
             p.StartInfo = psi;
