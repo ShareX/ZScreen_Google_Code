@@ -292,7 +292,7 @@ namespace ZScreenGUI
 
             niTray.Visible = true;
             // Loader.Splash.Close();
-            FileSystem.AppendDebug("Closed Splash Screen");
+            // FileSystem.AppendDebug("Closed Splash Screen");
             FileSystem.AppendDebug("Loaded ZScreen GUI...");
         }
 
@@ -870,21 +870,18 @@ namespace ZScreenGUI
 
             chkEditorsEnabled.Checked = Engine.conf.ImageEditorsEnabled;
             string mspaint = "Paint";
-            Software disabled = new Software(Engine.DISABLED_IMAGE_EDITOR, string.Empty, true);
             Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
             Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
 
-            Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.DISABLED_IMAGE_EDITOR ||
-                x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == "Paint" || !File.Exists(x.Path));
+            Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == mspaint || !File.Exists(x.Path));
 
             editor.Enabled = Engine.ZSCREEN_IMAGE_EDITOR == Engine.conf.ImageEditor.Name;
             paint.Enabled = mspaint == Engine.conf.ImageEditor.Name;
-                        
-            Engine.conf.ImageEditors.Insert(0, disabled);
-            Engine.conf.ImageEditors.Insert(1, editor);
+
+            Engine.conf.ImageEditors.Insert(0, editor);
             if (File.Exists(paint.Path))
             {
-                Engine.conf.ImageEditors.Insert(2, paint);
+                Engine.conf.ImageEditors.Insert(1, paint);
             }
 
             RegistryMgr.FindImageEditors();
@@ -1176,10 +1173,6 @@ namespace ZScreenGUI
                     ToolStripMenuItem tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
                     tsm.Click += new EventHandler(TrayImageEditorClick);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
-                    if (imgs[x].Name == Engine.DISABLED_IMAGE_EDITOR)
-                    {
-                        tsmEditinImageSoftware.DropDownItems.Add(new ToolStripSeparator());
-                    }
                 }
 
                 //check the active ftpUpload account
@@ -1190,7 +1183,7 @@ namespace ZScreenGUI
                 }
                 else
                 {
-                    CheckCorrectIsRightClickMenu(Engine.DISABLED_IMAGE_EDITOR);
+                    tsmEditinImageSoftware.Enabled = false;
                 }
 
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1393,20 +1386,6 @@ namespace ZScreenGUI
                 else
                 {
                     tsm.CheckState = CheckState.Unchecked;
-                }
-            }
-        }
-
-        private void btnBrowseImageSoftware_Click(object sender, EventArgs e)
-        {
-            if (lbSoftware.SelectedIndex > -1)
-            {
-                Software temp = BrowseImageSoftware();
-                if (temp != null)
-                {
-                    lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
-                    Engine.conf.ImageEditors[lbSoftware.SelectedIndex] = temp;
-                    ShowImageEditorsSettings();
                 }
             }
         }
@@ -1704,12 +1683,11 @@ namespace ZScreenGUI
             {
                 Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
                 if (app != null)
-                {                
-                	Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
-                	btnBrowseImageEditor.Enabled = !app.Protected;
+                {
+                    Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
-                    btnRemoveImageEditor.Enabled = !app.Protected;                    
+                    btnRemoveImageEditor.Enabled = !app.Protected;
                     gbImageEditorSettings.Visible = app.Name == Engine.ZSCREEN_IMAGE_EDITOR;
 
                     SetActiveImageSoftware();
@@ -4735,10 +4713,11 @@ namespace ZScreenGUI
         {
             Engine.conf.ActiveWindowGDIFreezeWindow = cbActiveWindowGDIFreezeWindow.Checked;
         }
-        
+
         void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
-        	Engine.conf.ImageEditorsEnabled = chkEditorsEnabled.Checked;
+            Engine.conf.ImageEditorsEnabled = chkEditorsEnabled.Checked;
+            lbSoftware.Enabled = chkEditorsEnabled.Checked;
         }
     }
 }

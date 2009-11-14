@@ -620,30 +620,32 @@ namespace ZScreenLib
         public void ImageEdit()
         {
             if (File.Exists(mTask.LocalFilePath))
-            {             
-                Software app = Engine.conf.ImageEditor;
-                if (app != null)
+            {
+                foreach (Software app in Engine.conf.ImageEditors)
                 {
-                    if (app.Name == Engine.ZSCREEN_IMAGE_EDITOR)
+                    if (app.Enabled)
                     {
-                        try
+                        if (app.Name == Engine.ZSCREEN_IMAGE_EDITOR)
                         {
-                            Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
-                            Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                            editor.AutoSave = Engine.conf.ImageEditorAutoSave;
-                            editor.MyWorker = mTask.MyWorker;
-                            editor.SetImage(mTask.MyImage);
-                            editor.SetImagePath(mTask.LocalFilePath);
-                            editor.ShowDialog();
+                            try
+                            {
+                                Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
+                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
+                                editor.AutoSave = Engine.conf.ImageEditorAutoSave;
+                                editor.MyWorker = mTask.MyWorker;
+                                editor.SetImage(mTask.MyImage);
+                                editor.SetImagePath(mTask.LocalFilePath);
+                                editor.ShowDialog();
+                            }
+                            catch (Exception ex)
+                            {
+                                FileSystem.AppendDebug("ImageEdit", ex);
+                            }
                         }
-                        catch (Exception ex)
+                        else if (File.Exists(app.Path))
                         {
-                            FileSystem.AppendDebug("ImageEdit", ex);
+                            app.OpenFile(mTask.LocalFilePath);
                         }
-                    }
-                    else if (File.Exists(app.Path))
-                    {
-                    	app.OpenFile(mTask.LocalFilePath);
                     }
                 }
             }
