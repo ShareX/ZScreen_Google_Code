@@ -1,4 +1,4 @@
-3.20.0.0 Ability to run external tools e.g. OptiPNG with arguments prior to uploading images {McoreD}
+3.20.0.0 Ability to run external tools e.g. OptiPNG with arguments prior to uploading images [kode54] {McoreD}
 
 Version 3.19 - 20091109
 
