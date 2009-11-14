@@ -1,3 +1,5 @@
+3.20.0.0 Ability to run external tools e.g. OptiPNG with arguments prior to uploading images {McoreD}
+
 Version 3.19 - 20091109
 
 3.19.1.0 Option to prefer System Folders for Settings and Data in Config Wizard [Issue 101] {McoreD}

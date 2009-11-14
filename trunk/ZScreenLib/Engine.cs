@@ -102,8 +102,7 @@ namespace ZScreenLib
         public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
         private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
-        public const string DISABLED_IMAGE_EDITOR = "Disabled";
-
+        
         public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif", "ico" };
         public static string[] zTextFileTypes = { "txt", "log" };
         public static string[] zWebpageFileTypes = { "html", "htm" };

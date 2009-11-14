@@ -20,7 +20,7 @@ namespace ZScreenGUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            FileSystem.AppendDebug("Starting Splash Screen");
+            // FileSystem.AppendDebug("Starting Splash Screen");
             // Splash = new ZSS.Forms.SplashScreen();
             // Splash.Show();
             AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
