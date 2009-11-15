@@ -352,9 +352,9 @@ namespace ZScreenGUI
             this.nudImageQuality = new System.Windows.Forms.NumericUpDown();
             this.lblJPEGQualityPercentage = new System.Windows.Forms.Label();
             this.lblQuality = new System.Windows.Forms.Label();
-            this.cbSwitchFormat = new System.Windows.Forms.ComboBox();
+            this.cboSwitchFormat = new System.Windows.Forms.ComboBox();
             this.lblFileFormat = new System.Windows.Forms.Label();
-            this.cbFileFormat = new System.Windows.Forms.ComboBox();
+            this.cboFileFormat = new System.Windows.Forms.ComboBox();
             this.lblKB = new System.Windows.Forms.Label();
             this.lblAfter = new System.Windows.Forms.Label();
             this.lblSwitchTo = new System.Windows.Forms.Label();
@@ -4209,9 +4209,9 @@ namespace ZScreenGUI
             this.gbPictureQuality.Controls.Add(this.nudImageQuality);
             this.gbPictureQuality.Controls.Add(this.lblJPEGQualityPercentage);
             this.gbPictureQuality.Controls.Add(this.lblQuality);
-            this.gbPictureQuality.Controls.Add(this.cbSwitchFormat);
+            this.gbPictureQuality.Controls.Add(this.cboSwitchFormat);
             this.gbPictureQuality.Controls.Add(this.lblFileFormat);
-            this.gbPictureQuality.Controls.Add(this.cbFileFormat);
+            this.gbPictureQuality.Controls.Add(this.cboFileFormat);
             this.gbPictureQuality.Controls.Add(this.lblKB);
             this.gbPictureQuality.Controls.Add(this.lblAfter);
             this.gbPictureQuality.Controls.Add(this.lblSwitchTo);
@@ -4303,13 +4303,13 @@ namespace ZScreenGUI
             // 
             // cbSwitchFormat
             // 
-            this.cbSwitchFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSwitchFormat.FormattingEnabled = true;
-            this.cbSwitchFormat.Location = new System.Drawing.Point(128, 96);
-            this.cbSwitchFormat.Name = "cbSwitchFormat";
-            this.cbSwitchFormat.Size = new System.Drawing.Size(98, 21);
-            this.cbSwitchFormat.TabIndex = 9;
-            this.cbSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cmbSwitchFormat_SelectedIndexChanged);
+            this.cboSwitchFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSwitchFormat.FormattingEnabled = true;
+            this.cboSwitchFormat.Location = new System.Drawing.Point(128, 96);
+            this.cboSwitchFormat.Name = "cbSwitchFormat";
+            this.cboSwitchFormat.Size = new System.Drawing.Size(98, 21);
+            this.cboSwitchFormat.TabIndex = 9;
+            this.cboSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cmbSwitchFormat_SelectedIndexChanged);
             // 
             // lblFileFormat
             // 
@@ -4323,13 +4323,13 @@ namespace ZScreenGUI
             // 
             // cbFileFormat
             // 
-            this.cbFileFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFileFormat.FormattingEnabled = true;
-            this.cbFileFormat.Location = new System.Drawing.Point(16, 40);
-            this.cbFileFormat.Name = "cbFileFormat";
-            this.cbFileFormat.Size = new System.Drawing.Size(98, 21);
-            this.cbFileFormat.TabIndex = 6;
-            this.cbFileFormat.SelectedIndexChanged += new System.EventHandler(this.cmbFileFormat_SelectedIndexChanged);
+            this.cboFileFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFileFormat.FormattingEnabled = true;
+            this.cboFileFormat.Location = new System.Drawing.Point(16, 40);
+            this.cboFileFormat.Name = "cbFileFormat";
+            this.cboFileFormat.Size = new System.Drawing.Size(98, 21);
+            this.cboFileFormat.TabIndex = 6;
+            this.cboFileFormat.SelectedIndexChanged += new System.EventHandler(this.cboFileFormat_SelectedIndexChanged);
             // 
             // lblKB
             // 
@@ -7242,9 +7242,9 @@ namespace ZScreenGUI
         internal System.Windows.Forms.NumericUpDown nudImageQuality;
         internal System.Windows.Forms.Label lblJPEGQualityPercentage;
         internal System.Windows.Forms.Label lblQuality;
-        internal System.Windows.Forms.ComboBox cbSwitchFormat;
+        internal System.Windows.Forms.ComboBox cboSwitchFormat;
         internal System.Windows.Forms.Label lblFileFormat;
-        internal System.Windows.Forms.ComboBox cbFileFormat;
+        internal System.Windows.Forms.ComboBox cboFileFormat;
         internal System.Windows.Forms.Label lblKB;
         internal System.Windows.Forms.Label lblAfter;
         internal System.Windows.Forms.Label lblSwitchTo;

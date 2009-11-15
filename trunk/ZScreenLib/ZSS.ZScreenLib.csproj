@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\ImageFormats.cs" />
     <Compile Include="Global\SyntaxParser.cs" />
     <Compile Include="Helpers\ClipboardHook.cs" />
     <Compile Include="Forms\AboutBox.cs">

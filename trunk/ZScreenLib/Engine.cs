@@ -102,8 +102,9 @@ namespace ZScreenLib
         public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
         private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
-        
-        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif", "ico" };
+
+        public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
+        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
         public static string[] zTextFileTypes = { "txt", "log" };
         public static string[] zWebpageFileTypes = { "html", "htm" };
 
@@ -475,6 +476,30 @@ namespace ZScreenLib
             {
                 zClipboardHook.UnregisterClipboardViewer();
                 FileSystem.AppendDebug("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
+            }
+        }
+
+        public static void SetImageFormat(ImageFileFormatType imgFormat)
+        {
+            Engine.conf.ImageFileFormat = imgFormat;
+
+            switch (imgFormat)
+            {
+                case ImageFileFormatType.Bmp:
+                    zImageFileFormat = new ImageFileFormatBmp();
+                    break;
+                case ImageFileFormatType.Gif:
+                    zImageFileFormat = new ImageFileFormatGif();
+                    break;
+                case ImageFileFormatType.Jpg:
+                    zImageFileFormat = new ImageFileFormatJpg();
+                    break;
+                case ImageFileFormatType.Png:
+                    zImageFileFormat = new ImageFileFormatPng();
+                    break;
+                case ImageFileFormatType.Tif:
+                    zImageFileFormat = new ImageFileFormatTif();
+                    break;
             }
         }
 

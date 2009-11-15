@@ -249,7 +249,7 @@ namespace ZScreenLib
         /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
         public bool SetFilePathFromPattern(string fileName)
         {
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileTypes[Engine.conf.FileFormat]));
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileFormat.Extension));
 
             if (Engine.conf.ManualNaming)
             {

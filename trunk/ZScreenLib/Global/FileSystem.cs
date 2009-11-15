@@ -39,7 +39,7 @@ namespace ZScreenLib
 {
     public static class FileSystem
     {
-        public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff, ImageFormat.Icon };
+        public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff };
 
         public static StringBuilder mDebug = new StringBuilder();
 
@@ -102,22 +102,22 @@ namespace ZScreenLib
 
                 try
                 {
-                    if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.FileFormat] != ImageFormat.Png)
+                    if (Engine.conf.MakeJPGBackgroundWhite && Engine.conf.ImageFileFormat != ImageFileFormatType.Png)
                     {
                         img = ImageEffects.FillBackground(img, Color.White);
                     }
 
-                    ms = GraphicsMgr.SaveImageToMemoryStream(img, mImageFormats[Engine.conf.FileFormat]);
+                    ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormat.Format);
 
                     if (ms.Length > size && size != 0)
                     {
-                        if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.SwitchFormat] != ImageFormat.Png)
+                        if (Engine.conf.MakeJPGBackgroundWhite && Engine.conf.SwitchImageFormat != ImageFileFormatType.Png)
                         {
                             img = ImageEffects.FillBackground(img, Color.White);
                         }
 
-                        ms = GraphicsMgr.SaveImageToMemoryStream(img, mImageFormats[Engine.conf.SwitchFormat]);
-                        filePath = Path.ChangeExtension(filePath, Engine.zImageFileTypes[Engine.conf.SwitchFormat]);
+                        ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormat.Format);
+                        filePath = Path.ChangeExtension(filePath, Engine.zImageFileFormat.Extension);
                     }
 
                     if (!Directory.Exists(Path.GetDirectoryName(filePath)))

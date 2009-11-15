@@ -91,7 +91,7 @@ namespace ZScreenLib
             {
                 if (format == ImageFormat.Jpeg)
                 {
-                    EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)Engine.conf.ImageQuality);
+                    EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)Engine.conf.JpgQuality);
                     ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
 
                     EncoderParameters encoderParams = new EncoderParameters(1);
