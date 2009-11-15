@@ -559,21 +559,21 @@ namespace ZScreenGUI
 
             // Image Settings
 
-            if (cbFileFormat.Items.Count == 0)
+            if (cboFileFormat.Items.Count == 0)
             {
-                cbFileFormat.Items.AddRange(Engine.zImageFileTypes);
+                cboFileFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
             }
 
-            cbFileFormat.SelectedIndex = Engine.conf.FileFormat;
-            nudImageQuality.Value = Engine.conf.ImageQuality;
+            cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFileFormat;
+            nudImageQuality.Value = Engine.conf.JpgQuality;
             cbGIFQuality.SelectedIndex = (int)Engine.conf.GIFQuality;
             nudSwitchAfter.Value = Engine.conf.SwitchAfter;
-            if (cbSwitchFormat.Items.Count == 0)
+            if (cboSwitchFormat.Items.Count == 0)
             {
-                cbSwitchFormat.Items.AddRange(Engine.zImageFileTypes);
+                cboSwitchFormat.Items.AddRange(Engine.zImageFileTypes);
             }
 
-            cbSwitchFormat.SelectedIndex = Engine.conf.SwitchFormat;
+            cboSwitchFormat.SelectedIndex = (int)Engine.conf.SwitchImageFormat;
 
             switch (Engine.conf.ImageSizeType)
             {
@@ -1741,19 +1741,19 @@ namespace ZScreenGUI
                 new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true, MaxNameLength = Engine.conf.MaxNameLength });
         }
 
-        private void cmbFileFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FileFormat = cbFileFormat.SelectedIndex;
+        private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {            
+            Engine.SetImageFormat((ImageFileFormatType)cboFileFormat.SelectedIndex);
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageQuality = nudImageQuality.Value;
+            Engine.conf.JpgQuality = nudImageQuality.Value;
         }
 
         private void cmbSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.SwitchFormat = cbSwitchFormat.SelectedIndex;
+            Engine.conf.SwitchImageFormat = (ImageFileFormatType)cboSwitchFormat.SelectedIndex;
         }
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)

@@ -240,11 +240,11 @@ namespace ZScreenLib
 
         // Image Settings
 
-        public int FileFormat = 0;
-        public decimal ImageQuality = 90;
+        public ImageFileFormatType ImageFileFormat = ImageFileFormatType.Png;
+        public decimal JpgQuality = 90;
         public GIFQuality GIFQuality = GIFQuality.Bit8;
         public decimal SwitchAfter = 512;
-        public int SwitchFormat = 1;
+        public ImageFileFormatType SwitchImageFormat = ImageFileFormatType.Jpg;
         public bool MakeJPGBackgroundWhite = true;
 
         public ImageSizeType ImageSizeType = ImageSizeType.DEFAULT;
