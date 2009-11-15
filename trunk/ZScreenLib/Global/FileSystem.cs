@@ -39,8 +39,6 @@ namespace ZScreenLib
 {
     public static class FileSystem
     {
-        public static ImageFormat[] mImageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Gif, ImageFormat.Bmp, ImageFormat.Tiff };
-
         public static StringBuilder mDebug = new StringBuilder();
 
         /// <summary>
