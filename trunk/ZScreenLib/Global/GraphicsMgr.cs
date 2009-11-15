@@ -111,8 +111,6 @@ namespace ZScreenLib
                             quantizer = new OctreeQuantizer(15, 4);
                             break;
                         case GIFQuality.Bit8:
-                            quantizer = new OctreeQuantizer(255, 4);
-                            break;
                         default:
                             quantizer = new OctreeQuantizer(255, 4);
                             break;
