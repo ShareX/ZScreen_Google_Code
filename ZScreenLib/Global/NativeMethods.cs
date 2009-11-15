@@ -1445,6 +1445,29 @@ namespace ZScreenLib
             public int bottomHeight;
         }
 
+        [DllImport("dwmapi.dll", PreserveSig = false)]
+        public static extern bool DwmIsCompositionEnabled();
+
+        [DllImport("dwmapi.dll")]
+        public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct DWM_BLURBEHIND
+        {
+            public DWM_BB dwFlags;
+            public bool fEnable;
+            public IntPtr hRgnBlur;
+            public bool fTransitionOnMaximized;
+        }
+
+        [Flags]
+        public enum DWM_BB
+        {
+            Enable = 1,
+            BlurRegion = 2,
+            TransitionMaximized = 4
+        }
+
         [DllImport("dwmapi.dll")]
         public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
 
