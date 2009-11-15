@@ -130,4 +130,11 @@ namespace ZScreenLib
     {
         DEFAULT, FIXED, RATIO
     }
+
+    public enum GIFQuality
+    {
+        Grayscale,
+        Bit4,
+        Bit8
+    }
 }

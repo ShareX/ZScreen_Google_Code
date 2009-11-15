@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 		Lib\AxSHDocVw.dll = Lib\AxSHDocVw.dll
 		Lib\ICSharpCode.SharpZipLib.dll = Lib\ICSharpCode.SharpZipLib.dll
 		Lib\IECaptComImports.dll = Lib\IECaptComImports.dll
+		Lib\ImageQuantization.dll = Lib\ImageQuantization.dll
 		Lib\Microsoft.WindowsAPICodePack.dll = Lib\Microsoft.WindowsAPICodePack.dll
 		Lib\Microsoft.WindowsAPICodePack.Shell.dll = Lib\Microsoft.WindowsAPICodePack.Shell.dll
 		Lib\SHDocVw.dll = Lib\SHDocVw.dll

@@ -242,6 +242,7 @@ namespace ZScreenLib
 
         public int FileFormat = 0;
         public decimal ImageQuality = 90;
+        public GIFQuality GIFQuality = GIFQuality.Bit8;
         public decimal SwitchAfter = 512;
         public int SwitchFormat = 1;
         public bool MakeJPGBackgroundWhite = true;

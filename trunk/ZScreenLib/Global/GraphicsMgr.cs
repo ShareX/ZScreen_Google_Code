@@ -29,6 +29,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using ImageQuantization;
 
 namespace ZScreenLib
 {
@@ -82,31 +83,57 @@ namespace ZScreenLib
             return bmp;
         }
 
-        public static void SaveImageToMemoryStream(Image img, MemoryStream ms, ImageFormat format)
+        public static MemoryStream SaveImageToMemoryStream(Image img, ImageFormat format)
         {
-            //image quality setting only works for JPEG
+            MemoryStream ms = new MemoryStream();
 
-            if (format == ImageFormat.Jpeg)
+            try
             {
-                EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)Engine.conf.ImageQuality);
-                ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
+                if (format == ImageFormat.Jpeg)
+                {
+                    EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)Engine.conf.ImageQuality);
+                    ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
 
-                EncoderParameters encoderParams = new EncoderParameters(1);
-                encoderParams.Param[0] = quality;
+                    EncoderParameters encoderParams = new EncoderParameters(1);
+                    encoderParams.Param[0] = quality;
 
-                img.Save(ms, codec, encoderParams);
-            }
-            else
-            {
-                try
+                    img.Save(ms, codec, encoderParams);
+                }
+                else if (format == ImageFormat.Gif)
+                {
+                    Quantizer quantizer;
+                    switch (Engine.conf.GIFQuality)
+                    {
+                        case GIFQuality.Grayscale:
+                            quantizer = new GrayscaleQuantizer();
+                            break;
+                        case GIFQuality.Bit4:
+                            quantizer = new OctreeQuantizer(15, 4);
+                            break;
+                        case GIFQuality.Bit8:
+                            quantizer = new OctreeQuantizer(255, 4);
+                            break;
+                        default:
+                            quantizer = new OctreeQuantizer(255, 4);
+                            break;
+                    }
+
+                    using (Bitmap quantized = quantizer.Quantize(img))
+                    {
+                        quantized.Save(ms, ImageFormat.Gif);
+                    }
+                }
+                else
                 {
                     img.Save(ms, format);
                 }
-                catch (Exception ex)
-                {
-                    FileSystem.AppendDebug("Error at SaveImageToMemoryStream", ex);
-                }
             }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug("Error at SaveImageToMemoryStream", ex);
+            }
+
+            return ms;
         }
 
         private static ImageCodecInfo GetEncoderInfo(string mimeType)
