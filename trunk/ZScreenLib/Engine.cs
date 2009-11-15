@@ -104,6 +104,7 @@ namespace ZScreenLib
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
 
         public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
+        public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
         public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
         public static string[] zTextFileTypes = { "txt", "log" };
         public static string[] zWebpageFileTypes = { "html", "htm" };
@@ -479,26 +480,24 @@ namespace ZScreenLib
             }
         }
 
-        public static void SetImageFormat(ImageFileFormatType imgFormat)
+        public static void SetImageFormat(ref ImageFileFormat ziff, ImageFileFormatType imgFormat)
         {
-            Engine.conf.ImageFileFormat = imgFormat;
-
             switch (imgFormat)
             {
                 case ImageFileFormatType.Bmp:
-                    zImageFileFormat = new ImageFileFormatBmp();
+                    ziff = new ImageFileFormatBmp();
                     break;
                 case ImageFileFormatType.Gif:
-                    zImageFileFormat = new ImageFileFormatGif();
+                    ziff = new ImageFileFormatGif();
                     break;
                 case ImageFileFormatType.Jpg:
-                    zImageFileFormat = new ImageFileFormatJpg();
+                    ziff = new ImageFileFormatJpg();
                     break;
                 case ImageFileFormatType.Png:
-                    zImageFileFormat = new ImageFileFormatPng();
+                    ziff = new ImageFileFormatPng();
                     break;
                 case ImageFileFormatType.Tif:
-                    zImageFileFormat = new ImageFileFormatTif();
+                    ziff = new ImageFileFormatTif();
                     break;
             }
         }

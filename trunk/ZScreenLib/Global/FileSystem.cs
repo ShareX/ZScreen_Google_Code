@@ -109,7 +109,7 @@ namespace ZScreenLib
 
                     if (ms.Length > size && size != 0)
                     {
-                        if (Engine.conf.MakeJPGBackgroundWhite && Engine.conf.SwitchImageFormat != ImageFileFormatType.Png)
+                        if (Engine.conf.MakeJPGBackgroundWhite && Engine.conf.ImageFormatSwitch != ImageFileFormatType.Png)
                         {
                             img = ImageEffects.FillBackground(img, Color.White);
                         }
