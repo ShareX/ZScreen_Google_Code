@@ -98,25 +98,25 @@ namespace ZScreenLib
 
                 long size = (long)Engine.conf.SwitchAfter * 1024;
 
-                if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.FileFormat] == ImageFormat.Jpeg)
-                {
-                    img = ImageEffects.FillBackground(img, Color.White);
-                }
+                MemoryStream ms = null;
 
-                MemoryStream ms = new MemoryStream();
                 try
                 {
-                    GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Engine.conf.FileFormat]);
+                    if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.FileFormat] != ImageFormat.Png)
+                    {
+                        img = ImageEffects.FillBackground(img, Color.White);
+                    }
+
+                    ms = GraphicsMgr.SaveImageToMemoryStream(img, mImageFormats[Engine.conf.FileFormat]);
 
                     if (ms.Length > size && size != 0)
                     {
-                        if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.SwitchFormat] == ImageFormat.Jpeg)
+                        if (Engine.conf.MakeJPGBackgroundWhite && mImageFormats[Engine.conf.SwitchFormat] != ImageFormat.Png)
                         {
                             img = ImageEffects.FillBackground(img, Color.White);
                         }
 
-                        ms = new MemoryStream();
-                        GraphicsMgr.SaveImageToMemoryStream(img, ms, mImageFormats[Engine.conf.SwitchFormat]);
+                        ms = GraphicsMgr.SaveImageToMemoryStream(img, mImageFormats[Engine.conf.SwitchFormat]);
                         filePath = Path.ChangeExtension(filePath, Engine.zImageFileTypes[Engine.conf.SwitchFormat]);
                     }
 
@@ -143,9 +143,10 @@ namespace ZScreenLib
                 }
                 finally
                 {
-                    if (ms != null) ((IDisposable)ms).Dispose();
+                    if (ms != null) ms.Dispose();
                 }
             }
+
             task.UpdateLocalFilePath(filePath);
             return filePath;
         }

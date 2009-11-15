@@ -346,6 +346,8 @@ namespace ZScreenGUI
             this.rbImageSizeRatio = new System.Windows.Forms.RadioButton();
             this.txtImageSizeFixedHeight = new System.Windows.Forms.TextBox();
             this.gbPictureQuality = new System.Windows.Forms.GroupBox();
+            this.cbGIFQuality = new System.Windows.Forms.ComboBox();
+            this.lblGIFQuality = new System.Windows.Forms.Label();
             this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
             this.nudImageQuality = new System.Windows.Forms.NumericUpDown();
             this.lblJPEGQualityPercentage = new System.Windows.Forms.Label();
@@ -4201,6 +4203,8 @@ namespace ZScreenGUI
             // gbPictureQuality
             // 
             this.gbPictureQuality.BackColor = System.Drawing.Color.Transparent;
+            this.gbPictureQuality.Controls.Add(this.cbGIFQuality);
+            this.gbPictureQuality.Controls.Add(this.lblGIFQuality);
             this.gbPictureQuality.Controls.Add(this.nudSwitchAfter);
             this.gbPictureQuality.Controls.Add(this.nudImageQuality);
             this.gbPictureQuality.Controls.Add(this.lblJPEGQualityPercentage);
@@ -4217,6 +4221,29 @@ namespace ZScreenGUI
             this.gbPictureQuality.TabIndex = 115;
             this.gbPictureQuality.TabStop = false;
             this.gbPictureQuality.Text = "Picture Quality";
+            // 
+            // cbGIFQuality
+            // 
+            this.cbGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGIFQuality.FormattingEnabled = true;
+            this.cbGIFQuality.Items.AddRange(new object[] {
+            "Grayscale",
+            "4 bit (16 colors)",
+            "8 bit (256 colors)"});
+            this.cbGIFQuality.Location = new System.Drawing.Point(240, 40);
+            this.cbGIFQuality.Name = "cbGIFQuality";
+            this.cbGIFQuality.Size = new System.Drawing.Size(121, 21);
+            this.cbGIFQuality.TabIndex = 118;
+            this.cbGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbGIFQuality_SelectedIndexChanged);
+            // 
+            // lblGIFQuality
+            // 
+            this.lblGIFQuality.AutoSize = true;
+            this.lblGIFQuality.Location = new System.Drawing.Point(240, 24);
+            this.lblGIFQuality.Name = "lblGIFQuality";
+            this.lblGIFQuality.Size = new System.Drawing.Size(62, 13);
+            this.lblGIFQuality.TabIndex = 117;
+            this.lblGIFQuality.Text = "GIF Quality:";
             // 
             // nudSwitchAfter
             // 
@@ -4270,9 +4297,9 @@ namespace ZScreenGUI
             this.lblQuality.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lblQuality.Location = new System.Drawing.Point(128, 24);
             this.lblQuality.Name = "lblQuality";
-            this.lblQuality.Size = new System.Drawing.Size(69, 13);
+            this.lblQuality.Size = new System.Drawing.Size(72, 13);
             this.lblQuality.TabIndex = 108;
-            this.lblQuality.Text = "JPEG Quality";
+            this.lblQuality.Text = "JPEG Quality:";
             // 
             // cbSwitchFormat
             // 
@@ -7584,6 +7611,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.TabPage tpActivewindow;
         private System.Windows.Forms.GroupBox gbCaptureGdi;
         private System.Windows.Forms.CheckBox cbActiveWindowGDIFreezeWindow;
+        private System.Windows.Forms.ComboBox cbGIFQuality;
+        private System.Windows.Forms.Label lblGIFQuality;
 
     }
 }

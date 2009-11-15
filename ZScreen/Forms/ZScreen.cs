@@ -566,6 +566,7 @@ namespace ZScreenGUI
 
             cbFileFormat.SelectedIndex = Engine.conf.FileFormat;
             nudImageQuality.Value = Engine.conf.ImageQuality;
+            cbGIFQuality.SelectedIndex = (int)Engine.conf.GIFQuality;
             nudSwitchAfter.Value = Engine.conf.SwitchAfter;
             if (cbSwitchFormat.Items.Count == 0)
             {
@@ -4714,10 +4715,15 @@ namespace ZScreenGUI
             Engine.conf.ActiveWindowGDIFreezeWindow = cbActiveWindowGDIFreezeWindow.Checked;
         }
 
-        void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
+        private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageEditorsEnabled = chkEditorsEnabled.Checked;
             lbSoftware.Enabled = chkEditorsEnabled.Checked;
+        }
+
+        private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.GIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
         }
     }
 }
