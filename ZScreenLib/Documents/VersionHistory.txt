@@ -1,3 +1,4 @@
+3.20.1.0 Enhancements to create better GIF images with options to change GIF Quality [Issue 74] {Jaex}
 3.20.0.0 Ability to run external tools e.g. OptiPNG with arguments prior to uploading images [kode54] {McoreD}
 
 Version 3.19 - 20091109
