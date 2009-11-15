@@ -570,10 +570,9 @@ namespace ZScreenGUI
             nudSwitchAfter.Value = Engine.conf.SwitchAfter;
             if (cboSwitchFormat.Items.Count == 0)
             {
-                cboSwitchFormat.Items.AddRange(Engine.zImageFileTypes);
+                cboSwitchFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
             }
-
-            cboSwitchFormat.SelectedIndex = (int)Engine.conf.SwitchImageFormat;
+            cboSwitchFormat.SelectedIndex = (int)Engine.conf.ImageFormatSwitch;
 
             switch (Engine.conf.ImageSizeType)
             {
@@ -1742,8 +1741,9 @@ namespace ZScreenGUI
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-            Engine.SetImageFormat((ImageFileFormatType)cboFileFormat.SelectedIndex);
+        {
+            Engine.conf.ImageFileFormat = (ImageFileFormatType)cboFileFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.conf.ImageFileFormat);
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
@@ -1751,9 +1751,10 @@ namespace ZScreenGUI
             Engine.conf.JpgQuality = nudImageQuality.Value;
         }
 
-        private void cmbSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.SwitchImageFormat = (ImageFileFormatType)cboSwitchFormat.SelectedIndex;
+            Engine.conf.ImageFormatSwitch = (ImageFileFormatType)cboSwitchFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.conf.ImageFormatSwitch);
         }
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)

@@ -233,8 +233,8 @@ namespace ZScreenLib
 
         // Naming Conventions
 
-        public string ActiveWindowPattern = "%t-%y.%mo.%d-%h.%mi.%s";
-        public string EntireScreenPattern = "SS-%y.%mo.%d-%h.%mi.%s";
+        public string ActiveWindowPattern = "%t-%y-%mo-%d_%h.%mi.%s";
+        public string EntireScreenPattern = "SS-%y-%mo-%d_%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
 
@@ -244,7 +244,7 @@ namespace ZScreenLib
         public decimal JpgQuality = 90;
         public GIFQuality GIFQuality = GIFQuality.Bit8;
         public decimal SwitchAfter = 512;
-        public ImageFileFormatType SwitchImageFormat = ImageFileFormatType.Jpg;
+        public ImageFileFormatType ImageFormatSwitch = ImageFileFormatType.Jpg;
         public bool MakeJPGBackgroundWhite = true;
 
         public ImageSizeType ImageSizeType = ImageSizeType.DEFAULT;

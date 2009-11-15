@@ -104,7 +104,7 @@ VersionInfoVersion={#MyAppVersion}
 ;required by products
 MinVersion=4.90.3000,5.0.2195sp3
 PrivilegesRequired=none
-AppID=ZScreen
+AppId=ZScreen
 
 [Languages]
 Name: en; MessagesFile: compiler:Default.isl

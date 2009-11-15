@@ -101,7 +101,7 @@ VersionInfoVersion={#MyAppVersion}
 
 ;required by products
 MinVersion=4.1,5.0
-PrivilegesRequired=admin
+PrivilegesRequired=poweruser
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
@@ -134,6 +134,9 @@ Type: files; Name: "{app}\ZSS.ImageUploader.dll"
 Type: files; Name: "{app}\ZSS.TextUploader.dll"
 Type: files; Name: "{app}\ImageUploader.dll"
 Type: files; Name: "{app}\ZSS.Colors.dll"
+
+[Registry]
+Root: HKCU; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: {#ExeName}; ValueData: """{app}\ZScreen.exe"""; Flags: uninsdeletevalue
 
 [Code]
 function InitializeSetup(): Boolean;

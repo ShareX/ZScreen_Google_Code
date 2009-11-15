@@ -4309,7 +4309,7 @@ namespace ZScreenGUI
             this.cboSwitchFormat.Name = "cbSwitchFormat";
             this.cboSwitchFormat.Size = new System.Drawing.Size(98, 21);
             this.cboSwitchFormat.TabIndex = 9;
-            this.cboSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cmbSwitchFormat_SelectedIndexChanged);
+            this.cboSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cboSwitchFormat_SelectedIndexChanged);
             // 
             // lblFileFormat
             // 
