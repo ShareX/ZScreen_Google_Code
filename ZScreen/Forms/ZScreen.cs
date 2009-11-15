@@ -81,6 +81,13 @@ namespace ZScreenGUI
             {
                 Loader.Worker2.CheckUpdates();
             }
+
+            Application.Idle += new EventHandler(Application_Idle);
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            DelayedTrimMemoryUse();
         }
 
         internal void ZScreen_Windows7onlyTasks()
@@ -1138,8 +1145,44 @@ namespace ZScreenGUI
                 {
                     Hide();
                 }
+
+                DelayedTrimMemoryUse();
             }
         }
+
+        #region Trim memory
+        private System.Timers.Timer timerTrimMemory;
+        /// <summary>
+        /// Trim memory working set after a few seconds, unless this method is called again in the mean time (optimization)
+        /// </summary>
+        private void DelayedTrimMemoryUse()
+        {
+            //System.Console.WriteLine("DelayedTrimMemoryUse");
+            if (timerTrimMemory == null)
+            {
+                timerTrimMemory = new System.Timers.Timer();
+                timerTrimMemory.AutoReset = false;
+                timerTrimMemory.Interval = 5000;
+                timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
+            }
+            else
+            {
+                timerTrimMemory.Stop();
+            }
+            timerTrimMemory.Start();
+        }
+
+        void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (timerTrimMemory != null)
+            {
+                timerTrimMemory.Stop();
+                timerTrimMemory.Close();
+            }
+            //System.Console.WriteLine("TrimMemoryUse");
+            NativeMethods.TrimMemoryUse();
+        }
+        #endregion
 
         private void WriteSettings()
         {

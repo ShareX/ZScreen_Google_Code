@@ -150,6 +150,10 @@ namespace ZScreenLib
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenThread(ThreadAccess dwDesiredAccess, bool bInheritHandle, uint dwThreadId);
 
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool SetProcessWorkingSetSize(IntPtr handle, IntPtr min, IntPtr max);
+
+
         [Flags]
         public enum ThreadAccess : int
         {
@@ -1677,5 +1681,15 @@ namespace ZScreenLib
         }
 
         #endregion
+
+
+
+        public static void TrimMemoryUse()
+        {
+            System.GC.Collect();
+            System.GC.WaitForFullGCComplete();
+            SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, (IntPtr)(-1), (IntPtr)(-1));
+        }
+
     }
 }
