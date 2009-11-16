@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+# SharpDevelop 3.1.0.4977
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
@@ -52,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenTesterGUI", "ZScreen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradientMaker", "ZScreenTester\GradientTester\GradientMaker.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "..\branches\Updater\Updater\Updater.csproj", "{EDAD3B82-D40D-4402-B260-FD238E42871D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater\Updater.csproj", "{EDAD3B82-D40D-4402-B260-FD238E42871D}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -120,10 +121,10 @@ Global
 		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B26E330-9E25-46E3-8DEB-A49F3F312611}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDAD3B82-D40D-4402-B260-FD238E42871D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDAD3B82-D40D-4402-B260-FD238E42871D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDAD3B82-D40D-4402-B260-FD238E42871D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAD3B82-D40D-4402-B260-FD238E42871D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDAD3B82-D40D-4402-B260-FD238E42871D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDAD3B82-D40D-4402-B260-FD238E42871D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
