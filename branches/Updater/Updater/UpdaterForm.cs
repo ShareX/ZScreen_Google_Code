@@ -28,6 +28,7 @@ using System.Globalization;
 using System.IO;
 using System.Web;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Updater
 {
@@ -35,9 +36,11 @@ namespace Updater
     {
         public string URL { get; set; }
         public string ProcessName { get; set; }
+        public string FileName { get; set; }
+        public string SavePath { get; private set; }
 
         private FileDownloader fileDownloader;
-        private MemoryStream stream;
+        private FileStream stream;
 
         public UpdaterForm()
         {
@@ -50,16 +53,8 @@ namespace Updater
         {
             URL = url;
             ProcessName = processName;
-            string filename = HttpUtility.UrlDecode(url.Substring(url.LastIndexOf('/') + 1));
-            lblFilename.Text = "Filename: " + filename;
-
-            stream = new MemoryStream();
-            fileDownloader = new FileDownloader(url, stream);
-            fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
-            fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
-            fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
-            fileDownloader.DownloadCompleted += (v1, v2) => ChangeStatus("Download completed.");
-            fileDownloader.ExceptionThrowed += (v1, v2) => ChangeStatus("Exception: " + fileDownloader.LastException.Message);
+            FileName = HttpUtility.UrlDecode(url.Substring(url.LastIndexOf('/') + 1));
+            lblFilename.Text = "Filename: " + FileName;
         }
 
         private void ChangeStatus(string status)
@@ -78,9 +73,57 @@ namespace Updater
 
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            btnDownload.Enabled = false;
-            fileDownloader.StartDownload();
-            ChangeStatus("Getting file size.");
+            if (!string.IsNullOrEmpty(URL))
+            {
+                btnDownload.Enabled = false;
+
+                SavePath = Path.Combine(Path.GetTempPath(), FileName);
+                stream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                fileDownloader = new FileDownloader(URL, stream);
+                fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
+                fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
+                fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
+                fileDownloader.DownloadCompleted += new EventHandler(fileDownloader_DownloadCompleted);
+                fileDownloader.ExceptionThrowed += (v1, v2) => ChangeStatus("Exception: " + fileDownloader.LastException.Message);
+                fileDownloader.StartDownload();
+
+                ChangeStatus("Getting file size.");
+            }
+        }
+
+        private void fileDownloader_DownloadCompleted(object sender, EventArgs e)
+        {
+            stream.Close();
+            ChangeStatus("Download completed.");
+
+            if (MessageBox.Show("Download completed. If " + ProcessName + " is open please close for the setup to install properly." +
+                "If you press Yes then Updater will automatically close " + ProcessName + " and open installer.",
+                this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (!string.IsNullOrEmpty(ProcessName))
+                {
+                    foreach (Process process in Process.GetProcessesByName(ProcessName))
+                    {
+                        process.Close();
+                    }
+                }
+
+                Process exe = Process.Start(SavePath);
+                exe.EnableRaisingEvents = true;
+                exe.Exited += new EventHandler(exe_Exited);
+            }
+        }
+
+        private void exe_Exited(object sender, EventArgs e)
+        {
+            MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            if (File.Exists(SavePath))
+            {
+                File.Delete(SavePath);
+            }
+
+            Application.Exit();
         }
 
         private void UpdaterForm_Paint(object sender, PaintEventArgs e)
