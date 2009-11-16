@@ -64,6 +64,10 @@ namespace ZScreenGUI
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ThumbnailCacher thumbnailCacher;
         internal static GoogleTranslate mGTranslator = null;
+        private System.Windows.Forms.Timer mTimerImageEditorMenuClose = new System.Windows.Forms.Timer()
+        {
+            Interval = 3000,
+        };
 
         #endregion
 
@@ -82,7 +86,19 @@ namespace ZScreenGUI
                 Loader.Worker2.CheckUpdates();
             }
 
+            tsmEditinImageSoftware.MouseEnter += new EventHandler(tsmEditinImageSoftware_MouseEnter);
+            mTimerImageEditorMenuClose.Tick += new EventHandler(mImageEditorMenuClose_Tick);
             Application.Idle += new EventHandler(Application_Idle);
+        }
+
+        void tsmEditinImageSoftware_MouseEnter(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.AutoClose = false;
+        }
+
+        void mImageEditorMenuClose_Tick(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.Close();
         }
 
         void Application_Idle(object sender, EventArgs e)
@@ -902,6 +918,7 @@ namespace ZScreenGUI
                     lbSoftware.Items.Add(app.Name, app.Enabled);
                 }
             }
+            RewriteImageEditorsRightClickMenu();
 
             int i;
             if (Engine.conf.ImageEditor != null && (i = lbSoftware.Items.IndexOf(Engine.conf.ImageEditor.Name)) != -1)
@@ -1203,7 +1220,6 @@ namespace ZScreenGUI
             if (Engine.conf.ImageEditors != null)
             {
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-
                 tsmEditinImageSoftware.DropDownItems.Clear();
 
                 List<Software> imgs = Engine.conf.ImageEditors;
@@ -1213,20 +1229,14 @@ namespace ZScreenGUI
 
                 for (int x = 0; x < imgs.Count; x++)
                 {
-                    ToolStripMenuItem tsm = new ToolStripMenuItem { Text = imgs[x].Name, CheckOnClick = true };
+                    ToolStripMenuItem tsm = new ToolStripMenuItem
+                    {
+                        Text = imgs[x].Name,
+                        CheckOnClick = true,
+                        Checked = imgs[x].Enabled
+                    };
                     tsm.Click += new EventHandler(TrayImageEditorClick);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
-                }
-
-                //check the active ftpUpload account
-
-                if (Adapter.ImageSoftwareEnabled())
-                {
-                    CheckCorrectIsRightClickMenu(Engine.conf.ImageEditor.Name);
-                }
-                else
-                {
-                    tsmEditinImageSoftware.Enabled = false;
                 }
 
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -1240,49 +1250,20 @@ namespace ZScreenGUI
             }
         }
 
-        private void DisableImageSoftwareClick(object sender, EventArgs e)
-        {
-            //cbRunImageSoftware.Checked = false;
-
-            //select "Disabled"
-            lbSoftware.SelectedIndex = 0;
-
-            CheckCorrectIsRightClickMenu(tsmEditinImageSoftware.DropDownItems[0].Text); //disabled
-            //rewriteISRightClickMenu();
-        }
-
         private void TrayImageEditorClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
-            Engine.conf.ImageEditor = GetImageSoftware(tsm.Text); //Program.conf.ImageSoftwareList[(int)tsm.Tag];
+            Engine.conf.ImageEditor = GetImageSoftware(tsm.Text);
 
             if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
             {
+                tsmEditinImageSoftware.DropDown.AutoClose = false;
+                mTimerImageEditorMenuClose.Enabled = true;
                 lbSoftware.SelectedItem = tsm.Text;
-            }
-        }
-
-        private void CheckCorrectIsRightClickMenu(string txt)
-        {
-            ToolStripMenuItem tsm;
-
-            for (int x = 0; x < tsmEditinImageSoftware.DropDownItems.Count; x++)
-            {
-                //if (tsmImageSoftware.DropDownItems[x].GetType() == typeof(ToolStripMenuItem))
-                if (tsmEditinImageSoftware.DropDownItems[x] is ToolStripMenuItem)
-                {
-                    tsm = (ToolStripMenuItem)tsmEditinImageSoftware.DropDownItems[x];
-
-                    if (tsm.Text == txt)
-                    {
-                        tsm.CheckState = CheckState.Checked;
-                    }
-                    else
-                    {
-                        tsm.CheckState = CheckState.Unchecked;
-                    }
-                }
+                lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
+                mTimerImageEditorMenuClose.Stop();
+                mTimerImageEditorMenuClose.Start();
             }
         }
 
@@ -1636,6 +1617,7 @@ namespace ZScreenGUI
                 Engine.conf.ImageEditors.Add(temp);
                 lbSoftware.Items.Add(temp);
                 lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
+                RewriteImageEditorsRightClickMenu();
             }
         }
 
@@ -1717,7 +1699,6 @@ namespace ZScreenGUI
         private void SetActiveImageSoftware()
         {
             Engine.conf.ImageEditor = Engine.conf.ImageEditors[lbSoftware.SelectedIndex];
-            RewriteImageEditorsRightClickMenu();
         }
 
         private void ShowImageEditorsSettings()
@@ -3764,7 +3745,6 @@ namespace ZScreenGUI
             Software temp = Engine.conf.ImageEditors[lbSoftware.SelectedIndex];
             lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
             Engine.conf.ImageEditors[lbSoftware.SelectedIndex] = temp;
-            CheckCorrectIsRightClickMenu(temp.Name);
             RewriteImageEditorsRightClickMenu();
         }
 
@@ -4768,6 +4748,11 @@ namespace ZScreenGUI
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.GIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
+        }
+
+        private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
+        {
+            chkEditorsEnabled.Checked = tsmEditinImageSoftware.Checked;
         }
     }
 }
