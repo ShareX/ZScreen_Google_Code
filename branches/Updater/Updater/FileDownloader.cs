@@ -21,19 +21,19 @@
 */
 #endregion
 
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace Updater
 {
     public class FileDownloader
     {
         public string URL { get; private set; }
-        public bool IsBusy { get; private set; }
+        public bool IsDownloading { get; private set; }
         public long FileSize { get; private set; }
         public long DownloadedSize { get; private set; }
         public double DownloadSpeed { get; private set; }
@@ -52,6 +52,7 @@ namespace Updater
         }
 
         public Exception LastException { get; private set; }
+        public bool IsPaused { get; private set; }
 
         public event EventHandler FileSizeReceived;
         public event EventHandler DownloadStarted;
@@ -78,15 +79,32 @@ namespace Updater
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            IsBusy = false;
+            IsDownloading = false;
         }
 
         public void StartDownload()
         {
-            if (!IsBusy && !string.IsNullOrEmpty(URL))
+            if (!IsDownloading && !string.IsNullOrEmpty(URL) && !worker.IsBusy)
             {
-                IsBusy = true;
+                IsDownloading = true;
+                IsPaused = false;
                 worker.RunWorkerAsync();
+            }
+        }
+
+        public void ResumeDownload()
+        {
+            if (IsDownloading)
+            {
+                IsPaused = false;
+            }
+        }
+
+        public void PauseDownload()
+        {
+            if (IsDownloading)
+            {
+                IsPaused = true;
             }
         }
 
@@ -113,7 +131,17 @@ namespace Updater
 
                     while (DownloadedSize < FileSize && !worker.CancellationPending)
                     {
-                        timer.Start();
+                        while (IsPaused)
+                        {
+                            timer.Reset();
+                            Thread.Sleep(10);
+                        }
+
+                        if (!timer.IsRunning)
+                        {
+                            timer.Start();
+                        }
+
                         bytesRead = response.GetResponseStream().Read(buffer, 0, buffer.Length);
                         stream.Write(buffer, 0, bytesRead);
                         DownloadedSize += bytesRead;

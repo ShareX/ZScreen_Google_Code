@@ -41,11 +41,13 @@ namespace Updater
 
         private FileDownloader fileDownloader;
         private FileStream stream;
+        private bool downloadStarted;
+        private bool paused;
 
         public UpdaterForm()
         {
             InitializeComponent();
-            ChangeStatus("Waiting");
+            ChangeStatus("Waiting.");
         }
 
         public UpdaterForm(string url, string processName)
@@ -75,19 +77,40 @@ namespace Updater
         {
             if (!string.IsNullOrEmpty(URL))
             {
-                btnDownload.Enabled = false;
+                if (!downloadStarted)
+                {
+                    downloadStarted = true;
+                    btnDownload.Text = "Pause";
 
-                SavePath = Path.Combine(Path.GetTempPath(), FileName);
-                stream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-                fileDownloader = new FileDownloader(URL, stream);
-                fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
-                fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
-                fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
-                fileDownloader.DownloadCompleted += new EventHandler(fileDownloader_DownloadCompleted);
-                fileDownloader.ExceptionThrowed += (v1, v2) => ChangeStatus("Exception: " + fileDownloader.LastException.Message);
-                fileDownloader.StartDownload();
+                    SavePath = Path.Combine(Path.GetTempPath(), FileName);
+                    stream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                    fileDownloader = new FileDownloader(URL, stream);
+                    fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
+                    fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
+                    fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
+                    fileDownloader.DownloadCompleted += new EventHandler(fileDownloader_DownloadCompleted);
+                    fileDownloader.ExceptionThrowed += (v1, v2) => ChangeStatus("Exception: " + fileDownloader.LastException.Message);
+                    fileDownloader.StartDownload();
 
-                ChangeStatus("Getting file size.");
+                    ChangeStatus("Getting file size.");
+                }
+                else
+                {
+                    if (paused)
+                    {
+                        paused = false;
+                        btnDownload.Text = "Pause";
+                        ChangeStatus("Downloading.");
+                        fileDownloader.ResumeDownload();
+                    }
+                    else
+                    {
+                        paused = true;
+                        btnDownload.Text = "Resume";
+                        ChangeStatus("Paused.");
+                        fileDownloader.PauseDownload();
+                    }
+                }
             }
         }
 
@@ -95,8 +118,10 @@ namespace Updater
         {
             stream.Close();
             ChangeStatus("Download completed.");
+            btnDownload.Text = "Completed.";
+            btnDownload.Enabled = false;
 
-            if (MessageBox.Show("Download completed. If " + ProcessName + " is open please close for the setup to install properly." +
+            if (MessageBox.Show("Download completed. If " + ProcessName + " is open please close for the setup to install properly. " +
                 "If you press Yes then Updater will automatically close " + ProcessName + " and open installer.",
                 this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -133,6 +158,22 @@ namespace Updater
             LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
             brush.SetSigmaBellShape(0.20f);
             g.FillRectangle(brush, rect);
+        }
+
+        private void openDownloadUrlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(URL))
+            {
+                Process.Start(URL);
+            }
+        }
+
+        private void copyDownloadUrlToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(URL))
+            {
+                Clipboard.SetText(URL);
+            }
         }
     }
 }

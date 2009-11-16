@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pbProgress = new System.Windows.Forms.ProgressBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblProgress = new System.Windows.Forms.Label();
             this.lblFilename = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
+            this.cmsRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openDownloadUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyDownloadUrlToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.cmsRightClickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbProgress
@@ -103,12 +108,35 @@
             this.btnDownload.UseVisualStyleBackColor = false;
             this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
+            // cmsRightClickMenu
+            // 
+            this.cmsRightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openDownloadUrlToolStripMenuItem,
+            this.copyDownloadUrlToClipboardToolStripMenuItem});
+            this.cmsRightClickMenu.Name = "cmsRightClickMenu";
+            this.cmsRightClickMenu.Size = new System.Drawing.Size(243, 48);
+            // 
+            // openDownloadUrlToolStripMenuItem
+            // 
+            this.openDownloadUrlToolStripMenuItem.Name = "openDownloadUrlToolStripMenuItem";
+            this.openDownloadUrlToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.openDownloadUrlToolStripMenuItem.Text = "Open download url";
+            this.openDownloadUrlToolStripMenuItem.Click += new System.EventHandler(this.openDownloadUrlToolStripMenuItem_Click);
+            // 
+            // copyDownloadUrlToClipboardToolStripMenuItem
+            // 
+            this.copyDownloadUrlToClipboardToolStripMenuItem.Name = "copyDownloadUrlToClipboardToolStripMenuItem";
+            this.copyDownloadUrlToClipboardToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.copyDownloadUrlToClipboardToolStripMenuItem.Text = "Copy download url to clipboard";
+            this.copyDownloadUrlToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyDownloadUrlToClipboardToolStripMenuItem_Click);
+            // 
             // UpdaterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(490, 185);
+            this.ContextMenuStrip = this.cmsRightClickMenu;
             this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblFilename);
@@ -122,6 +150,7 @@
             this.Text = "Update Manager";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.UpdaterForm_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.cmsRightClickMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,5 +164,8 @@
         private System.Windows.Forms.Label lblFilename;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnDownload;
+        private System.Windows.Forms.ContextMenuStrip cmsRightClickMenu;
+        private System.Windows.Forms.ToolStripMenuItem openDownloadUrlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyDownloadUrlToClipboardToolStripMenuItem;
     }
 }
