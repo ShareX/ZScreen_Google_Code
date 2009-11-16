@@ -29,6 +29,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Web;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -106,7 +107,20 @@ namespace ZSS.UpdateCheckerLib
                 };
                 if (ver.ShowDialog() == DialogResult.Yes)
                 {
-                    Process.Start(MyVersionInfo.Link);
+                    string updater = Path.Combine(Application.StartupPath, "Updater.exe");
+                    if (File.Exists(updater))
+                    {
+                        Process p = new Process();
+                        ProcessStartInfo psi = new ProcessStartInfo(updater);
+                        psi.Arguments = MyVersionInfo.Link + " " + Path.GetFileName(Application.ExecutablePath);
+                        p.StartInfo = psi;
+                        p.Start();
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        Process.Start(MyVersionInfo.Link);
+                    }
                 }
             }
         }
