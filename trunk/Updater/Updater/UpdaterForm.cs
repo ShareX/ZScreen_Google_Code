@@ -129,7 +129,7 @@ namespace Updater
                 {
                     foreach (Process process in Process.GetProcessesByName(ProcessName))
                     {
-                        process.Close();
+                        process.CloseMainWindow();
                     }
                 }
 
@@ -141,12 +141,12 @@ namespace Updater
 
         private void exe_Exited(object sender, EventArgs e)
         {
-            MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             if (File.Exists(SavePath))
             {
                 File.Delete(SavePath);
             }
+
+            MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             Application.Exit();
         }
