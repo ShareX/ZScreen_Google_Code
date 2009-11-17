@@ -186,7 +186,34 @@ namespace ZScreenLib
         public static Image CaptureWithGDI(IntPtr handle)
         {
             FileSystem.AppendDebug("Capturing with GDI");
-            Rectangle windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
+            Rectangle windowRect;
+
+            if (Engine.conf.ActiveWindowTryCaptureChilds)
+            {
+                windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
+            }
+            else
+            {
+                windowRect = NativeMethods.GetWindowRectangle(handle);
+
+                if (NativeMethods.IsWindowMaximized(handle))
+                {
+                    Rectangle screenRect = Screen.FromRectangle(windowRect).Bounds;
+
+                    if (windowRect.X < screenRect.X)
+                    {
+                        windowRect.Width -= (screenRect.X - windowRect.X) * 2;
+                        windowRect.X = screenRect.X;
+                    }
+
+                    if (windowRect.Y < screenRect.Y)
+                    {
+                        windowRect.Height -= (screenRect.Y - windowRect.Y) * 2;
+                        windowRect.Y = screenRect.Y;
+                    }
+                }
+            }
+
             Image windowImage = null;
 
             if (Engine.conf.ActiveWindowClearBackground)
@@ -325,9 +352,7 @@ namespace ZScreenLib
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.ShowInTaskbar = false;
 
-                    NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
-                    NativeMethods.GetWindowPlacement(handle, ref wp);
-                    int offset = Engine.conf.ActiveWindowIncludeShadows && wp.showCmd != (int)NativeMethods.SHOWWINDOW.SW_MAXIMIZE ? 20 : 0;
+                    int offset = Engine.conf.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
 
                     windowRect = windowRect.AddMargin(offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());

@@ -47,7 +47,7 @@ namespace Updater
             else
             {
                 //Application.Run(new UpdaterForm(@"http://mirror.netcologne.de/mozilla.org/firefox/releases/3.5.5/win32/en-US/Firefox%20Setup%203.5.5.exe", "ZScreen.exe"));
-                Application.Run(new UpdaterForm(@"http://zscreen.googlecode.com/files/ZScreen-3.19.1.0-setup.exe", "ZScreen.exe"));
+                //Application.Run(new UpdaterForm(@"http://zscreen.googlecode.com/files/ZScreen-3.19.1.0-setup.exe", "ZScreen.exe"));
             }
         }
     }
