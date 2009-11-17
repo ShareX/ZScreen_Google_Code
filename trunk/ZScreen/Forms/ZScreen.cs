@@ -66,7 +66,7 @@ namespace ZScreenGUI
         internal static GoogleTranslate mGTranslator = null;
         private System.Windows.Forms.Timer mTimerImageEditorMenuClose = new System.Windows.Forms.Timer()
         {
-            Interval = 3000,
+            Interval = 5000,
         };
 
         #endregion
@@ -94,6 +94,8 @@ namespace ZScreenGUI
         void tsmEditinImageSoftware_MouseEnter(object sender, EventArgs e)
         {
             tsmEditinImageSoftware.DropDown.AutoClose = false;
+            mTimerImageEditorMenuClose.Stop();
+            mTimerImageEditorMenuClose.Start();
         }
 
         void mImageEditorMenuClose_Tick(object sender, EventArgs e)
@@ -893,7 +895,7 @@ namespace ZScreenGUI
 
             chkEditorsEnabled.Checked = Engine.conf.ImageEditorsEnabled;
             tsmEditinImageSoftware.Checked = Engine.conf.ImageEditorsEnabled;
-            
+
             string mspaint = "Paint";
             Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
             Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
@@ -1233,7 +1235,7 @@ namespace ZScreenGUI
                 {
                     ToolStripMenuItem tsm = new ToolStripMenuItem
                     {
-                    	Tag = x,
+                        Tag = x,
                         Text = imgs[x].Name,
                         CheckOnClick = true,
                         Checked = imgs[x].Enabled
@@ -1252,25 +1254,25 @@ namespace ZScreenGUI
                 }
             }
         }
-        
+
         private void UpdateGuiEditors(object sender)
         {
-        	if (mGuiIsReady)
-        	{
-        		if (sender.GetType() == lbSoftware.GetType()) 
-        		{
-        			// the checked state needs to be inversed for some weird reason to get it working properly
-        			Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
-        			ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-        			tsm.Checked = Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled;
-        		}
-        		else if (sender.GetType() == typeof(ToolStripMenuItem)) 
-        		{        			
-        			ToolStripMenuItem tsm = sender as ToolStripMenuItem;
-        			Engine.conf.ImageEditors[(int)tsm.Tag].Enabled = tsm.Checked;
-        			lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
-        		}
-        	}  
+            if (mGuiIsReady)
+            {
+                if (sender.GetType() == lbSoftware.GetType())
+                {
+                    // the checked state needs to be inversed for some weird reason to get it working properly
+                    Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                    ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
+                    tsm.Checked = Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled;
+                }
+                else if (sender.GetType() == typeof(ToolStripMenuItem))
+                {
+                    ToolStripMenuItem tsm = sender as ToolStripMenuItem;
+                    Engine.conf.ImageEditors[(int)tsm.Tag].Enabled = tsm.Checked;
+                    lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
+                }
+            }
         }
 
         private void TrayImageEditorClick(object sender, EventArgs e)
@@ -4777,10 +4779,10 @@ namespace ZScreenGUI
         {
             chkEditorsEnabled.Checked = tsmEditinImageSoftware.Checked;
         }
-        
+
         void LbSoftwareItemCheck(object sender, ItemCheckEventArgs e)
         {
-        	UpdateGuiEditors(sender);
+            UpdateGuiEditors(sender);
         }
     }
 }
