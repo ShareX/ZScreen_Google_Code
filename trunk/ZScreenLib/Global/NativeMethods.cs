@@ -1535,14 +1535,38 @@ namespace ZScreenLib
         {
             if (Environment.OSVersion.Version.Major >= 6)
             {
-                Rectangle rectangle;
-                if (GetExtendedFrameBounds(handle, out rectangle))
+                Rectangle rect;
+                if (GetExtendedFrameBounds(handle, out rect))
                 {
-                    return rectangle;
+                    return rect;
                 }
             }
 
             return GetWindowRect(handle);
+        }
+
+        public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect)
+        {
+            if (NativeMethods.IsWindowMaximized(handle))
+            {
+                Rectangle screenRect = Screen.FromRectangle(windowRect).Bounds;
+
+                if (windowRect.X < screenRect.X)
+                {
+                    windowRect.Width -= (screenRect.X - windowRect.X) * 2;
+                    windowRect.X = screenRect.X;
+                }
+
+                if (windowRect.Y < screenRect.Y)
+                {
+                    windowRect.Height -= (screenRect.Y - windowRect.Y) * 2;
+                    windowRect.Y = screenRect.Y;
+                }
+
+                windowRect.Intersect(screenRect);
+            }
+
+            return windowRect;
         }
 
         public static void ActivateWindow(IntPtr handle)
