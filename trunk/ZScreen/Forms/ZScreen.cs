@@ -1189,8 +1189,8 @@ namespace ZScreenGUI
             else
             {
                 timerTrimMemory.Stop();
+                timerTrimMemory.Start();
             }
-            timerTrimMemory.Start();
         }
 
         void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
