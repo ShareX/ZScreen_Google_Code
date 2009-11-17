@@ -1502,11 +1502,10 @@ namespace ZScreenLib
             public bool fSourceClientAreaOnly;
         }
 
-        public static bool DWMWA_EXTENDED_FRAME_BOUNDS(IntPtr handle, out Rectangle rectangle)
+        public static bool GetExtendedFrameBounds(IntPtr handle, out Rectangle rectangle)
         {
             RECT rect;
-            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds,
-                out rect, Marshal.SizeOf(typeof(RECT)));
+            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out rect, Marshal.SizeOf(typeof(RECT)));
             rectangle = rect.ToRectangle();
             return result >= 0;
         }
@@ -1514,8 +1513,7 @@ namespace ZScreenLib
         public static bool DWMWA_NCRENDERING_ENABLED(IntPtr handle)
         {
             bool enabled;
-            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingEnabled,
-                out enabled, sizeof(bool));
+            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingEnabled, out enabled, sizeof(bool));
             //if (result < 0) throw new Exception("Error: DWMWA_NCRENDERING_ENABLED");
             return enabled;
         }
@@ -1535,20 +1533,16 @@ namespace ZScreenLib
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
         {
-            if (Environment.OSVersion.Version.Major < 6)
+            if (Environment.OSVersion.Version.Major >= 6)
             {
-                return GetWindowRect(handle);
+                Rectangle rectangle;
+                if (GetExtendedFrameBounds(handle, out rectangle))
+                {
+                    return rectangle;
+                }
             }
 
-            Rectangle rectangle;
-            if (DWMWA_EXTENDED_FRAME_BOUNDS(handle, out rectangle))
-            {
-                return rectangle;
-            }
-            else
-            {
-                return GetWindowRect(handle);
-            }
+            return GetWindowRect(handle);
         }
 
         public static void ActivateWindow(IntPtr handle)
@@ -1682,8 +1676,6 @@ namespace ZScreenLib
 
         #endregion
 
-
-
         public static void TrimMemoryUse()
         {
             System.GC.Collect();
@@ -1691,5 +1683,11 @@ namespace ZScreenLib
             SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, (IntPtr)(-1), (IntPtr)(-1));
         }
 
+        public static bool IsWindowMaximized(IntPtr handle)
+        {
+            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
+            NativeMethods.GetWindowPlacement(handle, ref wp);
+            return wp.showCmd == (int)NativeMethods.SHOWWINDOW.SW_MAXIMIZE;
+        }
     }
 }

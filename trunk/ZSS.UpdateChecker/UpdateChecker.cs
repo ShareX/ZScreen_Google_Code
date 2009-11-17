@@ -96,7 +96,7 @@ namespace ZSS.UpdateCheckerLib
 
         public void ShowPrompt()
         {
-            if (!string.IsNullOrEmpty(MyVersionInfo.Version) && new Version(MyVersionInfo.Version).CompareTo(new Version(Application.ProductVersion)) < 0)
+            if (!string.IsNullOrEmpty(MyVersionInfo.Version) && new Version(MyVersionInfo.Version).CompareTo(new Version(Application.ProductVersion)) > 0)
             {
                 this.Options.MyNewVersionWindowOptions.Question = string.Format("Do you want to download it now?\n\n{0}", this.Statistics);
                 this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
