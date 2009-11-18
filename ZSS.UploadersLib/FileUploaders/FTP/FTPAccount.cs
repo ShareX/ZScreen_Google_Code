@@ -24,6 +24,7 @@
 using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace UploadersLib
 {
@@ -114,6 +115,7 @@ namespace UploadersLib
                 return string.Empty;
             }
 
+            fileName = HttpUtility.UrlEncode(fileName);
             string path = string.Empty;
             string host = this.Host;
             string folderPath = this.SubFolderPath;
@@ -143,9 +145,6 @@ namespace UploadersLib
                 path = "http://" + path;
             }
 
-            path = path.Replace(" ", "%20");
-            path = path.Replace("[", "");
-            path = path.Replace("]", "");
             return path;
         }
 
