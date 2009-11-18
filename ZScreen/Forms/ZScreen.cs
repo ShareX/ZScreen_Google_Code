@@ -1178,19 +1178,26 @@ namespace ZScreenGUI
         /// </summary>
         private void DelayedTrimMemoryUse()
         {
-            //System.Console.WriteLine("DelayedTrimMemoryUse");
-            if (timerTrimMemory == null)
-            {
-                timerTrimMemory = new System.Timers.Timer();
-                timerTrimMemory.AutoReset = false;
-                timerTrimMemory.Interval = 5000;
-                timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
-            }
-            else
-            {
-                timerTrimMemory.Stop();
-                timerTrimMemory.Start();
-            }
+        	try 
+        	{
+        		//System.Console.WriteLine("DelayedTrimMemoryUse");
+        		if (timerTrimMemory == null)
+        		{
+        			timerTrimMemory = new System.Timers.Timer();
+        			timerTrimMemory.AutoReset = false;
+        			timerTrimMemory.Interval = 5000;
+        			timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
+        		}
+        		else
+            	{
+        			timerTrimMemory.Stop();
+                	timerTrimMemory.Start();
+            	}        		
+        	} 
+        	catch (Exception ex)
+        	{
+        		FileSystem.AppendDebug("Error inDelayedTrimMemoryUse", ex);
+        	}
         }
 
         void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

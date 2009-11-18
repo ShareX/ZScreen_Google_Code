@@ -527,7 +527,7 @@ namespace ZScreenLib
 
         //XmlSerializer can't handle Colors so whe do it
         //TODO hide this in property grid
-        [XmlElement("BorderEffectColor")]
+        [XmlElement("BorderEffectColor"), BrowsableAttribute(false) ]
         public string pseudo_BorderEffectColor
         {
             get
