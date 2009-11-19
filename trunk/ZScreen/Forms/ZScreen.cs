@@ -87,6 +87,7 @@ namespace ZScreenGUI
             }
 
             tsmEditinImageSoftware.MouseEnter += new EventHandler(tsmEditinImageSoftware_MouseEnter);
+            tsmEditinImageSoftware.MouseLeave += new EventHandler(tsmEditinImageSoftware_MouseLeave);
             mTimerImageEditorMenuClose.Tick += new EventHandler(mImageEditorMenuClose_Tick);
             Application.Idle += new EventHandler(Application_Idle);
         }
@@ -94,8 +95,12 @@ namespace ZScreenGUI
         void tsmEditinImageSoftware_MouseEnter(object sender, EventArgs e)
         {
             tsmEditinImageSoftware.DropDown.AutoClose = false;
-            mTimerImageEditorMenuClose.Stop();
-            mTimerImageEditorMenuClose.Start();
+            mTimerImageEditorMenuClose.Enabled = false;
+        }
+        
+        void tsmEditinImageSoftware_MouseLeave(object sender, EventArgs e)
+        {
+            mTimerImageEditorMenuClose.Enabled = true;       
         }
 
         void mImageEditorMenuClose_Tick(object sender, EventArgs e)
@@ -897,13 +902,18 @@ namespace ZScreenGUI
             tsmEditinImageSoftware.Checked = Engine.conf.ImageEditorsEnabled;
 
             string mspaint = "Paint";
-            Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, true);
-            Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), true);
+            Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, false);
+            if (Software.Exist(Engine.ZSCREEN_IMAGE_EDITOR)) 
+            {
+            	editor = Software.GetByName(Engine.ZSCREEN_IMAGE_EDITOR);
+            }
+            Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), false);
+            if (Software.Exist(mspaint)) 
+            {
+            	paint = Software.GetByName(mspaint);
+            }
 
             Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == mspaint || !File.Exists(x.Path));
-
-            editor.Enabled = Engine.ZSCREEN_IMAGE_EDITOR == Engine.conf.ImageEditor.Name;
-            paint.Enabled = mspaint == Engine.conf.ImageEditor.Name;
 
             Engine.conf.ImageEditors.Insert(0, editor);
             if (File.Exists(paint.Path))
