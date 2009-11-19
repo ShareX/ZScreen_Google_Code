@@ -1183,6 +1183,7 @@ namespace ZScreenGUI
 
         #region Trim memory
         private System.Timers.Timer timerTrimMemory;
+        Object trimMemoryLock = new Object();
         /// <summary>
         /// Trim memory working set after a few seconds, unless this method is called again in the mean time (optimization)
         /// </summary>
@@ -1190,35 +1191,40 @@ namespace ZScreenGUI
         {
         	try 
         	{
-        		//System.Console.WriteLine("DelayedTrimMemoryUse");
-        		if (timerTrimMemory == null)
-        		{
-        			timerTrimMemory = new System.Timers.Timer();
-        			timerTrimMemory.AutoReset = false;
-        			timerTrimMemory.Interval = 5000;
-        			timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
-        		}
-        		else
-            	{
-        			timerTrimMemory.Stop();
-                	timerTrimMemory.Start();
-            	}        		
+                lock (trimMemoryLock)
+                {
+                    //System.Console.WriteLine("DelayedTrimMemoryUse");
+                    if (timerTrimMemory == null)
+                    {
+                        timerTrimMemory = new System.Timers.Timer();
+                        timerTrimMemory.AutoReset = false;
+                        timerTrimMemory.Interval = 10000;
+                        timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
+                    }
+                    else
+                    {
+                        timerTrimMemory.Stop();
+                    }
+                    timerTrimMemory.Start();
+                }
         	} 
         	catch (Exception ex)
         	{
-        		FileSystem.AppendDebug("Error inDelayedTrimMemoryUse", ex);
+        		FileSystem.AppendDebug("Error in DelayedTrimMemoryUse", ex);
         	}
         }
 
         void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (timerTrimMemory != null)
+            lock (trimMemoryLock)
             {
-                timerTrimMemory.Stop();
-                timerTrimMemory.Close();
+                if (timerTrimMemory != null)
+                {
+                    timerTrimMemory.Stop();
+                    timerTrimMemory.Close();
+                }
+                NativeMethods.TrimMemoryUse();
             }
-            //System.Console.WriteLine("TrimMemoryUse");
-            NativeMethods.TrimMemoryUse();
         }
         #endregion
 
