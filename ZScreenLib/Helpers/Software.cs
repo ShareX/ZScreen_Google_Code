@@ -62,6 +62,15 @@ namespace ZScreenLib
         {
             this.Enabled = bEnabled;
         }
+        
+        public static Software GetByName(string sName)
+        {
+            foreach (Software software in Engine.conf.ImageEditors)
+            {
+                if (software.Name == sName) return software;
+            }
+            return null;
+        }
 
         public override string ToString()
         {
