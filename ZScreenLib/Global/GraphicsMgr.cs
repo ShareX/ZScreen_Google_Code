@@ -287,6 +287,97 @@ namespace ZScreenLib
 
             return bmp;
         }
+        public static Image AddHighlighting(Bitmap bmp)
+        {
+            return AddHighlighting(bmp, Color.Yellow, true, 100);
+        }
+
+        public static Image AddHighlighting(Bitmap bmp, Color color, bool preserveTransparency, int opacity)
+        {
+            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            int length = bmpData.Stride * bmpData.Height;
+            int r, g, b, a;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)bmpData.Scan0;
+
+                for (int i = 0; i < length; i += 4)
+                {
+                    r = i + 2; g = i + 1; b = i; a = i + 3;
+
+                    p[r] = CalculateHighlighting(p[r], color.R, opacity);
+                    p[g] = CalculateHighlighting(p[g], color.G, opacity);
+                    p[b] = CalculateHighlighting(p[b], color.B, opacity);
+
+                    if (!preserveTransparency)
+                    {
+                        p[a] = CalculateAlphaHighlighting(p[a], color.A, opacity);
+                    }
+                }
+            }
+
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
+
+        public static Image AddHighlighting2(Bitmap bmp, Color color, bool preserveTransparency, int opacity)
+        {
+            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            int r, g, b, a, length = bmpData.Stride * bmpData.Height;
+            byte[] buffer = new byte[length];
+            Marshal.Copy(bmpData.Scan0, buffer, 0, length);
+
+            for (int i = 0; i < length; i += 4)
+            {
+                r = i + 2; g = i + 1; b = i; a = i + 3;
+
+                buffer[r] = CalculateHighlighting(buffer[r], color.R, opacity);
+                buffer[g] = CalculateHighlighting(buffer[g], color.G, opacity);
+                buffer[b] = CalculateHighlighting(buffer[b], color.B, opacity);
+
+                if (!preserveTransparency)
+                {
+                    buffer[a] = CalculateAlphaHighlighting(buffer[a], color.A, opacity);
+                }
+            }
+
+            Marshal.Copy(buffer, 0, bmpData.Scan0, length);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
+
+        private static byte CalculateHighlighting(byte orginal, byte highlight, int opacity)
+        {
+            if (orginal < highlight)
+            {
+                return orginal;
+            }
+
+            if (opacity < 100)
+            {
+                return (byte)Math.Min((highlight + orginal * ((double)(100 - opacity) / 100)), 255);
+            }
+
+            return highlight;
+        }
+
+        private static byte CalculateAlphaHighlighting(byte orginal, byte highlight, int opacity)
+        {
+            if (orginal > highlight)
+            {
+                return orginal;
+            }
+
+            if (opacity < 100)
+            {
+                return (byte)Math.Min((orginal + highlight * ((double)opacity / 100)), 255);
+            }
+
+            return highlight;
+        }
 
         public static Image CropImage(Image img, Rectangle rect)
         {

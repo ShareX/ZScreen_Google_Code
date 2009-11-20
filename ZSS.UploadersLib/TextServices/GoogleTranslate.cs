@@ -44,11 +44,11 @@ namespace UploadersLib.TextServices
         public Options GetLanguageOptions()
         {
             Options gtLangOp = new Options();
-            // The remote name could not be resolved: 'translate.google.com'
+
             try
             {
                 WebClient webClient = new WebClient();
-                if (null != Uploader.ProxySettings)
+                if (Uploader.ProxySettings != null)
                 {
                     webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
                 }
@@ -57,7 +57,7 @@ namespace UploadersLib.TextServices
 
                 for (int i = 0; i < selectName.Length; i++)
                 {
-                    string countrySource = Regex.Match(source, "(?<=<select name=" + selectName[i] + ").+?(?=</select>)").Value;
+                    string countrySource = Regex.Match(source, "(?<=<select.*?name=" + selectName[i] + ").+?(?=</select>)").Value;
                     MatchCollection countryResults = Regex.Matches(countrySource, "(?<=value=\")(.+?)\">(.+?)(?=</option)");
                     foreach (Match countryResult in countryResults)
                     {
@@ -109,8 +109,8 @@ namespace UploadersLib.TextServices
                 webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
 
                 string wc = webClient.DownloadString(url);
-                result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=:</span> ).+?(?=</td>)").NextMatch().Value);
-                result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=(?:ltr|rtl)\">).+?(?=</div>)").Value);
+                result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=\"normaltext\">).+?(?=</span>)").Value);
+                result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=class=\"short_text\"><span.+?>).+?(?=</span)").Value);
                 result.TranslatedText = result.TranslatedText.Replace(" \r<br> ", Environment.NewLine);
                 result.Dictionary = SearchGrammer(wc);
             }
@@ -128,43 +128,36 @@ namespace UploadersLib.TextServices
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        private string SearchGrammer(string source)
+        private List<Vocabulary> SearchGrammer(string source)
         {
-            string result = "";
-            int foundWords = 0;
-
-            string[] dictionary = new[] { "", "adverb", "adjective", "conjunction", "interjection", "noun", "pronoun", "preposition", "verb" };
-
-            for (int x = 0; x < dictionary.Length; x++)
+            List<Vocabulary> result = new List<Vocabulary>();
+            MatchCollection matches = Regex.Matches(source, @"<td><b>(?<name>.+?)</b><ol>(?:<li>(?<value>.+?)</li>)+</ol></td>");
+            foreach (Match match in matches)
             {
-                string matchDictionary = Regex.Match(source, "(?<=top>" + dictionary[x] + "</td>).+?(?=</ol>)").Value;
-                if (!string.IsNullOrEmpty(matchDictionary))
+                string name = match.Groups["name"].Value;
+                name = name.Substring(0, 1).ToUpperInvariant() + name.Substring(1);
+                Vocabulary vocab = new Vocabulary(name);
+
+                foreach (Capture capture in match.Groups["value"].Captures)
                 {
-                    if (foundWords != 0)
-                    {
-                        result += "\r\n\r\n";
-                    }
-
-                    if (dictionary[x] != "")
-                    {
-                        result += dictionary[x] + ":\r\n";
-                    }
-
-                    MatchCollection matchesDictionary = Regex.Matches(matchDictionary, "(?<=<li>).+?(?=</li>)");
-                    for (int i = 0; i < matchesDictionary.Count; i++)
-                    {
-                        result += (i + 1) + ". " + matchesDictionary[i].Value;
-                        if (i != matchesDictionary.Count - 1)
-                        {
-                            result += "\r\n";
-                        }
-                    }
-
-                    foundWords++;
+                    vocab.Words.Add(HttpUtility.HtmlDecode(capture.Value));
                 }
+
+                result.Add(vocab);
             }
 
-            return HttpUtility.HtmlDecode(result);
+            return result;
+        }
+
+        public class Vocabulary
+        {
+            public string Name;
+            public List<string> Words = new List<string>();
+
+            public Vocabulary(string name)
+            {
+                Name = name;
+            }
         }
 
         /// <summary>For use in TranslateText returning URL.</summary>
@@ -243,7 +236,7 @@ namespace UploadersLib.TextServices
             /// Translated Text
             /// </summary>
             public string TranslatedText { get; set; }
-            public string Dictionary { get; set; }
+            public List<Vocabulary> Dictionary { get; set; }
         }
 
         public class TranslationInfo
