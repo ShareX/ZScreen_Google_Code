@@ -64,7 +64,7 @@ namespace ZScreenGUI
         #region Worker Events
 
         public override void BwApp_DoWork(object sender, DoWorkEventArgs e)
-        {            
+        {
             WorkerTask task = (WorkerTask)e.Argument;
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
@@ -272,10 +272,7 @@ namespace ZScreenGUI
                                 case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                                     if (mZScreen != null)
                                     {
-                                        this.mZScreen.txtTranslateText.Text = task.TranslationInfo.SourceText;
-                                        this.mZScreen.txtTranslateResult.Text = task.TranslationInfo.Result.TranslatedText;
-                                        this.mZScreen.txtLanguages.Text = task.TranslationInfo.Result.TranslationType;
-                                        this.mZScreen.txtDictionary.Text = task.TranslationInfo.Result.Dictionary;
+                                        FillGoogleTranslateInfo(task.TranslationInfo);
 
                                         this.mZScreen.btnTranslate.Enabled = true;
                                         this.mZScreen.btnTranslateTo1.Enabled = true;
@@ -683,6 +680,25 @@ namespace ZScreenGUI
             }
 
             Adapter.AddRecentItem(hi.LocalPath);
+        }
+
+        private void FillGoogleTranslateInfo(GoogleTranslate.TranslationInfo info)
+        {
+            mZScreen.txtTranslateText.Text = info.SourceText;
+            mZScreen.txtTranslateResult.Text = info.Result.TranslatedText;
+            mZScreen.txtLanguages.Text = info.Result.TranslationType;
+            List<GoogleTranslate.Vocabulary> dictionary = info.Result.Dictionary;
+            foreach (GoogleTranslate.Vocabulary vocab in dictionary)
+            {
+                ListViewGroup group = new ListViewGroup(vocab.Name, HorizontalAlignment.Left);
+                mZScreen.lvDictionary.Groups.Add(group);
+
+                foreach (string word in vocab.Words)
+                {
+                    ListViewItem lvi = new ListViewItem(word) { Group = group };
+                    mZScreen.lvDictionary.Items.Add(lvi);
+                }
+            }
         }
 
         #region Start Workers

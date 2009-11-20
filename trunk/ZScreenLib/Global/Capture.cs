@@ -142,6 +142,79 @@ namespace ZScreenLib
             return windowImage;
         }
 
+        private static Image CaptureWindowWithTransparencyGDI(IntPtr handle, Rectangle windowRect)
+        {
+            Image windowImage = null;
+            Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
+
+            try
+            {
+                using (new Freeze(handle))
+                using (Form form = new Form())
+                {
+                    form.BackColor = Color.White;
+                    form.FormBorderStyle = FormBorderStyle.None;
+                    form.ShowInTaskbar = false;
+
+                    int offset = Engine.conf.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
+
+                    windowRect = windowRect.AddMargin(offset);
+                    windowRect.Intersect(GraphicsMgr.GetScreenBounds());
+
+                    NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                    NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
+                    Application.DoEvents();
+                    whiteBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+
+                    form.BackColor = Color.Black;
+                    Application.DoEvents();
+                    blackBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+
+                    if (!Engine.conf.ActiveWindowGDIFreezeWindow)
+                    {
+                        form.BackColor = Color.White;
+                        Application.DoEvents();
+                        white2BGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+                    }
+                }
+
+                if (Engine.conf.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
+                {
+                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                }
+                else
+                {
+                    windowImage = (Image)whiteBGImage.Clone();
+                }
+            }
+            finally
+            {
+                if (whiteBGImage != null) whiteBGImage.Dispose();
+                if (blackBGImage != null) blackBGImage.Dispose();
+                if (white2BGImage != null) white2BGImage.Dispose();
+            }
+
+            if (windowImage != null)
+            {
+                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
+                windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
+
+                if (Engine.conf.ShowCursor)
+                {
+                    windowRect.X += windowRectCropped.X;
+                    windowRect.Y += windowRectCropped.Y;
+                    DrawCursor(windowImage, windowRect.Location);
+                }
+
+                if (Engine.conf.ActiveWindowShowCheckers)
+                {
+                    windowImage = ImageEffects.DrawCheckers(windowImage);
+                }
+            }
+
+            return windowImage;
+        }
+
         public static Image CaptureWithDWM(IntPtr handle)
         {
             FileSystem.AppendDebug("Capturing with DWM");
@@ -308,79 +381,6 @@ namespace ZScreenLib
                 blackBGImage.Dispose();
                 whiteBGImage.Dispose();
                 whiteBGImage2.Dispose();
-            }
-
-            return windowImage;
-        }
-
-        private static Image CaptureWindowWithTransparencyGDI(IntPtr handle, Rectangle windowRect)
-        {
-            Image windowImage = null;
-            Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
-
-            try
-            {
-                using (new Freeze(handle))
-                using (Form form = new Form())
-                {
-                    form.BackColor = Color.White;
-                    form.FormBorderStyle = FormBorderStyle.None;
-                    form.ShowInTaskbar = false;
-
-                    int offset = Engine.conf.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
-
-                    windowRect = windowRect.AddMargin(offset);
-                    windowRect.Intersect(GraphicsMgr.GetScreenBounds());
-
-                    NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
-                    NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
-                    Application.DoEvents();
-                    whiteBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
-
-                    form.BackColor = Color.Black;
-                    Application.DoEvents();
-                    blackBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
-
-                    if (!Engine.conf.ActiveWindowGDIFreezeWindow)
-                    {
-                        form.BackColor = Color.White;
-                        Application.DoEvents();
-                        white2BGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
-                    }
-                }
-
-                if (Engine.conf.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
-                {
-                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
-                }
-                else
-                {
-                    windowImage = (Image)whiteBGImage.Clone();
-                }
-            }
-            finally
-            {
-                if (whiteBGImage != null) whiteBGImage.Dispose();
-                if (blackBGImage != null) blackBGImage.Dispose();
-                if (white2BGImage != null) white2BGImage.Dispose();
-            }
-
-            if (windowImage != null)
-            {
-                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
-                windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
-
-                if (Engine.conf.ShowCursor)
-                {
-                    windowRect.X += windowRectCropped.X;
-                    windowRect.Y += windowRectCropped.Y;
-                    DrawCursor(windowImage, windowRect.Location);
-                }
-
-                if (Engine.conf.ActiveWindowShowCheckers)
-                {
-                    windowImage = ImageEffects.DrawCheckers(windowImage);
-                }
             }
 
             return windowImage;
