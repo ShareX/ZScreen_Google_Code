@@ -48,7 +48,7 @@ namespace UploadersLib.TextServices
             try
             {
                 WebClient webClient = new WebClient();
-                if (Uploader.ProxySettings != null)
+                if (!object.ReferenceEquals(Uploader.ProxySettings, null))
                 {
                     webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
                 }
