@@ -288,6 +288,10 @@ namespace ZScreenLib
             {
                 fName = fName.Replace(" ", "_");
             }
+            while (fName.IndexOf("__") != -1) 
+            {
+            	fName = fName.Replace("__", "_");
+            }
             return new StringBuilder(fName);
         }
 

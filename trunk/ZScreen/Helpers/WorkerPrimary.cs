@@ -688,17 +688,25 @@ namespace ZScreenGUI
             mZScreen.txtTranslateResult.Text = info.Result.TranslatedText;
             mZScreen.txtLanguages.Text = info.Result.TranslationType;
             List<GoogleTranslate.Vocabulary> dictionary = info.Result.Dictionary;
-            foreach (GoogleTranslate.Vocabulary vocab in dictionary)
+            if (dictionary.Count > 0) 
             {
-                ListViewGroup group = new ListViewGroup(vocab.Name, HorizontalAlignment.Left);
-                mZScreen.lvDictionary.Groups.Add(group);
-
-                foreach (string word in vocab.Words)
-                {
-                    ListViewItem lvi = new ListViewItem(word) { Group = group };
-                    mZScreen.lvDictionary.Items.Add(lvi);
-                }
+            	foreach (GoogleTranslate.Vocabulary vocab in dictionary)
+            	{
+            		ListViewGroup group = new ListViewGroup(vocab.Name, HorizontalAlignment.Left);
+            		mZScreen.lvDictionary.Groups.Add(group);
+            		
+            		foreach (string word in vocab.Words)
+            		{
+            			ListViewItem lvi = new ListViewItem(word) { Group = group };
+            			mZScreen.lvDictionary.Items.Add(lvi);
+            		}
+            	}	            	
             }
+            else
+            {
+            	mZScreen.lvDictionary.Groups.Clear();
+            	mZScreen.lvDictionary.Items.Clear();
+            }            
         }
 
         #region Start Workers
