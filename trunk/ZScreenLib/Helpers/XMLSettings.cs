@@ -211,12 +211,12 @@ namespace ZScreenLib
 
         // Active Window
 
-        public bool ActiveWindowClearBackground = false;
+        public bool ActiveWindowClearBackground = true;
         public bool ActiveWindowCleanTransparentCorners = true;
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
         public bool ActiveWindowTryCaptureChilds = false;
-        public bool ActiveWindowPreferDWM = false;
+        public bool ActiveWindowPreferDWM = true;
         public bool ActiveWindowGDIFreezeWindow = false;
 
         // Interaction

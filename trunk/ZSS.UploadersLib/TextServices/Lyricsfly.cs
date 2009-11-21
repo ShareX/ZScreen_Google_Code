@@ -30,7 +30,8 @@ namespace UploadersLib.TextServices
 {
     public class Lyricsfly : Uploader
     {
-        private const string UserID = "72abfc2bceb022534-temporary.API.access";
+        private const string UserID = "55603998025";
+        private const string AppID = "-code.google.com/p/itsfv";
 
         /// <summary>
         /// To search by artist and title combination
@@ -38,7 +39,7 @@ namespace UploadersLib.TextServices
         public Lyrics SearchLyrics(string artist, string title)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
-            arguments.Add("i", UserID);
+            arguments.Add("i", UserID + AppID);
             arguments.Add("a", FixText(artist));
             arguments.Add("t", FixText(title));
             string response = GetResponseString("http://lyricsfly.com/api/api.php", arguments);
@@ -51,7 +52,7 @@ namespace UploadersLib.TextServices
         public Lyrics SearchLyrics(string text)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
-            arguments.Add("i", UserID);
+            arguments.Add("i", UserID + AppID);
             arguments.Add("l", FixText(text));
             string response = GetResponseString("http://lyricsfly.com/api/txt-api.php", arguments);
             return ParseResponse(response);
