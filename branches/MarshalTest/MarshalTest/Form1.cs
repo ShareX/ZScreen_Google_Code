@@ -22,15 +22,13 @@ namespace Test
             {
                 Bitmap img = new Bitmap(@"..\..\" + f);
                 Debug.WriteLine(string.Format("Testing: {0} {1}x{2}", f, img.Width, img.Height));
-                Bitmap test = (Bitmap)img.Clone();
                 using (MyTimer timer = new MyTimer("Unsafe", false)) AddHighlighting(img, Color.Yellow, false);
-                test = (Bitmap)img.Clone();
                 using (MyTimer timer = new MyTimer("Unsafe SaveTransparency", false)) AddHighlighting(img, Color.Yellow, true);
-                test = (Bitmap)img.Clone();
                 using (MyTimer timer = new MyTimer("Marshal ", false)) AddHighlighting2(img, Color.Yellow, false);
-                test = (Bitmap)img.Clone();
                 using (MyTimer timer = new MyTimer("Marshal SaveTransparency", false)) AddHighlighting2(img, Color.Yellow, true);
-                pictureBox1.Image = test;
+                using (MyTimer timer = new MyTimer("Greyscale", false)) Grayscale(img);
+                using (MyTimer timer = new MyTimer("AddYellowHighlighting", false)) AddYellowHighlighting(img);
+                pictureBox1.Image = img;
             }
         }
 
@@ -93,6 +91,57 @@ namespace Test
             Marshal.Copy(buffer, 0, bmpData.Scan0, length);
             bmp.UnlockBits(bmpData);
 
+            return bmp;
+        }
+
+        public static Image AddYellowHighlighting(Bitmap bmp)
+        {
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            unsafe
+            {
+                byte* imgPtr = (byte*)(data.Scan0);
+                for (int i = 0; i < data.Height; i++)
+                {
+                    for (int j = 0; j < data.Width; j++)
+                    {
+                        imgPtr[0] = 0;
+                        imgPtr += 3;
+                    }
+                    imgPtr += data.Stride - data.Width * 3;
+                }
+            }
+            bmp.UnlockBits(data);
+            return bmp;
+        }
+
+        public static Image Grayscale(Bitmap bmp)
+        {
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            unsafe
+            {
+                byte* imgPtr = (byte*)(data.Scan0);
+                byte red, green, blue;
+                for (int i = 0; i < data.Height; i++)
+                {
+                    for (int j = 0; j < data.Width; j++)
+                    {
+                        blue = imgPtr[0];
+                        green = imgPtr[1];
+                        red = imgPtr[2];
+
+                        imgPtr[0] = imgPtr[1] = imgPtr[2] =
+                           (byte)(.299 * red
+                            + .587 * green
+                            + .114 * blue);
+                        imgPtr += 3;
+                    }
+                    imgPtr += data.Stride - data.Width * 3;
+                }
+
+            }
+            bmp.UnlockBits(data);
             return bmp;
         }
     }
