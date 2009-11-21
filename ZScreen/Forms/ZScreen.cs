@@ -97,10 +97,10 @@ namespace ZScreenGUI
             tsmEditinImageSoftware.DropDown.AutoClose = false;
             mTimerImageEditorMenuClose.Enabled = false;
         }
-        
+
         void tsmEditinImageSoftware_MouseLeave(object sender, EventArgs e)
         {
-            mTimerImageEditorMenuClose.Enabled = true;       
+            mTimerImageEditorMenuClose.Enabled = true;
         }
 
         void mImageEditorMenuClose_Tick(object sender, EventArgs e)
@@ -903,14 +903,14 @@ namespace ZScreenGUI
 
             string mspaint = "Paint";
             Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, false);
-            if (Software.Exist(Engine.ZSCREEN_IMAGE_EDITOR)) 
+            if (Software.Exist(Engine.ZSCREEN_IMAGE_EDITOR))
             {
-            	editor = Software.GetByName(Engine.ZSCREEN_IMAGE_EDITOR);
+                editor = Software.GetByName(Engine.ZSCREEN_IMAGE_EDITOR);
             }
             Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), false);
-            if (Software.Exist(mspaint)) 
+            if (Software.Exist(mspaint))
             {
-            	paint = Software.GetByName(mspaint);
+                paint = Software.GetByName(mspaint);
             }
 
             Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == mspaint || !File.Exists(x.Path));
@@ -1189,8 +1189,8 @@ namespace ZScreenGUI
         /// </summary>
         private void DelayedTrimMemoryUse()
         {
-        	try 
-        	{
+            try
+            {
                 lock (trimMemoryLock)
                 {
                     //System.Console.WriteLine("DelayedTrimMemoryUse");
@@ -1207,11 +1207,11 @@ namespace ZScreenGUI
                     }
                     timerTrimMemory.Start();
                 }
-        	} 
-        	catch (Exception ex)
-        	{
-        		FileSystem.AppendDebug("Error in DelayedTrimMemoryUse", ex);
-        	}
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug("Error in DelayedTrimMemoryUse", ex);
+            }
         }
 
         void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -4080,38 +4080,25 @@ namespace ZScreenGUI
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
-            AeroGlassConfigUpdate();
+            UpdateAeroGlassConfig();
         }
 
-        private void AeroGlassConfigUpdate()
+        private void UpdateAeroGlassConfig()
         {
             // Disable Show Checkers option if Clean Background is disabled
             if (!chkSelectedWindowCleanBackground.Checked)
             {
-                //chkSelectedWindowCleanTransparentCorners.Checked = false;
                 chkSelectedWindowShowCheckers.Checked = false;
             }
-
-            //chkSelectedWindowCleanTransparentCorners.Enabled = chkSelectedWindowCleanBackground.Checked;
             chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked;
-
-            /*if (chkSelectedWindowIncludeShadow.Checked)
-            {
-                chkSelectedWindowCleanTransparentCorners.Checked = false;
-            }
-            else if (chkSelectedWindowCleanTransparentCorners.Checked)
-            {
-                chkSelectedWindowIncludeShadow.Checked = false;
-            }
-            chkSelectedWindowCleanTransparentCorners.Enabled = !chkSelectedWindowIncludeShadow.Checked;
-            chkSelectedWindowIncludeShadow.Enabled = !chkSelectedWindowCleanTransparentCorners.Checked;
-            */
+            gbCaptureGdi.Enabled = !chkActiveWindowPreferDWM.Checked;
+            gbCaptureDwm.Enabled = !gbCaptureGdi.Enabled;
         }
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
-            AeroGlassConfigUpdate();
+            UpdateAeroGlassConfig();
         }
 
         private void cbSaveFormSizePosition_CheckedChanged(object sender, EventArgs e)
@@ -4742,7 +4729,7 @@ namespace ZScreenGUI
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
-            AeroGlassConfigUpdate();
+            UpdateAeroGlassConfig();
         }
 
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
@@ -4779,7 +4766,7 @@ namespace ZScreenGUI
         {
             Engine.conf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
             chkActiveWindowTryCaptureChilds.Enabled = !chkActiveWindowPreferDWM.Checked;
-            gbCaptureGdi.Enabled = !chkActiveWindowPreferDWM.Checked;
+            UpdateAeroGlassConfig();
         }
 
         private void chkActiveWindowGDIFreezeWindow_CheckedChanged(object sender, EventArgs e)
