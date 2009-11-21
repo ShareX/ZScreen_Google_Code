@@ -529,84 +529,87 @@ namespace ZScreenGUI
 
         private bool UploadUsingHotkeys(Keys key)
         {
-            if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
+            // Fix for Issue 23 - Media Center was triggering Keys.None
+            if (key != Keys.None)
             {
-                StartBW_EntireScreen();
-                return true;
-            }
+                if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
+                {
+                    StartBW_EntireScreen();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyActiveWindow == key) // Active Window
-            {
-                StartBW_ActiveWindow();
-                return true;
-            }
+                if (Engine.conf.HotkeyActiveWindow == key) // Active Window
+                {
+                    StartBW_ActiveWindow();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
-            {
-                StartBw_SelectedWindow();
-                return true;
-            }
+                if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
+                {
+                    StartBw_SelectedWindow();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyCropShot == key) // Crop Shot
-            {
-                StartBw_CropShot();
-                return true;
-            }
+                if (Engine.conf.HotkeyCropShot == key) // Crop Shot
+                {
+                    StartBw_CropShot();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
-            {
-                StartBW_LastCropShot();
-                return true;
-            }
+                if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
+                {
+                    StartBW_LastCropShot();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyAutoCapture == key) // Auto Capture
-            {
-                ShowAutoCapture();
-                return true;
-            }
+                if (Engine.conf.HotkeyAutoCapture == key) // Auto Capture
+                {
+                    ShowAutoCapture();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyClipboardUpload == key) // Clipboard Upload
-            {
-                UploadUsingClipboard();
-                return true;
-            }
+                if (Engine.conf.HotkeyClipboardUpload == key) // Clipboard Upload
+                {
+                    UploadUsingClipboard();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyDropWindow == key) // Drag & Drop Window
-            {
-                ShowDropWindow();
-                return true;
-            }
+                if (Engine.conf.HotkeyDropWindow == key) // Drag & Drop Window
+                {
+                    ShowDropWindow();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyActionsToolbar == key) // Actions Toolbar
-            {
-                ShowActionsToolbar(true);
-                return true;
-            }
+                if (Engine.conf.HotkeyActionsToolbar == key) // Actions Toolbar
+                {
+                    ShowActionsToolbar(true);
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyQuickOptions == key) // Quick Options
-            {
-                ShowQuickOptions();
-                return true;
-            }
+                if (Engine.conf.HotkeyQuickOptions == key) // Quick Options
+                {
+                    ShowQuickOptions();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyLanguageTranslator == key) // Language Translator
-            {
-                StartWorkerTranslator();
-                return true;
-            }
+                if (Engine.conf.HotkeyLanguageTranslator == key) // Language Translator
+                {
+                    StartWorkerTranslator();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyScreenColorPicker == key) // Screen Color Picker
-            {
-                ScreenColorPicker();
-                return true;
-            }
+                if (Engine.conf.HotkeyScreenColorPicker == key) // Screen Color Picker
+                {
+                    ScreenColorPicker();
+                    return true;
+                }
 
-            if (Engine.conf.HotkeyTwitterClient == key)
-            {
-                Adapter.TwitterMsg("");
-                return true;
+                if (Engine.conf.HotkeyTwitterClient == key)
+                {
+                    Adapter.TwitterMsg("");
+                    return true;
+                }
             }
-
             return false;
         }
 
@@ -688,25 +691,25 @@ namespace ZScreenGUI
             mZScreen.txtTranslateResult.Text = info.Result.TranslatedText;
             mZScreen.txtLanguages.Text = info.Result.TranslationType;
             List<GoogleTranslate.Vocabulary> dictionary = info.Result.Dictionary;
-            if (dictionary.Count > 0) 
+            if (dictionary.Count > 0)
             {
-            	foreach (GoogleTranslate.Vocabulary vocab in dictionary)
-            	{
-            		ListViewGroup group = new ListViewGroup(vocab.Name, HorizontalAlignment.Left);
-            		mZScreen.lvDictionary.Groups.Add(group);
-            		
-            		foreach (string word in vocab.Words)
-            		{
-            			ListViewItem lvi = new ListViewItem(word) { Group = group };
-            			mZScreen.lvDictionary.Items.Add(lvi);
-            		}
-            	}	            	
+                foreach (GoogleTranslate.Vocabulary vocab in dictionary)
+                {
+                    ListViewGroup group = new ListViewGroup(vocab.Name, HorizontalAlignment.Left);
+                    mZScreen.lvDictionary.Groups.Add(group);
+
+                    foreach (string word in vocab.Words)
+                    {
+                        ListViewItem lvi = new ListViewItem(word) { Group = group };
+                        mZScreen.lvDictionary.Items.Add(lvi);
+                    }
+                }
             }
             else
             {
-            	mZScreen.lvDictionary.Groups.Clear();
-            	mZScreen.lvDictionary.Items.Clear();
-            }            
+                mZScreen.lvDictionary.Groups.Clear();
+                mZScreen.lvDictionary.Items.Clear();
+            }
         }
 
         #region Start Workers
