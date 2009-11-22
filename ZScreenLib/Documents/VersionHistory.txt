@@ -1,7 +1,6 @@
-3.20.5.2 Opening files with Media Center and Multimedia Keyboards triggered ZScreen Hotkeys [Issue 23] {McoreD}
-
 Version 3.20 - 20091120
 
+3.20.5.2 Opening files with Media Center and Multimedia Keyboards triggered ZScreen Hotkeys [Issue 23] {McoreD}
 3.20.5.1 Filename of the URL generated as part of FTP uploading are URL Encoded {McoreD}
 3.20.5.0 Improvements to Google Translator incoporating latest changes {Jaex}
 3.20.4.0 Enhanced detection of maximized window position/size for more accurate Active Window capture {Jaex}
