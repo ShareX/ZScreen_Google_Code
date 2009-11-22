@@ -377,11 +377,11 @@ namespace ZScreenLib
         /// <returns>Shortens URL or Empty String if request failed</returns>
         public static string TryShortenURL(string url)
         {
-            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlUsingClipboardUploadAfter));
+            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
             if (!string.IsNullOrEmpty(url))
             {
-                if (Engine.conf.ShortenUrlUsingClipboardUploadAfter == 0 || Engine.conf.TwitterEnabled ||
-                    (Engine.conf.ShortenUrlUsingClipboardUploadAfter > 0 && url.Length > Engine.conf.ShortenUrlUsingClipboardUploadAfter) ||
+                if (Engine.conf.ShortenUrlAfterUploadAfter == 0 || Engine.conf.TwitterEnabled ||
+                    (Engine.conf.ShortenUrlAfterUploadAfter > 0 && url.Length > Engine.conf.ShortenUrlAfterUploadAfter) ||
                     (Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
                 {
                     return ShortenURL(url);

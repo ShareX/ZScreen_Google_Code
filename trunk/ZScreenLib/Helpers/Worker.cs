@@ -428,7 +428,7 @@ namespace ZScreenLib
             {
                 if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.ShortenUrlUsingClipboardUpload && Adapter.CheckURLShorteners())
                 {
-                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", task.MyText.LocalString, task.MyText.LocalString.Length, Engine.conf.ShortenUrlUsingClipboardUploadAfter));
+                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", task.MyText.LocalString, task.MyText.LocalString.Length, Engine.conf.ShortenUrlAfterUploadAfter));
                     task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
                     task.RunWorker();
                 }

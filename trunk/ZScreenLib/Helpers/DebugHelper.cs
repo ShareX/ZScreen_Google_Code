@@ -31,6 +31,7 @@ namespace ZScreenLib
     {
         public event StringEventHandler GetDebugInfo;
         private Process currProc = Process.GetCurrentProcess();
+        private PerformanceCounter mCpuCounter = new PerformanceCounter();
         public System.Windows.Forms.Timer DebugTimer;
         public Memory StartMemoryUsage { get; private set; }
         public Memory MemoryUsage { get; private set; }
@@ -43,6 +44,9 @@ namespace ZScreenLib
             StartTime = DateTime.Now;
             DebugTimer = new System.Windows.Forms.Timer { Interval = 500 };
             DebugTimer.Tick += new EventHandler(TimerTick);
+            mCpuCounter.CategoryName = "Processor";
+            mCpuCounter.CounterName = "% Processor Time";
+            mCpuCounter.InstanceName = "_Total";
         }
 
         public string DebugInfo()
@@ -73,6 +77,11 @@ namespace ZScreenLib
                 return GetDurationString(ts);
                 // return ts.ToString().Substring(0, ts.ToString().LastIndexOf("."));
             }
+        }
+
+        public float GetProcessorUsage()
+        {
+            return mCpuCounter.NextValue();
         }
 
         public int GetMemoryUsage()

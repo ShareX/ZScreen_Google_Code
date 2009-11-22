@@ -60,7 +60,7 @@ namespace ZScreenGUI
         private int mHadFocusAt;
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
-        private DebugHelper debug = null;
+        private DebugHelper mDebug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ThumbnailCacher thumbnailCacher;
         internal static GoogleTranslate mGTranslator = null;
@@ -339,7 +339,7 @@ namespace ZScreenGUI
                             bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
                             bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
                             bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
-                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlUsingClipboardUploadAfter && Engine.conf.MonitorUrls;
+                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter && Engine.conf.MonitorUrls;
                             if (uploadImage || uploadText || uploadFile || shortenUrl)
                             {
                                 if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
@@ -3520,8 +3520,8 @@ namespace ZScreenGUI
 
         private void StartDebug()
         {
-            debug = new DebugHelper();
-            debug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
+            mDebug = new DebugHelper();
+            mDebug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
         }
 
         private void debug_GetDebugInfo(object sender, string e)
@@ -3543,7 +3543,7 @@ namespace ZScreenGUI
 
         private void btnDebugStart_Click(object sender, EventArgs e)
         {
-            if (debug.DebugTimer.Enabled)
+            if (mDebug.DebugTimer.Enabled)
             {
                 btnDebugStart.Text = "Start";
             }
@@ -3552,7 +3552,7 @@ namespace ZScreenGUI
                 btnDebugStart.Text = "Pause";
             }
 
-            debug.DebugTimer.Enabled = !debug.DebugTimer.Enabled;
+            mDebug.DebugTimer.Enabled = !mDebug.DebugTimer.Enabled;
         }
 
         private void tsmMain_Click(object sender, EventArgs e)
