@@ -148,10 +148,8 @@ namespace Updater
             if (File.Exists(SavePath))
             {
                 File.Delete(SavePath);
+                MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             Application.Exit();
         }
 
