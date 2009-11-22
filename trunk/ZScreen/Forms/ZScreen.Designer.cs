@@ -465,7 +465,7 @@ namespace ZScreenGUI
             this.lblHistoryLocalPath = new System.Windows.Forms.Label();
             this.panelPreview = new System.Windows.Forms.Panel();
             this.pbPreview = new System.Windows.Forms.PictureBox();
-            this.txtPreview = new System.Windows.Forms.TextBox();
+            this.txtPreview = new System.Windows.Forms.RichTextBox();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
@@ -5573,7 +5573,7 @@ namespace ZScreenGUI
             this.txtPreview.Multiline = true;
             this.txtPreview.Name = "txtPreview";
             this.txtPreview.ReadOnly = true;
-            this.txtPreview.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtPreview.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.txtPreview.Size = new System.Drawing.Size(459, 235);
             this.txtPreview.TabIndex = 14;
             // 
@@ -7405,7 +7405,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblHistoryRemotePath;
         internal System.Windows.Forms.TextBox txtHistoryLocalPath;
         internal System.Windows.Forms.ListBox lbHistory;
-        internal System.Windows.Forms.TextBox txtPreview;
+        internal System.Windows.Forms.RichTextBox txtPreview;
         internal System.Windows.Forms.PictureBox pbPreview;
         internal System.Windows.Forms.TabPage tpHistorySettings;
         internal System.Windows.Forms.CheckBox cbHistorySave;
