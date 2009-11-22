@@ -1,8 +1,11 @@
 #summary Significant stages/events in the development of ZScreen
 #labels Phase-Support
 
-= Version 3 - XXXX-XX-XX =
+= Version 3 - 2009-09-04 =
 
+ * DavX joined the development of ZScreen on 2009-11-22
+ * kode54 joined the development of ZScreen on 2009-11-10
+ * Aero glass capture with shadows 
  * theone256 joined the development of ZScreen on 2009-10-25
  * Acquired the domain www.zscreen.net on 2009-09-12
  * Hades32 joined the development of ZScreen on 2009-08-23
