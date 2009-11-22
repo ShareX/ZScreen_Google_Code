@@ -133,7 +133,11 @@ namespace Updater
                     }
                 }
 
-                Process exe = Process.Start(SavePath);
+                ProcessStartInfo psi = new ProcessStartInfo(SavePath);
+                psi.Arguments = "/SILENT";
+                psi.UseShellExecute = true;
+                psi.Verb = "runas";
+                Process exe = Process.Start(psi);
                 exe.EnableRaisingEvents = true;
                 exe.Exited += new EventHandler(exe_Exited);
             }
