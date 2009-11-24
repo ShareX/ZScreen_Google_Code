@@ -553,14 +553,13 @@ namespace ZScreenGUI
             this.btnOpenZScreenTester = new System.Windows.Forms.Button();
             this.gbStatistics = new System.Windows.Forms.GroupBox();
             this.btnDebugStart = new System.Windows.Forms.Button();
-            this.btnCopyStats = new System.Windows.Forms.Button();
-            this.txtDebugInfo = new System.Windows.Forms.RichTextBox();
+            this.rtbDebugInfo = new System.Windows.Forms.RichTextBox();
             this.gbLastSource = new System.Windows.Forms.GroupBox();
             this.btnOpenSourceString = new System.Windows.Forms.Button();
             this.btnOpenSourceText = new System.Windows.Forms.Button();
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
             this.tpDebugLog = new System.Windows.Forms.TabPage();
-            this.txtDebugLog = new System.Windows.Forms.RichTextBox();
+            this.rtbDebugLog = new System.Windows.Forms.RichTextBox();
             this.tpOptionsAdv = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.tpUploadText = new System.Windows.Forms.TabPage();
@@ -6622,11 +6621,10 @@ namespace ZScreenGUI
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbStatistics.Controls.Add(this.btnDebugStart);
-            this.gbStatistics.Controls.Add(this.btnCopyStats);
-            this.gbStatistics.Controls.Add(this.txtDebugInfo);
+            this.gbStatistics.Controls.Add(this.rtbDebugInfo);
             this.gbStatistics.Location = new System.Drawing.Point(8, 8);
             this.gbStatistics.Name = "gbStatistics";
-            this.gbStatistics.Size = new System.Drawing.Size(775, 297);
+            this.gbStatistics.Size = new System.Drawing.Size(775, 312);
             this.gbStatistics.TabIndex = 28;
             this.gbStatistics.TabStop = false;
             this.gbStatistics.Text = "Statistics";
@@ -6641,29 +6639,19 @@ namespace ZScreenGUI
             this.btnDebugStart.UseVisualStyleBackColor = true;
             this.btnDebugStart.Click += new System.EventHandler(this.btnDebugStart_Click);
             // 
-            // btnCopyStats
+            // rtbDebugInfo
             // 
-            this.btnCopyStats.Location = new System.Drawing.Point(88, 24);
-            this.btnCopyStats.Name = "btnCopyStats";
-            this.btnCopyStats.Size = new System.Drawing.Size(120, 24);
-            this.btnCopyStats.TabIndex = 29;
-            this.btnCopyStats.Text = "Copy to Clipboard";
-            this.btnCopyStats.UseVisualStyleBackColor = true;
-            this.btnCopyStats.Click += new System.EventHandler(this.btnCopyStats_Click);
-            // 
-            // txtDebugInfo
-            // 
-            this.txtDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.rtbDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDebugInfo.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDebugInfo.Location = new System.Drawing.Point(15, 60);
-            this.txtDebugInfo.Name = "txtDebugInfo";
-            this.txtDebugInfo.ReadOnly = true;
-            this.txtDebugInfo.Size = new System.Drawing.Size(745, 221);
-            this.txtDebugInfo.TabIndex = 27;
-            this.txtDebugInfo.Text = "";
-            this.txtDebugInfo.WordWrap = false;
+            this.rtbDebugInfo.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.rtbDebugInfo.Location = new System.Drawing.Point(16, 56);
+            this.rtbDebugInfo.Name = "rtbDebugInfo";
+            this.rtbDebugInfo.ReadOnly = true;
+            this.rtbDebugInfo.Size = new System.Drawing.Size(745, 244);
+            this.rtbDebugInfo.TabIndex = 27;
+            this.rtbDebugInfo.Text = "";
+            this.rtbDebugInfo.WordWrap = false;
             // 
             // gbLastSource
             // 
@@ -6672,7 +6660,7 @@ namespace ZScreenGUI
             this.gbLastSource.Controls.Add(this.btnOpenSourceString);
             this.gbLastSource.Controls.Add(this.btnOpenSourceText);
             this.gbLastSource.Controls.Add(this.btnOpenSourceBrowser);
-            this.gbLastSource.Location = new System.Drawing.Point(8, 313);
+            this.gbLastSource.Location = new System.Drawing.Point(8, 328);
             this.gbLastSource.Name = "gbLastSource";
             this.gbLastSource.Size = new System.Drawing.Size(408, 64);
             this.gbLastSource.TabIndex = 26;
@@ -6714,7 +6702,7 @@ namespace ZScreenGUI
             // 
             // tpDebugLog
             // 
-            this.tpDebugLog.Controls.Add(this.txtDebugLog);
+            this.tpDebugLog.Controls.Add(this.rtbDebugLog);
             this.tpDebugLog.Location = new System.Drawing.Point(4, 22);
             this.tpDebugLog.Name = "tpDebugLog";
             this.tpDebugLog.Padding = new System.Windows.Forms.Padding(3);
@@ -6723,16 +6711,17 @@ namespace ZScreenGUI
             this.tpDebugLog.Text = "Debug";
             this.tpDebugLog.UseVisualStyleBackColor = true;
             // 
-            // txtDebugLog
+            // rtbDebugLog
             // 
-            this.txtDebugLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDebugLog.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDebugLog.Location = new System.Drawing.Point(3, 3);
-            this.txtDebugLog.Name = "txtDebugLog";
-            this.txtDebugLog.ReadOnly = true;
-            this.txtDebugLog.Size = new System.Drawing.Size(785, 397);
-            this.txtDebugLog.TabIndex = 0;
-            this.txtDebugLog.Text = "";
+            this.rtbDebugLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbDebugLog.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.rtbDebugLog.Location = new System.Drawing.Point(3, 3);
+            this.rtbDebugLog.Name = "rtbDebugLog";
+            this.rtbDebugLog.ReadOnly = true;
+            this.rtbDebugLog.Size = new System.Drawing.Size(785, 397);
+            this.rtbDebugLog.TabIndex = 0;
+            this.rtbDebugLog.Text = "";
+            this.rtbDebugLog.WordWrap = false;
             // 
             // tpOptionsAdv
             // 
@@ -7465,7 +7454,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.TabPage tpStats;
         internal System.Windows.Forms.GroupBox gbStatistics;
         internal System.Windows.Forms.Button btnDebugStart;
-        internal System.Windows.Forms.Button btnCopyStats;
         internal System.Windows.Forms.GroupBox gbLastSource;
         internal System.Windows.Forms.Button btnOpenSourceString;
         internal System.Windows.Forms.Button btnOpenSourceText;
@@ -7591,7 +7579,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.ComboBox cboSendSpaceAcctType;
         private System.Windows.Forms.Label lblSendSpaceAccountType;
         private System.Windows.Forms.Button btnSendSpaceRegister;
-        internal System.Windows.Forms.RichTextBox txtDebugInfo;
+        internal System.Windows.Forms.RichTextBox rtbDebugInfo;
         private System.Windows.Forms.Label lblErrorRetry;
         private System.Windows.Forms.Label lblFTPThumbHeight;
         private System.Windows.Forms.Label lblFTPThumbWidth;
@@ -7645,7 +7633,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ListView lvDictionary;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TabPage tpDebugLog;
-        private System.Windows.Forms.RichTextBox txtDebugLog;
+        private System.Windows.Forms.RichTextBox rtbDebugLog;
 
     }
 }
