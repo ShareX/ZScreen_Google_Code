@@ -98,7 +98,6 @@ namespace ZScreenGUI
                 }
             }
 
-            FileSystem.AppendDebug(".");
             FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
 
             switch (task.JobCategory)

@@ -323,7 +323,28 @@ namespace ZScreenGUI
             niTray.Visible = true;
             // Loader.Splash.Close();
             // FileSystem.AppendDebug("Closed Splash Screen");
+
+            txtDebugLog.Text = FileSystem.DebugLog.ToString();
+            FileSystem.DebugLogChanged += new FileSystem.DebugLogEventHandler(FileSystem_DebugLogChanged);
+
             FileSystem.AppendDebug("Loaded ZScreen GUI...");
+        }
+
+        private void FileSystem_DebugLogChanged(string line)
+        {
+            MethodInvoker method = delegate
+            {
+                txtDebugLog.AppendText(line + Environment.NewLine);
+            };
+
+            if (this.InvokeRequired)
+            {
+                this.Invoke(method);
+            }
+            else
+            {
+                method.Invoke();
+            }
         }
 
         protected override void WndProc(ref Message m)
@@ -1238,7 +1259,7 @@ namespace ZScreenGUI
 
             Engine.conf.WindowState = this.WindowState;
             Engine.conf.Write();
-            FileSystem.AppendDebug("Settings written to file.");
+            FileSystem.AppendDebug("Settings written to file: " + Engine.mAppSettings.GetSettingsFilePath());
             Loader.Worker.SaveHistoryItems();
         }
 
@@ -3530,8 +3551,6 @@ namespace ZScreenGUI
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(e);
-                sb.AppendLine();
-                sb.Append(FileSystem.mDebug.ToString());
                 txtDebugInfo.Text = sb.ToString();
                 if (cboDebugAutoScroll.Checked)
                 {

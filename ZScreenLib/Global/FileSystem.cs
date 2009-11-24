@@ -22,24 +22,23 @@
 #endregion
 
 using System;
-using System.Configuration;
-using System.IO;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
-using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
-using ZSS;
-using ZScreenLib.Properties;
+using System.Windows.Forms;
 using UploadersLib;
+using System.Diagnostics;
 
 namespace ZScreenLib
 {
     public static class FileSystem
     {
-        public static StringBuilder mDebug = new StringBuilder();
+        public delegate void DebugLogEventHandler(string line);
+        public static event DebugLogEventHandler DebugLogChanged;
+        public static StringBuilder DebugLog = new StringBuilder();
 
         /// <summary>
         /// Returns a list of file paths from a collection of files and directories
@@ -100,22 +99,12 @@ namespace ZScreenLib
 
                 try
                 {
-                    if (Engine.conf.MakeJPGBackgroundWhite && Engine.conf.ImageFileFormat != ImageFileFormatType.Png)
-                    {
-                        img = ImageEffects.FillBackground(img, Color.White);
-                    }
-
-                    ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormat.Format);
+                    ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormat);
 
                     if (ms.Length > size && size != 0)
                     {
-                        if (Engine.conf.MakeJPGBackgroundWhite && Engine.conf.ImageFormatSwitch != ImageFileFormatType.Png)
-                        {
-                            img = ImageEffects.FillBackground(img, Color.White);
-                        }
-
-                        ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormat.Format);
-                        filePath = Path.ChangeExtension(filePath, Engine.zImageFileFormat.Extension);
+                        ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormatSwitch);
+                        filePath = Path.ChangeExtension(filePath, Engine.zImageFileFormatSwitch.Extension);
                     }
 
                     if (!Directory.Exists(Path.GetDirectoryName(filePath)))
@@ -151,7 +140,7 @@ namespace ZScreenLib
 
         public static string GetTextFromFile(string filePath)
         {
-            string s = "";
+            string s = string.Empty;
             if (File.Exists(filePath))
             {
                 using (StreamReader sr = new StreamReader(filePath))
@@ -184,10 +173,22 @@ namespace ZScreenLib
 
         public static void AppendDebug(string msg)
         {
-            // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
-            string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
-            System.Diagnostics.Debug.WriteLine(line);
-            mDebug.AppendLine(line);
+            if (!string.IsNullOrEmpty(msg))
+            {
+                // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
+                string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
+                Debug.WriteLine(line);
+                DebugLog.AppendLine(line);
+                OnDebugLogChanged(line);
+            }
+        }
+
+        private static void OnDebugLogChanged(string line)
+        {
+            if (DebugLogChanged != null)
+            {
+                DebugLogChanged(line);
+            }
         }
 
         public static void WriteDebugFile()
@@ -198,12 +199,12 @@ namespace ZScreenLib
                 string fpDebug = Path.Combine(Engine.LogsDir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
                 if (Engine.conf.WriteDebugFile)
                 {
-                    if (mDebug.Length > 0)
+                    if (DebugLog.Length > 0)
                     {
                         using (StreamWriter sw = new StreamWriter(fpDebug, true))
                         {
-                            sw.WriteLine(mDebug.ToString());
-                            mDebug = new StringBuilder();
+                            sw.WriteLine(DebugLog.ToString());
+                            DebugLog = new StringBuilder();
                         }
                     }
                 }
