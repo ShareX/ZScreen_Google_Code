@@ -151,4 +151,12 @@ namespace ZScreenLib
         [Description("TIFF")]
         Tif
     }
+
+    public enum WindowButtonAction
+    {
+        MinimizeToTray,
+        MinimizeToTaskbar,
+        CloseApplication,
+        Nothing
+    }
 }

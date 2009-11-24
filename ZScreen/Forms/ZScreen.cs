@@ -55,7 +55,7 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
-        #region Private Variables
+        #region Variables
 
         private bool mGuiIsReady, mClose;
         private int mHadFocusAt;
@@ -64,11 +64,8 @@ namespace ZScreenGUI
         private DebugHelper mDebug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ThumbnailCacher thumbnailCacher;
+        private System.Windows.Forms.Timer mTimerImageEditorMenuClose = new System.Windows.Forms.Timer() { Interval = 5000 };
         internal static GoogleTranslate mGTranslator = null;
-        private System.Windows.Forms.Timer mTimerImageEditorMenuClose = new System.Windows.Forms.Timer()
-        {
-            Interval = 5000,
-        };
 
         #endregion
 
@@ -337,9 +334,9 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
-                switch ((ClipboardHook.Msgs)m.Msg)
+                switch (m.Msg)
                 {
-                    case ClipboardHook.Msgs.WM_DRAWCLIPBOARD:
+                    case (int)ClipboardHook.Msgs.WM_DRAWCLIPBOARD:
                         try
                         {
                             string cbText = Clipboard.GetText();
@@ -367,7 +364,7 @@ namespace ZScreenGUI
                             return;
                         }
                         break;
-                    case ClipboardHook.Msgs.WM_CHANGECBCHAIN:
+                    case (int)ClipboardHook.Msgs.WM_CHANGECBCHAIN:
                         if (m.WParam == ClipboardHook.mClipboardViewerNext)
                         {
                             ClipboardHook.mClipboardViewerNext = m.LParam;
@@ -375,6 +372,29 @@ namespace ZScreenGUI
                         else
                         {
                             ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
+                        }
+                        break;
+                    case NativeMethods.WM_SYSCOMMAND:
+                        int command = m.WParam.ToInt32() & 0xfff0;
+                        if (command == NativeMethods.SC_MINIMIZE)
+                        {
+                            switch (Engine.conf.MinimizeButtonAction)
+                            {
+                                case WindowButtonAction.CloseApplication:
+                                    mClose = true;
+                                    this.Close();
+                                    break;
+                                case WindowButtonAction.MinimizeToTaskbar:
+                                    this.WindowState = FormWindowState.Minimized;
+                                    break;
+                                case WindowButtonAction.MinimizeToTray:
+                                    this.Hide();
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            base.WndProc(ref m);
                         }
                         break;
                     default:
@@ -406,10 +426,6 @@ namespace ZScreenGUI
             #endregion
 
             #region Main
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Main
-            //~~~~~~~~~~~~~~~~~~~~~
 
             if (tsmiTabs.DropDownItems.Count == 0)
             {
@@ -474,19 +490,11 @@ namespace ZScreenGUI
 
             #region Hotkeys
 
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Hotkeys
-            //~~~~~~~~~~~~~~~~~~~~~
-
             UpdateHotkeysDGV();
 
             #endregion
 
             #region Capture
-
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Capture
-            //~~~~~~~~~~~~~~~~~~~~~
 
             // Crop Shot
             if (cbCropStyle.Items.Count == 0)
@@ -632,14 +640,10 @@ namespace ZScreenGUI
 
             #region Text Uploaders & URL Shorteners
 
-            ///////////////////////////////////
-            // Text Uploader Settings
-            ///////////////////////////////////
-
-            //            if (Engine.conf.TextUploadersList.Count == 0)
-            //            {
-            //                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-            //            }
+            /*if (Engine.conf.TextUploadersList.Count == 0)
+            {
+                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
+            }*/
             foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
             {
                 TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
@@ -975,6 +979,8 @@ namespace ZScreenGUI
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
+            cbCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
+            cbMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
 
             // Monitor Clipboard
 
@@ -1165,29 +1171,22 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!Engine.conf.ExitOnClose)
+            WriteSettings();
+
+            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.CloseButtonAction != WindowButtonAction.CloseApplication && !mClose)
             {
-                if (!mClose)
+                e.Cancel = true;
+
+                if (Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTaskbar)
                 {
-                    mClose = e.CloseReason != CloseReason.UserClosing; // if Windows shuts down then close by setting mClose = true
+                    this.WindowState = FormWindowState.Minimized;
+                }
+                else if (Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTray)
+                {
+                    this.Hide();
                 }
 
-                WriteSettings();
-
-                if (!mClose)
-                {
-                    e.Cancel = true; // cancel the Close
-                    if (Engine.conf.MinimizeOnClose)
-                    {
-                        this.WindowState = FormWindowState.Minimized;
-                    }
-                    else if (e.CloseReason == CloseReason.UserClosing)
-                    {
-                        Hide();
-                    }
-
-                    DelayedTrimMemoryUse();
-                }
+                DelayedTrimMemoryUse();
             }
         }
 
@@ -4822,6 +4821,16 @@ namespace ZScreenGUI
         private void txtDebugLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);
+        }
+
+        private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.CloseButtonAction = (WindowButtonAction)cbCloseButtonAction.SelectedIndex;
+        }
+
+        private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.MinimizeButtonAction = (WindowButtonAction)cbMinimizeButtonAction.SelectedIndex;
         }
     }
 }
