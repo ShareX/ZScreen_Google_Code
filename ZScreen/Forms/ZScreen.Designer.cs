@@ -88,6 +88,7 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
@@ -468,6 +469,7 @@ namespace ZScreenGUI
             this.panelPreview = new System.Windows.Forms.Panel();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.txtPreview = new System.Windows.Forms.RichTextBox();
+            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
@@ -547,10 +549,9 @@ namespace ZScreenGUI
             this.lblMebibytes = new System.Windows.Forms.Label();
             this.nudCacheSize = new System.Windows.Forms.NumericUpDown();
             this.txtCacheDir = new System.Windows.Forms.TextBox();
-            this.tpAdvDebug = new System.Windows.Forms.TabPage();
+            this.tpStats = new System.Windows.Forms.TabPage();
             this.btnOpenZScreenTester = new System.Windows.Forms.Button();
             this.gbStatistics = new System.Windows.Forms.GroupBox();
-            this.cboDebugAutoScroll = new System.Windows.Forms.CheckBox();
             this.btnDebugStart = new System.Windows.Forms.Button();
             this.btnCopyStats = new System.Windows.Forms.Button();
             this.txtDebugInfo = new System.Windows.Forms.RichTextBox();
@@ -558,6 +559,8 @@ namespace ZScreenGUI
             this.btnOpenSourceString = new System.Windows.Forms.Button();
             this.btnOpenSourceText = new System.Windows.Forms.Button();
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
+            this.tpDebugLog = new System.Windows.Forms.TabPage();
+            this.txtDebugLog = new System.Windows.Forms.RichTextBox();
             this.tpOptionsAdv = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.tpUploadText = new System.Windows.Forms.TabPage();
@@ -566,10 +569,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpDebugLog = new System.Windows.Forms.TabPage();
-            this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.ucDestOptions = new ZScreenLib.DestSelector();
-            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
             this.ucTwitterAccounts = new ZScreenGUI.AccountsControl();
@@ -718,11 +717,11 @@ namespace ZScreenGUI
             this.gbSettingsExportImport.SuspendLayout();
             this.gbRemoteDirCache.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).BeginInit();
-            this.tpAdvDebug.SuspendLayout();
+            this.tpStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
-            this.tpOptionsAdv.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
+            this.tpOptionsAdv.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1166,6 +1165,14 @@ namespace ZScreenGUI
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
+            // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
+            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.TabIndex = 124;
             // 
             // gbImageSettings
             // 
@@ -5600,6 +5607,15 @@ namespace ZScreenGUI
             this.txtPreview.TabIndex = 14;
             this.txtPreview.Text = "";
             // 
+            // historyBrowser
+            // 
+            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
+            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.historyBrowser.Name = "historyBrowser";
+            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
+            this.historyBrowser.TabIndex = 15;
+            // 
             // lbHistory
             // 
             this.lbHistory.AllowDrop = true;
@@ -5760,7 +5776,7 @@ namespace ZScreenGUI
             this.tcOptions.Controls.Add(this.tpProxy);
             this.tcOptions.Controls.Add(this.tpInteraction);
             this.tcOptions.Controls.Add(this.tpAdvPaths);
-            this.tcOptions.Controls.Add(this.tpAdvDebug);
+            this.tcOptions.Controls.Add(this.tpStats);
             this.tcOptions.Controls.Add(this.tpDebugLog);
             this.tcOptions.Controls.Add(this.tpOptionsAdv);
             this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -5769,6 +5785,7 @@ namespace ZScreenGUI
             this.tcOptions.SelectedIndex = 0;
             this.tcOptions.Size = new System.Drawing.Size(799, 429);
             this.tcOptions.TabIndex = 8;
+            this.tcOptions.SelectedIndexChanged += new System.EventHandler(this.tcOptions_SelectedIndexChanged);
             // 
             // tpGeneral
             // 
@@ -6575,18 +6592,18 @@ namespace ZScreenGUI
             this.txtCacheDir.Size = new System.Drawing.Size(621, 20);
             this.txtCacheDir.TabIndex = 0;
             // 
-            // tpAdvDebug
+            // tpStats
             // 
-            this.tpAdvDebug.Controls.Add(this.btnOpenZScreenTester);
-            this.tpAdvDebug.Controls.Add(this.gbStatistics);
-            this.tpAdvDebug.Controls.Add(this.gbLastSource);
-            this.tpAdvDebug.Location = new System.Drawing.Point(4, 22);
-            this.tpAdvDebug.Name = "tpAdvDebug";
-            this.tpAdvDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvDebug.Size = new System.Drawing.Size(791, 403);
-            this.tpAdvDebug.TabIndex = 1;
-            this.tpAdvDebug.Text = "Debug";
-            this.tpAdvDebug.UseVisualStyleBackColor = true;
+            this.tpStats.Controls.Add(this.btnOpenZScreenTester);
+            this.tpStats.Controls.Add(this.gbStatistics);
+            this.tpStats.Controls.Add(this.gbLastSource);
+            this.tpStats.Location = new System.Drawing.Point(4, 22);
+            this.tpStats.Name = "tpStats";
+            this.tpStats.Padding = new System.Windows.Forms.Padding(3);
+            this.tpStats.Size = new System.Drawing.Size(791, 403);
+            this.tpStats.TabIndex = 1;
+            this.tpStats.Text = "Statistics";
+            this.tpStats.UseVisualStyleBackColor = true;
             // 
             // btnOpenZScreenTester
             // 
@@ -6604,7 +6621,6 @@ namespace ZScreenGUI
             this.gbStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbStatistics.Controls.Add(this.cboDebugAutoScroll);
             this.gbStatistics.Controls.Add(this.btnDebugStart);
             this.gbStatistics.Controls.Add(this.btnCopyStats);
             this.gbStatistics.Controls.Add(this.txtDebugInfo);
@@ -6614,17 +6630,6 @@ namespace ZScreenGUI
             this.gbStatistics.TabIndex = 28;
             this.gbStatistics.TabStop = false;
             this.gbStatistics.Text = "Statistics";
-            // 
-            // cboDebugAutoScroll
-            // 
-            this.cboDebugAutoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboDebugAutoScroll.AutoSize = true;
-            this.cboDebugAutoScroll.Location = new System.Drawing.Point(680, 24);
-            this.cboDebugAutoScroll.Name = "cboDebugAutoScroll";
-            this.cboDebugAutoScroll.Size = new System.Drawing.Size(77, 17);
-            this.cboDebugAutoScroll.TabIndex = 29;
-            this.cboDebugAutoScroll.Text = "Auto &Scroll";
-            this.cboDebugAutoScroll.UseVisualStyleBackColor = true;
             // 
             // btnDebugStart
             // 
@@ -6655,7 +6660,6 @@ namespace ZScreenGUI
             this.txtDebugInfo.Location = new System.Drawing.Point(15, 60);
             this.txtDebugInfo.Name = "txtDebugInfo";
             this.txtDebugInfo.ReadOnly = true;
-            this.txtDebugInfo.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.txtDebugInfo.Size = new System.Drawing.Size(745, 221);
             this.txtDebugInfo.TabIndex = 27;
             this.txtDebugInfo.Text = "";
@@ -6707,6 +6711,28 @@ namespace ZScreenGUI
             this.btnOpenSourceBrowser.Text = "Open in Browser";
             this.btnOpenSourceBrowser.UseVisualStyleBackColor = true;
             this.btnOpenSourceBrowser.Click += new System.EventHandler(this.btnOpenSourceBrowser_Click);
+            // 
+            // tpDebugLog
+            // 
+            this.tpDebugLog.Controls.Add(this.txtDebugLog);
+            this.tpDebugLog.Location = new System.Drawing.Point(4, 22);
+            this.tpDebugLog.Name = "tpDebugLog";
+            this.tpDebugLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDebugLog.Size = new System.Drawing.Size(791, 403);
+            this.tpDebugLog.TabIndex = 7;
+            this.tpDebugLog.Text = "Debug";
+            this.tpDebugLog.UseVisualStyleBackColor = true;
+            // 
+            // txtDebugLog
+            // 
+            this.txtDebugLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDebugLog.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDebugLog.Location = new System.Drawing.Point(3, 3);
+            this.txtDebugLog.Name = "txtDebugLog";
+            this.txtDebugLog.ReadOnly = true;
+            this.txtDebugLog.Size = new System.Drawing.Size(785, 397);
+            this.txtDebugLog.TabIndex = 0;
+            this.txtDebugLog.Text = "";
             // 
             // tpOptionsAdv
             // 
@@ -6776,44 +6802,6 @@ namespace ZScreenGUI
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
-            // 
-            // tpDebugLog
-            // 
-            this.tpDebugLog.Controls.Add(this.txtDebugLog);
-            this.tpDebugLog.Location = new System.Drawing.Point(4, 22);
-            this.tpDebugLog.Name = "tpDebugLog";
-            this.tpDebugLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDebugLog.Size = new System.Drawing.Size(791, 403);
-            this.tpDebugLog.TabIndex = 7;
-            this.tpDebugLog.Text = "Debug Log";
-            this.tpDebugLog.UseVisualStyleBackColor = true;
-            // 
-            // txtDebugLog
-            // 
-            this.txtDebugLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDebugLog.Location = new System.Drawing.Point(3, 3);
-            this.txtDebugLog.Multiline = true;
-            this.txtDebugLog.Name = "txtDebugLog";
-            this.txtDebugLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtDebugLog.Size = new System.Drawing.Size(785, 397);
-            this.txtDebugLog.TabIndex = 0;
-            // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.TabIndex = 124;
-            // 
-            // historyBrowser
-            // 
-            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
-            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.historyBrowser.Name = "historyBrowser";
-            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
-            this.historyBrowser.TabIndex = 15;
             // 
             // nudtScreenshotDelay
             // 
@@ -7108,13 +7096,11 @@ namespace ZScreenGUI
             this.gbRemoteDirCache.ResumeLayout(false);
             this.gbRemoteDirCache.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).EndInit();
-            this.tpAdvDebug.ResumeLayout(false);
+            this.tpStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
-            this.gbStatistics.PerformLayout();
             this.gbLastSource.ResumeLayout(false);
-            this.tpOptionsAdv.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
-            this.tpDebugLog.PerformLayout();
+            this.tpOptionsAdv.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -7476,7 +7462,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblMebibytes;
         internal System.Windows.Forms.NumericUpDown nudCacheSize;
         internal System.Windows.Forms.TextBox txtCacheDir;
-        internal System.Windows.Forms.TabPage tpAdvDebug;
+        internal System.Windows.Forms.TabPage tpStats;
         internal System.Windows.Forms.GroupBox gbStatistics;
         internal System.Windows.Forms.Button btnDebugStart;
         internal System.Windows.Forms.Button btnCopyStats;
@@ -7606,7 +7592,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblSendSpaceAccountType;
         private System.Windows.Forms.Button btnSendSpaceRegister;
         internal System.Windows.Forms.RichTextBox txtDebugInfo;
-        private System.Windows.Forms.CheckBox cboDebugAutoScroll;
         private System.Windows.Forms.Label lblErrorRetry;
         private System.Windows.Forms.Label lblFTPThumbHeight;
         private System.Windows.Forms.Label lblFTPThumbWidth;
@@ -7660,7 +7645,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ListView lvDictionary;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TabPage tpDebugLog;
-        private System.Windows.Forms.TextBox txtDebugLog;
+        private System.Windows.Forms.RichTextBox txtDebugLog;
 
     }
 }

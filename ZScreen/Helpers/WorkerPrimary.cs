@@ -551,6 +551,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyCropShot == key) // Crop Shot
                 {
+                    FileSystem.AppendDebug("Crop Shot Hotkey triggered: " + key.ToSpecialString());
                     StartBw_CropShot();
                     return true;
                 }
