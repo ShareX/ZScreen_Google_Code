@@ -83,13 +83,18 @@ namespace ZScreenLib
             return bmp;
         }
 
-        public static MemoryStream SaveImageToMemoryStream(Image img, ImageFormat format)
+        public static MemoryStream SaveImageToMemoryStream(Image img, ImageFileFormat iff)
         {
             MemoryStream ms = new MemoryStream();
 
+            if (Engine.conf.MakeJPGBackgroundWhite && iff.FormatType != ImageFileFormatType.Png)
+            {
+                img = ImageEffects.FillBackground(img, Color.White);
+            }
+
             try
             {
-                if (format == ImageFormat.Jpeg)
+                if (iff.FormatType == ImageFileFormatType.Jpg)
                 {
                     EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)Engine.conf.JpgQuality);
                     ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
@@ -99,7 +104,7 @@ namespace ZScreenLib
 
                     img.Save(ms, codec, encoderParams);
                 }
-                else if (format == ImageFormat.Gif)
+                else if (iff.FormatType == ImageFileFormatType.Gif)
                 {
                     Quantizer quantizer;
                     switch (Engine.conf.GIFQuality)
@@ -123,7 +128,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    img.Save(ms, format);
+                    img.Save(ms, iff.Format);
                 }
             }
             catch (Exception ex)

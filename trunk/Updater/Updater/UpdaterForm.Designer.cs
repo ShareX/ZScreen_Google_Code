@@ -99,6 +99,7 @@
             // 
             this.btnDownload.BackColor = System.Drawing.Color.DimGray;
             this.btnDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDownload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnDownload.ForeColor = System.Drawing.Color.White;
             this.btnDownload.Location = new System.Drawing.Point(8, 144);
             this.btnDownload.Name = "btnDownload";

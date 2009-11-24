@@ -12,6 +12,7 @@ namespace ZScreenLib
         public abstract string Description { get; }
         public abstract string Extension { get; }
         public abstract ImageFormat Format { get; }
+        public abstract ImageFileFormatType FormatType { get; }
     }
 
     public sealed class ImageFileFormatPng : ImageFileFormat
@@ -34,6 +35,11 @@ namespace ZScreenLib
         public override ImageFormat Format
         {
             get { return ImageFormat.Png; }
+        }
+
+        public override ImageFileFormatType FormatType
+        {
+            get { return ImageFileFormatType.Png; }
         }
     }
 
@@ -58,6 +64,11 @@ namespace ZScreenLib
         {
             get { return ImageFormat.Jpeg; }
         }
+
+        public override ImageFileFormatType FormatType
+        {
+            get { return ImageFileFormatType.Jpg; }
+        }
     }
 
     public sealed class ImageFileFormatGif : ImageFileFormat
@@ -80,6 +91,11 @@ namespace ZScreenLib
         public override ImageFormat Format
         {
             get { return ImageFormat.Gif; }
+        }
+
+        public override ImageFileFormatType FormatType
+        {
+            get { return ImageFileFormatType.Gif; }
         }
     }
 
@@ -104,6 +120,11 @@ namespace ZScreenLib
         {
             get { return ImageFormat.Bmp; }
         }
+
+        public override ImageFileFormatType FormatType
+        {
+            get { return ImageFileFormatType.Bmp; }
+        }
     }
 
     public sealed class ImageFileFormatTif : ImageFileFormat
@@ -127,6 +148,10 @@ namespace ZScreenLib
         {
             get { return ImageFormat.Tiff; }
         }
-    }
 
+        public override ImageFileFormatType FormatType
+        {
+            get { return ImageFileFormatType.Tif; }
+        }
+    }
 }
