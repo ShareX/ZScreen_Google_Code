@@ -49,6 +49,7 @@ using ZSS.FTPClientLib;
 using ZScreenTesterGUI;
 using GradientTester;
 using ZScreenLib.Helpers;
+using ZScreenGUI.UserControls;
 
 namespace ZScreenGUI
 {
@@ -90,27 +91,6 @@ namespace ZScreenGUI
             tsmEditinImageSoftware.MouseLeave += new EventHandler(tsmEditinImageSoftware_MouseLeave);
             mTimerImageEditorMenuClose.Tick += new EventHandler(mImageEditorMenuClose_Tick);
             Application.Idle += new EventHandler(Application_Idle);
-        }
-
-        void tsmEditinImageSoftware_MouseEnter(object sender, EventArgs e)
-        {
-            tsmEditinImageSoftware.DropDown.AutoClose = false;
-            mTimerImageEditorMenuClose.Enabled = false;
-        }
-
-        void tsmEditinImageSoftware_MouseLeave(object sender, EventArgs e)
-        {
-            mTimerImageEditorMenuClose.Enabled = true;
-        }
-
-        void mImageEditorMenuClose_Tick(object sender, EventArgs e)
-        {
-            tsmEditinImageSoftware.DropDown.Close();
-        }
-
-        void Application_Idle(object sender, EventArgs e)
-        {
-            DelayedTrimMemoryUse();
         }
 
         internal void ZScreen_Windows7onlyTasks()
@@ -324,19 +304,22 @@ namespace ZScreenGUI
             // Loader.Splash.Close();
             // FileSystem.AppendDebug("Closed Splash Screen");
 
-            txtDebugLog.Text = FileSystem.DebugLog.ToString();
+            rtbDebugLog.Text = FileSystem.DebugLog.ToString();
             FileSystem.DebugLogChanged += new FileSystem.DebugLogEventHandler(FileSystem_DebugLogChanged);
+
+            new RichTextBoxMenu(rtbDebugLog, true);
+            new RichTextBoxMenu(rtbDebugInfo, true);
 
             FileSystem.AppendDebug("Loaded ZScreen GUI...");
         }
 
         private void FileSystem_DebugLogChanged(string line)
         {
-            if (!txtDebugLog.IsDisposed)
+            if (!rtbDebugLog.IsDisposed)
             {
                 MethodInvoker method = delegate
                 {
-                    txtDebugLog.AppendText(line + Environment.NewLine);
+                    rtbDebugLog.AppendText(line + Environment.NewLine);
                 };
 
                 if (this.InvokeRequired)
@@ -1794,6 +1777,27 @@ namespace ZScreenGUI
             }
         }
 
+        private void tsmEditinImageSoftware_MouseEnter(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.AutoClose = false;
+            mTimerImageEditorMenuClose.Enabled = false;
+        }
+
+        private void tsmEditinImageSoftware_MouseLeave(object sender, EventArgs e)
+        {
+            mTimerImageEditorMenuClose.Enabled = true;
+        }
+
+        private void mImageEditorMenuClose_Tick(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.Close();
+        }
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            DelayedTrimMemoryUse();
+        }
+
         private void lbSoftware_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowImageEditorsSettings();
@@ -3044,14 +3048,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnCopyStats_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtDebugInfo.Text))
-            {
-                Clipboard.SetText(txtDebugInfo.Text);
-            }
-        }
-
         private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageUploadRetryOnFail = chkImageUploadRetryOnFail.Checked;
@@ -3557,7 +3553,7 @@ namespace ZScreenGUI
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(e);
-                txtDebugInfo.Text = sb.ToString();
+                rtbDebugInfo.Text = sb.ToString();
             }
         }
 
@@ -4821,6 +4817,11 @@ namespace ZScreenGUI
             {
                 btnDebugStart_Click(sender, e);
             }
+        }
+
+        private void txtDebugLog_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }

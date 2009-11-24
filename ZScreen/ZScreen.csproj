@@ -173,6 +173,7 @@
     <Compile Include="UserControls\NumericUpDownTimer.designer.cs">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\RichTextBoxMenu.cs" />
     <Compile Include="UserControls\TextUploadersControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
