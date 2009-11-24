@@ -457,7 +457,7 @@ namespace ZScreenLib
         public bool PreferSystemFolders { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
         public bool ShowClipboardModeChooser { get; set; }
-        [Category("Options / General"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
+        [Category("Options / Interaction"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
@@ -476,17 +476,18 @@ namespace ZScreenLib
 
         // Options / Interaction
 
-        [Category("Options / Interaction"), DefaultValue(true),
+        [Category("Options / General"), DefaultValue(true),
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool ShortenUrlUsingClipboardUpload { get; set; }
-        [Category("Options / Interaction"), DefaultValue(80),
+        [Category("Options / General"), DefaultValue(80),
         Description("ShortenUrlAfterUpload will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int ShortenUrlAfterUploadAfter { get; set; }
-        [Category("Options / Interaction"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
+        [Category("Options / General"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
         [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to taskbar on close.")]
         public bool MinimizeOnClose { get; set; }
-
+        [Category("Options / Interaction"), DefaultValue(false), Description("Exit ZScreen on close. Overrides MinimizeOnClose.")]
+        public bool ExitOnClose { get; set; }
         // Options / Paths
 
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]

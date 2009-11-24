@@ -332,18 +332,21 @@ namespace ZScreenGUI
 
         private void FileSystem_DebugLogChanged(string line)
         {
-            MethodInvoker method = delegate
+            if (!txtDebugLog.IsDisposed)
             {
-                txtDebugLog.AppendText(line + Environment.NewLine);
-            };
+                MethodInvoker method = delegate
+                {
+                    txtDebugLog.AppendText(line + Environment.NewLine);
+                };
 
-            if (this.InvokeRequired)
-            {
-                this.Invoke(method);
-            }
-            else
-            {
-                method.Invoke();
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(method);
+                }
+                else
+                {
+                    method.Invoke();
+                }
             }
         }
 
@@ -1179,26 +1182,29 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!mClose)
+            if (!Engine.conf.ExitOnClose)
             {
-                mClose = e.CloseReason != CloseReason.UserClosing; // if Windows shuts down then close by setting mClose = true
-            }
-
-            WriteSettings();
-
-            if (!mClose)
-            {
-                e.Cancel = true; // cancel the Close
-                if (Engine.conf.MinimizeOnClose)
+                if (!mClose)
                 {
-                    this.WindowState = FormWindowState.Minimized;
-                }
-                else if (e.CloseReason == CloseReason.UserClosing)
-                {
-                    Hide();
+                    mClose = e.CloseReason != CloseReason.UserClosing; // if Windows shuts down then close by setting mClose = true
                 }
 
-                DelayedTrimMemoryUse();
+                WriteSettings();
+
+                if (!mClose)
+                {
+                    e.Cancel = true; // cancel the Close
+                    if (Engine.conf.MinimizeOnClose)
+                    {
+                        this.WindowState = FormWindowState.Minimized;
+                    }
+                    else if (e.CloseReason == CloseReason.UserClosing)
+                    {
+                        Hide();
+                    }
+
+                    DelayedTrimMemoryUse();
+                }
             }
         }
 
@@ -3552,11 +3558,6 @@ namespace ZScreenGUI
                 StringBuilder sb = new StringBuilder();
                 sb.Append(e);
                 txtDebugInfo.Text = sb.ToString();
-                if (cboDebugAutoScroll.Checked)
-                {
-                    txtDebugInfo.SelectionStart = txtDebugInfo.Text.Length;
-                    txtDebugInfo.ScrollToCaret();
-                }
             }
         }
 
@@ -4812,6 +4813,14 @@ namespace ZScreenGUI
         void LbSoftwareItemCheck(object sender, ItemCheckEventArgs e)
         {
             UpdateGuiEditors(sender);
+        }
+
+        private void tcOptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tcOptions.SelectedTab == tpStats)
+            {
+                btnDebugStart_Click(sender, e);
+            }
         }
     }
 }
