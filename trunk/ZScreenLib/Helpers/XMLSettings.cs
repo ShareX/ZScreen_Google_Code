@@ -385,6 +385,8 @@ namespace ZScreenLib
         public bool SaveFormSizePosition = true;
         public bool LockFormSize = false;
         public bool AutoSaveSettings = false;
+        public WindowButtonAction CloseButtonAction = WindowButtonAction.MinimizeToTray;
+        public WindowButtonAction MinimizeButtonAction = WindowButtonAction.MinimizeToTaskbar;
 
         // General - Monitor Clipboard
 
@@ -461,11 +463,6 @@ namespace ZScreenLib
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
-        [Category("Options / General"), DefaultValue(false), Description("When holding shift when finishing cropping show advanced options")]
-        public bool ShowAdvancedOptionsAfterCrop { get; set; }
-
-        [Category("Options / Windows 7 Taskbar"), DefaultValue(false), Description("Determine whether Windows 7 Taskbar was refreshed once")]
-        public bool UserTasksAdded { get; set; }
 
         // Options / History Settings
 
@@ -486,8 +483,7 @@ namespace ZScreenLib
         public bool ShortenUrlAfterUpload { get; set; }
         [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to taskbar on close.")]
         public bool MinimizeOnClose { get; set; }
-        [Category("Options / Interaction"), DefaultValue(false), Description("Exit ZScreen on close. Overrides MinimizeOnClose.")]
-        public bool ExitOnClose { get; set; }
+
         // Options / Paths
 
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
@@ -528,7 +524,7 @@ namespace ZScreenLib
 
         //XmlSerializer can't handle Colors so whe do it
         //TODO hide this in property grid
-        [XmlElement("BorderEffectColor"), BrowsableAttribute(false) ]
+        [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]
         public string pseudo_BorderEffectColor
         {
             get

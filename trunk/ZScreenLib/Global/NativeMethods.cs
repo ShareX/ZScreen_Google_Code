@@ -153,7 +153,6 @@ namespace ZScreenLib
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool SetProcessWorkingSetSize(IntPtr handle, IntPtr min, IntPtr max);
 
-
         [Flags]
         public enum ThreadAccess : int
         {
@@ -287,6 +286,9 @@ namespace ZScreenLib
             CHILDREN = 0x10,
             OWNED = 0x20
         }
+
+        public const int WM_SYSCOMMAND = 0x0112;
+        public const int SC_MINIMIZE = 0xF020;
 
         // From winuser.h
         public const UInt32 SWP_NOSIZE = 0x0001;

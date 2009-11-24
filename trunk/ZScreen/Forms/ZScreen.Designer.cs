@@ -575,6 +575,10 @@ namespace ZScreenGUI
             this.ucTextUploaders = new ZScreenGUI.TextUploadersControl();
             this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
             this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
+            this.lblCloseButtonAction = new System.Windows.Forms.Label();
+            this.lblMinimizeButtonAction = new System.Windows.Forms.Label();
+            this.cbMinimizeButtonAction = new System.Windows.Forms.ComboBox();
+            this.cbCloseButtonAction = new System.Windows.Forms.ComboBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1142,7 +1146,7 @@ namespace ZScreenGUI
             this.tcApp.Location = new System.Drawing.Point(2, 2);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(813, 462);
+            this.tcApp.Size = new System.Drawing.Size(810, 458);
             this.tcApp.TabIndex = 74;
             this.tcApp.SelectedIndexChanged += new System.EventHandler(this.tcApp_SelectedIndexChanged);
             // 
@@ -5764,7 +5768,7 @@ namespace ZScreenGUI
             this.tpOptions.Location = new System.Drawing.Point(4, 23);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(805, 435);
+            this.tpOptions.Size = new System.Drawing.Size(802, 431);
             this.tpOptions.TabIndex = 9;
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
@@ -5782,7 +5786,7 @@ namespace ZScreenGUI
             this.tcOptions.Location = new System.Drawing.Point(3, 3);
             this.tcOptions.Name = "tcOptions";
             this.tcOptions.SelectedIndex = 0;
-            this.tcOptions.Size = new System.Drawing.Size(799, 429);
+            this.tcOptions.Size = new System.Drawing.Size(796, 425);
             this.tcOptions.TabIndex = 8;
             this.tcOptions.SelectedIndexChanged += new System.EventHandler(this.tcOptions_SelectedIndexChanged);
             // 
@@ -5794,7 +5798,7 @@ namespace ZScreenGUI
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
             this.tpGeneral.Name = "tpGeneral";
             this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGeneral.Size = new System.Drawing.Size(791, 403);
+            this.tpGeneral.Size = new System.Drawing.Size(788, 399);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
@@ -5805,9 +5809,9 @@ namespace ZScreenGUI
             this.gbMonitorClipboard.Controls.Add(this.chkMonFiles);
             this.gbMonitorClipboard.Controls.Add(this.chkMonImages);
             this.gbMonitorClipboard.Controls.Add(this.chkMonText);
-            this.gbMonitorClipboard.Location = new System.Drawing.Point(8, 192);
+            this.gbMonitorClipboard.Location = new System.Drawing.Point(8, 224);
             this.gbMonitorClipboard.Name = "gbMonitorClipboard";
-            this.gbMonitorClipboard.Size = new System.Drawing.Size(752, 64);
+            this.gbMonitorClipboard.Size = new System.Drawing.Size(760, 56);
             this.gbMonitorClipboard.TabIndex = 9;
             this.gbMonitorClipboard.TabStop = false;
             this.gbMonitorClipboard.Text = "Monitor Clipboard";
@@ -5862,9 +5866,9 @@ namespace ZScreenGUI
             this.gbUpdates.Controls.Add(this.lblUpdateInfo);
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.chkCheckUpdates);
-            this.gbUpdates.Location = new System.Drawing.Point(8, 264);
+            this.gbUpdates.Location = new System.Drawing.Point(8, 288);
             this.gbUpdates.Name = "gbUpdates";
-            this.gbUpdates.Size = new System.Drawing.Size(752, 96);
+            this.gbUpdates.Size = new System.Drawing.Size(760, 96);
             this.gbUpdates.TabIndex = 8;
             this.gbUpdates.TabStop = false;
             this.gbUpdates.Text = "Check Updates";
@@ -5914,6 +5918,10 @@ namespace ZScreenGUI
             // gbMisc
             // 
             this.gbMisc.BackColor = System.Drawing.Color.Transparent;
+            this.gbMisc.Controls.Add(this.cbCloseButtonAction);
+            this.gbMisc.Controls.Add(this.cbMinimizeButtonAction);
+            this.gbMisc.Controls.Add(this.lblMinimizeButtonAction);
+            this.gbMisc.Controls.Add(this.lblCloseButtonAction);
             this.gbMisc.Controls.Add(this.chkHotkeys);
             this.gbMisc.Controls.Add(this.chkShellExt);
             this.gbMisc.Controls.Add(this.chkWindows7TaskbarIntegration);
@@ -5926,7 +5934,7 @@ namespace ZScreenGUI
             this.gbMisc.Controls.Add(this.chkStartWin);
             this.gbMisc.Location = new System.Drawing.Point(8, 8);
             this.gbMisc.Name = "gbMisc";
-            this.gbMisc.Size = new System.Drawing.Size(752, 176);
+            this.gbMisc.Size = new System.Drawing.Size(760, 208);
             this.gbMisc.TabIndex = 7;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
@@ -6863,14 +6871,63 @@ namespace ZScreenGUI
             this.ucProxyAccounts.Size = new System.Drawing.Size(785, 313);
             this.ucProxyAccounts.TabIndex = 0;
             // 
+            // lblCloseButtonAction
+            // 
+            this.lblCloseButtonAction.AutoSize = true;
+            this.lblCloseButtonAction.Location = new System.Drawing.Point(16, 176);
+            this.lblCloseButtonAction.Name = "lblCloseButtonAction";
+            this.lblCloseButtonAction.Size = new System.Drawing.Size(101, 13);
+            this.lblCloseButtonAction.TabIndex = 10;
+            this.lblCloseButtonAction.Text = "Close button action:";
+            // 
+            // lblMinimizeButtonAction
+            // 
+            this.lblMinimizeButtonAction.AutoSize = true;
+            this.lblMinimizeButtonAction.Location = new System.Drawing.Point(256, 176);
+            this.lblMinimizeButtonAction.Name = "lblMinimizeButtonAction";
+            this.lblMinimizeButtonAction.Size = new System.Drawing.Size(115, 13);
+            this.lblMinimizeButtonAction.TabIndex = 11;
+            this.lblMinimizeButtonAction.Text = "Minimize button action:";
+            // 
+            // cbMinimizeButtonAction
+            // 
+            this.cbMinimizeButtonAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMinimizeButtonAction.FormattingEnabled = true;
+            this.cbMinimizeButtonAction.Items.AddRange(new object[] {
+            "Minimize to tray",
+            "Minimize to taskbar",
+            "Close ZScreen",
+            "Nothing"});
+            this.cbMinimizeButtonAction.Location = new System.Drawing.Point(376, 172);
+            this.cbMinimizeButtonAction.Name = "cbMinimizeButtonAction";
+            this.cbMinimizeButtonAction.Size = new System.Drawing.Size(121, 21);
+            this.cbMinimizeButtonAction.TabIndex = 12;
+            this.cbMinimizeButtonAction.SelectedIndexChanged += new System.EventHandler(this.cbMinimizeButtonAction_SelectedIndexChanged);
+            // 
+            // cbCloseButtonAction
+            // 
+            this.cbCloseButtonAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCloseButtonAction.FormattingEnabled = true;
+            this.cbCloseButtonAction.Items.AddRange(new object[] {
+            "Minimize to tray",
+            "Minimize to taskbar",
+            "Close ZScreen",
+            "Nothing"});
+            this.cbCloseButtonAction.Location = new System.Drawing.Point(120, 172);
+            this.cbCloseButtonAction.Name = "cbCloseButtonAction";
+            this.cbCloseButtonAction.Size = new System.Drawing.Size(121, 21);
+            this.cbCloseButtonAction.TabIndex = 13;
+            this.cbCloseButtonAction.SelectedIndexChanged += new System.EventHandler(this.cbCloseButtonAction_SelectedIndexChanged);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 466);
+            this.ClientSize = new System.Drawing.Size(814, 462);
             this.Controls.Add(this.tcApp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(825, 500);
             this.Name = "ZScreen";
             this.Padding = new System.Windows.Forms.Padding(2);
@@ -7634,6 +7691,10 @@ namespace ZScreenGUI
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TabPage tpDebugLog;
         private System.Windows.Forms.RichTextBox rtbDebugLog;
+        private System.Windows.Forms.ComboBox cbCloseButtonAction;
+        private System.Windows.Forms.ComboBox cbMinimizeButtonAction;
+        private System.Windows.Forms.Label lblMinimizeButtonAction;
+        private System.Windows.Forms.Label lblCloseButtonAction;
 
     }
 }

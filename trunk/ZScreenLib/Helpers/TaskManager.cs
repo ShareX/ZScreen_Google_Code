@@ -176,29 +176,13 @@ namespace ZScreenLib
         /// <param name="task"></param>
         public void PublishData()
         {
-            if (Engine.conf.ShowAdvancedOptionsAfterCrop)
+            if (mTask.JobCategory == JobCategoryType.BINARY)
             {
-                //TODO: Implement Dialog to choose action
-
-                if (mTask.JobCategory == JobCategoryType.BINARY)
-                {
-                    UploadFile();
-                }
-                else
-                {
-                    PublishImage();
-                }
+                UploadFile();
             }
             else
             {
-                if (mTask.JobCategory == JobCategoryType.BINARY)
-                {
-                    UploadFile();
-                }
-                else
-                {
-                    PublishImage();
-                }
+                PublishImage();
             }
         }
 
