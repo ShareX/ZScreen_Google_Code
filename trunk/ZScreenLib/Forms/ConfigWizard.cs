@@ -60,8 +60,8 @@ namespace ZScreenLib
             {
                 txtRootFolder.Text = dlg.SelectedPath;
                 RootFolder = txtRootFolder.Text;
+                FileSystem.MoveDirectory(oldDir, txtRootFolder.Text);
             }
-            FileSystem.MoveDirectory(oldDir, txtRootFolder.Text);
         }
 
         private void btnViewRootDir_Click(object sender, EventArgs e)

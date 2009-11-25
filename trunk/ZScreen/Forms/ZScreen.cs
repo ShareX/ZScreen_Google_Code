@@ -4827,7 +4827,7 @@ namespace ZScreenGUI
 
         private void tcOptions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tcOptions.SelectedTab == tpStats)
+            if (tcOptions.SelectedTab == tpStats && !mDebug.DebugTimer.Enabled)
             {
                 btnDebugStart_Click(sender, e);
             }
