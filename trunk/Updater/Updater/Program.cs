@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NDesk.Options;
 
 namespace Updater
 {
@@ -40,14 +41,20 @@ namespace Updater
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (args.Length == 2)
+            string mUrl = string.Empty;
+            string mFilePath = string.Empty;
+
+            var p = new OptionSet() 
             {
-                Application.Run(new UpdaterForm(args[0], args[1]));
-            }
-            else
+                { "l|url=", "URL of the updated setup", v => mUrl = v },
+                { "fp|filepath=", "File path of the running application", v => mFilePath = v }
+            };
+
+            p.Parse(args);
+
+            if (!string.IsNullOrEmpty(mUrl) && !string.IsNullOrEmpty(mFilePath))
             {
-                //Application.Run(new UpdaterForm(@"http://mirror.netcologne.de/mozilla.org/firefox/releases/3.5.5/win32/en-US/Firefox%20Setup%203.5.5.exe", "ZScreen.exe"));
-                //Application.Run(new UpdaterForm(@"http://zscreen.googlecode.com/files/ZScreen-3.19.1.0-setup.exe", "ZScreen.exe"));
+                Application.Run(new UpdaterForm(mUrl, mFilePath));
             }
         }
     }

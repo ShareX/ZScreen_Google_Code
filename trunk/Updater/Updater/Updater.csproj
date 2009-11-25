@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileDownloader.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="UpdaterForm.cs">
       <SubType>Form</SubType>
     </Compile>

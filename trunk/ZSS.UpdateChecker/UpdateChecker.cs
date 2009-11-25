@@ -110,7 +110,11 @@ namespace ZSS.UpdateCheckerLib
                     string updater = Path.Combine(Application.StartupPath, "Updater.exe");
                     if (File.Exists(updater))
                     {
-                        Process.Start(updater, MyVersionInfo.Link + " " + Process.GetCurrentProcess().ProcessName);
+                        ProcessStartInfo psi = new ProcessStartInfo(updater);
+                        psi.Arguments = string.Format("url {0} filepath {1}", MyVersionInfo.Link, Process.GetCurrentProcess().MainModule.FileName);
+                        Process p = new Process();
+                        p.StartInfo = psi;
+                        p.Start();
                     }
                     else
                     {

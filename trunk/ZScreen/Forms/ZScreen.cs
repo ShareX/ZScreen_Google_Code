@@ -93,7 +93,10 @@ namespace ZScreenGUI
         internal void ZScreen_Windows7onlyTasks()
         {
             this.ShowInTaskbar = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
-            Engine.conf.MinimizeOnClose = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
+            if (Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7)
+            {
+                Engine.conf.MinimizeButtonAction = WindowButtonAction.MinimizeToTaskbar;
+            }
 
             if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
@@ -265,7 +268,7 @@ namespace ZScreenGUI
                     this.WindowState = Engine.conf.WindowState;
                     ShowInTaskbar = Engine.conf.ShowInTaskbar;
                 }
-                else if (Engine.conf.ShowInTaskbar && Engine.conf.MinimizeOnClose)
+                else if (Engine.conf.ShowInTaskbar && Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTaskbar)
                 {
                     this.WindowState = FormWindowState.Minimized;
                     ShowInTaskbar = true;
@@ -981,12 +984,12 @@ namespace ZScreenGUI
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
             if (cboCloseButtonAction.Items.Count == 0)
             {
-            	cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
-            }            
+                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+            }
             if (cboCloseButtonAction.Items.Count == 0)
             {
-            	cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
-            }            
+                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+            }
             cboCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
             cboMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
 
@@ -3603,10 +3606,10 @@ namespace ZScreenGUI
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldRootDir = txtRootFolder.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog 
-            { 
-            	ShowNewFolderButton = true, 
-            	Description = "Configure Root directory..."
+            FolderBrowserDialog dlg = new FolderBrowserDialog
+            {
+                ShowNewFolderButton = true,
+                Description = "Configure Root directory..."
             };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -4474,7 +4477,7 @@ namespace ZScreenGUI
             {
                 Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
                 cboMinimizeButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;
-                cboCloseButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;                
+                cboCloseButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;
                 chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
                 ZScreen_Windows7onlyTasks();
             }
@@ -4845,30 +4848,30 @@ namespace ZScreenGUI
         {
             Engine.conf.MinimizeButtonAction = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
-        
+
         void LbSoftwareMouseClick(object sender, MouseEventArgs e)
         {
-        	int sel = lbSoftware.IndexFromPoint(e.X, e.Y); 
-        	if (sel != -1)
-        	{
-        		lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
-        	}
-        }       
-        
+            int sel = lbSoftware.IndexFromPoint(e.X, e.Y);
+            if (sel != -1)
+            {
+                lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
+            }
+        }
+
         void BtnBrowseImagesDirClick(object sender, EventArgs e)
         {
-        	string oldDir = txtImagesDir.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog 
-            { 
-            	ShowNewFolderButton = true, 
-            	Description = "Configure Custom Images Directory..."            		
+            string oldDir = txtImagesDir.Text;
+            FolderBrowserDialog dlg = new FolderBrowserDialog
+            {
+                ShowNewFolderButton = true,
+                Description = "Configure Custom Images Directory..."
             };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-            	Engine.conf.UseCustomImagesDir = true;
-            	Engine.conf.CustomImagesDir = dlg.SelectedPath;
-            	FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
-            	UpdateGuiControlsPaths();
+                Engine.conf.UseCustomImagesDir = true;
+                Engine.conf.CustomImagesDir = dlg.SelectedPath;
+                FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
+                UpdateGuiControlsPaths();
             }
         }
     }
