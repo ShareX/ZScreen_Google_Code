@@ -4477,8 +4477,6 @@ namespace ZScreenGUI
             if (mGuiIsReady)
             {
                 Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
-                cboMinimizeButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;
-                cboCloseButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;
                 chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
                 ZScreen_Windows7onlyTasks();
             }
