@@ -23,8 +23,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
-using System.Web;
 
 namespace UploadersLib
 {
@@ -115,7 +113,6 @@ namespace UploadersLib
                 return string.Empty;
             }
 
-            fileName = HttpUtility.UrlEncode(fileName);
             string path = string.Empty;
             string host = this.Host;
             string folderPath = this.SubFolderPath;
