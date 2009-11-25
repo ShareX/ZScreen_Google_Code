@@ -979,8 +979,16 @@ namespace ZScreenGUI
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
-            cbCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
-            cbMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
+            if (cboCloseButtonAction.Items.Count == 0)
+            {
+            	cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+            }            
+            if (cboCloseButtonAction.Items.Count == 0)
+            {
+            	cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+            }            
+            cboCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
+            cboMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
 
             // Monitor Clipboard
 
@@ -4825,12 +4833,12 @@ namespace ZScreenGUI
 
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.CloseButtonAction = (WindowButtonAction)cbCloseButtonAction.SelectedIndex;
+            Engine.conf.CloseButtonAction = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
         }
 
         private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.MinimizeButtonAction = (WindowButtonAction)cbMinimizeButtonAction.SelectedIndex;
+            Engine.conf.MinimizeButtonAction = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
     }
 }
