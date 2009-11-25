@@ -91,10 +91,6 @@ namespace ZScreenGUI
         internal void ZScreen_Windows7onlyTasks()
         {
             this.ShowInTaskbar = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
-            if (Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7)
-            {
-                Engine.conf.MinimizeButtonAction = WindowButtonAction.MinimizeToTaskbar;
-            }
 
             if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
@@ -1611,11 +1607,18 @@ namespace ZScreenGUI
 
             if (Engine.conf.Windows7TaskbarIntegration)
             {
-                ZScreen_Windows7onlyTasks();
-                if (!Engine.conf.ShowMainWindow && !Engine.conf.FirstRun)
+                if (Engine.conf.FirstRun)
                 {
-                    this.WindowState = FormWindowState.Minimized;
+                    Engine.conf.CloseButtonAction = WindowButtonAction.MinimizeToTaskbar;
+                }
+                ZScreen_Windows7onlyTasks();
+                if (Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTaskbar)
+                {
                     this.ShowInTaskbar = true;
+                    if (!Engine.conf.ShowMainWindow)
+                    {
+                        this.WindowState = FormWindowState.Minimized;
+                    }
                 }
             }
 
