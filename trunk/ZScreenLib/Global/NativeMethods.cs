@@ -1320,10 +1320,9 @@ namespace ZScreenLib
 
                         using (Bitmap maskBitmap = Bitmap.FromHbitmap(iconInfo.hbmMask))
                         {
-                            Bitmap resultBitmap;
+                            Bitmap resultBitmap = null;
 
-                            // Is this a monochrome cursor?
-                            if (Engine.HasAero && maskBitmap.Height == maskBitmap.Width * 2)
+                            if (IsCursorMonochrome(maskBitmap))
                             {
                                 resultBitmap = new Bitmap(maskBitmap.Width, maskBitmap.Width);
 
@@ -1366,6 +1365,24 @@ namespace ZScreenLib
             }
 
             return new MyCursor();
+        }
+
+        private static bool IsCursorMonochrome(Bitmap bmp)
+        {
+            bool isMonochrome = bmp.Height == bmp.Width * 2;
+
+            Color white = Color.FromArgb(255, 255, 255, 255);
+
+            for (int y = 0; y < bmp.Height / 2; y++)
+            {
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    isMonochrome &= bmp.GetPixel(x, y) == white;
+                    if (!isMonochrome) return isMonochrome;
+                }
+            }
+
+            return isMonochrome;
         }
 
         public static bool GetWindowRegion(IntPtr hWnd, out Region region)
