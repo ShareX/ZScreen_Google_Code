@@ -154,9 +154,13 @@ namespace ZScreenLib
 
     public enum WindowButtonAction
     {
+    	[Description("Minimize to Tray")]
         MinimizeToTray,
+        [Description("Minimize to Taskbar")]
         MinimizeToTaskbar,
+        [Description("Exit Application")]
         CloseApplication,
+        [Description("Do Nothing")]
         Nothing
     }
 }

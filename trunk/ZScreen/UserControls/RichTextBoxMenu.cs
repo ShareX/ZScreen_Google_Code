@@ -22,8 +22,8 @@ namespace ZScreenGUI.UserControls
             cms.Items.Add("Copy").Click += new EventHandler(RichTextBoxMenuCopy_Click);
             cms.Items.Add("Paste").Click += new EventHandler(RichTextBoxMenuPaste_Click);
             cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Copy all").Click += new EventHandler(RichTextBoxMenuCopyAll_Click);
-            cms.Items.Add("Select all").Click += new EventHandler(RichTextBoxMenuSelectAll_Click);
+            cms.Items.Add("Copy All").Click += new EventHandler(RichTextBoxMenuCopyAll_Click);
+            cms.Items.Add("Select All").Click += new EventHandler(RichTextBoxMenuSelectAll_Click);
 
             rtb.ContextMenuStrip = cms;
         }
