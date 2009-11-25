@@ -481,8 +481,6 @@ namespace ZScreenLib
         public int ShortenUrlAfterUploadAfter { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
-        [Category("Options / Interaction"), DefaultValue(false), Description("Minimize ZScreen to taskbar on close.")]
-        public bool MinimizeOnClose { get; set; }
 
         // Options / Paths
 

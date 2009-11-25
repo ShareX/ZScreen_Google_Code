@@ -36,6 +36,7 @@ namespace Updater
     {
         public string URL { get; set; }
         public string ProcessName { get; set; }
+        public string ProcessPath { get; private set; }
         public string FileName { get; set; }
         public string SavePath { get; private set; }
 
@@ -50,11 +51,12 @@ namespace Updater
             ChangeStatus("Waiting.");
         }
 
-        public UpdaterForm(string url, string processName)
+        public UpdaterForm(string url, string processPath)
             : this()
         {
             URL = url;
-            ProcessName = processName;
+            ProcessPath = processPath;
+            ProcessName = Path.GetFileNameWithoutExtension(processPath);
             FileName = HttpUtility.UrlDecode(url.Substring(url.LastIndexOf('/') + 1));
             lblFilename.Text = "Filename: " + FileName;
         }
@@ -131,6 +133,14 @@ namespace Updater
                     {
                         process.CloseMainWindow();
                     }
+                    Process[] proc = Process.GetProcessesByName(ProcessName);
+                    if (proc.Length > 0)
+                    {
+                        foreach (Process process in proc)
+                        {
+                            process.Kill();
+                        }
+                    }
                 }
 
                 ProcessStartInfo psi = new ProcessStartInfo(SavePath);
@@ -138,20 +148,21 @@ namespace Updater
                 psi.UseShellExecute = true;
                 psi.Verb = "runas";
                 Process exe = Process.Start(psi);
-                exe.EnableRaisingEvents = true;
-                exe.Exited += new EventHandler(exe_Exited);
+                Application.Exit();
+                //exe.EnableRaisingEvents = true;
+                //exe.Exited += new EventHandler(exe_Exited);
             }
         }
 
-        private void exe_Exited(object sender, EventArgs e)
-        {
-            if (File.Exists(SavePath))
-            {
-                File.Delete(SavePath);
-                MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            Application.Exit();
-        }
+        //private void exe_Exited(object sender, EventArgs e)
+        //{
+        //    if (File.Exists(SavePath))
+        //    {
+        //        File.Delete(SavePath);
+        //        MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    Application.Exit();
+        //}
 
         private void UpdaterForm_Paint(object sender, PaintEventArgs e)
         {
