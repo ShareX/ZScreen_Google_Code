@@ -33,6 +33,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using GradientTester;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
@@ -40,16 +41,13 @@ using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
-using UploadersLib.TextUploaders;
-using UploadersLib.URLShorteners;
 using ZScreenGUI.Properties;
+using ZScreenGUI.UserControls;
 using ZScreenLib;
+using ZScreenLib.Helpers;
+using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using ZScreenTesterGUI;
-using GradientTester;
-using ZScreenLib.Helpers;
-using ZScreenGUI.UserControls;
 
 namespace ZScreenGUI
 {
