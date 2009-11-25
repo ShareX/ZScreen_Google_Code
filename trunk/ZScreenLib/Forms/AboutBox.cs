@@ -60,6 +60,7 @@ namespace ZScreenLib
             Timer timer = new Timer { Interval = 100 };
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
+            this.FormClosing += (v1, v2) => timer.Dispose();
         }
 
         private void timer_Tick(object sender, EventArgs e)

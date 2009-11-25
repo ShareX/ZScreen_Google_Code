@@ -22,6 +22,7 @@ namespace ZScreenGUI.UserControls
             cms.Items.Add("Copy").Click += new EventHandler(RichTextBoxMenuCopy_Click);
             cms.Items.Add("Paste").Click += new EventHandler(RichTextBoxMenuPaste_Click);
             cms.Items.Add(new ToolStripSeparator());
+            cms.Items.Add("Copy Selected Line").Click += new EventHandler(RichTextBoxMenuCopySelectedLine_Click);
             cms.Items.Add("Copy All").Click += new EventHandler(RichTextBoxMenuCopyAll_Click);
             cms.Items.Add("Select All").Click += new EventHandler(RichTextBoxMenuSelectAll_Click);
 
@@ -51,6 +52,19 @@ namespace ZScreenGUI.UserControls
         private void RichTextBoxMenuPaste_Click(object sender, EventArgs e)
         {
             rtb.Paste();
+        }
+
+        private void RichTextBoxMenuCopySelectedLine_Click(object sender, EventArgs e)
+        {
+            int line = rtb.GetLineFromCharIndex(rtb.GetFirstCharIndexOfCurrentLine());
+            if (rtb.Lines.Length > line)
+            {
+                string text = rtb.Lines[line];
+                if (!string.IsNullOrEmpty(text))
+                {
+                    Clipboard.SetText(text);
+                }
+            }
         }
 
         private void RichTextBoxMenuCopyAll_Click(object sender, EventArgs e)
