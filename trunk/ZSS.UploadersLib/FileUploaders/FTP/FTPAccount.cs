@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Web;
 
 namespace UploadersLib
 {
@@ -113,6 +114,7 @@ namespace UploadersLib
                 return string.Empty;
             }
 
+            fileName = HttpUtility.UrlEncode(fileName).Replace("+", "%20");
             string path = string.Empty;
             string host = this.Host;
             string folderPath = this.SubFolderPath;
