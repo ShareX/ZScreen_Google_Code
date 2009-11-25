@@ -51,7 +51,6 @@ namespace UploadersLib.FileUploaders
         {
             using (FTP ftpClient = new FTP(this.FTPAccount))
             {
-                fileName = HttpUtility.UrlEncode(fileName);
                 ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(x => OnProgressChanged((int)x));
                 string remotePath = FTPHelpers.CombineURL(FTPAccount.SubFolderPath, fileName);
 
