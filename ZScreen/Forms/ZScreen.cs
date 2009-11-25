@@ -3603,17 +3603,20 @@ namespace ZScreenGUI
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldRootDir = txtRootFolder.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog { ShowNewFolderButton = true };
+            FolderBrowserDialog dlg = new FolderBrowserDialog 
+            { 
+            	ShowNewFolderButton = true, 
+            	Description = "Configure Root directory..."
+            };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Engine.SetRootFolder(dlg.SelectedPath);
                 txtRootFolder.Text = Engine.mAppSettings.RootDir;
+                FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
+                UpdateGuiControlsPaths();
+                Engine.conf = XMLSettings.Read();
+                ZScreen_ConfigGUI();
             }
-
-            FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
-            UpdateGuiControlsPaths();
-            Engine.conf = XMLSettings.Read();
-            ZScreen_ConfigGUI();
         }
 
         private void btnViewRootDir_Click(object sender, EventArgs e)
@@ -4470,6 +4473,8 @@ namespace ZScreenGUI
             if (mGuiIsReady)
             {
                 Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
+                cboMinimizeButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;
+                cboCloseButtonAction.SelectedIndex = (int)WindowButtonAction.MinimizeToTaskbar;                
                 chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
                 ZScreen_Windows7onlyTasks();
             }
@@ -4839,6 +4844,32 @@ namespace ZScreenGUI
         private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.MinimizeButtonAction = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
+        }
+        
+        void LbSoftwareMouseClick(object sender, MouseEventArgs e)
+        {
+        	int sel = lbSoftware.IndexFromPoint(e.X, e.Y); 
+        	if (sel != -1)
+        	{
+        		lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
+        	}
+        }       
+        
+        void BtnBrowseImagesDirClick(object sender, EventArgs e)
+        {
+        	string oldDir = txtImagesDir.Text;
+            FolderBrowserDialog dlg = new FolderBrowserDialog 
+            { 
+            	ShowNewFolderButton = true, 
+            	Description = "Configure Custom Images Directory..."            		
+            };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+            	Engine.conf.UseCustomImagesDir = true;
+            	Engine.conf.CustomImagesDir = dlg.SelectedPath;
+            	FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
+            	UpdateGuiControlsPaths();
+            }
         }
     }
 }
