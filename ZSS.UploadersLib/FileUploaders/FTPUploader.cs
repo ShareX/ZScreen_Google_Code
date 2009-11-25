@@ -28,6 +28,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using UploadersLib.Helpers;
+using System.Web;
 
 namespace UploadersLib.FileUploaders
 {
@@ -50,6 +51,7 @@ namespace UploadersLib.FileUploaders
         {
             using (FTP ftpClient = new FTP(this.FTPAccount))
             {
+                fileName = HttpUtility.UrlEncode(fileName);
                 ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(x => OnProgressChanged((int)x));
                 string remotePath = FTPHelpers.CombineURL(FTPAccount.SubFolderPath, fileName);
 
