@@ -580,6 +580,7 @@ namespace ZScreenGUI
         	this.btnUploadTextClipboard = new System.Windows.Forms.Button();
         	this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
         	this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+        	this.btnBrowseImagesDir = new System.Windows.Forms.Button();
         	this.cmTray.SuspendLayout();
         	this.cmsHistory.SuspendLayout();
         	this.tcApp.SuspendLayout();
@@ -4477,6 +4478,7 @@ namespace ZScreenGUI
         	this.lbSoftware.Name = "lbSoftware";
         	this.lbSoftware.Size = new System.Drawing.Size(280, 397);
         	this.lbSoftware.TabIndex = 59;
+        	this.lbSoftware.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LbSoftwareMouseClick);
         	this.lbSoftware.SelectedIndexChanged += new System.EventHandler(this.lbSoftware_SelectedIndexChanged);
         	this.lbSoftware.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LbSoftwareItemCheck);
         	// 
@@ -6405,7 +6407,7 @@ namespace ZScreenGUI
         	// btnViewRootDir
         	// 
         	this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-        	this.btnViewRootDir.Location = new System.Drawing.Point(645, 22);
+        	this.btnViewRootDir.Location = new System.Drawing.Point(648, 22);
         	this.btnViewRootDir.Name = "btnViewRootDir";
         	this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
         	this.btnViewRootDir.TabIndex = 116;
@@ -6418,7 +6420,7 @@ namespace ZScreenGUI
         	this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
         	this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-        	this.btnBrowseRootDir.Location = new System.Drawing.Point(557, 22);
+        	this.btnBrowseRootDir.Location = new System.Drawing.Point(560, 22);
         	this.btnBrowseRootDir.Name = "btnBrowseRootDir";
         	this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
         	this.btnBrowseRootDir.TabIndex = 115;
@@ -6433,8 +6435,8 @@ namespace ZScreenGUI
         	this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
         	this.txtRootFolder.Name = "txtRootFolder";
         	this.txtRootFolder.ReadOnly = true;
-        	this.txtRootFolder.Size = new System.Drawing.Size(533, 20);
-        	this.txtRootFolder.TabIndex = 114;
+        	this.txtRootFolder.Size = new System.Drawing.Size(528, 20);
+        	this.txtRootFolder.TabIndex = 0;
         	this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
         	"";
         	// 
@@ -6443,6 +6445,7 @@ namespace ZScreenGUI
         	this.gbSaveLoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
         	this.gbSaveLoc.BackColor = System.Drawing.Color.Transparent;
+        	this.gbSaveLoc.Controls.Add(this.btnBrowseImagesDir);
         	this.gbSaveLoc.Controls.Add(this.btnMoveImageFiles);
         	this.gbSaveLoc.Controls.Add(this.lblImagesFolderPattern);
         	this.gbSaveLoc.Controls.Add(this.lblImagesFolderPatternPreview);
@@ -6459,6 +6462,7 @@ namespace ZScreenGUI
         	// 
         	// btnMoveImageFiles
         	// 
+        	this.btnMoveImageFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.btnMoveImageFiles.Location = new System.Drawing.Point(576, 56);
         	this.btnMoveImageFiles.Name = "btnMoveImageFiles";
         	this.btnMoveImageFiles.Size = new System.Drawing.Size(176, 23);
@@ -6509,7 +6513,7 @@ namespace ZScreenGUI
         	// btnViewImagesDir
         	// 
         	this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-        	this.btnViewImagesDir.Location = new System.Drawing.Point(648, 22);
+        	this.btnViewImagesDir.Location = new System.Drawing.Point(648, 21);
         	this.btnViewImagesDir.Name = "btnViewImagesDir";
         	this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
         	this.btnViewImagesDir.TabIndex = 113;
@@ -6526,7 +6530,7 @@ namespace ZScreenGUI
         	this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
         	this.txtImagesDir.Name = "txtImagesDir";
         	this.txtImagesDir.ReadOnly = true;
-        	this.txtImagesDir.Size = new System.Drawing.Size(621, 20);
+        	this.txtImagesDir.Size = new System.Drawing.Size(528, 20);
         	this.txtImagesDir.TabIndex = 1;
         	this.txtImagesDir.TextChanged += new System.EventHandler(this.txtFileDirectory_TextChanged);
         	// 
@@ -6922,6 +6926,19 @@ namespace ZScreenGUI
         	this.ttZScreen.ReshowDelay = 200;
         	this.ttZScreen.ShowAlways = true;
         	// 
+        	// btnBrowseImagesDir
+        	// 
+        	this.btnBrowseImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+        	this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        	this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+        	this.btnBrowseImagesDir.Location = new System.Drawing.Point(560, 21);
+        	this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
+        	this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
+        	this.btnBrowseImagesDir.TabIndex = 117;
+        	this.btnBrowseImagesDir.Text = "Relocate...";
+        	this.btnBrowseImagesDir.UseVisualStyleBackColor = true;
+        	this.btnBrowseImagesDir.Click += new System.EventHandler(this.BtnBrowseImagesDirClick);
+        	// 
         	// ZScreen
         	// 
         	this.AllowDrop = true;
@@ -7153,6 +7170,7 @@ namespace ZScreenGUI
         	this.tpOptionsAdv.ResumeLayout(false);
         	this.ResumeLayout(false);
         }
+        internal System.Windows.Forms.Button btnBrowseImagesDir;
         private System.Windows.Forms.GroupBox gbWindowButtons;
         private System.Windows.Forms.CheckBox chkEditorsEnabled;
 
