@@ -69,6 +69,7 @@ namespace ZScreenLib
 
         public static HistoryManager Read()
         {
+            FileSystem.AppendDebug("Reading History file: " + Engine.HistoryFile);
             return Read(Engine.HistoryFile);
         }
 
