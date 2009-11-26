@@ -74,6 +74,7 @@ namespace ZScreenGUI
             ZScreen_SetFormSettings();
             Loader.Worker = new WorkerPrimary(this);
             Loader.Worker2 = new WorkerSecondary(this);
+            Loader.Worker.mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
             ZScreen_ConfigGUI();
 
             Loader.Worker2.PerformOnlineTasks();
@@ -278,7 +279,7 @@ namespace ZScreenGUI
             Loader.Worker2.CleanCache();
             StartDebug();
 
-            SetToolTip(nudtScreenshotDelay);
+            SetToolTip(nudScreenshotDelay);
             FillClipboardCopyMenu();
             FillClipboardMenu();
 
@@ -411,19 +412,23 @@ namespace ZScreenGUI
             pgApp.SelectedObject = Engine.conf;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
 
-            #region Global
+            ZScreen_ConfigGUI_TrayMenu();
+            ZScreen_ConfigGUI_Options();
+            ZScreen_ConfigGUI_Main();
+            ZScreen_ConfigGUI_Destinations();
+            ZScreen_ConfigGUI_Hotkeys();
+            ZScreen_ConfigGUI_Screenshots();
+            ZScreen_ConfigGUI_Editors();
+            ZScreen_ConfigGUI_ImageHosting();
+            ZScreen_ConfigGUI_TextServices();
+            ZScreen_ConfigGUI_Translator();
+            ZScreen_ConfigGUI_History();
 
-            //~~~~~~~~~~~~~~~~~~~~~
-            //  Global
-            //~~~~~~~~~~~~~~~~~~~~~
-            Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
-            chkPreferSystemFolders.Checked = Engine.conf.PreferSystemFolders;
-            txtRootFolder.Text = Engine.RootAppFolder;
-            UpdateGuiControlsPaths();
-            #endregion
+            CheckFormSettings();
+        }
 
-            #region Main
-
+        private void ZScreen_ConfigGUI_TrayMenu()
+        {
             if (tsmiTabs.DropDownItems.Count == 0)
             {
                 foreach (TabPage tp in tcApp.TabPages)
@@ -436,13 +441,6 @@ namespace ZScreenGUI
                 }
             }
 
-            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
-            {
-                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
-            }
-
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
-
             if (tsmImageDest.DropDownItems.Count == 0)
             {
                 foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
@@ -453,7 +451,6 @@ namespace ZScreenGUI
                     tsmImageDest.DropDownItems.Add(tsmi);
                 }
             }
-
             CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(Engine.conf.ImageUploaderType));
 
             if (tsmFileDest.DropDownItems.Count == 0)
@@ -466,8 +463,16 @@ namespace ZScreenGUI
                     tsmFileDest.DropDownItems.Add(tsmi);
                 }
             }
-
             CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileDestMode));
+        }
+
+        private void ZScreen_ConfigGUI_Main()
+        {
+            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
+            {
+                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            }
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
 
             if (cboClipboardTextMode.Items.Count == 0)
             {
@@ -475,256 +480,12 @@ namespace ZScreenGUI
             }
 
             cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
-            nudtScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
-            nudtScreenshotDelay.Value = Engine.conf.ScreenshotDelayTime;
             chkManualNaming.Checked = Engine.conf.ManualNaming;
-            cbShowCursor.Checked = Engine.conf.ShowCursor;
-            cboCropGridMode.Checked = Engine.conf.CropGridToggle;
-            nudCropGridWidth.Value = Engine.conf.CropGridSize.Width;
-            nudCropGridHeight.Value = Engine.conf.CropGridSize.Height;
+            chkShowCursor.Checked = Engine.conf.ShowCursor;
+        }
 
-            #endregion
-
-            #region Hotkeys
-
-            UpdateHotkeysDGV();
-
-            #endregion
-
-            #region Capture
-
-            // Crop Shot
-            if (cbCropStyle.Items.Count == 0)
-            {
-                cbCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
-            }
-
-            cbCropStyle.SelectedIndex = (int)Engine.conf.CropRegionStyles;
-            cbRegionRectangleInfo.Checked = Engine.conf.CropRegionRectangleInfo;
-            cbRegionHotkeyInfo.Checked = Engine.conf.CropRegionHotkeyInfo;
-
-            cbCropDynamicCrosshair.Checked = Engine.conf.CropDynamicCrosshair;
-            nudCropCrosshairInterval.Value = Engine.conf.CropInterval;
-            nudCropCrosshairStep.Value = Engine.conf.CropStep;
-            nudCrosshairLineCount.Value = Engine.conf.CrosshairLineCount;
-            nudCrosshairLineSize.Value = Engine.conf.CrosshairLineSize;
-            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropCrosshairColor);
-            cbCropShowBigCross.Checked = Engine.conf.CropShowBigCross;
-            cbCropShowMagnifyingGlass.Checked = Engine.conf.CropShowMagnifyingGlass;
-
-            cbShowCropRuler.Checked = Engine.conf.CropShowRuler;
-            cbCropDynamicBorderColor.Checked = Engine.conf.CropDynamicBorderColor;
-            nudCropRegionInterval.Value = Engine.conf.CropRegionInterval;
-            nudCropRegionStep.Value = Engine.conf.CropRegionStep;
-            nudCropHueRange.Value = Engine.conf.CropHueRange;
-            pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropBorderColor);
-            nudCropBorderSize.Value = Engine.conf.CropBorderSize;
-            cbCropShowGrids.Checked = Engine.conf.CropShowGrids;
-
-            // Selected Window
-            if (cbSelectedWindowStyle.Items.Count == 0)
-            {
-                cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
-            }
-
-            cbSelectedWindowStyle.SelectedIndex = (int)Engine.conf.SelectedWindowRegionStyles;
-            cbSelectedWindowRectangleInfo.Checked = Engine.conf.SelectedWindowRectangleInfo;
-            cbSelectedWindowRuler.Checked = Engine.conf.SelectedWindowRuler;
-            pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.SelectedWindowBorderColor);
-            nudSelectedWindowBorderSize.Value = Engine.conf.SelectedWindowBorderSize;
-            cbSelectedWindowDynamicBorderColor.Checked = Engine.conf.SelectedWindowDynamicBorderColor;
-            nudSelectedWindowRegionInterval.Value = Engine.conf.SelectedWindowRegionInterval;
-            nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
-            nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
-            chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
-
-            // Active Window        
-            chkActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
-            chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
-            chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
-            chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
-            chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
-            chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
-            cbActiveWindowGDIFreezeWindow.Checked = Engine.conf.ActiveWindowGDIFreezeWindow;
-
-            // Interaction
-            nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
-            chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
-            cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Engine.conf.BalloonTipOpenLink;
-            cbShowUploadDuration.Checked = Engine.conf.ShowUploadDuration;
-            cbCompleteSound.Checked = Engine.conf.CompleteSound;
-            cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
-            cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
-
-            // Watermark
-            if (cboWatermarkType.Items.Count == 0)
-            {
-                cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
-            }
-
-            cboWatermarkType.SelectedIndex = (int)Engine.conf.WatermarkMode;
-            if (cbWatermarkPosition.Items.Count == 0)
-            {
-                cbWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
-            }
-
-            cbWatermarkPosition.SelectedIndex = (int)Engine.conf.WatermarkPositionMode;
-            nudWatermarkOffset.Value = Engine.conf.WatermarkOffset;
-            cbWatermarkAddReflection.Checked = Engine.conf.WatermarkAddReflection;
-            cbWatermarkAutoHide.Checked = Engine.conf.WatermarkAutoHide;
-
-            txtWatermarkText.Text = Engine.conf.WatermarkText;
-            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
-            lblWatermarkFont.Text = FontToString();
-            nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
-            trackWatermarkFontTrans.Value = (int)Engine.conf.WatermarkFontTrans;
-            nudWatermarkCornerRadius.Value = Engine.conf.WatermarkCornerRadius;
-            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1);
-            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2);
-            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkBorderColor);
-            nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
-            trackWatermarkBackgroundTrans.Value = (int)Engine.conf.WatermarkBackTrans;
-            if (cbWatermarkGradientType.Items.Count == 0)
-            {
-                cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
-            }
-
-            cbWatermarkGradientType.SelectedIndex = (int)Engine.conf.WatermarkGradientType;
-            cboUseCustomGradient.Checked = Engine.conf.WatermarkUseCustomGradient;
-
-            txtWatermarkImageLocation.Text = Engine.conf.WatermarkImageLocation;
-            cbWatermarkUseBorder.Checked = Engine.conf.WatermarkUseBorder;
-            nudWatermarkImageScale.Value = Engine.conf.WatermarkImageScale;
-
-            TestWatermark();
-
-            // Image Settings
-
-            if (cboFileFormat.Items.Count == 0)
-            {
-                cboFileFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
-            }
-
-            cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFileFormat;
-            nudImageQuality.Value = Engine.conf.JpgQuality;
-            cbGIFQuality.SelectedIndex = (int)Engine.conf.GIFQuality;
-            nudSwitchAfter.Value = Engine.conf.SwitchAfter;
-            if (cboSwitchFormat.Items.Count == 0)
-            {
-                cboSwitchFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
-            }
-            cboSwitchFormat.SelectedIndex = (int)Engine.conf.ImageFormatSwitch;
-
-            switch (Engine.conf.ImageSizeType)
-            {
-                case ImageSizeType.DEFAULT:
-                    rbImageSizeDefault.Checked = true;
-                    break;
-                case ImageSizeType.FIXED:
-                    rbImageSizeFixed.Checked = true;
-                    break;
-                case ImageSizeType.RATIO:
-                    rbImageSizeRatio.Checked = true;
-                    break;
-            }
-
-            txtImageSizeFixedWidth.Text = Engine.conf.ImageSizeFixedWidth.ToString();
-            txtImageSizeFixedHeight.Text = Engine.conf.ImageSizeFixedHeight.ToString();
-            txtImageSizeRatio.Text = Engine.conf.ImageSizeRatioPercentage.ToString();
-
-            #endregion
-
-            #region Text Uploaders & URL Shorteners
-
-            /*if (Engine.conf.TextUploadersList.Count == 0)
-            {
-                Engine.conf.TextUploadersList = new List<TextUploader> { new PastebinUploader(), new Paste2Uploader(), new SlexyUploader() };
-            }*/
-            foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
-            {
-                TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
-                if (null != tu)
-                {
-                    if (!Adapter.FindItemInList(Engine.conf.TextUploadersList, tu.ToString()))
-                    {
-                        Engine.conf.TextUploadersList.Add(tu);
-                    }
-                }
-            }
-
-            ucTextUploaders.MyCollection.Items.Clear();
-            ucDestOptions.cboTextUploaders.Items.Clear();
-            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
-            {
-                if (textUploader != null)
-                {
-                    ucTextUploaders.MyCollection.Items.Add(textUploader);
-                    ucDestOptions.cboTextUploaders.Items.Add(textUploader);
-                }
-            }
-
-            if (Adapter.CheckTextUploaders())
-            {
-                ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
-                ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
-            }
-            else
-            {
-                ucTextUploaders.MyCollection.SelectedIndex = 0;
-                ucDestOptions.cboTextUploaders.SelectedIndex = 0;
-            }
-
-            ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
-
-            ucTextUploaders.Templates.Items.Clear();
-            ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
-            ucTextUploaders.Templates.SelectedIndex = 1;
-
-            ///////////////////////////////////
-            // URL Shorteners Settings
-            ///////////////////////////////////
-
-            //            if (Engine.conf.UrlShortenersList.Count == 0)
-            //            {
-            //                Engine.conf.UrlShortenersList = new List<TextUploader> { new ThreelyUploader(), new BitlyUploader(),
-            //                    new IsgdUploader(), new KlamUploader(), new TinyURLUploader() };
-            //            }
-            foreach (UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType)))
-            {
-                TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
-                if (null != tu)
-                {
-                    if (!Adapter.FindItemInList(Engine.conf.UrlShortenersList, tu.ToString()))
-                    {
-                        Engine.conf.UrlShortenersList.Add(tu);
-                    }
-                }
-            }
-
-            ucUrlShorteners.MyCollection.Items.Clear();
-            ucDestOptions.cboURLShorteners.Items.Clear();
-            foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
-            {
-                if (textUploader != null)
-                {
-                    ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                    ucDestOptions.cboURLShorteners.Items.Add(textUploader);
-                }
-            }
-
-            if (Engine.conf.UrlShortenerSelected > -1 && Engine.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
-            {
-                ucUrlShorteners.MyCollection.SelectedIndex = Engine.conf.UrlShortenerSelected;
-                ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.UrlShortenerSelected;
-            }
-
-            ucUrlShorteners.Templates.Items.Clear();
-            ucUrlShorteners.Templates.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-            ucUrlShorteners.Templates.SelectedIndex = 0;
-
-            #endregion
-
+        private void ZScreen_ConfigGUI_Destinations()
+        {
             #region FTP Settings
 
             if (Engine.conf.FTPAccountList == null || Engine.conf.FTPAccountList.Count == 0)
@@ -871,40 +632,173 @@ namespace ZScreenGUI
             txtSendSpacePassword.Text = Engine.conf.SendSpacePassword;
             txtSendSpaceUserName.Text = Engine.conf.SendSpaceUserName;
             #endregion
+        }
 
-            // Others
+        private void ZScreen_ConfigGUI_Hotkeys()
+        {
+           Loader.Worker.mHotkeyMgr.UpdateHotkeysDGV();
+        }
 
-            cbAutoSwitchFileUploader.Checked = Engine.conf.AutoSwitchFileUploader;
-            nudErrorRetry.Value = Engine.conf.ErrorRetryCount;
-            cboImageUploadRetryOnTimeout.Checked = Engine.conf.ImageUploadRetryOnTimeout;
-            nudUploadDurationLimit.Value = Engine.conf.UploadDurationLimit;
+        private void ZScreen_ConfigGUI_Screenshots()
+        {
+            ZScreen_ConfigGUI_Screenshots_CropShot();
 
-            if (cboUploadMode.Items.Count == 0)
+            // Selected Window
+            if (cbSelectedWindowStyle.Items.Count == 0)
             {
-                cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
+                cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
 
-            cboUploadMode.SelectedIndex = (int)Engine.conf.UploadMode;
-            chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
-            chkImageUploadRandomRetryOnFail.Checked = Engine.conf.ImageUploadRandomRetryOnFail;
-            cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
-            cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
-            txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
-            cbAddFailedScreenshot.Checked = Engine.conf.AddFailedScreenshot;
-            cbTinyPicSizeCheck.Checked = Engine.conf.TinyPicSizeCheck;
+            cbSelectedWindowStyle.SelectedIndex = (int)Engine.conf.SelectedWindowRegionStyles;
+            cbSelectedWindowRectangleInfo.Checked = Engine.conf.SelectedWindowRectangleInfo;
+            cbSelectedWindowRuler.Checked = Engine.conf.SelectedWindowRuler;
+            pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.SelectedWindowBorderColor);
+            nudSelectedWindowBorderSize.Value = Engine.conf.SelectedWindowBorderSize;
+            cbSelectedWindowDynamicBorderColor.Checked = Engine.conf.SelectedWindowDynamicBorderColor;
+            nudSelectedWindowRegionInterval.Value = Engine.conf.SelectedWindowRegionInterval;
+            nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
+            nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
+            chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
-            // Web Page Upload
+            // Active Window        
+            chkActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
+            chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
+            chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
+            chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
+            chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
+            chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
+            cbActiveWindowGDIFreezeWindow.Checked = Engine.conf.ActiveWindowGDIFreezeWindow;
 
-            cbWebPageUseCustomSize.Checked = Engine.conf.WebPageUseCustomSize;
-            txtWebPageWidth.Text = Engine.conf.WebPageWidth.ToString();
-            txtWebPageHeight.Text = Engine.conf.WebPageHeight.ToString();
-            cbWebPageAutoUpload.Checked = Engine.conf.WebPageAutoUpload;
+            // Naming Conventions
+            txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
+            txtEntireScreen.Text = Engine.conf.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Engine.conf.SaveFolderPattern;
+            nudMaxNameLength.Value = Engine.conf.MaxNameLength;
 
-            #region Image Editors
+            ZScreen_ConfigGUI_Screenshots_Watermark();
+            ZScreen_ConfigGUI_Screenshots_ImageSettings();
+        }
 
-            ///////////////////////////////////
-            // Image Editors Settings
-            ///////////////////////////////////
+        private void ZScreen_ConfigGUI_Screenshots_CropShot()
+        {
+            // Crop Region Settings
+            if (chkCropStyle.Items.Count == 0)
+            {
+                chkCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
+            }
+            chkCropStyle.SelectedIndex = (int)Engine.conf.CropRegionStyles;
+            chkRegionRectangleInfo.Checked = Engine.conf.CropRegionRectangleInfo;
+            chkRegionHotkeyInfo.Checked = Engine.conf.CropRegionHotkeyInfo;
+
+            // Crosshair Settings
+            chkCropDynamicCrosshair.Checked = Engine.conf.CropDynamicCrosshair;
+            nudCropCrosshairInterval.Value = Engine.conf.CropInterval;
+            nudCropCrosshairStep.Value = Engine.conf.CropStep;
+            nudCrosshairLineCount.Value = Engine.conf.CrosshairLineCount;
+            nudCrosshairLineSize.Value = Engine.conf.CrosshairLineSize;
+            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropCrosshairColor);
+            chkCropShowBigCross.Checked = Engine.conf.CropShowBigCross;
+            chkCropShowMagnifyingGlass.Checked = Engine.conf.CropShowMagnifyingGlass;
+
+            // Region Settings
+            cbShowCropRuler.Checked = Engine.conf.CropShowRuler;
+            cbCropDynamicBorderColor.Checked = Engine.conf.CropDynamicBorderColor;
+            nudCropRegionInterval.Value = Engine.conf.CropRegionInterval;
+            nudCropRegionStep.Value = Engine.conf.CropRegionStep;
+            nudCropHueRange.Value = Engine.conf.CropHueRange;
+            pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropBorderColor);
+            nudCropBorderSize.Value = Engine.conf.CropBorderSize;
+            cbCropShowGrids.Checked = Engine.conf.CropShowGrids;
+
+            // Grid Mode Settings
+            nudScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
+            nudScreenshotDelay.Value = Engine.conf.ScreenshotDelayTime;
+            cboCropGridMode.Checked = Engine.conf.CropGridToggle;
+            nudCropGridWidth.Value = Engine.conf.CropGridSize.Width;
+            nudCropGridHeight.Value = Engine.conf.CropGridSize.Height;
+        }
+
+        private void ZScreen_ConfigGUI_Screenshots_Watermark()
+        {
+            if (cboWatermarkType.Items.Count == 0)
+            {
+                cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
+            }
+
+            cboWatermarkType.SelectedIndex = (int)Engine.conf.WatermarkMode;
+            if (chkWatermarkPosition.Items.Count == 0)
+            {
+                chkWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
+            }
+
+            chkWatermarkPosition.SelectedIndex = (int)Engine.conf.WatermarkPositionMode;
+            nudWatermarkOffset.Value = Engine.conf.WatermarkOffset;
+            cbWatermarkAddReflection.Checked = Engine.conf.WatermarkAddReflection;
+            cbWatermarkAutoHide.Checked = Engine.conf.WatermarkAutoHide;
+
+            txtWatermarkText.Text = Engine.conf.WatermarkText;
+            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
+            lblWatermarkFont.Text = FontToString();
+            nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
+            trackWatermarkFontTrans.Value = (int)Engine.conf.WatermarkFontTrans;
+            nudWatermarkCornerRadius.Value = Engine.conf.WatermarkCornerRadius;
+            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1);
+            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2);
+            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkBorderColor);
+            nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
+            trackWatermarkBackgroundTrans.Value = (int)Engine.conf.WatermarkBackTrans;
+            if (cbWatermarkGradientType.Items.Count == 0)
+            {
+                cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
+            }
+
+            cbWatermarkGradientType.SelectedIndex = (int)Engine.conf.WatermarkGradientType;
+            cboUseCustomGradient.Checked = Engine.conf.WatermarkUseCustomGradient;
+
+            txtWatermarkImageLocation.Text = Engine.conf.WatermarkImageLocation;
+            cbWatermarkUseBorder.Checked = Engine.conf.WatermarkUseBorder;
+            nudWatermarkImageScale.Value = Engine.conf.WatermarkImageScale;
+
+            TestWatermark();
+        }
+
+        private void ZScreen_ConfigGUI_Screenshots_ImageSettings()
+        {
+            if (cboFileFormat.Items.Count == 0)
+            {
+                cboFileFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
+            }
+
+            cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFileFormat;
+            nudImageQuality.Value = Engine.conf.JpgQuality;
+            cbGIFQuality.SelectedIndex = (int)Engine.conf.GIFQuality;
+            nudSwitchAfter.Value = Engine.conf.SwitchAfter;
+            if (cboSwitchFormat.Items.Count == 0)
+            {
+                cboSwitchFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
+            }
+            cboSwitchFormat.SelectedIndex = (int)Engine.conf.ImageFormatSwitch;
+
+            switch (Engine.conf.ImageSizeType)
+            {
+                case ImageSizeType.DEFAULT:
+                    rbImageSizeDefault.Checked = true;
+                    break;
+                case ImageSizeType.FIXED:
+                    rbImageSizeFixed.Checked = true;
+                    break;
+                case ImageSizeType.RATIO:
+                    rbImageSizeRatio.Checked = true;
+                    break;
+            }
+
+            txtImageSizeFixedWidth.Text = Engine.conf.ImageSizeFixedWidth.ToString();
+            txtImageSizeFixedHeight.Text = Engine.conf.ImageSizeFixedHeight.ToString();
+            txtImageSizeRatio.Text = Engine.conf.ImageSizeRatioPercentage.ToString();
+        }
+
+        private void ZScreen_ConfigGUI_Editors()
+        {
 
             chkEditorsEnabled.Checked = Engine.conf.ImageEditorsEnabled;
             tsmEditinImageSoftware.Checked = Engine.conf.ImageEditorsEnabled;
@@ -960,78 +854,32 @@ namespace ZScreenGUI
             {
                 Engine.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
             }
+        }
 
-            #endregion
-
-            #region Options
-
-            chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
-            chkShellExt.Checked = RegistryMgr.CheckShellExt();
-            chkOpenMainWindow.Checked = Engine.conf.ShowMainWindow;
-            chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
-            chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
-            cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
-            chkSaveFormSizePosition.Checked = Engine.conf.SaveFormSizePosition;
-            cbLockFormSize.Checked = Engine.conf.LockFormSize;
-            cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
-            chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
-            if (cboCloseButtonAction.Items.Count == 0)
-            {
-                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
-            }
-            if (cboCloseButtonAction.Items.Count == 0)
-            {
-                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
-            }
-            cboCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
-            cboMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
-
-            // Monitor Clipboard
-
-            chkMonImages.Checked = Engine.conf.MonitorImages;
-            chkMonText.Checked = Engine.conf.MonitorText;
-            chkMonFiles.Checked = Engine.conf.MonitorFiles;
-            chkMonUrls.Checked = Engine.conf.MonitorUrls;
-
-            #endregion
-
-            chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
-            ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
-
-            chkCheckUpdates.Checked = Engine.conf.CheckUpdates;
-            chkCheckUpdatesBeta.Checked = Engine.conf.CheckUpdatesBeta;
-            nudCacheSize.Value = Engine.conf.ScreenshotCacheSize;
-            chkDeleteLocal.Checked = Engine.conf.DeleteLocal;
-
-            FolderWatcher zWatcher = new FolderWatcher(this);
-            zWatcher.FolderPath = Engine.conf.FolderMonitorPath;
-            if (Engine.conf.FolderMonitoring)
-            {
-                zWatcher.StartWatching();
-            }
-            else
-            {
-                zWatcher.StopWatching();
-            }
-
-            // Naming Conventions
-            txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.conf.EntireScreenPattern;
-            txtImagesFolderPattern.Text = Engine.conf.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.conf.MaxNameLength;
-
-            // Proxy Settings
-            ProxySetup(Engine.conf.ProxyList);
-            if (ucProxyAccounts.AccountsList.Items.Count > 0)
-            {
-                ucProxyAccounts.AccountsList.SelectedIndex = Engine.conf.ProxySelected;
-            }
-
-            ///////////////////////////////////
+        private void ZScreen_ConfigGUI_ImageHosting()
+        {
             // Image Uploaders
-            ///////////////////////////////////
 
+            chkAutoSwitchFileUploader.Checked = Engine.conf.AutoSwitchFileUploader;
+            nudErrorRetry.Value = Engine.conf.ErrorRetryCount;
+            cboImageUploadRetryOnTimeout.Checked = Engine.conf.ImageUploadRetryOnTimeout;
+            nudUploadDurationLimit.Value = Engine.conf.UploadDurationLimit;
+
+            if (cboUploadMode.Items.Count == 0)
+            {
+                cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
+            }
+
+            cboUploadMode.SelectedIndex = (int)Engine.conf.UploadMode;
+            chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
+            chkImageUploadRandomRetryOnFail.Checked = Engine.conf.ImageUploadRandomRetryOnFail;
+            cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
+            cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
+            txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
+            cbAddFailedScreenshot.Checked = Engine.conf.AddFailedScreenshot;
+            cbTinyPicSizeCheck.Checked = Engine.conf.TinyPicSizeCheck;
+
+            // Custom Image Uploaders
             lbImageUploader.Items.Clear();
             if (Engine.conf.ImageUploadersList == null)
             {
@@ -1057,18 +905,178 @@ namespace ZScreenGUI
                 }
             }
 
-            #region History
+            // Web Page Upload
 
+            cbWebPageUseCustomSize.Checked = Engine.conf.WebPageUseCustomSize;
+            txtWebPageWidth.Text = Engine.conf.WebPageWidth.ToString();
+            txtWebPageHeight.Text = Engine.conf.WebPageHeight.ToString();
+            cbWebPageAutoUpload.Checked = Engine.conf.WebPageAutoUpload;
+        }
+
+        private void ZScreen_ConfigGUI_TextServices()
+        {
+            foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
+            {
+                TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
+                if (null != tu)
+                {
+                    if (!Adapter.FindItemInList(Engine.conf.TextUploadersList, tu.ToString()))
+                    {
+                        Engine.conf.TextUploadersList.Add(tu);
+                    }
+                }
+            }
+
+            ucTextUploaders.MyCollection.Items.Clear();
+            ucDestOptions.cboTextUploaders.Items.Clear();
+            foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
+            {
+                if (textUploader != null)
+                {
+                    ucTextUploaders.MyCollection.Items.Add(textUploader);
+                    ucDestOptions.cboTextUploaders.Items.Add(textUploader);
+                }
+            }
+
+            if (Adapter.CheckTextUploaders())
+            {
+                ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
+                ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
+            }
+            else
+            {
+                ucTextUploaders.MyCollection.SelectedIndex = 0;
+                ucDestOptions.cboTextUploaders.SelectedIndex = 0;
+            }
+
+            ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
+
+            ucTextUploaders.Templates.Items.Clear();
+            ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
+            ucTextUploaders.Templates.SelectedIndex = 1;
+
+            foreach (UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType)))
+            {
+                TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
+                if (null != tu)
+                {
+                    if (!Adapter.FindItemInList(Engine.conf.UrlShortenersList, tu.ToString()))
+                    {
+                        Engine.conf.UrlShortenersList.Add(tu);
+                    }
+                }
+            }
+
+            ucUrlShorteners.MyCollection.Items.Clear();
+            ucDestOptions.cboURLShorteners.Items.Clear();
+            foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
+            {
+                if (textUploader != null)
+                {
+                    ucUrlShorteners.MyCollection.Items.Add(textUploader);
+                    ucDestOptions.cboURLShorteners.Items.Add(textUploader);
+                }
+            }
+
+            if (Engine.conf.UrlShortenerSelected > -1 && Engine.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
+            {
+                ucUrlShorteners.MyCollection.SelectedIndex = Engine.conf.UrlShortenerSelected;
+                ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.UrlShortenerSelected;
+            }
+
+            ucUrlShorteners.Templates.Items.Clear();
+            ucUrlShorteners.Templates.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+            ucUrlShorteners.Templates.SelectedIndex = 0;
+        }
+
+        private void ZScreen_ConfigGUI_Translator()
+        {
+            // yet empty
+        }
+
+        private void ZScreen_ConfigGUI_History()
+        {
             if (mGuiIsReady)
             {
                 nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
                 Loader.Worker.UpdateGuiControlsHistory();
             }
             Loader.Worker2.LoadHistoryItems();
+        }
 
-            #endregion
+        private void ZScreen_ConfigGUI_Options()
+        {
+            Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
+            chkPreferSystemFolders.Checked = Engine.conf.PreferSystemFolders;
+            txtRootFolder.Text = Engine.RootAppFolder;
+            UpdateGuiControlsPaths();
 
-            CheckFormSettings();
+            // General
+
+            chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
+            chkShellExt.Checked = RegistryMgr.CheckShellExt();
+            chkOpenMainWindow.Checked = Engine.conf.ShowMainWindow;
+            chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
+            chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
+            cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
+            chkSaveFormSizePosition.Checked = Engine.conf.SaveFormSizePosition;
+            cbLockFormSize.Checked = Engine.conf.LockFormSize;
+            cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
+            chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
+            chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
+
+            // Interaction
+            nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
+            chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
+            cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
+            chkBalloonTipOpenLink.Checked = Engine.conf.BalloonTipOpenLink;
+            cbShowUploadDuration.Checked = Engine.conf.ShowUploadDuration;
+            cbCompleteSound.Checked = Engine.conf.CompleteSound;
+            cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
+            cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
+
+            // Proxy 
+            chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
+            ProxySetup(Engine.conf.ProxyList);
+            if (ucProxyAccounts.AccountsList.Items.Count > 0)
+            {
+                ucProxyAccounts.AccountsList.SelectedIndex = Engine.conf.ProxySelected;
+            }
+
+            if (cboCloseButtonAction.Items.Count == 0)
+            {
+                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+            }
+            if (cboCloseButtonAction.Items.Count == 0)
+            {
+                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+            }
+            cboCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
+            cboMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
+
+            ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
+
+            chkCheckUpdates.Checked = Engine.conf.CheckUpdates;
+            chkCheckUpdatesBeta.Checked = Engine.conf.CheckUpdatesBeta;
+            nudCacheSize.Value = Engine.conf.ScreenshotCacheSize;
+            chkDeleteLocal.Checked = Engine.conf.DeleteLocal;
+
+            FolderWatcher zWatcher = new FolderWatcher(this);
+            zWatcher.FolderPath = Engine.conf.FolderMonitorPath;
+            if (Engine.conf.FolderMonitoring)
+            {
+                zWatcher.StartWatching();
+            }
+            else
+            {
+                zWatcher.StopWatching();
+            }
+
+            // Monitor Clipboard
+            chkMonImages.Checked = Engine.conf.MonitorImages;
+            chkMonText.Checked = Engine.conf.MonitorText;
+            chkMonFiles.Checked = Engine.conf.MonitorFiles;
+            chkMonUrls.Checked = Engine.conf.MonitorUrls;
         }
 
         private void tsmiTab_Click(object sender, EventArgs e)
@@ -1122,12 +1130,12 @@ namespace ZScreenGUI
 
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionRectangleInfo = cbRegionRectangleInfo.Checked;
+            Engine.conf.CropRegionRectangleInfo = chkRegionRectangleInfo.Checked;
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionHotkeyInfo = cbRegionHotkeyInfo.Checked;
+            Engine.conf.CropRegionHotkeyInfo = chkRegionHotkeyInfo.Checked;
         }
 
         private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -2245,82 +2253,11 @@ namespace ZScreenGUI
             }
 
             Loader.Worker.mSetHotkeys = true;
-            Loader.Worker.mHKSelectedRow = e.RowIndex;
+            HotkeyMgr.mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
 
             dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = Loader.Worker.GetSelectedHotkeySpecialString() + " <Set Keys>";
-        }
-
-        private void UpdateHotkeysDGV()
-        {
-            dgvHotkeys.Rows.Clear();
-
-            AddHotkey("Entire Screen");
-            AddHotkey("Active Window");
-            AddHotkey("Crop Shot");
-            AddHotkey("Selected Window");
-            AddHotkey("Clipboard Upload");
-            AddHotkey("Last Crop Shot");
-            AddHotkey("Auto Capture");
-            AddHotkey("Actions Toolbar");
-            AddHotkey("Quick Options");
-            AddHotkey("Drop Window");
-            AddHotkey("Language Translator");
-            AddHotkey("Screen Color Picker");
-            AddHotkey("Twitter Client");
-
-            dgvHotkeys.Refresh();
-        }
-
-        private void AddHotkey(string descr)
-        {
-            object userHotKey = Engine.conf.GetFieldValue("Hotkey" + descr.Replace(" ", string.Empty));
-            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + descr.Replace(" ", string.Empty));
-
-            if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
-            {
-                dgvHotkeys.Rows.Add(descr, ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
-            }
-        }
-
-        private void dgvHotkeys_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                //txtActiveHelp.Text = dgvHotkeys.Rows[e.RowIndex].Cells[0].Value + ": allows you to ";
-
-                switch (e.RowIndex)
-                {
-                    case 0: //active window
-                        //txtActiveHelp.Text += "capture a window that is currently highlighted and send it your selected destination.";
-                        break;
-                    case 1: //selected window
-                        //txtActiveHelp.Text += "capture a window by selecting a window from the mouse and send it your selected destination.";
-                        break;
-                    case 2: //entire screen
-                        //txtActiveHelp.Text += "capture everything present on your screen including taskbar, start menu, etc and send it your selected destination";
-                        break;
-                    case 3: //crop shot
-                        //txtActiveHelp.Text += "capture a specified region of your screen and send it to your selected destination";
-                        break;
-                    case 4: //last crop shot
-                        //txtActiveHelp.Text += "capture the specified region from crop shot another time";
-                        break;
-                    case 5: //clipboard upload
-                        //txtActiveHelp.Text += "send files from your file system to your selected destination.";
-                        break;
-                    case 7: // quick options
-                        //txtActiveHelp.Text += "quickly select the destination you would like to send images via a small pop up form.";
-                        break;
-                    case 8: // drop window
-                        //txtActiveHelp.Text += "display a Drop Window so can drag and drop image files from Windows Explorer to upload.";
-                        break;
-                    case 9: // language translator
-                        //txtActiveHelp.Text += "translate the text that is in your clipboard from one language to another. See HTTP -> Language Translator for settings.";
-                        break;
-                }
-            }
         }
 
         private void dgvHotkeys_Leave(object sender, EventArgs e)
@@ -2375,7 +2312,7 @@ namespace ZScreenGUI
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionStyles = (RegionStyles)cbCropStyle.SelectedIndex;
+            Engine.conf.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
         }
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
@@ -2636,7 +2573,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowCursor = cbShowCursor.Checked;
+            Engine.conf.ShowCursor = chkShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
@@ -2777,7 +2714,7 @@ namespace ZScreenGUI
 
         private void cbWatermarkPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkPositionMode = (WatermarkPositionType)cbWatermarkPosition.SelectedIndex;
+            Engine.conf.WatermarkPositionMode = (WatermarkPositionType)chkWatermarkPosition.SelectedIndex;
             TestWatermark();
         }
 
@@ -3248,7 +3185,7 @@ namespace ZScreenGUI
 
         private void chkAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.AutoSwitchFileUploader = cbAutoSwitchFileUploader.Checked;
+            Engine.conf.AutoSwitchFileUploader = chkAutoSwitchFileUploader.Checked;
         }
 
         #endregion
@@ -3433,7 +3370,7 @@ namespace ZScreenGUI
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropDynamicCrosshair = cbCropDynamicCrosshair.Checked;
+            Engine.conf.CropDynamicCrosshair = chkCropDynamicCrosshair.Checked;
         }
 
         private void nudCrosshairLineCount_ValueChanged(object sender, EventArgs e)
@@ -3458,7 +3395,7 @@ namespace ZScreenGUI
 
         private void cbCropShowBigCross_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropShowBigCross = cbCropShowBigCross.Checked;
+            Engine.conf.CropShowBigCross = chkCropShowBigCross.Checked;
         }
 
         private void cbShowCropRuler_CheckedChanged(object sender, EventArgs e)
@@ -3662,7 +3599,7 @@ namespace ZScreenGUI
 
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropShowMagnifyingGlass = cbCropShowMagnifyingGlass.Checked;
+            Engine.conf.CropShowMagnifyingGlass = chkCropShowMagnifyingGlass.Checked;
         }
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
@@ -3688,12 +3625,12 @@ namespace ZScreenGUI
 
         private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.ScreenshotDelayTime = nudtScreenshotDelay.Value;
+            Engine.conf.ScreenshotDelayTime = nudScreenshotDelay.Value;
         }
 
         private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ScreenshotDelayTimes = nudtScreenshotDelay.Time;
+            Engine.conf.ScreenshotDelayTimes = nudScreenshotDelay.Time;
         }
 
         private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
@@ -4167,7 +4104,7 @@ namespace ZScreenGUI
 
         private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
         {
-            ttZScreen.Show(ttZScreen.GetToolTip(nudtScreenshotDelay), this);
+            ttZScreen.Show(ttZScreen.GetToolTip(nudScreenshotDelay), this);
         }
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
@@ -4881,6 +4818,11 @@ namespace ZScreenGUI
                 Engine.conf.PreferSystemFolders = chkPreferSystemFolders.Checked;
                 ZScreen_ConfigGUI();
             }
+        }
+
+        private void btnResetHotkeys_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.mHotkeyMgr.ResetHotkeys();
         }
     }
 }

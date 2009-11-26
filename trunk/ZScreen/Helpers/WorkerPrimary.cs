@@ -45,7 +45,7 @@ namespace ZScreenGUI
     {
         private ZScreen mZScreen;
         internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
-        internal int mHKSelectedRow = -1;
+        internal HotkeyMgr mHotkeyMgr = null;
 
         public WorkerPrimary(ZScreen myZScreen)
         {
@@ -511,13 +511,11 @@ namespace ZScreenGUI
                 }
                 else if (e.KeyData == Keys.Escape)
                 {
-                    mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = Keys.None;
-                    SetHotkey(mHKSelectedRow, Keys.None);
+                    mHotkeyMgr.SetHotkey(Keys.None);
                 }
                 else
                 {
-                    mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = e.KeyData.ToSpecialString();
-                    SetHotkey(mHKSelectedRow, e.KeyData);
+                    mHotkeyMgr.SetHotkey(e.KeyData);
                 }
             }
             else
@@ -619,18 +617,19 @@ namespace ZScreenGUI
             {
                 mSetHotkeys = false;
 
-                mZScreen.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
-
-                //reset hotkey text from <set keys> back to normal
-                mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
-
-                mHKSelectedRow = -1;
+                if (HotkeyMgr.mHKSelectedRow > -1)
+                {
+                    mZScreen.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
+                    //reset hotkey text from <set keys> back to normal
+                    mZScreen.dgvHotkeys.Rows[HotkeyMgr.mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
+                }
+                HotkeyMgr.mHKSelectedRow = -1;
             }
         }
 
         public string GetSelectedHotkeyName()
         {
-            return mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value.ToString();
+            return mZScreen.dgvHotkeys.Rows[HotkeyMgr.mHKSelectedRow].Cells[0].Value.ToString();
         }
 
         public string GetSelectedHotkeySpecialString()
@@ -643,20 +642,6 @@ namespace ZScreenGUI
 
             return "Error getting hotkey";
         }
-
-        private void SetHotkey(int row, Keys key)
-        {
-            SetHotkey(mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value.ToString(), key);
-
-            mZScreen.lblHotkeyStatus.Text = mZScreen.dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value + " Hotkey set to: " + key.ToSpecialString() +
-                ". Press enter when done setting all desired Hotkeys.";
-        }
-
-        private bool SetHotkey(string name, Keys key)
-        {
-            return Engine.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
-        }
-
 
         public void UploadUsingClipboard()
         {

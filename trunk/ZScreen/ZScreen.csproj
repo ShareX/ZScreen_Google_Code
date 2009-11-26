@@ -132,6 +132,7 @@
     <Compile Include="Global\FormsMgr.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Global\RegistryMgr.cs" />
+    <Compile Include="Helpers\HotkeyMgr.cs" />
     <Compile Include="Helpers\WorkerPrimary.cs" />
     <Compile Include="Helpers\WorkerSecondary.cs" />
     <Compile Include="Loader.cs" />
