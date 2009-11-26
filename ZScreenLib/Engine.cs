@@ -47,7 +47,14 @@ namespace ZScreenLib
         public static bool MultipleInstance { get; private set; }
 
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
+        internal static readonly string zFilesDir = Path.Combine(zLocalAppDataFolder, "Files");
+        internal static readonly string zLogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
         internal static readonly string zPicturesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
+        internal static readonly string zSettingsDir = Path.Combine(zLocalAppDataFolder, "Settings");
+        internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+        public static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
+
         public static AppSettings mAppSettings = AppSettings.Read();
 
         private static readonly string XMLFileName = XMLSettings.XMLFileName;
@@ -56,12 +63,15 @@ namespace ZScreenLib
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
 
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName + " Root");
         public static string RootAppFolder = zLocalAppDataFolder;
         public static string RootImagesDir = zPicturesFolder;
 
-        public static string CacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
-        public static string FilesDir = Path.Combine(zLocalAppDataFolder, "Files");
+        public static string CacheDir = zCacheDir;
+        public static string FilesDir = zFilesDir;
+        public static string LogsDir = zLogsDir;
+        public static string SettingsDir = zSettingsDir;
+        public static string TextDir = zTextDir;
         public static string ImagesDir
         {
             get
@@ -77,10 +87,6 @@ namespace ZScreenLib
             }
             set { ; }
         }
-        public static string LogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
-        public static string SettingsDir = Path.Combine(zLocalAppDataFolder, "Settings");
-        public static readonly string TempDir = Path.Combine(zLocalAppDataFolder, "Temp");
-        public static string TextDir = Path.Combine(zLocalAppDataFolder, "Text");
 
         private static string[] AppDirs;
 
@@ -162,16 +168,7 @@ namespace ZScreenLib
             }
 
             FileSystem.AppendDebug("Config file: " + AppSettings.AppSettingsFile);
-            if (mAppSettings.PreferSystemFolders)
-            {
-                FileSystem.AppendDebug(string.Format("Root Folder: {0}", zLocalAppDataFolder));
-            }
-            else
-            {
-                FileSystem.AppendDebug(string.Format("Root Folder: {0}", RootAppFolder));
-                RootImagesDir = Path.Combine(RootAppFolder, "Images"); // after RootAppFolder is set, now set RootImagesDir
-            }
-
+            FileSystem.AppendDebug(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
             FileSystem.AppendDebug("Initializing Default folder paths...");
             Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
             // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
@@ -299,16 +296,26 @@ namespace ZScreenLib
         /// </summary>
         public static void InitializeDefaultFolderPaths()
         {
-            if (!mAppSettings.PreferSystemFolders)
+            if (mAppSettings.PreferSystemFolders)
+            {
+                CacheDir = zCacheDir;
+                FilesDir = zFilesDir;
+                LogsDir = zLogsDir;
+                SettingsDir = zSettingsDir;
+                RootImagesDir = zPicturesFolder;
+                TextDir = zTextDir;
+            }
+            else
             {
                 CacheDir = Path.Combine(RootAppFolder, "Cache");
                 FilesDir = Path.Combine(RootAppFolder, "Files");
                 LogsDir = Path.Combine(RootAppFolder, "Logs");
+                RootImagesDir = Path.Combine(RootAppFolder, "Images");
                 SettingsDir = Path.Combine(RootAppFolder, "Settings");
                 TextDir = Path.Combine(RootAppFolder, "Text");
             }
 
-            AppDirs = new[] { CacheDir, FilesDir, RootImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
+            AppDirs = new[] { CacheDir, FilesDir, RootImagesDir, LogsDir, SettingsDir, zTempDir, TextDir };
 
             foreach (string dp in AppDirs)
             {

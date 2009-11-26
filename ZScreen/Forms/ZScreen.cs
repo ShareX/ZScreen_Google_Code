@@ -407,7 +407,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI()
         {
-            FileSystem.AppendDebug("Configuring ZScreen GUI..");
+            FileSystem.AppendDebug("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
             pgApp.SelectedObject = Engine.conf;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
 
@@ -417,9 +417,9 @@ namespace ZScreenGUI
             //  Global
             //~~~~~~~~~~~~~~~~~~~~~
             Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
+            chkPreferSystemFolders.Checked = Engine.conf.PreferSystemFolders;
             txtRootFolder.Text = Engine.RootAppFolder;
             UpdateGuiControlsPaths();
-
             #endregion
 
             #region Main
@@ -996,7 +996,6 @@ namespace ZScreenGUI
 
             #endregion
 
-            gbRoot.Enabled = !Engine.mAppSettings.PreferSystemFolders;
             chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
             ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
 
@@ -1065,10 +1064,7 @@ namespace ZScreenGUI
                 nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
                 Loader.Worker.UpdateGuiControlsHistory();
             }
-            else
-            {
-                Loader.Worker2.LoadHistoryItems();
-            }
+            Loader.Worker2.LoadHistoryItems();
 
             #endregion
 
@@ -1101,7 +1097,16 @@ namespace ZScreenGUI
             Engine.InitializeDefaultFolderPaths();
             txtImagesDir.Text = Engine.ImagesDir;
             txtCacheDir.Text = Engine.CacheDir;
-            txtSettingsDir.Text = Engine.SettingsDir;
+            if (Engine.conf.PreferSystemFolders)
+            {
+                txtRootFolder.Text = Engine.SettingsDir;
+                gbRoot.Text = "Settings";
+            }
+            else
+            {
+                txtRootFolder.Text = Engine.RootAppFolder;
+                gbRoot.Text = "Root";
+            }
         }
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
@@ -1559,11 +1564,6 @@ namespace ZScreenGUI
             WindowState = FormWindowState.Normal;
             this.Activate();
             this.BringToFront();
-        }
-
-        private void btnBrowseConfig_Click(object sender, EventArgs e)
-        {
-            ShowDirectory(Engine.SettingsDir);
         }
 
         private void tsmLic_Click(object sender, EventArgs e)
@@ -2209,7 +2209,7 @@ namespace ZScreenGUI
         {
             if (ifm != null)
             {
-                string path = ifm.GetSource(Engine.TempDir, sType);
+                string path = ifm.GetSource(Engine.zTempDir, sType);
                 if (!string.IsNullOrEmpty(path))
                 {
                     if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
@@ -4871,6 +4871,15 @@ namespace ZScreenGUI
                 Engine.conf.CustomImagesDir = dlg.SelectedPath;
                 FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
                 UpdateGuiControlsPaths();
+            }
+        }
+
+        private void chkPreferSystemFolders_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mGuiIsReady)
+            {
+                Engine.conf.PreferSystemFolders = chkPreferSystemFolders.Checked;
+                ZScreen_ConfigGUI();
             }
         }
     }
