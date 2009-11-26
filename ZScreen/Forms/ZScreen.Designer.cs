@@ -33,10 +33,10 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,10 +91,10 @@ namespace ZScreenGUI
             this.ucDestOptions = new ZScreenLib.DestSelector();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudtScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
-            this.cbShowCursor = new System.Windows.Forms.CheckBox();
+            this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
@@ -199,16 +199,16 @@ namespace ZScreenGUI
             this.lblCropRegionStep = new System.Windows.Forms.Label();
             this.nudCropRegionInterval = new System.Windows.Forms.NumericUpDown();
             this.gbDynamicCrosshair = new System.Windows.Forms.GroupBox();
-            this.cbCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
+            this.chkCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
             this.lblCropCrosshairStep = new System.Windows.Forms.Label();
             this.lblCropCrosshairInterval = new System.Windows.Forms.Label();
             this.nudCropCrosshairInterval = new System.Windows.Forms.NumericUpDown();
             this.nudCropCrosshairStep = new System.Windows.Forms.NumericUpDown();
             this.gpCropRegion = new System.Windows.Forms.GroupBox();
             this.lblCropRegionStyle = new System.Windows.Forms.Label();
-            this.cbRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
-            this.cbCropStyle = new System.Windows.Forms.ComboBox();
-            this.cbRegionRectangleInfo = new System.Windows.Forms.CheckBox();
+            this.chkRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
+            this.chkCropStyle = new System.Windows.Forms.ComboBox();
+            this.chkRegionRectangleInfo = new System.Windows.Forms.CheckBox();
             this.gbCropRegionSettings = new System.Windows.Forms.GroupBox();
             this.lblCropBorderSize = new System.Windows.Forms.Label();
             this.cbShowCropRuler = new System.Windows.Forms.CheckBox();
@@ -217,8 +217,8 @@ namespace ZScreenGUI
             this.pbCropBorderColor = new System.Windows.Forms.PictureBox();
             this.nudCropBorderSize = new System.Windows.Forms.NumericUpDown();
             this.gbCrosshairSettings = new System.Windows.Forms.GroupBox();
-            this.cbCropShowMagnifyingGlass = new System.Windows.Forms.CheckBox();
-            this.cbCropShowBigCross = new System.Windows.Forms.CheckBox();
+            this.chkCropShowMagnifyingGlass = new System.Windows.Forms.CheckBox();
+            this.chkCropShowBigCross = new System.Windows.Forms.CheckBox();
             this.pbCropCrosshairColor = new System.Windows.Forms.PictureBox();
             this.lblCropCrosshairColor = new System.Windows.Forms.Label();
             this.nudCrosshairLineCount = new System.Windows.Forms.NumericUpDown();
@@ -267,7 +267,7 @@ namespace ZScreenGUI
             this.cbWatermarkAutoHide = new System.Windows.Forms.CheckBox();
             this.cbWatermarkAddReflection = new System.Windows.Forms.CheckBox();
             this.lblWatermarkType = new System.Windows.Forms.Label();
-            this.cbWatermarkPosition = new System.Windows.Forms.ComboBox();
+            this.chkWatermarkPosition = new System.Windows.Forms.ComboBox();
             this.lblWatermarkPosition = new System.Windows.Forms.Label();
             this.nudWatermarkOffset = new System.Windows.Forms.NumericUpDown();
             this.lblWatermarkOffset = new System.Windows.Forms.Label();
@@ -380,7 +380,7 @@ namespace ZScreenGUI
             this.nudUploadDurationLimit = new System.Windows.Forms.NumericUpDown();
             this.nudErrorRetry = new System.Windows.Forms.NumericUpDown();
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
-            this.cbAutoSwitchFileUploader = new System.Windows.Forms.CheckBox();
+            this.chkAutoSwitchFileUploader = new System.Windows.Forms.CheckBox();
             this.cbTinyPicSizeCheck = new System.Windows.Forms.CheckBox();
             this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
             this.cboUploadMode = new System.Windows.Forms.ComboBox();
@@ -535,6 +535,7 @@ namespace ZScreenGUI
             this.lblTrayFlash = new System.Windows.Forms.Label();
             this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.tpAdvPaths = new System.Windows.Forms.TabPage();
+            this.chkPreferSystemFolders = new System.Windows.Forms.CheckBox();
             this.gbRoot = new System.Windows.Forms.GroupBox();
             this.btnViewRootDir = new System.Windows.Forms.Button();
             this.btnBrowseRootDir = new System.Windows.Forms.Button();
@@ -548,6 +549,7 @@ namespace ZScreenGUI
             this.chkDeleteLocal = new System.Windows.Forms.CheckBox();
             this.btnViewImagesDir = new System.Windows.Forms.Button();
             this.txtImagesDir = new System.Windows.Forms.TextBox();
+            this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
             this.btnSettingsDefault = new System.Windows.Forms.Button();
             this.btnSettingsExport = new System.Windows.Forms.Button();
             this.btnFTPExport = new System.Windows.Forms.Button();
@@ -578,8 +580,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.chkPreferSystemFolders = new System.Windows.Forms.CheckBox();
-            this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
+            this.btnResetHotkeys = new System.Windows.Forms.Button();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -719,6 +720,7 @@ namespace ZScreenGUI
             this.tpAdvPaths.SuspendLayout();
             this.gbRoot.SuspendLayout();
             this.gbSaveLoc.SuspendLayout();
+            this.gbSettingsExportImport.SuspendLayout();
             this.gbRemoteDirCache.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).BeginInit();
             this.tpStats.SuspendLayout();
@@ -726,7 +728,6 @@ namespace ZScreenGUI
             this.gbLastSource.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.gbSettingsExportImport.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1182,10 +1183,10 @@ namespace ZScreenGUI
             // gbImageSettings
             // 
             this.gbImageSettings.Controls.Add(this.lblScreenshotDelay);
-            this.gbImageSettings.Controls.Add(this.nudtScreenshotDelay);
+            this.gbImageSettings.Controls.Add(this.nudScreenshotDelay);
             this.gbImageSettings.Controls.Add(this.lblCopytoClipboard);
             this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
-            this.gbImageSettings.Controls.Add(this.cbShowCursor);
+            this.gbImageSettings.Controls.Add(this.chkShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
             this.gbImageSettings.Location = new System.Drawing.Point(48, 200);
             this.gbImageSettings.Name = "gbImageSettings";
@@ -1205,18 +1206,18 @@ namespace ZScreenGUI
             // 
             // nudtScreenshotDelay
             // 
-            this.nudtScreenshotDelay.Location = new System.Drawing.Point(112, 18);
-            this.nudtScreenshotDelay.Name = "nudtScreenshotDelay";
-            this.nudtScreenshotDelay.RealValue = ((long)(0));
-            this.nudtScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudtScreenshotDelay.TabIndex = 121;
-            this.nudtScreenshotDelay.Tag = "Test";
-            this.nudtScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudtScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudtScreenshotDelay.Value = ((long)(0));
-            this.nudtScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudtScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            this.nudtScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
+            this.nudScreenshotDelay.Name = "nudtScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             // 
             // lblCopytoClipboard
             // 
@@ -1241,16 +1242,16 @@ namespace ZScreenGUI
             // 
             // cbShowCursor
             // 
-            this.cbShowCursor.AutoSize = true;
-            this.cbShowCursor.Location = new System.Drawing.Point(16, 111);
-            this.cbShowCursor.Name = "cbShowCursor";
-            this.cbShowCursor.Size = new System.Drawing.Size(159, 17);
-            this.cbShowCursor.TabIndex = 8;
-            this.cbShowCursor.Text = "Show Cursor in Screenshots";
-            this.ttZScreen.SetToolTip(this.cbShowCursor, "When enabled your mouse cursor icon will be captured \r\nas it appeared when the sc" +
+            this.chkShowCursor.AutoSize = true;
+            this.chkShowCursor.Location = new System.Drawing.Point(16, 111);
+            this.chkShowCursor.Name = "cbShowCursor";
+            this.chkShowCursor.Size = new System.Drawing.Size(159, 17);
+            this.chkShowCursor.TabIndex = 8;
+            this.chkShowCursor.Text = "Show Cursor in Screenshots";
+            this.ttZScreen.SetToolTip(this.chkShowCursor, "When enabled your mouse cursor icon will be captured \r\nas it appeared when the sc" +
                     "reenshot was taken.");
-            this.cbShowCursor.UseVisualStyleBackColor = true;
-            this.cbShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
+            this.chkShowCursor.UseVisualStyleBackColor = true;
+            this.chkShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
             // 
             // chkManualNaming
             // 
@@ -2235,6 +2236,7 @@ namespace ZScreenGUI
             // 
             // tpHotkeys
             // 
+            this.tpHotkeys.Controls.Add(this.btnResetHotkeys);
             this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
             this.tpHotkeys.Controls.Add(this.dgvHotkeys);
             this.tpHotkeys.ImageKey = "keyboard.png";
@@ -2268,47 +2270,46 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys,
             this.DefaultKeys});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvHotkeys.Size = new System.Drawing.Size(550, 377);
             this.dgvHotkeys.TabIndex = 67;
-            this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
-            this.dgvHotkeys.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellMouseEnter);
+            this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);           
             this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
             this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
             this.dgvHotkeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvHotkeys_KeyDown);
@@ -2332,8 +2333,8 @@ namespace ZScreenGUI
             // DefaultKeys
             // 
             this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.DefaultKeys.HeaderText = "Default Hotkey";
             this.DefaultKeys.Name = "DefaultKeys";
             this.DefaultKeys.ReadOnly = true;
@@ -2485,7 +2486,7 @@ namespace ZScreenGUI
             // 
             // gbDynamicCrosshair
             // 
-            this.gbDynamicCrosshair.Controls.Add(this.cbCropDynamicCrosshair);
+            this.gbDynamicCrosshair.Controls.Add(this.chkCropDynamicCrosshair);
             this.gbDynamicCrosshair.Controls.Add(this.lblCropCrosshairStep);
             this.gbDynamicCrosshair.Controls.Add(this.lblCropCrosshairInterval);
             this.gbDynamicCrosshair.Controls.Add(this.nudCropCrosshairInterval);
@@ -2499,14 +2500,14 @@ namespace ZScreenGUI
             // 
             // cbCropDynamicCrosshair
             // 
-            this.cbCropDynamicCrosshair.AutoSize = true;
-            this.cbCropDynamicCrosshair.Location = new System.Drawing.Point(16, 24);
-            this.cbCropDynamicCrosshair.Name = "cbCropDynamicCrosshair";
-            this.cbCropDynamicCrosshair.Size = new System.Drawing.Size(65, 17);
-            this.cbCropDynamicCrosshair.TabIndex = 16;
-            this.cbCropDynamicCrosshair.Text = "Enabled";
-            this.cbCropDynamicCrosshair.UseVisualStyleBackColor = true;
-            this.cbCropDynamicCrosshair.CheckedChanged += new System.EventHandler(this.cbCropDynamicCrosshair_CheckedChanged);
+            this.chkCropDynamicCrosshair.AutoSize = true;
+            this.chkCropDynamicCrosshair.Location = new System.Drawing.Point(16, 24);
+            this.chkCropDynamicCrosshair.Name = "cbCropDynamicCrosshair";
+            this.chkCropDynamicCrosshair.Size = new System.Drawing.Size(65, 17);
+            this.chkCropDynamicCrosshair.TabIndex = 16;
+            this.chkCropDynamicCrosshair.Text = "Enabled";
+            this.chkCropDynamicCrosshair.UseVisualStyleBackColor = true;
+            this.chkCropDynamicCrosshair.CheckedChanged += new System.EventHandler(this.cbCropDynamicCrosshair_CheckedChanged);
             // 
             // lblCropCrosshairStep
             // 
@@ -2560,9 +2561,9 @@ namespace ZScreenGUI
             // gpCropRegion
             // 
             this.gpCropRegion.Controls.Add(this.lblCropRegionStyle);
-            this.gpCropRegion.Controls.Add(this.cbRegionHotkeyInfo);
-            this.gpCropRegion.Controls.Add(this.cbCropStyle);
-            this.gpCropRegion.Controls.Add(this.cbRegionRectangleInfo);
+            this.gpCropRegion.Controls.Add(this.chkRegionHotkeyInfo);
+            this.gpCropRegion.Controls.Add(this.chkCropStyle);
+            this.gpCropRegion.Controls.Add(this.chkRegionRectangleInfo);
             this.gpCropRegion.Location = new System.Drawing.Point(8, 16);
             this.gpCropRegion.Name = "gpCropRegion";
             this.gpCropRegion.Size = new System.Drawing.Size(352, 120);
@@ -2581,35 +2582,35 @@ namespace ZScreenGUI
             // 
             // cbRegionHotkeyInfo
             // 
-            this.cbRegionHotkeyInfo.AutoSize = true;
-            this.cbRegionHotkeyInfo.Location = new System.Drawing.Point(16, 88);
-            this.cbRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
-            this.cbRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
-            this.cbRegionHotkeyInfo.TabIndex = 6;
-            this.cbRegionHotkeyInfo.Text = "Show crop region hotkey instructions";
-            this.cbRegionHotkeyInfo.UseVisualStyleBackColor = true;
-            this.cbRegionHotkeyInfo.CheckedChanged += new System.EventHandler(this.cbRegionHotkeyInfo_CheckedChanged);
+            this.chkRegionHotkeyInfo.AutoSize = true;
+            this.chkRegionHotkeyInfo.Location = new System.Drawing.Point(16, 88);
+            this.chkRegionHotkeyInfo.Name = "cbRegionHotkeyInfo";
+            this.chkRegionHotkeyInfo.Size = new System.Drawing.Size(200, 17);
+            this.chkRegionHotkeyInfo.TabIndex = 6;
+            this.chkRegionHotkeyInfo.Text = "Show crop region hotkey instructions";
+            this.chkRegionHotkeyInfo.UseVisualStyleBackColor = true;
+            this.chkRegionHotkeyInfo.CheckedChanged += new System.EventHandler(this.cbRegionHotkeyInfo_CheckedChanged);
             // 
             // cbCropStyle
             // 
-            this.cbCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCropStyle.FormattingEnabled = true;
-            this.cbCropStyle.Location = new System.Drawing.Point(120, 24);
-            this.cbCropStyle.Name = "cbCropStyle";
-            this.cbCropStyle.Size = new System.Drawing.Size(216, 21);
-            this.cbCropStyle.TabIndex = 8;
-            this.cbCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
+            this.chkCropStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.chkCropStyle.FormattingEnabled = true;
+            this.chkCropStyle.Location = new System.Drawing.Point(120, 24);
+            this.chkCropStyle.Name = "cbCropStyle";
+            this.chkCropStyle.Size = new System.Drawing.Size(216, 21);
+            this.chkCropStyle.TabIndex = 8;
+            this.chkCropStyle.SelectedIndexChanged += new System.EventHandler(this.cbCropStyle_SelectedIndexChanged);
             // 
             // cbRegionRectangleInfo
             // 
-            this.cbRegionRectangleInfo.AutoSize = true;
-            this.cbRegionRectangleInfo.Location = new System.Drawing.Point(16, 64);
-            this.cbRegionRectangleInfo.Name = "cbRegionRectangleInfo";
-            this.cbRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
-            this.cbRegionRectangleInfo.TabIndex = 5;
-            this.cbRegionRectangleInfo.Text = "Show crop region coordinates and size";
-            this.cbRegionRectangleInfo.UseVisualStyleBackColor = true;
-            this.cbRegionRectangleInfo.CheckedChanged += new System.EventHandler(this.cbRegionRectangleInfo_CheckedChanged);
+            this.chkRegionRectangleInfo.AutoSize = true;
+            this.chkRegionRectangleInfo.Location = new System.Drawing.Point(16, 64);
+            this.chkRegionRectangleInfo.Name = "cbRegionRectangleInfo";
+            this.chkRegionRectangleInfo.Size = new System.Drawing.Size(209, 17);
+            this.chkRegionRectangleInfo.TabIndex = 5;
+            this.chkRegionRectangleInfo.Text = "Show crop region coordinates and size";
+            this.chkRegionRectangleInfo.UseVisualStyleBackColor = true;
+            this.chkRegionRectangleInfo.CheckedChanged += new System.EventHandler(this.cbRegionRectangleInfo_CheckedChanged);
             // 
             // gbCropRegionSettings
             // 
@@ -2688,8 +2689,8 @@ namespace ZScreenGUI
             // 
             // gbCrosshairSettings
             // 
-            this.gbCrosshairSettings.Controls.Add(this.cbCropShowMagnifyingGlass);
-            this.gbCrosshairSettings.Controls.Add(this.cbCropShowBigCross);
+            this.gbCrosshairSettings.Controls.Add(this.chkCropShowMagnifyingGlass);
+            this.gbCrosshairSettings.Controls.Add(this.chkCropShowBigCross);
             this.gbCrosshairSettings.Controls.Add(this.pbCropCrosshairColor);
             this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairColor);
             this.gbCrosshairSettings.Controls.Add(this.nudCrosshairLineCount);
@@ -2705,25 +2706,25 @@ namespace ZScreenGUI
             // 
             // cbCropShowMagnifyingGlass
             // 
-            this.cbCropShowMagnifyingGlass.AutoSize = true;
-            this.cbCropShowMagnifyingGlass.Location = new System.Drawing.Point(16, 48);
-            this.cbCropShowMagnifyingGlass.Name = "cbCropShowMagnifyingGlass";
-            this.cbCropShowMagnifyingGlass.Size = new System.Drawing.Size(133, 17);
-            this.cbCropShowMagnifyingGlass.TabIndex = 26;
-            this.cbCropShowMagnifyingGlass.Text = "Show magnifying glass";
-            this.cbCropShowMagnifyingGlass.UseVisualStyleBackColor = true;
-            this.cbCropShowMagnifyingGlass.CheckedChanged += new System.EventHandler(this.cbCropShowMagnifyingGlass_CheckedChanged);
+            this.chkCropShowMagnifyingGlass.AutoSize = true;
+            this.chkCropShowMagnifyingGlass.Location = new System.Drawing.Point(16, 48);
+            this.chkCropShowMagnifyingGlass.Name = "cbCropShowMagnifyingGlass";
+            this.chkCropShowMagnifyingGlass.Size = new System.Drawing.Size(133, 17);
+            this.chkCropShowMagnifyingGlass.TabIndex = 26;
+            this.chkCropShowMagnifyingGlass.Text = "Show magnifying glass";
+            this.chkCropShowMagnifyingGlass.UseVisualStyleBackColor = true;
+            this.chkCropShowMagnifyingGlass.CheckedChanged += new System.EventHandler(this.cbCropShowMagnifyingGlass_CheckedChanged);
             // 
             // cbCropShowBigCross
             // 
-            this.cbCropShowBigCross.AutoSize = true;
-            this.cbCropShowBigCross.Location = new System.Drawing.Point(16, 24);
-            this.cbCropShowBigCross.Name = "cbCropShowBigCross";
-            this.cbCropShowBigCross.Size = new System.Drawing.Size(194, 17);
-            this.cbCropShowBigCross.TabIndex = 25;
-            this.cbCropShowBigCross.Text = "Show second crosshair ( Big cross )";
-            this.cbCropShowBigCross.UseVisualStyleBackColor = true;
-            this.cbCropShowBigCross.CheckedChanged += new System.EventHandler(this.cbCropShowBigCross_CheckedChanged);
+            this.chkCropShowBigCross.AutoSize = true;
+            this.chkCropShowBigCross.Location = new System.Drawing.Point(16, 24);
+            this.chkCropShowBigCross.Name = "cbCropShowBigCross";
+            this.chkCropShowBigCross.Size = new System.Drawing.Size(194, 17);
+            this.chkCropShowBigCross.TabIndex = 25;
+            this.chkCropShowBigCross.Text = "Show second crosshair ( Big cross )";
+            this.chkCropShowBigCross.UseVisualStyleBackColor = true;
+            this.chkCropShowBigCross.CheckedChanged += new System.EventHandler(this.cbCropShowBigCross_CheckedChanged);
             // 
             // pbCropCrosshairColor
             // 
@@ -3217,7 +3218,7 @@ namespace ZScreenGUI
             this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAutoHide);
             this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkAddReflection);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkType);
-            this.gbWatermarkGeneral.Controls.Add(this.cbWatermarkPosition);
+            this.gbWatermarkGeneral.Controls.Add(this.chkWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkPosition);
             this.gbWatermarkGeneral.Controls.Add(this.nudWatermarkOffset);
             this.gbWatermarkGeneral.Controls.Add(this.lblWatermarkOffset);
@@ -3280,13 +3281,13 @@ namespace ZScreenGUI
             // 
             // cbWatermarkPosition
             // 
-            this.cbWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbWatermarkPosition.FormattingEnabled = true;
-            this.cbWatermarkPosition.Location = new System.Drawing.Point(88, 52);
-            this.cbWatermarkPosition.Name = "cbWatermarkPosition";
-            this.cbWatermarkPosition.Size = new System.Drawing.Size(121, 21);
-            this.cbWatermarkPosition.TabIndex = 18;
-            this.cbWatermarkPosition.SelectedIndexChanged += new System.EventHandler(this.cbWatermarkPosition_SelectedIndexChanged);
+            this.chkWatermarkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.chkWatermarkPosition.FormattingEnabled = true;
+            this.chkWatermarkPosition.Location = new System.Drawing.Point(88, 52);
+            this.chkWatermarkPosition.Name = "cbWatermarkPosition";
+            this.chkWatermarkPosition.Size = new System.Drawing.Size(121, 21);
+            this.chkWatermarkPosition.TabIndex = 18;
+            this.chkWatermarkPosition.SelectedIndexChanged += new System.EventHandler(this.cbWatermarkPosition_SelectedIndexChanged);
             // 
             // lblWatermarkPosition
             // 
@@ -4630,7 +4631,7 @@ namespace ZScreenGUI
             // 
             // gbImageUploaderOptions
             // 
-            this.gbImageUploaderOptions.Controls.Add(this.cbAutoSwitchFileUploader);
+            this.gbImageUploaderOptions.Controls.Add(this.chkAutoSwitchFileUploader);
             this.gbImageUploaderOptions.Controls.Add(this.cbTinyPicSizeCheck);
             this.gbImageUploaderOptions.Controls.Add(this.cbAddFailedScreenshot);
             this.gbImageUploaderOptions.Controls.Add(this.cboUploadMode);
@@ -4644,15 +4645,15 @@ namespace ZScreenGUI
             // 
             // cbAutoSwitchFileUploader
             // 
-            this.cbAutoSwitchFileUploader.AutoSize = true;
-            this.cbAutoSwitchFileUploader.Location = new System.Drawing.Point(16, 104);
-            this.cbAutoSwitchFileUploader.Name = "cbAutoSwitchFileUploader";
-            this.cbAutoSwitchFileUploader.Size = new System.Drawing.Size(465, 17);
-            this.cbAutoSwitchFileUploader.TabIndex = 114;
-            this.cbAutoSwitchFileUploader.Text = "Automatically switch to File Uploader if a user copies (Clipboard Upload) or drag" +
+            this.chkAutoSwitchFileUploader.AutoSize = true;
+            this.chkAutoSwitchFileUploader.Location = new System.Drawing.Point(16, 104);
+            this.chkAutoSwitchFileUploader.Name = "cbAutoSwitchFileUploader";
+            this.chkAutoSwitchFileUploader.Size = new System.Drawing.Size(465, 17);
+            this.chkAutoSwitchFileUploader.TabIndex = 114;
+            this.chkAutoSwitchFileUploader.Text = "Automatically switch to File Uploader if a user copies (Clipboard Upload) or drag" +
                 "s a non-Image";
-            this.cbAutoSwitchFileUploader.UseVisualStyleBackColor = true;
-            this.cbAutoSwitchFileUploader.CheckedChanged += new System.EventHandler(this.chkAutoSwitchFTP_CheckedChanged);
+            this.chkAutoSwitchFileUploader.UseVisualStyleBackColor = true;
+            this.chkAutoSwitchFileUploader.CheckedChanged += new System.EventHandler(this.chkAutoSwitchFTP_CheckedChanged);
             // 
             // cbTinyPicSizeCheck
             // 
@@ -6390,6 +6391,17 @@ namespace ZScreenGUI
             this.tpAdvPaths.Text = "Paths";
             this.tpAdvPaths.UseVisualStyleBackColor = true;
             // 
+            // chkPreferSystemFolders
+            // 
+            this.chkPreferSystemFolders.AutoSize = true;
+            this.chkPreferSystemFolders.Location = new System.Drawing.Point(16, 16);
+            this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
+            this.chkPreferSystemFolders.Size = new System.Drawing.Size(254, 17);
+            this.chkPreferSystemFolders.TabIndex = 117;
+            this.chkPreferSystemFolders.Text = "&Prefer System Folders to store Settings and Data";
+            this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
+            this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
+            // 
             // gbRoot
             // 
             this.gbRoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -6546,6 +6558,23 @@ namespace ZScreenGUI
             this.txtImagesDir.Size = new System.Drawing.Size(528, 20);
             this.txtImagesDir.TabIndex = 1;
             this.txtImagesDir.TextChanged += new System.EventHandler(this.txtFileDirectory_TextChanged);
+            // 
+            // gbSettingsExportImport
+            // 
+            this.gbSettingsExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
+            this.gbSettingsExportImport.Controls.Add(this.btnFTPExport);
+            this.gbSettingsExportImport.Controls.Add(this.btnFTPImport);
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
+            this.gbSettingsExportImport.Location = new System.Drawing.Point(8, 336);
+            this.gbSettingsExportImport.Name = "gbSettingsExportImport";
+            this.gbSettingsExportImport.Size = new System.Drawing.Size(765, 56);
+            this.gbSettingsExportImport.TabIndex = 6;
+            this.gbSettingsExportImport.TabStop = false;
+            this.gbSettingsExportImport.Text = "Backup and Restore";
             // 
             // btnSettingsDefault
             // 
@@ -6899,33 +6928,18 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // chkPreferSystemFolders
+            // btnResetHotkeys
             // 
-            this.chkPreferSystemFolders.AutoSize = true;
-            this.chkPreferSystemFolders.Location = new System.Drawing.Point(16, 16);
-            this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
-            this.chkPreferSystemFolders.Size = new System.Drawing.Size(254, 17);
-            this.chkPreferSystemFolders.TabIndex = 117;
-            this.chkPreferSystemFolders.Text = "&Prefer System Folders to store Settings and Data";
-            this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
-            this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
-            // 
-            // gbSettingsExportImport
-            // 
-            this.gbSettingsExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
-            this.gbSettingsExportImport.Controls.Add(this.btnFTPExport);
-            this.gbSettingsExportImport.Controls.Add(this.btnFTPImport);
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
-            this.gbSettingsExportImport.Location = new System.Drawing.Point(8, 336);
-            this.gbSettingsExportImport.Name = "gbSettingsExportImport";
-            this.gbSettingsExportImport.Size = new System.Drawing.Size(765, 56);
-            this.gbSettingsExportImport.TabIndex = 6;
-            this.gbSettingsExportImport.TabStop = false;
-            this.gbSettingsExportImport.Text = "Backup and Restore";
+            this.btnResetHotkeys.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnResetHotkeys.AutoSize = true;
+            this.btnResetHotkeys.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnResetHotkeys.Location = new System.Drawing.Point(688, 16);
+            this.btnResetHotkeys.Name = "btnResetHotkeys";
+            this.btnResetHotkeys.Size = new System.Drawing.Size(101, 23);
+            this.btnResetHotkeys.TabIndex = 69;
+            this.btnResetHotkeys.Text = "Reset &All Hotkeys";
+            this.btnResetHotkeys.UseVisualStyleBackColor = true;
+            this.btnResetHotkeys.Click += new System.EventHandler(this.btnResetHotkeys_Click);
             // 
             // ZScreen
             // 
@@ -7147,6 +7161,8 @@ namespace ZScreenGUI
             this.gbRoot.PerformLayout();
             this.gbSaveLoc.ResumeLayout(false);
             this.gbSaveLoc.PerformLayout();
+            this.gbSettingsExportImport.ResumeLayout(false);
+            this.gbSettingsExportImport.PerformLayout();
             this.gbRemoteDirCache.ResumeLayout(false);
             this.gbRemoteDirCache.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).EndInit();
@@ -7155,8 +7171,6 @@ namespace ZScreenGUI
             this.gbLastSource.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.gbSettingsExportImport.ResumeLayout(false);
-            this.gbSettingsExportImport.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -7224,11 +7238,11 @@ namespace ZScreenGUI
         internal System.Windows.Forms.LinkLabel llProjectPage;
         internal System.Windows.Forms.LinkLabel llWebsite;
         internal System.Windows.Forms.LinkLabel llblBugReports;
-        private NumericUpDownTimer nudtScreenshotDelay;
+        private NumericUpDownTimer nudScreenshotDelay;
         internal System.Windows.Forms.Label lblCopytoClipboard;
         internal System.Windows.Forms.ComboBox cboClipboardTextMode;
         internal System.Windows.Forms.CheckBox chkManualNaming;
-        internal System.Windows.Forms.CheckBox cbShowCursor;
+        internal System.Windows.Forms.CheckBox chkShowCursor;
         internal System.Windows.Forms.Label lblLogo;
         internal System.Windows.Forms.PictureBox pbLogo;
         internal System.Windows.Forms.TabPage tpHotkeys;
@@ -7252,9 +7266,9 @@ namespace ZScreenGUI
         internal System.Windows.Forms.PictureBox pbCropBorderColor;
         internal System.Windows.Forms.NumericUpDown nudCropBorderSize;
         internal System.Windows.Forms.GroupBox gbCrosshairSettings;
-        internal System.Windows.Forms.CheckBox cbCropShowMagnifyingGlass;
-        internal System.Windows.Forms.CheckBox cbCropShowBigCross;
-        internal System.Windows.Forms.CheckBox cbCropDynamicCrosshair;
+        internal System.Windows.Forms.CheckBox chkCropShowMagnifyingGlass;
+        internal System.Windows.Forms.CheckBox chkCropShowBigCross;
+        internal System.Windows.Forms.CheckBox chkCropDynamicCrosshair;
         internal System.Windows.Forms.NumericUpDown nudCropCrosshairStep;
         internal System.Windows.Forms.PictureBox pbCropCrosshairColor;
         internal System.Windows.Forms.NumericUpDown nudCropCrosshairInterval;
@@ -7266,9 +7280,9 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblCrosshairLineSize;
         internal System.Windows.Forms.Label lblCrosshairLineCount;
         internal System.Windows.Forms.Label lblCropRegionStyle;
-        internal System.Windows.Forms.CheckBox cbRegionHotkeyInfo;
-        internal System.Windows.Forms.ComboBox cbCropStyle;
-        internal System.Windows.Forms.CheckBox cbRegionRectangleInfo;
+        internal System.Windows.Forms.CheckBox chkRegionHotkeyInfo;
+        internal System.Windows.Forms.ComboBox chkCropStyle;
+        internal System.Windows.Forms.CheckBox chkRegionRectangleInfo;
         internal System.Windows.Forms.TabPage tpSelectedWindow;
         internal System.Windows.Forms.NumericUpDown nudSelectedWindowHueRange;
         internal System.Windows.Forms.Label lblSelectedWindowHueRange;
@@ -7344,7 +7358,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.CheckBox cbWatermarkAutoHide;
         internal System.Windows.Forms.CheckBox cbWatermarkAddReflection;
         internal System.Windows.Forms.Label lblWatermarkType;
-        internal System.Windows.Forms.ComboBox cbWatermarkPosition;
+        internal System.Windows.Forms.ComboBox chkWatermarkPosition;
         internal System.Windows.Forms.Label lblWatermarkPosition;
         internal System.Windows.Forms.NumericUpDown nudWatermarkOffset;
         internal System.Windows.Forms.Label lblWatermarkOffset;
@@ -7386,7 +7400,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.CheckedListBox lbSoftware;
         internal System.Windows.Forms.Button btnAddImageSoftware;
         internal System.Windows.Forms.GroupBox gbFTPSettings;
-        internal System.Windows.Forms.CheckBox cbAutoSwitchFileUploader;
+        internal System.Windows.Forms.CheckBox chkAutoSwitchFileUploader;
         internal System.Windows.Forms.CheckBox chkEnableThumbnail;
         internal System.Windows.Forms.Button btnFTPImport;
         internal System.Windows.Forms.Button btnFTPExport;
@@ -7706,6 +7720,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblCloseButtonAction;
         private System.Windows.Forms.CheckBox chkPreferSystemFolders;
         internal System.Windows.Forms.GroupBox gbSettingsExportImport;
+        private System.Windows.Forms.Button btnResetHotkeys;
 
     }
 }

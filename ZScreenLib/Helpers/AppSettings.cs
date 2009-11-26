@@ -19,7 +19,7 @@ namespace ZScreenLib
         public string XMLSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, XMLSettings.XMLFileName);
         [Category("Options / General"), DefaultValue(ImageDestType.CLIPBOARD), Description("Image Destination")]
         public ImageDestType ImageUploader { get; set; }
-        [Category("Options / General"), DefaultValue(true), Description("Prefer System Folders for all the data created by ZScreen")]
+        [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }
 
         public static void ApplyDefaultValues(object self)

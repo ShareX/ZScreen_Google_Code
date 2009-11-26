@@ -256,11 +256,6 @@ namespace ZScreenLib
             return number.ToString("d" + digits);
         }
 
-        public static StringBuilder Normalize(StringBuilder sb)
-        {
-            return Normalize(sb, true);
-        }
-
         /// <summary>
         ///    Normalize the entire thing, allow only characters and digits,
         ///    spaces become underscores, prevents possible problems
