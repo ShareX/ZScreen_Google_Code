@@ -1304,10 +1304,16 @@ namespace ZScreenLib
             return string.Empty;
         }
 
-        public static MyCursor CaptureCursor()
+        public static MyCursor CaptureCursor(Point ptScreenPos)
         {
             CursorInfo cursorInfo = new CursorInfo();
             cursorInfo.cbSize = Marshal.SizeOf(cursorInfo);
+
+            if (ptScreenPos == Point.Empty)
+            {
+                ptScreenPos = cursorInfo.ptScreenPos;
+            }
+
             if (GetCursorInfo(out cursorInfo) && cursorInfo.flags == CURSOR_SHOWING)
             {
                 IntPtr hicon = CopyIcon(cursorInfo.hCursor);
@@ -1316,7 +1322,7 @@ namespace ZScreenLib
                     IconInfo iconInfo;
                     if (GetIconInfo(hicon, out iconInfo))
                     {
-                        Point position = new Point(cursorInfo.ptScreenPos.X - iconInfo.xHotspot, cursorInfo.ptScreenPos.Y - iconInfo.yHotspot);
+                        Point position = new Point(ptScreenPos.X - iconInfo.xHotspot, ptScreenPos.Y - iconInfo.yHotspot);
 
                         using (Bitmap maskBitmap = Bitmap.FromHbitmap(iconInfo.hbmMask))
                         {

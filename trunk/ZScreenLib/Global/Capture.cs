@@ -41,6 +41,16 @@ namespace ZScreenLib
             return img;
         }
 
+        public static Image CaptureScreen(bool showCursor, Point cursorPos)
+        {
+            Image img = CaptureRectangle(GraphicsMgr.GetScreenBounds());
+            if (showCursor)
+            {
+                DrawCursor(img, Point.Empty, cursorPos);
+            }
+            return img;
+        }
+
         public static Image CaptureWindow(IntPtr handle, bool showCursor)
         {
             return CaptureWindow(handle, showCursor, 0);
@@ -439,7 +449,12 @@ namespace ZScreenLib
 
         private static Image DrawCursor(Image img, Point offset)
         {
-            using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor())
+            return DrawCursor(img, offset, Point.Empty);
+        }
+
+        private static Image DrawCursor(Image img, Point offset, Point cursorPos)
+        {
+            using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor(cursorPos))
             {
                 cursor.Position.Offset(-offset.X, -offset.Y);
                 using (Graphics g = Graphics.FromImage(img))
@@ -448,7 +463,6 @@ namespace ZScreenLib
                     g.DrawImage(cursor.Bitmap, cursor.Position);
                 }
             }
-
             return img;
         }
 

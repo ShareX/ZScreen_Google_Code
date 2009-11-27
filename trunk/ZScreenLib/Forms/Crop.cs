@@ -56,6 +56,7 @@ namespace ZScreenLib
         private Timer windowCheck = new Timer { Interval = 250 };
         private DynamicCrosshair crosshair = new DynamicCrosshair();
         private DynamicRectangle myRectangle;
+        public Point CursorPos { get; set; }
 
         private Rectangle CropRegion
         {
@@ -86,12 +87,12 @@ namespace ZScreenLib
             bmpBackground = new Bitmap(bmpClean);
             bmpRegion = new Bitmap(bmpClean);
             Bounds = GraphicsMgr.GetScreenBounds();
+            this.CursorPos = this.PointToClient(Cursor.Position);
             rectIntersect.Size = new Size(Bounds.Width - 1, Bounds.Height - 1);
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             CalculateBoundaryFromMousePosition();
             timer.Tick += new EventHandler(TimerTick);
             windowCheck.Tick += new EventHandler(WindowCheckTick);
-
             if (selectedWindowMode)
             {
                 captureObjects = Engine.conf.SelectedWindowCaptureObjects;
@@ -103,9 +104,13 @@ namespace ZScreenLib
             {
                 myRectangle = new DynamicRectangle(CaptureType.CROP);
                 if (Engine.conf.UseHardwareCursor == false)
+                {
                     Cursor.Hide();
+                }
                 else
+                {
                     this.Cursor = Cursors.Cross;
+                }
             }
 
             Graphics gBackground = Graphics.FromImage(bmpBackground);
