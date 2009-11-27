@@ -1312,15 +1312,22 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
-                    ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-                    tsm.Checked = Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled;
+                    if (Adapter.CheckList(Engine.conf.ImageEditors, lbSoftware.SelectedIndex))
+                    {
+                        Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                        ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
+                        tsm.Checked = Engine.conf.ImageEditors[lbSoftware.SelectedIndex].Enabled;
+                    }
                 }
                 else if (sender.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
-                    Engine.conf.ImageEditors[(int)tsm.Tag].Enabled = tsm.Checked;
-                    lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
+                    int sel = (int)tsm.Tag;
+                    if (Adapter.CheckList(Engine.conf.ImageEditors, sel))
+                    {
+                        Engine.conf.ImageEditors[sel].Enabled = tsm.Checked;
+                        lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
+                    }
                 }
             }
         }
