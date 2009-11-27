@@ -636,7 +636,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Hotkeys()
         {
-           Loader.Worker.mHotkeyMgr.UpdateHotkeysDGV();
+            Loader.Worker.mHotkeyMgr.UpdateHotkeysDGV();
         }
 
         private void ZScreen_ConfigGUI_Screenshots()
@@ -1950,7 +1950,6 @@ namespace ZScreenGUI
                                 {
                                     Clipboard.SetText(cbString);
                                 }
-
                                 break;
                             default:
                                 switch (t.MyImageUploader)
@@ -1962,7 +1961,6 @@ namespace ZScreenGUI
                                         {
                                             Process.Start(cbString);
                                         }
-
                                         break;
                                     default:
                                         cbString = t.RemoteFilePath;
@@ -1970,10 +1968,8 @@ namespace ZScreenGUI
                                         {
                                             Process.Start(cbString);
                                         }
-
                                         break;
                                 }
-
                                 break;
                         }
                     }
