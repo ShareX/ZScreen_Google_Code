@@ -141,15 +141,6 @@ namespace ZScreenGUI
                     break;
             }
 
-            if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
-            {
-                if (Engine.conf.AddFailedScreenshot ||
-                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
-                {
-                    task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
-                }
-            }
-
             if (task.MakeTinyURL)
             {
                 string url = task.RemoteFilePath;
@@ -257,6 +248,24 @@ namespace ZScreenGUI
                 else
                 {
                     FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
+                    if (task.MyImageUploader == ImageDestType.FILE && Engine.conf.ShowSaveFileDialogImages)
+                    {
+                        string fp = Adapter.SaveImage(task.MyImage);
+                        if (!string.IsNullOrEmpty(fp))
+                        {
+                            task.UpdateLocalFilePath(fp);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
+                    {
+                        if (Engine.conf.AddFailedScreenshot ||
+                            (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
+                        {
+                            AddHistoryItem(new HistoryItem(task));
+                        }
+                    }
+
                     switch (task.JobCategory)
                     {
                         case JobCategoryType.BINARY:

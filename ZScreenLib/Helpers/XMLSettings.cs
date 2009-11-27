@@ -237,6 +237,8 @@ namespace ZScreenLib
         public string EntireScreenPattern = "SS-%y-%mo-%d_%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
+        [Category("Options / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
+        public bool ShowSaveFileDialogImages { get; set; }
 
         // Image Settings
 
@@ -521,7 +523,6 @@ namespace ZScreenLib
         public Color BorderEffectColor { get; set; }
 
         //XmlSerializer can't handle Colors so whe do it
-        //TODO hide this in property grid
         [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]
         public string pseudo_BorderEffectColor
         {

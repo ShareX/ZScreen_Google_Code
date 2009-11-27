@@ -125,12 +125,13 @@ namespace ZScreenLib
                 NativeMethods.DestroyIcon(hicon);
             }
         }
-        public static void SaveImage(Image img)
+        public static string SaveImage(Image img)
         {
             if (img != null)
             {
-                ImageOutput.SaveWithDialog(img);
+              return  ImageOutput.SaveWithDialog(img);
             }
+            return string.Empty;
         }
 
         #endregion
