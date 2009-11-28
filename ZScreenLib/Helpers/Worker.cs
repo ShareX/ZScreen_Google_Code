@@ -11,6 +11,7 @@ using ZSS.IndexersLib;
 using System.Windows.Forms;
 using UploadersLib.Helpers;
 using ZScreenLib.Properties;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -286,7 +287,7 @@ namespace ZScreenLib
             {
                 task.SetImage(Clipboard.GetImage());
                 task.Settings.ManualNaming = false;
-                if (task.SetFilePathFromPattern(NameParser.Convert(NameParserType.EntireScreen)))
+                if (task.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen, Engine.conf.EntireScreenPattern))))
                 {
                     FileSystem.SaveImage(ref task);
                     StartWorkerPictures(task, task.LocalFilePath);
@@ -296,7 +297,7 @@ namespace ZScreenLib
             {
                 WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
-                    NameParser.Convert(new NameParserInfo("%y.%mo.%d-%h.%mi.%s")) + ".txt"));
+                    NameParser.Convert(new NameParserInfo(NameParserType.Text, "%y.%mo.%d-%h.%mi.%s")) + ".txt"));
                 File.WriteAllText(fp, Clipboard.GetText());
                 temp.UpdateLocalFilePath(fp);
                 temp.MyText = TextInfo.FromFile(fp);

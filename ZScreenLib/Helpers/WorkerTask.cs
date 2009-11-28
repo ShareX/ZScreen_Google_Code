@@ -33,6 +33,7 @@ using UploadersLib.Helpers;
 using UploadersLib.TextServices;
 using ZScreenLib.Helpers;
 using ZScreenLib.Properties;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -264,7 +265,7 @@ namespace ZScreenLib
                 if (dialog.DialogResult == DialogResult.OK)
                 {
                     StringBuilder sb = new StringBuilder(dialog.InputText);
-                    sb = NameParser.Normalize(sb, true);
+                    sb = NameParser.Normalize(new NameParser.NormalizeOptions(sb) { ConvertSpace = true });
                     if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(dialog.InputText))
                     {
                         this.FileName = sb.ToString();

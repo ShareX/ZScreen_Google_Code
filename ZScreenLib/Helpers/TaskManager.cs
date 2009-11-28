@@ -34,6 +34,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -150,16 +151,19 @@ namespace ZScreenLib
             if (mTask.MyImage != null)
             {
                 NameParserType type;
+                string text = string.Empty;
                 if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
                 {
                     type = NameParserType.ActiveWindow;
+                    text = Engine.conf.ActiveWindowPattern;
                 }
                 else
                 {
                     type = NameParserType.EntireScreen;
+                    text = Engine.conf.EntireScreenPattern;
                 }
 
-                if (mTask.SetFilePathFromPattern(NameParser.Convert(type)))
+                if (mTask.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(type, text))))
                 {
                     FileSystem.SaveImage(ref mTask);
                     if (!File.Exists(mTask.LocalFilePath))

@@ -1,16 +1,16 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZScreen")]
-[assembly: AssemblyDescription("Advanced image/text/file uploading utility")]
+[assembly: AssemblyTitle("ZSS.HelpersLib")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BrandonZ.net")]
-[assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
+[assembly: AssemblyCompany("BetaONE")]
+[assembly: AssemblyProduct("ZSS.HelpersLib")]
+[assembly: AssemblyCopyright("Copyright © BetaONE 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3a896475-06c8-4f35-818d-2f64b864d3d4")]
+[assembly: Guid("0836c289-a8c6-4b3c-ac1e-2a2957480f6a")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,5 +31,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("3.0.0.1463")]
-[assembly: AssemblyFileVersion("3.22.1.0")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

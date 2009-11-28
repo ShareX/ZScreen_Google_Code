@@ -342,6 +342,10 @@
       <Project>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</Project>
       <Name>ZSS.FTPClientLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+      <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
+      <Name>ZSS.HelpersLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
       <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
       <Name>ZSS.ImageEditorLib</Name>

@@ -44,6 +44,7 @@ using System.Reflection;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -129,7 +130,7 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-              return  ImageOutput.SaveWithDialog(img);
+                return ImageOutput.SaveWithDialog(img);
             }
             return string.Empty;
         }
@@ -162,7 +163,7 @@ namespace ZScreenLib
 
         #region FTP Methods
 
-        public static void TestFTPAccount(FTPAccount account)
+        public static void TestFTPAccount(FTPAccount account, bool silent)
         {
             string msg;
 
@@ -170,6 +171,7 @@ namespace ZScreenLib
             {
                 try
                 {
+                    DateTime time = DateTime.Now;
                     ftpClient.Test(account.SubFolderPath);
                     msg = "Success!";
                 }
@@ -202,8 +204,14 @@ namespace ZScreenLib
                 {
                     msg += "\n\nPing results:\n" + ping;
                 }
-
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (silent)
+                {
+                    FileSystem.AppendDebug(string.Format("Tested {0} sub-folder path in {1}", account.SubFolderPath, account.ToString()));
+                }
+                else
+                {
+                    MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
@@ -734,7 +742,7 @@ namespace ZScreenLib
                 try
                 {
                     fDialog.Color = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
-                    fDialog.Font = XMLSettings.DeserializeFont(Engine.conf.WatermarkFont);                    
+                    fDialog.Font = XMLSettings.DeserializeFont(Engine.conf.WatermarkFont);
                 }
                 catch (Exception err)
                 {
