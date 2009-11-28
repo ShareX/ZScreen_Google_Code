@@ -79,7 +79,6 @@ namespace ZScreenLib
 
             try
             {
-                //Crop cp = new Crop(Capture.CaptureScreen(false), false);
                 using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor, NativeMethods.ConvertPoint(Cursor.Position)))
                 {
                     if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)

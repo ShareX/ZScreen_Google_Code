@@ -1749,7 +1749,7 @@ namespace ZScreenLib
                 y = Math.Min(y, screen.Bounds.Y);
             }
 
-            return new Point(x - x, y - y);
+            return new Point(p.X - x, p.Y - y);
         }
     }
 }
