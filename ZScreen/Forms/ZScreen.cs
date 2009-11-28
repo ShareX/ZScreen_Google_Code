@@ -62,7 +62,6 @@ namespace ZScreenGUI
         private DebugHelper mDebug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ThumbnailCacher thumbnailCacher;
-        private System.Windows.Forms.Timer mTimerImageEditorMenuClose = new System.Windows.Forms.Timer() { Interval = 5000 };
         internal static GoogleTranslate mGTranslator = null;
 
         #endregion
@@ -82,9 +81,6 @@ namespace ZScreenGUI
             {
                 Loader.Worker2.CheckUpdates();
             }
-            tsmEditinImageSoftware.MouseEnter += new EventHandler(tsmEditinImageSoftware_MouseEnter);
-            tsmEditinImageSoftware.MouseLeave += new EventHandler(tsmEditinImageSoftware_MouseLeave);
-            mTimerImageEditorMenuClose.Tick += new EventHandler(mImageEditorMenuClose_Tick);
             Application.Idle += new EventHandler(Application_Idle);
         }
 
@@ -1290,6 +1286,8 @@ namespace ZScreenGUI
                         Checked = imgs[x].Enabled
                     };
                     tsm.Click += new EventHandler(TrayImageEditorClick);
+                    tsm.MouseEnter += new EventHandler(TrayImageEditor_MouseEnter);
+                    tsm.MouseLeave += new EventHandler(TrayImageEditor_MouseLeave);
                     tsmEditinImageSoftware.DropDownItems.Add(tsm);
                 }
 
@@ -1302,6 +1300,16 @@ namespace ZScreenGUI
                     tsmEditinImageSoftware.DropDown.Show();
                 }
             }
+        }
+
+        void TrayImageEditor_MouseLeave(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.AutoClose = true;
+        }
+
+        void TrayImageEditor_MouseEnter(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.AutoClose = false;
         }
 
         private void UpdateGuiEditors(object sender)
@@ -1340,11 +1348,8 @@ namespace ZScreenGUI
             if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
             {
                 tsmEditinImageSoftware.DropDown.AutoClose = false;
-                mTimerImageEditorMenuClose.Enabled = true;
                 lbSoftware.SelectedItem = tsm.Text;
                 UpdateGuiEditors(sender);
-                mTimerImageEditorMenuClose.Stop();
-                mTimerImageEditorMenuClose.Start();
             }
         }
 
@@ -1800,17 +1805,6 @@ namespace ZScreenGUI
                     SetActiveImageSoftware();
                 }
             }
-        }
-
-        private void tsmEditinImageSoftware_MouseEnter(object sender, EventArgs e)
-        {
-            tsmEditinImageSoftware.DropDown.AutoClose = false;
-            mTimerImageEditorMenuClose.Enabled = false;
-        }
-
-        private void tsmEditinImageSoftware_MouseLeave(object sender, EventArgs e)
-        {
-            mTimerImageEditorMenuClose.Enabled = true;
         }
 
         private void mImageEditorMenuClose_Tick(object sender, EventArgs e)
@@ -2848,7 +2842,7 @@ namespace ZScreenGUI
 
         private void llProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Engine.URL_PROJECTPAGE);
+            Process.Start(Engine.URL_WIKIPAGES);
         }
 
         private void ZScreen_Deactivate(object sender, EventArgs e)
