@@ -19,5 +19,7 @@ In order to successfully generate a predefine portion,
  # Release the PMB
 
 = Keywords = 
- * *PMB* = Primary mouse button, for right-handed people, PMP is the left click
- * *SMB* = Secondary mouse button, for right-handed people SMB is the right click
+ * *PMB* = Primary mouse button; left click for default mouse configurations 
+ * *SMB* = Secondary mouse button, right click for default mouse configurations 
+
+http://wmwiki.com/mcored/zscreen/Mouse_Properties-2009.11.28-10.51.00.png
