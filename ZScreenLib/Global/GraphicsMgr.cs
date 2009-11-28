@@ -52,6 +52,7 @@ namespace ZScreenLib
             Point bottomRight = new Point(0, 0);
             foreach (Screen screen in Screen.AllScreens)
             {
+                FileSystem.AppendDebug("Screen " + screen.DeviceName + ": " + screen.Bounds.Location.ToString());
                 if (screen.Bounds.X < topLeft.X) topLeft.X = screen.Bounds.X;
                 if (screen.Bounds.Y < topLeft.Y) topLeft.Y = screen.Bounds.Y;
                 if ((screen.Bounds.X + screen.Bounds.Width) > bottomRight.X) bottomRight.X = screen.Bounds.X + screen.Bounds.Width;
