@@ -88,6 +88,7 @@
             this.lbUsers.Location = new System.Drawing.Point(113, 3);
             this.lbUsers.Name = "lbUsers";
             this.lbUsers.Size = new System.Drawing.Size(104, 212);
+            this.lbUsers.Sorted = true;
             this.lbUsers.TabIndex = 4;
             this.lbUsers.SelectedIndexChanged += new System.EventHandler(this.lbUsers_SelectedIndexChanged);
             this.lbUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbUsers_KeyDown);
