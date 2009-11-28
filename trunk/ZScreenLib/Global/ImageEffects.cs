@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Greenshot.Drawing;
 using GradientTester;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -105,7 +106,7 @@ namespace ZScreenLib
                 case WatermarkType.NONE:
                     return img;
                 case WatermarkType.TEXT:
-                    return DrawWatermark(img, NameParser.Convert(new NameParserInfo(NameParserType.Watermark) { IsPreview = true, Picture = img }));
+                    return DrawWatermark(img, NameParser.Convert(new NameParserInfo(NameParserType.Watermark, Engine.conf.WatermarkText) { IsPreview = true, Picture = img }));
                 case WatermarkType.IMAGE:
                     return DrawImageWatermark(img, Engine.conf.WatermarkImageLocation);
             }

@@ -1,11 +1,13 @@
-Version 3.20 - 20091201
+Version 3.22 - 20091201
 
-3.20.8.2 Cursor was not captured on a multi-monitor configuration [Issue 145] {McoreD}
-3.20.8.1 Crash when scrolling in Options window [Issue 170] {McoreD}
-3.20.8.0 Ability to restore hotkeys to their defaults [Issue 141] {McoreD}
-3.20.7.2 Fixed high CPU usage after opening About Window [Issue 162] {Jaex}
-3.20.7.1 Relocating Images Directory will now setup custom Images Directory [Issue 169] {McoreD}
-3.20.7.0 Window button behavior settings in Options - Interaction tab {Jaex}
+3.22.1.0 FTP sub-folder path can now accept syntax such as %y-%mo {McoreD}
+3.22.0.0 PropertyGrid option to show prompt to save the image in a different location {McoreD}
+3.21.1.2 Cursor was not captured on a multi-monitor configuration [Issue 145] {McoreD}
+3.21.1.1 Crash when scrolling in Options window [Issue 170] {McoreD}
+3.21.1.0 Ability to restore hotkeys to their defaults [Issue 141] {McoreD}
+3.21.0.2 Fixed high CPU usage after opening About Window [Issue 162] {Jaex}
+3.21.0.1 Relocating Images Directory will now setup custom Images Directory [Issue 169] {McoreD}
+3.21.0.0 Window button behavior settings in Options - Interaction tab {Jaex}
 3.20.6.1 Application did not have a setting to exit on close [Issue 168] {McoreD}
 3.20.6.0 Debug information in the Debug tab are now text selectable {Jaex}
 3.20.5.3 Images larger than the limit did not convert to a lossy file format {Jaex}

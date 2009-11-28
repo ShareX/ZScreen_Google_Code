@@ -24,6 +24,7 @@
 using System;
 using System.ComponentModel;
 using System.Web;
+using HelpersLib;
 
 namespace UploadersLib
 {
@@ -45,11 +46,35 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
-        public string SubFolderPath { get; set; }
+        private string mSubFolderPath = string.Empty;
+        [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
+        public string SubFolderPath
+        {
+            get
+            {
+                return NameParser.Convert(new NameParserInfo(NameParserType.Text, mSubFolderPath) { IsFolderPath = true });
+                ;
+            }
+            set
+            {
+                mSubFolderPath = value;
+            }
+        }
 
-        [Category("FTP"), Description("HTTP Home Path, % = Host e.g. brandonz.net or %\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
-        public string HttpHomePath { get; set; }
+        private string mHttpHomePath = string.Empty;
+        [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. brandonz.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
+        public string HttpHomePath
+        {
+            get
+            {
+                return NameParser.Convert(new NameParserInfo(NameParserType.Text, mHttpHomePath) { IsFolderPath = true });
+                ;
+            }
+            set
+            {
+                mHttpHomePath = value;
+            }
+        }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get; set; }
@@ -135,7 +160,7 @@ namespace UploadersLib
             }
             else
             {
-                string httppath = this.HttpHomePath.Replace("%", host).TrimStart('@');
+                string httppath = this.HttpHomePath.Replace("%host", host).TrimStart('@');
                 path = FTPHelpers.CombineURL(httppath, folderPath, fileName);
             }
 

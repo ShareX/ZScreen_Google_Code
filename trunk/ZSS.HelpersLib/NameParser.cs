@@ -29,7 +29,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
 
-namespace ZScreenLib
+namespace HelpersLib
 {
     public enum ReplacementVariables
     {
@@ -76,51 +76,28 @@ namespace ZScreenLib
         EntireScreen,
         ActiveWindow,
         Watermark,
-        SaveFolder
+        SaveFolder,
+        Text
     }
 
     public class NameParserInfo
     {
         public string Pattern { get; set; }
 
-        private NameParserType type;
-        public NameParserType Type
-        {
-            get { return type; }
-            set
-            {
-                type = value;
-                switch (type)
-                {
-                    case NameParserType.ActiveWindow:
-                        Pattern = Engine.conf.ActiveWindowPattern;
-                        break;
-                    case NameParserType.EntireScreen:
-                        Pattern = Engine.conf.EntireScreenPattern;
-                        break;
-                    case NameParserType.Watermark:
-                        Pattern = Engine.conf.WatermarkText;
-                        break;
-                    case NameParserType.SaveFolder:
-                        Pattern = Engine.conf.SaveFolderPattern;
-                        break;
-                }
-            }
-        }
-
+        public NameParserType Type { get; set; }
+        public int AutoIncrement { get; set; }
+        public string ProductName { get; set; }
+        public bool IsFolderPath { get; set; }
         public bool IsPreview { get; set; }
         public Image Picture { get; set; }
         public DateTime CustomDate { get; set; }
         public int MaxNameLength { get; set; }
 
-        public NameParserInfo(string pattern)
+        public NameParserInfo(NameParserType nameType, string text)
         {
-            Pattern = pattern;
-        }
-
-        public NameParserInfo(NameParserType nameType)
-        {
+            ProductName = Application.ProductName;
             Type = nameType;
+            Pattern = text;
         }
     }
 
@@ -128,9 +105,9 @@ namespace ZScreenLib
     {
         public const string Prefix = "%";
 
-        public static string Convert(NameParserType nameParserType)
+        public static string Convert(string pattern)
         {
-            return Convert(new NameParserInfo(nameParserType) { MaxNameLength = Engine.conf.MaxNameLength });
+            return Convert(new NameParserInfo(NameParserType.Text, pattern));
         }
 
         public static string Convert(NameParserInfo nameParser)
@@ -158,7 +135,7 @@ namespace ZScreenLib
 
             if (nameParser.Type == NameParserType.ActiveWindow || nameParser.Type == NameParserType.Watermark)
             {
-                string activeWindow = NativeMethods.GetWindowLabel();
+                string activeWindow = HelpersNativeMethods.GetWindowLabel();
                 if (string.IsNullOrEmpty(activeWindow))
                 {
                     activeWindow = Application.ProductName;
@@ -213,17 +190,17 @@ namespace ZScreenLib
                 {
                     if (!nameParser.IsPreview && sb.ToString().Contains("%i"))
                     {
-                        Engine.conf.AutoIncrement++;
+                        nameParser.AutoIncrement++;
                     }
 
-                    sb = sb.Replace(ToString(ReplacementVariables.i), AddZeroes(Engine.conf.AutoIncrement, 4));
+                    sb = sb.Replace(ToString(ReplacementVariables.i), AddZeroes(nameParser.AutoIncrement, 4));
                 }
             }
 
             #endregion
 
             sb = sb.Replace(ToString(ReplacementVariables.ver), Application.ProductVersion);
-            sb = sb.Replace(ToString(ReplacementVariables.app), Engine.GetProductName());
+            sb = sb.Replace(ToString(ReplacementVariables.app), nameParser.ProductName);
 
             if (nameParser.Type == NameParserType.Watermark)
             {
@@ -232,7 +209,11 @@ namespace ZScreenLib
 
             if (nameParser.Type != NameParserType.Watermark)
             {
-                sb = Normalize(sb, nameParser.Type != NameParserType.SaveFolder);
+                sb = Normalize(new NormalizeOptions(sb)
+                {
+                    ConvertSpace = nameParser.Type != NameParserType.SaveFolder,
+                    IsFolderPath = nameParser.IsFolderPath
+                });
             }
 
             string result = sb.ToString();
@@ -256,20 +237,35 @@ namespace ZScreenLib
             return number.ToString("d" + digits);
         }
 
+        public class NormalizeOptions
+        {
+            public StringBuilder MyStringBuilder { get; private set; }
+            public bool IsFolderPath { get; set; }
+            public bool ConvertSpace { get; set; }
+
+            public NormalizeOptions(StringBuilder sb)
+            {
+                this.MyStringBuilder = sb;
+            }
+        }
+
         /// <summary>
         ///    Normalize the entire thing, allow only characters and digits,
         ///    spaces become underscores, prevents possible problems
         /// </summary>
-        public static StringBuilder Normalize(StringBuilder sb, bool convertSpace)
+        public static StringBuilder Normalize(NormalizeOptions options)
         {
             char[] unCharsFile = Path.GetInvalidFileNameChars();
             char[] unCharsPath = Path.GetInvalidPathChars();
 
-            string fName = sb.ToString();
+            string fName = options.MyStringBuilder.ToString();
 
             foreach (char c in unCharsFile)
             {
-                fName = fName.Replace(c, '_');
+                if (options.IsFolderPath && c != Path.DirectorySeparatorChar && c != '/' || !options.IsFolderPath)
+                {
+                    fName = fName.Replace(c, '_');
+                }
             }
             foreach (char c in unCharsPath)
             {
@@ -279,13 +275,13 @@ namespace ZScreenLib
             {
                 fName = fName.Remove(0, 1);
             }
-            if (convertSpace)
+            if (options.ConvertSpace)
             {
                 fName = fName.Replace(" ", "_");
             }
-            while (fName.IndexOf("__") != -1) 
+            while (fName.IndexOf("__") != -1)
             {
-            	fName = fName.Replace("__", "_");
+                fName = fName.Replace("__", "_");
             }
             return new StringBuilder(fName);
         }

@@ -48,6 +48,7 @@ using ZScreenLib.Helpers;
 using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
+using HelpersLib;
 
 namespace ZScreenGUI
 {
@@ -1852,14 +1853,24 @@ namespace ZScreenGUI
         {
             Engine.conf.ActiveWindowPattern = txtActiveWindow.Text;
             lblActiveWindowPreview.Text = NameParser.Convert(
-                new NameParserInfo(NameParserType.ActiveWindow) { IsPreview = true, MaxNameLength = Engine.conf.MaxNameLength });
+                new NameParserInfo(NameParserType.ActiveWindow, Engine.conf.ActiveWindowPattern)
+                {
+                    ProductName = Engine.GetProductName(),
+                    IsPreview = true,
+                    MaxNameLength = Engine.conf.MaxNameLength
+                });
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.EntireScreenPattern = txtEntireScreen.Text;
             lblEntireScreenPreview.Text = NameParser.Convert(
-                new NameParserInfo(NameParserType.EntireScreen) { IsPreview = true, MaxNameLength = Engine.conf.MaxNameLength });
+                new NameParserInfo(NameParserType.EntireScreen, Engine.conf.EntireScreenPattern)
+                {
+                    ProductName = Engine.GetProductName(),
+                    IsPreview = true,
+                    MaxNameLength = Engine.conf.MaxNameLength
+                });
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -4106,7 +4117,7 @@ namespace ZScreenGUI
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text = NameParser.Convert(NameParserType.SaveFolder);
+            lblImagesFolderPatternPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder, Engine.conf.SaveFolderPattern));
             txtImagesDir.Text = Engine.ImagesDir;
         }
 

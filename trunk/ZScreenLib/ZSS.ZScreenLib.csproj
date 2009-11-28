@@ -142,7 +142,6 @@
     <Compile Include="Global\GDI.cs" />
     <Compile Include="Global\GraphicsMgr.cs" />
     <Compile Include="Global\ImageEffects.cs" />
-    <Compile Include="Global\NameParser.cs" />
     <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="Global\Structures.cs" />
@@ -193,6 +192,10 @@
     <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
       <Name>ZSS.ColorsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+      <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
+      <Name>ZSS.HelpersLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
       <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>

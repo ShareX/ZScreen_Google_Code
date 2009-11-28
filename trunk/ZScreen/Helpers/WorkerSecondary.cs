@@ -108,6 +108,8 @@ namespace ZScreenGUI
 
         #endregion
 
+        #region History Reader
+
         public void LoadHistoryItems()
         {
             mZScreen.cbHistorySave.Checked = Engine.conf.HistorySave;
@@ -149,6 +151,8 @@ namespace ZScreenGUI
             e.Result = HistoryManager.Read();
         }
 
+        #endregion
+
         public void PerformOnlineTasks()
         {
             BackgroundWorker bwOnlineWorker = new BackgroundWorker();
@@ -165,6 +169,10 @@ namespace ZScreenGUI
                 if (null != Uploader.ProxySettings)
                 {
                     Adapter.UpdateTinyPicShuk();
+                }
+                if (Adapter.CheckFTPAccounts())
+                {
+                    Adapter.TestFTPAccount(Adapter.GetFtpAcctActive(), true);
                 }
             }
             catch (Exception ex)
@@ -257,7 +265,7 @@ namespace ZScreenGUI
 
         private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
         {
-            Adapter.TestFTPAccount((FTPAccount)e.Argument);
+            Adapter.TestFTPAccount((FTPAccount)e.Argument, false);
         }
 
         private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)

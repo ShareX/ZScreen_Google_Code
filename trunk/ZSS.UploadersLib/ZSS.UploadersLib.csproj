@@ -128,6 +128,10 @@
       <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
       <Name>Starksoft.Net.Proxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+      <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
+      <Name>ZSS.HelpersLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
