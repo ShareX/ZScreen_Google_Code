@@ -79,7 +79,7 @@ namespace ZScreenLib
 
             try
             {
-                using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor, NativeMethods.ConvertPoint(Cursor.Position)))
+                using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
                 {
                     if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)
                     {

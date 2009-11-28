@@ -82,7 +82,6 @@ namespace ZScreenGUI
             {
                 Loader.Worker2.CheckUpdates();
             }
-
             tsmEditinImageSoftware.MouseEnter += new EventHandler(tsmEditinImageSoftware_MouseEnter);
             tsmEditinImageSoftware.MouseLeave += new EventHandler(tsmEditinImageSoftware_MouseLeave);
             mTimerImageEditorMenuClose.Tick += new EventHandler(mImageEditorMenuClose_Tick);
