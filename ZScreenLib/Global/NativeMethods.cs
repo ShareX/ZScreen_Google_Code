@@ -1309,13 +1309,13 @@ namespace ZScreenLib
             CursorInfo cursorInfo = new CursorInfo();
             cursorInfo.cbSize = Marshal.SizeOf(cursorInfo);
 
-            if (ptScreenPos == Point.Empty)
-            {
-                ptScreenPos = cursorInfo.ptScreenPos;
-            }
-
             if (GetCursorInfo(out cursorInfo) && cursorInfo.flags == CURSOR_SHOWING)
             {
+                if (ptScreenPos == Point.Empty)
+                {
+                    ptScreenPos = cursorInfo.ptScreenPos;
+                }
+
                 IntPtr hicon = CopyIcon(cursorInfo.hCursor);
                 if (hicon != IntPtr.Zero)
                 {
