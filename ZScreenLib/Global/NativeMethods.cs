@@ -1738,5 +1738,18 @@ namespace ZScreenLib
             NativeMethods.GetWindowPlacement(handle, ref wp);
             return wp.showCmd == (int)NativeMethods.SHOWWINDOW.SW_MAXIMIZE;
         }
+
+        public static Point ConvertPoint(Point p)
+        {
+            int x = 0, y = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                x = Math.Min(x, screen.Bounds.X);
+                y = Math.Min(y, screen.Bounds.Y);
+            }
+
+            return new Point(x - x, y - y);
+        }
     }
 }

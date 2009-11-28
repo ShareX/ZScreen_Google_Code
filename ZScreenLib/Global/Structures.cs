@@ -87,4 +87,27 @@ namespace ZScreenLib
         public int x;
         public int y;
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT
+    {
+        public int X;
+        public int Y;
+
+        public POINT(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+
+        public static explicit operator Point(POINT p)
+        {
+            return new Point(p.X, p.Y);
+        }
+
+        public static explicit operator POINT(Point p)
+        {
+            return new POINT(p.X, p.Y);
+        }
+    }
 }

@@ -534,6 +534,8 @@ namespace ZScreenLib
             bmpClean.Dispose();
             bmpBackground.Dispose();
             bmpRegion.Dispose();
+            timer.Dispose();
+            windowCheck.Dispose();
         }
 
         #region Windows Form Designer generated code
