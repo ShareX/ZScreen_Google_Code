@@ -1,7 +1,7 @@
 Version 3.22 - 20091201
 
 3.22.1.0 FTP sub-folder path can now accept syntax such as %y-%mo {McoreD}
-3.22.0.0 PropertyGrid option to show prompt to save the image in a different location {McoreD}
+3.22.0.0 PropertyGrid option to show prompt to save the image in a different location [Issue 175] {McoreD}
 3.21.1.2 Cursor was not captured on a multi-monitor configuration [Issue 145] {McoreD}
 3.21.1.1 Crash when scrolling in Options window [Issue 170] {McoreD}
 3.21.1.0 Ability to restore hotkeys to their defaults [Issue 141] {McoreD}

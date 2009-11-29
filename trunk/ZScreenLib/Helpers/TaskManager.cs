@@ -163,7 +163,7 @@ namespace ZScreenLib
                     text = Engine.conf.EntireScreenPattern;
                 }
 
-                if (mTask.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(type, text))))
+                if (mTask.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(type, text) { AutoIncrement = Engine.conf.AutoIncrement })))
                 {
                     FileSystem.SaveImage(ref mTask);
                     if (!File.Exists(mTask.LocalFilePath))
