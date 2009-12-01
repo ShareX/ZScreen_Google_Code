@@ -1,62 +1,121 @@
-#include "scripts\products.iss"
+; Based on the original AllOrCurrent.iss
+; Dynamically change the locations of various installed elements
+; Installed latest Microsoft .NET Framework if run as Administrator
+; during the installation process based on user type, i.e.:
+;
+;      Current User or All Users
+;
+; Author: Dave Silvia; Mike Delpach
+; EMail: queries@wxcodex.net; mcored@gmail.com
 
+#include "scripts\products.iss"
 #include "scripts\products\winversion.iss"
 #include "scripts\products\fileversion.iss"
-
-//#include "scripts\products\iis.iss"
-
-//#include "scripts\products\kb835732.iss"
-//#include "scripts\products\kb886903.iss"
-//#include "scripts\products\kb928366.iss"
-
 #include "scripts\products\msi20.iss"
 #include "scripts\products\msi31.iss"
-//#include "scripts\products\ie6.iss"
-
-//#include "scripts\products\dotnetfx11.iss"
-//#include "scripts\products\dotnetfx11lp.iss"
-//#include "scripts\products\dotnetfx11sp1.iss"
-
-//#include "scripts\products\dotnetfx20.iss"
-//#include "scripts\products\dotnetfx20lp.iss"
-//#include "scripts\products\dotnetfx20sp1.iss"
-//#include "scripts\products\dotnetfx20sp1lp.iss"
-//#include "scripts\products\dotnetfx20sp2.iss"
-//#include "scripts\products\dotnetfx20sp2lp.iss"
-
 #include "scripts\products\dotnetfx35.iss"
-//#include "scripts\products\dotnetfx35lp.iss"
 #include "scripts\products\dotnetfx35sp1.iss"
-//#include "scripts\products\dotnetfx35sp1lp.iss"
 
-//#include "scripts\products\mdac28.iss"
-//#include "scripts\products\jet4sp8.iss"
-//#include "scripts\products\sql2005express.iss"
+[Code]
+var
+  yNreply: Integer;
+  defaultDirectory: String;
+  defaultMenuFolder: String;
+  applicationIdentifier: String;
+  userType: String;
+  userSystemName: String;
+  relativeStartMenuPrograms: String;
+  profileDirectory: String;
+  whichDesktop: String;
 
-#define SimpleVersion(str S) \
-	Local[0] = Pos (".0.0.", S), \
-	/* (4) and (5) */ \
-	(Local[0] > 0) ? Copy (S, 1, 3) : \
-	( \
-		Local[0] = Pos (".0.0", S), \
-		/* (3) */ \
-		(Local[0] > 0) ? Copy (S, 1, 3) : \
-		( \
-			Local[0] = Pos (".0", S), \
-			/* (2) */ \
-			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) : \
-			( \
-				Local[0] = Pos (".0.", S), \
-				/* (6) */ \
-				(Local[0] > 0) ? Copy (S, 1, 3) : \
-				( \
-					Copy (S, 1, 5) \
-				) \
-			) \
-		) \
+function InitializeSetup(): Boolean;
+begin
+  relativeStartMenuPrograms:='Microsoft\Windows\Start Menu\Programs';
+  defaultDirectory:=ExpandConstant('{localappdata}');
+  profileDirectory:=GetEnv('USERPROFILE');
+  defaultMenuFolder:=defaultDirectory+'\'+relativeStartMenuPrograms;
+  userSystemName:=ExpandConstant('{username}');
+  userType:='CurrentUser';
+  whichDesktop:=profileDirectory+'\Desktop';
+  Result:=true;
+  if IsAdminLoggedOn = True then
+  begin
+    yNreply:=MsgBox('As an administrator, you can install this application system wide or only for the user account that you are logged into.'
+                     + #13#10#13#10 + 'Is this a system wide installation?',mbConfirmation,MB_YESNO);
+    if yNreply = IDYES then
+    begin
+      userType:='AllUsers';
+      defaultDirectory:=ExpandConstant('{pf}');
+      profileDirectory:=GetEnv('ALLUSERSPROFILE');
+      defaultMenuFolder:=profileDirectory+'\'+relativeStartMenuPrograms;
+      whichDesktop:=profileDirectory+'\Desktop';
+      userSystemName:=userSystemName+'_Administrator';
+
+      initwinversion();
+      dotnetfx35();
+      dotnetfx35sp1();
+    end;
+  end
+  else
+   yNreply:=MsgBox('As a Standard User, you can only install this application for the user account that you are logged into.'
+                    + #13#10#13#10 + 'For a system wide installation, please press No, right click the setup and Run As Administrator.'
+                    + #13#10#13#10 + 'Do you want to continue?',mbConfirmation,MB_YESNO);
+   if yNreply = IDNO then
+   Result:=false;
+end;
+
+// This function passes the 'Script Constants' to the non-code
+// sections above.  These are populated in the function
+// following this one...
+function GetCodeVar(Param: String): String;
+var tmpVar: String;
+begin
+  if CompareText(Param,'DefaultDirName') = 0 then
+    Result:=defaultDirectory
+  else
+  if CompareText(Param,'StartMenu') = 0 then
+  begin
+    tmpVar:=ExpandConstant('{group}');
+    tmpVar:=ExtractFileName(tmpVar);
+    Result:=defaultMenuFolder+'\'+tmpVar;
+  end
+  else
+  if CompareText(Param,'Uninstaller') = 0 then
+  begin
+    tmpVar:=ExpandConstant('{uninstallexe}');
+    tmpVar:=ExtractFileName(tmpVar);
+    Result:=ExpandConstant('{app}')+'\'+tmpVar;
+  end
+  else
+  if CompareText(Param,'Desktop') = 0 then
+    Result:=whichDesktop
+  ;
+end;
+
+#define SimpleVersion(str S);; \
+	Local[0] = Pos (".0.0.", S),;; \
+	/* (4) and (5) */;; \
+	(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+	(;; \
+		Local[0] = Pos (".0.0", S),;; \
+		/* (3) */;; \
+		(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+		(;; \
+			Local[0] = Pos (".0", S),;; \
+			/* (2) */;; \
+			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) :;; \
+			(;; \
+				Local[0] = Pos (".0.", S),;; \
+				/* (6) */;; \
+				(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+				(;; \
+					Copy (S, 1, 5);; \
+				);; \
+			);; \
+		);; \
 	);
-		
-#define ExeName "ZScreen"		
+
+#define ExeName "ZScreen"
 #define ExePath "..\bin\Release\ZScreen.exe"
 #define MyAppVersion GetFileVersion(ExePath)
 
@@ -66,11 +125,11 @@ winxpsp2_title=Windows XP Service Pack 2
 
 
 [Setup]
-;SetupIconFile=..\Resources\zss-main.ico
-AllowNoIcons=yes
+AllowNoIcons=true
 AppMutex=Global\0167D1A0-6054-42f5-BA2A-243648899A6B
+AppId={#ExeName}
 AppName={#ExeName}
-AppPublisher=ZScreen
+AppPublisher={#ExeName}
 AppPublisherURL=http://code.google.com/p/zscreen
 AppSupportURL=http://code.google.com/p/zscreen/issues/list
 AppUpdatesURL=http://code.google.com/p/zscreen/downloads/list
@@ -80,127 +139,56 @@ ArchitecturesAllowed=x86 x64 ia64
 ArchitecturesInstallIn64BitMode=x64 ia64
 Compression=lzma/ultra64
 CreateAppDir=true
-DefaultDirName={pf}\ZScreen
+DefaultDirName={code:GetCodeVar|DefaultDirName}\{#ExeName}
 DefaultGroupName={#ExeName}
 DirExistsWarning=no
 InfoAfterFile=..\..\ZScreenLib\Documents\license.txt
 InfoBeforeFile=..\..\ZScreenLib\Documents\VersionHistory.txt
 InternalCompressLevel=ultra64
 LanguageDetectionMethod=uilanguage
-OutputBaseFilename={#ExeName}-{#MyAppVersion}-setup
+MinVersion=4.90.3000,5.0.2195sp3
+OutputBaseFilename={#ExeName}-{#MyAppVersion}-debug-setup
 OutputDir=..\..\..\Output\
-ShowUndisplayableLanguages=no
-SolidCompression=yes
-UninstallDisplayIcon={app}\ZScreen.exe
-UsePreviousAppDir=yes
-UsePreviousGroup=yes
+PrivilegesRequired=none
+;SetupIconFile=..\Resources\zss-main.ico
+ShowLanguageDialog=auto
+ShowUndisplayableLanguages=false
+SignedUninstaller=false
+SolidCompression=true
+Uninstallable=true
+UninstallDisplayIcon={app}\{#ExeName}.exe
+UsePreviousAppDir=no
+UsePreviousGroup=no
 VersionInfoCompany={#ExeName}
-VersionInfoDescription={#ExeName}
 VersionInfoTextVersion={#MyAppVersion}
 VersionInfoVersion={#MyAppVersion}
 
-;required by products
-MinVersion=4.1,5.0
-PrivilegesRequired=poweruser
-
 [Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl"
-Name: "de"; MessagesFile: "compiler:Languages\German.isl"
+Name: en; MessagesFile: compiler:Default.isl
+Name: de; MessagesFile: compiler:Languages\German.isl
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: "..\bin\Release\*.exe"; Excludes: "*.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: ..\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: "{group}\{#ExeName}"; Filename: "{app}\ZScreen.exe"; AppUserModelID: "ZScreen"
+Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
-Name: "{userdesktop}\{#ExeName}"; Filename: "{app}\ZScreen.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\ZScreen"; Filename: "{app}\ZScreen.exe."; Tasks: quicklaunchicon
+Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Tasks: desktopicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: "{app}\ZScreen.exe."; Description: "{cm:LaunchProgram,ZScreen}"; Flags: nowait postinstall skipifsilent
+Filename: {app}\{#ExeName}.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
 ;Filename: "{app}\ZScreen-manual.pdf"; Description: "{cm:LaunchProgram,ZScreen Manual}"; Flags: nowait unchecked postinstall shellexec skipifsilent
 
 [InstallDelete]
-Type: filesandordirs; Name: "{app}\ru"
-Type: filesandordirs; Name: "{app}\en"
-Type: filesandordirs; Name: "{app}\nl"
-Type: files; Name: "{app}\ZSS.ImageUploader.dll"
-Type: files; Name: "{app}\ZSS.TextUploader.dll"
-Type: files; Name: "{app}\ImageUploader.dll"
-Type: files; Name: "{app}\ZSS.Colors.dll"
-
-[Registry]
-Root: HKCU; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: {#ExeName}; ValueData: """{app}\ZScreen.exe"""; Flags: uninsdeletevalue
-
-[Code]
-function InitializeSetup(): Boolean;
-var
-          ResultCode: Integer;
-begin
-	
-	//Simple hack to remove old NSIS-installed ZScreen (v1.3.3.0 or earlier)
-	if FileExists(ExpandConstant('c:\program files\zscreen\uninst.exe')) then
-  begin
-
-        begin
-          if Exec(ExpandConstant('c:\program files\zscreen\uninst.exe'), '', '', SW_SHOW,
-            ewWaitUntilTerminated, ResultCode) then
-          begin
-            // success
-          end
-          else begin
-            // failure
-          end;
-        end;
-
-  end;
-
-  initwinversion();
-
-	//check if dotnetfx20 can be installed on this OS
-	if not minwinspversion(5, 0, 3) then begin
-		MsgBox(FmtMessage(CustomMessage('depinstall_missing'), [CustomMessage('win2000sp3_title')]), mbError, MB_OK);
-		exit;
-	end;
-	if not minwinspversion(5, 1, 2) then begin
-		MsgBox(FmtMessage(CustomMessage('depinstall_missing'), [CustomMessage('winxpsp2_title')]), mbError, MB_OK);
-		exit;
-	end;
-	
-	//if (not iis()) then exit;
-	
-	msi20('2.0');
-	msi31('3.1');
-//	ie6('5.0.2919');
-	
-	//dotnetfx11();
-	//dotnetfx11lp();
-	//dotnetfx11sp1();
-	
-//	kb835732();
-	
-//	if (minwinversion(5, 0) and minspversion(5, 0, 4)) then begin
-//		dotnetfx20sp1();
-//		dotnetfx20sp1lp();
-//	end else begin
-//		dotnetfx20();
-//		dotnetfx20lp();
-//	end;
-	
-dotnetfx35();
-	//dotnetfx35lp();
-dotnetfx35sp1();
-	//dotnetfx35sp1lp();
-	
-//	mdac28('2.7');
-//	jet4sp8('4.0.8015');
-	
-	Result := true;
-end;
-
+Type: filesandordirs; Name: {app}\ru
+Type: filesandordirs; Name: {app}\en
+Type: filesandordirs; Name: {app}\nl
+Type: files; Name: {app}\ZSS.ImageUploader.dll
+Type: files; Name: {app}\ZSS.TextUploader.dll
+Type: files; Name: {app}\ImageUploader.dll
+Type: files; Name: {app}\ZSS.Colors.dll

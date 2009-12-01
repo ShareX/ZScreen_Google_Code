@@ -37,9 +37,11 @@ begin
   userSystemName:=ExpandConstant('{username}');
   userType:='CurrentUser';
   whichDesktop:=profileDirectory+'\Desktop';
+  Result:=true;
   if IsAdminLoggedOn = True then
   begin
-    yNreply:=MsgBox('As an administrator, you can install this application system wide or only for the user account that you are logged into.'+ #13#10#13#10 + 'Is this an All Users installation?',mbConfirmation,MB_YESNO);
+    yNreply:=MsgBox('As an administrator, you can install this application system wide or only for the user account that you are logged into.'
+                     + #13#10#13#10 + 'Is this a system wide installation?',mbConfirmation,MB_YESNO);
     if yNreply = IDYES then
     begin
       userType:='AllUsers';
@@ -53,8 +55,13 @@ begin
       dotnetfx35();
       dotnetfx35sp1();
     end;
-  end;
-  Result:=true;
+  end
+  else
+   yNreply:=MsgBox('As a Standard User, you can only install this application for the user account that you are logged into.'
+                    + #13#10#13#10 + 'For a system wide installation, please press No, right click the setup and Run As Administrator.'
+                    + #13#10#13#10 + 'Do you want to continue?',mbConfirmation,MB_YESNO);
+   if yNreply = IDNO then
+   Result:=false;
 end;
 
 // This function passes the 'Script Constants' to the non-code
@@ -120,8 +127,9 @@ winxpsp2_title=Windows XP Service Pack 2
 [Setup]
 AllowNoIcons=true
 AppMutex=Global\0167D1A0-6054-42f5-BA2A-243648899A6B
+AppId={#ExeName}
 AppName={#ExeName}
-AppPublisher=ZScreen
+AppPublisher={#ExeName}
 AppPublisherURL=http://code.google.com/p/zscreen
 AppSupportURL=http://code.google.com/p/zscreen/issues/list
 AppUpdatesURL=http://code.google.com/p/zscreen/downloads/list
@@ -138,25 +146,22 @@ InfoAfterFile=..\..\ZScreenLib\Documents\license.txt
 InfoBeforeFile=..\..\ZScreenLib\Documents\VersionHistory.txt
 InternalCompressLevel=ultra64
 LanguageDetectionMethod=uilanguage
+MinVersion=4.90.3000,5.0.2195sp3
 OutputBaseFilename={#ExeName}-{#MyAppVersion}-debug-setup
 OutputDir=..\..\..\Output\
+PrivilegesRequired=none
 ;SetupIconFile=..\Resources\zss-main.ico
+ShowLanguageDialog=auto
 ShowUndisplayableLanguages=false
 SignedUninstaller=false
 SolidCompression=true
 Uninstallable=true
-UninstallDisplayIcon={app}\ZScreen.exe
+UninstallDisplayIcon={app}\{#ExeName}.exe
 UsePreviousAppDir=no
 UsePreviousGroup=no
 VersionInfoCompany={#ExeName}
-VersionInfoDescription={#ExeName}
 VersionInfoTextVersion={#MyAppVersion}
 VersionInfoVersion={#MyAppVersion}
-
-;required by products
-MinVersion=4.90.3000,5.0.2195sp3
-PrivilegesRequired=none
-AppId=ZScreen
 
 [Languages]
 Name: en; MessagesFile: compiler:Default.isl
@@ -170,13 +175,13 @@ Source: ..\bin\Debug\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignor
 Source: ..\bin\Debug\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\ZScreen.exe; AppUserModelID: ZScreen
+Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
-Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\ZScreen.exe; Tasks: desktopicon
+Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Tasks: desktopicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: {app}\ZScreen.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
+Filename: {app}\{#ExeName}.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
 ;Filename: "{app}\ZScreen-manual.pdf"; Description: "{cm:LaunchProgram,ZScreen Manual}"; Flags: nowait unchecked postinstall shellexec skipifsilent
 
 [InstallDelete]
@@ -187,5 +192,3 @@ Type: files; Name: {app}\ZSS.ImageUploader.dll
 Type: files; Name: {app}\ZSS.TextUploader.dll
 Type: files; Name: {app}\ImageUploader.dll
 Type: files; Name: {app}\ZSS.Colors.dll
-
-
