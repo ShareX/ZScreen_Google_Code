@@ -16,6 +16,33 @@
 #include "scripts\products\dotnetfx35.iss"
 #include "scripts\products\dotnetfx35sp1.iss"
 
+#define ExeName "ZScreen"
+#define SimpleVersion(str S);; \
+	Local[0] = Pos (".0.0.", S),;; \
+	/* (4) and (5) */;; \
+	(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+	(;; \
+		Local[0] = Pos (".0.0", S),;; \
+		/* (3) */;; \
+		(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+		(;; \
+			Local[0] = Pos (".0", S),;; \
+			/* (2) */;; \
+			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) :;; \
+			(;; \
+				Local[0] = Pos (".0.", S),;; \
+				/* (6) */;; \
+				(Local[0] > 0) ? Copy (S, 1, 3) :;; \
+				(;; \
+					Copy (S, 1, 5);; \
+				);; \
+			);; \
+		);; \
+	);
+
+#define ExePath "..\bin\Release\ZScreen.exe"
+#define MyAppVersion GetFileVersion(ExePath)
+
 [Code]
 var
   yNreply: Integer;
@@ -40,7 +67,7 @@ begin
   Result:=true;
   if IsAdminLoggedOn = True then
   begin
-    yNreply:=MsgBox('As an administrator, you can install this application system wide or only for the user account that you are logged into.'
+    yNreply:=MsgBox('As an administrator, you can install {#ExeName} system wide or only for the user account that you are logged into.'
                      + #13#10#13#10 + 'Is this a system wide installation?',mbConfirmation,MB_YESNO);
     if yNreply = IDYES then
     begin
@@ -57,7 +84,7 @@ begin
     end;
   end
   else
-   yNreply:=MsgBox('As a Standard User, you can only install this application for the user account that you are logged into.'
+   yNreply:=MsgBox('As a Standard User, you can only install {#ExeName} for the user account that you are logged into.'
                     + #13#10#13#10 + 'For a system wide installation, please press No, right click the setup and Run As Administrator.'
                     + #13#10#13#10 + 'Do you want to continue?',mbConfirmation,MB_YESNO);
    if yNreply = IDNO then
@@ -91,33 +118,6 @@ begin
     Result:=whichDesktop
   ;
 end;
-
-#define SimpleVersion(str S);; \
-	Local[0] = Pos (".0.0.", S),;; \
-	/* (4) and (5) */;; \
-	(Local[0] > 0) ? Copy (S, 1, 3) :;; \
-	(;; \
-		Local[0] = Pos (".0.0", S),;; \
-		/* (3) */;; \
-		(Local[0] > 0) ? Copy (S, 1, 3) :;; \
-		(;; \
-			Local[0] = Pos (".0", S),;; \
-			/* (2) */;; \
-			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) :;; \
-			(;; \
-				Local[0] = Pos (".0.", S),;; \
-				/* (6) */;; \
-				(Local[0] > 0) ? Copy (S, 1, 3) :;; \
-				(;; \
-					Copy (S, 1, 5);; \
-				);; \
-			);; \
-		);; \
-	);
-
-#define ExeName "ZScreen"
-#define ExePath "..\bin\Release\ZScreen.exe"
-#define MyAppVersion GetFileVersion(ExePath)
 
 [CustomMessages]
 win2000sp3_title=Windows 2000 Service Pack 3
