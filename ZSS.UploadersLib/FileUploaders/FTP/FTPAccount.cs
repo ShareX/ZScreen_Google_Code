@@ -46,35 +46,11 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        private string mSubFolderPath = string.Empty;
         [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
-        public string SubFolderPath
-        {
-            get
-            {
-                return NameParser.Convert(new NameParserInfo(NameParserType.Text, mSubFolderPath) { IsFolderPath = true });
-                ;
-            }
-            set
-            {
-                mSubFolderPath = value;
-            }
-        }
+        public string SubFolderPath { get; set; }
 
-        private string mHttpHomePath = string.Empty;
         [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. brandonz.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
-        public string HttpHomePath
-        {
-            get
-            {
-                return NameParser.Convert(new NameParserInfo(NameParserType.Text, mHttpHomePath) { IsFolderPath = true });
-                ;
-            }
-            set
-            {
-                mHttpHomePath = value;
-            }
-        }
+        public string HttpHomePath { get; set; }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get; set; }
@@ -127,6 +103,16 @@ namespace UploadersLib
             this.Name = name;
         }
 
+        public string GetSubFolderPath()
+        {
+            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.SubFolderPath) { IsFolderPath = true });
+        }
+
+        public string GetHttpHomePath()
+        {
+            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.HttpHomePath) { IsFolderPath = true });
+        }
+
         public string GetUriPath(string fileName)
         {
             return GetUriPath(fileName, false);
@@ -142,26 +128,27 @@ namespace UploadersLib
             fileName = HttpUtility.UrlEncode(fileName).Replace("+", "%20");
             string path = string.Empty;
             string host = this.Host;
-            string folderPath = this.SubFolderPath;
+            string lHttpHomePath = GetHttpHomePath();
+            string lFolderPath = this.GetSubFolderPath();
 
             if (host.StartsWith("ftp."))
             {
                 host = host.Remove(0, 4);
             }
 
-            if (this.HttpHomePath.StartsWith("@") || customPath)
+            if (lHttpHomePath.StartsWith("@") || customPath)
             {
-                folderPath = string.Empty;
+                lFolderPath = string.Empty;
             }
 
-            if (string.IsNullOrEmpty(this.HttpHomePath))
+            if (string.IsNullOrEmpty(lHttpHomePath))
             {
-                path = FTPHelpers.CombineURL(host, folderPath, fileName);
+                path = FTPHelpers.CombineURL(host, lFolderPath, fileName);
             }
             else
             {
-                string httppath = this.HttpHomePath.Replace("%host", host).TrimStart('@');
-                path = FTPHelpers.CombineURL(httppath, folderPath, fileName);
+                string httppath = lHttpHomePath.Replace("%host", host).TrimStart('@');
+                path = FTPHelpers.CombineURL(httppath, lFolderPath, fileName);
             }
 
             if (!path.StartsWith("http://"))
@@ -181,7 +168,7 @@ namespace UploadersLib
                 return string.Empty;
             }
 
-            return FTPHelpers.CombineURL(ftpAddress, this.SubFolderPath, fileName);
+            return FTPHelpers.CombineURL(ftpAddress, this.GetSubFolderPath(), fileName);
         }
 
         public override string ToString()

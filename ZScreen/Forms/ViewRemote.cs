@@ -52,7 +52,7 @@ namespace ZScreenLib
 
             try
             {
-                string[] splode, str = mFTP.ListDirectory(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath));
+                string[] splode, str = mFTP.ListDirectory(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.GetSubFolderPath()));
                 string goodFile;
 
                 bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_PROGRESS_MAX, str.Length);
@@ -111,7 +111,7 @@ namespace ZScreenLib
                 {
                     if (!string.IsNullOrEmpty(obj))
                     {
-                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath, obj));
+                        mFTP.DeleteFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.GetSubFolderPath(), obj));
                         lbFiles.Items.Remove(obj);
                     }
                 }
@@ -146,7 +146,7 @@ namespace ZScreenLib
                 {
                     foreach (string str in lbFiles.SelectedItems)
                     {
-                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath, str), Path.Combine(dir, Path.GetFileName(str)));
+                        mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.GetSubFolderPath(), str), Path.Combine(dir, Path.GetFileName(str)));
                     }
                 }
                 catch
@@ -245,7 +245,7 @@ namespace ZScreenLib
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.SubFolderPath, file), localfile);
+                    mFTP.DownloadFile(FTPHelpers.CombineURL(mAcc.FTPAddress, mAcc.GetSubFolderPath(), file), localfile);
                 }
                 catch (System.Exception ex)
                 {

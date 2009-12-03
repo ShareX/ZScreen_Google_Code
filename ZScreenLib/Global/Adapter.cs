@@ -166,13 +166,13 @@ namespace ZScreenLib
         public static void TestFTPAccount(FTPAccount account, bool silent)
         {
             string msg;
-
+            string sfp = account.GetSubFolderPath();
             using (FTP ftpClient = new FTP(account))
             {
                 try
                 {
                     DateTime time = DateTime.Now;
-                    ftpClient.Test(account.SubFolderPath);
+                    ftpClient.Test(sfp);
                     msg = "Success!";
                 }
                 catch (Exception e)
@@ -181,9 +181,9 @@ namespace ZScreenLib
                     {
                         try
                         {
-                            ftpClient.MakeMultiDirectory(account.SubFolderPath);
-                            ftpClient.Test(account.SubFolderPath);
-                            msg = "Success!\nAuto created folders: " + account.SubFolderPath;
+                            ftpClient.MakeMultiDirectory(sfp);
+                            ftpClient.Test(sfp);
+                            msg = "Success!\nAuto created folders: " + sfp;
                         }
                         catch (Exception e2)
                         {
@@ -206,7 +206,7 @@ namespace ZScreenLib
                 }
                 if (silent)
                 {
-                    FileSystem.AppendDebug(string.Format("Tested {0} sub-folder path in {1}", account.SubFolderPath, account.ToString()));
+                    FileSystem.AppendDebug(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
                 }
                 else
                 {
