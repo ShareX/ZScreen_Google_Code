@@ -530,7 +530,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvi.Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    path = FTPHelpers.CombineURL(Account.HttpHomePath, file.FullPath);
+                    path = FTPHelpers.CombineURL(Account.GetHttpHomePath(), file.FullPath);
                     list.Add(path);
                 }
             }

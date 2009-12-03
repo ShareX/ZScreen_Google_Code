@@ -52,7 +52,7 @@ namespace UploadersLib.FileUploaders
             using (FTP ftpClient = new FTP(this.FTPAccount))
             {
                 ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(x => OnProgressChanged((int)x));
-                string remotePath = FTPHelpers.CombineURL(FTPAccount.SubFolderPath, fileName);
+                string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
 
                 try
                 {
