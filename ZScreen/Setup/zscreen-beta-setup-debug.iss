@@ -61,7 +61,7 @@ begin
   relativeStartMenuPrograms:='Microsoft\Windows\Start Menu\Programs';
   defaultDirectory:=ExpandConstant('{localappdata}');
   profileDirectory:=GetEnv('USERPROFILE');
-  defaultMenuFolder:=defaultDirectory+'\'+relativeStartMenuPrograms;
+  defaultMenuFolder:=defaultDirectory + '\'+relativeStartMenuPrograms;
   userSystemName:=ExpandConstant('{username}');
   userType:='CurrentUser';
   whichDesktop:=profileDirectory+'\Desktop';
@@ -103,9 +103,14 @@ begin
   else
   if CompareText(Param,'StartMenu') = 0 then
   begin
+    if IsAdminLoggedOn = True then
+    begin
     tmpVar:=ExpandConstant('{group}');
     tmpVar:=ExtractFileName(tmpVar);
     Result:=defaultMenuFolder+'\'+tmpVar;
+    end
+    else
+    Result:=ExpandConstant('{group}');
   end
   else
   if CompareText(Param,'Uninstaller') = 0 then
