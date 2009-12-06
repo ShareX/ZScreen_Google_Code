@@ -102,17 +102,23 @@ namespace UploadersLib.TextServices
                                 }
                                 break;
                             case "204": // NO CONTENT
-                                throw new Exception("Parameter query returned no results. All parameters checked ok.");
+                                this.Errors.Add("Parameter query returned no results. All parameters checked ok.");
+                                break;
                             case "400": // MISSING KEY
-                                throw new Exception("Parameter “i” missing. Authorization failed.");
+                                this.Errors.Add("Parameter “i” missing. Authorization failed.");
+                                break;
                             case "401": // UNAUTHORIZED
-                                throw new Exception("Parameter “i” invalid. Authorization failed.");
+                                this.Errors.Add("Parameter “i” invalid. Authorization failed.");
+                                break;
                             case "402": // LIMITED TIME
-                                throw new Exception("Query request too soon. Limit query requests. Time of delay is shown in <delay> tag in milliseconds.");
+                                this.Errors.Add("Query request too soon. Limit query requests. Time of delay is shown in <delay> tag in milliseconds.");
+                                break;
                             case "406": // QUERY TOO SHORT
-                                throw new Exception("Query request string is too short. All other parameters checked ok.");
+                                this.Errors.Add("Query request string is too short. All other parameters checked ok.");
+                                break;
                             default:
-                                throw new Exception("Unknown status.");
+                                this.Errors.Add("Unknown status.");
+                                break;
                         }
                     }
                 }
