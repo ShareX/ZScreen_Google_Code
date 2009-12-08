@@ -30,7 +30,7 @@ namespace ImageEffects
 
         public override bool ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.ContrastFilter(ContrastValue));
+            Helpers.ApplyColorMatrix(img, Helpers.Contrast(ContrastValue));
             return true;
         }
     }

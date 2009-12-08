@@ -15,7 +15,7 @@ namespace ImageEffects
 
         public override bool ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.InverseFilter());
+            Helpers.ApplyColorMatrix(img, Helpers.Inverse());
             return true;
         }
     }

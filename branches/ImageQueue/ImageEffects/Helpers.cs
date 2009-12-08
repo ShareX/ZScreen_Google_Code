@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ImageEffects
 {
@@ -31,9 +28,10 @@ namespace ImageEffects
             }
         }
 
-        public static ColorMatrix BrightnessFilter(int percentage)
+        public static ColorMatrix Brightness(float percentage)
         {
-            float perc = (float)percentage / 100;
+            float perc = percentage / 100;
+
             return new ColorMatrix(new[]{
                 new float[] {1, 0, 0, 0, 0},
                 new float[] {0, 1, 0, 0, 0},
@@ -59,9 +57,10 @@ namespace ImageEffects
                 new float[] {0, 0, 0, 0, 1}});
         }
 
-        public static ColorMatrix ContrastFilter(int percentage)
+        public static ColorMatrix Contrast(float percentage)
         {
-            float perc = 1 + (float)percentage / 100;
+            float perc = 1 + percentage / 100;
+
             return new ColorMatrix(new[]{
                 new float[] {perc, 0, 0, 0, 0},
                 new float[] {0, perc, 0, 0, 0},
@@ -71,7 +70,7 @@ namespace ImageEffects
             });
         }
 
-        public static ColorMatrix GrayscaleFilter()
+        public static ColorMatrix Grayscale()
         {
             return new ColorMatrix(new[]{
                 new float[] {rw, rw, rw, 0, 0},
@@ -96,7 +95,7 @@ namespace ImageEffects
                 new float[] {0, 0, 0, 0, 1}});
         }
 
-        public static ColorMatrix InverseFilter()
+        public static ColorMatrix Inverse()
         {
             return new ColorMatrix(new[]{
                 new float[] {-1, 0, 0, 0, 0},

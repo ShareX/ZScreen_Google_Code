@@ -15,7 +15,7 @@ namespace ImageEffects
 
         public override bool ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.GrayscaleFilter());
+            Helpers.ApplyColorMatrix(img, Helpers.Grayscale());
             return true;
         }
     }

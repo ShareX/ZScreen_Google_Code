@@ -30,7 +30,7 @@ namespace ImageEffects
 
         public override bool ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.BrightnessFilter(BrightnessValue));
+            Helpers.ApplyColorMatrix(img, Helpers.Brightness(BrightnessValue));
             return true;
         }
     }
