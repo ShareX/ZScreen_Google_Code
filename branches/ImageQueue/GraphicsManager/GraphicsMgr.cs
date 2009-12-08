@@ -5,9 +5,9 @@ using System.Text;
 using System.Drawing.Drawing2D;
 using System.Drawing;
 
-namespace ImageManipulation
+namespace GraphicsManager
 {
-    public static class Helpers
+    public static class GraphicsMgr
     {
         public static Image ChangeImageSize(Image img, int width, int height)
         {
@@ -75,13 +75,6 @@ namespace ImageManipulation
                 new byte[] { (byte)PathPointType.Start, (byte)PathPointType.Line, (byte)PathPointType.Line, (byte)PathPointType.Line });
             gp.Transform(matrix);
             return Rectangle.Round(gp.GetBounds());
-        }
-
-        public static float Between(this float num, float min, float max)
-        {
-            if (num < min) return min;
-            if (num > max) return max;
-            return num;
         }
     }
 }

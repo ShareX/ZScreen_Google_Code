@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Plugins;
+using GraphicsManager;
 
 namespace ImageEffects
 {
@@ -46,7 +47,7 @@ namespace ImageEffects
 
         public override Image ApplyEffect(Image img)
         {
-            return Helpers.ApplyColorMatrix(img, Helpers.Colorize(color, percentage));
+            return ColorMatrixMgr.ApplyColorMatrix(img, ColorMatrixMgr.Colorize(color, percentage));
         }
     }
 }

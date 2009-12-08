@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using Plugins;
+using GraphicsManager;
 
 namespace ImageManipulation
 {
@@ -27,7 +28,7 @@ namespace ImageManipulation
 
         public override Image ApplyEffect(Image img)
         {
-            return Helpers.RotateImage(img, angle);
+            return GraphicsMgr.RotateImage(img, angle);
         }
     }
 }

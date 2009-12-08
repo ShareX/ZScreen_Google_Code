@@ -80,6 +80,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GraphicsManager\GraphicsManager.csproj">
+      <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
+      <Name>GraphicsManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\Plugins.csproj">
       <Project>{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}</Project>
       <Name>Plugins</Name>

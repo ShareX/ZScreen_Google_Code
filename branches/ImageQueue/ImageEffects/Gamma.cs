@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Plugins;
 using System.ComponentModel;
+using GraphicsManager;
 
 namespace ImageEffects
 {
@@ -29,7 +30,7 @@ namespace ImageEffects
 
         public override Image ApplyEffect(Image img)
         {
-            return Helpers.ChangeGamma(img, gammaValue);
+            return ColorMatrixMgr.ChangeGamma(img, gammaValue);
         }
     }
 }

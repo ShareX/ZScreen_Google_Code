@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageEffects", "ImageEffect
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManipulation", "ImageManipulation\ImageManipulation.csproj", "{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsManager", "GraphicsManager\GraphicsManager.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

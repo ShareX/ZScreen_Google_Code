@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ImageEffects
+namespace GraphicsManager
 {
-    public static class Helpers
+    public static class ColorMatrixMgr
     {
         /*
         private const float rw = 0.3086f;
@@ -148,13 +151,6 @@ namespace ImageEffects
                 new float[] {(1.0f - s) * bw, (1.0f - s) * bw, (1.0f - s) * bw + s, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
                 new float[] {0, 0, 0, 0, 1}});
-        }
-
-        public static float Between(this float num, float min, float max)
-        {
-            if (num < min) return min;
-            if (num > max) return max;
-            return num;
         }
     }
 }
