@@ -11,7 +11,7 @@ namespace ImageEffects
         {
             get
             {
-                return "Image Effects";
+                return "Image Adjustment";
             }
         }
 
@@ -19,7 +19,7 @@ namespace ImageEffects
         {
             get
             {
-                return "Image Effects";
+                return "Image Adjustment";
             }
         }
 
@@ -30,6 +30,7 @@ namespace ImageEffects
             PluginItems.Add(new Brightness());
             PluginItems.Add(new Colorize());
             PluginItems.Add(new Contrast());
+            PluginItems.Add(new Gamma());
             PluginItems.Add(new Grayscale());
             PluginItems.Add(new Hue());
             PluginItems.Add(new Inverse());

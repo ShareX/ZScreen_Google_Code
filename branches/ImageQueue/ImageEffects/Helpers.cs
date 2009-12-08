@@ -32,6 +32,25 @@ namespace ImageEffects
             return bmp;
         }
 
+        public static Image ChangeGamma(Image img, float gamma)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb);
+
+            gamma = gamma / 100 + 1;
+            gamma = gamma.Between(0.1f, 10.0f);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                using (ImageAttributes imgattr = new ImageAttributes())
+                {
+                    imgattr.SetGamma(gamma, ColorAdjustType.Bitmap);
+                    g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imgattr);
+                }
+            }
+
+            return bmp;
+        }
+
         public static ColorMatrix Alpha(float percentage, float addition)
         {
             float perc = 1 - percentage / 100;
@@ -129,6 +148,13 @@ namespace ImageEffects
                 new float[] {(1.0f - s) * bw, (1.0f - s) * bw, (1.0f - s) * bw + s, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
                 new float[] {0, 0, 0, 0, 1}});
+        }
+
+        public static float Between(this float num, float min, float max)
+        {
+            if (num < min) return min;
+            if (num > max) return max;
+            return num;
         }
     }
 }
