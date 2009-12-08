@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using NDesk.Options;
+using System.IO;
 
 namespace Updater
 {
@@ -43,18 +44,25 @@ namespace Updater
 
             string mUrl = string.Empty;
             string mFilePath = string.Empty;
+            bool mRunAs = false;
 
             var p = new OptionSet() 
             {
                 { "l|url=", "URL of the updated setup", v => mUrl = v },
-                { "fp|filepath=", "File path of the running application", v => mFilePath = v }
+                { "fp|filepath=", "File path of the running application", v => mFilePath = v }, 
+                { "runas=", "Whether or not to run as Administrator", (bool v) => mRunAs = v },
             };
 
             p.Parse(args);
 
-            if (!string.IsNullOrEmpty(mUrl) && !string.IsNullOrEmpty(mFilePath))
+            if (!string.IsNullOrEmpty(mUrl) && File.Exists(mFilePath))
             {
-                Application.Run(new UpdaterForm(mUrl, mFilePath));
+                Application.Run(new UpdaterForm(mUrl, mFilePath, mRunAs));
+            }
+            else
+            {
+                MessageBox.Show("Update did not succeed.\n\n" + String.Format("URL: {0}\nApplication Path: {1}\nCommand Line: {2}\nArguments: {3}",
+                    mUrl, mFilePath, Environment.CommandLine, args.Length), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
     }

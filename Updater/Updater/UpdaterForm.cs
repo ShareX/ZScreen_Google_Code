@@ -39,6 +39,7 @@ namespace Updater
         public string ProcessPath { get; private set; }
         public string FileName { get; set; }
         public string SavePath { get; private set; }
+        public bool RunAs { get; set; }
 
         private FileDownloader fileDownloader;
         private FileStream stream;
@@ -51,13 +52,15 @@ namespace Updater
             ChangeStatus("Waiting.");
         }
 
-        public UpdaterForm(string url, string processPath)
+        public UpdaterForm(string lUrl, string lProcessPath, bool lRunAs)
             : this()
         {
-            URL = url;
-            ProcessPath = processPath;
-            ProcessName = Path.GetFileNameWithoutExtension(processPath);
-            FileName = HttpUtility.UrlDecode(url.Substring(url.LastIndexOf('/') + 1));
+            URL = lUrl;
+            ProcessPath = lProcessPath;
+            RunAs = lRunAs;
+            Debug.WriteLine("RunAs: " + RunAs);
+            ProcessName = Path.GetFileNameWithoutExtension(lProcessPath);
+            FileName = HttpUtility.UrlDecode(lUrl.Substring(lUrl.LastIndexOf('/') + 1));
             lblFilename.Text = "Filename: " + FileName;
         }
 
@@ -133,36 +136,33 @@ namespace Updater
                     {
                         process.CloseMainWindow();
                     }
-                    Process[] proc = Process.GetProcessesByName(ProcessName);
-                    if (proc.Length > 0)
+                    System.Threading.Thread.Sleep(4000);
+                    foreach (Process process in Process.GetProcessesByName(ProcessName))
                     {
-                        foreach (Process process in proc)
-                        {
-                            process.Kill();
-                        }
+                        process.Kill();
                     }
                 }
-
-                ProcessStartInfo psi = new ProcessStartInfo(SavePath);
-                psi.Arguments = "/SILENT";
-                psi.UseShellExecute = true;
-                psi.Verb = "runas";
-                Process exe = Process.Start(psi);
-                Application.Exit();
-                //exe.EnableRaisingEvents = true;
-                //exe.Exited += new EventHandler(exe_Exited);
             }
+            ProcessStartInfo psi = new ProcessStartInfo(SavePath);
+            psi.Arguments = "/SILENT";
+            if (RunAs)
+            {
+                psi.Verb = "runas"; 
+            }
+            psi.UseShellExecute = true;
+            Process exe = Process.Start(psi);
+            exe.EnableRaisingEvents = true;
+            exe.Exited += new EventHandler(Installer_Exited);            
         }
 
-        //private void exe_Exited(object sender, EventArgs e)
-        //{
-        //    if (File.Exists(SavePath))
-        //    {
-        //        File.Delete(SavePath);
-        //        MessageBox.Show("Update success.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //    Application.Exit();
-        //}
+        void Installer_Exited(object sender, EventArgs e)
+        {
+            if (File.Exists(ProcessPath))
+            {
+                Process.Start(ProcessPath);
+            }
+            Application.Exit();
+        }
 
         private void UpdaterForm_Paint(object sender, PaintEventArgs e)
         {
