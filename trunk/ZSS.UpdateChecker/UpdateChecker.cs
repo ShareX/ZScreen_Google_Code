@@ -107,11 +107,20 @@ namespace ZSS.UpdateCheckerLib
                 };
                 if (ver.ShowDialog() == DialogResult.Yes)
                 {
-                    string updater = Path.Combine(Application.StartupPath, "Updater.exe");
-                    if (File.Exists(updater))
+                    string fnUpdater = "Updater.exe";
+                    string dirUpdater = Path.Combine(Path.GetTempPath(), Application.ProductName);
+                    string updater = Path.Combine(Application.StartupPath, fnUpdater);
+                    string updater2 = Path.Combine(dirUpdater, fnUpdater);
+                    if (!Directory.Exists(dirUpdater))
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo(updater);
-                        psi.Arguments = string.Format("url {0} filepath {1}", MyVersionInfo.Link, Process.GetCurrentProcess().MainModule.FileName);
+                        Directory.CreateDirectory(dirUpdater);
+                    }
+                    File.Copy(updater, updater2, true); // overwrite always to have to latest Updater copied
+
+                    if (File.Exists(updater2))
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo(updater2);
+                        psi.Arguments = string.Format("--url {0} --filepath \"{1}\"", MyVersionInfo.Link, Process.GetCurrentProcess().MainModule.FileName);
                         Process p = new Process();
                         p.StartInfo = psi;
                         p.Start();
