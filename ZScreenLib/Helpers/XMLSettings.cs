@@ -511,7 +511,6 @@ namespace ZScreenLib
         [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
         public FilterType BevelFilterType { get; set; }
 
-
         //Screenshots / Border
 
         [Category("Screenshots / Border"), DefaultValue(false), Description("Add border to screenshots.")]

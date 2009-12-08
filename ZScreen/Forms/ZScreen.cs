@@ -49,6 +49,7 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using HelpersLib;
+using System.Web;
 
 namespace ZScreenGUI
 {
@@ -4830,6 +4831,19 @@ namespace ZScreenGUI
         private void btnResetHotkeys_Click(object sender, EventArgs e)
         {
             Loader.Worker.mHotkeyMgr.ResetHotkeys();
+        }
+
+        private void editİnPicnikToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lbHistory.SelectedItem != null)
+            {
+                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
+                if (!string.IsNullOrEmpty(hi.RemotePath))
+                {
+                    Process.Start(string.Format("http://www.picnik.com/service/?_import={0}&_apikey={1}",
+                        HttpUtility.UrlEncode(hi.RemotePath), Engine.PICNIK_KEY));
+                }
+            }
         }
     }
 }
