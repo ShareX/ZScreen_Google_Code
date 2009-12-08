@@ -106,6 +106,8 @@ namespace ZScreenLib
         public const string TWITTER_CONSUMER_KEY = "Jzzcm6ytcyml14sQIvqvmA";
         public const string TWITTER_CONSUMER_SECRET = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
 
+        public const string PICNIK_KEY = "3aacd2de4563b8817de708b29b5bdd0e";
+
         public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
         private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";

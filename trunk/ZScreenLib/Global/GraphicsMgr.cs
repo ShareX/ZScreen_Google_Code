@@ -292,6 +292,7 @@ namespace ZScreenLib
 
             return bmp;
         }
+
         public static Image AddHighlighting(Bitmap bmp)
         {
             return AddHighlighting(bmp, Color.Yellow, true, 100);
