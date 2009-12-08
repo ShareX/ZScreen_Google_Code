@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using Plugins;
 
 namespace ImageEffects
@@ -13,9 +9,9 @@ namespace ImageEffects
 
         public override string Description { get { return "Hue"; } }
 
-        private int angle;
+        private float angle;
 
-        public int Angle
+        public float Angle
         {
             get
             {
@@ -28,10 +24,9 @@ namespace ImageEffects
             }
         }
 
-        public override bool ApplyEffect(Image img)
+        public override Image ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.Hue(angle));
-            return true;
+            return Helpers.ApplyColorMatrix(img, Helpers.Hue(angle));
         }
     }
 }

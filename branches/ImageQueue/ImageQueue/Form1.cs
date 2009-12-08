@@ -23,6 +23,7 @@ namespace ImageQueue
             plugins = PluginManager.LoadPlugins<IPluginInterface>(pluginsPath);
             FillPluginsList();
             previewImage = ImageQueue.Properties.Resources.main;
+            //previewImage = Image.FromFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\test.png");
             pbPreview.Image = previewImage;
         }
 
@@ -67,7 +68,15 @@ namespace ImageQueue
                 ListViewItem lvi = new ListViewItem(pluginItem.Name);
                 lvi.Tag = pluginItem;
                 pluginItem.PreviewTextChanged += p => lvi.Text = string.Format("{0}: {1}", pluginItem.Name, p);
-                lvEffects.Items.Add(lvi);
+
+                if (lvEffects.SelectedIndices.Count > 0)
+                {
+                    lvEffects.Items.Insert(lvEffects.SelectedIndices[lvEffects.SelectedIndices.Count - 1] + 1, lvi);
+                }
+                else
+                {
+                    lvEffects.Items.Add(lvi);
+                }
             }
 
             UpdatePreview();
@@ -91,16 +100,8 @@ namespace ImageQueue
         private void UpdatePreview()
         {
             Image img = (Image)previewImage.Clone();
-
-            foreach (ListViewItem lvi in lvEffects.Items)
-            {
-                if (lvi.Tag is IPluginItem)
-                {
-                    ((IPluginItem)lvi.Tag).ApplyEffect(img);
-                }
-            }
-
-            pbPreview.Image = img;
+            IPluginItem[] plugins = lvEffects.Items.Cast<ListViewItem>().Where(x => x.Tag is IPluginItem).Select(x => (IPluginItem)x.Tag).ToArray();
+            pbPreview.Image = PluginManager.ApplyEffects(plugins, img);
         }
     }
 }

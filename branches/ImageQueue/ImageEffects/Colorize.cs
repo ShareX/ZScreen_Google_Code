@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using Plugins;
 
 namespace ImageEffects
@@ -24,13 +20,13 @@ namespace ImageEffects
             set
             {
                 color = value;
-                OnPreviewTextChanged(color.ToString());
+                ChangePreviewText();
             }
         }
 
-        private int percentage;
+        private float percentage;
 
-        public int Percentage
+        public float Percentage
         {
             get
             {
@@ -39,14 +35,18 @@ namespace ImageEffects
             set
             {
                 percentage = value;
-                OnPreviewTextChanged(color.ToString());
+                ChangePreviewText();
             }
         }
 
-        public override bool ApplyEffect(Image img)
+        private void ChangePreviewText()
         {
-            Helpers.ApplyColorMatrix(img, Helpers.Colorize(color, percentage));
-            return true;
+            OnPreviewTextChanged(string.Format("{0} {1}%", color.ToString(), percentage));
+        }
+
+        public override Image ApplyEffect(Image img)
+        {
+            return Helpers.ApplyColorMatrix(img, Helpers.Colorize(color, percentage));
         }
     }
 }

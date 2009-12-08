@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using Plugins;
 
 namespace ImageEffects
@@ -13,10 +9,9 @@ namespace ImageEffects
 
         public override string Description { get { return "Inverse"; } }
 
-        public override bool ApplyEffect(Image img)
+        public override Image ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.Inverse());
-            return true;
+            return Helpers.ApplyColorMatrix(img, Helpers.Inverse());
         }
     }
 }

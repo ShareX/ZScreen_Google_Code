@@ -45,7 +45,7 @@
             this.tvPlugins.HideSelection = false;
             this.tvPlugins.Location = new System.Drawing.Point(8, 280);
             this.tvPlugins.Name = "tvPlugins";
-            this.tvPlugins.Size = new System.Drawing.Size(264, 288);
+            this.tvPlugins.Size = new System.Drawing.Size(296, 288);
             this.tvPlugins.TabIndex = 0;
             // 
             // pbPreview
@@ -53,10 +53,11 @@
             this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbPreview.BackColor = System.Drawing.Color.Transparent;
             this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbPreview.Location = new System.Drawing.Point(280, 280);
+            this.pbPreview.Location = new System.Drawing.Point(312, 280);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(320, 288);
+            this.pbPreview.Size = new System.Drawing.Size(434, 288);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbPreview.TabIndex = 1;
             this.pbPreview.TabStop = false;
@@ -66,10 +67,10 @@
             this.pgSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pgSettings.HelpVisible = false;
-            this.pgSettings.Location = new System.Drawing.Point(280, 8);
+            this.pgSettings.Location = new System.Drawing.Point(312, 8);
             this.pgSettings.Name = "pgSettings";
             this.pgSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgSettings.Size = new System.Drawing.Size(320, 264);
+            this.pgSettings.Size = new System.Drawing.Size(434, 264);
             this.pgSettings.TabIndex = 3;
             this.pgSettings.ToolbarVisible = false;
             this.pgSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgSettings_PropertyValueChanged);
@@ -93,7 +94,7 @@
             this.lvEffects.HideSelection = false;
             this.lvEffects.Location = new System.Drawing.Point(8, 8);
             this.lvEffects.Name = "lvEffects";
-            this.lvEffects.Size = new System.Drawing.Size(264, 264);
+            this.lvEffects.Size = new System.Drawing.Size(296, 264);
             this.lvEffects.TabIndex = 5;
             this.lvEffects.UseCompatibleStateImageBehavior = false;
             this.lvEffects.View = System.Windows.Forms.View.Details;
@@ -101,7 +102,7 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Width = 250;
+            this.columnHeader1.Width = 275;
             // 
             // btnRemove
             // 
@@ -117,7 +118,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 580);
+            this.ClientSize = new System.Drawing.Size(754, 580);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.pgSettings);

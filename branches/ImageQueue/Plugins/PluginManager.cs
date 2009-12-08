@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Reflection;
-using System.Collections;
+using System.Drawing;
 
 namespace Plugins
 {
@@ -45,6 +44,16 @@ namespace Plugins
             }
 
             return list;
+        }
+
+        public static Image ApplyEffects(IPluginItem[] plugins, Image img)
+        {
+            foreach (IPluginItem plugin in plugins)
+            {
+                img = plugin.ApplyEffect(img);
+            }
+
+            return img;
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Plugins;
 
 namespace ImageEffects
@@ -29,6 +26,7 @@ namespace ImageEffects
         public ImageEffectsPlugin()
         {
             PluginItems = new List<IPluginItem>();
+            PluginItems.Add(new Alpha());
             PluginItems.Add(new Brightness());
             PluginItems.Add(new Colorize());
             PluginItems.Add(new Contrast());

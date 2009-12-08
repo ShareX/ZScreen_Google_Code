@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using Plugins;
 
 namespace ImageEffects
@@ -13,9 +9,9 @@ namespace ImageEffects
 
         public override string Description { get { return "Contrast"; } }
 
-        private int contrastValue;
+        private float contrastValue;
 
-        public int ContrastValue
+        public float ContrastValue
         {
             get
             {
@@ -28,10 +24,9 @@ namespace ImageEffects
             }
         }
 
-        public override bool ApplyEffect(Image img)
+        public override Image ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.Contrast(ContrastValue));
-            return true;
+            return Helpers.ApplyColorMatrix(img, Helpers.Contrast(ContrastValue));
         }
     }
 }

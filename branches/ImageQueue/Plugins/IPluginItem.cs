@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Plugins
 {
@@ -23,6 +19,6 @@ namespace Plugins
             }
         }
 
-        public abstract bool ApplyEffect(Image img);
+        public abstract Image ApplyEffect(Image img);
     }
 }

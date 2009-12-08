@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImageEffects")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Image Effects")]
+[assembly: AssemblyDescription("Image Effects")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("ImageEffects")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2009")]
+[assembly: AssemblyCompany("ZScreen")]
+[assembly: AssemblyProduct("ZScreen")]
+[assembly: AssemblyCopyright("ZScreen")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

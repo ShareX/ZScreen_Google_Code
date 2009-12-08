@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using Plugins;
-using System.Drawing;
 
 namespace ImageEffects
 {
@@ -13,9 +9,9 @@ namespace ImageEffects
 
         public override string Description { get { return "Saturation"; } }
 
-        private int saturationValue;
+        private float saturationValue;
 
-        public int SaturationValue
+        public float SaturationValue
         {
             get
             {
@@ -28,10 +24,9 @@ namespace ImageEffects
             }
         }
 
-        public override bool ApplyEffect(Image img)
+        public override Image ApplyEffect(Image img)
         {
-            Helpers.ApplyColorMatrix(img, Helpers.Saturation(SaturationValue));
-            return true;
+            return Helpers.ApplyColorMatrix(img, Helpers.Saturation(SaturationValue));
         }
     }
 }

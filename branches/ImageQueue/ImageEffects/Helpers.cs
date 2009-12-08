@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
 namespace ImageEffects
@@ -17,15 +16,33 @@ namespace ImageEffects
         private const float gw = 0.715160f;
         private const float bw = 0.072169f;
 
-        public static void ApplyColorMatrix(Image img, ColorMatrix matrix)
+        public static Image ApplyColorMatrix(Image img, ColorMatrix matrix)
         {
-            using (Graphics g = Graphics.FromImage(img))
+            Bitmap bmp = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(matrix);
-                g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imgattr);
+                using (ImageAttributes imgattr = new ImageAttributes())
+                {
+                    imgattr.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                    g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imgattr);
+                }
             }
+
+            return bmp;
+        }
+
+        public static ColorMatrix Alpha(float percentage, float addition)
+        {
+            float perc = 1 - percentage / 100;
+            float add = addition / 100;
+
+            return new ColorMatrix(new[]{
+                new float[] {1, 0, 0, 0, 0},
+                new float[] {0, 1, 0, 0, 0},
+                new float[] {0, 0, 1, 0, 0},
+                new float[] {0, 0, 0, perc, 0},
+                new float[] {0, 0, 0, add, 1}});
         }
 
         public static ColorMatrix Brightness(float percentage)
@@ -37,8 +54,7 @@ namespace ImageEffects
                 new float[] {0, 1, 0, 0, 0},
                 new float[] {0, 0, 1, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
-                new float[] {perc, perc, perc, 0, 1}
-            });
+                new float[] {perc, perc, perc, 0, 1}});
         }
 
         public static ColorMatrix Colorize(Color color, float percentage)
@@ -66,8 +82,7 @@ namespace ImageEffects
                 new float[] {0, perc, 0, 0, 0},
                 new float[] {0, 0, perc, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
-                new float[] {0, 0, 0, 0, 1}
-            });
+                new float[] {0, 0, 0, 0, 1}});
         }
 
         public static ColorMatrix Grayscale()
@@ -77,15 +92,14 @@ namespace ImageEffects
                 new float[] {gw, gw, gw, 0, 0},
                 new float[] {bw, bw, bw, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
-                new float[] {0, 0, 0, 0, 1}
-            });
+                new float[] {0, 0, 0, 0, 1}});
         }
 
         public static ColorMatrix Hue(float angle)
         {
-            angle *= (float)(Math.PI / 180);
-            float c = (float)Math.Cos(angle);
-            float s = (float)Math.Sin(angle);
+            float a = angle * (float)(Math.PI / 180);
+            float c = (float)Math.Cos(a);
+            float s = (float)Math.Sin(a);
 
             return new ColorMatrix(new[]{
                 new float[] {(rw + (c * (1 - rw))) + (s * -rw), (rw + (c * -rw)) + (s * 0.143f), (rw + (c * -rw)) + (s * -(1 - rw)), 0, 0},
@@ -102,8 +116,7 @@ namespace ImageEffects
                 new float[] {0, -1, 0, 0, 0},
                 new float[] {0, 0, -1, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
-                new float[] {1, 1, 1, 0, 1}
-            });
+                new float[] {1, 1, 1, 0, 1}});
         }
 
         public static ColorMatrix Saturation(float percentage)
@@ -115,8 +128,7 @@ namespace ImageEffects
                 new float[] {(1.0f - s) * gw, (1.0f - s) * gw + s, (1.0f - s) * gw, 0, 0},
                 new float[] {(1.0f - s) * bw, (1.0f - s) * bw, (1.0f - s) * bw + s, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
-                new float[] {0, 0, 0, 0, 1}
-            });
+                new float[] {0, 0, 0, 0, 1}});
         }
     }
 }
