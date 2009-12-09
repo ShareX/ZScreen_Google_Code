@@ -581,7 +581,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.edit›nPicnikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editInPicnikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
@@ -1008,7 +1008,7 @@ namespace ZScreenGUI
             this.browseURLToolStripMenuItem,
             this.openSourceToolStripMenuItem,
             this.toolStripSeparator9,
-            this.edit›nPicnikToolStripMenuItem,
+            this.editInPicnikToolStripMenuItem,
             this.tsmiTwitter,
             this.toolStripSeparator8,
             this.cmsRetryUpload,
@@ -6945,12 +6945,12 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // edit›nPicnikToolStripMenuItem
+            // editInPicnikToolStripMenuItem
             // 
-            this.edit›nPicnikToolStripMenuItem.Name = "edit›nPicnikToolStripMenuItem";
-            this.edit›nPicnikToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.edit›nPicnikToolStripMenuItem.Text = "Edit in Picnik...";
-            this.edit›nPicnikToolStripMenuItem.Click += new System.EventHandler(this.edit›nPicnikToolStripMenuItem_Click);
+            this.editInPicnikToolStripMenuItem.Name = "editInPicnikToolStripMenuItem";
+            this.editInPicnikToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.editInPicnikToolStripMenuItem.Text = "Edit in Picnik...";
+            this.editInPicnikToolStripMenuItem.Click += new System.EventHandler(this.editInPicnikToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
@@ -7738,7 +7738,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.GroupBox gbSettingsExportImport;
         private System.Windows.Forms.Button btnResetHotkeys;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripMenuItem edit›nPicnikToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editInPicnikToolStripMenuItem;
 
     }
 }
