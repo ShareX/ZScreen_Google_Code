@@ -4833,7 +4833,7 @@ namespace ZScreenGUI
             Loader.Worker.mHotkeyMgr.ResetHotkeys();
         }
 
-        private void editİnPicnikToolStripMenuItem_Click(object sender, EventArgs e)
+        private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lbHistory.SelectedItem != null)
             {
