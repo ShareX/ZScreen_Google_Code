@@ -3,7 +3,7 @@ using Plugins;
 using System.ComponentModel;
 using GraphicsManager;
 
-namespace ImageEffects
+namespace ImageAdjustment
 {
     public class Gamma : IPluginItem
     {

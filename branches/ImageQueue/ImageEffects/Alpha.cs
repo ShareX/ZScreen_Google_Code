@@ -2,7 +2,7 @@
 using Plugins;
 using GraphicsManager;
 
-namespace ImageEffects
+namespace ImageAdjustment
 {
     public class Alpha : IPluginItem
     {

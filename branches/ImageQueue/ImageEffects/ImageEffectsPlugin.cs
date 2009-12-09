@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Plugins;
 
-namespace ImageEffects
+namespace ImageAdjustment
 {
     public class ImageEffectsPlugin : IPluginInterface
     {

@@ -8,8 +8,8 @@
     <ProjectGuid>{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageEffects</RootNamespace>
-    <AssemblyName>ImageEffects</AssemblyName>
+    <RootNamespace>ImageAdjustment</RootNamespace>
+    <AssemblyName>ImageAdjustment</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
