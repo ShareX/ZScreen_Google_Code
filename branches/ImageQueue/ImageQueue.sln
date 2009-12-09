@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+# SharpDevelop 3.1.0.4977
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageQueue", "ImageQueue\ImageQueue.csproj", "{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins.csproj", "{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}"

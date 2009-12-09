@@ -24,7 +24,7 @@ namespace ImageQueue
             plugins = PluginManager.LoadPlugins<IPluginInterface>(pluginsPath);
             FillPluginsList();
             //previewImage = ImageQueue.Properties.Resources.main;
-            previewImage = Image.FromFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\ZScreenTest.png");
+            previewImage = Image.FromFile(@"..\..\ZScreenTest.png");
             pbDefault.Image = previewImage;
             pbDefaultZoom.Image = ImageEffects.Zoom(pbDefault.Image, 8, 12);
             lblDefault.Text = string.Format("Default image ({0}x{1})", pbDefault.Image.Width, pbDefault.Image.Height);
