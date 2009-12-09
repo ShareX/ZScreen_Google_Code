@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageQueue", "ImageQueue\ImageQueue.csproj", "{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins.csproj", "{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPluginsLib", "Plugins\IPluginsLib.csproj", "{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageAdjustment", "ImageEffects\ImageAdjustment.csproj", "{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageAdjustmentLib", "ImageEffects\ImageAdjustmentLib.csproj", "{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManipulation", "ImageManipulation\ImageManipulation.csproj", "{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManipulationLib", "ImageManipulation\ImageManipulationLib.csproj", "{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsManager", "GraphicsManager\GraphicsManager.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "GraphicsManager\ZSS.GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

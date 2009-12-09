@@ -89,5 +89,7 @@ namespace GraphicsManager
             gp.Transform(matrix);
             return Rectangle.Round(gp.GetBounds());
         }
+
+
     }
 }
