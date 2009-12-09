@@ -16,7 +16,6 @@ namespace GraphicsManager
             {
                 g.CompositingQuality = CompositingQuality.HighQuality;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
                 g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
             }
 
@@ -33,6 +32,19 @@ namespace GraphicsManager
             int width = (int)(percentage / 100 * img.Width);
             int height = (int)(percentage / 100 * img.Height);
             return ChangeImageSize(img, width, height);
+        }
+
+        public static Image CropImage(Image img, Rectangle rect)
+        {
+            Image bmp = new Bitmap(rect.Width, rect.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
+            }
+
+            return bmp;
         }
 
         public static Bitmap RotateImage(Image img, float theta)
@@ -54,6 +66,7 @@ namespace GraphicsManager
                     Matrix mDest = new Matrix();
                     mDest.Translate(bmpDest.Width / 2, bmpDest.Height / 2, MatrixOrder.Append);
                     gDest.Transform = mDest;
+                    gDest.CompositingQuality = CompositingQuality.HighQuality;
                     gDest.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     gDest.DrawImage(img, pts);
                     return bmpDest;

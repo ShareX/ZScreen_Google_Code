@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Plugins;
 using System.IO;
+using GraphicsManager;
 
 namespace ImageQueue
 {
@@ -22,9 +23,11 @@ namespace ImageQueue
             string pluginsPath = Path.Combine(Application.StartupPath, "Plugins");
             plugins = PluginManager.LoadPlugins<IPluginInterface>(pluginsPath);
             FillPluginsList();
-            previewImage = ImageQueue.Properties.Resources.main;
-            //previewImage = Image.FromFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\test.png");
-            pbPreview.Image = previewImage;
+            //previewImage = ImageQueue.Properties.Resources.main;
+            previewImage = Image.FromFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\ZScreenTest.png");
+            pbDefault.Image = previewImage;
+            pbDefaultZoom.Image = ImageEffects.Zoom(pbDefault.Image, 8, 12);
+            lblDefault.Text = string.Format("Default image ({0}x{1})", pbDefault.Image.Width, pbDefault.Image.Height);
         }
 
         private void FillPluginsList()
@@ -43,6 +46,15 @@ namespace ImageQueue
             }
 
             tvPlugins.ExpandAll();
+        }
+
+        private void UpdatePreview()
+        {
+            Image img = (Image)previewImage.Clone();
+            IPluginItem[] plugins = lvEffects.Items.Cast<ListViewItem>().Where(x => x.Tag is IPluginItem).Select(x => (IPluginItem)x.Tag).ToArray();
+            pbPreview.Image = PluginManager.ApplyEffects(plugins, img);
+            pbPreviewZoom.Image = ImageEffects.Zoom(pbPreview.Image, 8, 12);
+            lblPreview.Text = string.Format("Preview image ({0}x{1})", pbPreview.Image.Width, pbPreview.Image.Height);
         }
 
         private void lvEffects_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,6 +88,7 @@ namespace ImageQueue
                 else
                 {
                     lvEffects.Items.Add(lvi);
+                    lvEffects.Items[lvEffects.Items.Count - 1].Selected = true;
                 }
             }
 
@@ -95,13 +108,6 @@ namespace ImageQueue
         private void pgSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             UpdatePreview();
-        }
-
-        private void UpdatePreview()
-        {
-            Image img = (Image)previewImage.Clone();
-            IPluginItem[] plugins = lvEffects.Items.Cast<ListViewItem>().Where(x => x.Tag is IPluginItem).Select(x => (IPluginItem)x.Tag).ToArray();
-            pbPreview.Image = PluginManager.ApplyEffects(plugins, img);
         }
     }
 }

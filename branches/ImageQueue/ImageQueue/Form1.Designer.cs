@@ -35,7 +35,19 @@
             this.lvEffects = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pbDefault = new System.Windows.Forms.PictureBox();
+            this.lblPreview = new System.Windows.Forms.Label();
+            this.lblDefault = new System.Windows.Forms.Label();
+            this.pbPreviewZoom = new System.Windows.Forms.PictureBox();
+            this.pbDefaultZoom = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDefault)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPreviewZoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDefaultZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // tvPlugins
@@ -45,19 +57,17 @@
             this.tvPlugins.HideSelection = false;
             this.tvPlugins.Location = new System.Drawing.Point(8, 280);
             this.tvPlugins.Name = "tvPlugins";
-            this.tvPlugins.Size = new System.Drawing.Size(296, 288);
+            this.tvPlugins.Size = new System.Drawing.Size(296, 492);
             this.tvPlugins.TabIndex = 0;
             // 
             // pbPreview
             // 
-            this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbPreview.BackColor = System.Drawing.Color.Transparent;
-            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbPreview.Location = new System.Drawing.Point(312, 280);
+            this.pbPreview.BackColor = System.Drawing.Color.DimGray;
+            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbPreview.Location = new System.Drawing.Point(0, 0);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(434, 288);
+            this.pbPreview.Size = new System.Drawing.Size(474, 492);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbPreview.TabIndex = 1;
             this.pbPreview.TabStop = false;
@@ -69,7 +79,7 @@
             this.pgSettings.Location = new System.Drawing.Point(312, 8);
             this.pgSettings.Name = "pgSettings";
             this.pgSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgSettings.Size = new System.Drawing.Size(434, 264);
+            this.pgSettings.Size = new System.Drawing.Size(937, 264);
             this.pgSettings.TabIndex = 3;
             this.pgSettings.ToolbarVisible = false;
             this.pgSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgSettings_PropertyValueChanged);
@@ -113,20 +123,103 @@
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(312, 280);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.pbPreviewZoom);
+            this.splitContainer1.Panel1.Controls.Add(this.lblPreview);
+            this.splitContainer1.Panel1.Controls.Add(this.pbPreview);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.pbDefaultZoom);
+            this.splitContainer1.Panel2.Controls.Add(this.lblDefault);
+            this.splitContainer1.Panel2.Controls.Add(this.pbDefault);
+            this.splitContainer1.Size = new System.Drawing.Size(935, 492);
+            this.splitContainer1.SplitterDistance = 474;
+            this.splitContainer1.TabIndex = 8;
+            // 
+            // pbDefault
+            // 
+            this.pbDefault.BackColor = System.Drawing.Color.DimGray;
+            this.pbDefault.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbDefault.Location = new System.Drawing.Point(0, 0);
+            this.pbDefault.Name = "pbDefault";
+            this.pbDefault.Size = new System.Drawing.Size(457, 492);
+            this.pbDefault.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbDefault.TabIndex = 0;
+            this.pbDefault.TabStop = false;
+            // 
+            // lblPreview
+            // 
+            this.lblPreview.AutoSize = true;
+            this.lblPreview.BackColor = System.Drawing.Color.DimGray;
+            this.lblPreview.ForeColor = System.Drawing.Color.White;
+            this.lblPreview.Location = new System.Drawing.Point(8, 8);
+            this.lblPreview.Name = "lblPreview";
+            this.lblPreview.Size = new System.Drawing.Size(71, 13);
+            this.lblPreview.TabIndex = 2;
+            this.lblPreview.Text = "Edited image:";
+            // 
+            // lblDefault
+            // 
+            this.lblDefault.AutoSize = true;
+            this.lblDefault.BackColor = System.Drawing.Color.DimGray;
+            this.lblDefault.ForeColor = System.Drawing.Color.White;
+            this.lblDefault.Location = new System.Drawing.Point(5, 8);
+            this.lblDefault.Name = "lblDefault";
+            this.lblDefault.Size = new System.Drawing.Size(75, 13);
+            this.lblDefault.TabIndex = 3;
+            this.lblDefault.Text = "Default image:";
+            // 
+            // pbPreviewZoom
+            // 
+            this.pbPreviewZoom.BackColor = System.Drawing.Color.DimGray;
+            this.pbPreviewZoom.Location = new System.Drawing.Point(376, 8);
+            this.pbPreviewZoom.Name = "pbPreviewZoom";
+            this.pbPreviewZoom.Size = new System.Drawing.Size(88, 88);
+            this.pbPreviewZoom.TabIndex = 3;
+            this.pbPreviewZoom.TabStop = false;
+            // 
+            // pbDefaultZoom
+            // 
+            this.pbDefaultZoom.BackColor = System.Drawing.Color.DimGray;
+            this.pbDefaultZoom.Location = new System.Drawing.Point(360, 8);
+            this.pbDefaultZoom.Name = "pbDefaultZoom";
+            this.pbDefaultZoom.Size = new System.Drawing.Size(88, 88);
+            this.pbDefaultZoom.TabIndex = 4;
+            this.pbDefaultZoom.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 580);
+            this.ClientSize = new System.Drawing.Size(1257, 784);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.pgSettings);
-            this.Controls.Add(this.pbPreview);
             this.Controls.Add(this.tvPlugins);
             this.Controls.Add(this.lvEffects);
             this.Name = "Form1";
             this.Text = "Test";
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbDefault)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPreviewZoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDefaultZoom)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -140,6 +233,12 @@
         private System.Windows.Forms.ListView lvEffects;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.PictureBox pbDefault;
+        private System.Windows.Forms.Label lblPreview;
+        private System.Windows.Forms.Label lblDefault;
+        private System.Windows.Forms.PictureBox pbPreviewZoom;
+        private System.Windows.Forms.PictureBox pbDefaultZoom;
     }
 }
 

@@ -14,7 +14,7 @@ namespace ImageManipulation
 
         private int percentage;
 
-        [Description("Reflection height size relative to screenshot height.")]
+        [Description("Reflection height size relative to screenshot height.\nValue need to be between 1 to 100.")]
         public int Percentage
         {
             get
@@ -23,13 +23,13 @@ namespace ImageManipulation
             }
             set
             {
-                percentage = value;
+                percentage = value.Between(1, 100);
             }
         }
 
         private int transparency;
 
-        [Description("Reflection transparency start from this value to 0.")]
+        [Description("Reflection transparency start from this value to 0.\nValue need to be between 0 to 255.")]
         public int Transparency
         {
             get
@@ -38,7 +38,7 @@ namespace ImageManipulation
             }
             set
             {
-                transparency = value;
+                transparency = value.Between(0, 255);
             }
         }
 

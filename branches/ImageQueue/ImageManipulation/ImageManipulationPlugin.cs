@@ -26,6 +26,7 @@ namespace ImageManipulation
         public ImageEffectsPlugin()
         {
             PluginItems = new List<IPluginItem>();
+            PluginItems.Add(new Border());
             PluginItems.Add(new Reflection());
             PluginItems.Add(new Resize());
             PluginItems.Add(new Rotate());
