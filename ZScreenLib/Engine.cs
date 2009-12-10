@@ -47,12 +47,13 @@ namespace ZScreenLib
         public static bool Portable { get; private set; }
         public static bool MultipleInstance { get; private set; }
 
+        internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
         internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
         internal static readonly string zFilesDir = Path.Combine(zLocalAppDataFolder, "Files");
         internal static readonly string zLogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
         internal static readonly string zPicturesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
-        internal static readonly string zSettingsDir = Path.Combine(zLocalAppDataFolder, "Settings");
+        internal static readonly string zSettingsDir = Path.Combine(zRoamingAppDataFolder, "Settings");
         internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
         public static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
