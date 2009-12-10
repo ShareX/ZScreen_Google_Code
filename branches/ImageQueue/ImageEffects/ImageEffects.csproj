@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</ProjectGuid>
+    <ProjectGuid>{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphicsManager</RootNamespace>
-    <AssemblyName>GraphicsManagerLib</AssemblyName>
+    <RootNamespace>ImageEffects</RootNamespace>
+    <AssemblyName>ImageEffects</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,11 +17,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\ImageQueue\bin\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,13 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitmapCache.cs" />
-    <Compile Include="ColorBgra.cs" />
-    <Compile Include="ColorMatrixMgr.cs" />
-    <Compile Include="GraphicsMgr.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="ImageEffects.cs" />
+    <Compile Include="Alpha.cs" />
+    <Compile Include="Brightness.cs" />
+    <Compile Include="Colorize.cs" />
+    <Compile Include="Contrast.cs" />
+    <Compile Include="Gamma.cs" />
+    <Compile Include="Grayscale.cs" />
+    <Compile Include="Hue.cs" />
+    <Compile Include="ImageEffectsPlugin.cs" />
+    <Compile Include="Inverse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Saturation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphicsManager\GraphicsManager.csproj">
+      <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
+      <Name>GraphicsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Plugins.csproj">
+      <Project>{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}</Project>
+      <Name>Plugins</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

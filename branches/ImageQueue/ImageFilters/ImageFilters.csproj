@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</ProjectGuid>
+    <ProjectGuid>{E35F89F8-7EFB-4A2D-9D3A-F54EA627107F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphicsManager</RootNamespace>
-    <AssemblyName>GraphicsManagerLib</AssemblyName>
+    <RootNamespace>ImageFilters</RootNamespace>
+    <AssemblyName>ImageFilters</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\ImageQueue\bin\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,13 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitmapCache.cs" />
-    <Compile Include="ColorBgra.cs" />
-    <Compile Include="ColorMatrixMgr.cs" />
-    <Compile Include="GraphicsMgr.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="ImageEffects.cs" />
+    <Compile Include="Blur.cs" />
+    <Compile Include="Shadow.cs" />
+    <Compile Include="ImageFiltersPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphicsManager\ZSS.GraphicsManagerLib.csproj">
+      <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
+      <Name>ZSS.GraphicsManagerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\IPluginsLib.csproj">
+      <Project>{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}</Project>
+      <Name>IPluginsLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

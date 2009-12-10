@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmapCache.cs" />
+    <Compile Include="ColorBgra.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="theroyal.png" />
-    <Content Include="1080p.png" />
+    <Content Include="ZScreenTest.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

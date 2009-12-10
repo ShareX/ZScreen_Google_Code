@@ -36,18 +36,18 @@
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.btnRemove = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pbDefault = new System.Windows.Forms.PictureBox();
-            this.lblPreview = new System.Windows.Forms.Label();
-            this.lblDefault = new System.Windows.Forms.Label();
             this.pbPreviewZoom = new System.Windows.Forms.PictureBox();
+            this.lblPreview = new System.Windows.Forms.Label();
             this.pbDefaultZoom = new System.Windows.Forms.PictureBox();
+            this.lblDefault = new System.Windows.Forms.Label();
+            this.pbDefault = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDefault)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDefaultZoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDefault)).BeginInit();
             this.SuspendLayout();
             // 
             // tvPlugins
@@ -79,7 +79,7 @@
             this.pgSettings.Location = new System.Drawing.Point(312, 8);
             this.pgSettings.Name = "pgSettings";
             this.pgSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgSettings.Size = new System.Drawing.Size(937, 264);
+            this.pgSettings.Size = new System.Drawing.Size(936, 264);
             this.pgSettings.TabIndex = 3;
             this.pgSettings.ToolbarVisible = false;
             this.pgSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgSettings_PropertyValueChanged);
@@ -146,17 +146,14 @@
             this.splitContainer1.SplitterDistance = 474;
             this.splitContainer1.TabIndex = 8;
             // 
-            // pbDefault
+            // pbPreviewZoom
             // 
-            this.pbDefault.BackColor = System.Drawing.Color.DimGray;
-            this.pbDefault.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbDefault.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbDefault.Location = new System.Drawing.Point(0, 0);
-            this.pbDefault.Name = "pbDefault";
-            this.pbDefault.Size = new System.Drawing.Size(457, 492);
-            this.pbDefault.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbDefault.TabIndex = 0;
-            this.pbDefault.TabStop = false;
+            this.pbPreviewZoom.BackColor = System.Drawing.Color.DimGray;
+            this.pbPreviewZoom.Location = new System.Drawing.Point(376, 8);
+            this.pbPreviewZoom.Name = "pbPreviewZoom";
+            this.pbPreviewZoom.Size = new System.Drawing.Size(88, 88);
+            this.pbPreviewZoom.TabIndex = 3;
+            this.pbPreviewZoom.TabStop = false;
             // 
             // lblPreview
             // 
@@ -169,6 +166,15 @@
             this.lblPreview.TabIndex = 2;
             this.lblPreview.Text = "Edited image:";
             // 
+            // pbDefaultZoom
+            // 
+            this.pbDefaultZoom.BackColor = System.Drawing.Color.DimGray;
+            this.pbDefaultZoom.Location = new System.Drawing.Point(360, 8);
+            this.pbDefaultZoom.Name = "pbDefaultZoom";
+            this.pbDefaultZoom.Size = new System.Drawing.Size(88, 88);
+            this.pbDefaultZoom.TabIndex = 4;
+            this.pbDefaultZoom.TabStop = false;
+            // 
             // lblDefault
             // 
             this.lblDefault.AutoSize = true;
@@ -180,23 +186,17 @@
             this.lblDefault.TabIndex = 3;
             this.lblDefault.Text = "Default image:";
             // 
-            // pbPreviewZoom
+            // pbDefault
             // 
-            this.pbPreviewZoom.BackColor = System.Drawing.Color.DimGray;
-            this.pbPreviewZoom.Location = new System.Drawing.Point(376, 8);
-            this.pbPreviewZoom.Name = "pbPreviewZoom";
-            this.pbPreviewZoom.Size = new System.Drawing.Size(88, 88);
-            this.pbPreviewZoom.TabIndex = 3;
-            this.pbPreviewZoom.TabStop = false;
-            // 
-            // pbDefaultZoom
-            // 
-            this.pbDefaultZoom.BackColor = System.Drawing.Color.DimGray;
-            this.pbDefaultZoom.Location = new System.Drawing.Point(360, 8);
-            this.pbDefaultZoom.Name = "pbDefaultZoom";
-            this.pbDefaultZoom.Size = new System.Drawing.Size(88, 88);
-            this.pbDefaultZoom.TabIndex = 4;
-            this.pbDefaultZoom.TabStop = false;
+            this.pbDefault.BackColor = System.Drawing.Color.DimGray;
+            this.pbDefault.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbDefault.Location = new System.Drawing.Point(0, 0);
+            this.pbDefault.Name = "pbDefault";
+            this.pbDefault.Size = new System.Drawing.Size(457, 492);
+            this.pbDefault.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbDefault.TabIndex = 0;
+            this.pbDefault.TabStop = false;
             // 
             // Form1
             // 
@@ -217,9 +217,9 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbDefault)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDefaultZoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDefault)).EndInit();
             this.ResumeLayout(false);
 
         }

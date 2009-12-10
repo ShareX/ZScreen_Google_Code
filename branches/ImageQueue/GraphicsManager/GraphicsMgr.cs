@@ -47,6 +47,19 @@ namespace GraphicsManager
             return bmp;
         }
 
+        public static Image AddCanvas(Image img, int size)
+        {
+            Image bmp = new Bitmap(img.Width + size * 2, img.Height + size * 2);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(img, new Rectangle(size, size, img.Width, img.Height), new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
+            }
+
+            return bmp;
+        }
+
         public static Bitmap RotateImage(Image img, float theta)
         {
             Matrix matrix = new Matrix();

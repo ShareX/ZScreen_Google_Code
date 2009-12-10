@@ -35,6 +35,16 @@ namespace GraphicsManager
             return bmp;
         }
 
+        public static ColorMatrix IdentityMatrix
+        {
+            get
+            {
+                ColorMatrix matrix = new ColorMatrix();
+                matrix[0, 0] = matrix[1, 1] = matrix[2, 2] = matrix[3, 3] = matrix[4, 4] = 1.0f;
+                return matrix;
+            }
+        }
+
         public static Image ChangeGamma(Image img, float gamma)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb);

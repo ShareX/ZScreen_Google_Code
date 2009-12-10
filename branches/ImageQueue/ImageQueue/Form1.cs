@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Plugins;
 using System.IO;
 using GraphicsManager;
+using System.Diagnostics;
 
 namespace ImageQueue
 {
@@ -52,9 +53,11 @@ namespace ImageQueue
         {
             Image img = (Image)previewImage.Clone();
             IPluginItem[] plugins = lvEffects.Items.Cast<ListViewItem>().Where(x => x.Tag is IPluginItem).Select(x => (IPluginItem)x.Tag).ToArray();
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             pbPreview.Image = PluginManager.ApplyEffects(plugins, img);
+            lblPreview.Text = string.Format("Preview image ({0}x{1}) - {2}ms", pbPreview.Image.Width, pbPreview.Image.Height, timer.ElapsedMilliseconds);
             pbPreviewZoom.Image = ImageEffects.Zoom(pbPreview.Image, 8, 12);
-            lblPreview.Text = string.Format("Preview image ({0}x{1})", pbPreview.Image.Width, pbPreview.Image.Height);
         }
 
         private void lvEffects_SelectedIndexChanged(object sender, EventArgs e)

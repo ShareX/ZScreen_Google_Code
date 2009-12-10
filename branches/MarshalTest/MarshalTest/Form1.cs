@@ -17,19 +17,30 @@ namespace Test
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string[] files = new string[] { "1080p.png", "theroyal.png" };
-            foreach (string f in files)
-            {
-                Bitmap img = new Bitmap(@"..\..\" + f);
-                Debug.WriteLine(string.Format("Testing: {0} {1}x{2}", f, img.Width, img.Height));
-                using (MyTimer timer = new MyTimer("Unsafe", false)) AddHighlighting(img, Color.Yellow, false);
-                using (MyTimer timer = new MyTimer("Unsafe SaveTransparency", false)) AddHighlighting(img, Color.Yellow, true);
-                using (MyTimer timer = new MyTimer("Marshal ", false)) AddHighlighting2(img, Color.Yellow, false);
-                using (MyTimer timer = new MyTimer("Marshal SaveTransparency", false)) AddHighlighting2(img, Color.Yellow, true);
-                using (MyTimer timer = new MyTimer("Greyscale", false)) Grayscale(img);
-                using (MyTimer timer = new MyTimer("AddYellowHighlighting", false)) AddYellowHighlighting(img);
-                pictureBox1.Image = img;
-            }
+            Test1();
+        }
+
+        public void Test1()
+        {
+            string f = "ZScreenTest.jpg";
+            Bitmap img = new Bitmap(@"..\..\" + f);
+            Debug.WriteLine(string.Format("Testing: {0} {1}x{2}", f, img.Width, img.Height));
+
+            Image test = (Bitmap)img.Clone();
+            using (MyTimer timer = new MyTimer("Unsafe", false)) AddHighlighting(img, Color.Yellow, false);
+            test = (Bitmap)img.Clone();
+            using (MyTimer timer = new MyTimer("Unsafe SaveTransparency", false)) AddHighlighting(img, Color.Yellow, true);
+            test = (Bitmap)img.Clone();
+            using (MyTimer timer = new MyTimer("Unsafe new", false)) AddHighlighting3(img, Color.Yellow, false);
+            test = (Bitmap)img.Clone();
+            using (MyTimer timer = new MyTimer("Unsafe new SaveTransparency", false)) AddHighlighting3(img, Color.Yellow, true);
+            test = (Bitmap)img.Clone();
+            using (MyTimer timer = new MyTimer("Marshal ", false)) AddHighlighting2(img, Color.Yellow, false);
+            test = (Bitmap)img.Clone();
+            using (MyTimer timer = new MyTimer("Marshal SaveTransparency", false)) AddHighlighting2(img, Color.Yellow, true);
+            //using (MyTimer timer = new MyTimer("Greyscale", false)) Grayscale(img);
+            //using (MyTimer timer = new MyTimer("AddYellowHighlighting", false)) AddYellowHighlighting(img);
+            pictureBox1.Image = img;
         }
 
         public static Image AddHighlighting(Bitmap bmp)
@@ -90,6 +101,30 @@ namespace Test
 
             Marshal.Copy(buffer, 0, bmpData.Scan0, length);
             bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
+
+        public unsafe static Image AddHighlighting3(Bitmap bmp, Color color, bool saveTransparency)
+        {
+            using (BitmapCache cache = new BitmapCache(bmp, ImageLockMode.ReadWrite))
+            {
+                ColorBgra* ptr = cache.Pointer;
+
+                for (int i = 0; i < cache.PixelCount; i++)
+                {
+                    ptr->R = Math.Min(ptr->R, color.R);
+                    ptr->G = Math.Min(ptr->G, color.G);
+                    ptr->B = Math.Min(ptr->B, color.B);
+
+                    if (!saveTransparency)
+                    {
+                        ptr->A = Math.Max(ptr->A, color.A);
+                    }
+
+                    ptr++;
+                }
+            }
 
             return bmp;
         }
