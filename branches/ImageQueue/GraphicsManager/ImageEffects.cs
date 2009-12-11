@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace GraphicsManager
+namespace GraphicsMgrLib
 {
-    public class ImageEffects
+    public class GraphicsMgrImageEffects
     {
         public enum BorderStyle
         {
@@ -151,6 +151,19 @@ namespace GraphicsManager
             }
 
             return result;
+        }
+
+        public static Image FillBackground(Image img, Color color)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.FillRectangle(new SolidBrush(color), 0, 0, img.Width, img.Height);
+                g.DrawImage(img, Point.Empty);
+            }
+
+            return bmp;
         }
     }
 }

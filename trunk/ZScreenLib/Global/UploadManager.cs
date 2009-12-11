@@ -27,6 +27,7 @@ using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.Helpers;
 using ZScreenLib.Properties;
+using GraphicsMgrLib;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550

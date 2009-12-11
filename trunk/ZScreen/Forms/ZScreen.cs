@@ -50,6 +50,7 @@ using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using HelpersLib;
 using System.Web;
+using GraphicsMgrLib;
 
 namespace ZScreenGUI
 {
@@ -284,8 +285,8 @@ namespace ZScreenGUI
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
 
-            turnLogo = new ImageEffects.TurnImage((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
-            turnLogo.ImageTurned += new ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
+            turnLogo = new ZScreenLib.ImageEffects.TurnImage((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
+            turnLogo.ImageTurned += new ZScreenLib.ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
 
             thumbnailCacher = new ThumbnailCacher(pbPreview, new Size(450, 230), 10)
             {
@@ -369,7 +370,7 @@ namespace ZScreenGUI
                             ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
                         }
                         break;
-                    case NativeMethods.WM_SYSCOMMAND:
+                    case ZScreenLib.NativeMethods.WM_SYSCOMMAND:
                         int command = m.WParam.ToInt32() & 0xfff0;
                         if (command == NativeMethods.SC_MINIMIZE)
                         {
@@ -2691,7 +2692,7 @@ namespace ZScreenGUI
                 Graphics g = Graphics.FromImage(bmp2);
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.DrawImage(bmp, new Rectangle(0, 0, pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height));
-                pbWatermarkShow.Image = ImageEffects.ApplyWatermark(bmp2);
+                pbWatermarkShow.Image = ZScreenLib.ImageEffects.ApplyWatermark(bmp2);
             }
         }
 

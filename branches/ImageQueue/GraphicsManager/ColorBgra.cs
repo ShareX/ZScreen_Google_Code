@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace GraphicsManager
+namespace GraphicsMgrLib
 {
     [StructLayout(LayoutKind.Explicit)]
     public struct ColorBgra

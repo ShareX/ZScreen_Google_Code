@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing.Imaging;
 
-namespace ZScreenLib
+namespace GraphicsMgrLib
 {
     public abstract class ImageFileFormat
     {

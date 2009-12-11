@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using UploadersLib.Helpers;
 using ZScreenLib.Properties;
 using HelpersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

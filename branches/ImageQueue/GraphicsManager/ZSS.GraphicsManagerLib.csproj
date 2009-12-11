@@ -8,8 +8,8 @@
     <ProjectGuid>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphicsManager</RootNamespace>
-    <AssemblyName>GraphicsManagerLib</AssemblyName>
+    <RootNamespace>GraphicsMgrLib</RootNamespace>
+    <AssemblyName>GraphicsMgrLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,11 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImageQuantization, Version=1.0.3606.5509, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\trunk\Lib\ImageQuantization.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -50,10 +55,49 @@
     <Compile Include="BitmapCache.cs" />
     <Compile Include="ColorBgra.cs" />
     <Compile Include="ColorMatrixMgr.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="GDI.cs" />
     <Compile Include="GraphicsMgr.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ImageEffects.cs" />
+    <Compile Include="ImageFileFormat.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bottomLeftShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bottomRightShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bottomShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\topLeftShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\topRightShadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\topShadow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

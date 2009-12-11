@@ -45,6 +45,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using HelpersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

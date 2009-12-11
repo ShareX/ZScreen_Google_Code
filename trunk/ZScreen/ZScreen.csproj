@@ -326,6 +326,10 @@
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\branches\ImageQueue\GraphicsManager\ZSS.GraphicsManagerLib.csproj">
+      <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
+      <Name>ZSS.GraphicsManagerLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZScreenLib\ZSS.ZScreenLib.csproj">
       <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
       <Name>ZSS.ZScreenLib</Name>

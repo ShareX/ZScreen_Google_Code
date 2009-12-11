@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZScreenLib.Properties {
+namespace GraphicsMgrLib.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ZScreenLib.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZScreenLib.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GraphicsMgrLib.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,101 +60,59 @@ namespace ZScreenLib.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap au {
+        internal static System.Drawing.Bitmap bottomLeftShadow {
             get {
-                object obj = ResourceManager.GetObject("au", resourceCulture);
+                object obj = ResourceManager.GetObject("bottomLeftShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to 		    GNU GENERAL PUBLIC LICENSE
-        ///		       Version 2, June 1991
-        ///
-        /// Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
-        /// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-        /// Everyone is permitted to copy and distribute verbatim copies
-        /// of this license document, but changing it is not allowed.
-        ///
-        ///			    Preamble
-        ///
-        ///  The licenses for most software are designed to take away your
-        ///freedom to share and change it.  By contrast, the GNU General Public
-        ///License is intended to guarantee your freedom  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string license {
+        internal static System.Drawing.Bitmap bottomRightShadow {
             get {
-                return ResourceManager.GetString("license", resourceCulture);
-            }
-        }
-        
-        internal static System.Drawing.Bitmap main {
-            get {
-                object obj = ResourceManager.GetObject("main", resourceCulture);
+                object obj = ResourceManager.GetObject("bottomRightShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap nav_home {
+        internal static System.Drawing.Bitmap bottomShadow {
             get {
-                object obj = ResourceManager.GetObject("nav_home", resourceCulture);
+                object obj = ResourceManager.GetObject("bottomShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap nav_user {
+        internal static System.Drawing.Bitmap leftShadow {
             get {
-                object obj = ResourceManager.GetObject("nav_user", resourceCulture);
+                object obj = ResourceManager.GetObject("leftShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap tr {
+        internal static System.Drawing.Bitmap rightShadow {
             get {
-                object obj = ResourceManager.GetObject("tr", resourceCulture);
+                object obj = ResourceManager.GetObject("rightShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap us {
+        internal static System.Drawing.Bitmap topLeftShadow {
             get {
-                object obj = ResourceManager.GetObject("us", resourceCulture);
+                object obj = ResourceManager.GetObject("topLeftShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Icon zss_busy {
+        internal static System.Drawing.Bitmap topRightShadow {
             get {
-                object obj = ResourceManager.GetObject("zss_busy", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("topRightShadow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Icon zss_green {
+        internal static System.Drawing.Bitmap topShadow {
             get {
-                object obj = ResourceManager.GetObject("zss_green", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon zss_main {
-            get {
-                object obj = ResourceManager.GetObject("zss_main", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon zss_tray {
-            get {
-                object obj = ResourceManager.GetObject("zss_tray", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon zss_uploaded {
-            get {
-                object obj = ResourceManager.GetObject("zss_uploaded", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("topShadow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

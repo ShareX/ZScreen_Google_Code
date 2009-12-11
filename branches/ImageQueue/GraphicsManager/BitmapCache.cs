@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace GraphicsManager
+namespace GraphicsMgrLib
 {
     public unsafe class BitmapCache : IDisposable
     {

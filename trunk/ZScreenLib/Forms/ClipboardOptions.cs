@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

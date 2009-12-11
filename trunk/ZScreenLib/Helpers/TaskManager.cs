@@ -35,6 +35,7 @@ using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
 using HelpersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {
