@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Plugins;
 using System.Drawing;
-using GraphicsManager;
+using GraphicsMgrLib;
 using System.Drawing.Imaging;
 using System.ComponentModel;
 

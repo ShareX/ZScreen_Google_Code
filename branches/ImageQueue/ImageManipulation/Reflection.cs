@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using Plugins;
-using GraphicsManager;
+using GraphicsMgrLib;
 using System.ComponentModel;
 
 namespace ImageManipulation
@@ -98,7 +98,7 @@ namespace ImageManipulation
 
         public override Image ApplyEffect(Image img)
         {
-            return ImageEffects.DrawReflection(img, percentage, transparency, offset, skew, skewSize);
+            return GraphicsMgrImageEffects.DrawReflection(img, percentage, transparency, offset, skew, skewSize);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using Plugins;
-using GraphicsManager;
+using GraphicsMgrLib;
 
 namespace ImageManipulation
 {

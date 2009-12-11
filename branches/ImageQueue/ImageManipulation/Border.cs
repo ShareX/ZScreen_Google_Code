@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using Plugins;
-using GraphicsManager;
+using GraphicsMgrLib;
 
 namespace ImageManipulation
 {
@@ -11,9 +11,9 @@ namespace ImageManipulation
 
         public override string Description { get { return "Border"; } }
 
-        private ImageEffects.BorderStyle borderStyle;
+        private GraphicsMgrImageEffects.BorderStyle borderStyle;
 
-        public ImageEffects.BorderStyle BorderStyle
+        public GraphicsMgrImageEffects.BorderStyle BorderStyle
         {
             get
             {
@@ -63,14 +63,14 @@ namespace ImageManipulation
 
         public Border()
         {
-            borderStyle = ImageEffects.BorderStyle.Outside;
+            borderStyle = GraphicsMgrImageEffects.BorderStyle.Outside;
             color = Color.Black;
             size = 1;
         }
 
         public override Image ApplyEffect(Image img)
         {
-            return ImageEffects.DrawBorder(borderStyle, img, color, size);
+            return GraphicsMgrImageEffects.DrawBorder(borderStyle, img, color, size);
         }
     }
 }

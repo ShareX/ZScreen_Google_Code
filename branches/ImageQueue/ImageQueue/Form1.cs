@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Plugins;
 using System.IO;
-using GraphicsManager;
+using GraphicsMgrLib;
 using System.Diagnostics;
 
 namespace ImageQueue
@@ -27,7 +27,7 @@ namespace ImageQueue
             //previewImage = ImageQueue.Properties.Resources.main;
             previewImage = Image.FromFile(@"..\..\ZScreenTest.png");
             pbDefault.Image = previewImage;
-            pbDefaultZoom.Image = ImageEffects.Zoom(pbDefault.Image, 8, 12);
+            pbDefaultZoom.Image = GraphicsMgrImageEffects.Zoom(pbDefault.Image, 8, 12);
             lblDefault.Text = string.Format("Default image ({0}x{1})", pbDefault.Image.Width, pbDefault.Image.Height);
         }
 
@@ -57,7 +57,7 @@ namespace ImageQueue
             timer.Start();
             pbPreview.Image = PluginManager.ApplyEffects(plugins, img);
             lblPreview.Text = string.Format("Preview image ({0}x{1}) - {2}ms", pbPreview.Image.Width, pbPreview.Image.Height, timer.ElapsedMilliseconds);
-            pbPreviewZoom.Image = ImageEffects.Zoom(pbPreview.Image, 8, 12);
+            pbPreviewZoom.Image = GraphicsMgrImageEffects.Zoom(pbPreview.Image, 8, 12);
         }
 
         private void lvEffects_SelectedIndexChanged(object sender, EventArgs e)

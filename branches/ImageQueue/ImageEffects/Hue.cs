@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using Plugins;
-using GraphicsManager;
+using GraphicsMgrLib;
 
 namespace ImageAdjustment
 {

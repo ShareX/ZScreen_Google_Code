@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using Plugins;
-using GraphicsManager;
+using GraphicsMgrLib;
 using System.Drawing.Imaging;
 using System.ComponentModel;
 using System;
