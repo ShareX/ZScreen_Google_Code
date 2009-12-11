@@ -38,6 +38,7 @@ using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZSS.IndexersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using UploadersLib.Helpers;
 using System.Diagnostics;
 using HelpersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

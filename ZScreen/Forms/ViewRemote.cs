@@ -27,6 +27,7 @@ using System.IO;
 using System.Windows.Forms;
 using ZScreenGUI.Properties;
 using UploadersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

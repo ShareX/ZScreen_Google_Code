@@ -32,6 +32,7 @@ using System.Windows.Forms;
 using UploadersLib;
 using System.Diagnostics;
 using HelpersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {
@@ -98,13 +99,19 @@ namespace ZScreenLib
 
                 MemoryStream ms = null;
 
+                GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions(img,  Engine.zImageFileFormat);
+                opt.GIFQuality = Engine.conf.GIFQuality;
+                opt.JpgQuality = Engine.conf.JpgQuality;
+                opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
+
                 try
                 {
-                    ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormat);
+                    ms = GraphicsMgr.SaveImageToMemoryStream(opt);
 
                     if (ms.Length > size && size != 0)
                     {
-                        ms = GraphicsMgr.SaveImageToMemoryStream(img, Engine.zImageFileFormatSwitch);
+                        opt.MyImageFileFormat = Engine.zImageFileFormatSwitch;
+                        ms = GraphicsMgr.SaveImageToMemoryStream(opt);
                         filePath = Path.ChangeExtension(filePath, Engine.zImageFileFormatSwitch.Extension);
                     }
 

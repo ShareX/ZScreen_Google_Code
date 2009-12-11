@@ -29,6 +29,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ZScreenLib.Helpers;
 using System.Threading;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

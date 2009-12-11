@@ -34,6 +34,7 @@ using System.Linq;
 using Greenshot.Drawing;
 using GradientTester;
 using HelpersLib;
+using GraphicsMgrLib;
 
 namespace ZScreenLib
 {

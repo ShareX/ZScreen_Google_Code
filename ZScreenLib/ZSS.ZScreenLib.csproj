@@ -75,7 +75,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Global\ImageFormats.cs" />
     <Compile Include="Global\SyntaxParser.cs" />
     <Compile Include="Helpers\ClipboardHook.cs" />
     <Compile Include="Forms\AboutBox.cs">
@@ -140,7 +139,6 @@
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FileSystem.cs" />
     <Compile Include="Global\GDI.cs" />
-    <Compile Include="Global\GraphicsMgr.cs" />
     <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\ResxMgr.cs" />
@@ -185,6 +183,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\branches\ImageQueue\GraphicsManager\ZSS.GraphicsManagerLib.csproj">
+      <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
+      <Name>ZSS.GraphicsManagerLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\GradientTester\ZSS.GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>
       <Name>ZSS.GradientMaker</Name>

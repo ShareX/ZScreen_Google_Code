@@ -29,6 +29,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using GraphicsMgrLib;
 
 namespace ZScreenLib.Helpers
 {

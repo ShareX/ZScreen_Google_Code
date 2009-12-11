@@ -121,18 +121,6 @@
   <data name="au" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\au.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bottomLeftShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bottomLeftShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bottomRightShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bottomRightShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bottomShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bottomShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="leftShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\leftShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="license" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Documents\license.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -144,18 +132,6 @@
   </data>
   <data name="nav_user" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nav-user.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rightShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rightShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="topLeftShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\topLeftShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="topRightShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\topRightShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="topShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\topShadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tr.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

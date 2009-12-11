@@ -67,34 +67,6 @@ namespace ZScreenLib.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap bottomLeftShadow {
-            get {
-                object obj = ResourceManager.GetObject("bottomLeftShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap bottomRightShadow {
-            get {
-                object obj = ResourceManager.GetObject("bottomRightShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap bottomShadow {
-            get {
-                object obj = ResourceManager.GetObject("bottomShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap leftShadow {
-            get {
-                object obj = ResourceManager.GetObject("leftShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to 		    GNU GENERAL PUBLIC LICENSE
         ///		       Version 2, June 1991
@@ -133,34 +105,6 @@ namespace ZScreenLib.Properties {
         internal static System.Drawing.Bitmap nav_user {
             get {
                 object obj = ResourceManager.GetObject("nav_user", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap rightShadow {
-            get {
-                object obj = ResourceManager.GetObject("rightShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap topLeftShadow {
-            get {
-                object obj = ResourceManager.GetObject("topLeftShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap topRightShadow {
-            get {
-                object obj = ResourceManager.GetObject("topRightShadow", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap topShadow {
-            get {
-                object obj = ResourceManager.GetObject("topShadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
