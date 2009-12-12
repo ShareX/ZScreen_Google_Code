@@ -123,6 +123,7 @@ namespace ZScreenLib
         public static ClipboardHook zClipboardHook = null;
         public static string zClipboardText = string.Empty;
 
+        private static TaskDialog td = null;
         public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
         private static bool RunConfig = false;
@@ -370,32 +371,30 @@ namespace ZScreenLib
                 // Let the user know
                 if (!registered)
                 {
-                    TaskDialog td = new TaskDialog();
-
-                    td.Text = "File type is not registered";
+                    td = new TaskDialog();
+                    td.Caption = GetProductName();
+                    td.Text = "File types are not registered";
                     td.InstructionText = "ZScreen needs to register image files as associated files to properly execute the Taskbar related features.";
                     td.Icon = TaskDialogStandardIcon.Information;
                     td.Cancelable = true;
 
                     TaskDialogCommandLink button1 = new TaskDialogCommandLink("registerButton", "Register file type for this application",
                         "Register image/text files with this application to run ZScreen correctly.");
-
-                    // Show UAC sheild as this task requires elevation
+                    button1.Click += new EventHandler(button1_Click);
+                    // Show UAC shield as this task requires elevation
                     button1.ShowElevationIcon = true;
 
-                    td.StandardButtons = TaskDialogStandardButtons.None;
                     td.Controls.Add(button1);
 
                     TaskDialogResult tdr = td.Show();
-
-                    RegistrationHelper.RegisterFileAssociations(
-                               progId,
-                               false,
-                               appId,
-                               Application.ExecutablePath + " /doc %1",
-                               GetExtensionsToRegister());
                 }
             }
+        }
+
+        static void button1_Click(object sender, EventArgs e)
+        {
+            RegistrationHelper.RegisterFileAssociations(progId, false, appId, Application.ExecutablePath + " /doc %1", GetExtensionsToRegister());
+            td.Close();
         }
 
         /// <summary>
