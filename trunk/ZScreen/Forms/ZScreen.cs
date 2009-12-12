@@ -51,6 +51,7 @@ using ZSS.FTPClientLib;
 using HelpersLib;
 using System.Web;
 using GraphicsMgrLib;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ZScreenGUI
 {
@@ -1017,8 +1018,6 @@ namespace ZScreenGUI
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
             chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
-            chkSaveFormSizePosition.Checked = Engine.conf.SaveFormSizePosition;
-            cbLockFormSize.Checked = Engine.conf.LockFormSize;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
@@ -2317,6 +2316,20 @@ namespace ZScreenGUI
                     this.Size = this.MinimumSize;
                 }
             }
+
+            if (mGuiIsReady)
+            {
+                if (Engine.conf.SaveFormSizePosition)
+                {
+                    Engine.conf.WindowLocation = this.Location;
+                    Engine.conf.WindowSize = this.Size;
+                }
+                else
+                {
+                    Engine.conf.WindowLocation = Point.Empty;
+                    Engine.conf.WindowSize = Size.Empty;
+                }
+            }
         }
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
@@ -3553,14 +3566,15 @@ namespace ZScreenGUI
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldRootDir = txtRootFolder.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog
+            CommonOpenFileDialog cfd = new CommonOpenFileDialog();
+            cfd.EnsureReadOnly = true;
+            cfd.IsFolderPicker = true;
+            cfd.AllowNonFileSystemItems = true;
+            cfd.Title = "Configure Root directory...";
+
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
             {
-                ShowNewFolderButton = true,
-                Description = "Configure Root directory..."
-            };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Engine.SetRootFolder(dlg.SelectedPath);
+                Engine.SetRootFolder(cfd.FileName);
                 txtRootFolder.Text = Engine.mAppSettings.RootDir;
                 FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
                 UpdateGuiControlsPaths();
@@ -3669,12 +3683,6 @@ namespace ZScreenGUI
         private void btnTranslateTo1_Click(object sender, EventArgs e)
         {
             Loader.Worker.TranslateTo1();
-        }
-
-        private void cbLockFormSize_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.LockFormSize = cbLockFormSize.Checked;
-            CheckFormSettings();
         }
 
         /// <summary>
@@ -4075,25 +4083,6 @@ namespace ZScreenGUI
         {
             Engine.conf.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
             UpdateAeroGlassConfig();
-        }
-
-        private void cbSaveFormSizePosition_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.SaveFormSizePosition = chkSaveFormSizePosition.Checked;
-
-            if (mGuiIsReady)
-            {
-                if (Engine.conf.SaveFormSizePosition)
-                {
-                    Engine.conf.WindowLocation = this.Location;
-                    Engine.conf.WindowSize = this.Size;
-                }
-                else
-                {
-                    Engine.conf.WindowLocation = Point.Empty;
-                    Engine.conf.WindowSize = Size.Empty;
-                }
-            }
         }
 
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
@@ -4806,15 +4795,16 @@ namespace ZScreenGUI
         void BtnBrowseImagesDirClick(object sender, EventArgs e)
         {
             string oldDir = txtImagesDir.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog
-            {
-                ShowNewFolderButton = true,
-                Description = "Configure Custom Images Directory..."
-            };
-            if (dlg.ShowDialog() == DialogResult.OK)
+            CommonOpenFileDialog cfd = new CommonOpenFileDialog();
+            cfd.EnsureReadOnly = true;
+            cfd.IsFolderPicker = true;
+            cfd.AllowNonFileSystemItems = true;
+            cfd.Title = "Configure Custom Images Directory...";
+
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
             {
                 Engine.conf.UseCustomImagesDir = true;
-                Engine.conf.CustomImagesDir = dlg.SelectedPath;
+                Engine.conf.CustomImagesDir = cfd.FileName;
                 FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
                 UpdateGuiControlsPaths();
             }
