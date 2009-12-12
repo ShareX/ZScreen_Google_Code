@@ -1,6 +1,8 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System.Diagnostics;
+using System.ComponentModel;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ZScreenLib
 {
@@ -24,7 +26,16 @@ namespace ZScreenLib
                     string.Join(" ", extensions));
             psi.UseShellExecute = true;
             psi.Verb = "runas"; //Launch elevated
-            Process.Start(psi).WaitForExit();
+
+            try
+            {
+                Process.Start(psi).WaitForExit();
+            }
+            catch (Win32Exception e)
+            {
+                if (e.NativeErrorCode == 1223) // 1223: The operation was canceled by the user. 
+                    TaskDialog.Show("The operation was canceled by the user.");
+            }
         }
 
         /// <summary>
