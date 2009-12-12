@@ -27,10 +27,12 @@ using System.IO;
 using System.Windows.Forms;
 using UploadersLib;
 using System.Text;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace ZScreenLib
 {
-    public partial class ConfigWizard : Form
+    public partial class ConfigWizard : GlassForm
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
@@ -39,11 +41,21 @@ namespace ZScreenLib
         public ConfigWizard(string rootDir)
         {
             InitializeComponent();
+            AeroGlassCompositionChanged += new AeroGlassCompositionChangedEvent(ConfigWizard_AeroGlassCompositionChanged);
             this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
             cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             cboScreenshotDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
+        }
+
+        void ConfigWizard_AeroGlassCompositionChanged(object sender, AeroGlassCompositionChangedEvenArgs e)
+        {
+            if (e.GlassAvailable)
+            {
+                ExcludeControlFromAeroGlass(panel1);           
+                Invalidate();
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -55,10 +67,15 @@ namespace ZScreenLib
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldDir = txtRootFolder.Text;
-            FolderBrowserDialog dlg = new FolderBrowserDialog { ShowNewFolderButton = true };
-            if (dlg.ShowDialog() == DialogResult.OK)
+            CommonOpenFileDialog cfd = new CommonOpenFileDialog();
+            cfd.EnsureReadOnly = true;
+            cfd.IsFolderPicker = true;
+            cfd.AllowNonFileSystemItems = true;
+            cfd.Title = "Configure Root diretory...";
+
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
             {
-                txtRootFolder.Text = dlg.SelectedPath;
+                txtRootFolder.Text = cfd.FileName;
                 RootFolder = txtRootFolder.Text;
                 FileSystem.MoveDirectory(oldDir, txtRootFolder.Text);
             }
@@ -93,6 +110,11 @@ namespace ZScreenLib
             sb.AppendLine(string.Format("Text:\t{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName));
             sb.AppendLine(string.Format("Logs:\t{0}\\{1}\\Logs", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName));
             ttApp.SetToolTip(chkPreferSystemFolders, sb.ToString());
+        }
+
+        private void ConfigWizard_Resize(object sender, EventArgs e)
+        {
+            ExcludeControlFromAeroGlass(panel1);
         }
     }
 }

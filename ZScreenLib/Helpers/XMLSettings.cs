@@ -385,8 +385,11 @@ namespace ZScreenLib
         public bool ShowMainWindow = false;
         public bool ShowInTaskbar = true;
         public bool ShowHelpBalloonTips = true;
-        public bool SaveFormSizePosition = true;
-        public bool LockFormSize = false;
+
+        [Category("Options / General"), DefaultValue(true), Description("Remember Main Window size and position.")]
+        public bool SaveFormSizePosition { get; set; }
+        [Category("Options / General"), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
+        public bool LockFormSize { get; set; }
         public bool AutoSaveSettings = false;
         public WindowButtonAction CloseButtonAction = WindowButtonAction.MinimizeToTray;
         public WindowButtonAction MinimizeButtonAction = WindowButtonAction.MinimizeToTaskbar;

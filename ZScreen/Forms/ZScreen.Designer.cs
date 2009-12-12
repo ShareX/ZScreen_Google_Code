@@ -33,10 +33,10 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +79,8 @@ namespace ZScreenGUI
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySourceToClipboardStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.editInPicnikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTwitter = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsRetryUpload = new System.Windows.Forms.ToolStripMenuItem();
@@ -506,9 +508,7 @@ namespace ZScreenGUI
             this.chkShellExt = new System.Windows.Forms.CheckBox();
             this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
-            this.chkSaveFormSizePosition = new System.Windows.Forms.CheckBox();
             this.cbShowHelpBalloonTips = new System.Windows.Forms.CheckBox();
-            this.cbLockFormSize = new System.Windows.Forms.CheckBox();
             this.chkShowTaskbar = new System.Windows.Forms.CheckBox();
             this.chkOpenMainWindow = new System.Windows.Forms.CheckBox();
             this.chkStartWin = new System.Windows.Forms.CheckBox();
@@ -581,8 +581,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.editInPicnikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -1014,7 +1012,7 @@ namespace ZScreenGUI
             this.cmsRetryUpload,
             this.deleteToolStripMenuItem});
             this.cmsHistory.Name = "cmsHistory";
-            this.cmsHistory.Size = new System.Drawing.Size(170, 242);
+            this.cmsHistory.Size = new System.Drawing.Size(170, 220);
             // 
             // tsmCopyCbHistory
             // 
@@ -1078,6 +1076,18 @@ namespace ZScreenGUI
             this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.copySourceToClipboardStringToolStripMenuItem.Text = "Copy Source to Clipboard";
             this.copySourceToClipboardStringToolStripMenuItem.Click += new System.EventHandler(this.copySourceToClipboardStringToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(166, 6);
+            // 
+            // editInPicnikToolStripMenuItem
+            // 
+            this.editInPicnikToolStripMenuItem.Name = "editInPicnikToolStripMenuItem";
+            this.editInPicnikToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.editInPicnikToolStripMenuItem.Text = "Edit in Picnik...";
+            this.editInPicnikToolStripMenuItem.Click += new System.EventHandler(this.editInPicnikToolStripMenuItem_Click);
             // 
             // tsmiTwitter
             // 
@@ -2287,39 +2297,39 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys,
             this.DefaultKeys});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -2350,8 +2360,8 @@ namespace ZScreenGUI
             // DefaultKeys
             // 
             this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle10;
             this.DefaultKeys.HeaderText = "Default Hotkey";
             this.DefaultKeys.Name = "DefaultKeys";
             this.DefaultKeys.ReadOnly = true;
@@ -5892,7 +5902,7 @@ namespace ZScreenGUI
             this.gbMonitorClipboard.Controls.Add(this.chkMonFiles);
             this.gbMonitorClipboard.Controls.Add(this.chkMonImages);
             this.gbMonitorClipboard.Controls.Add(this.chkMonText);
-            this.gbMonitorClipboard.Location = new System.Drawing.Point(8, 192);
+            this.gbMonitorClipboard.Location = new System.Drawing.Point(8, 144);
             this.gbMonitorClipboard.Name = "gbMonitorClipboard";
             this.gbMonitorClipboard.Size = new System.Drawing.Size(760, 56);
             this.gbMonitorClipboard.TabIndex = 9;
@@ -5949,7 +5959,7 @@ namespace ZScreenGUI
             this.gbUpdates.Controls.Add(this.lblUpdateInfo);
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.chkCheckUpdates);
-            this.gbUpdates.Location = new System.Drawing.Point(8, 256);
+            this.gbUpdates.Location = new System.Drawing.Point(8, 208);
             this.gbUpdates.Name = "gbUpdates";
             this.gbUpdates.Size = new System.Drawing.Size(760, 96);
             this.gbUpdates.TabIndex = 8;
@@ -6005,15 +6015,13 @@ namespace ZScreenGUI
             this.gbMisc.Controls.Add(this.chkShellExt);
             this.gbMisc.Controls.Add(this.chkWindows7TaskbarIntegration);
             this.gbMisc.Controls.Add(this.cbAutoSaveSettings);
-            this.gbMisc.Controls.Add(this.chkSaveFormSizePosition);
             this.gbMisc.Controls.Add(this.cbShowHelpBalloonTips);
-            this.gbMisc.Controls.Add(this.cbLockFormSize);
             this.gbMisc.Controls.Add(this.chkShowTaskbar);
             this.gbMisc.Controls.Add(this.chkOpenMainWindow);
             this.gbMisc.Controls.Add(this.chkStartWin);
             this.gbMisc.Location = new System.Drawing.Point(8, 8);
             this.gbMisc.Name = "gbMisc";
-            this.gbMisc.Size = new System.Drawing.Size(760, 176);
+            this.gbMisc.Size = new System.Drawing.Size(760, 128);
             this.gbMisc.TabIndex = 7;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
@@ -6056,7 +6064,7 @@ namespace ZScreenGUI
             // cbAutoSaveSettings
             // 
             this.cbAutoSaveSettings.AutoSize = true;
-            this.cbAutoSaveSettings.Location = new System.Drawing.Point(16, 120);
+            this.cbAutoSaveSettings.Location = new System.Drawing.Point(16, 72);
             this.cbAutoSaveSettings.Name = "cbAutoSaveSettings";
             this.cbAutoSaveSettings.Size = new System.Drawing.Size(244, 17);
             this.cbAutoSaveSettings.TabIndex = 7;
@@ -6065,38 +6073,16 @@ namespace ZScreenGUI
             this.cbAutoSaveSettings.UseVisualStyleBackColor = true;
             this.cbAutoSaveSettings.CheckedChanged += new System.EventHandler(this.cbAutoSaveSettings_CheckedChanged);
             // 
-            // chkSaveFormSizePosition
-            // 
-            this.chkSaveFormSizePosition.AutoSize = true;
-            this.chkSaveFormSizePosition.Location = new System.Drawing.Point(16, 96);
-            this.chkSaveFormSizePosition.Name = "chkSaveFormSizePosition";
-            this.chkSaveFormSizePosition.Size = new System.Drawing.Size(226, 17);
-            this.chkSaveFormSizePosition.TabIndex = 6;
-            this.chkSaveFormSizePosition.Text = "Remember Main Window size and position";
-            this.chkSaveFormSizePosition.UseVisualStyleBackColor = true;
-            this.chkSaveFormSizePosition.CheckedChanged += new System.EventHandler(this.cbSaveFormSizePosition_CheckedChanged);
-            // 
             // cbShowHelpBalloonTips
             // 
             this.cbShowHelpBalloonTips.AutoSize = true;
-            this.cbShowHelpBalloonTips.Location = new System.Drawing.Point(16, 144);
+            this.cbShowHelpBalloonTips.Location = new System.Drawing.Point(16, 96);
             this.cbShowHelpBalloonTips.Name = "cbShowHelpBalloonTips";
             this.cbShowHelpBalloonTips.Size = new System.Drawing.Size(156, 17);
             this.cbShowHelpBalloonTips.TabIndex = 5;
             this.cbShowHelpBalloonTips.Text = "Show Help via Balloon Tips";
             this.cbShowHelpBalloonTips.UseVisualStyleBackColor = true;
             this.cbShowHelpBalloonTips.CheckedChanged += new System.EventHandler(this.cbShowHelpBalloonTips_CheckedChanged);
-            // 
-            // cbLockFormSize
-            // 
-            this.cbLockFormSize.AutoSize = true;
-            this.cbLockFormSize.Location = new System.Drawing.Point(16, 72);
-            this.cbLockFormSize.Name = "cbLockFormSize";
-            this.cbLockFormSize.Size = new System.Drawing.Size(343, 17);
-            this.cbLockFormSize.TabIndex = 4;
-            this.cbLockFormSize.Text = "Lock Main Window size to minimum possible size and disable resize";
-            this.cbLockFormSize.UseVisualStyleBackColor = true;
-            this.cbLockFormSize.CheckedChanged += new System.EventHandler(this.cbLockFormSize_CheckedChanged);
             // 
             // chkShowTaskbar
             // 
@@ -6945,18 +6931,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // editInPicnikToolStripMenuItem
-            // 
-            this.editInPicnikToolStripMenuItem.Name = "editInPicnikToolStripMenuItem";
-            this.editInPicnikToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.editInPicnikToolStripMenuItem.Text = "Edit in Picnik...";
-            this.editInPicnikToolStripMenuItem.Click += new System.EventHandler(this.editInPicnikToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(166, 6);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -7525,7 +7499,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnCheckUpdate;
         internal System.Windows.Forms.CheckBox chkCheckUpdates;
         internal System.Windows.Forms.GroupBox gbMisc;
-        internal System.Windows.Forms.CheckBox cbLockFormSize;
         internal System.Windows.Forms.CheckBox chkShowTaskbar;
         internal System.Windows.Forms.CheckBox chkOpenMainWindow;
         internal System.Windows.Forms.CheckBox chkStartWin;
@@ -7603,7 +7576,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.PropertyGrid pgIndexer;
         private System.Windows.Forms.CheckBox chkSelectedWindowCaptureObjects;
         private System.Windows.Forms.Label lblWatermarkOffsetPixel;
-        private System.Windows.Forms.CheckBox chkSaveFormSizePosition;
         private System.Windows.Forms.CheckBox cbAutoSaveSettings;
         private System.Windows.Forms.CheckBox cbTwitPicShowFull;
         private System.Windows.Forms.ComboBox cboTwitPicThumbnailMode;
