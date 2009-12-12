@@ -3,6 +3,8 @@
 using System.Diagnostics;
 using System.ComponentModel;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
@@ -15,7 +17,7 @@ namespace ZScreenLib
             bool unregister, string progId, bool registerInHKCU,
             string appId, string openWith, string[] extensions)
         {
-            ProcessStartInfo psi = new ProcessStartInfo("RegistrationHelper.exe");
+            ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, "RegistrationHelper.exe"));
             psi.Arguments =
                 string.Format("{0} {1} {2} \"{3}\" {4} {5}",
                     progId, // 0
