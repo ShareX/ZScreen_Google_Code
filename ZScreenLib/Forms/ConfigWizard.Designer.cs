@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigWizard));
             this.lblScreenshotDestination = new System.Windows.Forms.Label();
             this.cboScreenshotDest = new System.Windows.Forms.ComboBox();
@@ -46,6 +47,7 @@
             this.lblWatermarkImage = new System.Windows.Forms.Label();
             this.gbWatermark = new System.Windows.Forms.GroupBox();
             this.chkPreferSystemFolders = new System.Windows.Forms.CheckBox();
+            this.ttApp = new System.Windows.Forms.ToolTip(this.components);
             this.gbRoot.SuspendLayout();
             this.gbPublishOptions.SuspendLayout();
             this.gbWatermark.SuspendLayout();
@@ -112,7 +114,9 @@
             // 
             this.txtRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
+            this.txtRootFolder.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtRootFolder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtRootFolder.Location = new System.Drawing.Point(16, 27);
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
             this.txtRootFolder.Size = new System.Drawing.Size(368, 20);
@@ -122,7 +126,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(520, 192);
+            this.btnOK.Location = new System.Drawing.Point(536, 192);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 117;
@@ -225,9 +229,9 @@
             this.chkPreferSystemFolders.AutoSize = true;
             this.chkPreferSystemFolders.Location = new System.Drawing.Point(16, 16);
             this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
-            this.chkPreferSystemFolders.Size = new System.Drawing.Size(231, 17);
+            this.chkPreferSystemFolders.Size = new System.Drawing.Size(230, 17);
             this.chkPreferSystemFolders.TabIndex = 121;
-            this.chkPreferSystemFolders.Text = "&Prefer System Folders for Settings and Data";
+            this.chkPreferSystemFolders.Text = "&Prefer Known Folders for Settings and Data";
             this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
             this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
             // 
@@ -247,6 +251,7 @@
             this.Name = "ConfigWizard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZScreen - Configuration Wizard";
+            this.Load += new System.EventHandler(this.ConfigWizard_Load);
             this.gbRoot.ResumeLayout(false);
             this.gbRoot.PerformLayout();
             this.gbPublishOptions.ResumeLayout(false);
@@ -277,5 +282,6 @@
         private System.Windows.Forms.Label lblWatermarkImage;
         private System.Windows.Forms.GroupBox gbWatermark;
         private System.Windows.Forms.CheckBox chkPreferSystemFolders;
+        private System.Windows.Forms.ToolTip ttApp;
     }
 }

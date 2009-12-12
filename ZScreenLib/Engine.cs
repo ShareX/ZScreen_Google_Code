@@ -66,7 +66,7 @@ namespace ZScreenLib
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
 
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName + " Root");
+        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
         public static string RootImagesDir = zPicturesFolder;
 
