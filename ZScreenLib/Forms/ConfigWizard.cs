@@ -32,7 +32,7 @@ using Microsoft.WindowsAPICodePack.Shell;
 
 namespace ZScreenLib
 {
-    public partial class ConfigWizard : GlassForm
+    public partial class ConfigWizard : DavuxLib.Controls.GlassForm
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
@@ -41,7 +41,11 @@ namespace ZScreenLib
         public ConfigWizard(string rootDir)
         {
             InitializeComponent();
-            AeroGlassCompositionChanged += new AeroGlassCompositionChangedEvent(ConfigWizard_AeroGlassCompositionChanged);
+            GlassMargins.topHeight = 5;
+            GlassMargins.bottomHeight = 30;
+            GlassMargins.leftWidth = GlassMargins.rightWidth = 0;
+            //  AeroGlassCompositionChanged += new AeroGlassCompositionChangedEvent(ConfigWizard_AeroGlassCompositionChanged);
+            EnableGlass();
             this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
@@ -53,7 +57,7 @@ namespace ZScreenLib
         {
             if (e.GlassAvailable)
             {
-                ExcludeControlFromAeroGlass(panel1);           
+                // ExcludeControlFromAeroGlass(panel1);           
                 Invalidate();
             }
         }
@@ -114,7 +118,13 @@ namespace ZScreenLib
 
         private void ConfigWizard_Resize(object sender, EventArgs e)
         {
-            ExcludeControlFromAeroGlass(panel1);
+            // ExcludeControlFromAeroGlass(panel1);
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

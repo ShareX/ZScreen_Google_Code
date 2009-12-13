@@ -40,10 +40,9 @@
             this.gbPublishOptions = new System.Windows.Forms.GroupBox();
             this.chkPreferSystemFolders = new System.Windows.Forms.CheckBox();
             this.ttApp = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Button();
             this.gbRoot.SuspendLayout();
             this.gbPublishOptions.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblScreenshotDestination
@@ -72,21 +71,23 @@
             this.gbRoot.Controls.Add(this.btnViewRootDir);
             this.gbRoot.Controls.Add(this.btnBrowseRootDir);
             this.gbRoot.Controls.Add(this.txtRootFolder);
-            this.gbRoot.Location = new System.Drawing.Point(16, 48);
+            this.gbRoot.Location = new System.Drawing.Point(8, 40);
             this.gbRoot.Name = "gbRoot";
-            this.gbRoot.Size = new System.Drawing.Size(600, 64);
+            this.gbRoot.Size = new System.Drawing.Size(616, 64);
             this.gbRoot.TabIndex = 118;
             this.gbRoot.TabStop = false;
             this.gbRoot.Text = "Root folder for Settings and Data";
+            this.gbRoot.UseCompatibleTextRendering = true;
             // 
             // btnViewRootDir
             // 
             this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(480, 24);
+            this.btnViewRootDir.Location = new System.Drawing.Point(496, 24);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewRootDir.TabIndex = 116;
             this.btnViewRootDir.Text = "View Directory...";
+            this.btnViewRootDir.UseCompatibleTextRendering = true;
             this.btnViewRootDir.UseVisualStyleBackColor = true;
             this.btnViewRootDir.Click += new System.EventHandler(this.btnViewRootDir_Click);
             // 
@@ -95,11 +96,12 @@
             this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseRootDir.Location = new System.Drawing.Point(392, 24);
+            this.btnBrowseRootDir.Location = new System.Drawing.Point(408, 24);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseRootDir.TabIndex = 115;
             this.btnBrowseRootDir.Text = "Relocate...";
+            this.btnBrowseRootDir.UseCompatibleTextRendering = true;
             this.btnBrowseRootDir.UseVisualStyleBackColor = true;
             this.btnBrowseRootDir.Click += new System.EventHandler(this.btnBrowseRootDir_Click);
             // 
@@ -112,18 +114,20 @@
             this.txtRootFolder.Location = new System.Drawing.Point(16, 27);
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
-            this.txtRootFolder.Size = new System.Drawing.Size(368, 20);
+            this.txtRootFolder.Size = new System.Drawing.Size(384, 20);
             this.txtRootFolder.TabIndex = 114;
             this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
                 "";
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(544, 192);
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOK.Location = new System.Drawing.Point(544, 184);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 117;
             this.btnOK.Text = "&OK";
+            this.btnOK.UseCompatibleTextRendering = true;
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -131,17 +135,18 @@
             // 
             this.gbPublishOptions.Controls.Add(this.lblScreenshotDestination);
             this.gbPublishOptions.Controls.Add(this.cboScreenshotDest);
-            this.gbPublishOptions.Location = new System.Drawing.Point(16, 120);
+            this.gbPublishOptions.Location = new System.Drawing.Point(8, 112);
             this.gbPublishOptions.Name = "gbPublishOptions";
-            this.gbPublishOptions.Size = new System.Drawing.Size(600, 64);
+            this.gbPublishOptions.Size = new System.Drawing.Size(616, 64);
             this.gbPublishOptions.TabIndex = 120;
             this.gbPublishOptions.TabStop = false;
             this.gbPublishOptions.Text = "Publish Options";
+            this.gbPublishOptions.UseCompatibleTextRendering = true;
             // 
             // chkPreferSystemFolders
             // 
             this.chkPreferSystemFolders.AutoSize = true;
-            this.chkPreferSystemFolders.Location = new System.Drawing.Point(24, 16);
+            this.chkPreferSystemFolders.Location = new System.Drawing.Point(8, 8);
             this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
             this.chkPreferSystemFolders.Size = new System.Drawing.Size(230, 17);
             this.chkPreferSystemFolders.TabIndex = 121;
@@ -149,23 +154,28 @@
             this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
             this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
             // 
-            // panel1
+            // btnExit
             // 
-            this.panel1.Controls.Add(this.btnOK);
-            this.panel1.Controls.Add(this.chkPreferSystemFolders);
-            this.panel1.Controls.Add(this.gbRoot);
-            this.panel1.Controls.Add(this.gbPublishOptions);
-            this.panel1.Location = new System.Drawing.Point(11, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(632, 240);
-            this.panel1.TabIndex = 122;
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExit.Location = new System.Drawing.Point(8, 184);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.TabIndex = 122;
+            this.btnExit.Text = "E&xit";
+            this.btnExit.UseCompatibleTextRendering = true;
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // ConfigWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 272);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(629, 206);
+            this.Controls.Add(this.chkPreferSystemFolders);
+            this.Controls.Add(this.gbRoot);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.gbPublishOptions);
+            this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -178,9 +188,8 @@
             this.gbRoot.PerformLayout();
             this.gbPublishOptions.ResumeLayout(false);
             this.gbPublishOptions.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -196,6 +205,6 @@
         private System.Windows.Forms.GroupBox gbPublishOptions;
         private System.Windows.Forms.CheckBox chkPreferSystemFolders;
         private System.Windows.Forms.ToolTip ttApp;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnExit;
     }
 }
