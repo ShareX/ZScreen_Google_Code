@@ -187,7 +187,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\branches\ImageQueue\GraphicsManager\ZSS.GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
       <Name>ZSS.GraphicsManagerLib</Name>
     </ProjectReference>

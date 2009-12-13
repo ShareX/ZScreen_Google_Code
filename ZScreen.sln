@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Updater", "Updater\Upda
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.HelpersLib", "ZSS.HelpersLib\ZSS.HelpersLib.csproj", "{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "..\branches\ImageQueue\GraphicsManager\ZSS.GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
