@@ -59,11 +59,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.HelpersLib", "ZSS.Helpe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavuxLib", "DavuxLibMin\DavuxLib.csproj", "{6241A05D-EF12-4769-B660-EF75060DF20E}"
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -137,8 +135,16 @@ Global
 		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39CBF608-D7E7-405B-BCB4-A316BB76B562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6241A05D-EF12-4769-B660-EF75060DF20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6241A05D-EF12-4769-B660-EF75060DF20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6241A05D-EF12-4769-B660-EF75060DF20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6241A05D-EF12-4769-B660-EF75060DF20E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
