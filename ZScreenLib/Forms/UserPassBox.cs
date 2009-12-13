@@ -23,10 +23,11 @@
 
 using System;
 using System.Windows.Forms;
+using DavuxLib.Controls;
 
 namespace ZScreenLib
 {
-    public partial class UserPassBox : Form
+    public partial class UserPassBox : GlassForm
     {
         public string FullName { get; private set; }
         public string UserName { get; private set; }

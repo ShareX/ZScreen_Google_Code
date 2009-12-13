@@ -177,13 +177,13 @@
             this.Controls.Add(this.gbPublishOptions);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.GlassArea = new System.Windows.Forms.Padding(0, 5, 0, 30);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ConfigWizard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZScreen - Configuration Wizard";
             this.Load += new System.EventHandler(this.ConfigWizard_Load);
-            this.Resize += new System.EventHandler(this.ConfigWizard_Resize);
             this.gbRoot.ResumeLayout(false);
             this.gbRoot.PerformLayout();
             this.gbPublishOptions.ResumeLayout(false);

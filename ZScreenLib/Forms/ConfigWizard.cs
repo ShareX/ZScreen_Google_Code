@@ -41,8 +41,6 @@ namespace ZScreenLib
         public ConfigWizard(string rootDir)
         {
             InitializeComponent();
-            GlassEnabled = true;
-            GlassArea = new Padding(0, 5, 0, 30); 
             this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
