@@ -24,11 +24,11 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
-using UploadersLib;
 using System.Text;
+using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
+using UploadersLib;
 
 namespace ZScreenLib
 {
@@ -41,25 +41,13 @@ namespace ZScreenLib
         public ConfigWizard(string rootDir)
         {
             InitializeComponent();
-            GlassMargins.topHeight = 5;
-            GlassMargins.bottomHeight = 30;
-            GlassMargins.leftWidth = GlassMargins.rightWidth = 0;
-            //  AeroGlassCompositionChanged += new AeroGlassCompositionChangedEvent(ConfigWizard_AeroGlassCompositionChanged);
-            EnableGlass();
+            GlassEnabled = true;
+            GlassArea = new Padding(0, 5, 0, 30); 
             this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
             cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
             cboScreenshotDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
-        }
-
-        void ConfigWizard_AeroGlassCompositionChanged(object sender, AeroGlassCompositionChangedEvenArgs e)
-        {
-            if (e.GlassAvailable)
-            {
-                // ExcludeControlFromAeroGlass(panel1);           
-                Invalidate();
-            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -114,11 +102,6 @@ namespace ZScreenLib
             sb.AppendLine(string.Format("Text:\t{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName));
             sb.AppendLine(string.Format("Logs:\t{0}\\{1}\\Logs", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName));
             ttApp.SetToolTip(chkPreferSystemFolders, sb.ToString());
-        }
-
-        private void ConfigWizard_Resize(object sender, EventArgs e)
-        {
-            // ExcludeControlFromAeroGlass(panel1);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
