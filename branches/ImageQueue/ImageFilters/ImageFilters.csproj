@@ -53,7 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphicsManager\ZSS.GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\..\..\trunk\GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
       <Name>ZSS.GraphicsManagerLib</Name>
     </ProjectReference>
