@@ -326,6 +326,10 @@
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DavuxLibMin\DavuxLib.csproj">
+      <Project>{6241A05D-EF12-4769-B660-EF75060DF20E}</Project>
+      <Name>DavuxLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
       <Name>ZSS.GraphicsManagerLib</Name>
