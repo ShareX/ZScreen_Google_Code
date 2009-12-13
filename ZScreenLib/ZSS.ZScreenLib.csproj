@@ -37,10 +37,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\AxSHDocVw.dll</HintPath>
     </Reference>
-    <Reference Include="DavuxLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Downloads\DavuxLib\DavuxLib\DavuxLib\bin\Debug\DavuxLib.dll</HintPath>
-    </Reference>
     <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\IECaptComImports.dll</HintPath>
@@ -94,7 +90,6 @@
       <DependentUpon>ClipboardOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ConfigWizard.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ConfigWizard.Designer.cs">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
