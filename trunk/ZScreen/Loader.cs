@@ -57,9 +57,11 @@ namespace ZScreenGUI
         {
             try
             {
-                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
-                Engine.LoadSettings();
-                Application.Run(new ZScreen());
+                if (Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+                {
+                    Engine.LoadSettings();
+                    Application.Run(new ZScreen());
+                }
             }
             catch (Exception ex)
             {
@@ -75,12 +77,14 @@ namespace ZScreenGUI
 
         private static void RunZScreenBeta()
         {
-            Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true });
-            Engine.LoadSettings();
-            Application.Run(new ZScreen());
+            if (Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+            {
+                Engine.LoadSettings();
+                Application.Run(new ZScreen());
 
-            Engine.conf.Write();
-            Engine.TurnOff();
+                Engine.conf.Write();
+                Engine.TurnOff();
+            }
         }
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)

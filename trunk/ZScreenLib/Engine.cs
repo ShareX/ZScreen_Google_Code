@@ -139,10 +139,11 @@ namespace ZScreenLib
             TurnOn(new EngineOptions());
         }
 
-        public static void TurnOn(EngineOptions options)
+        public static bool TurnOn(EngineOptions options)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
             FileSystem.AppendDebug(string.Format("Product Version: {0}, Rev {1}", mAppInfo.GetApplicationTitleFull(), Adapter.AppRevision));
+            DialogResult configResult = DialogResult.OK;
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
@@ -157,7 +158,7 @@ namespace ZScreenLib
                 if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.mAppSettings.RootDir))
                 {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
-                    cw.ShowDialog();
+                    configResult = cw.ShowDialog();
                     Engine.mAppSettings.RootDir = cw.RootFolder;
                     Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
                     Engine.mAppSettings.ImageUploader = cw.ImageDestinationType;
@@ -173,34 +174,38 @@ namespace ZScreenLib
                 }
             }
 
-            FileSystem.AppendDebug("Config file: " + AppSettings.AppSettingsFile);
-            FileSystem.AppendDebug(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
-            FileSystem.AppendDebug("Initializing Default folder paths...");
-            Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
-            // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
-
-            bool bGrantedOwnership;
-            try
+            if (configResult == DialogResult.OK)
             {
-                Guid assemblyGuid = Guid.Empty;
-                object[] assemblyObjects = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), true);
-                if (assemblyObjects.Length > 0)
+                FileSystem.AppendDebug("Config file: " + AppSettings.AppSettingsFile);
+                FileSystem.AppendDebug(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
+                FileSystem.AppendDebug("Initializing Default folder paths...");
+                Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
+                // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
+
+                bool bGrantedOwnership;
+                try
                 {
-                    assemblyGuid = new Guid(((System.Runtime.InteropServices.GuidAttribute)assemblyObjects[0]).Value);
+                    Guid assemblyGuid = Guid.Empty;
+                    object[] assemblyObjects = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), true);
+                    if (assemblyObjects.Length > 0)
+                    {
+                        assemblyGuid = new Guid(((System.Runtime.InteropServices.GuidAttribute)assemblyObjects[0]).Value);
+                    }
+                    Engine.mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
                 }
-                Engine.mAppMutex = new Mutex(true, assemblyGuid.ToString(), out bGrantedOwnership);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                bGrantedOwnership = false;
-            }
+                catch (UnauthorizedAccessException)
+                {
+                    bGrantedOwnership = false;
+                }
 
-            if (!bGrantedOwnership)
-            {
-                MultipleInstance = true;
-                mProductName += "*";
-                mAppInfo.AppName = mProductName;
+                if (!bGrantedOwnership)
+                {
+                    MultipleInstance = true;
+                    mProductName += "*";
+                    mAppInfo.AppName = mProductName;
+                }
             }
+            return configResult == DialogResult.OK;
         }
 
         public static void LoadSettings()
