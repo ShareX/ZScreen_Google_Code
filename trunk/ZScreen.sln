@@ -27,7 +27,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-3588-4A1D-926E-22C8692D345F}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\AxSHDocVw.dll = Lib\AxSHDocVw.dll
-		Lib\DavuxLib.dll = Lib\DavuxLib.dll
 		Lib\ICSharpCode.SharpZipLib.dll = Lib\ICSharpCode.SharpZipLib.dll
 		Lib\IECaptComImports.dll = Lib\IECaptComImports.dll
 		Lib\ImageQuantization.dll = Lib\ImageQuantization.dll
@@ -62,6 +61,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavuxLib", "DavuxLibMin\DavuxLib.csproj", "{6241A05D-EF12-4769-B660-EF75060DF20E}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -142,9 +145,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
