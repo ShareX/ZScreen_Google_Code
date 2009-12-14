@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ImageQuantization, Version=1.0.3606.5509, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\trunk\Lib\ImageQuantization.dll</HintPath>
+    <Reference Include="ImageQuantization">
+      <HintPath>..\Lib\ImageQuantization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
