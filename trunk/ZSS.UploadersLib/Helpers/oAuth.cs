@@ -8,7 +8,6 @@ namespace UploadersLib.Helpers
 {
     public class OAuthBase
     {
-
         /// <summary>
         /// Provides a predefined set of algorithms that are supported officially by the protocol
         /// </summary>
@@ -49,7 +48,6 @@ namespace UploadersLib.Helpers
         /// </summary>
         protected class QueryParameterComparer : IComparer<QueryParameter>
         {
-
             #region IComparer<QueryParameter> Members
 
             public int Compare(QueryParameter x, QueryParameter y)
@@ -359,6 +357,5 @@ namespace UploadersLib.Helpers
             // Just a simple implementation of a random number between 123400 and 9999999
             return random.Next(123400, 9999999).ToString();
         }
-
     }
 }
