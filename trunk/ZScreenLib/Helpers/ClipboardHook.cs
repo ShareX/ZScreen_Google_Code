@@ -249,7 +249,15 @@ namespace ZScreenLib
 
         public static int SendMessage(int wMsg, IntPtr wParam, IntPtr lParam)
         {
-            return SendMessage(mClipboardViewerNext, wMsg, wParam, lParam);
+            try
+            {
+                return SendMessage(mClipboardViewerNext, wMsg, wParam, lParam);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return -1;
+            }
         }
 
         /// <summary>
