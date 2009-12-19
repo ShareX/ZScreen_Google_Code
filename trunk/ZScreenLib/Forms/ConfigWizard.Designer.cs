@@ -66,14 +66,12 @@
             // 
             // gbRoot
             // 
-            this.gbRoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRoot.Controls.Add(this.btnViewRootDir);
             this.gbRoot.Controls.Add(this.btnBrowseRootDir);
             this.gbRoot.Controls.Add(this.txtRootFolder);
-            this.gbRoot.Location = new System.Drawing.Point(8, 32);
+            this.gbRoot.Location = new System.Drawing.Point(8, 33);
             this.gbRoot.Name = "gbRoot";
-            this.gbRoot.Size = new System.Drawing.Size(616, 64);
+            this.gbRoot.Size = new System.Drawing.Size(608, 64);
             this.gbRoot.TabIndex = 118;
             this.gbRoot.TabStop = false;
             this.gbRoot.Text = "Root folder for Settings and Data";
@@ -82,7 +80,7 @@
             // btnViewRootDir
             // 
             this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(496, 24);
+            this.btnViewRootDir.Location = new System.Drawing.Point(490, 24);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewRootDir.TabIndex = 116;
@@ -96,7 +94,7 @@
             this.btnBrowseRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseRootDir.Location = new System.Drawing.Point(408, 24);
+            this.btnBrowseRootDir.Location = new System.Drawing.Point(402, 24);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseRootDir.TabIndex = 115;
@@ -111,10 +109,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRootFolder.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtRootFolder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtRootFolder.Location = new System.Drawing.Point(16, 27);
+            this.txtRootFolder.Location = new System.Drawing.Point(16, 26);
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
-            this.txtRootFolder.Size = new System.Drawing.Size(384, 20);
+            this.txtRootFolder.Size = new System.Drawing.Size(376, 20);
             this.txtRootFolder.TabIndex = 114;
             this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
                 "";
@@ -122,9 +120,9 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOK.Location = new System.Drawing.Point(544, 184);
+            this.btnOK.Location = new System.Drawing.Point(543, 191);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(75, 28);
             this.btnOK.TabIndex = 117;
             this.btnOK.Text = "&OK";
             this.btnOK.UseCompatibleTextRendering = true;
@@ -135,9 +133,9 @@
             // 
             this.gbPublishOptions.Controls.Add(this.lblScreenshotDestination);
             this.gbPublishOptions.Controls.Add(this.cboScreenshotDest);
-            this.gbPublishOptions.Location = new System.Drawing.Point(8, 104);
+            this.gbPublishOptions.Location = new System.Drawing.Point(8, 105);
             this.gbPublishOptions.Name = "gbPublishOptions";
-            this.gbPublishOptions.Size = new System.Drawing.Size(616, 64);
+            this.gbPublishOptions.Size = new System.Drawing.Size(608, 64);
             this.gbPublishOptions.TabIndex = 120;
             this.gbPublishOptions.TabStop = false;
             this.gbPublishOptions.Text = "Publish Options";
@@ -154,12 +152,18 @@
             this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
             this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
             // 
+            // ttApp
+            // 
+            this.ttApp.AutoPopDelay = 15000;
+            this.ttApp.InitialDelay = 100;
+            this.ttApp.ReshowDelay = 100;
+            // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExit.Location = new System.Drawing.Point(8, 184);
+            this.btnExit.Location = new System.Drawing.Point(462, 191);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.Size = new System.Drawing.Size(75, 28);
             this.btnExit.TabIndex = 122;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseCompatibleTextRendering = true;
@@ -170,14 +174,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(629, 213);
+            this.ClientSize = new System.Drawing.Size(625, 226);
             this.Controls.Add(this.chkPreferSystemFolders);
             this.Controls.Add(this.gbRoot);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.gbPublishOptions);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.GlassArea = new System.Windows.Forms.Padding(0, 5, 0, 35);
+            this.GlassArea = new System.Windows.Forms.Padding(0, 0, 0, 45);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ConfigWizard";

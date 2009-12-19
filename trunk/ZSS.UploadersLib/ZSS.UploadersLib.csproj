@@ -90,6 +90,7 @@
     <Compile Include="ImageUploaders\ImageBamUploader.cs" />
     <Compile Include="ImageUploaders\ImageBin.cs" />
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
+    <Compile Include="ImageUploaders\Imgur.cs" />
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitSnapsUploader.cs" />

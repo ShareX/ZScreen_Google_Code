@@ -175,7 +175,7 @@ namespace ZScreenLib
 
         // Crop Shot
 
-        public RegionStyles CropRegionStyles = RegionStyles.BACKGROUND_REGION_BRIGHTNESS;
+        public RegionStyles CropRegionStyles = RegionStyles.REGION_BRIGHTNESS;
         public bool CropRegionRectangleInfo = true;
         public bool CropRegionHotkeyInfo = true;
 
@@ -199,7 +199,7 @@ namespace ZScreenLib
 
         // Selected Window
 
-        public RegionStyles SelectedWindowRegionStyles = RegionStyles.BACKGROUND_REGION_BRIGHTNESS;
+        public RegionStyles SelectedWindowRegionStyles = RegionStyles.REGION_BRIGHTNESS;
         public bool SelectedWindowRectangleInfo = true;
         public bool SelectedWindowRuler = true;
         public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));

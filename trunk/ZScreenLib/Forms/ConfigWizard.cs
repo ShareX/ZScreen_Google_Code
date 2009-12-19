@@ -27,7 +27,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Microsoft.WindowsAPICodePack.Shell;
 using UploadersLib;
 
 namespace ZScreenLib

@@ -113,7 +113,6 @@ namespace UploadersLib.ImageUploaders
 
         private ImageFileManager ParseResult(string source)
         {
-
             ImageFileManager ifm = new ImageFileManager { Source = source };
 
             if (!string.IsNullOrEmpty(source))
