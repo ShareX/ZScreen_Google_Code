@@ -23,8 +23,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.IO;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ZScreenLib
 {
@@ -43,55 +44,65 @@ namespace ZScreenLib
             this.HistoryItems = list;
         }
 
-        public void Save()
+        public bool Save()
         {
-            Save(Engine.HistoryFile);
+            FileSystem.AppendDebug("Saving history file: " + Engine.HistoryFile);
+            return Save(Engine.HistoryFile);
         }
 
-        public void Save(string filePath)
+        public bool Save(string filePath)
         {
             try
             {
                 if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                {
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                }
 
                 XmlSerializer xs = new XmlSerializer(typeof(HistoryManager));
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     xs.Serialize(fs, this);
                 }
+
+                return true;
             }
             catch (Exception e)
             {
-                System.Windows.Forms.MessageBox.Show(e.Message);
+                FileSystem.AppendDebug("Error while saving history", e);
+                MessageBox.Show(e.Message);
             }
+
+            return false;
         }
 
         public static HistoryManager Read()
         {
-            FileSystem.AppendDebug("Reading History file: " + Engine.HistoryFile);
+            FileSystem.AppendDebug("Reading history file: " + Engine.HistoryFile);
             return Read(Engine.HistoryFile);
         }
 
         public static HistoryManager Read(string filePath)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-            if (File.Exists(filePath))
+            try
             {
-                try
+                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                }
+
+                if (File.Exists(filePath))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(HistoryManager));
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         return (HistoryManager)xs.Deserialize(fs);
                     }
                 }
-                catch (Exception ex)
-                {
-                    FileSystem.AppendDebug("Error while reading History", ex);
-                }
+            }
+            catch (Exception e)
+            {
+                FileSystem.AppendDebug("Error while reading history", e);
             }
 
             return new HistoryManager();
