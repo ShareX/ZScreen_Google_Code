@@ -188,9 +188,9 @@ namespace ZScreenGUI
                     {
                         Adapter.CopyImageToClipboard(e.UserState as string);
                     }
-                    else if (e.UserState.GetType() == typeof(Bitmap))
+                    else if (e.UserState is Image)
                     {
-                        Adapter.CopyImageToClipboard(e.UserState as Image);
+                        Adapter.CopyImageToClipboard((Image)e.UserState);
                     }
 
                     break;

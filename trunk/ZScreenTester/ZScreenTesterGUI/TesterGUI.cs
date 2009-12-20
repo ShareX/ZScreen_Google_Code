@@ -32,6 +32,7 @@ namespace ZScreenTesterGUI
             public UrlShortenerType UrlShortener;
             public WorkerTask Task;
             public int Index;
+            public Stopwatch Timer;
         }
 
         public bool Testing
@@ -139,9 +140,9 @@ namespace ZScreenTesterGUI
             {
                 ListViewItem lvi = lvUploaders.Items[i];
 
-                if (lvi.SubItems.Count < 2)
+                while (lvi.SubItems.Count < 3)
                 {
-                    lvi.SubItems.Add("");
+                    lvi.SubItems.Add(string.Empty);
                 }
 
                 lvi.SubItems[1].Text = "Waiting";
@@ -198,6 +199,9 @@ namespace ZScreenTesterGUI
 
                 WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
 
+                uploader.Timer = new Stopwatch();
+                uploader.Timer.Start();
+
                 bw.ReportProgress((int)UploadStatus.Uploading, uploader);
 
                 switch (uploader.UploaderType)
@@ -226,6 +230,7 @@ namespace ZScreenTesterGUI
                         throw new Exception("Unknown uploader.");
                 }
 
+                uploader.Timer.Stop();
                 uploader.Task = task;
 
                 bw.ReportProgress((int)UploadStatus.Uploaded, uploader);
@@ -247,6 +252,7 @@ namespace ZScreenTesterGUI
                         case UploadStatus.Uploading:
                             lvUploaders.Items[uploader.Index].BackColor = Color.Gold;
                             lvUploaders.Items[uploader.Index].SubItems[1].Text = "Uploading...";
+                            lvUploaders.Items[uploader.Index].SubItems[2].Text = string.Empty;
                             break;
                         case UploadStatus.Uploaded:
                             if (uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
@@ -259,6 +265,8 @@ namespace ZScreenTesterGUI
                                 lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
                                 lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
                             }
+
+                            lvUploaders.Items[uploader.Index].SubItems[2].Text = uploader.Timer.ElapsedMilliseconds + " ms";
 
                             break;
                     }
