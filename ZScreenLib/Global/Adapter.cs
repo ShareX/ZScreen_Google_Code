@@ -71,8 +71,7 @@ namespace ZScreenLib
             {
                 try
                 {
-                    ImageOutput.PrepareClipboardObject();
-                    ImageOutput.CopyToClipboard(img);
+                    Clipboard.SetImage(img);
                 }
                 catch (Exception ex)
                 {
@@ -81,14 +80,16 @@ namespace ZScreenLib
             }
         }
 
-        public static void CopyImageToClipboard(string f)
+        public static void CopyImageToClipboard(string filePath)
         {
-            if (File.Exists(f))
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                Image img = Image.FromFile(f);
-                Clipboard.SetImage(img);
-                img.Dispose();
-                FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", f));
+                using (Image img = Image.FromFile(filePath))
+                {
+                    CopyImageToClipboard(img);
+                }
+
+                FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", filePath));
             }
         }
 
@@ -121,10 +122,12 @@ namespace ZScreenLib
         {
             if (ni != null)
             {
-                Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress());
-                IntPtr hicon = img.GetHicon();
-                ni.Icon = Icon.FromHandle(hicon);
-                NativeMethods.DestroyIcon(hicon);
+                using (Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress()))
+                {
+                    IntPtr hicon = img.GetHicon();
+                    ni.Icon = Icon.FromHandle(hicon);
+                    NativeMethods.DestroyIcon(hicon);
+                }
             }
         }
         public static string SaveImage(Image img)
@@ -133,6 +136,7 @@ namespace ZScreenLib
             {
                 return ImageOutput.SaveWithDialog(img);
             }
+
             return string.Empty;
         }
 
@@ -806,6 +810,5 @@ namespace ZScreenLib
                 return Engine.conf.MonitorImages || Engine.conf.MonitorText || Engine.conf.MonitorFiles || Engine.conf.MonitorUrls;
             }
         }
-
     }
 }

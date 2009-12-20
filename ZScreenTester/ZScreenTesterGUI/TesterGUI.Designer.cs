@@ -46,6 +46,7 @@
             this.btnTestAll = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtConsole = new System.Windows.Forms.TextBox();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.cmsUploaders.SuspendLayout();
             this.tcTesters.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -60,7 +61,8 @@
             // 
             this.lvUploaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader3});
             this.lvUploaders.ContextMenuStrip = this.cmsUploaders;
             this.lvUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvUploaders.FullRowSelect = true;
@@ -80,7 +82,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Status";
-            this.columnHeader2.Width = 423;
+            this.columnHeader2.Width = 333;
             // 
             // cmsUploaders
             // 
@@ -89,7 +91,7 @@
             this.openURLToolStripMenuItem,
             this.copyToolStripMenuItem});
             this.cmsUploaders.Name = "cmsUploaders";
-            this.cmsUploaders.Size = new System.Drawing.Size(207, 92);
+            this.cmsUploaders.Size = new System.Drawing.Size(207, 70);
             // 
             // testSelectedUploadersToolStripMenuItem
             // 
@@ -213,6 +215,11 @@
             this.txtConsole.Size = new System.Drawing.Size(621, 631);
             this.txtConsole.TabIndex = 0;
             // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Time";
+            this.columnHeader3.Width = 86;
+            // 
             // TesterGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -258,5 +265,6 @@
         private System.Windows.Forms.ToolStripButton btnTestAll;
         private System.Windows.Forms.ToolStripButton btnTestSelected;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
