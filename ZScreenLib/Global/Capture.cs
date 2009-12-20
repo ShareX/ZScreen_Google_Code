@@ -108,12 +108,17 @@ namespace ZScreenLib
             return null;
         }
 
+        /// <summary>
+        /// Captures a screenshot of a window using Windows GDI
+        /// </summary>
+        /// <param name="handle">handle of the window to capture</param>
+        /// <returns>the captured window image</returns>
         public static Image CaptureWithGDI(IntPtr handle)
         {
             FileSystem.AppendDebug("Capturing with GDI");
             Rectangle windowRect;
 
-            if (Engine.conf.ActiveWindowTryCaptureChilds)
+            if (Engine.conf.ActiveWindowTryCaptureChildren)
             {
                 windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
             }
@@ -135,7 +140,25 @@ namespace ZScreenLib
 
             if (windowImage == null)
             {
-                windowImage = CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+                using (new Freeze(handle))
+                {
+                    windowImage = CaptureRectangle(windowRect);
+                }
+
+                if (Engine.conf.ActiveWindowCleanTransparentCorners)
+                {
+                    Image result = RemoveCorners(handle, windowImage, null, windowRect);
+                    if (result != null)
+                    {
+                        windowImage = result;
+                    }
+                }
+
+                if (Engine.conf.ActiveWindowIncludeShadows)
+                {
+                    // Draw shadow manually to be able to have shadows in every case
+                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
+                }
 
                 if (Engine.conf.ShowCursor)
                 {
@@ -146,6 +169,11 @@ namespace ZScreenLib
             return windowImage;
         }
 
+        /// <summary>
+        /// Captures a screenshot of a window using Windows GDI. Captures transparency.
+        /// </summary>
+        /// <param name="handle">handle of the window to capture</param>
+        /// <returns>the captured window image</returns>
         private static Image CaptureWindowWithTransparencyGDI(IntPtr handle, Rectangle windowRect)
         {
             Image windowImage = null;
@@ -219,6 +247,11 @@ namespace ZScreenLib
             return windowImage;
         }
 
+        /// <summary>
+        /// Captures a screenshot of a window using the Windows DWM
+        /// </summary>
+        /// <param name="handle">handle of the window to capture</param>
+        /// <returns>the captured window image</returns>
         public static Image CaptureWithDWM(IntPtr handle)
         {
             FileSystem.AppendDebug("Capturing with DWM");
@@ -235,44 +268,18 @@ namespace ZScreenLib
 
             if (windowImage == null)
             {
-                Console.WriteLine("Standard capture (no transparency)");
+                FileSystem.AppendDebug("Standard capture (no transparency)");
                 windowImage = CaptureRectangle(windowRect);
                 if (Engine.conf.ShowCursor) DrawCursor(windowImage, windowRect.Location);
             }
 
-            const int cornerSize = 5;
-
-            if (Engine.conf.ActiveWindowCleanTransparentCorners && windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
+            if (Engine.conf.ActiveWindowCleanTransparentCorners)
             {
-                Console.WriteLine("Clean transparent corners");
-
-                if (redBGImage == null)
+                Image result = RemoveCorners(handle, windowImage, redBGImage, windowRect);
+                if(result != null)
                 {
-                    using (Form form = new Form())
-                    {
-                        form.FormBorderStyle = FormBorderStyle.None;
-                        form.ShowInTaskbar = false;
-                        form.BackColor = Color.Red;
-                        NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, 0);
-                        form.Show();
-                        NativeMethods.ActivateWindowRepeat(handle, 250);
-
-                        redBGImage = CaptureRectangle(windowRect) as Bitmap;
-                    }
+                    windowImage = result;
                 }
-
-                Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
-                using (Graphics g = Graphics.FromImage(result))
-                {
-                    g.Clear(Color.Transparent);
-                    // Remove the transparent pixels in the four corners
-                    RemoveCorner(redBGImage, g, 0, 0, cornerSize, Corner.TopLeft);
-                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, 0, windowImage.Width, Corner.TopRight);
-                    RemoveCorner(redBGImage, g, 0, windowImage.Height - cornerSize, cornerSize, Corner.BottomLeft);
-                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, windowImage.Height - cornerSize, windowImage.Width, Corner.BottomRight);
-                    g.DrawImage(windowImage, 0, 0);
-                }
-                windowImage = result;
             }
 
             if (Engine.conf.ActiveWindowIncludeShadows)
@@ -290,14 +297,60 @@ namespace ZScreenLib
         }
 
         /// <summary>
+        /// Remove the corners of a window by replacing the background of these corners by transparency.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="windowImage"></param>
+        /// <param name="redBGImage"></param>
+        /// <param name="windowRect"></param>
+        /// <returns></returns>
+        private static Image RemoveCorners(IntPtr handle, Image windowImage, Bitmap redBGImage, Rectangle windowRect)
+        {
+            const int cornerSize = 5;
+            if (windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
+            {
+                FileSystem.AppendDebug("Clean transparent corners");
+
+                if (redBGImage == null)
+                {
+                    using (Form form = new Form())
+                    {
+                        form.FormBorderStyle = FormBorderStyle.None;
+                        form.ShowInTaskbar = false;
+                        form.BackColor = Color.Red;
+
+                        NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                        NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
+                        Application.DoEvents();
+                        redBGImage = CaptureRectangle(windowRect) as Bitmap;
+                    }
+                }
+
+                Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    g.Clear(Color.Transparent);
+                    // Remove the transparent pixels in the four corners
+                    RemoveCorner(redBGImage, g, 0, 0, cornerSize, Corner.TopLeft);
+                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, 0, windowImage.Width, Corner.TopRight);
+                    RemoveCorner(redBGImage, g, 0, windowImage.Height - cornerSize, cornerSize, Corner.BottomLeft);
+                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, windowImage.Height - cornerSize, windowImage.Width, Corner.BottomRight);
+                    g.DrawImage(windowImage, 0, 0);
+                }
+                return result;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Make a full-size thumbnail of the captured window on a new topmost form, and capture 
         /// this new form with a black and then white background. Then compute the transparency by
         /// difference between the black and white versions.
-        /// This method has several advantages: 
+        /// This method has these advantages: 
         /// - the full form is captured even if it is obscured on the Windows desktop
         /// - there is no problem with unpredictable Z-order anymore (the background and 
         ///   the window to capture are drawn on the same window)
-        /// - it is possible to determine whether the form is animated and avoid a corrupted image
+        /// Note: now that GDI capture is more robust, DWM capture is not that useful anymore.
         /// </summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <param name="windowRect">the bounds of the window</param>
@@ -368,7 +421,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    Console.WriteLine("Detected animated image => cannot compute transparency");
+                    FileSystem.AppendDebug("Detected animated image => cannot compute transparency");
                     form.Close();
                     Application.DoEvents();
                     Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);

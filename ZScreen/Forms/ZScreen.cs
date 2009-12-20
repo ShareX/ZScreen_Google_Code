@@ -664,7 +664,7 @@ namespace ZScreenGUI
             chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
-            chkActiveWindowTryCaptureChilds.Checked = Engine.conf.ActiveWindowTryCaptureChilds;
+            chkActiveWindowTryCaptureChildren.Checked = Engine.conf.ActiveWindowTryCaptureChildren;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
             cbActiveWindowGDIFreezeWindow.Checked = Engine.conf.ActiveWindowGDIFreezeWindow;
 
@@ -4075,8 +4075,24 @@ namespace ZScreenGUI
                 chkSelectedWindowShowCheckers.Checked = false;
             }
             chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked;
-            gbCaptureGdi.Enabled = !chkActiveWindowPreferDWM.Checked;
-            gbCaptureDwm.Enabled = !gbCaptureGdi.Enabled;
+
+            // Disable Capture children option if DWM is enabled
+            if (chkActiveWindowPreferDWM.Checked)
+            {
+                chkActiveWindowTryCaptureChildren.Checked = false;
+            }
+            chkActiveWindowTryCaptureChildren.Enabled = !chkActiveWindowPreferDWM.Checked;
+
+            // With GDI, corner-clearing cannot be disabled when both "clean background" and "include shadow" are enabled
+            if (chkActiveWindowPreferDWM.Checked || !chkSelectedWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
+            {
+                chkSelectedWindowCleanTransparentCorners.Enabled = true;
+            }
+            else
+            {
+                chkSelectedWindowCleanTransparentCorners.Enabled = false;
+                chkSelectedWindowCleanTransparentCorners.Checked = true;
+            }
         }
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
@@ -4724,13 +4740,13 @@ namespace ZScreenGUI
 
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowTryCaptureChilds = chkActiveWindowTryCaptureChilds.Checked;
+            Engine.conf.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
         }
 
         private void chkActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
-            chkActiveWindowTryCaptureChilds.Enabled = !chkActiveWindowPreferDWM.Checked;
+            chkActiveWindowTryCaptureChildren.Enabled = !chkActiveWindowPreferDWM.Checked;
             UpdateAeroGlassConfig();
         }
 
