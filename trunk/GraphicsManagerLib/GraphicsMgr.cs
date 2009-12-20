@@ -158,7 +158,7 @@ namespace GraphicsMgrLib
                         bmp = new Bitmap(img);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //  FileSystem.AppendDebug("GetImageSafely", ex);
                 }

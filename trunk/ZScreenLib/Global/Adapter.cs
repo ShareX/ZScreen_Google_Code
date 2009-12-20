@@ -46,6 +46,7 @@ using System.Text;
 using System.Threading;
 using HelpersLib;
 using GraphicsMgrLib;
+using System.Drawing.Imaging;
 
 namespace ZScreenLib
 {
@@ -69,13 +70,18 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                try
+                using (Image img2 = ImageEffects.FillBackground(img, Engine.conf.ClipboardBackgroundColor))
                 {
-                    Clipboard.SetImage(img);
-                }
-                catch (Exception ex)
-                {
-                    FileSystem.AppendDebug("Error while copying image to clipboard", ex);
+                    try
+                    {
+                        Clipboard.SetImage(img2);
+                        //ImageOutput.PrepareClipboardObject();
+                        //ImageOutput.CopyToClipboard(img2);
+                    }
+                    catch (Exception ex)
+                    {
+                        FileSystem.AppendDebug("Error while copying image to clipboard", ex);
+                    }
                 }
             }
         }

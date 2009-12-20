@@ -449,13 +449,17 @@ namespace ZScreenLib
             return bmp;
         }
 
+        /// <summary>
+        /// Creates a new image with the transparency removed by capturing 
+        /// the given image over a background of the given color.
+        /// </summary>
         public static Image FillBackground(Image img, Color color)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height);
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.FillRectangle(new SolidBrush(color), 0, 0, img.Width, img.Height);
+                g.Clear(color);
                 g.DrawImage(img, Point.Empty);
             }
 
