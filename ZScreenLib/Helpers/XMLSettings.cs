@@ -525,7 +525,10 @@ namespace ZScreenLib
         [XmlIgnore(), Category("Screenshots / Border"), Description("Border Color.")]
         public Color BorderEffectColor { get; set; }
 
-        //XmlSerializer can't handle Colors so whe do it
+        [XmlIgnore(), Category("Screenshots / Clipboard"), Description("Background color of images captured to clipboard.")]
+        public Color ClipboardBackgroundColor { get; set; }
+
+        //XmlSerializer can't handle Colors so we do it
         [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]
         public string pseudo_BorderEffectColor
         {
@@ -536,6 +539,20 @@ namespace ZScreenLib
             set
             {
                 this.BorderEffectColor = DeserializeColor(value);
+            }
+        }
+
+        //XmlSerializer can't handle Colors so we do it
+        [XmlElement("ClipboardBackgroundColor"), BrowsableAttribute(false)]
+        public string pseudo_ClipboardBackgroundColor
+        {
+            get
+            {
+                return SerializeColor(this.ClipboardBackgroundColor);
+            }
+            set
+            {
+                this.ClipboardBackgroundColor = DeserializeColor(value);
             }
         }
 
@@ -555,14 +572,14 @@ namespace ZScreenLib
         public int RegionBrightnessValue { get; set; }
         [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
-        [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor insted.")]
+        [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
         public bool UseHardwareCursor { get; set; }
 
         // Screenshots / Reflection
 
         [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
         public bool DrawReflection { get; set; }
-        [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will be start: Screenshot height + Offset")]
+        [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will start: Screenshot height + Offset")]
         public int ReflectionOffset { get; set; }
         [Category("Screenshots / Reflection"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
         public int ReflectionPercentage { get; set; }
