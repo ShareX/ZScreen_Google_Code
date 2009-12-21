@@ -102,9 +102,23 @@ namespace GraphicsMgrLib.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap topLeftShadowSquare {
+            get {
+                object obj = ResourceManager.GetObject("topLeftShadowSquare", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap topRightShadow {
             get {
                 object obj = ResourceManager.GetObject("topRightShadow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap topRightShadowSquare {
+            get {
+                object obj = ResourceManager.GetObject("topRightShadowSquare", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
