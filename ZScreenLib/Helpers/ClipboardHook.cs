@@ -255,6 +255,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
+                FileSystem.AppendDebug("Error in SendMessage", ex);
                 Console.WriteLine(ex.ToString());
                 return -1;
             }
