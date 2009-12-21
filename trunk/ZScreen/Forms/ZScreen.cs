@@ -360,6 +360,8 @@ namespace ZScreenGUI
                             FileSystem.AppendDebug("Error monitoring clipboard", ex);
                             return;
                         }
+                        // pass message on to next clipboard listener
+                        ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
                         break;
                     case (int)ClipboardHook.Msgs.WM_CHANGECBCHAIN:
                         if (m.WParam == ClipboardHook.mClipboardViewerNext)
