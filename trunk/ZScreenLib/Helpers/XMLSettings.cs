@@ -196,6 +196,10 @@ namespace ZScreenLib
         public string CropBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
+        [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Make the corners rounded")]
+        public bool CropShotRoundedCorners { get; set; }
+        [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
+        public bool CropShotShadow { get; set; }
 
         // Selected Window
 
@@ -209,6 +213,10 @@ namespace ZScreenLib
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
         public bool SelectedWindowCaptureObjects = true;
+        [Category("Screenshots / Selected Window"), DefaultValue(false), Description("Make the corners rounded")]
+        public bool SelectedWindowRoundedCorners { get; set; }
+        [Category("Screenshots / Selected Window"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
+        public bool SelectedWindowShadow { get; set; }
 
         // Active Window
 
