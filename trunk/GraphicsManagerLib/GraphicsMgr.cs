@@ -229,7 +229,7 @@ namespace GraphicsMgrLib
                     options.MyImage.Save(ms, options.MyImageFileFormat.Format);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // FileSystem.AppendDebug("Error at SaveImageToMemoryStream", ex);
             }
@@ -770,14 +770,14 @@ namespace GraphicsMgrLib
 
         public static Point ShadowOffset { get { return new Point(Resources.leftShadow.Width, Resources.topShadow.Height); } }
 
-        public static Image AddBorderShadow(Image input)
+        public static Image AddBorderShadow(Image input, bool roundedShadowCorners)
         {
             Bitmap leftShadow = Resources.leftShadow;
             Bitmap rightShadow = Resources.rightShadow;
             Bitmap topShadow = Resources.topShadow;
             Bitmap bottomShadow = Resources.bottomShadow;
-            Bitmap topLeftShadow = Resources.topLeftShadow;
-            Bitmap topRightShadow = Resources.topRightShadow;
+            Bitmap topLeftShadow = roundedShadowCorners ? Resources.topLeftShadow : Resources.topLeftShadowSquare;
+            Bitmap topRightShadow = roundedShadowCorners ? Resources.topRightShadow : Resources.topRightShadowSquare;
             Bitmap bottomLeftShadow = Resources.bottomLeftShadow;
             Bitmap bottomRightShadow = Resources.bottomRightShadow;
 

@@ -157,7 +157,7 @@ namespace ZScreenLib
                 if (Engine.conf.ActiveWindowIncludeShadows)
                 {
                     // Draw shadow manually to be able to have shadows in every case
-                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
+                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage, true);
                 }
 
                 if (Engine.conf.ShowCursor)
@@ -286,7 +286,7 @@ namespace ZScreenLib
                 if (Engine.conf.ActiveWindowIncludeShadows)
                 {
                     // Draw shadow manually to be able to have shadows in every case
-                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
+                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage, true);
                     Point shadowOffset = GraphicsMgr.ShadowOffset;
                     windowRect.X -= shadowOffset.X;
                     windowRect.Y -= shadowOffset.Y;

@@ -116,13 +116,15 @@ namespace ZScreenLib
 
                 if (mTask.MyImage != null)
                 {
+                    bool roundedShadowCorners = false;
                     if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
                     {
                         mTask.SetImage(GraphicsMgr.RemoveCorners(mTask.MyImage, null));
+                        roundedShadowCorners = true;
                     }
                     if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
                     {
-                        mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.MyImage));
+                        mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.MyImage, roundedShadowCorners));
                     }
                     
                     WriteImage();
