@@ -768,6 +768,8 @@ namespace GraphicsMgrLib
             image.UnlockBits(imageData);
         }
 
+        public static Point ShadowOffset { get { return new Point(Resources.leftShadow.Width, Resources.topShadow.Height); } }
+
         public static Image AddBorderShadow(Image input)
         {
             Bitmap leftShadow = Resources.leftShadow;

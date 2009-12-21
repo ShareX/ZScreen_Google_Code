@@ -270,7 +270,6 @@ namespace ZScreenLib
             {
                 FileSystem.AppendDebug("Standard capture (no transparency)");
                 windowImage = CaptureRectangle(windowRect);
-                if (Engine.conf.ShowCursor) DrawCursor(windowImage, windowRect.Location);
             }
 
             if (Engine.conf.ActiveWindowCleanTransparentCorners)
@@ -282,15 +281,26 @@ namespace ZScreenLib
                 }
             }
 
-            if (Engine.conf.ActiveWindowIncludeShadows)
+            if (windowImage != null)
             {
-                // Draw shadow manually to be able to have shadows in every case
-                windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
-            }
+                if (Engine.conf.ActiveWindowIncludeShadows)
+                {
+                    // Draw shadow manually to be able to have shadows in every case
+                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage);
+                    Point shadowOffset = GraphicsMgr.ShadowOffset;
+                    windowRect.X -= shadowOffset.X;
+                    windowRect.Y -= shadowOffset.Y;
+                }
 
-            if (Engine.conf.ActiveWindowShowCheckers)
-            {
-                windowImage = ImageEffects.DrawCheckers(windowImage);
+                if (Engine.conf.ActiveWindowShowCheckers)
+                {
+                    windowImage = ImageEffects.DrawCheckers(windowImage);
+                }
+
+                if (Engine.conf.ShowCursor)
+                {
+                    DrawCursor(windowImage, windowRect.Location);
+                }
             }
 
             return windowImage;
@@ -478,12 +488,12 @@ namespace ZScreenLib
             return bmp;*/
         }
 
-        private static Image DrawCursor(Image img)
+        private static void DrawCursor(Image img)
         {
-            return DrawCursor(img, Point.Empty);
+            DrawCursor(img, Point.Empty);
         }
 
-        private static Image DrawCursor(Image img, Point offset)
+        private static void DrawCursor(Image img, Point offset)
         {
             using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor())
             {
@@ -494,7 +504,6 @@ namespace ZScreenLib
                     g.DrawImage(cursor.Bitmap, cursor.Position);
                 }
             }
-            return img;
         }
 
         #region Clean window corners
