@@ -79,6 +79,8 @@ namespace ZScreenLib
             mTakingScreenShot = true;
             string filePath = string.Empty;
 
+            bool windowMode = mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected;
+
             try
             {
                 using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
@@ -89,7 +91,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        using (Crop c = new Crop(imgSS, mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected))
+                        using (Crop c = new Crop(imgSS, windowMode))
                         {
                             if (c.ShowDialog() == DialogResult.OK)
                             {
@@ -97,7 +99,7 @@ namespace ZScreenLib
                                 {
                                     mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
                                 }
-                                else if (mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected && !Engine.LastCapture.IsEmpty)
+                                else if (windowMode && !Engine.LastCapture.IsEmpty)
                                 {
                                     mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
                                 }
@@ -114,6 +116,15 @@ namespace ZScreenLib
 
                 if (mTask.MyImage != null)
                 {
+                    if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
+                    {
+                        mTask.SetImage(GraphicsMgr.RemoveCorners(mTask.MyImage, null));
+                    }
+                    if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
+                    {
+                        mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.MyImage));
+                    }
+                    
                     WriteImage();
                     PublishData();
                 }

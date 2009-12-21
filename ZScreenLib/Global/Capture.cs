@@ -326,18 +326,7 @@ namespace ZScreenLib
                     }
                 }
 
-                Image result = new Bitmap(windowImage.Width, windowImage.Height, PixelFormat.Format32bppArgb);
-                using (Graphics g = Graphics.FromImage(result))
-                {
-                    g.Clear(Color.Transparent);
-                    // Remove the transparent pixels in the four corners
-                    RemoveCorner(redBGImage, g, 0, 0, cornerSize, Corner.TopLeft);
-                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, 0, windowImage.Width, Corner.TopRight);
-                    RemoveCorner(redBGImage, g, 0, windowImage.Height - cornerSize, cornerSize, Corner.BottomLeft);
-                    RemoveCorner(redBGImage, g, windowImage.Width - cornerSize, windowImage.Height - cornerSize, windowImage.Width, Corner.BottomRight);
-                    g.DrawImage(windowImage, 0, 0);
-                }
-                return result;
+                return GraphicsMgr.RemoveCorners(windowImage, redBGImage);
             }
             return null;
         }
@@ -528,63 +517,6 @@ namespace ZScreenLib
                 e.Graphics.FillRectangle(Brushes.Red, width - 5, height - 5, cornerSize, cornerSize); // bottom right
             }
         }*/
-
-        public enum Corner { TopLeft, TopRight, BottomLeft, BottomRight };
-
-        /// <summary>
-        /// Removes a corner from the clipping region of the given graphics object.
-        /// </summary>
-        /// <param name="bmp">The bitmap with the form corners masked in red</param>
-        private static void RemoveCorner(Bitmap bmp, Graphics g, int minx, int miny, int maxx, Corner corner)
-        {
-            int[] shape;
-            if (corner == Corner.TopLeft || corner == Corner.TopRight)
-            {
-                shape = new int[5] { 5, 3, 2, 1, 1 };
-            }
-            else
-            {
-                shape = new int[5] { 1, 1, 2, 3, 5 };
-            }
-
-            int maxy = miny + 5;
-            if (corner == Corner.TopLeft || corner == Corner.BottomLeft)
-            {
-                for (int y = miny; y < maxy; y++)
-                {
-                    for (int x = minx; x < minx + shape[y - miny]; x++)
-                    {
-                        RemoveCornerPixel(bmp, g, y, x);
-                    }
-                }
-            }
-            else
-            {
-                for (int y = miny; y < maxy; y++)
-                {
-                    for (int x = maxx - 1; x >= maxx - shape[y - miny]; x--)
-                    {
-                        RemoveCornerPixel(bmp, g, y, x);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Removes a pixel from the clipping region of the given graphics object, if
-        /// the bitmap is red at the coordinates of the pixel.
-        /// </summary>
-        /// <param name="bmp">The bitmap with the form corners masked in red</param>
-        private static void RemoveCornerPixel(Bitmap bmp, Graphics g, int y, int x)
-        {
-            var color = bmp.GetPixel(x, y);
-            // detect a shade of red (the color is darker because of the window's shadow)
-            if (color.R > 0 && color.G == 0 && color.B == 0)
-            {
-                Region region = new Region(new Rectangle(x, y, 1, 1));
-                g.SetClip(region, CombineMode.Exclude);
-            }
-        }
 
         #endregion
     }
