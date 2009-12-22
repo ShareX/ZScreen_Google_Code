@@ -319,7 +319,7 @@ namespace Greenshot
 
         private void CutToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            if (surface.CutSelectedElements())
+            if (surface.CutSelectedElements(MyWorker))
             {
                 this.btnPaste.Enabled = true;
                 this.pasteToolStripMenuItem.Enabled = true;
@@ -333,7 +333,7 @@ namespace Greenshot
 
         private void CopyToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            if (surface.CopySelectedElements())
+            if (surface.CopySelectedElements(this.MyWorker))
             {
                 this.btnPaste.Enabled = true;
                 this.pasteToolStripMenuItem.Enabled = true;

@@ -180,6 +180,9 @@ namespace ZScreenGUI
                 case (WorkerTask.ProgressType)103:
                     Adapter.SaveImage(e.UserState as Image);
                     break;
+                case (WorkerTask.ProgressType)104:
+                    Adapter.CopyDataToClipboard(e.UserState);
+                    break;                    	
                 case WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem(e.UserState as HistoryItem);
                     break;

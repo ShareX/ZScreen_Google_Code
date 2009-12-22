@@ -65,6 +65,11 @@ namespace ZScreenLib
                 PrinterSettings ps = ph.PrintWithDialog();
             }
         }
+        
+        public static void CopyDataToClipboard(object data)
+        {
+        	Clipboard.SetDataObject(data, true);
+        }
 
         public static void CopyImageToClipboard(Image img)
         {
