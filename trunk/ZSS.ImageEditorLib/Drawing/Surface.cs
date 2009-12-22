@@ -38,6 +38,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Greenshot.Configuration;
+using System.ComponentModel;
 
 namespace Greenshot.Drawing
 {
@@ -398,22 +399,22 @@ namespace Greenshot.Drawing
             }
         }
 
-        public bool CutSelectedElements()
+        public bool CutSelectedElements(BackgroundWorker worker)
         {
             if (selectedElements.Count > 0)
             {
-                Clipboard.SetDataObject(selectedElements, true);
+            	worker.ReportProgress(104, selectedElements);
                 RemoveSelectedElements();
                 return true;
             }
             return false;
         }
 
-        public bool CopySelectedElements()
+        public bool CopySelectedElements(BackgroundWorker worker)
         {
             if (selectedElements.Count > 0)
             {
-                Clipboard.SetDataObject(selectedElements, true);
+            	worker.ReportProgress(104, selectedElements);
                 return true;
             }
             return false;

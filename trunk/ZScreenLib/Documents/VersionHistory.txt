@@ -1,5 +1,9 @@
-Version 3.23 - 20091231
+Version 3.25 - 20091231
 
+3.25.0.0 Support for Rounded Corners and Shadow in Crop Shot and Selected Window {theone256}
+3.24.0.2 Fixed lack of transparency in screenshots when destination was set to Clipboard [Issue 186] {theone256}
+3.24.0.1 History items were sometimes not read at startup [Issue 183] {Jaex}
+3.24.0.0 Added imgur Image Uploader support {Jaex}
 3.23.0.0 Edit in Piknik support for items in History tab {Jaex}
 3.22.1.0 FTP sub-folder path can now accept syntax such as %y-%mo {McoreD}
 3.22.0.0 PropertyGrid option to show prompt to save the image in a different location [Issue 175] {McoreD}
