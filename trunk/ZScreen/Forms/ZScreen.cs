@@ -2771,7 +2771,17 @@ namespace ZScreenGUI
                     {
                         if (img != null)
                         {
-                            Clipboard.SetImage(img);
+                            using (Image img2 = ImageEffects.FillBackground(img, Engine.conf.ClipboardBackgroundColor))
+                            {
+                                try
+                                {
+                                    Clipboard.SetImage(img2);
+                                }
+                                catch (Exception ex)
+                                {
+                                    FileSystem.AppendDebug("Error while copying image to clipboard", ex);
+                                }
+                            }
                         }
                     }
                 }
