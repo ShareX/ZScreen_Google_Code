@@ -371,7 +371,7 @@ namespace ZScreenLib
 
                 IntPtr thumb;
                 NativeMethods.DwmRegisterThumbnail(form.Handle, handle, out thumb);
-                PSIZE size;
+                SIZE size;
                 NativeMethods.DwmQueryThumbnailSourceSize(thumb, out size);
 
                 if (size.x <= 0 || size.y <= 0)

@@ -153,6 +153,11 @@ namespace ZScreenLib
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool SetProcessWorkingSetSize(IntPtr handle, IntPtr min, IntPtr max);
 
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst,
+           ref POINT pptDst, ref SIZE psize, IntPtr hdcSrc, ref POINT pptSrc, uint crKey,
+           [In] ref BLENDFUNCTION pblend, uint dwFlags);
+
         [Flags]
         public enum ThreadAccess : int
         {
@@ -206,6 +211,14 @@ namespace ZScreenLib
             GW_CHILD = 5,
             GW_ENABLEDPOPUP = 6,
             GW_MAX = 6
+        }
+
+        public struct BLENDFUNCTION
+        {
+            public byte BlendOp;
+            public byte BlendFlags;
+            public byte SourceConstantAlpha;
+            public byte AlphaFormat;
         }
 
         /// <summary>Enumeration of the different ways of showing a window using
@@ -1501,7 +1514,7 @@ namespace ZScreenLib
         public static extern int DwmUnregisterThumbnail(IntPtr thumb);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmQueryThumbnailSourceSize(IntPtr thumb, out PSIZE size);
+        public static extern int DwmQueryThumbnailSourceSize(IntPtr thumb, out SIZE size);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);

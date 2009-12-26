@@ -11,29 +11,25 @@ namespace ZScreenGUI
     {
         public static int mHKSelectedRow = -1;
 
-        public static bool SaveHotkey(string name, Keys key)
-        {
-            return Engine.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
-        }
-
         public DataGridView dgvHotkeys { get; set; }
         public Label lblHotkeyStatus { get; set; }
 
         public string[] HotkeyNames = new string[] 
         { 
-            "Entire Screen", 
-            "Active Window", 
-            "Crop Shot", 
-            "Selected Window", 
-            "Clipboard Upload", 
-            "Last Crop Shot", 
-            "Auto Capture", 
-            "Actions Toolbar", 
+            "Entire Screen",
+            "Active Window",
+            "Crop Shot",
+            "Selected Window",
+            "Clipboard Upload",
+            "Freehand Crop Shot",
+            "Last Crop Shot",
+            "Auto Capture",
+            "Actions Toolbar",
             "Quick Options",
-            "Drop Window", 
-            "Language Translator", 
-            "Screen Color Picker", 
-            "Twitter Client" 
+            "Drop Window",
+            "Language Translator",
+            "Screen Color Picker",
+            "Twitter Client"
         };
 
         public HotkeyMgr(ref DataGridView dgv, ref Label info)
@@ -102,6 +98,11 @@ namespace ZScreenGUI
             dgvHotkeys.Rows[row].Cells[1].Value = key.ToSpecialString();
             lblHotkeyStatus.Text = dgvHotkeys.Rows[row].Cells[0].Value + " Hotkey set to: " + key.ToSpecialString() + ". Press enter when done setting all desired Hotkeys.";
             SaveHotkey(dgvHotkeys.Rows[row].Cells[0].Value.ToString(), key);
+        }
+
+        public static bool SaveHotkey(string name, Keys key)
+        {
+            return Engine.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
         }
     }
 }

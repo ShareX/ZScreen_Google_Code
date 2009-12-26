@@ -36,6 +36,7 @@ using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
 using HelpersLib;
 using GraphicsMgrLib;
+using ZScreenLib.Forms;
 
 namespace ZScreenLib
 {
@@ -126,7 +127,7 @@ namespace ZScreenLib
                     {
                         mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.MyImage, roundedShadowCorners));
                     }
-                    
+
                     WriteImage();
                     PublishData();
                 }
@@ -152,6 +153,27 @@ namespace ZScreenLib
         public void CaptureScreen()
         {
             mTask.CaptureScreen();
+            WriteImage();
+            PublishData();
+        }
+
+        public void CaptureFreehandCrop()
+        {
+            using (FreehandCrop crop = new FreehandCrop())
+            {
+                if (crop.ShowDialog() == DialogResult.OK)
+                {
+                    using (Image ss = Capture.CaptureScreen(false))
+                    {
+                        mTask.SetImage(crop.GetScreenshot(ss));
+                    }
+                }
+                else
+                {
+                    mTask.RetryPending = true;
+                }
+            }
+
             WriteImage();
             PublishData();
         }
