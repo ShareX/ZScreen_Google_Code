@@ -373,7 +373,7 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 1; i <= (int)Engine.conf.ErrorRetryCount && (mTask.ImageManager == null ||
+                    for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.ImageManager == null ||
                         (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))

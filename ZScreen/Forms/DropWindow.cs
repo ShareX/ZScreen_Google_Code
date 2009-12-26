@@ -80,7 +80,11 @@ namespace ZScreenLib
                 NativeMethods.ReleaseCapture();
                 NativeMethods.SendMessage(Handle, (uint)NativeMethods.WM_NCLBUTTONDOWN, (IntPtr)NativeMethods.HT_CAPTION, IntPtr.Zero);
             }
-            else
+        }
+
+        private void DropWindow_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
             {
                 this.Close();
             }
