@@ -69,7 +69,9 @@ namespace ZScreenLib
             [Description("Custom Uploader Test")]
             CustomUploaderTest,
             [Description("Webpage Capture")]
-            WEBPAGE_CAPTURE
+            WEBPAGE_CAPTURE,
+            [Description("Freehand Crop Shot")]
+            FREEHAND_CROP_SHOT
         }
 
         public enum ProgressType : int
@@ -337,10 +339,7 @@ namespace ZScreenLib
         {
             if (this.MyImage == null)
             {
-                using (new MyTimer("CaptureActiveWindow", false))
-                {
-                    this.SetImage(Capture.CaptureActiveWindow());
-                }
+                this.SetImage(Capture.CaptureActiveWindow());
             }
         }
 

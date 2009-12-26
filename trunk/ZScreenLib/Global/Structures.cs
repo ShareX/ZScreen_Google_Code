@@ -82,10 +82,16 @@ namespace ZScreenLib
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct PSIZE
+    public struct SIZE
     {
         public int x;
         public int y;
+
+        public SIZE(int width, int height)
+        {
+            x = width;
+            y = height;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]

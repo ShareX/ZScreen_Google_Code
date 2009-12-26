@@ -119,6 +119,9 @@ namespace ZScreenGUI
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                             new TaskManager(ref task).CaptureActiveWindow();
                             break;
+                        case WorkerTask.Jobs.FREEHAND_CROP_SHOT:
+                            new TaskManager(ref task).CaptureFreehandCrop();
+                            break;
                         case WorkerTask.Jobs.UPLOAD_IMAGE:
                         case WorkerTask.Jobs.UploadFromClipboard:
                         case WorkerTask.Jobs.PROCESS_DRAG_N_DROP:
@@ -182,7 +185,7 @@ namespace ZScreenGUI
                     break;
                 case (WorkerTask.ProgressType)104:
                     Adapter.CopyDataToClipboard(e.UserState);
-                    break;                    	
+                    break;
                 case WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX:
                     AddHistoryItem(e.UserState as HistoryItem);
                     break;
@@ -569,6 +572,12 @@ namespace ZScreenGUI
                 if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
                 {
                     StartBW_LastCropShot();
+                    return true;
+                }
+
+                if (Engine.conf.HotkeyFreehandCropShot == key) // Freehand Crop Shot
+                {
+                    StartBw_FreehandCropShot();
                     return true;
                 }
 

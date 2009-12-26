@@ -64,6 +64,9 @@ namespace ZScreenLib
                         case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                             new TaskManager(ref task).CaptureActiveWindow();
                             break;
+                        case WorkerTask.Jobs.FREEHAND_CROP_SHOT:
+                            new TaskManager(ref task).CaptureFreehandCrop();
+                            break;
                         case WorkerTask.Jobs.UPLOAD_IMAGE:
                         case WorkerTask.Jobs.UploadFromClipboard:
                             new TaskManager(ref task).PublishData();
@@ -275,6 +278,14 @@ namespace ZScreenLib
             if (!TaskManager.mTakingScreenShot)
             {
                 StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotCropped);
+            }
+        }
+
+        public void StartBw_FreehandCropShot()
+        {
+            if (!TaskManager.mTakingScreenShot)
+            {
+                StartWorkerScreenshots(WorkerTask.Jobs.FREEHAND_CROP_SHOT);
             }
         }
 
