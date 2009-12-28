@@ -31,12 +31,12 @@ namespace ZScreenLib.Forms
 {
     public partial class FreehandCrop : LayeredForm
     {
-        private Brush backBrush = new SolidBrush(Color.FromArgb(1, Color.White));
+        private Color backColor = Color.FromArgb(50, Color.Black);
         private GraphicsPath path = new GraphicsPath(FillMode.Winding);
         private Point lastPosition;
         private Bitmap bmp;
         private Pen pathPen = new Pen(Brushes.Red, 2);
-        private Brush pathBrush = new SolidBrush(Color.FromArgb(50, Color.CornflowerBlue));
+        private Brush pathBrush = new SolidBrush(Color.FromArgb(10, Color.White));
         private bool leftDown;
         private Timer timer = new Timer();
 
@@ -63,13 +63,12 @@ namespace ZScreenLib.Forms
 
         private void FreehandCrop_Shown(object sender, EventArgs e)
         {
-            //NativeMethods.ActivateWindow(this.Handle);
+            NativeMethods.ActivateWindow(this.Handle);
         }
 
         private void CleanBackground(Graphics g)
         {
-            g.Clear(Color.Transparent);
-            g.FillRectangle(backBrush, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            g.Clear(backColor);
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -116,7 +115,6 @@ namespace ZScreenLib.Forms
             if (e.Button == MouseButtons.Left)
             {
                 path.CloseFigure();
-                path.Flatten();
                 leftDown = false;
                 Draw();
             }
@@ -149,6 +147,7 @@ namespace ZScreenLib.Forms
 
                 if (path != null)
                 {
+                    g.CompositingMode = CompositingMode.SourceCopy;
                     g.FillPath(pathBrush, path);
                     g.DrawPath(pathPen, path);
                 }
