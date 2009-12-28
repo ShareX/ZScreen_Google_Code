@@ -164,7 +164,6 @@ namespace ZScreenGUI
             this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
             this.lblLogo.Text = this.Text;
-            chkWindows7TaskbarIntegration.Enabled = CoreHelpers.RunningOnWin7;
 
             if (this.WindowState == FormWindowState.Normal)
             {
@@ -1018,10 +1017,11 @@ namespace ZScreenGUI
             chkShellExt.Checked = RegistryMgr.CheckShellExt();
             chkOpenMainWindow.Checked = Engine.conf.ShowMainWindow;
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
-            chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
+            chkWindows7TaskbarIntegration.Enabled = CoreHelpers.RunningOnWin7;
+            chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration || !CoreHelpers.RunningOnWin7;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
             // Interaction
