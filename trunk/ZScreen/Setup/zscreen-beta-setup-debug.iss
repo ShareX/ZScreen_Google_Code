@@ -46,6 +46,7 @@
 [Code]
 var
   yNreply: Integer;
+  yNreply2: Integer;
   ErrorCode: Integer;
   defaultDirectory: String;
   defaultMenuFolder: String;
@@ -85,10 +86,10 @@ begin
     end;
   end
   else
-   yNreply:=MsgBox('As a Standard User, you can only install {#ExeName} for the user account that you are logged into.'
+   yNreply2:=MsgBox('As a Standard User, you can only install {#ExeName} for the user account that you are logged into.'
                     + #13#10#13#10 + 'For a system wide installation, please press No, right click the setup and Run As Administrator.'
                     + #13#10#13#10 + 'Do you want to continue?',mbConfirmation,MB_YESNO);
-   if yNreply = IDNO then
+   if yNreply2 = IDNO then
    Result:=false;
 end;
 

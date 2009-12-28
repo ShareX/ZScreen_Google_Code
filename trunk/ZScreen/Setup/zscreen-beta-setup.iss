@@ -46,6 +46,7 @@
 [Code]
 var
   yNreply: Integer;
+  yNreply2: Integer;
   defaultDirectory: String;
   defaultMenuFolder: String;
   applicationIdentifier: String;
@@ -84,10 +85,10 @@ begin
     end;
   end
   else
-   yNreply:=MsgBox('As a Standard User, you can only install {#ExeName} for the user account that you are logged into.'
+   yNreply2:=MsgBox('As a Standard User, you can only install {#ExeName} for the user account that you are logged into.'
                     + #13#10#13#10 + 'For a system wide installation, please press No, right click the setup and Run As Administrator.'
                     + #13#10#13#10 + 'Do you want to continue?',mbConfirmation,MB_YESNO);
-   if yNreply = IDNO then
+   if yNreply2 = IDNO then
    Result:=false;
 end;
 
@@ -180,7 +181,7 @@ Source: ..\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ign
 Source: ..\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
+Name: {group}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
 Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Tasks: desktopicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
