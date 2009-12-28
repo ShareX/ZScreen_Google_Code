@@ -55,7 +55,6 @@ namespace ZScreenLib.Forms
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ClassStyle = (int)NativeMethods.ClassStyles.CS_OWNDC;
                 cp.Style = unchecked((int)NativeMethods.WindowStyles.WS_POPUP);
                 cp.ExStyle |= (int)NativeMethods.WindowStyles.WS_EX_LAYERED | (int)NativeMethods.WindowStyles.WS_EX_TOPMOST;
                 return cp;

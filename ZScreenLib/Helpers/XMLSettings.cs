@@ -235,6 +235,7 @@ namespace ZScreenLib
         public bool FreehandCropShowHelpText = true;
         public bool FreehandCropAutoUpload = false;
         public bool FreehandCropAutoClose = false;
+        public bool FreehandCropShowRectangleBorder = false;
 
         // Interaction
 
