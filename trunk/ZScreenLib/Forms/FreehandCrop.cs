@@ -32,7 +32,7 @@ namespace ZScreenLib.Forms
     public partial class FreehandCrop : LayeredForm
     {
         private Brush backBrush = new SolidBrush(Color.FromArgb(1, Color.White));
-        private GraphicsPath path = new GraphicsPath();
+        private GraphicsPath path = new GraphicsPath(FillMode.Winding);
         private Point lastPosition;
         private Bitmap bmp;
         private Pen pathPen = new Pen(Brushes.Red, 2);
@@ -48,7 +48,6 @@ namespace ZScreenLib.Forms
         private void Initialize()
         {
             this.ShowInTaskbar = false;
-            this.TopMost = true;
             this.Bounds = GraphicsMgr.GetScreenBounds();
             bmp = new Bitmap(this.Width, this.Height);
             Draw();
@@ -56,7 +55,6 @@ namespace ZScreenLib.Forms
             this.MouseUp += new MouseEventHandler(Crop_MouseUp);
             this.KeyDown += new KeyEventHandler(Crop_KeyDown);
             this.Shown += new EventHandler(FreehandCrop_Shown);
-            path.FillMode = FillMode.Winding;
             path.StartFigure();
             timer.Interval = 50;
             timer.Tick += new EventHandler(timer_Tick);
@@ -65,7 +63,7 @@ namespace ZScreenLib.Forms
 
         private void FreehandCrop_Shown(object sender, EventArgs e)
         {
-            NativeMethods.ActivateWindow(this.Handle);
+            //NativeMethods.ActivateWindow(this.Handle);
         }
 
         private void CleanBackground(Graphics g)
@@ -92,10 +90,13 @@ namespace ZScreenLib.Forms
 
         private void Crop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                Exit(true);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                Exit(false);
             }
         }
 
@@ -115,14 +116,28 @@ namespace ZScreenLib.Forms
             if (e.Button == MouseButtons.Left)
             {
                 path.CloseFigure();
+                path.Flatten();
                 leftDown = false;
                 Draw();
             }
             else if (e.Button == MouseButtons.Right)
             {
-                this.DialogResult = DialogResult.Abort;
-                this.Close();
+                Exit(false);
             }
+        }
+
+        private void Exit(bool status)
+        {
+            if (status)
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                this.DialogResult = DialogResult.Abort;
+            }
+
+            this.Close();
         }
 
         private void Draw()
