@@ -673,6 +673,7 @@ namespace ZScreenGUI
             cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
             cbFreehandCropAutoUpload.Checked = Engine.conf.FreehandCropAutoUpload;
             cbFreehandCropAutoClose.Checked = Engine.conf.FreehandCropAutoClose;
+            cbFreehandCropShowRectangleBorder.Checked = Engine.conf.FreehandCropShowRectangleBorder;
 
             // Naming Conventions
             txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
@@ -4883,6 +4884,11 @@ namespace ZScreenGUI
         private void cbFreehandCropAutoClose_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.FreehandCropAutoClose = cbFreehandCropAutoClose.Checked;
+        }
+
+        private void cbFreehandCropShowRectangleBorder_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FreehandCropShowRectangleBorder = cbFreehandCropShowRectangleBorder.Checked;
         }
     }
 }

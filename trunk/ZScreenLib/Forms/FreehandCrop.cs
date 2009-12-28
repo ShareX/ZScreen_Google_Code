@@ -36,6 +36,7 @@ namespace ZScreenLib.Forms
         private Point lastPosition;
         private Bitmap bmp;
         private Pen pathPen = new Pen(Brushes.Red, 2) { DashStyle = DashStyle.Dash };
+        private Pen borderPen = new Pen(new SolidBrush(Color.FromArgb(175, Color.Black)), 2);
         private Brush pathBrush = new SolidBrush(Color.FromArgb(10, Color.White));
         private bool leftDown;
         private Timer timer = new Timer();
@@ -52,6 +53,7 @@ namespace ZScreenLib.Forms
             path.Dispose();
             bmp.Dispose();
             pathPen.Dispose();
+            borderPen.Dispose();
             pathBrush.Dispose();
             timer.Dispose();
 
@@ -167,6 +169,22 @@ namespace ZScreenLib.Forms
             }
         }
 
+        private void DrawRectangleBorder(Graphics g)
+        {
+            if (Engine.conf.FreehandCropShowRectangleBorder)
+            {
+                g.CompositingMode = CompositingMode.SourceOver;
+                Rectangle rect = Rectangle.Round(path.GetBounds());
+                g.DrawRectangle(borderPen, rect);
+                using (Font font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold))
+                {
+                    string text = string.Format("{0}x{1}", rect.Width, rect.Height);
+                    Size textSize = Size.Round(g.MeasureString(text, font, 500, StringFormat.GenericDefault));
+                    g.DrawString(text, font, Brushes.Black, new PointF(rect.Right - textSize.Width - 10, rect.Bottom - textSize.Height - 10));
+                }
+            }
+        }
+
         private void Exit(bool status)
         {
             if (status && path.PointCount > 0)
@@ -193,6 +211,8 @@ namespace ZScreenLib.Forms
                     g.CompositingMode = CompositingMode.SourceCopy;
                     g.FillPath(pathBrush, path);
                     g.DrawPath(pathPen, path);
+
+                    DrawRectangleBorder(g);
                 }
 
                 DrawHelpText(g);
@@ -204,6 +224,7 @@ namespace ZScreenLib.Forms
         public Image GetScreenshot(Image fullscreenSS)
         {
             Rectangle rect = Rectangle.Round(path.GetBounds());
+            rect.Location = NativeMethods.ConvertPoint(rect.Location);
 
             Bitmap screenshot = new Bitmap(rect.Width, rect.Height);
 
