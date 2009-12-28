@@ -32,17 +32,30 @@ namespace ZScreenLib.Forms
     public partial class FreehandCrop : LayeredForm
     {
         private Color backColor = Color.FromArgb(50, Color.Black);
-        private GraphicsPath path = new GraphicsPath(FillMode.Winding);
+        private GraphicsPath path = new GraphicsPath(FillMode.Alternate);
         private Point lastPosition;
         private Bitmap bmp;
-        private Pen pathPen = new Pen(Brushes.Red, 2);
+        private Pen pathPen = new Pen(Brushes.Red, 2) { DashStyle = DashStyle.Dash };
         private Brush pathBrush = new SolidBrush(Color.FromArgb(10, Color.White));
         private bool leftDown;
         private Timer timer = new Timer();
 
+        private const string helpText = "Left click = Draw regions.\nRight click = Remove regions.\nEnter = Upload drawn regions.\nEscape = Cancel upload.";
+
         public FreehandCrop()
         {
             Initialize();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            path.Dispose();
+            bmp.Dispose();
+            pathPen.Dispose();
+            pathBrush.Dispose();
+            timer.Dispose();
+
+            base.Dispose(disposing);
         }
 
         private void Initialize()
@@ -56,14 +69,14 @@ namespace ZScreenLib.Forms
             this.KeyDown += new KeyEventHandler(Crop_KeyDown);
             this.Shown += new EventHandler(FreehandCrop_Shown);
             path.StartFigure();
-            timer.Interval = 50;
+            timer.Interval = 16;
             timer.Tick += new EventHandler(timer_Tick);
-            timer.Start();
         }
 
         private void FreehandCrop_Shown(object sender, EventArgs e)
         {
             NativeMethods.ActivateWindow(this.Handle);
+            timer.Start();
         }
 
         private void CleanBackground(Graphics g)
@@ -104,9 +117,14 @@ namespace ZScreenLib.Forms
             if (e.Button == MouseButtons.Left)
             {
                 leftDown = true;
-                path.Reset();
                 path.StartFigure();
                 lastPosition = Cursor.Position;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                leftDown = false;
+                path.Reset();
+                Draw();
             }
         }
 
@@ -114,19 +132,44 @@ namespace ZScreenLib.Forms
         {
             if (e.Button == MouseButtons.Left)
             {
-                path.CloseFigure();
                 leftDown = false;
+                path.CloseFigure();
                 Draw();
+
+                if (Engine.conf.FreehandCropAutoUpload)
+                {
+                    Exit(true);
+                }
             }
-            else if (e.Button == MouseButtons.Right)
+            else if (Engine.conf.FreehandCropAutoClose && e.Button == MouseButtons.Right)
             {
                 Exit(false);
             }
         }
 
+        private void DrawHelpText(Graphics g)
+        {
+            if (Engine.conf.FreehandCropShowHelpText)
+            {
+                g.CompositingMode = CompositingMode.SourceOver;
+                g.SmoothingMode = SmoothingMode.HighSpeed;
+
+                using (Font helpTextFont = new Font("Arial", 10))
+                {
+                    Size textSize = Size.Round(g.MeasureString(helpText, helpTextFont, 500, StringFormat.GenericTypographic));
+                    Point textPos = PointToClient(new Point(this.Left + (this.Width / 2) - ((textSize.Width + 10) / 2), this.Top + 30));
+                    Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 10, textSize.Height + 10));
+                    GraphicsPath gPath = RoundedRectangle.Create(labelRect, 7);
+                    g.FillPath(new SolidBrush(Color.FromArgb(200, Color.White)), gPath);
+                    g.DrawPath(Pens.Black, gPath);
+                    g.DrawString(helpText, helpTextFont, Brushes.Black, new PointF(labelRect.X + 5, labelRect.Y + 5));
+                }
+            }
+        }
+
         private void Exit(bool status)
         {
-            if (status)
+            if (status && path.PointCount > 0)
             {
                 this.DialogResult = DialogResult.OK;
             }
@@ -142,15 +185,17 @@ namespace ZScreenLib.Forms
         {
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.SmoothingMode = SmoothingMode.HighSpeed;
                 CleanBackground(g);
 
-                if (path != null)
+                if (path != null && path.PointCount > 0)
                 {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
                     g.CompositingMode = CompositingMode.SourceCopy;
                     g.FillPath(pathBrush, path);
                     g.DrawPath(pathPen, path);
                 }
+
+                DrawHelpText(g);
 
                 DrawBitmap(bmp);
             }
