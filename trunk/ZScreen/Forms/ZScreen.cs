@@ -669,6 +669,11 @@ namespace ZScreenGUI
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
             cbActiveWindowGDIFreezeWindow.Checked = Engine.conf.ActiveWindowGDIFreezeWindow;
 
+            // Freehand Crop Shot
+            cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
+            cbFreehandCropAutoUpload.Checked = Engine.conf.FreehandCropAutoUpload;
+            cbFreehandCropAutoClose.Checked = Engine.conf.FreehandCropAutoClose;
+
             // Naming Conventions
             txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
             txtEntireScreen.Text = Engine.conf.EntireScreenPattern;
@@ -4863,6 +4868,21 @@ namespace ZScreenGUI
                         HttpUtility.UrlEncode(hi.RemotePath), Engine.PICNIK_KEY));
                 }
             }
+        }
+
+        private void cbFreehandCropShowHelpText_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FreehandCropShowHelpText = cbFreehandCropShowHelpText.Checked;
+        }
+
+        private void cbFreehandCropAutoUpload_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FreehandCropAutoUpload = cbFreehandCropAutoUpload.Checked;
+        }
+
+        private void cbFreehandCropAutoClose_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FreehandCropAutoClose = cbFreehandCropAutoClose.Checked;
         }
     }
 }

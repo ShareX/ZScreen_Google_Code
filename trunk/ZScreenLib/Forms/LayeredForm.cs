@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace ZScreenLib.Forms
 {
     public class LayeredForm : Form
     {
-        public LayeredForm()
-        {
-            FormBorderStyle = FormBorderStyle.None;
-        }
-
         public void DrawBitmap(Bitmap bmp)
         {
             DrawBitmap(bmp, 255);
@@ -64,6 +55,7 @@ namespace ZScreenLib.Forms
             get
             {
                 CreateParams cp = base.CreateParams;
+                cp.ClassStyle = (int)NativeMethods.ClassStyles.CS_OWNDC;
                 cp.Style = unchecked((int)NativeMethods.WindowStyles.WS_POPUP);
                 cp.ExStyle |= (int)NativeMethods.WindowStyles.WS_EX_LAYERED | (int)NativeMethods.WindowStyles.WS_EX_TOPMOST;
                 return cp;

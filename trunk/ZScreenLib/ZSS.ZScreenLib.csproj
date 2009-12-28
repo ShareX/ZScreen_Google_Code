@@ -12,6 +12,10 @@
     <AssemblyName>ZScreenLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -300,6 +304,9 @@
     <None Include="Resources\leftShadow.png" />
     <None Include="Resources\bottomShadow.png" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
+    <EmbeddedResource Include="Forms\Crop.resx">
+      <DependentUpon>Crop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DestOptions.resx">
       <DependentUpon>DestOptions.cs</DependentUpon>
     </EmbeddedResource>

@@ -230,6 +230,12 @@ namespace ZScreenLib
         public bool ActiveWindowPreferDWM = true;
         public bool ActiveWindowGDIFreezeWindow = false;
 
+        // Freehand Crop Shot
+
+        public bool FreehandCropShowHelpText = true;
+        public bool FreehandCropAutoUpload = false;
+        public bool FreehandCropAutoClose = false;
+
         // Interaction
 
         public decimal FlashTrayCount = 1;

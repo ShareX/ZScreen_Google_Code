@@ -556,6 +556,9 @@ namespace ZScreenLib
         private void InitializeComponent()
         {
             this.SuspendLayout();
+            // 
+            // Crop
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -566,10 +569,10 @@ namespace ZScreenLib
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Crop";
-            this.KeyPreview = true;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -579,9 +582,10 @@ namespace ZScreenLib
             this.Shown += new System.EventHandler(this.Crop_Shown);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Crop_FormClosed);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Crop_MouseDown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Crop_KeyDown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Crop_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Crop_KeyDown);
             this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -33,10 +33,10 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -248,13 +248,13 @@ namespace ZScreenGUI
             this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
             this.pbSelectedWindowBorderColor = new System.Windows.Forms.PictureBox();
             this.tpActivewindow = new System.Windows.Forms.TabPage();
+            this.chkActiveWindowTryCaptureChildren = new System.Windows.Forms.CheckBox();
+            this.cbActiveWindowGDIFreezeWindow = new System.Windows.Forms.CheckBox();
+            this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
             this.chkActiveWindowPreferDWM = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
-            this.cbActiveWindowGDIFreezeWindow = new System.Windows.Forms.CheckBox();
-            this.chkActiveWindowTryCaptureChildren = new System.Windows.Forms.CheckBox();
-            this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
             this.tpWatermark = new System.Windows.Forms.TabPage();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
@@ -570,6 +570,9 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.tpFreehandCropShot = new System.Windows.Forms.TabPage();
+            this.cbFreehandCropShowHelpText = new System.Windows.Forms.CheckBox();
+            this.cbFreehandCropAutoUpload = new System.Windows.Forms.CheckBox();
             this.ucDestOptions = new ZScreenLib.DestSelector();
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
@@ -579,6 +582,7 @@ namespace ZScreenGUI
             this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
             this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
+            this.cbFreehandCropAutoClose = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -724,6 +728,7 @@ namespace ZScreenGUI
             this.gbLastSource.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            this.tpFreehandCropShot.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -2240,39 +2245,39 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys,
             this.DefaultKeys});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -2303,8 +2308,8 @@ namespace ZScreenGUI
             // DefaultKeys
             // 
             this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle6;
             this.DefaultKeys.HeaderText = "Default Hotkey";
             this.DefaultKeys.Name = "DefaultKeys";
             this.DefaultKeys.ReadOnly = true;
@@ -2328,6 +2333,7 @@ namespace ZScreenGUI
             this.tcScreenshots.Controls.Add(this.tpCropShot);
             this.tcScreenshots.Controls.Add(this.tpSelectedWindow);
             this.tcScreenshots.Controls.Add(this.tpActivewindow);
+            this.tcScreenshots.Controls.Add(this.tpFreehandCropShot);
             this.tcScreenshots.Controls.Add(this.tpWatermark);
             this.tcScreenshots.Controls.Add(this.tpFileNaming);
             this.tcScreenshots.Controls.Add(this.tpCaptureQuality);
@@ -3057,6 +3063,42 @@ namespace ZScreenGUI
             this.tpActivewindow.Text = "Active Window";
             this.tpActivewindow.UseVisualStyleBackColor = true;
             // 
+            // chkActiveWindowTryCaptureChildren
+            // 
+            this.chkActiveWindowTryCaptureChildren.AutoSize = true;
+            this.chkActiveWindowTryCaptureChildren.Location = new System.Drawing.Point(16, 156);
+            this.chkActiveWindowTryCaptureChildren.Name = "chkActiveWindowTryCaptureChildren";
+            this.chkActiveWindowTryCaptureChildren.Size = new System.Drawing.Size(235, 17);
+            this.chkActiveWindowTryCaptureChildren.TabIndex = 48;
+            this.chkActiveWindowTryCaptureChildren.Text = "Capture Child Windows, Tooltips and Menus";
+            this.ttZScreen.SetToolTip(this.chkActiveWindowTryCaptureChildren, "Only works when DWM is disabled");
+            this.chkActiveWindowTryCaptureChildren.UseVisualStyleBackColor = true;
+            this.chkActiveWindowTryCaptureChildren.CheckedChanged += new System.EventHandler(this.chkActiveWindowTryCaptureChilds_CheckedChanged);
+            // 
+            // cbActiveWindowGDIFreezeWindow
+            // 
+            this.cbActiveWindowGDIFreezeWindow.AutoSize = true;
+            this.cbActiveWindowGDIFreezeWindow.Location = new System.Drawing.Point(16, 133);
+            this.cbActiveWindowGDIFreezeWindow.Name = "cbActiveWindowGDIFreezeWindow";
+            this.cbActiveWindowGDIFreezeWindow.Size = new System.Drawing.Size(168, 17);
+            this.cbActiveWindowGDIFreezeWindow.TabIndex = 49;
+            this.cbActiveWindowGDIFreezeWindow.Text = "Freeze window during capture";
+            this.ttZScreen.SetToolTip(this.cbActiveWindowGDIFreezeWindow, "Avoids artifacts with moving images");
+            this.cbActiveWindowGDIFreezeWindow.UseVisualStyleBackColor = true;
+            this.cbActiveWindowGDIFreezeWindow.CheckedChanged += new System.EventHandler(this.chkActiveWindowGDIFreezeWindow_CheckedChanged);
+            // 
+            // chkSelectedWindowCleanTransparentCorners
+            // 
+            this.chkSelectedWindowCleanTransparentCorners.AutoSize = true;
+            this.chkSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 110);
+            this.chkSelectedWindowCleanTransparentCorners.Name = "chkSelectedWindowCleanTransparentCorners";
+            this.chkSelectedWindowCleanTransparentCorners.Size = new System.Drawing.Size(147, 17);
+            this.chkSelectedWindowCleanTransparentCorners.TabIndex = 44;
+            this.chkSelectedWindowCleanTransparentCorners.Text = "Clean transparent corners";
+            this.ttZScreen.SetToolTip(this.chkSelectedWindowCleanTransparentCorners, "Remove the background behind the transparent window corners");
+            this.chkSelectedWindowCleanTransparentCorners.UseVisualStyleBackColor = true;
+            this.chkSelectedWindowCleanTransparentCorners.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanTransparentCorners_CheckedChanged);
+            // 
             // chkSelectedWindowShowCheckers
             // 
             this.chkSelectedWindowShowCheckers.AutoSize = true;
@@ -3104,42 +3146,6 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.chkSelectedWindowCleanBackground, "Clears background area that does not belong to the Active Window");
             this.chkSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
             this.chkSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
-            // 
-            // cbActiveWindowGDIFreezeWindow
-            // 
-            this.cbActiveWindowGDIFreezeWindow.AutoSize = true;
-            this.cbActiveWindowGDIFreezeWindow.Location = new System.Drawing.Point(16, 133);
-            this.cbActiveWindowGDIFreezeWindow.Name = "cbActiveWindowGDIFreezeWindow";
-            this.cbActiveWindowGDIFreezeWindow.Size = new System.Drawing.Size(168, 17);
-            this.cbActiveWindowGDIFreezeWindow.TabIndex = 49;
-            this.cbActiveWindowGDIFreezeWindow.Text = "Freeze window during capture";
-            this.ttZScreen.SetToolTip(this.cbActiveWindowGDIFreezeWindow, "Avoids artifacts with moving images");
-            this.cbActiveWindowGDIFreezeWindow.UseVisualStyleBackColor = true;
-            this.cbActiveWindowGDIFreezeWindow.CheckedChanged += new System.EventHandler(this.chkActiveWindowGDIFreezeWindow_CheckedChanged);
-            // 
-            // chkActiveWindowTryCaptureChildren
-            // 
-            this.chkActiveWindowTryCaptureChildren.AutoSize = true;
-            this.chkActiveWindowTryCaptureChildren.Location = new System.Drawing.Point(16, 156);
-            this.chkActiveWindowTryCaptureChildren.Name = "chkActiveWindowTryCaptureChildren";
-            this.chkActiveWindowTryCaptureChildren.Size = new System.Drawing.Size(235, 17);
-            this.chkActiveWindowTryCaptureChildren.TabIndex = 48;
-            this.chkActiveWindowTryCaptureChildren.Text = "Capture Child Windows, Tooltips and Menus";
-            this.ttZScreen.SetToolTip(this.chkActiveWindowTryCaptureChildren, "Only works when DWM is disabled");
-            this.chkActiveWindowTryCaptureChildren.UseVisualStyleBackColor = true;
-            this.chkActiveWindowTryCaptureChildren.CheckedChanged += new System.EventHandler(this.chkActiveWindowTryCaptureChilds_CheckedChanged);
-            // 
-            // chkSelectedWindowCleanTransparentCorners
-            // 
-            this.chkSelectedWindowCleanTransparentCorners.AutoSize = true;
-            this.chkSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 110);
-            this.chkSelectedWindowCleanTransparentCorners.Name = "chkSelectedWindowCleanTransparentCorners";
-            this.chkSelectedWindowCleanTransparentCorners.Size = new System.Drawing.Size(147, 17);
-            this.chkSelectedWindowCleanTransparentCorners.TabIndex = 44;
-            this.chkSelectedWindowCleanTransparentCorners.Text = "Clean transparent corners";
-            this.ttZScreen.SetToolTip(this.chkSelectedWindowCleanTransparentCorners, "Remove the background behind the transparent window corners");
-            this.chkSelectedWindowCleanTransparentCorners.UseVisualStyleBackColor = true;
-            this.chkSelectedWindowCleanTransparentCorners.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanTransparentCorners_CheckedChanged);
             // 
             // tpWatermark
             // 
@@ -6823,6 +6829,40 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // tpFreehandCropShot
+            // 
+            this.tpFreehandCropShot.Controls.Add(this.cbFreehandCropAutoClose);
+            this.tpFreehandCropShot.Controls.Add(this.cbFreehandCropAutoUpload);
+            this.tpFreehandCropShot.Controls.Add(this.cbFreehandCropShowHelpText);
+            this.tpFreehandCropShot.Location = new System.Drawing.Point(4, 23);
+            this.tpFreehandCropShot.Name = "tpFreehandCropShot";
+            this.tpFreehandCropShot.Size = new System.Drawing.Size(791, 402);
+            this.tpFreehandCropShot.TabIndex = 13;
+            this.tpFreehandCropShot.Text = "Freehand Crop Shot";
+            this.tpFreehandCropShot.UseVisualStyleBackColor = true;
+            // 
+            // cbFreehandCropShowHelpText
+            // 
+            this.cbFreehandCropShowHelpText.AutoSize = true;
+            this.cbFreehandCropShowHelpText.Location = new System.Drawing.Point(16, 16);
+            this.cbFreehandCropShowHelpText.Name = "cbFreehandCropShowHelpText";
+            this.cbFreehandCropShowHelpText.Size = new System.Drawing.Size(96, 17);
+            this.cbFreehandCropShowHelpText.TabIndex = 0;
+            this.cbFreehandCropShowHelpText.Text = "Show help text";
+            this.cbFreehandCropShowHelpText.UseVisualStyleBackColor = true;
+            this.cbFreehandCropShowHelpText.CheckedChanged += new System.EventHandler(this.cbFreehandCropShowHelpText_CheckedChanged);
+            // 
+            // cbFreehandCropAutoUpload
+            // 
+            this.cbFreehandCropAutoUpload.AutoSize = true;
+            this.cbFreehandCropAutoUpload.Location = new System.Drawing.Point(16, 40);
+            this.cbFreehandCropAutoUpload.Name = "cbFreehandCropAutoUpload";
+            this.cbFreehandCropAutoUpload.Size = new System.Drawing.Size(221, 17);
+            this.cbFreehandCropAutoUpload.TabIndex = 1;
+            this.cbFreehandCropAutoUpload.Text = "Automatically upload after region is drawn";
+            this.cbFreehandCropAutoUpload.UseVisualStyleBackColor = true;
+            this.cbFreehandCropAutoUpload.CheckedChanged += new System.EventHandler(this.cbFreehandCropAutoUpload_CheckedChanged);
+            // 
             // ucDestOptions
             // 
             this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
@@ -6910,6 +6950,17 @@ namespace ZScreenGUI
             this.ucProxyAccounts.Name = "ucProxyAccounts";
             this.ucProxyAccounts.Size = new System.Drawing.Size(785, 313);
             this.ucProxyAccounts.TabIndex = 0;
+            // 
+            // cbFreehandCropAutoClose
+            // 
+            this.cbFreehandCropAutoClose.AutoSize = true;
+            this.cbFreehandCropAutoClose.Location = new System.Drawing.Point(16, 64);
+            this.cbFreehandCropAutoClose.Name = "cbFreehandCropAutoClose";
+            this.cbFreehandCropAutoClose.Size = new System.Drawing.Size(313, 17);
+            this.cbFreehandCropAutoClose.TabIndex = 2;
+            this.cbFreehandCropAutoClose.Text = "Right click will be cancel upload instead clean drawn regions";
+            this.cbFreehandCropAutoClose.UseVisualStyleBackColor = true;
+            this.cbFreehandCropAutoClose.CheckedChanged += new System.EventHandler(this.cbFreehandCropAutoClose_CheckedChanged);
             // 
             // ZScreen
             // 
@@ -7137,6 +7188,8 @@ namespace ZScreenGUI
             this.gbLastSource.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            this.tpFreehandCropShot.ResumeLayout(false);
+            this.tpFreehandCropShot.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -7685,6 +7738,10 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnResetHotkeys;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem editInPicnikToolStripMenuItem;
+        private System.Windows.Forms.TabPage tpFreehandCropShot;
+        private System.Windows.Forms.CheckBox cbFreehandCropShowHelpText;
+        private System.Windows.Forms.CheckBox cbFreehandCropAutoUpload;
+        private System.Windows.Forms.CheckBox cbFreehandCropAutoClose;
 
     }
 }
