@@ -79,7 +79,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\FreehandCrop.cs">
+    <Compile Include="Shapes\FreehandCapture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shapes\ShapeCapture.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\LayeredForm.cs">
