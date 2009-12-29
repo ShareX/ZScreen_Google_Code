@@ -37,6 +37,7 @@ using ZScreenLib.Properties;
 using HelpersLib;
 using GraphicsMgrLib;
 using ZScreenLib.Forms;
+using ZScreenLib.Shapes;
 
 namespace ZScreenLib
 {
@@ -159,7 +160,7 @@ namespace ZScreenLib
 
         public void CaptureFreehandCrop()
         {
-            using (FreehandCrop crop = new FreehandCrop())
+            using (FreehandCapture crop = new FreehandCapture())
             {
                 if (crop.ShowDialog() == DialogResult.OK)
                 {
