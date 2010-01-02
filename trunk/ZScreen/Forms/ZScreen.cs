@@ -32,8 +32,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Web;
 using System.Windows.Forms;
 using GradientTester;
+using GraphicsMgrLib;
+using HelpersLib;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
@@ -48,10 +52,6 @@ using ZScreenLib.Helpers;
 using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using HelpersLib;
-using System.Web;
-using GraphicsMgrLib;
-using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ZScreenGUI
 {
@@ -332,6 +332,7 @@ namespace ZScreenGUI
             {
                 switch (m.Msg)
                 {
+                    case 992: // nfi but this is the only way it works for XP
                     case (int)ClipboardHook.Msgs.WM_DRAWCLIPBOARD:
                         try
                         {
