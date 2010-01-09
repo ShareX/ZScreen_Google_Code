@@ -2234,7 +2234,7 @@ namespace ZScreenGUI
         {
             if (ifm != null)
             {
-                string path = ifm.GetSource(Engine.zTempDir, sType);
+                string path = ifm.GetSource(Engine.TempDir, sType);
                 if (!string.IsNullOrEmpty(path))
                 {
                     if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)

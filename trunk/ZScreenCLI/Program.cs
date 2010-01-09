@@ -19,9 +19,9 @@ namespace ZScreenCLI
             try
             {
 #endif
-                Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
-                Engine.LoadSettingsLatest();
-                Application.Run(new MainWindow());
+            Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
+            Engine.LoadSettingsLatest();
+            Application.Run(new MainWindow());
 #if Release
             }
             catch (Exception ex)
@@ -31,8 +31,8 @@ namespace ZScreenCLI
             finally
             {
 #endif
-                Engine.TurnOff();
-                Application.Exit();
+            Engine.TurnOff();
+            Application.Exit();
 #if Release
             }
 #endif

@@ -145,7 +145,7 @@ namespace ZScreenLib
         public const Keys DefaultHotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
         public const Keys DefaultHotkeyCropShot = Keys.Control | Keys.PrintScreen;
         public const Keys DefaultHotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
-        public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.PageUp;
+        public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.F6;
         public const Keys DefaultHotkeyFreehandCropShot = Keys.Control | Keys.PageDown;
         public const Keys DefaultHotkeyLastCropShot = Keys.None;
         public const Keys DefaultHotkeyAutoCapture = Keys.None;
