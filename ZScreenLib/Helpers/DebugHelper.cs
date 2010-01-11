@@ -65,7 +65,7 @@ namespace ZScreenLib
             sb.AppendLine(System.Windows.Forms.Application.ExecutablePath);
             sb.AppendLine();
             sb.AppendLine("Settings file:");
-            sb.AppendLine(Engine.DefaultXMLFilePath);
+            sb.AppendLine(Engine.mAppSettings.XMLSettingsFile);
             return sb.ToString();
         }
 
