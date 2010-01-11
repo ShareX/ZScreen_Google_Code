@@ -49,7 +49,7 @@ namespace ZScreenLib
 
         public static AppSettings Read(string filePath)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            if (!Engine.Portable && !Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
             if (File.Exists(filePath))

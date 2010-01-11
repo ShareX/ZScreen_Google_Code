@@ -45,7 +45,7 @@ namespace ZScreenLib
         public static IntPtr zHandle = IntPtr.Zero;
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(mProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
-        public static bool Portable { get; private set; }
+        public static bool Portable = true;
         public static bool MultipleInstance { get; private set; }
 
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
@@ -93,8 +93,6 @@ namespace ZScreenLib
         }
 
         private static string[] AppDirs;
-
-        public static string DefaultXMLFilePath { get; private set; }
 
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
@@ -148,7 +146,6 @@ namespace ZScreenLib
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
-                Portable = true;
                 mAppSettings.PreferSystemFolders = false;
                 RootAppFolder = PortableRootFolder;
                 mProductName += " Portable";
@@ -156,6 +153,7 @@ namespace ZScreenLib
             }
             else
             {
+            	Portable = false;
                 if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.mAppSettings.RootDir))
                 {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
@@ -338,13 +336,8 @@ namespace ZScreenLib
                     Directory.CreateDirectory(dp);
                 }
             }
-
-            DefaultXMLFilePath = Path.Combine(SettingsDir, XMLSettings.XMLFileName);
-            string DefaultXMLFilePathOld = Path.Combine(SettingsDir, XMLFileName);
-            if (!File.Exists(DefaultXMLFilePath) && File.Exists(DefaultXMLFilePathOld))
-            {
-                DefaultXMLFilePath = DefaultXMLFilePathOld;
-            }
+            
+            Engine.mAppSettings.XMLSettingsFile = Path.Combine(SettingsDir, XMLSettings.XMLFileName);          
         }
 
         public static void InitializeFiles()
@@ -450,22 +443,7 @@ namespace ZScreenLib
                     Directory.CreateDirectory(SettingsDir);
                 }
 
-                if (File.Exists(OldXMLPortableFile))
-                {
-                    if (!File.Exists(DefaultXMLFilePath))                   // Portable
-                    {
-                        File.Move(OldXMLPortableFile, DefaultXMLFilePath);
-                    }
-                }
-                else if (File.Exists(OldXMLFilePath))                       // v1.x
-                {
-                    if (!File.Exists(DefaultXMLFilePath))
-                    {
-                        File.Move(OldXMLFilePath, DefaultXMLFilePath);
-                    }
-                }
-
-                return DefaultXMLFilePath;                                  // v2.x
+                return Engine.mAppSettings.XMLSettingsFile;                          
             }
         }
 
