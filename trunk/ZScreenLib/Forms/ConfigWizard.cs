@@ -28,6 +28,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using UploadersLib;
+using MS.WindowsAPICodePack.Internal;
 
 namespace ZScreenLib
 {
@@ -56,15 +57,32 @@ namespace ZScreenLib
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldDir = txtRootFolder.Text;
-            CommonOpenFileDialog cfd = new CommonOpenFileDialog();
-            cfd.EnsureReadOnly = true;
-            cfd.IsFolderPicker = true;
-            cfd.AllowNonFileSystemItems = true;
-            cfd.Title = "Configure Root diretory...";
-
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            string newDir = string.Empty;
+            if (CoreHelpers.RunningOnWin7)
             {
-                txtRootFolder.Text = cfd.FileName;
+                CommonOpenFileDialog dlg = new CommonOpenFileDialog();
+                dlg.EnsureReadOnly = true;
+                dlg.IsFolderPicker = true;
+                dlg.AllowNonFileSystemItems = true;
+                dlg.Title = "Configure Root diretory...";
+
+                if (dlg.ShowDialog() == CommonFileDialogResult.OK)
+                {
+                    newDir = dlg.FileName;
+                }
+            }
+            else
+            {
+                FolderBrowserDialog dlg = new FolderBrowserDialog();
+                dlg.Description = "Configure Root diretory...";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    newDir = dlg.SelectedPath;
+                }
+            }
+            if (!string.IsNullOrEmpty(newDir))
+            {
+                txtRootFolder.Text = newDir;
                 RootFolder = txtRootFolder.Text;
                 FileSystem.MoveDirectory(oldDir, txtRootFolder.Text);
             }

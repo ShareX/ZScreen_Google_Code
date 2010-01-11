@@ -48,14 +48,14 @@ namespace ZScreenLib
         public static bool Portable = true;
         public static bool MultipleInstance { get; private set; }
 
-        internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
-        internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+        internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), mProductName);
+        internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), mProductName);
         internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
         internal static readonly string zFilesDir = Path.Combine(zLocalAppDataFolder, "Files");
         internal static readonly string zLogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
-        internal static readonly string zPicturesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
+        internal static readonly string zPicturesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), mProductName);
         internal static readonly string zSettingsDir = Path.Combine(zRoamingAppDataFolder, "Settings");
-        internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+        internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), mProductName);
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
         public static AppSettings mAppSettings = AppSettings.Read();
@@ -66,7 +66,7 @@ namespace ZScreenLib
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
 
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
         public static string RootImagesDir = zPicturesDir;
 
@@ -163,13 +163,13 @@ namespace ZScreenLib
                     Engine.mAppSettings.ImageUploader = cw.ImageDestinationType;
                     RunConfig = true;
                 }
-                if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir))
+                if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
                 {
                     RootAppFolder = Engine.mAppSettings.RootDir;
                 }
                 else
-                {
-                    RootAppFolder = DefaultRootAppFolder;
+                {                    
+                    RootAppFolder = Engine.mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : DefaultRootAppFolder;
                 }
             }
 
@@ -336,8 +336,12 @@ namespace ZScreenLib
                     Directory.CreateDirectory(dp);
                 }
             }
-            
-            Engine.mAppSettings.XMLSettingsFile = Path.Combine(SettingsDir, XMLSettings.XMLFileName);          
+
+            string latestSettingsFile = Path.Combine(SettingsDir, XMLSettings.XMLFileName);
+            if (File.Exists(latestSettingsFile))
+            {
+                Engine.mAppSettings.XMLSettingsFile = latestSettingsFile;
+            }
         }
 
         public static void InitializeFiles()
