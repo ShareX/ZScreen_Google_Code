@@ -1,5 +1,6 @@
-Version 3.25 - 20100109
+Version 3.25 - 20100110
 
+3.25.0.2 Error while relocating Root folder in Config Wizard under Windows XP [Issue 199]
 3.25.0.1 Portable mode will not create a temp folder in %localappdata% anymore [Issue 198]
 3.25.0.0 Support for Rounded Corners and Shadow in Crop Shot and Selected Window {theone256}
 3.24.0.2 Fixed lack of transparency in screenshots when destination was set to Clipboard [Issue 186] {theone256}
