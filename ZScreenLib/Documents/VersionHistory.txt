@@ -1,3 +1,5 @@
+3.25.0.3 Portable mode did not read settings from previous version settings [Issue 198]
+
 Version 3.25 - 20100110
 
 3.25.0.2 Error while relocating Root folder in Config Wizard under Windows XP [Issue 199]
