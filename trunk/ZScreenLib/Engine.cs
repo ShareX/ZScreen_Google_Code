@@ -42,7 +42,7 @@ namespace ZScreenLib
     {
         // App Info
         private static string mProductName = Application.ProductName;        
-        private static readonly string PortableRootFolder = mProductName; // using relative paths
+        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
         
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
@@ -232,7 +232,7 @@ namespace ZScreenLib
         	if (!string.IsNullOrEmpty(settingsDir))
             {
                 List<ImageFile> imgFiles = new List<ImageFile>();
-                string[] files = Directory.GetFiles(settingsDir, "ZScreen-*-Settings.xml");
+                string[] files = Directory.GetFiles(settingsDir, Application.ProductName + "-*-Settings.xml");
                 if (files.Length > 0)
                 {
                     foreach (string f in files)
