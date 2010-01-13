@@ -328,7 +328,11 @@ namespace ZScreenLib
                     UploadDekiWiki();
                     break;
                 case ImageDestType.FILE:
-                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, mTask.LocalFilePath);
+                    string fp = mTask.LocalFilePath; 
+                    if (Engine.Portable) {
+                    	fp = Path.Combine(Application.StartupPath, fp);
+                    }
+                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, fp);
                     break;
                 case ImageDestType.FLICKR:
                     imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
