@@ -26,6 +26,7 @@ using System.IO;
 using System.Text;
 using UploadersLib;
 using UploadersLib.Helpers;
+using System.Windows.Forms;
 
 namespace ZScreenLib
 {
@@ -33,7 +34,18 @@ namespace ZScreenLib
     {
         public string JobName { get; set; }
         public string FileName { get; set; }
-        public string LocalPath { get; set; }
+        private string mLocalPath = string.Empty;
+        public string LocalPath 
+        { 
+        	get
+        	{
+        		return Engine.Portable ? Path.Combine(Application.StartupPath, mLocalPath) : mLocalPath;
+        	} 
+        	set 
+        	{
+        	    mLocalPath = value	;
+        	}
+        }
         public string RemotePath { get; set; }
         /// <summary>
         /// Full Image, Active Window, Cropped Window...
