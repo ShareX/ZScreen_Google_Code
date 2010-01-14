@@ -80,7 +80,7 @@ namespace HelpersLib
         Text
     }
 
-    public class NameParserInfo
+    public class NameParserInfo : IDisposable
     {
         public string Pattern { get; set; }
 
@@ -98,6 +98,14 @@ namespace HelpersLib
             ProductName = Application.ProductName;
             Type = nameType;
             Pattern = text;
+        }
+
+        public void Dispose()
+        {
+            if (Picture != null)
+            {
+                Picture.Dispose();
+            }
         }
     }
 
