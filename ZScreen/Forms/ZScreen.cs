@@ -1121,6 +1121,10 @@ namespace ZScreenGUI
                 txtRootFolder.Text = Engine.RootAppFolder;
                 gbRoot.Text = "Root";
             }
+            gbRoot.Enabled = !Engine.Portable; 
+            gbImages.Enabled = !Engine.Portable; 
+            gbCache.Enabled = !Engine.Portable; 
+            chkPreferSystemFolders.Enabled = !Engine.Portable; 
         }
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
@@ -3585,15 +3589,11 @@ namespace ZScreenGUI
         private void btnBrowseRootDir_Click(object sender, EventArgs e)
         {
             string oldRootDir = txtRootFolder.Text;
-            CommonOpenFileDialog cfd = new CommonOpenFileDialog();
-            cfd.EnsureReadOnly = true;
-            cfd.IsFolderPicker = true;
-            cfd.AllowNonFileSystemItems = true;
-            cfd.Title = "Configure Root directory...";
+            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Root directory...");
 
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (!string.IsNullOrEmpty(dirNew))
             {
-                Engine.SetRootFolder(cfd.FileName);
+                Engine.SetRootFolder(dirNew);
                 txtRootFolder.Text = Engine.mAppSettings.RootDir;
                 FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
                 UpdateGuiControlsPaths();
@@ -4830,16 +4830,12 @@ namespace ZScreenGUI
         void BtnBrowseImagesDirClick(object sender, EventArgs e)
         {
             string oldDir = txtImagesDir.Text;
-            CommonOpenFileDialog cfd = new CommonOpenFileDialog();
-            cfd.EnsureReadOnly = true;
-            cfd.IsFolderPicker = true;
-            cfd.AllowNonFileSystemItems = true;
-            cfd.Title = "Configure Custom Images Directory...";
+            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory...");
 
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (!string.IsNullOrEmpty(dirNew))
             {
                 Engine.conf.UseCustomImagesDir = true;
-                Engine.conf.CustomImagesDir = cfd.FileName;
+                Engine.conf.CustomImagesDir = dirNew;
                 FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
                 UpdateGuiControlsPaths();
             }
