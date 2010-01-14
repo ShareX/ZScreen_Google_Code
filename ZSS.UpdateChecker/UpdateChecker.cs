@@ -42,7 +42,7 @@ namespace ZSS.UpdateCheckerLib
 
     public class UpdateChecker
     {
-        private string projectName, downloadsList, labelFeatured;
+        private string projectName, downloadsList, labelFeatured, labelBeta;
 
         private UpdateCheckerOptions Options { get; set; }
         private VersionInfo MyVersionInfo;
