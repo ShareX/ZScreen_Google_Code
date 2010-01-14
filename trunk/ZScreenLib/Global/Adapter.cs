@@ -47,6 +47,8 @@ using System.Threading;
 using HelpersLib;
 using GraphicsMgrLib;
 using System.Drawing.Imaging;
+using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ZScreenLib
 {
@@ -777,6 +779,39 @@ namespace ZScreenLib
                 FileSystem.AppendDebug("Error while setting Watermark Font", ex);
             }
             return result;
+        }
+        
+        /// <summary>
+        /// Method to show the appropriate Folder Browser dialog based on the OS
+        /// </summary>
+        /// <param name="title">Title for the folder browser</param>
+        /// <returns>Folder path chosen by the user</returns>
+        public static string GetDirPathUsingFolderBrowser(string title)
+        {
+            string newDir = string.Empty;
+            if (CoreHelpers.RunningOnWin7)
+            {
+                CommonOpenFileDialog dlg = new CommonOpenFileDialog();
+                dlg.EnsureReadOnly = true;
+                dlg.IsFolderPicker = true;
+                dlg.AllowNonFileSystemItems = true;
+                dlg.Title = title;
+
+                if (dlg.ShowDialog() == CommonFileDialogResult.OK)
+                {
+                    newDir = dlg.FileName;
+                }
+            }
+            else
+            {
+                FolderBrowserDialog dlg = new FolderBrowserDialog();
+                dlg.Description = title;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    newDir = dlg.SelectedPath;
+                }
+            }
+            return newDir;
         }
 
         #region "Windows 7 only"
