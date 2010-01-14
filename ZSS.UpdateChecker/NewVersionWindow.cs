@@ -25,6 +25,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Net;
+using System.Diagnostics;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -72,6 +73,11 @@ namespace ZSS.UpdateCheckerLib
         {
             this.DialogResult = DialogResult.No;
             this.Close();
+        }
+        
+        void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
+        {
+        	Process.Start(e.LinkText);
         }
     }
 

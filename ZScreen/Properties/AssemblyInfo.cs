@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BrandonZ.net")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
+[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -52,4 +52,4 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.25.0.2")]
+[assembly: AssemblyFileVersion("3.25.0.1")]
