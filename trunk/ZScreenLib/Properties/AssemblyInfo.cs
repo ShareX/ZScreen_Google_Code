@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BrandonZ.net")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © Brandon Zimmerman 2006-2009")]
+[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("3.0.0.1540")]
+[assembly: AssemblyVersion("3.0.0.1546")]
 [assembly: AssemblyFileVersion("3.25.0.2")]
