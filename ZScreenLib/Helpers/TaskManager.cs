@@ -200,12 +200,16 @@ namespace ZScreenLib
                     text = Engine.conf.EntireScreenPattern;
                 }
 
-                if (mTask.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(type, text) { AutoIncrement = Engine.conf.AutoIncrement })))
+                using (NameParserInfo npi = new NameParserInfo(type, text) { AutoIncrement = Engine.conf.AutoIncrement })
                 {
-                    FileSystem.SaveImage(ref mTask);
-                    if (!File.Exists(mTask.LocalFilePath))
+                    if (mTask.SetFilePathFromPattern(NameParser.Convert(npi)))
                     {
-                        mTask.Errors.Add(string.Format("{0} does not exist", mTask.LocalFilePath));
+                        Engine.conf.AutoIncrement = npi.AutoIncrement;
+                        FileSystem.SaveImage(ref mTask);
+                        if (!File.Exists(mTask.LocalFilePath))
+                        {
+                            mTask.Errors.Add(string.Format("{0} does not exist", mTask.LocalFilePath));
+                        }
                     }
                 }
             }
@@ -328,9 +332,10 @@ namespace ZScreenLib
                     UploadDekiWiki();
                     break;
                 case ImageDestType.FILE:
-                    string fp = mTask.LocalFilePath; 
-                    if (Engine.Portable) {
-                    	fp = Path.Combine(Application.StartupPath, fp);
+                    string fp = mTask.LocalFilePath;
+                    if (Engine.Portable)
+                    {
+                        fp = Path.Combine(Application.StartupPath, fp);
                     }
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, fp);
                     break;
