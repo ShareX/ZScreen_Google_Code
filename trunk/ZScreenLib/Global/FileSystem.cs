@@ -64,7 +64,16 @@ namespace ZScreenLib
             {
                 if (File.Exists(fp))
                 {
-                    files.Add(fp);
+                    if (Path.GetTempPath().StartsWith(Path.GetDirectoryName(fp)))
+                    {
+                        string temp = Path.Combine(Engine.ImagesDir, Path.GetFileName(fp));
+                        File.Copy(fp, temp);
+                        files.Add(temp);
+                    }
+                    else
+                    {
+                        files.Add(fp);
+                    }
                 }
                 else if (Directory.Exists(fp))
                 {
@@ -99,7 +108,7 @@ namespace ZScreenLib
 
                 MemoryStream ms = null;
 
-                GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions(img,  Engine.zImageFileFormat);
+                GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions(img, Engine.zImageFileFormat);
                 opt.GIFQuality = Engine.conf.GIFQuality;
                 opt.JpgQuality = Engine.conf.JpgQuality;
                 opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
@@ -203,13 +212,13 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(Engine.LogsDir))
             {
-            	string dir = Engine.LogsDir;
-            	if (Engine.Portable)
-            	{
-            		dir = Path.Combine(Application.StartupPath, Engine.LogsDir);
-            	}            	            	
+                string dir = Engine.LogsDir;
+                if (Engine.Portable)
+                {
+                    dir = Path.Combine(Application.StartupPath, Engine.LogsDir);
+                }
                 string fpDebug = Path.Combine(dir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
-                AppendDebug("Writing Debug file: " + fpDebug);                
+                AppendDebug("Writing Debug file: " + fpDebug);
                 if (Engine.conf.WriteDebugFile)
                 {
                     if (DebugLog.Length > 0)
