@@ -1,9 +1,10 @@
-3.25.0.3 Portable mode did not read settings from previous version settings [Issue 198]
+3.25.0.4 Auto incrementing file names did not work as expected {Jaex}
+3.25.0.3 Portable mode did not read settings from previous version settings [Issue 198] {McoreD}
 
 Version 3.25 - 20100110
 
-3.25.0.2 Error while relocating Root folder in Config Wizard under Windows XP [Issue 199]
-3.25.0.1 Portable mode will not create a temp folder in %localappdata% anymore [Issue 198]
+3.25.0.2 Error while relocating Root folder in Config Wizard under Windows XP [Issue 199] {McoreD}
+3.25.0.1 Portable mode will not create a temp folder in %localappdata% anymore [Issue 198] {McoreD}
 3.25.0.0 Support for Rounded Corners and Shadow in Crop Shot and Selected Window {theone256}
 3.24.0.2 Fixed lack of transparency in screenshots when destination was set to Clipboard [Issue 186] {theone256}
 3.24.0.1 History items were sometimes not read at startup [Issue 183] {Jaex}

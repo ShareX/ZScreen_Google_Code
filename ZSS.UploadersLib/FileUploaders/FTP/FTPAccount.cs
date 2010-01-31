@@ -25,6 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Web;
 using HelpersLib;
+using System.Text.RegularExpressions;
 
 namespace UploadersLib
 {
@@ -105,12 +106,12 @@ namespace UploadersLib
 
         public string GetSubFolderPath()
         {
-            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.SubFolderPath) { IsFolderPath = true });
+            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.SubFolderPath) { Host = this.Host, IsFolderPath = true });
         }
 
         public string GetHttpHomePath()
         {
-            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.HttpHomePath) { IsFolderPath = true });
+            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.HttpHomePath) { Host = this.Host, IsFolderPath = true });
         }
 
         public string GetUriPath(string fileName)
