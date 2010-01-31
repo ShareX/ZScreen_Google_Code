@@ -89,6 +89,7 @@ namespace HelpersLib
         public string ProductName { get; set; }
         public bool IsFolderPath { get; set; }
         public bool IsPreview { get; set; }
+        public string Host { get; set; }
         public Image Picture { get; set; }
         public DateTime CustomDate { get; set; }
         public int MaxNameLength { get; set; }
@@ -153,6 +154,15 @@ namespace HelpersLib
             else
             {
                 sb = sb.Replace(ToString(ReplacementVariables.t), "");
+            }
+
+            #endregion
+
+            #region FTP
+
+            if (!string.IsNullOrEmpty(nameParser.Host))
+            {
+                sb = sb.Replace("%host", nameParser.Host);
             }
 
             #endregion
