@@ -1,4 +1,5 @@
 #summary Image Hosting Services
+#labels Featured
 
 Save the following as Default.zihs and use Import function in ZScreen > Image Uploaders to access the services.
 
@@ -6,6 +7,20 @@ Save the following as Default.zihs and use Import function in ZScreen > Image Up
 <?xml version="1.0"?>
 <ImageHostingServiceManager xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ImageHostingServices>
+    <ImageHostingService>
+      <Name>img1-0.1.1</Name>
+      <Arguments />
+      <UploadURL>http://img1.us/?app</UploadURL>
+       <FileForm>fileup</FileForm>
+      <RegexpList>
+        <string>(https?://)?(i.\.)?([a-zA-Z0-9_%]*)\b\.[a-z]{2,4}(\.[a-z]{2})?((/[a-zA-Z0-9_%]*)+)?(\.[a-z]*)?$</string>
+      </RegexpList>
+       <Fullimage>$1</Fullimage>
+      <Thumbnail />
+      <Regexps>
+        <string />
+      </Regexps>
+    </ImageHostingService>
     <ImageHostingService>
       <Name>TinyPic</Name>
       <Arguments>
