@@ -16,8 +16,6 @@ namespace UploadersLib.ImageUploaders
 
         public override ImageFileManager UploadImage(Image image, string fileName)
         {
-            ImageFileManager ifm = new ImageFileManager();
-
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", APIKEY);
 

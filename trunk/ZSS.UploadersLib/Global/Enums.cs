@@ -87,7 +87,9 @@ namespace UploadersLib
         [Description("ImageBin - www.imagebin.ca")]
         IMAGEBIN,
         [Description("ImageBam - www.imagebam.com")]
-        IMAGEBAM,  
+        IMAGEBAM,
+        [Description("Img1 - www.img1.us")]
+        IMG1,
         [Description("Imgur - www.imgur.com")]
         IMGUR,
         [Description("TwitPic - www.twitpic.com")]

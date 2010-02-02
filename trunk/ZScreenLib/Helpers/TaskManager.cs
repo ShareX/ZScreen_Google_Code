@@ -357,6 +357,9 @@ namespace ZScreenLib
                     imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode, Engine.conf.UploadMode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
+                case ImageDestType.IMG1:
+                    imageUploader = new Img1Uploader();
+                    break;
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur();
                     break;
