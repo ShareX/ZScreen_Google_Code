@@ -312,8 +312,6 @@ namespace ZScreenGUI
                                                 task.ImageManager.GetThumbnailUrl() + "\r\n");
                                         }
                                     }
-
-                                    this.mZScreen.btnUploadersTest.Enabled = true;
                                     break;
                             }
 
@@ -393,6 +391,7 @@ namespace ZScreenGUI
                 Engine.ZScreenKeyboardHook.Dispose();
                 Engine.ZScreenKeyboardHook = new KeyboardHook();
                 Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+                this.mZScreen.btnUploadersTest.Enabled = true;
             }
         }
 
