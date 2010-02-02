@@ -2190,7 +2190,6 @@ namespace ZScreenGUI
             ImageHostingServiceManager tmp = ImageHostingServiceManager.Read(fp);
             if (tmp != null)
             {
-                lbImageUploader.Items.Clear();
                 Engine.conf.ImageUploadersList = new List<ImageHostingService>();
                 Engine.conf.ImageUploadersList.AddRange(tmp.ImageHostingServices);
                 foreach (ImageHostingService iHostingService in Engine.conf.ImageUploadersList)
