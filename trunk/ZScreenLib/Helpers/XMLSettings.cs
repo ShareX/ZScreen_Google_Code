@@ -730,7 +730,7 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-        	string settingsFile = Engine.Portable ? Engine.GetLatestSettingsFile(Engine.SettingsDir) : Engine.mAppSettings.GetSettingsFilePath();
+            string settingsFile = Engine.Portable ? Engine.GetLatestSettingsFile(Engine.SettingsDir) : Engine.mAppSettings.GetSettingsFilePath();
             if (!File.Exists(settingsFile))
             {
                 if (File.Exists(Engine.mAppSettings.XMLSettingsFile))
