@@ -1003,11 +1003,8 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_History()
         {
-            if (mGuiIsReady)
-            {
-                nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
-                Loader.Worker.UpdateGuiControlsHistory();
-            }
+            nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
+
             Loader.Worker2.LoadHistoryItems();
         }
 
@@ -1121,10 +1118,10 @@ namespace ZScreenGUI
                 txtRootFolder.Text = Engine.RootAppFolder;
                 gbRoot.Text = "Root";
             }
-            gbRoot.Enabled = !Engine.Portable; 
-            gbImages.Enabled = !Engine.Portable; 
-            gbCache.Enabled = !Engine.Portable; 
-            chkPreferSystemFolders.Enabled = !Engine.Portable; 
+            gbRoot.Enabled = !Engine.Portable;
+            gbImages.Enabled = !Engine.Portable;
+            gbCache.Enabled = !Engine.Portable;
+            chkPreferSystemFolders.Enabled = !Engine.Portable;
         }
 
         private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
@@ -1192,14 +1189,18 @@ namespace ZScreenGUI
                 else if (this.WindowState == FormWindowState.Normal)
                 {
                     this.ShowInTaskbar = Engine.conf.ShowInTaskbar;
-                    this.Refresh();
                 }
+
+                this.Refresh();
             }
         }
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            WriteSettings();
+            if (e.CloseReason != CloseReason.WindowsShutDown)
+            {
+                WriteSettings();
+            }
 
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.CloseButtonAction != WindowButtonAction.CloseApplication && !mClose)
             {
@@ -2842,19 +2843,20 @@ namespace ZScreenGUI
                     msg += "the following files:\n\n" + sbFiles.ToString();
                 }
 
-                DialogResult strAns = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                foreach (HistoryItem hi in temp)
+                if (MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    lbHistory.Items.Remove(hi);
-                    if (strAns == DialogResult.Yes)
+                    foreach (HistoryItem hi in temp)
                     {
                         Adapter.DeleteFile(hi.LocalPath);
+                        lbHistory.Items.Remove(hi);
                     }
-                }
 
-                if (lbHistory.Items.Count > 0)
-                {
-                    lbHistory.SelectedIndex = 0;
+                    if (lbHistory.Items.Count > 0)
+                    {
+                        lbHistory.SelectedIndex = 0;
+                    }
+
+                    Loader.Worker.UpdateGuiControlsHistory();
                 }
             }
         }
@@ -3372,7 +3374,7 @@ namespace ZScreenGUI
             }
             else if (e.KeyCode == Keys.Delete)
             {
-                this.DeleteHistoryFiles();
+                DeleteHistoryFiles();
             }
         }
 
@@ -4885,6 +4887,14 @@ namespace ZScreenGUI
         private void cbFreehandCropShowRectangleBorder_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.FreehandCropShowRectangleBorder = cbFreehandCropShowRectangleBorder.Checked;
+        }
+
+        private void ZScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.WindowsShutDown)
+            {
+                WriteSettings();
+            }
         }
     }
 }

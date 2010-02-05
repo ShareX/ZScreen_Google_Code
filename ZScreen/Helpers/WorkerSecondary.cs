@@ -144,6 +144,8 @@ namespace ZScreenGUI
             {
                 mZScreen.lbHistory.SelectedIndex = 0;
             }
+
+            Loader.Worker.UpdateGuiControlsHistory();
         }
 
         private void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
