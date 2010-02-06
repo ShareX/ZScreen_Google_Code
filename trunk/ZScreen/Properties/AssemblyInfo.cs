@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ZScreen")]
 [assembly: AssemblyDescription("Advanced image/text/file uploading utility")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BrandonZ.net")]
+[assembly: AssemblyCompany("ZScreen Group")]
 [assembly: AssemblyProduct("ZScreen")]
 [assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
 [assembly: AssemblyTrademark("")]
@@ -52,4 +52,4 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.26.0.0")]
+[assembly: AssemblyFileVersion("3.26.0.2")]

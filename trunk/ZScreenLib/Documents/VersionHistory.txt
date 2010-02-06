@@ -1,3 +1,8 @@
+3.26.0.2 History List length in tab label didn't update upon entry removal [Issue 223] {Jaex}
+3.26.0.1 Canceling Windows deletion confirmation will not remove entry from History List [Issue 222] {Jaex}
+3.26.0.0 Added Img1 Image Uploader support {Jaex}
+3.26.0.6 Syntax %host was not replaced by host in FTP Account settings {McoreD}
+3.26.0.5 Uploading images from the browser did not work sometimes [Issue 206] {Jaex}
 3.25.0.4 Auto incrementing file names did not work as expected {Jaex}
 3.25.0.3 Portable mode did not read settings from previous version settings [Issue 198] {McoreD}
 
