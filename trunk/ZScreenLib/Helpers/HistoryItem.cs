@@ -35,16 +35,16 @@ namespace ZScreenLib
         public string JobName { get; set; }
         public string FileName { get; set; }
         private string mLocalPath = string.Empty;
-        public string LocalPath 
-        { 
-        	get
-        	{
-        		return Engine.Portable ? Path.Combine(Application.StartupPath, mLocalPath) : mLocalPath;
-        	} 
-        	set 
-        	{
-        	    mLocalPath = value	;
-        	}
+        public string LocalPath
+        {
+            get
+            {
+                return Engine.Portable ? Path.Combine(Application.StartupPath, mLocalPath) : mLocalPath;
+            }
+            set
+            {
+                mLocalPath = value;
+            }
         }
         public string RemotePath { get; set; }
         /// <summary>
@@ -71,7 +71,7 @@ namespace ZScreenLib
             this.JobName = task.Job.GetDescription();
             this.FileName = task.FileName.ToString();
             this.LocalPath = task.LocalFilePath;
-            this.RemotePath = task.RemoteFilePath;
+            this.RemotePath = string.IsNullOrEmpty(task.RemoteFilePath) ? task.ImageManager.GetLocalFilePathAsUri() : task.RemoteFilePath;
             this.DestinationMode = task.MyImageUploader.GetDescription();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.ImageManager;

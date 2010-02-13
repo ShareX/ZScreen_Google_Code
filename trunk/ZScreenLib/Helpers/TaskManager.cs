@@ -337,6 +337,7 @@ namespace ZScreenLib
                     {
                         fp = Path.Combine(Application.StartupPath, fp);
                     }
+                    mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, fp);
                     break;
                 case ImageDestType.FLICKR:

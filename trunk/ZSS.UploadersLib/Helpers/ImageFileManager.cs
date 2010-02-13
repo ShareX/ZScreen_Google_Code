@@ -40,6 +40,11 @@ namespace UploadersLib.Helpers
 
         public ImageFileManager() { }
 
+        public ImageFileManager(string fp)
+        {
+            this.LocalFilePath = fp;
+        }
+
         public ImageFileManager(string url, string source)
         {
             this.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE));
@@ -100,13 +105,13 @@ namespace UploadersLib.Helpers
                 case ClipboardUriType.LocalFilePath:
                     return this.LocalFilePath;
                 case ClipboardUriType.LocalFilePathUri:
-                    return GetLocalFilePathUri();
+                    return GetLocalFilePathAsUri();
             }
 
             return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE);
         }
 
-        private string GetLocalFilePathUri()
+        public string GetLocalFilePathAsUri()
         {
             return new Uri(this.LocalFilePath).AbsoluteUri;
         }

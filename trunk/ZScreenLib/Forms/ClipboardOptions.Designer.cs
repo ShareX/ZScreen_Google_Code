@@ -56,6 +56,7 @@
             this.ClientSize = new System.Drawing.Size(600, 452);
             this.Controls.Add(this.pbPreview);
             this.Name = "ClipboardOptions";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clipboard Copy Mode";
             this.Resize += new System.EventHandler(this.ClipboardOptions_Resize);
