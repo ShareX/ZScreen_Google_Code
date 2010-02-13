@@ -1,3 +1,4 @@
+3.26.1.0 Added new Clipboard URL Types: Local File Path, Local File Path as URI {McoreD}
 3.26.0.2 History List length in tab label didn't update upon entry removal [Issue 223] {Jaex}
 3.26.0.1 Canceling Windows deletion confirmation will not remove entry from History List [Issue 222] {Jaex}
 3.26.0.0 Added Img1 Image Uploader support {Jaex}
