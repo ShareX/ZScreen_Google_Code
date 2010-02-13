@@ -97,9 +97,18 @@ namespace UploadersLib.Helpers
                     return GetLinkedThumbnailWikiUrl();
                 case ClipboardUriType.THUMBNAIL:
                     return GetUrlByImageType(ImageFile.ImageType.THUMBNAIL);
+                case ClipboardUriType.LocalFilePath:
+                    return this.LocalFilePath;
+                case ClipboardUriType.LocalFilePathUri:
+                    return GetLocalFilePathUri();
             }
 
             return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE);
+        }
+
+        private string GetLocalFilePathUri()
+        {
+            return new Uri(this.LocalFilePath).AbsoluteUri;
         }
 
         private string GetUrlByImageType(ImageFile.ImageType type)

@@ -101,7 +101,7 @@ namespace ZScreenLib
                 case JobCategoryType.SCREENSHOTS:
                 case JobCategoryType.BINARY:
                     ScreenshotsHistory = task.ImageManager;
-                    if (ScreenshotsHistory != null && GraphicsMgr.IsValidImage(task.LocalFilePath))
+                    if (GraphicsMgr.IsValidImage(task.LocalFilePath))
                     {
                         if (Engine.conf.ShowClipboardModeChooser || showDialog)
                         {
