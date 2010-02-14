@@ -333,6 +333,12 @@ namespace ZScreenLib
         public bool FTPThumbnailCheckSize = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
+        //  Localhost
+        //~~~~~~~~~~~~~~~~~~~~~
+        public List<LocalhostAccount> LocalhostAccountList = new List<LocalhostAccount>();
+        public int LocalhostSelected = 0;
+
+        //~~~~~~~~~~~~~~~~~~~~~
         //  DekiWiki
         //~~~~~~~~~~~~~~~~~~~~~
 

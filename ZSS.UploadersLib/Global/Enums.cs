@@ -78,6 +78,8 @@ namespace UploadersLib
         FTP,
         [Description("File Hosting Service")]
         FileUploader,
+        [Description("Localhost")]
+        Localhost,
         [Description("Clipboard")]
         CLIPBOARD,
         [Description("File")]

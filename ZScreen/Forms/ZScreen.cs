@@ -184,6 +184,12 @@ namespace ZScreenGUI
             ucFTPAccounts.btnTest.Click += new EventHandler(FTPAccountTestButton_Click);
             ucFTPAccounts.AccountsList.SelectedIndexChanged += new EventHandler(FTPAccountsList_SelectedIndexChanged);
 
+            // Accounts - Localhost
+            ucLocalhostAccounts.btnAdd.Click += new EventHandler(LocalhostAccountAddButton_Click);
+            ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
+            ucLocalhostAccounts.btnTest.Visible = false;
+            ucLocalhostAccounts.AccountsList.SelectedIndexChanged += new EventHandler(LocalhostAccountsList_SelectedIndexChanged);
+
             // Accounts - MindTouch
             ucMindTouchAccounts.btnAdd.Click += new EventHandler(MindTouchAccountAddButton_Click);
             ucMindTouchAccounts.btnRemove.Click += new EventHandler(MindTouchAccountRemoveButton_Click);
@@ -508,6 +514,19 @@ namespace ZScreenGUI
             cbFTPThumbnailCheckSize.Checked = Engine.conf.FTPThumbnailCheckSize;
 
             #endregion
+
+            if (Engine.conf.LocalhostAccountList == null || Engine.conf.LocalhostAccountList.Count == 0)
+            {
+                LocalhostAccountsSetup(new List<LocalhostAccount>());
+            }
+            else
+            {
+                LocalhostAccountsSetup(Engine.conf.LocalhostAccountList);
+                if (ucLocalhostAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucLocalhostAccounts.AccountsList.SelectedIndex = Engine.conf.LocalhostSelected;
+                }
+            }
 
             #region MindTouch Settings
 
@@ -3075,8 +3094,6 @@ namespace ZScreenGUI
             }
         }
 
-        #region FTP Accounts
-
         private void FTPSetup(IEnumerable<FTPAccount> accs)
         {
             if (accs != null)
@@ -3098,6 +3115,48 @@ namespace ZScreenGUI
             {
                 Engine.conf.FTPAccountList.RemoveAt(sel);
             }
+        }
+
+        void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
+            Engine.conf.LocalhostSelected = sel;
+            if (Adapter.CheckList(Engine.conf.LocalhostAccountList, sel))
+            {
+                LocalhostAccount acc = Engine.conf.LocalhostAccountList[sel];
+                ucLocalhostAccounts.SettingsGrid.SelectedObject = acc;
+            }
+        }
+
+        void LocalhostAccountRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
+            if (ucLocalhostAccounts.RemoveItem(sel) == true)
+            {
+                Engine.conf.LocalhostAccountList.RemoveAt(sel);
+            }
+        }
+
+        private void LocalhostAccountsSetup(IEnumerable<LocalhostAccount> accs)
+        {
+            if (accs != null)
+            {
+                ucLocalhostAccounts.AccountsList.Items.Clear();
+                Engine.conf.LocalhostAccountList = new List<LocalhostAccount>();
+                Engine.conf.LocalhostAccountList.AddRange(accs);
+                foreach (LocalhostAccount acc in Engine.conf.LocalhostAccountList)
+                {
+                    ucLocalhostAccounts.AccountsList.Items.Add(acc);
+                }
+            }
+        }
+
+        void LocalhostAccountAddButton_Click(object sender, EventArgs e)
+        {
+            LocalhostAccount acc = new LocalhostAccount("New Account");
+            Engine.conf.LocalhostAccountList.Add(acc);
+            ucLocalhostAccounts.AccountsList.Items.Add(acc);
+            ucLocalhostAccounts.AccountsList.SelectedIndex = ucLocalhostAccounts.AccountsList.Items.Count - 1;
         }
 
         private void MindTouchAccountRemoveButton_Click(object sender, EventArgs e)
@@ -3233,8 +3292,6 @@ namespace ZScreenGUI
         {
             Engine.conf.AutoSwitchFileUploader = chkAutoSwitchFileUploader.Checked;
         }
-
-        #endregion
 
         private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {

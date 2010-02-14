@@ -364,6 +364,9 @@ namespace ZScreenLib
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur();
                     break;
+                case ImageDestType.Localhost:
+                    UploadLocalhost();
+                    break;
                 case ImageDestType.PRINTER:
                     if (mTask.MyImage != null)
                     {
@@ -476,6 +479,24 @@ namespace ZScreenLib
                 Thread.Sleep(250);
             }
             t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_tray);
+        }
+
+        public void UploadLocalhost()
+        {
+            if (Adapter.CheckList(Engine.conf.LocalhostAccountList, Engine.conf.LocalhostSelected) && File.Exists(mTask.LocalFilePath))
+            {
+                LocalhostAccount acc = Engine.conf.LocalhostAccountList[Engine.conf.LocalhostSelected];
+                string fn = Path.GetFileName(mTask.LocalFilePath);
+                string destFile = acc.GetLocalhostPath(fn);
+                string destDir = Path.GetDirectoryName(destFile);
+                if (!Directory.Exists(destDir))
+                {
+                    Directory.CreateDirectory(destDir);
+                }
+                File.Copy(mTask.LocalFilePath, destFile, true);
+                mTask.ImageManager = new ImageFileManager(destFile);
+                mTask.ImageManager.Add(acc.GetUriPath(fn), ImageFile.ImageType.FULLIMAGE);
+            }
         }
 
         /// <summary>
