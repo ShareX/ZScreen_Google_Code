@@ -493,7 +493,8 @@ namespace ZScreenLib
                 {
                     Directory.CreateDirectory(destDir);
                 }
-                File.Copy(mTask.LocalFilePath, destFile, true);
+                File.Move(mTask.LocalFilePath, destFile);
+                mTask.UpdateLocalFilePath(destFile);
                 mTask.ImageManager = new ImageFileManager(destFile);
                 mTask.ImageManager.Add(acc.GetUriPath(fn), ImageFile.ImageType.FULLIMAGE);
             }
