@@ -162,7 +162,7 @@ namespace ZScreenGUI
         {
             this.Icon = Resources.zss_main;
             this.Text = Engine.GetProductName();
-            this.niTray.Text = this.Text;
+            this.niTray.Text = (this.Text + " - " + Application.ExecutablePath).Substring(0, 60) + "...";
             this.lblLogo.Text = this.Text;
 
             if (this.WindowState == FormWindowState.Normal)
