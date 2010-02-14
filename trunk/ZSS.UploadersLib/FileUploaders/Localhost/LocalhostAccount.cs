@@ -28,6 +28,7 @@ using HelpersLib;
 using System.Text.RegularExpressions;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
+using System.IO;
 
 namespace UploadersLib
 {
@@ -160,7 +161,7 @@ namespace UploadersLib
             {
                 return string.Empty;
             }
-            return FTPHelpers.CombineURL(LocalhostRoot, this.GetSubFolderPath(), fileName);
+            return Path.Combine(Path.Combine(LocalhostRoot, this.GetSubFolderPath()), fileName);
         }
 
         public string GetLocalhostUri(string fileName)

@@ -58,18 +58,18 @@ namespace UploadersLib
         FULL_IMAGE_HTML,
         [Description("Full Image for Wiki")]
         FULL_IMAGE_WIKI,
-        [Description("Thumbnail")]
-        THUMBNAIL,
+        [Description("Full Image for Twitter")]
+        FULL_TINYURL,
         [Description("Linked Thumbnail for Forums")]
         LINKED_THUMBNAIL,
         [Description("Linked Thumbnail for Wiki")]
         LINKED_THUMBNAIL_WIKI,
-        [Description("Full Image for Twitter")]
-        FULL_TINYURL,
-        [Description("Local File")]
-        LocalFilePath,
+        [Description("Thumbnail")]
+        THUMBNAIL,
         [Description("Local File as URI")]
-        LocalFilePathUri
+        LocalFilePathUri,
+        [Description("Local File")]
+        LocalFilePath
     }
 
     public enum ImageDestType
