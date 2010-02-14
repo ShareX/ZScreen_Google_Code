@@ -525,7 +525,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(url))
                     {
                         mTask.RemoteFilePath = url;
-                        mTask.ImageManager = new ImageFileManager();
+                        mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
                         mTask.ImageManager.Add(url, ImageFile.ImageType.FULLIMAGE);
 
                         if (IsThumbnail())
