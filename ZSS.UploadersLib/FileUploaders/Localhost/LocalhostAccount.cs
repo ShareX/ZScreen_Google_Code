@@ -56,9 +56,6 @@ namespace UploadersLib
         [Category("Localhost"), Description("HTTP Home Path, %host = Host e.g. brandonz.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
 
-        [Category("Localhost"), Description("Set true for active or false for passive"), DefaultValue(false)]
-        public bool IsActive { get; set; }
-
         [Category("Localhost"), Description("file://Host:Port"), Browsable(false)]
         public string LocalUri
         {
@@ -98,7 +95,6 @@ namespace UploadersLib
             Port = 80;
             SubFolderPath = string.Empty;
             HttpHomePath = string.Empty;
-            IsActive = false;
         }
 
         public LocalhostAccount(string name)
@@ -148,7 +144,7 @@ namespace UploadersLib
             {
                 httppath = lHttpHomePath.Replace("%host", this.LocalhostRoot).TrimStart('@');
             }
-            path = FTPHelpers.CombineURL(string.Format("{0}:{1}", httppath, this.Port), lFolderPath, fileName);
+            path = FTPHelpers.CombineURL(this.Port == 80 ? httppath : string.Format("{0}:{1}", httppath, this.Port), lFolderPath, fileName);
 
             if (!path.StartsWith("http://"))
             {
