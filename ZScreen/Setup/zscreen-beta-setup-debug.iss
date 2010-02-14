@@ -59,10 +59,10 @@ var
   
 function InitializeSetup(): Boolean;
 begin
-  relativeStartMenuPrograms:='Microsoft\Windows\Start Menu\Programs';
+  relativeStartMenuPrograms:='Start Menu\Programs';
   defaultDirectory:=ExpandConstant('{localappdata}');
   profileDirectory:=GetEnv('USERPROFILE');
-  defaultMenuFolder:=defaultDirectory + '\'+relativeStartMenuPrograms;
+  defaultMenuFolder:=profileDirectory + '\'+relativeStartMenuPrograms;
   userSystemName:=ExpandConstant('{username}');
   userType:='CurrentUser';
   whichDesktop:=profileDirectory+'\Desktop';

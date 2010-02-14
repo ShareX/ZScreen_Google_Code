@@ -58,7 +58,7 @@ var
 
 function InitializeSetup(): Boolean;
 begin
-  relativeStartMenuPrograms:='Microsoft\Windows\Start Menu\Programs';
+  relativeStartMenuPrograms:='Start Menu\Programs';
   defaultDirectory:=ExpandConstant('{localappdata}');
   profileDirectory:=GetEnv('USERPROFILE');
   defaultMenuFolder:=profileDirectory+'\'+relativeStartMenuPrograms;
@@ -181,7 +181,7 @@ Source: ..\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ign
 Source: ..\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: {group}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
+Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
 Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Tasks: desktopicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
