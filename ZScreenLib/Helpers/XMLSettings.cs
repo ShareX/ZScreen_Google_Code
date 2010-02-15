@@ -486,7 +486,7 @@ namespace ZScreenLib
 
         [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }
-        [Category("Options / General"), DefaultValue(true), Description("Show Clipboard Mode Chooser after upload is complete")]
+        [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
         public bool ShowClipboardModeChooser { get; set; }
         [Category("Options / Interaction"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
