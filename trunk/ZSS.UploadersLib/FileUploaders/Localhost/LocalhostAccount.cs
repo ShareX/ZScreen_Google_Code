@@ -139,7 +139,7 @@ namespace UploadersLib
 
             if (string.IsNullOrEmpty(lHttpHomePath))
             {
-                httppath = this.LocalhostRoot;
+            	httppath = LocalUri.Replace("file://", "");
             }
             else
             {
