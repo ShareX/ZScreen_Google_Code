@@ -283,7 +283,8 @@ namespace ZScreenLib
                 ZScreenKeyboardHook.Dispose();
                 FileSystem.AppendDebug("Keyboard Hook terminated");
             }
-            FileSystem.WriteDebugFile();
+            FileSystem.WriteDebugFile();                
+            Engine.conf.Write();                
         }
 
         public static void SetRootFolder(string dp)
