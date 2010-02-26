@@ -303,7 +303,7 @@ namespace ZScreenLib
         {
             mTask.StartTime = DateTime.Now;
             FileSystem.AppendDebug("Uploading Image: " + mTask.LocalFilePath);
-
+            mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
             ImageUploader imageUploader = null;
 
             if (Engine.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
@@ -337,7 +337,6 @@ namespace ZScreenLib
                     {
                         fp = Path.Combine(Application.StartupPath, fp);
                     }
-                    mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_URL, fp);
                     break;
                 case ImageDestType.FLICKR:
@@ -526,7 +525,6 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(url))
                     {
                         mTask.RemoteFilePath = url;
-                        mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
                         mTask.ImageManager.Add(url, ImageFile.ImageType.FULLIMAGE);
 
                         if (IsThumbnail())
