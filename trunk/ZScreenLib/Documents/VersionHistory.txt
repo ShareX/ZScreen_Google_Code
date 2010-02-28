@@ -1,5 +1,6 @@
-Version 3.27.1.1 - 20100228
+Version 3.27.1.2 - 20100228
 
+3.27.1.2 Sending image to Printer also sent the image to other image uploaders [Issue 237] {McoreD}
 3.27.1.1 Thumbnail size uploaded to FTP did not follow the original image aspect ratio [Issue 236] {McoreD}
 3.27.1.0 Added new Clipboard URL Type: Linked Thumbnail as HTML [Issue 236] {McoreD}
 3.27.0.1 Some of the Windows 7 Taskbar integration behavior was activated for Windows XP {McoreD}

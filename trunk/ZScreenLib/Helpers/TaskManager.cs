@@ -460,7 +460,7 @@ namespace ZScreenLib
 
         private void SetRemoteFilePath()
         {
-            if (mTask.ImageManager != null)
+            if (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count > 0)
             {
                 string url = mTask.ImageManager.GetFullImageUrl();
                 mTask.RemoteFilePath = url;
