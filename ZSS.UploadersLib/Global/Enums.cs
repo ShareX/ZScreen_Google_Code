@@ -62,6 +62,8 @@ namespace UploadersLib
         FULL_TINYURL,
         [Description("Linked Thumbnail for Forums")]
         LINKED_THUMBNAIL,
+        [Description("Linked Thumbnail as HTML")]
+        LinkedThumbnailHtml,
         [Description("Linked Thumbnail for Wiki")]
         LINKED_THUMBNAIL_WIKI,
         [Description("Thumbnail")]

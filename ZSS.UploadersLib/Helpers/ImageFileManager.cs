@@ -98,6 +98,8 @@ namespace UploadersLib.Helpers
                     return GetFullImageWiki();
                 case ClipboardUriType.LINKED_THUMBNAIL:
                     return GetLinkedThumbnailForumUrl();
+                case ClipboardUriType.LinkedThumbnailHtml:
+                    return GetLinkedThumbnailHtmlUrl();
                 case ClipboardUriType.LINKED_THUMBNAIL_WIKI:
                     return GetLinkedThumbnailWikiUrl();
                 case ClipboardUriType.THUMBNAIL:
@@ -109,6 +111,17 @@ namespace UploadersLib.Helpers
             }
 
             return GetUrlByImageType(ImageFile.ImageType.FULLIMAGE);
+        }
+
+        private string GetLinkedThumbnailHtmlUrl()
+        {
+            string url = GetFullImageUrl();
+            string th = GetThumbnailUrl();
+            if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(th))
+            {
+                return string.Format("<a target='_blank' href=\"{0}\"><img src=\"{1}\" border='0'/></a>", url, th);
+            }
+            return string.Empty;
         }
 
         public string GetLocalFilePathAsUri()

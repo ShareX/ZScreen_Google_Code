@@ -527,9 +527,10 @@ namespace ZScreenLib
                         mTask.RemoteFilePath = url;
                         mTask.ImageManager.Add(url, ImageFile.ImageType.FULLIMAGE);
 
-                        if (IsThumbnail())
+                        if (CreateThumbnail())
                         {
-                            using (Image img = GraphicsMgr.ChangeImageSize(mTask.MyImage, Engine.conf.FTPThumbnailWidth, Engine.conf.FTPThumbnailHeight))
+                            double thar = (double)Engine.conf.FTPThumbnailWidth / (double)mTask.MyImage.Width;
+                            using (Image img = GraphicsMgr.ChangeImageSize(mTask.MyImage, Engine.conf.FTPThumbnailWidth, (int)(thar * mTask.MyImage.Height)))
                             {
                                 StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(mTask.LocalFilePath));
                                 sb.Append(".th");
@@ -561,12 +562,14 @@ namespace ZScreenLib
             return false;
         }
 
-        private bool IsThumbnail()
+        private bool CreateThumbnail()
         {
             return GraphicsMgr.IsValidImage(mTask.LocalFilePath) && mTask.MyImage != null &&
-                (Engine.conf.ClipboardUriMode != ClipboardUriType.FULL || Engine.conf.FTPCreateThumbnail) &&
-                (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth ||
-                mTask.MyImage.Height > Engine.conf.FTPThumbnailHeight)));
+                (Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL || 
+                 Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI || 
+                 Engine.conf.ClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml || 
+                 Engine.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
+                (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
         }
 
         private void UploadProgressChanged(int progress)

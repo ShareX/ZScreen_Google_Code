@@ -327,9 +327,7 @@ namespace ZScreenLib
 
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
         public int FTPSelected = 0;
-        public bool FTPCreateThumbnail = false;
         public int FTPThumbnailWidth = 150;
-        public int FTPThumbnailHeight = 125;
         public bool FTPThumbnailCheckSize = true;
 
         //~~~~~~~~~~~~~~~~~~~~~

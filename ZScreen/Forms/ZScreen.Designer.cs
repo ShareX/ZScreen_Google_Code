@@ -111,11 +111,10 @@ namespace ZScreenGUI
             this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
             this.gbFTPSettings = new System.Windows.Forms.GroupBox();
             this.cbFTPThumbnailCheckSize = new System.Windows.Forms.CheckBox();
-            this.lblFTPThumbHeight = new System.Windows.Forms.Label();
             this.lblFTPThumbWidth = new System.Windows.Forms.Label();
             this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
-            this.txtFTPThumbHeight = new System.Windows.Forms.TextBox();
-            this.chkEnableThumbnail = new System.Windows.Forms.CheckBox();
+            this.tpLocalhost = new System.Windows.Forms.TabPage();
+            this.ucLocalhostAccounts = new ZScreenGUI.AccountsControl();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
             this.lblRapidSharePassword = new System.Windows.Forms.Label();
             this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
@@ -584,8 +583,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpLocalhost = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new ZScreenGUI.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -596,6 +593,7 @@ namespace ZScreenGUI
             this.tcDestinations.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.gbFTPSettings.SuspendLayout();
+            this.tpLocalhost.SuspendLayout();
             this.tpRapidShare.SuspendLayout();
             this.tpSendSpace.SuspendLayout();
             this.tpFlickr.SuspendLayout();
@@ -732,7 +730,6 @@ namespace ZScreenGUI
             this.gbLastSource.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
-            this.tpLocalhost.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1441,11 +1438,8 @@ namespace ZScreenGUI
             this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gbFTPSettings.Controls.Add(this.cbFTPThumbnailCheckSize);
-            this.gbFTPSettings.Controls.Add(this.lblFTPThumbHeight);
             this.gbFTPSettings.Controls.Add(this.lblFTPThumbWidth);
             this.gbFTPSettings.Controls.Add(this.txtFTPThumbWidth);
-            this.gbFTPSettings.Controls.Add(this.txtFTPThumbHeight);
-            this.gbFTPSettings.Controls.Add(this.chkEnableThumbnail);
             this.gbFTPSettings.Location = new System.Drawing.Point(16, 315);
             this.gbFTPSettings.Name = "gbFTPSettings";
             this.gbFTPSettings.Size = new System.Drawing.Size(759, 75);
@@ -1464,27 +1458,18 @@ namespace ZScreenGUI
             this.cbFTPThumbnailCheckSize.UseVisualStyleBackColor = true;
             this.cbFTPThumbnailCheckSize.CheckedChanged += new System.EventHandler(this.cbFTPThumbnailCheckSize_CheckedChanged);
             // 
-            // lblFTPThumbHeight
-            // 
-            this.lblFTPThumbHeight.AutoSize = true;
-            this.lblFTPThumbHeight.Location = new System.Drawing.Point(312, 25);
-            this.lblFTPThumbHeight.Name = "lblFTPThumbHeight";
-            this.lblFTPThumbHeight.Size = new System.Drawing.Size(61, 13);
-            this.lblFTPThumbHeight.TabIndex = 130;
-            this.lblFTPThumbHeight.Text = "Height (px):";
-            // 
             // lblFTPThumbWidth
             // 
             this.lblFTPThumbWidth.AutoSize = true;
-            this.lblFTPThumbWidth.Location = new System.Drawing.Point(200, 25);
+            this.lblFTPThumbWidth.Location = new System.Drawing.Point(16, 25);
             this.lblFTPThumbWidth.Name = "lblFTPThumbWidth";
-            this.lblFTPThumbWidth.Size = new System.Drawing.Size(58, 13);
+            this.lblFTPThumbWidth.Size = new System.Drawing.Size(107, 13);
             this.lblFTPThumbWidth.TabIndex = 129;
-            this.lblFTPThumbWidth.Text = "Width (px):";
+            this.lblFTPThumbWidth.Text = "Thumbnail width (px):";
             // 
             // txtFTPThumbWidth
             // 
-            this.txtFTPThumbWidth.Location = new System.Drawing.Point(264, 22);
+            this.txtFTPThumbWidth.Location = new System.Drawing.Point(128, 22);
             this.txtFTPThumbWidth.Name = "txtFTPThumbWidth";
             this.txtFTPThumbWidth.Size = new System.Drawing.Size(40, 20);
             this.txtFTPThumbWidth.TabIndex = 127;
@@ -1492,28 +1477,26 @@ namespace ZScreenGUI
             this.txtFTPThumbWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtFTPThumbWidth.TextChanged += new System.EventHandler(this.txtFTPThumbWidth_TextChanged);
             // 
-            // txtFTPThumbHeight
+            // tpLocalhost
             // 
-            this.txtFTPThumbHeight.Location = new System.Drawing.Point(376, 22);
-            this.txtFTPThumbHeight.Name = "txtFTPThumbHeight";
-            this.txtFTPThumbHeight.Size = new System.Drawing.Size(40, 20);
-            this.txtFTPThumbHeight.TabIndex = 128;
-            this.txtFTPThumbHeight.Text = "2500";
-            this.txtFTPThumbHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtFTPThumbHeight.TextChanged += new System.EventHandler(this.txtFTPThumbHeight_TextChanged);
+            this.tpLocalhost.Controls.Add(this.ucLocalhostAccounts);
+            this.tpLocalhost.Location = new System.Drawing.Point(4, 23);
+            this.tpLocalhost.Name = "tpLocalhost";
+            this.tpLocalhost.Padding = new System.Windows.Forms.Padding(3);
+            this.tpLocalhost.Size = new System.Drawing.Size(791, 402);
+            this.tpLocalhost.TabIndex = 11;
+            this.tpLocalhost.Text = "Localhost";
+            this.tpLocalhost.UseVisualStyleBackColor = true;
             // 
-            // chkEnableThumbnail
+            // ucLocalhostAccounts
             // 
-            this.chkEnableThumbnail.AutoSize = true;
-            this.chkEnableThumbnail.BackColor = System.Drawing.Color.Transparent;
-            this.chkEnableThumbnail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkEnableThumbnail.Location = new System.Drawing.Point(16, 24);
-            this.chkEnableThumbnail.Name = "chkEnableThumbnail";
-            this.chkEnableThumbnail.Size = new System.Drawing.Size(187, 17);
-            this.chkEnableThumbnail.TabIndex = 113;
-            this.chkEnableThumbnail.Text = "Create thumbnail. Thumbnail size: ";
-            this.chkEnableThumbnail.UseVisualStyleBackColor = false;
-            this.chkEnableThumbnail.CheckedChanged += new System.EventHandler(this.chkEnableThumbnail_CheckedChanged);
+            this.ucLocalhostAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(785, 312);
+            this.ucLocalhostAccounts.TabIndex = 1;
             // 
             // tpRapidShare
             // 
@@ -6981,27 +6964,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tpLocalhost
-            // 
-            this.tpLocalhost.Controls.Add(this.ucLocalhostAccounts);
-            this.tpLocalhost.Location = new System.Drawing.Point(4, 23);
-            this.tpLocalhost.Name = "tpLocalhost";
-            this.tpLocalhost.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLocalhost.Size = new System.Drawing.Size(791, 402);
-            this.tpLocalhost.TabIndex = 11;
-            this.tpLocalhost.Text = "Localhost";
-            this.tpLocalhost.UseVisualStyleBackColor = true;
-            // 
-            // ucLocalhostAccount
-            // 
-            this.ucLocalhostAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccount";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(785, 312);
-            this.ucLocalhostAccounts.TabIndex = 1;
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -7037,6 +6999,7 @@ namespace ZScreenGUI
             this.tpFTP.ResumeLayout(false);
             this.gbFTPSettings.ResumeLayout(false);
             this.gbFTPSettings.PerformLayout();
+            this.tpLocalhost.ResumeLayout(false);
             this.tpRapidShare.ResumeLayout(false);
             this.tpRapidShare.PerformLayout();
             this.tpSendSpace.ResumeLayout(false);
@@ -7231,7 +7194,6 @@ namespace ZScreenGUI
             this.gbLastSource.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
-            this.tpLocalhost.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -7464,7 +7426,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnAddImageSoftware;
         internal System.Windows.Forms.GroupBox gbFTPSettings;
         internal System.Windows.Forms.CheckBox chkAutoSwitchFileUploader;
-        internal System.Windows.Forms.CheckBox chkEnableThumbnail;
         internal System.Windows.Forms.Button btnFTPImport;
         internal System.Windows.Forms.Button btnFTPExport;
         internal System.Windows.Forms.TabPage tpImageHosting;
@@ -7720,10 +7681,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnSendSpaceRegister;
         internal System.Windows.Forms.RichTextBox rtbDebugInfo;
         private System.Windows.Forms.Label lblErrorRetry;
-        private System.Windows.Forms.Label lblFTPThumbHeight;
         private System.Windows.Forms.Label lblFTPThumbWidth;
         private System.Windows.Forms.TextBox txtFTPThumbWidth;
-        private System.Windows.Forms.TextBox txtFTPThumbHeight;
         private System.Windows.Forms.CheckBox cbFTPThumbnailCheckSize;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
         private System.Windows.Forms.TabPage tpFlickr;
