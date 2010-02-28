@@ -39,19 +39,6 @@ namespace Starksoft.Net.Ftp
         /// Constructor.
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
-        /// <param name="bytesPerSecond">The data transfer speed in bytes per second.</param>
-        /// <param name="elapsedTime">The time that has elapsed since the data transfer started.</param>
-        public TransferProgressEventArgs(int bytesTransferred, int bytesPerSecond, TimeSpan elapsedTime)
-        {
-            _bytesTransferred = bytesTransferred;
-            _bytesPerSecond = bytesPerSecond;
-            _elapsedTime = elapsedTime;
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="bytesTransferred">The number of bytes transferred.</param>
         /// <param name="totalBytesTransferred">Total number of bytes transferred.</param>
         /// <param name="bytesPerSecond">The data transfer speed in bytes per second.</param>
         /// <param name="elapsedTime">The time that has elapsed since the data transfer started.</param>
