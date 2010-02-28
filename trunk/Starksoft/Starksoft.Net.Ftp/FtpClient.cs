@@ -346,7 +346,7 @@ namespace Starksoft.Net.Ftp
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when sending user information.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpConnectionOpenException(String.Format("An error occurred when sending user information.  Reason: {0}", base.LastResponse.Text), fex);
             }
 
             // wait for user to log into system and all response messages to be transmitted
@@ -369,7 +369,7 @@ namespace Starksoft.Net.Ftp
                 }
                 catch (FtpException fex)
                 {
-                    throw new FtpException(String.Format("An error occurred when sending password information.  Reason: {0}", base.LastResponse.Text), fex);
+                    throw new FtpConnectionOpenException(String.Format("An error occurred when sending password information.  Reason: {0}", base.LastResponse.Text), fex);
                 }
 
                 if (base.LastResponse.Code == FtpResponseCode.NotLoggedIn)
@@ -486,11 +486,56 @@ namespace Starksoft.Net.Ftp
         }
 
         /// <summary>
-        /// Changes the current working directory on the server.
+        /// Changes the current working directory on older FTP servers that cannot handle a full path containing
+        /// multiple subdirectories.  This method will separate the full path into separate change directory commands
+        /// to support such systems.
         /// </summary>
         /// <param name="path">Path of the new directory to change to.</param>
         /// <remarks>Accepts both foward slash '/' and back slash '\' path names.</remarks>
         /// <seealso cref="ChangeDirectory"/>
+        /// <seealso cref="GetWorkingDirectory"/>
+        public void ChangeDirectoryMultiPath(string path)
+        {
+            // the change working dir command can generally handle all the weird directory name spaces
+            // which is nice but frustrating that the ftp server implementors did not fix it for other commands
+
+            if (path == null)
+                throw new ArgumentNullException("path");
+
+            if (path.Length == 0)
+                throw new ArgumentException("must have a value", "path");
+
+            // replace the windows style directory delimiter with a unix style delimiter
+            path = path.Replace("\\", "/");
+
+            string[] dirs = path.Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+
+            try
+            {
+                // issue a single CWD command for each directory
+                // this is a very reliable method to change directories on all FTP servers
+                // because some systems do not all a full path to be specified when changing directories
+                foreach (string dir in dirs)
+                {
+                    base.SendRequest(new FtpRequest(FtpCmd.Cwd, dir));
+                }
+            }
+            catch (FtpException fex)
+            {
+                throw new FtpException(String.Format("Could not change working directory to '{0}'.  Reason: {1}", path, fex.Message), fex);
+            }
+
+            _currentDirectory = GetWorkingDirectory();
+        }
+
+        /// <summary>
+        /// Changes the current working directory on the server.  Some FTP server will not accept this command 
+        /// if the path contains mutiple directories.  For those FTP server implementations see the method
+        /// ChangeDirectoryMultiPath(string).
+        /// </summary>
+        /// <param name="path">Path of the new directory to change to.</param>
+        /// <remarks>Accepts both foward slash '/' and back slash '\' path names.</remarks>
+        /// <seealso cref="ChangeDirectoryMultiPath(string)"/>
         /// <seealso cref="GetWorkingDirectory"/>
 		public void ChangeDirectory(string path)
 		{
@@ -554,6 +599,9 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// The file is deleted in the current working directory if no path information 
         /// is specified.  Otherwise a full absolute path name can be specified.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to delete the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="DeleteDirectory"/>
 		public void DeleteFile(string path)
@@ -599,6 +647,9 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// If a directory name is given for path then the server will create a new subdirectory 
         /// in the current working directory.  Optionally, a full absolute path may be given.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to make the subdirectory using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
 		public void MakeDirectory(string path)
 		{
@@ -624,10 +675,11 @@ namespace Starksoft.Net.Ftp
         /// <param name="fromPath">Path and/or file name to be moved.</param>
         /// <param name="toPath">Destination path specifying the directory where the file will be moved to.</param>
         /// <remarks>
-        /// This method actuall results
-        /// in server FTP commands being issued to the server to perform the move.  This method is available for 
-        /// your convenience when performing common tasks such as moving processed files out of a pick directory
+        /// This method actually results in several FTP commands being issued to the server to perform the physical file move.  
+        /// This method is available for your convenience when performing common tasks such as moving processed files out of a pickup directory
         /// and into a archive directory.
+        /// Note that some older FTP server implementations will not accept a full path to a filename.  On those systems this method may not work
+        /// properly.
         /// </remarks>
 		public void MoveFile(string fromPath, string toPath)
 		{
@@ -662,6 +714,9 @@ namespace Starksoft.Net.Ftp
         /// The path can be either a specific subdirectory relative to the 
         /// current working directory on the server or an absolute path to 
         /// the directory to remove.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the parent directory of the directory you wish to delete using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="DeleteFile"/>
 		public void DeleteDirectory(string path)
@@ -762,6 +817,9 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// This function uses the MDTM command which is an additional feature command and therefore not supported
         /// by all FTP servers.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory which has the file you wish to set the date and time using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="Rename"/>
         public void SetDateTime(string path, DateTime dateTime)
@@ -839,9 +897,12 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// The path can be file name relative to the current working directory or an absolute path.  This command is an additional feature 
         /// that is not supported by all FTP servers.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to get the file size using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="GetFileDateTime"/>
-		public int GetFileSize(string path)
+		public long GetFileSize(string path)
 		{
             if (path == null)
                 throw new ArgumentNullException("path");
@@ -858,7 +919,7 @@ namespace Starksoft.Net.Ftp
                 throw new FtpException(String.Format("An error occurred when retrieving file size for {0}.  Reason: {1}", path, base.LastResponse.Text), fex);
             }
             
-            return Int32.Parse(base.LastResponse.Text.Substring(4), CultureInfo.InvariantCulture);
+            return Int64.Parse(base.LastResponse.Text, CultureInfo.InvariantCulture);
 		}
 
         /// <summary>
@@ -894,6 +955,9 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// Each FTP server may return different status dialog information.  The status information sent
         /// back is not parsed or processed in any way by the FtpClient object. 
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to get the status of the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
 		public string GetStatus(string path)
 		{
@@ -924,7 +988,7 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// Some FTP servers may return the client to specify the storage size prior to data transfer from the FTP client to the FTP server.
         /// </remarks>
-        public void AllocateStorage(int size)
+        public void AllocateStorage(long size)
         {
             try
             {
@@ -1053,6 +1117,11 @@ namespace Starksoft.Net.Ftp
         /// Retrieves a remote file from the FTP server and writes the data to a local file
         /// specfied in the localPath parameter.
         /// </summary>
+        /// <remarks>
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to get the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
+        /// </remarks>
         /// <param name="remotePath">A path and/or file name to the remote file.</param>
         /// <param name="localPath">A fully qualified local path to a file on the local machine.</param>
         /// <param name="action">The type of action to take.</param>
@@ -1156,6 +1225,9 @@ namespace Starksoft.Net.Ftp
         /// is used to send a restart command to the FTP server.  The FTP server is instructed to restart the download process at the last position of
         /// of the output stream.  Not all FTP servers support the restart command.  If the FTP server does not support the restart (REST) command,
         /// an FtpException error is thrown.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to get the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="GetFileAsync(string, string, FileAction)"/>
         /// <seealso cref="PutFile(string, string, FileAction)"/>
@@ -1195,15 +1267,22 @@ namespace Starksoft.Net.Ftp
                 base.TransferData(TransferDirection.ToClient, request, outStream);
             }
         }
-
+        
         /// <summary>
-        /// Tests to see if a file or directory exists on the remote server.
+        /// Tests to see if a file or directory exists on the remote server.  The current working directory must be the
+        /// parent or root directory of the file or directory whose existence is being tested.  For best results, 
+        /// call this method from the root working directory ("/").
         /// </summary>
-        /// <param name="path">The full path to the remote file or directory.</param>
-        /// <returns>A string containing the file listing from the current working directory.</returns>
-        /// <remarks>This method will execute a change working directory (CWD) command prior to testing to see if the file or 
-        /// directory exits.  The original working directory will be changed back to the original value
-        /// after this method has completed.</remarks>
+        /// <param name="path">The full path to the remote file or directory relative to the current working directory, or the filename 
+        /// or directory in the current working directory.</param>
+        /// <returns>Boolean value indicating if file exists or not.</returns>
+        /// <remarks>This method will execute a change working directory (CWD) command prior to testing to see if the  
+        /// file or direcotry exists.  The original working directory will be changed back to the original value
+        /// after this method has completed.  This method may not work on systems where the directory listing is not being
+        /// parsed correctly.  If the method call GetDirList() does not work properly with your FTP server, this method may not
+        /// produce reliable results.  This method will also not produce reliable results if the directory or file is hidden on the
+        /// remote FTP server.</remarks>
+        /// <seealso cref="GetDirList()"/>
         public bool Exists(string path)
         {
             if (path == null)
@@ -1212,27 +1291,55 @@ namespace Starksoft.Net.Ftp
             if (path.Length == 0)
                 throw new ArgumentException("must have a value", "path");
 
-            // In order to test that a file exists we have to look for one of two conditions.  Some FTP servers will send a 550 error after
-            // they go ahead and transmit zero length data.  This results in not FtpException being thrown.  Other servers will send a 450 error that the file
-            // was not found and this will cause an FtpException to be thrown.
+            // replace the windows style directory delimiter with a unix style delimiter
+            int chgDirCnt = 0;
+            bool found = false;
+            bool errorChgDir = false;
+            path = path.Replace("\\", "/");
+            string[] dirs = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            string filename = "";
+            if (dirs.Length == 1)
+                filename = path;
+            else
+                filename = dirs[dirs.Length - 1];
 
-            string result;
             try
             {
-                string origDir = _currentDirectory;
-                ChangeDirectory(path);
-                result = GetNameList(path);
-                ChangeDirectory(origDir);
+                // if the path contains more than just the filename then 
+                // we must change the directory to where the file is located
+                if (dirs.Length > 1)
+                {
+                    for (int i = 0; i < dirs.Length - 1; i++)
+                    {
+                        ChangeDirectory(dirs[i]);
+                        chgDirCnt++;
+                    }
+                }
+            } 
+            catch(FtpException)
+            {
+                errorChgDir = true;
+            }
+       
+            try
+            {
+                if (!errorChgDir)
+                    found = GetDirList().ContainsName(filename);
             }
             catch (FtpException)
+            { }
+               
+            try
             {
-                return false;
+                // change directory back up to the original directory
+                // this is a very reliable method to change directories on all FTP servers
+                for (int j = 0; j < chgDirCnt; j++)
+                    this.ChangeDirectoryUp();
             }
+            catch (FtpException)
+            { }
 
-            if (result.Length > 0)
-                return true;
-            else
-                return false;
+            return found;
         }
 
 
@@ -1257,6 +1364,11 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         /// <param name="path">The path to a directory on the remote FTP server.</param>
         /// <returns>A string containing the file listing from the current working directory.</returns>
+        /// <remarks>
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the parent directory you wish to get the name list using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
+        /// </remarks>
         /// <seealso cref="GetDirListAsText(string)"/>
         /// <seealso cref="GetDirList(string)"/>
         /// <seealso cref="GetDirListAsync(string)"/>
@@ -1293,6 +1405,11 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         /// <param name="path">The path to a directory on the remote FTP server.</param>
         /// <returns>A string containing the directory listing of files from the current working directory.</returns>
+        /// <remarks>
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the parent directory you wish to get the name list using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
+        /// </remarks>
         /// <seealso cref="GetDirList(string)"/>
         /// <seealso cref="GetDirListAsync(string)"/>
         /// <seealso cref="GetDirListDeep"/>
@@ -1331,8 +1448,12 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         /// <param name="path">The path to a directory on the remote FTP server.</param>
         /// <returns>FtpFileCollection collection object.</returns>
-        /// <remarks>This method returns a FtpFileCollection object containing a collection of 
-        /// FtpItem objects.</remarks>
+        /// <remarks>
+        /// This method returns a FtpFileCollection object containing a collection of 
+        /// FtpItem objects.  Some FTP server implementations will not accept a full path to a resource.  On those
+        /// systems it is best to change the working directory using the ChangeDirectoryMultiPath(string) method and then call
+        /// the method GetDirList().
+        /// </remarks>
         /// <seealso cref="GetDirListAsync(string)"/>
         /// <seealso cref="GetDirListAsText(string)"/>
         /// <seealso cref="GetDirListDeep"/>
@@ -1352,8 +1473,13 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         /// <param name="path">The path to a directory on the remote FTP server.</param>
         /// <returns>FtpFileCollection collection object.</returns>
-        /// <remarks>This method returns a FtpFileCollection object containing a collection of 
-        /// FtpItem objects.</remarks>
+        /// <remarks>
+        /// This method returns a FtpFileCollection object containing a collection of 
+        /// FtpItem objects.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the parent directory you wish to get the directory list using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
+        /// </remarks>
         /// <seealso cref="GetDirListDeepAsync(string)"/>
         /// <seealso cref="GetDirList(string)"/>
         /// <seealso cref="GetDirListAsync(string)"/>
@@ -1367,24 +1493,6 @@ namespace Starksoft.Net.Ftp
             FtpItemCollection deepCol = new FtpItemCollection();
             ParseDirListDeep(path, deepCol);
             return deepCol;
-        }
-
-        private void ParseDirListDeep(string path, FtpItemCollection deepCol)
-        {
-            FtpItemCollection itemCol = GetDirList(path);
-            deepCol.Merge(itemCol);
-
-            foreach (FtpItem item in itemCol)
-            {
-                // if the this call is being completed asynchronously and the user requests a cancellation
-                // then stop processing the items and return
-                if (base.AsyncWorker != null && base.AsyncWorker.CancellationPending)
-                    return;
-
-                // if the item is of type Directory then parse the directory list recursively
-                if (item.ItemType == FtpItemType.Directory)
-                    ParseDirListDeep(item.FullPath, deepCol);
-            }
         }
 
         /// <summary>
@@ -1521,6 +1629,9 @@ namespace Starksoft.Net.Ftp
         ///         744 	rwx 	r--	    r--
         ///         766 	rwx 	rw- 	rw-
         ///         777 	rwx 	rwx 	rwx
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory containing the file or directory you wish to change the mode on by using with the 
+        /// ChangeDirectory() or ChangeDirectoryMultiPath() method.
         /// </remarks>
         /// <seealso cref="SetDateTime"/>
         /// <seealso cref="Rename"/>
@@ -1572,6 +1683,9 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// The file is uploaded to the current working directory on the remote server.  The remotePath
         /// parameter is used to specify the path and file name used to store the file on the remote server.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to put the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="PutFileAsync(string, string, FileAction)"/>
         /// <seealso cref="PutFileUnique(string)"/>
@@ -1599,6 +1713,9 @@ namespace Starksoft.Net.Ftp
         /// parameter is used to specify the path and file name used to store the file on the remote server.
         /// To overwrite an existing file see the method PutFile(string, string, FileAction) and specify the 
         /// FileAction Create.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to put the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="PutFileAsync(string, string, FileAction)"/>
         /// <seealso cref="PutFileUnique(string)"/>
@@ -1670,6 +1787,9 @@ namespace Starksoft.Net.Ftp
         /// <remarks>
         /// The stream is uploaded to the current working directory on the remote server.  The remotePath
         /// parameter is used to specify the path and file name used to store the file on the remote server.
+        /// Note that some FTP servers will not accept a full path.  On those systems you must navigate to
+        /// the directory you wish to put the file using with the ChangeDirectory() or ChangeDirectoryMultiPath()
+        /// method.
         /// </remarks>
         /// <seealso cref="PutFileAsync(string, string, FileAction)"/>
         /// <seealso cref="PutFileUnique(string)"/>
@@ -1707,7 +1827,7 @@ namespace Starksoft.Net.Ftp
                     case FileAction.CreateNew:
                         if (Exists(remotePath))
                         {
-                            throw new FtpException("Can not overwrite existing file.");
+                            throw new FtpException("Cannot overwrite existing file when action FileAction.CreateNew is specified.");
                         }
                         base.TransferData(TransferDirection.ToServer, new FtpRequest(FtpCmd.Stor, remotePath), inputStream);
                         break;
@@ -1826,6 +1946,24 @@ namespace Starksoft.Net.Ftp
 #endregion
 
 #region Private Methods
+
+        private void ParseDirListDeep(string path, FtpItemCollection deepCol)
+        {
+            FtpItemCollection itemCol = GetDirList(path);
+            deepCol.Merge(itemCol);
+
+            foreach (FtpItem item in itemCol)
+            {
+                // if the this call is being completed asynchronously and the user requests a cancellation
+                // then stop processing the items and return
+                if (base.AsyncWorker != null && base.AsyncWorker.CancellationPending)
+                    return;
+
+                // if the item is of type Directory then parse the directory list recursively
+                if (item.ItemType == FtpItemType.Directory)
+                    ParseDirListDeep(item.FullPath, deepCol);
+            }
+        }
 
         private string CorrectLocalPath(string path)
         {
@@ -2299,6 +2437,7 @@ namespace Starksoft.Net.Ftp
             if (base.AsyncWorker != null && base.AsyncWorker.IsBusy)
                 throw new InvalidOperationException("The FtpClient object is already busy executing another asynchronous operation.  You can only execute one asychronous method at a time.");
 
+            base.CreateAsyncWorker();
             base.AsyncWorker.WorkerSupportsCancellation = true;
             base.AsyncWorker.DoWork += new DoWorkEventHandler(PutFileLocalAsync_DoWork);
             base.AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(PutFileAsync_RunWorkerCompleted);

@@ -85,10 +85,6 @@
       <Project>{5F228FCD-54F1-491D-93CE-3D768655FADC}</Project>
       <Name>Starksoft.Net.Ftp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj">
-      <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
-      <Name>Starksoft.Net.Proxy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
