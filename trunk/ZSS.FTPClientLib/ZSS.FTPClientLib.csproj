@@ -68,12 +68,6 @@
     <Compile Include="LoginDialog.Designer.cs">
       <DependentUpon>LoginDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="FTPClient.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FTPClient.Designer.cs">
-      <DependentUpon>FTPClient.cs</DependentUpon>
-    </Compile>
     <Compile Include="IconHelper.cs" />
     <Compile Include="IconListManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

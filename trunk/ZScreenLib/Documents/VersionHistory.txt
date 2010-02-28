@@ -1,3 +1,5 @@
+3.27.1.1 Thumbnail size uploaded to FTP did not follow the original image aspect ratio [Issue 236] {McoreD}
+3.27.1.0 Added new Clipboard URL Type: Linked Thumbnail as HTML [Issue 236] {McoreD}
 3.27.0.1 Some of the Windows 7 Taskbar integration behavior was activated for Windows XP {McoreD}
 3.27.0.0 Support for localhost image hosting [Issue 219] {McoreD}
 3.26.1.0 Added new Clipboard URL Types: Local File Path, Local File Path as URI {McoreD}

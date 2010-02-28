@@ -508,9 +508,7 @@ namespace ZScreenGUI
                 }
             }
 
-            chkEnableThumbnail.Checked = Engine.conf.FTPCreateThumbnail;
             txtFTPThumbWidth.Text = Engine.conf.FTPThumbnailWidth.ToString();
-            txtFTPThumbHeight.Text = Engine.conf.FTPThumbnailHeight.ToString();
             cbFTPThumbnailCheckSize.Checked = Engine.conf.FTPThumbnailCheckSize;
 
             #endregion
@@ -3283,11 +3281,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void chkEnableThumbnail_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FTPCreateThumbnail = chkEnableThumbnail.Checked;
-        }
-
         private void chkAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.AutoSwitchFileUploader = chkAutoSwitchFileUploader.Checked;
@@ -4483,15 +4476,6 @@ namespace ZScreenGUI
             if (int.TryParse(txtFTPThumbWidth.Text, out width))
             {
                 Engine.conf.FTPThumbnailWidth = width;
-            }
-        }
-
-        private void txtFTPThumbHeight_TextChanged(object sender, EventArgs e)
-        {
-            int height;
-            if (int.TryParse(txtFTPThumbHeight.Text, out height))
-            {
-                Engine.conf.FTPThumbnailHeight = height;
             }
         }
 
