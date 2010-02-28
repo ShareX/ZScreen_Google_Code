@@ -532,7 +532,7 @@ namespace ZScreenLib
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
+            if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageDestType.PRINTER)
             {
                 if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
                     string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending && File.Exists(task.LocalFilePath))
