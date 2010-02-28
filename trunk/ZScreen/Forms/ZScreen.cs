@@ -1659,7 +1659,7 @@ namespace ZScreenGUI
                 FileSystem.BackupAppSettings();
             }
 
-            if (Engine.conf.Windows7TaskbarIntegration)
+            if (Engine.conf.Windows7TaskbarIntegration && !CoreHelpers.RunningOnXP)
             {
                 if (Engine.conf.FirstRun)
                 {

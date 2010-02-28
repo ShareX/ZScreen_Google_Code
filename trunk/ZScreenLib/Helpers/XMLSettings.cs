@@ -65,7 +65,7 @@ namespace ZScreenLib
         public ImageDestType ImageUploaderType = ImageDestType.CLIPBOARD;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public TextDestType TextUploaderType = TextDestType.PASTE2;
-        public FileUploaderType FileDestMode = FileUploaderType.FTP;
+        public FileUploaderType FileDestMode = FileUploaderType.FileBin;
         [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Image Uploader for uploading Images")]
         public bool PreferFileUploaderForImages { get; set; }
         [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Text Uploader for uploading Text")]
