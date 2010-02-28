@@ -252,13 +252,8 @@ namespace Starksoft.Net.Ftp
         public List<string> Arguments
         {
             get 
-            {
-                if (_arguments != null)
-                {
-                    return new List<string>(_arguments);
-                }
-
-                return new List<string>();
+            {  
+                return new List<string>(_arguments); 
             }
         }
 
@@ -351,7 +346,7 @@ namespace Starksoft.Net.Ftp
                 case FtpCmd.Stat:
                     return BuildResponseArray(FtpResponseCode.SystemStatusOrHelpReply, FtpResponseCode.DirectoryStatus, FtpResponseCode.FileStatus);
                 case FtpCmd.Cdup:
-                    return BuildResponseArray(FtpResponseCode.CommandOkay);
+                    return BuildResponseArray(FtpResponseCode.CommandOkay, FtpResponseCode.RequestedFileActionOkayAndCompleted);
                 case FtpCmd.Size:
                     return BuildResponseArray(FtpResponseCode.FileStatus);
                 case FtpCmd.Feat:
@@ -365,7 +360,7 @@ namespace Starksoft.Net.Ftp
                 case FtpCmd.Noop:
                     return BuildResponseArray(FtpResponseCode.CommandOkay);                
                 case FtpCmd.Site:
-                    return BuildResponseArray(FtpResponseCode.CommandOkay, FtpResponseCode.CommandNotImplementedSuperfluousAtThisSite);
+                    return BuildResponseArray(FtpResponseCode.CommandOkay, FtpResponseCode.CommandNotImplementedSuperfluousAtThisSite, FtpResponseCode.RequestedFileActionOkayAndCompleted);
                 case FtpCmd.Pasv:
                     return BuildResponseArray(FtpResponseCode.EnteringPassiveMode);
                 case FtpCmd.Port:

@@ -383,9 +383,9 @@ namespace Starksoft.Net.Ftp
         /// <param name="port">Port number the adapter is to communicate on.</param>
         /// <param name="securityProtocol">Value indicating what secure security communications protocol should be used (if any).</param>
         internal FtpBase(string host, int port, FtpSecurityProtocol securityProtocol)
-        {
-            _host = host;
-            _port = port;
+		{
+			_host = host;
+			_port = port;
             _securityProtocol = securityProtocol;
         }
 
@@ -404,7 +404,7 @@ namespace Starksoft.Net.Ftp
         private FtpResponseQueue _responseQueue = new FtpResponseQueue();
         private FtpResponse _response = new FtpResponse();
         private FtpResponseCollection _responseList = new FtpResponseCollection();
-
+        
         private Thread _responseMonitor;
 
         private IProxyClient _proxy;
@@ -421,7 +421,7 @@ namespace Starksoft.Net.Ftp
         private int _activePort;
         private int _activePortRangeMin = 50000;
         private int _activePortRangeMax = 50080;
-
+        
         // secure communications specific 
         private FtpSecurityProtocol _securityProtocol = FtpSecurityProtocol.None;
         private X509Certificate2 _serverCertificate;
@@ -440,7 +440,7 @@ namespace Starksoft.Net.Ftp
         private BackgroundWorker _asyncWorker;
         private bool _asyncCanceled;
 
-        private const int TCP_BUFFER_SIZE = 8192;
+        private const int TCP_BUFFER_SIZE = 8192; 
         private const int TCP_TIMEOUT = 30000; // 30 seconds
 
         private const int WAIT_FOR_DATA_INTERVAL = 10; // 10 ms
@@ -476,7 +476,7 @@ namespace Starksoft.Net.Ftp
         /// Security certificate authentication event.
         /// </summary>
         public event EventHandler<ValidateServerCertificateEventArgs> ValidateServerCertificate;
-
+        
         /// <summary>
         /// Connection closed event.
         /// </summary>
@@ -580,7 +580,7 @@ namespace Starksoft.Net.Ftp
         {
             if (!File.Exists(localPath))
                 throw new ArgumentException("file does not exist.", "localPath");
-
+            
             using (FileStream fileStream = File.OpenRead(localPath))
             {
                 return ComputeChecksum(hash, fileStream);
@@ -665,7 +665,7 @@ namespace Starksoft.Net.Ftp
         #endregion
 
         #region Internal Properties
-
+        
         internal BackgroundWorker AsyncWorker
         {
             get { return _asyncWorker; }
@@ -684,7 +684,7 @@ namespace Starksoft.Net.Ftp
         {
             get { return _asyncCanceled; }
         }
-
+        
         /// <summary>
         /// Gets a value indicating whether an asynchronous operation is running.
         /// </summary>
@@ -708,12 +708,12 @@ namespace Starksoft.Net.Ftp
         public int Port
         {
             get { return _port; }
-            set
+            set 
             {
                 if (this.IsConnected)
                     throw new FtpException("Port property value can not be changed when connection is open.");
 
-                _port = value;
+                _port = value; 
             }
         }
 
@@ -731,12 +731,12 @@ namespace Starksoft.Net.Ftp
         public string Host
         {
             get { return _host; }
-            set
+            set 
             {
                 if (this.IsConnected)
                     throw new FtpException("Host property value can not be changed when connection is open.");
 
-                _host = value;
+                _host = value; 
             }
         }
 
@@ -755,12 +755,12 @@ namespace Starksoft.Net.Ftp
         public FtpSecurityProtocol SecurityProtocol
         {
             get { return _securityProtocol; }
-            set
+            set 
             {
                 if (this.IsConnected)
                     throw new FtpException("SecurityProtocol property value can not be changed when connection is open.");
 
-                _securityProtocol = value;
+                _securityProtocol = value; 
             }
         }
 
@@ -790,8 +790,8 @@ namespace Starksoft.Net.Ftp
         public bool IsCompressionEnabled
         {
             get { return _isCompressionEnabled; }
-            set
-            {
+            set 
+            { 
                 if (this.IsBusy)
                     throw new FtpException("IsCompressionEnabled property value can not be changed when the system is busy.");
 
@@ -807,10 +807,10 @@ namespace Starksoft.Net.Ftp
                 }
                 catch (FtpException ex)
                 {
-                    throw new FtpException("An error occurred while trying to enable or disable FTP data compression.", ex);
+                    throw new FtpDataCompressionException("An error occurred while trying to enable or disable FTP data compression.", ex);
                 }
-
-                _isCompressionEnabled = value;
+                
+                _isCompressionEnabled = value; 
             }
         }
 
@@ -828,12 +828,12 @@ namespace Starksoft.Net.Ftp
         public int MaxUploadSpeed
         {
             get { return _maxUploadSpeed; }
-            set
+            set 
             {
                 if (value * 1024 > Int32.MaxValue || value < 0)
                     throw new ArgumentOutOfRangeException("value", "The MaxUploadSpeed property must have a range of 0 to 2,097,152.");
-
-                _maxUploadSpeed = value;
+                
+                _maxUploadSpeed = value; 
             }
         }
 
@@ -851,12 +851,12 @@ namespace Starksoft.Net.Ftp
         public int MaxDownloadSpeed
         {
             get { return _maxDownloadSpeed; }
-            set
+            set 
             {
                 if (value * 1024 > Int32.MaxValue || value < 0)
                     throw new ArgumentOutOfRangeException("value", "must have a range of 0 to 2,097,152.");
 
-                _maxDownloadSpeed = value;
+                _maxDownloadSpeed = value; 
             }
         }
 
@@ -885,12 +885,12 @@ namespace Starksoft.Net.Ftp
         public int TcpBufferSize
         {
             get { return _tcpBufferSize; }
-            set
+            set 
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException("value", "must be greater than 0.");
 
-                _tcpBufferSize = value;
+                _tcpBufferSize = value; 
             }
         }
 
@@ -905,12 +905,12 @@ namespace Starksoft.Net.Ftp
         public int TcpTimeout
         {
             get { return _tcpTimeout; }
-            set
+            set 
             {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("value", "must be greater than or equal to 0.");
 
-                _tcpTimeout = value;
+                _tcpTimeout = value; 
             }
         }
 
@@ -925,12 +925,12 @@ namespace Starksoft.Net.Ftp
         public int TransferTimeout
         {
             get { return _transferTimeout; }
-            set
+            set 
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException("value", "must be greater than 0.");
-
-                _transferTimeout = value;
+                
+                _transferTimeout = value; 
             }
         }
 
@@ -945,14 +945,14 @@ namespace Starksoft.Net.Ftp
         public int CommandTimeout
         {
             get { return _commandTimeout; }
-            set
+            set 
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException("value", "must be greater than 0.");
-
-                _commandTimeout = value;
+            
+                _commandTimeout = value; 
             }
-        }
+        }             
 
         /// <summary>
         /// The beginning port number range used by the FtpClient when opening a local 'Active' port.  The default value is 4051.
@@ -971,7 +971,7 @@ namespace Starksoft.Net.Ftp
             set
             {
                 if (value > _activePortRangeMin)
-                    throw new ArgumentOutOfRangeException("value", "must be less than the ActivePortRangeMax value.");
+                    throw new ArgumentOutOfRangeException("value","must be less than the ActivePortRangeMax value.");
 
                 if (value < 1 || value > 65534)
                     throw new ArgumentOutOfRangeException("value", "must be between 1 and 65534.");
@@ -1021,12 +1021,12 @@ namespace Starksoft.Net.Ftp
         public TransferMode DataTransferMode
         {
             get { return _dataTransferMode; }
-            set
+            set 
             {
                 if (this.IsBusy)
                     throw new FtpException("DataTransferMode property value can not be changed when the component is busy.");
 
-                _dataTransferMode = value;
+                _dataTransferMode = value; 
             }
         }
 
@@ -1055,14 +1055,17 @@ namespace Starksoft.Net.Ftp
         /// <seealso cref="ConnectionClosed"/>
         public bool IsConnected
         {
-            get
+            get 
             {
                 if (_commandConn == null || _commandConn.Client == null)
                     return false;
 
                 Socket client = _commandConn.Client;
 
-                // This is how you can determine whether a socket is still connected.
+                if (!client.Connected)
+                    return false;
+                
+                // this is how you can determine whether a socket is still connected.
                 bool blockingState = client.Blocking;
                 bool connected = true;
                 try
@@ -1080,19 +1083,13 @@ namespace Starksoft.Net.Ftp
                         connected = false;
                     }
                 }
+                catch (ObjectDisposedException)
+                {
+                    connected = false;
+                }
                 finally
                 {
-                    try
-                    {
-                        if (null != client)
-                        {
-                            client.Blocking = blockingState;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
+                    client.Blocking = blockingState;
                 }
 
                 return connected;
@@ -1131,7 +1128,7 @@ namespace Starksoft.Net.Ftp
         internal void SendRequest(FtpRequest request)
         {
             if (_commandConn == null || _commandConn.Connected == false)
-                throw new FtpException("Connection is closed.");
+                throw new FtpConnectionClosedException("Connection is closed.");
 
             // clear out any responses that might have been pending from a previous
             // failed operation
@@ -1148,7 +1145,7 @@ namespace Starksoft.Net.Ftp
             }
             catch (IOException ex)
             {
-                throw new FtpException("Connection is broken.  Failed to send command.", ex);
+                throw new FtpConnectionBrokenException("Connection is broken.  Failed to send command.", ex);
             }
 
             // most commands will have happy codes but the quote() command does not 
@@ -1195,7 +1192,7 @@ namespace Starksoft.Net.Ftp
             _asyncCanceled = false;
             _asyncWorker = new BackgroundWorker();
         }
-
+                
         /// <summary>
         /// Closes all connections to the FTP server.
         /// </summary>
@@ -1208,7 +1205,6 @@ namespace Starksoft.Net.Ftp
             try
             {
                 CloseDataConn();
-                CloseProxyConn();
                 CloseCommandConn();
             }
             catch (FtpException)
@@ -1225,8 +1221,8 @@ namespace Starksoft.Net.Ftp
 
             StartCommandMonitorThread();
 
-            if (_securityProtocol != FtpSecurityProtocol.None)
-                SecureConnection();
+            if (_securityProtocol == FtpSecurityProtocol.Ssl2 || _securityProtocol == FtpSecurityProtocol.Ssl3 || _securityProtocol == FtpSecurityProtocol.Tls1 || _securityProtocol == FtpSecurityProtocol.Tls1OrSsl3)
+                CreateSslCommandStream();
 
             // test to see if this is an asychronous operation and if so make sure 
             // the user has not requested the operation to be canceled
@@ -1247,7 +1243,7 @@ namespace Starksoft.Net.Ftp
         internal void TransferData(TransferDirection direction, FtpRequest request, Stream data, long restartPosition)
         {
             if (_commandConn == null || _commandConn.Connected == false)
-                throw new FtpException("Connection is closed.");
+                throw new FtpConnectionClosedException("Connection is closed.");
 
             if (request == null)
                 throw new ArgumentNullException("request", "value is required");
@@ -1259,17 +1255,17 @@ namespace Starksoft.Net.Ftp
             {
                 case TransferDirection.ToClient:
                     if (!data.CanWrite)
-                        throw new FtpException("Data transfer error.  Data stream does not allow write operation.");
+                        throw new FtpDataTransferException("Data transfer error.  Data conn does not allow write operation.");
                     break;
                 case TransferDirection.ToServer:
                     if (!data.CanRead)
-                        throw new FtpException("Data transfer error.  Data stream does not allow read operation.");
+                        throw new FtpDataTransferException("Data transfer error.  Data conn does not allow read operation.");
                     break;
             }
-
+            
             // if this is a restart then the data stream must support seeking
             if (restartPosition > 0 && !data.CanSeek)
-                throw new FtpException("Data transfer restart error.  Data stream does not allow seek operation.");
+                throw new FtpDataTransferException("Data transfer restart error.  Data conn does not allow seek operation.");
 
             try
             {
@@ -1281,7 +1277,7 @@ namespace Starksoft.Net.Ftp
                 {
                     // instruct the server to restart file transfer at the same position where the output stream left off
                     SendRequest(new FtpRequest(FtpCmd.Rest, restartPosition.ToString(CultureInfo.InvariantCulture)));
-
+                    
                     // set the data stream to the same position as the server
                     data.Position = restartPosition;
                 }
@@ -1294,19 +1290,31 @@ namespace Starksoft.Net.Ftp
 
                 // test to see if the data connection failed to be established sometime the active connection fails due to security settings on the ftp server
                 if (_dataConn == null)
-                    throw new FtpException("Unable to establish a data connection to the destination.  The destination may have refused the connection.");
+                    throw new FtpDataConnectionException("Unable to establish a data connection to the destination.  The destination may have refused the connection.");
 
                 // create the data stream object - handles creation of SslStream and DeflateStream objects as well
-                Stream dataStream = GetDataStream(direction);
+                Stream conn = _dataConn.GetStream();
+
+                // test to see if we need to enable ssl
+                if (_securityProtocol == FtpSecurityProtocol.Ssl2 || _securityProtocol == FtpSecurityProtocol.Ssl3 || _securityProtocol == FtpSecurityProtocol.Tls1 || _securityProtocol == FtpSecurityProtocol.Tls1OrSsl3)
+                {
+                    conn = CreateSslStream(conn);
+                }
+
+                // test to see if we need to enable compression by using the DeflateStream
+                if (_isCompressionEnabled)
+                {
+                    conn = CreateZlibStream(direction, conn);
+                }
 
                 // based on the direction of the data transfer we need to handle the input and output streams
                 switch (direction)
                 {
                     case TransferDirection.ToClient:
-                        TransferBytes(dataStream, data, _maxDownloadSpeed * 1024);
+                        TransferBytes(conn, data, _maxDownloadSpeed * 1024);
                         break;
                     case TransferDirection.ToServer:
-                        TransferBytes(data, dataStream, _maxUploadSpeed * 1024);
+                        TransferBytes(data, conn, _maxUploadSpeed * 1024);
                         break;
                 }
             }
@@ -1322,6 +1330,31 @@ namespace Starksoft.Net.Ftp
             // integrity check
             if (_hashAlgorithm != HashingFunction.None && request.IsFileTransfer)
                 DoIntegrityCheck(request, data, restartPosition);
+        }
+
+        private Stream CreateZlibStream(TransferDirection direction, Stream stream)
+        {
+            DeflateStream deflateStream = null;
+
+            switch (direction)
+            {
+                case TransferDirection.ToClient:
+                    deflateStream = new DeflateStream(stream, CompressionMode.Decompress, true);
+                    // zlib fix to ignore first two bytes of header data 
+                    deflateStream.BaseStream.ReadByte();
+                    deflateStream.BaseStream.ReadByte();
+                    break;
+
+                case TransferDirection.ToServer:
+                    deflateStream = new DeflateStream(stream, CompressionMode.Compress, true);
+                    // this is a fix for the DeflateStream class only when sending compressed data to the server.  
+                    // Zlib has two bytes of data attached to the header that we have to write before processing the data stream.
+                    deflateStream.BaseStream.WriteByte(120);
+                    deflateStream.BaseStream.WriteByte(218);
+                    break;
+            }
+            stream = deflateStream;
+            return stream;
         }
 
         internal string TransferText(FtpRequest request)
@@ -1341,7 +1374,7 @@ namespace Starksoft.Net.Ftp
             }
             catch (Exception ex)
             {
-                throw new FtpException("Unable to enable compression (MODE Z) on the destination.", ex);
+                throw new FtpDataCompressionException("Unable to enable compression (MODE Z) on the destination.", ex);
             }
         }
 
@@ -1353,7 +1386,7 @@ namespace Starksoft.Net.Ftp
             }
             catch (Exception ex)
             {
-                throw new FtpException("Unable to disable compression (MODE S) on the destination.", ex);
+                throw new FtpDataCompressionException("Unable to disable compression (MODE S) on the destination.", ex);
             }
         }
 
@@ -1388,7 +1421,6 @@ namespace Starksoft.Net.Ftp
             DateTime start = DateTime.Now;
             TimeSpan elapsed;
             int bytesPerSec = 0;
-            long totalSize = input.CanSeek ? (int)input.Length : (int)output.Length;
 
             do
             {
@@ -1400,16 +1432,14 @@ namespace Starksoft.Net.Ftp
                 elapsed = DateTime.Now.Subtract(start);
                 bytesPerSec = (int)(elapsed.TotalSeconds < 1 ? bytesTotal : bytesTotal / elapsed.TotalSeconds);
 
-                // if the consumer subscribes to transfer progress event then fire it
+                //  if the consumer subscribes to transfer progress event then fire it
                 if (TransferProgress != null)
-                {
-                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesTotal, bytesPerSec, elapsed, totalSize));
-                }
+                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesPerSec, elapsed));
 
                 // test to see if this is an asychronous operation and if so make sure 
                 // the user has not requested the operation to be canceled
                 if (IsAsyncCancellationPending())
-                    throw new FtpException("Asynchronous operation canceled by user.");
+                    throw new FtpAsynchronousOperationException("Asynchronous operation canceled by user.");
 
                 // throttle the transfer if necessary
                 ThrottleByteTransfer(maxBytesPerSecond, bytesTotal, elapsed, bytesPerSec);
@@ -1434,7 +1464,7 @@ namespace Starksoft.Net.Ftp
                     // need to calc a delay in milliseconds for the throttle wait based on how fast the 
                     // transfer is relative to the speed it needs to be
                     double millisecDelay = (bytesTotal / (maxBytesPerSecond / 1000) - elapsedMilliSec);
-
+                    
                     // can only sleep to a max of an Int32 so we need to check this since bytesTotal is a long value
                     // this should never be an issue but never say never
                     if (millisecDelay > Int32.MaxValue)
@@ -1450,37 +1480,29 @@ namespace Starksoft.Net.Ftp
         {
             if (_host == null || _host.Length == 0)
                 throw new FtpException("An FTP Host must be specified before opening connection to FTP destination.  Set the appropriate value using the Host property on the FtpClient object.");
-
+            
             try
             {
                 //  test to see if we should use the user supplied proxy object
                 //  to create the connection
                 if (_proxy != null)
-                {
                     _commandConn = _proxy.CreateConnection(_host, _port);
-                }
                 else
-                {
-                    _commandConn = new TcpClient();
-                    _commandConn.Connect(_host, _port);
-                }
-
-                // give the server a little time to catch up
-                //Thread.Sleep(300);
+                    _commandConn = new TcpClient(_host, _port);
             }
             catch (ProxyException pex)
             {
                 if (_commandConn != null)
                     _commandConn.Close();
 
-                throw new FtpException(String.Format(CultureInfo.InvariantCulture, "A proxy error occurred while creating connection to FTP destination {0} on port {1}.", _host, _port.ToString(CultureInfo.InvariantCulture)), pex);
+                throw new FtpProxyException(String.Format(CultureInfo.InvariantCulture, "A proxy error occurred while creating connection to FTP destination {0} on port {1}.", _host, _port.ToString(CultureInfo.InvariantCulture)), pex);
             }
             catch (Exception ex)
             {
                 if (_commandConn != null)
                     _commandConn.Close();
 
-                throw new FtpException(String.Format(CultureInfo.InvariantCulture, "An error occurred while creating connection to FTP destination {0} on port {1}.", _host, _port.ToString(CultureInfo.InvariantCulture)), ex);
+                throw new FtpConnectionOpenException(String.Format(CultureInfo.InvariantCulture, "An error occurred while opening a connection to FTP destination {0} on port {1}.", _host, _port.ToString(CultureInfo.InvariantCulture)), ex);
             }
 
             // set command connection buffer sizes and timeouts
@@ -1492,64 +1514,13 @@ namespace Starksoft.Net.Ftp
             // set the command stream object
             _commandStream = _commandConn.GetStream();
         }
+        
 
-        // based on the ftp settings get or create the proper data stream object
-        private Stream GetDataStream(TransferDirection dataTransferDirection)
-        {
-            Stream dataStream = null;
 
-            // test to see if we need to enable secure connection
-            if (_securityProtocol != FtpSecurityProtocol.None)
-            {
-                dataStream = CreateSecureStream(_dataConn.GetStream());
-            }
-            else
-            {
-                // get a handle to data connection stream
-                dataStream = _dataConn.GetStream();
-            }
-
-            // test to see if we need to enable compression by using the DeflateStream
-            if (_isCompressionEnabled)
-            {
-                DeflateStream deflateStream = null;
-
-                switch (dataTransferDirection)
-                {
-                    case TransferDirection.ToClient:
-                        deflateStream = new DeflateStream(dataStream, CompressionMode.Decompress, true);
-                        // zlib fix to ignore first two bytes of header data 
-                        deflateStream.BaseStream.ReadByte();
-                        deflateStream.BaseStream.ReadByte();
-                        break;
-
-                    case TransferDirection.ToServer:
-                        deflateStream = new DeflateStream(dataStream, CompressionMode.Compress, true);
-                        // this is a fix for the DeflateStream class only when sending compressed data to the server.  
-                        // Zlib has two bytes of data attached to the header that we have to write before processing the data stream.
-                        deflateStream.BaseStream.WriteByte(120);
-                        deflateStream.BaseStream.WriteByte(218);
-                        break;
-                }
-
-                // reset the datastream object
-                dataStream = deflateStream;
-            }
-
-            return dataStream;
-        }
-
-        private void CloseProxyConn()
-        {
-            if (_proxy == null)
-                return;
-
-            //_proxy.Close();
-        }
 
         private void CloseCommandConn()
         {
-            if (_commandConn == null)
+            if (_commandConn == null) 
                 return;
             try
             {
@@ -1561,7 +1532,7 @@ namespace Starksoft.Net.Ftp
                 _commandConn.Close();
             }
             catch { }
-
+              
             _commandConn = null;
         }
 
@@ -1576,7 +1547,7 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         /// <param name="timeout">Maximum time to wait before timing out.</param>
         /// <param name="happyResponseCodes">Server response codes to wait for.</param>
-        internal protected void WaitForHappyCodes(int timeout, params FtpResponseCode[] happyResponseCodes)
+        internal protected  void WaitForHappyCodes(int timeout, params FtpResponseCode[] happyResponseCodes)
         {
             _responseList.Clear();
             do
@@ -1591,7 +1562,7 @@ namespace Starksoft.Net.Ftp
                         break;
 
                     if (IsUnhappyResponse(response))
-                        throw new FtpException(response.Text);
+                        throw new FtpResponseException(response, response.Text);
                 }
             } while (true);
 
@@ -1689,15 +1660,15 @@ namespace Starksoft.Net.Ftp
             while (_responseQueue.Count == 0)
             {
                 if (!IsConnected)
-                    throw new FtpException("Connection is closed.");
+                    throw new FtpConnectionClosedException("Connection is closed.");
 
                 if (IsAsyncCancellationPending())
-                    throw new FtpException("Asynchronous operation canceled by user.");
+                    throw new FtpAsynchronousOperationException("Asynchronous operation canceled.");
 
                 Thread.Sleep(WAIT_FOR_DATA_INTERVAL);
                 sleepTime += WAIT_FOR_DATA_INTERVAL;
                 if (sleepTime > timeout)
-                    throw new FtpException("A timeout occurred while waiting for the destination to send a response.  The last reponse from the destination is '" + _response.Text + "'");
+                    throw new FtpCommandResponseTimeoutException("A timeout occurred while waiting for the destination to send a response.  The last reponse from the destination is '" + _response.Text + "'");
             }
 
             // return next response object from the queue
@@ -1749,7 +1720,7 @@ namespace Starksoft.Net.Ftp
                     if (socketError.ErrorCode == 10048 && ++failureCnt < _activePortRangeMax - _activePortRangeMin)
                         _activeListener.Stop();
                     else
-                        throw new FtpException(String.Format(CultureInfo.InvariantCulture, "An error occurred while trying to create an active connection on host {0} port {1}", localHost, listenerPort.ToString(CultureInfo.InvariantCulture)), socketError);
+                        throw new FtpDataConnectionException(String.Format(CultureInfo.InvariantCulture, "An error occurred while trying to create an active connection on host {0} port {1}", localHost, listenerPort.ToString(CultureInfo.InvariantCulture)), socketError);
                 }
             } while (!success);
 
@@ -1767,7 +1738,7 @@ namespace Starksoft.Net.Ftp
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while issuing data port command '{0}' on an active FTP connection.", dataPortInfo), fex);
+                throw new FtpDataConnectionException(String.Format("An error occurred while issuing data port command '{0}' on an active FTP connection.", dataPortInfo), fex);
             }
         }
 
@@ -1786,7 +1757,7 @@ namespace Starksoft.Net.Ftp
             catch { }
 
             // signal the calling thread to continue now that the data connection is open
-            _activeSignal.Set();
+            _activeSignal.Set();       
         }
 
         private void OpenDataConn()
@@ -1832,9 +1803,9 @@ namespace Starksoft.Net.Ftp
                 if (!_activeSignal.WaitOne(_transferTimeout, false))
                 {
                     if (_response.Code == FtpResponseCode.CannotOpenDataConnection)
-                        throw new FtpException(String.Format(CultureInfo.InvariantCulture, "The ftp destination was unable to open a data connection to the ftp client on port {0}.", _activePort));
+                        throw new FtpDataConnectionException(String.Format(CultureInfo.InvariantCulture, "The ftp destination was unable to open a data connection to the ftp client on port {0}.", _activePort));
                     else
-                        throw new FtpException("The data connection timed out waiting for data to transfer from the destination.");
+                        throw new FtpDataConnectionTimeoutException("The data connection timed out waiting for data to transfer from the destination.");
                 }
             }
             else
@@ -1850,7 +1821,7 @@ namespace Starksoft.Net.Ftp
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while issuing up a passive FTP connection command.  Error: {0}", fex.Message), fex);
+                throw new FtpDataConnectionException(String.Format("An error occurred while issuing up a passive FTP connection command.  Error: {0}", fex.Message), fex);
             }
 
             //  get the port on the end
@@ -1877,34 +1848,34 @@ namespace Starksoft.Net.Ftp
             {
                 //  create a new tcp client object and use proxy if supplied
                 if (_proxy != null)
-                {
-                    // TODO: add support to the proxy class for buffersize, timeout, etc.
                     _dataConn = _proxy.CreateConnection(passiveHost, passivePort);
-                }
                 else
-                {
-                    _dataConn = new TcpClient();
-                    _dataConn.ReceiveBufferSize = _tcpBufferSize;
-                    _dataConn.ReceiveTimeout = _tcpTimeout;
-                    _dataConn.SendBufferSize = _tcpBufferSize;
-                    _dataConn.SendTimeout = _tcpTimeout;
-                    _dataConn.Connect(passiveHost, passivePort);
+                    _dataConn = new TcpClient(passiveHost, passivePort);
 
-                    //IAsyncResult result = _dataConn.BeginConnect(passiveHost, passivePort, null, null);
-                }
+                _dataConn.ReceiveBufferSize = _tcpBufferSize;
+                _dataConn.ReceiveTimeout = _tcpTimeout;
+                _dataConn.SendBufferSize = _tcpBufferSize;
+                _dataConn.SendTimeout = _tcpTimeout;
             }
             catch (Exception ex)
             {
-                throw new FtpException(String.Format(CultureInfo.InvariantCulture, "An error occurred while opening passive data connection to destination '{0}' on port '{1}'.", passiveHost, passivePort), ex);
+                throw new FtpDataConnectionException(String.Format(CultureInfo.InvariantCulture, "An error occurred while opening passive data connection to destination '{0}' on port '{1}'.", passiveHost, passivePort), ex);
             }
         }
 
-        // create the a secure stream connection from a NetworkStream
-        private SslStream CreateSecureStream(NetworkStream netStream)
-        {
-            // create an SSL stream that will close the client's stream
-            SslStream secure = new SslStream(netStream, true, new RemoteCertificateValidationCallback(secureStream_ValidateServerCertificate), null);
 
+
+        /// <summary>
+        /// Creates an SSL or TLS secured stream.
+        /// </summary>
+        /// <param name="stream">Unsecured stream.</param>
+        /// <returns>Secured stream</returns>
+        private Stream CreateSslStream(Stream stream)
+        {
+            // create an SSL or TLS stream that will close the client's stream
+            SslStream ssl = new SslStream(stream, true, new RemoteCertificateValidationCallback(secureStream_ValidateServerCertificate), null);
+
+            // choose the protocol
             SslProtocols protocol = SslProtocols.None;
             switch (_securityProtocol)
             {
@@ -1920,19 +1891,22 @@ namespace Starksoft.Net.Ftp
                 case FtpSecurityProtocol.Tls1:
                     protocol = SslProtocols.Tls;
                     break;
+                default:
+                    throw new FtpSecureConnectionException(String.Format("Unhandled FtpSecurityProtocol type '{0}'.", _securityProtocol.ToString()));
             }
 
             // The server name must match the name on the server certificate.
             try
             {
-                secure.AuthenticateAsClient(_host, _clientCertificates, protocol, true);
+                // authenicate the client
+                ssl.AuthenticateAsClient(_host, _clientCertificates, protocol, true);
             }
             catch (AuthenticationException authEx)
             {
                 throw new FtpAuthenticationException("Secure FTP session certificate authentication failed.", authEx);
             }
 
-            return secure;
+            return ssl;
         }
 
         // the following method is invoked by the RemoteCertificateValidationDelegate.
@@ -1957,7 +1931,7 @@ namespace Starksoft.Net.Ftp
             {
                 // analyze the policy errors and decide if the certificate should be accepted or not.
                 if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
-                    throw new FtpException(String.Format("Certificate validation failed.  The host name '{0}' does not match the name on the security certificate '{1}'.  To override this behavior, subscribe to the ValidateServerCertificate event to validate certificates.", _host, certificate.Issuer));
+                    throw new FtpCertificateValidationException(String.Format("Certificate validation failed.  The host name '{0}' does not match the name on the security certificate '{1}'.  To override this behavior, subscribe to the ValidateServerCertificate event to validate certificates.", _host, certificate.Issuer));
 
                 if (sslPolicyErrors == SslPolicyErrors.None || (sslPolicyErrors & SslPolicyErrors.RemoteCertificateChainErrors) == SslPolicyErrors.RemoteCertificateChainErrors)
                 {
@@ -1972,9 +1946,9 @@ namespace Starksoft.Net.Ftp
             }
 
         }
+        
 
-
-        private void SecureConnection()
+        private void CreateSslCommandStream()
         {
             try
             {
@@ -1992,22 +1966,24 @@ namespace Starksoft.Net.Ftp
                         break;
                 }
 
-                Debug.Assert(authCommand.Length > 0, "auth command should have a value - make sure every enum optino in auth command has a corresponding value");
+                Debug.Assert(authCommand.Length > 0, "auth command should have a value - make sure every enum option in auth command has a corresponding value");
 
                 SendRequest(new FtpRequest(FtpCmd.Auth, authCommand));
                 Thread.Sleep(200);
+                
                 // set the active command stream to the ssl command stream object
-                _commandStream = CreateSecureStream(_commandConn.GetStream());
+                _commandStream = CreateSslStream(_commandConn.GetStream());
+                
                 SendRequest(new FtpRequest(FtpCmd.Pbsz, "0"));
                 SendRequest(new FtpRequest(FtpCmd.Prot, "P"));
             }
             catch (FtpAuthenticationException fauth)
             {
-                throw new FtpException(String.Format("An ftp authentication exception occurred while setting up a secure data connection.  {0}", fauth.Message), fauth);
+                throw new FtpSecureConnectionException(String.Format("An ftp authentication exception occurred while setting up a ssl data connection.  {0}", fauth.Message), fauth);                
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while setting up a secure data connection.  {0}", fex.Message), fex);
+                throw new FtpSecureConnectionException(String.Format("An error occurred while setting up a ssl data connection.  {0}", fex.Message), fex);
             }
 
         }

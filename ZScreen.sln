@@ -44,10 +44,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ZScreenLib", "ZScreenLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ResourcesLib", "ZSS.ResourcesLib\ZSS.ResourcesLib.csproj", "{1D8C78B8-96D0-474A-96DA-84732D52C87A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Ftp", "Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj", "{5F228FCD-54F1-491D-93CE-3D768655FADC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj", "{56EB350E-089E-40BB-97CB-F2745A4251AE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenTesterGUI", "ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj", "{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GradientMaker", "ZScreenTester\GradientTester\ZSS.GradientMaker.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
@@ -59,6 +55,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavuxLib", "DavuxLibMin\DavuxLib.csproj", "{6241A05D-EF12-4769-B660-EF75060DF20E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Ftp", "Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj", "{5F228FCD-54F1-491D-93CE-3D768655FADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj", "{56EB350E-089E-40BB-97CB-F2745A4251AE}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -110,14 +110,6 @@ Global
 		{1D8C78B8-96D0-474A-96DA-84732D52C87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D8C78B8-96D0-474A-96DA-84732D52C87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D8C78B8-96D0-474A-96DA-84732D52C87A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -142,6 +134,14 @@ Global
 		{6241A05D-EF12-4769-B660-EF75060DF20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6241A05D-EF12-4769-B660-EF75060DF20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6241A05D-EF12-4769-B660-EF75060DF20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

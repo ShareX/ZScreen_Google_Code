@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5F228FCD-54F1-491D-93CE-3D768655FADC}</ProjectGuid>
     <SccProjectName>
@@ -14,6 +14,8 @@
     </SccProvider>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Starksoft.Net.Ftp</AssemblyName>
@@ -26,6 +28,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Starksoft.Net.Ftp</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>Starksoft.Net.%28None%29</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -41,8 +44,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Debug\Starksoft.Net.Ftp.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -54,9 +56,8 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
     <ErrorReport>prompt</ErrorReport>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -65,7 +66,7 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DefineConstants>TRACE;</DefineConstants>
     <DocumentationFile>bin\Release\Starksoft.Net.Ftp.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
@@ -81,6 +82,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Starksoft.Net.Proxy, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>references\Starksoft.Net.Proxy.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -88,6 +93,19 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\FtpAsynchronousOperationException.cs" />
+    <Compile Include="Exceptions\FtpCertificateValidationException.cs" />
+    <Compile Include="Exceptions\FtpCommandResponseTimeoutException.cs" />
+    <Compile Include="Exceptions\FtpConnectionBrokenException.cs" />
+    <Compile Include="Exceptions\FtpConnectionClosedException.cs" />
+    <Compile Include="Exceptions\FtpConnectionOpenException.cs" />
+    <Compile Include="Exceptions\FtpDataCompressionException.cs" />
+    <Compile Include="Exceptions\FtpDataConnectionException.cs" />
+    <Compile Include="Exceptions\FtpDataConnectionTimeoutException.cs" />
+    <Compile Include="Exceptions\FtpDataTransferException.cs" />
+    <Compile Include="Exceptions\FtpProxyException.cs" />
+    <Compile Include="Exceptions\FtpResponseException.cs" />
+    <Compile Include="Exceptions\FtpSecureConnectionException.cs" />
     <Compile Include="Hashing\Crc32.cs" />
     <Compile Include="EventArgs\ConnectionClosedEventArgs.cs" />
     <Compile Include="EventArgs\FxpCopyAsyncCompletedEventArgs.cs" />
@@ -125,13 +143,18 @@
     </Compile>
     <Compile Include="IFtpItemParser.cs" />
     <Compile Include="FtpGenericParser.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="FtpResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj">
-      <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
-      <Name>Starksoft.Net.Proxy</Name>
-    </ProjectReference>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -227,10 +227,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-    <ProjectReference Include="..\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj">
-      <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
-      <Name>Starksoft.Net.Proxy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj">
       <Project>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</Project>
       <Name>ZScreenTesterGUI</Name>
