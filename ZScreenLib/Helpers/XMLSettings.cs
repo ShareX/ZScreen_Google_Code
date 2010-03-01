@@ -281,6 +281,8 @@ namespace ZScreenLib
         public decimal WatermarkOffset = 5;
         public bool WatermarkAddReflection = false;
         public bool WatermarkAutoHide = true;
+        [Category("Options / Clipboard Upload"), DefaultValue(false), Description("Do not apply watermark during Clipboard Upload")]
+        public bool WatermarkExcludeClipboardUpload { get; set; }
 
         public string WatermarkText = "%h:%mi";
         public XmlFont WatermarkFont = new XmlFont();
@@ -497,7 +499,7 @@ namespace ZScreenLib
         public bool PreferBrowserForImages { get; set; }
         [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
         public bool PreferBrowserForText { get; set; }
-
+        
         // Options / Interaction
 
         [Category("Options / General"), DefaultValue(true),
