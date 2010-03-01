@@ -5,7 +5,7 @@
 = Requirements =
 
  * [http://www.microsoft.com/express/vcsharp/#webInstall Microsoft Visual C# Express] or Microsoft Visual Studio with C# 
- * http://tortoisesvn.net/downloads TortoiseSVN]
+ * [http://tortoisesvn.net/downloads TortoiseSVN]
 
 == Folders ==
 in your Projects folder, create the folders below
