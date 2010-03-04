@@ -70,6 +70,49 @@ namespace UploadersLib
 
         #region Post methods
 
+        /// <summary>
+        /// Method: POST
+        /// </summary>
+        protected string GetResponse(string url, Dictionary<string, string> arguments)
+        {
+            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+
+            byte[] data = MakeInputContent(boundary, arguments, true);
+
+            using (HttpWebResponse response = GetResponse(url, data, boundary))
+            {
+                return ResponseToString(response);
+            }
+        }
+
+        /// <summary>
+        /// Method: POST
+        /// </summary>
+        protected string GetResponse(string url)
+        {
+            return GetResponse(url, null);
+        }
+
+        /// <summary>
+        /// Method: POST
+        /// </summary>
+        protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
+        {
+            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+
+            byte[] data = MakeInputContent(boundary, arguments, true);
+
+            using (HttpWebResponse response = GetResponse(url, data, boundary))
+            {
+                if (response != null)
+                {
+                    return response.ResponseUri.OriginalString;
+                }
+            }
+
+            return null;
+        }
+
         private HttpWebResponse GetResponseUsingPost(string url, Stream stream, string boundary)
         {
             try
@@ -118,44 +161,13 @@ namespace UploadersLib
             }
         }
 
-        protected string GetResponse(string url, Dictionary<string, string> arguments)
-        {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
-
-            byte[] data = MakeInputContent(boundary, arguments, true);
-
-            using (HttpWebResponse response = GetResponse(url, data, boundary))
-            {
-                return ResponseToString(response);
-            }
-        }
-
-        protected string GetResponse(string url)
-        {
-            return GetResponse(url, null);
-        }
-
-        protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
-        {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
-
-            byte[] data = MakeInputContent(boundary, arguments, true);
-
-            using (HttpWebResponse response = GetResponse(url, data, boundary))
-            {
-                if (response != null)
-                {
-                    return response.ResponseUri.OriginalString;
-                }
-            }
-
-            return null;
-        }
-
         #endregion
 
         #region Get methods
 
+        /// <summary>
+        /// Method: GET
+        /// </summary>
         protected string GetResponseString(string url, Dictionary<string, string> arguments)
         {
             if (arguments != null && arguments.Count > 0)
@@ -169,6 +181,9 @@ namespace UploadersLib
             }
         }
 
+        /// <summary>
+        /// Method: GET
+        /// </summary>
         protected string GetResponseString(string url)
         {
             return GetResponseString(url, null);
