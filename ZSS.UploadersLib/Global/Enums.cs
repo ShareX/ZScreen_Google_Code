@@ -174,7 +174,9 @@ namespace UploadersLib
         [Description("SendSpace - www.sendspace.com")]
         SendSpace,
         [Description("FileBin - www.filebin.ca")]
-        FileBin
+        FileBin,
+        [Description("Drop.io - www.drop.io")]
+        DropIO
     }
 
     public enum RapidShareAcctType

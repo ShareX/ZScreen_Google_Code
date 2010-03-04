@@ -284,6 +284,9 @@ namespace ZScreenLib
                 case FileUploaderType.FileBin:
                     fileHost = new FileBin();
                     break;
+                case FileUploaderType.DropIO:
+                    fileHost = new DropIO();
+                    break;
             }
 
             if (fileHost != null)
@@ -565,9 +568,9 @@ namespace ZScreenLib
         private bool CreateThumbnail()
         {
             return GraphicsMgr.IsValidImage(mTask.LocalFilePath) && mTask.MyImage != null &&
-                (Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL || 
-                 Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI || 
-                 Engine.conf.ClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml || 
+                (Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
+                 Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
+                 Engine.conf.ClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
                  Engine.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
                 (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
         }
