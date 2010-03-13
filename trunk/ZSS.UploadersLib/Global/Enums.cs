@@ -38,6 +38,16 @@ namespace UploadersLib
         SOCKS5
     }
 
+    public enum Protocol
+    {
+        [Description("http://")]
+        Http,
+        [Description("https://")]
+        Https,
+        [Description("file://")]
+        File,
+    }
+
     #region Image Uploaders
 
     public enum UploadMode

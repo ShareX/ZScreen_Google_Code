@@ -54,6 +54,9 @@ namespace UploadersLib
         [Category("Localhost"), Description("Localhost Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
 
+        [Category("Localhost"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(Protocol.File)]
+        public Protocol RemoteProtocol { get; set; }
+
         [Category("Localhost"), Description("HTTP Home Path, %host = Host e.g. brandonz.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
 
@@ -147,9 +150,9 @@ namespace UploadersLib
             }
             path = FTPHelpers.CombineURL(this.Port == 80 ? httppath : string.Format("{0}:{1}", httppath, this.Port), lFolderPath, fileName);
 
-            if (!path.StartsWith("http://"))
+            if (!path.StartsWith(RemoteProtocol.GetDescription()))
             {
-                path = "http://" + path;
+                path = RemoteProtocol.GetDescription() + path;
             }
 
             return path;
