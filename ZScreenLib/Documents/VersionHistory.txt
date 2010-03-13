@@ -1,5 +1,6 @@
-Version 3.27.2.0 - 20100301
+Version 3.27.3.0 - 20100315
 
+3.27.3.0 Remote path protocols are now user confirgurable for FTP and Localhost {McoreD}
 3.27.2.0 PropertyGrid option to exclude Watermark during Clipboard Upload {McoreD}
 3.27.1.2 Sending image to Printer also sent the image to other image uploaders [Issue 237] {McoreD}
 3.27.1.1 Thumbnail size uploaded to FTP did not follow the original image aspect ratio [Issue 236] {McoreD}
