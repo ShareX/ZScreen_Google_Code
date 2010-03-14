@@ -52,7 +52,7 @@ namespace UploadersLib.TextUploaders
 
         public PastebinUploader()
         {
-            HostSettings.URL = "http://pastebin.com/pastebin.php";
+            HostSettings.URL = "http://pastebin.com/api_public.php";
         }
 
         public PastebinUploader(string url)
@@ -75,14 +75,32 @@ namespace UploadersLib.TextUploaders
             if (!string.IsNullOrEmpty(text.LocalString))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("code2", text.LocalString);
-                arguments.Add("expiry", ((char)HostSettings.ExpireTime).ToString());
-                arguments.Add("format", HostSettings.TextFormat);
-                arguments.Add("poster", HostSettings.Author);
-                //arguments.Add("parent_pid", "");
-                arguments.Add("paste", "Send");
 
-                return GetRedirectionURL(HostSettings.URL, arguments);
+                // this is simply the text that you paste on pastebin
+                arguments.Add("paste_code", text.LocalString);
+                // for adding a title or name to your paste
+                arguments.Add("paste_name", HostSettings.Author);
+                // for sending confirmation email with paste link
+                arguments.Add("paste_email", HostSettings.Email);
+                // for using a certain subdomain
+                arguments.Add("paste_subdomain", HostSettings.Subdomain);
+                // for making it public (0) or private (1)
+                arguments.Add("paste_private", HostSettings.IsPublic ? "0" : "1");
+                // for adding expiration date. N = Never, 10M = 10 Minutes, 1H = 1 Hour, 1D = 1 Day, 1M = 1 Month
+                arguments.Add("paste_expire_date", HostSettings.ExpireTime);
+                // for adding syntax highlighting
+                arguments.Add("paste_format ", HostSettings.TextFormat);
+
+                string response = GetResponse(HostSettings.URL, arguments);
+
+                if (response.StartsWith("ERROR"))
+                {
+                    Errors.Add(response);
+                }
+                else
+                {
+                    return response;
+                }
             }
 
             return string.Empty;
@@ -152,21 +170,16 @@ namespace UploadersLib.TextUploaders
             /// <summary>poster</summary>
             public string Author { get; set; }
             /// <summary>expiry</summary>
-            public TimeTypes ExpireTime { get; set; }
+            public string ExpireTime { get; set; }
+            public bool IsPublic { get; set; }
+            public string Subdomain { get; set; }
+            public string Email { get; set; }
 
             public PastebinSettings()
             {
                 Name = Hostname;
                 TextFormat = "text";
-                Author = "";
-                ExpireTime = TimeTypes.Month;
-            }
-
-            public enum TimeTypes
-            {
-                Day = 'd',
-                Month = 'm',
-                Forever = 'f'
+                ExpireTime = "N";
             }
         }
     }
