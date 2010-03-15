@@ -254,6 +254,7 @@ namespace ZScreenLib
         {
             mTask.StartTime = DateTime.Now;
             FileSystem.AppendDebug("Uploading File: " + mTask.LocalFilePath);
+            mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
             FileUploader fileHost = null;
             switch (mTask.MyFileUploader)
             {
