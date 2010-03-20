@@ -95,7 +95,7 @@ namespace UploadersLib.ImageUploaders
                             string userid, imageurl;
                             userid = xele.ElementValue("userid");
                             imageurl = xele.ElementValue("imageurl");
-                            ifm.ImageFileList.Add(new ImageFile(imageurl, ImageFile.ImageType.FULLIMAGE));
+                            ifm.ImageFileList.Add(new ImageFile(imageurl, LinkType.FULLIMAGE));
                             break;
                         case "fail":
                             string code, msg;

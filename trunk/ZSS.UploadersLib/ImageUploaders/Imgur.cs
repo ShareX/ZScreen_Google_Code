@@ -43,8 +43,9 @@ namespace UploadersLib.ImageUploaders
                             string small_thumbnail = xele.ElementValue("small_thumbnail");
                             string imgur_page = xele.ElementValue("imgur_page");
                             string delete_page = xele.ElementValue("delete_page");
-                            ifm.ImageFileList.Add(new ImageFile(original_image, ImageFile.ImageType.FULLIMAGE));
-                            ifm.ImageFileList.Add(new ImageFile(large_thumbnail, ImageFile.ImageType.THUMBNAIL));
+                            ifm.ImageFileList.Add(new ImageFile(original_image, LinkType.FULLIMAGE));
+                            ifm.ImageFileList.Add(new ImageFile(large_thumbnail, LinkType.THUMBNAIL));
+                            ifm.ImageFileList.Add(new ImageFile(delete_page, LinkType.DELETION_LINK));
                             break;
                         case "fail":
                             string error_code = xele.ElementValue("error_code");

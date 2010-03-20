@@ -131,9 +131,9 @@ namespace UploadersLib.ImageUploaders
                             mediaid = xele.ElementValue("mediaid");
                             mediaurl = xele.ElementValue("mediaurl");
                             if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
-                            ifm.ImageFileList.Add(new ImageFile(mediaurl, ImageFile.ImageType.FULLIMAGE));
+                            ifm.ImageFileList.Add(new ImageFile(mediaurl, LinkType.FULLIMAGE));
                             ifm.ImageFileList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
-                                this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), ImageFile.ImageType.THUMBNAIL));
+                                this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), LinkType.THUMBNAIL));
                             break;
                         case "fail":
                             string code, msg;

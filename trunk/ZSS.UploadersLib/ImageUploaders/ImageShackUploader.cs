@@ -120,8 +120,8 @@ namespace UploadersLib.ImageUploaders
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
 
-                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
+                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
             }
             catch (Exception ex)
             {
@@ -170,8 +170,8 @@ namespace UploadersLib.ImageUploaders
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
 
-                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
+                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
             }
             catch (Exception ex)
             {

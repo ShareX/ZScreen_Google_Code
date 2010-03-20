@@ -48,6 +48,14 @@ namespace UploadersLib
         File,
     }
 
+    public enum LinkType
+    {
+        THUMBNAIL,
+        FULLIMAGE,
+        FULLIMAGE_TINYURL,
+        DELETION_LINK
+    }
+
     #region Image Uploaders
 
     public enum UploadMode

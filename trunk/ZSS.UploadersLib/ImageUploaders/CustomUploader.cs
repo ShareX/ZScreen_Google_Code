@@ -72,11 +72,11 @@ namespace UploadersLib.ImageUploaders
                     string thumbnail = iHosting.ReturnLink(iHosting.Thumbnail);
                     if (!string.IsNullOrEmpty(fullimage))
                     {
-                        ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
+                        ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
                     }
                     if (!string.IsNullOrEmpty(thumbnail))
                     {
-                        ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                        ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
                     }
                 }
             }
